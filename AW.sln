@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Win", "AW.Win\AW.Win.csproj", "{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Data", "AW.Data\AW.Data.csproj", "{47F52527-A001-405B-9CEC-FCBF7FA10855}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

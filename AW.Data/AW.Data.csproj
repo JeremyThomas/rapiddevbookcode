@@ -1,0 +1,236 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{47F52527-A001-405B-9CEC-FCBF7FA10855}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>AW.Data</AssemblyName>
+    <AssemblyOriginatorKeyFile>AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>AW.Data</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>\bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>\bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20">
+      <Name>SD.LLBLGen.Pro.ORMSupportClasses.NET20</Name>
+      <HintPath>C:\Program Files\Solutions Design\LLBLGen Pro\RuntimeLibraries\DotNet11\</HintPath>
+    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer.NET20">
+      <Name>SD.LLBLGen.Pro.DQE.SqlServer.NET20</Name>
+      <HintPath>C:\Program Files\Solutions Design\LLBLGen Pro\RuntimeLibraries\DotNet11\</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Name>System.EnterpriseServices</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CollectionClasses\SpecialOfferProductCollection.cs" />
+    <Compile Include="CollectionClasses\SalesOrderDetailCollection.cs" />
+    <Compile Include="CollectionClasses\StateProvinceCollection.cs" />
+    <Compile Include="CollectionClasses\AddressTypeCollection.cs" />
+    <Compile Include="CollectionClasses\ProductCollection.cs" />
+    <Compile Include="CollectionClasses\AddressCollection.cs" />
+    <Compile Include="CollectionClasses\SalesOrderHeaderCollection.cs" />
+    <Compile Include="CollectionClasses\ContactCollection.cs" />
+    <Compile Include="CollectionClasses\IndividualCollection.cs" />
+    <Compile Include="CollectionClasses\CustomerCollection.cs" />
+    <Compile Include="CollectionClasses\EmployeeCollection.cs" />
+    <Compile Include="CollectionClasses\SpecialOfferCollection.cs" />
+    <Compile Include="CollectionClasses\CountryRegionCollection.cs" />
+    <Compile Include="CollectionClasses\ShipMethodCollection.cs" />
+    <Compile Include="CollectionClasses\EmployeeAddressCollection.cs" />
+    <Compile Include="CollectionClasses\CustomerAddressCollection.cs" />
+    <Compile Include="CollectionClasses\CustomerViewRelatedCollection.cs" />
+    <Compile Include="DaoClasses\SpecialOfferProductDAO.cs" />
+    <Compile Include="DaoClasses\SalesOrderDetailDAO.cs" />
+    <Compile Include="DaoClasses\StateProvinceDAO.cs" />
+    <Compile Include="DaoClasses\AddressTypeDAO.cs" />
+    <Compile Include="DaoClasses\ProductDAO.cs" />
+    <Compile Include="DaoClasses\AddressDAO.cs" />
+    <Compile Include="DaoClasses\SalesOrderHeaderDAO.cs" />
+    <Compile Include="DaoClasses\ContactDAO.cs" />
+    <Compile Include="DaoClasses\IndividualDAO.cs" />
+    <Compile Include="DaoClasses\CustomerDAO.cs" />
+    <Compile Include="DaoClasses\EmployeeDAO.cs" />
+    <Compile Include="DaoClasses\SpecialOfferDAO.cs" />
+    <Compile Include="DaoClasses\CountryRegionDAO.cs" />
+    <Compile Include="DaoClasses\ShipMethodDAO.cs" />
+    <Compile Include="DaoClasses\EmployeeAddressDAO.cs" />
+    <Compile Include="DaoClasses\CustomerAddressDAO.cs" />
+    <Compile Include="DaoClasses\CustomerViewRelatedDAO.cs" />
+    <Compile Include="DaoClasses\TypedListDAO.cs" />
+    <Compile Include="EntityBaseClasses\SpecialOfferProductEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\SalesOrderDetailEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\StateProvinceEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\AddressTypeEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\ProductEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\AddressEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\SalesOrderHeaderEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\ContactEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\IndividualEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\CustomerEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\EmployeeEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\SpecialOfferEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\CountryRegionEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\ShipMethodEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\EmployeeAddressEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\CustomerAddressEntityBase.cs" />
+    <Compile Include="EntityBaseClasses\CustomerViewRelatedEntityBase.cs" />
+    <Compile Include="EntityClasses\ContactEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EntityClasses\SpecialOfferProductEntity.cs" />
+    <Compile Include="EntityClasses\SalesOrderDetailEntity.cs" />
+    <Compile Include="EntityClasses\StateProvinceEntity.cs" />
+    <Compile Include="EntityClasses\AddressTypeEntity.cs" />
+    <Compile Include="EntityClasses\ProductEntity.cs" />
+    <Compile Include="EntityClasses\AddressEntity.cs" />
+    <Compile Include="EntityClasses\SalesOrderHeaderEntity.cs" />
+    <Compile Include="EntityClasses\IndividualEntity.cs" />
+    <Compile Include="EntityClasses\CustomerEntity.cs" />
+    <Compile Include="EntityClasses\EmployeeEntity.cs" />
+    <Compile Include="EntityClasses\SpecialOfferEntity.cs" />
+    <Compile Include="EntityClasses\CountryRegionEntity.cs" />
+    <Compile Include="EntityClasses\ShipMethodEntity.cs" />
+    <Compile Include="EntityClasses\EmployeeAddressEntity.cs" />
+    <Compile Include="EntityClasses\CustomerAddressEntity.cs" />
+    <Compile Include="EntityClasses\CustomerViewRelatedEntity.cs" />
+    <Compile Include="FactoryClasses\DaoFactory.cs" />
+    <Compile Include="FactoryClasses\EntityFactories.cs" />
+    <Compile Include="FactoryClasses\EntityFieldFactory.cs" />
+    <Compile Include="FactoryClasses\EntityFieldsFactory.cs" />
+    <Compile Include="FactoryClasses\PredicateFactory.cs" />
+    <Compile Include="FactoryClasses\PropertyDescriptorFactory.cs" />
+    <Compile Include="FactoryClasses\SortClauseFactory.cs" />
+    <Compile Include="HelperClasses\DbUtils.cs" />
+    <Compile Include="HelperClasses\DbUtilsComPlus.cs" />
+    <Compile Include="HelperClasses\ResultsetFields.cs" />
+    <Compile Include="HelperClasses\Transaction.cs" />
+    <Compile Include="HelperClasses\TransactionComPlus.cs" />
+    <Compile Include="HelperClasses\TypeDefaultValue.cs" />
+    <Compile Include="HelperClasses\InheritanceInfoProvider.cs" />
+    <Compile Include="HelperClasses\FieldCreationClasses.cs" />
+    <Compile Include="RelationClasses\SpecialOfferProductRelations.cs" />
+    <Compile Include="RelationClasses\SalesOrderDetailRelations.cs" />
+    <Compile Include="RelationClasses\StateProvinceRelations.cs" />
+    <Compile Include="RelationClasses\AddressTypeRelations.cs" />
+    <Compile Include="RelationClasses\ProductRelations.cs" />
+    <Compile Include="RelationClasses\AddressRelations.cs" />
+    <Compile Include="RelationClasses\SalesOrderHeaderRelations.cs" />
+    <Compile Include="RelationClasses\ContactRelations.cs" />
+    <Compile Include="RelationClasses\IndividualRelations.cs" />
+    <Compile Include="RelationClasses\CustomerRelations.cs" />
+    <Compile Include="RelationClasses\EmployeeRelations.cs" />
+    <Compile Include="RelationClasses\SpecialOfferRelations.cs" />
+    <Compile Include="RelationClasses\CountryRegionRelations.cs" />
+    <Compile Include="RelationClasses\ShipMethodRelations.cs" />
+    <Compile Include="RelationClasses\EmployeeAddressRelations.cs" />
+    <Compile Include="RelationClasses\CustomerAddressRelations.cs" />
+    <Compile Include="RelationClasses\CustomerViewRelatedRelations.cs" />
+    <Compile Include="SalesOrderHeaderEntityValidator.cs" />
+    <Compile Include="StoredProcedureCallerClasses\ActionProcedures.cs" />
+    <Compile Include="StoredProcedureCallerClasses\RetrievalProcedures.cs" />
+    <Compile Include="TypedListClasses\CustomerListTypedList.cs" />
+    <Compile Include="TypedViewClasses\CustomerViewTypedView.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="ValidatorClasses\SpecialOfferProductValidator.cs" />
+    <Compile Include="ValidatorClasses\SalesOrderDetailValidator.cs" />
+    <Compile Include="ValidatorClasses\StateProvinceValidator.cs" />
+    <Compile Include="ValidatorClasses\AddressTypeValidator.cs" />
+    <Compile Include="ValidatorClasses\ProductValidator.cs" />
+    <Compile Include="ValidatorClasses\AddressValidator.cs" />
+    <Compile Include="ValidatorClasses\SalesOrderHeaderValidator.cs" />
+    <Compile Include="ValidatorClasses\ContactValidator.cs" />
+    <Compile Include="ValidatorClasses\IndividualValidator.cs" />
+    <Compile Include="ValidatorClasses\CustomerValidator.cs" />
+    <Compile Include="ValidatorClasses\EmployeeValidator.cs" />
+    <Compile Include="ValidatorClasses\SpecialOfferValidator.cs" />
+    <Compile Include="ValidatorClasses\CountryRegionValidator.cs" />
+    <Compile Include="ValidatorClasses\ShipMethodValidator.cs" />
+    <Compile Include="ValidatorClasses\EmployeeAddressValidator.cs" />
+    <Compile Include="ValidatorClasses\CustomerAddressValidator.cs" />
+    <Compile Include="ValidatorClasses\CustomerViewRelatedValidator.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ConstantsEnums.cs" />
+    <None Include="AdventureWorks.snk" />
+    <None Include="App.config" />
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
