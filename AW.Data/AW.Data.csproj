@@ -260,6 +260,7 @@
     <Compile Include="EntityBaseClasses\CustomerViewRelatedEntityBase.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="EntityClasses\CommonEntityBase.cs" />
     <Compile Include="EntityClasses\ContactEntity.cs">
       <SubType>Code</SubType>
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
@@ -333,6 +334,10 @@
     <Compile Include="HelperClasses\DbUtilsComPlus.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="HelperClasses\FieldInfoProvider.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HelperClasses\PersistenceInfoProvider.cs" />
     <Compile Include="HelperClasses\ResultsetFields.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -351,6 +356,8 @@
     <Compile Include="HelperClasses\FieldCreationClasses.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="Linq\LinqMetaData.cs" />
+    <Compile Include="RelationClasses\DynamicRelation.cs" />
     <Compile Include="RelationClasses\SpecialOfferProductRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -426,21 +433,6 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </None>
     <AppDesigner Include="Properties\" />
-    <Compile Include="HelperClasses\FieldInfoProvider.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
-    <Compile Include="RelationClasses\DynamicRelation.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
-    <Compile Include="EntityClasses\CommonEntityBase.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
-    <Compile Include="HelperClasses\PersistenceInfoProvider.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
-    <Compile Include="Linq\LinqMetaData.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
