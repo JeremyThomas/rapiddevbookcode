@@ -22,5 +22,17 @@ namespace AW.Win.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseLinq {
+            get {
+                return ((bool)(this["UseLinq"]));
+            }
+            set {
+                this["UseLinq"] = value;
+            }
+        }
     }
 }

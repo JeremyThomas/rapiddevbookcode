@@ -11,13 +11,15 @@ using System;
 using System.ComponentModel;
 using System.Collections;
 #if !CF
+using System.Linq;
 using System.Runtime.Serialization;
 #endif
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
+using AW.Data.Linq;
 using AW.Data.RelationClasses;
-
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
@@ -270,6 +272,96 @@ namespace AW.Data.EntityClasses
                 Orders.GetMulti(Filter, 100, Sort, Relations,Prefetch);
                 return Orders;
             }
+
+        public static SalesOrderHeaderCollection GetSalesOrderHeaderCollectionWithLinq
+          (
+          DateTime FromDate,
+          DateTime ToDate,
+          string FirstName,
+          string LastName,
+          int OrderID,
+          string OrderNumber,
+          string CityName,
+          string StateName,
+          string CountryName,
+          string Zip
+          )
+        {
+          var Relations = new RelationCollection();
+          if (
+            (FirstName != "") |
+            (LastName != "") |
+            (CityName != "") |
+            (StateName != "") |
+            (CountryName != "") |
+            (Zip != "")
+            )
+          {
+            Relations.Add(
+              SalesOrderHeaderEntity.Relations.
+                CustomerViewRelatedEntityUsingCustomerId);
+          }
+
+          var predicate = MetaData.SalesOrderHeader.AsQueryable();
+          if (FromDate != DateTime.MinValue)
+          {
+            predicate = predicate.Where(soh => soh.OrderDate >= FromDate);
+          }
+          if (ToDate != DateTime.MinValue)
+          {
+            predicate = predicate.Where(soh => soh.OrderDate <= FromDate);
+          }
+          if (FirstName != "")
+          {
+            //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
+            predicate = predicate.Where(soh => soh.CustomerFirstName.Contains(FirstName));
+          }
+          if (LastName != "")
+          {
+            predicate = predicate.Where(soh => soh.CustomerLastName.Contains(LastName));
+          }
+          if (CityName != "")
+          {
+            predicate = predicate.Where(soh => soh.CustomerCity.Contains(CityName));
+          }
+          if (StateName != "")
+          {
+            predicate = predicate.Where(soh => soh.CustomerState == StateName);
+          }
+          if (CountryName != "")
+          {
+            predicate = predicate.Where(soh => soh.CustomerCountry == CountryName);
+          }
+          if (Zip != "")
+          {
+            predicate = predicate.Where(soh => soh.CustomerZip == Zip);
+          }
+          if (OrderID != 0)
+          {
+            predicate = predicate.Where(soh => soh.SalesOrderId == OrderID);
+          }
+          if (OrderNumber != "")
+          {
+            predicate = predicate.Where(soh => soh.SalesOrderNumber == OrderNumber);
+          }
+          var q = from c in predicate select c;
+          q.OrderBy(s => s.OrderDate);
+          return ((ILLBLGenProQuery)q).Execute<SalesOrderHeaderCollection>();
+        }
+
+        private static LinqMetaData metaData;
+
+        public static LinqMetaData MetaData
+        {
+          get
+          {
+            if (metaData == null)
+              metaData = new LinqMetaData();
+            return metaData;
+          }
+        }
+
+
         public string CustomerLastName
         { get { return this.CustomerViewRelated.LastName; } }
         public string CustomerFirstName
