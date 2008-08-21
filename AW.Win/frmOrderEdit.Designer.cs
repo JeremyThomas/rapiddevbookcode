@@ -518,7 +518,6 @@ namespace AW.Win
             this.salesOrderDetailCollection1.EntityValidatorToUse = null;
             this.salesOrderDetailCollection1.MaxNumberOfItemsToReturn = ((long)(0));
             this.salesOrderDetailCollection1.SortClauses = null;
-            this.salesOrderDetailCollection1.SupportsSorting = false;
             this.salesOrderDetailCollection1.SuppressClearInGetMulti = false;
             this.salesOrderDetailCollection1.Transaction = null;
             this.salesOrderDetailCollection1.ValidatorToUse = null;

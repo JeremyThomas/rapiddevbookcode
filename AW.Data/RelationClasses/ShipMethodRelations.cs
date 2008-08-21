@@ -1,38 +1,39 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:32 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
-
+using System.Collections;
+using System.Collections.Generic;
 using AW.Data;
 using AW.Data.FactoryClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>
-	/// Implements the static Relations variant for the entity: ShipMethod.
-	/// This class is generated. Do not modify.
-	/// </summary>
-	public class ShipMethodRelations
+	/// <summary>Implements the static Relations variant for the entity: ShipMethod. </summary>
+	public partial class ShipMethodRelations
 	{
-		/// <summary>
-		/// CTor
-		/// </summary>
+		/// <summary>CTor</summary>
 		public ShipMethodRelations()
 		{
+		}
+
+		/// <summary>Gets all relations of the ShipMethodEntity as a list of IEntityRelation objects.</summary>
+		/// <returns>a list of IEntityRelation objects</returns>
+		public virtual List<IEntityRelation> GetAllRelations()
+		{
+			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.SalesOrderHeaderEntityUsingShipMethodId);
+
+
+			return toReturn;
 		}
 
 		#region Class Property Declarations
@@ -44,18 +45,15 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-
-				IEntityRelation relation = new EntityRelation(RelationType.OneToMany);
-				relation.StartEntityIsPkSide = true;
-				relation.AddEntityFieldPair(EntityFieldFactory.Create(ShipMethodFieldIndex.ShipMethodId), EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.ShipMethodId));
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderHeader" , true);
+				relation.AddEntityFieldPair(ShipMethodFields.ShipMethodId, SalesOrderHeaderFields.ShipMethodId);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ShipMethodEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", false);
 				return relation;
 			}
 		}
-	
-	
-	
+
+
 
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }

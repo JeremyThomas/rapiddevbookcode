@@ -1,16 +1,11 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:30 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.Data;
@@ -25,7 +20,7 @@ namespace AW.Data.HelperClasses
 	/// Specific implementation of the Transaction class. The constructor will take care of the creation of the physical transaction and the
 	/// opening of the connection. The transaction object is ready to use as soon as the constructor succeeds.
 	/// </summary>
-	public class Transaction : TransactionBase
+	public partial class Transaction : TransactionBase
 	{
 		/// <summary>
 		/// CTor. Will read the connection string from an external source. Opens connection, class

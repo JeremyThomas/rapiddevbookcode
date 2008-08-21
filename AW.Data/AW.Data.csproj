@@ -1,7 +1,8 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{47F52527-A001-405B-9CEC-FCBF7FA10855}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -94,137 +95,340 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollectionClasses\SpecialOfferProductCollection.cs" />
-    <Compile Include="CollectionClasses\SalesOrderDetailCollection.cs" />
-    <Compile Include="CollectionClasses\StateProvinceCollection.cs" />
-    <Compile Include="CollectionClasses\AddressTypeCollection.cs" />
-    <Compile Include="CollectionClasses\ProductCollection.cs" />
-    <Compile Include="CollectionClasses\AddressCollection.cs" />
-    <Compile Include="CollectionClasses\SalesOrderHeaderCollection.cs" />
-    <Compile Include="CollectionClasses\ContactCollection.cs" />
-    <Compile Include="CollectionClasses\IndividualCollection.cs" />
-    <Compile Include="CollectionClasses\CustomerCollection.cs" />
-    <Compile Include="CollectionClasses\EmployeeCollection.cs" />
-    <Compile Include="CollectionClasses\SpecialOfferCollection.cs" />
-    <Compile Include="CollectionClasses\CountryRegionCollection.cs" />
-    <Compile Include="CollectionClasses\ShipMethodCollection.cs" />
-    <Compile Include="CollectionClasses\EmployeeAddressCollection.cs" />
-    <Compile Include="CollectionClasses\CustomerAddressCollection.cs" />
-    <Compile Include="CollectionClasses\CustomerViewRelatedCollection.cs" />
-    <Compile Include="DaoClasses\SpecialOfferProductDAO.cs" />
-    <Compile Include="DaoClasses\SalesOrderDetailDAO.cs" />
-    <Compile Include="DaoClasses\StateProvinceDAO.cs" />
-    <Compile Include="DaoClasses\AddressTypeDAO.cs" />
-    <Compile Include="DaoClasses\ProductDAO.cs" />
-    <Compile Include="DaoClasses\AddressDAO.cs" />
-    <Compile Include="DaoClasses\SalesOrderHeaderDAO.cs" />
-    <Compile Include="DaoClasses\ContactDAO.cs" />
-    <Compile Include="DaoClasses\IndividualDAO.cs" />
-    <Compile Include="DaoClasses\CustomerDAO.cs" />
-    <Compile Include="DaoClasses\EmployeeDAO.cs" />
-    <Compile Include="DaoClasses\SpecialOfferDAO.cs" />
-    <Compile Include="DaoClasses\CountryRegionDAO.cs" />
-    <Compile Include="DaoClasses\ShipMethodDAO.cs" />
-    <Compile Include="DaoClasses\EmployeeAddressDAO.cs" />
-    <Compile Include="DaoClasses\CustomerAddressDAO.cs" />
-    <Compile Include="DaoClasses\CustomerViewRelatedDAO.cs" />
-    <Compile Include="DaoClasses\TypedListDAO.cs" />
-    <Compile Include="EntityBaseClasses\SpecialOfferProductEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\SalesOrderDetailEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\StateProvinceEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\AddressTypeEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\ProductEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\AddressEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\SalesOrderHeaderEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\ContactEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\IndividualEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\CustomerEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\EmployeeEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\SpecialOfferEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\CountryRegionEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\ShipMethodEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\EmployeeAddressEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\CustomerAddressEntityBase.cs" />
-    <Compile Include="EntityBaseClasses\CustomerViewRelatedEntityBase.cs" />
+    <Compile Include="CollectionClasses\SpecialOfferProductCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\SalesOrderDetailCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\StateProvinceCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\AddressTypeCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\ProductCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\AddressCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\SalesOrderHeaderCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\ContactCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\IndividualCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\CustomerCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\EmployeeCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\SpecialOfferCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\CountryRegionCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\ShipMethodCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\EmployeeAddressCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\CustomerAddressCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\CustomerViewRelatedCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\SpecialOfferProductDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\SalesOrderDetailDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\StateProvinceDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\AddressTypeDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\ProductDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\AddressDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\SalesOrderHeaderDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\ContactDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\IndividualDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\CustomerDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\EmployeeDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\SpecialOfferDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\CountryRegionDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\ShipMethodDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\EmployeeAddressDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\CustomerAddressDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\CustomerViewRelatedDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\TypedListDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\SpecialOfferProductEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\SalesOrderDetailEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\StateProvinceEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\AddressTypeEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\ProductEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\AddressEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\SalesOrderHeaderEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\ContactEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\IndividualEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\CustomerEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\EmployeeEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\SpecialOfferEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\CountryRegionEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\ShipMethodEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\EmployeeAddressEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\CustomerAddressEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityBaseClasses\CustomerViewRelatedEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="EntityClasses\ContactEntity.cs">
       <SubType>Code</SubType>
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <Compile Include="EntityClasses\SpecialOfferProductEntity.cs" />
-    <Compile Include="EntityClasses\SalesOrderDetailEntity.cs" />
-    <Compile Include="EntityClasses\StateProvinceEntity.cs" />
-    <Compile Include="EntityClasses\AddressTypeEntity.cs" />
-    <Compile Include="EntityClasses\ProductEntity.cs" />
-    <Compile Include="EntityClasses\AddressEntity.cs" />
-    <Compile Include="EntityClasses\SalesOrderHeaderEntity.cs" />
-    <Compile Include="EntityClasses\IndividualEntity.cs" />
-    <Compile Include="EntityClasses\CustomerEntity.cs" />
-    <Compile Include="EntityClasses\EmployeeEntity.cs" />
-    <Compile Include="EntityClasses\SpecialOfferEntity.cs" />
-    <Compile Include="EntityClasses\CountryRegionEntity.cs" />
-    <Compile Include="EntityClasses\ShipMethodEntity.cs" />
-    <Compile Include="EntityClasses\EmployeeAddressEntity.cs" />
-    <Compile Include="EntityClasses\CustomerAddressEntity.cs" />
-    <Compile Include="EntityClasses\CustomerViewRelatedEntity.cs" />
-    <Compile Include="FactoryClasses\DaoFactory.cs" />
-    <Compile Include="FactoryClasses\EntityFactories.cs" />
-    <Compile Include="FactoryClasses\EntityFieldFactory.cs" />
-    <Compile Include="FactoryClasses\EntityFieldsFactory.cs" />
+    <Compile Include="EntityClasses\SpecialOfferProductEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\SalesOrderDetailEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\StateProvinceEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\AddressTypeEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\ProductEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\AddressEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\SalesOrderHeaderEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\IndividualEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\CustomerEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\EmployeeEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\SpecialOfferEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\CountryRegionEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\ShipMethodEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\EmployeeAddressEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\CustomerAddressEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\CustomerViewRelatedEntity.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="FactoryClasses\DaoFactory.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="FactoryClasses\EntityFactories.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="FactoryClasses\EntityFieldFactory.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="FactoryClasses\EntityFieldsFactory.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="FactoryClasses\PredicateFactory.cs" />
     <Compile Include="FactoryClasses\PropertyDescriptorFactory.cs" />
     <Compile Include="FactoryClasses\SortClauseFactory.cs" />
-    <Compile Include="HelperClasses\DbUtils.cs" />
-    <Compile Include="HelperClasses\DbUtilsComPlus.cs" />
-    <Compile Include="HelperClasses\ResultsetFields.cs" />
-    <Compile Include="HelperClasses\Transaction.cs" />
-    <Compile Include="HelperClasses\TransactionComPlus.cs" />
-    <Compile Include="HelperClasses\TypeDefaultValue.cs" />
-    <Compile Include="HelperClasses\InheritanceInfoProvider.cs" />
-    <Compile Include="HelperClasses\FieldCreationClasses.cs" />
-    <Compile Include="RelationClasses\SpecialOfferProductRelations.cs" />
-    <Compile Include="RelationClasses\SalesOrderDetailRelations.cs" />
-    <Compile Include="RelationClasses\StateProvinceRelations.cs" />
-    <Compile Include="RelationClasses\AddressTypeRelations.cs" />
-    <Compile Include="RelationClasses\ProductRelations.cs" />
-    <Compile Include="RelationClasses\AddressRelations.cs" />
-    <Compile Include="RelationClasses\SalesOrderHeaderRelations.cs" />
-    <Compile Include="RelationClasses\ContactRelations.cs" />
-    <Compile Include="RelationClasses\IndividualRelations.cs" />
-    <Compile Include="RelationClasses\CustomerRelations.cs" />
-    <Compile Include="RelationClasses\EmployeeRelations.cs" />
-    <Compile Include="RelationClasses\SpecialOfferRelations.cs" />
-    <Compile Include="RelationClasses\CountryRegionRelations.cs" />
-    <Compile Include="RelationClasses\ShipMethodRelations.cs" />
-    <Compile Include="RelationClasses\EmployeeAddressRelations.cs" />
-    <Compile Include="RelationClasses\CustomerAddressRelations.cs" />
-    <Compile Include="RelationClasses\CustomerViewRelatedRelations.cs" />
-    <Compile Include="SalesOrderHeaderEntityValidator.cs" />
-    <Compile Include="StoredProcedureCallerClasses\ActionProcedures.cs" />
-    <Compile Include="StoredProcedureCallerClasses\RetrievalProcedures.cs" />
-    <Compile Include="TypedListClasses\CustomerListTypedList.cs" />
-    <Compile Include="TypedViewClasses\CustomerViewTypedView.cs" />
+    <Compile Include="HelperClasses\DbUtils.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="HelperClasses\DbUtilsComPlus.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="HelperClasses\ResultsetFields.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="HelperClasses\Transaction.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="HelperClasses\TransactionComPlus.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="HelperClasses\TypeDefaultValue.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="HelperClasses\InheritanceInfoProvider.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="HelperClasses\FieldCreationClasses.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\SpecialOfferProductRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\SalesOrderDetailRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\StateProvinceRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\AddressTypeRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\ProductRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\AddressRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\SalesOrderHeaderRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\ContactRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\IndividualRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\CustomerRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\EmployeeRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\SpecialOfferRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\CountryRegionRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\ShipMethodRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\EmployeeAddressRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\CustomerAddressRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\CustomerViewRelatedRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="StoredProcedureCallerClasses\ActionProcedures.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="StoredProcedureCallerClasses\RetrievalProcedures.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="TypedListClasses\CustomerListTypedList.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="TypedViewClasses\CustomerViewTypedView.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="Utility.cs" />
-    <Compile Include="ValidatorClasses\SpecialOfferProductValidator.cs" />
-    <Compile Include="ValidatorClasses\SalesOrderDetailValidator.cs" />
-    <Compile Include="ValidatorClasses\StateProvinceValidator.cs" />
-    <Compile Include="ValidatorClasses\AddressTypeValidator.cs" />
-    <Compile Include="ValidatorClasses\ProductValidator.cs" />
-    <Compile Include="ValidatorClasses\AddressValidator.cs" />
-    <Compile Include="ValidatorClasses\SalesOrderHeaderValidator.cs" />
-    <Compile Include="ValidatorClasses\ContactValidator.cs" />
-    <Compile Include="ValidatorClasses\IndividualValidator.cs" />
-    <Compile Include="ValidatorClasses\CustomerValidator.cs" />
-    <Compile Include="ValidatorClasses\EmployeeValidator.cs" />
-    <Compile Include="ValidatorClasses\SpecialOfferValidator.cs" />
-    <Compile Include="ValidatorClasses\CountryRegionValidator.cs" />
-    <Compile Include="ValidatorClasses\ShipMethodValidator.cs" />
-    <Compile Include="ValidatorClasses\EmployeeAddressValidator.cs" />
-    <Compile Include="ValidatorClasses\CustomerAddressValidator.cs" />
-    <Compile Include="ValidatorClasses\CustomerViewRelatedValidator.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ConstantsEnums.cs" />
+    <Compile Include="AssemblyInfo.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="ConstantsEnums.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <None Include="AdventureWorks.snk" />
-    <None Include="App.config" />
+    <None Include="App.config">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </None>
     <AppDesigner Include="Properties\" />
+    <Compile Include="HelperClasses\FieldInfoProvider.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\DynamicRelation.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\CommonEntityBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="HelperClasses\PersistenceInfoProvider.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

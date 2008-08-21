@@ -1,17 +1,13 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:30 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SqlServerSpecific.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
+#if !CEDesktop
 using System;
 using System.Data;
 using System.Data.Common;
@@ -27,7 +23,7 @@ namespace AW.Data.HelperClasses
 	/// General utility class for COM+ transactions. 
 	/// </summary>
 	[Transaction(TransactionOption.Required)]
-	public class DbUtilsComPlus : ServicedComponent
+	public partial class DbUtilsComPlus : ServicedComponent
 	{
 		#region Public Static Members
 		public static string ActualConnectionString = string.Empty;
@@ -61,6 +57,17 @@ namespace AW.Data.HelperClasses
 			SD.LLBLGen.Pro.DQE.SqlServer.DynamicQueryEngine.ArithAbortOn = value;
 		}
 
+		/// <summary>
+		/// Sets the compatibility level used by the DQE. Default is SqlServer2000. To utilize SqlServer 2005 specific features, set this parameter 
+		/// to SqlServer2005, either through a setting in the .config file of your application or by calling this method once in your application.
+		/// Compatibility level influences the query generated for paging, sequence name (@@IDENTITY/SCOPE_IDENTITY()), and usage of newsequenceid() in inserts. 
+		/// </summary>
+		/// <parameter name="compatibilityLevel">the compatibility level the DQE should be running on. Default is SqlServer 2000 and up.</parameter>
+		/// <remarks>Setting the compatibility level is a global change. Calling this method will overrule a similar setting in the .config file.</remarks>
+		public static void SetSqlServerCompatibilityLevel(SqlServerCompatibilityLevel compatibilityLevel)
+		{
+			SD.LLBLGen.Pro.DQE.SqlServer.DynamicQueryEngine.CompatibilityLevel = compatibilityLevel;
+		}
 
 		/// <summary>
 		/// Creates a new SqlConnection
@@ -81,9 +88,7 @@ namespace AW.Data.HelperClasses
 		{
 			if(ActualConnectionString==string.Empty)
 			{
-				// read the connection string from the *.config file.
-				AppSettingsReader configReader = new AppSettingsReader();
-				ActualConnectionString = configReader.GetValue(connectionKeyString, typeof(string)).ToString();
+				ActualConnectionString = ConfigFileHelper.ReadConnectionStringFromConfig( connectionKeyString);
 			}
 
 			return CreateConnection(ActualConnectionString);
@@ -115,3 +120,4 @@ namespace AW.Data.HelperClasses
 		#endregion
 	}
 }
+#endif

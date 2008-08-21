@@ -1,29 +1,25 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:28 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Collections;
+#if !CF
 using System.Runtime.Serialization;
+#endif
 using System.Data;
 using System.Xml.Serialization;
-
 using AW.Data;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.RelationClasses;
-using AW.Data.ValidatorClasses;
 using AW.Data.HelperClasses;
 using AW.Data.CollectionClasses;
 
@@ -38,7 +34,7 @@ namespace AW.Data.EntityClasses
 	/// 
 	/// </summary>
 	[Serializable]
-	public abstract class EmployeeEntityBase : EntityBase, ISerializable
+	public abstract partial class EmployeeEntityBase : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
@@ -47,56 +43,41 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchManages, _alreadyFetchedManages;
 		private AW.Data.CollectionClasses.EmployeeAddressCollection	_employeeAddress;
 		private bool	_alwaysFetchEmployeeAddress, _alreadyFetchedEmployeeAddress;
-		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaEmployee;
-		private bool	_alwaysFetchContactCollectionViaEmployee, _alreadyFetchedContactCollectionViaEmployee;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaEmployeeAddress;
 		private bool	_alwaysFetchAddressCollectionViaEmployeeAddress, _alreadyFetchedAddressCollectionViaEmployeeAddress;
+		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaEmployee;
+		private bool	_alwaysFetchContactCollectionViaEmployee, _alreadyFetchedContactCollectionViaEmployee;
 		private ContactEntity _contact;
 		private bool	_alwaysFetchContact, _alreadyFetchedContact, _contactReturnsNewIfNotFound;
 		private EmployeeEntity _manager;
 		private bool	_alwaysFetchManager, _alreadyFetchedManager, _managerReturnsNewIfNotFound;
 
-		private static Hashtable	_customProperties;
-		private static Hashtable	_fieldsCustomProperties;
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
+		
+		#region Statics
+		private static Dictionary<string, string>	_customProperties;
+		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
-		#region DataBinding Change Event Handler Declarations
-		/// <summary>Event which is thrown when EmployeeId changes value. Databinding related.</summary>
-		public event EventHandler EmployeeIdChanged;
-		/// <summary>Event which is thrown when NationalIdnumber changes value. Databinding related.</summary>
-		public event EventHandler NationalIdnumberChanged;
-		/// <summary>Event which is thrown when ContactId changes value. Databinding related.</summary>
-		public event EventHandler ContactIdChanged;
-		/// <summary>Event which is thrown when LoginId changes value. Databinding related.</summary>
-		public event EventHandler LoginIdChanged;
-		/// <summary>Event which is thrown when ManagerId changes value. Databinding related.</summary>
-		public event EventHandler ManagerIdChanged;
-		/// <summary>Event which is thrown when Title changes value. Databinding related.</summary>
-		public event EventHandler TitleChanged;
-		/// <summary>Event which is thrown when BirthDate changes value. Databinding related.</summary>
-		public event EventHandler BirthDateChanged;
-		/// <summary>Event which is thrown when MaritalStatus changes value. Databinding related.</summary>
-		public event EventHandler MaritalStatusChanged;
-		/// <summary>Event which is thrown when Gender changes value. Databinding related.</summary>
-		public event EventHandler GenderChanged;
-		/// <summary>Event which is thrown when HireDate changes value. Databinding related.</summary>
-		public event EventHandler HireDateChanged;
-		/// <summary>Event which is thrown when SalariedFlag changes value. Databinding related.</summary>
-		public event EventHandler SalariedFlagChanged;
-		/// <summary>Event which is thrown when VacationHours changes value. Databinding related.</summary>
-		public event EventHandler VacationHoursChanged;
-		/// <summary>Event which is thrown when SickLeaveHours changes value. Databinding related.</summary>
-		public event EventHandler SickLeaveHoursChanged;
-		/// <summary>Event which is thrown when CurrentFlag changes value. Databinding related.</summary>
-		public event EventHandler CurrentFlagChanged;
-		/// <summary>Event which is thrown when Rowguid changes value. Databinding related.</summary>
-		public event EventHandler RowguidChanged;
-		/// <summary>Event which is thrown when ModifiedDate changes value. Databinding related.</summary>
-		public event EventHandler ModifiedDateChanged;
+		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
+		public static class MemberNames
+		{
+			/// <summary>Member name Contact</summary>
+			public static readonly string Contact = "Contact";
+			/// <summary>Member name Manager</summary>
+			public static readonly string Manager = "Manager";
+			/// <summary>Member name Manages</summary>
+			public static readonly string Manages = "Manages";
+			/// <summary>Member name EmployeeAddress</summary>
+			public static readonly string EmployeeAddress = "EmployeeAddress";
+			/// <summary>Member name AddressCollectionViaEmployeeAddress</summary>
+			public static readonly string AddressCollectionViaEmployeeAddress = "AddressCollectionViaEmployeeAddress";
+			/// <summary>Member name ContactCollectionViaEmployee</summary>
+			public static readonly string ContactCollectionViaEmployee = "ContactCollectionViaEmployee";
 
+		}
 		#endregion
 		
 		/// <summary>Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
@@ -108,7 +89,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		public EmployeeEntityBase()
 		{
-			InitClassEmpty(new PropertyDescriptorFactory(), CreateEntityFactoryInstance(), CreateValidator());
+			InitClassEmpty(null);
 		}
 
 	
@@ -116,7 +97,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
 		public EmployeeEntityBase(System.Int32 employeeId)
 		{
-			InitClassFetch(employeeId, CreateValidator(), new PropertyDescriptorFactory(), CreateEntityFactoryInstance(), null);
+			InitClassFetch(employeeId, null, null);
 		}
 
 		/// <summary>CTor</summary>
@@ -124,35 +105,17 @@ namespace AW.Data.EntityClasses
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		public EmployeeEntityBase(System.Int32 employeeId, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(employeeId, CreateValidator(), new PropertyDescriptorFactory(), CreateEntityFactoryInstance(), prefetchPathToUse);
+			InitClassFetch(employeeId, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
 		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="validator">The custom validator object for this EmployeeEntity</param>
-		public EmployeeEntityBase(System.Int32 employeeId, EmployeeValidator validator)
+		public EmployeeEntityBase(System.Int32 employeeId, IValidator validator)
 		{
-			InitClassFetch(employeeId, validator, new PropertyDescriptorFactory(), CreateEntityFactoryInstance(), null);
-		}
-
-		/// <summary>CTor</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
-		/// <param name="validator">The custom validator object for this EmployeeEntity</param>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		public EmployeeEntityBase(System.Int32 employeeId, EmployeeValidator validator, IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse)
-		{
-			InitClassFetch(employeeId, validator, propertyDescriptorFactoryToUse, entityFactoryToUse, null);
+			InitClassFetch(employeeId, validator, null);
 		}
 	
-
-		/// <summary>CTor</summary>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		public EmployeeEntityBase(IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse)
-		{
-			InitClassEmpty(propertyDescriptorFactoryToUse, entityFactoryToUse, CreateValidator());
-		}
 
 		/// <summary>Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
@@ -165,12 +128,12 @@ namespace AW.Data.EntityClasses
 			_employeeAddress = (AW.Data.CollectionClasses.EmployeeAddressCollection)info.GetValue("_employeeAddress", typeof(AW.Data.CollectionClasses.EmployeeAddressCollection));
 			_alwaysFetchEmployeeAddress = info.GetBoolean("_alwaysFetchEmployeeAddress");
 			_alreadyFetchedEmployeeAddress = info.GetBoolean("_alreadyFetchedEmployeeAddress");
-			_contactCollectionViaEmployee = (AW.Data.CollectionClasses.ContactCollection)info.GetValue("_contactCollectionViaEmployee", typeof(AW.Data.CollectionClasses.ContactCollection));
-			_alwaysFetchContactCollectionViaEmployee = info.GetBoolean("_alwaysFetchContactCollectionViaEmployee");
-			_alreadyFetchedContactCollectionViaEmployee = info.GetBoolean("_alreadyFetchedContactCollectionViaEmployee");
 			_addressCollectionViaEmployeeAddress = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaEmployeeAddress", typeof(AW.Data.CollectionClasses.AddressCollection));
 			_alwaysFetchAddressCollectionViaEmployeeAddress = info.GetBoolean("_alwaysFetchAddressCollectionViaEmployeeAddress");
 			_alreadyFetchedAddressCollectionViaEmployeeAddress = info.GetBoolean("_alreadyFetchedAddressCollectionViaEmployeeAddress");
+			_contactCollectionViaEmployee = (AW.Data.CollectionClasses.ContactCollection)info.GetValue("_contactCollectionViaEmployee", typeof(AW.Data.CollectionClasses.ContactCollection));
+			_alwaysFetchContactCollectionViaEmployee = info.GetBoolean("_alwaysFetchContactCollectionViaEmployee");
+			_alreadyFetchedContactCollectionViaEmployee = info.GetBoolean("_alreadyFetchedContactCollectionViaEmployee");
 			_contact = (ContactEntity)info.GetValue("_contact", typeof(ContactEntity));
 			if(_contact!=null)
 			{
@@ -188,77 +151,96 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchManager = info.GetBoolean("_alwaysFetchManager");
 			_alreadyFetchedManager = info.GetBoolean("_alreadyFetchedManager");
 
+			base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
 		}
 
 		
-		/// <summary> Will perform post-ReadXml actions as well as the normal ReadXml() actions, performed by the base class.</summary>
-		/// <param name="node">XmlNode with Xml data which should be read into this entity and its members. Node's root element is the root element of the entity's Xml data</param>
-		public override void ReadXml(System.Xml.XmlNode node)
+		/// <summary>Performs the desync setup when an FK field has been changed. The entity referenced based on the FK field will be dereferenced and sync info will be removed.</summary>
+		/// <param name="fieldIndex">The fieldindex.</param>
+		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			base.ReadXml (node);
+			switch((EmployeeFieldIndex)fieldIndex)
+			{
+				case EmployeeFieldIndex.ContactId:
+					DesetupSyncContact(true, false);
+					_alreadyFetchedContact = false;
+					break;
+				case EmployeeFieldIndex.ManagerId:
+					DesetupSyncManager(true, false);
+					_alreadyFetchedManager = false;
+					break;
+				default:
+					base.PerformDesyncSetupFKFieldChange(fieldIndex);
+					break;
+			}
+		}
+		
+		/// <summary>Gets the inheritance info provider instance of the project this entity instance is located in. </summary>
+		/// <returns>ready to use inheritance info provider instance.</returns>
+		protected override IInheritanceInfoProvider GetInheritanceInfoProvider()
+		{
+			return InheritanceInfoProviderSingleton.GetInstance();
+		}
+		
+		/// <summary> Will perform post-ReadXml actions</summary>
+		protected override void PostReadXmlFixups()
+		{
 			_alreadyFetchedManages = (_manages.Count > 0);
 			_alreadyFetchedEmployeeAddress = (_employeeAddress.Count > 0);
-			_alreadyFetchedContactCollectionViaEmployee = (_contactCollectionViaEmployee.Count > 0);
 			_alreadyFetchedAddressCollectionViaEmployeeAddress = (_addressCollectionViaEmployeeAddress.Count > 0);
+			_alreadyFetchedContactCollectionViaEmployee = (_contactCollectionViaEmployee.Count > 0);
 			_alreadyFetchedContact = (_contact != null);
 			_alreadyFetchedManager = (_manager != null);
 
 		}
-		
-		/// <summary> Saves the Entity class to the persistent storage. It updates or inserts the entity, which depends if the entity was originally read from the 
-		/// database. If the entity is new, an insert is done and the updateRestriction is ignored. If the entity is not new, the updateRestriction
-		/// predicate is used to create an additional where clause (it will be added with AND) for the update query. This predicate can be used for
-		/// concurrency checks, like checks on timestamp column values.</summary>
-		/// <param name="updateRestriction">Predicate expression, meant for concurrency checks in an Update query. Will be ignored when the entity is new </param>
-		/// <param name="recurse">When true, it will save all dirty objects referenced (directly or indirectly) by this entity also.</param>
-		/// <returns>true if Save succeeded, false otherwise</returns>
-		/// <remarks>Do not call this routine directly, use the overloaded version in a derived class as this version doesn't construct a
-		/// local transaction during recursive save, this is done in the overloaded version in a derived class.</remarks>
-		/// <exception cref="ORMQueryExecutionException">When an exception is caught during the save process. The caught exception is set as the
-		/// inner exception. Encapsulation of database-related exceptions is necessary since these exceptions do not have a common exception framework implemented.</exception>
-		public override bool Save(IPredicate updateRestriction, bool recurse)
+				
+		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
+		/// <param name="fieldName">Name of the field mapped onto the relation of which the relation objects have to be obtained.</param>
+		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
+		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			bool transactionStartedInThisScope = false;
-			Transaction transactionManager = null;
-
-			if(recurse || ((this.LLBLGenProIsInHierarchyOfType==InheritanceHierarchyType.TargetPerEntity) && this.LLBLGenProIsSubType))
-			{
-				if(!base.ParticipatesInTransaction)
-				{
-					transactionManager = new Transaction(IsolationLevel.ReadCommitted, "SaveRecursively");
-					transactionManager.Add(this);
-					transactionStartedInThisScope=true;
-				}
-			}
-			try
-			{
-				bool result = base.Save(updateRestriction, recurse);
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Commit();
-				}
-				return result;
-			}
-			catch
-			{
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Rollback();
-				}
-				throw;
-			}
-			finally
-			{
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Dispose();
-				}
-			}
+			return EmployeeEntity.GetRelationsForField(fieldName);
 		}
-		
+
+		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
+		/// <param name="fieldName">Name of the field mapped onto the relation of which the relation objects have to be obtained.</param>
+		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
+		public static RelationCollection GetRelationsForField(string fieldName)
+		{
+			RelationCollection toReturn = new RelationCollection();
+			switch(fieldName)
+			{
+				case "Contact":
+					toReturn.Add(EmployeeEntity.Relations.ContactEntityUsingContactId);
+					break;
+				case "Manager":
+					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId);
+					break;
+				case "Manages":
+					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId);
+					break;
+				case "EmployeeAddress":
+					toReturn.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId);
+					break;
+				case "AddressCollectionViaEmployeeAddress":
+					toReturn.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId, "EmployeeEntity__", "EmployeeAddress_", JoinHint.None);
+					toReturn.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressId, "EmployeeAddress_", string.Empty, JoinHint.None);
+					break;
+				case "ContactCollectionViaEmployee":
+					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId, "EmployeeEntity__", "Employee_", JoinHint.None);
+					toReturn.Add(EmployeeEntity.Relations.ContactEntityUsingContactId, "Employee_", string.Empty, JoinHint.None);
+					break;
+
+				default:
+
+					break;				
+			}
+			return toReturn;
+		}
+
 
 
 		/// <summary> ISerializable member. Does custom serialization so event handlers do not get serialized.
@@ -268,23 +250,23 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_manages", _manages);
+			info.AddValue("_manages", (!this.MarkedForDeletion?_manages:null));
 			info.AddValue("_alwaysFetchManages", _alwaysFetchManages);
 			info.AddValue("_alreadyFetchedManages", _alreadyFetchedManages);
-			info.AddValue("_employeeAddress", _employeeAddress);
+			info.AddValue("_employeeAddress", (!this.MarkedForDeletion?_employeeAddress:null));
 			info.AddValue("_alwaysFetchEmployeeAddress", _alwaysFetchEmployeeAddress);
 			info.AddValue("_alreadyFetchedEmployeeAddress", _alreadyFetchedEmployeeAddress);
-			info.AddValue("_contactCollectionViaEmployee", _contactCollectionViaEmployee);
-			info.AddValue("_alwaysFetchContactCollectionViaEmployee", _alwaysFetchContactCollectionViaEmployee);
-			info.AddValue("_alreadyFetchedContactCollectionViaEmployee", _alreadyFetchedContactCollectionViaEmployee);
-			info.AddValue("_addressCollectionViaEmployeeAddress", _addressCollectionViaEmployeeAddress);
+			info.AddValue("_addressCollectionViaEmployeeAddress", (!this.MarkedForDeletion?_addressCollectionViaEmployeeAddress:null));
 			info.AddValue("_alwaysFetchAddressCollectionViaEmployeeAddress", _alwaysFetchAddressCollectionViaEmployeeAddress);
 			info.AddValue("_alreadyFetchedAddressCollectionViaEmployeeAddress", _alreadyFetchedAddressCollectionViaEmployeeAddress);
-			info.AddValue("_contact", _contact);
+			info.AddValue("_contactCollectionViaEmployee", (!this.MarkedForDeletion?_contactCollectionViaEmployee:null));
+			info.AddValue("_alwaysFetchContactCollectionViaEmployee", _alwaysFetchContactCollectionViaEmployee);
+			info.AddValue("_alreadyFetchedContactCollectionViaEmployee", _alreadyFetchedContactCollectionViaEmployee);
+			info.AddValue("_contact", (!this.MarkedForDeletion?_contact:null));
 			info.AddValue("_contactReturnsNewIfNotFound", _contactReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchContact", _alwaysFetchContact);
 			info.AddValue("_alreadyFetchedContact", _alreadyFetchedContact);
-			info.AddValue("_manager", _manager);
+			info.AddValue("_manager", (!this.MarkedForDeletion?_manager:null));
 			info.AddValue("_managerReturnsNewIfNotFound", _managerReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchManager", _alwaysFetchManager);
 			info.AddValue("_alreadyFetchedManager", _alreadyFetchedManager);
@@ -300,7 +282,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
+		public override void SetRelatedEntityProperty(string propertyName, IEntity entity)
 		{
 			switch(propertyName)
 			{
@@ -326,18 +308,18 @@ namespace AW.Data.EntityClasses
 						this.EmployeeAddress.Add((EmployeeAddressEntity)entity);
 					}
 					break;
-				case "ContactCollectionViaEmployee":
-					_alreadyFetchedContactCollectionViaEmployee = true;
-					if(entity!=null)
-					{
-						this.ContactCollectionViaEmployee.Add((ContactEntity)entity);
-					}
-					break;
 				case "AddressCollectionViaEmployeeAddress":
 					_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
 					if(entity!=null)
 					{
 						this.AddressCollectionViaEmployeeAddress.Add((AddressEntity)entity);
+					}
+					break;
+				case "ContactCollectionViaEmployee":
+					_alreadyFetchedContactCollectionViaEmployee = true;
+					if(entity!=null)
+					{
+						this.ContactCollectionViaEmployee.Add((ContactEntity)entity);
 					}
 					break;
 
@@ -362,10 +344,10 @@ namespace AW.Data.EntityClasses
 					SetupSyncManager(relatedEntity);
 					break;
 				case "Manages":
-					_manages.Add(relatedEntity);
+					_manages.Add((EmployeeEntity)relatedEntity);
 					break;
 				case "EmployeeAddress":
-					_employeeAddress.Add(relatedEntity);
+					_employeeAddress.Add((EmployeeAddressEntity)relatedEntity);
 					break;
 
 				default:
@@ -377,22 +359,23 @@ namespace AW.Data.EntityClasses
 		/// <summary> Unsets the internal parameter related to the fieldname passed to the instance relatedEntity. Reverses the actions taken by SetRelatedEntity() </summary>
 		/// <param name="relatedEntity">Instance to unset as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
+		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName)
+		public override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
 				case "Contact":
-					DesetupSyncContact(false);
+					DesetupSyncContact(false, true);
 					break;
 				case "Manager":
-					DesetupSyncManager(false);
+					DesetupSyncManager(false, true);
 					break;
 				case "Manages":
-					_manages.Remove(relatedEntity);
+					base.PerformRelatedEntityRemoval(_manages, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "EmployeeAddress":
-					_employeeAddress.Remove(relatedEntity);
+					base.PerformRelatedEntityRemoval(_employeeAddress, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -404,9 +387,9 @@ namespace AW.Data.EntityClasses
 		/// <summary> Gets a collection of related entities referenced by this entity which depend on this entity (this entity is the PK side of their FK fields). These
 		/// entities will have to be persisted after this entity during a recursive save.</summary>
 		/// <returns>Collection with 0 or more IEntity objects, referenced by this entity</returns>
-		public override ArrayList GetDependingRelatedEntities()
+		public override List<IEntity> GetDependingRelatedEntities()
 		{
-			ArrayList toReturn = new ArrayList();
+			List<IEntity> toReturn = new List<IEntity>();
 
 
 			return toReturn;
@@ -415,9 +398,9 @@ namespace AW.Data.EntityClasses
 		/// <summary> Gets a collection of related entities referenced by this entity which this entity depends on (this entity is the FK side of their PK fields). These
 		/// entities will have to be persisted before this entity during a recursive save.</summary>
 		/// <returns>Collection with 0 or more IEntity objects, referenced by this entity</returns>
-		public override ArrayList GetDependentRelatedEntities()
+		public override List<IEntity> GetDependentRelatedEntities()
 		{
-			ArrayList toReturn = new ArrayList();
+			List<IEntity> toReturn = new List<IEntity>();
 			if(_contact!=null)
 			{
 				toReturn.Add(_contact);
@@ -431,12 +414,12 @@ namespace AW.Data.EntityClasses
 			return toReturn;
 		}
 		
-		/// <summary> Gets an ArrayList of all entity collections stored as member variables in this entity. The contents of the ArrayList is
+		/// <summary> Gets a List of all entity collections stored as member variables in this entity. The contents of the ArrayList is
 		/// used by the DataAccessAdapter to perform recursive saves. Only 1:n related collections are returned.</summary>
 		/// <returns>Collection with 0 or more IEntityCollection objects, referenced by this entity</returns>
-		public override ArrayList GetMemberEntityCollections()
+		public override List<IEntityCollection> GetMemberEntityCollections()
 		{
-			ArrayList toReturn = new ArrayList();
+			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_manages);
 			toReturn.Add(_employeeAddress);
 
@@ -452,7 +435,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>True if succeeded, false otherwise.</returns>
 		public bool FetchUsingPK(System.Int32 employeeId)
 		{
-			return FetchUsingPK(employeeId, null, null);
+			return FetchUsingPK(employeeId, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
@@ -461,7 +444,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>True if succeeded, false otherwise.</returns>
 		public bool FetchUsingPK(System.Int32 employeeId, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(employeeId, prefetchPathToUse, null);
+			return FetchUsingPK(employeeId, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
@@ -471,7 +454,20 @@ namespace AW.Data.EntityClasses
 		/// <returns>True if succeeded, false otherwise.</returns>
 		public bool FetchUsingPK(System.Int32 employeeId, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(employeeId, prefetchPathToUse, contextToUse);
+			return Fetch(employeeId, prefetchPathToUse, contextToUse, null);
+		}
+
+		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
+		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
+		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
+		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
+		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
+		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
+		/// <returns>True if succeeded, false otherwise.</returns>
+		public bool FetchUsingPK(System.Int32 employeeId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		{
+			return Fetch(employeeId, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -479,57 +475,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.EmployeeId, null, null);
-		}
-
-
-		/// <summary> Deletes the Entity from the persistent storage. This method succeeds also when the Entity is not present.</summary>
-		/// <param name="deleteRestriction">Predicate expression, meant for concurrency checks in a delete query. Overrules the predicate returned by a set ConcurrencyPredicateFactory object.</param>
-		/// <returns>true if Delete succeeded, false otherwise</returns>
-		public override bool Delete(IPredicate deleteRestriction)
-		{
-			bool transactionStartedInThisScope = false;
-			Transaction transactionManager = null;
-			if((this.LLBLGenProIsInHierarchyOfType==InheritanceHierarchyType.TargetPerEntity) && this.LLBLGenProIsSubType)
-			{
-				if(!base.ParticipatesInTransaction)
-				{
-					transactionManager = new Transaction(IsolationLevel.ReadCommitted, "DeleteEntity");
-					transactionManager.Add(this);
-					transactionStartedInThisScope=true;
-				}
-			}
-			try
-			{
-				OnDelete();
-				IDao dao = CreateDAOInstance();
-				bool wasSuccesful = dao.DeleteExisting(base.Fields, base.Transaction, deleteRestriction);
-				if(wasSuccesful)
-				{
-					base.Delete(deleteRestriction);
-				}
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Commit();
-				}
-				return wasSuccesful;
-			}
-			catch
-			{
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Rollback();
-				}
-				throw;
-			}
-			finally
-			{
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Dispose();
-				}
-				OnDeleteComplete();
-			}
+			return Fetch(this.EmployeeId, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -549,14 +495,13 @@ namespace AW.Data.EntityClasses
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
-		
-		/// <summary>Determines whether this entity is a subType of the entity represented by the passed in enum value, which represents a value in the EntityType enum</summary>
-		/// <param name="typeOfEntity">Type of entity.</param>
-		/// <returns>true if the passed in type is a supertype of this entity, otherwise false</returns>
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		public override bool CheckIfIsSubTypeOf(int typeOfEntity)
+
+				
+		/// <summary>Gets a list of all the EntityRelation objects the type of this instance has.</summary>
+		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
+		public override List<IEntityRelation> GetAllRelations()
 		{
-			return InheritanceInfoProviderSingleton.GetInstance().CheckIfIsSubTypeOf("EmployeeEntity", ((AW.Data.EntityType)typeOfEntity).ToString());
+			return new EmployeeRelations().GetAllRelations();
 		}
 
 
@@ -593,7 +538,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
 		public virtual AW.Data.CollectionClasses.EmployeeCollection GetMultiManages(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedManages || forceFetch || _alwaysFetchManages) && !base.IsSerializing && !base.IsDeserializing && !EntityCollectionBase.InDesignMode)
+ 			if( ( !_alreadyFetchedManages || forceFetch || _alwaysFetchManages) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
@@ -657,7 +602,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
 		public virtual AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddress(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedEmployeeAddress || forceFetch || _alwaysFetchEmployeeAddress) && !base.IsSerializing && !base.IsDeserializing && !EntityCollectionBase.InDesignMode)
+ 			if( ( !_alreadyFetchedEmployeeAddress || forceFetch || _alwaysFetchEmployeeAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
@@ -688,56 +633,6 @@ namespace AW.Data.EntityClasses
 			_employeeAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'ContactEntity'</returns>
-		public AW.Data.CollectionClasses.ContactCollection GetMultiContactCollectionViaEmployee(bool forceFetch)
-		{
-			return GetMultiContactCollectionViaEmployee(forceFetch, _contactCollectionViaEmployee.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.ContactCollection GetMultiContactCollectionViaEmployee(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedContactCollectionViaEmployee || forceFetch || _alwaysFetchContactCollectionViaEmployee) && !base.IsSerializing && !base.IsDeserializing && !EntityCollectionBase.InDesignMode)
-			{
-				if(base.ParticipatesInTransaction)
-				{
-					if(!_contactCollectionViaEmployee.ParticipatesInTransaction)
-					{
-						base.Transaction.Add(_contactCollectionViaEmployee);
-					}
-				}
-				IRelationCollection relations = new RelationCollection();
-				IPredicateExpression filter = new PredicateExpression();
-				relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId, "Employee_");
-				relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactId, "Employee_", string.Empty, JoinHint.None);
-				filter.Add(new FieldCompareValuePredicate(EntityFieldFactory.Create(EmployeeFieldIndex.EmployeeId), ComparisonOperator.Equal, this.EmployeeId));
-				_contactCollectionViaEmployee.SuppressClearInGetMulti=!forceFetch;
-				if(entityFactoryToUse!=null)
-				{
-					_contactCollectionViaEmployee.EntityFactoryToUse = entityFactoryToUse;
-				}
-				_contactCollectionViaEmployee.GetMulti(filter, relations);
-				_contactCollectionViaEmployee.SuppressClearInGetMulti=false;
-				_alreadyFetchedContactCollectionViaEmployee = true;
-			}
-			return _contactCollectionViaEmployee;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'ContactCollectionViaEmployee'. These settings will be taken into account
-		/// when the property ContactCollectionViaEmployee is requested or GetMultiContactCollectionViaEmployee is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersContactCollectionViaEmployee(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_contactCollectionViaEmployee.SortClauses=sortClauses;
-			_contactCollectionViaEmployee.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
@@ -752,7 +647,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
 		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
- 			if( ( !_alreadyFetchedAddressCollectionViaEmployeeAddress || forceFetch || _alwaysFetchAddressCollectionViaEmployeeAddress) && !base.IsSerializing && !base.IsDeserializing && !EntityCollectionBase.InDesignMode)
+ 			if( ( !_alreadyFetchedAddressCollectionViaEmployeeAddress || forceFetch || _alwaysFetchAddressCollectionViaEmployeeAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
@@ -761,17 +656,14 @@ namespace AW.Data.EntityClasses
 						base.Transaction.Add(_addressCollectionViaEmployeeAddress);
 					}
 				}
-				IRelationCollection relations = new RelationCollection();
 				IPredicateExpression filter = new PredicateExpression();
-				relations.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId, "EmployeeAddress_");
-				relations.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressId, "EmployeeAddress_", string.Empty, JoinHint.None);
-				filter.Add(new FieldCompareValuePredicate(EntityFieldFactory.Create(EmployeeFieldIndex.EmployeeId), ComparisonOperator.Equal, this.EmployeeId));
+				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeId, ComparisonOperator.Equal, this.EmployeeId, "EmployeeEntity__"));
 				_addressCollectionViaEmployeeAddress.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
 					_addressCollectionViaEmployeeAddress.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_addressCollectionViaEmployeeAddress.GetMulti(filter, relations);
+				_addressCollectionViaEmployeeAddress.GetMulti(filter, GetRelationsForField("AddressCollectionViaEmployeeAddress"));
 				_addressCollectionViaEmployeeAddress.SuppressClearInGetMulti=false;
 				_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
 			}
@@ -788,6 +680,53 @@ namespace AW.Data.EntityClasses
 			_addressCollectionViaEmployeeAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ContactEntity'</returns>
+		public AW.Data.CollectionClasses.ContactCollection GetMultiContactCollectionViaEmployee(bool forceFetch)
+		{
+			return GetMultiContactCollectionViaEmployee(forceFetch, _contactCollectionViaEmployee.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ContactCollection GetMultiContactCollectionViaEmployee(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedContactCollectionViaEmployee || forceFetch || _alwaysFetchContactCollectionViaEmployee) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+			{
+				if(base.ParticipatesInTransaction)
+				{
+					if(!_contactCollectionViaEmployee.ParticipatesInTransaction)
+					{
+						base.Transaction.Add(_contactCollectionViaEmployee);
+					}
+				}
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeId, ComparisonOperator.Equal, this.EmployeeId, "EmployeeEntity__"));
+				_contactCollectionViaEmployee.SuppressClearInGetMulti=!forceFetch;
+				if(entityFactoryToUse!=null)
+				{
+					_contactCollectionViaEmployee.EntityFactoryToUse = entityFactoryToUse;
+				}
+				_contactCollectionViaEmployee.GetMulti(filter, GetRelationsForField("ContactCollectionViaEmployee"));
+				_contactCollectionViaEmployee.SuppressClearInGetMulti=false;
+				_alreadyFetchedContactCollectionViaEmployee = true;
+			}
+			return _contactCollectionViaEmployee;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'ContactCollectionViaEmployee'. These settings will be taken into account
+		/// when the property ContactCollectionViaEmployee is requested or GetMultiContactCollectionViaEmployee is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersContactCollectionViaEmployee(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_contactCollectionViaEmployee.SortClauses=sortClauses;
+			_contactCollectionViaEmployee.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves the related entity of type 'ContactEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'ContactEntity' which is related to this entity.</returns>
 		public ContactEntity GetSingleContact()
@@ -800,28 +739,43 @@ namespace AW.Data.EntityClasses
 		/// <returns>A fetched entity of type 'ContactEntity' which is related to this entity.</returns>
 		public virtual ContactEntity GetSingleContact(bool forceFetch)
 		{
- 			if( ( !_alreadyFetchedContact || forceFetch || _alwaysFetchContact) && !base.IsSerializing && !base.IsDeserializing )
+			if( ( !_alreadyFetchedContact || forceFetch || _alwaysFetchContact) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeEntity.Relations.ContactEntityUsingContactId);
 
 				ContactEntity newEntity = new ContactEntity();
 				if(base.ParticipatesInTransaction)
 				{
 					base.Transaction.Add(newEntity);
 				}
-				bool fetchResult = newEntity.FetchUsingPK(this.ContactId);
-				if(!_contactReturnsNewIfNotFound && !fetchResult)
+				bool fetchResult = false;
+				if(performLazyLoading)
 				{
-					this.Contact = null;
+					fetchResult = newEntity.FetchUsingPK(this.ContactId);
 				}
-				else
+				if(fetchResult)
 				{
-					if((base.ActiveContext!=null)&&fetchResult)
+					if(base.ActiveContext!=null)
 					{
 						newEntity = (ContactEntity)base.ActiveContext.Get(newEntity);
 					}
 					this.Contact = newEntity;
-					_alreadyFetchedContact = fetchResult;
 				}
+				else
+				{
+					if(_contactReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_contact == null)))
+						{
+							this.Contact = newEntity;
+						}
+					}
+					else
+					{
+						this.Contact = null;
+					}
+				}
+				_alreadyFetchedContact = fetchResult;
 				if(base.ParticipatesInTransaction && !fetchResult)
 				{
 					base.Transaction.Remove(newEntity);
@@ -842,28 +796,43 @@ namespace AW.Data.EntityClasses
 		/// <returns>A fetched entity of type 'EmployeeEntity' which is related to this entity.</returns>
 		public virtual EmployeeEntity GetSingleManager(bool forceFetch)
 		{
- 			if( ( !_alreadyFetchedManager || forceFetch || _alwaysFetchManager) && !base.IsSerializing && !base.IsDeserializing )
+			if( ( !_alreadyFetchedManager || forceFetch || _alwaysFetchManager) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId);
 
 				EmployeeEntity newEntity = new EmployeeEntity();
 				if(base.ParticipatesInTransaction)
 				{
 					base.Transaction.Add(newEntity);
 				}
-				bool fetchResult = newEntity.FetchUsingPK(this.ManagerId);
-				if(!_managerReturnsNewIfNotFound && !fetchResult)
+				bool fetchResult = false;
+				if(performLazyLoading)
 				{
-					this.Manager = null;
+					fetchResult = newEntity.FetchUsingPK(this.ManagerId.GetValueOrDefault());
 				}
-				else
+				if(fetchResult)
 				{
-					if((base.ActiveContext!=null)&&fetchResult)
+					if(base.ActiveContext!=null)
 					{
 						newEntity = (EmployeeEntity)base.ActiveContext.Get(newEntity);
 					}
 					this.Manager = newEntity;
-					_alreadyFetchedManager = fetchResult;
 				}
+				else
+				{
+					if(_managerReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_manager == null)))
+						{
+							this.Manager = newEntity;
+						}
+					}
+					else
+					{
+						this.Manager = null;
+					}
+				}
+				_alreadyFetchedManager = fetchResult;
 				if(base.ParticipatesInTransaction && !fetchResult)
 				{
 					base.Transaction.Remove(newEntity);
@@ -872,239 +841,6 @@ namespace AW.Data.EntityClasses
 			return _manager;
 		}
 
-	
-		#region Data binding change event raising methods
-
-		/// <summary> Event thrower for the EmployeeIdChanged event, which is thrown when EmployeeId changes value. Databinding related.</summary>
-		protected virtual void OnEmployeeIdChanged()
-		{
-			if(EmployeeIdChanged!=null)
-			{
-				EmployeeIdChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the NationalIdnumberChanged event, which is thrown when NationalIdnumber changes value. Databinding related.</summary>
-		protected virtual void OnNationalIdnumberChanged()
-		{
-			if(NationalIdnumberChanged!=null)
-			{
-				NationalIdnumberChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the ContactIdChanged event, which is thrown when ContactId changes value. Databinding related.</summary>
-		protected virtual void OnContactIdChanged()
-		{
-			if(ContactIdChanged!=null)
-			{
-				ContactIdChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the LoginIdChanged event, which is thrown when LoginId changes value. Databinding related.</summary>
-		protected virtual void OnLoginIdChanged()
-		{
-			if(LoginIdChanged!=null)
-			{
-				LoginIdChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the ManagerIdChanged event, which is thrown when ManagerId changes value. Databinding related.</summary>
-		protected virtual void OnManagerIdChanged()
-		{
-			if(ManagerIdChanged!=null)
-			{
-				ManagerIdChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the TitleChanged event, which is thrown when Title changes value. Databinding related.</summary>
-		protected virtual void OnTitleChanged()
-		{
-			if(TitleChanged!=null)
-			{
-				TitleChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the BirthDateChanged event, which is thrown when BirthDate changes value. Databinding related.</summary>
-		protected virtual void OnBirthDateChanged()
-		{
-			if(BirthDateChanged!=null)
-			{
-				BirthDateChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the MaritalStatusChanged event, which is thrown when MaritalStatus changes value. Databinding related.</summary>
-		protected virtual void OnMaritalStatusChanged()
-		{
-			if(MaritalStatusChanged!=null)
-			{
-				MaritalStatusChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the GenderChanged event, which is thrown when Gender changes value. Databinding related.</summary>
-		protected virtual void OnGenderChanged()
-		{
-			if(GenderChanged!=null)
-			{
-				GenderChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the HireDateChanged event, which is thrown when HireDate changes value. Databinding related.</summary>
-		protected virtual void OnHireDateChanged()
-		{
-			if(HireDateChanged!=null)
-			{
-				HireDateChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the SalariedFlagChanged event, which is thrown when SalariedFlag changes value. Databinding related.</summary>
-		protected virtual void OnSalariedFlagChanged()
-		{
-			if(SalariedFlagChanged!=null)
-			{
-				SalariedFlagChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the VacationHoursChanged event, which is thrown when VacationHours changes value. Databinding related.</summary>
-		protected virtual void OnVacationHoursChanged()
-		{
-			if(VacationHoursChanged!=null)
-			{
-				VacationHoursChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the SickLeaveHoursChanged event, which is thrown when SickLeaveHours changes value. Databinding related.</summary>
-		protected virtual void OnSickLeaveHoursChanged()
-		{
-			if(SickLeaveHoursChanged!=null)
-			{
-				SickLeaveHoursChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the CurrentFlagChanged event, which is thrown when CurrentFlag changes value. Databinding related.</summary>
-		protected virtual void OnCurrentFlagChanged()
-		{
-			if(CurrentFlagChanged!=null)
-			{
-				CurrentFlagChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the RowguidChanged event, which is thrown when Rowguid changes value. Databinding related.</summary>
-		protected virtual void OnRowguidChanged()
-		{
-			if(RowguidChanged!=null)
-			{
-				RowguidChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the ModifiedDateChanged event, which is thrown when ModifiedDate changes value. Databinding related.</summary>
-		protected virtual void OnModifiedDateChanged()
-		{
-			if(ModifiedDateChanged!=null)
-			{
-				ModifiedDateChanged(this, new EventArgs());
-			}
-		}
-
-		#endregion
-		
-		/// <summary> Sets the field on index fieldIndex to the new value value. Marks also the fields object as dirty. </summary>
-		/// <param name="fieldIndex">Index of field to set the new value of</param>
-		/// <param name="value">Value to set</param>
-		/// <param name="checkForRefetch">If set to true, it will check if this entity is out of sync and will refetch it first if it is. Use true in normal behavior, false for framework specific code.</param>
-		/// <returns>true if the value is actually set, false otherwise.</returns>
-		/// <remarks>Dereferences a related object in an 1:1/m:1 relation if the field is an FK field and responsible for the reference of that particular related object.</remarks>
-		/// <exception cref="ArgumentOutOfRangeException">When fieldIndex is smaller than 0 or bigger than the number of fields in the fields collection.</exception>
-		protected override bool SetNewFieldValue(int fieldIndex, object value, bool checkForRefetch)
-		{
-			bool toReturn = base.SetNewFieldValue (fieldIndex, value, checkForRefetch, false);
-			if(toReturn)
-			{
-				switch((EmployeeFieldIndex)fieldIndex)
-				{
-					case EmployeeFieldIndex.ContactId:
-						DecoupleEventsContact();
-						_contact = null;
-						_alreadyFetchedContact = false;
-						break;
-					case EmployeeFieldIndex.ManagerId:
-						DecoupleEventsManager();
-						_manager = null;
-						_alreadyFetchedManager = false;
-						break;
-					default:
-						break;
-				}
-				base.PostFieldValueSetAction(toReturn);
-				switch((EmployeeFieldIndex)fieldIndex)
-				{
-					case EmployeeFieldIndex.EmployeeId:
-						OnEmployeeIdChanged();
-						break;
-					case EmployeeFieldIndex.NationalIdnumber:
-						OnNationalIdnumberChanged();
-						break;
-					case EmployeeFieldIndex.ContactId:
-						OnContactIdChanged();
-						break;
-					case EmployeeFieldIndex.LoginId:
-						OnLoginIdChanged();
-						break;
-					case EmployeeFieldIndex.ManagerId:
-						OnManagerIdChanged();
-						break;
-					case EmployeeFieldIndex.Title:
-						OnTitleChanged();
-						break;
-					case EmployeeFieldIndex.BirthDate:
-						OnBirthDateChanged();
-						break;
-					case EmployeeFieldIndex.MaritalStatus:
-						OnMaritalStatusChanged();
-						break;
-					case EmployeeFieldIndex.Gender:
-						OnGenderChanged();
-						break;
-					case EmployeeFieldIndex.HireDate:
-						OnHireDateChanged();
-						break;
-					case EmployeeFieldIndex.SalariedFlag:
-						OnSalariedFlagChanged();
-						break;
-					case EmployeeFieldIndex.VacationHours:
-						OnVacationHoursChanged();
-						break;
-					case EmployeeFieldIndex.SickLeaveHours:
-						OnSickLeaveHoursChanged();
-						break;
-					case EmployeeFieldIndex.CurrentFlag:
-						OnCurrentFlagChanged();
-						break;
-					case EmployeeFieldIndex.Rowguid:
-						OnRowguidChanged();
-						break;
-					case EmployeeFieldIndex.ModifiedDate:
-						OnModifiedDateChanged();
-						break;
-					default:
-						break;
-				}
-			}
-			return toReturn;
-		}
 
 		/// <summary> Performs the insert action of a new Entity to the persistent storage.</summary>
 		/// <returns>true if succeeded, false otherwise</returns>
@@ -1119,8 +855,8 @@ namespace AW.Data.EntityClasses
 		{
 			_manages.ActiveContext = base.ActiveContext;
 			_employeeAddress.ActiveContext = base.ActiveContext;
-			_contactCollectionViaEmployee.ActiveContext = base.ActiveContext;
 			_addressCollectionViaEmployeeAddress.ActiveContext = base.ActiveContext;
+			_contactCollectionViaEmployee.ActiveContext = base.ActiveContext;
 			if(_contact!=null)
 			{
 				_contact.ActiveContext = base.ActiveContext;
@@ -1152,43 +888,20 @@ namespace AW.Data.EntityClasses
 		}
 	
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="validatorToUse">Validator to use.</param>
-		protected virtual void InitClassEmpty(IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse, IValidator validatorToUse)
+		protected virtual void InitClassEmpty(IValidator validatorToUse)
 		{
+			OnInitializing();
 			base.Fields = CreateFields();
 			base.IsNew=true;
-			base.EntityFactoryToUse = entityFactoryToUse;
 			base.Validator = validatorToUse;
 
-			InitClassMembers(propertyDescriptorFactoryToUse, entityFactoryToUse);
+			InitClassMembers();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
 
-		}
-
-		/// <summary> A method which calls all OnFieldnameChanged methods to signal that the field has been changed
-		/// to bound controls. This is required after a RollbackFields() call.</summary>
-		protected override void FlagAllFieldsAsChanged()
-		{
-			OnEmployeeIdChanged();
-			OnNationalIdnumberChanged();
-			OnContactIdChanged();
-			OnLoginIdChanged();
-			OnManagerIdChanged();
-			OnTitleChanged();
-			OnBirthDateChanged();
-			OnMaritalStatusChanged();
-			OnGenderChanged();
-			OnHireDateChanged();
-			OnSalariedFlagChanged();
-			OnVacationHoursChanged();
-			OnSickLeaveHoursChanged();
-			OnCurrentFlagChanged();
-			OnRowguidChanged();
-			OnModifiedDateChanged();
+			OnInitialized();
 		}
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -1196,55 +909,79 @@ namespace AW.Data.EntityClasses
 		{
 			return EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
 		}
-
-		/// <summary>Creates field validator object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
-		protected virtual IValidator CreateValidator()
+		
+		/// <summary>Creates a new transaction object</summary>
+		/// <param name="levelOfIsolation">The level of isolation.</param>
+		/// <param name="name">The name.</param>
+		protected override ITransaction CreateTransaction( IsolationLevel levelOfIsolation, string name )
 		{
-			return new EmployeeValidator();
+			return new Transaction(levelOfIsolation, name);
 		}
 
+		/// <summary>
+		/// Creates the ITypeDefaultValue instance used to provide default values for value types which aren't of type nullable(of T)
+		/// </summary>
+		/// <returns></returns>
+		protected override ITypeDefaultValue CreateTypeDefaultValueProvider()
+		{
+			return new TypeDefaultValue();
+		}
+
+		/// <summary>
+		/// Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element. 
+		/// </summary>
+		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
+		public override Dictionary<string, object> GetRelatedData()
+		{
+			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			toReturn.Add("Contact", _contact);
+			toReturn.Add("Manager", _manager);
+			toReturn.Add("Manages", _manages);
+			toReturn.Add("EmployeeAddress", _employeeAddress);
+			toReturn.Add("AddressCollectionViaEmployeeAddress", _addressCollectionViaEmployeeAddress);
+			toReturn.Add("ContactCollectionViaEmployee", _contactCollectionViaEmployee);
+
+			return toReturn;
+		}
+		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
 		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="validator">The validator object for this EmployeeEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 employeeId, IValidator validator, IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 employeeId, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassMembers(propertyDescriptorFactoryToUse, entityFactoryToUse);
-
-			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(employeeId, prefetchPathToUse, null);
-			base.IsNew = !wasSuccesful;
+			OnInitializing();
 			base.Validator = validator;
-			base.EntityFactoryToUse = entityFactoryToUse;
+			InitClassMembers();
+			base.Fields = CreateFields();
+			bool wasSuccesful = Fetch(employeeId, prefetchPathToUse, null, null);
+			base.IsNew = !wasSuccesful;
 
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
 
+			OnInitialized();
 		}
 
 		/// <summary> Initializes the class members</summary>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		private void InitClassMembers(IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse)
+		private void InitClassMembers()
 		{
-			_manages = new AW.Data.CollectionClasses.EmployeeCollection(propertyDescriptorFactoryToUse, new EmployeeEntityFactory());
+			_manages = new AW.Data.CollectionClasses.EmployeeCollection(new EmployeeEntityFactory());
 			_manages.SetContainingEntityInfo(this, "Manager");
 			_alwaysFetchManages = false;
 			_alreadyFetchedManages = false;
-			_employeeAddress = new AW.Data.CollectionClasses.EmployeeAddressCollection(propertyDescriptorFactoryToUse, new EmployeeAddressEntityFactory());
+			_employeeAddress = new AW.Data.CollectionClasses.EmployeeAddressCollection(new EmployeeAddressEntityFactory());
 			_employeeAddress.SetContainingEntityInfo(this, "Employee");
 			_alwaysFetchEmployeeAddress = false;
 			_alreadyFetchedEmployeeAddress = false;
-			_contactCollectionViaEmployee = new AW.Data.CollectionClasses.ContactCollection(propertyDescriptorFactoryToUse, new ContactEntityFactory());
-			_alwaysFetchContactCollectionViaEmployee = false;
-			_alreadyFetchedContactCollectionViaEmployee = false;
-			_addressCollectionViaEmployeeAddress = new AW.Data.CollectionClasses.AddressCollection(propertyDescriptorFactoryToUse, new AddressEntityFactory());
+			_addressCollectionViaEmployeeAddress = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
 			_alwaysFetchAddressCollectionViaEmployeeAddress = false;
 			_alreadyFetchedAddressCollectionViaEmployeeAddress = false;
+			_contactCollectionViaEmployee = new AW.Data.CollectionClasses.ContactCollection(new ContactEntityFactory());
+			_alwaysFetchContactCollectionViaEmployee = false;
+			_alreadyFetchedContactCollectionViaEmployee = false;
 			_contact = null;
 			_contactReturnsNewIfNotFound = true;
 			_alwaysFetchContact = false;
@@ -1254,65 +991,68 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchManager = false;
 			_alreadyFetchedManager = false;
 
+
+			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			OnInitClassMembersComplete();
 		}
 
 		#region Custom Property Hashtable Setup
 		/// <summary> Initializes the hashtables for the entity type and entity field custom properties. </summary>
 		private static void SetupCustomPropertyHashtables()
 		{
-			_customProperties = new Hashtable();
-			_fieldsCustomProperties = new Hashtable();
+			_customProperties = new Dictionary<string, string>();
+			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 
-			Hashtable fieldHashtable = null;
-			fieldHashtable = new Hashtable();
+			Dictionary<string, string> fieldHashtable = null;
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("EmployeeId", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("NationalIdnumber", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ContactId", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("LoginId", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ManagerId", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("BirthDate", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("MaritalStatus", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Gender", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("HireDate", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("SalariedFlag", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("VacationHours", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("SickLeaveHours", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("CurrentFlag", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
@@ -1321,101 +1061,67 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Removes the sync logic for member _contact</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		private void DesetupSyncContact(bool signalRelatedEntity)
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncContact(bool signalRelatedEntity, bool resetFKFields)
 		{
-			if(_contact != null)
-			{
-
-				_contact.AfterSave-=new EventHandler(OnEntityAfterSave);
-				base.UnsetEntitySyncInformation("Contact", _contact, EmployeeEntity.Relations.ContactEntityUsingContactId);
-				if(signalRelatedEntity)
-				{
-					_contact.UnsetRelatedEntity(this, "Employee");
-				}
-				SetNewFieldValue((int)EmployeeFieldIndex.ContactId, null, false);
-				_contact = null;
-			}
-		}
-		
-		/// <summary> Decouples events from member _contact</summary>
-		private void DecoupleEventsContact()
-		{
-			if(_contact != null)
-			{
-
-				
-				_contact.AfterSave-=new EventHandler(OnEntityAfterSave);
-				base.UnsetEntitySyncInformation("Contact", _contact, EmployeeEntity.Relations.ContactEntityUsingContactId);
-			}
+			base.PerformDesetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactId, true, signalRelatedEntity, "Employee", resetFKFields, new int[] { (int)EmployeeFieldIndex.ContactId } );		
+			_contact = null;
 		}
 		
 		/// <summary> setups the sync logic for member _contact</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		private void SetupSyncContact(IEntity relatedEntity)
 		{
-			DesetupSyncContact(true);
-			if(relatedEntity!=null)
-			{
+			if(_contact!=relatedEntity)
+			{		
+				DesetupSyncContact(true, true);
 				_contact = (ContactEntity)relatedEntity;
-				_contact.ActiveContext = base.ActiveContext;
-				_alreadyFetchedContact = true;
-				_contact.AfterSave+=new EventHandler(OnEntityAfterSave);
-				base.SetEntitySyncInformation("Contact", _contact, EmployeeEntity.Relations.ContactEntityUsingContactId);
-
+				base.PerformSetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactId, true, ref _alreadyFetchedContact, new string[] {  } );
 			}
-			else
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnContactPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
 			{
-				_alreadyFetchedContact = false;
+				default:
+					break;
 			}
 		}
 
 		/// <summary> Removes the sync logic for member _manager</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		private void DesetupSyncManager(bool signalRelatedEntity)
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncManager(bool signalRelatedEntity, bool resetFKFields)
 		{
-			if(_manager != null)
-			{
-
-				_manager.AfterSave-=new EventHandler(OnEntityAfterSave);
-				base.UnsetEntitySyncInformation("Manager", _manager, EmployeeEntity.Relations.EmployeeEntityUsingManagerId);
-				if(signalRelatedEntity)
-				{
-					_manager.UnsetRelatedEntity(this, "Manages");
-				}
-				SetNewFieldValue((int)EmployeeFieldIndex.ManagerId, null, false);
-				_manager = null;
-			}
-		}
-		
-		/// <summary> Decouples events from member _manager</summary>
-		private void DecoupleEventsManager()
-		{
-			if(_manager != null)
-			{
-
-				
-				_manager.AfterSave-=new EventHandler(OnEntityAfterSave);
-				base.UnsetEntitySyncInformation("Manager", _manager, EmployeeEntity.Relations.EmployeeEntityUsingManagerId);
-			}
+			base.PerformDesetupSyncRelatedEntity( _manager, new PropertyChangedEventHandler( OnManagerPropertyChanged ), "Manager", EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId, true, signalRelatedEntity, "Manages", resetFKFields, new int[] { (int)EmployeeFieldIndex.ManagerId } );		
+			_manager = null;
 		}
 		
 		/// <summary> setups the sync logic for member _manager</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		private void SetupSyncManager(IEntity relatedEntity)
 		{
-			DesetupSyncManager(true);
-			if(relatedEntity!=null)
-			{
+			if(_manager!=relatedEntity)
+			{		
+				DesetupSyncManager(true, true);
 				_manager = (EmployeeEntity)relatedEntity;
-				_manager.ActiveContext = base.ActiveContext;
-				_alreadyFetchedManager = true;
-				_manager.AfterSave+=new EventHandler(OnEntityAfterSave);
-				base.SetEntitySyncInformation("Manager", _manager, EmployeeEntity.Relations.EmployeeEntityUsingManagerId);
-
+				base.PerformSetupSyncRelatedEntity( _manager, new PropertyChangedEventHandler( OnManagerPropertyChanged ), "Manager", EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId, true, ref _alreadyFetchedManager, new string[] {  } );
 			}
-			else
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnManagerPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
 			{
-				_alreadyFetchedManager = false;
+				default:
+					break;
 			}
 		}
 
@@ -1424,27 +1130,19 @@ namespace AW.Data.EntityClasses
 		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
+		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
+		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
+		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 employeeId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		private bool Fetch(System.Int32 employeeId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
 				base.Fields[(int)EmployeeFieldIndex.EmployeeId].ForcedCurrentValueWrite(employeeId);
-				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse);
-				bool fetchResult = false;
-				if(base.Fields.State == EntityState.Fetched)
-				{
-					base.IsNew = false;
-					fetchResult = true;
-					if(contextToUse!=null)
-					{
-						base.ActiveContext = contextToUse;
-						IEntity dummy = contextToUse.Get(this);
-					}
-				}
-				return fetchResult;
+				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
+				return (base.Fields.State == EntityState.Fetched);
 			}
 			finally
 			{
@@ -1462,7 +1160,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> Creates the entity factory for this type.</summary>
 		/// <returns></returns>
-		protected override IEntityFactory CreateEntityFactoryInstance()
+		protected override IEntityFactory CreateEntityFactory()
 		{
 			return new EmployeeEntityFactory();
 		}
@@ -1476,7 +1174,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> The custom properties for this entity type.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
-		public  static Hashtable CustomProperties
+		public  static Dictionary<string, string> CustomProperties
 		{
 			get { return _customProperties;}
 		}
@@ -1490,8 +1188,7 @@ namespace AW.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(),
-					EmployeeEntity.Relations.EmployeeEntityUsingManagerId, 
-					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Manages", RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("Manages")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Manages", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -1503,24 +1200,7 @@ namespace AW.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeAddressCollection(),
-					EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId, 
-					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeAddressEntity, 0, null, null, null, "EmployeeAddress", RelationType.OneToMany);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Contact' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathContactCollectionViaEmployee
-		{
-			get
-			{
-				IRelationCollection relations = new RelationCollection();
-				relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId);
-				relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactId);
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(),
-					EmployeeEntity.Relations.EmployeeEntityUsingManagerId,
-					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, relations, "ContactCollectionViaEmployee", RelationType.ManyToMany);
+					(IEntityRelation)GetRelationsForField("EmployeeAddress")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeAddressEntity, 0, null, null, null, "EmployeeAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -1531,12 +1211,24 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IRelationCollection relations = new RelationCollection();
-				relations.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId);
-				relations.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressId);
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(),
-					EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId,
-					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, relations, "AddressCollectionViaEmployeeAddress", RelationType.ManyToMany);
+				IEntityRelation intermediateRelation = EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId;
+				intermediateRelation.SetAliases(string.Empty, "EmployeeAddress_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
+					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaEmployeeAddress"), "AddressCollectionViaEmployeeAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Contact' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathContactCollectionViaEmployee
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = EmployeeEntity.Relations.EmployeeEntityUsingManagerId;
+				intermediateRelation.SetAliases(string.Empty, "Employee_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(), intermediateRelation,
+					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, GetRelationsForField("ContactCollectionViaEmployee"), "ContactCollectionViaEmployee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -1548,8 +1240,7 @@ namespace AW.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(),
-					EmployeeEntity.Relations.ContactEntityUsingContactId, 
-					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, null, "Contact", RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("Contact")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, null, "Contact", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -1561,23 +1252,29 @@ namespace AW.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(),
-					EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId, 
-					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Manager", RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("Manager")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Manager", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
 
+		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
+		[Browsable(false), XmlIgnore]
+		public override string LLBLGenProEntityName
+		{
+			get { return "EmployeeEntity";}
+		}
+
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
-		public virtual Hashtable CustomPropertiesOfType
+		public override Dictionary<string, string> CustomPropertiesOfType
 		{
 			get { return EmployeeEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value pairs. </summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
-		public  static Hashtable FieldsCustomProperties
+		public  static Dictionary<string, Dictionary<string, string>> FieldsCustomProperties
 		{
 			get { return _fieldsCustomProperties;}
 		}
@@ -1585,7 +1282,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The custom properties for the fields of the type of this entity instance. The returned Hashtable contains per fieldname a hashtable of name-value pairs. </summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
-		public virtual Hashtable FieldsCustomPropertiesOfType
+		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
 			get { return EmployeeEntity.FieldsCustomProperties;}
 		}
@@ -1597,16 +1294,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
 		public virtual System.Int32 EmployeeId
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.EmployeeId);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
-				}
-				return (System.Int32)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.EmployeeId, value); }
+			get { return (System.Int32)GetValue((int)EmployeeFieldIndex.EmployeeId, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.EmployeeId, value, true); }
 		}
 		/// <summary> The NationalIdnumber property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1615,16 +1304,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String NationalIdnumber
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.NationalIdnumber);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				return (System.String)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.NationalIdnumber, value); }
+			get { return (System.String)GetValue((int)EmployeeFieldIndex.NationalIdnumber, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.NationalIdnumber, value, true); }
 		}
 		/// <summary> The ContactId property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1633,16 +1314,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Int32 ContactId
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.ContactId);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
-				}
-				return (System.Int32)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.ContactId, value); }
+			get { return (System.Int32)GetValue((int)EmployeeFieldIndex.ContactId, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.ContactId, value, true); }
 		}
 		/// <summary> The LoginId property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1651,34 +1324,18 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String LoginId
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.LoginId);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				return (System.String)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.LoginId, value); }
+			get { return (System.String)GetValue((int)EmployeeFieldIndex.LoginId, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.LoginId, value, true); }
 		}
 		/// <summary> The ManagerId property of the Entity Employee<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Employee"."ManagerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual System.Int32 ManagerId
+		public virtual Nullable<System.Int32> ManagerId
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.ManagerId);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
-				}
-				return (System.Int32)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.ManagerId, value); }
+			get { return (Nullable<System.Int32>)GetValue((int)EmployeeFieldIndex.ManagerId, false); }
+			set	{ SetValue((int)EmployeeFieldIndex.ManagerId, value, true); }
 		}
 		/// <summary> The Title property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1687,16 +1344,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Title
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.Title);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				return (System.String)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.Title, value); }
+			get { return (System.String)GetValue((int)EmployeeFieldIndex.Title, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.Title, value, true); }
 		}
 		/// <summary> The BirthDate property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1705,16 +1354,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.DateTime BirthDate
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.BirthDate);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.DateTime));
-				}
-				return (System.DateTime)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.BirthDate, value); }
+			get { return (System.DateTime)GetValue((int)EmployeeFieldIndex.BirthDate, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.BirthDate, value, true); }
 		}
 		/// <summary> The MaritalStatus property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1723,16 +1364,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String MaritalStatus
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.MaritalStatus);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				return (System.String)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.MaritalStatus, value); }
+			get { return (System.String)GetValue((int)EmployeeFieldIndex.MaritalStatus, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.MaritalStatus, value, true); }
 		}
 		/// <summary> The Gender property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1741,16 +1374,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.String Gender
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.Gender);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				return (System.String)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.Gender, value); }
+			get { return (System.String)GetValue((int)EmployeeFieldIndex.Gender, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.Gender, value, true); }
 		}
 		/// <summary> The HireDate property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1759,16 +1384,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.DateTime HireDate
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.HireDate);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.DateTime));
-				}
-				return (System.DateTime)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.HireDate, value); }
+			get { return (System.DateTime)GetValue((int)EmployeeFieldIndex.HireDate, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.HireDate, value, true); }
 		}
 		/// <summary> The SalariedFlag property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1777,16 +1394,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Boolean SalariedFlag
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.SalariedFlag);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Boolean));
-				}
-				return (System.Boolean)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.SalariedFlag, value); }
+			get { return (System.Boolean)GetValue((int)EmployeeFieldIndex.SalariedFlag, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.SalariedFlag, value, true); }
 		}
 		/// <summary> The VacationHours property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1795,16 +1404,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Int16 VacationHours
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.VacationHours);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int16));
-				}
-				return (System.Int16)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.VacationHours, value); }
+			get { return (System.Int16)GetValue((int)EmployeeFieldIndex.VacationHours, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.VacationHours, value, true); }
 		}
 		/// <summary> The SickLeaveHours property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1813,16 +1414,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Int16 SickLeaveHours
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.SickLeaveHours);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int16));
-				}
-				return (System.Int16)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.SickLeaveHours, value); }
+			get { return (System.Int16)GetValue((int)EmployeeFieldIndex.SickLeaveHours, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.SickLeaveHours, value, true); }
 		}
 		/// <summary> The CurrentFlag property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1831,16 +1424,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Boolean CurrentFlag
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.CurrentFlag);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Boolean));
-				}
-				return (System.Boolean)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.CurrentFlag, value); }
+			get { return (System.Boolean)GetValue((int)EmployeeFieldIndex.CurrentFlag, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.CurrentFlag, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1849,16 +1434,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Guid Rowguid
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.Rowguid);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Guid));
-				}
-				return (System.Guid)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.Rowguid, value); }
+			get { return (System.Guid)GetValue((int)EmployeeFieldIndex.Rowguid, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.Rowguid, value, true); }
 		}
 		/// <summary> The ModifiedDate property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1867,16 +1444,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.DateTime ModifiedDate
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)EmployeeFieldIndex.ModifiedDate);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.DateTime));
-				}
-				return (System.DateTime)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)EmployeeFieldIndex.ModifiedDate, value); }
+			get { return (System.DateTime)GetValue((int)EmployeeFieldIndex.ModifiedDate, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.ModifiedDate, value, true); }
 		}
 
 		/// <summary> Retrieves all related entities of type 'EmployeeEntity' using a relation of type '1:n'.</summary>
@@ -1895,6 +1464,22 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _alwaysFetchManages; }
 			set	{ _alwaysFetchManages = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Manages already has been fetched. Setting this property to false when Manages has been fetched
+		/// will clear the Manages collection well. Setting this property to true while Manages hasn't been fetched disables lazy loading for Manages</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedManages
+		{
+			get { return _alreadyFetchedManages;}
+			set 
+			{
+				if(_alreadyFetchedManages && !value && (_manages != null))
+				{
+					_manages.Clear();
+				}
+				_alreadyFetchedManages = value;
+			}
 		}
 		/// <summary> Retrieves all related entities of type 'EmployeeAddressEntity' using a relation of type '1:n'.</summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiEmployeeAddress()', because 
@@ -1912,25 +1497,24 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _alwaysFetchEmployeeAddress; }
 			set	{ _alwaysFetchEmployeeAddress = value; }	
-		}
-
-		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiContactCollectionViaEmployee()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.ContactCollection ContactCollectionViaEmployee
-		{
-			get { return GetMultiContactCollectionViaEmployee(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for ContactCollectionViaEmployee. When set to true, ContactCollectionViaEmployee is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time ContactCollectionViaEmployee is accessed. You can always execute
-		/// a forced fetch by calling GetMultiContactCollectionViaEmployee(true).</summary>
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property EmployeeAddress already has been fetched. Setting this property to false when EmployeeAddress has been fetched
+		/// will clear the EmployeeAddress collection well. Setting this property to true while EmployeeAddress hasn't been fetched disables lazy loading for EmployeeAddress</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchContactCollectionViaEmployee
+		public bool AlreadyFetchedEmployeeAddress
 		{
-			get	{ return _alwaysFetchContactCollectionViaEmployee; }
-			set	{ _alwaysFetchContactCollectionViaEmployee = value; }	
+			get { return _alreadyFetchedEmployeeAddress;}
+			set 
+			{
+				if(_alreadyFetchedEmployeeAddress && !value && (_employeeAddress != null))
+				{
+					_employeeAddress.Clear();
+				}
+				_alreadyFetchedEmployeeAddress = value;
+			}
 		}
+
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaEmployeeAddress()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
@@ -1946,7 +1530,56 @@ namespace AW.Data.EntityClasses
 		public bool AlwaysFetchAddressCollectionViaEmployeeAddress
 		{
 			get	{ return _alwaysFetchAddressCollectionViaEmployeeAddress; }
-			set	{ _alwaysFetchAddressCollectionViaEmployeeAddress = value; }	
+			set	{ _alwaysFetchAddressCollectionViaEmployeeAddress = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaEmployeeAddress already has been fetched. Setting this property to false when AddressCollectionViaEmployeeAddress has been fetched
+		/// will clear the AddressCollectionViaEmployeeAddress collection well. Setting this property to true while AddressCollectionViaEmployeeAddress hasn't been fetched disables lazy loading for AddressCollectionViaEmployeeAddress</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedAddressCollectionViaEmployeeAddress
+		{
+			get { return _alreadyFetchedAddressCollectionViaEmployeeAddress;}
+			set 
+			{
+				if(_alreadyFetchedAddressCollectionViaEmployeeAddress && !value && (_addressCollectionViaEmployeeAddress != null))
+				{
+					_addressCollectionViaEmployeeAddress.Clear();
+				}
+				_alreadyFetchedAddressCollectionViaEmployeeAddress = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiContactCollectionViaEmployee()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ContactCollection ContactCollectionViaEmployee
+		{
+			get { return GetMultiContactCollectionViaEmployee(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for ContactCollectionViaEmployee. When set to true, ContactCollectionViaEmployee is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ContactCollectionViaEmployee is accessed. You can always execute
+		/// a forced fetch by calling GetMultiContactCollectionViaEmployee(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchContactCollectionViaEmployee
+		{
+			get	{ return _alwaysFetchContactCollectionViaEmployee; }
+			set	{ _alwaysFetchContactCollectionViaEmployee = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property ContactCollectionViaEmployee already has been fetched. Setting this property to false when ContactCollectionViaEmployee has been fetched
+		/// will clear the ContactCollectionViaEmployee collection well. Setting this property to true while ContactCollectionViaEmployee hasn't been fetched disables lazy loading for ContactCollectionViaEmployee</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedContactCollectionViaEmployee
+		{
+			get { return _alreadyFetchedContactCollectionViaEmployee;}
+			set 
+			{
+				if(_alreadyFetchedContactCollectionViaEmployee && !value && (_contactCollectionViaEmployee != null))
+				{
+					_contactCollectionViaEmployee.Clear();
+				}
+				_alreadyFetchedContactCollectionViaEmployee = value;
+			}
 		}
 
 		/// <summary> Gets / sets related entity of type 'ContactEntity'. This property is not visible in databound grids.
@@ -1955,7 +1588,6 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleContact()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(false)]
 		public virtual ContactEntity Contact
 		{
 			get	{ return GetSingleContact(false); }
@@ -1976,7 +1608,10 @@ namespace AW.Data.EntityClasses
 					}
 					else
 					{
-						((IEntity)value).SetRelatedEntity(this, "Employee");
+						if(_contact!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "Employee");
+						}
 					}
 				}
 			}
@@ -1991,7 +1626,23 @@ namespace AW.Data.EntityClasses
 			get	{ return _alwaysFetchContact; }
 			set	{ _alwaysFetchContact = value; }	
 		}
-		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Contact already has been fetched. Setting this property to false when Contact has been fetched
+		/// will set Contact to null as well. Setting this property to true while Contact hasn't been fetched disables lazy loading for Contact</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedContact
+		{
+			get { return _alreadyFetchedContact;}
+			set 
+			{
+				if(_alreadyFetchedContact && !value)
+				{
+					this.Contact = null;
+				}
+				_alreadyFetchedContact = value;
+			}
+		}
+
 		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Contact is not found
 		/// in the database. When set to true, Contact will return a new entity instance if the related entity is not found, otherwise 
 		/// null be returned if the related entity is not found. Default: true.</summary>
@@ -2007,7 +1658,6 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleManager()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(false)]
 		public virtual EmployeeEntity Manager
 		{
 			get	{ return GetSingleManager(false); }
@@ -2028,7 +1678,10 @@ namespace AW.Data.EntityClasses
 					}
 					else
 					{
-						((IEntity)value).SetRelatedEntity(this, "Manages");
+						if(_manager!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "Manages");
+						}
 					}
 				}
 			}
@@ -2043,7 +1696,23 @@ namespace AW.Data.EntityClasses
 			get	{ return _alwaysFetchManager; }
 			set	{ _alwaysFetchManager = value; }	
 		}
-		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Manager already has been fetched. Setting this property to false when Manager has been fetched
+		/// will set Manager to null as well. Setting this property to true while Manager hasn't been fetched disables lazy loading for Manager</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedManager
+		{
+			get { return _alreadyFetchedManager;}
+			set 
+			{
+				if(_alreadyFetchedManager && !value)
+				{
+					this.Manager = null;
+				}
+				_alreadyFetchedManager = value;
+			}
+		}
+
 		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Manager is not found
 		/// in the database. When set to true, Manager will return a new entity instance if the related entity is not found, otherwise 
 		/// null be returned if the related entity is not found. Default: true.</summary>
@@ -2069,7 +1738,7 @@ namespace AW.Data.EntityClasses
 			get { return InheritanceHierarchyType.None;}
 		}
 		
-		/// <summary>Returns the EntityType enum value for this entity.</summary>
+		/// <summary>Returns the AW.Data.EntityType enum value for this entity.</summary>
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 

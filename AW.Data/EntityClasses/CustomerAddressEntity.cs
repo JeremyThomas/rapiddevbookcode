@@ -1,27 +1,22 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Sunday, November 06, 2005 1:19:31 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.ComponentModel;
 using System.Collections;
+#if !CF
 using System.Runtime.Serialization;
-
+#endif
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
 using AW.Data.RelationClasses;
-using AW.Data.ValidatorClasses;
 
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -30,7 +25,6 @@ namespace AW.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 
 	/// <summary>
 	/// Entity class which represents the entity 'CustomerAddress'. <br/>
@@ -39,14 +33,13 @@ namespace AW.Data.EntityClasses
 	[Serializable]
 	public partial class CustomerAddressEntity : CustomerAddressEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Constructors
 		/// <summary>
 		/// CTor
 		/// </summary>
-		public CustomerAddressEntity():base(new PropertyDescriptorFactory(), new CustomerAddressEntityFactory())
+		public CustomerAddressEntity():base()
 		{
 		}
 
@@ -80,35 +73,11 @@ namespace AW.Data.EntityClasses
 		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="validator">The custom validator object for this CustomerAddressEntity</param>
-		public CustomerAddressEntity(System.Int32 customerId, System.Int32 addressId, CustomerAddressValidator validator):
+		public CustomerAddressEntity(System.Int32 customerId, System.Int32 addressId, IValidator validator):
 			base(customerId, addressId, validator)
 		{
 		}
-
-
-		/// <summary>
-		/// CTor
-		/// </summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="validator">The custom validator object for this CustomerAddressEntity</param>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		public CustomerAddressEntity(System.Int32 customerId, System.Int32 addressId, CustomerAddressValidator validator, IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse):
-			base(customerId, addressId, validator, propertyDescriptorFactoryToUse, entityFactoryToUse)
-		{
-		}
 	
-
-		/// <summary>
-		/// CTor
-		/// </summary>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		public CustomerAddressEntity(IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse):
-			base(propertyDescriptorFactoryToUse, entityFactoryToUse)
-		{
-		}
 		
 		/// <summary>
 		/// Private CTor for deserialization
@@ -117,6 +86,9 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected CustomerAddressEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
+			// __LLBLGENPRO_USER_CODE_REGION_END
 		}
 		#endregion
 
@@ -124,7 +96,6 @@ namespace AW.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included Code

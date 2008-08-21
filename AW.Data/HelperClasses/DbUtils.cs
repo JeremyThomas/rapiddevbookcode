@@ -1,16 +1,11 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:30 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SqlServerSpecific.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.Data;
@@ -25,7 +20,7 @@ namespace AW.Data.HelperClasses
 	/// <summary>
 	/// General utility methods used for SqlServer usage by the framework. 
 	/// </summary>
-	public class DbUtils
+	public partial class DbUtils
 	{
 		#region Public Static Members
 		public static string ActualConnectionString = string.Empty;
@@ -59,15 +54,30 @@ namespace AW.Data.HelperClasses
 			SD.LLBLGen.Pro.DQE.SqlServer.DynamicQueryEngine.ArithAbortOn = value;
 		}
 
+		/// <summary>
+		/// Compatibility level used by the DQE. Default is SqlServer2000. To utilize SqlServer 2005 specific features, set this parameter 
+		/// to SqlServer2005, either through a setting in the .config file of your application or by setting this parameter once in your application.
+		/// Compatibility level influences the query generated for paging, sequence name (@@IDENTITY/SCOPE_IDENTITY()), and usage of newsequenceid() in inserts. 
+		/// It also influences the provider to use. This way you can switch between SqlServer server client 'SqlClient' and SqlServer CE Desktop. 
+		/// </summary>
+		/// <remarks>Setting this property will overrule a similar setting in the .config file. Don't set this property when queries are executed as
+		/// it might switch factories for ADO.NET elements which could result in undefined behavior. Set this property at startup of your application as it's
+		/// a global setting (affects all queries in your application using this DQE)</remarks>
+		public static void SetSqlServerCompatibilityLevel(SqlServerCompatibilityLevel compatibilityLevel)
+		{
+			SD.LLBLGen.Pro.DQE.SqlServer.DynamicQueryEngine.CompatibilityLevel = compatibilityLevel;
+		}
 
 		/// <summary>
 		/// Creates a new SqlConnection
 		/// </summary>
 		/// <param name="connectionString">Conectionstring To use</param>
 		/// <returns>A ready to use, closed, sqlconnection object</returns>
-		public static SqlConnection CreateConnection(string connectionString)
+		public static DbConnection CreateConnection(string connectionString)
 		{
-			return new SqlConnection(connectionString);
+			DbConnection toReturn = SD.LLBLGen.Pro.DQE.SqlServer.DynamicQueryEngine.FactoryToUse.CreateConnection();
+			toReturn.ConnectionString = connectionString;
+			return toReturn;
 		}
 
 
@@ -76,13 +86,11 @@ namespace AW.Data.HelperClasses
 		/// The connection string is stored in a key with the name defined in the constant connectionKeyString, mentioned above.
 		/// </summary>
 		/// <returns>A ready to use, closed, sqlconnection object</returns>
-		public static SqlConnection CreateConnection()
+		public static DbConnection CreateConnection()
 		{
 			if(ActualConnectionString==string.Empty)
 			{
-				// read the connection string from the *.config file.
-				AppSettingsReader configReader = new AppSettingsReader();
-				ActualConnectionString = configReader.GetValue(connectionKeyString, typeof(string)).ToString();
+				ActualConnectionString = ConfigFileHelper.ReadConnectionStringFromConfig( connectionKeyString);
 			}
 
 			return CreateConnection(ActualConnectionString);
@@ -96,7 +104,7 @@ namespace AW.Data.HelperClasses
 		/// <returns>A ready to use connection object</returns>
 		public static IDbConnection DetermineConnectionToUse(ITransaction containingTransaction)
 		{
-			if(containingTransaction!=null)
+			if((containingTransaction!=null)&&(containingTransaction.ConnectionToUse!=null))
 			{
 				return containingTransaction.ConnectionToUse;
 			}
@@ -111,9 +119,9 @@ namespace AW.Data.HelperClasses
 		/// Creates a new SqlDataAdapter.
 		/// </summary>
 		/// <returns></returns>
-		public static SqlDataAdapter CreateDataAdapter()
+		public static DbDataAdapter CreateDataAdapter()
 		{
-			return new SqlDataAdapter();
+			return SD.LLBLGen.Pro.DQE.SqlServer.DynamicQueryEngine.FactoryToUse.CreateDataAdapter();
 		}
 
 
@@ -124,9 +132,9 @@ namespace AW.Data.HelperClasses
 		/// <param name="isolationLevelToUse">the isolation level to use</param>
 		/// <param name="name">the name for the transaction</param>
 		/// <returns>new SqlTransaction object.</returns>
-		public static SqlTransaction CreateTransaction(IDbConnection connectionToUse, IsolationLevel isolationLevelToUse, string name)
+		public static IDbTransaction CreateTransaction(IDbConnection connectionToUse, IsolationLevel isolationLevelToUse, string name)
 		{
-			return ((SqlConnection)connectionToUse).BeginTransaction(isolationLevelToUse, name);
+			return connectionToUse.BeginTransaction(isolationLevelToUse);
 		}
 
 
@@ -150,7 +158,7 @@ namespace AW.Data.HelperClasses
 			}
 			else
 			{
-				command = new SqlCommand(procName, CreateConnection());
+				command = new SqlCommand(procName, (SqlConnection)CreateConnection());
 			}
 			command.CommandType = CommandType.StoredProcedure;
 			command.CommandTimeout = _commandTimeOut;
@@ -175,7 +183,9 @@ namespace AW.Data.HelperClasses
 				if(connectionOpenedLocally)
 				{
 					command.Connection.Close();
+					command.Connection.Dispose();
 				}
+				command.Dispose();
 			}
 			return toReturn;
 		}
@@ -201,7 +211,7 @@ namespace AW.Data.HelperClasses
 			}
 			else
 			{
-				command = new SqlCommand(procName, CreateConnection());
+				command = new SqlCommand(procName, (SqlConnection)CreateConnection());
 			}
 			command.CommandType = CommandType.StoredProcedure;
 			command.CommandTimeout = _commandTimeOut;
@@ -211,8 +221,15 @@ namespace AW.Data.HelperClasses
 			{
 				command.Parameters.Add(parameters[i]);
 			}
-			adapter.Fill(tableToFill);
-
+			try
+			{
+				adapter.Fill(tableToFill);
+			}
+			finally
+			{
+				command.Dispose();
+				adapter.Dispose();
+			}
 			return true;
 		}
 
@@ -237,7 +254,7 @@ namespace AW.Data.HelperClasses
 			}
 			else
 			{
-				command = new SqlCommand(procName, CreateConnection());
+				command = new SqlCommand(procName, (SqlConnection)CreateConnection());
 			}
 			command.CommandType = CommandType.StoredProcedure;
 			command.CommandTimeout = _commandTimeOut;
@@ -247,7 +264,15 @@ namespace AW.Data.HelperClasses
 			{
 				command.Parameters.Add(parameters[i]);
 			}
-			adapter.Fill(dataSetToFill);
+			try
+			{
+				adapter.Fill(dataSetToFill);
+			}
+			finally
+			{
+				command.Dispose();
+				adapter.Dispose();
+			}
 
 			return true;
 		}

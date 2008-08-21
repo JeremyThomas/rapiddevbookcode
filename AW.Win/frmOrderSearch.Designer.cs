@@ -469,7 +469,6 @@ namespace AW.Win
             this.salesOrderHeaderCollection1.EntityValidatorToUse = null;
             this.salesOrderHeaderCollection1.MaxNumberOfItemsToReturn = ((long)(0));
             this.salesOrderHeaderCollection1.SortClauses = null;
-            this.salesOrderHeaderCollection1.SupportsSorting = false;
             this.salesOrderHeaderCollection1.SuppressClearInGetMulti = false;
             this.salesOrderHeaderCollection1.Transaction = null;
             this.salesOrderHeaderCollection1.ValidatorToUse = null;

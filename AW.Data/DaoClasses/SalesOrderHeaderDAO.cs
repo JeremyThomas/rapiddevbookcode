@@ -1,26 +1,21 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:24 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Collections;
 
 using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.HelperClasses;
-using AW.Data.ValidatorClasses;
 using AW.Data;
 
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -37,10 +32,10 @@ namespace AW.Data.DaoClasses
 	/// General DAO class for the SalesOrderHeader Entity. It will perform database oriented actions for
 	/// a entity of type 'SalesOrderHeaderEntity'. This DAO works on an EntityFields object. 
 	/// </summary>
-	public class SalesOrderHeaderDAO : DaoBase
+	public partial class SalesOrderHeaderDAO : DaoBase
 	{
 		/// <summary>CTor</summary>
-		public SalesOrderHeaderDAO() : base(InheritanceInfoProviderSingleton.GetInstance(), new DynamicQueryEngine(), InheritanceHierarchyType.None, "SalesOrderHeaderEntity", new SalesOrderHeaderEntityFactory(), new TypeDefaultValue())
+		public SalesOrderHeaderDAO() : base(InheritanceInfoProviderSingleton.GetInstance(), new DynamicQueryEngine(), InheritanceHierarchyType.None, "SalesOrderHeaderEntity", new SalesOrderHeaderEntityFactory())
 		{
 		}
 		
@@ -50,8 +45,7 @@ namespace AW.Data.DaoClasses
 		/// <param name="typeOfInheritance">Type of inheritance.</param>
 		/// <param name="entityName">Name of the entity.</param>
 		/// <param name="entityFactory">Entity factory.</param>
-		/// <param name="typeDefaultvalueSupplier">Type defaultvalue supplier.</param>
-		internal SalesOrderHeaderDAO(IInheritanceInfoProvider inheritanceInfoProviderToUse, DynamicQueryEngineBase dqeToUse, InheritanceHierarchyType typeOfInheritance, string entityName, IEntityFactory entityFactory, ITypeDefaultValue typeDefaultvalueSupplier) : base(inheritanceInfoProviderToUse, dqeToUse, typeOfInheritance, entityName, entityFactory, new TypeDefaultValue())
+		internal SalesOrderHeaderDAO(IInheritanceInfoProvider inheritanceInfoProviderToUse, DynamicQueryEngineBase dqeToUse, InheritanceHierarchyType typeOfInheritance, string entityName, IEntityFactory entityFactory) : base(inheritanceInfoProviderToUse, dqeToUse, typeOfInheritance, entityName, entityFactory)
 		{
 		}
 
@@ -67,26 +61,25 @@ namespace AW.Data.DaoClasses
 		/// When set to 0, no limitations are specified.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="validatorToUse">The Validator object to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
-		/// <param name="addressInstance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="address_Instance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
+		/// <param name="addressInstance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
-		/// <param name="customerView_Instance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IValidator validatorToUse, IPredicateExpression filter, IEntity addressInstance, IEntity address_Instance, IEntity contactInstance, IEntity customerInstance, IEntity shipMethodInstance, IEntity customerView_Instance, int pageNumber, int pageSize)
+		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity address_Instance, IEntity addressInstance, IEntity contactInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity shipMethodInstance, int pageNumber, int pageSize)
 		{
 			base.EntityFactoryToUse = entityFactoryToUse;
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
-			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(addressInstance, address_Instance, contactInstance, customerInstance, shipMethodInstance, customerView_Instance, fieldsToReturn);
+			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(address_Instance, addressInstance, contactInstance, customerInstance, customerViewRelatedInstance, shipMethodInstance, fieldsToReturn);
 			if(filter!=null)
 			{
 				selectFilter.AddWithAnd(filter);
 			}
-			return base.PerformGetMultiAction(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, validatorToUse, selectFilter, null, pageNumber, pageSize);
+			return base.PerformGetMultiAction(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, selectFilter, null, null, null, pageNumber, pageSize);
 		}
 
 		/// <summary>
@@ -104,7 +97,6 @@ namespace AW.Data.DaoClasses
 		/// <returns>a filled datatable if succeeded, false otherwise</returns>
 		public virtual DataTable GetMultiAsDataTable(long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicate selectFilter, IRelationCollection relations, int pageNumber, int pageSize)
 		{
-			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
 			return base.PerformGetMultiAsDataTableAction(maxNumberOfItemsToReturn, sortClauses, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -119,12 +111,11 @@ namespace AW.Data.DaoClasses
 		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="validatorToUse">The Validator object to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="specialOfferProductInstance">SpecialOfferProductEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingSpecialOfferProductCollectionViaSalesOrderDetail(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IValidator validatorToUse, IEntity specialOfferProductInstance, int pageNumber, int pageSize)
+		public bool GetMultiUsingSpecialOfferProductCollectionViaSalesOrderDetail(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity specialOfferProductInstance, int pageNumber, int pageSize)
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
 			RelationCollection relations = new RelationCollection();
@@ -133,7 +124,7 @@ namespace AW.Data.DaoClasses
 			IPredicateExpression selectFilter = new PredicateExpression();
 			selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fields[(int)SpecialOfferProductFieldIndex.SpecialOfferId], ComparisonOperator.Equal));
 selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fields[(int)SpecialOfferProductFieldIndex.ProductId], ComparisonOperator.Equal));
-			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, validatorToUse, selectFilter, relations, pageNumber, pageSize);
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
 		/// <summary>
@@ -146,11 +137,10 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="validatorToUse">The Validator object to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="specialOfferProductInstance">SpecialOfferProductEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingSpecialOfferProductCollectionViaSalesOrderDetail(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IValidator validatorToUse, IEntity specialOfferProductInstance, IPrefetchPath prefetchPathToUse)
+		public bool GetMultiUsingSpecialOfferProductCollectionViaSalesOrderDetail(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity specialOfferProductInstance, IPrefetchPath prefetchPathToUse)
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
 			RelationCollection relations = new RelationCollection();
@@ -159,7 +149,7 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 			IPredicateExpression selectFilter = new PredicateExpression();
 			selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fields[(int)SpecialOfferProductFieldIndex.SpecialOfferId], ComparisonOperator.Equal));
 selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fields[(int)SpecialOfferProductFieldIndex.ProductId], ComparisonOperator.Equal));
-			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, validatorToUse, selectFilter, relations, prefetchPathToUse);
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
 	
@@ -168,17 +158,17 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 		/// with the specified related Entities. If one is omitted, that entity is not used as a filter. 
 		/// </summary>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="addressInstance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <param name="address_Instance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
+		/// <param name="addressInstance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
-		/// <param name="customerView_Instance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to delete</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMulti(ITransaction containingTransaction, IEntity addressInstance, IEntity address_Instance, IEntity contactInstance, IEntity customerInstance, IEntity shipMethodInstance, IEntity customerView_Instance)
+		public int DeleteMulti(ITransaction containingTransaction, IEntity address_Instance, IEntity addressInstance, IEntity contactInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity shipMethodInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
-			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(addressInstance, address_Instance, contactInstance, customerInstance, shipMethodInstance, customerView_Instance, fields);
+			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(address_Instance, addressInstance, contactInstance, customerInstance, customerViewRelatedInstance, shipMethodInstance, fields);
 			return base.DeleteMulti(containingTransaction, deleteFilter);
 		}
 
@@ -189,17 +179,17 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 		/// </summary>
 		/// <param name="entityWithNewValues">IEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="addressInstance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <param name="address_Instance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
+		/// <param name="addressInstance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
-		/// <param name="customerView_Instance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to update</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity addressInstance, IEntity address_Instance, IEntity contactInstance, IEntity customerInstance, IEntity shipMethodInstance, IEntity customerView_Instance)
+		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity address_Instance, IEntity addressInstance, IEntity contactInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity shipMethodInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderHeaderEntity);
-			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(addressInstance, address_Instance, contactInstance, customerInstance, shipMethodInstance, customerView_Instance, fields);
+			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(address_Instance, addressInstance, contactInstance, customerInstance, customerViewRelatedInstance, shipMethodInstance, fields);
 			return base.UpdateMulti(entityWithNewValues, containingTransaction, updateFilter);
 		}
 	
@@ -227,25 +217,25 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 		/// <summary>
 		/// Creates a PredicateExpression which should be used as a filter when any combination of available foreign keys is specified.
 		/// </summary>
-		/// <param name="addressInstance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="address_Instance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
+		/// <param name="addressInstance">AddressEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="contactInstance">ContactEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
-		/// <param name="customerView_Instance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects</param>
 		/// <param name="fieldsToReturn">IEntityFields implementation which forms the definition of the fieldset of the target entity.</param>
 		/// <returns>A ready to use PredicateExpression based on the passed in foreign key value holders.</returns>
-		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity addressInstance, IEntity address_Instance, IEntity contactInstance, IEntity customerInstance, IEntity shipMethodInstance, IEntity customerView_Instance, IEntityFields fieldsToReturn)
+		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity address_Instance, IEntity addressInstance, IEntity contactInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity shipMethodInstance, IEntityFields fieldsToReturn)
 		{
 			IPredicateExpression selectFilter = new PredicateExpression();
 			
-			if(addressInstance != null)
-			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.BillToAddressId], ComparisonOperator.Equal, ((AddressEntity)addressInstance).AddressId));
-			}
 			if(address_Instance != null)
 			{
 				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.ShipToAddressId], ComparisonOperator.Equal, ((AddressEntity)address_Instance).AddressId));
+			}
+			if(addressInstance != null)
+			{
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.BillToAddressId], ComparisonOperator.Equal, ((AddressEntity)addressInstance).AddressId));
 			}
 			if(contactInstance != null)
 			{
@@ -255,13 +245,13 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 			{
 				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.CustomerId], ComparisonOperator.Equal, ((CustomerEntity)customerInstance).CustomerId));
 			}
+			if(customerViewRelatedInstance != null)
+			{
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.CustomerId], ComparisonOperator.Equal, ((CustomerViewRelatedEntity)customerViewRelatedInstance).CustomerId));
+			}
 			if(shipMethodInstance != null)
 			{
 				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.ShipMethodId], ComparisonOperator.Equal, ((ShipMethodEntity)shipMethodInstance).ShipMethodId));
-			}
-			if(customerView_Instance != null)
-			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.CustomerId], ComparisonOperator.Equal, ((CustomerViewRelatedEntity)customerView_Instance).CustomerId));
 			}
 			return selectFilter;
 		}

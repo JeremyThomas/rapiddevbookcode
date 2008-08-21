@@ -1,16 +1,11 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:30 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -20,7 +15,7 @@ using AW.Data;
 namespace AW.Data.HelperClasses
 {
 	/// <summary>Field Creation Class for entity AddressEntity</summary>
-	public class AddressFields
+	public partial class AddressFields
 	{
 		/// <summary>Creates a new AddressEntity.AddressId field instance</summary>
 		public static EntityField AddressId
@@ -65,7 +60,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity AddressTypeEntity</summary>
-	public class AddressTypeFields
+	public partial class AddressTypeFields
 	{
 		/// <summary>Creates a new AddressTypeEntity.AddressTypeId field instance</summary>
 		public static EntityField AddressTypeId
@@ -90,7 +85,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity ContactEntity</summary>
-	public class ContactFields
+	public partial class ContactFields
 	{
 		/// <summary>Creates a new ContactEntity.ContactId field instance</summary>
 		public static EntityField ContactId
@@ -170,7 +165,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity CountryRegionEntity</summary>
-	public class CountryRegionFields
+	public partial class CountryRegionFields
 	{
 		/// <summary>Creates a new CountryRegionEntity.CountryRegionCode field instance</summary>
 		public static EntityField CountryRegionCode
@@ -190,7 +185,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity CustomerEntity</summary>
-	public class CustomerFields
+	public partial class CustomerFields
 	{
 		/// <summary>Creates a new CustomerEntity.CustomerId field instance</summary>
 		public static EntityField CustomerId
@@ -225,7 +220,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity CustomerAddressEntity</summary>
-	public class CustomerAddressFields
+	public partial class CustomerAddressFields
 	{
 		/// <summary>Creates a new CustomerAddressEntity.CustomerId field instance</summary>
 		public static EntityField CustomerId
@@ -255,7 +250,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity CustomerViewRelatedEntity</summary>
-	public class CustomerViewRelatedFields
+	public partial class CustomerViewRelatedFields
 	{
 		/// <summary>Creates a new CustomerViewRelatedEntity.CustomerId field instance</summary>
 		public static EntityField CustomerId
@@ -345,7 +340,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity EmployeeEntity</summary>
-	public class EmployeeFields
+	public partial class EmployeeFields
 	{
 		/// <summary>Creates a new EmployeeEntity.EmployeeId field instance</summary>
 		public static EntityField EmployeeId
@@ -430,7 +425,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity EmployeeAddressEntity</summary>
-	public class EmployeeAddressFields
+	public partial class EmployeeAddressFields
 	{
 		/// <summary>Creates a new EmployeeAddressEntity.EmployeeId field instance</summary>
 		public static EntityField EmployeeId
@@ -455,7 +450,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity IndividualEntity</summary>
-	public class IndividualFields
+	public partial class IndividualFields
 	{
 		/// <summary>Creates a new IndividualEntity.CustomerId field instance</summary>
 		public static EntityField CustomerId
@@ -480,7 +475,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity ProductEntity</summary>
-	public class ProductFields
+	public partial class ProductFields
 	{
 		/// <summary>Creates a new ProductEntity.ProductId field instance</summary>
 		public static EntityField ProductId
@@ -610,7 +605,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity SalesOrderDetailEntity</summary>
-	public class SalesOrderDetailFields
+	public partial class SalesOrderDetailFields
 	{
 		/// <summary>Creates a new SalesOrderDetailEntity.SalesOrderId field instance</summary>
 		public static EntityField SalesOrderId
@@ -670,7 +665,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity SalesOrderHeaderEntity</summary>
-	public class SalesOrderHeaderFields
+	public partial class SalesOrderHeaderFields
 	{
 		/// <summary>Creates a new SalesOrderHeaderEntity.SalesOrderId field instance</summary>
 		public static EntityField SalesOrderId
@@ -810,7 +805,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity ShipMethodEntity</summary>
-	public class ShipMethodFields
+	public partial class ShipMethodFields
 	{
 		/// <summary>Creates a new ShipMethodEntity.ShipMethodId field instance</summary>
 		public static EntityField ShipMethodId
@@ -845,7 +840,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity SpecialOfferEntity</summary>
-	public class SpecialOfferFields
+	public partial class SpecialOfferFields
 	{
 		/// <summary>Creates a new SpecialOfferEntity.SpecialOfferId field instance</summary>
 		public static EntityField SpecialOfferId
@@ -905,7 +900,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity SpecialOfferProductEntity</summary>
-	public class SpecialOfferProductFields
+	public partial class SpecialOfferProductFields
 	{
 		/// <summary>Creates a new SpecialOfferProductEntity.SpecialOfferId field instance</summary>
 		public static EntityField SpecialOfferId
@@ -930,7 +925,7 @@ namespace AW.Data.HelperClasses
 	}
 
 	/// <summary>Field Creation Class for entity StateProvinceEntity</summary>
-	public class StateProvinceFields
+	public partial class StateProvinceFields
 	{
 		/// <summary>Creates a new StateProvinceEntity.StateProvinceId field instance</summary>
 		public static EntityField StateProvinceId
@@ -976,7 +971,7 @@ namespace AW.Data.HelperClasses
 	
 
 	/// <summary>Field Creation Class for typedview CustomerViewTypedView</summary>
-	public class CustomerViewFields
+	public partial class CustomerViewFields
 	{
 		/// <summary>Creates a new CustomerViewTypedView.CustomerId field instance</summary>
 		public static EntityField CustomerId

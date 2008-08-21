@@ -1,22 +1,19 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:32 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.ComponentModel;
 using System.Data;
 using System.Collections;
+#if !CF
 using System.Runtime.Serialization;
+#endif
 
 using AW.Data;
 using AW.Data.HelperClasses;
@@ -28,6 +25,10 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.TypedViewClasses
 {
+	
+	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+	// __LLBLGENPRO_USER_CODE_REGION_END
+	
 	/// <summary>
 	/// Typed datatable for the view 'CustomerView'.<br/><br/>
 	/// 
@@ -43,7 +44,9 @@ namespace AW.Data.TypedViewClasses
 	[ToolboxItem(true)]
 	[DesignTimeVisible(true)]
 #endif	
-	public class CustomerViewTypedView : DataTable, IEnumerable, ITypedView
+	public partial class CustomerViewTypedView : TypedViewBase<CustomerViewRow>, ITypedView
+		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfacesView
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private DataColumn _columnCustomerId;
@@ -63,7 +66,9 @@ namespace AW.Data.TypedViewClasses
 		private DataColumn _columnPostalCode;
 		private DataColumn _columnCountryRegionName;
 		private DataColumn _columnDemographics;
-
+		
+		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalMembers
+		// __LLBLGENPRO_USER_CODE_REGION_END
 		private static Hashtable	_customProperties;
 		private static Hashtable	_fieldsCustomProperties;
 		#endregion
@@ -209,13 +214,60 @@ namespace AW.Data.TypedViewClasses
 			IGroupByCollection groupByClause, int pageNumber, int pageSize)
 		{
 			// Build resultset
-			IEntityFields fieldsInResultset = EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.CustomerViewTypedView);
-
+			IEntityFields fieldsInResultset = GetFields();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START AdditionalFields
+			// be sure to call fieldsInResultset.Expand(number of new fields) first. 
+			// __LLBLGENPRO_USER_CODE_REGION_END
 			TypedListDAO dao = DAOFactory.CreateTypedListDAO();
-			return dao.GetMultiAsDataTable(fieldsInResultset, this, maxNumberOfItemsToReturn, sortClauses, selectFilter, null, true, groupByClause, transactionToUse, pageNumber, pageSize);
+			return dao.GetMultiAsDataTable(fieldsInResultset, this, maxNumberOfItemsToReturn, sortClauses, selectFilter, null, allowDuplicates, groupByClause, transactionToUse, pageNumber, pageSize);
+		}
+		
+		/// <summary>Gets the fields of this typed view</summary>
+		/// <returns>IEntityFields object</returns>
+		public virtual IEntityFields GetFields()
+		{
+			return EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.CustomerViewTypedView);
 		}
 
 
+		/// <summary>Gets an array of all CustomerViewRow objects.</summary>
+		/// <returns>Array with CustomerViewRow objects</returns>
+		public new CustomerViewRow[] Select()
+		{
+			return (CustomerViewRow[])base.Select();
+		}
+
+
+		/// <summary>Gets an array of all CustomerViewRow objects that match the filter criteria in order of primary key (or lacking one, order of addition.) </summary>
+		/// <param name="filterExpression">The criteria to use to filter the rows.</param>
+		/// <returns>Array with CustomerViewRow objects</returns>
+		public new CustomerViewRow[] Select(string filterExpression)
+		{
+			return (CustomerViewRow[])base.Select(filterExpression);
+		}
+
+
+		/// <summary>Gets an array of all CustomerViewRow objects that match the filter criteria, in the specified sort order</summary>
+		/// <param name="filterExpression">The filter expression.</param>
+		/// <param name="sort">A string specifying the column and sort direction.</param>
+		/// <returns>Array with CustomerViewRow objects</returns>
+		public new CustomerViewRow[] Select(string filterExpression, string sort)
+		{
+			return (CustomerViewRow[])base.Select(filterExpression, sort);
+		}
+
+
+		/// <summary>Gets an array of all CustomerViewRow objects that match the filter criteria, in the specified sort order that match the specified state</summary>
+		/// <param name="filterExpression">The filter expression.</param>
+		/// <param name="sort">A string specifying the column and sort direction.</param>
+		/// <param name="recordStates">One of the <see cref="System.Data.DataViewRowState"/> values.</param>
+		/// <returns>Array with CustomerViewRow objects</returns>
+		public new CustomerViewRow[] Select(string filterExpression, string sort, DataViewRowState recordStates)
+		{
+			return (CustomerViewRow[])base.Select(filterExpression, sort, recordStates);
+		}
+		
 		/// <summary>
 		/// Gets the amount of rows in the database for this typed view, not skipping duplicates
 		/// </summary>
@@ -261,16 +313,6 @@ namespace AW.Data.TypedViewClasses
 			IEntityFields fieldsInResultset = EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.CustomerViewTypedView);
 			TypedListDAO dao = DAOFactory.CreateTypedListDAO();
 			return dao.GetDbCount(fieldsInResultset, null, filter, null, groupByClause, allowDuplicates);
-		}
-
-
-		/// <summary>
-		/// Gets the enumerator for this class.
-		/// </summary>
-		/// <returns>Enumerator for this class.</returns>
-		public IEnumerator GetEnumerator()
-		{
-			return this.Rows.GetEnumerator();
 		}
 
 
@@ -372,8 +414,9 @@ namespace AW.Data.TypedViewClasses
 		/// <summary>
 		/// Initialize the datastructures.
 		/// </summary>
-		private void InitClass()
+		protected override void InitClass()
 		{
+			TableName = "CustomerView";		
 			
 			_columnCustomerId = new DataColumn("CustomerId", typeof(System.Int32), null, MappingType.Element);
 			_columnCustomerId.ReadOnly = true;
@@ -459,6 +502,10 @@ namespace AW.Data.TypedViewClasses
 			_columnDemographics.ReadOnly = true;
 			_columnDemographics.Caption = @"Demographics";
 			this.Columns.Add(_columnDemographics);
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START InitClass
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			OnInitialized();
 		}
 
 
@@ -484,6 +531,9 @@ namespace AW.Data.TypedViewClasses
 			_columnPostalCode = this.Columns["PostalCode"];
 			_columnCountryRegionName = this.Columns["CountryRegionName"];
 			_columnDemographics = this.Columns["Demographics"];
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START InitMembers
+			// __LLBLGENPRO_USER_CODE_REGION_END
 		}
 
 
@@ -720,7 +770,16 @@ namespace AW.Data.TypedViewClasses
 			get { return _columnDemographics; }
 		}
     
+		
+		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalColumnProperties
+		// __LLBLGENPRO_USER_CODE_REGION_END
  		#endregion
+		
+		#region Custom Typed View code
+		
+		// __LLBLGENPRO_USER_CODE_REGION_START CustomTypedViewCode
+		// __LLBLGENPRO_USER_CODE_REGION_END
+		#endregion
 
 		#region Included Code
 
@@ -731,7 +790,9 @@ namespace AW.Data.TypedViewClasses
 	/// <summary>
 	/// Typed datarow for the typed datatable CustomerView
 	/// </summary>
-	public class CustomerViewRow : DataRow
+	public partial class CustomerViewRow : DataRow
+		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfacesRow
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private CustomerViewTypedView	_parent;
@@ -741,7 +802,7 @@ namespace AW.Data.TypedViewClasses
 		/// CTor
 		/// </summary>
 		/// <param name="rowBuilder">Row builder object to use when building this row</param>
-		internal CustomerViewRow(DataRowBuilder rowBuilder) : base(rowBuilder) 
+		protected internal CustomerViewRow(DataRowBuilder rowBuilder) : base(rowBuilder) 
 		{
 			_parent = ((CustomerViewTypedView)(this.Table));
 		}
@@ -1547,6 +1608,12 @@ namespace AW.Data.TypedViewClasses
 		}
 
 	
+		#endregion
+		
+		#region Custom Typed View Row Code
+		
+		// __LLBLGENPRO_USER_CODE_REGION_START CustomTypedViewRowCode
+		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 	}
 }

@@ -1,16 +1,11 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:30 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 
@@ -27,7 +22,8 @@ namespace AW.Data.HelperClasses
 	/// template to the template ID: SD_TypeDefaultValueIncludeTemplate, or alter the template file currently 
 	/// bound to that template ID.
 	/// </summary>
-	public class TypeDefaultValue : ITypeDefaultValue
+	[Serializable]
+	public partial class TypeDefaultValue : ITypeDefaultValue
 	{
 		/// <summary>
 		/// Ctor
@@ -57,49 +53,53 @@ namespace AW.Data.HelperClasses
 		{
 			object valueToReturn=null;
 
-			switch(defaultValueType.UnderlyingSystemType.FullName)
+			switch(Type.GetTypeCode(defaultValueType))
 			{
-				case "System.String":
-					valueToReturn="";
+				case TypeCode.String:
+					valueToReturn=string.Empty;
 					break;
-				case "System.Byte":
-					valueToReturn = (byte)0;
-					break;
-				case "System.Int32":
-					valueToReturn = (int)0;
-					break;
-				case "System.Int16":
-					valueToReturn = (short)0;
-					break;
-				case "System.Int64":
-					valueToReturn = (long)0;
-					break;
-				case "System.DateTime":
-					valueToReturn = DateTime.MinValue;
-					break;
-				case "System.Decimal":
-					valueToReturn = 0.0M;
-					break;
-				case "System.Double":
-					valueToReturn = 0.0;
-					break;
-				case "System.Single":
-					valueToReturn = 0.0f;
-					break;
-				case "System.Boolean":
+				case TypeCode.Boolean:
 					valueToReturn = false;
 					break;
-				case "System.Byte[]":
-					valueToReturn = new byte[0];
+				case TypeCode.Byte:
+					valueToReturn = (byte)0;
 					break;
-				case "System.Guid":
-					valueToReturn = Guid.Empty;
+				case TypeCode.DateTime:
+					valueToReturn = DateTime.MinValue;
+					break;
+				case TypeCode.Decimal:
+					valueToReturn = 0.0M;
+					break;
+				case TypeCode.Double:
+					valueToReturn = 0.0;
+					break;
+				case TypeCode.Int16:
+					valueToReturn = (short)0;
+					break;
+				case TypeCode.Int32:
+					valueToReturn = (int)0;
+					break;
+				case TypeCode.Int64:
+					valueToReturn = (long)0;
+					break;
+				case TypeCode.Object:
+					switch(defaultValueType.UnderlyingSystemType.FullName)
+					{
+						case "System.Guid":
+							valueToReturn = Guid.Empty;
+							break;
+						case "System.Byte[]":
+							valueToReturn = new byte[0];
+							break;
+					}
+					break;					
+				case TypeCode.Single:
+					valueToReturn = 0.0f;
 					break;
 				default:
-					valueToReturn = new object();
+					// do nothing, return null.
 					break;
 			}
-
 			return valueToReturn;
 
 		}

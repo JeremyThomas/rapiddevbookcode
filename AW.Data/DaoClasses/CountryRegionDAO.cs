@@ -1,26 +1,21 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:25 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Collections;
 
 using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.HelperClasses;
-using AW.Data.ValidatorClasses;
 using AW.Data;
 
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -37,10 +32,10 @@ namespace AW.Data.DaoClasses
 	/// General DAO class for the CountryRegion Entity. It will perform database oriented actions for
 	/// a entity of type 'CountryRegionEntity'. This DAO works on an EntityFields object. 
 	/// </summary>
-	public class CountryRegionDAO : DaoBase
+	public partial class CountryRegionDAO : DaoBase
 	{
 		/// <summary>CTor</summary>
-		public CountryRegionDAO() : base(InheritanceInfoProviderSingleton.GetInstance(), new DynamicQueryEngine(), InheritanceHierarchyType.None, "CountryRegionEntity", new CountryRegionEntityFactory(), new TypeDefaultValue())
+		public CountryRegionDAO() : base(InheritanceInfoProviderSingleton.GetInstance(), new DynamicQueryEngine(), InheritanceHierarchyType.None, "CountryRegionEntity", new CountryRegionEntityFactory())
 		{
 		}
 		
@@ -50,8 +45,7 @@ namespace AW.Data.DaoClasses
 		/// <param name="typeOfInheritance">Type of inheritance.</param>
 		/// <param name="entityName">Name of the entity.</param>
 		/// <param name="entityFactory">Entity factory.</param>
-		/// <param name="typeDefaultvalueSupplier">Type defaultvalue supplier.</param>
-		internal CountryRegionDAO(IInheritanceInfoProvider inheritanceInfoProviderToUse, DynamicQueryEngineBase dqeToUse, InheritanceHierarchyType typeOfInheritance, string entityName, IEntityFactory entityFactory, ITypeDefaultValue typeDefaultvalueSupplier) : base(inheritanceInfoProviderToUse, dqeToUse, typeOfInheritance, entityName, entityFactory, new TypeDefaultValue())
+		internal CountryRegionDAO(IInheritanceInfoProvider inheritanceInfoProviderToUse, DynamicQueryEngineBase dqeToUse, InheritanceHierarchyType typeOfInheritance, string entityName, IEntityFactory entityFactory) : base(inheritanceInfoProviderToUse, dqeToUse, typeOfInheritance, entityName, entityFactory)
 		{
 		}
 
@@ -71,7 +65,6 @@ namespace AW.Data.DaoClasses
 		/// <returns>a filled datatable if succeeded, false otherwise</returns>
 		public virtual DataTable GetMultiAsDataTable(long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicate selectFilter, IRelationCollection relations, int pageNumber, int pageSize)
 		{
-			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.CountryRegionEntity);
 			return base.PerformGetMultiAsDataTableAction(maxNumberOfItemsToReturn, sortClauses, selectFilter, relations, pageNumber, pageSize);
 		}
 

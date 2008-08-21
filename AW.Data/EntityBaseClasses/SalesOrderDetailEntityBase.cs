@@ -1,29 +1,25 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:26 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Collections;
+#if !CF
 using System.Runtime.Serialization;
+#endif
 using System.Data;
 using System.Xml.Serialization;
-
 using AW.Data;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.RelationClasses;
-using AW.Data.ValidatorClasses;
 using AW.Data.HelperClasses;
 using AW.Data.CollectionClasses;
 
@@ -38,49 +34,38 @@ namespace AW.Data.EntityClasses
 	/// 
 	/// </summary>
 	[Serializable]
-	public abstract class SalesOrderDetailEntityBase : EntityBase, ISerializable
+	public abstract partial class SalesOrderDetailEntityBase : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 
 
-		private SpecialOfferProductEntity _specialOfferProduct;
-		private bool	_alwaysFetchSpecialOfferProduct, _alreadyFetchedSpecialOfferProduct, _specialOfferProductReturnsNewIfNotFound;
 		private SalesOrderHeaderEntity _salesOrderHeader;
 		private bool	_alwaysFetchSalesOrderHeader, _alreadyFetchedSalesOrderHeader, _salesOrderHeaderReturnsNewIfNotFound;
+		private SpecialOfferProductEntity _specialOfferProduct;
+		private bool	_alwaysFetchSpecialOfferProduct, _alreadyFetchedSpecialOfferProduct, _specialOfferProductReturnsNewIfNotFound;
 
-		private static Hashtable	_customProperties;
-		private static Hashtable	_fieldsCustomProperties;
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
+		
+		#region Statics
+		private static Dictionary<string, string>	_customProperties;
+		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
-		#region DataBinding Change Event Handler Declarations
-		/// <summary>Event which is thrown when SalesOrderId changes value. Databinding related.</summary>
-		public event EventHandler SalesOrderIdChanged;
-		/// <summary>Event which is thrown when SalesOrderDetailId changes value. Databinding related.</summary>
-		public event EventHandler SalesOrderDetailIdChanged;
-		/// <summary>Event which is thrown when CarrierTrackingNumber changes value. Databinding related.</summary>
-		public event EventHandler CarrierTrackingNumberChanged;
-		/// <summary>Event which is thrown when OrderQty changes value. Databinding related.</summary>
-		public event EventHandler OrderQtyChanged;
-		/// <summary>Event which is thrown when ProductId changes value. Databinding related.</summary>
-		public event EventHandler ProductIdChanged;
-		/// <summary>Event which is thrown when SpecialOfferId changes value. Databinding related.</summary>
-		public event EventHandler SpecialOfferIdChanged;
-		/// <summary>Event which is thrown when UnitPrice changes value. Databinding related.</summary>
-		public event EventHandler UnitPriceChanged;
-		/// <summary>Event which is thrown when UnitPriceDiscount changes value. Databinding related.</summary>
-		public event EventHandler UnitPriceDiscountChanged;
-		/// <summary>Event which is thrown when LineTotal changes value. Databinding related.</summary>
-		public event EventHandler LineTotalChanged;
-		/// <summary>Event which is thrown when Rowguid changes value. Databinding related.</summary>
-		public event EventHandler RowguidChanged;
-		/// <summary>Event which is thrown when ModifiedDate changes value. Databinding related.</summary>
-		public event EventHandler ModifiedDateChanged;
+		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
+		public static class MemberNames
+		{
+			/// <summary>Member name SalesOrderHeader</summary>
+			public static readonly string SalesOrderHeader = "SalesOrderHeader";
+			/// <summary>Member name SpecialOfferProduct</summary>
+			public static readonly string SpecialOfferProduct = "SpecialOfferProduct";
 
+
+
+		}
 		#endregion
 		
 		/// <summary>Static CTor for setting up custom property hashtables. Is executed before the first instance of this entity class or derived classes is constructed. </summary>
@@ -92,7 +77,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		public SalesOrderDetailEntityBase()
 		{
-			InitClassEmpty(new PropertyDescriptorFactory(), CreateEntityFactoryInstance(), CreateValidator());
+			InitClassEmpty(null);
 		}
 
 	
@@ -101,7 +86,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		public SalesOrderDetailEntityBase(System.Int32 salesOrderId, System.Int32 salesOrderDetailId)
 		{
-			InitClassFetch(salesOrderId, salesOrderDetailId, CreateValidator(), new PropertyDescriptorFactory(), CreateEntityFactoryInstance(), null);
+			InitClassFetch(salesOrderId, salesOrderDetailId, null, null);
 		}
 
 		/// <summary>CTor</summary>
@@ -110,37 +95,18 @@ namespace AW.Data.EntityClasses
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		public SalesOrderDetailEntityBase(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(salesOrderId, salesOrderDetailId, CreateValidator(), new PropertyDescriptorFactory(), CreateEntityFactoryInstance(), prefetchPathToUse);
+			InitClassFetch(salesOrderId, salesOrderDetailId, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
 		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="validator">The custom validator object for this SalesOrderDetailEntity</param>
-		public SalesOrderDetailEntityBase(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, SalesOrderDetailValidator validator)
+		public SalesOrderDetailEntityBase(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IValidator validator)
 		{
-			InitClassFetch(salesOrderId, salesOrderDetailId, validator, new PropertyDescriptorFactory(), CreateEntityFactoryInstance(), null);
-		}
-
-		/// <summary>CTor</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="validator">The custom validator object for this SalesOrderDetailEntity</param>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		public SalesOrderDetailEntityBase(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, SalesOrderDetailValidator validator, IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse)
-		{
-			InitClassFetch(salesOrderId, salesOrderDetailId, validator, propertyDescriptorFactoryToUse, entityFactoryToUse, null);
+			InitClassFetch(salesOrderId, salesOrderDetailId, validator, null);
 		}
 	
-
-		/// <summary>CTor</summary>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		public SalesOrderDetailEntityBase(IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse)
-		{
-			InitClassEmpty(propertyDescriptorFactoryToUse, entityFactoryToUse, CreateValidator());
-		}
 
 		/// <summary>Protected CTor for deserialization</summary>
 		/// <param name="info"></param>
@@ -149,14 +115,6 @@ namespace AW.Data.EntityClasses
 		{
 
 
-			_specialOfferProduct = (SpecialOfferProductEntity)info.GetValue("_specialOfferProduct", typeof(SpecialOfferProductEntity));
-			if(_specialOfferProduct!=null)
-			{
-				_specialOfferProduct.AfterSave+=new EventHandler(OnEntityAfterSave);
-			}
-			_specialOfferProductReturnsNewIfNotFound = info.GetBoolean("_specialOfferProductReturnsNewIfNotFound");
-			_alwaysFetchSpecialOfferProduct = info.GetBoolean("_alwaysFetchSpecialOfferProduct");
-			_alreadyFetchedSpecialOfferProduct = info.GetBoolean("_alreadyFetchedSpecialOfferProduct");
 			_salesOrderHeader = (SalesOrderHeaderEntity)info.GetValue("_salesOrderHeader", typeof(SalesOrderHeaderEntity));
 			if(_salesOrderHeader!=null)
 			{
@@ -165,76 +123,95 @@ namespace AW.Data.EntityClasses
 			_salesOrderHeaderReturnsNewIfNotFound = info.GetBoolean("_salesOrderHeaderReturnsNewIfNotFound");
 			_alwaysFetchSalesOrderHeader = info.GetBoolean("_alwaysFetchSalesOrderHeader");
 			_alreadyFetchedSalesOrderHeader = info.GetBoolean("_alreadyFetchedSalesOrderHeader");
+			_specialOfferProduct = (SpecialOfferProductEntity)info.GetValue("_specialOfferProduct", typeof(SpecialOfferProductEntity));
+			if(_specialOfferProduct!=null)
+			{
+				_specialOfferProduct.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_specialOfferProductReturnsNewIfNotFound = info.GetBoolean("_specialOfferProductReturnsNewIfNotFound");
+			_alwaysFetchSpecialOfferProduct = info.GetBoolean("_alwaysFetchSpecialOfferProduct");
+			_alreadyFetchedSpecialOfferProduct = info.GetBoolean("_alreadyFetchedSpecialOfferProduct");
 
+			base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
 		}
 
 		
-		/// <summary> Will perform post-ReadXml actions as well as the normal ReadXml() actions, performed by the base class.</summary>
-		/// <param name="node">XmlNode with Xml data which should be read into this entity and its members. Node's root element is the root element of the entity's Xml data</param>
-		public override void ReadXml(System.Xml.XmlNode node)
+		/// <summary>Performs the desync setup when an FK field has been changed. The entity referenced based on the FK field will be dereferenced and sync info will be removed.</summary>
+		/// <param name="fieldIndex">The fieldindex.</param>
+		protected override void PerformDesyncSetupFKFieldChange(int fieldIndex)
 		{
-			base.ReadXml (node);
+			switch((SalesOrderDetailFieldIndex)fieldIndex)
+			{
+				case SalesOrderDetailFieldIndex.SalesOrderId:
+					DesetupSyncSalesOrderHeader(true, false);
+					_alreadyFetchedSalesOrderHeader = false;
+					break;
+				case SalesOrderDetailFieldIndex.ProductId:
+					DesetupSyncSpecialOfferProduct(true, false);
+					_alreadyFetchedSpecialOfferProduct = false;
+					break;
+				case SalesOrderDetailFieldIndex.SpecialOfferId:
+					DesetupSyncSpecialOfferProduct(true, false);
+					_alreadyFetchedSpecialOfferProduct = false;
+					break;
+				default:
+					base.PerformDesyncSetupFKFieldChange(fieldIndex);
+					break;
+			}
+		}
+		
+		/// <summary>Gets the inheritance info provider instance of the project this entity instance is located in. </summary>
+		/// <returns>ready to use inheritance info provider instance.</returns>
+		protected override IInheritanceInfoProvider GetInheritanceInfoProvider()
+		{
+			return InheritanceInfoProviderSingleton.GetInstance();
+		}
+		
+		/// <summary> Will perform post-ReadXml actions</summary>
+		protected override void PostReadXmlFixups()
+		{
 
 
-			_alreadyFetchedSpecialOfferProduct = (_specialOfferProduct != null);
 			_alreadyFetchedSalesOrderHeader = (_salesOrderHeader != null);
+			_alreadyFetchedSpecialOfferProduct = (_specialOfferProduct != null);
 
 		}
-		
-		/// <summary> Saves the Entity class to the persistent storage. It updates or inserts the entity, which depends if the entity was originally read from the 
-		/// database. If the entity is new, an insert is done and the updateRestriction is ignored. If the entity is not new, the updateRestriction
-		/// predicate is used to create an additional where clause (it will be added with AND) for the update query. This predicate can be used for
-		/// concurrency checks, like checks on timestamp column values.</summary>
-		/// <param name="updateRestriction">Predicate expression, meant for concurrency checks in an Update query. Will be ignored when the entity is new </param>
-		/// <param name="recurse">When true, it will save all dirty objects referenced (directly or indirectly) by this entity also.</param>
-		/// <returns>true if Save succeeded, false otherwise</returns>
-		/// <remarks>Do not call this routine directly, use the overloaded version in a derived class as this version doesn't construct a
-		/// local transaction during recursive save, this is done in the overloaded version in a derived class.</remarks>
-		/// <exception cref="ORMQueryExecutionException">When an exception is caught during the save process. The caught exception is set as the
-		/// inner exception. Encapsulation of database-related exceptions is necessary since these exceptions do not have a common exception framework implemented.</exception>
-		public override bool Save(IPredicate updateRestriction, bool recurse)
+				
+		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
+		/// <param name="fieldName">Name of the field mapped onto the relation of which the relation objects have to be obtained.</param>
+		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
+		public override RelationCollection GetRelationsForFieldOfType(string fieldName)
 		{
-			bool transactionStartedInThisScope = false;
-			Transaction transactionManager = null;
-
-			if(recurse || ((this.LLBLGenProIsInHierarchyOfType==InheritanceHierarchyType.TargetPerEntity) && this.LLBLGenProIsSubType))
-			{
-				if(!base.ParticipatesInTransaction)
-				{
-					transactionManager = new Transaction(IsolationLevel.ReadCommitted, "SaveRecursively");
-					transactionManager.Add(this);
-					transactionStartedInThisScope=true;
-				}
-			}
-			try
-			{
-				bool result = base.Save(updateRestriction, recurse);
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Commit();
-				}
-				return result;
-			}
-			catch
-			{
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Rollback();
-				}
-				throw;
-			}
-			finally
-			{
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Dispose();
-				}
-			}
+			return SalesOrderDetailEntity.GetRelationsForField(fieldName);
 		}
-		
+
+		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
+		/// <param name="fieldName">Name of the field mapped onto the relation of which the relation objects have to be obtained.</param>
+		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
+		public static RelationCollection GetRelationsForField(string fieldName)
+		{
+			RelationCollection toReturn = new RelationCollection();
+			switch(fieldName)
+			{
+				case "SalesOrderHeader":
+					toReturn.Add(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId);
+					break;
+				case "SpecialOfferProduct":
+					toReturn.Add(SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId);
+					break;
+
+
+
+				default:
+
+					break;				
+			}
+			return toReturn;
+		}
+
 
 
 		/// <summary> ISerializable member. Does custom serialization so event handlers do not get serialized.
@@ -246,14 +223,14 @@ namespace AW.Data.EntityClasses
 		{
 
 
-			info.AddValue("_specialOfferProduct", _specialOfferProduct);
-			info.AddValue("_specialOfferProductReturnsNewIfNotFound", _specialOfferProductReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchSpecialOfferProduct", _alwaysFetchSpecialOfferProduct);
-			info.AddValue("_alreadyFetchedSpecialOfferProduct", _alreadyFetchedSpecialOfferProduct);
-			info.AddValue("_salesOrderHeader", _salesOrderHeader);
+			info.AddValue("_salesOrderHeader", (!this.MarkedForDeletion?_salesOrderHeader:null));
 			info.AddValue("_salesOrderHeaderReturnsNewIfNotFound", _salesOrderHeaderReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchSalesOrderHeader", _alwaysFetchSalesOrderHeader);
 			info.AddValue("_alreadyFetchedSalesOrderHeader", _alreadyFetchedSalesOrderHeader);
+			info.AddValue("_specialOfferProduct", (!this.MarkedForDeletion?_specialOfferProduct:null));
+			info.AddValue("_specialOfferProductReturnsNewIfNotFound", _specialOfferProductReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchSpecialOfferProduct", _alwaysFetchSpecialOfferProduct);
+			info.AddValue("_alreadyFetchedSpecialOfferProduct", _alreadyFetchedSpecialOfferProduct);
 
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -266,17 +243,17 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
+		public override void SetRelatedEntityProperty(string propertyName, IEntity entity)
 		{
 			switch(propertyName)
 			{
-				case "SpecialOfferProduct":
-					_alreadyFetchedSpecialOfferProduct = true;
-					this.SpecialOfferProduct = (SpecialOfferProductEntity)entity;
-					break;
 				case "SalesOrderHeader":
 					_alreadyFetchedSalesOrderHeader = true;
 					this.SalesOrderHeader = (SalesOrderHeaderEntity)entity;
+					break;
+				case "SpecialOfferProduct":
+					_alreadyFetchedSpecialOfferProduct = true;
+					this.SpecialOfferProduct = (SpecialOfferProductEntity)entity;
 					break;
 
 
@@ -295,11 +272,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "SpecialOfferProduct":
-					SetupSyncSpecialOfferProduct(relatedEntity);
-					break;
 				case "SalesOrderHeader":
 					SetupSyncSalesOrderHeader(relatedEntity);
+					break;
+				case "SpecialOfferProduct":
+					SetupSyncSpecialOfferProduct(relatedEntity);
 					break;
 
 
@@ -312,16 +289,17 @@ namespace AW.Data.EntityClasses
 		/// <summary> Unsets the internal parameter related to the fieldname passed to the instance relatedEntity. Reverses the actions taken by SetRelatedEntity() </summary>
 		/// <param name="relatedEntity">Instance to unset as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
+		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		public override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName)
+		public override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
-				case "SpecialOfferProduct":
-					DesetupSyncSpecialOfferProduct(false);
-					break;
 				case "SalesOrderHeader":
-					DesetupSyncSalesOrderHeader(false);
+					DesetupSyncSalesOrderHeader(false, true);
+					break;
+				case "SpecialOfferProduct":
+					DesetupSyncSpecialOfferProduct(false, true);
 					break;
 
 
@@ -334,9 +312,9 @@ namespace AW.Data.EntityClasses
 		/// <summary> Gets a collection of related entities referenced by this entity which depend on this entity (this entity is the PK side of their FK fields). These
 		/// entities will have to be persisted after this entity during a recursive save.</summary>
 		/// <returns>Collection with 0 or more IEntity objects, referenced by this entity</returns>
-		public override ArrayList GetDependingRelatedEntities()
+		public override List<IEntity> GetDependingRelatedEntities()
 		{
-			ArrayList toReturn = new ArrayList();
+			List<IEntity> toReturn = new List<IEntity>();
 
 
 			return toReturn;
@@ -345,28 +323,28 @@ namespace AW.Data.EntityClasses
 		/// <summary> Gets a collection of related entities referenced by this entity which this entity depends on (this entity is the FK side of their PK fields). These
 		/// entities will have to be persisted before this entity during a recursive save.</summary>
 		/// <returns>Collection with 0 or more IEntity objects, referenced by this entity</returns>
-		public override ArrayList GetDependentRelatedEntities()
+		public override List<IEntity> GetDependentRelatedEntities()
 		{
-			ArrayList toReturn = new ArrayList();
-			if(_specialOfferProduct!=null)
-			{
-				toReturn.Add(_specialOfferProduct);
-			}
+			List<IEntity> toReturn = new List<IEntity>();
 			if(_salesOrderHeader!=null)
 			{
 				toReturn.Add(_salesOrderHeader);
+			}
+			if(_specialOfferProduct!=null)
+			{
+				toReturn.Add(_specialOfferProduct);
 			}
 
 
 			return toReturn;
 		}
 		
-		/// <summary> Gets an ArrayList of all entity collections stored as member variables in this entity. The contents of the ArrayList is
+		/// <summary> Gets a List of all entity collections stored as member variables in this entity. The contents of the ArrayList is
 		/// used by the DataAccessAdapter to perform recursive saves. Only 1:n related collections are returned.</summary>
 		/// <returns>Collection with 0 or more IEntityCollection objects, referenced by this entity</returns>
-		public override ArrayList GetMemberEntityCollections()
+		public override List<IEntityCollection> GetMemberEntityCollections()
 		{
-			ArrayList toReturn = new ArrayList();
+			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 
 
 			return toReturn;
@@ -382,7 +360,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>True if succeeded, false otherwise.</returns>
 		public bool FetchUsingPK(System.Int32 salesOrderId, System.Int32 salesOrderDetailId)
 		{
-			return FetchUsingPK(salesOrderId, salesOrderDetailId, null, null);
+			return FetchUsingPK(salesOrderId, salesOrderDetailId, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
@@ -392,7 +370,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>True if succeeded, false otherwise.</returns>
 		public bool FetchUsingPK(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(salesOrderId, salesOrderDetailId, prefetchPathToUse, null);
+			return FetchUsingPK(salesOrderId, salesOrderDetailId, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
@@ -403,7 +381,21 @@ namespace AW.Data.EntityClasses
 		/// <returns>True if succeeded, false otherwise.</returns>
 		public bool FetchUsingPK(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(salesOrderId, salesOrderDetailId, prefetchPathToUse, contextToUse);
+			return Fetch(salesOrderId, salesOrderDetailId, prefetchPathToUse, contextToUse, null);
+		}
+
+		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
+		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
+		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
+		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
+		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
+		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
+		/// <returns>True if succeeded, false otherwise.</returns>
+		public bool FetchUsingPK(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		{
+			return Fetch(salesOrderId, salesOrderDetailId, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -411,57 +403,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.SalesOrderId, this.SalesOrderDetailId, null, null);
-		}
-
-
-		/// <summary> Deletes the Entity from the persistent storage. This method succeeds also when the Entity is not present.</summary>
-		/// <param name="deleteRestriction">Predicate expression, meant for concurrency checks in a delete query. Overrules the predicate returned by a set ConcurrencyPredicateFactory object.</param>
-		/// <returns>true if Delete succeeded, false otherwise</returns>
-		public override bool Delete(IPredicate deleteRestriction)
-		{
-			bool transactionStartedInThisScope = false;
-			Transaction transactionManager = null;
-			if((this.LLBLGenProIsInHierarchyOfType==InheritanceHierarchyType.TargetPerEntity) && this.LLBLGenProIsSubType)
-			{
-				if(!base.ParticipatesInTransaction)
-				{
-					transactionManager = new Transaction(IsolationLevel.ReadCommitted, "DeleteEntity");
-					transactionManager.Add(this);
-					transactionStartedInThisScope=true;
-				}
-			}
-			try
-			{
-				OnDelete();
-				IDao dao = CreateDAOInstance();
-				bool wasSuccesful = dao.DeleteExisting(base.Fields, base.Transaction, deleteRestriction);
-				if(wasSuccesful)
-				{
-					base.Delete(deleteRestriction);
-				}
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Commit();
-				}
-				return wasSuccesful;
-			}
-			catch
-			{
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Rollback();
-				}
-				throw;
-			}
-			finally
-			{
-				if(transactionStartedInThisScope)
-				{
-					transactionManager.Dispose();
-				}
-				OnDeleteComplete();
-			}
+			return Fetch(this.SalesOrderId, this.SalesOrderDetailId, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -481,60 +423,17 @@ namespace AW.Data.EntityClasses
 		{
 			return base.CheckIfCurrentFieldValueIsNull((int)fieldIndex);
 		}
-		
-		/// <summary>Determines whether this entity is a subType of the entity represented by the passed in enum value, which represents a value in the EntityType enum</summary>
-		/// <param name="typeOfEntity">Type of entity.</param>
-		/// <returns>true if the passed in type is a supertype of this entity, otherwise false</returns>
-		[EditorBrowsable(EditorBrowsableState.Never)]
-		public override bool CheckIfIsSubTypeOf(int typeOfEntity)
+
+				
+		/// <summary>Gets a list of all the EntityRelation objects the type of this instance has.</summary>
+		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
+		public override List<IEntityRelation> GetAllRelations()
 		{
-			return InheritanceInfoProviderSingleton.GetInstance().CheckIfIsSubTypeOf("SalesOrderDetailEntity", ((AW.Data.EntityType)typeOfEntity).ToString());
+			return new SalesOrderDetailRelations().GetAllRelations();
 		}
 
 
 
-
-		/// <summary> Retrieves the related entity of type 'SpecialOfferProductEntity', using a relation of type 'n:1'</summary>
-		/// <returns>A fetched entity of type 'SpecialOfferProductEntity' which is related to this entity.</returns>
-		public SpecialOfferProductEntity GetSingleSpecialOfferProduct()
-		{
-			return GetSingleSpecialOfferProduct(false);
-		}
-
-		/// <summary> Retrieves the related entity of type 'SpecialOfferProductEntity', using a relation of type 'n:1'</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
-		/// <returns>A fetched entity of type 'SpecialOfferProductEntity' which is related to this entity.</returns>
-		public virtual SpecialOfferProductEntity GetSingleSpecialOfferProduct(bool forceFetch)
-		{
- 			if( ( !_alreadyFetchedSpecialOfferProduct || forceFetch || _alwaysFetchSpecialOfferProduct) && !base.IsSerializing && !base.IsDeserializing )
-			{
-
-				SpecialOfferProductEntity newEntity = new SpecialOfferProductEntity();
-				if(base.ParticipatesInTransaction)
-				{
-					base.Transaction.Add(newEntity);
-				}
-				bool fetchResult = newEntity.FetchUsingPK(this.SpecialOfferId, this.ProductId);
-				if(!_specialOfferProductReturnsNewIfNotFound && !fetchResult)
-				{
-					this.SpecialOfferProduct = null;
-				}
-				else
-				{
-					if((base.ActiveContext!=null)&&fetchResult)
-					{
-						newEntity = (SpecialOfferProductEntity)base.ActiveContext.Get(newEntity);
-					}
-					this.SpecialOfferProduct = newEntity;
-					_alreadyFetchedSpecialOfferProduct = fetchResult;
-				}
-				if(base.ParticipatesInTransaction && !fetchResult)
-				{
-					base.Transaction.Remove(newEntity);
-				}
-			}
-			return _specialOfferProduct;
-		}
 
 		/// <summary> Retrieves the related entity of type 'SalesOrderHeaderEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'SalesOrderHeaderEntity' which is related to this entity.</returns>
@@ -548,28 +447,43 @@ namespace AW.Data.EntityClasses
 		/// <returns>A fetched entity of type 'SalesOrderHeaderEntity' which is related to this entity.</returns>
 		public virtual SalesOrderHeaderEntity GetSingleSalesOrderHeader(bool forceFetch)
 		{
- 			if( ( !_alreadyFetchedSalesOrderHeader || forceFetch || _alwaysFetchSalesOrderHeader) && !base.IsSerializing && !base.IsDeserializing )
+			if( ( !_alreadyFetchedSalesOrderHeader || forceFetch || _alwaysFetchSalesOrderHeader) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId);
 
 				SalesOrderHeaderEntity newEntity = new SalesOrderHeaderEntity();
 				if(base.ParticipatesInTransaction)
 				{
 					base.Transaction.Add(newEntity);
 				}
-				bool fetchResult = newEntity.FetchUsingPK(this.SalesOrderId);
-				if(!_salesOrderHeaderReturnsNewIfNotFound && !fetchResult)
+				bool fetchResult = false;
+				if(performLazyLoading)
 				{
-					this.SalesOrderHeader = null;
+					fetchResult = newEntity.FetchUsingPK(this.SalesOrderId);
 				}
-				else
+				if(fetchResult)
 				{
-					if((base.ActiveContext!=null)&&fetchResult)
+					if(base.ActiveContext!=null)
 					{
 						newEntity = (SalesOrderHeaderEntity)base.ActiveContext.Get(newEntity);
 					}
 					this.SalesOrderHeader = newEntity;
-					_alreadyFetchedSalesOrderHeader = fetchResult;
 				}
+				else
+				{
+					if(_salesOrderHeaderReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_salesOrderHeader == null)))
+						{
+							this.SalesOrderHeader = newEntity;
+						}
+					}
+					else
+					{
+						this.SalesOrderHeader = null;
+					}
+				}
+				_alreadyFetchedSalesOrderHeader = fetchResult;
 				if(base.ParticipatesInTransaction && !fetchResult)
 				{
 					base.Transaction.Remove(newEntity);
@@ -578,184 +492,63 @@ namespace AW.Data.EntityClasses
 			return _salesOrderHeader;
 		}
 
-	
-		#region Data binding change event raising methods
-
-		/// <summary> Event thrower for the SalesOrderIdChanged event, which is thrown when SalesOrderId changes value. Databinding related.</summary>
-		protected virtual void OnSalesOrderIdChanged()
+		/// <summary> Retrieves the related entity of type 'SpecialOfferProductEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'SpecialOfferProductEntity' which is related to this entity.</returns>
+		public SpecialOfferProductEntity GetSingleSpecialOfferProduct()
 		{
-			if(SalesOrderIdChanged!=null)
-			{
-				SalesOrderIdChanged(this, new EventArgs());
-			}
+			return GetSingleSpecialOfferProduct(false);
 		}
 
-		/// <summary> Event thrower for the SalesOrderDetailIdChanged event, which is thrown when SalesOrderDetailId changes value. Databinding related.</summary>
-		protected virtual void OnSalesOrderDetailIdChanged()
+		/// <summary> Retrieves the related entity of type 'SpecialOfferProductEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'SpecialOfferProductEntity' which is related to this entity.</returns>
+		public virtual SpecialOfferProductEntity GetSingleSpecialOfferProduct(bool forceFetch)
 		{
-			if(SalesOrderDetailIdChanged!=null)
+			if( ( !_alreadyFetchedSpecialOfferProduct || forceFetch || _alwaysFetchSpecialOfferProduct) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				SalesOrderDetailIdChanged(this, new EventArgs());
-			}
-		}
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId);
 
-		/// <summary> Event thrower for the CarrierTrackingNumberChanged event, which is thrown when CarrierTrackingNumber changes value. Databinding related.</summary>
-		protected virtual void OnCarrierTrackingNumberChanged()
-		{
-			if(CarrierTrackingNumberChanged!=null)
-			{
-				CarrierTrackingNumberChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the OrderQtyChanged event, which is thrown when OrderQty changes value. Databinding related.</summary>
-		protected virtual void OnOrderQtyChanged()
-		{
-			if(OrderQtyChanged!=null)
-			{
-				OrderQtyChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the ProductIdChanged event, which is thrown when ProductId changes value. Databinding related.</summary>
-		protected virtual void OnProductIdChanged()
-		{
-			if(ProductIdChanged!=null)
-			{
-				ProductIdChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the SpecialOfferIdChanged event, which is thrown when SpecialOfferId changes value. Databinding related.</summary>
-		protected virtual void OnSpecialOfferIdChanged()
-		{
-			if(SpecialOfferIdChanged!=null)
-			{
-				SpecialOfferIdChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the UnitPriceChanged event, which is thrown when UnitPrice changes value. Databinding related.</summary>
-		protected virtual void OnUnitPriceChanged()
-		{
-			if(UnitPriceChanged!=null)
-			{
-				UnitPriceChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the UnitPriceDiscountChanged event, which is thrown when UnitPriceDiscount changes value. Databinding related.</summary>
-		protected virtual void OnUnitPriceDiscountChanged()
-		{
-			if(UnitPriceDiscountChanged!=null)
-			{
-				UnitPriceDiscountChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the LineTotalChanged event, which is thrown when LineTotal changes value. Databinding related.</summary>
-		protected virtual void OnLineTotalChanged()
-		{
-			if(LineTotalChanged!=null)
-			{
-				LineTotalChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the RowguidChanged event, which is thrown when Rowguid changes value. Databinding related.</summary>
-		protected virtual void OnRowguidChanged()
-		{
-			if(RowguidChanged!=null)
-			{
-				RowguidChanged(this, new EventArgs());
-			}
-		}
-
-		/// <summary> Event thrower for the ModifiedDateChanged event, which is thrown when ModifiedDate changes value. Databinding related.</summary>
-		protected virtual void OnModifiedDateChanged()
-		{
-			if(ModifiedDateChanged!=null)
-			{
-				ModifiedDateChanged(this, new EventArgs());
-			}
-		}
-
-		#endregion
-		
-		/// <summary> Sets the field on index fieldIndex to the new value value. Marks also the fields object as dirty. </summary>
-		/// <param name="fieldIndex">Index of field to set the new value of</param>
-		/// <param name="value">Value to set</param>
-		/// <param name="checkForRefetch">If set to true, it will check if this entity is out of sync and will refetch it first if it is. Use true in normal behavior, false for framework specific code.</param>
-		/// <returns>true if the value is actually set, false otherwise.</returns>
-		/// <remarks>Dereferences a related object in an 1:1/m:1 relation if the field is an FK field and responsible for the reference of that particular related object.</remarks>
-		/// <exception cref="ArgumentOutOfRangeException">When fieldIndex is smaller than 0 or bigger than the number of fields in the fields collection.</exception>
-		protected override bool SetNewFieldValue(int fieldIndex, object value, bool checkForRefetch)
-		{
-			bool toReturn = base.SetNewFieldValue (fieldIndex, value, checkForRefetch, false);
-			if(toReturn)
-			{
-				switch((SalesOrderDetailFieldIndex)fieldIndex)
+				SpecialOfferProductEntity newEntity = new SpecialOfferProductEntity();
+				if(base.ParticipatesInTransaction)
 				{
-					case SalesOrderDetailFieldIndex.SalesOrderId:
-						DecoupleEventsSalesOrderHeader();
-						_salesOrderHeader = null;
-						_alreadyFetchedSalesOrderHeader = false;
-						break;
-					case SalesOrderDetailFieldIndex.ProductId:
-						DecoupleEventsSpecialOfferProduct();
-						_specialOfferProduct = null;
-						_alreadyFetchedSpecialOfferProduct = false;
-						break;
-					case SalesOrderDetailFieldIndex.SpecialOfferId:
-						DecoupleEventsSpecialOfferProduct();
-						_specialOfferProduct = null;
-						_alreadyFetchedSpecialOfferProduct = false;
-						break;
-					default:
-						break;
+					base.Transaction.Add(newEntity);
 				}
-				base.PostFieldValueSetAction(toReturn);
-				switch((SalesOrderDetailFieldIndex)fieldIndex)
+				bool fetchResult = false;
+				if(performLazyLoading)
 				{
-					case SalesOrderDetailFieldIndex.SalesOrderId:
-						OnSalesOrderIdChanged();
-						break;
-					case SalesOrderDetailFieldIndex.SalesOrderDetailId:
-						OnSalesOrderDetailIdChanged();
-						break;
-					case SalesOrderDetailFieldIndex.CarrierTrackingNumber:
-						OnCarrierTrackingNumberChanged();
-						break;
-					case SalesOrderDetailFieldIndex.OrderQty:
-						OnOrderQtyChanged();
-						break;
-					case SalesOrderDetailFieldIndex.ProductId:
-						OnProductIdChanged();
-						break;
-					case SalesOrderDetailFieldIndex.SpecialOfferId:
-						OnSpecialOfferIdChanged();
-						break;
-					case SalesOrderDetailFieldIndex.UnitPrice:
-						OnUnitPriceChanged();
-						break;
-					case SalesOrderDetailFieldIndex.UnitPriceDiscount:
-						OnUnitPriceDiscountChanged();
-						break;
-					case SalesOrderDetailFieldIndex.LineTotal:
-						OnLineTotalChanged();
-						break;
-					case SalesOrderDetailFieldIndex.Rowguid:
-						OnRowguidChanged();
-						break;
-					case SalesOrderDetailFieldIndex.ModifiedDate:
-						OnModifiedDateChanged();
-						break;
-					default:
-						break;
+					fetchResult = newEntity.FetchUsingPK(this.SpecialOfferId, this.ProductId);
+				}
+				if(fetchResult)
+				{
+					if(base.ActiveContext!=null)
+					{
+						newEntity = (SpecialOfferProductEntity)base.ActiveContext.Get(newEntity);
+					}
+					this.SpecialOfferProduct = newEntity;
+				}
+				else
+				{
+					if(_specialOfferProductReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_specialOfferProduct == null)))
+						{
+							this.SpecialOfferProduct = newEntity;
+						}
+					}
+					else
+					{
+						this.SpecialOfferProduct = null;
+					}
+				}
+				_alreadyFetchedSpecialOfferProduct = fetchResult;
+				if(base.ParticipatesInTransaction && !fetchResult)
+				{
+					base.Transaction.Remove(newEntity);
 				}
 			}
-			return toReturn;
+			return _specialOfferProduct;
 		}
+
 
 		/// <summary> Performs the insert action of a new Entity to the persistent storage.</summary>
 		/// <returns>true if succeeded, false otherwise</returns>
@@ -770,13 +563,13 @@ namespace AW.Data.EntityClasses
 		{
 
 
-			if(_specialOfferProduct!=null)
-			{
-				_specialOfferProduct.ActiveContext = base.ActiveContext;
-			}
 			if(_salesOrderHeader!=null)
 			{
 				_salesOrderHeader.ActiveContext = base.ActiveContext;
+			}
+			if(_specialOfferProduct!=null)
+			{
+				_specialOfferProduct.ActiveContext = base.ActiveContext;
 			}
 
 
@@ -801,38 +594,20 @@ namespace AW.Data.EntityClasses
 		}
 	
 		/// <summary> Initializes the class with empty data, as if it is a new Entity.</summary>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="validatorToUse">Validator to use.</param>
-		protected virtual void InitClassEmpty(IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse, IValidator validatorToUse)
+		protected virtual void InitClassEmpty(IValidator validatorToUse)
 		{
+			OnInitializing();
 			base.Fields = CreateFields();
 			base.IsNew=true;
-			base.EntityFactoryToUse = entityFactoryToUse;
 			base.Validator = validatorToUse;
 
-			InitClassMembers(propertyDescriptorFactoryToUse, entityFactoryToUse);
+			InitClassMembers();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
 
-		}
-
-		/// <summary> A method which calls all OnFieldnameChanged methods to signal that the field has been changed
-		/// to bound controls. This is required after a RollbackFields() call.</summary>
-		protected override void FlagAllFieldsAsChanged()
-		{
-			OnSalesOrderIdChanged();
-			OnSalesOrderDetailIdChanged();
-			OnCarrierTrackingNumberChanged();
-			OnOrderQtyChanged();
-			OnProductIdChanged();
-			OnSpecialOfferIdChanged();
-			OnUnitPriceChanged();
-			OnUnitPriceDiscountChanged();
-			OnLineTotalChanged();
-			OnRowguidChanged();
-			OnModifiedDateChanged();
+			OnInitialized();
 		}
 		
 		/// <summary>Creates entity fields object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
@@ -840,201 +615,191 @@ namespace AW.Data.EntityClasses
 		{
 			return EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.SalesOrderDetailEntity);
 		}
-
-		/// <summary>Creates field validator object for this entity. Used in constructor to setup this entity in a polymorphic scenario.</summary>
-		protected virtual IValidator CreateValidator()
+		
+		/// <summary>Creates a new transaction object</summary>
+		/// <param name="levelOfIsolation">The level of isolation.</param>
+		/// <param name="name">The name.</param>
+		protected override ITransaction CreateTransaction( IsolationLevel levelOfIsolation, string name )
 		{
-			return new SalesOrderDetailValidator();
+			return new Transaction(levelOfIsolation, name);
 		}
 
+		/// <summary>
+		/// Creates the ITypeDefaultValue instance used to provide default values for value types which aren't of type nullable(of T)
+		/// </summary>
+		/// <returns></returns>
+		protected override ITypeDefaultValue CreateTypeDefaultValueProvider()
+		{
+			return new TypeDefaultValue();
+		}
+
+		/// <summary>
+		/// Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element. 
+		/// </summary>
+		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
+		public override Dictionary<string, object> GetRelatedData()
+		{
+			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			toReturn.Add("SalesOrderHeader", _salesOrderHeader);
+			toReturn.Add("SpecialOfferProduct", _specialOfferProduct);
+
+
+
+			return toReturn;
+		}
+		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
 		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="validator">The validator object for this SalesOrderDetailEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IValidator validator, IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassMembers(propertyDescriptorFactoryToUse, entityFactoryToUse);
-
-			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(salesOrderId, salesOrderDetailId, prefetchPathToUse, null);
-			base.IsNew = !wasSuccesful;
+			OnInitializing();
 			base.Validator = validator;
-			base.EntityFactoryToUse = entityFactoryToUse;
+			InitClassMembers();
+			base.Fields = CreateFields();
+			bool wasSuccesful = Fetch(salesOrderId, salesOrderDetailId, prefetchPathToUse, null, null);
+			base.IsNew = !wasSuccesful;
 
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
 
+			OnInitialized();
 		}
 
 		/// <summary> Initializes the class members</summary>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		private void InitClassMembers(IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse)
+		private void InitClassMembers()
 		{
 
 
-			_specialOfferProduct = null;
-			_specialOfferProductReturnsNewIfNotFound = true;
-			_alwaysFetchSpecialOfferProduct = false;
-			_alreadyFetchedSpecialOfferProduct = false;
 			_salesOrderHeader = null;
 			_salesOrderHeaderReturnsNewIfNotFound = true;
 			_alwaysFetchSalesOrderHeader = false;
 			_alreadyFetchedSalesOrderHeader = false;
+			_specialOfferProduct = null;
+			_specialOfferProductReturnsNewIfNotFound = true;
+			_alwaysFetchSpecialOfferProduct = false;
+			_alreadyFetchedSpecialOfferProduct = false;
 
+
+			PerformDependencyInjection();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			OnInitClassMembersComplete();
 		}
 
 		#region Custom Property Hashtable Setup
 		/// <summary> Initializes the hashtables for the entity type and entity field custom properties. </summary>
 		private static void SetupCustomPropertyHashtables()
 		{
-			_customProperties = new Hashtable();
-			_fieldsCustomProperties = new Hashtable();
+			_customProperties = new Dictionary<string, string>();
+			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 
-			Hashtable fieldHashtable = null;
-			fieldHashtable = new Hashtable();
+			Dictionary<string, string> fieldHashtable = null;
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("SalesOrderId", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("SalesOrderDetailId", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("CarrierTrackingNumber", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("OrderQty", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ProductId", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("SpecialOfferId", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("UnitPrice", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("UnitPriceDiscount", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("LineTotal", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
-			fieldHashtable = new Hashtable();
+			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
 
 
-		/// <summary> Removes the sync logic for member _specialOfferProduct</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		private void DesetupSyncSpecialOfferProduct(bool signalRelatedEntity)
-		{
-			if(_specialOfferProduct != null)
-			{
-
-				_specialOfferProduct.AfterSave-=new EventHandler(OnEntityAfterSave);
-				base.UnsetEntitySyncInformation("SpecialOfferProduct", _specialOfferProduct, SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId);
-				if(signalRelatedEntity)
-				{
-					_specialOfferProduct.UnsetRelatedEntity(this, "SalesOrderDetail");
-				}
-				SetNewFieldValue((int)SalesOrderDetailFieldIndex.SpecialOfferId, null, false);
-				SetNewFieldValue((int)SalesOrderDetailFieldIndex.ProductId, null, false);
-				_specialOfferProduct = null;
-			}
-		}
-		
-		/// <summary> Decouples events from member _specialOfferProduct</summary>
-		private void DecoupleEventsSpecialOfferProduct()
-		{
-			if(_specialOfferProduct != null)
-			{
-
-				
-				_specialOfferProduct.AfterSave-=new EventHandler(OnEntityAfterSave);
-				base.UnsetEntitySyncInformation("SpecialOfferProduct", _specialOfferProduct, SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId);
-			}
-		}
-		
-		/// <summary> setups the sync logic for member _specialOfferProduct</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSpecialOfferProduct(IEntity relatedEntity)
-		{
-			DesetupSyncSpecialOfferProduct(true);
-			if(relatedEntity!=null)
-			{
-				_specialOfferProduct = (SpecialOfferProductEntity)relatedEntity;
-				_specialOfferProduct.ActiveContext = base.ActiveContext;
-				_alreadyFetchedSpecialOfferProduct = true;
-				_specialOfferProduct.AfterSave+=new EventHandler(OnEntityAfterSave);
-				base.SetEntitySyncInformation("SpecialOfferProduct", _specialOfferProduct, SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId);
-
-			}
-			else
-			{
-				_alreadyFetchedSpecialOfferProduct = false;
-			}
-		}
-
 		/// <summary> Removes the sync logic for member _salesOrderHeader</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		private void DesetupSyncSalesOrderHeader(bool signalRelatedEntity)
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncSalesOrderHeader(bool signalRelatedEntity, bool resetFKFields)
 		{
-			if(_salesOrderHeader != null)
-			{
-
-				_salesOrderHeader.AfterSave-=new EventHandler(OnEntityAfterSave);
-				base.UnsetEntitySyncInformation("SalesOrderHeader", _salesOrderHeader, SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId);
-				if(signalRelatedEntity)
-				{
-					_salesOrderHeader.UnsetRelatedEntity(this, "SalesOrderDetail");
-				}
-				SetNewFieldValue((int)SalesOrderDetailFieldIndex.SalesOrderId, null, false);
-				_salesOrderHeader = null;
-			}
-		}
-		
-		/// <summary> Decouples events from member _salesOrderHeader</summary>
-		private void DecoupleEventsSalesOrderHeader()
-		{
-			if(_salesOrderHeader != null)
-			{
-
-				
-				_salesOrderHeader.AfterSave-=new EventHandler(OnEntityAfterSave);
-				base.UnsetEntitySyncInformation("SalesOrderHeader", _salesOrderHeader, SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId);
-			}
+			base.PerformDesetupSyncRelatedEntity( _salesOrderHeader, new PropertyChangedEventHandler( OnSalesOrderHeaderPropertyChanged ), "SalesOrderHeader", SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId, true, signalRelatedEntity, "SalesOrderDetail", resetFKFields, new int[] { (int)SalesOrderDetailFieldIndex.SalesOrderId } );		
+			_salesOrderHeader = null;
 		}
 		
 		/// <summary> setups the sync logic for member _salesOrderHeader</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		private void SetupSyncSalesOrderHeader(IEntity relatedEntity)
 		{
-			DesetupSyncSalesOrderHeader(true);
-			if(relatedEntity!=null)
-			{
+			if(_salesOrderHeader!=relatedEntity)
+			{		
+				DesetupSyncSalesOrderHeader(true, true);
 				_salesOrderHeader = (SalesOrderHeaderEntity)relatedEntity;
-				_salesOrderHeader.ActiveContext = base.ActiveContext;
-				_alreadyFetchedSalesOrderHeader = true;
-				_salesOrderHeader.AfterSave+=new EventHandler(OnEntityAfterSave);
-				base.SetEntitySyncInformation("SalesOrderHeader", _salesOrderHeader, SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId);
-
+				base.PerformSetupSyncRelatedEntity( _salesOrderHeader, new PropertyChangedEventHandler( OnSalesOrderHeaderPropertyChanged ), "SalesOrderHeader", SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId, true, ref _alreadyFetchedSalesOrderHeader, new string[] {  } );
 			}
-			else
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSalesOrderHeaderPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
 			{
-				_alreadyFetchedSalesOrderHeader = false;
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _specialOfferProduct</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncSpecialOfferProduct(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _specialOfferProduct, new PropertyChangedEventHandler( OnSpecialOfferProductPropertyChanged ), "SpecialOfferProduct", SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId, true, signalRelatedEntity, "SalesOrderDetail", resetFKFields, new int[] { (int)SalesOrderDetailFieldIndex.SpecialOfferId, (int)SalesOrderDetailFieldIndex.ProductId } );		
+			_specialOfferProduct = null;
+		}
+		
+		/// <summary> setups the sync logic for member _specialOfferProduct</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncSpecialOfferProduct(IEntity relatedEntity)
+		{
+			if(_specialOfferProduct!=relatedEntity)
+			{		
+				DesetupSyncSpecialOfferProduct(true, true);
+				_specialOfferProduct = (SpecialOfferProductEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _specialOfferProduct, new PropertyChangedEventHandler( OnSpecialOfferProductPropertyChanged ), "SpecialOfferProduct", SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId, true, ref _alreadyFetchedSpecialOfferProduct, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSpecialOfferProductPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
 			}
 		}
 
@@ -1044,8 +809,11 @@ namespace AW.Data.EntityClasses
 		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
+		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
+		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
+		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		private bool Fetch(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
@@ -1053,19 +821,8 @@ namespace AW.Data.EntityClasses
 				IDao dao = this.CreateDAOInstance();
 				base.Fields[(int)SalesOrderDetailFieldIndex.SalesOrderId].ForcedCurrentValueWrite(salesOrderId);
 				base.Fields[(int)SalesOrderDetailFieldIndex.SalesOrderDetailId].ForcedCurrentValueWrite(salesOrderDetailId);
-				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse);
-				bool fetchResult = false;
-				if(base.Fields.State == EntityState.Fetched)
-				{
-					base.IsNew = false;
-					fetchResult = true;
-					if(contextToUse!=null)
-					{
-						base.ActiveContext = contextToUse;
-						IEntity dummy = contextToUse.Get(this);
-					}
-				}
-				return fetchResult;
+				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
+				return (base.Fields.State == EntityState.Fetched);
 			}
 			finally
 			{
@@ -1083,7 +840,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> Creates the entity factory for this type.</summary>
 		/// <returns></returns>
-		protected override IEntityFactory CreateEntityFactoryInstance()
+		protected override IEntityFactory CreateEntityFactory()
 		{
 			return new SalesOrderDetailEntityFactory();
 		}
@@ -1097,26 +854,13 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> The custom properties for this entity type.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
-		public  static Hashtable CustomProperties
+		public  static Dictionary<string, string> CustomProperties
 		{
 			get { return _customProperties;}
 		}
 
 
 
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SpecialOfferProduct' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathSpecialOfferProduct
-		{
-			get
-			{
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.SpecialOfferProductCollection(),
-					SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId, 
-					(int)AW.Data.EntityType.SalesOrderDetailEntity, (int)AW.Data.EntityType.SpecialOfferProductEntity, 0, null, null, null, "SpecialOfferProduct", RelationType.ManyToOne);
-			}
-		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHeader' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
@@ -1126,23 +870,41 @@ namespace AW.Data.EntityClasses
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderCollection(),
-					SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId, 
-					(int)AW.Data.EntityType.SalesOrderDetailEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, null, "SalesOrderHeader", RelationType.ManyToOne);
+					(IEntityRelation)GetRelationsForField("SalesOrderHeader")[0], (int)AW.Data.EntityType.SalesOrderDetailEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, null, "SalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SpecialOfferProduct' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSpecialOfferProduct
+		{
+			get
+			{
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.SpecialOfferProductCollection(),
+					(IEntityRelation)GetRelationsForField("SpecialOfferProduct")[0], (int)AW.Data.EntityType.SalesOrderDetailEntity, (int)AW.Data.EntityType.SpecialOfferProductEntity, 0, null, null, null, "SpecialOfferProduct", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
 
+		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
+		[Browsable(false), XmlIgnore]
+		public override string LLBLGenProEntityName
+		{
+			get { return "SalesOrderDetailEntity";}
+		}
+
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
-		public virtual Hashtable CustomPropertiesOfType
+		public override Dictionary<string, string> CustomPropertiesOfType
 		{
 			get { return SalesOrderDetailEntity.CustomProperties;}
 		}
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value pairs. </summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
-		public  static Hashtable FieldsCustomProperties
+		public  static Dictionary<string, Dictionary<string, string>> FieldsCustomProperties
 		{
 			get { return _fieldsCustomProperties;}
 		}
@@ -1150,7 +912,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The custom properties for the fields of the type of this entity instance. The returned Hashtable contains per fieldname a hashtable of name-value pairs. </summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
 		[Browsable(false), XmlIgnore]
-		public virtual Hashtable FieldsCustomPropertiesOfType
+		public override Dictionary<string, Dictionary<string, string>> FieldsCustomPropertiesOfType
 		{
 			get { return SalesOrderDetailEntity.FieldsCustomProperties;}
 		}
@@ -1162,16 +924,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
 		public virtual System.Int32 SalesOrderId
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.SalesOrderId);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
-				}
-				return (System.Int32)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.SalesOrderId, value); }
+			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SalesOrderId, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.SalesOrderId, value, true); }
 		}
 		/// <summary> The SalesOrderDetailId property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1180,16 +934,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
 		public virtual System.Int32 SalesOrderDetailId
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailId);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
-				}
-				return (System.Int32)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailId, value); }
+			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailId, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailId, value, true); }
 		}
 		/// <summary> The CarrierTrackingNumber property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1198,16 +944,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String CarrierTrackingNumber
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.CarrierTrackingNumber);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				return (System.String)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.CarrierTrackingNumber, value); }
+			get { return (System.String)GetValue((int)SalesOrderDetailFieldIndex.CarrierTrackingNumber, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.CarrierTrackingNumber, value, true); }
 		}
 		/// <summary> The OrderQty property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1216,16 +954,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Int16 OrderQty
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.OrderQty);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int16));
-				}
-				return (System.Int16)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.OrderQty, value); }
+			get { return (System.Int16)GetValue((int)SalesOrderDetailFieldIndex.OrderQty, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.OrderQty, value, true); }
 		}
 		/// <summary> The ProductId property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1234,16 +964,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Int32 ProductId
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.ProductId);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
-				}
-				return (System.Int32)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.ProductId, value); }
+			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.ProductId, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.ProductId, value, true); }
 		}
 		/// <summary> The SpecialOfferId property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1252,16 +974,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Int32 SpecialOfferId
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.SpecialOfferId);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
-				}
-				return (System.Int32)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.SpecialOfferId, value); }
+			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SpecialOfferId, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.SpecialOfferId, value, true); }
 		}
 		/// <summary> The UnitPrice property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1270,16 +984,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Decimal UnitPrice
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.UnitPrice);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Decimal));
-				}
-				return (System.Decimal)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.UnitPrice, value); }
+			get { return (System.Decimal)GetValue((int)SalesOrderDetailFieldIndex.UnitPrice, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.UnitPrice, value, true); }
 		}
 		/// <summary> The UnitPriceDiscount property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1288,16 +994,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Decimal UnitPriceDiscount
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.UnitPriceDiscount);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Decimal));
-				}
-				return (System.Decimal)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.UnitPriceDiscount, value); }
+			get { return (System.Decimal)GetValue((int)SalesOrderDetailFieldIndex.UnitPriceDiscount, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.UnitPriceDiscount, value, true); }
 		}
 		/// <summary> The LineTotal property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1306,16 +1004,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Decimal LineTotal
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.LineTotal);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Decimal));
-				}
-				return (System.Decimal)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.LineTotal, value); }
+			get { return (System.Decimal)GetValue((int)SalesOrderDetailFieldIndex.LineTotal, true); }
+
 		}
 		/// <summary> The Rowguid property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1324,16 +1014,8 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.Guid Rowguid
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.Rowguid);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.Guid));
-				}
-				return (System.Guid)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.Rowguid, value); }
+			get { return (System.Guid)GetValue((int)SalesOrderDetailFieldIndex.Rowguid, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.Rowguid, value, true); }
 		}
 		/// <summary> The ModifiedDate property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1342,79 +1024,18 @@ namespace AW.Data.EntityClasses
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		public virtual System.DateTime ModifiedDate
 		{
-			get
-			{
-				object valueToReturn = base.GetCurrentFieldValue((int)SalesOrderDetailFieldIndex.ModifiedDate);
-				if(valueToReturn == null)
-				{
-					valueToReturn = TypeDefaultValue.GetDefaultValue(typeof(System.DateTime));
-				}
-				return (System.DateTime)valueToReturn;
-			}
-			set	{ SetNewFieldValue((int)SalesOrderDetailFieldIndex.ModifiedDate, value); }
+			get { return (System.DateTime)GetValue((int)SalesOrderDetailFieldIndex.ModifiedDate, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.ModifiedDate, value, true); }
 		}
 
 
 
-		/// <summary> Gets / sets related entity of type 'SpecialOfferProductEntity'. This property is not visible in databound grids.
-		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
-		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSpecialOfferProduct()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
-		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(false)]
-		public virtual SpecialOfferProductEntity SpecialOfferProduct
-		{
-			get	{ return GetSingleSpecialOfferProduct(false); }
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncSpecialOfferProduct(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_specialOfferProduct != null)
-						{
-							_specialOfferProduct.UnsetRelatedEntity(this, "SalesOrderDetail");
-						}
-					}
-					else
-					{
-						((IEntity)value).SetRelatedEntity(this, "SalesOrderDetail");
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for SpecialOfferProduct. When set to true, SpecialOfferProduct is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time SpecialOfferProduct is accessed. You can always execute
-		/// a forced fetch by calling GetSingleSpecialOfferProduct(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchSpecialOfferProduct
-		{
-			get	{ return _alwaysFetchSpecialOfferProduct; }
-			set	{ _alwaysFetchSpecialOfferProduct = value; }	
-		}
-		
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SpecialOfferProduct is not found
-		/// in the database. When set to true, SpecialOfferProduct will return a new entity instance if the related entity is not found, otherwise 
-		/// null be returned if the related entity is not found. Default: true.</summary>
-		[Browsable(false)]
-		public bool SpecialOfferProductReturnsNewIfNotFound
-		{
-			get	{ return _specialOfferProductReturnsNewIfNotFound; }
-			set { _specialOfferProductReturnsNewIfNotFound = value; }	
-		}
 		/// <summary> Gets / sets related entity of type 'SalesOrderHeaderEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
 		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesOrderHeader()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(false)]
 		public virtual SalesOrderHeaderEntity SalesOrderHeader
 		{
 			get	{ return GetSingleSalesOrderHeader(false); }
@@ -1435,7 +1056,10 @@ namespace AW.Data.EntityClasses
 					}
 					else
 					{
-						((IEntity)value).SetRelatedEntity(this, "SalesOrderDetail");
+						if(_salesOrderHeader!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderDetail");
+						}
 					}
 				}
 			}
@@ -1450,7 +1074,23 @@ namespace AW.Data.EntityClasses
 			get	{ return _alwaysFetchSalesOrderHeader; }
 			set	{ _alwaysFetchSalesOrderHeader = value; }	
 		}
-		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrderHeader already has been fetched. Setting this property to false when SalesOrderHeader has been fetched
+		/// will set SalesOrderHeader to null as well. Setting this property to true while SalesOrderHeader hasn't been fetched disables lazy loading for SalesOrderHeader</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesOrderHeader
+		{
+			get { return _alreadyFetchedSalesOrderHeader;}
+			set 
+			{
+				if(_alreadyFetchedSalesOrderHeader && !value)
+				{
+					this.SalesOrderHeader = null;
+				}
+				_alreadyFetchedSalesOrderHeader = value;
+			}
+		}
+
 		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SalesOrderHeader is not found
 		/// in the database. When set to true, SalesOrderHeader will return a new entity instance if the related entity is not found, otherwise 
 		/// null be returned if the related entity is not found. Default: true.</summary>
@@ -1459,6 +1099,76 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _salesOrderHeaderReturnsNewIfNotFound; }
 			set { _salesOrderHeaderReturnsNewIfNotFound = value; }	
+		}
+		/// <summary> Gets / sets related entity of type 'SpecialOfferProductEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSpecialOfferProduct()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		public virtual SpecialOfferProductEntity SpecialOfferProduct
+		{
+			get	{ return GetSingleSpecialOfferProduct(false); }
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncSpecialOfferProduct(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_specialOfferProduct != null)
+						{
+							_specialOfferProduct.UnsetRelatedEntity(this, "SalesOrderDetail");
+						}
+					}
+					else
+					{
+						if(_specialOfferProduct!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderDetail");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SpecialOfferProduct. When set to true, SpecialOfferProduct is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SpecialOfferProduct is accessed. You can always execute
+		/// a forced fetch by calling GetSingleSpecialOfferProduct(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSpecialOfferProduct
+		{
+			get	{ return _alwaysFetchSpecialOfferProduct; }
+			set	{ _alwaysFetchSpecialOfferProduct = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SpecialOfferProduct already has been fetched. Setting this property to false when SpecialOfferProduct has been fetched
+		/// will set SpecialOfferProduct to null as well. Setting this property to true while SpecialOfferProduct hasn't been fetched disables lazy loading for SpecialOfferProduct</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSpecialOfferProduct
+		{
+			get { return _alreadyFetchedSpecialOfferProduct;}
+			set 
+			{
+				if(_alreadyFetchedSpecialOfferProduct && !value)
+				{
+					this.SpecialOfferProduct = null;
+				}
+				_alreadyFetchedSpecialOfferProduct = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SpecialOfferProduct is not found
+		/// in the database. When set to true, SpecialOfferProduct will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool SpecialOfferProductReturnsNewIfNotFound
+		{
+			get	{ return _specialOfferProductReturnsNewIfNotFound; }
+			set { _specialOfferProductReturnsNewIfNotFound = value; }	
 		}
 
 
@@ -1476,7 +1186,7 @@ namespace AW.Data.EntityClasses
 			get { return InheritanceHierarchyType.None;}
 		}
 		
-		/// <summary>Returns the EntityType enum value for this entity.</summary>
+		/// <summary>Returns the AW.Data.EntityType enum value for this entity.</summary>
 		[Browsable(false), XmlIgnore]
 		public override int LLBLGenProEntityTypeValue 
 		{ 

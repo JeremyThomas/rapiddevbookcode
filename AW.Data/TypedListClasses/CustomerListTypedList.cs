@@ -1,22 +1,19 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:32 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.ComponentModel;
 using System.Data;
 using System.Collections;
+#if !CF
 using System.Runtime.Serialization;
+#endif
 
 using AW.Data.HelperClasses;
 using AW.Data.DaoClasses;
@@ -45,25 +42,25 @@ namespace AW.Data.TypedListClasses
 	[ToolboxItem(true)]
 	[DesignTimeVisible(true)]
 #endif	
-	public class CustomerListTypedList : TypedListBase, IEnumerable, ITypedListLgp
+	public partial class CustomerListTypedList : TypedListBase<CustomerListRow>, ITypedListLgp
+		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfacesList
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private DataColumn _columnCustomerId;
+		private DataColumn _columnAddressLine1;
+		private DataColumn _columnAddressLine2;
+		private DataColumn _columnCity;
+		private DataColumn _columnAddressType;
 		private DataColumn _columnTitle;
 		private DataColumn _columnFirstName;
 		private DataColumn _columnMiddleName;
 		private DataColumn _columnLastName;
 		private DataColumn _columnSuffix;
-		private DataColumn _columnPhone;
 		private DataColumn _columnEmailAddress;
 		private DataColumn _columnEmailPromotion;
-		private DataColumn _columnAddressType;
-		private DataColumn _columnAddressLine1;
-		private DataColumn _columnAddressLine2;
-		private DataColumn _columnCity;
-		private DataColumn _columnStateProvinceName;
-		private DataColumn _columnPostalCode;
 		private DataColumn _columnCountryRegionName;
+		private DataColumn _columnStateProvinceName;
+		private DataColumn _columnCustomerId;
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -73,7 +70,7 @@ namespace AW.Data.TypedListClasses
 
 		#region Class Constants
 		/// <summary>The amount of fields in the resultset.</summary>
-		private const int AmountOfFields = 16;
+		private const int AmountOfFields = 14;
 		#endregion
 
 
@@ -270,14 +267,6 @@ namespace AW.Data.TypedListClasses
 		}
 
 
-		/// <summary>Gets the enumerator for this class.</summary>
-		/// <returns>Enumerator for this class.</returns>
-		public IEnumerator GetEnumerator()
-		{
-			return this.Rows.GetEnumerator();
-		}
-
-
 		/// <summary>Builds the relation set for this typed list.</summary>
 		/// <returns>ready to use relation set</returns>
 		public virtual IRelationCollection BuildRelationSet()
@@ -294,6 +283,7 @@ namespace AW.Data.TypedListClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START AdditionalRelations
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			OnRelationSetBuilt(toReturn);
 			return toReturn;
 		}
 
@@ -303,29 +293,66 @@ namespace AW.Data.TypedListClasses
 		public virtual IEntityFields BuildResultset()
 		{
 			ResultsetFields toReturn = new ResultsetFields(AmountOfFields);
-			toReturn.DefineField(CustomerFieldIndex.CustomerId, 0, "CustomerId", "", AggregateFunction.None);
-			toReturn.DefineField(ContactFieldIndex.Title, 1, "Title", "", AggregateFunction.None);
-			toReturn.DefineField(ContactFieldIndex.FirstName, 2, "FirstName", "", AggregateFunction.None);
-			toReturn.DefineField(ContactFieldIndex.MiddleName, 3, "MiddleName", "", AggregateFunction.None);
-			toReturn.DefineField(ContactFieldIndex.LastName, 4, "LastName", "", AggregateFunction.None);
-			toReturn.DefineField(ContactFieldIndex.Suffix, 5, "Suffix", "", AggregateFunction.None);
-			toReturn.DefineField(ContactFieldIndex.Phone, 6, "Phone", "", AggregateFunction.None);
-			toReturn.DefineField(ContactFieldIndex.EmailAddress, 7, "EmailAddress", "", AggregateFunction.None);
-			toReturn.DefineField(ContactFieldIndex.EmailPromotion, 8, "EmailPromotion", "", AggregateFunction.None);
-			toReturn.DefineField(AddressTypeFieldIndex.Name, 9, "AddressType", "", AggregateFunction.None);
-			toReturn.DefineField(AddressFieldIndex.AddressLine1, 10, "AddressLine1", "", AggregateFunction.None);
-			toReturn.DefineField(AddressFieldIndex.AddressLine2, 11, "AddressLine2", "", AggregateFunction.None);
-			toReturn.DefineField(AddressFieldIndex.City, 12, "City", "", AggregateFunction.None);
-			toReturn.DefineField(StateProvinceFieldIndex.Name, 13, "StateProvinceName", "", AggregateFunction.None);
-			toReturn.DefineField(AddressFieldIndex.PostalCode, 14, "PostalCode", "", AggregateFunction.None);
-			toReturn.DefineField(CountryRegionFieldIndex.Name, 15, "CountryRegionName", "", AggregateFunction.None);
+			toReturn.DefineField(AddressFields.AddressLine1, 0, "AddressLine1", "", AggregateFunction.None);
+			toReturn.DefineField(AddressFields.AddressLine2, 1, "AddressLine2", "", AggregateFunction.None);
+			toReturn.DefineField(AddressFields.City, 2, "City", "", AggregateFunction.None);
+			toReturn.DefineField(AddressTypeFields.Name, 3, "AddressType", "", AggregateFunction.None);
+			toReturn.DefineField(ContactFields.Title, 4, "Title", "", AggregateFunction.None);
+			toReturn.DefineField(ContactFields.FirstName, 5, "FirstName", "", AggregateFunction.None);
+			toReturn.DefineField(ContactFields.MiddleName, 6, "MiddleName", "", AggregateFunction.None);
+			toReturn.DefineField(ContactFields.LastName, 7, "LastName", "", AggregateFunction.None);
+			toReturn.DefineField(ContactFields.Suffix, 8, "Suffix", "", AggregateFunction.None);
+			toReturn.DefineField(ContactFields.EmailAddress, 9, "EmailAddress", "", AggregateFunction.None);
+			toReturn.DefineField(ContactFields.EmailPromotion, 10, "EmailPromotion", "", AggregateFunction.None);
+			toReturn.DefineField(CountryRegionFields.Name, 11, "CountryRegionName", "", AggregateFunction.None);
+			toReturn.DefineField(StateProvinceFields.Name, 12, "StateProvinceName", "", AggregateFunction.None);
+			toReturn.DefineField(CustomerFields.CustomerId, 13, "CustomerId", "", AggregateFunction.None);
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START AdditionalFields
 			// be sure to call toReturn.Expand(number of new fields) first. 
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			OnResultsetBuilt(toReturn);
 			return toReturn;
 		}
 
+
+		/// <summary>Gets an array of all CustomerListRow objects.</summary>
+		/// <returns>Array with CustomerListRow objects</returns>
+		public new CustomerListRow[] Select()
+		{
+			return (CustomerListRow[])base.Select();
+		}
+
+
+		/// <summary>Gets an array of all CustomerListRow objects that match the filter criteria in order of primary key (or lacking one, order of addition.) </summary>
+		/// <param name="filterExpression">The criteria to use to filter the rows.</param>
+		/// <returns>Array with CustomerListRow objects</returns>
+		public new CustomerListRow[] Select(string filterExpression)
+		{
+			return (CustomerListRow[])base.Select(filterExpression);
+		}
+
+
+		/// <summary>Gets an array of all CustomerListRow objects that match the filter criteria, in the specified sort order</summary>
+		/// <param name="filterExpression">The filter expression.</param>
+		/// <param name="sort">A string specifying the column and sort direction.</param>
+		/// <returns>Array with CustomerListRow objects</returns>
+		public new CustomerListRow[] Select(string filterExpression, string sort)
+		{
+			return (CustomerListRow[])base.Select(filterExpression, sort);
+		}
+
+
+		/// <summary>Gets an array of all CustomerListRow objects that match the filter criteria, in the specified sort order that match the specified state</summary>
+		/// <param name="filterExpression">The filter expression.</param>
+		/// <param name="sort">A string specifying the column and sort direction.</param>
+		/// <param name="recordStates">One of the <see cref="System.Data.DataViewRowState"/> values.</param>
+		/// <returns>Array with CustomerListRow objects</returns>
+		public new CustomerListRow[] Select(string filterExpression, string sort, DataViewRowState recordStates)
+		{
+			return (CustomerListRow[])base.Select(filterExpression, sort, recordStates);
+		}
+		
 
 		/// <summary>Creates a new typed row during the build of the datatable during a Fill session by a dataadapter.</summary>
 		/// <param name="rowBuilder">supplied row builder to pass to the typed row</param>
@@ -346,7 +373,16 @@ namespace AW.Data.TypedListClasses
 
 			fieldHashtable = new Hashtable();
 
-			_fieldsCustomProperties.Add("CustomerId", fieldHashtable);
+			_fieldsCustomProperties.Add("AddressLine1", fieldHashtable);
+			fieldHashtable = new Hashtable();
+
+			_fieldsCustomProperties.Add("AddressLine2", fieldHashtable);
+			fieldHashtable = new Hashtable();
+
+			_fieldsCustomProperties.Add("City", fieldHashtable);
+			fieldHashtable = new Hashtable();
+
+			_fieldsCustomProperties.Add("AddressType", fieldHashtable);
 			fieldHashtable = new Hashtable();
 
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
@@ -364,46 +400,46 @@ namespace AW.Data.TypedListClasses
 			_fieldsCustomProperties.Add("Suffix", fieldHashtable);
 			fieldHashtable = new Hashtable();
 
-			_fieldsCustomProperties.Add("Phone", fieldHashtable);
-			fieldHashtable = new Hashtable();
-
 			_fieldsCustomProperties.Add("EmailAddress", fieldHashtable);
 			fieldHashtable = new Hashtable();
 
 			_fieldsCustomProperties.Add("EmailPromotion", fieldHashtable);
 			fieldHashtable = new Hashtable();
 
-			_fieldsCustomProperties.Add("AddressType", fieldHashtable);
-			fieldHashtable = new Hashtable();
-
-			_fieldsCustomProperties.Add("AddressLine1", fieldHashtable);
-			fieldHashtable = new Hashtable();
-
-			_fieldsCustomProperties.Add("AddressLine2", fieldHashtable);
-			fieldHashtable = new Hashtable();
-
-			_fieldsCustomProperties.Add("City", fieldHashtable);
+			_fieldsCustomProperties.Add("CountryRegionName", fieldHashtable);
 			fieldHashtable = new Hashtable();
 
 			_fieldsCustomProperties.Add("StateProvinceName", fieldHashtable);
 			fieldHashtable = new Hashtable();
 
-			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
-			fieldHashtable = new Hashtable();
-
-			_fieldsCustomProperties.Add("CountryRegionName", fieldHashtable);			
+			_fieldsCustomProperties.Add("CustomerId", fieldHashtable);			
 		}
 
 
 		/// <summary>Initialize the datastructures.</summary>
 		/// <param name="obeyWeakRelations">flag for the internal used relations object</param>
-		private void InitClass(bool obeyWeakRelations)
+		protected override void InitClass(bool obeyWeakRelations)
 		{
 			
-			_columnCustomerId = new DataColumn("CustomerId", typeof(System.Int32), null, MappingType.Element);
-			_columnCustomerId.ReadOnly = true;
-			_columnCustomerId.Caption = @"CustomerId";
-			this.Columns.Add(_columnCustomerId);
+			_columnAddressLine1 = new DataColumn("AddressLine1", typeof(System.String), null, MappingType.Element);
+			_columnAddressLine1.ReadOnly = true;
+			_columnAddressLine1.Caption = @"AddressLine1";
+			this.Columns.Add(_columnAddressLine1);
+
+			_columnAddressLine2 = new DataColumn("AddressLine2", typeof(System.String), null, MappingType.Element);
+			_columnAddressLine2.ReadOnly = true;
+			_columnAddressLine2.Caption = @"AddressLine2";
+			this.Columns.Add(_columnAddressLine2);
+
+			_columnCity = new DataColumn("City", typeof(System.String), null, MappingType.Element);
+			_columnCity.ReadOnly = true;
+			_columnCity.Caption = @"City";
+			this.Columns.Add(_columnCity);
+
+			_columnAddressType = new DataColumn("AddressType", typeof(System.String), null, MappingType.Element);
+			_columnAddressType.ReadOnly = true;
+			_columnAddressType.Caption = @"AddressType";
+			this.Columns.Add(_columnAddressType);
 
 			_columnTitle = new DataColumn("Title", typeof(System.String), null, MappingType.Element);
 			_columnTitle.ReadOnly = true;
@@ -430,11 +466,6 @@ namespace AW.Data.TypedListClasses
 			_columnSuffix.Caption = @"Suffix";
 			this.Columns.Add(_columnSuffix);
 
-			_columnPhone = new DataColumn("Phone", typeof(System.String), null, MappingType.Element);
-			_columnPhone.ReadOnly = true;
-			_columnPhone.Caption = @"Phone";
-			this.Columns.Add(_columnPhone);
-
 			_columnEmailAddress = new DataColumn("EmailAddress", typeof(System.String), null, MappingType.Element);
 			_columnEmailAddress.ReadOnly = true;
 			_columnEmailAddress.Caption = @"EmailAddress";
@@ -445,69 +476,49 @@ namespace AW.Data.TypedListClasses
 			_columnEmailPromotion.Caption = @"EmailPromotion";
 			this.Columns.Add(_columnEmailPromotion);
 
-			_columnAddressType = new DataColumn("AddressType", typeof(System.String), null, MappingType.Element);
-			_columnAddressType.ReadOnly = true;
-			_columnAddressType.Caption = @"AddressType";
-			this.Columns.Add(_columnAddressType);
-
-			_columnAddressLine1 = new DataColumn("AddressLine1", typeof(System.String), null, MappingType.Element);
-			_columnAddressLine1.ReadOnly = true;
-			_columnAddressLine1.Caption = @"AddressLine1";
-			this.Columns.Add(_columnAddressLine1);
-
-			_columnAddressLine2 = new DataColumn("AddressLine2", typeof(System.String), null, MappingType.Element);
-			_columnAddressLine2.ReadOnly = true;
-			_columnAddressLine2.Caption = @"AddressLine2";
-			this.Columns.Add(_columnAddressLine2);
-
-			_columnCity = new DataColumn("City", typeof(System.String), null, MappingType.Element);
-			_columnCity.ReadOnly = true;
-			_columnCity.Caption = @"City";
-			this.Columns.Add(_columnCity);
+			_columnCountryRegionName = new DataColumn("CountryRegionName", typeof(System.String), null, MappingType.Element);
+			_columnCountryRegionName.ReadOnly = true;
+			_columnCountryRegionName.Caption = @"CountryRegionName";
+			this.Columns.Add(_columnCountryRegionName);
 
 			_columnStateProvinceName = new DataColumn("StateProvinceName", typeof(System.String), null, MappingType.Element);
 			_columnStateProvinceName.ReadOnly = true;
 			_columnStateProvinceName.Caption = @"StateProvinceName";
 			this.Columns.Add(_columnStateProvinceName);
 
-			_columnPostalCode = new DataColumn("PostalCode", typeof(System.String), null, MappingType.Element);
-			_columnPostalCode.ReadOnly = true;
-			_columnPostalCode.Caption = @"PostalCode";
-			this.Columns.Add(_columnPostalCode);
-
-			_columnCountryRegionName = new DataColumn("CountryRegionName", typeof(System.String), null, MappingType.Element);
-			_columnCountryRegionName.ReadOnly = true;
-			_columnCountryRegionName.Caption = @"CountryRegionName";
-			this.Columns.Add(_columnCountryRegionName);
+			_columnCustomerId = new DataColumn("CustomerId", typeof(System.Int32), null, MappingType.Element);
+			_columnCustomerId.ReadOnly = true;
+			_columnCustomerId.Caption = @"CustomerId";
+			this.Columns.Add(_columnCustomerId);
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClass
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			base.ObeyWeakRelations = obeyWeakRelations;
+			OnInitialized();
 		}
 
 
 		/// <summary>Initializes the members, after a clone action.</summary>
 		private void InitMembers()
 		{
-			_columnCustomerId = this.Columns["CustomerId"];
+			_columnAddressLine1 = this.Columns["AddressLine1"];
+			_columnAddressLine2 = this.Columns["AddressLine2"];
+			_columnCity = this.Columns["City"];
+			_columnAddressType = this.Columns["AddressType"];
 			_columnTitle = this.Columns["Title"];
 			_columnFirstName = this.Columns["FirstName"];
 			_columnMiddleName = this.Columns["MiddleName"];
 			_columnLastName = this.Columns["LastName"];
 			_columnSuffix = this.Columns["Suffix"];
-			_columnPhone = this.Columns["Phone"];
 			_columnEmailAddress = this.Columns["EmailAddress"];
 			_columnEmailPromotion = this.Columns["EmailPromotion"];
-			_columnAddressType = this.Columns["AddressType"];
-			_columnAddressLine1 = this.Columns["AddressLine1"];
-			_columnAddressLine2 = this.Columns["AddressLine2"];
-			_columnCity = this.Columns["City"];
-			_columnStateProvinceName = this.Columns["StateProvinceName"];
-			_columnPostalCode = this.Columns["PostalCode"];
 			_columnCountryRegionName = this.Columns["CountryRegionName"];
+			_columnStateProvinceName = this.Columns["StateProvinceName"];
+			_columnCustomerId = this.Columns["CustomerId"];
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			OnInitialized();
 		}
 
 
@@ -590,10 +601,28 @@ namespace AW.Data.TypedListClasses
 		}
 
 	
-		/// <summary>Returns the column object belonging to the TypedList field CustomerId</summary>
-		internal DataColumn CustomerIdColumn 
+		/// <summary>Returns the column object belonging to the TypedList field AddressLine1</summary>
+		internal DataColumn AddressLine1Column 
 		{
-			get { return _columnCustomerId; }
+			get { return _columnAddressLine1; }
+		}
+    
+		/// <summary>Returns the column object belonging to the TypedList field AddressLine2</summary>
+		internal DataColumn AddressLine2Column 
+		{
+			get { return _columnAddressLine2; }
+		}
+    
+		/// <summary>Returns the column object belonging to the TypedList field City</summary>
+		internal DataColumn CityColumn 
+		{
+			get { return _columnCity; }
+		}
+    
+		/// <summary>Returns the column object belonging to the TypedList field AddressType</summary>
+		internal DataColumn AddressTypeColumn 
+		{
+			get { return _columnAddressType; }
 		}
     
 		/// <summary>Returns the column object belonging to the TypedList field Title</summary>
@@ -626,12 +655,6 @@ namespace AW.Data.TypedListClasses
 			get { return _columnSuffix; }
 		}
     
-		/// <summary>Returns the column object belonging to the TypedList field Phone</summary>
-		internal DataColumn PhoneColumn 
-		{
-			get { return _columnPhone; }
-		}
-    
 		/// <summary>Returns the column object belonging to the TypedList field EmailAddress</summary>
 		internal DataColumn EmailAddressColumn 
 		{
@@ -644,28 +667,10 @@ namespace AW.Data.TypedListClasses
 			get { return _columnEmailPromotion; }
 		}
     
-		/// <summary>Returns the column object belonging to the TypedList field AddressType</summary>
-		internal DataColumn AddressTypeColumn 
+		/// <summary>Returns the column object belonging to the TypedList field CountryRegionName</summary>
+		internal DataColumn CountryRegionNameColumn 
 		{
-			get { return _columnAddressType; }
-		}
-    
-		/// <summary>Returns the column object belonging to the TypedList field AddressLine1</summary>
-		internal DataColumn AddressLine1Column 
-		{
-			get { return _columnAddressLine1; }
-		}
-    
-		/// <summary>Returns the column object belonging to the TypedList field AddressLine2</summary>
-		internal DataColumn AddressLine2Column 
-		{
-			get { return _columnAddressLine2; }
-		}
-    
-		/// <summary>Returns the column object belonging to the TypedList field City</summary>
-		internal DataColumn CityColumn 
-		{
-			get { return _columnCity; }
+			get { return _columnCountryRegionName; }
 		}
     
 		/// <summary>Returns the column object belonging to the TypedList field StateProvinceName</summary>
@@ -674,16 +679,10 @@ namespace AW.Data.TypedListClasses
 			get { return _columnStateProvinceName; }
 		}
     
-		/// <summary>Returns the column object belonging to the TypedList field PostalCode</summary>
-		internal DataColumn PostalCodeColumn 
+		/// <summary>Returns the column object belonging to the TypedList field CustomerId</summary>
+		internal DataColumn CustomerIdColumn 
 		{
-			get { return _columnPostalCode; }
-		}
-    
-		/// <summary>Returns the column object belonging to the TypedList field CountryRegionName</summary>
-		internal DataColumn CountryRegionNameColumn 
-		{
-			get { return _columnCountryRegionName; }
+			get { return _columnCustomerId; }
 		}
     
 		
@@ -704,7 +703,9 @@ namespace AW.Data.TypedListClasses
 
 
 	/// <summary>Typed datarow for the typed datatable CustomerList</summary>
-	public class CustomerListRow : DataRow
+	public partial class CustomerListRow : DataRow
+		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfacesRow
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private CustomerListTypedList	_parent;
@@ -712,7 +713,7 @@ namespace AW.Data.TypedListClasses
 
 		/// <summary>CTor</summary>
 		/// <param name="rowBuilder">Row builder object to use when building this row</param>
-		internal CustomerListRow(DataRowBuilder rowBuilder) : base(rowBuilder) 
+		protected internal CustomerListRow(DataRowBuilder rowBuilder) : base(rowBuilder) 
 		{
 			_parent = ((CustomerListTypedList)(this.Table));
 		}
@@ -720,39 +721,150 @@ namespace AW.Data.TypedListClasses
 
 		#region Class Property Declarations
 	
-		/// <summary>Gets / sets the value of the TypedList field CustomerId<br/><br/>
+		/// <summary>Gets / sets the value of the TypedList field AddressLine1<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on: Customer.CustomerId</remarks>
-		public System.Int32 CustomerId 
+		/// <remarks>Mapped on: Address.AddressLine1</remarks>
+		public System.String AddressLine1 
 		{
 			get 
 			{
-				if(IsCustomerIdNull())
+				if(IsAddressLine1Null())
 				{
 					// return default value for this type.
-					return (System.Int32)TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
+					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
 				}
 				else
 				{
-					return (System.Int32)this[_parent.CustomerIdColumn];
+					return (System.String)this[_parent.AddressLine1Column];
 				}
 			}
 			set 
 			{
-				this[_parent.CustomerIdColumn] = value;
+				this[_parent.AddressLine1Column] = value;
 			}
 		}
 
-		/// <summary>Returns true if the TypedList field CustomerId is NULL, false otherwise.</summary>
-		public bool IsCustomerIdNull() 
+		/// <summary>Returns true if the TypedList field AddressLine1 is NULL, false otherwise.</summary>
+		public bool IsAddressLine1Null() 
 		{
-			return IsNull(_parent.CustomerIdColumn);
+			return IsNull(_parent.AddressLine1Column);
 		}
 
-		/// <summary>Sets the TypedList field CustomerId to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetCustomerIdNull() 
+		/// <summary>Sets the TypedList field AddressLine1 to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetAddressLine1Null() 
 		{
-			this[_parent.CustomerIdColumn] = System.Convert.DBNull;
+			this[_parent.AddressLine1Column] = System.Convert.DBNull;
+		}
+
+	
+
+		/// <summary>Gets / sets the value of the TypedList field AddressLine2<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on: Address.AddressLine2</remarks>
+		public System.String AddressLine2 
+		{
+			get 
+			{
+				if(IsAddressLine2Null())
+				{
+					// return default value for this type.
+					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
+				}
+				else
+				{
+					return (System.String)this[_parent.AddressLine2Column];
+				}
+			}
+			set 
+			{
+				this[_parent.AddressLine2Column] = value;
+			}
+		}
+
+		/// <summary>Returns true if the TypedList field AddressLine2 is NULL, false otherwise.</summary>
+		public bool IsAddressLine2Null() 
+		{
+			return IsNull(_parent.AddressLine2Column);
+		}
+
+		/// <summary>Sets the TypedList field AddressLine2 to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetAddressLine2Null() 
+		{
+			this[_parent.AddressLine2Column] = System.Convert.DBNull;
+		}
+
+	
+
+		/// <summary>Gets / sets the value of the TypedList field City<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on: Address.City</remarks>
+		public System.String City 
+		{
+			get 
+			{
+				if(IsCityNull())
+				{
+					// return default value for this type.
+					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
+				}
+				else
+				{
+					return (System.String)this[_parent.CityColumn];
+				}
+			}
+			set 
+			{
+				this[_parent.CityColumn] = value;
+			}
+		}
+
+		/// <summary>Returns true if the TypedList field City is NULL, false otherwise.</summary>
+		public bool IsCityNull() 
+		{
+			return IsNull(_parent.CityColumn);
+		}
+
+		/// <summary>Sets the TypedList field City to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetCityNull() 
+		{
+			this[_parent.CityColumn] = System.Convert.DBNull;
+		}
+
+	
+
+		/// <summary>Gets / sets the value of the TypedList field AddressType<br/><br/>
+		/// </summary>
+		/// <remarks>Mapped on: AddressType.Name</remarks>
+		public System.String AddressType 
+		{
+			get 
+			{
+				if(IsAddressTypeNull())
+				{
+					// return default value for this type.
+					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
+				}
+				else
+				{
+					return (System.String)this[_parent.AddressTypeColumn];
+				}
+			}
+			set 
+			{
+				this[_parent.AddressTypeColumn] = value;
+			}
+		}
+
+		/// <summary>Returns true if the TypedList field AddressType is NULL, false otherwise.</summary>
+		public bool IsAddressTypeNull() 
+		{
+			return IsNull(_parent.AddressTypeColumn);
+		}
+
+		/// <summary>Sets the TypedList field AddressType to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetAddressTypeNull() 
+		{
+			this[_parent.AddressTypeColumn] = System.Convert.DBNull;
 		}
 
 	
@@ -942,43 +1054,6 @@ namespace AW.Data.TypedListClasses
 
 	
 
-		/// <summary>Gets / sets the value of the TypedList field Phone<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on: Contact.Phone</remarks>
-		public System.String Phone 
-		{
-			get 
-			{
-				if(IsPhoneNull())
-				{
-					// return default value for this type.
-					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				else
-				{
-					return (System.String)this[_parent.PhoneColumn];
-				}
-			}
-			set 
-			{
-				this[_parent.PhoneColumn] = value;
-			}
-		}
-
-		/// <summary>Returns true if the TypedList field Phone is NULL, false otherwise.</summary>
-		public bool IsPhoneNull() 
-		{
-			return IsNull(_parent.PhoneColumn);
-		}
-
-		/// <summary>Sets the TypedList field Phone to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetPhoneNull() 
-		{
-			this[_parent.PhoneColumn] = System.Convert.DBNull;
-		}
-
-	
-
 		/// <summary>Gets / sets the value of the TypedList field EmailAddress<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on: Contact.EmailAddress</remarks>
@@ -1053,150 +1128,39 @@ namespace AW.Data.TypedListClasses
 
 	
 
-		/// <summary>Gets / sets the value of the TypedList field AddressType<br/><br/>
+		/// <summary>Gets / sets the value of the TypedList field CountryRegionName<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on: AddressType.Name</remarks>
-		public System.String AddressType 
+		/// <remarks>Mapped on: CountryRegion.Name</remarks>
+		public System.String CountryRegionName 
 		{
 			get 
 			{
-				if(IsAddressTypeNull())
+				if(IsCountryRegionNameNull())
 				{
 					// return default value for this type.
 					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
 				}
 				else
 				{
-					return (System.String)this[_parent.AddressTypeColumn];
+					return (System.String)this[_parent.CountryRegionNameColumn];
 				}
 			}
 			set 
 			{
-				this[_parent.AddressTypeColumn] = value;
+				this[_parent.CountryRegionNameColumn] = value;
 			}
 		}
 
-		/// <summary>Returns true if the TypedList field AddressType is NULL, false otherwise.</summary>
-		public bool IsAddressTypeNull() 
+		/// <summary>Returns true if the TypedList field CountryRegionName is NULL, false otherwise.</summary>
+		public bool IsCountryRegionNameNull() 
 		{
-			return IsNull(_parent.AddressTypeColumn);
+			return IsNull(_parent.CountryRegionNameColumn);
 		}
 
-		/// <summary>Sets the TypedList field AddressType to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetAddressTypeNull() 
+		/// <summary>Sets the TypedList field CountryRegionName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetCountryRegionNameNull() 
 		{
-			this[_parent.AddressTypeColumn] = System.Convert.DBNull;
-		}
-
-	
-
-		/// <summary>Gets / sets the value of the TypedList field AddressLine1<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on: Address.AddressLine1</remarks>
-		public System.String AddressLine1 
-		{
-			get 
-			{
-				if(IsAddressLine1Null())
-				{
-					// return default value for this type.
-					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				else
-				{
-					return (System.String)this[_parent.AddressLine1Column];
-				}
-			}
-			set 
-			{
-				this[_parent.AddressLine1Column] = value;
-			}
-		}
-
-		/// <summary>Returns true if the TypedList field AddressLine1 is NULL, false otherwise.</summary>
-		public bool IsAddressLine1Null() 
-		{
-			return IsNull(_parent.AddressLine1Column);
-		}
-
-		/// <summary>Sets the TypedList field AddressLine1 to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetAddressLine1Null() 
-		{
-			this[_parent.AddressLine1Column] = System.Convert.DBNull;
-		}
-
-	
-
-		/// <summary>Gets / sets the value of the TypedList field AddressLine2<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on: Address.AddressLine2</remarks>
-		public System.String AddressLine2 
-		{
-			get 
-			{
-				if(IsAddressLine2Null())
-				{
-					// return default value for this type.
-					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				else
-				{
-					return (System.String)this[_parent.AddressLine2Column];
-				}
-			}
-			set 
-			{
-				this[_parent.AddressLine2Column] = value;
-			}
-		}
-
-		/// <summary>Returns true if the TypedList field AddressLine2 is NULL, false otherwise.</summary>
-		public bool IsAddressLine2Null() 
-		{
-			return IsNull(_parent.AddressLine2Column);
-		}
-
-		/// <summary>Sets the TypedList field AddressLine2 to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetAddressLine2Null() 
-		{
-			this[_parent.AddressLine2Column] = System.Convert.DBNull;
-		}
-
-	
-
-		/// <summary>Gets / sets the value of the TypedList field City<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on: Address.City</remarks>
-		public System.String City 
-		{
-			get 
-			{
-				if(IsCityNull())
-				{
-					// return default value for this type.
-					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				else
-				{
-					return (System.String)this[_parent.CityColumn];
-				}
-			}
-			set 
-			{
-				this[_parent.CityColumn] = value;
-			}
-		}
-
-		/// <summary>Returns true if the TypedList field City is NULL, false otherwise.</summary>
-		public bool IsCityNull() 
-		{
-			return IsNull(_parent.CityColumn);
-		}
-
-		/// <summary>Sets the TypedList field City to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetCityNull() 
-		{
-			this[_parent.CityColumn] = System.Convert.DBNull;
+			this[_parent.CountryRegionNameColumn] = System.Convert.DBNull;
 		}
 
 	
@@ -1238,76 +1202,39 @@ namespace AW.Data.TypedListClasses
 
 	
 
-		/// <summary>Gets / sets the value of the TypedList field PostalCode<br/><br/>
+		/// <summary>Gets / sets the value of the TypedList field CustomerId<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on: Address.PostalCode</remarks>
-		public System.String PostalCode 
+		/// <remarks>Mapped on: Customer.CustomerId</remarks>
+		public System.Int32 CustomerId 
 		{
 			get 
 			{
-				if(IsPostalCodeNull())
+				if(IsCustomerIdNull())
 				{
 					// return default value for this type.
-					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
+					return (System.Int32)TypeDefaultValue.GetDefaultValue(typeof(System.Int32));
 				}
 				else
 				{
-					return (System.String)this[_parent.PostalCodeColumn];
+					return (System.Int32)this[_parent.CustomerIdColumn];
 				}
 			}
 			set 
 			{
-				this[_parent.PostalCodeColumn] = value;
+				this[_parent.CustomerIdColumn] = value;
 			}
 		}
 
-		/// <summary>Returns true if the TypedList field PostalCode is NULL, false otherwise.</summary>
-		public bool IsPostalCodeNull() 
+		/// <summary>Returns true if the TypedList field CustomerId is NULL, false otherwise.</summary>
+		public bool IsCustomerIdNull() 
 		{
-			return IsNull(_parent.PostalCodeColumn);
+			return IsNull(_parent.CustomerIdColumn);
 		}
 
-		/// <summary>Sets the TypedList field PostalCode to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetPostalCodeNull() 
+		/// <summary>Sets the TypedList field CustomerId to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetCustomerIdNull() 
 		{
-			this[_parent.PostalCodeColumn] = System.Convert.DBNull;
-		}
-
-	
-
-		/// <summary>Gets / sets the value of the TypedList field CountryRegionName<br/><br/>
-		/// </summary>
-		/// <remarks>Mapped on: CountryRegion.Name</remarks>
-		public System.String CountryRegionName 
-		{
-			get 
-			{
-				if(IsCountryRegionNameNull())
-				{
-					// return default value for this type.
-					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
-				}
-				else
-				{
-					return (System.String)this[_parent.CountryRegionNameColumn];
-				}
-			}
-			set 
-			{
-				this[_parent.CountryRegionNameColumn] = value;
-			}
-		}
-
-		/// <summary>Returns true if the TypedList field CountryRegionName is NULL, false otherwise.</summary>
-		public bool IsCountryRegionNameNull() 
-		{
-			return IsNull(_parent.CountryRegionNameColumn);
-		}
-
-		/// <summary>Sets the TypedList field CountryRegionName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetCountryRegionNameNull() 
-		{
-			this[_parent.CountryRegionNameColumn] = System.Convert.DBNull;
+			this[_parent.CustomerIdColumn] = System.Convert.DBNull;
 		}
 
 	

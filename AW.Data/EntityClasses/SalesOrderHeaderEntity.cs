@@ -1,37 +1,31 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Sunday, November 06, 2005 1:19:31 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.ComponentModel;
 using System.Collections;
+#if !CF
 using System.Runtime.Serialization;
-
+#endif
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
 using AW.Data.RelationClasses;
-using AW.Data.ValidatorClasses;
-using AW.Data.HelperClasses;
+
 using SD.LLBLGen.Pro.ORMSupportClasses;
-using AW.Data.EntityClasses;
 
 namespace AW.Data.EntityClasses
 {
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+  using AW.Data.HelperClasses;
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 
 	/// <summary>
 	/// Entity class which represents the entity 'SalesOrderHeader'. <br/>
@@ -40,20 +34,15 @@ namespace AW.Data.EntityClasses
 	[Serializable]
 	public partial class SalesOrderHeaderEntity : SalesOrderHeaderEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Constructors
 		/// <summary>
 		/// CTor
 		/// </summary>
-        public SalesOrderHeaderEntity():base(
-            new PropertyDescriptorFactory(), new SalesOrderHeaderEntityFactory())
-        {
-            EntityValidators.SalesOrderHeaderEntityValidator val =
-                new AW.Data.EntityValidators.SalesOrderHeaderEntityValidator();
-            this.EntityValidatorToUse = val;
-        }
+		public SalesOrderHeaderEntity():base()
+		{
+		}
 
 	
 		/// <summary>
@@ -63,9 +52,6 @@ namespace AW.Data.EntityClasses
 		public SalesOrderHeaderEntity(System.Int32 salesOrderId):
 			base(salesOrderId)
 		{
-            EntityValidators.SalesOrderHeaderEntityValidator val =
-    new AW.Data.EntityValidators.SalesOrderHeaderEntityValidator();
-            this.EntityValidatorToUse = val;
 		}
 
 
@@ -77,9 +63,6 @@ namespace AW.Data.EntityClasses
 		public SalesOrderHeaderEntity(System.Int32 salesOrderId, IPrefetchPath prefetchPathToUse):
 			base(salesOrderId, prefetchPathToUse)
 		{
-            EntityValidators.SalesOrderHeaderEntityValidator val =
-    new AW.Data.EntityValidators.SalesOrderHeaderEntityValidator();
-            this.EntityValidatorToUse = val;
 		}
 
 
@@ -88,43 +71,11 @@ namespace AW.Data.EntityClasses
 		/// </summary>
 		/// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
 		/// <param name="validator">The custom validator object for this SalesOrderHeaderEntity</param>
-		public SalesOrderHeaderEntity(System.Int32 salesOrderId, SalesOrderHeaderValidator validator):
+		public SalesOrderHeaderEntity(System.Int32 salesOrderId, IValidator validator):
 			base(salesOrderId, validator)
 		{
-            EntityValidators.SalesOrderHeaderEntityValidator val =
-    new AW.Data.EntityValidators.SalesOrderHeaderEntityValidator();
-            this.EntityValidatorToUse = val;
-		}
-
-
-		/// <summary>
-		/// CTor
-		/// </summary>
-		/// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
-		/// <param name="validator">The custom validator object for this SalesOrderHeaderEntity</param>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		public SalesOrderHeaderEntity(System.Int32 salesOrderId, SalesOrderHeaderValidator validator, IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse):
-			base(salesOrderId, validator, propertyDescriptorFactoryToUse, entityFactoryToUse)
-		{
-            EntityValidators.SalesOrderHeaderEntityValidator val =
-    new AW.Data.EntityValidators.SalesOrderHeaderEntityValidator();
-            this.EntityValidatorToUse = val;
 		}
 	
-
-		/// <summary>
-		/// CTor
-		/// </summary>
-		/// <param name="propertyDescriptorFactoryToUse">PropertyDescriptor factory to use in GetItemProperties method of contained collections. Complex databinding related.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		public SalesOrderHeaderEntity(IPropertyDescriptorFactory propertyDescriptorFactoryToUse, IEntityFactory entityFactoryToUse):
-			base(propertyDescriptorFactoryToUse, entityFactoryToUse)
-		{
-            EntityValidators.SalesOrderHeaderEntityValidator val =
-    new AW.Data.EntityValidators.SalesOrderHeaderEntityValidator();
-            this.EntityValidatorToUse = val;
-		}
 		
 		/// <summary>
 		/// Private CTor for deserialization
@@ -133,9 +84,9 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected SalesOrderHeaderEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-            EntityValidators.SalesOrderHeaderEntityValidator val =
-    new AW.Data.EntityValidators.SalesOrderHeaderEntityValidator();
-            this.EntityValidatorToUse = val;
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
+			// __LLBLGENPRO_USER_CODE_REGION_END
 		}
 		#endregion
 
@@ -312,37 +263,35 @@ namespace AW.Data.EntityClasses
                 Sort.Add(
                     SalesOrderHeaderFields.OrderDate | SortOperator.Ascending);
                 SalesOrderHeaderCollection Orders = new SalesOrderHeaderCollection();
-                Orders.SupportsSorting = true;
+                //note      Orders.SupportsSorting = true;
                 IPrefetchPath Prefetch = 
                     new PrefetchPath((int)EntityType.SalesOrderHeaderEntity);
-                Prefetch.Add(
-                    SalesOrderHeaderEntity.PrefetchPathCustomerView_);
+                //note Prefetch.Add(SalesOrderHeaderEntity.PrefetchPathCustomerView_);
                 Orders.GetMulti(Filter, 100, Sort, Relations,Prefetch);
                 return Orders;
             }
         public string CustomerLastName
-        { get {return this.CustomerView_.LastName;} }
+        { get { return this.CustomerViewRelated.LastName; } }
         public string CustomerFirstName
-        { get {return this.CustomerView_.FirstName;} }
+        { get { return this.CustomerViewRelated.FirstName; } }
         public string CustomerCity
-        { get {return this.CustomerView_.City;} }
+        { get { return this.CustomerViewRelated.City; } }
         public string CustomerState
-        { get {return this.CustomerView_.StateProvinceName;} }
+        { get { return this.CustomerViewRelated.StateProvinceName; } }
         public string CustomerCountry
-        { get {return this.CustomerView_.CountryRegionName;} }
+        { get { return this.CustomerViewRelated.CountryRegionName; } }
         public string CustomerZip
-        { get {return this.CustomerView_.PostalCode;} }
+        { get { return this.CustomerViewRelated.PostalCode; } }
 
-        protected override void OnFieldValidateComplete(IEntityField field, bool validationResult)
-        {
-            base.OnFieldValidateComplete(field, validationResult);
-        }
-        protected override void OnFieldValidate(IEntityField field)
-        {
-            base.OnFieldValidate(field);
-        }
+    //note  //protected override void OnFieldValidateComplete(IEntityField field, bool validationResult)
+        //{
+        //    base.OnFieldValidateComplete(field, validationResult);
+        //}
+        //protected override void OnFieldValidate(IEntityField field)
+        //{
+        //    base.OnFieldValidate(field);
+        //}
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included Code
@@ -350,4 +299,3 @@ namespace AW.Data.EntityClasses
 		#endregion
 	}
 }
-

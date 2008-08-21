@@ -1,26 +1,21 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:25 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.Data;
 using System.Data.Common;
+using System.Collections;
 
 using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.HelperClasses;
-using AW.Data.ValidatorClasses;
 using AW.Data;
 
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -37,10 +32,10 @@ namespace AW.Data.DaoClasses
 	/// General DAO class for the EmployeeAddress Entity. It will perform database oriented actions for
 	/// a entity of type 'EmployeeAddressEntity'. This DAO works on an EntityFields object. 
 	/// </summary>
-	public class EmployeeAddressDAO : DaoBase
+	public partial class EmployeeAddressDAO : DaoBase
 	{
 		/// <summary>CTor</summary>
-		public EmployeeAddressDAO() : base(InheritanceInfoProviderSingleton.GetInstance(), new DynamicQueryEngine(), InheritanceHierarchyType.None, "EmployeeAddressEntity", new EmployeeAddressEntityFactory(), new TypeDefaultValue())
+		public EmployeeAddressDAO() : base(InheritanceInfoProviderSingleton.GetInstance(), new DynamicQueryEngine(), InheritanceHierarchyType.None, "EmployeeAddressEntity", new EmployeeAddressEntityFactory())
 		{
 		}
 		
@@ -50,8 +45,7 @@ namespace AW.Data.DaoClasses
 		/// <param name="typeOfInheritance">Type of inheritance.</param>
 		/// <param name="entityName">Name of the entity.</param>
 		/// <param name="entityFactory">Entity factory.</param>
-		/// <param name="typeDefaultvalueSupplier">Type defaultvalue supplier.</param>
-		internal EmployeeAddressDAO(IInheritanceInfoProvider inheritanceInfoProviderToUse, DynamicQueryEngineBase dqeToUse, InheritanceHierarchyType typeOfInheritance, string entityName, IEntityFactory entityFactory, ITypeDefaultValue typeDefaultvalueSupplier) : base(inheritanceInfoProviderToUse, dqeToUse, typeOfInheritance, entityName, entityFactory, new TypeDefaultValue())
+		internal EmployeeAddressDAO(IInheritanceInfoProvider inheritanceInfoProviderToUse, DynamicQueryEngineBase dqeToUse, InheritanceHierarchyType typeOfInheritance, string entityName, IEntityFactory entityFactory) : base(inheritanceInfoProviderToUse, dqeToUse, typeOfInheritance, entityName, entityFactory)
 		{
 		}
 
@@ -67,13 +61,12 @@ namespace AW.Data.DaoClasses
 		/// When set to 0, no limitations are specified.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="validatorToUse">The Validator object to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects to return</param>
 		/// <param name="employeeInstance">EmployeeEntity instance to use as a filter for the EmployeeAddressEntity objects to return</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IValidator validatorToUse, IPredicateExpression filter, IEntity addressInstance, IEntity employeeInstance, int pageNumber, int pageSize)
+		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity addressInstance, IEntity employeeInstance, int pageNumber, int pageSize)
 		{
 			base.EntityFactoryToUse = entityFactoryToUse;
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeAddressEntity);
@@ -82,7 +75,7 @@ namespace AW.Data.DaoClasses
 			{
 				selectFilter.AddWithAnd(filter);
 			}
-			return base.PerformGetMultiAction(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, validatorToUse, selectFilter, null, pageNumber, pageSize);
+			return base.PerformGetMultiAction(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, selectFilter, null, null, null, pageNumber, pageSize);
 		}
 
 		/// <summary>
@@ -100,7 +93,6 @@ namespace AW.Data.DaoClasses
 		/// <returns>a filled datatable if succeeded, false otherwise</returns>
 		public virtual DataTable GetMultiAsDataTable(long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicate selectFilter, IRelationCollection relations, int pageNumber, int pageSize)
 		{
-			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeAddressEntity);
 			return base.PerformGetMultiAsDataTableAction(maxNumberOfItemsToReturn, sortClauses, selectFilter, relations, pageNumber, pageSize);
 		}
 

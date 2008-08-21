@@ -8,8 +8,6 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.CollectionClasses;
-using AW.Data.ValidatorClasses;
-using AW.Data.EntityValidators;
 
 namespace AW.Win
 {
@@ -48,12 +46,12 @@ namespace AW.Win
             tbFreight.Text = _order.Freight.ToString("N2");
             lblTotal.Text = _order.TotalDue.ToString("N2");
             tbContact.Text = _order.Contact.DisplayName;
-            tbCustomer.Text = _order.CustomerView_.DisplayName;
+            //note tbCustomer.Text = _order.CustomerView_.DisplayName;
             cbOnlineOrder.Checked = _order.OnlineOrderFlag;
             dtpOrderDate.Value = _order.OrderDate;
             dtpDueDate.Value = _order.DueDate;
             if (_order.ShipDate != DateTime.MinValue)
-                dtpShipDate.Value = _order.ShipDate;
+                dtpShipDate.Value = _order.ShipDate.Value;
             else
                 dtpShipDate.Checked = false;
             cbShipMethod.SelectedValue = _order.ShipMethodId;
@@ -137,14 +135,14 @@ namespace AW.Win
                 }
                 else
                 {
-                    SalesOrderHeaderEntityValidator val = 
-                        (SalesOrderHeaderEntityValidator)
-                        _order.EntityValidatorToUse;
-                    MessageBox.Show(
-                        val.ErrorMessage,
-                        "Error",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Stop);
+                    //note SalesOrderHeaderEntityValidator val = 
+                    //    (SalesOrderHeaderEntityValidator)
+                    //    _order.EntityValidatorToUse;
+                    //MessageBox.Show(
+                    //    val.ErrorMessage,
+                    //    "Error",
+                    //    MessageBoxButtons.OK,
+                    //    MessageBoxIcon.Stop);
                     return false;
                 }
                 
@@ -174,13 +172,13 @@ namespace AW.Win
 
         private void tbPurchaseOrder_TextChanged(object sender, EventArgs e)
         {
-            AW.Data.WinForms.Validation.ValidatePropertyAssignment<string>
-            (tbPurchaseOrder,
-            (int)SalesOrderHeaderFieldIndex.PurchaseOrderNumber,
-            tbPurchaseOrder.Text,
-            SalesOrderHeaderValidator.PurchaseOrderError,
-            myError,
-            _order);
+            //note AW.Data.WinForms.Validation.ValidatePropertyAssignment<string>
+            //(tbPurchaseOrder,
+            //(int)SalesOrderHeaderFieldIndex.PurchaseOrderNumber,
+            //tbPurchaseOrder.Text,
+            //SalesOrderHeaderValidator.PurchaseOrderError,
+            //myError,
+            //_order);
         }
 
 

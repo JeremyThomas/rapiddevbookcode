@@ -1,25 +1,11 @@
 ﻿///////////////////////////////////////////////////////////////
-// This is generated code. If you modify this code, be aware
-// of the fact that when you re-generate the code, your changes
-// are lost. If you want to keep your changes, make this file read-only
-// when you have finished your changes, however it is recommended that
-// you inherit from this class to extend the functionality of this generated
-// class or you modify / extend the templates used to generate this code.
-//
-// Do not try to run this code on another version of the database than the database
-// which was used to generate this code. This means that when you used f.e. SqlServer 2000
-// to generate this code, it is likely that you will not be able to use that code on
-// SqlServer 7 due to SQL syntax mismatches. Most code is generic code which will work
-// with any database, but some code relies on a specific database type/vendor/version used. 
-// This code is located in the DaoClasses which target a specific specified database. Also all
-// classes target a specific specified Dynamic Query Engine (DQE) in the using/imports
-// directives. 
+// This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 1.0.2005.1
-// Code is generated on: Wednesday, November 09, 2005 8:47:32 PM
-// Code is generated using templates: C# template set for SqlServer (1.0.2005.1)
+// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated on: 
+// Code is generated using templates: SD.TemplateBindings.SqlServerSpecific.NET20
 // Templates vendor: Solutions Design.
-// Templates version: 1.0.2005.1.102305
+// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.Data;
@@ -34,7 +20,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 	/// <summary>
 	/// Class which contains the static logic to execute retrieval stored procedures in the database.
 	/// </summary>
-	public class RetrievalProcedures
+	public partial class RetrievalProcedures
 	{
 		/// <summary>
 		/// private CTor so no instance can be created.
@@ -58,7 +44,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 
 			// Call the stored proc.
 			DataTable toReturn = new DataTable("UspGetEmployeeManagers");
-			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[dbo].[uspGetEmployeeManagers]", parameters, toReturn, null);
+			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[AdventureWorks].[dbo].[uspGetEmployeeManagers]", parameters, toReturn, null);
 
 			return toReturn;
 		}
@@ -82,7 +68,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 			
 			// Call the stored proc.
 			DataTable toReturn = new DataTable("UspGetEmployeeManagers");
-			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[dbo].[uspGetEmployeeManagers]", parameters, toReturn, null);
+			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[AdventureWorks].[dbo].[uspGetEmployeeManagers]", parameters, toReturn, null);
 
 
 			returnValue = (int)parameters[1].Value;
@@ -105,7 +91,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 
 			// Call the stored proc.
 			DataTable toReturn = new DataTable("UspGetEmployeeManagers");
-			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[dbo].[uspGetEmployeeManagers]", parameters, toReturn, transactionToUse);
+			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[AdventureWorks].[dbo].[uspGetEmployeeManagers]", parameters, toReturn, transactionToUse);
 
 			return toReturn;
 		}
@@ -130,10 +116,25 @@ namespace AW.Data.StoredProcedureCallerClasses
 			
 			// Call the stored proc.
 			DataTable toReturn = new DataTable("UspGetEmployeeManagers");
-			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[dbo].[uspGetEmployeeManagers]", parameters, toReturn, transactionToUse);
+			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[AdventureWorks].[dbo].[uspGetEmployeeManagers]", parameters, toReturn, transactionToUse);
 
 
 			returnValue = (int)parameters[1].Value;
+			return toReturn;
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'uspGetEmployeeManagers'.
+		/// 
+		/// </summary>
+		/// <param name="employeeId">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetUspGetEmployeeManagersCallAsQuery( System.Int32 employeeId)
+		{
+			string procName = SD.LLBLGen.Pro.DQE.SqlServer.DynamicQueryEngine.GetNewStoredProcedureName("[AdventureWorks].[dbo].[uspGetEmployeeManagers]");
+			RetrievalQuery toReturn = new RetrievalQuery( new SqlCommand(procName) );
+			toReturn.Parameters.Add(new SqlParameter("@EmployeeID", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, employeeId));
+
+			toReturn.Command.CommandType = CommandType.StoredProcedure;
 			return toReturn;
 		}
 	
@@ -152,7 +153,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 
 			// Call the stored proc.
 			DataTable toReturn = new DataTable("UspGetManagerEmployees");
-			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[dbo].[uspGetManagerEmployees]", parameters, toReturn, null);
+			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[AdventureWorks].[dbo].[uspGetManagerEmployees]", parameters, toReturn, null);
 
 			return toReturn;
 		}
@@ -176,7 +177,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 			
 			// Call the stored proc.
 			DataTable toReturn = new DataTable("UspGetManagerEmployees");
-			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[dbo].[uspGetManagerEmployees]", parameters, toReturn, null);
+			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[AdventureWorks].[dbo].[uspGetManagerEmployees]", parameters, toReturn, null);
 
 
 			returnValue = (int)parameters[1].Value;
@@ -199,7 +200,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 
 			// Call the stored proc.
 			DataTable toReturn = new DataTable("UspGetManagerEmployees");
-			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[dbo].[uspGetManagerEmployees]", parameters, toReturn, transactionToUse);
+			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[AdventureWorks].[dbo].[uspGetManagerEmployees]", parameters, toReturn, transactionToUse);
 
 			return toReturn;
 		}
@@ -224,10 +225,25 @@ namespace AW.Data.StoredProcedureCallerClasses
 			
 			// Call the stored proc.
 			DataTable toReturn = new DataTable("UspGetManagerEmployees");
-			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[dbo].[uspGetManagerEmployees]", parameters, toReturn, transactionToUse);
+			bool hasSucceeded = DbUtils.CallRetrievalStoredProcedure("[AdventureWorks].[dbo].[uspGetManagerEmployees]", parameters, toReturn, transactionToUse);
 
 
 			returnValue = (int)parameters[1].Value;
+			return toReturn;
+		}
+
+		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'uspGetManagerEmployees'.
+		/// 
+		/// </summary>
+		/// <param name="managerId">Input parameter of stored procedure</param>
+		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
+		public static IRetrievalQuery GetUspGetManagerEmployeesCallAsQuery( System.Int32 managerId)
+		{
+			string procName = SD.LLBLGen.Pro.DQE.SqlServer.DynamicQueryEngine.GetNewStoredProcedureName("[AdventureWorks].[dbo].[uspGetManagerEmployees]");
+			RetrievalQuery toReturn = new RetrievalQuery( new SqlCommand(procName) );
+			toReturn.Parameters.Add(new SqlParameter("@ManagerID", SqlDbType.Int, 0, ParameterDirection.Input, true, 10, 0, "",  DataRowVersion.Current, managerId));
+
+			toReturn.Command.CommandType = CommandType.StoredProcedure;
 			return toReturn;
 		}
 	
