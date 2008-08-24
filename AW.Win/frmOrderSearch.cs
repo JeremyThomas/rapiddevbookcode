@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
+using AW.Win.Properties;
 
 namespace AW.Win
 {
@@ -29,20 +30,22 @@ namespace AW.Win
 
     private void frmOrderSearch_Load(object sender, EventArgs e)
     {
-      this.cbCountry.DataSource =
-        CountryRegionEntity.GetCountryRegionCollection();
-      this.cbCountry.DisplayMember =
-        CountryRegionFieldIndex.Name.ToString();
-      this.cbCountry.ValueMember =
-        CountryRegionFieldIndex.CountryRegionCode.ToString();
-      this.cbCountry.Text = "";
-      this.cbState.DataSource =
-        StateProvinceEntity.GetStateProvinceCollection();
-      this.cbState.DisplayMember =
-        StateProvinceFieldIndex.Name.ToString();
-      this.cbState.ValueMember =
-        StateProvinceFieldIndex.StateProvinceId.ToString();
-      this.cbState.Text = "";
+      var previousState = Settings.Default.State;
+      var previousCountry = Settings.Default.Country;
+
+      cbCountry.DataSource = CountryRegionEntity.GetCountryRegionCollection();
+      cbCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
+      cbCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
+
+      cbState.DataSource = StateProvinceEntity.GetStateProvinceCollection();
+      cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
+      cbState.ValueMember = StateProvinceFieldIndex.StateProvinceId.ToString();
+
+      dtpDateFrom.Checked = dtpDateFrom.Value.Date != DateTime.Today;
+      dtpDateTo.Checked = dtpDateTo.Value.Date != DateTime.Today;
+
+      cbState.Text = previousState;
+      cbCountry.Text = previousCountry;
     }
 
     //private void btnSearch_Click(object sender, EventArgs e)
@@ -91,7 +94,6 @@ namespace AW.Win
       _orderID = 0;
       _orderName = "";
       if (tbOrderID.Text != "")
-      {
         try
         {
           _orderID = Convert.ToInt32(tbOrderID.Text);
@@ -100,7 +102,6 @@ namespace AW.Win
         {
           _orderName = tbOrderID.Text;
         }
-      }
       _firstName = tbFirstName.Text;
       _lastName = tbLastName.Text;
       _cityName = tbCity.Text;
@@ -110,8 +111,7 @@ namespace AW.Win
       btnSearch.Enabled = false;
       _frmStatusBar = new frmStatusBar();
       _frmStatusBar.Show();
-      _frmStatusBar.CancelButtonClicked +=
-        _frmStatusBar_CancelButtonClicked;
+      _frmStatusBar.CancelButtonClicked += _frmStatusBar_CancelButtonClicked;
       searchWorker.RunWorkerAsync();
     }
 
@@ -123,23 +123,17 @@ namespace AW.Win
 
     private void newOrderToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var Order = new SalesOrderHeaderEntity();
-      Order.CustomerId = 17018;
-      Order.ContactId = 4975;
-      Order.BillToAddressId = 14810;
-      Order.ShipToAddressId = 14810;
+      var Order = new SalesOrderHeaderEntity {CustomerId = 17018, ContactId = 4975, BillToAddressId = 14810, ShipToAddressId = 14810};
       var frm = new frmOrderEdit(Order);
-      ((frmMain) this.MdiParent).LaunchChildForm(frm);
+      ((frmMain) MdiParent).LaunchChildForm(frm);
     }
 
     private void dgResults_CellContentDoubleClick(
       object sender, DataGridViewCellEventArgs e)
     {
-      var Order =
-        dgResults.Rows[e.RowIndex].DataBoundItem
-        as SalesOrderHeaderEntity;
+      var Order = dgResults.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
       var frm = new frmOrderEdit(Order);
-      ((frmMain) this.MdiParent).LaunchChildForm(frm);
+      ((frmMain) MdiParent).LaunchChildForm(frm);
     }
 
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -155,7 +149,8 @@ namespace AW.Win
           _cityName,
           _state,
           _country,
-          _zip);
+          _zip,
+          Convert.ToInt32(numericUpDownNumRows.Value));
       else
         _results = SalesOrderHeaderEntity.GetSalesOrderHeaderCollection(
           _fromDate,
@@ -167,7 +162,8 @@ namespace AW.Win
           _cityName,
           _state,
           _country,
-          _zip);
+          _zip,
+          Convert.ToInt32(numericUpDownNumRows.Value));
     }
 
     private void searchWorker_RunWorkerCompleted(object sender,
@@ -183,6 +179,11 @@ namespace AW.Win
       }
       btnSearch.Enabled = true;
       dgResults.DataSource = _results;
+    }
+
+    private void frmOrderSearch_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      Settings.Default.Save();
     }
   }
 }

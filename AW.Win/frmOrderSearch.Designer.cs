@@ -29,15 +29,12 @@ namespace AW.Win
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
           this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
           this.label9 = new System.Windows.Forms.Label();
-          this.tbCity = new System.Windows.Forms.TextBox();
           this.label8 = new System.Windows.Forms.Label();
-          this.dtpDateFrom = new System.Windows.Forms.DateTimePicker();
-          this.dtpDateTo = new System.Windows.Forms.DateTimePicker();
           this.label1 = new System.Windows.Forms.Label();
           this.label2 = new System.Windows.Forms.Label();
           this.label3 = new System.Windows.Forms.Label();
@@ -45,15 +42,23 @@ namespace AW.Win
           this.label5 = new System.Windows.Forms.Label();
           this.label6 = new System.Windows.Forms.Label();
           this.label7 = new System.Windows.Forms.Label();
+          this.panel1 = new System.Windows.Forms.Panel();
+          this.btnSearch = new System.Windows.Forms.Button();
+          this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+          this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.searchWorker = new System.ComponentModel.BackgroundWorker();
+          this.tbCity = new System.Windows.Forms.TextBox();
+          this.dtpDateFrom = new System.Windows.Forms.DateTimePicker();
+          this.dtpDateTo = new System.Windows.Forms.DateTimePicker();
           this.tbZip = new System.Windows.Forms.TextBox();
           this.tbFirstName = new System.Windows.Forms.TextBox();
           this.tbLastName = new System.Windows.Forms.TextBox();
           this.cbState = new System.Windows.Forms.ComboBox();
           this.cbCountry = new System.Windows.Forms.ComboBox();
           this.tbOrderID = new System.Windows.Forms.TextBox();
-          this.panel1 = new System.Windows.Forms.Panel();
+          this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
           this.checkBoxUseLinq = new System.Windows.Forms.CheckBox();
-          this.btnSearch = new System.Windows.Forms.Button();
+          this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
           this.dgResults = new System.Windows.Forms.DataGridView();
           this.salesOrderIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,15 +70,13 @@ namespace AW.Win
           this.customerZipDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.customerCountryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.totalDueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-          this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.salesOrderHeaderCollection1 = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
-          this.searchWorker = new System.ComponentModel.BackgroundWorker();
           this.tableLayoutPanel1.SuspendLayout();
           this.tableLayoutPanel2.SuspendLayout();
           this.panel1.SuspendLayout();
-          ((System.ComponentModel.ISupportInitialize)(this.dgResults)).BeginInit();
           this.contextMenuStrip1.SuspendLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.dgResults)).BeginInit();
           this.SuspendLayout();
           // 
           // tableLayoutPanel1
@@ -141,14 +144,6 @@ namespace AW.Win
           this.label9.Text = "Order ID:";
           this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
           // 
-          // tbCity
-          // 
-          this.tbCity.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.tbCity.Location = new System.Drawing.Point(412, 3);
-          this.tbCity.Name = "tbCity";
-          this.tbCity.Size = new System.Drawing.Size(269, 20);
-          this.tbCity.TabIndex = 16;
-          // 
           // label8
           // 
           this.label8.AutoSize = true;
@@ -159,28 +154,6 @@ namespace AW.Win
           this.label8.TabIndex = 9;
           this.label8.Text = "From Date:";
           this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-          // 
-          // dtpDateFrom
-          // 
-          this.dtpDateFrom.Checked = false;
-          this.dtpDateFrom.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.dtpDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-          this.dtpDateFrom.Location = new System.Drawing.Point(71, 3);
-          this.dtpDateFrom.Name = "dtpDateFrom";
-          this.dtpDateFrom.ShowCheckBox = true;
-          this.dtpDateFrom.Size = new System.Drawing.Size(267, 20);
-          this.dtpDateFrom.TabIndex = 0;
-          // 
-          // dtpDateTo
-          // 
-          this.dtpDateTo.Checked = false;
-          this.dtpDateTo.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.dtpDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-          this.dtpDateTo.Location = new System.Drawing.Point(71, 28);
-          this.dtpDateTo.Name = "dtpDateTo";
-          this.dtpDateTo.ShowCheckBox = true;
-          this.dtpDateTo.Size = new System.Drawing.Size(267, 20);
-          this.dtpDateTo.TabIndex = 1;
           // 
           // label1
           // 
@@ -259,62 +232,9 @@ namespace AW.Win
           this.label7.Text = "Zip:";
           this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
           // 
-          // tbZip
-          // 
-          this.tbZip.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.tbZip.Location = new System.Drawing.Point(412, 78);
-          this.tbZip.Name = "tbZip";
-          this.tbZip.Size = new System.Drawing.Size(269, 20);
-          this.tbZip.TabIndex = 13;
-          // 
-          // tbFirstName
-          // 
-          this.tbFirstName.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.tbFirstName.Location = new System.Drawing.Point(71, 53);
-          this.tbFirstName.Name = "tbFirstName";
-          this.tbFirstName.Size = new System.Drawing.Size(267, 20);
-          this.tbFirstName.TabIndex = 11;
-          // 
-          // tbLastName
-          // 
-          this.tbLastName.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.tbLastName.Location = new System.Drawing.Point(71, 78);
-          this.tbLastName.Name = "tbLastName";
-          this.tbLastName.Size = new System.Drawing.Size(267, 20);
-          this.tbLastName.TabIndex = 12;
-          // 
-          // cbState
-          // 
-          this.cbState.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-          this.cbState.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-          this.cbState.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.cbState.FormattingEnabled = true;
-          this.cbState.Location = new System.Drawing.Point(412, 28);
-          this.cbState.Name = "cbState";
-          this.cbState.Size = new System.Drawing.Size(269, 21);
-          this.cbState.TabIndex = 14;
-          // 
-          // cbCountry
-          // 
-          this.cbCountry.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-          this.cbCountry.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-          this.cbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.cbCountry.FormattingEnabled = true;
-          this.cbCountry.Location = new System.Drawing.Point(412, 53);
-          this.cbCountry.Name = "cbCountry";
-          this.cbCountry.Size = new System.Drawing.Size(269, 21);
-          this.cbCountry.TabIndex = 15;
-          // 
-          // tbOrderID
-          // 
-          this.tbOrderID.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.tbOrderID.Location = new System.Drawing.Point(71, 103);
-          this.tbOrderID.Name = "tbOrderID";
-          this.tbOrderID.Size = new System.Drawing.Size(267, 20);
-          this.tbOrderID.TabIndex = 17;
-          // 
           // panel1
           // 
+          this.panel1.Controls.Add(this.numericUpDownNumRows);
           this.panel1.Controls.Add(this.checkBoxUseLinq);
           this.panel1.Controls.Add(this.btnSearch);
           this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -322,6 +242,146 @@ namespace AW.Win
           this.panel1.Name = "panel1";
           this.panel1.Size = new System.Drawing.Size(269, 23);
           this.panel1.TabIndex = 22;
+          // 
+          // btnSearch
+          // 
+          this.btnSearch.Location = new System.Drawing.Point(3, 0);
+          this.btnSearch.Name = "btnSearch";
+          this.btnSearch.Size = new System.Drawing.Size(75, 22);
+          this.btnSearch.TabIndex = 21;
+          this.btnSearch.Text = "Search";
+          this.btnSearch.UseVisualStyleBackColor = true;
+          this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+          // 
+          // contextMenuStrip1
+          // 
+          this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newOrderToolStripMenuItem});
+          this.contextMenuStrip1.Name = "contextMenuStrip1";
+          this.contextMenuStrip1.Size = new System.Drawing.Size(138, 26);
+          // 
+          // newOrderToolStripMenuItem
+          // 
+          this.newOrderToolStripMenuItem.Name = "newOrderToolStripMenuItem";
+          this.newOrderToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+          this.newOrderToolStripMenuItem.Text = "New Order";
+          this.newOrderToolStripMenuItem.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
+          // 
+          // searchWorker
+          // 
+          this.searchWorker.WorkerSupportsCancellation = true;
+          this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
+          this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
+          // 
+          // tbCity
+          // 
+          this.tbCity.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "City", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbCity.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.tbCity.Location = new System.Drawing.Point(412, 3);
+          this.tbCity.Name = "tbCity";
+          this.tbCity.Size = new System.Drawing.Size(269, 20);
+          this.tbCity.TabIndex = 16;
+          this.tbCity.Text = global::AW.Win.Properties.Settings.Default.City;
+          // 
+          // dtpDateFrom
+          // 
+          this.dtpDateFrom.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "DateFrom", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.dtpDateFrom.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.dtpDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+          this.dtpDateFrom.Location = new System.Drawing.Point(71, 3);
+          this.dtpDateFrom.Name = "dtpDateFrom";
+          this.dtpDateFrom.ShowCheckBox = true;
+          this.dtpDateFrom.Size = new System.Drawing.Size(267, 20);
+          this.dtpDateFrom.TabIndex = 0;
+          this.dtpDateFrom.Value = global::AW.Win.Properties.Settings.Default.DateFrom;
+          // 
+          // dtpDateTo
+          // 
+          this.dtpDateTo.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "DateTo", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.dtpDateTo.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.dtpDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+          this.dtpDateTo.Location = new System.Drawing.Point(71, 28);
+          this.dtpDateTo.Name = "dtpDateTo";
+          this.dtpDateTo.ShowCheckBox = true;
+          this.dtpDateTo.Size = new System.Drawing.Size(267, 20);
+          this.dtpDateTo.TabIndex = 1;
+          this.dtpDateTo.Value = global::AW.Win.Properties.Settings.Default.DateTo;
+          // 
+          // tbZip
+          // 
+          this.tbZip.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "Zip", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbZip.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.tbZip.Location = new System.Drawing.Point(412, 78);
+          this.tbZip.Name = "tbZip";
+          this.tbZip.Size = new System.Drawing.Size(269, 20);
+          this.tbZip.TabIndex = 13;
+          this.tbZip.Text = global::AW.Win.Properties.Settings.Default.Zip;
+          // 
+          // tbFirstName
+          // 
+          this.tbFirstName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "FirstName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbFirstName.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.tbFirstName.Location = new System.Drawing.Point(71, 53);
+          this.tbFirstName.Name = "tbFirstName";
+          this.tbFirstName.Size = new System.Drawing.Size(267, 20);
+          this.tbFirstName.TabIndex = 11;
+          this.tbFirstName.Text = global::AW.Win.Properties.Settings.Default.FirstName;
+          // 
+          // tbLastName
+          // 
+          this.tbLastName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "LastName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbLastName.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.tbLastName.Location = new System.Drawing.Point(71, 78);
+          this.tbLastName.Name = "tbLastName";
+          this.tbLastName.Size = new System.Drawing.Size(267, 20);
+          this.tbLastName.TabIndex = 12;
+          this.tbLastName.Text = global::AW.Win.Properties.Settings.Default.LastName;
+          // 
+          // cbState
+          // 
+          this.cbState.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+          this.cbState.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+          this.cbState.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "State", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.cbState.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.cbState.FormattingEnabled = true;
+          this.cbState.Location = new System.Drawing.Point(412, 28);
+          this.cbState.Name = "cbState";
+          this.cbState.Size = new System.Drawing.Size(269, 21);
+          this.cbState.TabIndex = 14;
+          this.cbState.Text = global::AW.Win.Properties.Settings.Default.State;
+          // 
+          // cbCountry
+          // 
+          this.cbCountry.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+          this.cbCountry.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+          this.cbCountry.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "Country", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.cbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.cbCountry.FormattingEnabled = true;
+          this.cbCountry.Location = new System.Drawing.Point(412, 53);
+          this.cbCountry.Name = "cbCountry";
+          this.cbCountry.Size = new System.Drawing.Size(269, 21);
+          this.cbCountry.TabIndex = 15;
+          this.cbCountry.Text = global::AW.Win.Properties.Settings.Default.Country;
+          // 
+          // tbOrderID
+          // 
+          this.tbOrderID.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "OrderID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbOrderID.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.tbOrderID.Location = new System.Drawing.Point(71, 103);
+          this.tbOrderID.Name = "tbOrderID";
+          this.tbOrderID.Size = new System.Drawing.Size(267, 20);
+          this.tbOrderID.TabIndex = 17;
+          this.tbOrderID.Text = global::AW.Win.Properties.Settings.Default.OrderID;
+          // 
+          // numericUpDownNumRows
+          // 
+          this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.numericUpDownNumRows.Location = new System.Drawing.Point(201, 2);
+          this.numericUpDownNumRows.Name = "numericUpDownNumRows";
+          this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
+          this.numericUpDownNumRows.TabIndex = 23;
+          this.toolTip1.SetToolTip(this.numericUpDownNumRows, "max Number Of Items To Return");
+          this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
           // 
           // checkBoxUseLinq
           // 
@@ -334,16 +394,6 @@ namespace AW.Win
           this.checkBoxUseLinq.TabIndex = 22;
           this.checkBoxUseLinq.Text = "UseLinq";
           this.checkBoxUseLinq.UseVisualStyleBackColor = true;
-          // 
-          // btnSearch
-          // 
-          this.btnSearch.Location = new System.Drawing.Point(3, 0);
-          this.btnSearch.Name = "btnSearch";
-          this.btnSearch.Size = new System.Drawing.Size(75, 22);
-          this.btnSearch.TabIndex = 21;
-          this.btnSearch.Text = "Search";
-          this.btnSearch.UseVisualStyleBackColor = true;
-          this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
           // 
           // dgResults
           // 
@@ -395,9 +445,9 @@ namespace AW.Win
           // 
           this.orderDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.orderDateDataGridViewTextBoxColumn.DataPropertyName = "OrderDate";
-          dataGridViewCellStyle1.Format = "d";
-          dataGridViewCellStyle1.NullValue = null;
-          this.orderDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+          dataGridViewCellStyle3.Format = "d";
+          dataGridViewCellStyle3.NullValue = null;
+          this.orderDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
           this.orderDateDataGridViewTextBoxColumn.HeaderText = "Date";
           this.orderDateDataGridViewTextBoxColumn.Name = "orderDateDataGridViewTextBoxColumn";
           this.orderDateDataGridViewTextBoxColumn.Width = 55;
@@ -460,26 +510,12 @@ namespace AW.Win
           // 
           this.totalDueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
           this.totalDueDataGridViewTextBoxColumn.DataPropertyName = "TotalDue";
-          dataGridViewCellStyle2.Format = "C2";
-          dataGridViewCellStyle2.NullValue = null;
-          this.totalDueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+          dataGridViewCellStyle4.Format = "C2";
+          dataGridViewCellStyle4.NullValue = null;
+          this.totalDueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
           this.totalDueDataGridViewTextBoxColumn.HeaderText = "Total";
           this.totalDueDataGridViewTextBoxColumn.Name = "totalDueDataGridViewTextBoxColumn";
           this.totalDueDataGridViewTextBoxColumn.ReadOnly = true;
-          // 
-          // contextMenuStrip1
-          // 
-          this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newOrderToolStripMenuItem});
-          this.contextMenuStrip1.Name = "contextMenuStrip1";
-          this.contextMenuStrip1.Size = new System.Drawing.Size(138, 26);
-          // 
-          // newOrderToolStripMenuItem
-          // 
-          this.newOrderToolStripMenuItem.Name = "newOrderToolStripMenuItem";
-          this.newOrderToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-          this.newOrderToolStripMenuItem.Text = "New Order";
-          this.newOrderToolStripMenuItem.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
           // 
           // salesOrderHeaderCollection1
           // 
@@ -498,12 +534,6 @@ namespace AW.Win
           this.salesOrderHeaderCollection1.SuppressClearInGetMulti = false;
           this.salesOrderHeaderCollection1.Transaction = null;
           // 
-          // searchWorker
-          // 
-          this.searchWorker.WorkerSupportsCancellation = true;
-          this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
-          this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
-          // 
           // frmOrderSearch
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -516,13 +546,15 @@ namespace AW.Win
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
           this.Text = "Order Search";
           this.Load += new System.EventHandler(this.frmOrderSearch_Load);
+          this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderSearch_FormClosed);
           this.tableLayoutPanel1.ResumeLayout(false);
           this.tableLayoutPanel2.ResumeLayout(false);
           this.tableLayoutPanel2.PerformLayout();
           this.panel1.ResumeLayout(false);
           this.panel1.PerformLayout();
-          ((System.ComponentModel.ISupportInitialize)(this.dgResults)).EndInit();
           this.contextMenuStrip1.ResumeLayout(false);
+          ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.dgResults)).EndInit();
           this.ResumeLayout(false);
 
         }
@@ -568,5 +600,7 @@ namespace AW.Win
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.CheckBox checkBoxUseLinq;
+        private System.Windows.Forms.NumericUpDown numericUpDownNumRows;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
