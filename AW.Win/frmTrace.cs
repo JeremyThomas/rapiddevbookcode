@@ -10,11 +10,13 @@ namespace AW.Win
 {
   public partial class frmTrace : Form
   {
+    private int textBoxTraceListenerIndex;
+
     public frmTrace()
     {
       InitializeComponent();
       var dummy = DynamicQueryEngine.ArithAbortOn;
-      Trace.Listeners.Add(new TextBoxTraceListener(textBoxTrace));
+      textBoxTraceListenerIndex = Trace.Listeners.Add(new TextBoxTraceListener(textBoxTrace));
       comboBoxTraceLevel.DataSource = Enum.GetValues(typeof (TraceLevel));
     }
 
@@ -49,7 +51,7 @@ namespace AW.Win
 
     private void frmTrace_FormClosed(object sender, FormClosedEventArgs e)
     {
-      Settings.Default.Save();
+      Trace.Listeners.RemoveAt(textBoxTraceListenerIndex);
     }
 
     private void buttonClearTrace_Click(object sender, EventArgs e)
