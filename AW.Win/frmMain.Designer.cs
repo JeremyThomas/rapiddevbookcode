@@ -38,8 +38,8 @@ namespace AW.Win
           this.organizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.utilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.vacationBonusUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip1.SuspendLayout();
           this.SuspendLayout();
           // 
@@ -69,7 +69,7 @@ namespace AW.Win
           // exitToolStripMenuItem
           // 
           this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-          this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
           this.exitToolStripMenuItem.Text = "E&xit";
           this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
           // 
@@ -127,12 +127,6 @@ namespace AW.Win
           this.vacationBonusUtilityToolStripMenuItem.Text = "Vacation Bonus Utility ...";
           this.vacationBonusUtilityToolStripMenuItem.Click += new System.EventHandler(this.vacationBonusUtilityToolStripMenuItem_Click);
           // 
-          // windowToolStripMenuItem
-          // 
-          this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-          this.windowToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-          this.windowToolStripMenuItem.Text = "&Window";
-          // 
           // traceToolStripMenuItem
           // 
           this.traceToolStripMenuItem.Name = "traceToolStripMenuItem";
@@ -140,19 +134,28 @@ namespace AW.Win
           this.traceToolStripMenuItem.Text = "Trace...";
           this.traceToolStripMenuItem.Click += new System.EventHandler(this.traceToolStripMenuItem_Click);
           // 
+          // windowToolStripMenuItem
+          // 
+          this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
+          this.windowToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+          this.windowToolStripMenuItem.Text = "&Window";
+          // 
           // frmMain
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(395, 273);
           this.Controls.Add(this.menuStrip1);
+          this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", global::AW.Win.Properties.Settings.Default, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.IsMdiContainer = true;
           this.MainMenuStrip = this.menuStrip1;
           this.Name = "frmMain";
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
           this.Text = "Adventure Works";
-          this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+          this.WindowState = global::AW.Win.Properties.Settings.Default.MainWindowState;
           this.Load += new System.EventHandler(this.frmMain_Load);
+          this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+          this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
           this.menuStrip1.ResumeLayout(false);
           this.menuStrip1.PerformLayout();
           this.ResumeLayout(false);

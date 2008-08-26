@@ -46,6 +46,8 @@ namespace AW.Win
 
       cbState.Text = previousState;
       cbCountry.Text = previousCountry;
+
+      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrderSearchSizeLocation);
     }
 
     //private void btnSearch_Click(object sender, EventArgs e)
@@ -184,6 +186,11 @@ namespace AW.Win
     private void frmOrderSearch_FormClosed(object sender, FormClosedEventArgs e)
     {
       Settings.Default.Save();
+    }
+
+    private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      Settings.Default.OrderSearchSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
   }
 }

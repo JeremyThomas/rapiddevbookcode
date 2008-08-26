@@ -29,8 +29,8 @@ namespace AW.Win
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
           this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
           this.label9 = new System.Windows.Forms.Label();
@@ -44,21 +44,6 @@ namespace AW.Win
           this.label7 = new System.Windows.Forms.Label();
           this.panel1 = new System.Windows.Forms.Panel();
           this.btnSearch = new System.Windows.Forms.Button();
-          this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-          this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.searchWorker = new System.ComponentModel.BackgroundWorker();
-          this.tbCity = new System.Windows.Forms.TextBox();
-          this.dtpDateFrom = new System.Windows.Forms.DateTimePicker();
-          this.dtpDateTo = new System.Windows.Forms.DateTimePicker();
-          this.tbZip = new System.Windows.Forms.TextBox();
-          this.tbFirstName = new System.Windows.Forms.TextBox();
-          this.tbLastName = new System.Windows.Forms.TextBox();
-          this.cbState = new System.Windows.Forms.ComboBox();
-          this.cbCountry = new System.Windows.Forms.ComboBox();
-          this.tbOrderID = new System.Windows.Forms.TextBox();
-          this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
-          this.checkBoxUseLinq = new System.Windows.Forms.CheckBox();
-          this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
           this.dgResults = new System.Windows.Forms.DataGridView();
           this.salesOrderIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,13 +55,28 @@ namespace AW.Win
           this.customerZipDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.customerCountryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.totalDueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+          this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+          this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.salesOrderHeaderCollection1 = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
+          this.searchWorker = new System.ComponentModel.BackgroundWorker();
+          this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+          this.tbCity = new System.Windows.Forms.TextBox();
+          this.dtpDateFrom = new System.Windows.Forms.DateTimePicker();
+          this.dtpDateTo = new System.Windows.Forms.DateTimePicker();
+          this.tbZip = new System.Windows.Forms.TextBox();
+          this.tbFirstName = new System.Windows.Forms.TextBox();
+          this.tbLastName = new System.Windows.Forms.TextBox();
+          this.cbState = new System.Windows.Forms.ComboBox();
+          this.cbCountry = new System.Windows.Forms.ComboBox();
+          this.tbOrderID = new System.Windows.Forms.TextBox();
+          this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
+          this.checkBoxUseLinq = new System.Windows.Forms.CheckBox();
           this.tableLayoutPanel1.SuspendLayout();
           this.tableLayoutPanel2.SuspendLayout();
           this.panel1.SuspendLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.dgResults)).BeginInit();
           this.contextMenuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.dgResults)).BeginInit();
           this.SuspendLayout();
           // 
           // tableLayoutPanel1
@@ -253,6 +253,128 @@ namespace AW.Win
           this.btnSearch.UseVisualStyleBackColor = true;
           this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
           // 
+          // dgResults
+          // 
+          this.dgResults.AllowUserToAddRows = false;
+          this.dgResults.AutoGenerateColumns = false;
+          this.dgResults.BackgroundColor = System.Drawing.Color.White;
+          this.dgResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+          this.dgResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.salesOrderIdDataGridViewTextBoxColumn,
+            this.salesOrderNumberDataGridViewTextBoxColumn,
+            this.orderDateDataGridViewTextBoxColumn,
+            this.customerLastNameDataGridViewTextBoxColumn,
+            this.customerFirstNameDataGridViewTextBoxColumn,
+            this.customerCityDataGridViewTextBoxColumn,
+            this.customerStateDataGridViewTextBoxColumn,
+            this.customerZipDataGridViewTextBoxColumn,
+            this.customerCountryDataGridViewTextBoxColumn,
+            this.totalDueDataGridViewTextBoxColumn});
+          this.dgResults.ContextMenuStrip = this.contextMenuStrip1;
+          this.dgResults.DataSource = this.salesOrderHeaderCollection1;
+          this.dgResults.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.dgResults.Location = new System.Drawing.Point(5, 142);
+          this.dgResults.Name = "dgResults";
+          this.dgResults.RowHeadersVisible = false;
+          this.dgResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+          this.dgResults.Size = new System.Drawing.Size(684, 431);
+          this.dgResults.TabIndex = 1;
+          this.dgResults.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
+          // 
+          // salesOrderIdDataGridViewTextBoxColumn
+          // 
+          this.salesOrderIdDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+          this.salesOrderIdDataGridViewTextBoxColumn.DataPropertyName = "SalesOrderId";
+          this.salesOrderIdDataGridViewTextBoxColumn.HeaderText = "ID";
+          this.salesOrderIdDataGridViewTextBoxColumn.Name = "salesOrderIdDataGridViewTextBoxColumn";
+          this.salesOrderIdDataGridViewTextBoxColumn.ReadOnly = true;
+          this.salesOrderIdDataGridViewTextBoxColumn.Width = 43;
+          // 
+          // salesOrderNumberDataGridViewTextBoxColumn
+          // 
+          this.salesOrderNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+          this.salesOrderNumberDataGridViewTextBoxColumn.DataPropertyName = "SalesOrderNumber";
+          this.salesOrderNumberDataGridViewTextBoxColumn.HeaderText = "#";
+          this.salesOrderNumberDataGridViewTextBoxColumn.Name = "salesOrderNumberDataGridViewTextBoxColumn";
+          this.salesOrderNumberDataGridViewTextBoxColumn.ReadOnly = true;
+          this.salesOrderNumberDataGridViewTextBoxColumn.Width = 39;
+          // 
+          // orderDateDataGridViewTextBoxColumn
+          // 
+          this.orderDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+          this.orderDateDataGridViewTextBoxColumn.DataPropertyName = "OrderDate";
+          dataGridViewCellStyle1.Format = "d";
+          dataGridViewCellStyle1.NullValue = null;
+          this.orderDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+          this.orderDateDataGridViewTextBoxColumn.HeaderText = "Date";
+          this.orderDateDataGridViewTextBoxColumn.Name = "orderDateDataGridViewTextBoxColumn";
+          this.orderDateDataGridViewTextBoxColumn.Width = 55;
+          // 
+          // customerLastNameDataGridViewTextBoxColumn
+          // 
+          this.customerLastNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+          this.customerLastNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerLastName";
+          this.customerLastNameDataGridViewTextBoxColumn.HeaderText = "Last";
+          this.customerLastNameDataGridViewTextBoxColumn.Name = "customerLastNameDataGridViewTextBoxColumn";
+          this.customerLastNameDataGridViewTextBoxColumn.ReadOnly = true;
+          this.customerLastNameDataGridViewTextBoxColumn.Width = 52;
+          // 
+          // customerFirstNameDataGridViewTextBoxColumn
+          // 
+          this.customerFirstNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+          this.customerFirstNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerFirstName";
+          this.customerFirstNameDataGridViewTextBoxColumn.HeaderText = "First";
+          this.customerFirstNameDataGridViewTextBoxColumn.Name = "customerFirstNameDataGridViewTextBoxColumn";
+          this.customerFirstNameDataGridViewTextBoxColumn.ReadOnly = true;
+          this.customerFirstNameDataGridViewTextBoxColumn.Width = 51;
+          // 
+          // customerCityDataGridViewTextBoxColumn
+          // 
+          this.customerCityDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+          this.customerCityDataGridViewTextBoxColumn.DataPropertyName = "CustomerCity";
+          this.customerCityDataGridViewTextBoxColumn.HeaderText = "City";
+          this.customerCityDataGridViewTextBoxColumn.Name = "customerCityDataGridViewTextBoxColumn";
+          this.customerCityDataGridViewTextBoxColumn.ReadOnly = true;
+          this.customerCityDataGridViewTextBoxColumn.Width = 49;
+          // 
+          // customerStateDataGridViewTextBoxColumn
+          // 
+          this.customerStateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+          this.customerStateDataGridViewTextBoxColumn.DataPropertyName = "CustomerState";
+          this.customerStateDataGridViewTextBoxColumn.HeaderText = "State";
+          this.customerStateDataGridViewTextBoxColumn.Name = "customerStateDataGridViewTextBoxColumn";
+          this.customerStateDataGridViewTextBoxColumn.ReadOnly = true;
+          this.customerStateDataGridViewTextBoxColumn.Width = 57;
+          // 
+          // customerZipDataGridViewTextBoxColumn
+          // 
+          this.customerZipDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+          this.customerZipDataGridViewTextBoxColumn.DataPropertyName = "CustomerZip";
+          this.customerZipDataGridViewTextBoxColumn.HeaderText = "Zip";
+          this.customerZipDataGridViewTextBoxColumn.Name = "customerZipDataGridViewTextBoxColumn";
+          this.customerZipDataGridViewTextBoxColumn.ReadOnly = true;
+          this.customerZipDataGridViewTextBoxColumn.Width = 47;
+          // 
+          // customerCountryDataGridViewTextBoxColumn
+          // 
+          this.customerCountryDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+          this.customerCountryDataGridViewTextBoxColumn.DataPropertyName = "CustomerCountry";
+          this.customerCountryDataGridViewTextBoxColumn.HeaderText = "Country";
+          this.customerCountryDataGridViewTextBoxColumn.Name = "customerCountryDataGridViewTextBoxColumn";
+          this.customerCountryDataGridViewTextBoxColumn.ReadOnly = true;
+          this.customerCountryDataGridViewTextBoxColumn.Width = 68;
+          // 
+          // totalDueDataGridViewTextBoxColumn
+          // 
+          this.totalDueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+          this.totalDueDataGridViewTextBoxColumn.DataPropertyName = "TotalDue";
+          dataGridViewCellStyle2.Format = "C2";
+          dataGridViewCellStyle2.NullValue = null;
+          this.totalDueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+          this.totalDueDataGridViewTextBoxColumn.HeaderText = "Total";
+          this.totalDueDataGridViewTextBoxColumn.Name = "totalDueDataGridViewTextBoxColumn";
+          this.totalDueDataGridViewTextBoxColumn.ReadOnly = true;
+          // 
           // contextMenuStrip1
           // 
           this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -266,6 +388,23 @@ namespace AW.Win
           this.newOrderToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
           this.newOrderToolStripMenuItem.Text = "New Order";
           this.newOrderToolStripMenuItem.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
+          // 
+          // salesOrderHeaderCollection1
+          // 
+          this.salesOrderHeaderCollection1.ActiveContext = null;
+          this.salesOrderHeaderCollection1.AllowEdit = true;
+          this.salesOrderHeaderCollection1.AllowNew = true;
+          this.salesOrderHeaderCollection1.AllowRemove = false;
+          this.salesOrderHeaderCollection1.Capacity = 0;
+          this.salesOrderHeaderCollection1.ConcurrencyPredicateFactoryToUse = null;
+          this.salesOrderHeaderCollection1.DoNotPerformAddIfPresent = true;
+          this.salesOrderHeaderCollection1.EntityFactoryToUse = new AW.Data.FactoryClasses.SalesOrderHeaderEntityFactory();
+          this.salesOrderHeaderCollection1.IsReadOnly = false;
+          this.salesOrderHeaderCollection1.MaxNumberOfItemsToReturn = ((long)(0));
+          this.salesOrderHeaderCollection1.RemovedEntitiesTracker = null;
+          this.salesOrderHeaderCollection1.SortClauses = null;
+          this.salesOrderHeaderCollection1.SuppressClearInGetMulti = false;
+          this.salesOrderHeaderCollection1.Transaction = null;
           // 
           // searchWorker
           // 
@@ -395,145 +534,6 @@ namespace AW.Win
           this.checkBoxUseLinq.Text = "UseLinq";
           this.checkBoxUseLinq.UseVisualStyleBackColor = true;
           // 
-          // dgResults
-          // 
-          this.dgResults.AllowUserToAddRows = false;
-          this.dgResults.AutoGenerateColumns = false;
-          this.dgResults.BackgroundColor = System.Drawing.Color.White;
-          this.dgResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-          this.dgResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.salesOrderIdDataGridViewTextBoxColumn,
-            this.salesOrderNumberDataGridViewTextBoxColumn,
-            this.orderDateDataGridViewTextBoxColumn,
-            this.customerLastNameDataGridViewTextBoxColumn,
-            this.customerFirstNameDataGridViewTextBoxColumn,
-            this.customerCityDataGridViewTextBoxColumn,
-            this.customerStateDataGridViewTextBoxColumn,
-            this.customerZipDataGridViewTextBoxColumn,
-            this.customerCountryDataGridViewTextBoxColumn,
-            this.totalDueDataGridViewTextBoxColumn});
-          this.dgResults.ContextMenuStrip = this.contextMenuStrip1;
-          this.dgResults.DataSource = this.salesOrderHeaderCollection1;
-          this.dgResults.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.dgResults.Location = new System.Drawing.Point(5, 142);
-          this.dgResults.Name = "dgResults";
-          this.dgResults.RowHeadersVisible = false;
-          this.dgResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-          this.dgResults.Size = new System.Drawing.Size(684, 431);
-          this.dgResults.TabIndex = 1;
-          this.dgResults.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
-          // 
-          // salesOrderIdDataGridViewTextBoxColumn
-          // 
-          this.salesOrderIdDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-          this.salesOrderIdDataGridViewTextBoxColumn.DataPropertyName = "SalesOrderId";
-          this.salesOrderIdDataGridViewTextBoxColumn.HeaderText = "ID";
-          this.salesOrderIdDataGridViewTextBoxColumn.Name = "salesOrderIdDataGridViewTextBoxColumn";
-          this.salesOrderIdDataGridViewTextBoxColumn.ReadOnly = true;
-          this.salesOrderIdDataGridViewTextBoxColumn.Width = 43;
-          // 
-          // salesOrderNumberDataGridViewTextBoxColumn
-          // 
-          this.salesOrderNumberDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-          this.salesOrderNumberDataGridViewTextBoxColumn.DataPropertyName = "SalesOrderNumber";
-          this.salesOrderNumberDataGridViewTextBoxColumn.HeaderText = "#";
-          this.salesOrderNumberDataGridViewTextBoxColumn.Name = "salesOrderNumberDataGridViewTextBoxColumn";
-          this.salesOrderNumberDataGridViewTextBoxColumn.ReadOnly = true;
-          this.salesOrderNumberDataGridViewTextBoxColumn.Width = 39;
-          // 
-          // orderDateDataGridViewTextBoxColumn
-          // 
-          this.orderDateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-          this.orderDateDataGridViewTextBoxColumn.DataPropertyName = "OrderDate";
-          dataGridViewCellStyle3.Format = "d";
-          dataGridViewCellStyle3.NullValue = null;
-          this.orderDateDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
-          this.orderDateDataGridViewTextBoxColumn.HeaderText = "Date";
-          this.orderDateDataGridViewTextBoxColumn.Name = "orderDateDataGridViewTextBoxColumn";
-          this.orderDateDataGridViewTextBoxColumn.Width = 55;
-          // 
-          // customerLastNameDataGridViewTextBoxColumn
-          // 
-          this.customerLastNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-          this.customerLastNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerLastName";
-          this.customerLastNameDataGridViewTextBoxColumn.HeaderText = "Last";
-          this.customerLastNameDataGridViewTextBoxColumn.Name = "customerLastNameDataGridViewTextBoxColumn";
-          this.customerLastNameDataGridViewTextBoxColumn.ReadOnly = true;
-          this.customerLastNameDataGridViewTextBoxColumn.Width = 52;
-          // 
-          // customerFirstNameDataGridViewTextBoxColumn
-          // 
-          this.customerFirstNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-          this.customerFirstNameDataGridViewTextBoxColumn.DataPropertyName = "CustomerFirstName";
-          this.customerFirstNameDataGridViewTextBoxColumn.HeaderText = "First";
-          this.customerFirstNameDataGridViewTextBoxColumn.Name = "customerFirstNameDataGridViewTextBoxColumn";
-          this.customerFirstNameDataGridViewTextBoxColumn.ReadOnly = true;
-          this.customerFirstNameDataGridViewTextBoxColumn.Width = 51;
-          // 
-          // customerCityDataGridViewTextBoxColumn
-          // 
-          this.customerCityDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-          this.customerCityDataGridViewTextBoxColumn.DataPropertyName = "CustomerCity";
-          this.customerCityDataGridViewTextBoxColumn.HeaderText = "City";
-          this.customerCityDataGridViewTextBoxColumn.Name = "customerCityDataGridViewTextBoxColumn";
-          this.customerCityDataGridViewTextBoxColumn.ReadOnly = true;
-          this.customerCityDataGridViewTextBoxColumn.Width = 49;
-          // 
-          // customerStateDataGridViewTextBoxColumn
-          // 
-          this.customerStateDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-          this.customerStateDataGridViewTextBoxColumn.DataPropertyName = "CustomerState";
-          this.customerStateDataGridViewTextBoxColumn.HeaderText = "State";
-          this.customerStateDataGridViewTextBoxColumn.Name = "customerStateDataGridViewTextBoxColumn";
-          this.customerStateDataGridViewTextBoxColumn.ReadOnly = true;
-          this.customerStateDataGridViewTextBoxColumn.Width = 57;
-          // 
-          // customerZipDataGridViewTextBoxColumn
-          // 
-          this.customerZipDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-          this.customerZipDataGridViewTextBoxColumn.DataPropertyName = "CustomerZip";
-          this.customerZipDataGridViewTextBoxColumn.HeaderText = "Zip";
-          this.customerZipDataGridViewTextBoxColumn.Name = "customerZipDataGridViewTextBoxColumn";
-          this.customerZipDataGridViewTextBoxColumn.ReadOnly = true;
-          this.customerZipDataGridViewTextBoxColumn.Width = 47;
-          // 
-          // customerCountryDataGridViewTextBoxColumn
-          // 
-          this.customerCountryDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-          this.customerCountryDataGridViewTextBoxColumn.DataPropertyName = "CustomerCountry";
-          this.customerCountryDataGridViewTextBoxColumn.HeaderText = "Country";
-          this.customerCountryDataGridViewTextBoxColumn.Name = "customerCountryDataGridViewTextBoxColumn";
-          this.customerCountryDataGridViewTextBoxColumn.ReadOnly = true;
-          this.customerCountryDataGridViewTextBoxColumn.Width = 68;
-          // 
-          // totalDueDataGridViewTextBoxColumn
-          // 
-          this.totalDueDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-          this.totalDueDataGridViewTextBoxColumn.DataPropertyName = "TotalDue";
-          dataGridViewCellStyle4.Format = "C2";
-          dataGridViewCellStyle4.NullValue = null;
-          this.totalDueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
-          this.totalDueDataGridViewTextBoxColumn.HeaderText = "Total";
-          this.totalDueDataGridViewTextBoxColumn.Name = "totalDueDataGridViewTextBoxColumn";
-          this.totalDueDataGridViewTextBoxColumn.ReadOnly = true;
-          // 
-          // salesOrderHeaderCollection1
-          // 
-          this.salesOrderHeaderCollection1.ActiveContext = null;
-          this.salesOrderHeaderCollection1.AllowEdit = true;
-          this.salesOrderHeaderCollection1.AllowNew = true;
-          this.salesOrderHeaderCollection1.AllowRemove = false;
-          this.salesOrderHeaderCollection1.Capacity = 0;
-          this.salesOrderHeaderCollection1.ConcurrencyPredicateFactoryToUse = null;
-          this.salesOrderHeaderCollection1.DoNotPerformAddIfPresent = true;
-          this.salesOrderHeaderCollection1.EntityFactoryToUse = new AW.Data.FactoryClasses.SalesOrderHeaderEntityFactory();
-          this.salesOrderHeaderCollection1.IsReadOnly = false;
-          this.salesOrderHeaderCollection1.MaxNumberOfItemsToReturn = ((long)(0));
-          this.salesOrderHeaderCollection1.RemovedEntitiesTracker = null;
-          this.salesOrderHeaderCollection1.SortClauses = null;
-          this.salesOrderHeaderCollection1.SuppressClearInGetMulti = false;
-          this.salesOrderHeaderCollection1.Transaction = null;
-          // 
           // frmOrderSearch
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -547,14 +547,15 @@ namespace AW.Win
           this.Text = "Order Search";
           this.Load += new System.EventHandler(this.frmOrderSearch_Load);
           this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderSearch_FormClosed);
+          this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmOrderSearch_FormClosing);
           this.tableLayoutPanel1.ResumeLayout(false);
           this.tableLayoutPanel2.ResumeLayout(false);
           this.tableLayoutPanel2.PerformLayout();
           this.panel1.ResumeLayout(false);
           this.panel1.PerformLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.dgResults)).EndInit();
           this.contextMenuStrip1.ResumeLayout(false);
           ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.dgResults)).EndInit();
           this.ResumeLayout(false);
 
         }

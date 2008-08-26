@@ -202,5 +202,89 @@ namespace AW.Win.Properties {
                 this["FilterOnToDate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle MainWindowSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["MainWindowSizeLocation"]));
+            }
+            set {
+                this["MainWindowSizeLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle OrderSearchSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["OrderSearchSizeLocation"]));
+            }
+            set {
+                this["OrderSearchSizeLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle CustomersSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["CustomersSizeLocation"]));
+            }
+            set {
+                this["CustomersSizeLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle OrganizationSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["OrganizationSizeLocation"]));
+            }
+            set {
+                this["OrganizationSizeLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle OrderEditSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["OrderEditSizeLocation"]));
+            }
+            set {
+                this["OrderEditSizeLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle VacationSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["VacationSizeLocation"]));
+            }
+            set {
+                this["VacationSizeLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
+        public global::System.Windows.Forms.FormWindowState MainWindowState {
+            get {
+                return ((global::System.Windows.Forms.FormWindowState)(this["MainWindowState"]));
+            }
+            set {
+                this["MainWindowState"] = value;
+            }
+        }
     }
 }

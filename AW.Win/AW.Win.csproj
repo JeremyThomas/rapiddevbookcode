@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AWHelper.cs" />
     <Compile Include="frmTrace.cs">
       <SubType>Form</SubType>
     </Compile>

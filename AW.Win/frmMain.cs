@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using AW.Win.Properties;
 
 namespace AW.Win
 {
@@ -17,6 +18,7 @@ namespace AW.Win
 
     private void frmMain_Load(object sender, EventArgs e)
     {
+      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.MainWindowSizeLocation);
     }
 
     //private void LaunchChildForm(Form ChildForm)
@@ -68,6 +70,16 @@ namespace AW.Win
     private void traceToolStripMenuItem_Click(object sender, EventArgs e)
     {
       LaunchChildForm(new frmTrace());
+    }
+
+    private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      Settings.Default.Save();
+    }
+
+    private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      Settings.Default.MainWindowSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
   }
 }
