@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AW.Data.Linq;
 
 namespace AW.Win
 {
@@ -107,5 +108,17 @@ namespace AW.Win
     }
 
     #endregion
+
+    private static LinqMetaData metaData;
+
+    public static LinqMetaData MetaData
+    {
+      get
+      {
+        if (metaData == null)
+          metaData = new LinqMetaData();
+        return metaData;
+      }
+    }
   }
 }

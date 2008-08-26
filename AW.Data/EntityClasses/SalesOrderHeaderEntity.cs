@@ -23,13 +23,11 @@ using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 
-
-
 namespace AW.Data.EntityClasses
 {
-
   // __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
   using AW.Data.HelperClasses;
+
   // __LLBLGENPRO_USER_CODE_REGION_END
 
   /// <summary>
@@ -315,7 +313,7 @@ namespace AW.Data.EntityClasses
       }
       if (ToDate != DateTime.MinValue)
       {
-        predicate = predicate.Where(soh => soh.OrderDate <= FromDate);
+        predicate = predicate.Where(soh => soh.OrderDate <= ToDate);
       }
       if (FirstName != "")
       {
@@ -352,7 +350,8 @@ namespace AW.Data.EntityClasses
       }
       var q = from c in predicate select c;
       q = q.OrderBy(s => s.OrderDate);
-      q = q.Take(maxNumberOfItemsToReturn);
+      if (maxNumberOfItemsToReturn > 0)
+        q = q.Take(maxNumberOfItemsToReturn);
       return ((ILLBLGenProQuery) q).Execute<SalesOrderHeaderCollection>();
     }
 

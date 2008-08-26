@@ -1,6 +1,6 @@
 namespace AW.Win
 {
-    partial class frmOrderSearch
+    partial class frmOrderSearch2
     {
         /// <summary>
         /// Required designer variable.
@@ -534,17 +534,17 @@ namespace AW.Win
           this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
           this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
           // 
-          // frmOrderSearch
+          // frmOrderSearch2
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(694, 578);
           this.Controls.Add(this.tableLayoutPanel1);
           this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-          this.Name = "frmOrderSearch";
+          this.Name = "frmOrderSearch2";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-          this.Text = "Order Search";
+          this.Text = "Order Search 2";
           this.Load += new System.EventHandler(this.frmOrderSearch_Load);
           this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderSearch_FormClosed);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmOrderSearch_FormClosing);

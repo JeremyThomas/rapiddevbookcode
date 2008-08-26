@@ -58,6 +58,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
+    <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -72,6 +73,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWHelper.cs" />
+    <Compile Include="frmOrderSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrderSearch.Designer.cs">
+      <DependentUpon>frmOrderSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrderSearch2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrderSearch2.Designer.cs">
+      <DependentUpon>frmOrderSearch2.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmTrace.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,12 +109,6 @@
     <Compile Include="frmOrderEdit.Designer.cs">
       <DependentUpon>frmOrderEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmOrderSearch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmOrderSearch.Designer.cs">
-      <DependentUpon>frmOrderSearch.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmOrganization.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +129,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmOrderSearch.resx">
+      <DependentUpon>frmOrderSearch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrderSearch2.resx">
+      <DependentUpon>frmOrderSearch2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmTrace.resx">
       <DependentUpon>frmTrace.cs</DependentUpon>
     </EmbeddedResource>
@@ -136,10 +151,6 @@
     <EmbeddedResource Include="frmOrderEdit.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmOrderEdit.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmOrderSearch.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmOrderSearch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmOrganization.resx">
       <SubType>Designer</SubType>
@@ -166,6 +177,7 @@
     <None Include="AdventureWorks.snk" />
     <None Include="App.config" />
     <None Include="AW.Win_TemporaryKey.pfx" />
+    <None Include="Properties\DataSources\AW.Data.EntityClasses.SalesOrderHeaderEntity.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

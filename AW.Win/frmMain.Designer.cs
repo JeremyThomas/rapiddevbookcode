@@ -40,6 +40,7 @@ namespace AW.Win
           this.vacationBonusUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.orders2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip1.SuspendLayout();
           this.SuspendLayout();
           // 
@@ -76,7 +77,8 @@ namespace AW.Win
           // searchToolStripMenuItem
           // 
           this.searchToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ordersToolStripMenuItem});
+            this.ordersToolStripMenuItem,
+            this.orders2ToolStripMenuItem});
           this.searchToolStripMenuItem.Name = "searchToolStripMenuItem";
           this.searchToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
           this.searchToolStripMenuItem.Text = "&Search";
@@ -140,6 +142,13 @@ namespace AW.Win
           this.windowToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
           this.windowToolStripMenuItem.Text = "&Window";
           // 
+          // orders2ToolStripMenuItem
+          // 
+          this.orders2ToolStripMenuItem.Name = "orders2ToolStripMenuItem";
+          this.orders2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+          this.orders2ToolStripMenuItem.Text = "Orders2 ...";
+          this.orders2ToolStripMenuItem.Click += new System.EventHandler(this.orders2ToolStripMenuItem_Click);
+          // 
           // frmMain
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -177,5 +186,6 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vacationBonusUtilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem traceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem orders2ToolStripMenuItem;
     }
 }

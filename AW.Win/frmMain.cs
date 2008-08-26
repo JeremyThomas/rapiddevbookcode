@@ -52,6 +52,11 @@ namespace AW.Win
       LaunchChildForm(new frmOrderSearch());
     }
 
+    private void orders2ToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      LaunchChildForm(new frmOrderSearch2());
+    }
+
     private void customersToolStripMenuItem_Click(object sender, EventArgs e)
     {
       LaunchChildForm(new frmCustomers());
@@ -81,5 +86,7 @@ namespace AW.Win
     {
       Settings.Default.MainWindowSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
+
+
   }
 }
