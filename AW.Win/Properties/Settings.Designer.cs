@@ -286,5 +286,17 @@ namespace AW.Win.Properties {
                 this["MainWindowState"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Off")]
+        public global::System.Diagnostics.TraceLevel LinqTraceLevel {
+            get {
+                return ((global::System.Diagnostics.TraceLevel)(this["LinqTraceLevel"]));
+            }
+            set {
+                this["LinqTraceLevel"] = value;
+            }
+        }
     }
 }

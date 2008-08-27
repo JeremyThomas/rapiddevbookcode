@@ -39,22 +39,22 @@ namespace AW.Win
           this.CountryRegionName = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
           this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+          this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
           this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
           this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
           this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
           this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-          this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
           this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
           this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
           this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
           this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-          this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
-          this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonPlaintypedview = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonViewAsEntity = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonTypedList = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
           this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
+          this.toolStripButtonLinqBarf = new System.Windows.Forms.ToolStripButton();
+          this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
           ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -135,10 +135,10 @@ namespace AW.Win
           // 
           // bindingNavigator1
           // 
-          this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem;
+          this.bindingNavigator1.AddNewItem = null;
           this.bindingNavigator1.BindingSource = this.bindingSource1;
           this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
-          this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem;
+          this.bindingNavigator1.DeleteItem = null;
           this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
@@ -149,12 +149,12 @@ namespace AW.Win
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2,
-            this.bindingNavigatorAddNewItem,
-            this.bindingNavigatorDeleteItem,
             this.toolStripButtonPlaintypedview,
             this.toolStripButtonViewAsEntity,
             this.toolStripButtonTypedList,
-            this.toolStripButtonLinq});
+            this.toolStripButtonLinq,
+            this.toolStripSeparator1,
+            this.toolStripButtonLinqBarf});
           this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
           this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
           this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -165,6 +165,13 @@ namespace AW.Win
           this.bindingNavigator1.Size = new System.Drawing.Size(794, 25);
           this.bindingNavigator1.TabIndex = 1;
           this.bindingNavigator1.Text = "bindingNavigator1";
+          // 
+          // bindingNavigatorCountItem
+          // 
+          this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
+          this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
+          this.bindingNavigatorCountItem.Text = "of {0}";
+          this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
           // 
           // bindingNavigatorMoveFirstItem
           // 
@@ -198,16 +205,9 @@ namespace AW.Win
           this.bindingNavigatorPositionItem.Text = "0";
           this.bindingNavigatorPositionItem.ToolTipText = "Current position";
           // 
-          // bindingNavigatorCountItem
-          // 
-          this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-          this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
-          this.bindingNavigatorCountItem.Text = "of {0}";
-          this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-          // 
           // bindingNavigatorSeparator1
           // 
-          this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator";
+          this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
           this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
           // 
           // bindingNavigatorMoveNextItem
@@ -230,26 +230,8 @@ namespace AW.Win
           // 
           // bindingNavigatorSeparator2
           // 
-          this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator";
+          this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
           this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
-          // 
-          // bindingNavigatorAddNewItem
-          // 
-          this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-          this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-          this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-          this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
-          this.bindingNavigatorAddNewItem.Text = "Add new";
-          // 
-          // bindingNavigatorDeleteItem
-          // 
-          this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-          this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-          this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-          this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
-          this.bindingNavigatorDeleteItem.Text = "Delete";
           // 
           // toolStripButtonPlaintypedview
           // 
@@ -295,11 +277,25 @@ namespace AW.Win
             0,
             0,
             0});
-          this.numericUpDownNumRows.Location = new System.Drawing.Point(625, 2);
+          this.numericUpDownNumRows.Location = new System.Drawing.Point(649, 2);
           this.numericUpDownNumRows.Name = "numericUpDownNumRows";
           this.numericUpDownNumRows.Size = new System.Drawing.Size(59, 20);
           this.numericUpDownNumRows.TabIndex = 2;
           this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
+          // 
+          // toolStripButtonLinqBarf
+          // 
+          this.toolStripButtonLinqBarf.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqBarf.Image")));
+          this.toolStripButtonLinqBarf.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonLinqBarf.Name = "toolStripButtonLinqBarf";
+          this.toolStripButtonLinqBarf.Size = new System.Drawing.Size(69, 22);
+          this.toolStripButtonLinqBarf.Text = "Linq Barf";
+          this.toolStripButtonLinqBarf.Click += new System.EventHandler(this.toolStripButtonLinqBarf_Click);
+          // 
+          // toolStripSeparator1
+          // 
+          this.toolStripSeparator1.Name = "toolStripSeparator1";
+          this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
           // 
           // frmCustomers
           // 
@@ -338,9 +334,7 @@ namespace AW.Win
         private System.Windows.Forms.DataGridViewTextBoxColumn CountryRegionName;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.BindingNavigator bindingNavigator1;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
-        private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
         private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator;
@@ -354,6 +348,8 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedList;
         private System.Windows.Forms.ToolStripButton toolStripButtonLinq;
         private System.Windows.Forms.NumericUpDown numericUpDownNumRows;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLinqBarf;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 
     }
 }

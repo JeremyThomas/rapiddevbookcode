@@ -27,6 +27,12 @@ namespace AW.Win
       dgvResults.AutoGenerateColumns = true;
     }
 
+    public int MaxNumberOfItemsToReturn
+    {
+      get { return Convert.ToInt32(numericUpDownNumRows.Value); }
+      set { numericUpDownNumRows.Value = value; }
+    }
+
     /// <summary>
     /// Handles the Click event of the toolStripButtonPlaintypedview control.
     /// </summary>
@@ -94,7 +100,6 @@ namespace AW.Win
     ///       [SALES].[SALESORDERHEADER].[MODIFIEDDATE]
     ///FROM   [SALES].[SALESORDERHEADER]
     ///WHERE  (([SALES].[SALESORDERHEADER].[SALESORDERID] = @SalesOrderId1))
-
     ///    SELECT [SALES].[VINDIVIDUALCUSTOMER].[CUSTOMERID]        AS [CUSTOMERID],
     ///       [SALES].[VINDIVIDUALCUSTOMER].[TITLE],
     ///       [SALES].[VINDIVIDUALCUSTOMER].[FIRSTNAME],
@@ -152,7 +157,72 @@ namespace AW.Win
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    /// <remarks>
+    /// <remarks>SQL Output:
+    ///SELECT [LPA_L3].[ADDRESSLINE1],
+    ///       [LPA_L3].[ADDRESSLINE2],
+    ///       [LPA_L3].[CITY],
+    ///       [LPA_L4].[NAME]           AS [ADDRESSTYPE],
+    ///       [LPA_L6].[TITLE],
+    ///       [LPA_L6].[FIRSTNAME],
+    ///       [LPA_L6].[MIDDLENAME],
+    ///       [LPA_L6].[LASTNAME],
+    ///       [LPA_L6].[SUFFIX],
+    ///       [LPA_L6].[EMAILADDRESS],
+    ///       [LPA_L6].[EMAILPROMOTION],
+    ///       [LPA_L8].[NAME]           AS [COUNTRYREGIONNAME],
+    ///       [LPA_L7].[NAME]           AS [STATEPROVINCENAME],
+    ///       [LPA_L1].[CUSTOMERID]     AS [CUSTOMERID]
+    ///FROM   ((((((([ADVENTUREWORKS].[SALES].[CUSTOMER] [LPA_L1]
+    ///              INNER JOIN [ADVENTUREWORKS].[SALES].[CUSTOMERADDRESS] [LPA_L2]
+    ///                ON ([LPA_L1].[CUSTOMERID] = [LPA_L2].[CUSTOMERID]))
+    ///             INNER JOIN [ADVENTUREWORKS].[PERSON].[ADDRESS] [LPA_L3]
+    ///               ON [LPA_L3].[ADDRESSID] = [LPA_L2].[ADDRESSID])
+    ///            INNER JOIN [ADVENTUREWORKS].[PERSON].[ADDRESSTYPE] [LPA_L4]
+    ///              ON [LPA_L4].[ADDRESSTYPEID] = [LPA_L2].[ADDRESSTYPEID])
+    ///           INNER JOIN [ADVENTUREWORKS].[SALES].[INDIVIDUAL] [LPA_L5]
+    ///             ON [LPA_L1].[CUSTOMERID] = [LPA_L5].[CUSTOMERID])
+    ///          INNER JOIN [ADVENTUREWORKS].[PERSON].[CONTACT] [LPA_L6]
+    ///            ON [LPA_L6].[CONTACTID] = [LPA_L5].[CONTACTID])
+    ///         INNER JOIN [ADVENTUREWORKS].[PERSON].[STATEPROVINCE] [LPA_L7]
+    ///           ON [LPA_L7].[STATEPROVINCEID] = [LPA_L3].[STATEPROVINCEID])
+    ///        INNER JOIN [ADVENTUREWORKS].[PERSON].[COUNTRYREGION] [LPA_L8]
+    ///          ON [LPA_L8].[COUNTRYREGIONCODE] = [LPA_L7].[COUNTRYREGIONCODE])
+    ///WHERE  ((((([LPA_L3].[ADDRESSLINE1] = [LPA_L3].[ADDRESSLINE1])))))</remarks>
+    private void toolStripButtonLinq_Click(object sender, EventArgs e)
+    {
+      var customerlist = from customer in AWHelper.MetaData.Customer
+                         from customerAddress in customer.CustomerAddress
+                         where customerAddress.Address.AddressLine1 == customerAddress.Address.AddressLine1
+                         select new
+                                  {
+                                    customerAddress.Address.AddressLine1,
+                                    customerAddress.Address.AddressLine2,
+                                    customerAddress.Address.City,
+                                    AddressType = customerAddress.AddressType.Name,
+                                    customer.Individual.Contact.Title,
+                                    customer.Individual.Contact.FirstName,
+                                    customer.Individual.Contact.MiddleName,
+                                    customer.Individual.Contact.LastName,
+                                    customer.Individual.Contact.Suffix,
+                                    customer.Individual.Contact.EmailAddress,
+                                    customer.Individual.Contact.EmailPromotion,
+                                    CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
+                                    StateProvinceName = customerAddress.Address.StateProvince.Name,
+                                    customer.CustomerId
+                                  };
+      //customerlist = from p in customerlist where p.AddressLine1 == p.AddressLine1 select p;
+
+      if (MaxNumberOfItemsToReturn > 0)
+        customerlist = customerlist.Take(MaxNumberOfItemsToReturn);
+      bindingSource1.DataSource = customerlist;
+    }
+
+    /// <summary>
+    /// Handles the Click event of the toolStripButtonLinqBarf control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+    /// <remarks>SQL Output:
     /// SELECT DISTINCT TOP 5 [LPLA_4].[ADDRESSLINE1],
     ///                      [LPLA_4].[ADDRESSLINE2],
     ///                      [LPLA_4].[CITY],
@@ -169,31 +239,47 @@ namespace AW.Win
     ///                      [LPA_L1].[CUSTOMERID]     AS [CUSTOMERID]
     /// FROM   ([ADVENTUREWORKS].[SALES].[CUSTOMER] [LPA_L1]
     ///        INNER JOIN [ADVENTUREWORKS].[SALES].[CUSTOMERADDRESS] [LPA_L2]
-    ///          ON ([LPA_L1].[CUSTOMERID] = [LPA_L2].[CUSTOMERID]))</remarks>
-    private void toolStripButtonLinq_Click(object sender, EventArgs e)
+    ///          ON ([LPA_L1].[CUSTOMERID] = [LPA_L2].[CUSTOMERID]))
+    /// 
+    ///An exception was caught during the execution of a retrieval query: The multi-part identifier "LPLA_4.AddressLine1" could not be bound.
+    ///The multi-part identifier "LPLA_4.AddressLine2" could not be bound.
+    ///The multi-part identifier "LPLA_4.City" could not be bound.
+    ///The multi-part identifier "LPLA_5.Name" could not be bound.
+    ///The multi-part identifier "LPLA_7.Title" could not be bound.
+    ///The multi-part identifier "LPLA_7.FirstName" could not be bound.
+    ///The multi-part identifier "LPLA_7.MiddleName" could not be bound.
+    ///The multi-part identifier "LPLA_7.LastName" could not be bound.
+    ///The multi-part identifier "LPLA_7.Suffix" could not be bound.
+    ///The multi-part identifier "LPLA_7.EmailAddress" could not be bound.
+    ///The multi-part identifier "LPLA_7.EmailPromotion" could not be bound.
+    ///The multi-part identifier "LPLA_9.Name" could not be bound.
+    ///The multi-part identifier "LPLA_8.Name" could not be bound.. 
+    /// </remarks>
+    private void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
     {
       var customerlist = from customer in AWHelper.MetaData.Customer
                          from customerAddress in customer.CustomerAddress
-                         where customerAddress.Address.AddressLine1 == customerAddress.Address.AddressLine1
                          select new
                                   {
-                                    customerAddress.Address.AddressLine1, customerAddress.Address.AddressLine2, customerAddress.Address.City,
-                                    AddressType = customerAddress.AddressType.Name, customer.Individual.Contact.Title,
-                                    customer.Individual.Contact.FirstName, customer.Individual.Contact.MiddleName, customer.Individual.Contact.LastName,
-                                    customer.Individual.Contact.Suffix, customer.Individual.Contact.EmailAddress, customer.Individual.Contact.EmailPromotion,
+                                    customerAddress.Address.AddressLine1,
+                                    customerAddress.Address.AddressLine2,
+                                    customerAddress.Address.City,
+                                    AddressType = customerAddress.AddressType.Name,
+                                    customer.Individual.Contact.Title,
+                                    customer.Individual.Contact.FirstName,
+                                    customer.Individual.Contact.MiddleName,
+                                    customer.Individual.Contact.LastName,
+                                    customer.Individual.Contact.Suffix,
+                                    customer.Individual.Contact.EmailAddress,
+                                    customer.Individual.Contact.EmailPromotion,
                                     CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
                                     StateProvinceName = customerAddress.Address.StateProvince.Name,
                                     customer.CustomerId
                                   };
+
       if (MaxNumberOfItemsToReturn > 0)
         customerlist = customerlist.Take(MaxNumberOfItemsToReturn);
       bindingSource1.DataSource = customerlist;
-    }
-
-    public int MaxNumberOfItemsToReturn
-    {
-      get { return Convert.ToInt32(numericUpDownNumRows.Value); }
-      set { numericUpDownNumRows.Value = value; }
     }
   }
 }

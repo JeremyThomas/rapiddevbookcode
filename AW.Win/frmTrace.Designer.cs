@@ -29,9 +29,12 @@
     private void InitializeComponent()
     {
       this.textBoxTrace = new System.Windows.Forms.TextBox();
-      this.comboBoxTraceLevel = new System.Windows.Forms.ComboBox();
+      this.comboBoxDQETraceLevel = new System.Windows.Forms.ComboBox();
       this.buttonClearTrace = new System.Windows.Forms.Button();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.label2 = new System.Windows.Forms.Label();
+      this.label1 = new System.Windows.Forms.Label();
+      this.comboBoxLinqTraceLevel = new System.Windows.Forms.ComboBox();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
@@ -44,21 +47,21 @@
       this.textBoxTrace.Multiline = true;
       this.textBoxTrace.Name = "textBoxTrace";
       this.textBoxTrace.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-      this.textBoxTrace.Size = new System.Drawing.Size(982, 524);
+      this.textBoxTrace.Size = new System.Drawing.Size(773, 427);
       this.textBoxTrace.TabIndex = 1;
       // 
-      // comboBoxTraceLevel
+      // comboBoxDQETraceLevel
       // 
-      this.comboBoxTraceLevel.FormattingEnabled = true;
-      this.comboBoxTraceLevel.Location = new System.Drawing.Point(12, 12);
-      this.comboBoxTraceLevel.Name = "comboBoxTraceLevel";
-      this.comboBoxTraceLevel.Size = new System.Drawing.Size(153, 21);
-      this.comboBoxTraceLevel.TabIndex = 0;
-      this.comboBoxTraceLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxTraceLevel_SelectedIndexChanged);
+      this.comboBoxDQETraceLevel.FormattingEnabled = true;
+      this.comboBoxDQETraceLevel.Location = new System.Drawing.Point(108, 10);
+      this.comboBoxDQETraceLevel.Name = "comboBoxDQETraceLevel";
+      this.comboBoxDQETraceLevel.Size = new System.Drawing.Size(153, 21);
+      this.comboBoxDQETraceLevel.TabIndex = 0;
+      this.comboBoxDQETraceLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxTraceLevel_SelectedIndexChanged);
       // 
       // buttonClearTrace
       // 
-      this.buttonClearTrace.Location = new System.Drawing.Point(213, 12);
+      this.buttonClearTrace.Location = new System.Drawing.Point(532, 10);
       this.buttonClearTrace.Name = "buttonClearTrace";
       this.buttonClearTrace.Size = new System.Drawing.Size(90, 23);
       this.buttonClearTrace.TabIndex = 1;
@@ -75,21 +78,51 @@
       // 
       // splitContainer1.Panel1
       // 
+      this.splitContainer1.Panel1.Controls.Add(this.label2);
+      this.splitContainer1.Panel1.Controls.Add(this.label1);
+      this.splitContainer1.Panel1.Controls.Add(this.comboBoxLinqTraceLevel);
       this.splitContainer1.Panel1.Controls.Add(this.buttonClearTrace);
-      this.splitContainer1.Panel1.Controls.Add(this.comboBoxTraceLevel);
+      this.splitContainer1.Panel1.Controls.Add(this.comboBoxDQETraceLevel);
       // 
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.textBoxTrace);
-      this.splitContainer1.Size = new System.Drawing.Size(982, 573);
-      this.splitContainer1.SplitterDistance = 45;
+      this.splitContainer1.Size = new System.Drawing.Size(773, 467);
+      this.splitContainer1.SplitterDistance = 36;
       this.splitContainer1.TabIndex = 3;
+      // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(267, 15);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(87, 13);
+      this.label2.TabIndex = 4;
+      this.label2.Text = "Linq Trace Level";
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(12, 13);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(90, 13);
+      this.label1.TabIndex = 3;
+      this.label1.Text = "DQE Trace Level";
+      // 
+      // comboBoxLinqTraceLevel
+      // 
+      this.comboBoxLinqTraceLevel.FormattingEnabled = true;
+      this.comboBoxLinqTraceLevel.Location = new System.Drawing.Point(360, 12);
+      this.comboBoxLinqTraceLevel.Name = "comboBoxLinqTraceLevel";
+      this.comboBoxLinqTraceLevel.Size = new System.Drawing.Size(153, 21);
+      this.comboBoxLinqTraceLevel.TabIndex = 2;
+      this.comboBoxLinqTraceLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxLinqTraceLevel_SelectedIndexChanged);
       // 
       // frmTrace
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(982, 573);
+      this.ClientSize = new System.Drawing.Size(773, 467);
       this.Controls.Add(this.splitContainer1);
       this.Name = "frmTrace";
       this.Text = "FormTrace";
@@ -97,6 +130,7 @@
       this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmTrace_FormClosed);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmTrace_FormClosing);
       this.splitContainer1.Panel1.ResumeLayout(false);
+      this.splitContainer1.Panel1.PerformLayout();
       this.splitContainer1.Panel2.ResumeLayout(false);
       this.splitContainer1.Panel2.PerformLayout();
       this.splitContainer1.ResumeLayout(false);
@@ -106,9 +140,12 @@
 
     #endregion
 
-    private System.Windows.Forms.ComboBox comboBoxTraceLevel;
+    private System.Windows.Forms.ComboBox comboBoxDQETraceLevel;
     private System.Windows.Forms.TextBox textBoxTrace;
     private System.Windows.Forms.Button buttonClearTrace;
     private System.Windows.Forms.SplitContainer splitContainer1;
+    private System.Windows.Forms.ComboBox comboBoxLinqTraceLevel;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label label1;
   }
 }

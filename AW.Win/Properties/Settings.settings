@@ -68,5 +68,8 @@
     <Setting Name="MainWindowState" Type="System.Windows.Forms.FormWindowState" Scope="User">
       <Value Profile="(Default)">Normal</Value>
     </Setting>
+    <Setting Name="LinqTraceLevel" Type="System.Diagnostics.TraceLevel" Scope="User">
+      <Value Profile="(Default)">Off</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
