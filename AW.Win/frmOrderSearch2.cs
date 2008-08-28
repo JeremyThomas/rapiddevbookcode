@@ -43,13 +43,25 @@ namespace AW.Win
       cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
       cbState.ValueMember = StateProvinceFieldIndex.StateProvinceId.ToString();
 
-      dtpDateFrom.Checked = dtpDateFrom.Value.Date != DateTime.Today;
-      dtpDateTo.Checked = dtpDateTo.Value.Date != DateTime.Today;
+      dtpDateFrom.Checked = Settings.Default.FilterOnFromDate;
+      dtpDateTo.Checked = Settings.Default.FilterOnToDate;
 
       cbState.Text = previousState;
       cbCountry.Text = previousCountry;
 
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrderSearchSizeLocation);
+    }
+
+    private void frmOrderSearch_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      Settings.Default.Save();
+    }
+
+    private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      Settings.Default.OrderSearchSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+      Settings.Default.FilterOnFromDate = dtpDateFrom.Checked;
+      Settings.Default.FilterOnToDate = dtpDateTo.Checked;
     }
 
     private void btnSearch_Click(object sender, EventArgs e)
@@ -77,11 +89,18 @@ namespace AW.Win
       state = cbState.Text;
       country = cbCountry.Text;
       zip = tbZip.Text;
-      btnSearch.Enabled = false;
-      frmStatusBar = new frmStatusBar();
-      frmStatusBar.Show();
-      frmStatusBar.CancelButtonClicked += frmStatusBar_CancelButtonClicked;
-      searchWorker.RunWorkerAsync();
+      if (sender == buttonBarf)
+      {
+        Barf();
+      }
+      else
+      {
+        btnSearch.Enabled = false;
+        frmStatusBar = new frmStatusBar();
+        frmStatusBar.Show();
+        frmStatusBar.CancelButtonClicked += frmStatusBar_CancelButtonClicked;
+        searchWorker.RunWorkerAsync();
+      }
     }
 
     private void frmStatusBar_CancelButtonClicked(object sender, CancelEventArgs e)
@@ -105,11 +124,19 @@ namespace AW.Win
       ((frmMain) MdiParent).LaunchChildForm(frm);
     }
 
+    private void Barf()
+    {
+      var query = from soh in AWHelper.MetaData.SalesOrderHeader
+                      from customerAddress in soh.Customer.CustomerAddress
+                      select soh;
+
+      var x = query.ToList();
+      //dgResults.DataSource = ((ILLBLGenProQuery)predicate).Execute<SalesOrderHeaderCollection>();
+    }
+
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      var predicate = from soh in AWHelper.MetaData.SalesOrderHeader
-                      from customer in AWHelper.MetaData.CustomerViewRelated
-                      select soh;
+      var predicate = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
 
       if (fromDate != DateTime.MinValue)
       {
@@ -122,27 +149,42 @@ namespace AW.Win
       if (firstName != "")
       {
         //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
-        predicate = predicate.Where(soh => soh.CustomerFirstName.Contains(firstName));
+        predicate = predicate.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
       }
       if (lastName != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerLastName.Contains(lastName));
+        predicate = predicate.Where(soh => soh.Customer.Individual.Contact.LastName.Contains(lastName));
       }
       if (cityName != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerCity.Contains(cityName));
+        predicate = from soh in predicate
+                    from customerAddress in soh.Customer.CustomerAddress
+                    where customerAddress.Address.City.Contains(cityName)
+                    select soh;
       }
       if (state != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerState == state);
+        predicate = from soh in predicate
+                    from customerAddress in soh.Customer.CustomerAddress
+                    where customerAddress.Address.StateProvince.Name == state
+                    select soh;
+        //predicate = predicate.Where(soh => soh.CustomerState == state);
       }
       if (country != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerCountry == country);
+        predicate = from soh in predicate
+                    from customerAddress in soh.Customer.CustomerAddress
+                    where customerAddress.Address.StateProvince.CountryRegion.Name == country
+                    select soh;
+        //predicate = predicate.Where(soh => soh.CustomerCountry == country);
       }
       if (zip != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerZip == zip);
+        predicate = from soh in predicate
+                    from customerAddress in soh.Customer.CustomerAddress
+                    where customerAddress.Address.PostalCode == zip
+                    select soh;
+        //predicate = predicate.Where(soh => soh.CustomerZip == zip);
       }
       if (orderID != 0)
       {
@@ -152,20 +194,25 @@ namespace AW.Win
       {
         predicate = predicate.Where(soh => soh.SalesOrderNumber == orderName);
       }
-      var q = from c in predicate select c;
-      q = q.OrderBy(s => s.OrderDate);
-      var maxNumberOfItemsToReturn = Convert.ToInt32(numericUpDownNumRows.Value);
-      if (maxNumberOfItemsToReturn > 0)
-        q = q.Take(maxNumberOfItemsToReturn);
-      results = ((ILLBLGenProQuery) q).Execute<SalesOrderHeaderCollection>();
+
+      predicate = predicate.OrderBy(s => s.OrderDate);
+
+      if (MaxNumberOfItemsToReturn > 0)
+        predicate = predicate.Take(MaxNumberOfItemsToReturn);
+      results = ((ILLBLGenProQuery)predicate).Execute<SalesOrderHeaderCollection>();
     }
 
-    private void searchWorker_RunWorkerCompleted(object sender,
-                                                 RunWorkerCompletedEventArgs e)
+    public int MaxNumberOfItemsToReturn
+    {
+      get { return Convert.ToInt32(numericUpDownNumRows.Value); }
+      set { numericUpDownNumRows.Value = value; }
+    }
+
+    private void searchWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       if (e.Error != null)
       {
-        MessageBox.Show(e.Error.Message);
+        Application.OnThreadException(e.Error);
       }
       if (frmStatusBar != null)
       {
@@ -175,14 +222,5 @@ namespace AW.Win
       dgResults.DataSource = results;
     }
 
-    private void frmOrderSearch_FormClosed(object sender, FormClosedEventArgs e)
-    {
-      Settings.Default.Save();
-    }
-
-    private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
-    {
-      Settings.Default.OrderSearchSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-    }
   }
 }

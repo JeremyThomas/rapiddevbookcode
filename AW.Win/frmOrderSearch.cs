@@ -41,13 +41,25 @@ namespace AW.Win
       cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
       cbState.ValueMember = StateProvinceFieldIndex.StateProvinceId.ToString();
 
-      dtpDateFrom.Checked = dtpDateFrom.Value.Date != DateTime.Today;
-      dtpDateTo.Checked = dtpDateTo.Value.Date != DateTime.Today;
+      dtpDateFrom.Checked = Settings.Default.FilterOnFromDate;
+      dtpDateTo.Checked = Settings.Default.FilterOnToDate;
 
       cbState.Text = previousState;
       cbCountry.Text = previousCountry;
 
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrderSearchSizeLocation);
+    }
+
+    private void frmOrderSearch_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      Settings.Default.Save();
+    }
+
+    private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      Settings.Default.OrderSearchSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+      Settings.Default.FilterOnFromDate = dtpDateFrom.Checked;
+      Settings.Default.FilterOnToDate = dtpDateTo.Checked;
     }
 
     //private void btnSearch_Click(object sender, EventArgs e)
@@ -173,7 +185,7 @@ namespace AW.Win
     {
       if (e.Error != null)
       {
-        MessageBox.Show(e.Error.Message);
+        Application.OnThreadException(e.Error);
       }
       if (_frmStatusBar != null)
       {
@@ -183,14 +195,5 @@ namespace AW.Win
       dgResults.DataSource = _results;
     }
 
-    private void frmOrderSearch_FormClosed(object sender, FormClosedEventArgs e)
-    {
-      Settings.Default.Save();
-    }
-
-    private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
-    {
-      Settings.Default.OrderSearchSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-    }
   }
 }

@@ -20,6 +20,8 @@ namespace AW.Win
       textBoxTraceListenerIndex = Trace.Listeners.Add(new TextBoxTraceListener(textBoxTrace));
       comboBoxDQETraceLevel.DataSource = Enum.GetValues(typeof (TraceLevel));
       comboBoxLinqTraceLevel.DataSource = Enum.GetValues(typeof(TraceLevel));
+      comboBoxDQETraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "TraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
+      comboBoxLinqTraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "LinqTraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
     }
 
     private void FrmTrace_Load(object sender, EventArgs e)
@@ -32,8 +34,6 @@ namespace AW.Win
     private void frmTrace_FormClosing(object sender, FormClosingEventArgs e)
     {
       Settings.Default.TraceWindowSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-      Settings.Default.TraceLevel = DQETraceLevel;
-      Settings.Default.LinqTraceLevel = LinqTraceLevel;
     }
 
     private void frmTrace_FormClosed(object sender, FormClosedEventArgs e)
@@ -64,7 +64,7 @@ namespace AW.Win
       set
       {
         GenericExpressionHandler.Switch.Level = value;
-        if (!value.Equals(comboBoxDQETraceLevel.SelectedItem))
+        if (!value.Equals(comboBoxLinqTraceLevel.SelectedItem))
           comboBoxLinqTraceLevel.SelectedItem = value;
       }
     }

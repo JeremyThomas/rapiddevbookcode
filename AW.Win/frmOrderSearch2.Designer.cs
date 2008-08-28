@@ -52,8 +52,8 @@ namespace AW.Win
           this.cbCountry = new System.Windows.Forms.ComboBox();
           this.tbOrderID = new System.Windows.Forms.TextBox();
           this.panel1 = new System.Windows.Forms.Panel();
+          this.buttonBarf = new System.Windows.Forms.Button();
           this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
-          this.checkBoxUseLinq = new System.Windows.Forms.CheckBox();
           this.btnSearch = new System.Windows.Forms.Button();
           this.dgResults = new System.Windows.Forms.DataGridView();
           this.salesOrderIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -334,14 +334,24 @@ namespace AW.Win
           // 
           // panel1
           // 
+          this.panel1.Controls.Add(this.buttonBarf);
           this.panel1.Controls.Add(this.numericUpDownNumRows);
-          this.panel1.Controls.Add(this.checkBoxUseLinq);
           this.panel1.Controls.Add(this.btnSearch);
           this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
           this.panel1.Location = new System.Drawing.Point(412, 103);
           this.panel1.Name = "panel1";
           this.panel1.Size = new System.Drawing.Size(269, 23);
           this.panel1.TabIndex = 22;
+          // 
+          // buttonBarf
+          // 
+          this.buttonBarf.Location = new System.Drawing.Point(95, 0);
+          this.buttonBarf.Name = "buttonBarf";
+          this.buttonBarf.Size = new System.Drawing.Size(75, 23);
+          this.buttonBarf.TabIndex = 24;
+          this.buttonBarf.Text = "Barf";
+          this.buttonBarf.UseVisualStyleBackColor = true;
+          this.buttonBarf.Click += new System.EventHandler(this.btnSearch_Click);
           // 
           // numericUpDownNumRows
           // 
@@ -352,18 +362,6 @@ namespace AW.Win
           this.numericUpDownNumRows.TabIndex = 23;
           this.toolTip1.SetToolTip(this.numericUpDownNumRows, "max Number Of Items To Return");
           this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
-          // 
-          // checkBoxUseLinq
-          // 
-          this.checkBoxUseLinq.AutoSize = true;
-          this.checkBoxUseLinq.Checked = global::AW.Win.Properties.Settings.Default.UseLinq;
-          this.checkBoxUseLinq.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "UseLinq", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-          this.checkBoxUseLinq.Location = new System.Drawing.Point(102, 4);
-          this.checkBoxUseLinq.Name = "checkBoxUseLinq";
-          this.checkBoxUseLinq.Size = new System.Drawing.Size(65, 17);
-          this.checkBoxUseLinq.TabIndex = 22;
-          this.checkBoxUseLinq.Text = "UseLinq";
-          this.checkBoxUseLinq.UseVisualStyleBackColor = true;
           // 
           // btnSearch
           // 
@@ -552,7 +550,6 @@ namespace AW.Win
           this.tableLayoutPanel2.ResumeLayout(false);
           this.tableLayoutPanel2.PerformLayout();
           this.panel1.ResumeLayout(false);
-          this.panel1.PerformLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.dgResults)).EndInit();
           this.contextMenuStrip1.ResumeLayout(false);
@@ -600,8 +597,8 @@ namespace AW.Win
         private System.ComponentModel.BackgroundWorker searchWorker;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.CheckBox checkBoxUseLinq;
         private System.Windows.Forms.NumericUpDown numericUpDownNumRows;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button buttonBarf;
     }
 }

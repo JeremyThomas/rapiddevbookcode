@@ -52,9 +52,9 @@ namespace AW.Win
           this.toolStripButtonViewAsEntity = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonTypedList = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
-          this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
-          this.toolStripButtonLinqBarf = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+          this.toolStripButtonLinqBarf = new System.Windows.Forms.ToolStripButton();
+          this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
           ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -269,6 +269,21 @@ namespace AW.Win
           this.toolStripButtonLinq.Text = "Linq";
           this.toolStripButtonLinq.Click += new System.EventHandler(this.toolStripButtonLinq_Click);
           // 
+          // toolStripSeparator1
+          // 
+          this.toolStripSeparator1.Name = "toolStripSeparator1";
+          this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+          // 
+          // toolStripButtonLinqBarf
+          // 
+          this.toolStripButtonLinqBarf.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqBarf.Image")));
+          this.toolStripButtonLinqBarf.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonLinqBarf.Name = "toolStripButtonLinqBarf";
+          this.toolStripButtonLinqBarf.Size = new System.Drawing.Size(69, 22);
+          this.toolStripButtonLinqBarf.Text = "Linq Barf";
+          this.toolStripButtonLinqBarf.Visible = false;
+          this.toolStripButtonLinqBarf.Click += new System.EventHandler(this.toolStripButtonLinqBarf_Click);
+          // 
           // numericUpDownNumRows
           // 
           this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -282,20 +297,6 @@ namespace AW.Win
           this.numericUpDownNumRows.Size = new System.Drawing.Size(59, 20);
           this.numericUpDownNumRows.TabIndex = 2;
           this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
-          // 
-          // toolStripButtonLinqBarf
-          // 
-          this.toolStripButtonLinqBarf.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqBarf.Image")));
-          this.toolStripButtonLinqBarf.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.toolStripButtonLinqBarf.Name = "toolStripButtonLinqBarf";
-          this.toolStripButtonLinqBarf.Size = new System.Drawing.Size(69, 22);
-          this.toolStripButtonLinqBarf.Text = "Linq Barf";
-          this.toolStripButtonLinqBarf.Click += new System.EventHandler(this.toolStripButtonLinqBarf_Click);
-          // 
-          // toolStripSeparator1
-          // 
-          this.toolStripSeparator1.Name = "toolStripSeparator1";
-          this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
           // 
           // frmCustomers
           // 
