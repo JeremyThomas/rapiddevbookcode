@@ -186,71 +186,77 @@ namespace AW.Win
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
       //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
-      var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
+      var query = from soh in AWHelper.MetaData.SalesOrderHeader
+                  from customerAddress in soh.Customer.CustomerAddress
+                  select new { soh, customerAddress };
 
       if (fromDate != DateTime.MinValue)
       {
-        query = query.Where(soh => soh.OrderDate >= fromDate);
+        query = query.Where(q => q.soh.OrderDate >= fromDate);
       }
       if (toDate != DateTime.MinValue)
       {
-        query = query.Where(soh => soh.OrderDate <= toDate);
+        query = query.Where(q => q.soh.OrderDate <= toDate);
       }
       if (firstName != "")
       {
         //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
-        query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
+        query = query.Where(q => q.soh.Customer.Individual.Contact.FirstName.Contains(firstName));
       }
       if (lastName != "")
       {
-        query = query.Where(soh => soh.Customer.Individual.Contact.LastName.Contains(lastName));
+        query = query.Where(q => q.soh.Customer.Individual.Contact.LastName.Contains(lastName));
       }
       if (cityName != "")
       {
-        query = from soh in query
-                    from customerAddress in soh.Customer.CustomerAddress
-                    where customerAddress.Address.City.Contains(cityName)
-                    select soh;
+        query = query.Where(q => q.customerAddress.Address.City.Contains(cityName));
+        //query = from soh in query
+        //            from customerAddress in soh.Customer.CustomerAddress
+        //            where customerAddress
+        //            select soh;
       }
       if (state != "")
       {
-        query = from soh in query
-                    from customerAddress in soh.Customer.CustomerAddress
-                    where customerAddress.Address.StateProvince.Name == state
-                    select soh;
+        query = query.Where(q => q.customerAddress.Address.StateProvince.Name == state);
+        //query = from soh in query
+        //            from customerAddress in soh.Customer.CustomerAddress
+        //            where customerAddress.Address.StateProvince.Name == state
+        //            select soh;
         //predicate = predicate.Where(soh => soh.CustomerState == state);
       }
       if (country != "")
       {
-        query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
-        query = from soh in query
-                    from customerAddress in soh.Customer.CustomerAddress
-                    where customerAddress.Address.StateProvince.CountryRegion.Name == country
-                    select soh;
+        query = query.Where(q => q.customerAddress.Address.StateProvince.CountryRegion.Name == country);
+        //query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
+        //query = from soh in query
+        //            from customerAddress in soh.Customer.CustomerAddress
+        //            where customerAddress.Address.StateProvince.CountryRegion.Name == country
+        //            select soh;
         //predicate = predicate.Where(soh => soh.CustomerCountry == country);
       }
       if (zip != "")
       {
-        query = from soh in query
-                    from customerAddress in soh.Customer.CustomerAddress
-                    where customerAddress.Address.PostalCode == zip
-                    select soh;
+        query = query.Where(q => q.customerAddress.Address.PostalCode == zip);
+        //query = from soh in query
+        //            from customerAddress in soh.Customer.CustomerAddress
+        //            where customerAddress.Address.PostalCode == zip
+        //            select soh;
         //predicate = predicate.Where(soh => soh.CustomerZip == zip);
       }
       if (orderID != 0)
       {
-        query = query.Where(soh => soh.SalesOrderId == orderID);
+        query = query.Where(q => q.soh.SalesOrderId == orderID);
       }
       if (orderName != "")
       {
-        query = query.Where(soh => soh.SalesOrderNumber == orderName);
+        query = query.Where(q => q.soh.SalesOrderNumber == orderName);
       }
-
-      query = query.OrderBy(s => s.OrderDate);
+      var salesOrderHeader = from q in query select q.soh;
+      salesOrderHeader = salesOrderHeader.OrderBy(s => s.OrderDate);
 
       if (MaxNumberOfItemsToReturn > 0)
-        query = query.Take(MaxNumberOfItemsToReturn);
-      results = query;
+        salesOrderHeader = salesOrderHeader.Take(MaxNumberOfItemsToReturn);
+      results = salesOrderHeader;
     }
 
     public int MaxNumberOfItemsToReturn
