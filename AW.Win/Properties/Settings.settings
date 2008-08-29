@@ -71,5 +71,8 @@
     <Setting Name="LinqTraceLevel" Type="System.Diagnostics.TraceLevel" Scope="User">
       <Value Profile="(Default)">Off</Value>
     </Setting>
+    <Setting Name="OpenTraceWindosOnStart" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

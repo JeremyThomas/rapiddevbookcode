@@ -19,6 +19,8 @@ namespace AW.Win
     private void frmMain_Load(object sender, EventArgs e)
     {
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.MainWindowSizeLocation);
+      if (Settings.Default.OpenTraceWindosOnStart)
+        LaunchChildForm(new frmTrace());
     }
 
     //private void LaunchChildForm(Form ChildForm)

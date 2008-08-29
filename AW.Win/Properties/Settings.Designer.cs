@@ -298,5 +298,17 @@ namespace AW.Win.Properties {
                 this["LinqTraceLevel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OpenTraceWindosOnStart {
+            get {
+                return ((bool)(this["OpenTraceWindosOnStart"]));
+            }
+            set {
+                this["OpenTraceWindosOnStart"] = value;
+            }
+        }
     }
 }

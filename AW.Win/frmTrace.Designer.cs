@@ -35,6 +35,7 @@
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.comboBoxLinqTraceLevel = new System.Windows.Forms.ComboBox();
+      this.checkBoxOpenOnStart = new System.Windows.Forms.CheckBox();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
@@ -61,9 +62,9 @@
       // 
       // buttonClearTrace
       // 
-      this.buttonClearTrace.Location = new System.Drawing.Point(532, 10);
+      this.buttonClearTrace.Location = new System.Drawing.Point(519, 10);
       this.buttonClearTrace.Name = "buttonClearTrace";
-      this.buttonClearTrace.Size = new System.Drawing.Size(90, 23);
+      this.buttonClearTrace.Size = new System.Drawing.Size(74, 23);
       this.buttonClearTrace.TabIndex = 1;
       this.buttonClearTrace.Text = "Clear Trace";
       this.buttonClearTrace.UseVisualStyleBackColor = true;
@@ -72,12 +73,14 @@
       // splitContainer1
       // 
       this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
       this.splitContainer1.Location = new System.Drawing.Point(0, 0);
       this.splitContainer1.Name = "splitContainer1";
       this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
       // 
       // splitContainer1.Panel1
       // 
+      this.splitContainer1.Panel1.Controls.Add(this.checkBoxOpenOnStart);
       this.splitContainer1.Panel1.Controls.Add(this.label2);
       this.splitContainer1.Panel1.Controls.Add(this.label1);
       this.splitContainer1.Panel1.Controls.Add(this.comboBoxLinqTraceLevel);
@@ -118,6 +121,18 @@
       this.comboBoxLinqTraceLevel.TabIndex = 2;
       this.comboBoxLinqTraceLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxLinqTraceLevel_SelectedIndexChanged);
       // 
+      // checkBoxOpenOnStart
+      // 
+      this.checkBoxOpenOnStart.AutoSize = true;
+      this.checkBoxOpenOnStart.Checked = global::AW.Win.Properties.Settings.Default.OpenTraceWindosOnStart;
+      this.checkBoxOpenOnStart.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "OpenTraceWindosOnStart", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxOpenOnStart.Location = new System.Drawing.Point(610, 11);
+      this.checkBoxOpenOnStart.Name = "checkBoxOpenOnStart";
+      this.checkBoxOpenOnStart.Size = new System.Drawing.Size(148, 17);
+      this.checkBoxOpenOnStart.TabIndex = 5;
+      this.checkBoxOpenOnStart.Text = "Open this window on start";
+      this.checkBoxOpenOnStart.UseVisualStyleBackColor = true;
+      // 
       // frmTrace
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -147,5 +162,6 @@
     private System.Windows.Forms.ComboBox comboBoxLinqTraceLevel;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.CheckBox checkBoxOpenOnStart;
   }
 }

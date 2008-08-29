@@ -33,6 +33,7 @@ namespace AW.Win
           this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.orders2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.customersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.organizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +41,6 @@ namespace AW.Win
           this.vacationBonusUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.orders2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip1.SuspendLayout();
           this.SuspendLayout();
           // 
@@ -55,7 +55,7 @@ namespace AW.Win
           this.menuStrip1.Location = new System.Drawing.Point(0, 0);
           this.menuStrip1.MdiWindowListItem = this.windowToolStripMenuItem;
           this.menuStrip1.Name = "menuStrip1";
-          this.menuStrip1.Size = new System.Drawing.Size(395, 24);
+          this.menuStrip1.Size = new System.Drawing.Size(617, 24);
           this.menuStrip1.TabIndex = 1;
           this.menuStrip1.Text = "menuStrip1";
           // 
@@ -86,9 +86,16 @@ namespace AW.Win
           // ordersToolStripMenuItem
           // 
           this.ordersToolStripMenuItem.Name = "ordersToolStripMenuItem";
-          this.ordersToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+          this.ordersToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
           this.ordersToolStripMenuItem.Text = "&Orders ...";
           this.ordersToolStripMenuItem.Click += new System.EventHandler(this.ordersToolStripMenuItem_Click);
+          // 
+          // orders2ToolStripMenuItem
+          // 
+          this.orders2ToolStripMenuItem.Name = "orders2ToolStripMenuItem";
+          this.orders2ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+          this.orders2ToolStripMenuItem.Text = "Orders2 ...";
+          this.orders2ToolStripMenuItem.Click += new System.EventHandler(this.orders2ToolStripMenuItem_Click);
           // 
           // reportsToolStripMenuItem
           // 
@@ -142,18 +149,11 @@ namespace AW.Win
           this.windowToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
           this.windowToolStripMenuItem.Text = "&Window";
           // 
-          // orders2ToolStripMenuItem
-          // 
-          this.orders2ToolStripMenuItem.Name = "orders2ToolStripMenuItem";
-          this.orders2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-          this.orders2ToolStripMenuItem.Text = "Orders2 ...";
-          this.orders2ToolStripMenuItem.Click += new System.EventHandler(this.orders2ToolStripMenuItem_Click);
-          // 
           // frmMain
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-          this.ClientSize = new System.Drawing.Size(395, 273);
+          this.ClientSize = new System.Drawing.Size(617, 443);
           this.Controls.Add(this.menuStrip1);
           this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", global::AW.Win.Properties.Settings.Default, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.IsMdiContainer = true;

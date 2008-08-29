@@ -23,7 +23,7 @@ namespace AW.Win
     private string state;
     private string country;
     private string zip;
-    private SalesOrderHeaderCollection results;
+    private object results;
 
     public frmOrderSearch2()
     {
@@ -116,55 +116,105 @@ namespace AW.Win
       ((frmMain) MdiParent).LaunchChildForm(frm);
     }
 
-    private void dgResults_CellContentDoubleClick(
-      object sender, DataGridViewCellEventArgs e)
+    private void dgResults_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
-      var Order = dgResults.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
+      var Order = salesOrderHeaderEntityDataGridView.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
       var frm = new frmOrderEdit(Order);
       ((frmMain) MdiParent).LaunchChildForm(frm);
     }
 
-    private void Barf()
+    /// <summary>
+    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14181
+    /// </summary>
+    private static void Barf()
     {
-      var query = from soh in AWHelper.MetaData.SalesOrderHeader
-                      from customerAddress in soh.Customer.CustomerAddress
-                      select soh;
+      //var query = from soh in AWHelper.MetaData.SalesOrderHeader
+      //                from customerAddress in soh.Customer.CustomerAddress
+      //                where customerAddress.Address.PostalCode == "some Postal Code"
+      //                where customerAddress.Address.StateProvince.CountryRegion.Name == country
+      //                select soh;
+      var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
+      //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
+      query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains("firstName"));
 
+      //query = from soh in query
+      //        where soh.Customer.Individual.Contact.LastName == "LastName"
+      //        select soh;
+
+      query = from soh in query
+              from customerAddress in soh.Customer.CustomerAddress
+              where customerAddress.Address.StateProvince.CountryRegion.Name == "country"
+              select soh;
+
+      query = from soh in query select soh;
       var x = query.ToList();
-      //dgResults.DataSource = ((ILLBLGenProQuery)predicate).Execute<SalesOrderHeaderCollection>();
+      //salesOrderHeaderEntityBindingSource.DataSource = query;
+      //salesOrderHeaderEntityBindingSource.DataSource = ((ILLBLGenProQuery)query).Execute<SalesOrderHeaderCollection>();
     }
 
+    private static void Barf2()
+    {
+      //var query = from soh in AWHelper.MetaData.SalesOrderHeader
+      //                from customerAddress in soh.Customer.CustomerAddress
+      //                where customerAddress.Address.PostalCode == "some Postal Code"
+      //                where customerAddress.Address.StateProvince.CountryRegion.Name == country
+      //                select soh;
+      var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
+      //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
+      query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains("firstName"));
+
+      query = from soh in query
+              where soh.Customer.Individual.Contact.LastName == "country"
+              select soh;
+
+      //query = from soh in query
+      //        from customerAddress in soh.Customer.CustomerAddress
+      //        where customerAddress.Address.StateProvince.CountryRegion.Name == "country"
+      //        select soh;
+
+      query = from soh in query select soh;
+      var x = query.ToList();
+      //salesOrderHeaderEntityBindingSource.DataSource = query;
+      //salesOrderHeaderEntityBindingSource.DataSource = ((ILLBLGenProQuery)query).Execute<SalesOrderHeaderCollection>();
+    }
+
+    /// <summary>
+    /// Handles the DoWork event of the searchWorker control. http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14181
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      var predicate = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
+      //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
+      var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
 
       if (fromDate != DateTime.MinValue)
       {
-        predicate = predicate.Where(soh => soh.OrderDate >= fromDate);
+        query = query.Where(soh => soh.OrderDate >= fromDate);
       }
       if (toDate != DateTime.MinValue)
       {
-        predicate = predicate.Where(soh => soh.OrderDate <= toDate);
+        query = query.Where(soh => soh.OrderDate <= toDate);
       }
       if (firstName != "")
       {
         //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
-        predicate = predicate.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
+        query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
       }
       if (lastName != "")
       {
-        predicate = predicate.Where(soh => soh.Customer.Individual.Contact.LastName.Contains(lastName));
+        query = query.Where(soh => soh.Customer.Individual.Contact.LastName.Contains(lastName));
       }
       if (cityName != "")
       {
-        predicate = from soh in predicate
+        query = from soh in query
                     from customerAddress in soh.Customer.CustomerAddress
                     where customerAddress.Address.City.Contains(cityName)
                     select soh;
       }
       if (state != "")
       {
-        predicate = from soh in predicate
+        query = from soh in query
                     from customerAddress in soh.Customer.CustomerAddress
                     where customerAddress.Address.StateProvince.Name == state
                     select soh;
@@ -172,7 +222,8 @@ namespace AW.Win
       }
       if (country != "")
       {
-        predicate = from soh in predicate
+        query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
+        query = from soh in query
                     from customerAddress in soh.Customer.CustomerAddress
                     where customerAddress.Address.StateProvince.CountryRegion.Name == country
                     select soh;
@@ -180,7 +231,7 @@ namespace AW.Win
       }
       if (zip != "")
       {
-        predicate = from soh in predicate
+        query = from soh in query
                     from customerAddress in soh.Customer.CustomerAddress
                     where customerAddress.Address.PostalCode == zip
                     select soh;
@@ -188,18 +239,18 @@ namespace AW.Win
       }
       if (orderID != 0)
       {
-        predicate = predicate.Where(soh => soh.SalesOrderId == orderID);
+        query = query.Where(soh => soh.SalesOrderId == orderID);
       }
       if (orderName != "")
       {
-        predicate = predicate.Where(soh => soh.SalesOrderNumber == orderName);
+        query = query.Where(soh => soh.SalesOrderNumber == orderName);
       }
 
-      predicate = predicate.OrderBy(s => s.OrderDate);
+      query = query.OrderBy(s => s.OrderDate);
 
       if (MaxNumberOfItemsToReturn > 0)
-        predicate = predicate.Take(MaxNumberOfItemsToReturn);
-      results = ((ILLBLGenProQuery)predicate).Execute<SalesOrderHeaderCollection>();
+        query = query.Take(MaxNumberOfItemsToReturn);
+      results = query;
     }
 
     public int MaxNumberOfItemsToReturn
@@ -211,15 +262,11 @@ namespace AW.Win
     private void searchWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
       if (e.Error != null)
-      {
         Application.OnThreadException(e.Error);
-      }
       if (frmStatusBar != null)
-      {
         frmStatusBar.Close();
-      }
       btnSearch.Enabled = true;
-      dgResults.DataSource = results;
+      salesOrderHeaderEntityBindingSource.DataSource = results;
     }
 
   }

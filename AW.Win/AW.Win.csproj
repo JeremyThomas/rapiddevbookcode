@@ -177,6 +177,7 @@
     <None Include="AdventureWorks.snk" />
     <None Include="App.config" />
     <None Include="AW.Win_TemporaryKey.pfx" />
+    <None Include="Properties\DataSources\AW.Data.CollectionClasses.SalesOrderHeaderCollection.datasource" />
     <None Include="Properties\DataSources\AW.Data.EntityClasses.SalesOrderHeaderEntity.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
