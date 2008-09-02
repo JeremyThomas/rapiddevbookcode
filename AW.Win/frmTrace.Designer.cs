@@ -35,7 +35,6 @@
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.comboBoxLinqTraceLevel = new System.Windows.Forms.ComboBox();
-      this.checkBoxOpenOnStart = new System.Windows.Forms.CheckBox();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
@@ -80,7 +79,6 @@
       // 
       // splitContainer1.Panel1
       // 
-      this.splitContainer1.Panel1.Controls.Add(this.checkBoxOpenOnStart);
       this.splitContainer1.Panel1.Controls.Add(this.label2);
       this.splitContainer1.Panel1.Controls.Add(this.label1);
       this.splitContainer1.Panel1.Controls.Add(this.comboBoxLinqTraceLevel);
@@ -121,18 +119,6 @@
       this.comboBoxLinqTraceLevel.TabIndex = 2;
       this.comboBoxLinqTraceLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxLinqTraceLevel_SelectedIndexChanged);
       // 
-      // checkBoxOpenOnStart
-      // 
-      this.checkBoxOpenOnStart.AutoSize = true;
-      this.checkBoxOpenOnStart.Checked = global::AW.Win.Properties.Settings.Default.OpenTraceWindosOnStart;
-      this.checkBoxOpenOnStart.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "OpenTraceWindosOnStart", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxOpenOnStart.Location = new System.Drawing.Point(610, 11);
-      this.checkBoxOpenOnStart.Name = "checkBoxOpenOnStart";
-      this.checkBoxOpenOnStart.Size = new System.Drawing.Size(148, 17);
-      this.checkBoxOpenOnStart.TabIndex = 5;
-      this.checkBoxOpenOnStart.Text = "Open this window on start";
-      this.checkBoxOpenOnStart.UseVisualStyleBackColor = true;
-      // 
       // frmTrace
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,6 +128,7 @@
       this.Name = "frmTrace";
       this.Text = "FormTrace";
       this.Load += new System.EventHandler(this.FrmTrace_Load);
+      this.Shown += new System.EventHandler(this.frmTrace_Shown);
       this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmTrace_FormClosed);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmTrace_FormClosing);
       this.splitContainer1.Panel1.ResumeLayout(false);
@@ -162,6 +149,5 @@
     private System.Windows.Forms.ComboBox comboBoxLinqTraceLevel;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.CheckBox checkBoxOpenOnStart;
   }
 }

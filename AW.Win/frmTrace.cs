@@ -11,13 +11,12 @@ namespace AW.Win
 {
   public partial class frmTrace : Form
   {
-    private readonly int textBoxTraceListenerIndex;
+    private int textBoxTraceListenerIndex;
 
     public frmTrace()
     {
       InitializeComponent();
       var dummy = DynamicQueryEngine.ArithAbortOn;
-      textBoxTraceListenerIndex = Trace.Listeners.Add(new TextBoxTraceListener(textBoxTrace));
       comboBoxDQETraceLevel.DataSource = Enum.GetValues(typeof (TraceLevel));
       comboBoxLinqTraceLevel.DataSource = Enum.GetValues(typeof(TraceLevel));
       comboBoxDQETraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "TraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
@@ -29,6 +28,11 @@ namespace AW.Win
       DQETraceLevel = Settings.Default.TraceLevel;
       LinqTraceLevel = Settings.Default.LinqTraceLevel;
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.TraceWindowSizeLocation);
+    }
+
+    private void frmTrace_Shown(object sender, EventArgs e)
+    {
+      textBoxTraceListenerIndex = Trace.Listeners.Add(new TextBoxTraceListener(textBoxTrace));
     }
 
     private void frmTrace_FormClosing(object sender, FormClosingEventArgs e)

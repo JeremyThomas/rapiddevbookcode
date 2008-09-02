@@ -41,6 +41,7 @@ namespace AW.Win
           this.vacationBonusUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip1.SuspendLayout();
           this.SuspendLayout();
           // 
@@ -145,9 +146,19 @@ namespace AW.Win
           // 
           // windowToolStripMenuItem
           // 
+          this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reOpenWindowsToolStripMenuItem});
           this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
           this.windowToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
           this.windowToolStripMenuItem.Text = "&Window";
+          // 
+          // reOpenWindowsToolStripMenuItem
+          // 
+          this.reOpenWindowsToolStripMenuItem.Checked = global::AW.Win.Properties.Settings.Default.ReopenWindows;
+          this.reOpenWindowsToolStripMenuItem.CheckOnClick = true;
+          this.reOpenWindowsToolStripMenuItem.Name = "reOpenWindowsToolStripMenuItem";
+          this.reOpenWindowsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+          this.reOpenWindowsToolStripMenuItem.Text = "Reopen Windows";
           // 
           // frmMain
           // 
@@ -163,6 +174,7 @@ namespace AW.Win
           this.Text = "Adventure Works";
           this.WindowState = global::AW.Win.Properties.Settings.Default.MainWindowState;
           this.Load += new System.EventHandler(this.frmMain_Load);
+          this.Shown += new System.EventHandler(this.frmMain_Shown);
           this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
           this.menuStrip1.ResumeLayout(false);
@@ -187,5 +199,6 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripMenuItem vacationBonusUtilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem traceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orders2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reOpenWindowsToolStripMenuItem;
     }
 }

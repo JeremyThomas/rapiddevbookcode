@@ -310,5 +310,39 @@ namespace AW.Win.Properties {
                 this["OpenTraceWindosOnStart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ReopenWindows {
+            get {
+                return ((bool)(this["ReopenWindows"]));
+            }
+            set {
+                this["ReopenWindows"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection OpenWindows {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["OpenWindows"]));
+            }
+            set {
+                this["OpenWindows"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Countries {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Countries"]));
+            }
+            set {
+                this["Countries"] = value;
+            }
+        }
     }
 }

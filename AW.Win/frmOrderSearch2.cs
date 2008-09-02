@@ -1,12 +1,12 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
-using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Win.Properties;
-using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Win
 {
@@ -21,7 +21,7 @@ namespace AW.Win
     private string orderName;
     private string cityName;
     private string state;
-    private string country;
+    private List<string> countries;
     private string zip;
     private object results;
 
@@ -33,11 +33,10 @@ namespace AW.Win
     private void frmOrderSearch_Load(object sender, EventArgs e)
     {
       var previousState = Settings.Default.State;
-      var previousCountry = Settings.Default.Country;
 
-      cbCountry.DataSource = CountryRegionEntity.GetCountryRegionCollection();
-      cbCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
-      cbCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
+      listBoxCountry.DataSource = CountryRegionEntity.GetCountryRegionCollection();
+      listBoxCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
+      listBoxCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
 
       cbState.DataSource = StateProvinceEntity.GetStateProvinceCollection();
       cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
@@ -47,7 +46,10 @@ namespace AW.Win
       dtpDateTo.Checked = Settings.Default.FilterOnToDate;
 
       cbState.Text = previousState;
-      cbCountry.Text = previousCountry;
+
+      if (Settings.Default.Countries != null && listBoxCountry.Items.Count > 0)
+        foreach (var selectedRow in Settings.Default.Countries)
+          listBoxCountry.SelectedIndices.Add(Convert.ToInt32(selectedRow));
 
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrderSearchSizeLocation);
     }
@@ -62,6 +64,16 @@ namespace AW.Win
       Settings.Default.OrderSearchSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
       Settings.Default.FilterOnFromDate = dtpDateFrom.Checked;
       Settings.Default.FilterOnToDate = dtpDateTo.Checked;
+
+      if (listBoxCountry.Items.Count > 0)
+      {
+        if (Settings.Default.Countries == null)
+          Settings.Default.Countries = new StringCollection();
+        else
+          Settings.Default.Countries.Clear();
+        foreach (var selectedRow in listBoxCountry.SelectedIndices)
+          Settings.Default.Countries.Add(selectedRow.ToString());
+      }
     }
 
     private void btnSearch_Click(object sender, EventArgs e)
@@ -87,11 +99,19 @@ namespace AW.Win
       lastName = tbLastName.Text;
       cityName = tbCity.Text;
       state = cbState.Text;
-      country = cbCountry.Text;
+      countries = (from country in listBoxCountry.SelectedItems.OfType<CountryRegionEntity>() select country.Name).ToList();
       zip = tbZip.Text;
       if (sender == buttonBarf)
       {
         Barf();
+      }
+      else if (sender == buttonBarf2)
+      {
+        BarfLambda();
+      }
+      else if (sender == buttonBarf3)
+      {
+        LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder();
       }
       else
       {
@@ -126,25 +146,18 @@ namespace AW.Win
     /// <summary>
     /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14181
     /// </summary>
-    private static void Barf()
+    private void Barf()
     {
-      //var query = from soh in AWHelper.MetaData.SalesOrderHeader
-      //                from customerAddress in soh.Customer.CustomerAddress
-      //                where customerAddress.Address.PostalCode == "some Postal Code"
-      //                where customerAddress.Address.StateProvince.CountryRegion.Name == country
-      //                select soh;
       var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
-      //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
-      query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains("firstName"));
 
-      //query = from soh in query
-      //        where soh.Customer.Individual.Contact.LastName == "LastName"
-      //        select soh;
+      if (firstName != "")
+        query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
 
-      query = from soh in query
-              from customerAddress in soh.Customer.CustomerAddress
-              where customerAddress.Address.StateProvince.CountryRegion.Name == "country"
-              select soh;
+      if (state != "")
+        query = from soh in query
+                from customerAddress in soh.Customer.CustomerAddress
+                where customerAddress.Address.StateProvince.Name == state
+                select soh;
 
       query = from soh in query select soh;
       var x = query.ToList();
@@ -152,19 +165,80 @@ namespace AW.Win
       //salesOrderHeaderEntityBindingSource.DataSource = ((ILLBLGenProQuery)query).Execute<SalesOrderHeaderCollection>();
     }
 
-    private static void Barf2()
+    /// <summary>
+    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14181
+    /// </summary>
+    private static void BarfLambda()
     {
-      //var query = from soh in AWHelper.MetaData.SalesOrderHeader
-      //                from customerAddress in soh.Customer.CustomerAddress
-      //                where customerAddress.Address.PostalCode == "some Postal Code"
-      //                where customerAddress.Address.StateProvince.CountryRegion.Name == country
-      //                select soh;
+      var q1 = AWHelper.MetaData.SalesOrderHeader
+        .Where(soh => (soh.Customer.Individual.Contact.LastName == "LastName"));
+
+      var f1 = true;
+      if (f1)
+
+        q1 = q1.SelectMany(
+          soh => soh.Customer.CustomerAddress,
+          (soh, customerAddress) =>
+          new
+            {
+              soh, customerAddress
+            }
+          ).Where(temp0 => (temp0.customerAddress.Address.StateProvince.Name == "State"))
+          .Select(temp0 => temp0.soh);
+
+      if (f1)
+        q1 = q1
+          .SelectMany(
+          soh => soh.Customer.CustomerAddress,
+          (soh, customerAddress) =>
+          new
+            {
+              soh, customerAddress
+            }
+          )
+          .Where(temp1 => (temp1.customerAddress.Address.City == "city")).Select(temp0 => temp0.soh);
+      var x = q1.ToList();
+      //salesOrderHeaderEntityBindingSource.DataSource = query;
+      //salesOrderHeaderEntityBindingSource.DataSource = ((ILLBLGenProQuery)query).Execute<SalesOrderHeaderCollection>();
+    }
+
+    public void LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder()
+    {
+      var q = from c in AWHelper.MetaData.Customer
+              join o in AWHelper.MetaData.SalesOrderHeader on c.CustomerId equals o.CustomerId into oc
+              from x in oc.DefaultIfEmpty()
+              where x.SalesOrderId == null
+              select c;
+      if (MaxNumberOfItemsToReturn > 0)
+        q = q.Take(MaxNumberOfItemsToReturn);
+      salesOrderHeaderEntityBindingSource.DataSource = q;
+
+      var q1 = from customer in AWHelper.MetaData.Customer
+               from soh in customer.SalesOrderHeader.DefaultIfEmpty()
+               where soh.SalesOrderId == null
+               select new {customer};
+      if (MaxNumberOfItemsToReturn > 0)
+        q1 = q1.Take(MaxNumberOfItemsToReturn);
+      var z = q1.ToList();
+    }
+
+    private void Barf3()
+    {
+      //var q2 = from customer in AWHelper.MetaData.Customer
+      //         join ca in AWHelper.MetaData.CustomerAddress on customer.CustomerId equals ca.CustomerId into customerAddress
+      //         from x in customerAddress.DefaultIfEmpty()
+      //         //where customerAddress.AddressTypeID == null
+      //         select new { customer, x };
+      //if (MaxNumberOfItemsToReturn > 0)
+      //  q2 = q2.Take(MaxNumberOfItemsToReturn);
+      //var w = q2.ToList();
+
       var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
       //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
-      query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains("firstName"));
+      query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains("Brad"));
 
       query = from soh in query
-              where soh.Customer.Individual.Contact.LastName == "country"
+              //    where soh.Customer.Individual.Contact.LastName == "United Kingdom"
               select soh;
 
       //query = from soh in query
@@ -172,9 +246,42 @@ namespace AW.Win
       //        where customerAddress.Address.StateProvince.CountryRegion.Name == "country"
       //        select soh;
 
-      query = from soh in query select soh;
-      var x = query.ToList();
-      //salesOrderHeaderEntityBindingSource.DataSource = query;
+      if (MaxNumberOfItemsToReturn > 0)
+        query = query.Take(MaxNumberOfItemsToReturn);
+
+      var query2 = from s in query
+                   select new
+                            {
+                              s.SalesOrderId,
+                              s.RevisionNumber,
+                              s.OrderDate,
+                              s.DueDate,
+                              s.ShipDate,
+                              s.Status,
+                              s.OnlineOrderFlag,
+                              s.SalesOrderNumber,
+                              s.PurchaseOrderNumber,
+                              s.AccountNumber,
+                              s.CustomerId,
+                              s.ContactId,
+                              s.SalesPersonId,
+                              s.TerritoryId,
+                              s.BillToAddressId,
+                              s.ShipToAddressId,
+                              s.ShipMethodId,
+                              s.CreditCardId,
+                              s.CreditCardApprovalCode,
+                              s.CurrencyRateId,
+                              s.SubTotal,
+                              s.TaxAmt,
+                              s.Freight,
+                              s.TotalDue,
+                              s.Comment,
+                              s.Rowguid,
+                              s.ModifiedDate
+                            };
+      //  var x = query.ToList();
+      salesOrderHeaderEntityBindingSource.DataSource = query2;
       //salesOrderHeaderEntityBindingSource.DataSource = ((ILLBLGenProQuery)query).Execute<SalesOrderHeaderCollection>();
     }
 
@@ -188,7 +295,7 @@ namespace AW.Win
       //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
       var query = from soh in AWHelper.MetaData.SalesOrderHeader
                   from customerAddress in soh.Customer.CustomerAddress
-                  select new { soh, customerAddress };
+                  select new {soh, customerAddress};
 
       if (fromDate != DateTime.MinValue)
       {
@@ -200,7 +307,7 @@ namespace AW.Win
       }
       if (firstName != "")
       {
-        //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
+        // query = query.Where(q => System.Data.Linq.SqlClient.SqlMethods.Like(q.soh.Customer.Individual.Contact.FirstName, firstName));
         query = query.Where(q => q.soh.Customer.Individual.Contact.FirstName.Contains(firstName));
       }
       if (lastName != "")
@@ -224,10 +331,9 @@ namespace AW.Win
         //            select soh;
         //predicate = predicate.Where(soh => soh.CustomerState == state);
       }
-      if (country != "")
+      if (countries.Count > 0)
       {
-        query = query.Where(q => q.customerAddress.Address.StateProvince.CountryRegion.Name == country);
-        //query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
+        query = query.Where(q => countries.Contains(q.customerAddress.Address.StateProvince.CountryRegion.Name));
         //query = from soh in query
         //            from customerAddress in soh.Customer.CustomerAddress
         //            where customerAddress.Address.StateProvince.CountryRegion.Name == country
@@ -274,6 +380,5 @@ namespace AW.Win
       btnSearch.Enabled = true;
       salesOrderHeaderEntityBindingSource.DataSource = results;
     }
-
   }
 }
