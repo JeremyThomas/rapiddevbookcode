@@ -29,6 +29,9 @@ namespace AW.Win
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
           System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderSearch2));
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
           this.label9 = new System.Windows.Forms.Label();
@@ -45,7 +48,7 @@ namespace AW.Win
           this.tbLastName = new System.Windows.Forms.TextBox();
           this.tbOrderID = new System.Windows.Forms.TextBox();
           this.panel1 = new System.Windows.Forms.Panel();
-          this.buttonBarf3 = new System.Windows.Forms.Button();
+          this.buttonClear = new System.Windows.Forms.Button();
           this.buttonBarf2 = new System.Windows.Forms.Button();
           this.buttonBarf = new System.Windows.Forms.Button();
           this.btnSearch = new System.Windows.Forms.Button();
@@ -97,6 +100,7 @@ namespace AW.Win
           this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
           this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
           this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+          this.buttonClearCountries = new System.Windows.Forms.Button();
           this.tableLayoutPanel2.SuspendLayout();
           this.panel1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
@@ -134,6 +138,7 @@ namespace AW.Win
           this.tableLayoutPanel2.Controls.Add(this.cbState, 3, 5);
           this.tableLayoutPanel2.Controls.Add(this.label5, 2, 5);
           this.tableLayoutPanel2.Controls.Add(this.listBoxCountry, 3, 2);
+          this.tableLayoutPanel2.Controls.Add(this.buttonClearCountries, 2, 3);
           this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
           this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
           this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -290,7 +295,7 @@ namespace AW.Win
           // 
           // panel1
           // 
-          this.panel1.Controls.Add(this.buttonBarf3);
+          this.panel1.Controls.Add(this.buttonClear);
           this.panel1.Controls.Add(this.buttonBarf2);
           this.panel1.Controls.Add(this.buttonBarf);
           this.panel1.Controls.Add(this.btnSearch);
@@ -300,23 +305,23 @@ namespace AW.Win
           this.panel1.Size = new System.Drawing.Size(271, 32);
           this.panel1.TabIndex = 22;
           // 
-          // buttonBarf3
+          // buttonClear
           // 
-          this.buttonBarf3.Location = new System.Drawing.Point(157, 5);
-          this.buttonBarf3.Name = "buttonBarf3";
-          this.buttonBarf3.Size = new System.Drawing.Size(41, 23);
-          this.buttonBarf3.TabIndex = 26;
-          this.buttonBarf3.Text = "Barf3";
-          this.buttonBarf3.UseVisualStyleBackColor = true;
-          this.buttonBarf3.Click += new System.EventHandler(this.btnSearch_Click);
+          this.buttonClear.Location = new System.Drawing.Point(202, 4);
+          this.buttonClear.Name = "buttonClear";
+          this.buttonClear.Size = new System.Drawing.Size(54, 23);
+          this.buttonClear.TabIndex = 26;
+          this.buttonClear.Text = "Clear All";
+          this.buttonClear.UseVisualStyleBackColor = true;
+          this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
           // 
           // buttonBarf2
           // 
-          this.buttonBarf2.Location = new System.Drawing.Point(106, 5);
+          this.buttonBarf2.Location = new System.Drawing.Point(119, 3);
           this.buttonBarf2.Name = "buttonBarf2";
-          this.buttonBarf2.Size = new System.Drawing.Size(45, 23);
+          this.buttonBarf2.Size = new System.Drawing.Size(77, 23);
           this.buttonBarf2.TabIndex = 25;
-          this.buttonBarf2.Text = "Barf2";
+          this.buttonBarf2.Text = "BarfLeftJoin";
           this.buttonBarf2.UseVisualStyleBackColor = true;
           this.buttonBarf2.Click += new System.EventHandler(this.btnSearch_Click);
           // 
@@ -411,6 +416,14 @@ namespace AW.Win
           this.salesOrderHeaderEntityDataGridView.AllowUserToAddRows = false;
           this.salesOrderHeaderEntityDataGridView.AllowUserToDeleteRows = false;
           this.salesOrderHeaderEntityDataGridView.AutoGenerateColumns = false;
+          dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+          dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+          dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+          this.salesOrderHeaderEntityDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
           this.salesOrderHeaderEntityDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
           this.salesOrderHeaderEntityDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn7,
@@ -440,10 +453,26 @@ namespace AW.Win
             this.dataGridViewTextBoxColumn30,
             this.dataGridViewTextBoxColumn32});
           this.salesOrderHeaderEntityDataGridView.DataSource = this.salesOrderHeaderEntityBindingSource;
+          dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+          dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+          dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+          this.salesOrderHeaderEntityDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
           this.salesOrderHeaderEntityDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
           this.salesOrderHeaderEntityDataGridView.Location = new System.Drawing.Point(0, 170);
           this.salesOrderHeaderEntityDataGridView.Name = "salesOrderHeaderEntityDataGridView";
           this.salesOrderHeaderEntityDataGridView.ReadOnly = true;
+          dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+          dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+          dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+          this.salesOrderHeaderEntityDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
           this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(694, 398);
           this.salesOrderHeaderEntityDataGridView.TabIndex = 2;
           this.salesOrderHeaderEntityDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
@@ -750,6 +779,18 @@ namespace AW.Win
           this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
           this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
           // 
+          // buttonClearCountries
+          // 
+          this.buttonClearCountries.Dock = System.Windows.Forms.DockStyle.Fill;
+          this.buttonClearCountries.Location = new System.Drawing.Point(349, 78);
+          this.buttonClearCountries.Name = "buttonClearCountries";
+          this.buttonClearCountries.Size = new System.Drawing.Size(63, 19);
+          this.buttonClearCountries.TabIndex = 25;
+          this.buttonClearCountries.Text = "Clear cnty";
+          this.buttonClearCountries.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+          this.buttonClearCountries.UseVisualStyleBackColor = true;
+          this.buttonClearCountries.Click += new System.EventHandler(this.buttonClearCountries_Click);
+          // 
           // frmOrderSearch2
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -849,7 +890,8 @@ namespace AW.Win
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn32;
         private System.Windows.Forms.Button buttonBarf2;
-        private System.Windows.Forms.Button buttonBarf3;
+        private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.ListBox listBoxCountry;
+        private System.Windows.Forms.Button buttonClearCountries;
     }
 }

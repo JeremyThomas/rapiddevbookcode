@@ -47,6 +47,7 @@ namespace AW.Win
 
       cbState.Text = previousState;
 
+      buttonClearCountries_Click(sender, e);
       if (Settings.Default.Countries != null && listBoxCountry.Items.Count > 0)
         foreach (var selectedRow in Settings.Default.Countries)
           listBoxCountry.SelectedIndices.Add(Convert.ToInt32(selectedRow));
@@ -107,10 +108,6 @@ namespace AW.Win
       }
       else if (sender == buttonBarf2)
       {
-        BarfLambda();
-      }
-      else if (sender == buttonBarf3)
-      {
         LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder();
       }
       else
@@ -154,10 +151,26 @@ namespace AW.Win
         query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
 
       if (state != "")
+       // query = query.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state));
+        query = from soh in query
+                where soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state)
+                select soh;
+
+      if (cityName != "")
+      {
+        //query = query.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.City == cityName));
+        query = from soh in query
+                where soh.Customer.CustomerAddress.Any(ca => ca.Address.City == cityName)
+                select soh;
+      }
+
+      if (countries.Count > 0)
+      {
         query = from soh in query
                 from customerAddress in soh.Customer.CustomerAddress
-                where customerAddress.Address.StateProvince.Name == state
+                where countries.Contains(customerAddress.Address.StateProvince.CountryRegion.Name)
                 select soh;
+      }
 
       query = from soh in query select soh;
       var x = query.ToList();
@@ -166,44 +179,12 @@ namespace AW.Win
     }
 
     /// <summary>
-    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14181
+    /// Test which uses DefaultIfEmpty and 'into' (so GroupJoin + SelectMany + DefaultIfEmpty) to fetch all customers which have no orders
+    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14210
     /// </summary>
-    private static void BarfLambda()
-    {
-      var q1 = AWHelper.MetaData.SalesOrderHeader
-        .Where(soh => (soh.Customer.Individual.Contact.LastName == "LastName"));
-
-      var f1 = true;
-      if (f1)
-
-        q1 = q1.SelectMany(
-          soh => soh.Customer.CustomerAddress,
-          (soh, customerAddress) =>
-          new
-            {
-              soh, customerAddress
-            }
-          ).Where(temp0 => (temp0.customerAddress.Address.StateProvince.Name == "State"))
-          .Select(temp0 => temp0.soh);
-
-      if (f1)
-        q1 = q1
-          .SelectMany(
-          soh => soh.Customer.CustomerAddress,
-          (soh, customerAddress) =>
-          new
-            {
-              soh, customerAddress
-            }
-          )
-          .Where(temp1 => (temp1.customerAddress.Address.City == "city")).Select(temp0 => temp0.soh);
-      var x = q1.ToList();
-      //salesOrderHeaderEntityBindingSource.DataSource = query;
-      //salesOrderHeaderEntityBindingSource.DataSource = ((ILLBLGenProQuery)query).Execute<SalesOrderHeaderCollection>();
-    }
-
     public void LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder()
     {
+      //var q = AWHelper.MetaData.Customer.GroupJoin(AWHelper.MetaData.SalesOrderHeader, c => c.CustomerId, o => o.CustomerId, (c, oc) => new {c, oc}).SelectMany(@t => @t.oc.DefaultIfEmpty(), (@t, x) => new {@t, x}).Where(@t => @t.x.SalesOrderId == null).Select(@t => @t.@t.c);
       var q = from c in AWHelper.MetaData.Customer
               join o in AWHelper.MetaData.SalesOrderHeader on c.CustomerId equals o.CustomerId into oc
               from x in oc.DefaultIfEmpty()
@@ -213,76 +194,26 @@ namespace AW.Win
         q = q.Take(MaxNumberOfItemsToReturn);
       salesOrderHeaderEntityBindingSource.DataSource = q;
 
+      //var q1 = AWHelper.MetaData.Customer.SelectMany(customer => customer.SalesOrderHeader.DefaultIfEmpty(), (customer, soh) => new {customer, soh}).Where(@t => @t.soh.SalesOrderId == null).Select(@t => @t.customer);
       var q1 = from customer in AWHelper.MetaData.Customer
                from soh in customer.SalesOrderHeader.DefaultIfEmpty()
                where soh.SalesOrderId == null
-               select new {customer};
+               select customer;
       if (MaxNumberOfItemsToReturn > 0)
         q1 = q1.Take(MaxNumberOfItemsToReturn);
       var z = q1.ToList();
-    }
 
-    private void Barf3()
-    {
-      //var q2 = from customer in AWHelper.MetaData.Customer
-      //         join ca in AWHelper.MetaData.CustomerAddress on customer.CustomerId equals ca.CustomerId into customerAddress
-      //         from x in customerAddress.DefaultIfEmpty()
-      //         //where customerAddress.AddressTypeID == null
-      //         select new { customer, x };
-      //if (MaxNumberOfItemsToReturn > 0)
-      //  q2 = q2.Take(MaxNumberOfItemsToReturn);
-      //var w = q2.ToList();
-
-      var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
-      //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
-      query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains("Brad"));
-
-      query = from soh in query
-              //    where soh.Customer.Individual.Contact.LastName == "United Kingdom"
-              select soh;
-
-      //query = from soh in query
-      //        from customerAddress in soh.Customer.CustomerAddress
-      //        where customerAddress.Address.StateProvince.CountryRegion.Name == "country"
-      //        select soh;
-
+      //Now fetch all customers which have no orders but have Addresses
+      //var q2 = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).SelectMany(@t => @t.customer.SalesOrderHeader.DefaultIfEmpty(), (@t, soh) => new {@t, soh}).Where(@t => @t.soh.SalesOrderId == null).Where(@t => @t.@t.ca.AddressId != null).Select(@t => @t.@t.customer);
+      var q2 = from customer in AWHelper.MetaData.Customer
+               from ca in customer.CustomerAddress
+               from soh in customer.SalesOrderHeader.DefaultIfEmpty()
+               where soh.SalesOrderId == null
+      //         where ca.AddressId != null
+               select customer;
       if (MaxNumberOfItemsToReturn > 0)
-        query = query.Take(MaxNumberOfItemsToReturn);
-
-      var query2 = from s in query
-                   select new
-                            {
-                              s.SalesOrderId,
-                              s.RevisionNumber,
-                              s.OrderDate,
-                              s.DueDate,
-                              s.ShipDate,
-                              s.Status,
-                              s.OnlineOrderFlag,
-                              s.SalesOrderNumber,
-                              s.PurchaseOrderNumber,
-                              s.AccountNumber,
-                              s.CustomerId,
-                              s.ContactId,
-                              s.SalesPersonId,
-                              s.TerritoryId,
-                              s.BillToAddressId,
-                              s.ShipToAddressId,
-                              s.ShipMethodId,
-                              s.CreditCardId,
-                              s.CreditCardApprovalCode,
-                              s.CurrencyRateId,
-                              s.SubTotal,
-                              s.TaxAmt,
-                              s.Freight,
-                              s.TotalDue,
-                              s.Comment,
-                              s.Rowguid,
-                              s.ModifiedDate
-                            };
-      //  var x = query.ToList();
-      salesOrderHeaderEntityBindingSource.DataSource = query2;
-      //salesOrderHeaderEntityBindingSource.DataSource = ((ILLBLGenProQuery)query).Execute<SalesOrderHeaderCollection>();
+        q2 = q2.Take(MaxNumberOfItemsToReturn);
+      var w = q2.ToList();
     }
 
     /// <summary>
@@ -292,72 +223,60 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      //var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
-      var query = from soh in AWHelper.MetaData.SalesOrderHeader
-                  from customerAddress in soh.Customer.CustomerAddress
-                  select new {soh, customerAddress};
+      var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
 
       if (fromDate != DateTime.MinValue)
       {
-        query = query.Where(q => q.soh.OrderDate >= fromDate);
+        query = query.Where(q => q.OrderDate >= fromDate);
       }
       if (toDate != DateTime.MinValue)
       {
-        query = query.Where(q => q.soh.OrderDate <= toDate);
+        query = query.Where(q => q.OrderDate <= toDate);
       }
       if (firstName != "")
       {
         // query = query.Where(q => System.Data.Linq.SqlClient.SqlMethods.Like(q.soh.Customer.Individual.Contact.FirstName, firstName));
-        query = query.Where(q => q.soh.Customer.Individual.Contact.FirstName.Contains(firstName));
+        query = query.Where(q => q.Customer.Individual.Contact.FirstName.Contains(firstName));
       }
       if (lastName != "")
       {
-        query = query.Where(q => q.soh.Customer.Individual.Contact.LastName.Contains(lastName));
+        query = query.Where(q => q.Customer.Individual.Contact.LastName.Contains(lastName));
       }
+      
       if (cityName != "")
       {
-        query = query.Where(q => q.customerAddress.Address.City.Contains(cityName));
-        //query = from soh in query
-        //            from customerAddress in soh.Customer.CustomerAddress
-        //            where customerAddress
-        //            select soh;
+        query = from soh in query
+                where soh.Customer.CustomerAddress.Any(ca => ca.Address.City == cityName)
+                select soh;
       }
       if (state != "")
       {
-        query = query.Where(q => q.customerAddress.Address.StateProvince.Name == state);
-        //query = from soh in query
-        //            from customerAddress in soh.Customer.CustomerAddress
-        //            where customerAddress.Address.StateProvince.Name == state
-        //            select soh;
-        //predicate = predicate.Where(soh => soh.CustomerState == state);
+        query = from soh in query
+                where soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state)
+                select soh;
       }
       if (countries.Count > 0)
       {
-        query = query.Where(q => countries.Contains(q.customerAddress.Address.StateProvince.CountryRegion.Name));
-        //query = from soh in query
-        //            from customerAddress in soh.Customer.CustomerAddress
-        //            where customerAddress.Address.StateProvince.CountryRegion.Name == country
-        //            select soh;
-        //predicate = predicate.Where(soh => soh.CustomerCountry == country);
+        query = from soh in query
+                from customerAddress in soh.Customer.CustomerAddress
+                where countries.Contains(customerAddress.Address.StateProvince.CountryRegion.Name)
+                select soh;
       }
       if (zip != "")
       {
-        query = query.Where(q => q.customerAddress.Address.PostalCode == zip);
-        //query = from soh in query
-        //            from customerAddress in soh.Customer.CustomerAddress
-        //            where customerAddress.Address.PostalCode == zip
-        //            select soh;
-        //predicate = predicate.Where(soh => soh.CustomerZip == zip);
+        query = from soh in query
+                where soh.Customer.CustomerAddress.Any(ca => ca.Address.PostalCode == zip)
+                select soh;
       }
       if (orderID != 0)
       {
-        query = query.Where(q => q.soh.SalesOrderId == orderID);
+        query = query.Where(q => q.SalesOrderId == orderID);
       }
       if (orderName != "")
       {
-        query = query.Where(q => q.soh.SalesOrderNumber == orderName);
+        query = query.Where(q => q.SalesOrderNumber == orderName);
       }
-      var salesOrderHeader = from q in query select q.soh;
+      var salesOrderHeader = query;
       salesOrderHeader = salesOrderHeader.OrderBy(s => s.OrderDate);
 
       if (MaxNumberOfItemsToReturn > 0)
@@ -380,5 +299,28 @@ namespace AW.Win
       btnSearch.Enabled = true;
       salesOrderHeaderEntityBindingSource.DataSource = results;
     }
+
+    private void buttonClear_Click(object sender, EventArgs e)
+    {
+      dtpDateFrom.Checked = false;
+      dtpDateFrom.Checked = false;
+
+      //tableLayoutPanel2.c
+      var q = from ctl in tableLayoutPanel2.Controls.OfType<TextBox>() select ctl;
+      foreach (var textbox in q)
+        textbox.Text = String.Empty;
+
+      var x = from ctl in tableLayoutPanel2.Controls.OfType<ComboBox>() select ctl;
+      foreach (var comboBox in x)
+        comboBox.Text = String.Empty;
+      
+      buttonClearCountries_Click(sender, e);
+    }
+
+    private void buttonClearCountries_Click(object sender, EventArgs e)
+    {
+      listBoxCountry.SelectedItems.Clear();
+    }
+
   }
 }
