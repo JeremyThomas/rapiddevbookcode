@@ -151,7 +151,7 @@ namespace AW.Win
         query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
 
       if (state != "")
-       // query = query.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state));
+        // query = query.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state));
         query = from soh in query
                 where soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state)
                 select soh;
@@ -165,17 +165,13 @@ namespace AW.Win
       }
 
       if (countries.Count > 0)
-      {
         query = from soh in query
-                from customerAddress in soh.Customer.CustomerAddress
-                where countries.Contains(customerAddress.Address.StateProvince.CountryRegion.Name)
+                where soh.Customer.CustomerAddress.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
                 select soh;
-      }
 
-      query = from soh in query select soh;
-      var x = query.ToList();
-      //salesOrderHeaderEntityBindingSource.DataSource = query;
-      //salesOrderHeaderEntityBindingSource.DataSource = ((ILLBLGenProQuery)query).Execute<SalesOrderHeaderCollection>();
+      if (MaxNumberOfItemsToReturn > 0)
+        query = query.Take(MaxNumberOfItemsToReturn);
+      salesOrderHeaderEntityBindingSource.DataSource = query;
     }
 
     /// <summary>
@@ -209,7 +205,7 @@ namespace AW.Win
                from ca in customer.CustomerAddress
                from soh in customer.SalesOrderHeader.DefaultIfEmpty()
                where soh.SalesOrderId == null
-      //         where ca.AddressId != null
+               where ca.AddressId != null
                select customer;
       if (MaxNumberOfItemsToReturn > 0)
         q2 = q2.Take(MaxNumberOfItemsToReturn);
@@ -242,7 +238,7 @@ namespace AW.Win
       {
         query = query.Where(q => q.Customer.Individual.Contact.LastName.Contains(lastName));
       }
-      
+
       if (cityName != "")
       {
         query = from soh in query
@@ -258,8 +254,7 @@ namespace AW.Win
       if (countries.Count > 0)
       {
         query = from soh in query
-                from customerAddress in soh.Customer.CustomerAddress
-                where countries.Contains(customerAddress.Address.StateProvince.CountryRegion.Name)
+                where soh.Customer.CustomerAddress.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
                 select soh;
       }
       if (zip != "")
@@ -313,7 +308,7 @@ namespace AW.Win
       var x = from ctl in tableLayoutPanel2.Controls.OfType<ComboBox>() select ctl;
       foreach (var comboBox in x)
         comboBox.Text = String.Empty;
-      
+
       buttonClearCountries_Click(sender, e);
     }
 
@@ -321,6 +316,5 @@ namespace AW.Win
     {
       listBoxCountry.SelectedItems.Clear();
     }
-
   }
 }
