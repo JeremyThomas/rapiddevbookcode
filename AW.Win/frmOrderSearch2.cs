@@ -175,38 +175,34 @@ namespace AW.Win
     }
 
     /// <summary>
-    /// Test which uses DefaultIfEmpty and 'into' (so GroupJoin + SelectMany + DefaultIfEmpty) to fetch all customers which have no orders
+    /// Test fetching the CustomerId, SalesOrderId, AddressId of all customers which have addresses and may have orders
     /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14210
     /// </summary>
     public void LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder()
     {
-      //var q = AWHelper.MetaData.Customer.GroupJoin(AWHelper.MetaData.SalesOrderHeader, c => c.CustomerId, o => o.CustomerId, (c, oc) => new {c, oc}).SelectMany(@t => @t.oc.DefaultIfEmpty(), (@t, x) => new {@t, x}).Where(@t => @t.x.SalesOrderId == null).Select(@t => @t.@t.c);
-      var q = from c in AWHelper.MetaData.Customer
-              join o in AWHelper.MetaData.SalesOrderHeader on c.CustomerId equals o.CustomerId into oc
-              from x in oc.DefaultIfEmpty()
-              where x.SalesOrderId == null
-              select c;
+//      var q = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).GroupJoin(AWHelper.MetaData.SalesOrderHeader, @t => @t.customer.CustomerId, soh => soh.CustomerId, (@t, oc) => new {@t, oc}).SelectMany(@t => @t.oc.DefaultIfEmpty(), (@t, nullableSOH) => new {@t.@t.customer.CustomerId, @t.@t.ca.AddressId, nullableSOH.SalesOrderId});
+      var q = from customer in AWHelper.MetaData.Customer
+              from ca in customer.CustomerAddress
+              join soh in AWHelper.MetaData.SalesOrderHeader on customer.CustomerId equals soh.CustomerId into oc
+              from nullableSOH in oc.DefaultIfEmpty()
+              select new { customer.CustomerId, ca.AddressId, nullableSOH.SalesOrderId };
       if (MaxNumberOfItemsToReturn > 0)
         q = q.Take(MaxNumberOfItemsToReturn);
       salesOrderHeaderEntityBindingSource.DataSource = q;
 
-      //var q1 = AWHelper.MetaData.Customer.SelectMany(customer => customer.SalesOrderHeader.DefaultIfEmpty(), (customer, soh) => new {customer, soh}).Where(@t => @t.soh.SalesOrderId == null).Select(@t => @t.customer);
+      //var q1 = AWHelper.MetaData.Customer.SelectMany(customer => customer.SalesOrderHeader.DefaultIfEmpty(), (customer, soh) => new {customer.CustomerId, soh.SalesOrderId});
       var q1 = from customer in AWHelper.MetaData.Customer
                from soh in customer.SalesOrderHeader.DefaultIfEmpty()
-               where soh.SalesOrderId == null
-               select customer;
+               select new { customer.CustomerId, soh.SalesOrderId };
       if (MaxNumberOfItemsToReturn > 0)
         q1 = q1.Take(MaxNumberOfItemsToReturn);
       var z = q1.ToList();
 
-      //Now fetch all customers which have no orders but have Addresses
-      //var q2 = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).SelectMany(@t => @t.customer.SalesOrderHeader.DefaultIfEmpty(), (@t, soh) => new {@t, soh}).Where(@t => @t.soh.SalesOrderId == null).Where(@t => @t.@t.ca.AddressId != null).Select(@t => @t.@t.customer);
+//      var q2 = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).SelectMany(@t => @t.customer.SalesOrderHeader.DefaultIfEmpty(), (@t, soh) => new {@t.customer.CustomerId, @t.ca.AddressId, soh.SalesOrderId});
       var q2 = from customer in AWHelper.MetaData.Customer
                from ca in customer.CustomerAddress
                from soh in customer.SalesOrderHeader.DefaultIfEmpty()
-               where soh.SalesOrderId == null
-               where ca.AddressId != null
-               select customer;
+               select new { customer.CustomerId, ca.AddressId, soh.SalesOrderId };
       if (MaxNumberOfItemsToReturn > 0)
         q2 = q2.Take(MaxNumberOfItemsToReturn);
       var w = q2.ToList();

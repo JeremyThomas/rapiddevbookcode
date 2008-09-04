@@ -10,6 +10,7 @@ namespace AW.Win
     public frmMain()
     {
       InitializeComponent();
+      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.MainWindowSizeLocation);
     }
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -19,7 +20,6 @@ namespace AW.Win
 
     private void frmMain_Load(object sender, EventArgs e)
     {
-      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.MainWindowSizeLocation);
     }
 
     private void frmMain_Shown(object sender, EventArgs e)
