@@ -14,6 +14,7 @@ namespace Logging
   {
     private readonly TextBox _target;
     private readonly StringSendDelegate _invokeWrite;
+    private readonly bool _scrollToBottom = true;
 
     /// <summary>
     /// Create a new text box trace listener that writes to the 
@@ -23,6 +24,11 @@ namespace Logging
     {
       _target = target;
       _invokeWrite = SendString;
+    }
+
+    public TextBoxTraceListener(TextBox target, bool _scrollToBottom):this(target)
+    {
+      this._scrollToBottom = _scrollToBottom;
     }
 
     /// <summary>
@@ -60,6 +66,11 @@ namespace Logging
     {
       // No need to lock text box as this function will only ever be executed from the UI thread
       _target.Text += message;
+      if (_scrollToBottom)
+      {
+        _target.SelectionStart = _target.Text.Length;
+        _target.ScrollToCaret();
+      }
     }
   }
 }

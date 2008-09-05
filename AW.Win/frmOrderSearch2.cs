@@ -150,6 +150,11 @@ namespace AW.Win
       if (firstName != "")
         query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
 
+      if (lastName != "")
+      {
+        query = query.Where(q => q.Customer.Individual.Contact.LastName.Contains(lastName));
+      }
+
       if (state != "")
         // query = query.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state));
         query = from soh in query
@@ -169,8 +174,11 @@ namespace AW.Win
                 where soh.Customer.CustomerAddress.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
                 select soh;
 
+      query = query.OrderBy(s => s.OrderDate);
+
       if (MaxNumberOfItemsToReturn > 0)
         query = query.Take(MaxNumberOfItemsToReturn);
+
       salesOrderHeaderEntityBindingSource.DataSource = query;
     }
 
@@ -185,7 +193,7 @@ namespace AW.Win
               from ca in customer.CustomerAddress
               join soh in AWHelper.MetaData.SalesOrderHeader on customer.CustomerId equals soh.CustomerId into oc
               from nullableSOH in oc.DefaultIfEmpty()
-              select new { customer.CustomerId, ca.AddressId, nullableSOH.SalesOrderId };
+              select new {customer.CustomerId, ca.AddressId, nullableSOH.SalesOrderId};
       if (MaxNumberOfItemsToReturn > 0)
         q = q.Take(MaxNumberOfItemsToReturn);
       salesOrderHeaderEntityBindingSource.DataSource = q;
@@ -193,16 +201,23 @@ namespace AW.Win
       //var q1 = AWHelper.MetaData.Customer.SelectMany(customer => customer.SalesOrderHeader.DefaultIfEmpty(), (customer, soh) => new {customer.CustomerId, soh.SalesOrderId});
       var q1 = from customer in AWHelper.MetaData.Customer
                from soh in customer.SalesOrderHeader.DefaultIfEmpty()
-               select new { customer.CustomerId, soh.SalesOrderId };
+               select new {customer.CustomerId, soh.SalesOrderId};
       if (MaxNumberOfItemsToReturn > 0)
         q1 = q1.Take(MaxNumberOfItemsToReturn);
       var z = q1.ToList();
+
+      var q4 = from customer in AWHelper.MetaData.Customer
+               from soh in customer.SalesOrderHeader.Where(soh => soh.SalesOrderId < 10).DefaultIfEmpty()
+               select new {customer.CustomerId, soh.SalesOrderId};
+      if (MaxNumberOfItemsToReturn > 0)
+        q4 = q4.Take(MaxNumberOfItemsToReturn);
+      var x = q4.ToList();
 
 //      var q2 = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).SelectMany(@t => @t.customer.SalesOrderHeader.DefaultIfEmpty(), (@t, soh) => new {@t.customer.CustomerId, @t.ca.AddressId, soh.SalesOrderId});
       var q2 = from customer in AWHelper.MetaData.Customer
                from ca in customer.CustomerAddress
                from soh in customer.SalesOrderHeader.DefaultIfEmpty()
-               select new { customer.CustomerId, ca.AddressId, soh.SalesOrderId };
+               select new {customer.CustomerId, ca.AddressId, soh.SalesOrderId};
       if (MaxNumberOfItemsToReturn > 0)
         q2 = q2.Take(MaxNumberOfItemsToReturn);
       var w = q2.ToList();
@@ -215,64 +230,46 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
+      var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
 
       if (fromDate != DateTime.MinValue)
-      {
         query = query.Where(q => q.OrderDate >= fromDate);
-      }
       if (toDate != DateTime.MinValue)
-      {
         query = query.Where(q => q.OrderDate <= toDate);
-      }
       if (firstName != "")
       {
         // query = query.Where(q => System.Data.Linq.SqlClient.SqlMethods.Like(q.soh.Customer.Individual.Contact.FirstName, firstName));
         query = query.Where(q => q.Customer.Individual.Contact.FirstName.Contains(firstName));
       }
       if (lastName != "")
-      {
         query = query.Where(q => q.Customer.Individual.Contact.LastName.Contains(lastName));
-      }
 
       if (cityName != "")
-      {
         query = from soh in query
                 where soh.Customer.CustomerAddress.Any(ca => ca.Address.City == cityName)
                 select soh;
-      }
       if (state != "")
-      {
         query = from soh in query
                 where soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state)
                 select soh;
-      }
       if (countries.Count > 0)
-      {
         query = from soh in query
                 where soh.Customer.CustomerAddress.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
                 select soh;
-      }
       if (zip != "")
-      {
         query = from soh in query
                 where soh.Customer.CustomerAddress.Any(ca => ca.Address.PostalCode == zip)
                 select soh;
-      }
       if (orderID != 0)
-      {
         query = query.Where(q => q.SalesOrderId == orderID);
-      }
       if (orderName != "")
-      {
         query = query.Where(q => q.SalesOrderNumber == orderName);
-      }
-      var salesOrderHeader = query;
-      salesOrderHeader = salesOrderHeader.OrderBy(s => s.OrderDate);
+
+      query = query.OrderBy(s => s.OrderDate);
 
       if (MaxNumberOfItemsToReturn > 0)
-        salesOrderHeader = salesOrderHeader.Take(MaxNumberOfItemsToReturn);
-      results = salesOrderHeader;
+        query = query.Take(MaxNumberOfItemsToReturn);
+      results = query.ToList();
     }
 
     public int MaxNumberOfItemsToReturn
