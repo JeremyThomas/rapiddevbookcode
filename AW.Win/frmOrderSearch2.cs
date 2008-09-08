@@ -188,8 +188,14 @@ namespace AW.Win
     /// </summary>
     public void LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder()
     {
+      var customers = AWHelper.MetaData.Customer.AsQueryable();
+      //var customersDerivedTable = customers.Select(customer => customer);
+      var customersDerivedTable = from customer in customers select customer; //Using this to force a derived table causes a crash
+      customersDerivedTable = customers.Where(c => c.CustomerId > 10); //To force a derived table
+
 //      var q = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).GroupJoin(AWHelper.MetaData.SalesOrderHeader, @t => @t.customer.CustomerId, soh => soh.CustomerId, (@t, oc) => new {@t, oc}).SelectMany(@t => @t.oc.DefaultIfEmpty(), (@t, nullableSOH) => new {@t.@t.customer.CustomerId, @t.@t.ca.AddressId, nullableSOH.SalesOrderId});
-      var q = from customer in AWHelper.MetaData.Customer
+      AWHelper.TraceOut("ExplicitJoin with Derived Table");
+      var q = from customer in customersDerivedTable
               from ca in customer.CustomerAddress
               join soh in AWHelper.MetaData.SalesOrderHeader on customer.CustomerId equals soh.CustomerId into oc
               from nullableSOH in oc.DefaultIfEmpty()
@@ -198,29 +204,63 @@ namespace AW.Win
         q = q.Take(MaxNumberOfItemsToReturn);
       salesOrderHeaderEntityBindingSource.DataSource = q;
 
+      AWHelper.TraceOut("One Left Association Join with Derived Table");
       //var q1 = AWHelper.MetaData.Customer.SelectMany(customer => customer.SalesOrderHeader.DefaultIfEmpty(), (customer, soh) => new {customer.CustomerId, soh.SalesOrderId});
-      var q1 = from customer in AWHelper.MetaData.Customer
+      var q1 = from customer in customersDerivedTable
                from soh in customer.SalesOrderHeader.DefaultIfEmpty()
                select new {customer.CustomerId, soh.SalesOrderId};
       if (MaxNumberOfItemsToReturn > 0)
         q1 = q1.Take(MaxNumberOfItemsToReturn);
+      try
+      {
       var z = q1.ToList();
+      }
+      catch (Exception e)
+      {
+        AWHelper.TraceOut(e.ToString());
+      }
 
-      var q4 = from customer in AWHelper.MetaData.Customer
-               from soh in customer.SalesOrderHeader.Where(soh => soh.SalesOrderId < 10).DefaultIfEmpty()
-               select new {customer.CustomerId, soh.SalesOrderId};
-      if (MaxNumberOfItemsToReturn > 0)
-        q4 = q4.Take(MaxNumberOfItemsToReturn);
-      var x = q4.ToList();
-
+      AWHelper.TraceOut("One Left and one inner Association Join");
 //      var q2 = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).SelectMany(@t => @t.customer.SalesOrderHeader.DefaultIfEmpty(), (@t, soh) => new {@t.customer.CustomerId, @t.ca.AddressId, soh.SalesOrderId});
-      var q2 = from customer in AWHelper.MetaData.Customer
+      var q2 = from customer in customers
                from ca in customer.CustomerAddress
                from soh in customer.SalesOrderHeader.DefaultIfEmpty()
                select new {customer.CustomerId, ca.AddressId, soh.SalesOrderId};
       if (MaxNumberOfItemsToReturn > 0)
         q2 = q2.Take(MaxNumberOfItemsToReturn);
       var w = q2.ToList();
+
+      AWHelper.TraceOut("Two inner Association Joins with Derived Table");
+      var q3 = from customer in customersDerivedTable
+               from ca in customer.CustomerAddress
+               from soh in customer.SalesOrderHeader
+               select new {customer.CustomerId, ca.AddressId, soh.SalesOrderId};
+      if (MaxNumberOfItemsToReturn > 0)
+        q3 = q3.Take(MaxNumberOfItemsToReturn);
+      var k = q3.ToList();
+
+      AWHelper.TraceOut("One Left and one inner Association Join with Derived Table");
+      var q5 = from customer in customersDerivedTable
+               from ca in customer.CustomerAddress
+               from soh in customer.SalesOrderHeader.DefaultIfEmpty()
+               select new {customer.CustomerId, ca.AddressId, soh.SalesOrderId};
+      if (MaxNumberOfItemsToReturn > 0)
+        q5 = q5.Take(MaxNumberOfItemsToReturn);
+      try
+      {
+        var f = q5.ToList();
+      }
+      catch (Exception e)
+      {
+        AWHelper.TraceOut(e.ToString());
+      }
+
+      var q4 = from customer in customers
+               from soh in customer.SalesOrderHeader.Where(soh => soh.SalesOrderId < 10).DefaultIfEmpty()
+               select new {customer.CustomerId, soh.SalesOrderId};
+      if (MaxNumberOfItemsToReturn > 0)
+        q4 = q4.Take(MaxNumberOfItemsToReturn);
+      var x = q4.ToList();
     }
 
     /// <summary>

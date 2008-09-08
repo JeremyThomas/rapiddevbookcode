@@ -190,7 +190,9 @@ namespace AW.Win
     ///          ON [LPA_L8].[COUNTRYREGIONCODE] = [LPA_L7].[COUNTRYREGIONCODE])</remarks>
     private void toolStripButtonLinq_Click(object sender, EventArgs e)
     {
-      var customerlist = from customer in AWHelper.MetaData.Customer
+      var customers = AWHelper.MetaData.Customer.AsQueryable();
+      customers = customers.Where(c => c.CustomerId > 10);
+      var customerlist = from customer in customers
                          from customerAddress in customer.CustomerAddress
                          select new
                                   {
