@@ -222,6 +222,111 @@ namespace AW.Data.FactoryClasses
 		#endregion
 	}
 	
+	/// <summary>Factory to create new, empty CreditCardEntity objects.</summary>
+	[Serializable]
+	public partial class CreditCardEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CreditCardEntityFactory() : base("CreditCardEntity", AW.Data.EntityType.CreditCardEntity) { }
+
+		/// <summary>Creates a new, empty CreditCardEntity object.</summary>
+		/// <returns>A new, empty CreditCardEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CreditCardEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCreditCard
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new CreditCardEntity instance and will set the Fields object of the new IEntity instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields object for the new IEntity to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields object) IEntity object</returns>
+		public override IEntity Create(IEntityFields fields) {
+			IEntity toReturn = Create();
+			toReturn.Fields = fields;
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCreditCardUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty CurrencyEntity objects.</summary>
+	[Serializable]
+	public partial class CurrencyEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CurrencyEntityFactory() : base("CurrencyEntity", AW.Data.EntityType.CurrencyEntity) { }
+
+		/// <summary>Creates a new, empty CurrencyEntity object.</summary>
+		/// <returns>A new, empty CurrencyEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CurrencyEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCurrency
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new CurrencyEntity instance and will set the Fields object of the new IEntity instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields object for the new IEntity to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields object) IEntity object</returns>
+		public override IEntity Create(IEntityFields fields) {
+			IEntity toReturn = Create();
+			toReturn.Fields = fields;
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCurrencyUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty CurrencyRateEntity objects.</summary>
+	[Serializable]
+	public partial class CurrencyRateEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CurrencyRateEntityFactory() : base("CurrencyRateEntity", AW.Data.EntityType.CurrencyRateEntity) { }
+
+		/// <summary>Creates a new, empty CurrencyRateEntity object.</summary>
+		/// <returns>A new, empty CurrencyRateEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CurrencyRateEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCurrencyRate
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new CurrencyRateEntity instance and will set the Fields object of the new IEntity instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields object for the new IEntity to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields object) IEntity object</returns>
+		public override IEntity Create(IEntityFields fields) {
+			IEntity toReturn = Create();
+			toReturn.Fields = fields;
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCurrencyRateUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+
+		#region Included Code
+
+		#endregion
+	}
+	
 	/// <summary>Factory to create new, empty CustomerEntity objects.</summary>
 	[Serializable]
 	public partial class CustomerEntityFactory : EntityFactoryBase {
@@ -519,6 +624,41 @@ namespace AW.Data.FactoryClasses
 		#endregion
 	}
 	
+	/// <summary>Factory to create new, empty SalesTerritoryEntity objects.</summary>
+	[Serializable]
+	public partial class SalesTerritoryEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public SalesTerritoryEntityFactory() : base("SalesTerritoryEntity", AW.Data.EntityType.SalesTerritoryEntity) { }
+
+		/// <summary>Creates a new, empty SalesTerritoryEntity object.</summary>
+		/// <returns>A new, empty SalesTerritoryEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new SalesTerritoryEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesTerritory
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+		
+		/// <summary>Creates a new SalesTerritoryEntity instance and will set the Fields object of the new IEntity instance to the passed in fields object.</summary>
+		/// <param name="fields">Populated IEntityFields object for the new IEntity to create</param>
+		/// <returns>Fully created and populated (due to the IEntityFields object) IEntity object</returns>
+		public override IEntity Create(IEntityFields fields) {
+			IEntity toReturn = Create();
+			toReturn.Fields = fields;
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesTerritoryUsingFields
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+
+		#region Included Code
+
+		#endregion
+	}
+	
 	/// <summary>Factory to create new, empty ShipMethodEntity objects.</summary>
 	[Serializable]
 	public partial class ShipMethodEntityFactory : EntityFactoryBase {
@@ -670,6 +810,12 @@ namespace AW.Data.FactoryClasses
 					return new ContactCollection();
 				case AW.Data.EntityType.CountryRegionEntity:
 					return new CountryRegionCollection();
+				case AW.Data.EntityType.CreditCardEntity:
+					return new CreditCardCollection();
+				case AW.Data.EntityType.CurrencyEntity:
+					return new CurrencyCollection();
+				case AW.Data.EntityType.CurrencyRateEntity:
+					return new CurrencyRateCollection();
 				case AW.Data.EntityType.CustomerEntity:
 					return new CustomerCollection();
 				case AW.Data.EntityType.CustomerAddressEntity:
@@ -688,6 +834,8 @@ namespace AW.Data.FactoryClasses
 					return new SalesOrderDetailCollection();
 				case AW.Data.EntityType.SalesOrderHeaderEntity:
 					return new SalesOrderHeaderCollection();
+				case AW.Data.EntityType.SalesTerritoryEntity:
+					return new SalesTerritoryCollection();
 				case AW.Data.EntityType.ShipMethodEntity:
 					return new ShipMethodCollection();
 				case AW.Data.EntityType.SpecialOfferEntity:
@@ -726,6 +874,15 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.CountryRegionEntity:
 					factoryToUse = new CountryRegionEntityFactory();
 					break;
+				case AW.Data.EntityType.CreditCardEntity:
+					factoryToUse = new CreditCardEntityFactory();
+					break;
+				case AW.Data.EntityType.CurrencyEntity:
+					factoryToUse = new CurrencyEntityFactory();
+					break;
+				case AW.Data.EntityType.CurrencyRateEntity:
+					factoryToUse = new CurrencyRateEntityFactory();
+					break;
 				case AW.Data.EntityType.CustomerEntity:
 					factoryToUse = new CustomerEntityFactory();
 					break;
@@ -752,6 +909,9 @@ namespace AW.Data.FactoryClasses
 					break;
 				case AW.Data.EntityType.SalesOrderHeaderEntity:
 					factoryToUse = new SalesOrderHeaderEntityFactory();
+					break;
+				case AW.Data.EntityType.SalesTerritoryEntity:
+					factoryToUse = new SalesTerritoryEntityFactory();
 					break;
 				case AW.Data.EntityType.ShipMethodEntity:
 					factoryToUse = new ShipMethodEntityFactory();

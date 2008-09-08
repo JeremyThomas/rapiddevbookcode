@@ -44,6 +44,8 @@ namespace AW.Data.EntityClasses
 
 		private CountryRegionEntity _countryRegion;
 		private bool	_alwaysFetchCountryRegion, _alreadyFetchedCountryRegion, _countryRegionReturnsNewIfNotFound;
+		private SalesTerritoryEntity _salesTerritory;
+		private bool	_alwaysFetchSalesTerritory, _alreadyFetchedSalesTerritory, _salesTerritoryReturnsNewIfNotFound;
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
@@ -59,6 +61,8 @@ namespace AW.Data.EntityClasses
 		{
 			/// <summary>Member name CountryRegion</summary>
 			public static readonly string CountryRegion = "CountryRegion";
+			/// <summary>Member name SalesTerritory</summary>
+			public static readonly string SalesTerritory = "SalesTerritory";
 			/// <summary>Member name Address</summary>
 			public static readonly string Address = "Address";
 
@@ -120,6 +124,14 @@ namespace AW.Data.EntityClasses
 			_countryRegionReturnsNewIfNotFound = info.GetBoolean("_countryRegionReturnsNewIfNotFound");
 			_alwaysFetchCountryRegion = info.GetBoolean("_alwaysFetchCountryRegion");
 			_alreadyFetchedCountryRegion = info.GetBoolean("_alreadyFetchedCountryRegion");
+			_salesTerritory = (SalesTerritoryEntity)info.GetValue("_salesTerritory", typeof(SalesTerritoryEntity));
+			if(_salesTerritory!=null)
+			{
+				_salesTerritory.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_salesTerritoryReturnsNewIfNotFound = info.GetBoolean("_salesTerritoryReturnsNewIfNotFound");
+			_alwaysFetchSalesTerritory = info.GetBoolean("_alwaysFetchSalesTerritory");
+			_alreadyFetchedSalesTerritory = info.GetBoolean("_alreadyFetchedSalesTerritory");
 
 			base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			
@@ -137,6 +149,10 @@ namespace AW.Data.EntityClasses
 				case StateProvinceFieldIndex.CountryRegionCode:
 					DesetupSyncCountryRegion(true, false);
 					_alreadyFetchedCountryRegion = false;
+					break;
+				case StateProvinceFieldIndex.TerritoryId:
+					DesetupSyncSalesTerritory(true, false);
+					_alreadyFetchedSalesTerritory = false;
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -157,6 +173,7 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedAddress = (_address.Count > 0);
 
 			_alreadyFetchedCountryRegion = (_countryRegion != null);
+			_alreadyFetchedSalesTerritory = (_salesTerritory != null);
 
 		}
 				
@@ -178,6 +195,9 @@ namespace AW.Data.EntityClasses
 			{
 				case "CountryRegion":
 					toReturn.Add(StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode);
+					break;
+				case "SalesTerritory":
+					toReturn.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId);
 					break;
 				case "Address":
 					toReturn.Add(StateProvinceEntity.Relations.AddressEntityUsingStateProvinceId);
@@ -208,6 +228,10 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_countryRegionReturnsNewIfNotFound", _countryRegionReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchCountryRegion", _alwaysFetchCountryRegion);
 			info.AddValue("_alreadyFetchedCountryRegion", _alreadyFetchedCountryRegion);
+			info.AddValue("_salesTerritory", (!this.MarkedForDeletion?_salesTerritory:null));
+			info.AddValue("_salesTerritoryReturnsNewIfNotFound", _salesTerritoryReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchSalesTerritory", _alwaysFetchSalesTerritory);
+			info.AddValue("_alreadyFetchedSalesTerritory", _alreadyFetchedSalesTerritory);
 
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
@@ -227,6 +251,10 @@ namespace AW.Data.EntityClasses
 				case "CountryRegion":
 					_alreadyFetchedCountryRegion = true;
 					this.CountryRegion = (CountryRegionEntity)entity;
+					break;
+				case "SalesTerritory":
+					_alreadyFetchedSalesTerritory = true;
+					this.SalesTerritory = (SalesTerritoryEntity)entity;
 					break;
 				case "Address":
 					_alreadyFetchedAddress = true;
@@ -254,6 +282,9 @@ namespace AW.Data.EntityClasses
 				case "CountryRegion":
 					SetupSyncCountryRegion(relatedEntity);
 					break;
+				case "SalesTerritory":
+					SetupSyncSalesTerritory(relatedEntity);
+					break;
 				case "Address":
 					_address.Add((AddressEntity)relatedEntity);
 					break;
@@ -275,6 +306,9 @@ namespace AW.Data.EntityClasses
 			{
 				case "CountryRegion":
 					DesetupSyncCountryRegion(false, true);
+					break;
+				case "SalesTerritory":
+					DesetupSyncSalesTerritory(false, true);
 					break;
 				case "Address":
 					base.PerformRelatedEntityRemoval(_address, relatedEntity, signalRelatedEntityManyToOne);
@@ -306,6 +340,10 @@ namespace AW.Data.EntityClasses
 			if(_countryRegion!=null)
 			{
 				toReturn.Add(_countryRegion);
+			}
+			if(_salesTerritory!=null)
+			{
+				toReturn.Add(_salesTerritory);
 			}
 
 
@@ -524,6 +562,63 @@ namespace AW.Data.EntityClasses
 			return _countryRegion;
 		}
 
+		/// <summary> Retrieves the related entity of type 'SalesTerritoryEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'SalesTerritoryEntity' which is related to this entity.</returns>
+		public SalesTerritoryEntity GetSingleSalesTerritory()
+		{
+			return GetSingleSalesTerritory(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'SalesTerritoryEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'SalesTerritoryEntity' which is related to this entity.</returns>
+		public virtual SalesTerritoryEntity GetSingleSalesTerritory(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedSalesTerritory || forceFetch || _alwaysFetchSalesTerritory) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
+			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId);
+
+				SalesTerritoryEntity newEntity = new SalesTerritoryEntity();
+				if(base.ParticipatesInTransaction)
+				{
+					base.Transaction.Add(newEntity);
+				}
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					fetchResult = newEntity.FetchUsingPK(this.TerritoryId);
+				}
+				if(fetchResult)
+				{
+					if(base.ActiveContext!=null)
+					{
+						newEntity = (SalesTerritoryEntity)base.ActiveContext.Get(newEntity);
+					}
+					this.SalesTerritory = newEntity;
+				}
+				else
+				{
+					if(_salesTerritoryReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_salesTerritory == null)))
+						{
+							this.SalesTerritory = newEntity;
+						}
+					}
+					else
+					{
+						this.SalesTerritory = null;
+					}
+				}
+				_alreadyFetchedSalesTerritory = fetchResult;
+				if(base.ParticipatesInTransaction && !fetchResult)
+				{
+					base.Transaction.Remove(newEntity);
+				}
+			}
+			return _salesTerritory;
+		}
+
 
 		/// <summary> Performs the insert action of a new Entity to the persistent storage.</summary>
 		/// <returns>true if succeeded, false otherwise</returns>
@@ -541,6 +636,10 @@ namespace AW.Data.EntityClasses
 			if(_countryRegion!=null)
 			{
 				_countryRegion.ActiveContext = base.ActiveContext;
+			}
+			if(_salesTerritory!=null)
+			{
+				_salesTerritory.ActiveContext = base.ActiveContext;
 			}
 
 
@@ -612,6 +711,7 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("CountryRegion", _countryRegion);
+			toReturn.Add("SalesTerritory", _salesTerritory);
 			toReturn.Add("Address", _address);
 
 
@@ -651,6 +751,10 @@ namespace AW.Data.EntityClasses
 			_countryRegionReturnsNewIfNotFound = true;
 			_alwaysFetchCountryRegion = false;
 			_alreadyFetchedCountryRegion = false;
+			_salesTerritory = null;
+			_salesTerritoryReturnsNewIfNotFound = true;
+			_alwaysFetchSalesTerritory = false;
+			_alreadyFetchedSalesTerritory = false;
 
 
 			PerformDependencyInjection();
@@ -721,6 +825,39 @@ namespace AW.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnCountryRegionPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _salesTerritory</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncSalesTerritory(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _salesTerritory, new PropertyChangedEventHandler( OnSalesTerritoryPropertyChanged ), "SalesTerritory", StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId, true, signalRelatedEntity, "StateProvince", resetFKFields, new int[] { (int)StateProvinceFieldIndex.TerritoryId } );		
+			_salesTerritory = null;
+		}
+		
+		/// <summary> setups the sync logic for member _salesTerritory</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncSalesTerritory(IEntity relatedEntity)
+		{
+			if(_salesTerritory!=relatedEntity)
+			{		
+				DesetupSyncSalesTerritory(true, true);
+				_salesTerritory = (SalesTerritoryEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _salesTerritory, new PropertyChangedEventHandler( OnSalesTerritoryPropertyChanged ), "SalesTerritory", StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId, true, ref _alreadyFetchedSalesTerritory, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSalesTerritoryPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -806,6 +943,18 @@ namespace AW.Data.EntityClasses
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.CountryRegionCollection(),
 					(IEntityRelation)GetRelationsForField("CountryRegion")[0], (int)AW.Data.EntityType.StateProvinceEntity, (int)AW.Data.EntityType.CountryRegionEntity, 0, null, null, null, "CountryRegion", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesTerritory' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesTerritory
+		{
+			get
+			{
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryCollection(),
+					(IEntityRelation)GetRelationsForField("SalesTerritory")[0], (int)AW.Data.EntityType.StateProvinceEntity, (int)AW.Data.EntityType.SalesTerritoryEntity, 0, null, null, null, "SalesTerritory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -1025,6 +1174,76 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _countryRegionReturnsNewIfNotFound; }
 			set { _countryRegionReturnsNewIfNotFound = value; }	
+		}
+		/// <summary> Gets / sets related entity of type 'SalesTerritoryEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesTerritory()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		public virtual SalesTerritoryEntity SalesTerritory
+		{
+			get	{ return GetSingleSalesTerritory(false); }
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncSalesTerritory(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_salesTerritory != null)
+						{
+							_salesTerritory.UnsetRelatedEntity(this, "StateProvince");
+						}
+					}
+					else
+					{
+						if(_salesTerritory!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "StateProvince");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesTerritory. When set to true, SalesTerritory is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesTerritory is accessed. You can always execute
+		/// a forced fetch by calling GetSingleSalesTerritory(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesTerritory
+		{
+			get	{ return _alwaysFetchSalesTerritory; }
+			set	{ _alwaysFetchSalesTerritory = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesTerritory already has been fetched. Setting this property to false when SalesTerritory has been fetched
+		/// will set SalesTerritory to null as well. Setting this property to true while SalesTerritory hasn't been fetched disables lazy loading for SalesTerritory</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesTerritory
+		{
+			get { return _alreadyFetchedSalesTerritory;}
+			set 
+			{
+				if(_alreadyFetchedSalesTerritory && !value)
+				{
+					this.SalesTerritory = null;
+				}
+				_alreadyFetchedSalesTerritory = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SalesTerritory is not found
+		/// in the database. When set to true, SalesTerritory will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool SalesTerritoryReturnsNewIfNotFound
+		{
+			get	{ return _salesTerritoryReturnsNewIfNotFound; }
+			set { _salesTerritoryReturnsNewIfNotFound = value; }	
 		}
 
 

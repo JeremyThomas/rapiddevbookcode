@@ -33,7 +33,7 @@ namespace AW.Data.RelationClasses
 			toReturn.Add(this.CustomerAddressEntityUsingCustomerId);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingCustomerId);
 			toReturn.Add(this.IndividualEntityUsingCustomerId);
-
+			toReturn.Add(this.SalesTerritoryEntityUsingTerritoryId);
 			return toReturn;
 		}
 
@@ -88,6 +88,20 @@ namespace AW.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between CustomerEntity and SalesTerritoryEntity over the m:1 relation they have, using the relation between the fields:
+		/// Customer.TerritoryId - SalesTerritory.TerritoryId
+		/// </summary>
+		public virtual IEntityRelation SalesTerritoryEntityUsingTerritoryId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SalesTerritory", false);
+				relation.AddEntityFieldPair(SalesTerritoryFields.TerritoryId, CustomerFields.TerritoryId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesTerritoryEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerEntity", true);
+				return relation;
+			}
+		}
 
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }

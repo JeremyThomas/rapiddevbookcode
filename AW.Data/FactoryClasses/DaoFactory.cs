@@ -56,6 +56,27 @@ namespace AW.Data.FactoryClasses
 			return new CountryRegionDAO();
 		}
 
+		/// <summary>Creates a new CreditCardDAO object</summary>
+		/// <returns>the new DAO object ready to use for CreditCard Entities</returns>
+		public static CreditCardDAO CreateCreditCardDAO()
+		{
+			return new CreditCardDAO();
+		}
+
+		/// <summary>Creates a new CurrencyDAO object</summary>
+		/// <returns>the new DAO object ready to use for Currency Entities</returns>
+		public static CurrencyDAO CreateCurrencyDAO()
+		{
+			return new CurrencyDAO();
+		}
+
+		/// <summary>Creates a new CurrencyRateDAO object</summary>
+		/// <returns>the new DAO object ready to use for CurrencyRate Entities</returns>
+		public static CurrencyRateDAO CreateCurrencyRateDAO()
+		{
+			return new CurrencyRateDAO();
+		}
+
 		/// <summary>Creates a new CustomerDAO object</summary>
 		/// <returns>the new DAO object ready to use for Customer Entities</returns>
 		public static CustomerDAO CreateCustomerDAO()
@@ -117,6 +138,13 @@ namespace AW.Data.FactoryClasses
 		public static SalesOrderHeaderDAO CreateSalesOrderHeaderDAO()
 		{
 			return new SalesOrderHeaderDAO();
+		}
+
+		/// <summary>Creates a new SalesTerritoryDAO object</summary>
+		/// <returns>the new DAO object ready to use for SalesTerritory Entities</returns>
+		public static SalesTerritoryDAO CreateSalesTerritoryDAO()
+		{
+			return new SalesTerritoryDAO();
 		}
 
 		/// <summary>Creates a new ShipMethodDAO object</summary>

@@ -55,11 +55,14 @@ namespace AW.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			base.InitClass((17 + 1));
+			base.InitClass((21 + 1));
 			InitAddressEntityMappings();
 			InitAddressTypeEntityMappings();
 			InitContactEntityMappings();
 			InitCountryRegionEntityMappings();
+			InitCreditCardEntityMappings();
+			InitCurrencyEntityMappings();
+			InitCurrencyRateEntityMappings();
 			InitCustomerEntityMappings();
 			InitCustomerAddressEntityMappings();
 			InitCustomerViewRelatedEntityMappings();
@@ -69,6 +72,7 @@ namespace AW.Data.HelperClasses
 			InitProductEntityMappings();
 			InitSalesOrderDetailEntityMappings();
 			InitSalesOrderHeaderEntityMappings();
+			InitSalesTerritoryEntityMappings();
 			InitShipMethodEntityMappings();
 			InitSpecialOfferEntityMappings();
 			InitSpecialOfferProductEntityMappings();
@@ -126,6 +130,37 @@ namespace AW.Data.HelperClasses
 			base.AddElementFieldMapping( "CountryRegionEntity", "CountryRegionCode", "CountryRegionCode", false, (int)SqlDbType.NVarChar, 3, 0, 0, false, "", null, typeof(System.String), 0 );
 			base.AddElementFieldMapping( "CountryRegionEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "CountryRegionEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+		}
+		/// <summary>Inits CreditCardEntity's mappings</summary>
+		private void InitCreditCardEntityMappings()
+		{
+			base.AddElementMapping( "CreditCardEntity", "AdventureWorks", @"Sales", "CreditCard", 6 );
+			base.AddElementFieldMapping( "CreditCardEntity", "CreditCardId", "CreditCardID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "CreditCardEntity", "CardType", "CardType", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "CreditCardEntity", "CardNumber", "CardNumber", false, (int)SqlDbType.NVarChar, 25, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "CreditCardEntity", "ExpMonth", "ExpMonth", false, (int)SqlDbType.TinyInt, 0, 0, 3, false, "", null, typeof(System.Byte), 3 );
+			base.AddElementFieldMapping( "CreditCardEntity", "ExpYear", "ExpYear", false, (int)SqlDbType.SmallInt, 0, 0, 5, false, "", null, typeof(System.Int16), 4 );
+			base.AddElementFieldMapping( "CreditCardEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 5 );
+		}
+		/// <summary>Inits CurrencyEntity's mappings</summary>
+		private void InitCurrencyEntityMappings()
+		{
+			base.AddElementMapping( "CurrencyEntity", "AdventureWorks", @"Sales", "Currency", 3 );
+			base.AddElementFieldMapping( "CurrencyEntity", "CurrencyCode", "CurrencyCode", false, (int)SqlDbType.NChar, 3, 0, 0, false, "", null, typeof(System.String), 0 );
+			base.AddElementFieldMapping( "CurrencyEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "CurrencyEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
+		}
+		/// <summary>Inits CurrencyRateEntity's mappings</summary>
+		private void InitCurrencyRateEntityMappings()
+		{
+			base.AddElementMapping( "CurrencyRateEntity", "AdventureWorks", @"Sales", "CurrencyRate", 7 );
+			base.AddElementFieldMapping( "CurrencyRateEntity", "CurrencyRateId", "CurrencyRateID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "CurrencyRateEntity", "CurrencyRateDate", "CurrencyRateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 1 );
+			base.AddElementFieldMapping( "CurrencyRateEntity", "FromCurrencyCode", "FromCurrencyCode", false, (int)SqlDbType.NChar, 3, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "CurrencyRateEntity", "ToCurrencyCode", "ToCurrencyCode", false, (int)SqlDbType.NChar, 3, 0, 0, false, "", null, typeof(System.String), 3 );
+			base.AddElementFieldMapping( "CurrencyRateEntity", "AverageRate", "AverageRate", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 4 );
+			base.AddElementFieldMapping( "CurrencyRateEntity", "EndOfDayRate", "EndOfDayRate", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 5 );
+			base.AddElementFieldMapping( "CurrencyRateEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 6 );
 		}
 		/// <summary>Inits CustomerEntity's mappings</summary>
 		private void InitCustomerEntityMappings()
@@ -286,6 +321,21 @@ namespace AW.Data.HelperClasses
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "Comment", "Comment", true, (int)SqlDbType.NVarChar, 128, 0, 0, false, "", null, typeof(System.String), 24 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 25 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 26 );
+		}
+		/// <summary>Inits SalesTerritoryEntity's mappings</summary>
+		private void InitSalesTerritoryEntityMappings()
+		{
+			base.AddElementMapping( "SalesTerritoryEntity", "AdventureWorks", @"Sales", "SalesTerritory", 10 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "TerritoryId", "TerritoryID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "CountryRegionCode", "CountryRegionCode", false, (int)SqlDbType.NVarChar, 3, 0, 0, false, "", null, typeof(System.String), 2 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "Group", "Group", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 3 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "SalesYtd", "SalesYTD", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 4 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "SalesLastYear", "SalesLastYear", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 5 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "CostYtd", "CostYTD", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 6 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "CostLastYear", "CostLastYear", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 7 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 8 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 9 );
 		}
 		/// <summary>Inits ShipMethodEntity's mappings</summary>
 		private void InitShipMethodEntityMappings()

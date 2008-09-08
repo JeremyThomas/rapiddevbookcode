@@ -63,13 +63,14 @@ namespace AW.Data.DaoClasses
 		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity countryRegionInstance, int pageNumber, int pageSize)
+		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity countryRegionInstance, IEntity salesTerritoryInstance, int pageNumber, int pageSize)
 		{
 			base.EntityFactoryToUse = entityFactoryToUse;
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.StateProvinceEntity);
-			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(countryRegionInstance, fieldsToReturn);
+			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(countryRegionInstance, salesTerritoryInstance, fieldsToReturn);
 			if(filter!=null)
 			{
 				selectFilter.AddWithAnd(filter);
@@ -102,11 +103,12 @@ namespace AW.Data.DaoClasses
 		/// </summary>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to delete</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to delete</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMulti(ITransaction containingTransaction, IEntity countryRegionInstance)
+		public int DeleteMulti(ITransaction containingTransaction, IEntity countryRegionInstance, IEntity salesTerritoryInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.StateProvinceEntity);
-			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(countryRegionInstance, fields);
+			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(countryRegionInstance, salesTerritoryInstance, fields);
 			return base.DeleteMulti(containingTransaction, deleteFilter);
 		}
 
@@ -118,11 +120,12 @@ namespace AW.Data.DaoClasses
 		/// <param name="entityWithNewValues">IEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to update</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to update</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity countryRegionInstance)
+		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity countryRegionInstance, IEntity salesTerritoryInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.StateProvinceEntity);
-			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(countryRegionInstance, fields);
+			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(countryRegionInstance, salesTerritoryInstance, fields);
 			return base.UpdateMulti(entityWithNewValues, containingTransaction, updateFilter);
 		}
 	
@@ -151,15 +154,20 @@ namespace AW.Data.DaoClasses
 		/// Creates a PredicateExpression which should be used as a filter when any combination of available foreign keys is specified.
 		/// </summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects</param>
 		/// <param name="fieldsToReturn">IEntityFields implementation which forms the definition of the fieldset of the target entity.</param>
 		/// <returns>A ready to use PredicateExpression based on the passed in foreign key value holders.</returns>
-		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity countryRegionInstance, IEntityFields fieldsToReturn)
+		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity countryRegionInstance, IEntity salesTerritoryInstance, IEntityFields fieldsToReturn)
 		{
 			IPredicateExpression selectFilter = new PredicateExpression();
 			
 			if(countryRegionInstance != null)
 			{
 				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)StateProvinceFieldIndex.CountryRegionCode], ComparisonOperator.Equal, ((CountryRegionEntity)countryRegionInstance).CountryRegionCode));
+			}
+			if(salesTerritoryInstance != null)
+			{
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)StateProvinceFieldIndex.TerritoryId], ComparisonOperator.Equal, ((SalesTerritoryEntity)salesTerritoryInstance).TerritoryId));
 			}
 			return selectFilter;
 		}

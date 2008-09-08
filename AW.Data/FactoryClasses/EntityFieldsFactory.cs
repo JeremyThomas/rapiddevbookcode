@@ -52,6 +52,15 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.CountryRegionEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CountryRegionEntity");
 					break;
+				case AW.Data.EntityType.CreditCardEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CreditCardEntity");
+					break;
+				case AW.Data.EntityType.CurrencyEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CurrencyEntity");
+					break;
+				case AW.Data.EntityType.CurrencyRateEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CurrencyRateEntity");
+					break;
 				case AW.Data.EntityType.CustomerEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CustomerEntity");
 					break;
@@ -78,6 +87,9 @@ namespace AW.Data.FactoryClasses
 					break;
 				case AW.Data.EntityType.SalesOrderHeaderEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesOrderHeaderEntity");
+					break;
+				case AW.Data.EntityType.SalesTerritoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesTerritoryEntity");
 					break;
 				case AW.Data.EntityType.ShipMethodEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ShipMethodEntity");

@@ -43,16 +43,22 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchSalesOrderDetail, _alreadyFetchedSalesOrderDetail;
 		private AW.Data.CollectionClasses.SpecialOfferProductCollection _specialOfferProductCollectionViaSalesOrderDetail;
 		private bool	_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail, _alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail;
-		private AddressEntity _address_;
-		private bool	_alwaysFetchAddress_, _alreadyFetchedAddress_, _address_ReturnsNewIfNotFound;
 		private AddressEntity _address;
 		private bool	_alwaysFetchAddress, _alreadyFetchedAddress, _addressReturnsNewIfNotFound;
+		private AddressEntity _address_;
+		private bool	_alwaysFetchAddress_, _alreadyFetchedAddress_, _address_ReturnsNewIfNotFound;
 		private ContactEntity _contact;
 		private bool	_alwaysFetchContact, _alreadyFetchedContact, _contactReturnsNewIfNotFound;
+		private CreditCardEntity _creditCard;
+		private bool	_alwaysFetchCreditCard, _alreadyFetchedCreditCard, _creditCardReturnsNewIfNotFound;
+		private CurrencyRateEntity _currencyRate;
+		private bool	_alwaysFetchCurrencyRate, _alreadyFetchedCurrencyRate, _currencyRateReturnsNewIfNotFound;
 		private CustomerEntity _customer;
 		private bool	_alwaysFetchCustomer, _alreadyFetchedCustomer, _customerReturnsNewIfNotFound;
 		private CustomerViewRelatedEntity _customerViewRelated;
 		private bool	_alwaysFetchCustomerViewRelated, _alreadyFetchedCustomerViewRelated, _customerViewRelatedReturnsNewIfNotFound;
+		private SalesTerritoryEntity _salesTerritory;
+		private bool	_alwaysFetchSalesTerritory, _alreadyFetchedSalesTerritory, _salesTerritoryReturnsNewIfNotFound;
 		private ShipMethodEntity _shipMethod;
 		private bool	_alwaysFetchShipMethod, _alreadyFetchedShipMethod, _shipMethodReturnsNewIfNotFound;
 
@@ -68,16 +74,22 @@ namespace AW.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static class MemberNames
 		{
-			/// <summary>Member name Address_</summary>
-			public static readonly string Address_ = "Address_";
 			/// <summary>Member name Address</summary>
 			public static readonly string Address = "Address";
+			/// <summary>Member name Address_</summary>
+			public static readonly string Address_ = "Address_";
 			/// <summary>Member name Contact</summary>
 			public static readonly string Contact = "Contact";
+			/// <summary>Member name CreditCard</summary>
+			public static readonly string CreditCard = "CreditCard";
+			/// <summary>Member name CurrencyRate</summary>
+			public static readonly string CurrencyRate = "CurrencyRate";
 			/// <summary>Member name Customer</summary>
 			public static readonly string Customer = "Customer";
 			/// <summary>Member name CustomerViewRelated</summary>
 			public static readonly string CustomerViewRelated = "CustomerViewRelated";
+			/// <summary>Member name SalesTerritory</summary>
+			public static readonly string SalesTerritory = "SalesTerritory";
 			/// <summary>Member name ShipMethod</summary>
 			public static readonly string ShipMethod = "ShipMethod";
 			/// <summary>Member name SalesOrderDetail</summary>
@@ -136,14 +148,6 @@ namespace AW.Data.EntityClasses
 			_specialOfferProductCollectionViaSalesOrderDetail = (AW.Data.CollectionClasses.SpecialOfferProductCollection)info.GetValue("_specialOfferProductCollectionViaSalesOrderDetail", typeof(AW.Data.CollectionClasses.SpecialOfferProductCollection));
 			_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail = info.GetBoolean("_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail");
 			_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail = info.GetBoolean("_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail");
-			_address_ = (AddressEntity)info.GetValue("_address_", typeof(AddressEntity));
-			if(_address_!=null)
-			{
-				_address_.AfterSave+=new EventHandler(OnEntityAfterSave);
-			}
-			_address_ReturnsNewIfNotFound = info.GetBoolean("_address_ReturnsNewIfNotFound");
-			_alwaysFetchAddress_ = info.GetBoolean("_alwaysFetchAddress_");
-			_alreadyFetchedAddress_ = info.GetBoolean("_alreadyFetchedAddress_");
 			_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
 			if(_address!=null)
 			{
@@ -152,6 +156,14 @@ namespace AW.Data.EntityClasses
 			_addressReturnsNewIfNotFound = info.GetBoolean("_addressReturnsNewIfNotFound");
 			_alwaysFetchAddress = info.GetBoolean("_alwaysFetchAddress");
 			_alreadyFetchedAddress = info.GetBoolean("_alreadyFetchedAddress");
+			_address_ = (AddressEntity)info.GetValue("_address_", typeof(AddressEntity));
+			if(_address_!=null)
+			{
+				_address_.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_address_ReturnsNewIfNotFound = info.GetBoolean("_address_ReturnsNewIfNotFound");
+			_alwaysFetchAddress_ = info.GetBoolean("_alwaysFetchAddress_");
+			_alreadyFetchedAddress_ = info.GetBoolean("_alreadyFetchedAddress_");
 			_contact = (ContactEntity)info.GetValue("_contact", typeof(ContactEntity));
 			if(_contact!=null)
 			{
@@ -160,6 +172,22 @@ namespace AW.Data.EntityClasses
 			_contactReturnsNewIfNotFound = info.GetBoolean("_contactReturnsNewIfNotFound");
 			_alwaysFetchContact = info.GetBoolean("_alwaysFetchContact");
 			_alreadyFetchedContact = info.GetBoolean("_alreadyFetchedContact");
+			_creditCard = (CreditCardEntity)info.GetValue("_creditCard", typeof(CreditCardEntity));
+			if(_creditCard!=null)
+			{
+				_creditCard.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_creditCardReturnsNewIfNotFound = info.GetBoolean("_creditCardReturnsNewIfNotFound");
+			_alwaysFetchCreditCard = info.GetBoolean("_alwaysFetchCreditCard");
+			_alreadyFetchedCreditCard = info.GetBoolean("_alreadyFetchedCreditCard");
+			_currencyRate = (CurrencyRateEntity)info.GetValue("_currencyRate", typeof(CurrencyRateEntity));
+			if(_currencyRate!=null)
+			{
+				_currencyRate.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_currencyRateReturnsNewIfNotFound = info.GetBoolean("_currencyRateReturnsNewIfNotFound");
+			_alwaysFetchCurrencyRate = info.GetBoolean("_alwaysFetchCurrencyRate");
+			_alreadyFetchedCurrencyRate = info.GetBoolean("_alreadyFetchedCurrencyRate");
 			_customer = (CustomerEntity)info.GetValue("_customer", typeof(CustomerEntity));
 			if(_customer!=null)
 			{
@@ -176,6 +204,14 @@ namespace AW.Data.EntityClasses
 			_customerViewRelatedReturnsNewIfNotFound = info.GetBoolean("_customerViewRelatedReturnsNewIfNotFound");
 			_alwaysFetchCustomerViewRelated = info.GetBoolean("_alwaysFetchCustomerViewRelated");
 			_alreadyFetchedCustomerViewRelated = info.GetBoolean("_alreadyFetchedCustomerViewRelated");
+			_salesTerritory = (SalesTerritoryEntity)info.GetValue("_salesTerritory", typeof(SalesTerritoryEntity));
+			if(_salesTerritory!=null)
+			{
+				_salesTerritory.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_salesTerritoryReturnsNewIfNotFound = info.GetBoolean("_salesTerritoryReturnsNewIfNotFound");
+			_alwaysFetchSalesTerritory = info.GetBoolean("_alwaysFetchSalesTerritory");
+			_alreadyFetchedSalesTerritory = info.GetBoolean("_alreadyFetchedSalesTerritory");
 			_shipMethod = (ShipMethodEntity)info.GetValue("_shipMethod", typeof(ShipMethodEntity));
 			if(_shipMethod!=null)
 			{
@@ -208,6 +244,10 @@ namespace AW.Data.EntityClasses
 					DesetupSyncContact(true, false);
 					_alreadyFetchedContact = false;
 					break;
+				case SalesOrderHeaderFieldIndex.TerritoryId:
+					DesetupSyncSalesTerritory(true, false);
+					_alreadyFetchedSalesTerritory = false;
+					break;
 				case SalesOrderHeaderFieldIndex.BillToAddressId:
 					DesetupSyncAddress(true, false);
 					_alreadyFetchedAddress = false;
@@ -219,6 +259,14 @@ namespace AW.Data.EntityClasses
 				case SalesOrderHeaderFieldIndex.ShipMethodId:
 					DesetupSyncShipMethod(true, false);
 					_alreadyFetchedShipMethod = false;
+					break;
+				case SalesOrderHeaderFieldIndex.CreditCardId:
+					DesetupSyncCreditCard(true, false);
+					_alreadyFetchedCreditCard = false;
+					break;
+				case SalesOrderHeaderFieldIndex.CurrencyRateId:
+					DesetupSyncCurrencyRate(true, false);
+					_alreadyFetchedCurrencyRate = false;
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -238,11 +286,14 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedSalesOrderDetail = (_salesOrderDetail.Count > 0);
 			_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail = (_specialOfferProductCollectionViaSalesOrderDetail.Count > 0);
-			_alreadyFetchedAddress_ = (_address_ != null);
 			_alreadyFetchedAddress = (_address != null);
+			_alreadyFetchedAddress_ = (_address_ != null);
 			_alreadyFetchedContact = (_contact != null);
+			_alreadyFetchedCreditCard = (_creditCard != null);
+			_alreadyFetchedCurrencyRate = (_currencyRate != null);
 			_alreadyFetchedCustomer = (_customer != null);
 			_alreadyFetchedCustomerViewRelated = (_customerViewRelated != null);
+			_alreadyFetchedSalesTerritory = (_salesTerritory != null);
 			_alreadyFetchedShipMethod = (_shipMethod != null);
 
 		}
@@ -263,20 +314,29 @@ namespace AW.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Address_":
-					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId);
-					break;
 				case "Address":
 					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressId);
 					break;
+				case "Address_":
+					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId);
+					break;
 				case "Contact":
 					toReturn.Add(SalesOrderHeaderEntity.Relations.ContactEntityUsingContactId);
+					break;
+				case "CreditCard":
+					toReturn.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId);
+					break;
+				case "CurrencyRate":
+					toReturn.Add(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateId);
 					break;
 				case "Customer":
 					toReturn.Add(SalesOrderHeaderEntity.Relations.CustomerEntityUsingCustomerId);
 					break;
 				case "CustomerViewRelated":
 					toReturn.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerId);
+					break;
+				case "SalesTerritory":
+					toReturn.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId);
 					break;
 				case "ShipMethod":
 					toReturn.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodId);
@@ -311,18 +371,26 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_specialOfferProductCollectionViaSalesOrderDetail", (!this.MarkedForDeletion?_specialOfferProductCollectionViaSalesOrderDetail:null));
 			info.AddValue("_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail", _alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail);
 			info.AddValue("_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail", _alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail);
-			info.AddValue("_address_", (!this.MarkedForDeletion?_address_:null));
-			info.AddValue("_address_ReturnsNewIfNotFound", _address_ReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchAddress_", _alwaysFetchAddress_);
-			info.AddValue("_alreadyFetchedAddress_", _alreadyFetchedAddress_);
 			info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
 			info.AddValue("_addressReturnsNewIfNotFound", _addressReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchAddress", _alwaysFetchAddress);
 			info.AddValue("_alreadyFetchedAddress", _alreadyFetchedAddress);
+			info.AddValue("_address_", (!this.MarkedForDeletion?_address_:null));
+			info.AddValue("_address_ReturnsNewIfNotFound", _address_ReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchAddress_", _alwaysFetchAddress_);
+			info.AddValue("_alreadyFetchedAddress_", _alreadyFetchedAddress_);
 			info.AddValue("_contact", (!this.MarkedForDeletion?_contact:null));
 			info.AddValue("_contactReturnsNewIfNotFound", _contactReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchContact", _alwaysFetchContact);
 			info.AddValue("_alreadyFetchedContact", _alreadyFetchedContact);
+			info.AddValue("_creditCard", (!this.MarkedForDeletion?_creditCard:null));
+			info.AddValue("_creditCardReturnsNewIfNotFound", _creditCardReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchCreditCard", _alwaysFetchCreditCard);
+			info.AddValue("_alreadyFetchedCreditCard", _alreadyFetchedCreditCard);
+			info.AddValue("_currencyRate", (!this.MarkedForDeletion?_currencyRate:null));
+			info.AddValue("_currencyRateReturnsNewIfNotFound", _currencyRateReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchCurrencyRate", _alwaysFetchCurrencyRate);
+			info.AddValue("_alreadyFetchedCurrencyRate", _alreadyFetchedCurrencyRate);
 			info.AddValue("_customer", (!this.MarkedForDeletion?_customer:null));
 			info.AddValue("_customerReturnsNewIfNotFound", _customerReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchCustomer", _alwaysFetchCustomer);
@@ -331,6 +399,10 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_customerViewRelatedReturnsNewIfNotFound", _customerViewRelatedReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchCustomerViewRelated", _alwaysFetchCustomerViewRelated);
 			info.AddValue("_alreadyFetchedCustomerViewRelated", _alreadyFetchedCustomerViewRelated);
+			info.AddValue("_salesTerritory", (!this.MarkedForDeletion?_salesTerritory:null));
+			info.AddValue("_salesTerritoryReturnsNewIfNotFound", _salesTerritoryReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchSalesTerritory", _alwaysFetchSalesTerritory);
+			info.AddValue("_alreadyFetchedSalesTerritory", _alreadyFetchedSalesTerritory);
 			info.AddValue("_shipMethod", (!this.MarkedForDeletion?_shipMethod:null));
 			info.AddValue("_shipMethodReturnsNewIfNotFound", _shipMethodReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchShipMethod", _alwaysFetchShipMethod);
@@ -351,17 +423,25 @@ namespace AW.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Address_":
-					_alreadyFetchedAddress_ = true;
-					this.Address_ = (AddressEntity)entity;
-					break;
 				case "Address":
 					_alreadyFetchedAddress = true;
 					this.Address = (AddressEntity)entity;
 					break;
+				case "Address_":
+					_alreadyFetchedAddress_ = true;
+					this.Address_ = (AddressEntity)entity;
+					break;
 				case "Contact":
 					_alreadyFetchedContact = true;
 					this.Contact = (ContactEntity)entity;
+					break;
+				case "CreditCard":
+					_alreadyFetchedCreditCard = true;
+					this.CreditCard = (CreditCardEntity)entity;
+					break;
+				case "CurrencyRate":
+					_alreadyFetchedCurrencyRate = true;
+					this.CurrencyRate = (CurrencyRateEntity)entity;
 					break;
 				case "Customer":
 					_alreadyFetchedCustomer = true;
@@ -370,6 +450,10 @@ namespace AW.Data.EntityClasses
 				case "CustomerViewRelated":
 					_alreadyFetchedCustomerViewRelated = true;
 					this.CustomerViewRelated = (CustomerViewRelatedEntity)entity;
+					break;
+				case "SalesTerritory":
+					_alreadyFetchedSalesTerritory = true;
+					this.SalesTerritory = (SalesTerritoryEntity)entity;
 					break;
 				case "ShipMethod":
 					_alreadyFetchedShipMethod = true;
@@ -404,20 +488,29 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Address_":
-					SetupSyncAddress_(relatedEntity);
-					break;
 				case "Address":
 					SetupSyncAddress(relatedEntity);
 					break;
+				case "Address_":
+					SetupSyncAddress_(relatedEntity);
+					break;
 				case "Contact":
 					SetupSyncContact(relatedEntity);
+					break;
+				case "CreditCard":
+					SetupSyncCreditCard(relatedEntity);
+					break;
+				case "CurrencyRate":
+					SetupSyncCurrencyRate(relatedEntity);
 					break;
 				case "Customer":
 					SetupSyncCustomer(relatedEntity);
 					break;
 				case "CustomerViewRelated":
 					SetupSyncCustomerViewRelated(relatedEntity);
+					break;
+				case "SalesTerritory":
+					SetupSyncSalesTerritory(relatedEntity);
 					break;
 				case "ShipMethod":
 					SetupSyncShipMethod(relatedEntity);
@@ -441,20 +534,29 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Address_":
-					DesetupSyncAddress_(false, true);
-					break;
 				case "Address":
 					DesetupSyncAddress(false, true);
 					break;
+				case "Address_":
+					DesetupSyncAddress_(false, true);
+					break;
 				case "Contact":
 					DesetupSyncContact(false, true);
+					break;
+				case "CreditCard":
+					DesetupSyncCreditCard(false, true);
+					break;
+				case "CurrencyRate":
+					DesetupSyncCurrencyRate(false, true);
 					break;
 				case "Customer":
 					DesetupSyncCustomer(false, true);
 					break;
 				case "CustomerViewRelated":
 					DesetupSyncCustomerViewRelated(false, true);
+					break;
+				case "SalesTerritory":
+					DesetupSyncSalesTerritory(false, true);
 					break;
 				case "ShipMethod":
 					DesetupSyncShipMethod(false, true);
@@ -486,17 +588,25 @@ namespace AW.Data.EntityClasses
 		public override List<IEntity> GetDependentRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
-			if(_address_!=null)
-			{
-				toReturn.Add(_address_);
-			}
 			if(_address!=null)
 			{
 				toReturn.Add(_address);
 			}
+			if(_address_!=null)
+			{
+				toReturn.Add(_address_);
+			}
 			if(_contact!=null)
 			{
 				toReturn.Add(_contact);
+			}
+			if(_creditCard!=null)
+			{
+				toReturn.Add(_creditCard);
+			}
+			if(_currencyRate!=null)
+			{
+				toReturn.Add(_currencyRate);
 			}
 			if(_customer!=null)
 			{
@@ -505,6 +615,10 @@ namespace AW.Data.EntityClasses
 			if(_customerViewRelated!=null)
 			{
 				toReturn.Add(_customerViewRelated);
+			}
+			if(_salesTerritory!=null)
+			{
+				toReturn.Add(_salesTerritory);
 			}
 			if(_shipMethod!=null)
 			{
@@ -718,63 +832,6 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
-		public AddressEntity GetSingleAddress_()
-		{
-			return GetSingleAddress_(false);
-		}
-
-		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
-		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
-		public virtual AddressEntity GetSingleAddress_(bool forceFetch)
-		{
-			if( ( !_alreadyFetchedAddress_ || forceFetch || _alwaysFetchAddress_) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
-			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId);
-
-				AddressEntity newEntity = new AddressEntity();
-				if(base.ParticipatesInTransaction)
-				{
-					base.Transaction.Add(newEntity);
-				}
-				bool fetchResult = false;
-				if(performLazyLoading)
-				{
-					fetchResult = newEntity.FetchUsingPK(this.ShipToAddressId);
-				}
-				if(fetchResult)
-				{
-					if(base.ActiveContext!=null)
-					{
-						newEntity = (AddressEntity)base.ActiveContext.Get(newEntity);
-					}
-					this.Address_ = newEntity;
-				}
-				else
-				{
-					if(_address_ReturnsNewIfNotFound)
-					{
-						if(performLazyLoading || (!performLazyLoading && (_address_ == null)))
-						{
-							this.Address_ = newEntity;
-						}
-					}
-					else
-					{
-						this.Address_ = null;
-					}
-				}
-				_alreadyFetchedAddress_ = fetchResult;
-				if(base.ParticipatesInTransaction && !fetchResult)
-				{
-					base.Transaction.Remove(newEntity);
-				}
-			}
-			return _address_;
-		}
-
-		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
-		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
 		public AddressEntity GetSingleAddress()
 		{
 			return GetSingleAddress(false);
@@ -828,6 +885,63 @@ namespace AW.Data.EntityClasses
 				}
 			}
 			return _address;
+		}
+
+		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
+		public AddressEntity GetSingleAddress_()
+		{
+			return GetSingleAddress_(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
+		public virtual AddressEntity GetSingleAddress_(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedAddress_ || forceFetch || _alwaysFetchAddress_) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
+			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId);
+
+				AddressEntity newEntity = new AddressEntity();
+				if(base.ParticipatesInTransaction)
+				{
+					base.Transaction.Add(newEntity);
+				}
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					fetchResult = newEntity.FetchUsingPK(this.ShipToAddressId);
+				}
+				if(fetchResult)
+				{
+					if(base.ActiveContext!=null)
+					{
+						newEntity = (AddressEntity)base.ActiveContext.Get(newEntity);
+					}
+					this.Address_ = newEntity;
+				}
+				else
+				{
+					if(_address_ReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_address_ == null)))
+						{
+							this.Address_ = newEntity;
+						}
+					}
+					else
+					{
+						this.Address_ = null;
+					}
+				}
+				_alreadyFetchedAddress_ = fetchResult;
+				if(base.ParticipatesInTransaction && !fetchResult)
+				{
+					base.Transaction.Remove(newEntity);
+				}
+			}
+			return _address_;
 		}
 
 		/// <summary> Retrieves the related entity of type 'ContactEntity', using a relation of type 'n:1'</summary>
@@ -885,6 +999,120 @@ namespace AW.Data.EntityClasses
 				}
 			}
 			return _contact;
+		}
+
+		/// <summary> Retrieves the related entity of type 'CreditCardEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'CreditCardEntity' which is related to this entity.</returns>
+		public CreditCardEntity GetSingleCreditCard()
+		{
+			return GetSingleCreditCard(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'CreditCardEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'CreditCardEntity' which is related to this entity.</returns>
+		public virtual CreditCardEntity GetSingleCreditCard(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedCreditCard || forceFetch || _alwaysFetchCreditCard) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
+			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId);
+
+				CreditCardEntity newEntity = new CreditCardEntity();
+				if(base.ParticipatesInTransaction)
+				{
+					base.Transaction.Add(newEntity);
+				}
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					fetchResult = newEntity.FetchUsingPK(this.CreditCardId.GetValueOrDefault());
+				}
+				if(fetchResult)
+				{
+					if(base.ActiveContext!=null)
+					{
+						newEntity = (CreditCardEntity)base.ActiveContext.Get(newEntity);
+					}
+					this.CreditCard = newEntity;
+				}
+				else
+				{
+					if(_creditCardReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_creditCard == null)))
+						{
+							this.CreditCard = newEntity;
+						}
+					}
+					else
+					{
+						this.CreditCard = null;
+					}
+				}
+				_alreadyFetchedCreditCard = fetchResult;
+				if(base.ParticipatesInTransaction && !fetchResult)
+				{
+					base.Transaction.Remove(newEntity);
+				}
+			}
+			return _creditCard;
+		}
+
+		/// <summary> Retrieves the related entity of type 'CurrencyRateEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'CurrencyRateEntity' which is related to this entity.</returns>
+		public CurrencyRateEntity GetSingleCurrencyRate()
+		{
+			return GetSingleCurrencyRate(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'CurrencyRateEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'CurrencyRateEntity' which is related to this entity.</returns>
+		public virtual CurrencyRateEntity GetSingleCurrencyRate(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedCurrencyRate || forceFetch || _alwaysFetchCurrencyRate) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
+			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateId);
+
+				CurrencyRateEntity newEntity = new CurrencyRateEntity();
+				if(base.ParticipatesInTransaction)
+				{
+					base.Transaction.Add(newEntity);
+				}
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					fetchResult = newEntity.FetchUsingPK(this.CurrencyRateId.GetValueOrDefault());
+				}
+				if(fetchResult)
+				{
+					if(base.ActiveContext!=null)
+					{
+						newEntity = (CurrencyRateEntity)base.ActiveContext.Get(newEntity);
+					}
+					this.CurrencyRate = newEntity;
+				}
+				else
+				{
+					if(_currencyRateReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_currencyRate == null)))
+						{
+							this.CurrencyRate = newEntity;
+						}
+					}
+					else
+					{
+						this.CurrencyRate = null;
+					}
+				}
+				_alreadyFetchedCurrencyRate = fetchResult;
+				if(base.ParticipatesInTransaction && !fetchResult)
+				{
+					base.Transaction.Remove(newEntity);
+				}
+			}
+			return _currencyRate;
 		}
 
 		/// <summary> Retrieves the related entity of type 'CustomerEntity', using a relation of type 'n:1'</summary>
@@ -1001,6 +1229,63 @@ namespace AW.Data.EntityClasses
 			return _customerViewRelated;
 		}
 
+		/// <summary> Retrieves the related entity of type 'SalesTerritoryEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'SalesTerritoryEntity' which is related to this entity.</returns>
+		public SalesTerritoryEntity GetSingleSalesTerritory()
+		{
+			return GetSingleSalesTerritory(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'SalesTerritoryEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'SalesTerritoryEntity' which is related to this entity.</returns>
+		public virtual SalesTerritoryEntity GetSingleSalesTerritory(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedSalesTerritory || forceFetch || _alwaysFetchSalesTerritory) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
+			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId);
+
+				SalesTerritoryEntity newEntity = new SalesTerritoryEntity();
+				if(base.ParticipatesInTransaction)
+				{
+					base.Transaction.Add(newEntity);
+				}
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					fetchResult = newEntity.FetchUsingPK(this.TerritoryId.GetValueOrDefault());
+				}
+				if(fetchResult)
+				{
+					if(base.ActiveContext!=null)
+					{
+						newEntity = (SalesTerritoryEntity)base.ActiveContext.Get(newEntity);
+					}
+					this.SalesTerritory = newEntity;
+				}
+				else
+				{
+					if(_salesTerritoryReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_salesTerritory == null)))
+						{
+							this.SalesTerritory = newEntity;
+						}
+					}
+					else
+					{
+						this.SalesTerritory = null;
+					}
+				}
+				_alreadyFetchedSalesTerritory = fetchResult;
+				if(base.ParticipatesInTransaction && !fetchResult)
+				{
+					base.Transaction.Remove(newEntity);
+				}
+			}
+			return _salesTerritory;
+		}
+
 		/// <summary> Retrieves the related entity of type 'ShipMethodEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'ShipMethodEntity' which is related to this entity.</returns>
 		public ShipMethodEntity GetSingleShipMethod()
@@ -1072,17 +1357,25 @@ namespace AW.Data.EntityClasses
 		{
 			_salesOrderDetail.ActiveContext = base.ActiveContext;
 			_specialOfferProductCollectionViaSalesOrderDetail.ActiveContext = base.ActiveContext;
-			if(_address_!=null)
-			{
-				_address_.ActiveContext = base.ActiveContext;
-			}
 			if(_address!=null)
 			{
 				_address.ActiveContext = base.ActiveContext;
 			}
+			if(_address_!=null)
+			{
+				_address_.ActiveContext = base.ActiveContext;
+			}
 			if(_contact!=null)
 			{
 				_contact.ActiveContext = base.ActiveContext;
+			}
+			if(_creditCard!=null)
+			{
+				_creditCard.ActiveContext = base.ActiveContext;
+			}
+			if(_currencyRate!=null)
+			{
+				_currencyRate.ActiveContext = base.ActiveContext;
 			}
 			if(_customer!=null)
 			{
@@ -1091,6 +1384,10 @@ namespace AW.Data.EntityClasses
 			if(_customerViewRelated!=null)
 			{
 				_customerViewRelated.ActiveContext = base.ActiveContext;
+			}
+			if(_salesTerritory!=null)
+			{
+				_salesTerritory.ActiveContext = base.ActiveContext;
 			}
 			if(_shipMethod!=null)
 			{
@@ -1165,11 +1462,14 @@ namespace AW.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Address_", _address_);
 			toReturn.Add("Address", _address);
+			toReturn.Add("Address_", _address_);
 			toReturn.Add("Contact", _contact);
+			toReturn.Add("CreditCard", _creditCard);
+			toReturn.Add("CurrencyRate", _currencyRate);
 			toReturn.Add("Customer", _customer);
 			toReturn.Add("CustomerViewRelated", _customerViewRelated);
+			toReturn.Add("SalesTerritory", _salesTerritory);
 			toReturn.Add("ShipMethod", _shipMethod);
 			toReturn.Add("SalesOrderDetail", _salesOrderDetail);
 			toReturn.Add("SpecialOfferProductCollectionViaSalesOrderDetail", _specialOfferProductCollectionViaSalesOrderDetail);
@@ -1208,18 +1508,26 @@ namespace AW.Data.EntityClasses
 			_specialOfferProductCollectionViaSalesOrderDetail = new AW.Data.CollectionClasses.SpecialOfferProductCollection(new SpecialOfferProductEntityFactory());
 			_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail = false;
 			_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail = false;
-			_address_ = null;
-			_address_ReturnsNewIfNotFound = true;
-			_alwaysFetchAddress_ = false;
-			_alreadyFetchedAddress_ = false;
 			_address = null;
 			_addressReturnsNewIfNotFound = true;
 			_alwaysFetchAddress = false;
 			_alreadyFetchedAddress = false;
+			_address_ = null;
+			_address_ReturnsNewIfNotFound = true;
+			_alwaysFetchAddress_ = false;
+			_alreadyFetchedAddress_ = false;
 			_contact = null;
 			_contactReturnsNewIfNotFound = true;
 			_alwaysFetchContact = false;
 			_alreadyFetchedContact = false;
+			_creditCard = null;
+			_creditCardReturnsNewIfNotFound = true;
+			_alwaysFetchCreditCard = false;
+			_alreadyFetchedCreditCard = false;
+			_currencyRate = null;
+			_currencyRateReturnsNewIfNotFound = true;
+			_alwaysFetchCurrencyRate = false;
+			_alreadyFetchedCurrencyRate = false;
 			_customer = null;
 			_customerReturnsNewIfNotFound = true;
 			_alwaysFetchCustomer = false;
@@ -1228,6 +1536,10 @@ namespace AW.Data.EntityClasses
 			_customerViewRelatedReturnsNewIfNotFound = true;
 			_alwaysFetchCustomerViewRelated = false;
 			_alreadyFetchedCustomerViewRelated = false;
+			_salesTerritory = null;
+			_salesTerritoryReturnsNewIfNotFound = true;
+			_alwaysFetchSalesTerritory = false;
+			_alreadyFetchedSalesTerritory = false;
 			_shipMethod = null;
 			_shipMethodReturnsNewIfNotFound = true;
 			_alwaysFetchShipMethod = false;
@@ -1334,39 +1646,6 @@ namespace AW.Data.EntityClasses
 		#endregion
 
 
-		/// <summary> Removes the sync logic for member _address_</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncAddress_(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _address_, new PropertyChangedEventHandler( OnAddress_PropertyChanged ), "Address_", SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, true, signalRelatedEntity, "SalesOrderHeader_", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.ShipToAddressId } );		
-			_address_ = null;
-		}
-		
-		/// <summary> setups the sync logic for member _address_</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncAddress_(IEntity relatedEntity)
-		{
-			if(_address_!=relatedEntity)
-			{		
-				DesetupSyncAddress_(true, true);
-				_address_ = (AddressEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _address_, new PropertyChangedEventHandler( OnAddress_PropertyChanged ), "Address_", SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, true, ref _alreadyFetchedAddress_, new string[] {  } );
-			}
-		}
-
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnAddress_PropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
 		/// <summary> Removes the sync logic for member _address</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -1400,6 +1679,39 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _address_</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAddress_(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _address_, new PropertyChangedEventHandler( OnAddress_PropertyChanged ), "Address_", SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, true, signalRelatedEntity, "SalesOrderHeader_", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.ShipToAddressId } );		
+			_address_ = null;
+		}
+		
+		/// <summary> setups the sync logic for member _address_</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAddress_(IEntity relatedEntity)
+		{
+			if(_address_!=relatedEntity)
+			{		
+				DesetupSyncAddress_(true, true);
+				_address_ = (AddressEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _address_, new PropertyChangedEventHandler( OnAddress_PropertyChanged ), "Address_", SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, true, ref _alreadyFetchedAddress_, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAddress_PropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Removes the sync logic for member _contact</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -1425,6 +1737,72 @@ namespace AW.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnContactPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _creditCard</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncCreditCard(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _creditCard, new PropertyChangedEventHandler( OnCreditCardPropertyChanged ), "CreditCard", SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId, true, signalRelatedEntity, "SalesOrderHeader", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.CreditCardId } );		
+			_creditCard = null;
+		}
+		
+		/// <summary> setups the sync logic for member _creditCard</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncCreditCard(IEntity relatedEntity)
+		{
+			if(_creditCard!=relatedEntity)
+			{		
+				DesetupSyncCreditCard(true, true);
+				_creditCard = (CreditCardEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _creditCard, new PropertyChangedEventHandler( OnCreditCardPropertyChanged ), "CreditCard", SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId, true, ref _alreadyFetchedCreditCard, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCreditCardPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _currencyRate</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncCurrencyRate(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _currencyRate, new PropertyChangedEventHandler( OnCurrencyRatePropertyChanged ), "CurrencyRate", SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateId, true, signalRelatedEntity, "SalesOrderHeader", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.CurrencyRateId } );		
+			_currencyRate = null;
+		}
+		
+		/// <summary> setups the sync logic for member _currencyRate</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncCurrencyRate(IEntity relatedEntity)
+		{
+			if(_currencyRate!=relatedEntity)
+			{		
+				DesetupSyncCurrencyRate(true, true);
+				_currencyRate = (CurrencyRateEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _currencyRate, new PropertyChangedEventHandler( OnCurrencyRatePropertyChanged ), "CurrencyRate", SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateId, true, ref _alreadyFetchedCurrencyRate, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnCurrencyRatePropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1491,6 +1869,39 @@ namespace AW.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnCustomerViewRelatedPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _salesTerritory</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncSalesTerritory(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _salesTerritory, new PropertyChangedEventHandler( OnSalesTerritoryPropertyChanged ), "SalesTerritory", SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId, true, signalRelatedEntity, "SalesOrderHeader", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.TerritoryId } );		
+			_salesTerritory = null;
+		}
+		
+		/// <summary> setups the sync logic for member _salesTerritory</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncSalesTerritory(IEntity relatedEntity)
+		{
+			if(_salesTerritory!=relatedEntity)
+			{		
+				DesetupSyncSalesTerritory(true, true);
+				_salesTerritory = (SalesTerritoryEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _salesTerritory, new PropertyChangedEventHandler( OnSalesTerritoryPropertyChanged ), "SalesTerritory", SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId, true, ref _alreadyFetchedSalesTerritory, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSalesTerritoryPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1616,24 +2027,24 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathAddress_
-		{
-			get
-			{
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(),
-					(IEntityRelation)GetRelationsForField("Address_")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "Address_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathAddress
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(),
 					(IEntityRelation)GetRelationsForField("Address")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "Address", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathAddress_
+		{
+			get
+			{
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(),
+					(IEntityRelation)GetRelationsForField("Address_")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "Address_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -1646,6 +2057,30 @@ namespace AW.Data.EntityClasses
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(),
 					(IEntityRelation)GetRelationsForField("Contact")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, null, "Contact", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'CreditCard' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathCreditCard
+		{
+			get
+			{
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.CreditCardCollection(),
+					(IEntityRelation)GetRelationsForField("CreditCard")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.CreditCardEntity, 0, null, null, null, "CreditCard", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'CurrencyRate' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathCurrencyRate
+		{
+			get
+			{
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.CurrencyRateCollection(),
+					(IEntityRelation)GetRelationsForField("CurrencyRate")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.CurrencyRateEntity, 0, null, null, null, "CurrencyRate", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -1670,6 +2105,18 @@ namespace AW.Data.EntityClasses
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerViewRelatedCollection(),
 					(IEntityRelation)GetRelationsForField("CustomerViewRelated")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.CustomerViewRelatedEntity, 0, null, null, null, "CustomerViewRelated", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesTerritory' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesTerritory
+		{
+			get
+			{
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryCollection(),
+					(IEntityRelation)GetRelationsForField("SalesTerritory")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.SalesTerritoryEntity, 0, null, null, null, "SalesTerritory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -2058,76 +2505,6 @@ namespace AW.Data.EntityClasses
 		/// <summary> Gets / sets related entity of type 'AddressEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
 		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleAddress_()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
-		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		public virtual AddressEntity Address_
-		{
-			get	{ return GetSingleAddress_(false); }
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncAddress_(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_address_ != null)
-						{
-							_address_.UnsetRelatedEntity(this, "SalesOrderHeader_");
-						}
-					}
-					else
-					{
-						if(_address_!=value)
-						{
-							((IEntity)value).SetRelatedEntity(this, "SalesOrderHeader_");
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for Address_. When set to true, Address_ is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time Address_ is accessed. You can always execute
-		/// a forced fetch by calling GetSingleAddress_(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchAddress_
-		{
-			get	{ return _alwaysFetchAddress_; }
-			set	{ _alwaysFetchAddress_ = value; }	
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property Address_ already has been fetched. Setting this property to false when Address_ has been fetched
-		/// will set Address_ to null as well. Setting this property to true while Address_ hasn't been fetched disables lazy loading for Address_</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedAddress_
-		{
-			get { return _alreadyFetchedAddress_;}
-			set 
-			{
-				if(_alreadyFetchedAddress_ && !value)
-				{
-					this.Address_ = null;
-				}
-				_alreadyFetchedAddress_ = value;
-			}
-		}
-
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Address_ is not found
-		/// in the database. When set to true, Address_ will return a new entity instance if the related entity is not found, otherwise 
-		/// null be returned if the related entity is not found. Default: true.</summary>
-		[Browsable(false)]
-		public bool Address_ReturnsNewIfNotFound
-		{
-			get	{ return _address_ReturnsNewIfNotFound; }
-			set { _address_ReturnsNewIfNotFound = value; }	
-		}
-		/// <summary> Gets / sets related entity of type 'AddressEntity'. This property is not visible in databound grids.
-		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
-		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleAddress()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
@@ -2194,6 +2571,76 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _addressReturnsNewIfNotFound; }
 			set { _addressReturnsNewIfNotFound = value; }	
+		}
+		/// <summary> Gets / sets related entity of type 'AddressEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleAddress_()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		public virtual AddressEntity Address_
+		{
+			get	{ return GetSingleAddress_(false); }
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncAddress_(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_address_ != null)
+						{
+							_address_.UnsetRelatedEntity(this, "SalesOrderHeader_");
+						}
+					}
+					else
+					{
+						if(_address_!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderHeader_");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Address_. When set to true, Address_ is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Address_ is accessed. You can always execute
+		/// a forced fetch by calling GetSingleAddress_(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchAddress_
+		{
+			get	{ return _alwaysFetchAddress_; }
+			set	{ _alwaysFetchAddress_ = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Address_ already has been fetched. Setting this property to false when Address_ has been fetched
+		/// will set Address_ to null as well. Setting this property to true while Address_ hasn't been fetched disables lazy loading for Address_</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedAddress_
+		{
+			get { return _alreadyFetchedAddress_;}
+			set 
+			{
+				if(_alreadyFetchedAddress_ && !value)
+				{
+					this.Address_ = null;
+				}
+				_alreadyFetchedAddress_ = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Address_ is not found
+		/// in the database. When set to true, Address_ will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool Address_ReturnsNewIfNotFound
+		{
+			get	{ return _address_ReturnsNewIfNotFound; }
+			set { _address_ReturnsNewIfNotFound = value; }	
 		}
 		/// <summary> Gets / sets related entity of type 'ContactEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
@@ -2264,6 +2711,146 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _contactReturnsNewIfNotFound; }
 			set { _contactReturnsNewIfNotFound = value; }	
+		}
+		/// <summary> Gets / sets related entity of type 'CreditCardEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCreditCard()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		public virtual CreditCardEntity CreditCard
+		{
+			get	{ return GetSingleCreditCard(false); }
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncCreditCard(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_creditCard != null)
+						{
+							_creditCard.UnsetRelatedEntity(this, "SalesOrderHeader");
+						}
+					}
+					else
+					{
+						if(_creditCard!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderHeader");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for CreditCard. When set to true, CreditCard is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time CreditCard is accessed. You can always execute
+		/// a forced fetch by calling GetSingleCreditCard(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchCreditCard
+		{
+			get	{ return _alwaysFetchCreditCard; }
+			set	{ _alwaysFetchCreditCard = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property CreditCard already has been fetched. Setting this property to false when CreditCard has been fetched
+		/// will set CreditCard to null as well. Setting this property to true while CreditCard hasn't been fetched disables lazy loading for CreditCard</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedCreditCard
+		{
+			get { return _alreadyFetchedCreditCard;}
+			set 
+			{
+				if(_alreadyFetchedCreditCard && !value)
+				{
+					this.CreditCard = null;
+				}
+				_alreadyFetchedCreditCard = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property CreditCard is not found
+		/// in the database. When set to true, CreditCard will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool CreditCardReturnsNewIfNotFound
+		{
+			get	{ return _creditCardReturnsNewIfNotFound; }
+			set { _creditCardReturnsNewIfNotFound = value; }	
+		}
+		/// <summary> Gets / sets related entity of type 'CurrencyRateEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCurrencyRate()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		public virtual CurrencyRateEntity CurrencyRate
+		{
+			get	{ return GetSingleCurrencyRate(false); }
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncCurrencyRate(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_currencyRate != null)
+						{
+							_currencyRate.UnsetRelatedEntity(this, "SalesOrderHeader");
+						}
+					}
+					else
+					{
+						if(_currencyRate!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderHeader");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for CurrencyRate. When set to true, CurrencyRate is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time CurrencyRate is accessed. You can always execute
+		/// a forced fetch by calling GetSingleCurrencyRate(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchCurrencyRate
+		{
+			get	{ return _alwaysFetchCurrencyRate; }
+			set	{ _alwaysFetchCurrencyRate = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property CurrencyRate already has been fetched. Setting this property to false when CurrencyRate has been fetched
+		/// will set CurrencyRate to null as well. Setting this property to true while CurrencyRate hasn't been fetched disables lazy loading for CurrencyRate</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedCurrencyRate
+		{
+			get { return _alreadyFetchedCurrencyRate;}
+			set 
+			{
+				if(_alreadyFetchedCurrencyRate && !value)
+				{
+					this.CurrencyRate = null;
+				}
+				_alreadyFetchedCurrencyRate = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property CurrencyRate is not found
+		/// in the database. When set to true, CurrencyRate will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool CurrencyRateReturnsNewIfNotFound
+		{
+			get	{ return _currencyRateReturnsNewIfNotFound; }
+			set { _currencyRateReturnsNewIfNotFound = value; }	
 		}
 		/// <summary> Gets / sets related entity of type 'CustomerEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
@@ -2404,6 +2991,76 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _customerViewRelatedReturnsNewIfNotFound; }
 			set { _customerViewRelatedReturnsNewIfNotFound = value; }	
+		}
+		/// <summary> Gets / sets related entity of type 'SalesTerritoryEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesTerritory()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		public virtual SalesTerritoryEntity SalesTerritory
+		{
+			get	{ return GetSingleSalesTerritory(false); }
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncSalesTerritory(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_salesTerritory != null)
+						{
+							_salesTerritory.UnsetRelatedEntity(this, "SalesOrderHeader");
+						}
+					}
+					else
+					{
+						if(_salesTerritory!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderHeader");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesTerritory. When set to true, SalesTerritory is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesTerritory is accessed. You can always execute
+		/// a forced fetch by calling GetSingleSalesTerritory(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesTerritory
+		{
+			get	{ return _alwaysFetchSalesTerritory; }
+			set	{ _alwaysFetchSalesTerritory = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesTerritory already has been fetched. Setting this property to false when SalesTerritory has been fetched
+		/// will set SalesTerritory to null as well. Setting this property to true while SalesTerritory hasn't been fetched disables lazy loading for SalesTerritory</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesTerritory
+		{
+			get { return _alreadyFetchedSalesTerritory;}
+			set 
+			{
+				if(_alreadyFetchedSalesTerritory && !value)
+				{
+					this.SalesTerritory = null;
+				}
+				_alreadyFetchedSalesTerritory = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SalesTerritory is not found
+		/// in the database. When set to true, SalesTerritory will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool SalesTerritoryReturnsNewIfNotFound
+		{
+			get	{ return _salesTerritoryReturnsNewIfNotFound; }
+			set { _salesTerritoryReturnsNewIfNotFound = value; }	
 		}
 		/// <summary> Gets / sets related entity of type 'ShipMethodEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this

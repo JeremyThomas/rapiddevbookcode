@@ -83,55 +83,6 @@ namespace AW.Data.DaoClasses
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingAddressCollectionViaSalesOrderHeader_(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, int pageNumber, int pageSize)
-		{
-			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
-			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
-		}
-
-		/// <summary>
-		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
-		/// which are related via a relation of type 'm:n' with the passed in AddressEntity. 
-		/// </summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
-		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingAddressCollectionViaSalesOrderHeader_(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, IPrefetchPath prefetchPathToUse)
-		{
-			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
-			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
-		}
-
-		/// <summary>
-		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
-		/// which are related via a relation of type 'm:n' with the passed in AddressEntity. 
-		/// </summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
-		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiUsingAddressCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, int pageNumber, int pageSize)
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
@@ -162,6 +113,55 @@ namespace AW.Data.DaoClasses
 			RelationCollection relations = new RelationCollection();
 			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
 			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in AddressEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingAddressCollectionViaSalesOrderHeader_(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in AddressEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingAddressCollectionViaSalesOrderHeader_(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
 			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
@@ -213,6 +213,104 @@ namespace AW.Data.DaoClasses
 			relations.Add(SalesOrderHeaderEntity.Relations.ContactEntityUsingContactId, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
 			selectFilter.Add(new FieldCompareValuePredicate(contactInstance.Fields[(int)ContactFieldIndex.ContactId], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in CreditCardEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingCreditCardCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity creditCardInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(creditCardInstance.Fields[(int)CreditCardFieldIndex.CreditCardId], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in CreditCardEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingCreditCardCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity creditCardInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(creditCardInstance.Fields[(int)CreditCardFieldIndex.CreditCardId], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in CurrencyRateEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity currencyRateInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(currencyRateInstance.Fields[(int)CurrencyRateFieldIndex.CurrencyRateId], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in CurrencyRateEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity currencyRateInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(currencyRateInstance.Fields[(int)CurrencyRateFieldIndex.CurrencyRateId], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -311,6 +409,55 @@ namespace AW.Data.DaoClasses
 			relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerId, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
 			selectFilter.Add(new FieldCompareValuePredicate(customerViewRelatedInstance.Fields[(int)CustomerViewRelatedFieldIndex.CustomerId], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in SalesTerritoryEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity salesTerritoryInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryId], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling ShipMethodCollection object all ShipMethodEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in SalesTerritoryEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity salesTerritoryInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ShipMethodEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(ShipMethodEntity.Relations.SalesOrderHeaderEntityUsingShipMethodId, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryId], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 

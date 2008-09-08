@@ -62,47 +62,52 @@ namespace AW.Data.CollectionClasses
 		/// <summary> Retrieves in this StateProvinceCollection object all StateProvinceEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity countryRegionInstance)
+		public bool GetMultiManyToOne(IEntity countryRegionInstance, IEntity salesTerritoryInstance)
 		{
-			return GetMultiManyToOne(countryRegionInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(countryRegionInstance, salesTerritoryInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this StateProvinceCollection object all StateProvinceEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity countryRegionInstance, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity countryRegionInstance, IEntity salesTerritoryInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(countryRegionInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(countryRegionInstance, salesTerritoryInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this StateProvinceCollection object all StateProvinceEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity countryRegionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity countryRegionInstance, IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(countryRegionInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
+			return GetMultiManyToOne(countryRegionInstance, salesTerritoryInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this StateProvinceCollection object all StateProvinceEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToOne(IEntity countryRegionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToOne(IEntity countryRegionInstance, IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
 		{
 			bool validParameters = false;
 			validParameters |= (countryRegionInstance!=null);
+			validParameters |= (salesTerritoryInstance!=null);
 			if(!validParameters)
 			{
 				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
@@ -112,28 +117,30 @@ namespace AW.Data.CollectionClasses
 				this.Clear();
 			}
 			StateProvinceDAO dao = DAOFactory.CreateStateProvinceDAO();
-			return dao.GetMulti(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, filter, countryRegionInstance, pageNumber, pageSize);
+			return dao.GetMulti(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, filter, countryRegionInstance, salesTerritoryInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all StateProvince entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
 		/// <remarks>Runs directly on the persistent storage. It will not delete entity objects from the current collection.</remarks>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMultiManyToOne(IEntity countryRegionInstance)
+		public int DeleteMultiManyToOne(IEntity countryRegionInstance, IEntity salesTerritoryInstance)
 		{
 			StateProvinceDAO dao = DAOFactory.CreateStateProvinceDAO();
-			return dao.DeleteMulti(base.Transaction, countryRegionInstance);
+			return dao.DeleteMulti(base.Transaction, countryRegionInstance, salesTerritoryInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all StateProvince entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
 		/// Which fields are updated in those matching entities depends on which fields are <i>changed</i> in the passed in entity entityWithNewValues. The new values of these fields are read from entityWithNewValues. </summary>
 		/// <param name="entityWithNewValues">StateProvinceEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
 		/// <param name="countryRegionInstance">CountryRegionEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the StateProvinceEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMultiManyToOne(StateProvinceEntity entityWithNewValues, IEntity countryRegionInstance)
+		public int UpdateMultiManyToOne(StateProvinceEntity entityWithNewValues, IEntity countryRegionInstance, IEntity salesTerritoryInstance)
 		{
 			StateProvinceDAO dao = DAOFactory.CreateStateProvinceDAO();
-			return dao.UpdateMulti(entityWithNewValues, base.Transaction, countryRegionInstance);
+			return dao.UpdateMulti(entityWithNewValues, base.Transaction, countryRegionInstance, salesTerritoryInstance);
 		}
 
 

@@ -33,6 +33,7 @@ namespace AW.Data.RelationClasses
 			toReturn.Add(this.AddressEntityUsingStateProvinceId);
 
 			toReturn.Add(this.CountryRegionEntityUsingCountryRegionCode);
+			toReturn.Add(this.SalesTerritoryEntityUsingTerritoryId);
 			return toReturn;
 		}
 
@@ -64,6 +65,20 @@ namespace AW.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CountryRegion", false);
 				relation.AddEntityFieldPair(CountryRegionFields.CountryRegionCode, StateProvinceFields.CountryRegionCode);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("StateProvinceEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between StateProvinceEntity and SalesTerritoryEntity over the m:1 relation they have, using the relation between the fields:
+		/// StateProvince.TerritoryId - SalesTerritory.TerritoryId
+		/// </summary>
+		public virtual IEntityRelation SalesTerritoryEntityUsingTerritoryId
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SalesTerritory", false);
+				relation.AddEntityFieldPair(SalesTerritoryFields.TerritoryId, StateProvinceFields.TerritoryId);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesTerritoryEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("StateProvinceEntity", true);
 				return relation;
 			}

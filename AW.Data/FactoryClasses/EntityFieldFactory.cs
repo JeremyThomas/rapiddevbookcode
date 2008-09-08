@@ -63,6 +63,33 @@ namespace AW.Data.FactoryClasses
 			return new EntityField(info, PersistenceInfoProviderSingleton.GetInstance().GetFieldPersistenceInfo(info.ContainingObjectName, info.Name));
 		}
 
+		/// <summary>Creates a new IEntityField instance for usage in the EntityFields object for the CreditCardEntity.  Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField instance should be created</param>
+		/// <returns>The IEntityField instance for the field specified in fieldIndex</returns>
+		public static IEntityField Create(CreditCardFieldIndex fieldIndex)
+		{
+			IFieldInfo info = FieldInfoProviderSingleton.GetInstance().GetFieldInfo("CreditCardEntity", (int)fieldIndex);
+			return new EntityField(info, PersistenceInfoProviderSingleton.GetInstance().GetFieldPersistenceInfo(info.ContainingObjectName, info.Name));
+		}
+
+		/// <summary>Creates a new IEntityField instance for usage in the EntityFields object for the CurrencyEntity.  Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField instance should be created</param>
+		/// <returns>The IEntityField instance for the field specified in fieldIndex</returns>
+		public static IEntityField Create(CurrencyFieldIndex fieldIndex)
+		{
+			IFieldInfo info = FieldInfoProviderSingleton.GetInstance().GetFieldInfo("CurrencyEntity", (int)fieldIndex);
+			return new EntityField(info, PersistenceInfoProviderSingleton.GetInstance().GetFieldPersistenceInfo(info.ContainingObjectName, info.Name));
+		}
+
+		/// <summary>Creates a new IEntityField instance for usage in the EntityFields object for the CurrencyRateEntity.  Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField instance should be created</param>
+		/// <returns>The IEntityField instance for the field specified in fieldIndex</returns>
+		public static IEntityField Create(CurrencyRateFieldIndex fieldIndex)
+		{
+			IFieldInfo info = FieldInfoProviderSingleton.GetInstance().GetFieldInfo("CurrencyRateEntity", (int)fieldIndex);
+			return new EntityField(info, PersistenceInfoProviderSingleton.GetInstance().GetFieldPersistenceInfo(info.ContainingObjectName, info.Name));
+		}
+
 		/// <summary>Creates a new IEntityField instance for usage in the EntityFields object for the CustomerEntity.  Which EntityField is created is specified by fieldIndex</summary>
 		/// <param name="fieldIndex">The field which IEntityField instance should be created</param>
 		/// <returns>The IEntityField instance for the field specified in fieldIndex</returns>
@@ -141,6 +168,15 @@ namespace AW.Data.FactoryClasses
 		public static IEntityField Create(SalesOrderHeaderFieldIndex fieldIndex)
 		{
 			IFieldInfo info = FieldInfoProviderSingleton.GetInstance().GetFieldInfo("SalesOrderHeaderEntity", (int)fieldIndex);
+			return new EntityField(info, PersistenceInfoProviderSingleton.GetInstance().GetFieldPersistenceInfo(info.ContainingObjectName, info.Name));
+		}
+
+		/// <summary>Creates a new IEntityField instance for usage in the EntityFields object for the SalesTerritoryEntity.  Which EntityField is created is specified by fieldIndex</summary>
+		/// <param name="fieldIndex">The field which IEntityField instance should be created</param>
+		/// <returns>The IEntityField instance for the field specified in fieldIndex</returns>
+		public static IEntityField Create(SalesTerritoryFieldIndex fieldIndex)
+		{
+			IFieldInfo info = FieldInfoProviderSingleton.GetInstance().GetFieldInfo("SalesTerritoryEntity", (int)fieldIndex);
 			return new EntityField(info, PersistenceInfoProviderSingleton.GetInstance().GetFieldPersistenceInfo(info.ContainingObjectName, info.Name));
 		}
 

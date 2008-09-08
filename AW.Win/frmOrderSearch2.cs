@@ -147,6 +147,12 @@ namespace AW.Win
     {
       var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
 
+      query = from soh in query
+              where soh.Customer.CustomerId>10
+              select soh;
+
+      //query = query.Where(soh => soh.SalesOrderId > 10);
+
       if (firstName != "")
         query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
 
@@ -174,12 +180,13 @@ namespace AW.Win
                 where soh.Customer.CustomerAddress.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
                 select soh;
 
-      query = query.OrderBy(s => s.OrderDate);
+      var sohShipMethod = from soh in query
+              select new {soh.SalesOrderId, soh.CreditCard.CardNumber};
 
       if (MaxNumberOfItemsToReturn > 0)
-        query = query.Take(MaxNumberOfItemsToReturn);
+        sohShipMethod = sohShipMethod.Take(MaxNumberOfItemsToReturn);
 
-      salesOrderHeaderEntityBindingSource.DataSource = query;
+      salesOrderHeaderEntityBindingSource.DataSource = sohShipMethod;
     }
 
     /// <summary>
@@ -220,12 +227,12 @@ namespace AW.Win
         AWHelper.TraceOut(e.ToString());
       }
 
-      AWHelper.TraceOut("One Left and one inner Association Join");
+      AWHelper.TraceOut("customer.SalesTerritory.Name");
 //      var q2 = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).SelectMany(@t => @t.customer.SalesOrderHeader.DefaultIfEmpty(), (@t, soh) => new {@t.customer.CustomerId, @t.ca.AddressId, soh.SalesOrderId});
-      var q2 = from customer in customers
+      var q2 = from customer in customersDerivedTable
                from ca in customer.CustomerAddress
-               from soh in customer.SalesOrderHeader.DefaultIfEmpty()
-               select new {customer.CustomerId, ca.AddressId, soh.SalesOrderId};
+   //            from soh in customer.SalesOrderHeader.DefaultIfEmpty()
+               select new { customer.CustomerId, customer.SalesTerritory.Name };
       if (MaxNumberOfItemsToReturn > 0)
         q2 = q2.Take(MaxNumberOfItemsToReturn);
       var w = q2.ToList();

@@ -113,6 +113,68 @@ namespace AW.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CreditCard.
+	/// </summary>
+	public enum CreditCardFieldIndex:int
+	{
+		///<summary>CreditCardId. </summary>
+		CreditCardId,
+		///<summary>CardType. </summary>
+		CardType,
+		///<summary>CardNumber. </summary>
+		CardNumber,
+		///<summary>ExpMonth. </summary>
+		ExpMonth,
+		///<summary>ExpYear. </summary>
+		ExpYear,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Currency.
+	/// </summary>
+	public enum CurrencyFieldIndex:int
+	{
+		///<summary>CurrencyCode. </summary>
+		CurrencyCode,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CurrencyRate.
+	/// </summary>
+	public enum CurrencyRateFieldIndex:int
+	{
+		///<summary>CurrencyRateId. </summary>
+		CurrencyRateId,
+		///<summary>CurrencyRateDate. </summary>
+		CurrencyRateDate,
+		///<summary>FromCurrencyCode. </summary>
+		FromCurrencyCode,
+		///<summary>ToCurrencyCode. </summary>
+		ToCurrencyCode,
+		///<summary>AverageRate. </summary>
+		AverageRate,
+		///<summary>EndOfDayRate. </summary>
+		EndOfDayRate,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Customer.
 	/// </summary>
 	public enum CustomerFieldIndex:int
@@ -433,6 +495,36 @@ namespace AW.Data
 
 
 	/// <summary>
+	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesTerritory.
+	/// </summary>
+	public enum SalesTerritoryFieldIndex:int
+	{
+		///<summary>TerritoryId. </summary>
+		TerritoryId,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>CountryRegionCode. </summary>
+		CountryRegionCode,
+		///<summary>Group. </summary>
+		Group,
+		///<summary>SalesYtd. </summary>
+		SalesYtd,
+		///<summary>SalesLastYear. </summary>
+		SalesLastYear,
+		///<summary>CostYtd. </summary>
+		CostYtd,
+		///<summary>CostLastYear. </summary>
+		CostLastYear,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+
+
+	/// <summary>
 	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ShipMethod.
 	/// </summary>
 	public enum ShipMethodFieldIndex:int
@@ -626,6 +718,12 @@ namespace AW.Data
 		ContactEntity,
 		///<summary>CountryRegion</summary>
 		CountryRegionEntity,
+		///<summary>CreditCard</summary>
+		CreditCardEntity,
+		///<summary>Currency</summary>
+		CurrencyEntity,
+		///<summary>CurrencyRate</summary>
+		CurrencyRateEntity,
 		///<summary>Customer</summary>
 		CustomerEntity,
 		///<summary>CustomerAddress</summary>
@@ -644,6 +742,8 @@ namespace AW.Data
 		SalesOrderDetailEntity,
 		///<summary>SalesOrderHeader</summary>
 		SalesOrderHeaderEntity,
+		///<summary>SalesTerritory</summary>
+		SalesTerritoryEntity,
 		///<summary>ShipMethod</summary>
 		ShipMethodEntity,
 		///<summary>SpecialOffer</summary>

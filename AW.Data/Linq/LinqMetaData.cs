@@ -75,6 +75,15 @@ namespace AW.Data.Linq
 				case AW.Data.EntityType.CountryRegionEntity:
 					toReturn = this.CountryRegion;
 					break;
+				case AW.Data.EntityType.CreditCardEntity:
+					toReturn = this.CreditCard;
+					break;
+				case AW.Data.EntityType.CurrencyEntity:
+					toReturn = this.Currency;
+					break;
+				case AW.Data.EntityType.CurrencyRateEntity:
+					toReturn = this.CurrencyRate;
+					break;
 				case AW.Data.EntityType.CustomerEntity:
 					toReturn = this.Customer;
 					break;
@@ -101,6 +110,9 @@ namespace AW.Data.Linq
 					break;
 				case AW.Data.EntityType.SalesOrderHeaderEntity:
 					toReturn = this.SalesOrderHeader;
+					break;
+				case AW.Data.EntityType.SalesTerritoryEntity:
+					toReturn = this.SalesTerritory;
 					break;
 				case AW.Data.EntityType.ShipMethodEntity:
 					toReturn = this.ShipMethod;
@@ -140,6 +152,21 @@ namespace AW.Data.Linq
 		public DataSource<CountryRegionEntity> CountryRegion
 		{
 			get { return new DataSource<CountryRegionEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		/// <summary>returns the datasource to use in a Linq query when targeting CreditCardEntity instances in the database.</summary>
+		public DataSource<CreditCardEntity> CreditCard
+		{
+			get { return new DataSource<CreditCardEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		/// <summary>returns the datasource to use in a Linq query when targeting CurrencyEntity instances in the database.</summary>
+		public DataSource<CurrencyEntity> Currency
+		{
+			get { return new DataSource<CurrencyEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		/// <summary>returns the datasource to use in a Linq query when targeting CurrencyRateEntity instances in the database.</summary>
+		public DataSource<CurrencyRateEntity> CurrencyRate
+		{
+			get { return new DataSource<CurrencyRateEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		/// <summary>returns the datasource to use in a Linq query when targeting CustomerEntity instances in the database.</summary>
 		public DataSource<CustomerEntity> Customer
@@ -185,6 +212,11 @@ namespace AW.Data.Linq
 		public DataSource<SalesOrderHeaderEntity> SalesOrderHeader
 		{
 			get { return new DataSource<SalesOrderHeaderEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		/// <summary>returns the datasource to use in a Linq query when targeting SalesTerritoryEntity instances in the database.</summary>
+		public DataSource<SalesTerritoryEntity> SalesTerritory
+		{
+			get { return new DataSource<SalesTerritoryEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		/// <summary>returns the datasource to use in a Linq query when targeting ShipMethodEntity instances in the database.</summary>
 		public DataSource<ShipMethodEntity> ShipMethod

@@ -212,6 +212,7 @@ namespace AW.Win
                     select customer;
 
       var customerlist = CustomerListLinqedTypedList.GetCustomerListQuery(customers);
+
       if (MaxNumberOfItemsToReturn > 0)
         customerlist = customerlist.Take(MaxNumberOfItemsToReturn);
       bindingSource1.DataSource = customerlist;

@@ -11,91 +11,90 @@ using System;
 using System.ComponentModel;
 using System.Collections;
 #if !CF
-using System.Linq;
 using System.Runtime.Serialization;
 #endif
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
-using AW.Data.Linq;
 using AW.Data.RelationClasses;
-using SD.LLBLGen.Pro.LinqSupportClasses;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 
 namespace AW.Data.EntityClasses
 {
+	
   // __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
-  using AW.Data.HelperClasses;
-
+  using HelperClasses;
+  using Linq;
+  using System.Linq;
+  using SD.LLBLGen.Pro.LinqSupportClasses;
+  using SD.LLBLGen.Pro.ORMSupportClasses;
   // __LLBLGENPRO_USER_CODE_REGION_END
 
-  /// <summary>
-  /// Entity class which represents the entity 'SalesOrderHeader'. <br/>
-  /// This class is used for Business Logic or for framework extension code. 
-  /// </summary>
-  [Serializable]
-  public class SalesOrderHeaderEntity : SalesOrderHeaderEntityBase
+	/// <summary>
+	/// Entity class which represents the entity 'SalesOrderHeader'. <br/>
+	/// This class is used for Business Logic or for framework extension code. 
+	/// </summary>
+	[Serializable]
+	public partial class SalesOrderHeaderEntity : SalesOrderHeaderEntityBase
     // __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
     // __LLBLGENPRO_USER_CODE_REGION_END	
-  {
-    #region Constructors
+	{
+		#region Constructors
+		/// <summary>
+		/// CTor
+		/// </summary>
+		public SalesOrderHeaderEntity():base()
+		{
+		}
 
-    /// <summary>
-    /// CTor
-    /// </summary>
-    public SalesOrderHeaderEntity()
-    {
-    }
-
-
-    /// <summary>
-    /// CTor
-    /// </summary>
-    /// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
-    public SalesOrderHeaderEntity(Int32 salesOrderId) :
-      base(salesOrderId)
-    {
-    }
-
-
-    /// <summary>
-    /// CTor
-    /// </summary>
-    /// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
-    /// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-    public SalesOrderHeaderEntity(Int32 salesOrderId, IPrefetchPath prefetchPathToUse) :
-      base(salesOrderId, prefetchPathToUse)
-    {
-    }
+	
+		/// <summary>
+		/// CTor
+		/// </summary>
+		/// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
+		public SalesOrderHeaderEntity(System.Int32 salesOrderId):
+			base(salesOrderId)
+		{
+		}
 
 
-    /// <summary>
-    /// CTor
-    /// </summary>
-    /// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
-    /// <param name="validator">The custom validator object for this SalesOrderHeaderEntity</param>
-    public SalesOrderHeaderEntity(Int32 salesOrderId, IValidator validator) :
-      base(salesOrderId, validator)
-    {
-    }
+		/// <summary>
+		/// CTor
+		/// </summary>
+		/// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
+		public SalesOrderHeaderEntity(System.Int32 salesOrderId, IPrefetchPath prefetchPathToUse):
+			base(salesOrderId, prefetchPathToUse)
+		{
+		}
 
 
-    /// <summary>
-    /// Private CTor for deserialization
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="context"></param>
-    protected SalesOrderHeaderEntity(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
+		/// <summary>
+		/// CTor
+		/// </summary>
+		/// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
+		/// <param name="validator">The custom validator object for this SalesOrderHeaderEntity</param>
+		public SalesOrderHeaderEntity(System.Int32 salesOrderId, IValidator validator):
+			base(salesOrderId, validator)
+		{
+		}
+	
+		
+		/// <summary>
+		/// Private CTor for deserialization
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
+		protected SalesOrderHeaderEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+		{
+			
       // __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
       // __LLBLGENPRO_USER_CODE_REGION_END
-    }
+		}
+		#endregion
 
-    #endregion
-
-    #region Custom Entity code
-
+		#region Custom Entity code
+		
     // __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
     //public static SalesOrderHeaderCollection GetSalesOrderHeaderCollection
     //    (
@@ -406,11 +405,10 @@ namespace AW.Data.EntityClasses
     //    base.OnFieldValidate(field);
     //}
     // __LLBLGENPRO_USER_CODE_REGION_END
+		#endregion
 
-    #endregion
+		#region Included Code
 
-    #region Included Code
-
-    #endregion
-  }
+		#endregion
+	}
 }
