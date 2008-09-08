@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWHelper.cs" />
+    <Compile Include="CustomerListLinqedTypedList.cs" />
     <Compile Include="frmOrderSearch.cs">
       <SubType>Form</SubType>
     </Compile>

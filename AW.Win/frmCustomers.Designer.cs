@@ -53,7 +53,7 @@ namespace AW.Win
           this.toolStripButtonTypedList = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-          this.toolStripButtonLinqBarf = new System.Windows.Forms.ToolStripButton();
+          this.toolStripButtonLinqAnonymous = new System.Windows.Forms.ToolStripButton();
           this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
           ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -152,9 +152,9 @@ namespace AW.Win
             this.toolStripButtonPlaintypedview,
             this.toolStripButtonViewAsEntity,
             this.toolStripButtonTypedList,
-            this.toolStripButtonLinq,
             this.toolStripSeparator1,
-            this.toolStripButtonLinqBarf});
+            this.toolStripButtonLinq,
+            this.toolStripButtonLinqAnonymous});
           this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
           this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
           this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -265,8 +265,8 @@ namespace AW.Win
           this.toolStripButtonLinq.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinq.Image")));
           this.toolStripButtonLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
           this.toolStripButtonLinq.Name = "toolStripButtonLinq";
-          this.toolStripButtonLinq.Size = new System.Drawing.Size(46, 22);
-          this.toolStripButtonLinq.Text = "Linq";
+          this.toolStripButtonLinq.Size = new System.Drawing.Size(121, 22);
+          this.toolStripButtonLinq.Text = "Linq Concrete Class";
           this.toolStripButtonLinq.Click += new System.EventHandler(this.toolStripButtonLinq_Click);
           // 
           // toolStripSeparator1
@@ -274,15 +274,14 @@ namespace AW.Win
           this.toolStripSeparator1.Name = "toolStripSeparator1";
           this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
           // 
-          // toolStripButtonLinqBarf
+          // toolStripButtonLinqAnonymous
           // 
-          this.toolStripButtonLinqBarf.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqBarf.Image")));
-          this.toolStripButtonLinqBarf.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.toolStripButtonLinqBarf.Name = "toolStripButtonLinqBarf";
-          this.toolStripButtonLinqBarf.Size = new System.Drawing.Size(69, 22);
-          this.toolStripButtonLinqBarf.Text = "Linq Barf";
-          this.toolStripButtonLinqBarf.Visible = false;
-          this.toolStripButtonLinqBarf.Click += new System.EventHandler(this.toolStripButtonLinqBarf_Click);
+          this.toolStripButtonLinqAnonymous.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqAnonymous.Image")));
+          this.toolStripButtonLinqAnonymous.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonLinqAnonymous.Name = "toolStripButtonLinqAnonymous";
+          this.toolStripButtonLinqAnonymous.Size = new System.Drawing.Size(105, 22);
+          this.toolStripButtonLinqAnonymous.Text = "Linq Anonymous";
+          this.toolStripButtonLinqAnonymous.Click += new System.EventHandler(this.toolStripButtonLinqBarf_Click);
           // 
           // numericUpDownNumRows
           // 
@@ -292,7 +291,7 @@ namespace AW.Win
             0,
             0,
             0});
-          this.numericUpDownNumRows.Location = new System.Drawing.Point(649, 2);
+          this.numericUpDownNumRows.Location = new System.Drawing.Point(723, 2);
           this.numericUpDownNumRows.Name = "numericUpDownNumRows";
           this.numericUpDownNumRows.Size = new System.Drawing.Size(59, 20);
           this.numericUpDownNumRows.TabIndex = 2;
@@ -349,7 +348,7 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedList;
         private System.Windows.Forms.ToolStripButton toolStripButtonLinq;
         private System.Windows.Forms.NumericUpDown numericUpDownNumRows;
-        private System.Windows.Forms.ToolStripButton toolStripButtonLinqBarf;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLinqAnonymous;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 
     }

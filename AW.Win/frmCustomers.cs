@@ -159,6 +159,71 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
     /// <remarks>http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14170
     /// SQL Output:
+    ///SELECT DISTINCT TOP 3 [LPA_L3].[AddressLine1]   AS [addressLine1],
+    ///                      [LPA_L3].[AddressLine2]   AS [addressLine2],
+    ///                      [LPA_L3].[City]           AS [city],
+    ///                      [LPA_L4].[Name]           AS [addressType],
+    ///                      [LPA_L6].[Title]          AS [title],
+    ///                      [LPA_L6].[FirstName]      AS [firstName],
+    ///                      [LPA_L6].[MiddleName]     AS [middleName],
+    ///                      [LPA_L6].[LastName]       AS [lastName],
+    ///                      [LPA_L6].[Suffix]         AS [suffix],
+    ///                      [LPA_L6].[EmailAddress]   AS [emailAddress],
+    ///                      [LPA_L6].[EmailPromotion] AS [emailPromotion],
+    ///                      [LPA_L8].[Name]           AS [countryRegionName],
+    ///                      [LPA_L7].[Name]           AS [stateProvinceName],
+    ///                      [LPA_L1].[CustomerId]     AS [customerId]
+    ///FROM   ((((((((SELECT [LPLA_1].[CustomerID]    AS [CustomerId],
+    ///                      [LPLA_1].[TerritoryID]   AS [TerritoryId],
+    ///                      [LPLA_1].[AccountNumber],
+    ///                      [LPLA_1].[CustomerType],
+    ///                      [LPLA_1].[rowguid]       AS [Rowguid],
+    ///                      [LPLA_1].[ModifiedDate]
+    ///               FROM   [AdventureWorks].[Sales].[Customer] [LPLA_1]
+    ///               WHERE  ((([LPLA_1].[CustomerID] > @CustomerId1))
+    ///                       AND EXISTS (SELECT [LPA_L11].[ModifiedDate]
+    ///                                   FROM   ([AdventureWorks].[Person].[Address] [LPA_L10]
+    ///                                           INNER JOIN [AdventureWorks].[Sales].[CustomerAddress] [LPA_L11]
+    ///                                             ON [LPA_L10].[AddressID] = [LPA_L11].[AddressID])
+    ///                                   WHERE  ([LPLA_1].[CustomerID] = [LPA_L11].[CustomerID]
+    ///                                           AND ([LPA_L10].[City] = @City2))))) [LPA_L1]
+    ///              INNER JOIN [AdventureWorks].[Sales].[CustomerAddress] [LPA_L2]
+    ///                ON ([LPA_L1].[CustomerId] = [LPA_L2].[CustomerID]))
+    ///             INNER JOIN [AdventureWorks].[Person].[Address] [LPA_L3]
+    ///               ON [LPA_L3].[AddressID] = [LPA_L2].[AddressID])
+    ///            INNER JOIN [AdventureWorks].[Person].[AddressType] [LPA_L4]
+    ///              ON [LPA_L4].[AddressTypeID] = [LPA_L2].[AddressTypeID])
+    ///           INNER JOIN [AdventureWorks].[Sales].[Individual] [LPA_L5]
+    ///             ON [LPA_L1].[CustomerId] = [LPA_L5].[CustomerID])
+    ///          INNER JOIN [AdventureWorks].[Person].[Contact] [LPA_L6]
+    ///            ON [LPA_L6].[ContactID] = [LPA_L5].[ContactID])
+    ///         INNER JOIN [AdventureWorks].[Person].[StateProvince] [LPA_L7]
+    ///           ON [LPA_L7].[StateProvinceID] = [LPA_L3].[StateProvinceID])
+    ///        INNER JOIN [AdventureWorks].[Person].[CountryRegion] [LPA_L8]
+    ///          ON [LPA_L8].[CountryRegionCode] = [LPA_L7].[CountryRegionCode])</remarks>
+    private void toolStripButtonLinq_Click(object sender, EventArgs e)
+    {
+      var customers = AWHelper.MetaData.Customer.AsQueryable();
+      customers = customers.Where(c => c.CustomerId > 10);
+      var cityName = "London";
+      if (cityName != "")
+        customers = from customer in customers
+                    where customer.CustomerAddress.Any(ca => ca.Address.City == cityName)
+                    select customer;
+
+      var customerlist = CustomerListLinqedTypedList.GetCustomerListQuery(customers);
+      if (MaxNumberOfItemsToReturn > 0)
+        customerlist = customerlist.Take(MaxNumberOfItemsToReturn);
+      bindingSource1.DataSource = customerlist;
+    }
+
+    /// <summary>
+    /// Handles the Click event of the toolStripButtonLinqBarf control.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+    /// <remarks>http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14170
+    /// SQL Output:
     ///SELECT [LPA_L3].[ADDRESSLINE1],
     ///       [LPA_L3].[ADDRESSLINE2],
     ///       [LPA_L3].[CITY],
@@ -188,10 +253,9 @@ namespace AW.Win
     ///           ON [LPA_L7].[STATEPROVINCEID] = [LPA_L3].[STATEPROVINCEID])
     ///        INNER JOIN [ADVENTUREWORKS].[PERSON].[COUNTRYREGION] [LPA_L8]
     ///          ON [LPA_L8].[COUNTRYREGIONCODE] = [LPA_L7].[COUNTRYREGIONCODE])</remarks>
-    private void toolStripButtonLinq_Click(object sender, EventArgs e)
+    private void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
     {
       var customers = AWHelper.MetaData.Customer.AsQueryable();
-      customers = customers.Where(c => c.CustomerId > 10);
       var customerlist = from customer in customers
                          from customerAddress in customer.CustomerAddress
                          select new
@@ -214,16 +278,6 @@ namespace AW.Win
       if (MaxNumberOfItemsToReturn > 0)
         customerlist = customerlist.Take(MaxNumberOfItemsToReturn);
       bindingSource1.DataSource = customerlist;
-    }
-
-    /// <summary>
-    /// Handles the Click event of the toolStripButtonLinqBarf control.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-    /// <remarks></remarks>
-    private void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
-    {
     }
   }
 }
