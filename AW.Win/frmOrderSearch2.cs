@@ -145,13 +145,22 @@ namespace AW.Win
     /// </summary>
     private void Barf()
     {
-      var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
+      var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
 
-      query = from soh in query
-              where soh.Customer.CustomerId>10
+      var w = (from soh in query
+              from sod in soh.SalesOrderDetail
+               select new { soh.SalesOrderId, soh.Customer.AccountNumber, soh.CreditCard.CardNumber }).ToList();
+
+      query = from soh in AWHelper.MetaData.SalesOrderHeader
+              from sod in soh.SalesOrderDetail
               select soh;
+      //SQL error
+      var y = (from soh in query
+               select new { soh.SalesOrderId }).ToList();
 
-      //query = query.Where(soh => soh.SalesOrderId > 10);
+      //Bad alias? error
+      var x = (from soh in query
+               select new {soh.SalesOrderId, soh.CreditCard.CardNumber}).ToList();
 
       if (firstName != "")
         query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
@@ -181,7 +190,7 @@ namespace AW.Win
                 select soh;
 
       var sohShipMethod = from soh in query
-              select new {soh.SalesOrderId, soh.CreditCard.CardNumber};
+                          select new {soh.SalesOrderId, soh.CreditCard.CardNumber};
 
       if (MaxNumberOfItemsToReturn > 0)
         sohShipMethod = sohShipMethod.Take(MaxNumberOfItemsToReturn);
@@ -220,7 +229,7 @@ namespace AW.Win
         q1 = q1.Take(MaxNumberOfItemsToReturn);
       try
       {
-      var z = q1.ToList();
+        var z = q1.ToList();
       }
       catch (Exception e)
       {
@@ -231,8 +240,8 @@ namespace AW.Win
 //      var q2 = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).SelectMany(@t => @t.customer.SalesOrderHeader.DefaultIfEmpty(), (@t, soh) => new {@t.customer.CustomerId, @t.ca.AddressId, soh.SalesOrderId});
       var q2 = from customer in customersDerivedTable
                from ca in customer.CustomerAddress
-   //            from soh in customer.SalesOrderHeader.DefaultIfEmpty()
-               select new { customer.CustomerId, customer.SalesTerritory.Name };
+               //            from soh in customer.SalesOrderHeader.DefaultIfEmpty()
+               select new {customer.CustomerId, customer.SalesTerritory.Name};
       if (MaxNumberOfItemsToReturn > 0)
         q2 = q2.Take(MaxNumberOfItemsToReturn);
       var w = q2.ToList();
