@@ -145,57 +145,19 @@ namespace AW.Win
     /// </summary>
     private void Barf()
     {
-      var query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
-
-      var w = (from soh in query
-              from sod in soh.SalesOrderDetail
-               select new { soh.SalesOrderId, soh.Customer.AccountNumber, soh.CreditCard.CardNumber }).ToList();
-
-      query = from soh in AWHelper.MetaData.SalesOrderHeader
+      var query = from soh in AWHelper.MetaData.SalesOrderHeader
               from sod in soh.SalesOrderDetail
               select soh;
-      //SQL error
-      var y = (from soh in query
-               select new { soh.SalesOrderId }).ToList();
 
-      //Bad alias? error
       var x = (from soh in query
-               select new {soh.SalesOrderId, soh.CreditCard.CardNumber}).ToList();
+               select new { soh.SalesOrderId, soh.Customer.AccountNumber, soh.CreditCard.CardNumber }).ToList();
 
-      if (firstName != "")
-        query = query.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(firstName));
 
-      if (lastName != "")
-      {
-        query = query.Where(q => q.Customer.Individual.Contact.LastName.Contains(lastName));
-      }
+      query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
 
-      if (state != "")
-        // query = query.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state));
-        query = from soh in query
-                where soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == state)
-                select soh;
-
-      if (cityName != "")
-      {
-        //query = query.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.City == cityName));
-        query = from soh in query
-                where soh.Customer.CustomerAddress.Any(ca => ca.Address.City == cityName)
-                select soh;
-      }
-
-      if (countries.Count > 0)
-        query = from soh in query
-                where soh.Customer.CustomerAddress.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
-                select soh;
-
-      var sohShipMethod = from soh in query
-                          select new {soh.SalesOrderId, soh.CreditCard.CardNumber};
-
-      if (MaxNumberOfItemsToReturn > 0)
-        sohShipMethod = sohShipMethod.Take(MaxNumberOfItemsToReturn);
-
-      salesOrderHeaderEntityBindingSource.DataSource = sohShipMethod;
+      var w = (from soh in query
+               from sod in soh.SalesOrderDetail
+               select new { soh.SalesOrderId, soh.Customer.AccountNumber, soh.CreditCard.CardNumber }).ToList();
     }
 
     /// <summary>
