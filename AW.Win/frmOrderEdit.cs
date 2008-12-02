@@ -2,8 +2,10 @@ using System;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.EntityValidators;
 using AW.Data.WinForms;
 using AW.Win.Properties;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
@@ -25,11 +27,12 @@ namespace AW.Win
     private void frmOrderEdit_Load(object sender, EventArgs e)
     {
       PopulateListBoxes();
-      if (_order.IsNew == false)
-      {
-        PopulateOrderData();
-        PopulateOrderDetailData();
-      }
+   
+        if (_order != null && _order.IsNew == false)
+        {
+          PopulateOrderData();
+          PopulateOrderDetailData();
+        }
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrderEditSizeLocation);
     }
 
@@ -133,23 +136,22 @@ namespace AW.Win
           _order.SetNewFieldValue(
             (int) SalesOrderHeaderFieldIndex.ShipDate, null);
         _order.ShipMethodId = Convert.ToInt32(cbShipMethod.SelectedValue);
-        if (_order.Validate())
+
+        try
         {
           _order.Save();
-          return true;
         }
-        else
+        catch (ORMEntityValidationException ex)
         {
-          //note SalesOrderHeaderEntityValidator val = 
-          //    (SalesOrderHeaderEntityValidator)
-          //    _order.EntityValidatorToUse;
-          //MessageBox.Show(
-          //    val.ErrorMessage,
-          //    "Error",
-          //    MessageBoxButtons.OK,
-          //    MessageBoxIcon.Stop);
+          var val = (SalesOrderHeaderEntityValidator) _order.Validator;
+          MessageBox.Show(
+            ex.Message,
+            "Error",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Stop);
           return false;
         }
+        return true;
       }
       catch (Exception err)
       {
@@ -160,7 +162,7 @@ namespace AW.Win
 
     private void tspClose_Click(object sender, EventArgs e)
     {
-      _order.Refetch();
+      if (_order != null) _order.Refetch();
       Close();
     }
 
@@ -178,13 +180,13 @@ namespace AW.Win
 
     private void tbPurchaseOrder_TextChanged(object sender, EventArgs e)
     {
-      //note AW.Data.WinForms.Validation.ValidatePropertyAssignment<string>
-      //(tbPurchaseOrder,
-      //(int)SalesOrderHeaderFieldIndex.PurchaseOrderNumber,
-      //tbPurchaseOrder.Text,
-      //SalesOrderHeaderValidator.PurchaseOrderError,
-      //myError,
-      //_order);
+      Validation.ValidatePropertyAssignment
+        (tbPurchaseOrder,
+         (int) SalesOrderHeaderFieldIndex.PurchaseOrderNumber,
+         tbPurchaseOrder.Text,
+         SalesOrderHeaderEntityValidator.PurchaseOrderError,
+         myError,
+         _order);
     }
 
     private void frmOrderEdit_FormClosing(object sender, FormClosingEventArgs e)

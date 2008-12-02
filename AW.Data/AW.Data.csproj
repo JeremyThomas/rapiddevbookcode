@@ -418,6 +418,7 @@
     <Compile Include="RelationClasses\CustomerViewRelatedRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="SalesOrderHeaderEntityValidator.cs" />
     <Compile Include="StoredProcedureCallerClasses\ActionProcedures.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

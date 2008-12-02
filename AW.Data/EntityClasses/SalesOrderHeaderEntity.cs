@@ -8,15 +8,11 @@
 // Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
-using System.ComponentModel;
-using System.Collections;
 #if !CF
 using System.Runtime.Serialization;
 #endif
-using AW.Data.FactoryClasses;
+using AW.Data.EntityValidators;
 using AW.Data.CollectionClasses;
-using AW.Data.DaoClasses;
-using AW.Data.RelationClasses;
 
 
 namespace AW.Data.EntityClasses
@@ -396,7 +392,7 @@ namespace AW.Data.EntityClasses
       get { return CustomerViewRelated.PostalCode; }
     }
 
-    //note  //protected override void OnFieldValidateComplete(IEntityField field, bool validationResult)
+    //note protected override void OnFieldValidateComplete(IEntityField field, bool validationResult)
     //{
     //    base.OnFieldValidateComplete(field, validationResult);
     //}
@@ -404,7 +400,17 @@ namespace AW.Data.EntityClasses
     //{
     //    base.OnFieldValidate(field);
     //}
-    // __LLBLGENPRO_USER_CODE_REGION_END
+
+            /// <summary>
+        /// Called at the end of the initialization routine. Raises Initialized event.
+        /// </summary>
+        protected override void OnInitialized()
+        {
+            // Set the validator to this customer instance.
+          this.Validator = new SalesOrderHeaderEntityValidator();
+        }
+
+     //__LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 
 		#region Included Code

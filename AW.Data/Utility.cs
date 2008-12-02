@@ -21,8 +21,8 @@ namespace AW.Data.WinForms
             {
                 IValidator Validator = Entity.Validator;
                 if (Value.Equals(Entity.GetCurrentFieldValue(
-                    FieldToValidate)) == false 
-                  //note  && Validator.Validate(FieldToValidate, Value) == false
+                    FieldToValidate)) == false
+                    && Validator.ValidateFieldValue(Entity, FieldToValidate, Value) == false
                   )
                 {
                     myError.SetError(ControltoValidate, ErrorMessage);
