@@ -184,7 +184,7 @@ namespace AW.Win
         (tbPurchaseOrder,
          (int) SalesOrderHeaderFieldIndex.PurchaseOrderNumber,
          tbPurchaseOrder.Text,
-         SalesOrderHeaderEntityValidator.PurchaseOrderError,
+         SalesOrderHeaderEntity.PurchaseOrderError,
          myError,
          _order);
     }
