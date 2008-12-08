@@ -14,10 +14,9 @@ using System.Runtime.Serialization;
 using AW.Data.EntityValidators;
 using AW.Data.CollectionClasses;
 
-
 namespace AW.Data.EntityClasses
 {
-	
+
   // __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
   using HelperClasses;
   using Linq;
@@ -26,71 +25,72 @@ namespace AW.Data.EntityClasses
   using SD.LLBLGen.Pro.ORMSupportClasses;
   // __LLBLGENPRO_USER_CODE_REGION_END
 
-	/// <summary>
-	/// Entity class which represents the entity 'SalesOrderHeader'. <br/>
-	/// This class is used for Business Logic or for framework extension code. 
-	/// </summary>
-	[Serializable]
-	public partial class SalesOrderHeaderEntity : SalesOrderHeaderEntityBase
+  /// <summary>
+  /// Entity class which represents the entity 'SalesOrderHeader'. <br/>
+  /// This class is used for Business Logic or for framework extension code. 
+  /// </summary>
+  [Serializable]
+  public class SalesOrderHeaderEntity : SalesOrderHeaderEntityBase
     // __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
     // __LLBLGENPRO_USER_CODE_REGION_END	
-	{
-		#region Constructors
-		/// <summary>
-		/// CTor
-		/// </summary>
-		public SalesOrderHeaderEntity():base()
-		{
-		}
+  {
+    #region Constructors
 
-	
-		/// <summary>
-		/// CTor
-		/// </summary>
-		/// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
-		public SalesOrderHeaderEntity(System.Int32 salesOrderId):
-			base(salesOrderId)
-		{
-		}
+    /// <summary>
+    /// CTor
+    /// </summary>
+    public SalesOrderHeaderEntity()
+    {
+    }
 
 
-		/// <summary>
-		/// CTor
-		/// </summary>
-		/// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesOrderHeaderEntity(System.Int32 salesOrderId, IPrefetchPath prefetchPathToUse):
-			base(salesOrderId, prefetchPathToUse)
-		{
-		}
+    /// <summary>
+    /// CTor
+    /// </summary>
+    /// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
+    public SalesOrderHeaderEntity(Int32 salesOrderId) :
+      base(salesOrderId)
+    {
+    }
 
 
-		/// <summary>
-		/// CTor
-		/// </summary>
-		/// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
-		/// <param name="validator">The custom validator object for this SalesOrderHeaderEntity</param>
-		public SalesOrderHeaderEntity(System.Int32 salesOrderId, IValidator validator):
-			base(salesOrderId, validator)
-		{
-		}
-	
-		
-		/// <summary>
-		/// Private CTor for deserialization
-		/// </summary>
-		/// <param name="info"></param>
-		/// <param name="context"></param>
-		protected SalesOrderHeaderEntity(SerializationInfo info, StreamingContext context) : base(info, context)
-		{
-			
+    /// <summary>
+    /// CTor
+    /// </summary>
+    /// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
+    /// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
+    public SalesOrderHeaderEntity(Int32 salesOrderId, IPrefetchPath prefetchPathToUse) :
+      base(salesOrderId, prefetchPathToUse)
+    {
+    }
+
+
+    /// <summary>
+    /// CTor
+    /// </summary>
+    /// <param name="salesOrderId">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
+    /// <param name="validator">The custom validator object for this SalesOrderHeaderEntity</param>
+    public SalesOrderHeaderEntity(Int32 salesOrderId, IValidator validator) :
+      base(salesOrderId, validator)
+    {
+    }
+
+
+    /// <summary>
+    /// Private CTor for deserialization
+    /// </summary>
+    /// <param name="info"></param>
+    /// <param name="context"></param>
+    protected SalesOrderHeaderEntity(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
       // __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
       // __LLBLGENPRO_USER_CODE_REGION_END
-		}
-		#endregion
+    }
 
-		#region Custom Entity code
-		
+    #endregion
+
+    #region Custom Entity code
+
     // __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
     //public static SalesOrderHeaderCollection GetSalesOrderHeaderCollection
     //    (
@@ -194,7 +194,7 @@ namespace AW.Data.EntityClasses
       int maxNumberOfItemsToReturn
       )
     {
-      var Relations = new RelationCollection();
+      var relations = new RelationCollection();
       IPredicateExpression Filter = new PredicateExpression();
       if (
         (FirstName != "") |
@@ -205,9 +205,7 @@ namespace AW.Data.EntityClasses
         (Zip != "")
         )
       {
-        Relations.Add(
-          SalesOrderHeaderEntityBase.Relations.
-            CustomerViewRelatedEntityUsingCustomerId);
+        relations.Add(Relations.CustomerViewRelatedEntityUsingCustomerId);
       }
       if (FromDate != DateTime.MinValue)
       {
@@ -259,15 +257,11 @@ namespace AW.Data.EntityClasses
         Filter.Add(
           SalesOrderHeaderFields.SalesOrderNumber == OrderNumber);
       }
-      ISortExpression Sort = new SortExpression();
-      Sort.Add(
-        SalesOrderHeaderFields.OrderDate | SortOperator.Ascending);
+      ISortExpression Sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
       var Orders = new SalesOrderHeaderCollection();
       //note      Orders.SupportsSorting = true;
-      IPrefetchPath Prefetch =
-        new PrefetchPath((int) EntityType.SalesOrderHeaderEntity);
-      //note Prefetch.Add(SalesOrderHeaderEntity.PrefetchPathCustomerView_);
-      Orders.GetMulti(Filter, maxNumberOfItemsToReturn, Sort, Relations, Prefetch);
+      IPrefetchPath Prefetch = new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {PrefetchPathCustomerViewRelated};
+      Orders.GetMulti(Filter, maxNumberOfItemsToReturn, Sort, relations, Prefetch);
       return Orders;
     }
 
@@ -286,7 +280,7 @@ namespace AW.Data.EntityClasses
       int maxNumberOfItemsToReturn
       )
     {
-      var Relations = new RelationCollection();
+      var relations = new RelationCollection();
       if (
         (FirstName != "") |
         (LastName != "") |
@@ -296,8 +290,8 @@ namespace AW.Data.EntityClasses
         (Zip != "")
         )
       {
-        Relations.Add(
-          SalesOrderHeaderEntityBase.Relations.
+        relations.Add(
+          Relations.
             CustomerViewRelatedEntityUsingCustomerId);
       }
 
@@ -401,20 +395,21 @@ namespace AW.Data.EntityClasses
     //    base.OnFieldValidate(field);
     //}
 
-            /// <summary>
-        /// Called at the end of the initialization routine. Raises Initialized event.
-        /// </summary>
-        protected override void OnInitialized()
-        {
-            // Set the validator to this customer instance.
-          this.Validator = new SalesOrderHeaderEntityValidator();
-        }
+    /// <summary>
+    /// Called at the end of the initialization routine. Raises Initialized event.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+      // Set the validator to this customer instance.
+      Validator = new SalesOrderHeaderEntityValidator();
+    }
 
-     //__LLBLGENPRO_USER_CODE_REGION_END
-		#endregion
+    //__LLBLGENPRO_USER_CODE_REGION_END
 
-		#region Included Code
+    #endregion
 
-		#endregion
-	}
+    #region Included Code
+
+    #endregion
+  }
 }
