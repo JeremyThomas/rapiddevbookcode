@@ -30,7 +30,7 @@ namespace AW.Data.EntityClasses
   /// This class is used for Business Logic or for framework extension code. 
   /// </summary>
   [Serializable]
-  public class SalesOrderHeaderEntity : SalesOrderHeaderEntityBase
+  public partial class SalesOrderHeaderEntity : SalesOrderHeaderEntityBase
     // __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
     // __LLBLGENPRO_USER_CODE_REGION_END	
   {
@@ -280,21 +280,6 @@ namespace AW.Data.EntityClasses
       int maxNumberOfItemsToReturn
       )
     {
-      var relations = new RelationCollection();
-      if (
-        (FirstName != "") |
-        (LastName != "") |
-        (CityName != "") |
-        (StateName != "") |
-        (CountryName != "") |
-        (Zip != "")
-        )
-      {
-        relations.Add(
-          Relations.
-            CustomerViewRelatedEntityUsingCustomerId);
-      }
-
       var predicate = MetaData.SalesOrderHeader.AsQueryable();
       if (FromDate != DateTime.MinValue)
       {
@@ -307,27 +292,27 @@ namespace AW.Data.EntityClasses
       if (FirstName != "")
       {
         //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
-        predicate = predicate.Where(soh => soh.CustomerFirstName.Contains(FirstName));
+        predicate = predicate.Where(soh => soh.Customer.Individual.Contact.FirstName.Contains(FirstName));
       }
       if (LastName != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerLastName.Contains(LastName));
+        predicate = predicate.Where(soh => soh.Customer.Individual.Contact.LastName.Contains(LastName));
       }
       if (CityName != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerCity.Contains(CityName));
+        predicate = predicate.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.City == CityName));
       }
       if (StateName != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerState == StateName);
+        predicate = predicate.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == StateName));
       }
       if (CountryName != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerCountry == CountryName);
+        predicate = predicate.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.CountryRegion.Name == CountryName));
       }
       if (Zip != "")
       {
-        predicate = predicate.Where(soh => soh.CustomerZip == Zip);
+        predicate = predicate.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.PostalCode == Zip));
       }
       if (OrderID != 0)
       {
@@ -337,7 +322,7 @@ namespace AW.Data.EntityClasses
       {
         predicate = predicate.Where(soh => soh.SalesOrderNumber == OrderNumber);
       }
-      var q = from c in predicate select c;
+      var q = (from c in predicate select c).WithPath(p => p.Prefetch(c => c.CustomerViewRelated));
       q = q.OrderBy(s => s.OrderDate);
       if (maxNumberOfItemsToReturn > 0)
         q = q.Take(maxNumberOfItemsToReturn);
@@ -358,7 +343,11 @@ namespace AW.Data.EntityClasses
 
     public string CustomerLastName
     {
-      get { return CustomerViewRelated.LastName; }
+      get
+      {
+        PostReadXmlFixups();
+        return CustomerViewRelated.LastName;
+      }
     }
 
     public string CustomerFirstName
@@ -385,15 +374,6 @@ namespace AW.Data.EntityClasses
     {
       get { return CustomerViewRelated.PostalCode; }
     }
-
-    //note protected override void OnFieldValidateComplete(IEntityField field, bool validationResult)
-    //{
-    //    base.OnFieldValidateComplete(field, validationResult);
-    //}
-    //protected override void OnFieldValidate(IEntityField field)
-    //{
-    //    base.OnFieldValidate(field);
-    //}
 
     /// <summary>
     /// Called at the end of the initialization routine. Raises Initialized event.
