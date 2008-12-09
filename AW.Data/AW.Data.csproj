@@ -270,6 +270,7 @@
     <Compile Include="EntityClasses\CommonEntityBase.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="EntityClasses\CommonEntityCustom.cs" />
     <Compile Include="EntityClasses\ContactEntity.cs">
       <SubType>Code</SubType>
       <GeneratedBy>LLBLGen Pro</GeneratedBy>

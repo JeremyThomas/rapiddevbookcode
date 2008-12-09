@@ -30,10 +30,10 @@ namespace AW.Win
         {
           this.components = new System.ComponentModel.Container();
           System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderEdit));
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
           this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
           this.label8 = new System.Windows.Forms.Label();
           this.label3 = new System.Windows.Forms.Label();
@@ -73,11 +73,13 @@ namespace AW.Win
           this.lineTotalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderDetailCollection1 = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
           this.myError = new System.Windows.Forms.ErrorProvider(this.components);
+          this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
           this.tableLayoutPanel1.SuspendLayout();
           this.toolStrip1.SuspendLayout();
           this.tableLayoutPanel2.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.myError)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
           this.SuspendLayout();
           // 
           // tableLayoutPanel1
@@ -204,6 +206,7 @@ namespace AW.Win
           // dtpOrderDate
           // 
           this.dtpOrderDate.Checked = false;
+          this.dtpOrderDate.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.salesOrderHeaderEntityBindingSource, "OrderDate", true));
           this.dtpOrderDate.Dock = System.Windows.Forms.DockStyle.Fill;
           this.dtpOrderDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
           this.dtpOrderDate.Location = new System.Drawing.Point(97, 3);
@@ -213,6 +216,7 @@ namespace AW.Win
           // 
           // dtpDueDate
           // 
+          this.dtpDueDate.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.salesOrderHeaderEntityBindingSource, "DueDate", true));
           this.dtpDueDate.Dock = System.Windows.Forms.DockStyle.Fill;
           this.dtpDueDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
           this.dtpDueDate.Location = new System.Drawing.Point(97, 28);
@@ -222,6 +226,7 @@ namespace AW.Win
           // 
           // dtpShipDate
           // 
+          this.dtpShipDate.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.salesOrderHeaderEntityBindingSource, "ShipDate", true));
           this.dtpShipDate.Dock = System.Windows.Forms.DockStyle.Fill;
           this.dtpShipDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
           this.dtpShipDate.Location = new System.Drawing.Point(97, 53);
@@ -233,6 +238,7 @@ namespace AW.Win
           // cbOnlineOrder
           // 
           this.cbOnlineOrder.AutoSize = true;
+          this.cbOnlineOrder.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.salesOrderHeaderEntityBindingSource, "OnlineOrderFlag", true));
           this.cbOnlineOrder.Dock = System.Windows.Forms.DockStyle.Fill;
           this.cbOnlineOrder.Location = new System.Drawing.Point(97, 78);
           this.cbOnlineOrder.Name = "cbOnlineOrder";
@@ -243,6 +249,7 @@ namespace AW.Win
           // 
           // tbPurchaseOrder
           // 
+          this.tbPurchaseOrder.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.salesOrderHeaderEntityBindingSource, "PurchaseOrderNumber", true));
           this.tbPurchaseOrder.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbPurchaseOrder.Location = new System.Drawing.Point(97, 103);
           this.tbPurchaseOrder.Name = "tbPurchaseOrder";
@@ -252,6 +259,7 @@ namespace AW.Win
           // 
           // cbShipMethod
           // 
+          this.cbShipMethod.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.salesOrderHeaderEntityBindingSource, "ShipMethodId", true));
           this.cbShipMethod.Dock = System.Windows.Forms.DockStyle.Fill;
           this.cbShipMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
           this.cbShipMethod.FormattingEnabled = true;
@@ -259,9 +267,11 @@ namespace AW.Win
           this.cbShipMethod.Name = "cbShipMethod";
           this.cbShipMethod.Size = new System.Drawing.Size(215, 21);
           this.cbShipMethod.TabIndex = 38;
+          this.cbShipMethod.ValueMember = "AddressCollectionViaSalesOrderHeader";
           // 
           // tbCustomer
           // 
+          this.tbCustomer.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.salesOrderHeaderEntityBindingSource, "CustomerViewRelated.DisplayName", true));
           this.tbCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbCustomer.Location = new System.Drawing.Point(412, 3);
           this.tbCustomer.Name = "tbCustomer";
@@ -291,6 +301,7 @@ namespace AW.Win
           // 
           // tbSubtotal
           // 
+          this.tbSubtotal.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.salesOrderHeaderEntityBindingSource, "SubTotal", true));
           this.tbSubtotal.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbSubtotal.Location = new System.Drawing.Point(412, 53);
           this.tbSubtotal.Name = "tbSubtotal";
@@ -311,6 +322,7 @@ namespace AW.Win
           // 
           // tbTax
           // 
+          this.tbTax.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.salesOrderHeaderEntityBindingSource, "TaxAmt", true));
           this.tbTax.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbTax.Location = new System.Drawing.Point(412, 78);
           this.tbTax.Name = "tbTax";
@@ -331,6 +343,7 @@ namespace AW.Win
           // 
           // tbFreight
           // 
+          this.tbFreight.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.salesOrderHeaderEntityBindingSource, "Freight", true));
           this.tbFreight.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbFreight.Location = new System.Drawing.Point(412, 103);
           this.tbFreight.Name = "tbFreight";
@@ -352,6 +365,7 @@ namespace AW.Win
           // lblTotal
           // 
           this.lblTotal.AutoSize = true;
+          this.lblTotal.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.salesOrderHeaderEntityBindingSource, "TotalDue", true));
           this.lblTotal.Dock = System.Windows.Forms.DockStyle.Fill;
           this.lblTotal.Location = new System.Drawing.Point(412, 125);
           this.lblTotal.Name = "lblTotal";
@@ -465,9 +479,9 @@ namespace AW.Win
           // 
           this.orderQtyDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.orderQtyDataGridViewTextBoxColumn.DataPropertyName = "OrderQty";
-          dataGridViewCellStyle1.Format = "N0";
-          dataGridViewCellStyle1.NullValue = null;
-          this.orderQtyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+          dataGridViewCellStyle17.Format = "N0";
+          dataGridViewCellStyle17.NullValue = null;
+          this.orderQtyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle17;
           this.orderQtyDataGridViewTextBoxColumn.HeaderText = "#";
           this.orderQtyDataGridViewTextBoxColumn.Name = "orderQtyDataGridViewTextBoxColumn";
           this.orderQtyDataGridViewTextBoxColumn.Width = 39;
@@ -476,9 +490,9 @@ namespace AW.Win
           // 
           this.unitPriceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.unitPriceDataGridViewTextBoxColumn.DataPropertyName = "UnitPrice";
-          dataGridViewCellStyle2.Format = "C2";
-          dataGridViewCellStyle2.NullValue = null;
-          this.unitPriceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+          dataGridViewCellStyle18.Format = "C2";
+          dataGridViewCellStyle18.NullValue = null;
+          this.unitPriceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle18;
           this.unitPriceDataGridViewTextBoxColumn.HeaderText = "Price/Unit";
           this.unitPriceDataGridViewTextBoxColumn.Name = "unitPriceDataGridViewTextBoxColumn";
           this.unitPriceDataGridViewTextBoxColumn.Width = 80;
@@ -487,9 +501,9 @@ namespace AW.Win
           // 
           this.unitPriceDiscountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.unitPriceDiscountDataGridViewTextBoxColumn.DataPropertyName = "UnitPriceDiscount";
-          dataGridViewCellStyle3.Format = "C2";
-          dataGridViewCellStyle3.NullValue = null;
-          this.unitPriceDiscountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+          dataGridViewCellStyle19.Format = "C2";
+          dataGridViewCellStyle19.NullValue = null;
+          this.unitPriceDiscountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle19;
           this.unitPriceDiscountDataGridViewTextBoxColumn.HeaderText = "Discount/Unit";
           this.unitPriceDiscountDataGridViewTextBoxColumn.Name = "unitPriceDiscountDataGridViewTextBoxColumn";
           this.unitPriceDiscountDataGridViewTextBoxColumn.Width = 98;
@@ -498,9 +512,9 @@ namespace AW.Win
           // 
           this.lineTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
           this.lineTotalDataGridViewTextBoxColumn.DataPropertyName = "LineTotal";
-          dataGridViewCellStyle4.Format = "C2";
-          dataGridViewCellStyle4.NullValue = null;
-          this.lineTotalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+          dataGridViewCellStyle20.Format = "C2";
+          dataGridViewCellStyle20.NullValue = null;
+          this.lineTotalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle20;
           this.lineTotalDataGridViewTextBoxColumn.HeaderText = "Total";
           this.lineTotalDataGridViewTextBoxColumn.Name = "lineTotalDataGridViewTextBoxColumn";
           this.lineTotalDataGridViewTextBoxColumn.ReadOnly = true;
@@ -525,6 +539,11 @@ namespace AW.Win
           // myError
           // 
           this.myError.ContainerControl = this;
+          this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
+          // 
+          // salesOrderHeaderEntityBindingSource
+          // 
+          this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
           // 
           // frmOrderEdit
           // 
@@ -547,6 +566,7 @@ namespace AW.Win
           this.tableLayoutPanel2.ResumeLayout(false);
           ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.myError)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -593,5 +613,6 @@ namespace AW.Win
         private System.Windows.Forms.TextBox tbSubtotal;
         private System.Windows.Forms.TextBox tbTax;
         private System.Windows.Forms.ErrorProvider myError;
+        private System.Windows.Forms.BindingSource salesOrderHeaderEntityBindingSource;
     }
 }

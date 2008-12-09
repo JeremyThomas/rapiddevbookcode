@@ -44,6 +44,13 @@ namespace AW.Data.WinForms
       return Validated;
     }
 
+    public static bool ValidatePropertyAssignment<T>(T Value, EntityBase Entity, int FieldToValidate)
+    {
+      if (Entity.Validator != null)
+        return Value.Equals(Entity.GetCurrentFieldValue(FieldToValidate)) || Entity.Validator.ValidateFieldValue(Entity, FieldToValidate, Value);
+      return true;
+    }
+
     public static bool ValidateForm(Control mycontrol, ErrorProvider MyError)
     {
       var IsValid = true;
@@ -97,11 +104,15 @@ namespace AW.Data.WinForms
     /// <remarks>Originally SalesOrderHeaderValidator.Validate</remarks>
     public static bool ValidateFieldValue(IEntityCore involvedEntity, int fieldIndex, object value)
     {
-      var validationAttributes = Model.GetTable(involvedEntity.GetType()).GetColumn(FieldInfoProviderSingleton.GetInstance().
-        GetFieldInfo(involvedEntity.LLBLGenProEntityName, fieldIndex).Name).Attributes.OfType<ValidationAttribute>();
+      var fieldName = FieldInfoProviderSingleton.GetInstance().GetFieldInfo(involvedEntity.LLBLGenProEntityName, fieldIndex).Name;
+      var validationAttributes = Model.GetTable(involvedEntity.GetType()).GetColumn(fieldName).Attributes.OfType<ValidationAttribute>();
+      involvedEntity.SetEntityFieldError(fieldName, string.Empty, false);
       foreach (var validationAttribute in validationAttributes)
         if (!validationAttribute.IsValid(value))
+        {
+          involvedEntity.SetEntityFieldError(fieldName, validationAttribute.ErrorMessage, true);
           return false;
+        }
       return true;
     }
   }

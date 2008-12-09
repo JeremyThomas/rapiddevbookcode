@@ -18,21 +18,20 @@ namespace AW.Win
       InitializeComponent();
     }
 
-    public frmOrderEdit(SalesOrderHeaderEntity Order)
+    public frmOrderEdit(SalesOrderHeaderEntity Order) : this()
     {
-      InitializeComponent();
       _order = Order;
     }
 
     private void frmOrderEdit_Load(object sender, EventArgs e)
     {
       PopulateListBoxes();
-   
-        if (_order != null && _order.IsNew == false)
-        {
-          PopulateOrderData();
-          PopulateOrderDetailData();
-        }
+
+      if (_order != null && _order.IsNew == false)
+      {
+        PopulateOrderData();
+        PopulateOrderDetailData();
+      }
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrderEditSizeLocation);
     }
 
@@ -45,21 +44,22 @@ namespace AW.Win
 
     private void PopulateOrderData()
     {
-      tbPurchaseOrder.Text = _order.PurchaseOrderNumber;
-      tbSubtotal.Text = _order.SubTotal.ToString("N2");
-      tbTax.Text = _order.TaxAmt.ToString("N2");
-      tbFreight.Text = _order.Freight.ToString("N2");
-      lblTotal.Text = _order.TotalDue.ToString("N2");
-      tbContact.Text = _order.Contact.DisplayName;
-      //note tbCustomer.Text = _order.CustomerView_.DisplayName;
-      cbOnlineOrder.Checked = _order.OnlineOrderFlag;
-      dtpOrderDate.Value = _order.OrderDate;
-      dtpDueDate.Value = _order.DueDate;
+      salesOrderHeaderEntityBindingSource.DataSource = _order;
+      //tbPurchaseOrder.Text = _order.PurchaseOrderNumber;
+      //tbSubtotal.Text = _order.SubTotal.ToString("N2");
+      //tbTax.Text = _order.TaxAmt.ToString("N2");
+      //tbFreight.Text = _order.Freight.ToString("N2");
+      //lblTotal.Text = _order.TotalDue.ToString("N2");
+      //tbContact.Text = _order.Contact.DisplayName;
+      //tbCustomer.Text = _order.CustomerView_.DisplayName;
+      //cbOnlineOrder.Checked = _order.OnlineOrderFlag;
+      //dtpOrderDate.Value = _order.OrderDate;
+      //dtpDueDate.Value = _order.DueDate;
       if (_order.ShipDate != DateTime.MinValue)
         dtpShipDate.Value = _order.ShipDate.Value;
       else
         dtpShipDate.Checked = false;
-      cbShipMethod.SelectedValue = _order.ShipMethodId;
+      //cbShipMethod.SelectedValue = _order.ShipMethodId;
     }
 
     private void PopulateOrderDetailData()
@@ -67,16 +67,14 @@ namespace AW.Win
       dgvDetail.DataSource = _order.SalesOrderDetail;
     }
 
-    //private void tspSave_Click(object sender, EventArgs e)
-    //{
-    //    if (SaveData())
-    //    {
-    //        this.Close();
-    //    }
-    //}
     private void tspSave_Click(object sender, EventArgs e)
     {
-      if (Validation.ValidateForm(this, myError))
+      // there are errors, cancel the save until the user fixes them.
+      if (_order.GetEntityFieldsErrors() != string.Empty)
+      {
+        MessageBox.Show("There are errors in the entity. Please fix them prior to save.", "Please fix the errors.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+      }
+      else if (Validation.ValidateForm(this, myError))
       {
         if (SaveData())
         {
@@ -93,49 +91,23 @@ namespace AW.Win
       }
     }
 
-    //private bool SaveData()
-    //{
-    //    try
-    //    {
-    //        _order.Freight = Convert.ToDecimal(tbFreight.Text);
-    //        _order.PurchaseOrderNumber = tbPurchaseOrder.Text;
-    //        _order.SubTotal = Convert.ToDecimal(tbSubtotal.Text);
-    //        _order.TaxAmt = Convert.ToDecimal(tbTax.Text);
-    //        _order.OnlineOrderFlag = cbOnlineOrder.Checked;
-    //        _order.OrderDate = dtpOrderDate.Value;
-    //        _order.DueDate = dtpDueDate.Value;
-    //        if (dtpShipDate.Checked)
-    //            _order.ShipDate = dtpShipDate.Value;
-    //        else
-    //            _order.SetNewFieldValue(
-    //                (int)SalesOrderHeaderFieldIndex.ShipDate, null);
-    //        _order.ShipMethodId = Convert.ToInt32(cbShipMethod.SelectedValue);
-    //        _order.Save();
-    //        return true;
-    //    }
-    //    catch (Exception err)
-    //    {
-    //        MessageBox.Show(err.Message);
-    //        return false;
-    //    }
-    //}
     private bool SaveData()
     {
       try
       {
-        _order.Freight = Convert.ToDecimal(tbFreight.Text);
-        _order.PurchaseOrderNumber = tbPurchaseOrder.Text;
-        _order.SubTotal = Convert.ToDecimal(tbSubtotal.Text);
-        _order.TaxAmt = Convert.ToDecimal(tbTax.Text);
-        _order.OnlineOrderFlag = cbOnlineOrder.Checked;
-        _order.OrderDate = dtpOrderDate.Value;
-        _order.DueDate = dtpDueDate.Value;
+        //_order.Freight = Convert.ToDecimal(tbFreight.Text);
+        //_order.PurchaseOrderNumber = tbPurchaseOrder.Text;
+        //_order.SubTotal = Convert.ToDecimal(tbSubtotal.Text);
+        //_order.TaxAmt = Convert.ToDecimal(tbTax.Text);
+        //_order.OnlineOrderFlag = cbOnlineOrder.Checked;
+        //_order.OrderDate = dtpOrderDate.Value;
+        //_order.DueDate = dtpDueDate.Value;
         if (dtpShipDate.Checked)
           _order.ShipDate = dtpShipDate.Value;
         else
           _order.SetNewFieldValue(
             (int) SalesOrderHeaderFieldIndex.ShipDate, null);
-        _order.ShipMethodId = Convert.ToInt32(cbShipMethod.SelectedValue);
+        //_order.ShipMethodId = Convert.ToInt32(cbShipMethod.SelectedValue);
 
         try
         {
@@ -180,13 +152,10 @@ namespace AW.Win
 
     private void tbPurchaseOrder_TextChanged(object sender, EventArgs e)
     {
-      Validation.ValidatePropertyAssignment
-        (tbPurchaseOrder,
-         (int) SalesOrderHeaderFieldIndex.PurchaseOrderNumber,
-         tbPurchaseOrder.Text,
-         SalesOrderHeaderEntity.PurchaseOrderError,
-         myError,
-         _order);
+      //So we validate as we type rather than when we focus off the control
+      Validation.ValidatePropertyAssignment(tbPurchaseOrder.Text, _order, (int) SalesOrderHeaderFieldIndex.PurchaseOrderNumber);
+      // update the errors at GUI 
+      myError.UpdateBinding();
     }
 
     private void frmOrderEdit_FormClosing(object sender, FormClosingEventArgs e)
