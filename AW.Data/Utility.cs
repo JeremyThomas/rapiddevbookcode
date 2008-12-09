@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.DynamicData;
@@ -104,16 +105,14 @@ namespace AW.Data.WinForms
     /// <remarks>Originally SalesOrderHeaderValidator.Validate</remarks>
     public static bool ValidateFieldValue(IEntityCore involvedEntity, int fieldIndex, object value)
     {
-      var fieldName = FieldInfoProviderSingleton.GetInstance().GetFieldInfo(involvedEntity.LLBLGenProEntityName, fieldIndex).Name;
+      var fieldName = ((EntityField) involvedEntity.Fields[fieldIndex]).SourceColumnName;
+      //var fieldName = FieldInfoProviderSingleton.GetInstance().GetFieldInfo(involvedEntity.LLBLGenProEntityName, fieldIndex).Name;
       var validationAttributes = Model.GetTable(involvedEntity.GetType()).GetColumn(fieldName).Attributes.OfType<ValidationAttribute>();
       involvedEntity.SetEntityFieldError(fieldName, string.Empty, false);
       foreach (var validationAttribute in validationAttributes)
         if (!validationAttribute.IsValid(value))
-        {
           involvedEntity.SetEntityFieldError(fieldName, validationAttribute.ErrorMessage, true);
-          return false;
-        }
-      return true;
+      return string.IsNullOrEmpty(((IDataErrorInfo)involvedEntity)[fieldName]);
     }
   }
 }
