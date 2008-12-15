@@ -160,6 +160,8 @@ namespace AW.Win
 
     private void frmOrderEdit_FormClosing(object sender, FormClosingEventArgs e)
     {
+     // salesOrderHeaderEntityBindingSource.CancelEdit();
+      if (_order != null) _order.ResetErrors();
       Settings.Default.OrderEditSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
   }

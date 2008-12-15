@@ -8,26 +8,26 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
 {
+  [DisplayName("An Order")]
   [MetadataType(typeof (SalesOrderHeaderMetadata))]
   public partial class SalesOrderHeaderEntity
-  {    
+  {
     public const string PurchaseOrderError = "Purchase order number must be 4 - 8 characters.";
     public const string PurchaseOrderRegularExpression = "^.{4,8}$";
-  }
 
-  [Category("Sales")]
-  [Description("You can use this page to find out what is happening with an order")]
-  [DisplayName("An Order")]
-  public class SalesOrderHeaderMetadata
-  {
-    [RegularExpression(SalesOrderHeaderEntity.PurchaseOrderRegularExpression, ErrorMessage = SalesOrderHeaderEntity.PurchaseOrderError)]
-    public object PurchaseOrderNumber { get; set; }
+    [Category("Sales")]
+    [Description("You can use this page to find out what is happening with an order")]
+    private interface SalesOrderHeaderMetadata
+    {
+      [RegularExpression(PurchaseOrderRegularExpression, ErrorMessage = PurchaseOrderError)]
+      object PurchaseOrderNumber { get; set; }
+    }
   }
 }
 
 namespace AW.Data.EntityValidators
 {
-  public class SalesOrderHeaderEntityValidator : ValidatorBase
+  public class SalesOrderHeaderEntityValidator: ValidatorBase
   {
     public string ErrorMessage = "";
 
@@ -37,20 +37,16 @@ namespace AW.Data.EntityValidators
       var sbExceptionMessage = new StringBuilder();
 
       // order to validate. Cast depends upon the entity you are validating.
-      var order = (SalesOrderHeaderEntity) involvedEntity;
+      var order = (SalesOrderHeaderEntity)involvedEntity;
       if (order.ShipDate != DateTime.MinValue &&
           order.ShipDate < order.OrderDate)
-      {
         // add the error info to the message
         sbExceptionMessage.Append("Ship Date must be equal to/greater " +
                                   "than the Order Date. ");
-      }
       if (order.DueDate < order.OrderDate)
-      {
         sbExceptionMessage.Append(
           "Due Date must be null or greater than " +
           "the Order Date. ");
-      }
 
       // get the errors collected
       var strExceptionMessage = sbExceptionMessage.ToString();

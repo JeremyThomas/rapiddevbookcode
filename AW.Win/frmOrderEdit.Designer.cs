@@ -30,10 +30,10 @@ namespace AW.Win
         {
           this.components = new System.ComponentModel.Container();
           System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderEdit));
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
           this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
           this.label8 = new System.Windows.Forms.Label();
           this.label3 = new System.Windows.Forms.Label();
@@ -65,6 +65,8 @@ namespace AW.Win
           this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.tspDelete = new System.Windows.Forms.ToolStripButton();
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+          this.myError = new System.Windows.Forms.ErrorProvider(this.components);
+          this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
           this.dgvDetail = new System.Windows.Forms.DataGridView();
           this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.orderQtyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,14 +74,12 @@ namespace AW.Win
           this.unitPriceDiscountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.lineTotalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderDetailCollection1 = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
-          this.myError = new System.Windows.Forms.ErrorProvider(this.components);
-          this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
           this.tableLayoutPanel1.SuspendLayout();
           this.toolStrip1.SuspendLayout();
           this.tableLayoutPanel2.SuspendLayout();
-          ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.myError)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
           this.SuspendLayout();
           // 
           // tableLayoutPanel1
@@ -260,6 +260,7 @@ namespace AW.Win
           // cbShipMethod
           // 
           this.cbShipMethod.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.salesOrderHeaderEntityBindingSource, "ShipMethodId", true));
+          this.cbShipMethod.DisplayMember = "AddressCollectionViaSalesOrderHeader";
           this.cbShipMethod.Dock = System.Windows.Forms.DockStyle.Fill;
           this.cbShipMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
           this.cbShipMethod.FormattingEnabled = true;
@@ -442,6 +443,15 @@ namespace AW.Win
           this.tableLayoutPanel2.Size = new System.Drawing.Size(642, 351);
           this.tableLayoutPanel2.TabIndex = 39;
           // 
+          // myError
+          // 
+          this.myError.ContainerControl = this;
+          this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
+          // 
+          // salesOrderHeaderEntityBindingSource
+          // 
+          this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
+          // 
           // dgvDetail
           // 
           this.dgvDetail.AllowUserToAddRows = false;
@@ -479,9 +489,9 @@ namespace AW.Win
           // 
           this.orderQtyDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.orderQtyDataGridViewTextBoxColumn.DataPropertyName = "OrderQty";
-          dataGridViewCellStyle17.Format = "N0";
-          dataGridViewCellStyle17.NullValue = null;
-          this.orderQtyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle17;
+          dataGridViewCellStyle1.Format = "N0";
+          dataGridViewCellStyle1.NullValue = null;
+          this.orderQtyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
           this.orderQtyDataGridViewTextBoxColumn.HeaderText = "#";
           this.orderQtyDataGridViewTextBoxColumn.Name = "orderQtyDataGridViewTextBoxColumn";
           this.orderQtyDataGridViewTextBoxColumn.Width = 39;
@@ -490,9 +500,9 @@ namespace AW.Win
           // 
           this.unitPriceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.unitPriceDataGridViewTextBoxColumn.DataPropertyName = "UnitPrice";
-          dataGridViewCellStyle18.Format = "C2";
-          dataGridViewCellStyle18.NullValue = null;
-          this.unitPriceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle18;
+          dataGridViewCellStyle2.Format = "C2";
+          dataGridViewCellStyle2.NullValue = null;
+          this.unitPriceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
           this.unitPriceDataGridViewTextBoxColumn.HeaderText = "Price/Unit";
           this.unitPriceDataGridViewTextBoxColumn.Name = "unitPriceDataGridViewTextBoxColumn";
           this.unitPriceDataGridViewTextBoxColumn.Width = 80;
@@ -501,9 +511,9 @@ namespace AW.Win
           // 
           this.unitPriceDiscountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.unitPriceDiscountDataGridViewTextBoxColumn.DataPropertyName = "UnitPriceDiscount";
-          dataGridViewCellStyle19.Format = "C2";
-          dataGridViewCellStyle19.NullValue = null;
-          this.unitPriceDiscountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle19;
+          dataGridViewCellStyle3.Format = "C2";
+          dataGridViewCellStyle3.NullValue = null;
+          this.unitPriceDiscountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
           this.unitPriceDiscountDataGridViewTextBoxColumn.HeaderText = "Discount/Unit";
           this.unitPriceDiscountDataGridViewTextBoxColumn.Name = "unitPriceDiscountDataGridViewTextBoxColumn";
           this.unitPriceDiscountDataGridViewTextBoxColumn.Width = 98;
@@ -512,9 +522,9 @@ namespace AW.Win
           // 
           this.lineTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
           this.lineTotalDataGridViewTextBoxColumn.DataPropertyName = "LineTotal";
-          dataGridViewCellStyle20.Format = "C2";
-          dataGridViewCellStyle20.NullValue = null;
-          this.lineTotalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle20;
+          dataGridViewCellStyle4.Format = "C2";
+          dataGridViewCellStyle4.NullValue = null;
+          this.lineTotalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
           this.lineTotalDataGridViewTextBoxColumn.HeaderText = "Total";
           this.lineTotalDataGridViewTextBoxColumn.Name = "lineTotalDataGridViewTextBoxColumn";
           this.lineTotalDataGridViewTextBoxColumn.ReadOnly = true;
@@ -536,15 +546,6 @@ namespace AW.Win
           this.salesOrderDetailCollection1.SuppressClearInGetMulti = false;
           this.salesOrderDetailCollection1.Transaction = null;
           // 
-          // myError
-          // 
-          this.myError.ContainerControl = this;
-          this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
-          // 
-          // salesOrderHeaderEntityBindingSource
-          // 
-          this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
-          // 
           // frmOrderEdit
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -564,9 +565,9 @@ namespace AW.Win
           this.toolStrip1.ResumeLayout(false);
           this.toolStrip1.PerformLayout();
           this.tableLayoutPanel2.ResumeLayout(false);
-          ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.myError)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 
