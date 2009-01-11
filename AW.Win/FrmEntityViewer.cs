@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Windows.Forms;
-//using JesseJohnston;
+using AW.Win.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+//using JesseJohnston;
 
 namespace AW.Win
 {
@@ -17,16 +12,28 @@ namespace AW.Win
     public FrmEntityViewer()
     {
       InitializeComponent();
-      dataGridView1.AutoGenerateColumns = true;
+      dataGridViewFields.AutoGenerateColumns = true;
+      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
     }
 
-    public FrmEntityViewer(IEntity entity):this()
+    public FrmEntityViewer(IEntity entity) : this()
     {
       if (entity == null) throw new ArgumentNullException("entity");
       propertyGrid1.SelectedObject = entity;
       //entityFieldsBindingSource.DataSource = entity.Fields.OfType<EntityField>();
       entityFieldsBindingSource.DataSource = entity.Fields.OfType<object>();
+
     }
-    
+
+    private void FrmEntityViewer_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      Settings.Default.EntityViewerSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+      Settings.Default.EntityFieldColumns = AWHelper.SaveColumnState(dataGridViewFields);
+    }
+
+    private void FrmEntityViewer_Load(object sender, EventArgs e)
+    {
+      AWHelper.RestoreColumnsState(Settings.Default.EntityFieldColumns, dataGridViewFields);
+    }
   }
 }

@@ -216,6 +216,10 @@
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\href.controls\href.Controls.csproj">
+      <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
+      <Name>href.Controls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

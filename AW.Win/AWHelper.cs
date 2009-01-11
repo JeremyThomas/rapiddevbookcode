@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using AW.Data.Linq;
 
 namespace AW.Win
 {
-  static class AWHelper
+  internal static class AWHelper
   {
     /// <summary>
     /// Sends a msg to the Win32 debug output and prefixs it with the name off the method that called TraceOut
@@ -92,7 +88,6 @@ namespace AW.Win
     /// </summary>
     /// <param name="form">The form.</param>
     /// <param name="location">The location.</param>
-    /// <remarks>//http://net-test2/mantis/view.php?id=4390 issue #4</remarks>
     public static void SetWindowLocationSafely(Form form, Point location)
     {
       if (!location.IsEmpty)

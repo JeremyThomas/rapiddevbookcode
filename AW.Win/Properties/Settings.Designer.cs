@@ -344,5 +344,40 @@ namespace AW.Win.Properties {
                 this["Countries"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle EntityViewerSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["EntityViewerSizeLocation"]));
+            }
+            set {
+                this["EntityViewerSizeLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle TraceSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["TraceSizeLocation"]));
+            }
+            set {
+                this["TraceSizeLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection EntityFieldColumns {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["EntityFieldColumns"]));
+            }
+            set {
+                this["EntityFieldColumns"] = value;
+            }
+        }
     }
 }
