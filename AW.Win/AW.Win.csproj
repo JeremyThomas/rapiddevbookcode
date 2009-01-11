@@ -77,6 +77,12 @@
   <ItemGroup>
     <Compile Include="AWHelper.cs" />
     <Compile Include="CustomerListLinqedTypedList.cs" />
+    <Compile Include="FrmEntityViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEntityViewer.Designer.cs">
+      <DependentUpon>FrmEntityViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmOrderSearch.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmEntityViewer.resx">
+      <DependentUpon>FrmEntityViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmOrderSearch.resx">
       <DependentUpon>frmOrderSearch.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -183,6 +192,7 @@
     <None Include="AW.Win_TemporaryKey.pfx" />
     <None Include="Properties\DataSources\AW.Data.CollectionClasses.SalesOrderHeaderCollection.datasource" />
     <None Include="Properties\DataSources\AW.Data.EntityClasses.SalesOrderHeaderEntity.datasource" />
+    <None Include="Properties\DataSources\SD.LLBLGen.Pro.ORMSupportClasses.EntityFields.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

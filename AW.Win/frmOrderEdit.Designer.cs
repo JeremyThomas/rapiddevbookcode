@@ -66,7 +66,6 @@ namespace AW.Win
           this.tspDelete = new System.Windows.Forms.ToolStripButton();
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
           this.myError = new System.Windows.Forms.ErrorProvider(this.components);
-          this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
           this.dgvDetail = new System.Windows.Forms.DataGridView();
           this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.orderQtyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -74,12 +73,14 @@ namespace AW.Win
           this.unitPriceDiscountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.lineTotalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderDetailCollection1 = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
+          this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
+          this.toolStripButtonViewEntity = new System.Windows.Forms.ToolStripButton();
           this.tableLayoutPanel1.SuspendLayout();
           this.toolStrip1.SuspendLayout();
           this.tableLayoutPanel2.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.myError)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
           this.SuspendLayout();
           // 
           // tableLayoutPanel1
@@ -382,7 +383,8 @@ namespace AW.Win
             this.toolStripSeparator1,
             this.tspClose,
             this.toolStripSeparator2,
-            this.tspDelete});
+            this.tspDelete,
+            this.toolStripButtonViewEntity});
           this.toolStrip1.Location = new System.Drawing.Point(0, 0);
           this.toolStrip1.Name = "toolStrip1";
           this.toolStrip1.Size = new System.Drawing.Size(642, 25);
@@ -447,10 +449,6 @@ namespace AW.Win
           // 
           this.myError.ContainerControl = this;
           this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
-          // 
-          // salesOrderHeaderEntityBindingSource
-          // 
-          this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
           // 
           // dgvDetail
           // 
@@ -546,6 +544,19 @@ namespace AW.Win
           this.salesOrderDetailCollection1.SuppressClearInGetMulti = false;
           this.salesOrderDetailCollection1.Transaction = null;
           // 
+          // salesOrderHeaderEntityBindingSource
+          // 
+          this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
+          // 
+          // toolStripButtonViewEntity
+          // 
+          this.toolStripButtonViewEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewEntity.Image")));
+          this.toolStripButtonViewEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonViewEntity.Name = "toolStripButtonViewEntity";
+          this.toolStripButtonViewEntity.Size = new System.Drawing.Size(80, 22);
+          this.toolStripButtonViewEntity.Text = "View Entity";
+          this.toolStripButtonViewEntity.Click += new System.EventHandler(this.toolStripButtonViewEntity_Click);
+          // 
           // frmOrderEdit
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -566,8 +577,8 @@ namespace AW.Win
           this.toolStrip1.PerformLayout();
           this.tableLayoutPanel2.ResumeLayout(false);
           ((System.ComponentModel.ISupportInitialize)(this.myError)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -615,5 +626,6 @@ namespace AW.Win
         private System.Windows.Forms.TextBox tbTax;
         private System.Windows.Forms.ErrorProvider myError;
         private System.Windows.Forms.BindingSource salesOrderHeaderEntityBindingSource;
+        private System.Windows.Forms.ToolStripButton toolStripButtonViewEntity;
     }
 }

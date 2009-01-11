@@ -164,5 +164,11 @@ namespace AW.Win
       if (_order != null) _order.ResetErrors();
       Settings.Default.OrderEditSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
+
+    private void toolStripButtonViewEntity_Click(object sender, EventArgs e)
+    {
+      var frm = new FrmEntityViewer(_order);
+      ((frmMain)MdiParent).LaunchChildForm(frm);
+    }
   }
 }

@@ -49,7 +49,8 @@ namespace AW.Win
         else
           Settings.Default.OpenWindows.Clear();
         foreach (var myForm in MdiChildren)
-          Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
+          if (Convert.ToBoolean(myForm.Tag))
+            Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
       }
     }
 

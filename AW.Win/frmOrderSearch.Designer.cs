@@ -544,6 +544,7 @@ namespace AW.Win
           this.Name = "frmOrderSearch";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+          this.Tag = "True";
           this.Text = "Order Search";
           this.Load += new System.EventHandler(this.frmOrderSearch_Load);
           this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderSearch_FormClosed);

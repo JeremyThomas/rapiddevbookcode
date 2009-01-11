@@ -126,6 +126,7 @@
       this.ClientSize = new System.Drawing.Size(773, 467);
       this.Controls.Add(this.splitContainer1);
       this.Name = "frmTrace";
+      this.Tag = "True";
       this.Text = "FormTrace";
       this.Load += new System.EventHandler(this.FrmTrace_Load);
       this.Shown += new System.EventHandler(this.frmTrace_Shown);
