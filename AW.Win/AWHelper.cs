@@ -108,17 +108,5 @@ namespace AW.Win
     }
 
     #endregion
-
-    private static LinqMetaData metaData;
-
-    public static LinqMetaData MetaData
-    {
-      get
-      {
-        if (metaData == null)
-          metaData = new LinqMetaData();
-        return metaData;
-      }
-    }
   }
 }

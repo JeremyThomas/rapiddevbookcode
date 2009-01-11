@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 #endif
 using AW.Data.EntityValidators;
 using AW.Data.CollectionClasses;
+using AW.Data.WinForms;
 
 namespace AW.Data.EntityClasses
 {
@@ -280,7 +281,7 @@ namespace AW.Data.EntityClasses
       int maxNumberOfItemsToReturn
       )
     {
-      var predicate = MetaData.SalesOrderHeader.AsQueryable();
+      var predicate = Validation.MetaData.SalesOrderHeader.AsQueryable();
       if (FromDate != DateTime.MinValue)
       {
         predicate = predicate.Where(soh => soh.OrderDate >= FromDate);
@@ -327,18 +328,6 @@ namespace AW.Data.EntityClasses
       if (maxNumberOfItemsToReturn > 0)
         q = q.Take(maxNumberOfItemsToReturn);
       return ((ILLBLGenProQuery) q).Execute<SalesOrderHeaderCollection>();
-    }
-
-    private static LinqMetaData metaData;
-
-    public static LinqMetaData MetaData
-    {
-      get
-      {
-        if (metaData == null)
-          metaData = new LinqMetaData();
-        return metaData;
-      }
     }
 
     public string CustomerLastName

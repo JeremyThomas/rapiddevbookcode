@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AW.Data.EntityClasses;
+using AW.Data.WinForms;
 
 namespace AW.Win
 {
@@ -112,7 +113,7 @@ namespace AW.Win
 
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery()
     {
-      return GetCustomerListQuery(AWHelper.MetaData.Customer);
+      return GetCustomerListQuery(Validation.MetaData.Customer);
     }
 
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery(IQueryable<CustomerEntity> customers)

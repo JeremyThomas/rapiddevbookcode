@@ -72,7 +72,17 @@ namespace AW.Data.WinForms
       return IsValid;
     }
 
-    private static MetaModel model;
+    private static LinqMetaData metaData;
+
+    public static LinqMetaData MetaData
+    {
+      get
+      {
+        if (metaData == null)
+          metaData = new LinqMetaData();
+        return metaData;
+      }
+    }
 
     /// <summary>
     /// Gets the DynamicData model. Its used to get the validation attributes of entity fields without using reflection
@@ -82,14 +92,14 @@ namespace AW.Data.WinForms
     {
       get
       {
-        if (model == null)
+        if (MetaModel.Default == null)
         {
-          model = new MetaModel();
+          var model = new MetaModel();
           // Define the model provider. You've to specify the type of the DataAccessAdapter to use and the type of the generated EntityType enum below.
           // register the modelprovider with the model so DynamicData knows how the model looks like 
-          model.RegisterContext(new LLBLGenProDataModelProvider(typeof (EntityType), new LinqMetaData(), new ElementCreator()), new ContextConfiguration());
+          model.RegisterContext(new LLBLGenProDataModelProvider(typeof(EntityType), MetaData, new ElementCreator()));
         }
-        return model;
+        return MetaModel.Default;
       }
     }
 
@@ -108,11 +118,12 @@ namespace AW.Data.WinForms
       var fieldName = ((EntityField) involvedEntity.Fields[fieldIndex]).SourceColumnName;
       //var fieldName = FieldInfoProviderSingleton.GetInstance().GetFieldInfo(involvedEntity.LLBLGenProEntityName, fieldIndex).Name;
       var validationAttributes = Model.GetTable(involvedEntity.GetType()).GetColumn(fieldName).Attributes.OfType<ValidationAttribute>();
-      involvedEntity.SetEntityFieldError(fieldName, string.Empty, false);
+      involvedEntity.SetEntityFieldError(fieldName, String.Empty, false);
       foreach (var validationAttribute in validationAttributes)
         if (!validationAttribute.IsValid(value))
           involvedEntity.SetEntityFieldError(fieldName, validationAttribute.ErrorMessage, true);
-      return string.IsNullOrEmpty(((IDataErrorInfo)involvedEntity)[fieldName]);
+      return String.IsNullOrEmpty(((IDataErrorInfo)involvedEntity)[fieldName]);
     }
+
   }
 }

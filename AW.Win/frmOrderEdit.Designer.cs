@@ -43,6 +43,7 @@ namespace AW.Win
           this.label7 = new System.Windows.Forms.Label();
           this.label9 = new System.Windows.Forms.Label();
           this.dtpOrderDate = new System.Windows.Forms.DateTimePicker();
+          this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
           this.dtpDueDate = new System.Windows.Forms.DateTimePicker();
           this.dtpShipDate = new System.Windows.Forms.DateTimePicker();
           this.cbOnlineOrder = new System.Windows.Forms.CheckBox();
@@ -64,8 +65,8 @@ namespace AW.Win
           this.tspClose = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.tspDelete = new System.Windows.Forms.ToolStripButton();
+          this.toolStripButtonViewEntity = new System.Windows.Forms.ToolStripButton();
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-          this.myError = new System.Windows.Forms.ErrorProvider(this.components);
           this.dgvDetail = new System.Windows.Forms.DataGridView();
           this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.orderQtyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,14 +74,13 @@ namespace AW.Win
           this.unitPriceDiscountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.lineTotalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderDetailCollection1 = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
-          this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
-          this.toolStripButtonViewEntity = new System.Windows.Forms.ToolStripButton();
+          this.myError = new System.Windows.Forms.ErrorProvider(this.components);
           this.tableLayoutPanel1.SuspendLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
           this.toolStrip1.SuspendLayout();
           this.tableLayoutPanel2.SuspendLayout();
-          ((System.ComponentModel.ISupportInitialize)(this.myError)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.myError)).BeginInit();
           this.SuspendLayout();
           // 
           // tableLayoutPanel1
@@ -214,6 +214,10 @@ namespace AW.Win
           this.dtpOrderDate.Name = "dtpOrderDate";
           this.dtpOrderDate.Size = new System.Drawing.Size(215, 20);
           this.dtpOrderDate.TabIndex = 26;
+          // 
+          // salesOrderHeaderEntityBindingSource
+          // 
+          this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
           // 
           // dtpDueDate
           // 
@@ -429,6 +433,15 @@ namespace AW.Win
           this.tspDelete.Text = "Delete";
           this.tspDelete.Click += new System.EventHandler(this.tspDelete_Click);
           // 
+          // toolStripButtonViewEntity
+          // 
+          this.toolStripButtonViewEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewEntity.Image")));
+          this.toolStripButtonViewEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonViewEntity.Name = "toolStripButtonViewEntity";
+          this.toolStripButtonViewEntity.Size = new System.Drawing.Size(80, 22);
+          this.toolStripButtonViewEntity.Text = "View Entity";
+          this.toolStripButtonViewEntity.Click += new System.EventHandler(this.toolStripButtonViewEntity_Click);
+          // 
           // tableLayoutPanel2
           // 
           this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
@@ -444,11 +457,6 @@ namespace AW.Win
           this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
           this.tableLayoutPanel2.Size = new System.Drawing.Size(642, 351);
           this.tableLayoutPanel2.TabIndex = 39;
-          // 
-          // myError
-          // 
-          this.myError.ContainerControl = this;
-          this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
           // 
           // dgvDetail
           // 
@@ -544,18 +552,10 @@ namespace AW.Win
           this.salesOrderDetailCollection1.SuppressClearInGetMulti = false;
           this.salesOrderDetailCollection1.Transaction = null;
           // 
-          // salesOrderHeaderEntityBindingSource
+          // myError
           // 
-          this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
-          // 
-          // toolStripButtonViewEntity
-          // 
-          this.toolStripButtonViewEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewEntity.Image")));
-          this.toolStripButtonViewEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.toolStripButtonViewEntity.Name = "toolStripButtonViewEntity";
-          this.toolStripButtonViewEntity.Size = new System.Drawing.Size(80, 22);
-          this.toolStripButtonViewEntity.Text = "View Entity";
-          this.toolStripButtonViewEntity.Click += new System.EventHandler(this.toolStripButtonViewEntity_Click);
+          this.myError.ContainerControl = this;
+          this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
           // 
           // frmOrderEdit
           // 
@@ -573,12 +573,12 @@ namespace AW.Win
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmOrderEdit_FormClosing);
           this.tableLayoutPanel1.ResumeLayout(false);
           this.tableLayoutPanel1.PerformLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
           this.toolStrip1.ResumeLayout(false);
           this.toolStrip1.PerformLayout();
           this.tableLayoutPanel2.ResumeLayout(false);
-          ((System.ComponentModel.ISupportInitialize)(this.myError)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.dgvDetail)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.myError)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 

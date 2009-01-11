@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.WinForms;
 using AW.Win.Properties;
 
 namespace AW.Win
@@ -145,7 +146,7 @@ namespace AW.Win
     /// </summary>
     private void Barf()
     {
-      var query = from soh in AWHelper.MetaData.SalesOrderHeader
+      var query = from soh in Validation.MetaData.SalesOrderHeader
               from sod in soh.SalesOrderDetail
               select soh;
 
@@ -153,7 +154,7 @@ namespace AW.Win
                select new { soh.SalesOrderId, soh.Customer.AccountNumber, soh.CreditCard.CardNumber }).ToList();
 
 
-      query = from soh in AWHelper.MetaData.SalesOrderHeader select soh;
+      query = from soh in Validation.MetaData.SalesOrderHeader select soh;
 
       var w = (from soh in query
                from sod in soh.SalesOrderDetail
@@ -166,7 +167,7 @@ namespace AW.Win
     /// </summary>
     public void LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder()
     {
-      var customers = AWHelper.MetaData.Customer.AsQueryable();
+      var customers = Validation.MetaData.Customer.AsQueryable();
       //var customersDerivedTable = customers.Select(customer => customer);
       var customersDerivedTable = from customer in customers select customer; //Using this to force a derived table causes a crash
       customersDerivedTable = customers.Where(c => c.CustomerId > 10); //To force a derived table
@@ -174,7 +175,7 @@ namespace AW.Win
 //      var q = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).GroupJoin(AWHelper.MetaData.SalesOrderHeader, @t => @t.customer.CustomerId, soh => soh.CustomerId, (@t, oc) => new {@t, oc}).SelectMany(@t => @t.oc.DefaultIfEmpty(), (@t, nullableSOH) => new {@t.@t.customer.CustomerId, @t.@t.ca.AddressId, nullableSOH.SalesOrderId});
       AWHelper.TraceOut("ExplicitJoin with Derived Table");
       var q = from customer in customersDerivedTable             
-              join soh in (from s in AWHelper.MetaData.SalesOrderHeader where s.SalesPersonId > 22 select s) on customer.CustomerId equals soh.CustomerId into oc
+              join soh in (from s in Validation.MetaData.SalesOrderHeader where s.SalesPersonId > 22 select s) on customer.CustomerId equals soh.CustomerId into oc
               from nullableSOH in oc.DefaultIfEmpty()
 
               from ca in customer.CustomerAddress.DefaultIfEmpty()
@@ -198,7 +199,7 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      var query = AWHelper.MetaData.SalesOrderHeader.AsQueryable();
+      var query = Validation.MetaData.SalesOrderHeader.AsQueryable();
 
       if (fromDate != DateTime.MinValue)
         query = query.Where(q => q.OrderDate >= fromDate);
