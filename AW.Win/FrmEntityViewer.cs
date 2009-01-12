@@ -33,6 +33,7 @@ namespace AW.Win
 
     private void FrmEntityViewer_Load(object sender, EventArgs e)
     {
+      propertyGrid1.RefreshSelectedObject();
       AWHelper.RestoreColumnsState(Settings.Default.EntityFieldColumns, dataGridViewFields);
     }
   }

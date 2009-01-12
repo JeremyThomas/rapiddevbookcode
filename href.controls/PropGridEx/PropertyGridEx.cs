@@ -267,12 +267,7 @@ namespace href.Controls.PropGridEx
                 base.Site = value;
             }
         }
-        public void ShowEvents(bool show)
-        {
-            base.ShowEventsButton(show);
-//            if (show)
-//                this.PropertyTabs.AddTabType(typeof(System.Windows.Forms.Design.EventsTab));
-        }
+
         #endregion
 
         public bool DrawFlat
@@ -281,9 +276,27 @@ namespace href.Controls.PropGridEx
             set { DrawFlatToolbar = value; }
         }
 
+        public void ShowEvents(bool show)
+        {
+          if (show)
+            this.PropertyTabs.AddTabType(typeof(System.Windows.Forms.Design.EventsTab));
+          base.ShowEventsButton(show);
+        }
+
+        /// <summary>
+        /// Refreshes the selected object as the property tab goes invisible is SelectedObject is set in the forms constructor.
+        /// </summary>
+        public void RefreshSelectedObject()
+        {
+          var so = SelectedObject;
+          SelectedObject = null;
+          SelectedObject = so;
+        }
+
         protected override void OnSelectedObjectsChanged(EventArgs e)
         {
-            base.OnSelectedObjectsChanged(e);
+          base.OnSelectedObjectsChanged(e);
+          ShowEvents(true);
         }
     }
 
