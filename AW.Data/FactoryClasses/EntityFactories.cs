@@ -603,6 +603,7 @@ namespace AW.Data.FactoryClasses
 			IEntity toReturn = new SalesOrderHeaderEntity();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesOrderHeader
+      toReturn.ConcurrencyPredicateFactoryToUse = GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory;
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}

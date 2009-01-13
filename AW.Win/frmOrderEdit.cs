@@ -9,7 +9,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
-  public partial class frmOrderEdit : Form
+  public partial class frmOrderEdit: Form
   {
     private readonly SalesOrderHeaderEntity _order;
 
@@ -18,7 +18,7 @@ namespace AW.Win
       InitializeComponent();
     }
 
-    public frmOrderEdit(SalesOrderHeaderEntity Order) : this()
+    public frmOrderEdit(SalesOrderHeaderEntity Order): this()
     {
       _order = Order;
     }
@@ -71,65 +71,51 @@ namespace AW.Win
     {
       // there are errors, cancel the save until the user fixes them.
       if (_order.GetEntityFieldsErrors() != string.Empty)
-      {
         MessageBox.Show("There are errors in the entity. Please fix them prior to save.", "Please fix the errors.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-      }
       else if (Validation.ValidateForm(this, myError))
       {
+        salesOrderHeaderEntityBindingSource.EndEdit();
         if (SaveData())
-        {
-          Close();
-        }
+          //Close()
+          salesOrderHeaderEntityBindingSource.ResetBindings(false);
       }
       else
-      {
         MessageBox.Show(
           "Please correct errors before saving.",
           "Error",
           MessageBoxButtons.OK,
           MessageBoxIcon.Error);
-      }
     }
 
     private bool SaveData()
     {
-      try
-      {
-        //_order.Freight = Convert.ToDecimal(tbFreight.Text);
-        //_order.PurchaseOrderNumber = tbPurchaseOrder.Text;
-        //_order.SubTotal = Convert.ToDecimal(tbSubtotal.Text);
-        //_order.TaxAmt = Convert.ToDecimal(tbTax.Text);
-        //_order.OnlineOrderFlag = cbOnlineOrder.Checked;
-        //_order.OrderDate = dtpOrderDate.Value;
-        //_order.DueDate = dtpDueDate.Value;
-        if (dtpShipDate.Checked)
-          _order.ShipDate = dtpShipDate.Value;
-        else
-          _order.SetNewFieldValue(
-            (int) SalesOrderHeaderFieldIndex.ShipDate, null);
-        //_order.ShipMethodId = Convert.ToInt32(cbShipMethod.SelectedValue);
+      var result = false;
+      if (dtpShipDate.Checked)
+        _order.ShipDate = dtpShipDate.Value;
+      else
+        _order.SetNewFieldValue(
+          (int)SalesOrderHeaderFieldIndex.ShipDate, null);
 
-        try
+      try
+      {        
+       // if (!_order.Save(GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory.CreatePredicate(ConcurrencyPredicateType.Save, _order)))
+        if (!_order.Save())
         {
-          _order.Save();
-        }
-        catch (ORMEntityValidationException ex)
-        {
-          var val = (SalesOrderHeaderEntityValidator) _order.Validator;
           MessageBox.Show(
-            ex.Message,
-            "Error",
+            "Record wasn't saved",
+            "Save error",
             MessageBoxButtons.OK,
             MessageBoxIcon.Stop);
-          return false;
         }
-        return true;
+        result = true;
       }
-      catch (Exception err)
+      catch (ORMConcurrencyException ex)
       {
-        MessageBox.Show(err.Message);
-        return false;
+        var frm = new FrmReconcile((IEntity)ex.EntityWhichFailed);
+        result = frm.ShowDialog() == DialogResult.OK;
+
       }
+      return result;
     }
 
     private void tspClose_Click(object sender, EventArgs e)
@@ -153,14 +139,14 @@ namespace AW.Win
     private void tbPurchaseOrder_TextChanged(object sender, EventArgs e)
     {
       //So we validate as we type rather than when we focus off the control
-      Validation.ValidatePropertyAssignment(tbPurchaseOrder.Text, _order, (int) SalesOrderHeaderFieldIndex.PurchaseOrderNumber);
+      Validation.ValidatePropertyAssignment(tbPurchaseOrder.Text, _order, (int)SalesOrderHeaderFieldIndex.PurchaseOrderNumber);
       // update the errors at GUI 
       myError.UpdateBinding();
     }
 
     private void frmOrderEdit_FormClosing(object sender, FormClosingEventArgs e)
     {
-     // salesOrderHeaderEntityBindingSource.CancelEdit();
+      // salesOrderHeaderEntityBindingSource.CancelEdit();
       if (_order != null) _order.ResetErrors();
       Settings.Default.OrderEditSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
@@ -169,6 +155,31 @@ namespace AW.Win
     {
       var frm = new FrmEntityViewer(_order);
       ((frmMain)MdiParent).LaunchChildForm(frm);
+    }
+
+    private void toolStripButtonRefetch_Click(object sender, EventArgs e)
+    {
+      salesOrderHeaderEntityBindingSource.CancelEdit();
+      _order.Refetch();
+      salesOrderHeaderEntityBindingSource.ResetBindings(false);
+    }
+
+    public void RevertEntity(EntityBase entity)
+    {
+          foreach (EntityField field in entity.Fields)
+          {
+            if (field.IsChanged)
+            {
+              //field.CurrentValue = field.DbValue;
+              field.RejectChange();
+            }
+          }
+    }
+
+    private void toolStripButtonRevert_Click(object sender, EventArgs e)
+    {
+      salesOrderHeaderEntityBindingSource.CancelEdit();
+      RevertEntity(_order);
     }
   }
 }

@@ -162,6 +162,7 @@
     <Compile Include="CollectionClasses\CustomerViewRelatedCollection.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="Concurrency.cs" />
     <Compile Include="DaoClasses\SpecialOfferProductDAO.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

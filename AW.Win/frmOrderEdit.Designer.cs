@@ -75,6 +75,8 @@ namespace AW.Win
           this.lineTotalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderDetailCollection1 = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
           this.myError = new System.Windows.Forms.ErrorProvider(this.components);
+          this.toolStripButtonRefetch = new System.Windows.Forms.ToolStripButton();
+          this.toolStripButtonRevert = new System.Windows.Forms.ToolStripButton();
           this.tableLayoutPanel1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
           this.toolStrip1.SuspendLayout();
@@ -388,7 +390,9 @@ namespace AW.Win
             this.tspClose,
             this.toolStripSeparator2,
             this.tspDelete,
-            this.toolStripButtonViewEntity});
+            this.toolStripButtonViewEntity,
+            this.toolStripButtonRefetch,
+            this.toolStripButtonRevert});
           this.toolStrip1.Location = new System.Drawing.Point(0, 0);
           this.toolStrip1.Name = "toolStrip1";
           this.toolStrip1.Size = new System.Drawing.Size(642, 25);
@@ -557,6 +561,24 @@ namespace AW.Win
           this.myError.ContainerControl = this;
           this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
           // 
+          // toolStripButtonRefetch
+          // 
+          this.toolStripButtonRefetch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRefetch.Image")));
+          this.toolStripButtonRefetch.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonRefetch.Name = "toolStripButtonRefetch";
+          this.toolStripButtonRefetch.Size = new System.Drawing.Size(101, 22);
+          this.toolStripButtonRefetch.Text = "Reload from DB";
+          this.toolStripButtonRefetch.Click += new System.EventHandler(this.toolStripButtonRefetch_Click);
+          // 
+          // toolStripButtonRevert
+          // 
+          this.toolStripButtonRevert.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRevert.Image")));
+          this.toolStripButtonRevert.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonRevert.Name = "toolStripButtonRevert";
+          this.toolStripButtonRevert.Size = new System.Drawing.Size(116, 22);
+          this.toolStripButtonRevert.Text = "Revert all changes";
+          this.toolStripButtonRevert.Click += new System.EventHandler(this.toolStripButtonRevert_Click);
+          // 
           // frmOrderEdit
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -627,5 +649,7 @@ namespace AW.Win
         private System.Windows.Forms.ErrorProvider myError;
         private System.Windows.Forms.BindingSource salesOrderHeaderEntityBindingSource;
         private System.Windows.Forms.ToolStripButton toolStripButtonViewEntity;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRefetch;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRevert;
     }
 }
