@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using AW.Data;
-using AW.Data.FactoryClasses;
-using AW.Data.DaoClasses;
-using AW.Data.RelationClasses;
-using AW.Data.CollectionClasses;
-using AW.Data.HelperClasses;
-using SD.LLBLGen.Pro.ORMSupportClasses;
+﻿using System.ComponentModel;
 using System.Text;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
 {
-	/// <summary>Common base class which is the base class for all generated entities which aren't a subtype of another entity.</summary>
-	public abstract partial class CommonEntityBase
-	{
+  /// <summary>Common base class which is the base class for all generated entities which aren't a subtype of another entity.</summary>
+  public abstract partial class CommonEntityBase
+  {
+    /// <summary>
+    /// Called at the end of the initialization routine. Raises Initialized event.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+      //Not needed as setup using DI ConcurrencyPredicateFactoryToUse = GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory;
+    }
+
     /// <summary>
     /// Gets the entity fields errors.
     /// </summary>
@@ -23,19 +24,15 @@ namespace AW.Data.EntityClasses
     public string GetEntityFieldsErrors()
     {
       // variables to construct the message
-      StringBuilder sbErrors = new StringBuilder();
-      string toReturn = string.Empty;
+      var sbErrors = new StringBuilder();
+      var toReturn = string.Empty;
 
       // iterate over fields and get their errorInfo
-      foreach (IEntityField field in this.Fields)
-      {
+      foreach (IEntityField field in Fields)
         /// IEntity implements IDataErrorInfo, and it contains a collections of field errors already set. 
         /// For more info read the docs (LLBLGen Pro Help -> Using generated code -> Validation per field or per entity -> IDataErrorInfo implementation).
-        if (!string.IsNullOrEmpty(((System.ComponentModel.IDataErrorInfo)this)[field.Name]))
-        {
-          sbErrors.Append(((System.ComponentModel.IDataErrorInfo)this)[field.Name] + ";");
-        }
-      }
+        if (!string.IsNullOrEmpty(((IDataErrorInfo)this)[field.Name]))
+          sbErrors.Append(((IDataErrorInfo)this)[field.Name] + ";");
 
       // determine if there was errors and cut off the extra ';'
       if (sbErrors.ToString() != string.Empty)
@@ -46,7 +43,7 @@ namespace AW.Data.EntityClasses
 
       return toReturn;
     }
-    
+
     /// <summary>
     /// Resets the errors.
     /// Used to clean the IDataErrorInfo when GUI cancels an Insert/Update operation.
@@ -55,14 +52,12 @@ namespace AW.Data.EntityClasses
     {
       // reset the field errors
       foreach (EntityField field in Fields)
-      {
         SetEntityFieldError(field.Name, string.Empty, false);
-      }
 
       // reset entity error
       SetEntityError(string.Empty);
     }
-    
+
     /// <summary>
     /// Called right at the beginning of SetValue(), which is called from an entity field property setter
     /// </summary>
@@ -76,15 +71,11 @@ namespace AW.Data.EntityClasses
     protected override void OnSetValue(int fieldIndex, object valueToSet, out bool cancel)
     {
       if (Fields[fieldIndex].CurrentValue != null)
-      {
         if (Fields[fieldIndex].CurrentValue.Equals(valueToSet)
-            && !string.IsNullOrEmpty(((System.ComponentModel.IDataErrorInfo)this)[Fields[fieldIndex].Name]))
-        {
+            && !string.IsNullOrEmpty(((IDataErrorInfo)this)[Fields[fieldIndex].Name]))
           SetEntityFieldError(Fields[fieldIndex].Name, string.Empty, false);
-        }
-      }
 
       base.OnSetValue(fieldIndex, valueToSet, out cancel);
     }
-	}
+  }
 }

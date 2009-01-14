@@ -41,9 +41,6 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		public CommonEntityBase()
 		{
-      // __LLBLGENPRO_USER_CODE_REGION_START 
-      ConcurrencyPredicateFactoryToUse = GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory;
-      // __LLBLGENPRO_USER_CODE_REGION_END
 		}
 		
 		/// <summary>Protected CTor for deserialization</summary>
@@ -53,7 +50,6 @@ namespace AW.Data.EntityClasses
 		{
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
-		  ConcurrencyPredicateFactoryToUse = GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory;
 			// __LLBLGENPRO_USER_CODE_REGION_END
 		}
 

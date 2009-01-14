@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows.Forms;
 using AW.Win.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
-//using JesseJohnston;
 
 namespace AW.Win
 {
@@ -12,7 +11,7 @@ namespace AW.Win
     public FrmEntityViewer()
     {
       InitializeComponent();
-      dataGridViewFields.AutoGenerateColumns = true;
+      //dataGridViewFields.AutoGenerateColumns = true;
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
     }
 
@@ -21,7 +20,7 @@ namespace AW.Win
       if (entity == null) throw new ArgumentNullException("entity");
       propertyGrid1.SelectedObject = entity;
       //entityFieldsBindingSource.DataSource = entity.Fields.OfType<EntityField>();
-      entityFieldsBindingSource.DataSource = entity.Fields.OfType<object>();
+      entityFieldBindingSource.DataSource = entity.Fields.OfType<object>();
 
     }
 

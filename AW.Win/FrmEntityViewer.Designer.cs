@@ -33,14 +33,50 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridViewFields = new System.Windows.Forms.DataGridView();
-      this.entityFieldsBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.propertyGrid1 = new href.Controls.PropGridEx.PropertyGridEx();
+      this.entityFieldBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isChangedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.currentValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dbValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isNullDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.dataTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isNullableDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.isReadOnlyDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.fieldIndexDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isPrimaryKeyDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.actualDotNetTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.sourceCatalogNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.sourceSchemaNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.sourceObjectNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.sourceColumnNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.sourceColumnMaxLengthDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.sourceColumnDbTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.sourceColumnIsNullableDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.sourceColumnScaleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.sourceColumnPrecisionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isIdentityDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.identityValueSequenceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.typeConverterToUseDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.linkedSuperTypeFieldDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.maxLengthDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.scaleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.precisionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.aliasDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.containingObjectNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.objectAliasDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.aggregateFunctionToApplyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.expressionToApplyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isForeignKeyDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.actualContainingObjectNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isInMultiTargetEntityDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.actAsDerivedTableFieldDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFields)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.entityFieldsBindingSource)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // dataGridViewFields
@@ -60,7 +96,44 @@
       dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
       this.dataGridViewFields.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridViewFields.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dataGridViewFields.DataSource = this.entityFieldsBindingSource;
+      this.dataGridViewFields.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn,
+            this.isChangedDataGridViewCheckBoxColumn,
+            this.currentValueDataGridViewTextBoxColumn,
+            this.dbValueDataGridViewTextBoxColumn,
+            this.isNullDataGridViewCheckBoxColumn,
+            this.dataTypeDataGridViewTextBoxColumn,
+            this.isNullableDataGridViewCheckBoxColumn,
+            this.isReadOnlyDataGridViewCheckBoxColumn,
+            this.fieldIndexDataGridViewTextBoxColumn,
+            this.isPrimaryKeyDataGridViewCheckBoxColumn,
+            this.actualDotNetTypeDataGridViewTextBoxColumn,
+            this.sourceCatalogNameDataGridViewTextBoxColumn,
+            this.sourceSchemaNameDataGridViewTextBoxColumn,
+            this.sourceObjectNameDataGridViewTextBoxColumn,
+            this.sourceColumnNameDataGridViewTextBoxColumn,
+            this.sourceColumnMaxLengthDataGridViewTextBoxColumn,
+            this.sourceColumnDbTypeDataGridViewTextBoxColumn,
+            this.sourceColumnIsNullableDataGridViewCheckBoxColumn,
+            this.sourceColumnScaleDataGridViewTextBoxColumn,
+            this.sourceColumnPrecisionDataGridViewTextBoxColumn,
+            this.isIdentityDataGridViewCheckBoxColumn,
+            this.identityValueSequenceNameDataGridViewTextBoxColumn,
+            this.typeConverterToUseDataGridViewTextBoxColumn,
+            this.linkedSuperTypeFieldDataGridViewTextBoxColumn,
+            this.maxLengthDataGridViewTextBoxColumn,
+            this.scaleDataGridViewTextBoxColumn,
+            this.precisionDataGridViewTextBoxColumn,
+            this.aliasDataGridViewTextBoxColumn,
+            this.containingObjectNameDataGridViewTextBoxColumn,
+            this.objectAliasDataGridViewTextBoxColumn,
+            this.aggregateFunctionToApplyDataGridViewTextBoxColumn,
+            this.expressionToApplyDataGridViewTextBoxColumn,
+            this.isForeignKeyDataGridViewCheckBoxColumn,
+            this.actualContainingObjectNameDataGridViewTextBoxColumn,
+            this.isInMultiTargetEntityDataGridViewCheckBoxColumn,
+            this.actAsDerivedTableFieldDataGridViewCheckBoxColumn});
+      this.dataGridViewFields.DataSource = this.entityFieldBindingSource;
       dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
       dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
       dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -82,10 +155,6 @@
       this.dataGridViewFields.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
       this.dataGridViewFields.Size = new System.Drawing.Size(575, 562);
       this.dataGridViewFields.TabIndex = 1;
-      // 
-      // entityFieldsBindingSource
-      // 
-      this.entityFieldsBindingSource.DataSource = typeof(SD.LLBLGen.Pro.ORMSupportClasses.IEntityField);
       // 
       // splitContainer1
       // 
@@ -116,6 +185,290 @@
       this.propertyGrid1.Size = new System.Drawing.Size(289, 562);
       this.propertyGrid1.TabIndex = 0;
       // 
+      // entityFieldBindingSource
+      // 
+      this.entityFieldBindingSource.DataSource = typeof(SD.LLBLGen.Pro.ORMSupportClasses.EntityField);
+      // 
+      // nameDataGridViewTextBoxColumn
+      // 
+      this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+      this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+      this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+      this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+      this.nameDataGridViewTextBoxColumn.Width = 60;
+      // 
+      // isChangedDataGridViewCheckBoxColumn
+      // 
+      this.isChangedDataGridViewCheckBoxColumn.DataPropertyName = "IsChanged";
+      this.isChangedDataGridViewCheckBoxColumn.HeaderText = "IsChanged";
+      this.isChangedDataGridViewCheckBoxColumn.Name = "isChangedDataGridViewCheckBoxColumn";
+      this.isChangedDataGridViewCheckBoxColumn.Width = 64;
+      // 
+      // currentValueDataGridViewTextBoxColumn
+      // 
+      this.currentValueDataGridViewTextBoxColumn.DataPropertyName = "CurrentValue";
+      this.currentValueDataGridViewTextBoxColumn.HeaderText = "CurrentValue";
+      this.currentValueDataGridViewTextBoxColumn.Name = "currentValueDataGridViewTextBoxColumn";
+      this.currentValueDataGridViewTextBoxColumn.Width = 93;
+      // 
+      // dbValueDataGridViewTextBoxColumn
+      // 
+      this.dbValueDataGridViewTextBoxColumn.DataPropertyName = "DbValue";
+      this.dbValueDataGridViewTextBoxColumn.HeaderText = "DbValue";
+      this.dbValueDataGridViewTextBoxColumn.Name = "dbValueDataGridViewTextBoxColumn";
+      this.dbValueDataGridViewTextBoxColumn.ReadOnly = true;
+      this.dbValueDataGridViewTextBoxColumn.Width = 73;
+      // 
+      // isNullDataGridViewCheckBoxColumn
+      // 
+      this.isNullDataGridViewCheckBoxColumn.DataPropertyName = "IsNull";
+      this.isNullDataGridViewCheckBoxColumn.HeaderText = "IsNull";
+      this.isNullDataGridViewCheckBoxColumn.Name = "isNullDataGridViewCheckBoxColumn";
+      this.isNullDataGridViewCheckBoxColumn.Width = 39;
+      // 
+      // dataTypeDataGridViewTextBoxColumn
+      // 
+      this.dataTypeDataGridViewTextBoxColumn.DataPropertyName = "DataType";
+      this.dataTypeDataGridViewTextBoxColumn.HeaderText = "DataType";
+      this.dataTypeDataGridViewTextBoxColumn.Name = "dataTypeDataGridViewTextBoxColumn";
+      this.dataTypeDataGridViewTextBoxColumn.ReadOnly = true;
+      this.dataTypeDataGridViewTextBoxColumn.Width = 79;
+      // 
+      // isNullableDataGridViewCheckBoxColumn
+      // 
+      this.isNullableDataGridViewCheckBoxColumn.DataPropertyName = "IsNullable";
+      this.isNullableDataGridViewCheckBoxColumn.HeaderText = "IsNullable";
+      this.isNullableDataGridViewCheckBoxColumn.Name = "isNullableDataGridViewCheckBoxColumn";
+      this.isNullableDataGridViewCheckBoxColumn.ReadOnly = true;
+      this.isNullableDataGridViewCheckBoxColumn.Width = 59;
+      // 
+      // isReadOnlyDataGridViewCheckBoxColumn
+      // 
+      this.isReadOnlyDataGridViewCheckBoxColumn.DataPropertyName = "IsReadOnly";
+      this.isReadOnlyDataGridViewCheckBoxColumn.HeaderText = "IsReadOnly";
+      this.isReadOnlyDataGridViewCheckBoxColumn.Name = "isReadOnlyDataGridViewCheckBoxColumn";
+      this.isReadOnlyDataGridViewCheckBoxColumn.ReadOnly = true;
+      this.isReadOnlyDataGridViewCheckBoxColumn.Width = 68;
+      // 
+      // fieldIndexDataGridViewTextBoxColumn
+      // 
+      this.fieldIndexDataGridViewTextBoxColumn.DataPropertyName = "FieldIndex";
+      this.fieldIndexDataGridViewTextBoxColumn.HeaderText = "FieldIndex";
+      this.fieldIndexDataGridViewTextBoxColumn.Name = "fieldIndexDataGridViewTextBoxColumn";
+      this.fieldIndexDataGridViewTextBoxColumn.ReadOnly = true;
+      this.fieldIndexDataGridViewTextBoxColumn.Width = 80;
+      // 
+      // isPrimaryKeyDataGridViewCheckBoxColumn
+      // 
+      this.isPrimaryKeyDataGridViewCheckBoxColumn.DataPropertyName = "IsPrimaryKey";
+      this.isPrimaryKeyDataGridViewCheckBoxColumn.HeaderText = "IsPrimaryKey";
+      this.isPrimaryKeyDataGridViewCheckBoxColumn.Name = "isPrimaryKeyDataGridViewCheckBoxColumn";
+      this.isPrimaryKeyDataGridViewCheckBoxColumn.ReadOnly = true;
+      this.isPrimaryKeyDataGridViewCheckBoxColumn.Width = 73;
+      // 
+      // actualDotNetTypeDataGridViewTextBoxColumn
+      // 
+      this.actualDotNetTypeDataGridViewTextBoxColumn.DataPropertyName = "ActualDotNetType";
+      this.actualDotNetTypeDataGridViewTextBoxColumn.HeaderText = "ActualDotNetType";
+      this.actualDotNetTypeDataGridViewTextBoxColumn.Name = "actualDotNetTypeDataGridViewTextBoxColumn";
+      this.actualDotNetTypeDataGridViewTextBoxColumn.ReadOnly = true;
+      this.actualDotNetTypeDataGridViewTextBoxColumn.Width = 120;
+      // 
+      // sourceCatalogNameDataGridViewTextBoxColumn
+      // 
+      this.sourceCatalogNameDataGridViewTextBoxColumn.DataPropertyName = "SourceCatalogName";
+      this.sourceCatalogNameDataGridViewTextBoxColumn.HeaderText = "SourceCatalogName";
+      this.sourceCatalogNameDataGridViewTextBoxColumn.Name = "sourceCatalogNameDataGridViewTextBoxColumn";
+      this.sourceCatalogNameDataGridViewTextBoxColumn.ReadOnly = true;
+      this.sourceCatalogNameDataGridViewTextBoxColumn.Width = 130;
+      // 
+      // sourceSchemaNameDataGridViewTextBoxColumn
+      // 
+      this.sourceSchemaNameDataGridViewTextBoxColumn.DataPropertyName = "SourceSchemaName";
+      this.sourceSchemaNameDataGridViewTextBoxColumn.HeaderText = "SourceSchemaName";
+      this.sourceSchemaNameDataGridViewTextBoxColumn.Name = "sourceSchemaNameDataGridViewTextBoxColumn";
+      this.sourceSchemaNameDataGridViewTextBoxColumn.ReadOnly = true;
+      this.sourceSchemaNameDataGridViewTextBoxColumn.Width = 133;
+      // 
+      // sourceObjectNameDataGridViewTextBoxColumn
+      // 
+      this.sourceObjectNameDataGridViewTextBoxColumn.DataPropertyName = "SourceObjectName";
+      this.sourceObjectNameDataGridViewTextBoxColumn.HeaderText = "SourceObjectName";
+      this.sourceObjectNameDataGridViewTextBoxColumn.Name = "sourceObjectNameDataGridViewTextBoxColumn";
+      this.sourceObjectNameDataGridViewTextBoxColumn.ReadOnly = true;
+      this.sourceObjectNameDataGridViewTextBoxColumn.Width = 125;
+      // 
+      // sourceColumnNameDataGridViewTextBoxColumn
+      // 
+      this.sourceColumnNameDataGridViewTextBoxColumn.DataPropertyName = "SourceColumnName";
+      this.sourceColumnNameDataGridViewTextBoxColumn.HeaderText = "SourceColumnName";
+      this.sourceColumnNameDataGridViewTextBoxColumn.Name = "sourceColumnNameDataGridViewTextBoxColumn";
+      this.sourceColumnNameDataGridViewTextBoxColumn.ReadOnly = true;
+      this.sourceColumnNameDataGridViewTextBoxColumn.Width = 129;
+      // 
+      // sourceColumnMaxLengthDataGridViewTextBoxColumn
+      // 
+      this.sourceColumnMaxLengthDataGridViewTextBoxColumn.DataPropertyName = "SourceColumnMaxLength";
+      this.sourceColumnMaxLengthDataGridViewTextBoxColumn.HeaderText = "SourceColumnMaxLength";
+      this.sourceColumnMaxLengthDataGridViewTextBoxColumn.Name = "sourceColumnMaxLengthDataGridViewTextBoxColumn";
+      this.sourceColumnMaxLengthDataGridViewTextBoxColumn.ReadOnly = true;
+      this.sourceColumnMaxLengthDataGridViewTextBoxColumn.Width = 154;
+      // 
+      // sourceColumnDbTypeDataGridViewTextBoxColumn
+      // 
+      this.sourceColumnDbTypeDataGridViewTextBoxColumn.DataPropertyName = "SourceColumnDbType";
+      this.sourceColumnDbTypeDataGridViewTextBoxColumn.HeaderText = "SourceColumnDbType";
+      this.sourceColumnDbTypeDataGridViewTextBoxColumn.Name = "sourceColumnDbTypeDataGridViewTextBoxColumn";
+      this.sourceColumnDbTypeDataGridViewTextBoxColumn.ReadOnly = true;
+      this.sourceColumnDbTypeDataGridViewTextBoxColumn.Width = 139;
+      // 
+      // sourceColumnIsNullableDataGridViewCheckBoxColumn
+      // 
+      this.sourceColumnIsNullableDataGridViewCheckBoxColumn.DataPropertyName = "SourceColumnIsNullable";
+      this.sourceColumnIsNullableDataGridViewCheckBoxColumn.HeaderText = "SourceColumnIsNullable";
+      this.sourceColumnIsNullableDataGridViewCheckBoxColumn.Name = "sourceColumnIsNullableDataGridViewCheckBoxColumn";
+      this.sourceColumnIsNullableDataGridViewCheckBoxColumn.ReadOnly = true;
+      this.sourceColumnIsNullableDataGridViewCheckBoxColumn.Width = 128;
+      // 
+      // sourceColumnScaleDataGridViewTextBoxColumn
+      // 
+      this.sourceColumnScaleDataGridViewTextBoxColumn.DataPropertyName = "SourceColumnScale";
+      this.sourceColumnScaleDataGridViewTextBoxColumn.HeaderText = "SourceColumnScale";
+      this.sourceColumnScaleDataGridViewTextBoxColumn.Name = "sourceColumnScaleDataGridViewTextBoxColumn";
+      this.sourceColumnScaleDataGridViewTextBoxColumn.ReadOnly = true;
+      this.sourceColumnScaleDataGridViewTextBoxColumn.Width = 128;
+      // 
+      // sourceColumnPrecisionDataGridViewTextBoxColumn
+      // 
+      this.sourceColumnPrecisionDataGridViewTextBoxColumn.DataPropertyName = "SourceColumnPrecision";
+      this.sourceColumnPrecisionDataGridViewTextBoxColumn.HeaderText = "SourceColumnPrecision";
+      this.sourceColumnPrecisionDataGridViewTextBoxColumn.Name = "sourceColumnPrecisionDataGridViewTextBoxColumn";
+      this.sourceColumnPrecisionDataGridViewTextBoxColumn.ReadOnly = true;
+      this.sourceColumnPrecisionDataGridViewTextBoxColumn.Width = 144;
+      // 
+      // isIdentityDataGridViewCheckBoxColumn
+      // 
+      this.isIdentityDataGridViewCheckBoxColumn.DataPropertyName = "IsIdentity";
+      this.isIdentityDataGridViewCheckBoxColumn.HeaderText = "IsIdentity";
+      this.isIdentityDataGridViewCheckBoxColumn.Name = "isIdentityDataGridViewCheckBoxColumn";
+      this.isIdentityDataGridViewCheckBoxColumn.ReadOnly = true;
+      this.isIdentityDataGridViewCheckBoxColumn.Width = 55;
+      // 
+      // identityValueSequenceNameDataGridViewTextBoxColumn
+      // 
+      this.identityValueSequenceNameDataGridViewTextBoxColumn.DataPropertyName = "IdentityValueSequenceName";
+      this.identityValueSequenceNameDataGridViewTextBoxColumn.HeaderText = "IdentityValueSequenceName";
+      this.identityValueSequenceNameDataGridViewTextBoxColumn.Name = "identityValueSequenceNameDataGridViewTextBoxColumn";
+      this.identityValueSequenceNameDataGridViewTextBoxColumn.ReadOnly = true;
+      this.identityValueSequenceNameDataGridViewTextBoxColumn.Width = 170;
+      // 
+      // typeConverterToUseDataGridViewTextBoxColumn
+      // 
+      this.typeConverterToUseDataGridViewTextBoxColumn.DataPropertyName = "TypeConverterToUse";
+      this.typeConverterToUseDataGridViewTextBoxColumn.HeaderText = "TypeConverterToUse";
+      this.typeConverterToUseDataGridViewTextBoxColumn.Name = "typeConverterToUseDataGridViewTextBoxColumn";
+      this.typeConverterToUseDataGridViewTextBoxColumn.ReadOnly = true;
+      this.typeConverterToUseDataGridViewTextBoxColumn.Width = 134;
+      // 
+      // linkedSuperTypeFieldDataGridViewTextBoxColumn
+      // 
+      this.linkedSuperTypeFieldDataGridViewTextBoxColumn.DataPropertyName = "LinkedSuperTypeField";
+      this.linkedSuperTypeFieldDataGridViewTextBoxColumn.HeaderText = "LinkedSuperTypeField";
+      this.linkedSuperTypeFieldDataGridViewTextBoxColumn.Name = "linkedSuperTypeFieldDataGridViewTextBoxColumn";
+      this.linkedSuperTypeFieldDataGridViewTextBoxColumn.Width = 138;
+      // 
+      // maxLengthDataGridViewTextBoxColumn
+      // 
+      this.maxLengthDataGridViewTextBoxColumn.DataPropertyName = "MaxLength";
+      this.maxLengthDataGridViewTextBoxColumn.HeaderText = "MaxLength";
+      this.maxLengthDataGridViewTextBoxColumn.Name = "maxLengthDataGridViewTextBoxColumn";
+      this.maxLengthDataGridViewTextBoxColumn.ReadOnly = true;
+      this.maxLengthDataGridViewTextBoxColumn.Width = 85;
+      // 
+      // scaleDataGridViewTextBoxColumn
+      // 
+      this.scaleDataGridViewTextBoxColumn.DataPropertyName = "Scale";
+      this.scaleDataGridViewTextBoxColumn.HeaderText = "Scale";
+      this.scaleDataGridViewTextBoxColumn.Name = "scaleDataGridViewTextBoxColumn";
+      this.scaleDataGridViewTextBoxColumn.ReadOnly = true;
+      this.scaleDataGridViewTextBoxColumn.Width = 59;
+      // 
+      // precisionDataGridViewTextBoxColumn
+      // 
+      this.precisionDataGridViewTextBoxColumn.DataPropertyName = "Precision";
+      this.precisionDataGridViewTextBoxColumn.HeaderText = "Precision";
+      this.precisionDataGridViewTextBoxColumn.Name = "precisionDataGridViewTextBoxColumn";
+      this.precisionDataGridViewTextBoxColumn.ReadOnly = true;
+      this.precisionDataGridViewTextBoxColumn.Width = 75;
+      // 
+      // aliasDataGridViewTextBoxColumn
+      // 
+      this.aliasDataGridViewTextBoxColumn.DataPropertyName = "Alias";
+      this.aliasDataGridViewTextBoxColumn.HeaderText = "Alias";
+      this.aliasDataGridViewTextBoxColumn.Name = "aliasDataGridViewTextBoxColumn";
+      this.aliasDataGridViewTextBoxColumn.Width = 54;
+      // 
+      // containingObjectNameDataGridViewTextBoxColumn
+      // 
+      this.containingObjectNameDataGridViewTextBoxColumn.DataPropertyName = "ContainingObjectName";
+      this.containingObjectNameDataGridViewTextBoxColumn.HeaderText = "ContainingObjectName";
+      this.containingObjectNameDataGridViewTextBoxColumn.Name = "containingObjectNameDataGridViewTextBoxColumn";
+      this.containingObjectNameDataGridViewTextBoxColumn.ReadOnly = true;
+      this.containingObjectNameDataGridViewTextBoxColumn.Width = 141;
+      // 
+      // objectAliasDataGridViewTextBoxColumn
+      // 
+      this.objectAliasDataGridViewTextBoxColumn.DataPropertyName = "ObjectAlias";
+      this.objectAliasDataGridViewTextBoxColumn.HeaderText = "ObjectAlias";
+      this.objectAliasDataGridViewTextBoxColumn.Name = "objectAliasDataGridViewTextBoxColumn";
+      this.objectAliasDataGridViewTextBoxColumn.Width = 85;
+      // 
+      // aggregateFunctionToApplyDataGridViewTextBoxColumn
+      // 
+      this.aggregateFunctionToApplyDataGridViewTextBoxColumn.DataPropertyName = "AggregateFunctionToApply";
+      this.aggregateFunctionToApplyDataGridViewTextBoxColumn.HeaderText = "AggregateFunctionToApply";
+      this.aggregateFunctionToApplyDataGridViewTextBoxColumn.Name = "aggregateFunctionToApplyDataGridViewTextBoxColumn";
+      this.aggregateFunctionToApplyDataGridViewTextBoxColumn.Width = 161;
+      // 
+      // expressionToApplyDataGridViewTextBoxColumn
+      // 
+      this.expressionToApplyDataGridViewTextBoxColumn.DataPropertyName = "ExpressionToApply";
+      this.expressionToApplyDataGridViewTextBoxColumn.HeaderText = "ExpressionToApply";
+      this.expressionToApplyDataGridViewTextBoxColumn.Name = "expressionToApplyDataGridViewTextBoxColumn";
+      this.expressionToApplyDataGridViewTextBoxColumn.Width = 122;
+      // 
+      // isForeignKeyDataGridViewCheckBoxColumn
+      // 
+      this.isForeignKeyDataGridViewCheckBoxColumn.DataPropertyName = "IsForeignKey";
+      this.isForeignKeyDataGridViewCheckBoxColumn.HeaderText = "IsForeignKey";
+      this.isForeignKeyDataGridViewCheckBoxColumn.Name = "isForeignKeyDataGridViewCheckBoxColumn";
+      this.isForeignKeyDataGridViewCheckBoxColumn.ReadOnly = true;
+      this.isForeignKeyDataGridViewCheckBoxColumn.Width = 74;
+      // 
+      // actualContainingObjectNameDataGridViewTextBoxColumn
+      // 
+      this.actualContainingObjectNameDataGridViewTextBoxColumn.DataPropertyName = "ActualContainingObjectName";
+      this.actualContainingObjectNameDataGridViewTextBoxColumn.HeaderText = "ActualContainingObjectName";
+      this.actualContainingObjectNameDataGridViewTextBoxColumn.Name = "actualContainingObjectNameDataGridViewTextBoxColumn";
+      this.actualContainingObjectNameDataGridViewTextBoxColumn.ReadOnly = true;
+      this.actualContainingObjectNameDataGridViewTextBoxColumn.Width = 171;
+      // 
+      // isInMultiTargetEntityDataGridViewCheckBoxColumn
+      // 
+      this.isInMultiTargetEntityDataGridViewCheckBoxColumn.DataPropertyName = "IsInMultiTargetEntity";
+      this.isInMultiTargetEntityDataGridViewCheckBoxColumn.HeaderText = "IsInMultiTargetEntity";
+      this.isInMultiTargetEntityDataGridViewCheckBoxColumn.Name = "isInMultiTargetEntityDataGridViewCheckBoxColumn";
+      this.isInMultiTargetEntityDataGridViewCheckBoxColumn.ReadOnly = true;
+      this.isInMultiTargetEntityDataGridViewCheckBoxColumn.Width = 109;
+      // 
+      // actAsDerivedTableFieldDataGridViewCheckBoxColumn
+      // 
+      this.actAsDerivedTableFieldDataGridViewCheckBoxColumn.DataPropertyName = "ActAsDerivedTableField";
+      this.actAsDerivedTableFieldDataGridViewCheckBoxColumn.HeaderText = "ActAsDerivedTableField";
+      this.actAsDerivedTableFieldDataGridViewCheckBoxColumn.Name = "actAsDerivedTableFieldDataGridViewCheckBoxColumn";
+      this.actAsDerivedTableFieldDataGridViewCheckBoxColumn.ReadOnly = true;
+      this.actAsDerivedTableFieldDataGridViewCheckBoxColumn.Width = 127;
+      // 
       // FrmEntityViewer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -128,10 +481,10 @@
       this.Load += new System.EventHandler(this.FrmEntityViewer_Load);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmEntityViewer_FormClosing);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFields)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.entityFieldsBindingSource)).EndInit();
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       this.splitContainer1.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -139,9 +492,45 @@
     #endregion
 
     private System.Windows.Forms.DataGridView dataGridViewFields;
-    private System.Windows.Forms.BindingSource entityFieldsBindingSource;
     private System.Windows.Forms.SplitContainer splitContainer1;
     private href.Controls.PropGridEx.PropertyGridEx propertyGrid1;
+    private System.Windows.Forms.BindingSource entityFieldBindingSource;
+    private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isChangedDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn currentValueDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn dbValueDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isNullDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn dataTypeDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isNullableDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isReadOnlyDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn fieldIndexDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isPrimaryKeyDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn actualDotNetTypeDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn sourceCatalogNameDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn sourceSchemaNameDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn sourceObjectNameDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn sourceColumnNameDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn sourceColumnMaxLengthDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn sourceColumnDbTypeDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn sourceColumnIsNullableDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn sourceColumnScaleDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn sourceColumnPrecisionDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isIdentityDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn identityValueSequenceNameDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn typeConverterToUseDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn linkedSuperTypeFieldDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn maxLengthDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn scaleDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn precisionDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn aliasDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn containingObjectNameDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn objectAliasDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn aggregateFunctionToApplyDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn expressionToApplyDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isForeignKeyDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewTextBoxColumn actualContainingObjectNameDataGridViewTextBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isInMultiTargetEntityDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn actAsDerivedTableFieldDataGridViewCheckBoxColumn;
 
   }
 }
