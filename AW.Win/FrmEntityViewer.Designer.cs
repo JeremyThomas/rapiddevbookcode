@@ -33,9 +33,6 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridViewFields = new System.Windows.Forms.DataGridView();
-      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-      this.propertyGrid1 = new href.Controls.PropGridEx.PropertyGridEx();
-      this.entityFieldBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.isChangedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.currentValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,11 +69,14 @@
       this.actualContainingObjectNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.isInMultiTargetEntityDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.actAsDerivedTableFieldDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.entityFieldBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.propertyGrid1 = new href.Controls.PropGridEx.PropertyGridEx();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFields)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // dataGridViewFields
@@ -155,39 +155,6 @@
       this.dataGridViewFields.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
       this.dataGridViewFields.Size = new System.Drawing.Size(575, 562);
       this.dataGridViewFields.TabIndex = 1;
-      // 
-      // splitContainer1
-      // 
-      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-      this.splitContainer1.Name = "splitContainer1";
-      // 
-      // splitContainer1.Panel1
-      // 
-      this.splitContainer1.Panel1.Controls.Add(this.propertyGrid1);
-      // 
-      // splitContainer1.Panel2
-      // 
-      this.splitContainer1.Panel2.Controls.Add(this.dataGridViewFields);
-      this.splitContainer1.Size = new System.Drawing.Size(868, 562);
-      this.splitContainer1.SplitterDistance = 289;
-      this.splitContainer1.TabIndex = 2;
-      // 
-      // propertyGrid1
-      // 
-      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
-      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.propertyGrid1.DrawFlat = true;
-      this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-      this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(289, 562);
-      this.propertyGrid1.TabIndex = 0;
-      // 
-      // entityFieldBindingSource
-      // 
-      this.entityFieldBindingSource.DataSource = typeof(SD.LLBLGen.Pro.ORMSupportClasses.EntityField);
       // 
       // nameDataGridViewTextBoxColumn
       // 
@@ -469,6 +436,40 @@
       this.actAsDerivedTableFieldDataGridViewCheckBoxColumn.ReadOnly = true;
       this.actAsDerivedTableFieldDataGridViewCheckBoxColumn.Width = 127;
       // 
+      // entityFieldBindingSource
+      // 
+      this.entityFieldBindingSource.DataSource = typeof(SD.LLBLGen.Pro.ORMSupportClasses.EntityField);
+      // 
+      // splitContainer1
+      // 
+      this.splitContainer1.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::AW.Win.Properties.Settings.Default, "FrmEntityViewerSplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer1.Name = "splitContainer1";
+      // 
+      // splitContainer1.Panel1
+      // 
+      this.splitContainer1.Panel1.Controls.Add(this.propertyGrid1);
+      // 
+      // splitContainer1.Panel2
+      // 
+      this.splitContainer1.Panel2.Controls.Add(this.dataGridViewFields);
+      this.splitContainer1.Size = new System.Drawing.Size(868, 562);
+      this.splitContainer1.SplitterDistance = global::AW.Win.Properties.Settings.Default.FrmEntityViewerSplitterDistance;
+      this.splitContainer1.TabIndex = 2;
+      // 
+      // propertyGrid1
+      // 
+      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
+      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.propertyGrid1.DrawFlat = true;
+      this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
+      this.propertyGrid1.Name = "propertyGrid1";
+      this.propertyGrid1.Size = new System.Drawing.Size(289, 562);
+      this.propertyGrid1.TabIndex = 0;
+      // 
       // FrmEntityViewer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -481,10 +482,10 @@
       this.Load += new System.EventHandler(this.FrmEntityViewer_Load);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmEntityViewer_FormClosing);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFields)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).EndInit();
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       this.splitContainer1.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).EndInit();
       this.ResumeLayout(false);
 
     }

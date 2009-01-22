@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using AW.Data.EntityClasses;
 using AW.Win.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -8,20 +10,25 @@ namespace AW.Win
 {
   public partial class FrmEntityViewer : Form
   {
+    private static TypeDescriptionProvider CommonEntityBaseTypeDescriptionProvider;
+
     public FrmEntityViewer()
     {
       InitializeComponent();
       //dataGridViewFields.AutoGenerateColumns = true;
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
+      if (CommonEntityBaseTypeDescriptionProvider == null)
+      {
+        CommonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (CommonEntityBase));
+        TypeDescriptor.AddProvider(CommonEntityBaseTypeDescriptionProvider, typeof (CommonEntityBase));
+      }
     }
 
     public FrmEntityViewer(IEntity entity) : this()
     {
       if (entity == null) throw new ArgumentNullException("entity");
       propertyGrid1.SelectedObject = entity;
-      //entityFieldsBindingSource.DataSource = entity.Fields.OfType<EntityField>();
-      entityFieldBindingSource.DataSource = entity.Fields.OfType<object>();
-
+      entityFieldBindingSource.DataSource = entity.Fields.AsQueryable();
     }
 
     private void FrmEntityViewer_FormClosing(object sender, FormClosingEventArgs e)

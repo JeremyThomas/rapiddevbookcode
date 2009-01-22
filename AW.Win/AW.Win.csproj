@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="AWHelper.cs" />
     <Compile Include="CustomerListLinqedTypedList.cs" />
+    <Compile Include="FieldsToPropertiesTypeDescriptionProvider.cs" />
     <Compile Include="FrmEntityViewer.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -92,5 +92,8 @@
     <Setting Name="EntityFieldColumns" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="FrmEntityViewerSplitterDistance" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">289</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

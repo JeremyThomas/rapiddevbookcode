@@ -379,5 +379,17 @@ namespace AW.Win.Properties {
                 this["EntityFieldColumns"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("289")]
+        public int FrmEntityViewerSplitterDistance {
+            get {
+                return ((int)(this["FrmEntityViewerSplitterDistance"]));
+            }
+            set {
+                this["FrmEntityViewerSplitterDistance"] = value;
+            }
+        }
     }
 }
