@@ -93,23 +93,13 @@ namespace href.Controls.PropGridEx
             {
                 FieldInfo field = fieldInfos[i];
 
-                /*
-                // ignore statics
-                if (field.IsStatic)
-                    continue;
-                 */
-
-                // ignore EventHandlers
-                if (field.FieldType.IsSubclassOf(typeof(Delegate)) )
-                    continue;
-
                 // ignore doublette names
                 if (addedMemberNames.Contains(field.Name))
                     continue;
 
                 // this one made it in the list... 
                 addedMemberNames.Add(field.Name);
-                fields.Add( new FieldMemberDescriptor(type, field) );
+                fields.Add( new FieldMemberDescriptor(field) );
             }
             
 
