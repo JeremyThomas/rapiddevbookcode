@@ -278,5 +278,32 @@ namespace AW.Win
     {
       listBoxCountry.SelectedItems.Clear();
     }
+
+    private void buttonBarf_Click(object sender, EventArgs e)
+    {
+      var c = from Address in Validation.MetaData.Address
+              from EmployeeAddress in Address.EmployeeAddress
+              from Individual in EmployeeAddress.Employee.Contact.Individual
+              select Address;
+
+      c.ToList();  //ORMRelationException: Relation at index 1 doesn't contain an entity already added to the FROM clause. Bad alias?
+
+//LinqToSQL executes the above with this SQL:
+//SELECT NULL AS [EMPTY]
+//FROM [Person].[Address] AS [t0]
+//CROSS JOIN [HumanResources].[EmployeeAddress] AS [t1]
+//INNER JOIN [HumanResources].[Employee] AS [t2] ON [t2].[EmployeeID] = [t1].[EmployeeID]
+//INNER JOIN [Person].[Contact] AS [t3] ON [t3].[ContactID] = [t2].[ContactID]
+//CROSS JOIN [Sales].[Individual] AS [t4]
+//WHERE ([t1].[AddressID] = [t0].[AddressID]) AND ([t4].[ContactID] = [t3].[ContactID])
+
+      var x = from CountryRegion in Validation.MetaData.CountryRegion
+              from StateProvince in CountryRegion.StateProvince
+              from Address in StateProvince.Address
+              from EmployeeAddress in Address.EmployeeAddress
+              from Individual in EmployeeAddress.Employee.Contact.Individual
+              select CountryRegion;
+      x.ToList();
+    }
   }
 }

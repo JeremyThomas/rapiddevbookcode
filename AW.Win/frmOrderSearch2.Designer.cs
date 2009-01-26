@@ -29,9 +29,9 @@ namespace AW.Win
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
           System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderSearch2));
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
           this.label9 = new System.Windows.Forms.Label();
@@ -323,7 +323,6 @@ namespace AW.Win
           this.buttonBarf2.TabIndex = 25;
           this.buttonBarf2.Text = "BarfLeftJoin";
           this.buttonBarf2.UseVisualStyleBackColor = true;
-          this.buttonBarf2.Click += new System.EventHandler(this.btnSearch_Click);
           // 
           // buttonBarf
           // 
@@ -333,7 +332,7 @@ namespace AW.Win
           this.buttonBarf.TabIndex = 24;
           this.buttonBarf.Text = "Barf";
           this.buttonBarf.UseVisualStyleBackColor = true;
-          this.buttonBarf.Click += new System.EventHandler(this.btnSearch_Click);
+          this.buttonBarf.Click += new System.EventHandler(this.buttonBarf_Click);
           // 
           // btnSearch
           // 
@@ -428,14 +427,14 @@ namespace AW.Win
           this.salesOrderHeaderEntityDataGridView.AllowUserToAddRows = false;
           this.salesOrderHeaderEntityDataGridView.AllowUserToDeleteRows = false;
           this.salesOrderHeaderEntityDataGridView.AutoGenerateColumns = false;
-          dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-          dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-          dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-          this.salesOrderHeaderEntityDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+          dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+          dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+          dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+          this.salesOrderHeaderEntityDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
           this.salesOrderHeaderEntityDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
           this.salesOrderHeaderEntityDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn7,
@@ -465,26 +464,26 @@ namespace AW.Win
             this.dataGridViewTextBoxColumn30,
             this.dataGridViewTextBoxColumn32});
           this.salesOrderHeaderEntityDataGridView.DataSource = this.salesOrderHeaderEntityBindingSource;
-          dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-          dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-          dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-          this.salesOrderHeaderEntityDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+          dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+          dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+          dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+          this.salesOrderHeaderEntityDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
           this.salesOrderHeaderEntityDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
           this.salesOrderHeaderEntityDataGridView.Location = new System.Drawing.Point(0, 170);
           this.salesOrderHeaderEntityDataGridView.Name = "salesOrderHeaderEntityDataGridView";
           this.salesOrderHeaderEntityDataGridView.ReadOnly = true;
-          dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-          dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-          dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-          this.salesOrderHeaderEntityDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+          dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+          dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+          dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+          this.salesOrderHeaderEntityDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
           this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(694, 398);
           this.salesOrderHeaderEntityDataGridView.TabIndex = 2;
           this.salesOrderHeaderEntityDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
@@ -803,6 +802,7 @@ namespace AW.Win
           this.Name = "frmOrderSearch2";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+          this.Tag = "True";
           this.Text = "Order Search 2";
           this.Load += new System.EventHandler(this.frmOrderSearch_Load);
           this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderSearch_FormClosed);
