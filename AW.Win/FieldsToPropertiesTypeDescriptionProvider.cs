@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -89,8 +90,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       {
         if (base.Category == "Misc")
         {
-          var cat = base.Category + " " + ComponentType.Name;
-          return _field.FieldType.IsSubclassOf(typeof (Delegate)) ? cat + "-Events" : cat + "-Fields";
+          return base.Category + (_field.IsStatic ? " Static" : "") + (_field.FieldType.IsSubclassOf(typeof(Delegate)) ? " Events" : " Fields");
         }
         return base.Category;
       }
@@ -100,9 +100,9 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
     {
       get
       {
-        if (string. IsNullOrEmpty(base.Description))
+        if (string.IsNullOrEmpty(base.Description))
           return String.Format("{0} {1} {2}\n\rDefined in class {3}", Category, _field.FieldType, _field.Name, _field.DeclaringType.FullName);
-        
+
         return base.Description;
       }
     }
@@ -124,10 +124,6 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       {
         var m = ((Delegate) value).Method;
         return m.DeclaringType.FullName + "." + m.Name;
-        //foreach (Delegate d in ((Delegate)value).GetInvocationList())
-        //{
-        //  return d;
-        //}
       }
       return value;
     }
@@ -139,6 +135,9 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
     }
   }
 
+  /// <summary>
+  /// Use this as ReflectPropertyDescriptor is internal
+  /// </summary>
   public class MyReflectedPropertyDescriptor : PropertyDescriptor
   {
     private readonly PropertyInfo property;
@@ -190,7 +189,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       get
       {
         if (base.Category == "Misc")
-          return base.Category + " " + ComponentType.Name + "-Property";
+          return base.Category + " Properties";
         return base.Category;
       }
     }
@@ -218,7 +217,14 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 
     public override object GetValue(object component)
     {
-      return property.GetValue(component, null);
+      try
+      {
+        return property.GetValue(component, null);
+      }
+      catch (Exception e)
+      {
+        return null;
+      } 
     }
 
     public override void SetValue(object component, object value)
@@ -247,89 +253,6 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       return GetProperties(null);
     }
 
-//    private static PropertyDescriptor[] ReflectGetProperties(Type type)
-//    {
-//      if (_propertyCache == null)
-//      {
-//        lock (_internalSyncObject)
-//        {
-//          if (_propertyCache == null)
-//          {
-//            _propertyCache = new Hashtable();
-//          }
-//        }
-//      }
-
-//      PropertyDescriptor[] properties = (PropertyDescriptor[])_propertyCache[type];
-//      if (properties == null)
-//      {
-//        BindingFlags bindingFlags = BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance;
-//        TypeDescriptor.Trace("Properties : Building properties for {0}", type.Name);
-
-//        // Get the type's properties.  Properties may have their
-//        // get and set methods individually overridden in a derived
-//        // class, so if we find a missing method we need to walk
-//        // down the base class chain to find it.  We actually merge
-//        // "new" properties of the same name, so we must preserve
-//        // the member info for each method individually.
-//        //
-//        PropertyInfo[] propertyInfos = type.GetProperties(bindingFlags);
-//        properties = new PropertyDescriptor[propertyInfos.Length];
-//        int propertyCount = 0;
-
-
-//        for (int idx = 0; idx < propertyInfos.Length; idx++)
-//        {
-//          PropertyInfo propertyInfo = propertyInfos[idx];
-
-//          // Today we do not support parameterized properties.
-//          // UNDONE : We should support these!
-//          if (propertyInfo.GetIndexParameters().Length > 0)
-//          {
-//            continue;
-//          }
-
-//          MethodInfo getMethod = propertyInfo.GetGetMethod();
-//          MethodInfo setMethod = propertyInfo.GetSetMethod();
-//          string name = propertyInfo.Name;
-
-//          // If the property only overrode "set", then we don't
-//          // pick it up here.  Rather, we just merge it in from
-//          // the base class list.
-
-
-//          // If a property had at least a get method, we consider it.  We don't
-//          // consider write-only properties.
-//          //
-//          if (getMethod != null)
-//          {
-//            properties[propertyCount++] = new ReflectPropertyDescriptor(type, name,
-//                                                                        propertyInfo.PropertyType,
-//                                                                        propertyInfo, getMethod,
-//                                                                        setMethod, null);
-//          }
-//        }
-
-
-//        if (propertyCount != properties.Length)
-//        {
-//          PropertyDescriptor[] newProperties = new PropertyDescriptor[propertyCount];
-//          Array.Copy(properties, 0, newProperties, 0, propertyCount);
-//          properties = newProperties;
-//        }
-
-//#if DEBUG
-//        foreach (PropertyDescriptor dbgProp in properties)
-//        {
-//          Debug.Assert(dbgProp != null, "Holes in property array for type " + type);
-//        }
-//#endif
-//        _propertyCache[type] = properties;
-//      }
-
-//      return properties;
-//    }
-
     public override PropertyDescriptorCollection GetProperties(Attribute[] attributes)
     {
       // Retrieve cached properties and filtered properties
@@ -339,7 +262,18 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 
       // Use a cached version if we can
       if (filtering && cache != null && cache.IsValid(attributes)) return cache.FilteredProperties;
-      else if (!filtering && props != null) return props;
+      if (!filtering && props != null) return props;
+
+      // use a stack to reverse hierarchy
+      // if fieldnames occure in more than one class
+      // use the one from the class that is highest in the class hierarchy
+      var objectHierarchy = new Stack<Type>();
+      var curType = _objectType.BaseType;
+      while (curType != null)
+      {
+        objectHierarchy.Push(curType);
+        curType = curType.BaseType;
+      }
 
       // Otherwise, create the property collection
       props = new PropertyDescriptorCollection(null);
@@ -347,24 +281,17 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       {
         props.Add(prop);
       }
-      foreach (var prop in _objectType.GetProperties(BindingFlags.Instance |
-                                                     BindingFlags.NonPublic | BindingFlags.Static))
-      {
-        var fieldDesc = new MyReflectedPropertyDescriptor(prop);
-        if (!filtering || fieldDesc.Attributes.Contains(attributes))
-          props.Add(fieldDesc);
-      }
 
-      foreach (var field in _objectType.GetFields(BindingFlags.Instance |
-                                                  BindingFlags.Public |
-                                                  BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy))
-      {
-        var fieldDesc = new FieldPropertyDescriptor(field);
-        if (!filtering || fieldDesc.Attributes.Contains(attributes))
-          props.Add(fieldDesc);
-      }
-      AddBaseEventFields(props, attributes);
+      // list to rememnber already added names
+      var addedMemberNames = new List<string>();
 
+      while (objectHierarchy.Count > 0)
+      {
+        var next = objectHierarchy.Pop();
+        AddTypeFields(next, attributes, props, addedMemberNames);
+        AddTypeProperties(next, attributes, props);
+      }
+      
       // Store the updated properties
       if (filtering)
       {
@@ -377,23 +304,48 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       return props;
     }
 
-    public void AddBaseEventFields(PropertyDescriptorCollection propertyDescriptorCollection, Attribute[] attributes)
+    /// <summary>
+    /// Add the  fields of an object
+    /// </summary>
+    private static void AddTypeFields(Type type, Attribute[] attributes, PropertyDescriptorCollection fields, ICollection<string> addedMemberNames)
     {
-      var t = _objectType.BaseType;
+      // get all instance FieldInfos
+      var fieldInfos = type.GetFields(BindingFlags.Instance | BindingFlags.Public |
+      BindingFlags.NonPublic | BindingFlags.Static);
+
       var filtering = attributes != null && attributes.Length > 0;
 
-      while (t != null)
+      for (var i = 0; i < fieldInfos.Length; i++)
       {
-        foreach (var field in t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic ))
-          if (field.FieldType.IsSubclassOf(typeof(Delegate)))
-        {
-          var fieldDesc = new FieldPropertyDescriptor(field);
-          if (!filtering || fieldDesc.Attributes.Contains(attributes))
-            propertyDescriptorCollection.Add(fieldDesc);
-        }
+        var field = fieldInfos[i];
 
-        t = t.BaseType;
+        // ignore doublette names
+        if (addedMemberNames.Contains(field.Name))
+          continue;
+
+        // this one made it in the list... 
+        addedMemberNames.Add(field.Name);
+        var fieldDesc = new FieldPropertyDescriptor(field);
+        if (!filtering || fieldDesc.Attributes.Contains(attributes))
+          fields.Add(fieldDesc);
       }
+    }
+
+    /// <summary>
+    /// Add the  fields of an object
+    /// </summary>
+    private static void AddTypeProperties(Type type, Attribute[] attributes, PropertyDescriptorCollection props)
+    {
+      var filtering = attributes != null && attributes.Length > 0;
+
+      foreach (var prop in type.GetProperties(BindingFlags.Instance | BindingFlags.Public |
+                                               BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy))
+      {
+        var fieldDesc = new MyReflectedPropertyDescriptor(prop);
+        if (!filtering || fieldDesc.Attributes.Contains(attributes) && props.Find(fieldDesc.Name, false) == null)
+          props.Add(fieldDesc);
+      }
+
     }
 
     public Delegate[] GetEventSubscribers(object target, string eventName)
