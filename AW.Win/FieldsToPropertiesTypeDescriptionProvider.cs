@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -130,8 +131,50 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 
     public override void SetValue(object component, object value)
     {
+      if (component == null)
+        return;
       _field.SetValue(component, value);
       OnValueChanged(component, EventArgs.Empty);
+    }
+
+    /// <summary>
+    /// Create an AttributeCollection that ensures an ExpandableObjectConverter
+    /// and add Description and Category attributes
+    /// </summary>
+    public override AttributeCollection Attributes
+    {
+      get
+      {
+        var hasExpandebleTypeConverter = false;
+        var baseAttribs = base.Attributes;
+        var attributes = new List<Attribute>(baseAttribs.Count);
+        foreach (Attribute baseAttribute in baseAttribs)
+        {
+          var tca = baseAttribute as TypeConverterAttribute;
+
+          if ((tca != null) && (Type.GetType(tca.ConverterTypeName).IsSubclassOf(typeof(ExpandableObjectConverter))))
+          {
+            attributes.Add(baseAttribute);
+            hasExpandebleTypeConverter = true;
+          }
+          else
+          {
+            attributes.Add(baseAttribute);
+          }
+        }
+
+
+        // add expandable type conv?
+        if ((!hasExpandebleTypeConverter) && (!_field.FieldType.IsValueType) && (_field.FieldType != typeof(string)))
+        {
+          attributes.Add(new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+        }
+
+        var result = new AttributeCollection(attributes.ToArray());
+
+
+        return result;
+      }
     }
   }
 
@@ -232,6 +275,45 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       property.SetValue(component, value, null);
       OnValueChanged(component, EventArgs.Empty);
     }
+
+    /// <summary>
+    /// Create an AttributeCollection that ensures an ExpandableObjectConverter
+    /// and add Description and Category attributes
+    /// </summary>
+    public override AttributeCollection Attributes
+    {
+      get
+      {
+        var hasExpandebleTypeConverter = false;
+        var baseAttribs = base.Attributes;
+        var attributes = new List<Attribute>(baseAttribs.Count);
+        foreach (Attribute baseAttribute in baseAttribs)
+        {
+          var tca = baseAttribute as TypeConverterAttribute;
+
+          if ((tca != null) && (Type.GetType(tca.ConverterTypeName).IsSubclassOf(typeof(ExpandableObjectConverter))))
+          {
+            attributes.Add(baseAttribute);
+            hasExpandebleTypeConverter = true;
+          }
+          else
+          {
+            attributes.Add(baseAttribute);
+          }
+        }
+        
+        // add expandable type conv?
+        if ((!hasExpandebleTypeConverter) && (!property.PropertyType.IsValueType) && (property.PropertyType != typeof(string)))
+        {
+          attributes.Add(new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
+        }
+
+        var result = new AttributeCollection(attributes.ToArray());
+
+
+        return result;
+      }
+    }
   }
 
   private class FieldsToPropertiesTypeDescriptor : CustomTypeDescriptor
@@ -261,8 +343,8 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       var props = _provider._propCache;
 
       // Use a cached version if we can
-      if (filtering && cache != null && cache.IsValid(attributes)) return cache.FilteredProperties;
-      if (!filtering && props != null) return props;
+      //if (filtering && cache != null && cache.IsValid(attributes)) return cache.FilteredProperties;
+      //if (!filtering && props != null) return props;
 
       // use a stack to reverse hierarchy
       // if fieldnames occure in more than one class
@@ -287,11 +369,11 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 
       while (objectHierarchy.Count > 0)
       {
-        var next = objectHierarchy.Pop();
-        AddTypeFields(next, attributes, props, addedMemberNames);
-        AddTypeProperties(next, attributes, props);
+        curType = objectHierarchy.Pop();
+        AddTypeFields(curType, attributes, props, addedMemberNames);
+        AddTypeProperties(curType, attributes, props);
       }
-      
+
       // Store the updated properties
       if (filtering)
       {
@@ -309,6 +391,11 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
     /// </summary>
     private static void AddTypeFields(Type type, Attribute[] attributes, PropertyDescriptorCollection fields, ICollection<string> addedMemberNames)
     {
+      if ((type == typeof(ArrayList)) ||
+     (type == typeof(Hashtable)) ||
+     (type == typeof(SortedList)))
+        return;
+
       // get all instance FieldInfos
       var fieldInfos = type.GetFields(BindingFlags.Instance | BindingFlags.Public |
       BindingFlags.NonPublic | BindingFlags.Static);
@@ -348,53 +435,6 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 
     }
 
-    public Delegate[] GetEventSubscribers(object target, string eventName)
-    {
-      var WinFormsEventName = "Event" + eventName;
 
-      var t = target.GetType();
-
-
-      do
-      {
-        var fia = t.GetFields(BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
-
-        foreach (var fi in fia)
-        {
-          if (fi.Name == eventName)
-          {
-            //we've found the compiler generated event
-
-            var d = fi.GetValue(target) as Delegate;
-
-            if (d != null)
-
-              return d.GetInvocationList();
-          }
-
-          if (fi.Name == WinFormsEventName)
-          {
-            //we've found an EventHandlerList key
-
-            //get the list
-
-            var ehl = (EventHandlerList) target.GetType().GetProperty("Events", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy).GetValue(target, null);
-
-            //and dereference the delegate.
-
-            var d = ehl[fi.GetValue(target)];
-
-            if (d != null)
-
-              return d.GetInvocationList();
-          }
-        }
-
-        t = t.BaseType;
-      } while (t != null);
-
-
-      return new Delegate[] {};
-    }
   }
 }
