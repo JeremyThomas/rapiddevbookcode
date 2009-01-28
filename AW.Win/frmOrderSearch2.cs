@@ -287,15 +287,7 @@ namespace AW.Win
               select Address;
 
       c.ToList();  //ORMRelationException: Relation at index 1 doesn't contain an entity already added to the FROM clause. Bad alias?
-
-//LinqToSQL executes the above with this SQL:
-//SELECT NULL AS [EMPTY]
-//FROM [Person].[Address] AS [t0]
-//CROSS JOIN [HumanResources].[EmployeeAddress] AS [t1]
-//INNER JOIN [HumanResources].[Employee] AS [t2] ON [t2].[EmployeeID] = [t1].[EmployeeID]
-//INNER JOIN [Person].[Contact] AS [t3] ON [t3].[ContactID] = [t2].[ContactID]
-//CROSS JOIN [Sales].[Individual] AS [t4]
-//WHERE ([t1].[AddressID] = [t0].[AddressID]) AND ([t4].[ContactID] = [t3].[ContactID])
+      //http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15159
 
       var x = from CountryRegion in Validation.MetaData.CountryRegion
               from StateProvince in CountryRegion.StateProvince
@@ -304,6 +296,60 @@ namespace AW.Win
               from Individual in EmployeeAddress.Employee.Contact.Individual
               select CountryRegion;
       x.ToList();
+
+      var f = from Address in Validation.MetaData.Address
+              select new { Address.StateProvince.Name };
+
+      f.ToList();
+      
+      //var d = from address in Validation.MetaData.Address
+      //        join employeeAddress in Validation.MetaData.EmployeeAddress on address.AddressId equals employeeAddress.AddressId
+      //        join individual in Validation.MetaData.Individual on employeeAddress.Employee.Contact.ContactId equals individual.ContactId
+      //        //where employeeAddress.Employee.Contact != null
+      //        select address;
+      //d.ToList();
+
+      var q = from Address in Validation.MetaData.Address
+              from EmployeeAddress in Address.EmployeeAddress
+              select EmployeeAddress.Employee.Contact;
+      q.ToList();
+
+      var g = from Address in Validation.MetaData.Address
+              from EmployeeAddress in Address.EmployeeAddress
+              select EmployeeAddress.Employee.Contact.Phone;
+
+      g.ToList();
+
+      var k = from employeeAddress in Validation.MetaData.EmployeeAddress
+              select employeeAddress.Employee.Contact.Individual;
+
+      k.ToList();//Application_ThreadException: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeId', however this field wasn't found in the projection of the entity.
+
+      var h = from address in Validation.MetaData.Address
+              from employeeAddress in address.EmployeeAddress
+              select employeeAddress.Employee.Contact.Individual;
+
+      h.ToList();  
+    }
+
+    private static void BarfonMultipleTableJoins()
+    {
+      var query = from soh in Validation.MetaData.SalesOrderHeader
+                  from sod in soh.SalesOrderDetail
+                  from sod2 in soh.SalesOrderDetail
+                  where sod.SalesOrderId > 10 && sod2.SalesOrderId >1
+                  select soh;
+
+      var x = query.ToList();
+
+      var w = (from soh in query
+               from sod3 in soh.SalesOrderDetail
+               select soh).ToList();
+    }
+
+    private void buttonBarf2_Click(object sender, EventArgs e)
+    {
+      BarfonMultipleTableJoins();
     }
   }
 }

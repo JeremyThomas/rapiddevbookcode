@@ -29,9 +29,9 @@ namespace AW.Win
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
           System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderSearch2));
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
           this.label9 = new System.Windows.Forms.Label();
@@ -60,6 +60,20 @@ namespace AW.Win
           this.listBoxCountry = new System.Windows.Forms.ListBox();
           this.buttonClearCountries = new System.Windows.Forms.Button();
           this.salesOrderHeaderEntityDataGridView = new System.Windows.Forms.DataGridView();
+          this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+          this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.searchWorker = new System.ComponentModel.BackgroundWorker();
+          this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+          this.salesOrderHeaderEntityBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+          this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+          this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+          this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
+          this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
+          this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
+          this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+          this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
+          this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
+          this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -87,28 +101,14 @@ namespace AW.Win
           this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
-          this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-          this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.searchWorker = new System.ComponentModel.BackgroundWorker();
-          this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-          this.salesOrderHeaderEntityBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-          this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-          this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-          this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-          this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-          this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-          this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-          this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-          this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-          this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.tableLayoutPanel2.SuspendLayout();
           this.panel1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
           this.contextMenuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingNavigator)).BeginInit();
           this.salesOrderHeaderEntityBindingNavigator.SuspendLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
           this.SuspendLayout();
           // 
           // tableLayoutPanel2
@@ -307,7 +307,7 @@ namespace AW.Win
           // 
           // buttonClear
           // 
-          this.buttonClear.Location = new System.Drawing.Point(202, 4);
+          this.buttonClear.Location = new System.Drawing.Point(201, 4);
           this.buttonClear.Name = "buttonClear";
           this.buttonClear.Size = new System.Drawing.Size(54, 23);
           this.buttonClear.TabIndex = 26;
@@ -317,18 +317,19 @@ namespace AW.Win
           // 
           // buttonBarf2
           // 
-          this.buttonBarf2.Location = new System.Drawing.Point(119, 3);
+          this.buttonBarf2.Location = new System.Drawing.Point(135, 4);
           this.buttonBarf2.Name = "buttonBarf2";
-          this.buttonBarf2.Size = new System.Drawing.Size(77, 23);
+          this.buttonBarf2.Size = new System.Drawing.Size(54, 23);
           this.buttonBarf2.TabIndex = 25;
-          this.buttonBarf2.Text = "BarfLeftJoin";
+          this.buttonBarf2.Text = "Barf2";
           this.buttonBarf2.UseVisualStyleBackColor = true;
+          this.buttonBarf2.Click += new System.EventHandler(this.buttonBarf2_Click);
           // 
           // buttonBarf
           // 
-          this.buttonBarf.Location = new System.Drawing.Point(66, 5);
+          this.buttonBarf.Location = new System.Drawing.Point(69, 4);
           this.buttonBarf.Name = "buttonBarf";
-          this.buttonBarf.Size = new System.Drawing.Size(34, 23);
+          this.buttonBarf.Size = new System.Drawing.Size(54, 23);
           this.buttonBarf.TabIndex = 24;
           this.buttonBarf.Text = "Barf";
           this.buttonBarf.UseVisualStyleBackColor = true;
@@ -336,9 +337,9 @@ namespace AW.Win
           // 
           // btnSearch
           // 
-          this.btnSearch.Location = new System.Drawing.Point(3, 5);
+          this.btnSearch.Location = new System.Drawing.Point(3, 4);
           this.btnSearch.Name = "btnSearch";
-          this.btnSearch.Size = new System.Drawing.Size(57, 22);
+          this.btnSearch.Size = new System.Drawing.Size(54, 23);
           this.btnSearch.TabIndex = 21;
           this.btnSearch.Text = "Search";
           this.btnSearch.UseVisualStyleBackColor = true;
@@ -427,14 +428,14 @@ namespace AW.Win
           this.salesOrderHeaderEntityDataGridView.AllowUserToAddRows = false;
           this.salesOrderHeaderEntityDataGridView.AllowUserToDeleteRows = false;
           this.salesOrderHeaderEntityDataGridView.AutoGenerateColumns = false;
-          dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-          dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-          dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-          this.salesOrderHeaderEntityDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+          dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+          dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+          dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+          this.salesOrderHeaderEntityDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
           this.salesOrderHeaderEntityDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
           this.salesOrderHeaderEntityDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn7,
@@ -464,29 +465,144 @@ namespace AW.Win
             this.dataGridViewTextBoxColumn30,
             this.dataGridViewTextBoxColumn32});
           this.salesOrderHeaderEntityDataGridView.DataSource = this.salesOrderHeaderEntityBindingSource;
-          dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-          dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-          dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-          this.salesOrderHeaderEntityDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
+          dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+          dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+          dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+          this.salesOrderHeaderEntityDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
           this.salesOrderHeaderEntityDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
           this.salesOrderHeaderEntityDataGridView.Location = new System.Drawing.Point(0, 170);
           this.salesOrderHeaderEntityDataGridView.Name = "salesOrderHeaderEntityDataGridView";
           this.salesOrderHeaderEntityDataGridView.ReadOnly = true;
-          dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-          dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-          dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-          dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-          dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-          dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-          dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-          this.salesOrderHeaderEntityDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+          dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+          dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+          dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+          dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+          dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+          dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+          dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+          this.salesOrderHeaderEntityDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
           this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(694, 398);
           this.salesOrderHeaderEntityDataGridView.TabIndex = 2;
           this.salesOrderHeaderEntityDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
+          // 
+          // contextMenuStrip1
+          // 
+          this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newOrderToolStripMenuItem});
+          this.contextMenuStrip1.Name = "contextMenuStrip1";
+          this.contextMenuStrip1.Size = new System.Drawing.Size(138, 26);
+          // 
+          // newOrderToolStripMenuItem
+          // 
+          this.newOrderToolStripMenuItem.Name = "newOrderToolStripMenuItem";
+          this.newOrderToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+          this.newOrderToolStripMenuItem.Text = "New Order";
+          this.newOrderToolStripMenuItem.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
+          // 
+          // searchWorker
+          // 
+          this.searchWorker.WorkerSupportsCancellation = true;
+          this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
+          this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
+          // 
+          // salesOrderHeaderEntityBindingNavigator
+          // 
+          this.salesOrderHeaderEntityBindingNavigator.AddNewItem = null;
+          this.salesOrderHeaderEntityBindingNavigator.BindingSource = this.salesOrderHeaderEntityBindingSource;
+          this.salesOrderHeaderEntityBindingNavigator.CountItem = this.bindingNavigatorCountItem;
+          this.salesOrderHeaderEntityBindingNavigator.DeleteItem = null;
+          this.salesOrderHeaderEntityBindingNavigator.Dock = System.Windows.Forms.DockStyle.Bottom;
+          this.salesOrderHeaderEntityBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bindingNavigatorMoveFirstItem,
+            this.bindingNavigatorMovePreviousItem,
+            this.bindingNavigatorSeparator,
+            this.bindingNavigatorPositionItem,
+            this.bindingNavigatorCountItem,
+            this.bindingNavigatorSeparator1,
+            this.bindingNavigatorMoveNextItem,
+            this.bindingNavigatorMoveLastItem,
+            this.bindingNavigatorSeparator2});
+          this.salesOrderHeaderEntityBindingNavigator.Location = new System.Drawing.Point(0, 568);
+          this.salesOrderHeaderEntityBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
+          this.salesOrderHeaderEntityBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
+          this.salesOrderHeaderEntityBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
+          this.salesOrderHeaderEntityBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+          this.salesOrderHeaderEntityBindingNavigator.Name = "salesOrderHeaderEntityBindingNavigator";
+          this.salesOrderHeaderEntityBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
+          this.salesOrderHeaderEntityBindingNavigator.Size = new System.Drawing.Size(694, 25);
+          this.salesOrderHeaderEntityBindingNavigator.TabIndex = 1;
+          this.salesOrderHeaderEntityBindingNavigator.Text = "bindingNavigator1";
+          // 
+          // bindingNavigatorCountItem
+          // 
+          this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
+          this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
+          this.bindingNavigatorCountItem.Text = "of {0}";
+          this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
+          // 
+          // bindingNavigatorMoveFirstItem
+          // 
+          this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
+          this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
+          this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
+          this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
+          this.bindingNavigatorMoveFirstItem.Text = "Move first";
+          // 
+          // bindingNavigatorMovePreviousItem
+          // 
+          this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
+          this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
+          this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
+          this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
+          this.bindingNavigatorMovePreviousItem.Text = "Move previous";
+          // 
+          // bindingNavigatorSeparator
+          // 
+          this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
+          this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
+          // 
+          // bindingNavigatorPositionItem
+          // 
+          this.bindingNavigatorPositionItem.AccessibleName = "Position";
+          this.bindingNavigatorPositionItem.AutoSize = false;
+          this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
+          this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 21);
+          this.bindingNavigatorPositionItem.Text = "0";
+          this.bindingNavigatorPositionItem.ToolTipText = "Current position";
+          // 
+          // bindingNavigatorSeparator1
+          // 
+          this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
+          this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
+          // 
+          // bindingNavigatorMoveNextItem
+          // 
+          this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
+          this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
+          this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
+          this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
+          this.bindingNavigatorMoveNextItem.Text = "Move next";
+          // 
+          // bindingNavigatorMoveLastItem
+          // 
+          this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+          this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
+          this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
+          this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
+          this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
+          this.bindingNavigatorMoveLastItem.Text = "Move last";
+          // 
+          // bindingNavigatorSeparator2
+          // 
+          this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
+          this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
           // 
           // dataGridViewTextBoxColumn7
           // 
@@ -675,121 +791,6 @@ namespace AW.Win
           this.salesOrderHeaderEntityBindingSource.AllowNew = false;
           this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
           // 
-          // contextMenuStrip1
-          // 
-          this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newOrderToolStripMenuItem});
-          this.contextMenuStrip1.Name = "contextMenuStrip1";
-          this.contextMenuStrip1.Size = new System.Drawing.Size(138, 26);
-          // 
-          // newOrderToolStripMenuItem
-          // 
-          this.newOrderToolStripMenuItem.Name = "newOrderToolStripMenuItem";
-          this.newOrderToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
-          this.newOrderToolStripMenuItem.Text = "New Order";
-          this.newOrderToolStripMenuItem.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
-          // 
-          // searchWorker
-          // 
-          this.searchWorker.WorkerSupportsCancellation = true;
-          this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
-          this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
-          // 
-          // salesOrderHeaderEntityBindingNavigator
-          // 
-          this.salesOrderHeaderEntityBindingNavigator.AddNewItem = null;
-          this.salesOrderHeaderEntityBindingNavigator.BindingSource = this.salesOrderHeaderEntityBindingSource;
-          this.salesOrderHeaderEntityBindingNavigator.CountItem = this.bindingNavigatorCountItem;
-          this.salesOrderHeaderEntityBindingNavigator.DeleteItem = null;
-          this.salesOrderHeaderEntityBindingNavigator.Dock = System.Windows.Forms.DockStyle.Bottom;
-          this.salesOrderHeaderEntityBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bindingNavigatorMoveFirstItem,
-            this.bindingNavigatorMovePreviousItem,
-            this.bindingNavigatorSeparator,
-            this.bindingNavigatorPositionItem,
-            this.bindingNavigatorCountItem,
-            this.bindingNavigatorSeparator1,
-            this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2});
-          this.salesOrderHeaderEntityBindingNavigator.Location = new System.Drawing.Point(0, 568);
-          this.salesOrderHeaderEntityBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-          this.salesOrderHeaderEntityBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
-          this.salesOrderHeaderEntityBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
-          this.salesOrderHeaderEntityBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-          this.salesOrderHeaderEntityBindingNavigator.Name = "salesOrderHeaderEntityBindingNavigator";
-          this.salesOrderHeaderEntityBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-          this.salesOrderHeaderEntityBindingNavigator.Size = new System.Drawing.Size(694, 25);
-          this.salesOrderHeaderEntityBindingNavigator.TabIndex = 1;
-          this.salesOrderHeaderEntityBindingNavigator.Text = "bindingNavigator1";
-          // 
-          // bindingNavigatorCountItem
-          // 
-          this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-          this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
-          this.bindingNavigatorCountItem.Text = "of {0}";
-          this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-          // 
-          // bindingNavigatorMoveFirstItem
-          // 
-          this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
-          this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-          this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-          this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
-          this.bindingNavigatorMoveFirstItem.Text = "Move first";
-          // 
-          // bindingNavigatorMovePreviousItem
-          // 
-          this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-          this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-          this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-          this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
-          this.bindingNavigatorMovePreviousItem.Text = "Move previous";
-          // 
-          // bindingNavigatorSeparator
-          // 
-          this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-          this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
-          // 
-          // bindingNavigatorPositionItem
-          // 
-          this.bindingNavigatorPositionItem.AccessibleName = "Position";
-          this.bindingNavigatorPositionItem.AutoSize = false;
-          this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-          this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 21);
-          this.bindingNavigatorPositionItem.Text = "0";
-          this.bindingNavigatorPositionItem.ToolTipText = "Current position";
-          // 
-          // bindingNavigatorSeparator1
-          // 
-          this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-          this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
-          // 
-          // bindingNavigatorMoveNextItem
-          // 
-          this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-          this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-          this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-          this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
-          this.bindingNavigatorMoveNextItem.Text = "Move next";
-          // 
-          // bindingNavigatorMoveLastItem
-          // 
-          this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-          this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-          this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-          this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-          this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
-          this.bindingNavigatorMoveLastItem.Text = "Move last";
-          // 
-          // bindingNavigatorSeparator2
-          // 
-          this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-          this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
-          // 
           // frmOrderSearch2
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -812,11 +813,11 @@ namespace AW.Win
           this.panel1.ResumeLayout(false);
           ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
           this.contextMenuStrip1.ResumeLayout(false);
           ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingNavigator)).EndInit();
           this.salesOrderHeaderEntityBindingNavigator.ResumeLayout(false);
           this.salesOrderHeaderEntityBindingNavigator.PerformLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 
