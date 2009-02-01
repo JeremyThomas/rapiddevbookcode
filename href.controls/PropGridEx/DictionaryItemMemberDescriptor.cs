@@ -11,7 +11,7 @@ namespace href.Controls.PropGridEx
     private readonly IDictionary m_Dict;
     private readonly object m_Key;
 
-    internal DictionaryItemMemberDescriptor(IDictionary list, object key)
+    public DictionaryItemMemberDescriptor(IDictionary list, object key)
       :
         base(String.Format("[{0}]", key), null)
     {

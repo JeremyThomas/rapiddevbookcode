@@ -281,5 +281,21 @@ namespace AW.Win
         customerlist = customerlist.Take(MaxNumberOfItemsToReturn);
       bindingSource1.DataSource = customerlist;
     }
+
+    private void view()
+    {
+      var frm = new FrmEntityViewer(bindingSource1.Current);
+      ((frmMain)MdiParent).LaunchChildForm(frm);
+    }
+
+    private void dgvResults_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+      view();
+    }
+
+    private void dgvResults_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+    {
+      view();
+    }
   }
 }

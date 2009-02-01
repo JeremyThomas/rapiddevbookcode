@@ -66,6 +66,8 @@ namespace AW.Win
           this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.tspDelete = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonViewEntity = new System.Windows.Forms.ToolStripButton();
+          this.toolStripButtonRefetch = new System.Windows.Forms.ToolStripButton();
+          this.toolStripButtonRevert = new System.Windows.Forms.ToolStripButton();
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
           this.dgvDetail = new System.Windows.Forms.DataGridView();
           this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -75,8 +77,6 @@ namespace AW.Win
           this.lineTotalDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderDetailCollection1 = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
           this.myError = new System.Windows.Forms.ErrorProvider(this.components);
-          this.toolStripButtonRefetch = new System.Windows.Forms.ToolStripButton();
-          this.toolStripButtonRevert = new System.Windows.Forms.ToolStripButton();
           this.tableLayoutPanel1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
           this.toolStrip1.SuspendLayout();
@@ -446,6 +446,24 @@ namespace AW.Win
           this.toolStripButtonViewEntity.Text = "View Entity";
           this.toolStripButtonViewEntity.Click += new System.EventHandler(this.toolStripButtonViewEntity_Click);
           // 
+          // toolStripButtonRefetch
+          // 
+          this.toolStripButtonRefetch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRefetch.Image")));
+          this.toolStripButtonRefetch.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonRefetch.Name = "toolStripButtonRefetch";
+          this.toolStripButtonRefetch.Size = new System.Drawing.Size(101, 22);
+          this.toolStripButtonRefetch.Text = "Reload from DB";
+          this.toolStripButtonRefetch.Click += new System.EventHandler(this.toolStripButtonRefetch_Click);
+          // 
+          // toolStripButtonRevert
+          // 
+          this.toolStripButtonRevert.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRevert.Image")));
+          this.toolStripButtonRevert.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonRevert.Name = "toolStripButtonRevert";
+          this.toolStripButtonRevert.Size = new System.Drawing.Size(116, 22);
+          this.toolStripButtonRevert.Text = "Revert all changes";
+          this.toolStripButtonRevert.Click += new System.EventHandler(this.toolStripButtonRevert_Click);
+          // 
           // tableLayoutPanel2
           // 
           this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset;
@@ -560,24 +578,6 @@ namespace AW.Win
           // 
           this.myError.ContainerControl = this;
           this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
-          // 
-          // toolStripButtonRefetch
-          // 
-          this.toolStripButtonRefetch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRefetch.Image")));
-          this.toolStripButtonRefetch.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.toolStripButtonRefetch.Name = "toolStripButtonRefetch";
-          this.toolStripButtonRefetch.Size = new System.Drawing.Size(101, 22);
-          this.toolStripButtonRefetch.Text = "Reload from DB";
-          this.toolStripButtonRefetch.Click += new System.EventHandler(this.toolStripButtonRefetch_Click);
-          // 
-          // toolStripButtonRevert
-          // 
-          this.toolStripButtonRevert.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRevert.Image")));
-          this.toolStripButtonRevert.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.toolStripButtonRevert.Name = "toolStripButtonRevert";
-          this.toolStripButtonRevert.Size = new System.Drawing.Size(116, 22);
-          this.toolStripButtonRevert.Text = "Revert all changes";
-          this.toolStripButtonRevert.Click += new System.EventHandler(this.toolStripButtonRevert_Click);
           // 
           // frmOrderEdit
           // 

@@ -51,8 +51,8 @@ namespace AW.Win
           this.toolStripButtonPlaintypedview = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonViewAsEntity = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonTypedList = new System.Windows.Forms.ToolStripButton();
-          this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
           this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+          this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonLinqAnonymous = new System.Windows.Forms.ToolStripButton();
           this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
           ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
@@ -79,6 +79,9 @@ namespace AW.Win
           this.dgvResults.Name = "dgvResults";
           this.dgvResults.Size = new System.Drawing.Size(794, 353);
           this.dgvResults.TabIndex = 0;
+          this.dgvResults.Tag = "True";
+          this.dgvResults.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellDoubleClick);
+          this.dgvResults.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvResults_RowHeaderMouseClick);
           // 
           // Column1
           // 
@@ -260,6 +263,11 @@ namespace AW.Win
           this.toolStripButtonTypedList.Text = "TypedList";
           this.toolStripButtonTypedList.Click += new System.EventHandler(this.toolStripButtonTypedList_Click);
           // 
+          // toolStripSeparator1
+          // 
+          this.toolStripSeparator1.Name = "toolStripSeparator1";
+          this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+          // 
           // toolStripButtonLinq
           // 
           this.toolStripButtonLinq.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinq.Image")));
@@ -268,11 +276,6 @@ namespace AW.Win
           this.toolStripButtonLinq.Size = new System.Drawing.Size(121, 22);
           this.toolStripButtonLinq.Text = "Linq Concrete Class";
           this.toolStripButtonLinq.Click += new System.EventHandler(this.toolStripButtonLinq_Click);
-          // 
-          // toolStripSeparator1
-          // 
-          this.toolStripSeparator1.Name = "toolStripSeparator1";
-          this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
           // 
           // toolStripButtonLinqAnonymous
           // 
@@ -309,6 +312,7 @@ namespace AW.Win
           this.Name = "frmCustomers";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+          this.Tag = "True";
           this.Text = "Customer List";
           this.Load += new System.EventHandler(this.frmCustomers_Load);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCustomers_FormClosing);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using href.Controls.PropGridEx;
 
 //http://msdn.microsoft.com/en-us/magazine/cc163804.aspx
 
@@ -165,7 +166,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 
 
         // add expandable type conv?
-        if ((!hasExpandebleTypeConverter) && (!_field.FieldType.IsValueType) && (_field.FieldType != typeof(string)))
+        if ((!hasExpandebleTypeConverter) && (!_field.FieldType.IsValueType) && (_field.FieldType != typeof(string)) && !_field.FieldType.IsSubclassOf(typeof(Delegate)))
         {
           attributes.Add(new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
         }
@@ -175,6 +176,35 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 
         return result;
       }
+    }
+
+    public override PropertyDescriptorCollection GetChildProperties(object instance, Attribute[] filter)
+    {
+      // get default child properties
+      var props = base.GetChildProperties(instance, filter);
+
+      // if it is an IList
+      var list = instance as IList;
+      if (list != null)
+      {
+        // add special property Descriptors for the items
+        for (var i = 0; i < list.Count; i++)
+        {
+          props.Add(new ListItemMemberDescriptor(list, i));
+        }
+      }
+
+      // if it is an IDictionary
+      var dict = instance as IDictionary;
+      if (dict != null)
+      {
+        foreach (var key in dict.Keys)
+        {
+          // add special property Descriptors for the values
+          props.Add(new DictionaryItemMemberDescriptor(dict, key));
+        }
+      }
+      return props;
     }
   }
 
@@ -303,7 +333,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
         }
         
         // add expandable type conv?
-        if ((!hasExpandebleTypeConverter) && (!property.PropertyType.IsValueType) && (property.PropertyType != typeof(string)))
+        if ((!hasExpandebleTypeConverter) && (!property.PropertyType.IsValueType) && (property.PropertyType != typeof(string)) && !property.PropertyType.IsSubclassOf(typeof(Delegate)))
         {
           attributes.Add(new TypeConverterAttribute(typeof(ExpandableObjectConverter)));
         }
@@ -350,7 +380,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
       // if fieldnames occure in more than one class
       // use the one from the class that is highest in the class hierarchy
       var objectHierarchy = new Stack<Type>();
-      var curType = _objectType.BaseType;
+      var curType = _objectType;
       while (curType != null)
       {
         objectHierarchy.Push(curType);
@@ -429,8 +459,12 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
                                                BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy))
       {
         var fieldDesc = new MyReflectedPropertyDescriptor(prop);
-        if (!filtering || fieldDesc.Attributes.Contains(attributes) && props.Find(fieldDesc.Name, false) == null)
-          props.Add(fieldDesc);
+        if (!filtering || fieldDesc.Attributes.Contains(attributes))
+        {
+          var existing = props.Find(fieldDesc.Name, false);
+          if (existing == null || !existing.IsBrowsable)
+            props.Add(fieldDesc);
+        }
       }
 
     }

@@ -35,8 +35,6 @@
       this.dataGridViewFields = new System.Windows.Forms.DataGridView();
       this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.isChangedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-      this.currentValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dbValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.isNullDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.dataTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.isNullableDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -72,11 +70,25 @@
       this.entityFieldBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.propertyGrid1 = new href.Controls.PropGridEx.PropertyGridEx();
+      this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
+      this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.selectObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+      this.dataGridView1 = new System.Windows.Forms.DataGridView();
+      this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.currentValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dbValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFields)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
+      this.contextMenuStrip1.SuspendLayout();
+      this.splitContainer2.Panel1.SuspendLayout();
+      this.splitContainer2.Panel2.SuspendLayout();
+      this.splitContainer2.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
       this.SuspendLayout();
       // 
       // dataGridViewFields
@@ -99,8 +111,6 @@
       this.dataGridViewFields.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameDataGridViewTextBoxColumn,
             this.isChangedDataGridViewCheckBoxColumn,
-            this.currentValueDataGridViewTextBoxColumn,
-            this.dbValueDataGridViewTextBoxColumn,
             this.isNullDataGridViewCheckBoxColumn,
             this.dataTypeDataGridViewTextBoxColumn,
             this.isNullableDataGridViewCheckBoxColumn,
@@ -132,7 +142,9 @@
             this.isForeignKeyDataGridViewCheckBoxColumn,
             this.actualContainingObjectNameDataGridViewTextBoxColumn,
             this.isInMultiTargetEntityDataGridViewCheckBoxColumn,
-            this.actAsDerivedTableFieldDataGridViewCheckBoxColumn});
+            this.actAsDerivedTableFieldDataGridViewCheckBoxColumn,
+            this.currentValueDataGridViewTextBoxColumn,
+            this.dbValueDataGridViewTextBoxColumn});
       this.dataGridViewFields.DataSource = this.entityFieldBindingSource;
       dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
       dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -153,7 +165,7 @@
       dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
       dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
       this.dataGridViewFields.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-      this.dataGridViewFields.Size = new System.Drawing.Size(575, 562);
+      this.dataGridViewFields.Size = new System.Drawing.Size(575, 281);
       this.dataGridViewFields.TabIndex = 1;
       // 
       // nameDataGridViewTextBoxColumn
@@ -170,21 +182,6 @@
       this.isChangedDataGridViewCheckBoxColumn.HeaderText = "IsChanged";
       this.isChangedDataGridViewCheckBoxColumn.Name = "isChangedDataGridViewCheckBoxColumn";
       this.isChangedDataGridViewCheckBoxColumn.Width = 64;
-      // 
-      // currentValueDataGridViewTextBoxColumn
-      // 
-      this.currentValueDataGridViewTextBoxColumn.DataPropertyName = "CurrentValue";
-      this.currentValueDataGridViewTextBoxColumn.HeaderText = "CurrentValue";
-      this.currentValueDataGridViewTextBoxColumn.Name = "currentValueDataGridViewTextBoxColumn";
-      this.currentValueDataGridViewTextBoxColumn.Width = 93;
-      // 
-      // dbValueDataGridViewTextBoxColumn
-      // 
-      this.dbValueDataGridViewTextBoxColumn.DataPropertyName = "DbValue";
-      this.dbValueDataGridViewTextBoxColumn.HeaderText = "DbValue";
-      this.dbValueDataGridViewTextBoxColumn.Name = "dbValueDataGridViewTextBoxColumn";
-      this.dbValueDataGridViewTextBoxColumn.ReadOnly = true;
-      this.dbValueDataGridViewTextBoxColumn.Width = 73;
       // 
       // isNullDataGridViewCheckBoxColumn
       // 
@@ -453,7 +450,7 @@
       // 
       // splitContainer1.Panel2
       // 
-      this.splitContainer1.Panel2.Controls.Add(this.dataGridViewFields);
+      this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
       this.splitContainer1.Size = new System.Drawing.Size(868, 562);
       this.splitContainer1.SplitterDistance = global::AW.Win.Properties.Settings.Default.FrmEntityViewerSplitterDistance;
       this.splitContainer1.TabIndex = 2;
@@ -463,12 +460,98 @@
       this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
       this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
       this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
       this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.propertyGrid1.DrawFlat = true;
       this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
       this.propertyGrid1.Name = "propertyGrid1";
       this.propertyGrid1.Size = new System.Drawing.Size(289, 562);
       this.propertyGrid1.TabIndex = 0;
+      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
+      this.propertyGrid1.SelectedObjectsChanged += new System.EventHandler(this.propertyGrid1_SelectedObjectsChanged);
+      // 
+      // propertyGrid2
+      // 
+      this.propertyGrid2.Location = new System.Drawing.Point(0, 0);
+      this.propertyGrid2.Name = "propertyGrid2";
+      this.propertyGrid2.Size = new System.Drawing.Size(469, 141);
+      this.propertyGrid2.TabIndex = 2;
+      this.propertyGrid2.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid2_SelectedGridItemChanged);
+      // 
+      // contextMenuStrip1
+      // 
+      this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectObjectToolStripMenuItem});
+      this.contextMenuStrip1.Name = "contextMenuStrip1";
+      this.contextMenuStrip1.Size = new System.Drawing.Size(147, 26);
+      // 
+      // selectObjectToolStripMenuItem
+      // 
+      this.selectObjectToolStripMenuItem.Name = "selectObjectToolStripMenuItem";
+      this.selectObjectToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+      this.selectObjectToolStripMenuItem.Text = "SelectObject";
+      this.selectObjectToolStripMenuItem.Click += new System.EventHandler(this.selectObjectToolStripMenuItem_Click);
+      // 
+      // splitContainer2
+      // 
+      this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer2.Name = "splitContainer2";
+      this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      // 
+      // splitContainer2.Panel1
+      // 
+      this.splitContainer2.Panel1.Controls.Add(this.dataGridViewFields);
+      // 
+      // splitContainer2.Panel2
+      // 
+      this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
+      this.splitContainer2.Panel2.Controls.Add(this.propertyGrid2);
+      this.splitContainer2.Size = new System.Drawing.Size(575, 562);
+      this.splitContainer2.SplitterDistance = 281;
+      this.splitContainer2.TabIndex = 3;
+      // 
+      // dataGridView1
+      // 
+      this.dataGridView1.AllowUserToAddRows = false;
+      this.dataGridView1.AllowUserToDeleteRows = false;
+      this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+      this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+      this.dataGridView1.Name = "dataGridView1";
+      this.dataGridView1.Size = new System.Drawing.Size(575, 277);
+      this.dataGridView1.TabIndex = 3;
+      // 
+      // dataGridViewTextBoxColumn1
+      // 
+      this.dataGridViewTextBoxColumn1.DataPropertyName = "CurrentValue";
+      this.dataGridViewTextBoxColumn1.HeaderText = "CurrentValue";
+      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+      this.dataGridViewTextBoxColumn1.Width = 93;
+      // 
+      // dataGridViewTextBoxColumn2
+      // 
+      this.dataGridViewTextBoxColumn2.DataPropertyName = "DbValue";
+      this.dataGridViewTextBoxColumn2.HeaderText = "DbValue";
+      this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+      this.dataGridViewTextBoxColumn2.ReadOnly = true;
+      this.dataGridViewTextBoxColumn2.Width = 73;
+      // 
+      // currentValueDataGridViewTextBoxColumn
+      // 
+      this.currentValueDataGridViewTextBoxColumn.DataPropertyName = "CurrentValue";
+      this.currentValueDataGridViewTextBoxColumn.HeaderText = "CurrentValue";
+      this.currentValueDataGridViewTextBoxColumn.Name = "currentValueDataGridViewTextBoxColumn";
+      this.currentValueDataGridViewTextBoxColumn.Width = 93;
+      // 
+      // dbValueDataGridViewTextBoxColumn
+      // 
+      this.dbValueDataGridViewTextBoxColumn.DataPropertyName = "DbValue";
+      this.dbValueDataGridViewTextBoxColumn.HeaderText = "DbValue";
+      this.dbValueDataGridViewTextBoxColumn.Name = "dbValueDataGridViewTextBoxColumn";
+      this.dbValueDataGridViewTextBoxColumn.ReadOnly = true;
+      this.dbValueDataGridViewTextBoxColumn.Width = 73;
       // 
       // FrmEntityViewer
       // 
@@ -486,6 +569,11 @@
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       this.splitContainer1.ResumeLayout(false);
+      this.contextMenuStrip1.ResumeLayout(false);
+      this.splitContainer2.Panel1.ResumeLayout(false);
+      this.splitContainer2.Panel2.ResumeLayout(false);
+      this.splitContainer2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -532,6 +620,13 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn actualContainingObjectNameDataGridViewTextBoxColumn;
     private System.Windows.Forms.DataGridViewCheckBoxColumn isInMultiTargetEntityDataGridViewCheckBoxColumn;
     private System.Windows.Forms.DataGridViewCheckBoxColumn actAsDerivedTableFieldDataGridViewCheckBoxColumn;
+    private System.Windows.Forms.PropertyGrid propertyGrid2;
+    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+    private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+    private System.Windows.Forms.ToolStripMenuItem selectObjectToolStripMenuItem;
+    private System.Windows.Forms.SplitContainer splitContainer2;
+    private System.Windows.Forms.DataGridView dataGridView1;
 
   }
 }

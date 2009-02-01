@@ -6,6 +6,8 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Collections;
 using System.Reflection;
+using SD.LLBLGen.Pro.ORMSupportClasses;
+using FieldInfo=System.Reflection.FieldInfo;
 
 namespace href.Controls.PropGridEx
 {
@@ -140,11 +142,19 @@ namespace href.Controls.PropGridEx
             IList list = component as IList;
             if (list != null)
             {
+              IEntityFields entityFields = component as IEntityFields;
+              if (entityFields == null)
                 // add an ListItemMemberDescriptor fore each item in the list
                 for (int i = 0; i < list.Count; i++)
                 {
                     fields.Add(new ListItemMemberDescriptor(list, i));
                 }
+              else
+                for (int i = 0; i < entityFields.Count; i++)
+                {
+                  fields.Add(new EntityFieldMemberDescriptor(entityFields, i));
+                }
+
             }
 
             // special treatment for classes implementing IDictionary

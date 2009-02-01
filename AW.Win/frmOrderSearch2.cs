@@ -336,15 +336,22 @@ namespace AW.Win
     {
       var query = from soh in Validation.MetaData.SalesOrderHeader
                   from sod in soh.SalesOrderDetail
-                  from sod2 in soh.SalesOrderDetail
-                  where sod.SalesOrderId > 10 && sod2.SalesOrderId >1
+                  where sod.SalesOrderId > 10 
                   select soh;
-
-      var x = query.ToList();
 
       var w = (from soh in query
                from sod3 in soh.SalesOrderDetail
-               select soh).ToList();
+               select soh).Take(1).ToList();
+
+      var c = from Address in Validation.MetaData.Address
+              from EmployeeAddress in Address.EmployeeAddress
+              select Address;
+
+      var x = from Address in c
+              from EmployeeAddress in Address.EmployeeAddress
+              from SalesOrderHeader in Address.SalesOrderHeader.DefaultIfEmpty()
+              select Address;
+      x.ToList();
     }
 
     private void buttonBarf2_Click(object sender, EventArgs e)

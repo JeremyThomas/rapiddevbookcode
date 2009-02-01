@@ -2,11 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace href.Controls.PropGridEx
 {
   public abstract class ListItemAbstractDescriptor : PropertyDescriptor
   {
+    protected ListItemAbstractDescriptor(string name)
+      : this(name, null)
+    {
+    }
+
     protected ListItemAbstractDescriptor(string name, Attribute[] attrs) : base(name, attrs)
     {
     }
@@ -18,7 +24,6 @@ namespace href.Controls.PropGridEx
     protected ListItemAbstractDescriptor(MemberDescriptor descr, Attribute[] attrs) : base(descr, attrs)
     {
     }
-
 
     public override bool IsReadOnly
     {
@@ -92,12 +97,33 @@ namespace href.Controls.PropGridEx
     }
   }
 
+  class EntityFieldMemberDescriptor : ListItemAbstractDescriptor
+  {
+    private readonly IEntityField entityField;
+
+    public EntityFieldMemberDescriptor(IEntityFields entityFields, int index)
+      : base(entityFields[index].Name)
+    {
+      entityField = entityFields[index];
+    }
+
+    public override object GetValue(object component)
+    {
+      return entityField;
+    }
+
+    public override Type ComponentType
+    {
+      get { return typeof(IEntityFields); }
+    }
+  }
+  //IEntityFields
   public class ListItemMemberDescriptor : ListItemAbstractDescriptor
   {
     private readonly IList m_List;
     private readonly int m_Index;
 
-    internal ListItemMemberDescriptor(IList list, int index)
+    public ListItemMemberDescriptor(IList list, int index)
       :
         base(String.Format("[{0}]", index), null)
     {
