@@ -17,18 +17,18 @@ namespace AW.Win
     public FrmEntityViewer()
     {
       InitializeComponent();
-      dataGridView1.AutoGenerateColumns = true;
+      dataGridViewEnumerable.AutoGenerateColumns = true;
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
       if (CommonEntityBaseTypeDescriptionProvider == null)
       {
-        CommonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof(CommonEntityBase));
-        TypeDescriptor.AddProvider(CommonEntityBaseTypeDescriptionProvider, typeof(CommonEntityBase));
+        CommonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));
+        TypeDescriptor.AddProvider(CommonEntityBaseTypeDescriptionProvider, typeof (object));
       }
 
       if (EntityFieldsTypeDescriptionProvider == null)
       {
         EntityFieldsTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (EntityFields));
-       // TypeDescriptor.AddProvider(EntityFieldsTypeDescriptionProvider, typeof(EntityFields));
+        // TypeDescriptor.AddProvider(EntityFieldsTypeDescriptionProvider, typeof(EntityFields));
       }
     }
 
@@ -37,31 +37,33 @@ namespace AW.Win
     {
       if (entity == null) throw new ArgumentNullException("entity");
       propertyGrid1.SelectedObject = entity;
-
     }
 
     private void FrmEntityViewer_FormClosing(object sender, FormClosingEventArgs e)
-      {
-        Settings.Default.EntityViewerSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-        Settings.Default.EntityFieldColumns = AWHelper.SaveColumnState(dataGridViewFields);
-      }
+    {
+      Settings.Default.EntityViewerSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+      Settings.Default.EntityFieldColumns = AWHelper.SaveColumnState(dataGridViewFields);
+    }
 
     private void FrmEntityViewer_Load(object sender, EventArgs e)
-      {
-        propertyGrid1.RefreshSelectedObject();
-        AWHelper.RestoreColumnsState(Settings.Default.EntityFieldColumns, dataGridViewFields);
-      }
+    {
+      propertyGrid1.RefreshSelectedObject();
+      AWHelper.RestoreColumnsState(Settings.Default.EntityFieldColumns, dataGridViewFields);
+    }
 
     private void propertyGrid1_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
     {
       var x = e.NewSelection;
       var t = x.PropertyDescriptor;
-      if (!(e.OldSelection == null && dataGridView1.DataSource == propertyGrid1.SelectedObject))
-        if (e.NewSelection.Value is IEnumerable)
-        {
-          var enumerable = (IEnumerable) e.NewSelection.Value;
-          dataGridView1.DataSource = enumerable;
-        }
+      if (e.NewSelection.Value != null && !(e.OldSelection == null && dataGridViewEnumerable.DataSource == propertyGrid1.SelectedObject))
+        if (!(e.NewSelection.Value is string))
+          if (e.NewSelection.Value is IEnumerable)
+          {
+            var enumerable = (IEnumerable) e.NewSelection.Value;
+            bindingSourceEnumerable.DataSource = enumerable.AsQueryable();
+          }
+          else if (e.NewSelection.Expandable)
+            bindingSourceEnumerable.DataSource = e.NewSelection.Value;
     }
 
     private void propertyGrid2_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
@@ -80,12 +82,11 @@ namespace AW.Win
 
     private void propertyGrid1_SelectedObjectsChanged(object sender, EventArgs e)
     {
-      dataGridView1.DataSource = propertyGrid1.SelectedObject;
+      bindingSourceEnumerable.DataSource = propertyGrid1.SelectedObject;
       if (propertyGrid1.SelectedObject is IEntity)
       {
-        entityFieldBindingSource.DataSource = ((IEntity)propertyGrid1.SelectedObject).Fields.AsQueryable() ;
-        dataGridView1.DataSource = ((IEntity)propertyGrid1.SelectedObject).Fields.OfType<EntityField>();
+        entityFieldBindingSource.DataSource = ((IEntity) propertyGrid1.SelectedObject).Fields.AsQueryable();
       }
     }
-    }
   }
+}

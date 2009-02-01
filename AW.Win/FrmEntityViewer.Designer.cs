@@ -74,7 +74,8 @@
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.selectObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-      this.dataGridView1 = new System.Windows.Forms.DataGridView();
+      this.dataGridViewEnumerable = new System.Windows.Forms.DataGridView();
+      this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.currentValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -88,7 +89,8 @@
       this.splitContainer2.Panel1.SuspendLayout();
       this.splitContainer2.Panel2.SuspendLayout();
       this.splitContainer2.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       this.SuspendLayout();
       // 
       // dataGridViewFields
@@ -505,23 +507,25 @@
       // 
       // splitContainer2.Panel2
       // 
-      this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
+      this.splitContainer2.Panel2.Controls.Add(this.dataGridViewEnumerable);
       this.splitContainer2.Panel2.Controls.Add(this.propertyGrid2);
       this.splitContainer2.Size = new System.Drawing.Size(575, 562);
       this.splitContainer2.SplitterDistance = 281;
       this.splitContainer2.TabIndex = 3;
       // 
-      // dataGridView1
+      // dataGridViewEnumerable
       // 
-      this.dataGridView1.AllowUserToAddRows = false;
-      this.dataGridView1.AllowUserToDeleteRows = false;
-      this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-      this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-      this.dataGridView1.Name = "dataGridView1";
-      this.dataGridView1.Size = new System.Drawing.Size(575, 277);
-      this.dataGridView1.TabIndex = 3;
+      this.dataGridViewEnumerable.AllowUserToAddRows = false;
+      this.dataGridViewEnumerable.AllowUserToDeleteRows = false;
+      this.dataGridViewEnumerable.AutoGenerateColumns = false;
+      this.dataGridViewEnumerable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+      this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
+      this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGridViewEnumerable.Location = new System.Drawing.Point(0, 0);
+      this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(575, 277);
+      this.dataGridViewEnumerable.TabIndex = 3;
       // 
       // dataGridViewTextBoxColumn1
       // 
@@ -573,7 +577,8 @@
       this.splitContainer2.Panel1.ResumeLayout(false);
       this.splitContainer2.Panel2.ResumeLayout(false);
       this.splitContainer2.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -626,7 +631,8 @@
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     private System.Windows.Forms.ToolStripMenuItem selectObjectToolStripMenuItem;
     private System.Windows.Forms.SplitContainer splitContainer2;
-    private System.Windows.Forms.DataGridView dataGridView1;
+    private System.Windows.Forms.DataGridView dataGridViewEnumerable;
+    private System.Windows.Forms.BindingSource bindingSourceEnumerable;
 
   }
 }
