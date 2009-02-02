@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace AW.Win
 {
-  internal static class AWHelper
+  public static class AWHelper
   {
     /// <summary>
     /// Sends a msg to the Win32 debug output and prefixs it with the name off the method that called TraceOut

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data.EntityClasses;
-using AW.Win.Properties;
+using href.Controls.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win

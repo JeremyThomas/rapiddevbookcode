@@ -70,14 +70,16 @@
       this.entityFieldBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.propertyGrid1 = new href.Controls.PropGridEx.PropertyGridEx();
-      this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.selectObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
       this.dataGridViewEnumerable = new System.Windows.Forms.DataGridView();
       this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
+      this.propertyGrid2 = new System.Windows.Forms.PropertyGrid();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.currentValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dbValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFields)).BeginInit();
@@ -167,7 +169,7 @@
       dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
       dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
       this.dataGridViewFields.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-      this.dataGridViewFields.Size = new System.Drawing.Size(575, 281);
+      this.dataGridViewFields.Size = new System.Drawing.Size(539, 281);
       this.dataGridViewFields.TabIndex = 1;
       // 
       // nameDataGridViewTextBoxColumn
@@ -441,7 +443,7 @@
       // 
       // splitContainer1
       // 
-      this.splitContainer1.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::AW.Win.Properties.Settings.Default, "FrmEntityViewerSplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.splitContainer1.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::href.Controls.Properties.Settings.Default, "FrmEntityViewerSplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.splitContainer1.Location = new System.Drawing.Point(0, 0);
       this.splitContainer1.Name = "splitContainer1";
@@ -454,7 +456,7 @@
       // 
       this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
       this.splitContainer1.Size = new System.Drawing.Size(868, 562);
-      this.splitContainer1.SplitterDistance = global::AW.Win.Properties.Settings.Default.FrmEntityViewerSplitterDistance;
+      this.splitContainer1.SplitterDistance = global::href.Controls.Properties.Settings.Default.FrmEntityViewerSplitterDistance;
       this.splitContainer1.TabIndex = 2;
       // 
       // propertyGrid1
@@ -467,18 +469,10 @@
       this.propertyGrid1.DrawFlat = true;
       this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
       this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(289, 562);
+      this.propertyGrid1.Size = new System.Drawing.Size(325, 562);
       this.propertyGrid1.TabIndex = 0;
       this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       this.propertyGrid1.SelectedObjectsChanged += new System.EventHandler(this.propertyGrid1_SelectedObjectsChanged);
-      // 
-      // propertyGrid2
-      // 
-      this.propertyGrid2.Location = new System.Drawing.Point(0, 0);
-      this.propertyGrid2.Name = "propertyGrid2";
-      this.propertyGrid2.Size = new System.Drawing.Size(469, 141);
-      this.propertyGrid2.TabIndex = 2;
-      this.propertyGrid2.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid2_SelectedGridItemChanged);
       // 
       // contextMenuStrip1
       // 
@@ -509,7 +503,7 @@
       // 
       this.splitContainer2.Panel2.Controls.Add(this.dataGridViewEnumerable);
       this.splitContainer2.Panel2.Controls.Add(this.propertyGrid2);
-      this.splitContainer2.Size = new System.Drawing.Size(575, 562);
+      this.splitContainer2.Size = new System.Drawing.Size(539, 562);
       this.splitContainer2.SplitterDistance = 281;
       this.splitContainer2.TabIndex = 3;
       // 
@@ -524,8 +518,16 @@
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(0, 0);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
-      this.dataGridViewEnumerable.Size = new System.Drawing.Size(575, 277);
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(539, 277);
       this.dataGridViewEnumerable.TabIndex = 3;
+      // 
+      // propertyGrid2
+      // 
+      this.propertyGrid2.Location = new System.Drawing.Point(0, 0);
+      this.propertyGrid2.Name = "propertyGrid2";
+      this.propertyGrid2.Size = new System.Drawing.Size(469, 141);
+      this.propertyGrid2.TabIndex = 2;
+      this.propertyGrid2.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid2_SelectedGridItemChanged);
       // 
       // dataGridViewTextBoxColumn1
       // 
@@ -541,6 +543,21 @@
       this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
       this.dataGridViewTextBoxColumn2.ReadOnly = true;
       this.dataGridViewTextBoxColumn2.Width = 73;
+      // 
+      // dataGridViewTextBoxColumn3
+      // 
+      this.dataGridViewTextBoxColumn3.DataPropertyName = "CurrentValue";
+      this.dataGridViewTextBoxColumn3.HeaderText = "CurrentValue";
+      this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+      this.dataGridViewTextBoxColumn3.Width = 93;
+      // 
+      // dataGridViewTextBoxColumn4
+      // 
+      this.dataGridViewTextBoxColumn4.DataPropertyName = "DbValue";
+      this.dataGridViewTextBoxColumn4.HeaderText = "DbValue";
+      this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+      this.dataGridViewTextBoxColumn4.ReadOnly = true;
+      this.dataGridViewTextBoxColumn4.Width = 73;
       // 
       // currentValueDataGridViewTextBoxColumn
       // 
@@ -633,6 +650,8 @@
     private System.Windows.Forms.SplitContainer splitContainer2;
     private System.Windows.Forms.DataGridView dataGridViewEnumerable;
     private System.Windows.Forms.BindingSource bindingSourceEnumerable;
+    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+    private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
 
   }
 }

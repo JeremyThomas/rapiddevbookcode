@@ -35,6 +35,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <AssemblyOriginatorKeyFile>..\AW.Win\AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,18 +57,37 @@
   <ItemGroup>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AWHelper.cs" />
+    <Compile Include="EntityViewer\FieldsToPropertiesTypeDescriptionProvider.cs" />
+    <Compile Include="EntityViewer\FrmEntityViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EntityViewer\FrmEntityViewer.Designer.cs">
+      <DependentUpon>FrmEntityViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Hosting\DummySite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="PropGridEx\DictionaryItemMemberDescriptor.cs" />
     <Compile Include="PropGridEx\FieldMemberDescriptor.cs" />
@@ -78,6 +98,9 @@
     <Compile Include="PropGridEx\RawMemberTab.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EntityViewer\FrmEntityViewer.resx">
+      <DependentUpon>FrmEntityViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -99,6 +122,11 @@
   <ItemGroup>
     <None Include="..\AW.Win\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\Members.png" />
   </ItemGroup>
@@ -128,6 +156,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AW.Data\AW.Data.csproj">
+      <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
+      <Name>AW.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
