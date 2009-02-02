@@ -62,7 +62,7 @@ namespace AW.Win
             var enumerable = (IEnumerable) e.NewSelection.Value;
             bindingSourceEnumerable.DataSource = enumerable.AsQueryable();
           }
-          else if (e.NewSelection.Expandable)
+          else if (!e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
             bindingSourceEnumerable.DataSource = e.NewSelection.Value;
     }
 

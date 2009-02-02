@@ -331,6 +331,9 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
             attributes.Add(baseAttribute);
           }
         }
+
+     //   if (!IsBrowsable)
+          //attributes.Add(new BrowsableAttribute(false));
         
         // add expandable type conv?
         if ((!hasExpandebleTypeConverter) && (!property.PropertyType.IsValueType) && (property.PropertyType != typeof(string)) && !property.PropertyType.IsSubclassOf(typeof(Delegate)))
@@ -463,7 +466,11 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
         {
           var existing = props.Find(fieldDesc.Name, false);
           if (existing == null || !existing.IsBrowsable)
+          {
             props.Add(fieldDesc);
+            if (existing != null)
+              props.Remove(existing);
+          }
         }
       }
 
