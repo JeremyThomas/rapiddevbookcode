@@ -10,7 +10,8 @@
     <RootNamespace>AW.Win</RootNamespace>
     <AssemblyName>AW.Win</AssemblyName>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
     <SignManifests>true</SignManifests>
     <ManifestCertificateThumbprint>A52A1B242DFC58D05C553BFD37E77E9D4D89711F</ManifestCertificateThumbprint>
     <ManifestKeyFile>AW.Win_TemporaryKey.pfx</ManifestKeyFile>
@@ -186,9 +187,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="AdventureWorks.snk" />
     <None Include="App.config" />
-    <None Include="AW.Win_TemporaryKey.pfx" />
     <None Include="Properties\DataSources\AW.Data.CollectionClasses.SalesOrderHeaderCollection.datasource" />
     <None Include="Properties\DataSources\AW.Data.EntityClasses.SalesOrderHeaderEntity.datasource" />
     <None Include="Properties\DataSources\SD.LLBLGen.Pro.ORMSupportClasses.EntityField.datasource" />
@@ -212,6 +211,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AW.Business\AW.Business.csproj">
+      <Project>{78186ECB-5408-400B-B1A7-10F4A150BC56}</Project>
+      <Name>AW.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AW.Data\AW.Data.csproj">
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>

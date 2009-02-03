@@ -34,7 +34,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <AssemblyOriginatorKeyFile>..\AW.Win\AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -120,7 +120,7 @@
     <None Include="Resources\save16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\AW.Win\AdventureWorks.snk">
+    <None Include="..\Ancillary\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
     </None>
     <None Include="app.config" />

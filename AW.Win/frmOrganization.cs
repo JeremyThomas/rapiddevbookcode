@@ -158,7 +158,7 @@ namespace AW.Win
     private static TreeNode GetManagersRecursive(EmployeeEntityBase Employee)
     {
       var EmployeeNode = new TreeNode {Text = (Employee.Contact.LastName + ", " + Employee.Contact.FirstName + " [" + Employee.EmployeeId + "]"), Tag = Employee.EmployeeId};
-      if (Employee.ManagerId != 0)
+      if (Employee.ManagerId != 0 && Employee.ManagerId != null)
       {
         var ManagerNode = GetManagersRecursive(Employee.Manager);
         FindLowestNode(ManagerNode).Nodes.Add(EmployeeNode);
@@ -192,6 +192,11 @@ namespace AW.Win
     private void frmOrganization_FormClosing(object sender, FormClosingEventArgs e)
     {
       Settings.Default.OrderSearchSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+    }
+
+    private void btnSearchNon_Click(object sender, EventArgs e)
+    {
+
     }
 
     #region Dynamic Version

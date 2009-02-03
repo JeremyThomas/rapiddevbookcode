@@ -39,14 +39,14 @@ namespace AW.Win
           // tvOrganization
           // 
           this.tvOrganization.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.tvOrganization.Location = new System.Drawing.Point(0, 34);
+          this.tvOrganization.Location = new System.Drawing.Point(0, 59);
           this.tvOrganization.Name = "tvOrganization";
-          this.tvOrganization.Size = new System.Drawing.Size(292, 392);
+          this.tvOrganization.Size = new System.Drawing.Size(292, 367);
           this.tvOrganization.TabIndex = 2;
           // 
           // btnSearch
           // 
-          this.btnSearch.Location = new System.Drawing.Point(185, 4);
+          this.btnSearch.Location = new System.Drawing.Point(13, 30);
           this.btnSearch.Name = "btnSearch";
           this.btnSearch.Size = new System.Drawing.Size(75, 23);
           this.btnSearch.TabIndex = 5;
@@ -62,7 +62,7 @@ namespace AW.Win
           this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
           this.panel1.Location = new System.Drawing.Point(0, 0);
           this.panel1.Name = "panel1";
-          this.panel1.Size = new System.Drawing.Size(292, 34);
+          this.panel1.Size = new System.Drawing.Size(292, 59);
           this.panel1.TabIndex = 6;
           // 
           // cbEmployee
@@ -75,12 +75,13 @@ namespace AW.Win
           // 
           // btnSearchNon
           // 
-          this.btnSearchNon.Location = new System.Drawing.Point(302, 5);
+          this.btnSearchNon.Location = new System.Drawing.Point(94, 30);
           this.btnSearchNon.Name = "btnSearchNon";
           this.btnSearchNon.Size = new System.Drawing.Size(101, 23);
           this.btnSearchNon.TabIndex = 6;
           this.btnSearchNon.Text = "Search Not Pre";
           this.btnSearchNon.UseVisualStyleBackColor = true;
+          this.btnSearchNon.Click += new System.EventHandler(this.btnSearchNon_Click);
           // 
           // frmOrganization
           // 
@@ -93,6 +94,7 @@ namespace AW.Win
           this.Name = "frmOrganization";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+          this.Tag = "True";
           this.Text = "Adventure Works Organization";
           this.Load += new System.EventHandler(this.frmOrganization_Load);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmOrganization_FormClosing);

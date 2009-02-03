@@ -12,7 +12,7 @@
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>AW.Data</AssemblyName>
-    <AssemblyOriginatorKeyFile>AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
@@ -447,7 +447,9 @@
     <Compile Include="ConstantsEnums.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
-    <None Include="AdventureWorks.snk" />
+    <None Include="..\Ancillary\AdventureWorks.snk">
+      <Link>AdventureWorks.snk</Link>
+    </None>
     <None Include="App.config">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </None>

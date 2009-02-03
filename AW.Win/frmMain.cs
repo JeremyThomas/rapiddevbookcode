@@ -41,17 +41,15 @@ namespace AW.Win
     {
       Settings.Default.MainWindowSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
 
-      Settings.Default.ReopenWindows = reOpenWindowsToolStripMenuItem.Checked;
-      if (Settings.Default.ReopenWindows && MdiChildren.Length > 0)
-      {
-        if (Settings.Default.OpenWindows == null)
+      Settings.Default.ReopenWindows = reOpenWindowsToolStripMenuItem.Checked;        
+      if (Settings.Default.OpenWindows == null)
           Settings.Default.OpenWindows = new StringCollection();
         else
           Settings.Default.OpenWindows.Clear();
+      if (Settings.Default.ReopenWindows && MdiChildren.Length > 0)
         foreach (var myForm in MdiChildren)
           if (Convert.ToBoolean(myForm.Tag))
             Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
-      }
     }
 
     //private void LaunchChildForm(Form ChildForm)

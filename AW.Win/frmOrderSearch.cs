@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
+using AW.Business;
 using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
@@ -153,7 +154,7 @@ namespace AW.Win
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
       if (checkBoxUseLinq.Checked)
-        _results = SalesOrderHeaderEntity.GetSalesOrderHeaderCollectionWithLinq(
+        _results = SalesOrderManager.GetSalesOrderHeaderCollectionWithLinq(
           _fromDate,
           _toDate,
           _firstName,
@@ -166,7 +167,7 @@ namespace AW.Win
           _zip,
           Convert.ToInt32(numericUpDownNumRows.Value));
       else
-        _results = SalesOrderHeaderEntity.GetSalesOrderHeaderCollection(
+        _results = SalesOrderManager.GetSalesOrderHeaderCollection(
           _fromDate,
           _toDate,
           _firstName,
