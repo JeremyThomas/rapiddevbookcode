@@ -1,27 +1,14 @@
 ﻿using System;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using AW.Data;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
   public static class AWHelper
   {
-    /// <summary>
-    /// Sends a msg to the Win32 debug output and prefixs it with the name off the method that called TraceOut
-    /// </summary>
-    /// <param name="msg">The message.</param>
-    public static void TraceOut(string msg)
-    {
-      Trace.WriteLine(new StackTrace(false).GetFrame(1).GetMethod().Name + ": " + msg);
-    }
-
-    public static void DebugOut(string msg)
-    {
-      Debug.WriteLine(new StackTrace(false).GetFrame(1).GetMethod().Name + ": " + msg);
-    }
-
     #region SaveControlState
 
     public static void RestoreColumnsState(StringCollection cols, DataGridView dataGridView)
@@ -36,7 +23,7 @@ namespace AW.Win
         var a = cols[i].Split(',');
         dataGridView.Columns[i].DisplayIndex = Math.Min(Int16.Parse(a[0]), MaxDisplayIndex);
         dataGridView.Columns[i].Width = Int16.Parse(a[1]);
-        dataGridView.Columns[i].Visible = bool.Parse(a[2]);
+        dataGridView.Columns[i].Visible = Boolean.Parse(a[2]);
       }
     }
 
@@ -47,7 +34,7 @@ namespace AW.Win
       var stringCollection = new StringCollection();
       foreach (DataGridViewColumn column in dataGridView.Columns)
       {
-        stringCollection.Add(string.Format(
+        stringCollection.Add(String.Format(
                                "{0},{1},{2}",
                                column.DisplayIndex,
                                column.Width,
@@ -96,10 +83,63 @@ namespace AW.Win
           if (screen.WorkingArea.Contains(location))
           {
             form.Location = location;
-            DebugOut("setting form: '" + form + "' location to: " + location);
+            GlobalHelper.DebugOut("setting form: '" + form + "' location to: " + location);
             break;
           }
         }
+    }
+
+    #endregion
+
+    #region Validatation
+
+    public static bool ValidatePropertyAssignment<T>(
+      Control ControltoValidate,
+      int FieldToValidate,
+      T Value, string ErrorMessage,
+      ErrorProvider myError,
+      EntityBase Entity)
+    {
+      var Validated = true;
+      try
+      {
+        var Validator = Entity.Validator;
+        if (Value.Equals(Entity.GetCurrentFieldValue(FieldToValidate)) == false
+            && Validator.ValidateFieldValue(Entity, FieldToValidate, Value) == false
+          )
+        {
+          myError.SetError(ControltoValidate, ErrorMessage);
+          Validated = false;
+        }
+        else
+          myError.SetError(ControltoValidate, "");
+      }
+      catch (Exception err)
+      {
+        myError.SetError(ControltoValidate, err.Message);
+        Validated = false;
+      }
+      return Validated;
+    }
+
+    public static bool ValidateForm(Control mycontrol, ErrorProvider MyError)
+    {
+      var IsValid = true;
+      foreach (Control ChildControl in mycontrol.Controls)
+      {
+        if (MyError.GetError(ChildControl) != "")
+        {
+          IsValid = false;
+          break;
+        }
+        if (ChildControl.Controls.Count > 0)
+        {
+          IsValid = ValidateForm(ChildControl, MyError);
+          if (IsValid == false)
+            break;
+        }
+      }
+      return IsValid;
     }
 
     #endregion

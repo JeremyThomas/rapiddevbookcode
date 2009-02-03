@@ -2,8 +2,6 @@ using System;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Data.EntityValidators;
-using AW.Data.WinForms;
 using AW.Win.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -72,7 +70,7 @@ namespace AW.Win
       // there are errors, cancel the save until the user fixes them.
       if (_order.GetEntityFieldsErrors() != string.Empty)
         MessageBox.Show("There are errors in the entity. Please fix them prior to save.", "Please fix the errors.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-      else if (Validation.ValidateForm(this, myError))
+      else if (AWHelper.ValidateForm(this, myError))
       {
         salesOrderHeaderEntityBindingSource.EndEdit();
         if (SaveData())

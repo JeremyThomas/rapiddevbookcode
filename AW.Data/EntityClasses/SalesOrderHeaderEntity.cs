@@ -12,8 +12,6 @@ using System;
 using System.Runtime.Serialization;
 #endif
 using AW.Data.EntityValidators;
-using AW.Data.CollectionClasses;
-using AW.Data.WinForms;
 
 namespace AW.Data.EntityClasses
 {

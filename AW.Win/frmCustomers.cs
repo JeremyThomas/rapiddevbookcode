@@ -1,11 +1,11 @@
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.TypedListClasses;
 using AW.Data.TypedViewClasses;
-using AW.Data.WinForms;
 using AW.Win.Properties;
 
 namespace AW.Win
@@ -204,7 +204,7 @@ namespace AW.Win
     ///          ON [LPA_L8].[CountryRegionCode] = [LPA_L7].[CountryRegionCode])</remarks>
     private void toolStripButtonLinq_Click(object sender, EventArgs e)
     {
-      var customers = Validation.MetaData.Customer.AsQueryable();
+      var customers = MetaSingletons.MetaData.Customer.AsQueryable();
       customers = customers.Where(c => c.CustomerId > 10);
       var cityName = "London";
       if (cityName != "")
@@ -257,7 +257,7 @@ namespace AW.Win
     ///          ON [LPA_L8].[COUNTRYREGIONCODE] = [LPA_L7].[COUNTRYREGIONCODE])</remarks>
     private void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
     {
-      var customers = Validation.MetaData.Customer.AsQueryable();
+      var customers = MetaSingletons.MetaData.Customer.AsQueryable();
       var customerlist = from customer in customers
                          from customerAddress in customer.CustomerAddress
                          select new

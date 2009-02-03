@@ -1,77 +1,18 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Web.DynamicData;
-using System.Windows.Forms;
 using AW.Data.FactoryClasses;
-using AW.Data.HelperClasses;
 using AW.Data.Linq;
 using SD.LLBLGen.Pro.DynamicDataSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Data.WinForms
+namespace AW.Data
 {
-  public static class Validation
+  public static class MetaSingletons
   {
-    public static bool ValidatePropertyAssignment<T>(
-      Control ControltoValidate,
-      int FieldToValidate,
-      T Value, string ErrorMessage,
-      ErrorProvider myError,
-      EntityBase Entity)
-    {
-      var Validated = true;
-      try
-      {
-        var Validator = Entity.Validator;
-        if (Value.Equals(Entity.GetCurrentFieldValue(FieldToValidate)) == false
-            && Validator.ValidateFieldValue(Entity, FieldToValidate, Value) == false
-          )
-        {
-          myError.SetError(ControltoValidate, ErrorMessage);
-          Validated = false;
-        }
-        else
-        {
-          myError.SetError(ControltoValidate, "");
-        }
-      }
-      catch (Exception err)
-      {
-        myError.SetError(ControltoValidate, err.Message);
-        Validated = false;
-      }
-      return Validated;
-    }
-
-    public static bool ValidatePropertyAssignment<T>(T Value, EntityBase Entity, int FieldToValidate)
-    {
-      if (Entity.Validator != null)
-        return Value.Equals(Entity.GetCurrentFieldValue(FieldToValidate)) || Entity.Validator.ValidateFieldValue(Entity, FieldToValidate, Value);
-      return true;
-    }
-
-    public static bool ValidateForm(Control mycontrol, ErrorProvider MyError)
-    {
-      var IsValid = true;
-      foreach (Control ChildControl in mycontrol.Controls)
-      {
-        if (MyError.GetError(ChildControl) != "")
-        {
-          IsValid = false;
-          break;
-        }
-        if (ChildControl.Controls.Count > 0)
-        {
-          IsValid = ValidateForm(ChildControl, MyError);
-          if (IsValid == false)
-            break;
-        }
-      }
-      return IsValid;
-    }
-
     private static LinqMetaData metaData;
 
     public static LinqMetaData MetaData
@@ -97,10 +38,41 @@ namespace AW.Data.WinForms
           var model = new MetaModel();
           // Define the model provider. You've to specify the type of the DataAccessAdapter to use and the type of the generated EntityType enum below.
           // register the modelprovider with the model so DynamicData knows how the model looks like 
-          model.RegisterContext(new LLBLGenProDataModelProvider(typeof(EntityType), MetaData, new ElementCreator()));
+          model.RegisterContext(new LLBLGenProDataModelProvider(typeof (EntityType), MetaData, new ElementCreator()));
         }
         return MetaModel.Default;
       }
+    }
+  }
+
+  public static class GlobalHelper
+  {
+    #region Debuging
+    
+    /// <summary>
+    /// Sends a msg to the Win32 debug output and prefixs it with the name off the method that called TraceOut
+    /// </summary>
+    /// <param name="msg">The message.</param>
+    public static void TraceOut(string msg)
+    {
+      Trace.WriteLine(new StackTrace(false).GetFrame(1).GetMethod().Name + ": " + msg);
+    }
+
+    public static void DebugOut(string msg)
+    {
+      Debug.WriteLine(new StackTrace(false).GetFrame(1).GetMethod().Name + ": " + msg);
+    }
+
+    #endregion
+  }
+
+  public static class Validation
+  {
+    public static bool ValidatePropertyAssignment<T>(T Value, EntityBase Entity, int FieldToValidate)
+    {
+      if (Entity.Validator != null)
+        return Value.Equals(Entity.GetCurrentFieldValue(FieldToValidate)) || Entity.Validator.ValidateFieldValue(Entity, FieldToValidate, Value);
+      return true;
     }
 
     /// <summary>
@@ -117,13 +89,12 @@ namespace AW.Data.WinForms
     {
       var fieldName = ((EntityField) involvedEntity.Fields[fieldIndex]).SourceColumnName;
       //var fieldName = FieldInfoProviderSingleton.GetInstance().GetFieldInfo(involvedEntity.LLBLGenProEntityName, fieldIndex).Name;
-      var validationAttributes = Model.GetTable(involvedEntity.GetType()).GetColumn(fieldName).Attributes.OfType<ValidationAttribute>();
+      var validationAttributes = MetaSingletons.Model.GetTable(involvedEntity.GetType()).GetColumn(fieldName).Attributes.OfType<ValidationAttribute>();
       involvedEntity.SetEntityFieldError(fieldName, String.Empty, false);
       foreach (var validationAttribute in validationAttributes)
         if (!validationAttribute.IsValid(value))
           involvedEntity.SetEntityFieldError(fieldName, validationAttribute.ErrorMessage, true);
-      return String.IsNullOrEmpty(((IDataErrorInfo)involvedEntity)[fieldName]);
+      return String.IsNullOrEmpty(((IDataErrorInfo) involvedEntity)[fieldName]);
     }
-
   }
 }
