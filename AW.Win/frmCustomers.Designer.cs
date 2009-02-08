@@ -37,8 +37,8 @@ namespace AW.Win
           this.EmailAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.StateProvinceName = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.CountryRegionName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-          this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+          this.bindingSourceCustomerList = new System.Windows.Forms.BindingSource(this.components);
+          this.bindingNavigatorCustomerList = new System.Windows.Forms.BindingNavigator(this.components);
           this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
           this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
           this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
@@ -55,10 +55,11 @@ namespace AW.Win
           this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
           this.toolStripButtonLinqAnonymous = new System.Windows.Forms.ToolStripButton();
           this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
+          this.toolStripButtonViewAsEntityLinq = new System.Windows.Forms.ToolStripButton();
           ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
-          this.bindingNavigator1.SuspendLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).BeginInit();
+          this.bindingNavigatorCustomerList.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
           this.SuspendLayout();
           // 
@@ -73,11 +74,11 @@ namespace AW.Win
             this.EmailAddress,
             this.StateProvinceName,
             this.CountryRegionName});
-          this.dgvResults.DataSource = this.bindingSource1;
+          this.dgvResults.DataSource = this.bindingSourceCustomerList;
           this.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill;
           this.dgvResults.Location = new System.Drawing.Point(0, 25);
           this.dgvResults.Name = "dgvResults";
-          this.dgvResults.Size = new System.Drawing.Size(794, 353);
+          this.dgvResults.Size = new System.Drawing.Size(889, 353);
           this.dgvResults.TabIndex = 0;
           this.dgvResults.Tag = "True";
           this.dgvResults.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvResults_CellDoubleClick);
@@ -136,13 +137,17 @@ namespace AW.Win
           this.CountryRegionName.ReadOnly = true;
           this.CountryRegionName.Width = 68;
           // 
-          // bindingNavigator1
+          // bindingSourceCustomerList
           // 
-          this.bindingNavigator1.AddNewItem = null;
-          this.bindingNavigator1.BindingSource = this.bindingSource1;
-          this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
-          this.bindingNavigator1.DeleteItem = null;
-          this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+          this.bindingSourceCustomerList.AllowNew = false;
+          // 
+          // bindingNavigatorCustomerList
+          // 
+          this.bindingNavigatorCustomerList.AddNewItem = null;
+          this.bindingNavigatorCustomerList.BindingSource = this.bindingSourceCustomerList;
+          this.bindingNavigatorCustomerList.CountItem = this.bindingNavigatorCountItem;
+          this.bindingNavigatorCustomerList.DeleteItem = null;
+          this.bindingNavigatorCustomerList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
             this.bindingNavigatorSeparator,
@@ -157,17 +162,18 @@ namespace AW.Win
             this.toolStripButtonTypedList,
             this.toolStripSeparator1,
             this.toolStripButtonLinq,
-            this.toolStripButtonLinqAnonymous});
-          this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
-          this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-          this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
-          this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
-          this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-          this.bindingNavigator1.Name = "bindingNavigator1";
-          this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-          this.bindingNavigator1.Size = new System.Drawing.Size(794, 25);
-          this.bindingNavigator1.TabIndex = 1;
-          this.bindingNavigator1.Text = "bindingNavigator1";
+            this.toolStripButtonLinqAnonymous,
+            this.toolStripButtonViewAsEntityLinq});
+          this.bindingNavigatorCustomerList.Location = new System.Drawing.Point(0, 0);
+          this.bindingNavigatorCustomerList.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
+          this.bindingNavigatorCustomerList.MoveLastItem = this.bindingNavigatorMoveLastItem;
+          this.bindingNavigatorCustomerList.MoveNextItem = this.bindingNavigatorMoveNextItem;
+          this.bindingNavigatorCustomerList.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+          this.bindingNavigatorCustomerList.Name = "bindingNavigatorCustomerList";
+          this.bindingNavigatorCustomerList.PositionItem = this.bindingNavigatorPositionItem;
+          this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(889, 25);
+          this.bindingNavigatorCustomerList.TabIndex = 1;
+          this.bindingNavigatorCustomerList.Text = "bindingNavigator1";
           // 
           // bindingNavigatorCountItem
           // 
@@ -294,21 +300,29 @@ namespace AW.Win
             0,
             0,
             0});
-          this.numericUpDownNumRows.Location = new System.Drawing.Point(723, 2);
+          this.numericUpDownNumRows.Location = new System.Drawing.Point(821, 3);
           this.numericUpDownNumRows.Name = "numericUpDownNumRows";
           this.numericUpDownNumRows.Size = new System.Drawing.Size(59, 20);
           this.numericUpDownNumRows.TabIndex = 2;
           this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
           // 
+          // toolStripButtonViewAsEntityLinq
+          // 
+          this.toolStripButtonViewAsEntityLinq.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsEntityLinq.Image")));
+          this.toolStripButtonViewAsEntityLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.toolStripButtonViewAsEntityLinq.Name = "toolStripButtonViewAsEntityLinq";
+          this.toolStripButtonViewAsEntityLinq.Size = new System.Drawing.Size(108, 22);
+          this.toolStripButtonViewAsEntityLinq.Text = "ViewAsEntityLinq";
+          this.toolStripButtonViewAsEntityLinq.Click += new System.EventHandler(this.toolStripButtonViewAsEntityLinq_Click);
+          // 
           // frmCustomers
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-          this.ClientSize = new System.Drawing.Size(794, 378);
+          this.ClientSize = new System.Drawing.Size(889, 378);
           this.Controls.Add(this.numericUpDownNumRows);
           this.Controls.Add(this.dgvResults);
-          this.Controls.Add(this.bindingNavigator1);
-          this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+          this.Controls.Add(this.bindingNavigatorCustomerList);
           this.Name = "frmCustomers";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -317,10 +331,10 @@ namespace AW.Win
           this.Load += new System.EventHandler(this.frmCustomers_Load);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmCustomers_FormClosing);
           ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
-          this.bindingNavigator1.ResumeLayout(false);
-          this.bindingNavigator1.PerformLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).EndInit();
+          this.bindingNavigatorCustomerList.ResumeLayout(false);
+          this.bindingNavigatorCustomerList.PerformLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
@@ -336,8 +350,8 @@ namespace AW.Win
         private System.Windows.Forms.DataGridViewTextBoxColumn EmailAddress;
         private System.Windows.Forms.DataGridViewTextBoxColumn StateProvinceName;
         private System.Windows.Forms.DataGridViewTextBoxColumn CountryRegionName;
-        private System.Windows.Forms.BindingSource bindingSource1;
-        private System.Windows.Forms.BindingNavigator bindingNavigator1;
+        private System.Windows.Forms.BindingSource bindingSourceCustomerList;
+        private System.Windows.Forms.BindingNavigator bindingNavigatorCustomerList;
         private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
         private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;
@@ -354,6 +368,7 @@ namespace AW.Win
         private System.Windows.Forms.NumericUpDown numericUpDownNumRows;
         private System.Windows.Forms.ToolStripButton toolStripButtonLinqAnonymous;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonViewAsEntityLinq;
 
     }
 }

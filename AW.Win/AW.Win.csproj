@@ -76,7 +76,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerListLinqedTypedList.cs" />
     <Compile Include="frmOrderSearch.cs">
       <SubType>Form</SubType>
     </Compile>

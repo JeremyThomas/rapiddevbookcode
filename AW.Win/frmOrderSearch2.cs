@@ -35,11 +35,11 @@ namespace AW.Win
     {
       var previousState = Settings.Default.State;
 
-      listBoxCountry.DataSource = CountryRegionEntity.GetCountryRegionCollection();
+      listBoxCountry.DataSource = LookUpQueries.GetCountryRegionCollection();
       listBoxCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
       listBoxCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
 
-      cbState.DataSource = StateProvinceEntity.GetStateProvinceCollection();
+      cbState.DataSource = LookUpQueries.GetStateProvinceCollection();
       cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
       cbState.ValueMember = StateProvinceFieldIndex.StateProvinceId.ToString();
 

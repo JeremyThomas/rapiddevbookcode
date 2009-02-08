@@ -34,11 +34,11 @@ namespace AW.Win
       var previousState = Settings.Default.State;
       var previousCountry = Settings.Default.Country;
 
-      cbCountry.DataSource = CountryRegionEntity.GetCountryRegionCollection();
+      cbCountry.DataSource = LookUpQueries.GetCountryRegionCollection();
       cbCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
       cbCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
 
-      cbState.DataSource = StateProvinceEntity.GetStateProvinceCollection();
+      cbState.DataSource = LookUpQueries.GetStateProvinceCollection();
       cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
       cbState.ValueMember = StateProvinceFieldIndex.StateProvinceId.ToString();
 

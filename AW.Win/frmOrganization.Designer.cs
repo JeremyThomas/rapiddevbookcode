@@ -33,6 +33,8 @@ namespace AW.Win
           this.panel1 = new System.Windows.Forms.Panel();
           this.cbEmployee = new System.Windows.Forms.ComboBox();
           this.btnSearchNon = new System.Windows.Forms.Button();
+          this.btnSearchSP = new System.Windows.Forms.Button();
+          this.buttonSearchNP = new System.Windows.Forms.Button();
           this.panel1.SuspendLayout();
           this.SuspendLayout();
           // 
@@ -56,6 +58,8 @@ namespace AW.Win
           // 
           // panel1
           // 
+          this.panel1.Controls.Add(this.buttonSearchNP);
+          this.panel1.Controls.Add(this.btnSearchSP);
           this.panel1.Controls.Add(this.cbEmployee);
           this.panel1.Controls.Add(this.btnSearchNon);
           this.panel1.Controls.Add(this.btnSearch);
@@ -82,6 +86,26 @@ namespace AW.Win
           this.btnSearchNon.Text = "Search Not Pre";
           this.btnSearchNon.UseVisualStyleBackColor = true;
           this.btnSearchNon.Click += new System.EventHandler(this.btnSearchNon_Click);
+          // 
+          // btnSearchSP
+          // 
+          this.btnSearchSP.Location = new System.Drawing.Point(203, 4);
+          this.btnSearchSP.Name = "btnSearchSP";
+          this.btnSearchSP.Size = new System.Drawing.Size(75, 23);
+          this.btnSearchSP.TabIndex = 8;
+          this.btnSearchSP.Text = "SearchSP";
+          this.btnSearchSP.UseVisualStyleBackColor = true;
+          this.btnSearchSP.Click += new System.EventHandler(this.btnSearchSP_Click);
+          // 
+          // buttonSearchNP
+          // 
+          this.buttonSearchNP.Location = new System.Drawing.Point(203, 30);
+          this.buttonSearchNP.Name = "buttonSearchNP";
+          this.buttonSearchNP.Size = new System.Drawing.Size(75, 23);
+          this.buttonSearchNP.TabIndex = 9;
+          this.buttonSearchNP.Text = "SearchNP";
+          this.buttonSearchNP.UseVisualStyleBackColor = true;
+          this.buttonSearchNP.Click += new System.EventHandler(this.buttonSearchNP_Click);
           // 
           // frmOrganization
           // 
@@ -110,5 +134,7 @@ namespace AW.Win
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSearchNon;
         private System.Windows.Forms.ComboBox cbEmployee;
+        private System.Windows.Forms.Button btnSearchSP;
+        private System.Windows.Forms.Button buttonSearchNP;
     }
 }
