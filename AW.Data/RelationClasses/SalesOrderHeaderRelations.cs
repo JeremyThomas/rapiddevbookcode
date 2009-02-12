@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -30,31 +30,31 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.SalesOrderDetailEntityUsingSalesOrderId);
+			toReturn.Add(this.SalesOrderDetailEntityUsingSalesOrderID);
 
-			toReturn.Add(this.AddressEntityUsingBillToAddressId);
-			toReturn.Add(this.AddressEntityUsingShipToAddressId);
-			toReturn.Add(this.ContactEntityUsingContactId);
-			toReturn.Add(this.CreditCardEntityUsingCreditCardId);
-			toReturn.Add(this.CurrencyRateEntityUsingCurrencyRateId);
-			toReturn.Add(this.CustomerEntityUsingCustomerId);
-			toReturn.Add(this.CustomerViewRelatedEntityUsingCustomerId);
-			toReturn.Add(this.SalesTerritoryEntityUsingTerritoryId);
-			toReturn.Add(this.ShipMethodEntityUsingShipMethodId);
+			toReturn.Add(this.AddressEntityUsingShipToAddressID);
+			toReturn.Add(this.AddressEntityUsingBillToAddressID);
+			toReturn.Add(this.ContactEntityUsingContactID);
+			toReturn.Add(this.CreditCardEntityUsingCreditCardID);
+			toReturn.Add(this.CurrencyRateEntityUsingCurrencyRateID);
+			toReturn.Add(this.CustomerEntityUsingCustomerID);
+			toReturn.Add(this.CustomerViewRelatedEntityUsingCustomerID);
+			toReturn.Add(this.SalesTerritoryEntityUsingTerritoryID);
+			toReturn.Add(this.ShipMethodEntityUsingShipMethodID);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesOrderDetailEntity over the 1:n relation they have, using the relation between the fields:
-		/// SalesOrderHeader.SalesOrderId - SalesOrderDetail.SalesOrderId
+		/// SalesOrderHeader.SalesOrderID - SalesOrderDetail.SalesOrderID
 		/// </summary>
-		public virtual IEntityRelation SalesOrderDetailEntityUsingSalesOrderId
+		public virtual IEntityRelation SalesOrderDetailEntityUsingSalesOrderID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderDetail" , true);
-				relation.AddEntityFieldPair(SalesOrderHeaderFields.SalesOrderId, SalesOrderDetailFields.SalesOrderId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderDetails" , true);
+				relation.AddEntityFieldPair(SalesOrderHeaderFields.SalesOrderID, SalesOrderDetailFields.SalesOrderID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderDetailEntity", false);
 				return relation;
@@ -63,126 +63,126 @@ namespace AW.Data.RelationClasses
 
 
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.BillToAddressId - Address.AddressId
+		/// SalesOrderHeader.ShipToAddressID - Address.AddressID
 		/// </summary>
-		public virtual IEntityRelation AddressEntityUsingBillToAddressId
+		public virtual IEntityRelation AddressEntityUsingShipToAddressID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
-				relation.AddEntityFieldPair(AddressFields.AddressId, SalesOrderHeaderFields.BillToAddressId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "ShippingAddress", false);
+				relation.AddEntityFieldPair(AddressFields.AddressID, SalesOrderHeaderFields.ShipToAddressID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.ShipToAddressId - Address.AddressId
+		/// SalesOrderHeader.BillToAddressID - Address.AddressID
 		/// </summary>
-		public virtual IEntityRelation AddressEntityUsingShipToAddressId
+		public virtual IEntityRelation AddressEntityUsingBillToAddressID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address_", false);
-				relation.AddEntityFieldPair(AddressFields.AddressId, SalesOrderHeaderFields.ShipToAddressId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "BillingAddress", false);
+				relation.AddEntityFieldPair(AddressFields.AddressID, SalesOrderHeaderFields.BillToAddressID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.ContactId - Contact.ContactId
+		/// SalesOrderHeader.ContactID - Contact.ContactID
 		/// </summary>
-		public virtual IEntityRelation ContactEntityUsingContactId
+		public virtual IEntityRelation ContactEntityUsingContactID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Contact", false);
-				relation.AddEntityFieldPair(ContactFields.ContactId, SalesOrderHeaderFields.ContactId);
+				relation.AddEntityFieldPair(ContactFields.ContactID, SalesOrderHeaderFields.ContactID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and CreditCardEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.CreditCardId - CreditCard.CreditCardId
+		/// SalesOrderHeader.CreditCardID - CreditCard.CreditCardID
 		/// </summary>
-		public virtual IEntityRelation CreditCardEntityUsingCreditCardId
+		public virtual IEntityRelation CreditCardEntityUsingCreditCardID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CreditCard", false);
-				relation.AddEntityFieldPair(CreditCardFields.CreditCardId, SalesOrderHeaderFields.CreditCardId);
+				relation.AddEntityFieldPair(CreditCardFields.CreditCardID, SalesOrderHeaderFields.CreditCardID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CreditCardEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and CurrencyRateEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.CurrencyRateId - CurrencyRate.CurrencyRateId
+		/// SalesOrderHeader.CurrencyRateID - CurrencyRate.CurrencyRateID
 		/// </summary>
-		public virtual IEntityRelation CurrencyRateEntityUsingCurrencyRateId
+		public virtual IEntityRelation CurrencyRateEntityUsingCurrencyRateID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CurrencyRate", false);
-				relation.AddEntityFieldPair(CurrencyRateFields.CurrencyRateId, SalesOrderHeaderFields.CurrencyRateId);
+				relation.AddEntityFieldPair(CurrencyRateFields.CurrencyRateID, SalesOrderHeaderFields.CurrencyRateID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyRateEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and CustomerEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.CustomerId - Customer.CustomerId
+		/// SalesOrderHeader.CustomerID - Customer.CustomerID
 		/// </summary>
-		public virtual IEntityRelation CustomerEntityUsingCustomerId
+		public virtual IEntityRelation CustomerEntityUsingCustomerID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Customer", false);
-				relation.AddEntityFieldPair(CustomerFields.CustomerId, SalesOrderHeaderFields.CustomerId);
+				relation.AddEntityFieldPair(CustomerFields.CustomerID, SalesOrderHeaderFields.CustomerID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and CustomerViewRelatedEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.CustomerId - CustomerViewRelated.CustomerId
+		/// SalesOrderHeader.CustomerID - CustomerViewRelated.CustomerId
 		/// </summary>
-		public virtual IEntityRelation CustomerViewRelatedEntityUsingCustomerId
+		public virtual IEntityRelation CustomerViewRelatedEntityUsingCustomerID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "CustomerViewRelated", false);
-				relation.AddEntityFieldPair(CustomerViewRelatedFields.CustomerId, SalesOrderHeaderFields.CustomerId);
+				relation.AddEntityFieldPair(CustomerViewRelatedFields.CustomerId, SalesOrderHeaderFields.CustomerID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerViewRelatedEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesTerritoryEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.TerritoryId - SalesTerritory.TerritoryId
+		/// SalesOrderHeader.TerritoryID - SalesTerritory.TerritoryID
 		/// </summary>
-		public virtual IEntityRelation SalesTerritoryEntityUsingTerritoryId
+		public virtual IEntityRelation SalesTerritoryEntityUsingTerritoryID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SalesTerritory", false);
-				relation.AddEntityFieldPair(SalesTerritoryFields.TerritoryId, SalesOrderHeaderFields.TerritoryId);
+				relation.AddEntityFieldPair(SalesTerritoryFields.TerritoryID, SalesOrderHeaderFields.TerritoryID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesTerritoryEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and ShipMethodEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.ShipMethodId - ShipMethod.ShipMethodId
+		/// SalesOrderHeader.ShipMethodID - ShipMethod.ShipMethodID
 		/// </summary>
-		public virtual IEntityRelation ShipMethodEntityUsingShipMethodId
+		public virtual IEntityRelation ShipMethodEntityUsingShipMethodID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "ShipMethod", false);
-				relation.AddEntityFieldPair(ShipMethodFields.ShipMethodId, SalesOrderHeaderFields.ShipMethodId);
+				relation.AddEntityFieldPair(ShipMethodFields.ShipMethodID, SalesOrderHeaderFields.ShipMethodID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ShipMethodEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;

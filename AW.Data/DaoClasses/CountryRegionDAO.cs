@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -88,9 +88,9 @@ namespace AW.Data.DaoClasses
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.CountryRegionEntity);
 			RelationCollection relations = new RelationCollection();
 			relations.Add(CountryRegionEntity.Relations.StateProvinceEntityUsingCountryRegionCode, "StateProvince_");
-			relations.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId, "StateProvince_", string.Empty, JoinHint.None);
+			relations.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "StateProvince_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -112,9 +112,9 @@ namespace AW.Data.DaoClasses
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.CountryRegionEntity);
 			RelationCollection relations = new RelationCollection();
 			relations.Add(CountryRegionEntity.Relations.StateProvinceEntityUsingCountryRegionCode, "StateProvince_");
-			relations.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId, "StateProvince_", string.Empty, JoinHint.None);
+			relations.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "StateProvince_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 

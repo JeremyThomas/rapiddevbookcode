@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -39,8 +39,8 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AW.Data.CollectionClasses.SpecialOfferProductCollection	_specialOfferProduct;
-		private bool	_alwaysFetchSpecialOfferProduct, _alreadyFetchedSpecialOfferProduct;
+		private AW.Data.CollectionClasses.SpecialOfferProductCollection	_specialOfferProducts;
+		private bool	_alwaysFetchSpecialOfferProducts, _alreadyFetchedSpecialOfferProducts;
 		private AW.Data.CollectionClasses.SpecialOfferCollection _specialOfferCollectionViaSpecialOfferProduct;
 		private bool	_alwaysFetchSpecialOfferCollectionViaSpecialOfferProduct, _alreadyFetchedSpecialOfferCollectionViaSpecialOfferProduct;
 
@@ -55,11 +55,11 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 
-			/// <summary>Member name SpecialOfferProduct</summary>
-			public static readonly string SpecialOfferProduct = "SpecialOfferProduct";
+			/// <summary>Member name SpecialOfferProducts</summary>
+			public static readonly string SpecialOfferProducts = "SpecialOfferProducts";
 			/// <summary>Member name SpecialOfferCollectionViaSpecialOfferProduct</summary>
 			public static readonly string SpecialOfferCollectionViaSpecialOfferProduct = "SpecialOfferCollectionViaSpecialOfferProduct";
 
@@ -80,26 +80,26 @@ namespace AW.Data.EntityClasses
 
 	
 		/// <summary>CTor</summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
-		public ProductEntityBase(System.Int32 productId)
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
+		public ProductEntityBase(System.Int32 productID)
 		{
-			InitClassFetch(productId, null, null);
+			InitClassFetch(productID, null, null);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ProductEntityBase(System.Int32 productId, IPrefetchPath prefetchPathToUse)
+		public ProductEntityBase(System.Int32 productID, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(productId, null, prefetchPathToUse);
+			InitClassFetch(productID, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="validator">The custom validator object for this ProductEntity</param>
-		public ProductEntityBase(System.Int32 productId, IValidator validator)
+		public ProductEntityBase(System.Int32 productID, IValidator validator)
 		{
-			InitClassFetch(productId, validator, null);
+			InitClassFetch(productID, validator, null);
 		}
 	
 
@@ -108,9 +108,9 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected ProductEntityBase(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_specialOfferProduct = (AW.Data.CollectionClasses.SpecialOfferProductCollection)info.GetValue("_specialOfferProduct", typeof(AW.Data.CollectionClasses.SpecialOfferProductCollection));
-			_alwaysFetchSpecialOfferProduct = info.GetBoolean("_alwaysFetchSpecialOfferProduct");
-			_alreadyFetchedSpecialOfferProduct = info.GetBoolean("_alreadyFetchedSpecialOfferProduct");
+			_specialOfferProducts = (AW.Data.CollectionClasses.SpecialOfferProductCollection)info.GetValue("_specialOfferProducts", typeof(AW.Data.CollectionClasses.SpecialOfferProductCollection));
+			_alwaysFetchSpecialOfferProducts = info.GetBoolean("_alwaysFetchSpecialOfferProducts");
+			_alreadyFetchedSpecialOfferProducts = info.GetBoolean("_alreadyFetchedSpecialOfferProducts");
 			_specialOfferCollectionViaSpecialOfferProduct = (AW.Data.CollectionClasses.SpecialOfferCollection)info.GetValue("_specialOfferCollectionViaSpecialOfferProduct", typeof(AW.Data.CollectionClasses.SpecialOfferCollection));
 			_alwaysFetchSpecialOfferCollectionViaSpecialOfferProduct = info.GetBoolean("_alwaysFetchSpecialOfferCollectionViaSpecialOfferProduct");
 			_alreadyFetchedSpecialOfferCollectionViaSpecialOfferProduct = info.GetBoolean("_alreadyFetchedSpecialOfferCollectionViaSpecialOfferProduct");
@@ -145,7 +145,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
-			_alreadyFetchedSpecialOfferProduct = (_specialOfferProduct.Count > 0);
+			_alreadyFetchedSpecialOfferProducts = (_specialOfferProducts.Count > 0);
 			_alreadyFetchedSpecialOfferCollectionViaSpecialOfferProduct = (_specialOfferCollectionViaSpecialOfferProduct.Count > 0);
 
 
@@ -168,12 +168,12 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "SpecialOfferProduct":
-					toReturn.Add(ProductEntity.Relations.SpecialOfferProductEntityUsingProductId);
+				case "SpecialOfferProducts":
+					toReturn.Add(ProductEntity.Relations.SpecialOfferProductEntityUsingProductID);
 					break;
 				case "SpecialOfferCollectionViaSpecialOfferProduct":
-					toReturn.Add(ProductEntity.Relations.SpecialOfferProductEntityUsingProductId, "ProductEntity__", "SpecialOfferProduct_", JoinHint.None);
-					toReturn.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferId, "SpecialOfferProduct_", string.Empty, JoinHint.None);
+					toReturn.Add(ProductEntity.Relations.SpecialOfferProductEntityUsingProductID, "ProductEntity__", "SpecialOfferProduct_", JoinHint.None);
+					toReturn.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferID, "SpecialOfferProduct_", string.Empty, JoinHint.None);
 					break;
 
 				default:
@@ -192,9 +192,9 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_specialOfferProduct", (!this.MarkedForDeletion?_specialOfferProduct:null));
-			info.AddValue("_alwaysFetchSpecialOfferProduct", _alwaysFetchSpecialOfferProduct);
-			info.AddValue("_alreadyFetchedSpecialOfferProduct", _alreadyFetchedSpecialOfferProduct);
+			info.AddValue("_specialOfferProducts", (!this.MarkedForDeletion?_specialOfferProducts:null));
+			info.AddValue("_alwaysFetchSpecialOfferProducts", _alwaysFetchSpecialOfferProducts);
+			info.AddValue("_alreadyFetchedSpecialOfferProducts", _alreadyFetchedSpecialOfferProducts);
 			info.AddValue("_specialOfferCollectionViaSpecialOfferProduct", (!this.MarkedForDeletion?_specialOfferCollectionViaSpecialOfferProduct:null));
 			info.AddValue("_alwaysFetchSpecialOfferCollectionViaSpecialOfferProduct", _alwaysFetchSpecialOfferCollectionViaSpecialOfferProduct);
 			info.AddValue("_alreadyFetchedSpecialOfferCollectionViaSpecialOfferProduct", _alreadyFetchedSpecialOfferCollectionViaSpecialOfferProduct);
@@ -216,11 +216,11 @@ namespace AW.Data.EntityClasses
 			switch(propertyName)
 			{
 
-				case "SpecialOfferProduct":
-					_alreadyFetchedSpecialOfferProduct = true;
+				case "SpecialOfferProducts":
+					_alreadyFetchedSpecialOfferProducts = true;
 					if(entity!=null)
 					{
-						this.SpecialOfferProduct.Add((SpecialOfferProductEntity)entity);
+						this.SpecialOfferProducts.Add((SpecialOfferProductEntity)entity);
 					}
 					break;
 				case "SpecialOfferCollectionViaSpecialOfferProduct":
@@ -246,8 +246,8 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "SpecialOfferProduct":
-					_specialOfferProduct.Add((SpecialOfferProductEntity)relatedEntity);
+				case "SpecialOfferProducts":
+					_specialOfferProducts.Add((SpecialOfferProductEntity)relatedEntity);
 					break;
 
 				default:
@@ -266,8 +266,8 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "SpecialOfferProduct":
-					base.PerformRelatedEntityRemoval(_specialOfferProduct, relatedEntity, signalRelatedEntityManyToOne);
+				case "SpecialOfferProducts":
+					base.PerformRelatedEntityRemoval(_specialOfferProducts, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -305,7 +305,7 @@ namespace AW.Data.EntityClasses
 		public override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
-			toReturn.Add(_specialOfferProduct);
+			toReturn.Add(_specialOfferProducts);
 
 			return toReturn;
 		}
@@ -315,43 +315,43 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 productId)
+		public bool FetchUsingPK(System.Int32 productID)
 		{
-			return FetchUsingPK(productId, null, null, null);
+			return FetchUsingPK(productID, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 productId, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(System.Int32 productID, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(productId, prefetchPathToUse, null, null);
+			return FetchUsingPK(productID, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 productId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(System.Int32 productID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(productId, prefetchPathToUse, contextToUse, null);
+			return Fetch(productID, prefetchPathToUse, contextToUse, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 productId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(System.Int32 productID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(productId, prefetchPathToUse, contextToUse, excludedIncludedFields);
+			return Fetch(productID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -359,7 +359,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.ProductId, null, null, null);
+			return Fetch(this.ProductID, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -392,27 +392,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'SpecialOfferProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'SpecialOfferProductEntity'</returns>
-		public AW.Data.CollectionClasses.SpecialOfferProductCollection GetMultiSpecialOfferProduct(bool forceFetch)
+		public AW.Data.CollectionClasses.SpecialOfferProductCollection GetMultiSpecialOfferProducts(bool forceFetch)
 		{
-			return GetMultiSpecialOfferProduct(forceFetch, _specialOfferProduct.EntityFactoryToUse, null);
+			return GetMultiSpecialOfferProducts(forceFetch, _specialOfferProducts.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SpecialOfferProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'SpecialOfferProductEntity'</returns>
-		public AW.Data.CollectionClasses.SpecialOfferProductCollection GetMultiSpecialOfferProduct(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.SpecialOfferProductCollection GetMultiSpecialOfferProducts(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiSpecialOfferProduct(forceFetch, _specialOfferProduct.EntityFactoryToUse, filter);
+			return GetMultiSpecialOfferProducts(forceFetch, _specialOfferProducts.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SpecialOfferProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.SpecialOfferProductCollection GetMultiSpecialOfferProduct(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.SpecialOfferProductCollection GetMultiSpecialOfferProducts(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiSpecialOfferProduct(forceFetch, entityFactoryToUse, null);
+			return GetMultiSpecialOfferProducts(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SpecialOfferProductEntity' using a relation of type '1:n'.</summary>
@@ -420,37 +420,37 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.SpecialOfferProductCollection GetMultiSpecialOfferProduct(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.SpecialOfferProductCollection GetMultiSpecialOfferProducts(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedSpecialOfferProduct || forceFetch || _alwaysFetchSpecialOfferProduct) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedSpecialOfferProducts || forceFetch || _alwaysFetchSpecialOfferProducts) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_specialOfferProduct.ParticipatesInTransaction)
+					if(!_specialOfferProducts.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_specialOfferProduct);
+						base.Transaction.Add(_specialOfferProducts);
 					}
 				}
-				_specialOfferProduct.SuppressClearInGetMulti=!forceFetch;
+				_specialOfferProducts.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_specialOfferProduct.EntityFactoryToUse = entityFactoryToUse;
+					_specialOfferProducts.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_specialOfferProduct.GetMultiManyToOne(this, null, filter);
-				_specialOfferProduct.SuppressClearInGetMulti=false;
-				_alreadyFetchedSpecialOfferProduct = true;
+				_specialOfferProducts.GetMultiManyToOne(this, null, filter);
+				_specialOfferProducts.SuppressClearInGetMulti=false;
+				_alreadyFetchedSpecialOfferProducts = true;
 			}
-			return _specialOfferProduct;
+			return _specialOfferProducts;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'SpecialOfferProduct'. These settings will be taken into account
-		/// when the property SpecialOfferProduct is requested or GetMultiSpecialOfferProduct is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'SpecialOfferProducts'. These settings will be taken into account
+		/// when the property SpecialOfferProducts is requested or GetMultiSpecialOfferProducts is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersSpecialOfferProduct(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersSpecialOfferProducts(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_specialOfferProduct.SortClauses=sortClauses;
-			_specialOfferProduct.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_specialOfferProducts.SortClauses=sortClauses;
+			_specialOfferProducts.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'SpecialOfferEntity' using a relation of type 'm:n'.</summary>
@@ -477,7 +477,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(ProductFields.ProductId, ComparisonOperator.Equal, this.ProductId, "ProductEntity__"));
+				filter.Add(new FieldCompareValuePredicate(ProductFields.ProductID, ComparisonOperator.Equal, this.ProductID, "ProductEntity__"));
 				_specialOfferCollectionViaSpecialOfferProduct.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -513,7 +513,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			_specialOfferProduct.ActiveContext = base.ActiveContext;
+			_specialOfferProducts.ActiveContext = base.ActiveContext;
 			_specialOfferCollectionViaSpecialOfferProduct.ActiveContext = base.ActiveContext;
 
 
@@ -586,7 +586,7 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-			toReturn.Add("SpecialOfferProduct", _specialOfferProduct);
+			toReturn.Add("SpecialOfferProducts", _specialOfferProducts);
 			toReturn.Add("SpecialOfferCollectionViaSpecialOfferProduct", _specialOfferCollectionViaSpecialOfferProduct);
 
 			return toReturn;
@@ -594,16 +594,16 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="validator">The validator object for this ProductEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 productId, IValidator validator, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 productID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			base.Validator = validator;
 			InitClassMembers();
 			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(productId, prefetchPathToUse, null, null);
+			bool wasSuccesful = Fetch(productID, prefetchPathToUse, null, null);
 			base.IsNew = !wasSuccesful;
 
 			
@@ -616,10 +616,10 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
-			_specialOfferProduct = new AW.Data.CollectionClasses.SpecialOfferProductCollection(new SpecialOfferProductEntityFactory());
-			_specialOfferProduct.SetContainingEntityInfo(this, "Product");
-			_alwaysFetchSpecialOfferProduct = false;
-			_alreadyFetchedSpecialOfferProduct = false;
+			_specialOfferProducts = new AW.Data.CollectionClasses.SpecialOfferProductCollection(new SpecialOfferProductEntityFactory());
+			_specialOfferProducts.SetContainingEntityInfo(this, "Product");
+			_alwaysFetchSpecialOfferProducts = false;
+			_alreadyFetchedSpecialOfferProducts = false;
 			_specialOfferCollectionViaSpecialOfferProduct = new AW.Data.CollectionClasses.SpecialOfferCollection(new SpecialOfferEntityFactory());
 			_alwaysFetchSpecialOfferCollectionViaSpecialOfferProduct = false;
 			_alreadyFetchedSpecialOfferCollectionViaSpecialOfferProduct = false;
@@ -643,7 +643,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ProductId", fieldHashtable);
+			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
@@ -697,10 +697,10 @@ namespace AW.Data.EntityClasses
 			_fieldsCustomProperties.Add("Style", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ProductSubcategoryId", fieldHashtable);
+			_fieldsCustomProperties.Add("ProductSubcategoryID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ProductModelId", fieldHashtable);
+			_fieldsCustomProperties.Add("ProductModelID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("SellStartDate", fieldHashtable);
@@ -723,20 +723,20 @@ namespace AW.Data.EntityClasses
 
 
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 productId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(System.Int32 productID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
-				base.Fields[(int)ProductFieldIndex.ProductId].ForcedCurrentValueWrite(productId);
+				base.Fields[(int)ProductFieldIndex.ProductID].ForcedCurrentValueWrite(productID);
 				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
 				return (base.Fields.State == EntityState.Fetched);
 			}
@@ -779,12 +779,12 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SpecialOfferProduct' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathSpecialOfferProduct
+		public static IPrefetchPathElement PrefetchPathSpecialOfferProducts
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.SpecialOfferProductCollection(),
-					(IEntityRelation)GetRelationsForField("SpecialOfferProduct")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.SpecialOfferProductEntity, 0, null, null, null, "SpecialOfferProduct", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("SpecialOfferProducts")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.SpecialOfferProductEntity, 0, null, null, null, "SpecialOfferProducts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -795,7 +795,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = ProductEntity.Relations.SpecialOfferProductEntityUsingProductId;
+				IEntityRelation intermediateRelation = ProductEntity.Relations.SpecialOfferProductEntityUsingProductID;
 				intermediateRelation.SetAliases(string.Empty, "SpecialOfferProduct_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.SpecialOfferCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.SpecialOfferEntity, 0, null, null, GetRelationsForField("SpecialOfferCollectionViaSpecialOfferProduct"), "SpecialOfferCollectionViaSpecialOfferProduct", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -834,15 +834,15 @@ namespace AW.Data.EntityClasses
 			get { return ProductEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The ProductId property of the Entity Product<br/><br/>
+		/// <summary> The ProductID property of the Entity Product<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 ProductId
+		public virtual System.Int32 ProductID
 		{
-			get { return (System.Int32)GetValue((int)ProductFieldIndex.ProductId, true); }
-			set	{ SetValue((int)ProductFieldIndex.ProductId, value, true); }
+			get { return (System.Int32)GetValue((int)ProductFieldIndex.ProductID, true); }
+			set	{ SetValue((int)ProductFieldIndex.ProductID, value, true); }
 		}
 		/// <summary> The Name property of the Entity Product<br/><br/>
 		/// </summary>
@@ -1014,25 +1014,25 @@ namespace AW.Data.EntityClasses
 			get { return (System.String)GetValue((int)ProductFieldIndex.Style, true); }
 			set	{ SetValue((int)ProductFieldIndex.Style, value, true); }
 		}
-		/// <summary> The ProductSubcategoryId property of the Entity Product<br/><br/>
+		/// <summary> The ProductSubcategoryID property of the Entity Product<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductSubcategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int32> ProductSubcategoryId
+		public virtual Nullable<System.Int32> ProductSubcategoryID
 		{
-			get { return (Nullable<System.Int32>)GetValue((int)ProductFieldIndex.ProductSubcategoryId, false); }
-			set	{ SetValue((int)ProductFieldIndex.ProductSubcategoryId, value, true); }
+			get { return (Nullable<System.Int32>)GetValue((int)ProductFieldIndex.ProductSubcategoryID, false); }
+			set	{ SetValue((int)ProductFieldIndex.ProductSubcategoryID, value, true); }
 		}
-		/// <summary> The ProductModelId property of the Entity Product<br/><br/>
+		/// <summary> The ProductModelID property of the Entity Product<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductModelID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int32> ProductModelId
+		public virtual Nullable<System.Int32> ProductModelID
 		{
-			get { return (Nullable<System.Int32>)GetValue((int)ProductFieldIndex.ProductModelId, false); }
-			set	{ SetValue((int)ProductFieldIndex.ProductModelId, value, true); }
+			get { return (Nullable<System.Int32>)GetValue((int)ProductFieldIndex.ProductModelID, false); }
+			set	{ SetValue((int)ProductFieldIndex.ProductModelID, value, true); }
 		}
 		/// <summary> The SellStartDate property of the Entity Product<br/><br/>
 		/// </summary>
@@ -1086,36 +1086,36 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Retrieves all related entities of type 'SpecialOfferProductEntity' using a relation of type '1:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSpecialOfferProduct()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSpecialOfferProducts()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.SpecialOfferProductCollection SpecialOfferProduct
+		public virtual AW.Data.CollectionClasses.SpecialOfferProductCollection SpecialOfferProducts
 		{
-			get	{ return GetMultiSpecialOfferProduct(false); }
+			get	{ return GetMultiSpecialOfferProducts(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for SpecialOfferProduct. When set to true, SpecialOfferProduct is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time SpecialOfferProduct is accessed. You can always execute
-		/// a forced fetch by calling GetMultiSpecialOfferProduct(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for SpecialOfferProducts. When set to true, SpecialOfferProducts is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SpecialOfferProducts is accessed. You can always execute
+		/// a forced fetch by calling GetMultiSpecialOfferProducts(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchSpecialOfferProduct
+		public bool AlwaysFetchSpecialOfferProducts
 		{
-			get	{ return _alwaysFetchSpecialOfferProduct; }
-			set	{ _alwaysFetchSpecialOfferProduct = value; }	
+			get	{ return _alwaysFetchSpecialOfferProducts; }
+			set	{ _alwaysFetchSpecialOfferProducts = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property SpecialOfferProduct already has been fetched. Setting this property to false when SpecialOfferProduct has been fetched
-		/// will clear the SpecialOfferProduct collection well. Setting this property to true while SpecialOfferProduct hasn't been fetched disables lazy loading for SpecialOfferProduct</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property SpecialOfferProducts already has been fetched. Setting this property to false when SpecialOfferProducts has been fetched
+		/// will clear the SpecialOfferProducts collection well. Setting this property to true while SpecialOfferProducts hasn't been fetched disables lazy loading for SpecialOfferProducts</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedSpecialOfferProduct
+		public bool AlreadyFetchedSpecialOfferProducts
 		{
-			get { return _alreadyFetchedSpecialOfferProduct;}
+			get { return _alreadyFetchedSpecialOfferProducts;}
 			set 
 			{
-				if(_alreadyFetchedSpecialOfferProduct && !value && (_specialOfferProduct != null))
+				if(_alreadyFetchedSpecialOfferProducts && !value && (_specialOfferProducts != null))
 				{
-					_specialOfferProduct.Clear();
+					_specialOfferProducts.Clear();
 				}
-				_alreadyFetchedSpecialOfferProduct = value;
+				_alreadyFetchedSpecialOfferProducts = value;
 			}
 		}
 

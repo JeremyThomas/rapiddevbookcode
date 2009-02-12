@@ -11,38 +11,38 @@ namespace AW.Business
     public static void Barf()
     {
       var query = from soh in MetaSingletons.MetaData.SalesOrderHeader
-                  from sod in soh.SalesOrderDetail
+                  from sod in soh.SalesOrderDetails
                   select soh;
 
       var x = (from soh in query
-               select new {soh.SalesOrderId, soh.Customer.AccountNumber, soh.CreditCard.CardNumber}).ToList();
+               select new {soh.SalesOrderID, soh.Customer.AccountNumber, soh.CreditCard.CardNumber}).ToList();
 
 
       query = from soh in MetaSingletons.MetaData.SalesOrderHeader select soh;
 
       var w = (from soh in query
-               from sod in soh.SalesOrderDetail
-               select new {soh.SalesOrderId, soh.Customer.AccountNumber, soh.CreditCard.CardNumber}).ToList();
+               from sod in soh.SalesOrderDetails
+               select new {soh.SalesOrderID, soh.Customer.AccountNumber, soh.CreditCard.CardNumber}).ToList();
     }
 
     public static void BarfonMultipleTableJoins()
     {
       var query = from soh in MetaSingletons.MetaData.SalesOrderHeader
-                  from sod in soh.SalesOrderDetail
-                  where sod.SalesOrderId > 10
+                  from sod in soh.SalesOrderDetails
+                  where sod.SalesOrderID > 10
                   select soh;
 
       var w = (from soh in query
-               from sod3 in soh.SalesOrderDetail
+               from sod3 in soh.SalesOrderDetails
                select soh).Take(1).ToList();
 
       var c = from Address in MetaSingletons.MetaData.Address
-              from EmployeeAddress in Address.EmployeeAddress
+              from EmployeeAddresses in Address.EmployeeAddresses
               select Address;
 
       var x = from Address in c
-              from EmployeeAddress in Address.EmployeeAddress
-              from SalesOrderHeader in Address.SalesOrderHeader.DefaultIfEmpty()
+              from EmployeeAddresses in Address.EmployeeAddresses
+              from SalesOrderHeader in Address.SalesOrderHeaders.DefaultIfEmpty()
               select Address;
       x.ToList();
     }
@@ -50,18 +50,18 @@ namespace AW.Business
     public static void Barf1()
     {
       var c = from Address in MetaSingletons.MetaData.Address
-              from EmployeeAddress in Address.EmployeeAddress
-              from Individual in EmployeeAddress.Employee.Contact.Individual
+              from EmployeeAddresses in Address.EmployeeAddresses
+              from Individual in EmployeeAddresses.Employee.Contact.Individuals
               select Address;
 
       c.ToList(); //ORMRelationException: Relation at index 1 doesn't contain an entity already added to the FROM clause. Bad alias?
       //http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15159
 
       var x = from CountryRegion in MetaSingletons.MetaData.CountryRegion
-              from StateProvince in CountryRegion.StateProvince
-              from Address in StateProvince.Address
-              from EmployeeAddress in Address.EmployeeAddress
-              from Individual in EmployeeAddress.Employee.Contact.Individual
+              from StateProvince in CountryRegion.StateProvinces
+              from Address in StateProvince.Addresses
+              from EmployeeAddresses in Address.EmployeeAddresses
+              from Individual in EmployeeAddresses.Employee.Contact.Individuals
               select CountryRegion;
       x.ToList();
 
@@ -71,37 +71,37 @@ namespace AW.Business
       f.ToList();
 
       //var d = from address in Validation.MetaData.Address
-      //        join employeeAddress in Validation.MetaData.EmployeeAddress on address.AddressId equals employeeAddress.AddressId
-      //        join individual in Validation.MetaData.Individual on employeeAddress.Employee.Contact.ContactId equals individual.ContactId
-      //        //where employeeAddress.Employee.Contact != null
+      //        join EmployeeAddresses in Validation.MetaData.EmployeeAddresses on address.AddressId equals EmployeeAddresses.AddressId
+      //        join individual in Validation.MetaData.Individual on EmployeeAddresses.Employee.Contact.ContactId equals individual.ContactId
+      //        //where EmployeeAddresses.Employee.Contact != null
       //        select address;
       //d.ToList();
 
       var q = from Address in MetaSingletons.MetaData.Address
-              from EmployeeAddress in Address.EmployeeAddress
-              select EmployeeAddress.Employee.Contact;
+              from EmployeeAddresses in Address.EmployeeAddresses
+              select EmployeeAddresses.Employee.Contact;
       q.ToList();
 
       var g = from Address in MetaSingletons.MetaData.Address
-              from EmployeeAddress in Address.EmployeeAddress
-              select EmployeeAddress.Employee.Contact.Phone;
+              from EmployeeAddresses in Address.EmployeeAddresses
+              select EmployeeAddresses.Employee.Contact.Phone;
 
       g.ToList();
 
-      var k = from employeeAddress in MetaSingletons.MetaData.EmployeeAddress
-              select employeeAddress.Employee.Contact.Individual;
+      var k = from EmployeeAddresses in MetaSingletons.MetaData.EmployeeAddress
+              select EmployeeAddresses.Employee.Contact.Individuals;
 
-      k.ToList(); //Application_ThreadException: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeId', however this field wasn't found in the projection of the entity.
+      k.ToList(); //Application_ThreadException: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeID', however this field wasn't found in the projection of the entity.
 
       var h = from address in MetaSingletons.MetaData.Address
-              from employeeAddress in address.EmployeeAddress
-              select employeeAddress.Employee.Contact.Individual;
+              from EmployeeAddresses in address.EmployeeAddresses
+              select EmployeeAddresses.Employee.Contact.Individuals;
 
       h.ToList();
     }
 
     /// <summary>
-    /// Test fetching the CustomerId, SalesOrderId, AddressId of all customers which have addresses and may have orders
+    /// Test fetching the CustomerID, SalesOrderID, AddressId of all customers which have addresses and may have orders
     /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14210
     /// </summary>
     public static object LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(int maxNumberOfItemsToReturn)
@@ -109,21 +109,22 @@ namespace AW.Business
       var customers = MetaSingletons.MetaData.Customer.AsQueryable();
       //var customersDerivedTable = customers.Select(customer => customer);
       var customersDerivedTable = from customer in customers select customer; //Using this to force a derived table causes a crash
-      customersDerivedTable = customers.Where(c => c.CustomerId > 10); //To force a derived table
+      customersDerivedTable = customers.Where(c => c.CustomerID > 10); //To force a derived table
 
-//      var q = AWHelper.MetaData.Customer.SelectMany(customer => customer.CustomerAddress, (customer, ca) => new {customer, ca}).GroupJoin(AWHelper.MetaData.SalesOrderHeader, @t => @t.customer.CustomerId, soh => soh.CustomerId, (@t, oc) => new {@t, oc}).SelectMany(@t => @t.oc.DefaultIfEmpty(), (@t, nullableSOH) => new {@t.@t.customer.CustomerId, @t.@t.ca.AddressId, nullableSOH.SalesOrderId});
+//      var q = AWHelper.MetaData.Customer.SelectMany(customer => Customer.CustomerAddresses, (customer, ca) => new {customer, ca}).GroupJoin(AWHelper.MetaData.SalesOrderHeader, @t => @t.customer.CustomerID, soh => soh.CustomerID, (@t, oc) => new {@t, oc}).SelectMany(@t => @t.oc.DefaultIfEmpty(), (@t, nullableSOH) => new {@t.@t.customer.CustomerID, @t.@t.ca.AddressId, nullableSOH.SalesOrderID});
       GlobalHelper.TraceOut("ExplicitJoin with Derived Table");
       var q = from customer in customersDerivedTable
-              join soh in (from s in MetaSingletons.MetaData.SalesOrderHeader where s.SalesPersonId > 22 select s) on customer.CustomerId equals soh.CustomerId into oc
+              join soh in
+                (from s in MetaSingletons.MetaData.SalesOrderHeader where s.SalesPersonID > 22 select s) on customer.CustomerID equals soh.CustomerID into oc
               from nullableSOH in oc.DefaultIfEmpty()
-              from ca in customer.CustomerAddress.DefaultIfEmpty()
-              select new {customer.CustomerId, ca.AddressId, nullableSOH.SalesOrderId, customer.SalesTerritory.Name};
+              from ca in customer.CustomerAddresses.DefaultIfEmpty()
+              select new { customer.CustomerID, ca.AddressID, nullableSOH.SalesOrderID, customer.SalesTerritory.Name };
       if (maxNumberOfItemsToReturn > 0)
         q = q.Take(maxNumberOfItemsToReturn);
 
       var q4 = from customer in customers
-               from soh in customer.SalesOrderHeader.Where(soh => soh.SalesOrderId < 10).DefaultIfEmpty()
-               select new {customer.CustomerId, soh.SalesOrderId};
+               from soh in customer.SalesOrderHeaders.Where(soh => soh.SalesOrderID < 10).DefaultIfEmpty()
+               select new { customer.CustomerID, soh.SalesOrderID };
       if (maxNumberOfItemsToReturn > 0)
         q4 = q4.Take(maxNumberOfItemsToReturn);
       var x = q4.ToList();

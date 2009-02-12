@@ -68,7 +68,7 @@ namespace AW.Test
     public void GetCustomerViewRelatedLinqTest()
     {
       var actual = CustomerQueries.GetCustomerViewRelatedLinq();
-      Assert.AreEqual(46117, actual.SalesOrderHeader[0].SalesOrderId);
+      Assert.AreEqual(46117, actual.SalesOrderHeader[0].SalesOrderID);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ namespace AW.Test
     {
       var actual = CustomerQueries.GetCustomerViewRelatedCollection();
       Assert.AreEqual(1, actual.Count);
-      Assert.AreEqual(46117, actual[0].SalesOrderHeader[0].SalesOrderId);
+      Assert.AreEqual(46117, actual[0].SalesOrderHeader[0].SalesOrderID);
     }
 
     /// <summary>

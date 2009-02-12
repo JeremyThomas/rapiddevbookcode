@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -47,10 +47,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		public CustomerAddressEntity(System.Int32 customerId, System.Int32 addressId):
-			base(customerId, addressId)
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		public CustomerAddressEntity(System.Int32 customerID, System.Int32 addressID):
+			base(customerID, addressID)
 		{
 		}
 
@@ -58,11 +58,11 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public CustomerAddressEntity(System.Int32 customerId, System.Int32 addressId, IPrefetchPath prefetchPathToUse):
-			base(customerId, addressId, prefetchPathToUse)
+		public CustomerAddressEntity(System.Int32 customerID, System.Int32 addressID, IPrefetchPath prefetchPathToUse):
+			base(customerID, addressID, prefetchPathToUse)
 		{
 		}
 
@@ -70,11 +70,11 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="validator">The custom validator object for this CustomerAddressEntity</param>
-		public CustomerAddressEntity(System.Int32 customerId, System.Int32 addressId, IValidator validator):
-			base(customerId, addressId, validator)
+		public CustomerAddressEntity(System.Int32 customerID, System.Int32 addressID, IValidator validator):
+			base(customerID, addressID, validator)
 		{
 		}
 	

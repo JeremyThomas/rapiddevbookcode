@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -48,9 +48,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="shipMethodId">PK value for ShipMethod which data should be fetched into this ShipMethod object</param>
-		public ShipMethodEntity(System.Int32 shipMethodId):
-			base(shipMethodId)
+		/// <param name="shipMethodID">PK value for ShipMethod which data should be fetched into this ShipMethod object</param>
+		public ShipMethodEntity(System.Int32 shipMethodID):
+			base(shipMethodID)
 		{
 		}
 
@@ -58,10 +58,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="shipMethodId">PK value for ShipMethod which data should be fetched into this ShipMethod object</param>
+		/// <param name="shipMethodID">PK value for ShipMethod which data should be fetched into this ShipMethod object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ShipMethodEntity(System.Int32 shipMethodId, IPrefetchPath prefetchPathToUse):
-			base(shipMethodId, prefetchPathToUse)
+		public ShipMethodEntity(System.Int32 shipMethodID, IPrefetchPath prefetchPathToUse):
+			base(shipMethodID, prefetchPathToUse)
 		{
 		}
 
@@ -69,10 +69,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="shipMethodId">PK value for ShipMethod which data should be fetched into this ShipMethod object</param>
+		/// <param name="shipMethodID">PK value for ShipMethod which data should be fetched into this ShipMethod object</param>
 		/// <param name="validator">The custom validator object for this ShipMethodEntity</param>
-		public ShipMethodEntity(System.Int32 shipMethodId, IValidator validator):
-			base(shipMethodId, validator)
+		public ShipMethodEntity(System.Int32 shipMethodID, IValidator validator):
+			base(shipMethodID, validator)
 		{
 		}
 	

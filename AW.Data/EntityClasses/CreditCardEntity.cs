@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -25,7 +25,6 @@ namespace AW.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 
 	/// <summary>
 	/// Entity class which represents the entity 'CreditCard'. <br/>
@@ -34,8 +33,7 @@ namespace AW.Data.EntityClasses
 	[Serializable]
 	public partial class CreditCardEntity : CreditCardEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Constructors
 		/// <summary>
@@ -49,9 +47,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="creditCardId">PK value for CreditCard which data should be fetched into this CreditCard object</param>
-		public CreditCardEntity(System.Int32 creditCardId):
-			base(creditCardId)
+		/// <param name="creditCardID">PK value for CreditCard which data should be fetched into this CreditCard object</param>
+		public CreditCardEntity(System.Int32 creditCardID):
+			base(creditCardID)
 		{
 		}
 
@@ -59,10 +57,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="creditCardId">PK value for CreditCard which data should be fetched into this CreditCard object</param>
+		/// <param name="creditCardID">PK value for CreditCard which data should be fetched into this CreditCard object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public CreditCardEntity(System.Int32 creditCardId, IPrefetchPath prefetchPathToUse):
-			base(creditCardId, prefetchPathToUse)
+		public CreditCardEntity(System.Int32 creditCardID, IPrefetchPath prefetchPathToUse):
+			base(creditCardID, prefetchPathToUse)
 		{
 		}
 
@@ -70,10 +68,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="creditCardId">PK value for CreditCard which data should be fetched into this CreditCard object</param>
+		/// <param name="creditCardID">PK value for CreditCard which data should be fetched into this CreditCard object</param>
 		/// <param name="validator">The custom validator object for this CreditCardEntity</param>
-		public CreditCardEntity(System.Int32 creditCardId, IValidator validator):
-			base(creditCardId, validator)
+		public CreditCardEntity(System.Int32 creditCardID, IValidator validator):
+			base(creditCardID, validator)
 		{
 		}
 	
@@ -88,7 +86,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 		#endregion
 
@@ -96,7 +93,6 @@ namespace AW.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included Code

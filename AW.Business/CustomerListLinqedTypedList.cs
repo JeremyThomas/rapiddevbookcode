@@ -19,7 +19,7 @@ namespace AW.Win
     private readonly int emailPromotion;
     private readonly string countryRegionName;
     private readonly string stateProvinceName;
-    private readonly int customerId;
+    private readonly int customerID;
 
     public string AddressLine1
     {
@@ -86,14 +86,14 @@ namespace AW.Win
       get { return stateProvinceName; }
     }
 
-    public int CustomerId
+    public int CustomerID
     {
-      get { return customerId; }
+      get { return customerID; }
     }
 
     public CustomerListLinqedTypedList(string addressLine1, string addressLine2, string city, string addressType, string title,
                                        string firstName, string middleName, string lastName, string suffix, string emailAddress,
-                                       int emailPromotion, string countryRegionName, string stateProvinceName, int customerId)
+                                       int emailPromotion, string countryRegionName, string stateProvinceName, int CustomerID)
     {
       this.addressLine1 = addressLine1;
       this.addressLine2 = addressLine2;
@@ -108,7 +108,7 @@ namespace AW.Win
       this.emailPromotion = emailPromotion;
       this.countryRegionName = countryRegionName;
       this.stateProvinceName = stateProvinceName;
-      this.customerId = customerId;
+      this.customerID = CustomerID;
     }
 
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery()
@@ -119,7 +119,7 @@ namespace AW.Win
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery(IQueryable<CustomerEntity> customers)
     {
       return (from customer in customers
-              from customerAddress in customer.CustomerAddress
+              from customerAddress in customer.CustomerAddresses
               select
                 new CustomerListLinqedTypedList(customerAddress.Address.AddressLine1, customerAddress.Address.AddressLine2,
                                                 customerAddress.Address.City, customerAddress.AddressType.Name,
@@ -128,7 +128,7 @@ namespace AW.Win
                                                 customer.Individual.Contact.Suffix, customer.Individual.Contact.EmailAddress,
                                                 customer.Individual.Contact.EmailPromotion,
                                                 customerAddress.Address.StateProvince.CountryRegion.Name,
-                                                customerAddress.Address.StateProvince.Name, customer.CustomerId));
+                                                customerAddress.Address.StateProvince.Name, customer.CustomerID));
     }
   }
 }

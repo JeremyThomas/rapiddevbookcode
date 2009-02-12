@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -163,11 +163,11 @@ namespace AW.Data.DaoClasses
 			
 			if(addressInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeAddressFieldIndex.AddressId], ComparisonOperator.Equal, ((AddressEntity)addressInstance).AddressId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeAddressFieldIndex.AddressID], ComparisonOperator.Equal, ((AddressEntity)addressInstance).AddressID));
 			}
 			if(employeeInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeAddressFieldIndex.EmployeeId], ComparisonOperator.Equal, ((EmployeeEntity)employeeInstance).EmployeeId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeAddressFieldIndex.EmployeeID], ComparisonOperator.Equal, ((EmployeeEntity)employeeInstance).EmployeeID));
 			}
 			return selectFilter;
 		}

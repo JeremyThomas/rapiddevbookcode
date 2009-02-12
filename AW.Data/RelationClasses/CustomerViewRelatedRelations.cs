@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -30,7 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.SalesOrderHeaderEntityUsingCustomerId);
+			toReturn.Add(this.SalesOrderHeaderEntityUsingCustomerID);
 
 
 			return toReturn;
@@ -39,14 +39,14 @@ namespace AW.Data.RelationClasses
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between CustomerViewRelatedEntity and SalesOrderHeaderEntity over the 1:n relation they have, using the relation between the fields:
-		/// CustomerViewRelated.CustomerId - SalesOrderHeader.CustomerId
+		/// CustomerViewRelated.CustomerId - SalesOrderHeader.CustomerID
 		/// </summary>
-		public virtual IEntityRelation SalesOrderHeaderEntityUsingCustomerId
+		public virtual IEntityRelation SalesOrderHeaderEntityUsingCustomerID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderHeader" , true);
-				relation.AddEntityFieldPair(CustomerViewRelatedFields.CustomerId, SalesOrderHeaderFields.CustomerId);
+				relation.AddEntityFieldPair(CustomerViewRelatedFields.CustomerId, SalesOrderHeaderFields.CustomerID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerViewRelatedEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", false);
 				return relation;

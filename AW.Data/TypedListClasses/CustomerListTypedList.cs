@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:25 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -50,7 +50,7 @@ namespace AW.Data.TypedListClasses
 		private DataColumn _columnAddressLine1;
 		private DataColumn _columnAddressLine2;
 		private DataColumn _columnCity;
-		private DataColumn _columnAddressType;
+		private DataColumn _columnName;
 		private DataColumn _columnTitle;
 		private DataColumn _columnFirstName;
 		private DataColumn _columnMiddleName;
@@ -273,13 +273,13 @@ namespace AW.Data.TypedListClasses
 		{
 			IRelationCollection toReturn = new RelationCollection();
 			toReturn.ObeyWeakRelations = base.ObeyWeakRelations;
-			toReturn.Add(CustomerEntity.Relations.IndividualEntityUsingCustomerId, "", "", JoinHint.None);
-			toReturn.Add(IndividualEntity.Relations.ContactEntityUsingContactId, "", "", JoinHint.None);
-			toReturn.Add(CustomerEntity.Relations.CustomerAddressEntityUsingCustomerId, "", "", JoinHint.None);
-			toReturn.Add(CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeId, "", "", JoinHint.None);
-			toReturn.Add(CustomerAddressEntity.Relations.AddressEntityUsingAddressId, "", "", JoinHint.None);
-			toReturn.Add(AddressEntity.Relations.StateProvinceEntityUsingStateProvinceId, "", "", JoinHint.None);
+			toReturn.Add(AddressEntity.Relations.StateProvinceEntityUsingStateProvinceID, "", "", JoinHint.None);
 			toReturn.Add(StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode, "", "", JoinHint.None);
+			toReturn.Add(AddressEntity.Relations.CustomerAddressEntityUsingAddressID, "", "", JoinHint.None);
+			toReturn.Add(CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeID, "", "", JoinHint.None);
+			toReturn.Add(CustomerAddressEntity.Relations.CustomerEntityUsingCustomerID, "", "", JoinHint.None);
+			toReturn.Add(CustomerEntity.Relations.IndividualEntityUsingCustomerID, "", "", JoinHint.None);
+			toReturn.Add(IndividualEntity.Relations.ContactEntityUsingContactID, "", "", JoinHint.None);
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START AdditionalRelations
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -296,7 +296,7 @@ namespace AW.Data.TypedListClasses
 			toReturn.DefineField(AddressFields.AddressLine1, 0, "AddressLine1", "", AggregateFunction.None);
 			toReturn.DefineField(AddressFields.AddressLine2, 1, "AddressLine2", "", AggregateFunction.None);
 			toReturn.DefineField(AddressFields.City, 2, "City", "", AggregateFunction.None);
-			toReturn.DefineField(AddressTypeFields.Name, 3, "AddressType", "", AggregateFunction.None);
+			toReturn.DefineField(AddressTypeFields.Name, 3, "Name", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.Title, 4, "Title", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.FirstName, 5, "FirstName", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.MiddleName, 6, "MiddleName", "", AggregateFunction.None);
@@ -304,9 +304,9 @@ namespace AW.Data.TypedListClasses
 			toReturn.DefineField(ContactFields.Suffix, 8, "Suffix", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.EmailAddress, 9, "EmailAddress", "", AggregateFunction.None);
 			toReturn.DefineField(ContactFields.EmailPromotion, 10, "EmailPromotion", "", AggregateFunction.None);
-			toReturn.DefineField(CountryRegionFields.Name, 11, "CountryRegionName", "", AggregateFunction.None);
-			toReturn.DefineField(StateProvinceFields.Name, 12, "StateProvinceName", "", AggregateFunction.None);
-			toReturn.DefineField(CustomerFields.CustomerId, 13, "CustomerId", "", AggregateFunction.None);
+			toReturn.DefineField(StateProvinceFields.Name, 11, "CountryRegionName", "", AggregateFunction.None);
+			toReturn.DefineField(CountryRegionFields.Name, 12, "StateProvinceName", "", AggregateFunction.None);
+			toReturn.DefineField(CustomerFields.CustomerID, 13, "CustomerId", "", AggregateFunction.None);
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START AdditionalFields
 			// be sure to call toReturn.Expand(number of new fields) first. 
@@ -382,7 +382,7 @@ namespace AW.Data.TypedListClasses
 			_fieldsCustomProperties.Add("City", fieldHashtable);
 			fieldHashtable = new Hashtable();
 
-			_fieldsCustomProperties.Add("AddressType", fieldHashtable);
+			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Hashtable();
 
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
@@ -436,10 +436,10 @@ namespace AW.Data.TypedListClasses
 			_columnCity.Caption = @"City";
 			this.Columns.Add(_columnCity);
 
-			_columnAddressType = new DataColumn("AddressType", typeof(System.String), null, MappingType.Element);
-			_columnAddressType.ReadOnly = true;
-			_columnAddressType.Caption = @"AddressType";
-			this.Columns.Add(_columnAddressType);
+			_columnName = new DataColumn("Name", typeof(System.String), null, MappingType.Element);
+			_columnName.ReadOnly = true;
+			_columnName.Caption = @"Name";
+			this.Columns.Add(_columnName);
 
 			_columnTitle = new DataColumn("Title", typeof(System.String), null, MappingType.Element);
 			_columnTitle.ReadOnly = true;
@@ -504,7 +504,7 @@ namespace AW.Data.TypedListClasses
 			_columnAddressLine1 = this.Columns["AddressLine1"];
 			_columnAddressLine2 = this.Columns["AddressLine2"];
 			_columnCity = this.Columns["City"];
-			_columnAddressType = this.Columns["AddressType"];
+			_columnName = this.Columns["Name"];
 			_columnTitle = this.Columns["Title"];
 			_columnFirstName = this.Columns["FirstName"];
 			_columnMiddleName = this.Columns["MiddleName"];
@@ -619,10 +619,10 @@ namespace AW.Data.TypedListClasses
 			get { return _columnCity; }
 		}
     
-		/// <summary>Returns the column object belonging to the TypedList field AddressType</summary>
-		internal DataColumn AddressTypeColumn 
+		/// <summary>Returns the column object belonging to the TypedList field Name</summary>
+		internal DataColumn NameColumn 
 		{
-			get { return _columnAddressType; }
+			get { return _columnName; }
 		}
     
 		/// <summary>Returns the column object belonging to the TypedList field Title</summary>
@@ -832,39 +832,39 @@ namespace AW.Data.TypedListClasses
 
 	
 
-		/// <summary>Gets / sets the value of the TypedList field AddressType<br/><br/>
+		/// <summary>Gets / sets the value of the TypedList field Name<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on: AddressType.Name</remarks>
-		public System.String AddressType 
+		public System.String Name 
 		{
 			get 
 			{
-				if(IsAddressTypeNull())
+				if(IsNameNull())
 				{
 					// return default value for this type.
 					return (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String));
 				}
 				else
 				{
-					return (System.String)this[_parent.AddressTypeColumn];
+					return (System.String)this[_parent.NameColumn];
 				}
 			}
 			set 
 			{
-				this[_parent.AddressTypeColumn] = value;
+				this[_parent.NameColumn] = value;
 			}
 		}
 
-		/// <summary>Returns true if the TypedList field AddressType is NULL, false otherwise.</summary>
-		public bool IsAddressTypeNull() 
+		/// <summary>Returns true if the TypedList field Name is NULL, false otherwise.</summary>
+		public bool IsNameNull() 
 		{
-			return IsNull(_parent.AddressTypeColumn);
+			return IsNull(_parent.NameColumn);
 		}
 
-		/// <summary>Sets the TypedList field AddressType to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetAddressTypeNull() 
+		/// <summary>Sets the TypedList field Name to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetNameNull() 
 		{
-			this[_parent.AddressTypeColumn] = System.Convert.DBNull;
+			this[_parent.NameColumn] = System.Convert.DBNull;
 		}
 
 	
@@ -1130,7 +1130,7 @@ namespace AW.Data.TypedListClasses
 
 		/// <summary>Gets / sets the value of the TypedList field CountryRegionName<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on: CountryRegion.Name</remarks>
+		/// <remarks>Mapped on: StateProvince.Name</remarks>
 		public System.String CountryRegionName 
 		{
 			get 
@@ -1167,7 +1167,7 @@ namespace AW.Data.TypedListClasses
 
 		/// <summary>Gets / sets the value of the TypedList field StateProvinceName<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on: StateProvince.Name</remarks>
+		/// <remarks>Mapped on: CountryRegion.Name</remarks>
 		public System.String StateProvinceName 
 		{
 			get 
@@ -1204,7 +1204,7 @@ namespace AW.Data.TypedListClasses
 
 		/// <summary>Gets / sets the value of the TypedList field CustomerId<br/><br/>
 		/// </summary>
-		/// <remarks>Mapped on: Customer.CustomerId</remarks>
+		/// <remarks>Mapped on: Customer.CustomerID</remarks>
 		public System.Int32 CustomerId 
 		{
 			get 

@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="AW.LinqToSQL.cd" />
     <None Include="AWDataClasses.dbml.layout">
       <DependentUpon>AWDataClasses.dbml</DependentUpon>
     </None>

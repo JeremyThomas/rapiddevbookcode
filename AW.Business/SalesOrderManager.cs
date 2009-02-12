@@ -37,7 +37,7 @@ namespace AW.Business
         (CountryName != "") |
         (Zip != "")
         )
-        relations.Add(SalesOrderHeaderEntityBase.Relations.CustomerViewRelatedEntityUsingCustomerId);
+        relations.Add(SalesOrderHeaderEntityBase.Relations.CustomerViewRelatedEntityUsingCustomerID);
       if (FromDate != DateTime.MinValue)
         Filter.Add(SalesOrderHeaderFields.OrderDate >= FromDate);
       if (ToDate != DateTime.MinValue)
@@ -55,7 +55,7 @@ namespace AW.Business
       if (Zip != "")
         Filter.Add(CustomerViewRelatedFields.PostalCode == Zip);
       if (OrderID != 0)
-        Filter.Add(SalesOrderHeaderFields.SalesOrderId == OrderID);
+        Filter.Add(SalesOrderHeaderFields.SalesOrderID == OrderID);
       if (OrderNumber != "")
         Filter.Add(SalesOrderHeaderFields.SalesOrderNumber == OrderNumber);
       ISortExpression Sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
@@ -92,15 +92,15 @@ namespace AW.Business
       if (LastName != "")
         predicate = predicate.Where(soh => soh.Customer.Individual.Contact.LastName.Contains(LastName));
       if (CityName != "")
-        predicate = predicate.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.City == CityName));
+        predicate = predicate.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == CityName));
       if (StateName != "")
-        predicate = predicate.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == StateName));
+        predicate = predicate.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.Name == StateName));
       if (CountryName != "")
-        predicate = predicate.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.CountryRegion.Name == CountryName));
+        predicate = predicate.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.CountryRegion.Name == CountryName));
       if (Zip != "")
-        predicate = predicate.Where(soh => soh.Customer.CustomerAddress.Any(ca => ca.Address.PostalCode == Zip));
+        predicate = predicate.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.PostalCode == Zip));
       if (OrderID != 0)
-        predicate = predicate.Where(soh => soh.SalesOrderId == OrderID);
+        predicate = predicate.Where(soh => soh.SalesOrderID == OrderID);
       if (OrderNumber != "")
         predicate = predicate.Where(soh => soh.SalesOrderNumber == OrderNumber);
       var q = (from c in predicate select c).WithPath(p => p.Prefetch(c => c.CustomerViewRelated));
@@ -139,22 +139,22 @@ namespace AW.Business
 
       if (cityName != "")
         query = from soh in query
-                where soh.Customer.CustomerAddress.Any(ca => ca.Address.City == cityName)
+                where soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == cityName)
                 select soh;
       if (stateName != "")
         query = from soh in query
-                where soh.Customer.CustomerAddress.Any(ca => ca.Address.StateProvince.Name == stateName)
+                where soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.Name == stateName)
                 select soh;
       if (countries.Count > 0)
         query = from soh in query
-                where soh.Customer.CustomerAddress.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
+                where soh.Customer.CustomerAddresses.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
                 select soh;
       if (zip != "")
         query = from soh in query
-                where soh.Customer.CustomerAddress.Any(ca => ca.Address.PostalCode == zip)
+                where soh.Customer.CustomerAddresses.Any(ca => ca.Address.PostalCode == zip)
                 select soh;
       if (orderID != 0)
-        query = query.Where(q => q.SalesOrderId == orderID);
+        query = query.Where(q => q.SalesOrderID == orderID);
       if (orderNumber != "")
         query = query.Where(q => q.SalesOrderNumber == orderNumber);
 

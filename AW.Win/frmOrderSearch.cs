@@ -40,7 +40,7 @@ namespace AW.Win
 
       cbState.DataSource = LookUpQueries.GetStateProvinceCollection();
       cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
-      cbState.ValueMember = StateProvinceFieldIndex.StateProvinceId.ToString();
+      cbState.ValueMember = StateProvinceFieldIndex.StateProvinceID.ToString();
 
       dtpDateFrom.Checked = Settings.Default.FilterOnFromDate;
       dtpDateTo.Checked = Settings.Default.FilterOnToDate;
@@ -138,7 +138,7 @@ namespace AW.Win
 
     private void newOrderToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var Order = new SalesOrderHeaderEntity {CustomerId = 17018, ContactId = 4975, BillToAddressId = 14810, ShipToAddressId = 14810};
+      var Order = new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810};
       var frm = new frmOrderEdit(Order);
       ((frmMain) MdiParent).LaunchChildForm(frm);
     }

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -85,11 +85,11 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits AddressEntity's FieldInfo objects</summary>
 		private void InitAddressEntityInfos()
 		{
-			base.AddElementFieldInfo("AddressEntity", "AddressId", typeof(System.Int32), true, false, true, false,  (int)AddressFieldIndex.AddressId, 0, 0, 10);
+			base.AddElementFieldInfo("AddressEntity", "AddressID", typeof(System.Int32), true, false, true, false,  (int)AddressFieldIndex.AddressID, 0, 0, 10);
 			base.AddElementFieldInfo("AddressEntity", "AddressLine1", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.AddressLine1, 60, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "AddressLine2", typeof(System.String), false, false, false, true,  (int)AddressFieldIndex.AddressLine2, 60, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "City", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.City, 30, 0, 0);
-			base.AddElementFieldInfo("AddressEntity", "StateProvinceId", typeof(System.Int32), false, true, false, false,  (int)AddressFieldIndex.StateProvinceId, 0, 0, 10);
+			base.AddElementFieldInfo("AddressEntity", "StateProvinceID", typeof(System.Int32), false, true, false, false,  (int)AddressFieldIndex.StateProvinceID, 0, 0, 10);
 			base.AddElementFieldInfo("AddressEntity", "PostalCode", typeof(System.String), false, false, false, false,  (int)AddressFieldIndex.PostalCode, 15, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)AddressFieldIndex.Rowguid, 0, 0, 0);
 			base.AddElementFieldInfo("AddressEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)AddressFieldIndex.ModifiedDate, 0, 0, 0);
@@ -97,7 +97,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits AddressTypeEntity's FieldInfo objects</summary>
 		private void InitAddressTypeEntityInfos()
 		{
-			base.AddElementFieldInfo("AddressTypeEntity", "AddressTypeId", typeof(System.Int32), true, false, true, false,  (int)AddressTypeFieldIndex.AddressTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("AddressTypeEntity", "AddressTypeID", typeof(System.Int32), true, false, true, false,  (int)AddressTypeFieldIndex.AddressTypeID, 0, 0, 10);
 			base.AddElementFieldInfo("AddressTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)AddressTypeFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("AddressTypeEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)AddressTypeFieldIndex.Rowguid, 0, 0, 0);
 			base.AddElementFieldInfo("AddressTypeEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)AddressTypeFieldIndex.ModifiedDate, 0, 0, 0);
@@ -105,7 +105,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits ContactEntity's FieldInfo objects</summary>
 		private void InitContactEntityInfos()
 		{
-			base.AddElementFieldInfo("ContactEntity", "ContactId", typeof(System.Int32), true, false, true, false,  (int)ContactFieldIndex.ContactId, 0, 0, 10);
+			base.AddElementFieldInfo("ContactEntity", "ContactID", typeof(System.Int32), true, false, true, false,  (int)ContactFieldIndex.ContactID, 0, 0, 10);
 			base.AddElementFieldInfo("ContactEntity", "NameStyle", typeof(System.Boolean), false, false, false, false,  (int)ContactFieldIndex.NameStyle, 0, 0, 0);
 			base.AddElementFieldInfo("ContactEntity", "Title", typeof(System.String), false, false, false, true,  (int)ContactFieldIndex.Title, 8, 0, 0);
 			base.AddElementFieldInfo("ContactEntity", "FirstName", typeof(System.String), false, false, false, false,  (int)ContactFieldIndex.FirstName, 50, 0, 0);
@@ -115,7 +115,7 @@ namespace AW.Data.HelperClasses
 			base.AddElementFieldInfo("ContactEntity", "EmailAddress", typeof(System.String), false, false, false, true,  (int)ContactFieldIndex.EmailAddress, 50, 0, 0);
 			base.AddElementFieldInfo("ContactEntity", "EmailPromotion", typeof(System.Int32), false, false, false, false,  (int)ContactFieldIndex.EmailPromotion, 0, 0, 10);
 			base.AddElementFieldInfo("ContactEntity", "Phone", typeof(System.String), false, false, false, true,  (int)ContactFieldIndex.Phone, 25, 0, 0);
-			base.AddElementFieldInfo("ContactEntity", "PasswordHash", typeof(System.String), false, false, false, false,  (int)ContactFieldIndex.PasswordHash, 40, 0, 0);
+			base.AddElementFieldInfo("ContactEntity", "PasswordHash", typeof(System.String), false, false, false, false,  (int)ContactFieldIndex.PasswordHash, 128, 0, 0);
 			base.AddElementFieldInfo("ContactEntity", "PasswordSalt", typeof(System.String), false, false, false, false,  (int)ContactFieldIndex.PasswordSalt, 10, 0, 0);
 			base.AddElementFieldInfo("ContactEntity", "AdditionalContactInfo", typeof(System.String), false, false, false, true,  (int)ContactFieldIndex.AdditionalContactInfo, 2147483647, 0, 0);
 			base.AddElementFieldInfo("ContactEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)ContactFieldIndex.Rowguid, 0, 0, 0);
@@ -131,7 +131,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits CreditCardEntity's FieldInfo objects</summary>
 		private void InitCreditCardEntityInfos()
 		{
-			base.AddElementFieldInfo("CreditCardEntity", "CreditCardId", typeof(System.Int32), true, false, true, false,  (int)CreditCardFieldIndex.CreditCardId, 0, 0, 10);
+			base.AddElementFieldInfo("CreditCardEntity", "CreditCardID", typeof(System.Int32), true, false, true, false,  (int)CreditCardFieldIndex.CreditCardID, 0, 0, 10);
 			base.AddElementFieldInfo("CreditCardEntity", "CardType", typeof(System.String), false, false, false, false,  (int)CreditCardFieldIndex.CardType, 50, 0, 0);
 			base.AddElementFieldInfo("CreditCardEntity", "CardNumber", typeof(System.String), false, false, false, false,  (int)CreditCardFieldIndex.CardNumber, 25, 0, 0);
 			base.AddElementFieldInfo("CreditCardEntity", "ExpMonth", typeof(System.Byte), false, false, false, false,  (int)CreditCardFieldIndex.ExpMonth, 0, 0, 3);
@@ -148,7 +148,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits CurrencyRateEntity's FieldInfo objects</summary>
 		private void InitCurrencyRateEntityInfos()
 		{
-			base.AddElementFieldInfo("CurrencyRateEntity", "CurrencyRateId", typeof(System.Int32), true, false, true, false,  (int)CurrencyRateFieldIndex.CurrencyRateId, 0, 0, 10);
+			base.AddElementFieldInfo("CurrencyRateEntity", "CurrencyRateID", typeof(System.Int32), true, false, true, false,  (int)CurrencyRateFieldIndex.CurrencyRateID, 0, 0, 10);
 			base.AddElementFieldInfo("CurrencyRateEntity", "CurrencyRateDate", typeof(System.DateTime), false, false, false, false,  (int)CurrencyRateFieldIndex.CurrencyRateDate, 0, 0, 0);
 			base.AddElementFieldInfo("CurrencyRateEntity", "FromCurrencyCode", typeof(System.String), false, true, false, false,  (int)CurrencyRateFieldIndex.FromCurrencyCode, 3, 0, 0);
 			base.AddElementFieldInfo("CurrencyRateEntity", "ToCurrencyCode", typeof(System.String), false, true, false, false,  (int)CurrencyRateFieldIndex.ToCurrencyCode, 3, 0, 0);
@@ -159,8 +159,8 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits CustomerEntity's FieldInfo objects</summary>
 		private void InitCustomerEntityInfos()
 		{
-			base.AddElementFieldInfo("CustomerEntity", "CustomerId", typeof(System.Int32), true, false, true, false,  (int)CustomerFieldIndex.CustomerId, 0, 0, 10);
-			base.AddElementFieldInfo("CustomerEntity", "TerritoryId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CustomerFieldIndex.TerritoryId, 0, 0, 10);
+			base.AddElementFieldInfo("CustomerEntity", "CustomerID", typeof(System.Int32), true, false, true, false,  (int)CustomerFieldIndex.CustomerID, 0, 0, 10);
+			base.AddElementFieldInfo("CustomerEntity", "TerritoryID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)CustomerFieldIndex.TerritoryID, 0, 0, 10);
 			base.AddElementFieldInfo("CustomerEntity", "AccountNumber", typeof(System.String), false, false, true, false,  (int)CustomerFieldIndex.AccountNumber, 10, 0, 0);
 			base.AddElementFieldInfo("CustomerEntity", "CustomerType", typeof(System.String), false, false, false, false,  (int)CustomerFieldIndex.CustomerType, 1, 0, 0);
 			base.AddElementFieldInfo("CustomerEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)CustomerFieldIndex.Rowguid, 0, 0, 0);
@@ -169,9 +169,9 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits CustomerAddressEntity's FieldInfo objects</summary>
 		private void InitCustomerAddressEntityInfos()
 		{
-			base.AddElementFieldInfo("CustomerAddressEntity", "CustomerId", typeof(System.Int32), true, true, false, false,  (int)CustomerAddressFieldIndex.CustomerId, 0, 0, 10);
-			base.AddElementFieldInfo("CustomerAddressEntity", "AddressId", typeof(System.Int32), true, true, false, false,  (int)CustomerAddressFieldIndex.AddressId, 0, 0, 10);
-			base.AddElementFieldInfo("CustomerAddressEntity", "AddressTypeId", typeof(System.Int32), false, true, false, false,  (int)CustomerAddressFieldIndex.AddressTypeId, 0, 0, 10);
+			base.AddElementFieldInfo("CustomerAddressEntity", "CustomerID", typeof(System.Int32), true, true, false, false,  (int)CustomerAddressFieldIndex.CustomerID, 0, 0, 10);
+			base.AddElementFieldInfo("CustomerAddressEntity", "AddressID", typeof(System.Int32), true, true, false, false,  (int)CustomerAddressFieldIndex.AddressID, 0, 0, 10);
+			base.AddElementFieldInfo("CustomerAddressEntity", "AddressTypeID", typeof(System.Int32), false, true, false, false,  (int)CustomerAddressFieldIndex.AddressTypeID, 0, 0, 10);
 			base.AddElementFieldInfo("CustomerAddressEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)CustomerAddressFieldIndex.Rowguid, 0, 0, 0);
 			base.AddElementFieldInfo("CustomerAddressEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)CustomerAddressFieldIndex.ModifiedDate, 0, 0, 0);
 		}
@@ -199,11 +199,11 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits EmployeeEntity's FieldInfo objects</summary>
 		private void InitEmployeeEntityInfos()
 		{
-			base.AddElementFieldInfo("EmployeeEntity", "EmployeeId", typeof(System.Int32), true, false, true, false,  (int)EmployeeFieldIndex.EmployeeId, 0, 0, 10);
+			base.AddElementFieldInfo("EmployeeEntity", "EmployeeID", typeof(System.Int32), true, false, true, false,  (int)EmployeeFieldIndex.EmployeeID, 0, 0, 10);
 			base.AddElementFieldInfo("EmployeeEntity", "NationalIdnumber", typeof(System.String), false, false, false, false,  (int)EmployeeFieldIndex.NationalIdnumber, 15, 0, 0);
-			base.AddElementFieldInfo("EmployeeEntity", "ContactId", typeof(System.Int32), false, true, false, false,  (int)EmployeeFieldIndex.ContactId, 0, 0, 10);
-			base.AddElementFieldInfo("EmployeeEntity", "LoginId", typeof(System.String), false, false, false, false,  (int)EmployeeFieldIndex.LoginId, 256, 0, 0);
-			base.AddElementFieldInfo("EmployeeEntity", "ManagerId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)EmployeeFieldIndex.ManagerId, 0, 0, 10);
+			base.AddElementFieldInfo("EmployeeEntity", "ContactID", typeof(System.Int32), false, true, false, false,  (int)EmployeeFieldIndex.ContactID, 0, 0, 10);
+			base.AddElementFieldInfo("EmployeeEntity", "LoginID", typeof(System.String), false, false, false, false,  (int)EmployeeFieldIndex.LoginID, 256, 0, 0);
+			base.AddElementFieldInfo("EmployeeEntity", "ManagerID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)EmployeeFieldIndex.ManagerID, 0, 0, 10);
 			base.AddElementFieldInfo("EmployeeEntity", "Title", typeof(System.String), false, false, false, false,  (int)EmployeeFieldIndex.Title, 50, 0, 0);
 			base.AddElementFieldInfo("EmployeeEntity", "BirthDate", typeof(System.DateTime), false, false, false, false,  (int)EmployeeFieldIndex.BirthDate, 0, 0, 0);
 			base.AddElementFieldInfo("EmployeeEntity", "MaritalStatus", typeof(System.String), false, false, false, false,  (int)EmployeeFieldIndex.MaritalStatus, 1, 0, 0);
@@ -219,23 +219,23 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits EmployeeAddressEntity's FieldInfo objects</summary>
 		private void InitEmployeeAddressEntityInfos()
 		{
-			base.AddElementFieldInfo("EmployeeAddressEntity", "EmployeeId", typeof(System.Int32), true, true, false, false,  (int)EmployeeAddressFieldIndex.EmployeeId, 0, 0, 10);
-			base.AddElementFieldInfo("EmployeeAddressEntity", "AddressId", typeof(System.Int32), true, true, false, false,  (int)EmployeeAddressFieldIndex.AddressId, 0, 0, 10);
+			base.AddElementFieldInfo("EmployeeAddressEntity", "EmployeeID", typeof(System.Int32), true, true, false, false,  (int)EmployeeAddressFieldIndex.EmployeeID, 0, 0, 10);
+			base.AddElementFieldInfo("EmployeeAddressEntity", "AddressID", typeof(System.Int32), true, true, false, false,  (int)EmployeeAddressFieldIndex.AddressID, 0, 0, 10);
 			base.AddElementFieldInfo("EmployeeAddressEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)EmployeeAddressFieldIndex.Rowguid, 0, 0, 0);
 			base.AddElementFieldInfo("EmployeeAddressEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)EmployeeAddressFieldIndex.ModifiedDate, 0, 0, 0);
 		}
 		/// <summary>Inits IndividualEntity's FieldInfo objects</summary>
 		private void InitIndividualEntityInfos()
 		{
-			base.AddElementFieldInfo("IndividualEntity", "CustomerId", typeof(System.Int32), true, true, false, false,  (int)IndividualFieldIndex.CustomerId, 0, 0, 10);
-			base.AddElementFieldInfo("IndividualEntity", "ContactId", typeof(System.Int32), false, true, false, false,  (int)IndividualFieldIndex.ContactId, 0, 0, 10);
+			base.AddElementFieldInfo("IndividualEntity", "CustomerID", typeof(System.Int32), true, true, false, false,  (int)IndividualFieldIndex.CustomerID, 0, 0, 10);
+			base.AddElementFieldInfo("IndividualEntity", "ContactID", typeof(System.Int32), false, true, false, false,  (int)IndividualFieldIndex.ContactID, 0, 0, 10);
 			base.AddElementFieldInfo("IndividualEntity", "Demographics", typeof(System.String), false, false, false, true,  (int)IndividualFieldIndex.Demographics, 2147483647, 0, 0);
 			base.AddElementFieldInfo("IndividualEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)IndividualFieldIndex.ModifiedDate, 0, 0, 0);
 		}
 		/// <summary>Inits ProductEntity's FieldInfo objects</summary>
 		private void InitProductEntityInfos()
 		{
-			base.AddElementFieldInfo("ProductEntity", "ProductId", typeof(System.Int32), true, false, true, false,  (int)ProductFieldIndex.ProductId, 0, 0, 10);
+			base.AddElementFieldInfo("ProductEntity", "ProductID", typeof(System.Int32), true, false, true, false,  (int)ProductFieldIndex.ProductID, 0, 0, 10);
 			base.AddElementFieldInfo("ProductEntity", "Name", typeof(System.String), false, false, false, false,  (int)ProductFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("ProductEntity", "ProductNumber", typeof(System.String), false, false, false, false,  (int)ProductFieldIndex.ProductNumber, 25, 0, 0);
 			base.AddElementFieldInfo("ProductEntity", "MakeFlag", typeof(System.Boolean), false, false, false, false,  (int)ProductFieldIndex.MakeFlag, 0, 0, 0);
@@ -253,8 +253,8 @@ namespace AW.Data.HelperClasses
 			base.AddElementFieldInfo("ProductEntity", "ProductLine", typeof(System.String), false, false, false, true,  (int)ProductFieldIndex.ProductLine, 2, 0, 0);
 			base.AddElementFieldInfo("ProductEntity", "Class", typeof(System.String), false, false, false, true,  (int)ProductFieldIndex.Class, 2, 0, 0);
 			base.AddElementFieldInfo("ProductEntity", "Style", typeof(System.String), false, false, false, true,  (int)ProductFieldIndex.Style, 2, 0, 0);
-			base.AddElementFieldInfo("ProductEntity", "ProductSubcategoryId", typeof(Nullable<System.Int32>), false, false, false, true,  (int)ProductFieldIndex.ProductSubcategoryId, 0, 0, 10);
-			base.AddElementFieldInfo("ProductEntity", "ProductModelId", typeof(Nullable<System.Int32>), false, false, false, true,  (int)ProductFieldIndex.ProductModelId, 0, 0, 10);
+			base.AddElementFieldInfo("ProductEntity", "ProductSubcategoryID", typeof(Nullable<System.Int32>), false, false, false, true,  (int)ProductFieldIndex.ProductSubcategoryID, 0, 0, 10);
+			base.AddElementFieldInfo("ProductEntity", "ProductModelID", typeof(Nullable<System.Int32>), false, false, false, true,  (int)ProductFieldIndex.ProductModelID, 0, 0, 10);
 			base.AddElementFieldInfo("ProductEntity", "SellStartDate", typeof(System.DateTime), false, false, false, false,  (int)ProductFieldIndex.SellStartDate, 0, 0, 0);
 			base.AddElementFieldInfo("ProductEntity", "SellEndDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)ProductFieldIndex.SellEndDate, 0, 0, 0);
 			base.AddElementFieldInfo("ProductEntity", "DiscontinuedDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)ProductFieldIndex.DiscontinuedDate, 0, 0, 0);
@@ -264,12 +264,12 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits SalesOrderDetailEntity's FieldInfo objects</summary>
 		private void InitSalesOrderDetailEntityInfos()
 		{
-			base.AddElementFieldInfo("SalesOrderDetailEntity", "SalesOrderId", typeof(System.Int32), true, true, false, false,  (int)SalesOrderDetailFieldIndex.SalesOrderId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderDetailEntity", "SalesOrderDetailId", typeof(System.Int32), true, false, true, false,  (int)SalesOrderDetailFieldIndex.SalesOrderDetailId, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderDetailEntity", "SalesOrderID", typeof(System.Int32), true, true, false, false,  (int)SalesOrderDetailFieldIndex.SalesOrderID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderDetailEntity", "SalesOrderDetailID", typeof(System.Int32), true, false, true, false,  (int)SalesOrderDetailFieldIndex.SalesOrderDetailID, 0, 0, 10);
 			base.AddElementFieldInfo("SalesOrderDetailEntity", "CarrierTrackingNumber", typeof(System.String), false, false, false, true,  (int)SalesOrderDetailFieldIndex.CarrierTrackingNumber, 25, 0, 0);
 			base.AddElementFieldInfo("SalesOrderDetailEntity", "OrderQty", typeof(System.Int16), false, false, false, false,  (int)SalesOrderDetailFieldIndex.OrderQty, 0, 0, 5);
-			base.AddElementFieldInfo("SalesOrderDetailEntity", "ProductId", typeof(System.Int32), false, true, false, false,  (int)SalesOrderDetailFieldIndex.ProductId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderDetailEntity", "SpecialOfferId", typeof(System.Int32), false, true, false, false,  (int)SalesOrderDetailFieldIndex.SpecialOfferId, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderDetailEntity", "ProductID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderDetailFieldIndex.ProductID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderDetailEntity", "SpecialOfferID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderDetailFieldIndex.SpecialOfferID, 0, 0, 10);
 			base.AddElementFieldInfo("SalesOrderDetailEntity", "UnitPrice", typeof(System.Decimal), false, false, false, false,  (int)SalesOrderDetailFieldIndex.UnitPrice, 0, 4, 19);
 			base.AddElementFieldInfo("SalesOrderDetailEntity", "UnitPriceDiscount", typeof(System.Decimal), false, false, false, false,  (int)SalesOrderDetailFieldIndex.UnitPriceDiscount, 0, 4, 19);
 			base.AddElementFieldInfo("SalesOrderDetailEntity", "LineTotal", typeof(System.Decimal), false, false, true, false,  (int)SalesOrderDetailFieldIndex.LineTotal, 0, 6, 38);
@@ -279,7 +279,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits SalesOrderHeaderEntity's FieldInfo objects</summary>
 		private void InitSalesOrderHeaderEntityInfos()
 		{
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "SalesOrderId", typeof(System.Int32), true, false, true, false,  (int)SalesOrderHeaderFieldIndex.SalesOrderId, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "SalesOrderID", typeof(System.Int32), true, false, true, false,  (int)SalesOrderHeaderFieldIndex.SalesOrderID, 0, 0, 10);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "RevisionNumber", typeof(System.Byte), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.RevisionNumber, 0, 0, 3);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "OrderDate", typeof(System.DateTime), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.OrderDate, 0, 0, 0);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "DueDate", typeof(System.DateTime), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.DueDate, 0, 0, 0);
@@ -289,16 +289,16 @@ namespace AW.Data.HelperClasses
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "SalesOrderNumber", typeof(System.String), false, false, true, false,  (int)SalesOrderHeaderFieldIndex.SalesOrderNumber, 25, 0, 0);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "PurchaseOrderNumber", typeof(System.String), false, false, false, true,  (int)SalesOrderHeaderFieldIndex.PurchaseOrderNumber, 25, 0, 0);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "AccountNumber", typeof(System.String), false, false, false, true,  (int)SalesOrderHeaderFieldIndex.AccountNumber, 15, 0, 0);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "CustomerId", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.CustomerId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "ContactId", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.ContactId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "SalesPersonId", typeof(Nullable<System.Int32>), false, false, false, true,  (int)SalesOrderHeaderFieldIndex.SalesPersonId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "TerritoryId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.TerritoryId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "BillToAddressId", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.BillToAddressId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "ShipToAddressId", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.ShipToAddressId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "ShipMethodId", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.ShipMethodId, 0, 0, 10);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "CreditCardId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.CreditCardId, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "CustomerID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.CustomerID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "ContactID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.ContactID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "SalesPersonID", typeof(Nullable<System.Int32>), false, false, false, true,  (int)SalesOrderHeaderFieldIndex.SalesPersonID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "TerritoryID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.TerritoryID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "BillToAddressID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.BillToAddressID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "ShipToAddressID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.ShipToAddressID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "ShipMethodID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.ShipMethodID, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "CreditCardID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.CreditCardID, 0, 0, 10);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "CreditCardApprovalCode", typeof(System.String), false, false, false, true,  (int)SalesOrderHeaderFieldIndex.CreditCardApprovalCode, 15, 0, 0);
-			base.AddElementFieldInfo("SalesOrderHeaderEntity", "CurrencyRateId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.CurrencyRateId, 0, 0, 10);
+			base.AddElementFieldInfo("SalesOrderHeaderEntity", "CurrencyRateID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.CurrencyRateID, 0, 0, 10);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "SubTotal", typeof(System.Decimal), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.SubTotal, 0, 4, 19);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "TaxAmt", typeof(System.Decimal), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.TaxAmt, 0, 4, 19);
 			base.AddElementFieldInfo("SalesOrderHeaderEntity", "Freight", typeof(System.Decimal), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.Freight, 0, 4, 19);
@@ -310,7 +310,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits SalesTerritoryEntity's FieldInfo objects</summary>
 		private void InitSalesTerritoryEntityInfos()
 		{
-			base.AddElementFieldInfo("SalesTerritoryEntity", "TerritoryId", typeof(System.Int32), true, false, true, false,  (int)SalesTerritoryFieldIndex.TerritoryId, 0, 0, 10);
+			base.AddElementFieldInfo("SalesTerritoryEntity", "TerritoryID", typeof(System.Int32), true, false, true, false,  (int)SalesTerritoryFieldIndex.TerritoryID, 0, 0, 10);
 			base.AddElementFieldInfo("SalesTerritoryEntity", "Name", typeof(System.String), false, false, false, false,  (int)SalesTerritoryFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("SalesTerritoryEntity", "CountryRegionCode", typeof(System.String), false, false, false, false,  (int)SalesTerritoryFieldIndex.CountryRegionCode, 3, 0, 0);
 			base.AddElementFieldInfo("SalesTerritoryEntity", "Group", typeof(System.String), false, false, false, false,  (int)SalesTerritoryFieldIndex.Group, 50, 0, 0);
@@ -324,7 +324,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits ShipMethodEntity's FieldInfo objects</summary>
 		private void InitShipMethodEntityInfos()
 		{
-			base.AddElementFieldInfo("ShipMethodEntity", "ShipMethodId", typeof(System.Int32), true, false, true, false,  (int)ShipMethodFieldIndex.ShipMethodId, 0, 0, 10);
+			base.AddElementFieldInfo("ShipMethodEntity", "ShipMethodID", typeof(System.Int32), true, false, true, false,  (int)ShipMethodFieldIndex.ShipMethodID, 0, 0, 10);
 			base.AddElementFieldInfo("ShipMethodEntity", "Name", typeof(System.String), false, false, false, false,  (int)ShipMethodFieldIndex.Name, 50, 0, 0);
 			base.AddElementFieldInfo("ShipMethodEntity", "ShipBase", typeof(System.Decimal), false, false, false, false,  (int)ShipMethodFieldIndex.ShipBase, 0, 4, 19);
 			base.AddElementFieldInfo("ShipMethodEntity", "ShipRate", typeof(System.Decimal), false, false, false, false,  (int)ShipMethodFieldIndex.ShipRate, 0, 4, 19);
@@ -334,7 +334,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits SpecialOfferEntity's FieldInfo objects</summary>
 		private void InitSpecialOfferEntityInfos()
 		{
-			base.AddElementFieldInfo("SpecialOfferEntity", "SpecialOfferId", typeof(System.Int32), true, false, true, false,  (int)SpecialOfferFieldIndex.SpecialOfferId, 0, 0, 10);
+			base.AddElementFieldInfo("SpecialOfferEntity", "SpecialOfferID", typeof(System.Int32), true, false, true, false,  (int)SpecialOfferFieldIndex.SpecialOfferID, 0, 0, 10);
 			base.AddElementFieldInfo("SpecialOfferEntity", "Description", typeof(System.String), false, false, false, false,  (int)SpecialOfferFieldIndex.Description, 255, 0, 0);
 			base.AddElementFieldInfo("SpecialOfferEntity", "DiscountPct", typeof(System.Decimal), false, false, false, false,  (int)SpecialOfferFieldIndex.DiscountPct, 0, 4, 10);
 			base.AddElementFieldInfo("SpecialOfferEntity", "Type", typeof(System.String), false, false, false, false,  (int)SpecialOfferFieldIndex.Type, 50, 0, 0);
@@ -349,20 +349,20 @@ namespace AW.Data.HelperClasses
 		/// <summary>Inits SpecialOfferProductEntity's FieldInfo objects</summary>
 		private void InitSpecialOfferProductEntityInfos()
 		{
-			base.AddElementFieldInfo("SpecialOfferProductEntity", "SpecialOfferId", typeof(System.Int32), true, true, false, false,  (int)SpecialOfferProductFieldIndex.SpecialOfferId, 0, 0, 10);
-			base.AddElementFieldInfo("SpecialOfferProductEntity", "ProductId", typeof(System.Int32), true, true, false, false,  (int)SpecialOfferProductFieldIndex.ProductId, 0, 0, 10);
+			base.AddElementFieldInfo("SpecialOfferProductEntity", "SpecialOfferID", typeof(System.Int32), true, true, false, false,  (int)SpecialOfferProductFieldIndex.SpecialOfferID, 0, 0, 10);
+			base.AddElementFieldInfo("SpecialOfferProductEntity", "ProductID", typeof(System.Int32), true, true, false, false,  (int)SpecialOfferProductFieldIndex.ProductID, 0, 0, 10);
 			base.AddElementFieldInfo("SpecialOfferProductEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)SpecialOfferProductFieldIndex.Rowguid, 0, 0, 0);
 			base.AddElementFieldInfo("SpecialOfferProductEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)SpecialOfferProductFieldIndex.ModifiedDate, 0, 0, 0);
 		}
 		/// <summary>Inits StateProvinceEntity's FieldInfo objects</summary>
 		private void InitStateProvinceEntityInfos()
 		{
-			base.AddElementFieldInfo("StateProvinceEntity", "StateProvinceId", typeof(System.Int32), true, false, true, false,  (int)StateProvinceFieldIndex.StateProvinceId, 0, 0, 10);
+			base.AddElementFieldInfo("StateProvinceEntity", "StateProvinceID", typeof(System.Int32), true, false, true, false,  (int)StateProvinceFieldIndex.StateProvinceID, 0, 0, 10);
 			base.AddElementFieldInfo("StateProvinceEntity", "StateProvinceCode", typeof(System.String), false, false, false, false,  (int)StateProvinceFieldIndex.StateProvinceCode, 3, 0, 0);
 			base.AddElementFieldInfo("StateProvinceEntity", "CountryRegionCode", typeof(System.String), false, true, false, false,  (int)StateProvinceFieldIndex.CountryRegionCode, 3, 0, 0);
 			base.AddElementFieldInfo("StateProvinceEntity", "IsOnlyStateProvinceFlag", typeof(System.Boolean), false, false, false, false,  (int)StateProvinceFieldIndex.IsOnlyStateProvinceFlag, 0, 0, 0);
 			base.AddElementFieldInfo("StateProvinceEntity", "Name", typeof(System.String), false, false, false, false,  (int)StateProvinceFieldIndex.Name, 50, 0, 0);
-			base.AddElementFieldInfo("StateProvinceEntity", "TerritoryId", typeof(System.Int32), false, true, false, false,  (int)StateProvinceFieldIndex.TerritoryId, 0, 0, 10);
+			base.AddElementFieldInfo("StateProvinceEntity", "TerritoryID", typeof(System.Int32), false, true, false, false,  (int)StateProvinceFieldIndex.TerritoryID, 0, 0, 10);
 			base.AddElementFieldInfo("StateProvinceEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)StateProvinceFieldIndex.Rowguid, 0, 0, 0);
 			base.AddElementFieldInfo("StateProvinceEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)StateProvinceFieldIndex.ModifiedDate, 0, 0, 0);
 		}

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -41,10 +41,10 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.EmployeeCollection	_manages;
 		private bool	_alwaysFetchManages, _alreadyFetchedManages;
-		private AW.Data.CollectionClasses.EmployeeAddressCollection	_employeeAddress;
-		private bool	_alwaysFetchEmployeeAddress, _alreadyFetchedEmployeeAddress;
-		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaEmployeeAddress;
-		private bool	_alwaysFetchAddressCollectionViaEmployeeAddress, _alreadyFetchedAddressCollectionViaEmployeeAddress;
+		private AW.Data.CollectionClasses.EmployeeAddressCollection	_employeeAddresses;
+		private bool	_alwaysFetchEmployeeAddresses, _alreadyFetchedEmployeeAddresses;
+		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaEmployeeAddres;
+		private bool	_alwaysFetchAddressCollectionViaEmployeeAddres, _alreadyFetchedAddressCollectionViaEmployeeAddres;
 		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaEmployee;
 		private bool	_alwaysFetchContactCollectionViaEmployee, _alreadyFetchedContactCollectionViaEmployee;
 		private ContactEntity _contact;
@@ -62,7 +62,7 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 			/// <summary>Member name Contact</summary>
 			public static readonly string Contact = "Contact";
@@ -70,10 +70,10 @@ namespace AW.Data.EntityClasses
 			public static readonly string Manager = "Manager";
 			/// <summary>Member name Manages</summary>
 			public static readonly string Manages = "Manages";
-			/// <summary>Member name EmployeeAddress</summary>
-			public static readonly string EmployeeAddress = "EmployeeAddress";
-			/// <summary>Member name AddressCollectionViaEmployeeAddress</summary>
-			public static readonly string AddressCollectionViaEmployeeAddress = "AddressCollectionViaEmployeeAddress";
+			/// <summary>Member name EmployeeAddresses</summary>
+			public static readonly string EmployeeAddresses = "EmployeeAddresses";
+			/// <summary>Member name AddressCollectionViaEmployeeAddres</summary>
+			public static readonly string AddressCollectionViaEmployeeAddres = "AddressCollectionViaEmployeeAddres";
 			/// <summary>Member name ContactCollectionViaEmployee</summary>
 			public static readonly string ContactCollectionViaEmployee = "ContactCollectionViaEmployee";
 
@@ -94,26 +94,26 @@ namespace AW.Data.EntityClasses
 
 	
 		/// <summary>CTor</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
-		public EmployeeEntityBase(System.Int32 employeeId)
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
+		public EmployeeEntityBase(System.Int32 employeeID)
 		{
-			InitClassFetch(employeeId, null, null);
+			InitClassFetch(employeeID, null, null);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public EmployeeEntityBase(System.Int32 employeeId, IPrefetchPath prefetchPathToUse)
+		public EmployeeEntityBase(System.Int32 employeeID, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(employeeId, null, prefetchPathToUse);
+			InitClassFetch(employeeID, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="validator">The custom validator object for this EmployeeEntity</param>
-		public EmployeeEntityBase(System.Int32 employeeId, IValidator validator)
+		public EmployeeEntityBase(System.Int32 employeeID, IValidator validator)
 		{
-			InitClassFetch(employeeId, validator, null);
+			InitClassFetch(employeeID, validator, null);
 		}
 	
 
@@ -125,12 +125,12 @@ namespace AW.Data.EntityClasses
 			_manages = (AW.Data.CollectionClasses.EmployeeCollection)info.GetValue("_manages", typeof(AW.Data.CollectionClasses.EmployeeCollection));
 			_alwaysFetchManages = info.GetBoolean("_alwaysFetchManages");
 			_alreadyFetchedManages = info.GetBoolean("_alreadyFetchedManages");
-			_employeeAddress = (AW.Data.CollectionClasses.EmployeeAddressCollection)info.GetValue("_employeeAddress", typeof(AW.Data.CollectionClasses.EmployeeAddressCollection));
-			_alwaysFetchEmployeeAddress = info.GetBoolean("_alwaysFetchEmployeeAddress");
-			_alreadyFetchedEmployeeAddress = info.GetBoolean("_alreadyFetchedEmployeeAddress");
-			_addressCollectionViaEmployeeAddress = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaEmployeeAddress", typeof(AW.Data.CollectionClasses.AddressCollection));
-			_alwaysFetchAddressCollectionViaEmployeeAddress = info.GetBoolean("_alwaysFetchAddressCollectionViaEmployeeAddress");
-			_alreadyFetchedAddressCollectionViaEmployeeAddress = info.GetBoolean("_alreadyFetchedAddressCollectionViaEmployeeAddress");
+			_employeeAddresses = (AW.Data.CollectionClasses.EmployeeAddressCollection)info.GetValue("_employeeAddresses", typeof(AW.Data.CollectionClasses.EmployeeAddressCollection));
+			_alwaysFetchEmployeeAddresses = info.GetBoolean("_alwaysFetchEmployeeAddresses");
+			_alreadyFetchedEmployeeAddresses = info.GetBoolean("_alreadyFetchedEmployeeAddresses");
+			_addressCollectionViaEmployeeAddres = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaEmployeeAddres", typeof(AW.Data.CollectionClasses.AddressCollection));
+			_alwaysFetchAddressCollectionViaEmployeeAddres = info.GetBoolean("_alwaysFetchAddressCollectionViaEmployeeAddres");
+			_alreadyFetchedAddressCollectionViaEmployeeAddres = info.GetBoolean("_alreadyFetchedAddressCollectionViaEmployeeAddres");
 			_contactCollectionViaEmployee = (AW.Data.CollectionClasses.ContactCollection)info.GetValue("_contactCollectionViaEmployee", typeof(AW.Data.CollectionClasses.ContactCollection));
 			_alwaysFetchContactCollectionViaEmployee = info.GetBoolean("_alwaysFetchContactCollectionViaEmployee");
 			_alreadyFetchedContactCollectionViaEmployee = info.GetBoolean("_alreadyFetchedContactCollectionViaEmployee");
@@ -164,11 +164,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch((EmployeeFieldIndex)fieldIndex)
 			{
-				case EmployeeFieldIndex.ContactId:
+				case EmployeeFieldIndex.ContactID:
 					DesetupSyncContact(true, false);
 					_alreadyFetchedContact = false;
 					break;
-				case EmployeeFieldIndex.ManagerId:
+				case EmployeeFieldIndex.ManagerID:
 					DesetupSyncManager(true, false);
 					_alreadyFetchedManager = false;
 					break;
@@ -189,8 +189,8 @@ namespace AW.Data.EntityClasses
 		protected override void PostReadXmlFixups()
 		{
 			_alreadyFetchedManages = (_manages.Count > 0);
-			_alreadyFetchedEmployeeAddress = (_employeeAddress.Count > 0);
-			_alreadyFetchedAddressCollectionViaEmployeeAddress = (_addressCollectionViaEmployeeAddress.Count > 0);
+			_alreadyFetchedEmployeeAddresses = (_employeeAddresses.Count > 0);
+			_alreadyFetchedAddressCollectionViaEmployeeAddres = (_addressCollectionViaEmployeeAddres.Count > 0);
 			_alreadyFetchedContactCollectionViaEmployee = (_contactCollectionViaEmployee.Count > 0);
 			_alreadyFetchedContact = (_contact != null);
 			_alreadyFetchedManager = (_manager != null);
@@ -214,24 +214,24 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 				case "Contact":
-					toReturn.Add(EmployeeEntity.Relations.ContactEntityUsingContactId);
+					toReturn.Add(EmployeeEntity.Relations.ContactEntityUsingContactID);
 					break;
 				case "Manager":
-					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId);
+					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIDManagerID);
 					break;
 				case "Manages":
-					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId);
+					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID);
 					break;
-				case "EmployeeAddress":
-					toReturn.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId);
+				case "EmployeeAddresses":
+					toReturn.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeID);
 					break;
-				case "AddressCollectionViaEmployeeAddress":
-					toReturn.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId, "EmployeeEntity__", "EmployeeAddress_", JoinHint.None);
-					toReturn.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressId, "EmployeeAddress_", string.Empty, JoinHint.None);
+				case "AddressCollectionViaEmployeeAddres":
+					toReturn.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeID, "EmployeeEntity__", "EmployeeAddress_", JoinHint.None);
+					toReturn.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, "EmployeeAddress_", string.Empty, JoinHint.None);
 					break;
 				case "ContactCollectionViaEmployee":
-					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId, "EmployeeEntity__", "Employee_", JoinHint.None);
-					toReturn.Add(EmployeeEntity.Relations.ContactEntityUsingContactId, "Employee_", string.Empty, JoinHint.None);
+					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID, "EmployeeEntity__", "Employee_", JoinHint.None);
+					toReturn.Add(EmployeeEntity.Relations.ContactEntityUsingContactID, "Employee_", string.Empty, JoinHint.None);
 					break;
 
 				default:
@@ -253,12 +253,12 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_manages", (!this.MarkedForDeletion?_manages:null));
 			info.AddValue("_alwaysFetchManages", _alwaysFetchManages);
 			info.AddValue("_alreadyFetchedManages", _alreadyFetchedManages);
-			info.AddValue("_employeeAddress", (!this.MarkedForDeletion?_employeeAddress:null));
-			info.AddValue("_alwaysFetchEmployeeAddress", _alwaysFetchEmployeeAddress);
-			info.AddValue("_alreadyFetchedEmployeeAddress", _alreadyFetchedEmployeeAddress);
-			info.AddValue("_addressCollectionViaEmployeeAddress", (!this.MarkedForDeletion?_addressCollectionViaEmployeeAddress:null));
-			info.AddValue("_alwaysFetchAddressCollectionViaEmployeeAddress", _alwaysFetchAddressCollectionViaEmployeeAddress);
-			info.AddValue("_alreadyFetchedAddressCollectionViaEmployeeAddress", _alreadyFetchedAddressCollectionViaEmployeeAddress);
+			info.AddValue("_employeeAddresses", (!this.MarkedForDeletion?_employeeAddresses:null));
+			info.AddValue("_alwaysFetchEmployeeAddresses", _alwaysFetchEmployeeAddresses);
+			info.AddValue("_alreadyFetchedEmployeeAddresses", _alreadyFetchedEmployeeAddresses);
+			info.AddValue("_addressCollectionViaEmployeeAddres", (!this.MarkedForDeletion?_addressCollectionViaEmployeeAddres:null));
+			info.AddValue("_alwaysFetchAddressCollectionViaEmployeeAddres", _alwaysFetchAddressCollectionViaEmployeeAddres);
+			info.AddValue("_alreadyFetchedAddressCollectionViaEmployeeAddres", _alreadyFetchedAddressCollectionViaEmployeeAddres);
 			info.AddValue("_contactCollectionViaEmployee", (!this.MarkedForDeletion?_contactCollectionViaEmployee:null));
 			info.AddValue("_alwaysFetchContactCollectionViaEmployee", _alwaysFetchContactCollectionViaEmployee);
 			info.AddValue("_alreadyFetchedContactCollectionViaEmployee", _alreadyFetchedContactCollectionViaEmployee);
@@ -301,18 +301,18 @@ namespace AW.Data.EntityClasses
 						this.Manages.Add((EmployeeEntity)entity);
 					}
 					break;
-				case "EmployeeAddress":
-					_alreadyFetchedEmployeeAddress = true;
+				case "EmployeeAddresses":
+					_alreadyFetchedEmployeeAddresses = true;
 					if(entity!=null)
 					{
-						this.EmployeeAddress.Add((EmployeeAddressEntity)entity);
+						this.EmployeeAddresses.Add((EmployeeAddressEntity)entity);
 					}
 					break;
-				case "AddressCollectionViaEmployeeAddress":
-					_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
+				case "AddressCollectionViaEmployeeAddres":
+					_alreadyFetchedAddressCollectionViaEmployeeAddres = true;
 					if(entity!=null)
 					{
-						this.AddressCollectionViaEmployeeAddress.Add((AddressEntity)entity);
+						this.AddressCollectionViaEmployeeAddres.Add((AddressEntity)entity);
 					}
 					break;
 				case "ContactCollectionViaEmployee":
@@ -346,8 +346,8 @@ namespace AW.Data.EntityClasses
 				case "Manages":
 					_manages.Add((EmployeeEntity)relatedEntity);
 					break;
-				case "EmployeeAddress":
-					_employeeAddress.Add((EmployeeAddressEntity)relatedEntity);
+				case "EmployeeAddresses":
+					_employeeAddresses.Add((EmployeeAddressEntity)relatedEntity);
 					break;
 
 				default:
@@ -374,8 +374,8 @@ namespace AW.Data.EntityClasses
 				case "Manages":
 					base.PerformRelatedEntityRemoval(_manages, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "EmployeeAddress":
-					base.PerformRelatedEntityRemoval(_employeeAddress, relatedEntity, signalRelatedEntityManyToOne);
+				case "EmployeeAddresses":
+					base.PerformRelatedEntityRemoval(_employeeAddresses, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -421,7 +421,7 @@ namespace AW.Data.EntityClasses
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_manages);
-			toReturn.Add(_employeeAddress);
+			toReturn.Add(_employeeAddresses);
 
 			return toReturn;
 		}
@@ -431,43 +431,43 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 employeeId)
+		public bool FetchUsingPK(System.Int32 employeeID)
 		{
-			return FetchUsingPK(employeeId, null, null, null);
+			return FetchUsingPK(employeeID, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 employeeId, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(System.Int32 employeeID, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(employeeId, prefetchPathToUse, null, null);
+			return FetchUsingPK(employeeID, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 employeeId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(System.Int32 employeeID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(employeeId, prefetchPathToUse, contextToUse, null);
+			return Fetch(employeeID, prefetchPathToUse, contextToUse, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 employeeId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(System.Int32 employeeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(employeeId, prefetchPathToUse, contextToUse, excludedIncludedFields);
+			return Fetch(employeeID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -475,7 +475,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.EmployeeId, null, null, null);
+			return Fetch(this.EmployeeID, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -572,27 +572,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'EmployeeAddressEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'EmployeeAddressEntity'</returns>
-		public AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddress(bool forceFetch)
+		public AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddresses(bool forceFetch)
 		{
-			return GetMultiEmployeeAddress(forceFetch, _employeeAddress.EntityFactoryToUse, null);
+			return GetMultiEmployeeAddresses(forceFetch, _employeeAddresses.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'EmployeeAddressEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'EmployeeAddressEntity'</returns>
-		public AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddress(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddresses(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiEmployeeAddress(forceFetch, _employeeAddress.EntityFactoryToUse, filter);
+			return GetMultiEmployeeAddresses(forceFetch, _employeeAddresses.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'EmployeeAddressEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddresses(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiEmployeeAddress(forceFetch, entityFactoryToUse, null);
+			return GetMultiEmployeeAddresses(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'EmployeeAddressEntity' using a relation of type '1:n'.</summary>
@@ -600,84 +600,84 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddress(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.EmployeeAddressCollection GetMultiEmployeeAddresses(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedEmployeeAddress || forceFetch || _alwaysFetchEmployeeAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedEmployeeAddresses || forceFetch || _alwaysFetchEmployeeAddresses) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_employeeAddress.ParticipatesInTransaction)
+					if(!_employeeAddresses.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_employeeAddress);
+						base.Transaction.Add(_employeeAddresses);
 					}
 				}
-				_employeeAddress.SuppressClearInGetMulti=!forceFetch;
+				_employeeAddresses.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_employeeAddress.EntityFactoryToUse = entityFactoryToUse;
+					_employeeAddresses.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_employeeAddress.GetMultiManyToOne(null, this, filter);
-				_employeeAddress.SuppressClearInGetMulti=false;
-				_alreadyFetchedEmployeeAddress = true;
+				_employeeAddresses.GetMultiManyToOne(null, this, filter);
+				_employeeAddresses.SuppressClearInGetMulti=false;
+				_alreadyFetchedEmployeeAddresses = true;
 			}
-			return _employeeAddress;
+			return _employeeAddresses;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'EmployeeAddress'. These settings will be taken into account
-		/// when the property EmployeeAddress is requested or GetMultiEmployeeAddress is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'EmployeeAddresses'. These settings will be taken into account
+		/// when the property EmployeeAddresses is requested or GetMultiEmployeeAddresses is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersEmployeeAddress(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersEmployeeAddresses(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_employeeAddress.SortClauses=sortClauses;
-			_employeeAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_employeeAddresses.SortClauses=sortClauses;
+			_employeeAddresses.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddress(bool forceFetch)
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddres(bool forceFetch)
 		{
-			return GetMultiAddressCollectionViaEmployeeAddress(forceFetch, _addressCollectionViaEmployeeAddress.EntityFactoryToUse);
+			return GetMultiAddressCollectionViaEmployeeAddres(forceFetch, _addressCollectionViaEmployeeAddres.EntityFactoryToUse);
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddres(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
- 			if( ( !_alreadyFetchedAddressCollectionViaEmployeeAddress || forceFetch || _alwaysFetchAddressCollectionViaEmployeeAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedAddressCollectionViaEmployeeAddres || forceFetch || _alwaysFetchAddressCollectionViaEmployeeAddres) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_addressCollectionViaEmployeeAddress.ParticipatesInTransaction)
+					if(!_addressCollectionViaEmployeeAddres.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_addressCollectionViaEmployeeAddress);
+						base.Transaction.Add(_addressCollectionViaEmployeeAddres);
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeId, ComparisonOperator.Equal, this.EmployeeId, "EmployeeEntity__"));
-				_addressCollectionViaEmployeeAddress.SuppressClearInGetMulti=!forceFetch;
+				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeID, ComparisonOperator.Equal, this.EmployeeID, "EmployeeEntity__"));
+				_addressCollectionViaEmployeeAddres.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_addressCollectionViaEmployeeAddress.EntityFactoryToUse = entityFactoryToUse;
+					_addressCollectionViaEmployeeAddres.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_addressCollectionViaEmployeeAddress.GetMulti(filter, GetRelationsForField("AddressCollectionViaEmployeeAddress"));
-				_addressCollectionViaEmployeeAddress.SuppressClearInGetMulti=false;
-				_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
+				_addressCollectionViaEmployeeAddres.GetMulti(filter, GetRelationsForField("AddressCollectionViaEmployeeAddres"));
+				_addressCollectionViaEmployeeAddres.SuppressClearInGetMulti=false;
+				_alreadyFetchedAddressCollectionViaEmployeeAddres = true;
 			}
-			return _addressCollectionViaEmployeeAddress;
+			return _addressCollectionViaEmployeeAddres;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaEmployeeAddress'. These settings will be taken into account
-		/// when the property AddressCollectionViaEmployeeAddress is requested or GetMultiAddressCollectionViaEmployeeAddress is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaEmployeeAddres'. These settings will be taken into account
+		/// when the property AddressCollectionViaEmployeeAddres is requested or GetMultiAddressCollectionViaEmployeeAddres is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersAddressCollectionViaEmployeeAddress(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersAddressCollectionViaEmployeeAddres(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_addressCollectionViaEmployeeAddress.SortClauses=sortClauses;
-			_addressCollectionViaEmployeeAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_addressCollectionViaEmployeeAddres.SortClauses=sortClauses;
+			_addressCollectionViaEmployeeAddres.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
@@ -704,7 +704,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeId, ComparisonOperator.Equal, this.EmployeeId, "EmployeeEntity__"));
+				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeID, ComparisonOperator.Equal, this.EmployeeID, "EmployeeEntity__"));
 				_contactCollectionViaEmployee.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -741,7 +741,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedContact || forceFetch || _alwaysFetchContact) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeEntity.Relations.ContactEntityUsingContactId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeEntity.Relations.ContactEntityUsingContactID);
 
 				ContactEntity newEntity = new ContactEntity();
 				if(base.ParticipatesInTransaction)
@@ -751,7 +751,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.ContactId);
+					fetchResult = newEntity.FetchUsingPK(this.ContactID);
 				}
 				if(fetchResult)
 				{
@@ -798,7 +798,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedManager || forceFetch || _alwaysFetchManager) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIDManagerID);
 
 				EmployeeEntity newEntity = new EmployeeEntity();
 				if(base.ParticipatesInTransaction)
@@ -808,7 +808,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.ManagerId.GetValueOrDefault());
+					fetchResult = newEntity.FetchUsingPK(this.ManagerID.GetValueOrDefault());
 				}
 				if(fetchResult)
 				{
@@ -854,8 +854,8 @@ namespace AW.Data.EntityClasses
 		protected override void AddInternalsToContext()
 		{
 			_manages.ActiveContext = base.ActiveContext;
-			_employeeAddress.ActiveContext = base.ActiveContext;
-			_addressCollectionViaEmployeeAddress.ActiveContext = base.ActiveContext;
+			_employeeAddresses.ActiveContext = base.ActiveContext;
+			_addressCollectionViaEmployeeAddres.ActiveContext = base.ActiveContext;
 			_contactCollectionViaEmployee.ActiveContext = base.ActiveContext;
 			if(_contact!=null)
 			{
@@ -937,8 +937,8 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("Contact", _contact);
 			toReturn.Add("Manager", _manager);
 			toReturn.Add("Manages", _manages);
-			toReturn.Add("EmployeeAddress", _employeeAddress);
-			toReturn.Add("AddressCollectionViaEmployeeAddress", _addressCollectionViaEmployeeAddress);
+			toReturn.Add("EmployeeAddresses", _employeeAddresses);
+			toReturn.Add("AddressCollectionViaEmployeeAddres", _addressCollectionViaEmployeeAddres);
 			toReturn.Add("ContactCollectionViaEmployee", _contactCollectionViaEmployee);
 
 			return toReturn;
@@ -946,16 +946,16 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="validator">The validator object for this EmployeeEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 employeeId, IValidator validator, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 employeeID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			base.Validator = validator;
 			InitClassMembers();
 			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(employeeId, prefetchPathToUse, null, null);
+			bool wasSuccesful = Fetch(employeeID, prefetchPathToUse, null, null);
 			base.IsNew = !wasSuccesful;
 
 			
@@ -972,13 +972,13 @@ namespace AW.Data.EntityClasses
 			_manages.SetContainingEntityInfo(this, "Manager");
 			_alwaysFetchManages = false;
 			_alreadyFetchedManages = false;
-			_employeeAddress = new AW.Data.CollectionClasses.EmployeeAddressCollection(new EmployeeAddressEntityFactory());
-			_employeeAddress.SetContainingEntityInfo(this, "Employee");
-			_alwaysFetchEmployeeAddress = false;
-			_alreadyFetchedEmployeeAddress = false;
-			_addressCollectionViaEmployeeAddress = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
-			_alwaysFetchAddressCollectionViaEmployeeAddress = false;
-			_alreadyFetchedAddressCollectionViaEmployeeAddress = false;
+			_employeeAddresses = new AW.Data.CollectionClasses.EmployeeAddressCollection(new EmployeeAddressEntityFactory());
+			_employeeAddresses.SetContainingEntityInfo(this, "Employee");
+			_alwaysFetchEmployeeAddresses = false;
+			_alreadyFetchedEmployeeAddresses = false;
+			_addressCollectionViaEmployeeAddres = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
+			_alwaysFetchAddressCollectionViaEmployeeAddres = false;
+			_alreadyFetchedAddressCollectionViaEmployeeAddres = false;
 			_contactCollectionViaEmployee = new AW.Data.CollectionClasses.ContactCollection(new ContactEntityFactory());
 			_alwaysFetchContactCollectionViaEmployee = false;
 			_alreadyFetchedContactCollectionViaEmployee = false;
@@ -1009,19 +1009,19 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("EmployeeId", fieldHashtable);
+			_fieldsCustomProperties.Add("EmployeeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("NationalIdnumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ContactId", fieldHashtable);
+			_fieldsCustomProperties.Add("ContactID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("LoginId", fieldHashtable);
+			_fieldsCustomProperties.Add("LoginID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ManagerId", fieldHashtable);
+			_fieldsCustomProperties.Add("ManagerID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
@@ -1064,7 +1064,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncContact(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactId, true, signalRelatedEntity, "Employee", resetFKFields, new int[] { (int)EmployeeFieldIndex.ContactId } );		
+			base.PerformDesetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactID, true, signalRelatedEntity, "Employees", resetFKFields, new int[] { (int)EmployeeFieldIndex.ContactID } );		
 			_contact = null;
 		}
 		
@@ -1076,7 +1076,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncContact(true, true);
 				_contact = (ContactEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactId, true, ref _alreadyFetchedContact, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactID, true, ref _alreadyFetchedContact, new string[] {  } );
 			}
 		}
 
@@ -1097,7 +1097,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncManager(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _manager, new PropertyChangedEventHandler( OnManagerPropertyChanged ), "Manager", EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId, true, signalRelatedEntity, "Manages", resetFKFields, new int[] { (int)EmployeeFieldIndex.ManagerId } );		
+			base.PerformDesetupSyncRelatedEntity( _manager, new PropertyChangedEventHandler( OnManagerPropertyChanged ), "Manager", EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIDManagerID, true, signalRelatedEntity, "Manages", resetFKFields, new int[] { (int)EmployeeFieldIndex.ManagerID } );		
 			_manager = null;
 		}
 		
@@ -1109,7 +1109,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncManager(true, true);
 				_manager = (EmployeeEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _manager, new PropertyChangedEventHandler( OnManagerPropertyChanged ), "Manager", EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIdManagerId, true, ref _alreadyFetchedManager, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _manager, new PropertyChangedEventHandler( OnManagerPropertyChanged ), "Manager", EmployeeEntity.Relations.EmployeeEntityUsingEmployeeIDManagerID, true, ref _alreadyFetchedManager, new string[] {  } );
 			}
 		}
 
@@ -1127,20 +1127,20 @@ namespace AW.Data.EntityClasses
 
 
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 employeeId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(System.Int32 employeeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
-				base.Fields[(int)EmployeeFieldIndex.EmployeeId].ForcedCurrentValueWrite(employeeId);
+				base.Fields[(int)EmployeeFieldIndex.EmployeeID].ForcedCurrentValueWrite(employeeID);
 				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
 				return (base.Fields.State == EntityState.Fetched);
 			}
@@ -1195,26 +1195,26 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'EmployeeAddress' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathEmployeeAddress
+		public static IPrefetchPathElement PrefetchPathEmployeeAddresses
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeAddressCollection(),
-					(IEntityRelation)GetRelationsForField("EmployeeAddress")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeAddressEntity, 0, null, null, null, "EmployeeAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("EmployeeAddresses")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeAddressEntity, 0, null, null, null, "EmployeeAddresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathAddressCollectionViaEmployeeAddress
+		public static IPrefetchPathElement PrefetchPathAddressCollectionViaEmployeeAddres
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId;
+				IEntityRelation intermediateRelation = EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeID;
 				intermediateRelation.SetAliases(string.Empty, "EmployeeAddress_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
-					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaEmployeeAddress"), "AddressCollectionViaEmployeeAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaEmployeeAddres"), "AddressCollectionViaEmployeeAddres", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -1225,7 +1225,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = EmployeeEntity.Relations.EmployeeEntityUsingManagerId;
+				IEntityRelation intermediateRelation = EmployeeEntity.Relations.EmployeeEntityUsingManagerID;
 				intermediateRelation.SetAliases(string.Empty, "Employee_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, GetRelationsForField("ContactCollectionViaEmployee"), "ContactCollectionViaEmployee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -1287,15 +1287,15 @@ namespace AW.Data.EntityClasses
 			get { return EmployeeEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The EmployeeId property of the Entity Employee<br/><br/>
+		/// <summary> The EmployeeID property of the Entity Employee<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Employee"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 EmployeeId
+		public virtual System.Int32 EmployeeID
 		{
-			get { return (System.Int32)GetValue((int)EmployeeFieldIndex.EmployeeId, true); }
-			set	{ SetValue((int)EmployeeFieldIndex.EmployeeId, value, true); }
+			get { return (System.Int32)GetValue((int)EmployeeFieldIndex.EmployeeID, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.EmployeeID, value, true); }
 		}
 		/// <summary> The NationalIdnumber property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1307,35 +1307,35 @@ namespace AW.Data.EntityClasses
 			get { return (System.String)GetValue((int)EmployeeFieldIndex.NationalIdnumber, true); }
 			set	{ SetValue((int)EmployeeFieldIndex.NationalIdnumber, value, true); }
 		}
-		/// <summary> The ContactId property of the Entity Employee<br/><br/>
+		/// <summary> The ContactID property of the Entity Employee<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Employee"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 ContactId
+		public virtual System.Int32 ContactID
 		{
-			get { return (System.Int32)GetValue((int)EmployeeFieldIndex.ContactId, true); }
-			set	{ SetValue((int)EmployeeFieldIndex.ContactId, value, true); }
+			get { return (System.Int32)GetValue((int)EmployeeFieldIndex.ContactID, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.ContactID, value, true); }
 		}
-		/// <summary> The LoginId property of the Entity Employee<br/><br/>
+		/// <summary> The LoginID property of the Entity Employee<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Employee"."LoginID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 256<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String LoginId
+		public virtual System.String LoginID
 		{
-			get { return (System.String)GetValue((int)EmployeeFieldIndex.LoginId, true); }
-			set	{ SetValue((int)EmployeeFieldIndex.LoginId, value, true); }
+			get { return (System.String)GetValue((int)EmployeeFieldIndex.LoginID, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.LoginID, value, true); }
 		}
-		/// <summary> The ManagerId property of the Entity Employee<br/><br/>
+		/// <summary> The ManagerID property of the Entity Employee<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "Employee"."ManagerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int32> ManagerId
+		public virtual Nullable<System.Int32> ManagerID
 		{
-			get { return (Nullable<System.Int32>)GetValue((int)EmployeeFieldIndex.ManagerId, false); }
-			set	{ SetValue((int)EmployeeFieldIndex.ManagerId, value, true); }
+			get { return (Nullable<System.Int32>)GetValue((int)EmployeeFieldIndex.ManagerID, false); }
+			set	{ SetValue((int)EmployeeFieldIndex.ManagerID, value, true); }
 		}
 		/// <summary> The Title property of the Entity Employee<br/><br/>
 		/// </summary>
@@ -1482,70 +1482,70 @@ namespace AW.Data.EntityClasses
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'EmployeeAddressEntity' using a relation of type '1:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiEmployeeAddress()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiEmployeeAddresses()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.EmployeeAddressCollection EmployeeAddress
+		public virtual AW.Data.CollectionClasses.EmployeeAddressCollection EmployeeAddresses
 		{
-			get	{ return GetMultiEmployeeAddress(false); }
+			get	{ return GetMultiEmployeeAddresses(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for EmployeeAddress. When set to true, EmployeeAddress is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time EmployeeAddress is accessed. You can always execute
-		/// a forced fetch by calling GetMultiEmployeeAddress(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for EmployeeAddresses. When set to true, EmployeeAddresses is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time EmployeeAddresses is accessed. You can always execute
+		/// a forced fetch by calling GetMultiEmployeeAddresses(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchEmployeeAddress
+		public bool AlwaysFetchEmployeeAddresses
 		{
-			get	{ return _alwaysFetchEmployeeAddress; }
-			set	{ _alwaysFetchEmployeeAddress = value; }	
+			get	{ return _alwaysFetchEmployeeAddresses; }
+			set	{ _alwaysFetchEmployeeAddresses = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property EmployeeAddress already has been fetched. Setting this property to false when EmployeeAddress has been fetched
-		/// will clear the EmployeeAddress collection well. Setting this property to true while EmployeeAddress hasn't been fetched disables lazy loading for EmployeeAddress</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property EmployeeAddresses already has been fetched. Setting this property to false when EmployeeAddresses has been fetched
+		/// will clear the EmployeeAddresses collection well. Setting this property to true while EmployeeAddresses hasn't been fetched disables lazy loading for EmployeeAddresses</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedEmployeeAddress
+		public bool AlreadyFetchedEmployeeAddresses
 		{
-			get { return _alreadyFetchedEmployeeAddress;}
+			get { return _alreadyFetchedEmployeeAddresses;}
 			set 
 			{
-				if(_alreadyFetchedEmployeeAddress && !value && (_employeeAddress != null))
+				if(_alreadyFetchedEmployeeAddresses && !value && (_employeeAddresses != null))
 				{
-					_employeeAddress.Clear();
+					_employeeAddresses.Clear();
 				}
-				_alreadyFetchedEmployeeAddress = value;
+				_alreadyFetchedEmployeeAddresses = value;
 			}
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaEmployeeAddress()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaEmployeeAddres()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaEmployeeAddress
+		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaEmployeeAddres
 		{
-			get { return GetMultiAddressCollectionViaEmployeeAddress(false); }
+			get { return GetMultiAddressCollectionViaEmployeeAddres(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaEmployeeAddress. When set to true, AddressCollectionViaEmployeeAddress is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaEmployeeAddress is accessed. You can always execute
-		/// a forced fetch by calling GetMultiAddressCollectionViaEmployeeAddress(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaEmployeeAddres. When set to true, AddressCollectionViaEmployeeAddres is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaEmployeeAddres is accessed. You can always execute
+		/// a forced fetch by calling GetMultiAddressCollectionViaEmployeeAddres(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchAddressCollectionViaEmployeeAddress
+		public bool AlwaysFetchAddressCollectionViaEmployeeAddres
 		{
-			get	{ return _alwaysFetchAddressCollectionViaEmployeeAddress; }
-			set	{ _alwaysFetchAddressCollectionViaEmployeeAddress = value; }
+			get	{ return _alwaysFetchAddressCollectionViaEmployeeAddres; }
+			set	{ _alwaysFetchAddressCollectionViaEmployeeAddres = value; }
 		}
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaEmployeeAddress already has been fetched. Setting this property to false when AddressCollectionViaEmployeeAddress has been fetched
-		/// will clear the AddressCollectionViaEmployeeAddress collection well. Setting this property to true while AddressCollectionViaEmployeeAddress hasn't been fetched disables lazy loading for AddressCollectionViaEmployeeAddress</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaEmployeeAddres already has been fetched. Setting this property to false when AddressCollectionViaEmployeeAddres has been fetched
+		/// will clear the AddressCollectionViaEmployeeAddres collection well. Setting this property to true while AddressCollectionViaEmployeeAddres hasn't been fetched disables lazy loading for AddressCollectionViaEmployeeAddres</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedAddressCollectionViaEmployeeAddress
+		public bool AlreadyFetchedAddressCollectionViaEmployeeAddres
 		{
-			get { return _alreadyFetchedAddressCollectionViaEmployeeAddress;}
+			get { return _alreadyFetchedAddressCollectionViaEmployeeAddres;}
 			set 
 			{
-				if(_alreadyFetchedAddressCollectionViaEmployeeAddress && !value && (_addressCollectionViaEmployeeAddress != null))
+				if(_alreadyFetchedAddressCollectionViaEmployeeAddres && !value && (_addressCollectionViaEmployeeAddres != null))
 				{
-					_addressCollectionViaEmployeeAddress.Clear();
+					_addressCollectionViaEmployeeAddres.Clear();
 				}
-				_alreadyFetchedAddressCollectionViaEmployeeAddress = value;
+				_alreadyFetchedAddressCollectionViaEmployeeAddres = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
@@ -1588,6 +1588,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleContact()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual ContactEntity Contact
 		{
 			get	{ return GetSingleContact(false); }
@@ -1603,14 +1604,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_contact != null)
 						{
-							_contact.UnsetRelatedEntity(this, "Employee");
+							_contact.UnsetRelatedEntity(this, "Employees");
 						}
 					}
 					else
 					{
 						if(_contact!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "Employee");
+							((IEntity)value).SetRelatedEntity(this, "Employees");
 						}
 					}
 				}
@@ -1658,6 +1659,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleManager()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual EmployeeEntity Manager
 		{
 			get	{ return GetSingleManager(false); }

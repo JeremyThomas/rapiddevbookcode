@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -30,19 +30,17 @@ namespace AW.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity base class which represents the base class for the entity 'CurrencyRate'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
 	public abstract partial class CurrencyRateEntityBase : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AW.Data.CollectionClasses.SalesOrderHeaderCollection	_salesOrderHeader;
-		private bool	_alwaysFetchSalesOrderHeader, _alreadyFetchedSalesOrderHeader;
+		private AW.Data.CollectionClasses.SalesOrderHeaderCollection	_salesOrderHeaders;
+		private bool	_alwaysFetchSalesOrderHeaders, _alreadyFetchedSalesOrderHeaders;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaSalesOrderHeader_;
 		private bool	_alwaysFetchAddressCollectionViaSalesOrderHeader_, _alreadyFetchedAddressCollectionViaSalesOrderHeader_;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaSalesOrderHeader;
@@ -53,6 +51,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchCreditCardCollectionViaSalesOrderHeader, _alreadyFetchedCreditCardCollectionViaSalesOrderHeader;
 		private AW.Data.CollectionClasses.CustomerCollection _customerCollectionViaSalesOrderHeader;
 		private bool	_alwaysFetchCustomerCollectionViaSalesOrderHeader, _alreadyFetchedCustomerCollectionViaSalesOrderHeader;
+		private AW.Data.CollectionClasses.CustomerViewRelatedCollection _customerViewRelatedCollectionViaSalesOrderHeader____;
+		private bool	_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____, _alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____;
 		private AW.Data.CollectionClasses.SalesTerritoryCollection _salesTerritoryCollectionViaSalesOrderHeader;
 		private bool	_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader, _alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader;
 		private AW.Data.CollectionClasses.ShipMethodCollection _shipMethodCollectionViaSalesOrderHeader;
@@ -65,7 +65,6 @@ namespace AW.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 		
 		#region Statics
@@ -73,14 +72,14 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 			/// <summary>Member name Currency_</summary>
 			public static readonly string Currency_ = "Currency_";
 			/// <summary>Member name Currency</summary>
 			public static readonly string Currency = "Currency";
-			/// <summary>Member name SalesOrderHeader</summary>
-			public static readonly string SalesOrderHeader = "SalesOrderHeader";
+			/// <summary>Member name SalesOrderHeaders</summary>
+			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
 			/// <summary>Member name AddressCollectionViaSalesOrderHeader_</summary>
 			public static readonly string AddressCollectionViaSalesOrderHeader_ = "AddressCollectionViaSalesOrderHeader_";
 			/// <summary>Member name AddressCollectionViaSalesOrderHeader</summary>
@@ -91,6 +90,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string CreditCardCollectionViaSalesOrderHeader = "CreditCardCollectionViaSalesOrderHeader";
 			/// <summary>Member name CustomerCollectionViaSalesOrderHeader</summary>
 			public static readonly string CustomerCollectionViaSalesOrderHeader = "CustomerCollectionViaSalesOrderHeader";
+			/// <summary>Member name CustomerViewRelatedCollectionViaSalesOrderHeader____</summary>
+			public static readonly string CustomerViewRelatedCollectionViaSalesOrderHeader____ = "CustomerViewRelatedCollectionViaSalesOrderHeader____";
 			/// <summary>Member name SalesTerritoryCollectionViaSalesOrderHeader</summary>
 			public static readonly string SalesTerritoryCollectionViaSalesOrderHeader = "SalesTerritoryCollectionViaSalesOrderHeader";
 			/// <summary>Member name ShipMethodCollectionViaSalesOrderHeader</summary>
@@ -113,26 +114,26 @@ namespace AW.Data.EntityClasses
 
 	
 		/// <summary>CTor</summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
-		public CurrencyRateEntityBase(System.Int32 currencyRateId)
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		public CurrencyRateEntityBase(System.Int32 currencyRateID)
 		{
-			InitClassFetch(currencyRateId, null, null);
+			InitClassFetch(currencyRateID, null, null);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public CurrencyRateEntityBase(System.Int32 currencyRateId, IPrefetchPath prefetchPathToUse)
+		public CurrencyRateEntityBase(System.Int32 currencyRateID, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(currencyRateId, null, prefetchPathToUse);
+			InitClassFetch(currencyRateID, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="validator">The custom validator object for this CurrencyRateEntity</param>
-		public CurrencyRateEntityBase(System.Int32 currencyRateId, IValidator validator)
+		public CurrencyRateEntityBase(System.Int32 currencyRateID, IValidator validator)
 		{
-			InitClassFetch(currencyRateId, validator, null);
+			InitClassFetch(currencyRateID, validator, null);
 		}
 	
 
@@ -141,9 +142,9 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected CurrencyRateEntityBase(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_salesOrderHeader = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrderHeader", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
-			_alwaysFetchSalesOrderHeader = info.GetBoolean("_alwaysFetchSalesOrderHeader");
-			_alreadyFetchedSalesOrderHeader = info.GetBoolean("_alreadyFetchedSalesOrderHeader");
+			_salesOrderHeaders = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrderHeaders", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
+			_alwaysFetchSalesOrderHeaders = info.GetBoolean("_alwaysFetchSalesOrderHeaders");
+			_alreadyFetchedSalesOrderHeaders = info.GetBoolean("_alreadyFetchedSalesOrderHeaders");
 			_addressCollectionViaSalesOrderHeader_ = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaSalesOrderHeader_", typeof(AW.Data.CollectionClasses.AddressCollection));
 			_alwaysFetchAddressCollectionViaSalesOrderHeader_ = info.GetBoolean("_alwaysFetchAddressCollectionViaSalesOrderHeader_");
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = info.GetBoolean("_alreadyFetchedAddressCollectionViaSalesOrderHeader_");
@@ -159,6 +160,9 @@ namespace AW.Data.EntityClasses
 			_customerCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.CustomerCollection)info.GetValue("_customerCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.CustomerCollection));
 			_alwaysFetchCustomerCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchCustomerCollectionViaSalesOrderHeader");
 			_alreadyFetchedCustomerCollectionViaSalesOrderHeader = info.GetBoolean("_alreadyFetchedCustomerCollectionViaSalesOrderHeader");
+			_customerViewRelatedCollectionViaSalesOrderHeader____ = (AW.Data.CollectionClasses.CustomerViewRelatedCollection)info.GetValue("_customerViewRelatedCollectionViaSalesOrderHeader____", typeof(AW.Data.CollectionClasses.CustomerViewRelatedCollection));
+			_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____ = info.GetBoolean("_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____");
+			_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____ = info.GetBoolean("_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____");
 			_salesTerritoryCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.SalesTerritoryCollection)info.GetValue("_salesTerritoryCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.SalesTerritoryCollection));
 			_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader");
 			_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader = info.GetBoolean("_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader");
@@ -186,7 +190,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 		
@@ -220,12 +223,13 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
-			_alreadyFetchedSalesOrderHeader = (_salesOrderHeader.Count > 0);
+			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = (_addressCollectionViaSalesOrderHeader_.Count > 0);
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader = (_addressCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedContactCollectionViaSalesOrderHeader = (_contactCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedCreditCardCollectionViaSalesOrderHeader = (_creditCardCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedCustomerCollectionViaSalesOrderHeader = (_customerCollectionViaSalesOrderHeader.Count > 0);
+			_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____ = (_customerViewRelatedCollectionViaSalesOrderHeader____.Count > 0);
 			_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader = (_salesTerritoryCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = (_shipMethodCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedCurrency_ = (_currency_ != null);
@@ -255,36 +259,40 @@ namespace AW.Data.EntityClasses
 				case "Currency":
 					toReturn.Add(CurrencyRateEntity.Relations.CurrencyEntityUsingFromCurrencyCode);
 					break;
-				case "SalesOrderHeader":
-					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId);
+				case "SalesOrderHeaders":
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID);
 					break;
 				case "AddressCollectionViaSalesOrderHeader_":
-					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				case "AddressCollectionViaSalesOrderHeader":
-					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				case "ContactCollectionViaSalesOrderHeader":
-					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.ContactEntityUsingContactId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.ContactEntityUsingContactID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				case "CreditCardCollectionViaSalesOrderHeader":
-					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				case "CustomerCollectionViaSalesOrderHeader":
-					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.CustomerEntityUsingCustomerId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.CustomerEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					break;
+				case "CustomerViewRelatedCollectionViaSalesOrderHeader____":
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				case "SalesTerritoryCollectionViaSalesOrderHeader":
-					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				case "ShipMethodCollectionViaSalesOrderHeader":
-					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					toReturn.Add(CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID, "CurrencyRateEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 
 				default:
@@ -303,9 +311,9 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_salesOrderHeader", (!this.MarkedForDeletion?_salesOrderHeader:null));
-			info.AddValue("_alwaysFetchSalesOrderHeader", _alwaysFetchSalesOrderHeader);
-			info.AddValue("_alreadyFetchedSalesOrderHeader", _alreadyFetchedSalesOrderHeader);
+			info.AddValue("_salesOrderHeaders", (!this.MarkedForDeletion?_salesOrderHeaders:null));
+			info.AddValue("_alwaysFetchSalesOrderHeaders", _alwaysFetchSalesOrderHeaders);
+			info.AddValue("_alreadyFetchedSalesOrderHeaders", _alreadyFetchedSalesOrderHeaders);
 			info.AddValue("_addressCollectionViaSalesOrderHeader_", (!this.MarkedForDeletion?_addressCollectionViaSalesOrderHeader_:null));
 			info.AddValue("_alwaysFetchAddressCollectionViaSalesOrderHeader_", _alwaysFetchAddressCollectionViaSalesOrderHeader_);
 			info.AddValue("_alreadyFetchedAddressCollectionViaSalesOrderHeader_", _alreadyFetchedAddressCollectionViaSalesOrderHeader_);
@@ -321,6 +329,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_customerCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_customerCollectionViaSalesOrderHeader:null));
 			info.AddValue("_alwaysFetchCustomerCollectionViaSalesOrderHeader", _alwaysFetchCustomerCollectionViaSalesOrderHeader);
 			info.AddValue("_alreadyFetchedCustomerCollectionViaSalesOrderHeader", _alreadyFetchedCustomerCollectionViaSalesOrderHeader);
+			info.AddValue("_customerViewRelatedCollectionViaSalesOrderHeader____", (!this.MarkedForDeletion?_customerViewRelatedCollectionViaSalesOrderHeader____:null));
+			info.AddValue("_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____", _alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____);
+			info.AddValue("_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____", _alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____);
 			info.AddValue("_salesTerritoryCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_salesTerritoryCollectionViaSalesOrderHeader:null));
 			info.AddValue("_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader", _alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader);
 			info.AddValue("_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader", _alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader);
@@ -339,7 +350,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -360,11 +370,11 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedCurrency = true;
 					this.Currency = (CurrencyEntity)entity;
 					break;
-				case "SalesOrderHeader":
-					_alreadyFetchedSalesOrderHeader = true;
+				case "SalesOrderHeaders":
+					_alreadyFetchedSalesOrderHeaders = true;
 					if(entity!=null)
 					{
-						this.SalesOrderHeader.Add((SalesOrderHeaderEntity)entity);
+						this.SalesOrderHeaders.Add((SalesOrderHeaderEntity)entity);
 					}
 					break;
 				case "AddressCollectionViaSalesOrderHeader_":
@@ -402,6 +412,13 @@ namespace AW.Data.EntityClasses
 						this.CustomerCollectionViaSalesOrderHeader.Add((CustomerEntity)entity);
 					}
 					break;
+				case "CustomerViewRelatedCollectionViaSalesOrderHeader____":
+					_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____ = true;
+					if(entity!=null)
+					{
+						this.CustomerViewRelatedCollectionViaSalesOrderHeader____.Add((CustomerViewRelatedEntity)entity);
+					}
+					break;
 				case "SalesTerritoryCollectionViaSalesOrderHeader":
 					_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader = true;
 					if(entity!=null)
@@ -437,8 +454,8 @@ namespace AW.Data.EntityClasses
 				case "Currency":
 					SetupSyncCurrency(relatedEntity);
 					break;
-				case "SalesOrderHeader":
-					_salesOrderHeader.Add((SalesOrderHeaderEntity)relatedEntity);
+				case "SalesOrderHeaders":
+					_salesOrderHeaders.Add((SalesOrderHeaderEntity)relatedEntity);
 					break;
 
 				default:
@@ -462,8 +479,8 @@ namespace AW.Data.EntityClasses
 				case "Currency":
 					DesetupSyncCurrency(false, true);
 					break;
-				case "SalesOrderHeader":
-					base.PerformRelatedEntityRemoval(_salesOrderHeader, relatedEntity, signalRelatedEntityManyToOne);
+				case "SalesOrderHeaders":
+					base.PerformRelatedEntityRemoval(_salesOrderHeaders, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -508,7 +525,7 @@ namespace AW.Data.EntityClasses
 		public override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
-			toReturn.Add(_salesOrderHeader);
+			toReturn.Add(_salesOrderHeaders);
 
 			return toReturn;
 		}
@@ -518,43 +535,43 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 currencyRateId)
+		public bool FetchUsingPK(System.Int32 currencyRateID)
 		{
-			return FetchUsingPK(currencyRateId, null, null, null);
+			return FetchUsingPK(currencyRateID, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 currencyRateId, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(System.Int32 currencyRateID, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(currencyRateId, prefetchPathToUse, null, null);
+			return FetchUsingPK(currencyRateID, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 currencyRateId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(System.Int32 currencyRateID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(currencyRateId, prefetchPathToUse, contextToUse, null);
+			return Fetch(currencyRateID, prefetchPathToUse, contextToUse, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 currencyRateId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(System.Int32 currencyRateID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(currencyRateId, prefetchPathToUse, contextToUse, excludedIncludedFields);
+			return Fetch(currencyRateID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -562,7 +579,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.CurrencyRateId, null, null, null);
+			return Fetch(this.CurrencyRateID, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -595,27 +612,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'SalesOrderHeaderEntity'</returns>
-		public AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrderHeader(bool forceFetch)
+		public AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrderHeaders(bool forceFetch)
 		{
-			return GetMultiSalesOrderHeader(forceFetch, _salesOrderHeader.EntityFactoryToUse, null);
+			return GetMultiSalesOrderHeaders(forceFetch, _salesOrderHeaders.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'SalesOrderHeaderEntity'</returns>
-		public AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrderHeader(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrderHeaders(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiSalesOrderHeader(forceFetch, _salesOrderHeader.EntityFactoryToUse, filter);
+			return GetMultiSalesOrderHeaders(forceFetch, _salesOrderHeaders.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrderHeader(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrderHeaders(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiSalesOrderHeader(forceFetch, entityFactoryToUse, null);
+			return GetMultiSalesOrderHeaders(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
@@ -623,37 +640,37 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrderHeader(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrderHeaders(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedSalesOrderHeader || forceFetch || _alwaysFetchSalesOrderHeader) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedSalesOrderHeaders || forceFetch || _alwaysFetchSalesOrderHeaders) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_salesOrderHeader.ParticipatesInTransaction)
+					if(!_salesOrderHeaders.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_salesOrderHeader);
+						base.Transaction.Add(_salesOrderHeaders);
 					}
 				}
-				_salesOrderHeader.SuppressClearInGetMulti=!forceFetch;
+				_salesOrderHeaders.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_salesOrderHeader.EntityFactoryToUse = entityFactoryToUse;
+					_salesOrderHeaders.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_salesOrderHeader.GetMultiManyToOne(null, null, null, null, this, null, null, null, null, filter);
-				_salesOrderHeader.SuppressClearInGetMulti=false;
-				_alreadyFetchedSalesOrderHeader = true;
+				_salesOrderHeaders.GetMultiManyToOne(null, null, null, null, this, null, null, null, null, filter);
+				_salesOrderHeaders.SuppressClearInGetMulti=false;
+				_alreadyFetchedSalesOrderHeaders = true;
 			}
-			return _salesOrderHeader;
+			return _salesOrderHeaders;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'SalesOrderHeader'. These settings will be taken into account
-		/// when the property SalesOrderHeader is requested or GetMultiSalesOrderHeader is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'SalesOrderHeaders'. These settings will be taken into account
+		/// when the property SalesOrderHeaders is requested or GetMultiSalesOrderHeaders is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersSalesOrderHeader(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersSalesOrderHeaders(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_salesOrderHeader.SortClauses=sortClauses;
-			_salesOrderHeader.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_salesOrderHeaders.SortClauses=sortClauses;
+			_salesOrderHeaders.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
@@ -680,7 +697,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateId, ComparisonOperator.Equal, this.CurrencyRateId, "CurrencyRateEntity__"));
+				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateID, ComparisonOperator.Equal, this.CurrencyRateID, "CurrencyRateEntity__"));
 				_addressCollectionViaSalesOrderHeader_.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -727,7 +744,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateId, ComparisonOperator.Equal, this.CurrencyRateId, "CurrencyRateEntity__"));
+				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateID, ComparisonOperator.Equal, this.CurrencyRateID, "CurrencyRateEntity__"));
 				_addressCollectionViaSalesOrderHeader.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -774,7 +791,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateId, ComparisonOperator.Equal, this.CurrencyRateId, "CurrencyRateEntity__"));
+				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateID, ComparisonOperator.Equal, this.CurrencyRateID, "CurrencyRateEntity__"));
 				_contactCollectionViaSalesOrderHeader.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -821,7 +838,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateId, ComparisonOperator.Equal, this.CurrencyRateId, "CurrencyRateEntity__"));
+				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateID, ComparisonOperator.Equal, this.CurrencyRateID, "CurrencyRateEntity__"));
 				_creditCardCollectionViaSalesOrderHeader.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -868,7 +885,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateId, ComparisonOperator.Equal, this.CurrencyRateId, "CurrencyRateEntity__"));
+				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateID, ComparisonOperator.Equal, this.CurrencyRateID, "CurrencyRateEntity__"));
 				_customerCollectionViaSalesOrderHeader.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -889,6 +906,53 @@ namespace AW.Data.EntityClasses
 		{
 			_customerCollectionViaSalesOrderHeader.SortClauses=sortClauses;
 			_customerCollectionViaSalesOrderHeader.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'CustomerViewRelatedEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'CustomerViewRelatedEntity'</returns>
+		public AW.Data.CollectionClasses.CustomerViewRelatedCollection GetMultiCustomerViewRelatedCollectionViaSalesOrderHeader____(bool forceFetch)
+		{
+			return GetMultiCustomerViewRelatedCollectionViaSalesOrderHeader____(forceFetch, _customerViewRelatedCollectionViaSalesOrderHeader____.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'CustomerViewRelatedEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.CustomerViewRelatedCollection GetMultiCustomerViewRelatedCollectionViaSalesOrderHeader____(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____ || forceFetch || _alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+			{
+				if(base.ParticipatesInTransaction)
+				{
+					if(!_customerViewRelatedCollectionViaSalesOrderHeader____.ParticipatesInTransaction)
+					{
+						base.Transaction.Add(_customerViewRelatedCollectionViaSalesOrderHeader____);
+					}
+				}
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateID, ComparisonOperator.Equal, this.CurrencyRateID, "CurrencyRateEntity__"));
+				_customerViewRelatedCollectionViaSalesOrderHeader____.SuppressClearInGetMulti=!forceFetch;
+				if(entityFactoryToUse!=null)
+				{
+					_customerViewRelatedCollectionViaSalesOrderHeader____.EntityFactoryToUse = entityFactoryToUse;
+				}
+				_customerViewRelatedCollectionViaSalesOrderHeader____.GetMulti(filter, GetRelationsForField("CustomerViewRelatedCollectionViaSalesOrderHeader____"));
+				_customerViewRelatedCollectionViaSalesOrderHeader____.SuppressClearInGetMulti=false;
+				_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____ = true;
+			}
+			return _customerViewRelatedCollectionViaSalesOrderHeader____;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'CustomerViewRelatedCollectionViaSalesOrderHeader____'. These settings will be taken into account
+		/// when the property CustomerViewRelatedCollectionViaSalesOrderHeader____ is requested or GetMultiCustomerViewRelatedCollectionViaSalesOrderHeader____ is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersCustomerViewRelatedCollectionViaSalesOrderHeader____(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_customerViewRelatedCollectionViaSalesOrderHeader____.SortClauses=sortClauses;
+			_customerViewRelatedCollectionViaSalesOrderHeader____.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesTerritoryEntity' using a relation of type 'm:n'.</summary>
@@ -915,7 +979,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateId, ComparisonOperator.Equal, this.CurrencyRateId, "CurrencyRateEntity__"));
+				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateID, ComparisonOperator.Equal, this.CurrencyRateID, "CurrencyRateEntity__"));
 				_salesTerritoryCollectionViaSalesOrderHeader.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -962,7 +1026,7 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateId, ComparisonOperator.Equal, this.CurrencyRateId, "CurrencyRateEntity__"));
+				filter.Add(new FieldCompareValuePredicate(CurrencyRateFields.CurrencyRateID, ComparisonOperator.Equal, this.CurrencyRateID, "CurrencyRateEntity__"));
 				_shipMethodCollectionViaSalesOrderHeader.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -1111,12 +1175,13 @@ namespace AW.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			_salesOrderHeader.ActiveContext = base.ActiveContext;
+			_salesOrderHeaders.ActiveContext = base.ActiveContext;
 			_addressCollectionViaSalesOrderHeader_.ActiveContext = base.ActiveContext;
 			_addressCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
 			_contactCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
 			_creditCardCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
 			_customerCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
+			_customerViewRelatedCollectionViaSalesOrderHeader____.ActiveContext = base.ActiveContext;
 			_salesTerritoryCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
 			_shipMethodCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
 			if(_currency_!=null)
@@ -1162,7 +1227,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -1199,12 +1263,13 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Currency_", _currency_);
 			toReturn.Add("Currency", _currency);
-			toReturn.Add("SalesOrderHeader", _salesOrderHeader);
+			toReturn.Add("SalesOrderHeaders", _salesOrderHeaders);
 			toReturn.Add("AddressCollectionViaSalesOrderHeader_", _addressCollectionViaSalesOrderHeader_);
 			toReturn.Add("AddressCollectionViaSalesOrderHeader", _addressCollectionViaSalesOrderHeader);
 			toReturn.Add("ContactCollectionViaSalesOrderHeader", _contactCollectionViaSalesOrderHeader);
 			toReturn.Add("CreditCardCollectionViaSalesOrderHeader", _creditCardCollectionViaSalesOrderHeader);
 			toReturn.Add("CustomerCollectionViaSalesOrderHeader", _customerCollectionViaSalesOrderHeader);
+			toReturn.Add("CustomerViewRelatedCollectionViaSalesOrderHeader____", _customerViewRelatedCollectionViaSalesOrderHeader____);
 			toReturn.Add("SalesTerritoryCollectionViaSalesOrderHeader", _salesTerritoryCollectionViaSalesOrderHeader);
 			toReturn.Add("ShipMethodCollectionViaSalesOrderHeader", _shipMethodCollectionViaSalesOrderHeader);
 
@@ -1213,22 +1278,21 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="validator">The validator object for this CurrencyRateEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 currencyRateId, IValidator validator, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 currencyRateID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			base.Validator = validator;
 			InitClassMembers();
 			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(currencyRateId, prefetchPathToUse, null, null);
+			bool wasSuccesful = Fetch(currencyRateID, prefetchPathToUse, null, null);
 			base.IsNew = !wasSuccesful;
 
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -1236,10 +1300,10 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
-			_salesOrderHeader = new AW.Data.CollectionClasses.SalesOrderHeaderCollection(new SalesOrderHeaderEntityFactory());
-			_salesOrderHeader.SetContainingEntityInfo(this, "CurrencyRate");
-			_alwaysFetchSalesOrderHeader = false;
-			_alreadyFetchedSalesOrderHeader = false;
+			_salesOrderHeaders = new AW.Data.CollectionClasses.SalesOrderHeaderCollection(new SalesOrderHeaderEntityFactory());
+			_salesOrderHeaders.SetContainingEntityInfo(this, "CurrencyRate");
+			_alwaysFetchSalesOrderHeaders = false;
+			_alreadyFetchedSalesOrderHeaders = false;
 			_addressCollectionViaSalesOrderHeader_ = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
 			_alwaysFetchAddressCollectionViaSalesOrderHeader_ = false;
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = false;
@@ -1255,6 +1319,9 @@ namespace AW.Data.EntityClasses
 			_customerCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.CustomerCollection(new CustomerEntityFactory());
 			_alwaysFetchCustomerCollectionViaSalesOrderHeader = false;
 			_alreadyFetchedCustomerCollectionViaSalesOrderHeader = false;
+			_customerViewRelatedCollectionViaSalesOrderHeader____ = new AW.Data.CollectionClasses.CustomerViewRelatedCollection(new CustomerViewRelatedEntityFactory());
+			_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____ = false;
+			_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____ = false;
 			_salesTerritoryCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.SalesTerritoryCollection(new SalesTerritoryEntityFactory());
 			_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader = false;
 			_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader = false;
@@ -1275,7 +1342,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -1289,7 +1355,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("CurrencyRateId", fieldHashtable);
+			_fieldsCustomProperties.Add("CurrencyRateID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("CurrencyRateDate", fieldHashtable);
@@ -1317,7 +1383,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncCurrency_(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _currency_, new PropertyChangedEventHandler( OnCurrency_PropertyChanged ), "Currency_", CurrencyRateEntity.Relations.CurrencyEntityUsingToCurrencyCode, true, signalRelatedEntity, "CurrencyRate_", resetFKFields, new int[] { (int)CurrencyRateFieldIndex.ToCurrencyCode } );		
+			base.PerformDesetupSyncRelatedEntity( _currency_, new PropertyChangedEventHandler( OnCurrency_PropertyChanged ), "Currency_", CurrencyRateEntity.Relations.CurrencyEntityUsingToCurrencyCode, true, signalRelatedEntity, "CurrencyRates_", resetFKFields, new int[] { (int)CurrencyRateFieldIndex.ToCurrencyCode } );		
 			_currency_ = null;
 		}
 		
@@ -1350,7 +1416,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncCurrency(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _currency, new PropertyChangedEventHandler( OnCurrencyPropertyChanged ), "Currency", CurrencyRateEntity.Relations.CurrencyEntityUsingFromCurrencyCode, true, signalRelatedEntity, "CurrencyRate", resetFKFields, new int[] { (int)CurrencyRateFieldIndex.FromCurrencyCode } );		
+			base.PerformDesetupSyncRelatedEntity( _currency, new PropertyChangedEventHandler( OnCurrencyPropertyChanged ), "Currency", CurrencyRateEntity.Relations.CurrencyEntityUsingFromCurrencyCode, true, signalRelatedEntity, "CurrencyRates", resetFKFields, new int[] { (int)CurrencyRateFieldIndex.FromCurrencyCode } );		
 			_currency = null;
 		}
 		
@@ -1380,20 +1446,20 @@ namespace AW.Data.EntityClasses
 
 
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="currencyRateId">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
+		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 currencyRateId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(System.Int32 currencyRateID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
-				base.Fields[(int)CurrencyRateFieldIndex.CurrencyRateId].ForcedCurrentValueWrite(currencyRateId);
+				base.Fields[(int)CurrencyRateFieldIndex.CurrencyRateID].ForcedCurrentValueWrite(currencyRateID);
 				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
 				return (base.Fields.State == EntityState.Fetched);
 			}
@@ -1436,12 +1502,12 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHeader' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathSalesOrderHeader
+		public static IPrefetchPathElement PrefetchPathSalesOrderHeaders
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderCollection(),
-					(IEntityRelation)GetRelationsForField("SalesOrderHeader")[0], (int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, null, "SalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("SalesOrderHeaders")[0], (int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, null, "SalesOrderHeaders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -1452,7 +1518,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId;
+				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaSalesOrderHeader_"), "AddressCollectionViaSalesOrderHeader_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -1466,7 +1532,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId;
+				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaSalesOrderHeader"), "AddressCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -1480,7 +1546,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId;
+				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, GetRelationsForField("ContactCollectionViaSalesOrderHeader"), "ContactCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -1494,7 +1560,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId;
+				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.CreditCardCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.CreditCardEntity, 0, null, null, GetRelationsForField("CreditCardCollectionViaSalesOrderHeader"), "CreditCardCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -1508,10 +1574,24 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId;
+				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.CustomerEntity, 0, null, null, GetRelationsForField("CustomerCollectionViaSalesOrderHeader"), "CustomerCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'CustomerViewRelated' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathCustomerViewRelatedCollectionViaSalesOrderHeader____
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID;
+				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerViewRelatedCollection(), intermediateRelation,
+					(int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.CustomerViewRelatedEntity, 0, null, null, GetRelationsForField("CustomerViewRelatedCollectionViaSalesOrderHeader____"), "CustomerViewRelatedCollectionViaSalesOrderHeader____", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -1522,7 +1602,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId;
+				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.SalesTerritoryEntity, 0, null, null, GetRelationsForField("SalesTerritoryCollectionViaSalesOrderHeader"), "SalesTerritoryCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -1536,7 +1616,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateId;
+				IEntityRelation intermediateRelation = CurrencyRateEntity.Relations.SalesOrderHeaderEntityUsingCurrencyRateID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.ShipMethodCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.ShipMethodEntity, 0, null, null, GetRelationsForField("ShipMethodCollectionViaSalesOrderHeader"), "ShipMethodCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -1598,15 +1678,15 @@ namespace AW.Data.EntityClasses
 			get { return CurrencyRateEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The CurrencyRateId property of the Entity CurrencyRate<br/><br/>
+		/// <summary> The CurrencyRateID property of the Entity CurrencyRate<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."CurrencyRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 CurrencyRateId
+		public virtual System.Int32 CurrencyRateID
 		{
-			get { return (System.Int32)GetValue((int)CurrencyRateFieldIndex.CurrencyRateId, true); }
-			set	{ SetValue((int)CurrencyRateFieldIndex.CurrencyRateId, value, true); }
+			get { return (System.Int32)GetValue((int)CurrencyRateFieldIndex.CurrencyRateID, true); }
+			set	{ SetValue((int)CurrencyRateFieldIndex.CurrencyRateID, value, true); }
 		}
 		/// <summary> The CurrencyRateDate property of the Entity CurrencyRate<br/><br/>
 		/// </summary>
@@ -1670,36 +1750,36 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrderHeader()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrderHeaders()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.SalesOrderHeaderCollection SalesOrderHeader
+		public virtual AW.Data.CollectionClasses.SalesOrderHeaderCollection SalesOrderHeaders
 		{
-			get	{ return GetMultiSalesOrderHeader(false); }
+			get	{ return GetMultiSalesOrderHeaders(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for SalesOrderHeader. When set to true, SalesOrderHeader is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time SalesOrderHeader is accessed. You can always execute
-		/// a forced fetch by calling GetMultiSalesOrderHeader(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for SalesOrderHeaders. When set to true, SalesOrderHeaders is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesOrderHeaders is accessed. You can always execute
+		/// a forced fetch by calling GetMultiSalesOrderHeaders(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchSalesOrderHeader
+		public bool AlwaysFetchSalesOrderHeaders
 		{
-			get	{ return _alwaysFetchSalesOrderHeader; }
-			set	{ _alwaysFetchSalesOrderHeader = value; }	
+			get	{ return _alwaysFetchSalesOrderHeaders; }
+			set	{ _alwaysFetchSalesOrderHeaders = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrderHeader already has been fetched. Setting this property to false when SalesOrderHeader has been fetched
-		/// will clear the SalesOrderHeader collection well. Setting this property to true while SalesOrderHeader hasn't been fetched disables lazy loading for SalesOrderHeader</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrderHeaders already has been fetched. Setting this property to false when SalesOrderHeaders has been fetched
+		/// will clear the SalesOrderHeaders collection well. Setting this property to true while SalesOrderHeaders hasn't been fetched disables lazy loading for SalesOrderHeaders</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedSalesOrderHeader
+		public bool AlreadyFetchedSalesOrderHeaders
 		{
-			get { return _alreadyFetchedSalesOrderHeader;}
+			get { return _alreadyFetchedSalesOrderHeaders;}
 			set 
 			{
-				if(_alreadyFetchedSalesOrderHeader && !value && (_salesOrderHeader != null))
+				if(_alreadyFetchedSalesOrderHeaders && !value && (_salesOrderHeaders != null))
 				{
-					_salesOrderHeader.Clear();
+					_salesOrderHeaders.Clear();
 				}
-				_alreadyFetchedSalesOrderHeader = value;
+				_alreadyFetchedSalesOrderHeaders = value;
 			}
 		}
 
@@ -1868,6 +1948,39 @@ namespace AW.Data.EntityClasses
 				_alreadyFetchedCustomerCollectionViaSalesOrderHeader = value;
 			}
 		}
+		/// <summary> Retrieves all related entities of type 'CustomerViewRelatedEntity' using a relation of type 'm:n'.</summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiCustomerViewRelatedCollectionViaSalesOrderHeader____()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.CustomerViewRelatedCollection CustomerViewRelatedCollectionViaSalesOrderHeader____
+		{
+			get { return GetMultiCustomerViewRelatedCollectionViaSalesOrderHeader____(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for CustomerViewRelatedCollectionViaSalesOrderHeader____. When set to true, CustomerViewRelatedCollectionViaSalesOrderHeader____ is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time CustomerViewRelatedCollectionViaSalesOrderHeader____ is accessed. You can always execute
+		/// a forced fetch by calling GetMultiCustomerViewRelatedCollectionViaSalesOrderHeader____(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____
+		{
+			get	{ return _alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____; }
+			set	{ _alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader____ = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property CustomerViewRelatedCollectionViaSalesOrderHeader____ already has been fetched. Setting this property to false when CustomerViewRelatedCollectionViaSalesOrderHeader____ has been fetched
+		/// will clear the CustomerViewRelatedCollectionViaSalesOrderHeader____ collection well. Setting this property to true while CustomerViewRelatedCollectionViaSalesOrderHeader____ hasn't been fetched disables lazy loading for CustomerViewRelatedCollectionViaSalesOrderHeader____</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____
+		{
+			get { return _alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____;}
+			set 
+			{
+				if(_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____ && !value && (_customerViewRelatedCollectionViaSalesOrderHeader____ != null))
+				{
+					_customerViewRelatedCollectionViaSalesOrderHeader____.Clear();
+				}
+				_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader____ = value;
+			}
+		}
 		/// <summary> Retrieves all related entities of type 'SalesTerritoryEntity' using a relation of type 'm:n'.</summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesTerritoryCollectionViaSalesOrderHeader()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
@@ -1941,6 +2054,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCurrency_()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual CurrencyEntity Currency_
 		{
 			get	{ return GetSingleCurrency_(false); }
@@ -1956,14 +2070,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_currency_ != null)
 						{
-							_currency_.UnsetRelatedEntity(this, "CurrencyRate_");
+							_currency_.UnsetRelatedEntity(this, "CurrencyRates_");
 						}
 					}
 					else
 					{
 						if(_currency_!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "CurrencyRate_");
+							((IEntity)value).SetRelatedEntity(this, "CurrencyRates_");
 						}
 					}
 				}
@@ -2011,6 +2125,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCurrency()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual CurrencyEntity Currency
 		{
 			get	{ return GetSingleCurrency(false); }
@@ -2026,14 +2141,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_currency != null)
 						{
-							_currency.UnsetRelatedEntity(this, "CurrencyRate");
+							_currency.UnsetRelatedEntity(this, "CurrencyRates");
 						}
 					}
 					else
 					{
 						if(_currency!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "CurrencyRate");
+							((IEntity)value).SetRelatedEntity(this, "CurrencyRates");
 						}
 					}
 				}
@@ -2104,7 +2219,6 @@ namespace AW.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code

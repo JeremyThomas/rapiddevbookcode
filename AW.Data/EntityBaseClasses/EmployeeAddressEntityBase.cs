@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -56,7 +56,7 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 			/// <summary>Member name Address</summary>
 			public static readonly string Address = "Address";
@@ -82,29 +82,29 @@ namespace AW.Data.EntityClasses
 
 	
 		/// <summary>CTor</summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		public EmployeeAddressEntityBase(System.Int32 employeeId, System.Int32 addressId)
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		public EmployeeAddressEntityBase(System.Int32 employeeID, System.Int32 addressID)
 		{
-			InitClassFetch(employeeId, addressId, null, null);
+			InitClassFetch(employeeID, addressID, null, null);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public EmployeeAddressEntityBase(System.Int32 employeeId, System.Int32 addressId, IPrefetchPath prefetchPathToUse)
+		public EmployeeAddressEntityBase(System.Int32 employeeID, System.Int32 addressID, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(employeeId, addressId, null, prefetchPathToUse);
+			InitClassFetch(employeeID, addressID, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="validator">The custom validator object for this EmployeeAddressEntity</param>
-		public EmployeeAddressEntityBase(System.Int32 employeeId, System.Int32 addressId, IValidator validator)
+		public EmployeeAddressEntityBase(System.Int32 employeeID, System.Int32 addressID, IValidator validator)
 		{
-			InitClassFetch(employeeId, addressId, validator, null);
+			InitClassFetch(employeeID, addressID, validator, null);
 		}
 	
 
@@ -145,11 +145,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch((EmployeeAddressFieldIndex)fieldIndex)
 			{
-				case EmployeeAddressFieldIndex.EmployeeId:
+				case EmployeeAddressFieldIndex.EmployeeID:
 					DesetupSyncEmployee(true, false);
 					_alreadyFetchedEmployee = false;
 					break;
-				case EmployeeAddressFieldIndex.AddressId:
+				case EmployeeAddressFieldIndex.AddressID:
 					DesetupSyncAddress(true, false);
 					_alreadyFetchedAddress = false;
 					break;
@@ -193,10 +193,10 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 				case "Address":
-					toReturn.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressId);
+					toReturn.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressID);
 					break;
 				case "Employee":
-					toReturn.Add(EmployeeAddressEntity.Relations.EmployeeEntityUsingEmployeeId);
+					toReturn.Add(EmployeeAddressEntity.Relations.EmployeeEntityUsingEmployeeID);
 					break;
 
 
@@ -351,47 +351,47 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 employeeId, System.Int32 addressId)
+		public bool FetchUsingPK(System.Int32 employeeID, System.Int32 addressID)
 		{
-			return FetchUsingPK(employeeId, addressId, null, null, null);
+			return FetchUsingPK(employeeID, addressID, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 employeeId, System.Int32 addressId, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(System.Int32 employeeID, System.Int32 addressID, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(employeeId, addressId, prefetchPathToUse, null, null);
+			return FetchUsingPK(employeeID, addressID, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 employeeId, System.Int32 addressId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(System.Int32 employeeID, System.Int32 addressID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(employeeId, addressId, prefetchPathToUse, contextToUse, null);
+			return Fetch(employeeID, addressID, prefetchPathToUse, contextToUse, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 employeeId, System.Int32 addressId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(System.Int32 employeeID, System.Int32 addressID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(employeeId, addressId, prefetchPathToUse, contextToUse, excludedIncludedFields);
+			return Fetch(employeeID, addressID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -399,7 +399,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.EmployeeId, this.AddressId, null, null, null);
+			return Fetch(this.EmployeeID, this.AddressID, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -445,7 +445,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedAddress || forceFetch || _alwaysFetchAddress) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeAddressEntity.Relations.AddressEntityUsingAddressId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeAddressEntity.Relations.AddressEntityUsingAddressID);
 
 				AddressEntity newEntity = new AddressEntity();
 				if(base.ParticipatesInTransaction)
@@ -455,7 +455,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.AddressId);
+					fetchResult = newEntity.FetchUsingPK(this.AddressID);
 				}
 				if(fetchResult)
 				{
@@ -502,7 +502,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedEmployee || forceFetch || _alwaysFetchEmployee) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeAddressEntity.Relations.EmployeeEntityUsingEmployeeId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(EmployeeAddressEntity.Relations.EmployeeEntityUsingEmployeeID);
 
 				EmployeeEntity newEntity = new EmployeeEntity();
 				if(base.ParticipatesInTransaction)
@@ -512,7 +512,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.EmployeeId);
+					fetchResult = newEntity.FetchUsingPK(this.EmployeeID);
 				}
 				if(fetchResult)
 				{
@@ -646,17 +646,17 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="validator">The validator object for this EmployeeAddressEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 employeeId, System.Int32 addressId, IValidator validator, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 employeeID, System.Int32 addressID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			base.Validator = validator;
 			InitClassMembers();
 			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(employeeId, addressId, prefetchPathToUse, null, null);
+			bool wasSuccesful = Fetch(employeeID, addressID, prefetchPathToUse, null, null);
 			base.IsNew = !wasSuccesful;
 
 			
@@ -698,10 +698,10 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("EmployeeId", fieldHashtable);
+			_fieldsCustomProperties.Add("EmployeeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
+			_fieldsCustomProperties.Add("AddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
@@ -717,7 +717,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", EmployeeAddressEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "EmployeeAddress", resetFKFields, new int[] { (int)EmployeeAddressFieldIndex.AddressId } );		
+			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, true, signalRelatedEntity, "EmployeeAddresses", resetFKFields, new int[] { (int)EmployeeAddressFieldIndex.AddressID } );		
 			_address = null;
 		}
 		
@@ -729,7 +729,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncAddress(true, true);
 				_address = (AddressEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", EmployeeAddressEntity.Relations.AddressEntityUsingAddressId, true, ref _alreadyFetchedAddress, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, true, ref _alreadyFetchedAddress, new string[] {  } );
 			}
 		}
 
@@ -750,7 +750,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncEmployee(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _employee, new PropertyChangedEventHandler( OnEmployeePropertyChanged ), "Employee", EmployeeAddressEntity.Relations.EmployeeEntityUsingEmployeeId, true, signalRelatedEntity, "EmployeeAddress", resetFKFields, new int[] { (int)EmployeeAddressFieldIndex.EmployeeId } );		
+			base.PerformDesetupSyncRelatedEntity( _employee, new PropertyChangedEventHandler( OnEmployeePropertyChanged ), "Employee", EmployeeAddressEntity.Relations.EmployeeEntityUsingEmployeeID, true, signalRelatedEntity, "EmployeeAddresses", resetFKFields, new int[] { (int)EmployeeAddressFieldIndex.EmployeeID } );		
 			_employee = null;
 		}
 		
@@ -762,7 +762,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncEmployee(true, true);
 				_employee = (EmployeeEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _employee, new PropertyChangedEventHandler( OnEmployeePropertyChanged ), "Employee", EmployeeAddressEntity.Relations.EmployeeEntityUsingEmployeeId, true, ref _alreadyFetchedEmployee, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _employee, new PropertyChangedEventHandler( OnEmployeePropertyChanged ), "Employee", EmployeeAddressEntity.Relations.EmployeeEntityUsingEmployeeID, true, ref _alreadyFetchedEmployee, new string[] {  } );
 			}
 		}
 
@@ -780,22 +780,22 @@ namespace AW.Data.EntityClasses
 
 
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 employeeId, System.Int32 addressId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(System.Int32 employeeID, System.Int32 addressID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
-				base.Fields[(int)EmployeeAddressFieldIndex.EmployeeId].ForcedCurrentValueWrite(employeeId);
-				base.Fields[(int)EmployeeAddressFieldIndex.AddressId].ForcedCurrentValueWrite(addressId);
+				base.Fields[(int)EmployeeAddressFieldIndex.EmployeeID].ForcedCurrentValueWrite(employeeID);
+				base.Fields[(int)EmployeeAddressFieldIndex.AddressID].ForcedCurrentValueWrite(addressID);
 				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
 				return (base.Fields.State == EntityState.Fetched);
 			}
@@ -892,25 +892,25 @@ namespace AW.Data.EntityClasses
 			get { return EmployeeAddressEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The EmployeeId property of the Entity EmployeeAddress<br/><br/>
+		/// <summary> The EmployeeID property of the Entity EmployeeAddress<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "EmployeeAddress"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 EmployeeId
+		public virtual System.Int32 EmployeeID
 		{
-			get { return (System.Int32)GetValue((int)EmployeeAddressFieldIndex.EmployeeId, true); }
-			set	{ SetValue((int)EmployeeAddressFieldIndex.EmployeeId, value, true); }
+			get { return (System.Int32)GetValue((int)EmployeeAddressFieldIndex.EmployeeID, true); }
+			set	{ SetValue((int)EmployeeAddressFieldIndex.EmployeeID, value, true); }
 		}
-		/// <summary> The AddressId property of the Entity EmployeeAddress<br/><br/>
+		/// <summary> The AddressID property of the Entity EmployeeAddress<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "EmployeeAddress"."AddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 AddressId
+		public virtual System.Int32 AddressID
 		{
-			get { return (System.Int32)GetValue((int)EmployeeAddressFieldIndex.AddressId, true); }
-			set	{ SetValue((int)EmployeeAddressFieldIndex.AddressId, value, true); }
+			get { return (System.Int32)GetValue((int)EmployeeAddressFieldIndex.AddressID, true); }
+			set	{ SetValue((int)EmployeeAddressFieldIndex.AddressID, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity EmployeeAddress<br/><br/>
 		/// </summary>
@@ -941,6 +941,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleAddress()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual AddressEntity Address
 		{
 			get	{ return GetSingleAddress(false); }
@@ -956,14 +957,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_address != null)
 						{
-							_address.UnsetRelatedEntity(this, "EmployeeAddress");
+							_address.UnsetRelatedEntity(this, "EmployeeAddresses");
 						}
 					}
 					else
 					{
 						if(_address!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "EmployeeAddress");
+							((IEntity)value).SetRelatedEntity(this, "EmployeeAddresses");
 						}
 					}
 				}
@@ -1011,6 +1012,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleEmployee()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual EmployeeEntity Employee
 		{
 			get	{ return GetSingleEmployee(false); }
@@ -1026,14 +1028,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_employee != null)
 						{
-							_employee.UnsetRelatedEntity(this, "EmployeeAddress");
+							_employee.UnsetRelatedEntity(this, "EmployeeAddresses");
 						}
 					}
 					else
 					{
 						if(_employee!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "EmployeeAddress");
+							((IEntity)value).SetRelatedEntity(this, "EmployeeAddresses");
 						}
 					}
 				}

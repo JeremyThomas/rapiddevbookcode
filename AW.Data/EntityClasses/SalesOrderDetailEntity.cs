@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -47,10 +47,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		public SalesOrderDetailEntity(System.Int32 salesOrderId, System.Int32 salesOrderDetailId):
-			base(salesOrderId, salesOrderDetailId)
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		public SalesOrderDetailEntity(System.Int32 salesOrderID, System.Int32 salesOrderDetailID):
+			base(salesOrderID, salesOrderDetailID)
 		{
 		}
 
@@ -58,11 +58,11 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesOrderDetailEntity(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse):
-			base(salesOrderId, salesOrderDetailId, prefetchPathToUse)
+		public SalesOrderDetailEntity(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IPrefetchPath prefetchPathToUse):
+			base(salesOrderID, salesOrderDetailID, prefetchPathToUse)
 		{
 		}
 
@@ -70,11 +70,11 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="validator">The custom validator object for this SalesOrderDetailEntity</param>
-		public SalesOrderDetailEntity(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IValidator validator):
-			base(salesOrderId, salesOrderDetailId, validator)
+		public SalesOrderDetailEntity(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IValidator validator):
+			base(salesOrderID, salesOrderDetailID, validator)
 		{
 		}
 	

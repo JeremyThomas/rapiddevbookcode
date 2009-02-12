@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -48,9 +48,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
-		public EmployeeEntity(System.Int32 employeeId):
-			base(employeeId)
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
+		public EmployeeEntity(System.Int32 employeeID):
+			base(employeeID)
 		{
 		}
 
@@ -58,10 +58,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public EmployeeEntity(System.Int32 employeeId, IPrefetchPath prefetchPathToUse):
-			base(employeeId, prefetchPathToUse)
+		public EmployeeEntity(System.Int32 employeeID, IPrefetchPath prefetchPathToUse):
+			base(employeeID, prefetchPathToUse)
 		{
 		}
 
@@ -69,10 +69,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="employeeId">PK value for Employee which data should be fetched into this Employee object</param>
+		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="validator">The custom validator object for this EmployeeEntity</param>
-		public EmployeeEntity(System.Int32 employeeId, IValidator validator):
-			base(employeeId, validator)
+		public EmployeeEntity(System.Int32 employeeID, IValidator validator):
+			base(employeeID, validator)
 		{
 		}
 	
@@ -96,7 +96,7 @@ namespace AW.Data.EntityClasses
         public static EmployeeCollection GetEmployees()
         {
             RelationCollection Relations = new RelationCollection();
-            Relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactId);
+            Relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactID);
             ISortExpression LastFirstAlpha = 
                 (ContactFields.LastName  | SortOperator.Ascending)
               & (ContactFields.FirstName | SortOperator.Ascending);

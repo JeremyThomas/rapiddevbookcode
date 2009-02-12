@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -87,10 +87,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -111,10 +111,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -136,10 +136,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -160,10 +160,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -185,10 +185,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(creditCardInstance.Fields[(int)CreditCardFieldIndex.CreditCardId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(creditCardInstance.Fields[(int)CreditCardFieldIndex.CreditCardID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -209,10 +209,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(creditCardInstance.Fields[(int)CreditCardFieldIndex.CreditCardId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(creditCardInstance.Fields[(int)CreditCardFieldIndex.CreditCardID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -234,10 +234,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(currencyRateInstance.Fields[(int)CurrencyRateFieldIndex.CurrencyRateId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(currencyRateInstance.Fields[(int)CurrencyRateFieldIndex.CurrencyRateID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -258,10 +258,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(currencyRateInstance.Fields[(int)CurrencyRateFieldIndex.CurrencyRateId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(currencyRateInstance.Fields[(int)CurrencyRateFieldIndex.CurrencyRateID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -283,10 +283,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CustomerEntityUsingCustomerId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CustomerEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(customerInstance.Fields[(int)CustomerFieldIndex.CustomerId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(customerInstance.Fields[(int)CustomerFieldIndex.CustomerID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -307,10 +307,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CustomerEntityUsingCustomerId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CustomerEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(customerInstance.Fields[(int)CustomerFieldIndex.CustomerId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(customerInstance.Fields[(int)CustomerFieldIndex.CustomerID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -328,12 +328,12 @@ namespace AW.Data.DaoClasses
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity customerViewRelatedInstance, int pageNumber, int pageSize)
+		public bool GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader__(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity customerViewRelatedInstance, int pageNumber, int pageSize)
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
 			selectFilter.Add(new FieldCompareValuePredicate(customerViewRelatedInstance.Fields[(int)CustomerViewRelatedFieldIndex.CustomerId], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
@@ -352,12 +352,12 @@ namespace AW.Data.DaoClasses
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity customerViewRelatedInstance, IPrefetchPath prefetchPathToUse)
+		public bool GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader__(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity customerViewRelatedInstance, IPrefetchPath prefetchPathToUse)
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
 			selectFilter.Add(new FieldCompareValuePredicate(customerViewRelatedInstance.Fields[(int)CustomerViewRelatedFieldIndex.CustomerId], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
@@ -381,10 +381,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.EmployeeEntityUsingContactId, "Employee_");
-			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId, "Employee_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.EmployeeEntityUsingContactID, "Employee_");
+			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID, "Employee_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(employeeInstance.Fields[(int)EmployeeFieldIndex.EmployeeId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(employeeInstance.Fields[(int)EmployeeFieldIndex.EmployeeID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -405,10 +405,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.EmployeeEntityUsingContactId, "Employee_");
-			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId, "Employee_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.EmployeeEntityUsingContactID, "Employee_");
+			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID, "Employee_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(employeeInstance.Fields[(int)EmployeeFieldIndex.EmployeeId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(employeeInstance.Fields[(int)EmployeeFieldIndex.EmployeeID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -430,10 +430,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -454,10 +454,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -479,10 +479,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(shipMethodInstance.Fields[(int)ShipMethodFieldIndex.ShipMethodId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(shipMethodInstance.Fields[(int)ShipMethodFieldIndex.ShipMethodID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -503,10 +503,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ContactEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactId, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodId, "SalesOrderHeader_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
+			relations.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(shipMethodInstance.Fields[(int)ShipMethodFieldIndex.ShipMethodId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(shipMethodInstance.Fields[(int)ShipMethodFieldIndex.ShipMethodID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 

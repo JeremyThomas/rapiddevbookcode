@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:25 p.m.
 // Code is generated using templates: SD.TemplateBindings.SqlServerSpecific.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -85,11 +85,11 @@ namespace AW.Data.HelperClasses
 		private void InitAddressEntityMappings()
 		{
 			base.AddElementMapping( "AddressEntity", "AdventureWorks", @"Person", "Address", 8 );
-			base.AddElementFieldMapping( "AddressEntity", "AddressId", "AddressID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AddressEntity", "AddressID", "AddressID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AddressEntity", "AddressLine1", "AddressLine1", false, (int)SqlDbType.NVarChar, 60, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "AddressEntity", "AddressLine2", "AddressLine2", true, (int)SqlDbType.NVarChar, 60, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "AddressEntity", "City", "City", false, (int)SqlDbType.NVarChar, 30, 0, 0, false, "", null, typeof(System.String), 3 );
-			base.AddElementFieldMapping( "AddressEntity", "StateProvinceId", "StateProvinceID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
+			base.AddElementFieldMapping( "AddressEntity", "StateProvinceID", "StateProvinceID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
 			base.AddElementFieldMapping( "AddressEntity", "PostalCode", "PostalCode", false, (int)SqlDbType.NVarChar, 15, 0, 0, false, "", null, typeof(System.String), 5 );
 			base.AddElementFieldMapping( "AddressEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 6 );
 			base.AddElementFieldMapping( "AddressEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 7 );
@@ -98,7 +98,7 @@ namespace AW.Data.HelperClasses
 		private void InitAddressTypeEntityMappings()
 		{
 			base.AddElementMapping( "AddressTypeEntity", "AdventureWorks", @"Person", "AddressType", 4 );
-			base.AddElementFieldMapping( "AddressTypeEntity", "AddressTypeId", "AddressTypeID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "AddressTypeEntity", "AddressTypeID", "AddressTypeID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "AddressTypeEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "AddressTypeEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 2 );
 			base.AddElementFieldMapping( "AddressTypeEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
@@ -107,7 +107,7 @@ namespace AW.Data.HelperClasses
 		private void InitContactEntityMappings()
 		{
 			base.AddElementMapping( "ContactEntity", "AdventureWorks", @"Person", "Contact", 15 );
-			base.AddElementFieldMapping( "ContactEntity", "ContactId", "ContactID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "ContactEntity", "ContactID", "ContactID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ContactEntity", "NameStyle", "NameStyle", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 1 );
 			base.AddElementFieldMapping( "ContactEntity", "Title", "Title", true, (int)SqlDbType.NVarChar, 8, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "ContactEntity", "FirstName", "FirstName", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 3 );
@@ -117,7 +117,7 @@ namespace AW.Data.HelperClasses
 			base.AddElementFieldMapping( "ContactEntity", "EmailAddress", "EmailAddress", true, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 7 );
 			base.AddElementFieldMapping( "ContactEntity", "EmailPromotion", "EmailPromotion", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
 			base.AddElementFieldMapping( "ContactEntity", "Phone", "Phone", true, (int)SqlDbType.NVarChar, 25, 0, 0, false, "", null, typeof(System.String), 9 );
-			base.AddElementFieldMapping( "ContactEntity", "PasswordHash", "PasswordHash", false, (int)SqlDbType.VarChar, 40, 0, 0, false, "", null, typeof(System.String), 10 );
+			base.AddElementFieldMapping( "ContactEntity", "PasswordHash", "PasswordHash", false, (int)SqlDbType.VarChar, 128, 0, 0, false, "", null, typeof(System.String), 10 );
 			base.AddElementFieldMapping( "ContactEntity", "PasswordSalt", "PasswordSalt", false, (int)SqlDbType.VarChar, 10, 0, 0, false, "", null, typeof(System.String), 11 );
 			base.AddElementFieldMapping( "ContactEntity", "AdditionalContactInfo", "AdditionalContactInfo", true, (int)SqlDbType.Xml, 2147483647, 0, 0, false, "", null, typeof(System.String), 12 );
 			base.AddElementFieldMapping( "ContactEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 13 );
@@ -135,7 +135,7 @@ namespace AW.Data.HelperClasses
 		private void InitCreditCardEntityMappings()
 		{
 			base.AddElementMapping( "CreditCardEntity", "AdventureWorks", @"Sales", "CreditCard", 6 );
-			base.AddElementFieldMapping( "CreditCardEntity", "CreditCardId", "CreditCardID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "CreditCardEntity", "CreditCardID", "CreditCardID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "CreditCardEntity", "CardType", "CardType", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "CreditCardEntity", "CardNumber", "CardNumber", false, (int)SqlDbType.NVarChar, 25, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "CreditCardEntity", "ExpMonth", "ExpMonth", false, (int)SqlDbType.TinyInt, 0, 0, 3, false, "", null, typeof(System.Byte), 3 );
@@ -154,7 +154,7 @@ namespace AW.Data.HelperClasses
 		private void InitCurrencyRateEntityMappings()
 		{
 			base.AddElementMapping( "CurrencyRateEntity", "AdventureWorks", @"Sales", "CurrencyRate", 7 );
-			base.AddElementFieldMapping( "CurrencyRateEntity", "CurrencyRateId", "CurrencyRateID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "CurrencyRateEntity", "CurrencyRateID", "CurrencyRateID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "CurrencyRateEntity", "CurrencyRateDate", "CurrencyRateDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 1 );
 			base.AddElementFieldMapping( "CurrencyRateEntity", "FromCurrencyCode", "FromCurrencyCode", false, (int)SqlDbType.NChar, 3, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "CurrencyRateEntity", "ToCurrencyCode", "ToCurrencyCode", false, (int)SqlDbType.NChar, 3, 0, 0, false, "", null, typeof(System.String), 3 );
@@ -166,8 +166,8 @@ namespace AW.Data.HelperClasses
 		private void InitCustomerEntityMappings()
 		{
 			base.AddElementMapping( "CustomerEntity", "AdventureWorks", @"Sales", "Customer", 6 );
-			base.AddElementFieldMapping( "CustomerEntity", "CustomerId", "CustomerID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "CustomerEntity", "TerritoryId", "TerritoryID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "CustomerEntity", "CustomerID", "CustomerID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "CustomerEntity", "TerritoryID", "TerritoryID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "CustomerEntity", "AccountNumber", "AccountNumber", false, (int)SqlDbType.VarChar, 10, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "CustomerEntity", "CustomerType", "CustomerType", false, (int)SqlDbType.NChar, 1, 0, 0, false, "", null, typeof(System.String), 3 );
 			base.AddElementFieldMapping( "CustomerEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 4 );
@@ -177,9 +177,9 @@ namespace AW.Data.HelperClasses
 		private void InitCustomerAddressEntityMappings()
 		{
 			base.AddElementMapping( "CustomerAddressEntity", "AdventureWorks", @"Sales", "CustomerAddress", 5 );
-			base.AddElementFieldMapping( "CustomerAddressEntity", "CustomerId", "CustomerID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "CustomerAddressEntity", "AddressId", "AddressID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
-			base.AddElementFieldMapping( "CustomerAddressEntity", "AddressTypeId", "AddressTypeID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
+			base.AddElementFieldMapping( "CustomerAddressEntity", "CustomerID", "CustomerID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "CustomerAddressEntity", "AddressID", "AddressID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "CustomerAddressEntity", "AddressTypeID", "AddressTypeID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
 			base.AddElementFieldMapping( "CustomerAddressEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 3 );
 			base.AddElementFieldMapping( "CustomerAddressEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 4 );
 		}
@@ -209,11 +209,11 @@ namespace AW.Data.HelperClasses
 		private void InitEmployeeEntityMappings()
 		{
 			base.AddElementMapping( "EmployeeEntity", "AdventureWorks", @"HumanResources", "Employee", 16 );
-			base.AddElementFieldMapping( "EmployeeEntity", "EmployeeId", "EmployeeID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "EmployeeEntity", "EmployeeID", "EmployeeID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "EmployeeEntity", "NationalIdnumber", "NationalIDNumber", false, (int)SqlDbType.NVarChar, 15, 0, 0, false, "", null, typeof(System.String), 1 );
-			base.AddElementFieldMapping( "EmployeeEntity", "ContactId", "ContactID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
-			base.AddElementFieldMapping( "EmployeeEntity", "LoginId", "LoginID", false, (int)SqlDbType.NVarChar, 256, 0, 0, false, "", null, typeof(System.String), 3 );
-			base.AddElementFieldMapping( "EmployeeEntity", "ManagerId", "ManagerID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
+			base.AddElementFieldMapping( "EmployeeEntity", "ContactID", "ContactID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 2 );
+			base.AddElementFieldMapping( "EmployeeEntity", "LoginID", "LoginID", false, (int)SqlDbType.NVarChar, 256, 0, 0, false, "", null, typeof(System.String), 3 );
+			base.AddElementFieldMapping( "EmployeeEntity", "ManagerID", "ManagerID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
 			base.AddElementFieldMapping( "EmployeeEntity", "Title", "Title", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 5 );
 			base.AddElementFieldMapping( "EmployeeEntity", "BirthDate", "BirthDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 6 );
 			base.AddElementFieldMapping( "EmployeeEntity", "MaritalStatus", "MaritalStatus", false, (int)SqlDbType.NChar, 1, 0, 0, false, "", null, typeof(System.String), 7 );
@@ -230,8 +230,8 @@ namespace AW.Data.HelperClasses
 		private void InitEmployeeAddressEntityMappings()
 		{
 			base.AddElementMapping( "EmployeeAddressEntity", "AdventureWorks", @"HumanResources", "EmployeeAddress", 4 );
-			base.AddElementFieldMapping( "EmployeeAddressEntity", "EmployeeId", "EmployeeID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "EmployeeAddressEntity", "AddressId", "AddressID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "EmployeeAddressEntity", "EmployeeID", "EmployeeID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "EmployeeAddressEntity", "AddressID", "AddressID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "EmployeeAddressEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 2 );
 			base.AddElementFieldMapping( "EmployeeAddressEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
 		}
@@ -239,8 +239,8 @@ namespace AW.Data.HelperClasses
 		private void InitIndividualEntityMappings()
 		{
 			base.AddElementMapping( "IndividualEntity", "AdventureWorks", @"Sales", "Individual", 4 );
-			base.AddElementFieldMapping( "IndividualEntity", "CustomerId", "CustomerID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "IndividualEntity", "ContactId", "ContactID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "IndividualEntity", "CustomerID", "CustomerID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "IndividualEntity", "ContactID", "ContactID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "IndividualEntity", "Demographics", "Demographics", true, (int)SqlDbType.Xml, 2147483647, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "IndividualEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
 		}
@@ -248,7 +248,7 @@ namespace AW.Data.HelperClasses
 		private void InitProductEntityMappings()
 		{
 			base.AddElementMapping( "ProductEntity", "AdventureWorks", @"Production", "Product", 25 );
-			base.AddElementFieldMapping( "ProductEntity", "ProductId", "ProductID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "ProductEntity", "ProductID", "ProductID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ProductEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "ProductEntity", "ProductNumber", "ProductNumber", false, (int)SqlDbType.NVarChar, 25, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "ProductEntity", "MakeFlag", "MakeFlag", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
@@ -266,8 +266,8 @@ namespace AW.Data.HelperClasses
 			base.AddElementFieldMapping( "ProductEntity", "ProductLine", "ProductLine", true, (int)SqlDbType.NChar, 2, 0, 0, false, "", null, typeof(System.String), 15 );
 			base.AddElementFieldMapping( "ProductEntity", "Class", "Class", true, (int)SqlDbType.NChar, 2, 0, 0, false, "", null, typeof(System.String), 16 );
 			base.AddElementFieldMapping( "ProductEntity", "Style", "Style", true, (int)SqlDbType.NChar, 2, 0, 0, false, "", null, typeof(System.String), 17 );
-			base.AddElementFieldMapping( "ProductEntity", "ProductSubcategoryId", "ProductSubcategoryID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 18 );
-			base.AddElementFieldMapping( "ProductEntity", "ProductModelId", "ProductModelID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 19 );
+			base.AddElementFieldMapping( "ProductEntity", "ProductSubcategoryID", "ProductSubcategoryID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 18 );
+			base.AddElementFieldMapping( "ProductEntity", "ProductModelID", "ProductModelID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 19 );
 			base.AddElementFieldMapping( "ProductEntity", "SellStartDate", "SellStartDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 20 );
 			base.AddElementFieldMapping( "ProductEntity", "SellEndDate", "SellEndDate", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 21 );
 			base.AddElementFieldMapping( "ProductEntity", "DiscontinuedDate", "DiscontinuedDate", true, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 22 );
@@ -278,12 +278,12 @@ namespace AW.Data.HelperClasses
 		private void InitSalesOrderDetailEntityMappings()
 		{
 			base.AddElementMapping( "SalesOrderDetailEntity", "AdventureWorks", @"Sales", "SalesOrderDetail", 11 );
-			base.AddElementFieldMapping( "SalesOrderDetailEntity", "SalesOrderId", "SalesOrderID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "SalesOrderDetailEntity", "SalesOrderDetailId", "SalesOrderDetailID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "SalesOrderDetailEntity", "SalesOrderID", "SalesOrderID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "SalesOrderDetailEntity", "SalesOrderDetailID", "SalesOrderDetailID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "SalesOrderDetailEntity", "CarrierTrackingNumber", "CarrierTrackingNumber", true, (int)SqlDbType.NVarChar, 25, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "SalesOrderDetailEntity", "OrderQty", "OrderQty", false, (int)SqlDbType.SmallInt, 0, 0, 5, false, "", null, typeof(System.Int16), 3 );
-			base.AddElementFieldMapping( "SalesOrderDetailEntity", "ProductId", "ProductID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
-			base.AddElementFieldMapping( "SalesOrderDetailEntity", "SpecialOfferId", "SpecialOfferID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
+			base.AddElementFieldMapping( "SalesOrderDetailEntity", "ProductID", "ProductID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 4 );
+			base.AddElementFieldMapping( "SalesOrderDetailEntity", "SpecialOfferID", "SpecialOfferID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
 			base.AddElementFieldMapping( "SalesOrderDetailEntity", "UnitPrice", "UnitPrice", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 6 );
 			base.AddElementFieldMapping( "SalesOrderDetailEntity", "UnitPriceDiscount", "UnitPriceDiscount", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 7 );
 			base.AddElementFieldMapping( "SalesOrderDetailEntity", "LineTotal", "LineTotal", false, (int)SqlDbType.Decimal, 0, 6, 38, false, "", null, typeof(System.Decimal), 8 );
@@ -294,7 +294,7 @@ namespace AW.Data.HelperClasses
 		private void InitSalesOrderHeaderEntityMappings()
 		{
 			base.AddElementMapping( "SalesOrderHeaderEntity", "AdventureWorks", @"Sales", "SalesOrderHeader", 27 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "SalesOrderId", "SalesOrderID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "SalesOrderID", "SalesOrderID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "RevisionNumber", "RevisionNumber", false, (int)SqlDbType.TinyInt, 0, 0, 3, false, "", null, typeof(System.Byte), 1 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "OrderDate", "OrderDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 2 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "DueDate", "DueDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
@@ -304,16 +304,16 @@ namespace AW.Data.HelperClasses
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "SalesOrderNumber", "SalesOrderNumber", false, (int)SqlDbType.NVarChar, 25, 0, 0, false, "", null, typeof(System.String), 7 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "PurchaseOrderNumber", "PurchaseOrderNumber", true, (int)SqlDbType.NVarChar, 25, 0, 0, false, "", null, typeof(System.String), 8 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "AccountNumber", "AccountNumber", true, (int)SqlDbType.NVarChar, 15, 0, 0, false, "", null, typeof(System.String), 9 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "CustomerId", "CustomerID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 10 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "ContactId", "ContactID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 11 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "SalesPersonId", "SalesPersonID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 12 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "TerritoryId", "TerritoryID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 13 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "BillToAddressId", "BillToAddressID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 14 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "ShipToAddressId", "ShipToAddressID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 15 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "ShipMethodId", "ShipMethodID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 16 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "CreditCardId", "CreditCardID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 17 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "CustomerID", "CustomerID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 10 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "ContactID", "ContactID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 11 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "SalesPersonID", "SalesPersonID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 12 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "TerritoryID", "TerritoryID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 13 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "BillToAddressID", "BillToAddressID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 14 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "ShipToAddressID", "ShipToAddressID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 15 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "ShipMethodID", "ShipMethodID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 16 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "CreditCardID", "CreditCardID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 17 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "CreditCardApprovalCode", "CreditCardApprovalCode", true, (int)SqlDbType.VarChar, 15, 0, 0, false, "", null, typeof(System.String), 18 );
-			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "CurrencyRateId", "CurrencyRateID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 19 );
+			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "CurrencyRateID", "CurrencyRateID", true, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 19 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "SubTotal", "SubTotal", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 20 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "TaxAmt", "TaxAmt", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 21 );
 			base.AddElementFieldMapping( "SalesOrderHeaderEntity", "Freight", "Freight", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 22 );
@@ -326,7 +326,7 @@ namespace AW.Data.HelperClasses
 		private void InitSalesTerritoryEntityMappings()
 		{
 			base.AddElementMapping( "SalesTerritoryEntity", "AdventureWorks", @"Sales", "SalesTerritory", 10 );
-			base.AddElementFieldMapping( "SalesTerritoryEntity", "TerritoryId", "TerritoryID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "SalesTerritoryEntity", "TerritoryID", "TerritoryID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "SalesTerritoryEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "SalesTerritoryEntity", "CountryRegionCode", "CountryRegionCode", false, (int)SqlDbType.NVarChar, 3, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "SalesTerritoryEntity", "Group", "Group", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 3 );
@@ -341,7 +341,7 @@ namespace AW.Data.HelperClasses
 		private void InitShipMethodEntityMappings()
 		{
 			base.AddElementMapping( "ShipMethodEntity", "AdventureWorks", @"Purchasing", "ShipMethod", 6 );
-			base.AddElementFieldMapping( "ShipMethodEntity", "ShipMethodId", "ShipMethodID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "ShipMethodEntity", "ShipMethodID", "ShipMethodID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "ShipMethodEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "ShipMethodEntity", "ShipBase", "ShipBase", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 2 );
 			base.AddElementFieldMapping( "ShipMethodEntity", "ShipRate", "ShipRate", false, (int)SqlDbType.Money, 0, 4, 19, false, "", null, typeof(System.Decimal), 3 );
@@ -352,7 +352,7 @@ namespace AW.Data.HelperClasses
 		private void InitSpecialOfferEntityMappings()
 		{
 			base.AddElementMapping( "SpecialOfferEntity", "AdventureWorks", @"Sales", "SpecialOffer", 11 );
-			base.AddElementFieldMapping( "SpecialOfferEntity", "SpecialOfferId", "SpecialOfferID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "SpecialOfferEntity", "SpecialOfferID", "SpecialOfferID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "SpecialOfferEntity", "Description", "Description", false, (int)SqlDbType.NVarChar, 255, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "SpecialOfferEntity", "DiscountPct", "DiscountPct", false, (int)SqlDbType.SmallMoney, 0, 4, 10, false, "", null, typeof(System.Decimal), 2 );
 			base.AddElementFieldMapping( "SpecialOfferEntity", "Type", "Type", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 3 );
@@ -368,8 +368,8 @@ namespace AW.Data.HelperClasses
 		private void InitSpecialOfferProductEntityMappings()
 		{
 			base.AddElementMapping( "SpecialOfferProductEntity", "AdventureWorks", @"Sales", "SpecialOfferProduct", 4 );
-			base.AddElementFieldMapping( "SpecialOfferProductEntity", "SpecialOfferId", "SpecialOfferID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
-			base.AddElementFieldMapping( "SpecialOfferProductEntity", "ProductId", "ProductID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
+			base.AddElementFieldMapping( "SpecialOfferProductEntity", "SpecialOfferID", "SpecialOfferID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "SpecialOfferProductEntity", "ProductID", "ProductID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 1 );
 			base.AddElementFieldMapping( "SpecialOfferProductEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 2 );
 			base.AddElementFieldMapping( "SpecialOfferProductEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 3 );
 		}
@@ -377,12 +377,12 @@ namespace AW.Data.HelperClasses
 		private void InitStateProvinceEntityMappings()
 		{
 			base.AddElementMapping( "StateProvinceEntity", "AdventureWorks", @"Person", "StateProvince", 8 );
-			base.AddElementFieldMapping( "StateProvinceEntity", "StateProvinceId", "StateProvinceID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			base.AddElementFieldMapping( "StateProvinceEntity", "StateProvinceID", "StateProvinceID", false, (int)SqlDbType.Int, 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
 			base.AddElementFieldMapping( "StateProvinceEntity", "StateProvinceCode", "StateProvinceCode", false, (int)SqlDbType.NChar, 3, 0, 0, false, "", null, typeof(System.String), 1 );
 			base.AddElementFieldMapping( "StateProvinceEntity", "CountryRegionCode", "CountryRegionCode", false, (int)SqlDbType.NVarChar, 3, 0, 0, false, "", null, typeof(System.String), 2 );
 			base.AddElementFieldMapping( "StateProvinceEntity", "IsOnlyStateProvinceFlag", "IsOnlyStateProvinceFlag", false, (int)SqlDbType.Bit, 0, 0, 0, false, "", null, typeof(System.Boolean), 3 );
 			base.AddElementFieldMapping( "StateProvinceEntity", "Name", "Name", false, (int)SqlDbType.NVarChar, 50, 0, 0, false, "", null, typeof(System.String), 4 );
-			base.AddElementFieldMapping( "StateProvinceEntity", "TerritoryId", "TerritoryID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
+			base.AddElementFieldMapping( "StateProvinceEntity", "TerritoryID", "TerritoryID", false, (int)SqlDbType.Int, 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
 			base.AddElementFieldMapping( "StateProvinceEntity", "Rowguid", "rowguid", false, (int)SqlDbType.UniqueIdentifier, 0, 0, 0, false, "", null, typeof(System.Guid), 6 );
 			base.AddElementFieldMapping( "StateProvinceEntity", "ModifiedDate", "ModifiedDate", false, (int)SqlDbType.DateTime, 0, 0, 0, false, "", null, typeof(System.DateTime), 7 );
 		}

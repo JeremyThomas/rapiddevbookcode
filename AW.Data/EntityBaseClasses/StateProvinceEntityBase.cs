@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -39,8 +39,8 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AW.Data.CollectionClasses.AddressCollection	_address;
-		private bool	_alwaysFetchAddress, _alreadyFetchedAddress;
+		private AW.Data.CollectionClasses.AddressCollection	_addresses;
+		private bool	_alwaysFetchAddresses, _alreadyFetchedAddresses;
 
 		private CountryRegionEntity _countryRegion;
 		private bool	_alwaysFetchCountryRegion, _alreadyFetchedCountryRegion, _countryRegionReturnsNewIfNotFound;
@@ -57,14 +57,14 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 			/// <summary>Member name CountryRegion</summary>
 			public static readonly string CountryRegion = "CountryRegion";
 			/// <summary>Member name SalesTerritory</summary>
 			public static readonly string SalesTerritory = "SalesTerritory";
-			/// <summary>Member name Address</summary>
-			public static readonly string Address = "Address";
+			/// <summary>Member name Addresses</summary>
+			public static readonly string Addresses = "Addresses";
 
 
 		}
@@ -84,26 +84,26 @@ namespace AW.Data.EntityClasses
 
 	
 		/// <summary>CTor</summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
-		public StateProvinceEntityBase(System.Int32 stateProvinceId)
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		public StateProvinceEntityBase(System.Int32 stateProvinceID)
 		{
-			InitClassFetch(stateProvinceId, null, null);
+			InitClassFetch(stateProvinceID, null, null);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public StateProvinceEntityBase(System.Int32 stateProvinceId, IPrefetchPath prefetchPathToUse)
+		public StateProvinceEntityBase(System.Int32 stateProvinceID, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(stateProvinceId, null, prefetchPathToUse);
+			InitClassFetch(stateProvinceID, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="validator">The custom validator object for this StateProvinceEntity</param>
-		public StateProvinceEntityBase(System.Int32 stateProvinceId, IValidator validator)
+		public StateProvinceEntityBase(System.Int32 stateProvinceID, IValidator validator)
 		{
-			InitClassFetch(stateProvinceId, validator, null);
+			InitClassFetch(stateProvinceID, validator, null);
 		}
 	
 
@@ -112,9 +112,9 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected StateProvinceEntityBase(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_address = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_address", typeof(AW.Data.CollectionClasses.AddressCollection));
-			_alwaysFetchAddress = info.GetBoolean("_alwaysFetchAddress");
-			_alreadyFetchedAddress = info.GetBoolean("_alreadyFetchedAddress");
+			_addresses = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addresses", typeof(AW.Data.CollectionClasses.AddressCollection));
+			_alwaysFetchAddresses = info.GetBoolean("_alwaysFetchAddresses");
+			_alreadyFetchedAddresses = info.GetBoolean("_alreadyFetchedAddresses");
 
 			_countryRegion = (CountryRegionEntity)info.GetValue("_countryRegion", typeof(CountryRegionEntity));
 			if(_countryRegion!=null)
@@ -150,7 +150,7 @@ namespace AW.Data.EntityClasses
 					DesetupSyncCountryRegion(true, false);
 					_alreadyFetchedCountryRegion = false;
 					break;
-				case StateProvinceFieldIndex.TerritoryId:
+				case StateProvinceFieldIndex.TerritoryID:
 					DesetupSyncSalesTerritory(true, false);
 					_alreadyFetchedSalesTerritory = false;
 					break;
@@ -170,7 +170,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
-			_alreadyFetchedAddress = (_address.Count > 0);
+			_alreadyFetchedAddresses = (_addresses.Count > 0);
 
 			_alreadyFetchedCountryRegion = (_countryRegion != null);
 			_alreadyFetchedSalesTerritory = (_salesTerritory != null);
@@ -197,10 +197,10 @@ namespace AW.Data.EntityClasses
 					toReturn.Add(StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode);
 					break;
 				case "SalesTerritory":
-					toReturn.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId);
+					toReturn.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryID);
 					break;
-				case "Address":
-					toReturn.Add(StateProvinceEntity.Relations.AddressEntityUsingStateProvinceId);
+				case "Addresses":
+					toReturn.Add(StateProvinceEntity.Relations.AddressEntityUsingStateProvinceID);
 					break;
 
 
@@ -220,9 +220,9 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
-			info.AddValue("_alwaysFetchAddress", _alwaysFetchAddress);
-			info.AddValue("_alreadyFetchedAddress", _alreadyFetchedAddress);
+			info.AddValue("_addresses", (!this.MarkedForDeletion?_addresses:null));
+			info.AddValue("_alwaysFetchAddresses", _alwaysFetchAddresses);
+			info.AddValue("_alreadyFetchedAddresses", _alreadyFetchedAddresses);
 
 			info.AddValue("_countryRegion", (!this.MarkedForDeletion?_countryRegion:null));
 			info.AddValue("_countryRegionReturnsNewIfNotFound", _countryRegionReturnsNewIfNotFound);
@@ -256,11 +256,11 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedSalesTerritory = true;
 					this.SalesTerritory = (SalesTerritoryEntity)entity;
 					break;
-				case "Address":
-					_alreadyFetchedAddress = true;
+				case "Addresses":
+					_alreadyFetchedAddresses = true;
 					if(entity!=null)
 					{
-						this.Address.Add((AddressEntity)entity);
+						this.Addresses.Add((AddressEntity)entity);
 					}
 					break;
 
@@ -285,8 +285,8 @@ namespace AW.Data.EntityClasses
 				case "SalesTerritory":
 					SetupSyncSalesTerritory(relatedEntity);
 					break;
-				case "Address":
-					_address.Add((AddressEntity)relatedEntity);
+				case "Addresses":
+					_addresses.Add((AddressEntity)relatedEntity);
 					break;
 
 				default:
@@ -310,8 +310,8 @@ namespace AW.Data.EntityClasses
 				case "SalesTerritory":
 					DesetupSyncSalesTerritory(false, true);
 					break;
-				case "Address":
-					base.PerformRelatedEntityRemoval(_address, relatedEntity, signalRelatedEntityManyToOne);
+				case "Addresses":
+					base.PerformRelatedEntityRemoval(_addresses, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -356,7 +356,7 @@ namespace AW.Data.EntityClasses
 		public override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
-			toReturn.Add(_address);
+			toReturn.Add(_addresses);
 
 			return toReturn;
 		}
@@ -366,43 +366,43 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 stateProvinceId)
+		public bool FetchUsingPK(System.Int32 stateProvinceID)
 		{
-			return FetchUsingPK(stateProvinceId, null, null, null);
+			return FetchUsingPK(stateProvinceID, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 stateProvinceId, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(System.Int32 stateProvinceID, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(stateProvinceId, prefetchPathToUse, null, null);
+			return FetchUsingPK(stateProvinceID, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 stateProvinceId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(System.Int32 stateProvinceID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(stateProvinceId, prefetchPathToUse, contextToUse, null);
+			return Fetch(stateProvinceID, prefetchPathToUse, contextToUse, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 stateProvinceId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(System.Int32 stateProvinceID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(stateProvinceId, prefetchPathToUse, contextToUse, excludedIncludedFields);
+			return Fetch(stateProvinceID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -410,7 +410,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.StateProvinceId, null, null, null);
+			return Fetch(this.StateProvinceID, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -443,27 +443,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddress(bool forceFetch)
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddresses(bool forceFetch)
 		{
-			return GetMultiAddress(forceFetch, _address.EntityFactoryToUse, null);
+			return GetMultiAddresses(forceFetch, _addresses.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddress(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddresses(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiAddress(forceFetch, _address.EntityFactoryToUse, filter);
+			return GetMultiAddresses(forceFetch, _addresses.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddresses(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiAddress(forceFetch, entityFactoryToUse, null);
+			return GetMultiAddresses(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type '1:n'.</summary>
@@ -471,37 +471,37 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.AddressCollection GetMultiAddress(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.AddressCollection GetMultiAddresses(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedAddress || forceFetch || _alwaysFetchAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedAddresses || forceFetch || _alwaysFetchAddresses) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_address.ParticipatesInTransaction)
+					if(!_addresses.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_address);
+						base.Transaction.Add(_addresses);
 					}
 				}
-				_address.SuppressClearInGetMulti=!forceFetch;
+				_addresses.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_address.EntityFactoryToUse = entityFactoryToUse;
+					_addresses.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_address.GetMultiManyToOne(this, filter);
-				_address.SuppressClearInGetMulti=false;
-				_alreadyFetchedAddress = true;
+				_addresses.GetMultiManyToOne(this, filter);
+				_addresses.SuppressClearInGetMulti=false;
+				_alreadyFetchedAddresses = true;
 			}
-			return _address;
+			return _addresses;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'Address'. These settings will be taken into account
-		/// when the property Address is requested or GetMultiAddress is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'Addresses'. These settings will be taken into account
+		/// when the property Addresses is requested or GetMultiAddresses is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersAddress(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersAddresses(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_address.SortClauses=sortClauses;
-			_address.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_addresses.SortClauses=sortClauses;
+			_addresses.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 
@@ -576,7 +576,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedSalesTerritory || forceFetch || _alwaysFetchSalesTerritory) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryID);
 
 				SalesTerritoryEntity newEntity = new SalesTerritoryEntity();
 				if(base.ParticipatesInTransaction)
@@ -586,7 +586,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.TerritoryId);
+					fetchResult = newEntity.FetchUsingPK(this.TerritoryID);
 				}
 				if(fetchResult)
 				{
@@ -631,7 +631,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			_address.ActiveContext = base.ActiveContext;
+			_addresses.ActiveContext = base.ActiveContext;
 
 			if(_countryRegion!=null)
 			{
@@ -712,7 +712,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("CountryRegion", _countryRegion);
 			toReturn.Add("SalesTerritory", _salesTerritory);
-			toReturn.Add("Address", _address);
+			toReturn.Add("Addresses", _addresses);
 
 
 			return toReturn;
@@ -720,16 +720,16 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="validator">The validator object for this StateProvinceEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 stateProvinceId, IValidator validator, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 stateProvinceID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			base.Validator = validator;
 			InitClassMembers();
 			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(stateProvinceId, prefetchPathToUse, null, null);
+			bool wasSuccesful = Fetch(stateProvinceID, prefetchPathToUse, null, null);
 			base.IsNew = !wasSuccesful;
 
 			
@@ -742,10 +742,10 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
-			_address = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
-			_address.SetContainingEntityInfo(this, "StateProvince");
-			_alwaysFetchAddress = false;
-			_alreadyFetchedAddress = false;
+			_addresses = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
+			_addresses.SetContainingEntityInfo(this, "StateProvince");
+			_alwaysFetchAddresses = false;
+			_alreadyFetchedAddresses = false;
 
 			_countryRegion = null;
 			_countryRegionReturnsNewIfNotFound = true;
@@ -774,7 +774,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("StateProvinceId", fieldHashtable);
+			_fieldsCustomProperties.Add("StateProvinceID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("StateProvinceCode", fieldHashtable);
@@ -789,7 +789,7 @@ namespace AW.Data.EntityClasses
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("TerritoryId", fieldHashtable);
+			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
@@ -805,7 +805,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncCountryRegion(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _countryRegion, new PropertyChangedEventHandler( OnCountryRegionPropertyChanged ), "CountryRegion", StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode, true, signalRelatedEntity, "StateProvince", resetFKFields, new int[] { (int)StateProvinceFieldIndex.CountryRegionCode } );		
+			base.PerformDesetupSyncRelatedEntity( _countryRegion, new PropertyChangedEventHandler( OnCountryRegionPropertyChanged ), "CountryRegion", StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode, true, signalRelatedEntity, "StateProvinces", resetFKFields, new int[] { (int)StateProvinceFieldIndex.CountryRegionCode } );		
 			_countryRegion = null;
 		}
 		
@@ -838,7 +838,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncSalesTerritory(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _salesTerritory, new PropertyChangedEventHandler( OnSalesTerritoryPropertyChanged ), "SalesTerritory", StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId, true, signalRelatedEntity, "StateProvince", resetFKFields, new int[] { (int)StateProvinceFieldIndex.TerritoryId } );		
+			base.PerformDesetupSyncRelatedEntity( _salesTerritory, new PropertyChangedEventHandler( OnSalesTerritoryPropertyChanged ), "SalesTerritory", StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryID, true, signalRelatedEntity, "StateProvinces", resetFKFields, new int[] { (int)StateProvinceFieldIndex.TerritoryID } );		
 			_salesTerritory = null;
 		}
 		
@@ -850,7 +850,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncSalesTerritory(true, true);
 				_salesTerritory = (SalesTerritoryEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _salesTerritory, new PropertyChangedEventHandler( OnSalesTerritoryPropertyChanged ), "SalesTerritory", StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId, true, ref _alreadyFetchedSalesTerritory, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _salesTerritory, new PropertyChangedEventHandler( OnSalesTerritoryPropertyChanged ), "SalesTerritory", StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryID, true, ref _alreadyFetchedSalesTerritory, new string[] {  } );
 			}
 		}
 
@@ -868,20 +868,20 @@ namespace AW.Data.EntityClasses
 
 
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 stateProvinceId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(System.Int32 stateProvinceID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
-				base.Fields[(int)StateProvinceFieldIndex.StateProvinceId].ForcedCurrentValueWrite(stateProvinceId);
+				base.Fields[(int)StateProvinceFieldIndex.StateProvinceID].ForcedCurrentValueWrite(stateProvinceID);
 				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
 				return (base.Fields.State == EntityState.Fetched);
 			}
@@ -924,12 +924,12 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathAddress
+		public static IPrefetchPathElement PrefetchPathAddresses
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(),
-					(IEntityRelation)GetRelationsForField("Address")[0], (int)AW.Data.EntityType.StateProvinceEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "Address", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("Addresses")[0], (int)AW.Data.EntityType.StateProvinceEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "Addresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -989,15 +989,15 @@ namespace AW.Data.EntityClasses
 			get { return StateProvinceEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The StateProvinceId property of the Entity StateProvince<br/><br/>
+		/// <summary> The StateProvinceID property of the Entity StateProvince<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."StateProvinceID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 StateProvinceId
+		public virtual System.Int32 StateProvinceID
 		{
-			get { return (System.Int32)GetValue((int)StateProvinceFieldIndex.StateProvinceId, true); }
-			set	{ SetValue((int)StateProvinceFieldIndex.StateProvinceId, value, true); }
+			get { return (System.Int32)GetValue((int)StateProvinceFieldIndex.StateProvinceID, true); }
+			set	{ SetValue((int)StateProvinceFieldIndex.StateProvinceID, value, true); }
 		}
 		/// <summary> The StateProvinceCode property of the Entity StateProvince<br/><br/>
 		/// </summary>
@@ -1039,15 +1039,15 @@ namespace AW.Data.EntityClasses
 			get { return (System.String)GetValue((int)StateProvinceFieldIndex.Name, true); }
 			set	{ SetValue((int)StateProvinceFieldIndex.Name, value, true); }
 		}
-		/// <summary> The TerritoryId property of the Entity StateProvince<br/><br/>
+		/// <summary> The TerritoryID property of the Entity StateProvince<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 TerritoryId
+		public virtual System.Int32 TerritoryID
 		{
-			get { return (System.Int32)GetValue((int)StateProvinceFieldIndex.TerritoryId, true); }
-			set	{ SetValue((int)StateProvinceFieldIndex.TerritoryId, value, true); }
+			get { return (System.Int32)GetValue((int)StateProvinceFieldIndex.TerritoryID, true); }
+			set	{ SetValue((int)StateProvinceFieldIndex.TerritoryID, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity StateProvince<br/><br/>
 		/// </summary>
@@ -1071,36 +1071,36 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type '1:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddress()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddresses()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.AddressCollection Address
+		public virtual AW.Data.CollectionClasses.AddressCollection Addresses
 		{
-			get	{ return GetMultiAddress(false); }
+			get	{ return GetMultiAddresses(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for Address. When set to true, Address is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time Address is accessed. You can always execute
-		/// a forced fetch by calling GetMultiAddress(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for Addresses. When set to true, Addresses is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Addresses is accessed. You can always execute
+		/// a forced fetch by calling GetMultiAddresses(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchAddress
+		public bool AlwaysFetchAddresses
 		{
-			get	{ return _alwaysFetchAddress; }
-			set	{ _alwaysFetchAddress = value; }	
+			get	{ return _alwaysFetchAddresses; }
+			set	{ _alwaysFetchAddresses = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property Address already has been fetched. Setting this property to false when Address has been fetched
-		/// will clear the Address collection well. Setting this property to true while Address hasn't been fetched disables lazy loading for Address</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property Addresses already has been fetched. Setting this property to false when Addresses has been fetched
+		/// will clear the Addresses collection well. Setting this property to true while Addresses hasn't been fetched disables lazy loading for Addresses</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedAddress
+		public bool AlreadyFetchedAddresses
 		{
-			get { return _alreadyFetchedAddress;}
+			get { return _alreadyFetchedAddresses;}
 			set 
 			{
-				if(_alreadyFetchedAddress && !value && (_address != null))
+				if(_alreadyFetchedAddresses && !value && (_addresses != null))
 				{
-					_address.Clear();
+					_addresses.Clear();
 				}
-				_alreadyFetchedAddress = value;
+				_alreadyFetchedAddresses = value;
 			}
 		}
 
@@ -1111,6 +1111,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCountryRegion()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual CountryRegionEntity CountryRegion
 		{
 			get	{ return GetSingleCountryRegion(false); }
@@ -1126,14 +1127,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_countryRegion != null)
 						{
-							_countryRegion.UnsetRelatedEntity(this, "StateProvince");
+							_countryRegion.UnsetRelatedEntity(this, "StateProvinces");
 						}
 					}
 					else
 					{
 						if(_countryRegion!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "StateProvince");
+							((IEntity)value).SetRelatedEntity(this, "StateProvinces");
 						}
 					}
 				}
@@ -1181,6 +1182,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesTerritory()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual SalesTerritoryEntity SalesTerritory
 		{
 			get	{ return GetSingleSalesTerritory(false); }
@@ -1196,14 +1198,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_salesTerritory != null)
 						{
-							_salesTerritory.UnsetRelatedEntity(this, "StateProvince");
+							_salesTerritory.UnsetRelatedEntity(this, "StateProvinces");
 						}
 					}
 					else
 					{
 						if(_salesTerritory!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "StateProvince");
+							((IEntity)value).SetRelatedEntity(this, "StateProvinces");
 						}
 					}
 				}

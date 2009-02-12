@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -111,14 +111,14 @@ namespace AW.Data.DaoClasses
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingAddressCollectionViaEmployeeAddress(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, int pageNumber, int pageSize)
+		public bool GetMultiUsingAddressCollectionViaEmployeeAddres(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, int pageNumber, int pageSize)
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId, "EmployeeAddress_");
-			relations.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressId, "EmployeeAddress_", string.Empty, JoinHint.None);
+			relations.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeID, "EmployeeAddress_");
+			relations.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, "EmployeeAddress_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -135,14 +135,14 @@ namespace AW.Data.DaoClasses
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingAddressCollectionViaEmployeeAddress(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		public bool GetMultiUsingAddressCollectionViaEmployeeAddres(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, IPrefetchPath prefetchPathToUse)
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeId, "EmployeeAddress_");
-			relations.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressId, "EmployeeAddress_", string.Empty, JoinHint.None);
+			relations.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeID, "EmployeeAddress_");
+			relations.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, "EmployeeAddress_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -164,10 +164,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId, "Employee_");
-			relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactId, "Employee_", string.Empty, JoinHint.None);
+			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID, "Employee_");
+			relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactID, "Employee_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(contactInstance.Fields[(int)ContactFieldIndex.ContactId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(contactInstance.Fields[(int)ContactFieldIndex.ContactID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -188,10 +188,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerId, "Employee_");
-			relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactId, "Employee_", string.Empty, JoinHint.None);
+			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID, "Employee_");
+			relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactID, "Employee_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(contactInstance.Fields[(int)ContactFieldIndex.ContactId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(contactInstance.Fields[(int)ContactFieldIndex.ContactID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
@@ -262,11 +262,11 @@ namespace AW.Data.DaoClasses
 			
 			if(contactInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeFieldIndex.ContactId], ComparisonOperator.Equal, ((ContactEntity)contactInstance).ContactId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeFieldIndex.ContactID], ComparisonOperator.Equal, ((ContactEntity)contactInstance).ContactID));
 			}
 			if(managerInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeFieldIndex.ManagerId], ComparisonOperator.Equal, ((EmployeeEntity)managerInstance).EmployeeId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeFieldIndex.ManagerID], ComparisonOperator.Equal, ((EmployeeEntity)managerInstance).EmployeeID));
 			}
 			return selectFilter;
 		}

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:25 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -17,10 +17,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity AddressEntity</summary>
 	public partial class AddressFields
 	{
-		/// <summary>Creates a new AddressEntity.AddressId field instance</summary>
-		public static EntityField AddressId
+		/// <summary>Creates a new AddressEntity.AddressID field instance</summary>
+		public static EntityField AddressID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(AddressFieldIndex.AddressId);}
+			get { return (EntityField)EntityFieldFactory.Create(AddressFieldIndex.AddressID);}
 		}
 		/// <summary>Creates a new AddressEntity.AddressLine1 field instance</summary>
 		public static EntityField AddressLine1
@@ -37,10 +37,10 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(AddressFieldIndex.City);}
 		}
-		/// <summary>Creates a new AddressEntity.StateProvinceId field instance</summary>
-		public static EntityField StateProvinceId
+		/// <summary>Creates a new AddressEntity.StateProvinceID field instance</summary>
+		public static EntityField StateProvinceID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(AddressFieldIndex.StateProvinceId);}
+			get { return (EntityField)EntityFieldFactory.Create(AddressFieldIndex.StateProvinceID);}
 		}
 		/// <summary>Creates a new AddressEntity.PostalCode field instance</summary>
 		public static EntityField PostalCode
@@ -62,10 +62,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity AddressTypeEntity</summary>
 	public partial class AddressTypeFields
 	{
-		/// <summary>Creates a new AddressTypeEntity.AddressTypeId field instance</summary>
-		public static EntityField AddressTypeId
+		/// <summary>Creates a new AddressTypeEntity.AddressTypeID field instance</summary>
+		public static EntityField AddressTypeID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(AddressTypeFieldIndex.AddressTypeId);}
+			get { return (EntityField)EntityFieldFactory.Create(AddressTypeFieldIndex.AddressTypeID);}
 		}
 		/// <summary>Creates a new AddressTypeEntity.Name field instance</summary>
 		public static EntityField Name
@@ -87,10 +87,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity ContactEntity</summary>
 	public partial class ContactFields
 	{
-		/// <summary>Creates a new ContactEntity.ContactId field instance</summary>
-		public static EntityField ContactId
+		/// <summary>Creates a new ContactEntity.ContactID field instance</summary>
+		public static EntityField ContactID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(ContactFieldIndex.ContactId);}
+			get { return (EntityField)EntityFieldFactory.Create(ContactFieldIndex.ContactID);}
 		}
 		/// <summary>Creates a new ContactEntity.NameStyle field instance</summary>
 		public static EntityField NameStyle
@@ -187,10 +187,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity CreditCardEntity</summary>
 	public partial class CreditCardFields
 	{
-		/// <summary>Creates a new CreditCardEntity.CreditCardId field instance</summary>
-		public static EntityField CreditCardId
+		/// <summary>Creates a new CreditCardEntity.CreditCardID field instance</summary>
+		public static EntityField CreditCardID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CreditCardFieldIndex.CreditCardId);}
+			get { return (EntityField)EntityFieldFactory.Create(CreditCardFieldIndex.CreditCardID);}
 		}
 		/// <summary>Creates a new CreditCardEntity.CardType field instance</summary>
 		public static EntityField CardType
@@ -242,10 +242,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity CurrencyRateEntity</summary>
 	public partial class CurrencyRateFields
 	{
-		/// <summary>Creates a new CurrencyRateEntity.CurrencyRateId field instance</summary>
-		public static EntityField CurrencyRateId
+		/// <summary>Creates a new CurrencyRateEntity.CurrencyRateID field instance</summary>
+		public static EntityField CurrencyRateID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CurrencyRateFieldIndex.CurrencyRateId);}
+			get { return (EntityField)EntityFieldFactory.Create(CurrencyRateFieldIndex.CurrencyRateID);}
 		}
 		/// <summary>Creates a new CurrencyRateEntity.CurrencyRateDate field instance</summary>
 		public static EntityField CurrencyRateDate
@@ -282,15 +282,15 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity CustomerEntity</summary>
 	public partial class CustomerFields
 	{
-		/// <summary>Creates a new CustomerEntity.CustomerId field instance</summary>
-		public static EntityField CustomerId
+		/// <summary>Creates a new CustomerEntity.CustomerID field instance</summary>
+		public static EntityField CustomerID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerFieldIndex.CustomerId);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerFieldIndex.CustomerID);}
 		}
-		/// <summary>Creates a new CustomerEntity.TerritoryId field instance</summary>
-		public static EntityField TerritoryId
+		/// <summary>Creates a new CustomerEntity.TerritoryID field instance</summary>
+		public static EntityField TerritoryID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerFieldIndex.TerritoryId);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerFieldIndex.TerritoryID);}
 		}
 		/// <summary>Creates a new CustomerEntity.AccountNumber field instance</summary>
 		public static EntityField AccountNumber
@@ -317,20 +317,20 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity CustomerAddressEntity</summary>
 	public partial class CustomerAddressFields
 	{
-		/// <summary>Creates a new CustomerAddressEntity.CustomerId field instance</summary>
-		public static EntityField CustomerId
+		/// <summary>Creates a new CustomerAddressEntity.CustomerID field instance</summary>
+		public static EntityField CustomerID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerAddressFieldIndex.CustomerId);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerAddressFieldIndex.CustomerID);}
 		}
-		/// <summary>Creates a new CustomerAddressEntity.AddressId field instance</summary>
-		public static EntityField AddressId
+		/// <summary>Creates a new CustomerAddressEntity.AddressID field instance</summary>
+		public static EntityField AddressID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerAddressFieldIndex.AddressId);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerAddressFieldIndex.AddressID);}
 		}
-		/// <summary>Creates a new CustomerAddressEntity.AddressTypeId field instance</summary>
-		public static EntityField AddressTypeId
+		/// <summary>Creates a new CustomerAddressEntity.AddressTypeID field instance</summary>
+		public static EntityField AddressTypeID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerAddressFieldIndex.AddressTypeId);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerAddressFieldIndex.AddressTypeID);}
 		}
 		/// <summary>Creates a new CustomerAddressEntity.Rowguid field instance</summary>
 		public static EntityField Rowguid
@@ -437,30 +437,30 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity EmployeeEntity</summary>
 	public partial class EmployeeFields
 	{
-		/// <summary>Creates a new EmployeeEntity.EmployeeId field instance</summary>
-		public static EntityField EmployeeId
+		/// <summary>Creates a new EmployeeEntity.EmployeeID field instance</summary>
+		public static EntityField EmployeeID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.EmployeeId);}
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.EmployeeID);}
 		}
 		/// <summary>Creates a new EmployeeEntity.NationalIdnumber field instance</summary>
 		public static EntityField NationalIdnumber
 		{
 			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.NationalIdnumber);}
 		}
-		/// <summary>Creates a new EmployeeEntity.ContactId field instance</summary>
-		public static EntityField ContactId
+		/// <summary>Creates a new EmployeeEntity.ContactID field instance</summary>
+		public static EntityField ContactID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.ContactId);}
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.ContactID);}
 		}
-		/// <summary>Creates a new EmployeeEntity.LoginId field instance</summary>
-		public static EntityField LoginId
+		/// <summary>Creates a new EmployeeEntity.LoginID field instance</summary>
+		public static EntityField LoginID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.LoginId);}
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.LoginID);}
 		}
-		/// <summary>Creates a new EmployeeEntity.ManagerId field instance</summary>
-		public static EntityField ManagerId
+		/// <summary>Creates a new EmployeeEntity.ManagerID field instance</summary>
+		public static EntityField ManagerID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.ManagerId);}
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.ManagerID);}
 		}
 		/// <summary>Creates a new EmployeeEntity.Title field instance</summary>
 		public static EntityField Title
@@ -522,15 +522,15 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity EmployeeAddressEntity</summary>
 	public partial class EmployeeAddressFields
 	{
-		/// <summary>Creates a new EmployeeAddressEntity.EmployeeId field instance</summary>
-		public static EntityField EmployeeId
+		/// <summary>Creates a new EmployeeAddressEntity.EmployeeID field instance</summary>
+		public static EntityField EmployeeID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(EmployeeAddressFieldIndex.EmployeeId);}
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeAddressFieldIndex.EmployeeID);}
 		}
-		/// <summary>Creates a new EmployeeAddressEntity.AddressId field instance</summary>
-		public static EntityField AddressId
+		/// <summary>Creates a new EmployeeAddressEntity.AddressID field instance</summary>
+		public static EntityField AddressID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(EmployeeAddressFieldIndex.AddressId);}
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeAddressFieldIndex.AddressID);}
 		}
 		/// <summary>Creates a new EmployeeAddressEntity.Rowguid field instance</summary>
 		public static EntityField Rowguid
@@ -547,15 +547,15 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity IndividualEntity</summary>
 	public partial class IndividualFields
 	{
-		/// <summary>Creates a new IndividualEntity.CustomerId field instance</summary>
-		public static EntityField CustomerId
+		/// <summary>Creates a new IndividualEntity.CustomerID field instance</summary>
+		public static EntityField CustomerID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.CustomerId);}
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.CustomerID);}
 		}
-		/// <summary>Creates a new IndividualEntity.ContactId field instance</summary>
-		public static EntityField ContactId
+		/// <summary>Creates a new IndividualEntity.ContactID field instance</summary>
+		public static EntityField ContactID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.ContactId);}
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.ContactID);}
 		}
 		/// <summary>Creates a new IndividualEntity.Demographics field instance</summary>
 		public static EntityField Demographics
@@ -572,10 +572,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity ProductEntity</summary>
 	public partial class ProductFields
 	{
-		/// <summary>Creates a new ProductEntity.ProductId field instance</summary>
-		public static EntityField ProductId
+		/// <summary>Creates a new ProductEntity.ProductID field instance</summary>
+		public static EntityField ProductID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(ProductFieldIndex.ProductId);}
+			get { return (EntityField)EntityFieldFactory.Create(ProductFieldIndex.ProductID);}
 		}
 		/// <summary>Creates a new ProductEntity.Name field instance</summary>
 		public static EntityField Name
@@ -662,15 +662,15 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(ProductFieldIndex.Style);}
 		}
-		/// <summary>Creates a new ProductEntity.ProductSubcategoryId field instance</summary>
-		public static EntityField ProductSubcategoryId
+		/// <summary>Creates a new ProductEntity.ProductSubcategoryID field instance</summary>
+		public static EntityField ProductSubcategoryID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(ProductFieldIndex.ProductSubcategoryId);}
+			get { return (EntityField)EntityFieldFactory.Create(ProductFieldIndex.ProductSubcategoryID);}
 		}
-		/// <summary>Creates a new ProductEntity.ProductModelId field instance</summary>
-		public static EntityField ProductModelId
+		/// <summary>Creates a new ProductEntity.ProductModelID field instance</summary>
+		public static EntityField ProductModelID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(ProductFieldIndex.ProductModelId);}
+			get { return (EntityField)EntityFieldFactory.Create(ProductFieldIndex.ProductModelID);}
 		}
 		/// <summary>Creates a new ProductEntity.SellStartDate field instance</summary>
 		public static EntityField SellStartDate
@@ -702,15 +702,15 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity SalesOrderDetailEntity</summary>
 	public partial class SalesOrderDetailFields
 	{
-		/// <summary>Creates a new SalesOrderDetailEntity.SalesOrderId field instance</summary>
-		public static EntityField SalesOrderId
+		/// <summary>Creates a new SalesOrderDetailEntity.SalesOrderID field instance</summary>
+		public static EntityField SalesOrderID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.SalesOrderId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.SalesOrderID);}
 		}
-		/// <summary>Creates a new SalesOrderDetailEntity.SalesOrderDetailId field instance</summary>
-		public static EntityField SalesOrderDetailId
+		/// <summary>Creates a new SalesOrderDetailEntity.SalesOrderDetailID field instance</summary>
+		public static EntityField SalesOrderDetailID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.SalesOrderDetailId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.SalesOrderDetailID);}
 		}
 		/// <summary>Creates a new SalesOrderDetailEntity.CarrierTrackingNumber field instance</summary>
 		public static EntityField CarrierTrackingNumber
@@ -722,15 +722,15 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.OrderQty);}
 		}
-		/// <summary>Creates a new SalesOrderDetailEntity.ProductId field instance</summary>
-		public static EntityField ProductId
+		/// <summary>Creates a new SalesOrderDetailEntity.ProductID field instance</summary>
+		public static EntityField ProductID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.ProductId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.ProductID);}
 		}
-		/// <summary>Creates a new SalesOrderDetailEntity.SpecialOfferId field instance</summary>
-		public static EntityField SpecialOfferId
+		/// <summary>Creates a new SalesOrderDetailEntity.SpecialOfferID field instance</summary>
+		public static EntityField SpecialOfferID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.SpecialOfferId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderDetailFieldIndex.SpecialOfferID);}
 		}
 		/// <summary>Creates a new SalesOrderDetailEntity.UnitPrice field instance</summary>
 		public static EntityField UnitPrice
@@ -762,10 +762,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity SalesOrderHeaderEntity</summary>
 	public partial class SalesOrderHeaderFields
 	{
-		/// <summary>Creates a new SalesOrderHeaderEntity.SalesOrderId field instance</summary>
-		public static EntityField SalesOrderId
+		/// <summary>Creates a new SalesOrderHeaderEntity.SalesOrderID field instance</summary>
+		public static EntityField SalesOrderID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.SalesOrderId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.SalesOrderID);}
 		}
 		/// <summary>Creates a new SalesOrderHeaderEntity.RevisionNumber field instance</summary>
 		public static EntityField RevisionNumber
@@ -812,55 +812,55 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.AccountNumber);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.CustomerId field instance</summary>
-		public static EntityField CustomerId
+		/// <summary>Creates a new SalesOrderHeaderEntity.CustomerID field instance</summary>
+		public static EntityField CustomerID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.CustomerId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.CustomerID);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.ContactId field instance</summary>
-		public static EntityField ContactId
+		/// <summary>Creates a new SalesOrderHeaderEntity.ContactID field instance</summary>
+		public static EntityField ContactID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.ContactId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.ContactID);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.SalesPersonId field instance</summary>
-		public static EntityField SalesPersonId
+		/// <summary>Creates a new SalesOrderHeaderEntity.SalesPersonID field instance</summary>
+		public static EntityField SalesPersonID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.SalesPersonId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.SalesPersonID);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.TerritoryId field instance</summary>
-		public static EntityField TerritoryId
+		/// <summary>Creates a new SalesOrderHeaderEntity.TerritoryID field instance</summary>
+		public static EntityField TerritoryID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.TerritoryId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.TerritoryID);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.BillToAddressId field instance</summary>
-		public static EntityField BillToAddressId
+		/// <summary>Creates a new SalesOrderHeaderEntity.BillToAddressID field instance</summary>
+		public static EntityField BillToAddressID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.BillToAddressId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.BillToAddressID);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.ShipToAddressId field instance</summary>
-		public static EntityField ShipToAddressId
+		/// <summary>Creates a new SalesOrderHeaderEntity.ShipToAddressID field instance</summary>
+		public static EntityField ShipToAddressID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.ShipToAddressId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.ShipToAddressID);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.ShipMethodId field instance</summary>
-		public static EntityField ShipMethodId
+		/// <summary>Creates a new SalesOrderHeaderEntity.ShipMethodID field instance</summary>
+		public static EntityField ShipMethodID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.ShipMethodId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.ShipMethodID);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.CreditCardId field instance</summary>
-		public static EntityField CreditCardId
+		/// <summary>Creates a new SalesOrderHeaderEntity.CreditCardID field instance</summary>
+		public static EntityField CreditCardID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.CreditCardId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.CreditCardID);}
 		}
 		/// <summary>Creates a new SalesOrderHeaderEntity.CreditCardApprovalCode field instance</summary>
 		public static EntityField CreditCardApprovalCode
 		{
 			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.CreditCardApprovalCode);}
 		}
-		/// <summary>Creates a new SalesOrderHeaderEntity.CurrencyRateId field instance</summary>
-		public static EntityField CurrencyRateId
+		/// <summary>Creates a new SalesOrderHeaderEntity.CurrencyRateID field instance</summary>
+		public static EntityField CurrencyRateID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.CurrencyRateId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderFieldIndex.CurrencyRateID);}
 		}
 		/// <summary>Creates a new SalesOrderHeaderEntity.SubTotal field instance</summary>
 		public static EntityField SubTotal
@@ -902,10 +902,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity SalesTerritoryEntity</summary>
 	public partial class SalesTerritoryFields
 	{
-		/// <summary>Creates a new SalesTerritoryEntity.TerritoryId field instance</summary>
-		public static EntityField TerritoryId
+		/// <summary>Creates a new SalesTerritoryEntity.TerritoryID field instance</summary>
+		public static EntityField TerritoryID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesTerritoryFieldIndex.TerritoryId);}
+			get { return (EntityField)EntityFieldFactory.Create(SalesTerritoryFieldIndex.TerritoryID);}
 		}
 		/// <summary>Creates a new SalesTerritoryEntity.Name field instance</summary>
 		public static EntityField Name
@@ -957,10 +957,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity ShipMethodEntity</summary>
 	public partial class ShipMethodFields
 	{
-		/// <summary>Creates a new ShipMethodEntity.ShipMethodId field instance</summary>
-		public static EntityField ShipMethodId
+		/// <summary>Creates a new ShipMethodEntity.ShipMethodID field instance</summary>
+		public static EntityField ShipMethodID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(ShipMethodFieldIndex.ShipMethodId);}
+			get { return (EntityField)EntityFieldFactory.Create(ShipMethodFieldIndex.ShipMethodID);}
 		}
 		/// <summary>Creates a new ShipMethodEntity.Name field instance</summary>
 		public static EntityField Name
@@ -992,10 +992,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity SpecialOfferEntity</summary>
 	public partial class SpecialOfferFields
 	{
-		/// <summary>Creates a new SpecialOfferEntity.SpecialOfferId field instance</summary>
-		public static EntityField SpecialOfferId
+		/// <summary>Creates a new SpecialOfferEntity.SpecialOfferID field instance</summary>
+		public static EntityField SpecialOfferID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SpecialOfferFieldIndex.SpecialOfferId);}
+			get { return (EntityField)EntityFieldFactory.Create(SpecialOfferFieldIndex.SpecialOfferID);}
 		}
 		/// <summary>Creates a new SpecialOfferEntity.Description field instance</summary>
 		public static EntityField Description
@@ -1052,15 +1052,15 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity SpecialOfferProductEntity</summary>
 	public partial class SpecialOfferProductFields
 	{
-		/// <summary>Creates a new SpecialOfferProductEntity.SpecialOfferId field instance</summary>
-		public static EntityField SpecialOfferId
+		/// <summary>Creates a new SpecialOfferProductEntity.SpecialOfferID field instance</summary>
+		public static EntityField SpecialOfferID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SpecialOfferProductFieldIndex.SpecialOfferId);}
+			get { return (EntityField)EntityFieldFactory.Create(SpecialOfferProductFieldIndex.SpecialOfferID);}
 		}
-		/// <summary>Creates a new SpecialOfferProductEntity.ProductId field instance</summary>
-		public static EntityField ProductId
+		/// <summary>Creates a new SpecialOfferProductEntity.ProductID field instance</summary>
+		public static EntityField ProductID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(SpecialOfferProductFieldIndex.ProductId);}
+			get { return (EntityField)EntityFieldFactory.Create(SpecialOfferProductFieldIndex.ProductID);}
 		}
 		/// <summary>Creates a new SpecialOfferProductEntity.Rowguid field instance</summary>
 		public static EntityField Rowguid
@@ -1077,10 +1077,10 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity StateProvinceEntity</summary>
 	public partial class StateProvinceFields
 	{
-		/// <summary>Creates a new StateProvinceEntity.StateProvinceId field instance</summary>
-		public static EntityField StateProvinceId
+		/// <summary>Creates a new StateProvinceEntity.StateProvinceID field instance</summary>
+		public static EntityField StateProvinceID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(StateProvinceFieldIndex.StateProvinceId);}
+			get { return (EntityField)EntityFieldFactory.Create(StateProvinceFieldIndex.StateProvinceID);}
 		}
 		/// <summary>Creates a new StateProvinceEntity.StateProvinceCode field instance</summary>
 		public static EntityField StateProvinceCode
@@ -1102,10 +1102,10 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(StateProvinceFieldIndex.Name);}
 		}
-		/// <summary>Creates a new StateProvinceEntity.TerritoryId field instance</summary>
-		public static EntityField TerritoryId
+		/// <summary>Creates a new StateProvinceEntity.TerritoryID field instance</summary>
+		public static EntityField TerritoryID
 		{
-			get { return (EntityField)EntityFieldFactory.Create(StateProvinceFieldIndex.TerritoryId);}
+			get { return (EntityField)EntityFieldFactory.Create(StateProvinceFieldIndex.TerritoryID);}
 		}
 		/// <summary>Creates a new StateProvinceEntity.Rowguid field instance</summary>
 		public static EntityField Rowguid

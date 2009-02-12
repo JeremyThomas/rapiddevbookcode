@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -163,12 +163,12 @@ namespace AW.Data.DaoClasses
 			
 			if(salesOrderHeaderInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderDetailFieldIndex.SalesOrderId], ComparisonOperator.Equal, ((SalesOrderHeaderEntity)salesOrderHeaderInstance).SalesOrderId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderDetailFieldIndex.SalesOrderID], ComparisonOperator.Equal, ((SalesOrderHeaderEntity)salesOrderHeaderInstance).SalesOrderID));
 			}
 			if(specialOfferProductInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderDetailFieldIndex.SpecialOfferId], ComparisonOperator.Equal, ((SpecialOfferProductEntity)specialOfferProductInstance).SpecialOfferId));
-selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderDetailFieldIndex.ProductId], ComparisonOperator.Equal, ((SpecialOfferProductEntity)specialOfferProductInstance).ProductId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderDetailFieldIndex.SpecialOfferID], ComparisonOperator.Equal, ((SpecialOfferProductEntity)specialOfferProductInstance).SpecialOfferID));
+selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderDetailFieldIndex.ProductID], ComparisonOperator.Equal, ((SpecialOfferProductEntity)specialOfferProductInstance).ProductID));
 			}
 			return selectFilter;
 		}

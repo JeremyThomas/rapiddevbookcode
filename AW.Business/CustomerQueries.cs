@@ -16,7 +16,7 @@ namespace AW.Business
     /// <param name="maxNumberOfItemsToReturn">The max number of items to return.</param>
     /// <returns></returns>
     /// <remarks>
-    /// SELECT [SALES].[VINDIVIDUALCUSTOMER].[CUSTOMERID]        AS [CUSTOMERID],
+    /// SELECT [SALES].[VINDIVIDUALCUSTOMER].[CustomerID]        AS [CustomerID],
     /// [SALES].[VINDIVIDUALCUSTOMER].[TITLE],
     /// [SALES].[VINDIVIDUALCUSTOMER].[FIRSTNAME],
     /// [SALES].[VINDIVIDUALCUSTOMER].[MIDDLENAME],
@@ -57,7 +57,7 @@ namespace AW.Business
     /// [SALES].[SALESORDERHEADER].[SALESORDERNUMBER],
     /// [SALES].[SALESORDERHEADER].[PURCHASEORDERNUMBER],
     /// [SALES].[SALESORDERHEADER].[ACCOUNTNUMBER],
-    /// [SALES].[SALESORDERHEADER].[CUSTOMERID]             AS [CUSTOMERID],
+    /// [SALES].[SALESORDERHEADER].[CustomerID]             AS [CustomerID],
     /// [SALES].[SALESORDERHEADER].[CONTACTID]              AS [CONTACTID],
     /// [SALES].[SALESORDERHEADER].[SALESPERSONID]          AS [SALESPERSONID],
     /// [SALES].[SALESORDERHEADER].[TERRITORYID]            AS [TERRITORYID],
@@ -77,7 +77,7 @@ namespace AW.Business
     /// FROM   [SALES].[SALESORDERHEADER]
     /// WHERE  (([SALES].[SALESORDERHEADER].[SALESORDERID] = @SalesOrderId1))
     /// .
-    /// SELECT [SALES].[VINDIVIDUALCUSTOMER].[CUSTOMERID]        AS [CUSTOMERID],
+    /// SELECT [SALES].[VINDIVIDUALCUSTOMER].[CustomerID]        AS [CustomerID],
     /// [SALES].[VINDIVIDUALCUSTOMER].[TITLE],
     /// [SALES].[VINDIVIDUALCUSTOMER].[FIRSTNAME],
     /// [SALES].[VINDIVIDUALCUSTOMER].[MIDDLENAME],
@@ -95,7 +95,7 @@ namespace AW.Business
     /// [SALES].[VINDIVIDUALCUSTOMER].[COUNTRYREGIONNAME],
     /// [SALES].[VINDIVIDUALCUSTOMER].[DEMOGRAPHICS]
     /// FROM   [SALES].[VINDIVIDUALCUSTOMER]
-    /// WHERE  (([SALES].[VINDIVIDUALCUSTOMER].[CUSTOMERID] = @CustomerId1))
+    /// WHERE  (([SALES].[VINDIVIDUALCUSTOMER].[CustomerID] = @CustomerID1))
     /// </remarks>
     public static CustomerViewRelatedCollection GetCustomerViewRelatedCollection()
     {
@@ -112,7 +112,7 @@ namespace AW.Business
     /// <remarks>SQL Output:
     /// SELECT     Person.Address.AddressLine1, Person.Address.AddressLine2, Person.Address.City, Person.AddressType.Name AS AddressType, Person.Contact.Title,
     /// , Person.CountryRegion.Name AS CountryRegionName, Person.StateProvince.Name AS StateProvinceName,
-    /// Sales.Customer.CustomerID AS CustomerId
+    /// Sales.Customer.CustomerID AS CustomerID
     /// FROM         Sales.Customer INNER JOIN
     /// Sales.Individual ON Sales.Customer.CustomerID = Sales.Individual.CustomerID INNER JOIN
     /// Person.Contact ON Person.Contact.ContactID = Sales.Individual.ContactID INNER JOIN
@@ -148,15 +148,15 @@ namespace AW.Business
     ///                      [LPA_L6].[EmailPromotion] AS [emailPromotion],
     ///                      [LPA_L8].[Name]           AS [countryRegionName],
     ///                      [LPA_L7].[Name]           AS [stateProvinceName],
-    ///                      [LPA_L1].[CustomerId]     AS [customerId]
-    ///FROM   ((((((((SELECT [LPLA_1].[CustomerID]    AS [CustomerId],
+    ///                      [LPA_L1].[CustomerID]     AS [CustomerID]
+    ///FROM   ((((((((SELECT [LPLA_1].[CustomerID]    AS [CustomerID],
     ///                      [LPLA_1].[TerritoryID]   AS [TerritoryId],
     ///                      [LPLA_1].[AccountNumber],
     ///                      [LPLA_1].[CustomerType],
     ///                      [LPLA_1].[rowguid]       AS [Rowguid],
     ///                      [LPLA_1].[ModifiedDate]
     ///               FROM   [AdventureWorks].[Sales].[Customer] [LPLA_1]
-    ///               WHERE  ((([LPLA_1].[CustomerID] > @CustomerId1))
+    ///               WHERE  ((([LPLA_1].[CustomerID] > @CustomerID1))
     ///                       AND EXISTS (SELECT [LPA_L11].[ModifiedDate]
     ///                                   FROM   ([AdventureWorks].[Person].[Address] [LPA_L10]
     ///                                           INNER JOIN [AdventureWorks].[Sales].[CustomerAddress] [LPA_L11]
@@ -164,13 +164,13 @@ namespace AW.Business
     ///                                   WHERE  ([LPLA_1].[CustomerID] = [LPA_L11].[CustomerID]
     ///                                           AND ([LPA_L10].[City] = @City2))))) [LPA_L1]
     ///              INNER JOIN [AdventureWorks].[Sales].[CustomerAddress] [LPA_L2]
-    ///                ON ([LPA_L1].[CustomerId] = [LPA_L2].[CustomerID]))
+    ///                ON ([LPA_L1].[CustomerID] = [LPA_L2].[CustomerID]))
     ///             INNER JOIN [AdventureWorks].[Person].[Address] [LPA_L3]
     ///               ON [LPA_L3].[AddressID] = [LPA_L2].[AddressID])
     ///            INNER JOIN [AdventureWorks].[Person].[AddressType] [LPA_L4]
     ///              ON [LPA_L4].[AddressTypeID] = [LPA_L2].[AddressTypeID])
     ///           INNER JOIN [AdventureWorks].[Sales].[Individual] [LPA_L5]
-    ///             ON [LPA_L1].[CustomerId] = [LPA_L5].[CustomerID])
+    ///             ON [LPA_L1].[CustomerID] = [LPA_L5].[CustomerID])
     ///          INNER JOIN [AdventureWorks].[Person].[Contact] [LPA_L6]
     ///            ON [LPA_L6].[ContactID] = [LPA_L5].[ContactID])
     ///         INNER JOIN [AdventureWorks].[Person].[StateProvince] [LPA_L7]
@@ -180,11 +180,11 @@ namespace AW.Business
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListLinqedTypedList(int maxNumberOfItemsToReturn)
     {
       var customers = MetaSingletons.MetaData.Customer.AsQueryable();
-      customers = customers.Where(c => c.CustomerId > 10);
+      customers = customers.Where(c => c.CustomerID > 10);
       var cityName = "London";
       if (cityName != "")
         customers = from customer in customers
-                    where customer.CustomerAddress.Any(ca => ca.Address.City == cityName)
+                    where customer.CustomerAddresses.Any(ca => ca.Address.City == cityName)
                     select customer;
 
       return CustomerListLinqedTypedList.GetCustomerListQuery(customers).Take(maxNumberOfItemsToReturn);
@@ -210,16 +210,16 @@ namespace AW.Business
     ///       [LPA_L6].[EMAILPROMOTION],
     ///       [LPA_L8].[NAME]           AS [COUNTRYREGIONNAME],
     ///       [LPA_L7].[NAME]           AS [STATEPROVINCENAME],
-    ///       [LPA_L1].[CUSTOMERID]     AS [CUSTOMERID]
+    ///       [LPA_L1].[CustomerID]     AS [CustomerID]
     ///FROM   ((((((([ADVENTUREWORKS].[SALES].[CUSTOMER] [LPA_L1]
     ///              INNER JOIN [ADVENTUREWORKS].[SALES].[CUSTOMERADDRESS] [LPA_L2]
-    ///                ON ([LPA_L1].[CUSTOMERID] = [LPA_L2].[CUSTOMERID]))
+    ///                ON ([LPA_L1].[CustomerID] = [LPA_L2].[CustomerID]))
     ///             INNER JOIN [ADVENTUREWORKS].[PERSON].[ADDRESS] [LPA_L3]
     ///               ON [LPA_L3].[ADDRESSID] = [LPA_L2].[ADDRESSID])
     ///            INNER JOIN [ADVENTUREWORKS].[PERSON].[ADDRESSTYPE] [LPA_L4]
     ///              ON [LPA_L4].[ADDRESSTYPEID] = [LPA_L2].[ADDRESSTYPEID])
     ///           INNER JOIN [ADVENTUREWORKS].[SALES].[INDIVIDUAL] [LPA_L5]
-    ///             ON [LPA_L1].[CUSTOMERID] = [LPA_L5].[CUSTOMERID])
+    ///             ON [LPA_L1].[CustomerID] = [LPA_L5].[CustomerID])
     ///          INNER JOIN [ADVENTUREWORKS].[PERSON].[CONTACT] [LPA_L6]
     ///            ON [LPA_L6].[CONTACTID] = [LPA_L5].[CONTACTID])
     ///         INNER JOIN [ADVENTUREWORKS].[PERSON].[STATEPROVINCE] [LPA_L7]
@@ -229,7 +229,7 @@ namespace AW.Business
     public static IQueryable GetCustomerListAnonymousLinq(int maxNumberOfItemsToReturn)
     {
       var customerlist = from customer in MetaSingletons.MetaData.Customer
-                         from customerAddress in customer.CustomerAddress
+                         from customerAddress in customer.CustomerAddresses
                          select new
                                   {
                                     customerAddress.Address.AddressLine1,
@@ -245,7 +245,7 @@ namespace AW.Business
                                     customer.Individual.Contact.EmailPromotion,
                                     CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
                                     StateProvinceName = customerAddress.Address.StateProvince.Name,
-                                    customer.CustomerId
+                                    customer.CustomerID
                                   };
       return customerlist.Take(maxNumberOfItemsToReturn);
     }
@@ -265,7 +265,7 @@ namespace AW.Business
     ///       [LPLA_1].[SalesOrderNumber]                    ,
     ///       [LPLA_1].[PurchaseOrderNumber]                 ,
     ///       [LPLA_1].[AccountNumber]                       ,
-    ///       [LPLA_1].[CustomerID]      AS [CustomerId]          ,
+    ///       [LPLA_1].[CustomerID]      AS [CustomerID]          ,
     ///       [LPLA_1].[ContactID]       AS [ContactId]           ,
     ///       [LPLA_1].[SalesPersonID]   AS [SalesPersonId]       ,
     ///       [LPLA_1].[TerritoryID]     AS [TerritoryId]         ,
@@ -285,7 +285,7 @@ namespace AW.Business
     ///FROM   [AdventureWorks].[Sales].[SalesOrderHeader] [LPLA_1]
     ///WHERE ( ( ( ( [LPLA_1].[SalesOrderID] = @SalesOrderId1))))
     /// .
-    ///SELECT [AdventureWorks].[Sales].[vIndividualCustomer].[CustomerID] AS [CustomerId],
+    ///SELECT [AdventureWorks].[Sales].[vIndividualCustomer].[CustomerID] AS [CustomerID],
     ///       [AdventureWorks].[Sales].[vIndividualCustomer].[Title]                     ,
     ///       [AdventureWorks].[Sales].[vIndividualCustomer].[FirstName]                 ,
     ///       [AdventureWorks].[Sales].[vIndividualCustomer].[MiddleName]                ,
@@ -303,10 +303,10 @@ namespace AW.Business
     ///       [AdventureWorks].[Sales].[vIndividualCustomer].[CountryRegionName]         ,
     ///       [AdventureWorks].[Sales].[vIndividualCustomer].[Demographics]
     ///FROM   [AdventureWorks].[Sales].[vIndividualCustomer]
-    ///WHERE ( ( [AdventureWorks].[Sales].[vIndividualCustomer].[CustomerID] = @CustomerId1)) </remarks>
+    ///WHERE ( ( [AdventureWorks].[Sales].[vIndividualCustomer].[CustomerID] = @CustomerID1)) </remarks>
     public static CustomerViewRelatedEntity GetCustomerViewRelatedLinq()
     {
-      return MetaSingletons.MetaData.SalesOrderHeader.First(soh => soh.SalesOrderId == 46117).CustomerViewRelated;
+      return MetaSingletons.MetaData.SalesOrderHeader.First(soh => soh.SalesOrderID == 46117).CustomerViewRelated;
     }
   }
 }

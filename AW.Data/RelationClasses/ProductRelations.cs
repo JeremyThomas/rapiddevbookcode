@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -30,7 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.SpecialOfferProductEntityUsingProductId);
+			toReturn.Add(this.SpecialOfferProductEntityUsingProductID);
 
 
 			return toReturn;
@@ -39,14 +39,14 @@ namespace AW.Data.RelationClasses
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between ProductEntity and SpecialOfferProductEntity over the 1:n relation they have, using the relation between the fields:
-		/// Product.ProductId - SpecialOfferProduct.ProductId
+		/// Product.ProductID - SpecialOfferProduct.ProductID
 		/// </summary>
-		public virtual IEntityRelation SpecialOfferProductEntityUsingProductId
+		public virtual IEntityRelation SpecialOfferProductEntityUsingProductID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SpecialOfferProduct" , true);
-				relation.AddEntityFieldPair(ProductFields.ProductId, SpecialOfferProductFields.ProductId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SpecialOfferProducts" , true);
+				relation.AddEntityFieldPair(ProductFields.ProductID, SpecialOfferProductFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferProductEntity", false);
 				return relation;

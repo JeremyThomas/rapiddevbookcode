@@ -97,8 +97,8 @@ namespace AW.Business
 
     public static TreeNode GetManagersRecursive(EmployeeEntityBase Employee)
     {
-      var EmployeeNode = new TreeNode {Text = (Employee.Contact.LastName + ", " + Employee.Contact.FirstName + " [" + Employee.EmployeeId + "]"), Tag = Employee.EmployeeId};
-      if (Employee.ManagerId != 0 && Employee.ManagerId != null)
+      var EmployeeNode = new TreeNode {Text = (Employee.Contact.LastName + ", " + Employee.Contact.FirstName + " [" + Employee.EmployeeID + "]"), Tag = Employee.EmployeeID};
+      if (Employee.ManagerID != 0 && Employee.ManagerID != null)
       {
         var ManagerNode = GetManagersRecursive(Employee.Manager);
         FindLowestNode(ManagerNode).Nodes.Add(EmployeeNode);
@@ -116,7 +116,7 @@ namespace AW.Business
 
     public static TreeNode GetEmployeesRecursive(EmployeeEntityBase Employee)
     {
-      var EmployeeNode = new TreeNode {Text = (Employee.Contact.LastName + ", " + Employee.Contact.FirstName + " [" + Employee.EmployeeId + "]"), Tag = Employee.EmployeeId};
+      var EmployeeNode = new TreeNode {Text = (Employee.Contact.LastName + ", " + Employee.Contact.FirstName + " [" + Employee.EmployeeID + "]"), Tag = Employee.EmployeeID};
       if (Employee.Manages.Count > 0)
         foreach (var Subordinate in Employee.Manages)
         {
@@ -126,7 +126,7 @@ namespace AW.Business
     }
 
 
-    public static EmployeeEntity GetPrefetchedEmployeeEntity(Int32 employeeId)
+    public static EmployeeEntity GetPrefetchedEmployeeEntity(Int32 EmployeeID)
     {
       IPrefetchPath prefetch =
         new PrefetchPath((int) EntityType.EmployeeEntity) {EmployeeEntityBase.PrefetchPathContact};
@@ -145,7 +145,7 @@ namespace AW.Business
       prefetch[1].SubPath[0].SubPath[0].SubPath[0].SubPath[0].SubPath.Add(
         EmployeeEntityBase.PrefetchPathContact);
       return new
-        EmployeeEntity(employeeId, prefetch);
+        EmployeeEntity(EmployeeID, prefetch);
     }
 
     #endregion
@@ -156,14 +156,14 @@ namespace AW.Business
     {
       var MyNode = new TreeNode(Employee.Contact.LastName
                                 + ", " + Employee.Contact.FirstName + " ["
-                                + Employee.EmployeeId + " ]") {Tag = Employee.EmployeeId};
+                                + Employee.EmployeeID + " ]") {Tag = Employee.EmployeeID};
       return MyNode;
     }
 
     public static TreeNode GetManagersRecursive(EmployeeEntity Employee)
     {
       var EmployeeNode = MakeNode(Employee);
-      if (Employee.ManagerId != 0 && Employee.ManagerId != null)
+      if (Employee.ManagerID != 0 && Employee.ManagerID != null)
       {
         var ManagerNode = GetManagersRecursive(Employee.Manager);
         FindLowestNode(ManagerNode).Nodes.Add(EmployeeNode);

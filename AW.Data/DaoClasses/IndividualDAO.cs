@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -159,7 +159,7 @@ namespace AW.Data.DaoClasses
 			
 			if(contactInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)IndividualFieldIndex.ContactId], ComparisonOperator.Equal, ((ContactEntity)contactInstance).ContactId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)IndividualFieldIndex.ContactID], ComparisonOperator.Equal, ((ContactEntity)contactInstance).ContactID));
 			}
 			return selectFilter;
 		}

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -47,9 +47,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="specialOfferId">PK value for SpecialOffer which data should be fetched into this SpecialOffer object</param>
-		public SpecialOfferEntity(System.Int32 specialOfferId):
-			base(specialOfferId)
+		/// <param name="specialOfferID">PK value for SpecialOffer which data should be fetched into this SpecialOffer object</param>
+		public SpecialOfferEntity(System.Int32 specialOfferID):
+			base(specialOfferID)
 		{
 		}
 
@@ -57,10 +57,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="specialOfferId">PK value for SpecialOffer which data should be fetched into this SpecialOffer object</param>
+		/// <param name="specialOfferID">PK value for SpecialOffer which data should be fetched into this SpecialOffer object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SpecialOfferEntity(System.Int32 specialOfferId, IPrefetchPath prefetchPathToUse):
-			base(specialOfferId, prefetchPathToUse)
+		public SpecialOfferEntity(System.Int32 specialOfferID, IPrefetchPath prefetchPathToUse):
+			base(specialOfferID, prefetchPathToUse)
 		{
 		}
 
@@ -68,10 +68,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="specialOfferId">PK value for SpecialOffer which data should be fetched into this SpecialOffer object</param>
+		/// <param name="specialOfferID">PK value for SpecialOffer which data should be fetched into this SpecialOffer object</param>
 		/// <param name="validator">The custom validator object for this SpecialOfferEntity</param>
-		public SpecialOfferEntity(System.Int32 specialOfferId, IValidator validator):
-			base(specialOfferId, validator)
+		public SpecialOfferEntity(System.Int32 specialOfferID, IValidator validator):
+			base(specialOfferID, validator)
 		{
 		}
 	

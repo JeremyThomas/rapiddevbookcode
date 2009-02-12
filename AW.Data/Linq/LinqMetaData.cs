@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.Linq
 // Templates vendor: Solutions Design.
 //////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@ using AW.Data.RelationClasses;
 namespace AW.Data.Linq
 {
 	/// <summary>Meta-data class for the construction of Linq queries which are to be executed using LLBLGen Pro code.</summary>
-	public class LinqMetaData : ILinqMetaData
+	public partial class LinqMetaData : ILinqMetaData
 	{
 		#region Class Member Declarations
 		private ITransaction _transactionToUse;

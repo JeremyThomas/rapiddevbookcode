@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -48,9 +48,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
-		public ProductEntity(System.Int32 productId):
-			base(productId)
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
+		public ProductEntity(System.Int32 productID):
+			base(productID)
 		{
 		}
 
@@ -58,10 +58,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ProductEntity(System.Int32 productId, IPrefetchPath prefetchPathToUse):
-			base(productId, prefetchPathToUse)
+		public ProductEntity(System.Int32 productID, IPrefetchPath prefetchPathToUse):
+			base(productID, prefetchPathToUse)
 		{
 		}
 
@@ -69,10 +69,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="productId">PK value for Product which data should be fetched into this Product object</param>
+		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="validator">The custom validator object for this ProductEntity</param>
-		public ProductEntity(System.Int32 productId, IValidator validator):
-			base(productId, validator)
+		public ProductEntity(System.Int32 productID, IValidator validator):
+			base(productID, validator)
 		{
 		}
 	

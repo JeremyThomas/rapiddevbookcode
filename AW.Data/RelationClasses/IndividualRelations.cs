@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -31,8 +31,8 @@ namespace AW.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 
-			toReturn.Add(this.CustomerEntityUsingCustomerId);
-			toReturn.Add(this.ContactEntityUsingContactId);
+			toReturn.Add(this.CustomerEntityUsingCustomerID);
+			toReturn.Add(this.ContactEntityUsingContactID);
 			return toReturn;
 		}
 
@@ -40,9 +40,9 @@ namespace AW.Data.RelationClasses
 
 
 		/// <summary>Returns a new IEntityRelation object, between IndividualEntity and CustomerEntity over the 1:1 relation they have, using the relation between the fields:
-		/// Individual.CustomerId - Customer.CustomerId
+		/// Individual.CustomerID - Customer.CustomerID
 		/// </summary>
-		public virtual IEntityRelation CustomerEntityUsingCustomerId
+		public virtual IEntityRelation CustomerEntityUsingCustomerID
 		{
 			get
 			{
@@ -50,7 +50,7 @@ namespace AW.Data.RelationClasses
 
 
 
-				relation.AddEntityFieldPair(CustomerFields.CustomerId, IndividualFields.CustomerId);
+				relation.AddEntityFieldPair(CustomerFields.CustomerID, IndividualFields.CustomerID);
 
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IndividualEntity", true);
@@ -59,14 +59,14 @@ namespace AW.Data.RelationClasses
 		}
 
 		/// <summary>Returns a new IEntityRelation object, between IndividualEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
-		/// Individual.ContactId - Contact.ContactId
+		/// Individual.ContactID - Contact.ContactID
 		/// </summary>
-		public virtual IEntityRelation ContactEntityUsingContactId
+		public virtual IEntityRelation ContactEntityUsingContactID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Contact", false);
-				relation.AddEntityFieldPair(ContactFields.ContactId, IndividualFields.ContactId);
+				relation.AddEntityFieldPair(ContactFields.ContactID, IndividualFields.ContactID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IndividualEntity", true);
 				return relation;

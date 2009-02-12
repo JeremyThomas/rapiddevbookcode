@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -30,26 +30,26 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.SalesOrderDetailEntityUsingSpecialOfferIdProductId);
+			toReturn.Add(this.SalesOrderDetailEntityUsingSpecialOfferIDProductID);
 
-			toReturn.Add(this.ProductEntityUsingProductId);
-			toReturn.Add(this.SpecialOfferEntityUsingSpecialOfferId);
+			toReturn.Add(this.ProductEntityUsingProductID);
+			toReturn.Add(this.SpecialOfferEntityUsingSpecialOfferID);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between SpecialOfferProductEntity and SalesOrderDetailEntity over the 1:n relation they have, using the relation between the fields:
-		/// SpecialOfferProduct.SpecialOfferId - SalesOrderDetail.SpecialOfferId
-		/// SpecialOfferProduct.ProductId - SalesOrderDetail.ProductId
+		/// SpecialOfferProduct.SpecialOfferID - SalesOrderDetail.SpecialOfferID
+		/// SpecialOfferProduct.ProductID - SalesOrderDetail.ProductID
 		/// </summary>
-		public virtual IEntityRelation SalesOrderDetailEntityUsingSpecialOfferIdProductId
+		public virtual IEntityRelation SalesOrderDetailEntityUsingSpecialOfferIDProductID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderDetail" , true);
-				relation.AddEntityFieldPair(SpecialOfferProductFields.SpecialOfferId, SalesOrderDetailFields.SpecialOfferId);
-				relation.AddEntityFieldPair(SpecialOfferProductFields.ProductId, SalesOrderDetailFields.ProductId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderDetails" , true);
+				relation.AddEntityFieldPair(SpecialOfferProductFields.SpecialOfferID, SalesOrderDetailFields.SpecialOfferID);
+				relation.AddEntityFieldPair(SpecialOfferProductFields.ProductID, SalesOrderDetailFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderDetailEntity", false);
 				return relation;
@@ -58,28 +58,28 @@ namespace AW.Data.RelationClasses
 
 
 		/// <summary>Returns a new IEntityRelation object, between SpecialOfferProductEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
-		/// SpecialOfferProduct.ProductId - Product.ProductId
+		/// SpecialOfferProduct.ProductID - Product.ProductID
 		/// </summary>
-		public virtual IEntityRelation ProductEntityUsingProductId
+		public virtual IEntityRelation ProductEntityUsingProductID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Product", false);
-				relation.AddEntityFieldPair(ProductFields.ProductId, SpecialOfferProductFields.ProductId);
+				relation.AddEntityFieldPair(ProductFields.ProductID, SpecialOfferProductFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferProductEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SpecialOfferProductEntity and SpecialOfferEntity over the m:1 relation they have, using the relation between the fields:
-		/// SpecialOfferProduct.SpecialOfferId - SpecialOffer.SpecialOfferId
+		/// SpecialOfferProduct.SpecialOfferID - SpecialOffer.SpecialOfferID
 		/// </summary>
-		public virtual IEntityRelation SpecialOfferEntityUsingSpecialOfferId
+		public virtual IEntityRelation SpecialOfferEntityUsingSpecialOfferID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SpecialOffer", false);
-				relation.AddEntityFieldPair(SpecialOfferFields.SpecialOfferId, SpecialOfferProductFields.SpecialOfferId);
+				relation.AddEntityFieldPair(SpecialOfferFields.SpecialOfferID, SpecialOfferProductFields.SpecialOfferID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferProductEntity", true);
 				return relation;

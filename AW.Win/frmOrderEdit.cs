@@ -37,7 +37,7 @@ namespace AW.Win
     {
       cbShipMethod.DataSource = ShipMethodEntity.GetShipMethodCollection();
       cbShipMethod.DisplayMember = ShipMethodFieldIndex.Name.ToString();
-      cbShipMethod.ValueMember = ShipMethodFieldIndex.ShipMethodId.ToString();
+      cbShipMethod.ValueMember = ShipMethodFieldIndex.ShipMethodID.ToString();
     }
 
     private void PopulateOrderData()
@@ -62,7 +62,7 @@ namespace AW.Win
 
     private void PopulateOrderDetailData()
     {
-      dgvDetail.DataSource = _order.SalesOrderDetail;
+      dgvDetail.DataSource = _order.SalesOrderDetails;
     }
 
     private void tspSave_Click(object sender, EventArgs e)

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -58,7 +58,7 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 			/// <summary>Member name Address</summary>
 			public static readonly string Address = "Address";
@@ -86,29 +86,29 @@ namespace AW.Data.EntityClasses
 
 	
 		/// <summary>CTor</summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		public CustomerAddressEntityBase(System.Int32 customerId, System.Int32 addressId)
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		public CustomerAddressEntityBase(System.Int32 customerID, System.Int32 addressID)
 		{
-			InitClassFetch(customerId, addressId, null, null);
+			InitClassFetch(customerID, addressID, null, null);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public CustomerAddressEntityBase(System.Int32 customerId, System.Int32 addressId, IPrefetchPath prefetchPathToUse)
+		public CustomerAddressEntityBase(System.Int32 customerID, System.Int32 addressID, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(customerId, addressId, null, prefetchPathToUse);
+			InitClassFetch(customerID, addressID, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="validator">The custom validator object for this CustomerAddressEntity</param>
-		public CustomerAddressEntityBase(System.Int32 customerId, System.Int32 addressId, IValidator validator)
+		public CustomerAddressEntityBase(System.Int32 customerID, System.Int32 addressID, IValidator validator)
 		{
-			InitClassFetch(customerId, addressId, validator, null);
+			InitClassFetch(customerID, addressID, validator, null);
 		}
 	
 
@@ -157,15 +157,15 @@ namespace AW.Data.EntityClasses
 		{
 			switch((CustomerAddressFieldIndex)fieldIndex)
 			{
-				case CustomerAddressFieldIndex.CustomerId:
+				case CustomerAddressFieldIndex.CustomerID:
 					DesetupSyncCustomer(true, false);
 					_alreadyFetchedCustomer = false;
 					break;
-				case CustomerAddressFieldIndex.AddressId:
+				case CustomerAddressFieldIndex.AddressID:
 					DesetupSyncAddress(true, false);
 					_alreadyFetchedAddress = false;
 					break;
-				case CustomerAddressFieldIndex.AddressTypeId:
+				case CustomerAddressFieldIndex.AddressTypeID:
 					DesetupSyncAddressType(true, false);
 					_alreadyFetchedAddressType = false;
 					break;
@@ -210,13 +210,13 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 				case "Address":
-					toReturn.Add(CustomerAddressEntity.Relations.AddressEntityUsingAddressId);
+					toReturn.Add(CustomerAddressEntity.Relations.AddressEntityUsingAddressID);
 					break;
 				case "AddressType":
-					toReturn.Add(CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeId);
+					toReturn.Add(CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeID);
 					break;
 				case "Customer":
-					toReturn.Add(CustomerAddressEntity.Relations.CustomerEntityUsingCustomerId);
+					toReturn.Add(CustomerAddressEntity.Relations.CustomerEntityUsingCustomerID);
 					break;
 
 
@@ -389,47 +389,47 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 customerId, System.Int32 addressId)
+		public bool FetchUsingPK(System.Int32 customerID, System.Int32 addressID)
 		{
-			return FetchUsingPK(customerId, addressId, null, null, null);
+			return FetchUsingPK(customerID, addressID, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 customerId, System.Int32 addressId, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(System.Int32 customerID, System.Int32 addressID, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(customerId, addressId, prefetchPathToUse, null, null);
+			return FetchUsingPK(customerID, addressID, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 customerId, System.Int32 addressId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(System.Int32 customerID, System.Int32 addressID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(customerId, addressId, prefetchPathToUse, contextToUse, null);
+			return Fetch(customerID, addressID, prefetchPathToUse, contextToUse, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 customerId, System.Int32 addressId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(System.Int32 customerID, System.Int32 addressID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(customerId, addressId, prefetchPathToUse, contextToUse, excludedIncludedFields);
+			return Fetch(customerID, addressID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -437,7 +437,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.CustomerId, this.AddressId, null, null, null);
+			return Fetch(this.CustomerID, this.AddressID, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -483,7 +483,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedAddress || forceFetch || _alwaysFetchAddress) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(CustomerAddressEntity.Relations.AddressEntityUsingAddressId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(CustomerAddressEntity.Relations.AddressEntityUsingAddressID);
 
 				AddressEntity newEntity = new AddressEntity();
 				if(base.ParticipatesInTransaction)
@@ -493,7 +493,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.AddressId);
+					fetchResult = newEntity.FetchUsingPK(this.AddressID);
 				}
 				if(fetchResult)
 				{
@@ -540,7 +540,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedAddressType || forceFetch || _alwaysFetchAddressType) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeID);
 
 				AddressTypeEntity newEntity = new AddressTypeEntity();
 				if(base.ParticipatesInTransaction)
@@ -550,7 +550,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.AddressTypeId);
+					fetchResult = newEntity.FetchUsingPK(this.AddressTypeID);
 				}
 				if(fetchResult)
 				{
@@ -597,7 +597,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedCustomer || forceFetch || _alwaysFetchCustomer) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(CustomerAddressEntity.Relations.CustomerEntityUsingCustomerId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(CustomerAddressEntity.Relations.CustomerEntityUsingCustomerID);
 
 				CustomerEntity newEntity = new CustomerEntity();
 				if(base.ParticipatesInTransaction)
@@ -607,7 +607,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.CustomerId);
+					fetchResult = newEntity.FetchUsingPK(this.CustomerID);
 				}
 				if(fetchResult)
 				{
@@ -746,17 +746,17 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="validator">The validator object for this CustomerAddressEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 customerId, System.Int32 addressId, IValidator validator, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 customerID, System.Int32 addressID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			base.Validator = validator;
 			InitClassMembers();
 			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(customerId, addressId, prefetchPathToUse, null, null);
+			bool wasSuccesful = Fetch(customerID, addressID, prefetchPathToUse, null, null);
 			base.IsNew = !wasSuccesful;
 
 			
@@ -802,13 +802,13 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("CustomerId", fieldHashtable);
+			_fieldsCustomProperties.Add("CustomerID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("AddressId", fieldHashtable);
+			_fieldsCustomProperties.Add("AddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("AddressTypeId", fieldHashtable);
+			_fieldsCustomProperties.Add("AddressTypeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
@@ -824,7 +824,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", CustomerAddressEntity.Relations.AddressEntityUsingAddressId, true, signalRelatedEntity, "CustomerAddress", resetFKFields, new int[] { (int)CustomerAddressFieldIndex.AddressId } );		
+			base.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", CustomerAddressEntity.Relations.AddressEntityUsingAddressID, true, signalRelatedEntity, "CustomerAddresses", resetFKFields, new int[] { (int)CustomerAddressFieldIndex.AddressID } );		
 			_address = null;
 		}
 		
@@ -836,7 +836,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncAddress(true, true);
 				_address = (AddressEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", CustomerAddressEntity.Relations.AddressEntityUsingAddressId, true, ref _alreadyFetchedAddress, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", CustomerAddressEntity.Relations.AddressEntityUsingAddressID, true, ref _alreadyFetchedAddress, new string[] {  } );
 			}
 		}
 
@@ -857,7 +857,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncAddressType(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _addressType, new PropertyChangedEventHandler( OnAddressTypePropertyChanged ), "AddressType", CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeId, true, signalRelatedEntity, "CustomerAddress", resetFKFields, new int[] { (int)CustomerAddressFieldIndex.AddressTypeId } );		
+			base.PerformDesetupSyncRelatedEntity( _addressType, new PropertyChangedEventHandler( OnAddressTypePropertyChanged ), "AddressType", CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeID, true, signalRelatedEntity, "CustomerAddresses", resetFKFields, new int[] { (int)CustomerAddressFieldIndex.AddressTypeID } );		
 			_addressType = null;
 		}
 		
@@ -869,7 +869,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncAddressType(true, true);
 				_addressType = (AddressTypeEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _addressType, new PropertyChangedEventHandler( OnAddressTypePropertyChanged ), "AddressType", CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeId, true, ref _alreadyFetchedAddressType, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _addressType, new PropertyChangedEventHandler( OnAddressTypePropertyChanged ), "AddressType", CustomerAddressEntity.Relations.AddressTypeEntityUsingAddressTypeID, true, ref _alreadyFetchedAddressType, new string[] {  } );
 			}
 		}
 
@@ -890,7 +890,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncCustomer(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _customer, new PropertyChangedEventHandler( OnCustomerPropertyChanged ), "Customer", CustomerAddressEntity.Relations.CustomerEntityUsingCustomerId, true, signalRelatedEntity, "CustomerAddress", resetFKFields, new int[] { (int)CustomerAddressFieldIndex.CustomerId } );		
+			base.PerformDesetupSyncRelatedEntity( _customer, new PropertyChangedEventHandler( OnCustomerPropertyChanged ), "Customer", CustomerAddressEntity.Relations.CustomerEntityUsingCustomerID, true, signalRelatedEntity, "CustomerAddresses", resetFKFields, new int[] { (int)CustomerAddressFieldIndex.CustomerID } );		
 			_customer = null;
 		}
 		
@@ -902,7 +902,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncCustomer(true, true);
 				_customer = (CustomerEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _customer, new PropertyChangedEventHandler( OnCustomerPropertyChanged ), "Customer", CustomerAddressEntity.Relations.CustomerEntityUsingCustomerId, true, ref _alreadyFetchedCustomer, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _customer, new PropertyChangedEventHandler( OnCustomerPropertyChanged ), "Customer", CustomerAddressEntity.Relations.CustomerEntityUsingCustomerID, true, ref _alreadyFetchedCustomer, new string[] {  } );
 			}
 		}
 
@@ -920,22 +920,22 @@ namespace AW.Data.EntityClasses
 
 
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="customerId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
-		/// <param name="addressId">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="customerID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
+		/// <param name="addressID">PK value for CustomerAddress which data should be fetched into this CustomerAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 customerId, System.Int32 addressId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(System.Int32 customerID, System.Int32 addressID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
-				base.Fields[(int)CustomerAddressFieldIndex.CustomerId].ForcedCurrentValueWrite(customerId);
-				base.Fields[(int)CustomerAddressFieldIndex.AddressId].ForcedCurrentValueWrite(addressId);
+				base.Fields[(int)CustomerAddressFieldIndex.CustomerID].ForcedCurrentValueWrite(customerID);
+				base.Fields[(int)CustomerAddressFieldIndex.AddressID].ForcedCurrentValueWrite(addressID);
 				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
 				return (base.Fields.State == EntityState.Fetched);
 			}
@@ -1044,35 +1044,35 @@ namespace AW.Data.EntityClasses
 			get { return CustomerAddressEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The CustomerId property of the Entity CustomerAddress<br/><br/>
+		/// <summary> The CustomerID property of the Entity CustomerAddress<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "CustomerAddress"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 CustomerId
+		public virtual System.Int32 CustomerID
 		{
-			get { return (System.Int32)GetValue((int)CustomerAddressFieldIndex.CustomerId, true); }
-			set	{ SetValue((int)CustomerAddressFieldIndex.CustomerId, value, true); }
+			get { return (System.Int32)GetValue((int)CustomerAddressFieldIndex.CustomerID, true); }
+			set	{ SetValue((int)CustomerAddressFieldIndex.CustomerID, value, true); }
 		}
-		/// <summary> The AddressId property of the Entity CustomerAddress<br/><br/>
+		/// <summary> The AddressID property of the Entity CustomerAddress<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "CustomerAddress"."AddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 AddressId
+		public virtual System.Int32 AddressID
 		{
-			get { return (System.Int32)GetValue((int)CustomerAddressFieldIndex.AddressId, true); }
-			set	{ SetValue((int)CustomerAddressFieldIndex.AddressId, value, true); }
+			get { return (System.Int32)GetValue((int)CustomerAddressFieldIndex.AddressID, true); }
+			set	{ SetValue((int)CustomerAddressFieldIndex.AddressID, value, true); }
 		}
-		/// <summary> The AddressTypeId property of the Entity CustomerAddress<br/><br/>
+		/// <summary> The AddressTypeID property of the Entity CustomerAddress<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "CustomerAddress"."AddressTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 AddressTypeId
+		public virtual System.Int32 AddressTypeID
 		{
-			get { return (System.Int32)GetValue((int)CustomerAddressFieldIndex.AddressTypeId, true); }
-			set	{ SetValue((int)CustomerAddressFieldIndex.AddressTypeId, value, true); }
+			get { return (System.Int32)GetValue((int)CustomerAddressFieldIndex.AddressTypeID, true); }
+			set	{ SetValue((int)CustomerAddressFieldIndex.AddressTypeID, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity CustomerAddress<br/><br/>
 		/// </summary>
@@ -1103,6 +1103,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleAddress()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual AddressEntity Address
 		{
 			get	{ return GetSingleAddress(false); }
@@ -1118,14 +1119,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_address != null)
 						{
-							_address.UnsetRelatedEntity(this, "CustomerAddress");
+							_address.UnsetRelatedEntity(this, "CustomerAddresses");
 						}
 					}
 					else
 					{
 						if(_address!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "CustomerAddress");
+							((IEntity)value).SetRelatedEntity(this, "CustomerAddresses");
 						}
 					}
 				}
@@ -1173,6 +1174,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleAddressType()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual AddressTypeEntity AddressType
 		{
 			get	{ return GetSingleAddressType(false); }
@@ -1188,14 +1190,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_addressType != null)
 						{
-							_addressType.UnsetRelatedEntity(this, "CustomerAddress");
+							_addressType.UnsetRelatedEntity(this, "CustomerAddresses");
 						}
 					}
 					else
 					{
 						if(_addressType!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "CustomerAddress");
+							((IEntity)value).SetRelatedEntity(this, "CustomerAddresses");
 						}
 					}
 				}
@@ -1243,6 +1245,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCustomer()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual CustomerEntity Customer
 		{
 			get	{ return GetSingleCustomer(false); }
@@ -1258,14 +1261,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_customer != null)
 						{
-							_customer.UnsetRelatedEntity(this, "CustomerAddress");
+							_customer.UnsetRelatedEntity(this, "CustomerAddresses");
 						}
 					}
 					else
 					{
 						if(_customer!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "CustomerAddress");
+							((IEntity)value).SetRelatedEntity(this, "CustomerAddresses");
 						}
 					}
 				}

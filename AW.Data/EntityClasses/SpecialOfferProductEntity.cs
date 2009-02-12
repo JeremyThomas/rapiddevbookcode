@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -47,10 +47,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		public SpecialOfferProductEntity(System.Int32 specialOfferId, System.Int32 productId):
-			base(specialOfferId, productId)
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		public SpecialOfferProductEntity(System.Int32 specialOfferID, System.Int32 productID):
+			base(specialOfferID, productID)
 		{
 		}
 
@@ -58,11 +58,11 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SpecialOfferProductEntity(System.Int32 specialOfferId, System.Int32 productId, IPrefetchPath prefetchPathToUse):
-			base(specialOfferId, productId, prefetchPathToUse)
+		public SpecialOfferProductEntity(System.Int32 specialOfferID, System.Int32 productID, IPrefetchPath prefetchPathToUse):
+			base(specialOfferID, productID, prefetchPathToUse)
 		{
 		}
 
@@ -70,11 +70,11 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="validator">The custom validator object for this SpecialOfferProductEntity</param>
-		public SpecialOfferProductEntity(System.Int32 specialOfferId, System.Int32 productId, IValidator validator):
-			base(specialOfferId, productId, validator)
+		public SpecialOfferProductEntity(System.Int32 specialOfferID, System.Int32 productID, IValidator validator):
+			base(specialOfferID, productID, validator)
 		{
 		}
 	

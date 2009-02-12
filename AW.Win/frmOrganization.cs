@@ -18,7 +18,7 @@ namespace AW.Win
     {
       cbEmployee.DataSource = LookUpQueries.GetEmployees();
       cbEmployee.DisplayMember = "EmployeeDisplayName";
-      cbEmployee.ValueMember = EmployeeFieldIndex.EmployeeId.ToString();
+      cbEmployee.ValueMember = EmployeeFieldIndex.EmployeeID.ToString();
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrderSearchSizeLocation);
     }
 
@@ -53,13 +53,13 @@ namespace AW.Win
       tvOrganization.Nodes.Clear();
       TreeNode MasterNode;
       var emp = OrganizationManager.GetPrefetchedEmployeeEntity(Convert.ToInt32(cbEmployee.SelectedValue));
-      var EmployeeNode = new TreeNode {Text = (emp.Contact.FirstName + ", " + emp.Contact.LastName + " [" + emp.EmployeeId + "]"), Tag = emp.EmployeeId};
+      var EmployeeNode = new TreeNode {Text = (emp.Contact.FirstName + ", " + emp.Contact.LastName + " [" + emp.EmployeeID + "]"), Tag = emp.EmployeeID};
       if (emp.Manages.Count > 0)
         foreach (var Subordinate in emp.Manages)
         {
           EmployeeNode.Nodes.Add(OrganizationManager.GetEmployeesRecursive(Subordinate));
         }
-      if (emp.ManagerId != 0)
+      if (emp.ManagerID != 0)
       {
         var ManagersNode = OrganizationManager.GetManagersRecursive(emp.Manager);
         OrganizationManager.FindLowestNode(ManagersNode).Nodes.Add(EmployeeNode);
@@ -86,7 +86,7 @@ namespace AW.Win
         {
           EmployeeNode.Nodes.Add(OrganizationManager.GetEmployeesRecursive(Subordinate));
         }
-      if (Employee.ManagerId != 0)
+      if (Employee.ManagerID != 0)
       {
         var ManagersNode = OrganizationManager.GetManagersRecursive(Employee.Manager);
         OrganizationManager.FindLowestNode(ManagersNode).Nodes.Add(EmployeeNode);
@@ -108,13 +108,13 @@ namespace AW.Win
       TreeNode MasterNode;
 
       var emp = new EmployeeEntity(Convert.ToInt32(cbEmployee.SelectedValue));
-      var EmployeeNode = new TreeNode {Text = (emp.Contact.FirstName + ", " + emp.Contact.LastName + " [" + emp.EmployeeId + "]"), Tag = emp.EmployeeId};
+      var EmployeeNode = new TreeNode {Text = (emp.Contact.FirstName + ", " + emp.Contact.LastName + " [" + emp.EmployeeID + "]"), Tag = emp.EmployeeID};
       if (emp.Manages.Count > 0)
         foreach (var Subordinate in emp.Manages)
         {
           EmployeeNode.Nodes.Add(OrganizationManager.GetEmployeesRecursive(Subordinate));
         }
-      if (emp.ManagerId != 0)
+      if (emp.ManagerID != 0)
       {
         var ManagersNode = OrganizationManager.GetManagersRecursive(emp.Manager);
         OrganizationManager.FindLowestNode(ManagersNode).Nodes.Add(EmployeeNode);

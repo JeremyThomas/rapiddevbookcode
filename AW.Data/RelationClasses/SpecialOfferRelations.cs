@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -30,7 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.SpecialOfferProductEntityUsingSpecialOfferId);
+			toReturn.Add(this.SpecialOfferProductEntityUsingSpecialOfferID);
 
 
 			return toReturn;
@@ -39,14 +39,14 @@ namespace AW.Data.RelationClasses
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between SpecialOfferEntity and SpecialOfferProductEntity over the 1:n relation they have, using the relation between the fields:
-		/// SpecialOffer.SpecialOfferId - SpecialOfferProduct.SpecialOfferId
+		/// SpecialOffer.SpecialOfferID - SpecialOfferProduct.SpecialOfferID
 		/// </summary>
-		public virtual IEntityRelation SpecialOfferProductEntityUsingSpecialOfferId
+		public virtual IEntityRelation SpecialOfferProductEntityUsingSpecialOfferID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SpecialOfferProduct" , true);
-				relation.AddEntityFieldPair(SpecialOfferFields.SpecialOfferId, SpecialOfferProductFields.SpecialOfferId);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SpecialOfferProducts" , true);
+				relation.AddEntityFieldPair(SpecialOfferFields.SpecialOfferID, SpecialOfferProductFields.SpecialOfferID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferProductEntity", false);
 				return relation;

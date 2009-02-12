@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,9 +32,9 @@ namespace AW.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 
 
-			toReturn.Add(this.AddressEntityUsingAddressId);
-			toReturn.Add(this.AddressTypeEntityUsingAddressTypeId);
-			toReturn.Add(this.CustomerEntityUsingCustomerId);
+			toReturn.Add(this.AddressEntityUsingAddressID);
+			toReturn.Add(this.AddressTypeEntityUsingAddressTypeID);
+			toReturn.Add(this.CustomerEntityUsingCustomerID);
 			return toReturn;
 		}
 
@@ -43,42 +43,42 @@ namespace AW.Data.RelationClasses
 
 
 		/// <summary>Returns a new IEntityRelation object, between CustomerAddressEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
-		/// CustomerAddress.AddressId - Address.AddressId
+		/// CustomerAddress.AddressID - Address.AddressID
 		/// </summary>
-		public virtual IEntityRelation AddressEntityUsingAddressId
+		public virtual IEntityRelation AddressEntityUsingAddressID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
-				relation.AddEntityFieldPair(AddressFields.AddressId, CustomerAddressFields.AddressId);
+				relation.AddEntityFieldPair(AddressFields.AddressID, CustomerAddressFields.AddressID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerAddressEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between CustomerAddressEntity and AddressTypeEntity over the m:1 relation they have, using the relation between the fields:
-		/// CustomerAddress.AddressTypeId - AddressType.AddressTypeId
+		/// CustomerAddress.AddressTypeID - AddressType.AddressTypeID
 		/// </summary>
-		public virtual IEntityRelation AddressTypeEntityUsingAddressTypeId
+		public virtual IEntityRelation AddressTypeEntityUsingAddressTypeID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "AddressType", false);
-				relation.AddEntityFieldPair(AddressTypeFields.AddressTypeId, CustomerAddressFields.AddressTypeId);
+				relation.AddEntityFieldPair(AddressTypeFields.AddressTypeID, CustomerAddressFields.AddressTypeID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressTypeEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerAddressEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between CustomerAddressEntity and CustomerEntity over the m:1 relation they have, using the relation between the fields:
-		/// CustomerAddress.CustomerId - Customer.CustomerId
+		/// CustomerAddress.CustomerID - Customer.CustomerID
 		/// </summary>
-		public virtual IEntityRelation CustomerEntityUsingCustomerId
+		public virtual IEntityRelation CustomerEntityUsingCustomerID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Customer", false);
-				relation.AddEntityFieldPair(CustomerFields.CustomerId, CustomerAddressFields.CustomerId);
+				relation.AddEntityFieldPair(CustomerFields.CustomerID, CustomerAddressFields.CustomerID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerAddressEntity", true);
 				return relation;

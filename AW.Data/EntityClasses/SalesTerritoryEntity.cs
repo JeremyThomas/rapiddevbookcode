@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -25,7 +25,6 @@ namespace AW.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 
 	/// <summary>
 	/// Entity class which represents the entity 'SalesTerritory'. <br/>
@@ -34,8 +33,7 @@ namespace AW.Data.EntityClasses
 	[Serializable]
 	public partial class SalesTerritoryEntity : SalesTerritoryEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Constructors
 		/// <summary>
@@ -49,9 +47,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="territoryId">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
-		public SalesTerritoryEntity(System.Int32 territoryId):
-			base(territoryId)
+		/// <param name="territoryID">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
+		public SalesTerritoryEntity(System.Int32 territoryID):
+			base(territoryID)
 		{
 		}
 
@@ -59,10 +57,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="territoryId">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
+		/// <param name="territoryID">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesTerritoryEntity(System.Int32 territoryId, IPrefetchPath prefetchPathToUse):
-			base(territoryId, prefetchPathToUse)
+		public SalesTerritoryEntity(System.Int32 territoryID, IPrefetchPath prefetchPathToUse):
+			base(territoryID, prefetchPathToUse)
 		{
 		}
 
@@ -70,10 +68,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="territoryId">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
+		/// <param name="territoryID">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
 		/// <param name="validator">The custom validator object for this SalesTerritoryEntity</param>
-		public SalesTerritoryEntity(System.Int32 territoryId, IValidator validator):
-			base(territoryId, validator)
+		public SalesTerritoryEntity(System.Int32 territoryID, IValidator validator):
+			base(territoryID, validator)
 		{
 		}
 	
@@ -88,7 +86,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 		#endregion
 
@@ -96,7 +93,6 @@ namespace AW.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included Code

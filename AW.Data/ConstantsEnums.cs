@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -17,16 +17,16 @@ namespace AW.Data
 	/// </summary>
 	public enum AddressFieldIndex:int
 	{
-		///<summary>AddressId. </summary>
-		AddressId,
+		///<summary>AddressID. </summary>
+		AddressID,
 		///<summary>AddressLine1. </summary>
 		AddressLine1,
 		///<summary>AddressLine2. </summary>
 		AddressLine2,
 		///<summary>City. </summary>
 		City,
-		///<summary>StateProvinceId. </summary>
-		StateProvinceId,
+		///<summary>StateProvinceID. </summary>
+		StateProvinceID,
 		///<summary>PostalCode. </summary>
 		PostalCode,
 		///<summary>Rowguid. </summary>
@@ -43,8 +43,8 @@ namespace AW.Data
 	/// </summary>
 	public enum AddressTypeFieldIndex:int
 	{
-		///<summary>AddressTypeId. </summary>
-		AddressTypeId,
+		///<summary>AddressTypeID. </summary>
+		AddressTypeID,
 		///<summary>Name. </summary>
 		Name,
 		///<summary>Rowguid. </summary>
@@ -61,8 +61,8 @@ namespace AW.Data
 	/// </summary>
 	public enum ContactFieldIndex:int
 	{
-		///<summary>ContactId. </summary>
-		ContactId,
+		///<summary>ContactID. </summary>
+		ContactID,
 		///<summary>NameStyle. </summary>
 		NameStyle,
 		///<summary>Title. </summary>
@@ -117,8 +117,8 @@ namespace AW.Data
 	/// </summary>
 	public enum CreditCardFieldIndex:int
 	{
-		///<summary>CreditCardId. </summary>
-		CreditCardId,
+		///<summary>CreditCardID. </summary>
+		CreditCardID,
 		///<summary>CardType. </summary>
 		CardType,
 		///<summary>CardNumber. </summary>
@@ -155,8 +155,8 @@ namespace AW.Data
 	/// </summary>
 	public enum CurrencyRateFieldIndex:int
 	{
-		///<summary>CurrencyRateId. </summary>
-		CurrencyRateId,
+		///<summary>CurrencyRateID. </summary>
+		CurrencyRateID,
 		///<summary>CurrencyRateDate. </summary>
 		CurrencyRateDate,
 		///<summary>FromCurrencyCode. </summary>
@@ -179,10 +179,10 @@ namespace AW.Data
 	/// </summary>
 	public enum CustomerFieldIndex:int
 	{
-		///<summary>CustomerId. </summary>
-		CustomerId,
-		///<summary>TerritoryId. </summary>
-		TerritoryId,
+		///<summary>CustomerID. </summary>
+		CustomerID,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
 		///<summary>AccountNumber. </summary>
 		AccountNumber,
 		///<summary>CustomerType. </summary>
@@ -201,12 +201,12 @@ namespace AW.Data
 	/// </summary>
 	public enum CustomerAddressFieldIndex:int
 	{
-		///<summary>CustomerId. </summary>
-		CustomerId,
-		///<summary>AddressId. </summary>
-		AddressId,
-		///<summary>AddressTypeId. </summary>
-		AddressTypeId,
+		///<summary>CustomerID. </summary>
+		CustomerID,
+		///<summary>AddressID. </summary>
+		AddressID,
+		///<summary>AddressTypeID. </summary>
+		AddressTypeID,
 		///<summary>Rowguid. </summary>
 		Rowguid,
 		///<summary>ModifiedDate. </summary>
@@ -265,16 +265,16 @@ namespace AW.Data
 	/// </summary>
 	public enum EmployeeFieldIndex:int
 	{
-		///<summary>EmployeeId. </summary>
-		EmployeeId,
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
 		///<summary>NationalIdnumber. </summary>
 		NationalIdnumber,
-		///<summary>ContactId. </summary>
-		ContactId,
-		///<summary>LoginId. </summary>
-		LoginId,
-		///<summary>ManagerId. </summary>
-		ManagerId,
+		///<summary>ContactID. </summary>
+		ContactID,
+		///<summary>LoginID. </summary>
+		LoginID,
+		///<summary>ManagerID. </summary>
+		ManagerID,
 		///<summary>Title. </summary>
 		Title,
 		///<summary>BirthDate. </summary>
@@ -307,10 +307,10 @@ namespace AW.Data
 	/// </summary>
 	public enum EmployeeAddressFieldIndex:int
 	{
-		///<summary>EmployeeId. </summary>
-		EmployeeId,
-		///<summary>AddressId. </summary>
-		AddressId,
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
+		///<summary>AddressID. </summary>
+		AddressID,
 		///<summary>Rowguid. </summary>
 		Rowguid,
 		///<summary>ModifiedDate. </summary>
@@ -325,10 +325,10 @@ namespace AW.Data
 	/// </summary>
 	public enum IndividualFieldIndex:int
 	{
-		///<summary>CustomerId. </summary>
-		CustomerId,
-		///<summary>ContactId. </summary>
-		ContactId,
+		///<summary>CustomerID. </summary>
+		CustomerID,
+		///<summary>ContactID. </summary>
+		ContactID,
 		///<summary>Demographics. </summary>
 		Demographics,
 		///<summary>ModifiedDate. </summary>
@@ -343,8 +343,8 @@ namespace AW.Data
 	/// </summary>
 	public enum ProductFieldIndex:int
 	{
-		///<summary>ProductId. </summary>
-		ProductId,
+		///<summary>ProductID. </summary>
+		ProductID,
 		///<summary>Name. </summary>
 		Name,
 		///<summary>ProductNumber. </summary>
@@ -379,10 +379,10 @@ namespace AW.Data
 		Class,
 		///<summary>Style. </summary>
 		Style,
-		///<summary>ProductSubcategoryId. </summary>
-		ProductSubcategoryId,
-		///<summary>ProductModelId. </summary>
-		ProductModelId,
+		///<summary>ProductSubcategoryID. </summary>
+		ProductSubcategoryID,
+		///<summary>ProductModelID. </summary>
+		ProductModelID,
 		///<summary>SellStartDate. </summary>
 		SellStartDate,
 		///<summary>SellEndDate. </summary>
@@ -403,18 +403,18 @@ namespace AW.Data
 	/// </summary>
 	public enum SalesOrderDetailFieldIndex:int
 	{
-		///<summary>SalesOrderId. </summary>
-		SalesOrderId,
-		///<summary>SalesOrderDetailId. </summary>
-		SalesOrderDetailId,
+		///<summary>SalesOrderID. </summary>
+		SalesOrderID,
+		///<summary>SalesOrderDetailID. </summary>
+		SalesOrderDetailID,
 		///<summary>CarrierTrackingNumber. </summary>
 		CarrierTrackingNumber,
 		///<summary>OrderQty. </summary>
 		OrderQty,
-		///<summary>ProductId. </summary>
-		ProductId,
-		///<summary>SpecialOfferId. </summary>
-		SpecialOfferId,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>SpecialOfferID. </summary>
+		SpecialOfferID,
 		///<summary>UnitPrice. </summary>
 		UnitPrice,
 		///<summary>UnitPriceDiscount. </summary>
@@ -435,8 +435,8 @@ namespace AW.Data
 	/// </summary>
 	public enum SalesOrderHeaderFieldIndex:int
 	{
-		///<summary>SalesOrderId. </summary>
-		SalesOrderId,
+		///<summary>SalesOrderID. </summary>
+		SalesOrderID,
 		///<summary>RevisionNumber. </summary>
 		RevisionNumber,
 		///<summary>OrderDate. </summary>
@@ -455,26 +455,26 @@ namespace AW.Data
 		PurchaseOrderNumber,
 		///<summary>AccountNumber. </summary>
 		AccountNumber,
-		///<summary>CustomerId. </summary>
-		CustomerId,
-		///<summary>ContactId. </summary>
-		ContactId,
-		///<summary>SalesPersonId. </summary>
-		SalesPersonId,
-		///<summary>TerritoryId. </summary>
-		TerritoryId,
-		///<summary>BillToAddressId. </summary>
-		BillToAddressId,
-		///<summary>ShipToAddressId. </summary>
-		ShipToAddressId,
-		///<summary>ShipMethodId. </summary>
-		ShipMethodId,
-		///<summary>CreditCardId. </summary>
-		CreditCardId,
+		///<summary>CustomerID. </summary>
+		CustomerID,
+		///<summary>ContactID. </summary>
+		ContactID,
+		///<summary>SalesPersonID. </summary>
+		SalesPersonID,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
+		///<summary>BillToAddressID. </summary>
+		BillToAddressID,
+		///<summary>ShipToAddressID. </summary>
+		ShipToAddressID,
+		///<summary>ShipMethodID. </summary>
+		ShipMethodID,
+		///<summary>CreditCardID. </summary>
+		CreditCardID,
 		///<summary>CreditCardApprovalCode. </summary>
 		CreditCardApprovalCode,
-		///<summary>CurrencyRateId. </summary>
-		CurrencyRateId,
+		///<summary>CurrencyRateID. </summary>
+		CurrencyRateID,
 		///<summary>SubTotal. </summary>
 		SubTotal,
 		///<summary>TaxAmt. </summary>
@@ -499,8 +499,8 @@ namespace AW.Data
 	/// </summary>
 	public enum SalesTerritoryFieldIndex:int
 	{
-		///<summary>TerritoryId. </summary>
-		TerritoryId,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
 		///<summary>Name. </summary>
 		Name,
 		///<summary>CountryRegionCode. </summary>
@@ -529,8 +529,8 @@ namespace AW.Data
 	/// </summary>
 	public enum ShipMethodFieldIndex:int
 	{
-		///<summary>ShipMethodId. </summary>
-		ShipMethodId,
+		///<summary>ShipMethodID. </summary>
+		ShipMethodID,
 		///<summary>Name. </summary>
 		Name,
 		///<summary>ShipBase. </summary>
@@ -551,8 +551,8 @@ namespace AW.Data
 	/// </summary>
 	public enum SpecialOfferFieldIndex:int
 	{
-		///<summary>SpecialOfferId. </summary>
-		SpecialOfferId,
+		///<summary>SpecialOfferID. </summary>
+		SpecialOfferID,
 		///<summary>Description. </summary>
 		Description,
 		///<summary>DiscountPct. </summary>
@@ -583,10 +583,10 @@ namespace AW.Data
 	/// </summary>
 	public enum SpecialOfferProductFieldIndex:int
 	{
-		///<summary>SpecialOfferId. </summary>
-		SpecialOfferId,
-		///<summary>ProductId. </summary>
-		ProductId,
+		///<summary>SpecialOfferID. </summary>
+		SpecialOfferID,
+		///<summary>ProductID. </summary>
+		ProductID,
 		///<summary>Rowguid. </summary>
 		Rowguid,
 		///<summary>ModifiedDate. </summary>
@@ -601,8 +601,8 @@ namespace AW.Data
 	/// </summary>
 	public enum StateProvinceFieldIndex:int
 	{
-		///<summary>StateProvinceId. </summary>
-		StateProvinceId,
+		///<summary>StateProvinceID. </summary>
+		StateProvinceID,
 		///<summary>StateProvinceCode. </summary>
 		StateProvinceCode,
 		///<summary>CountryRegionCode. </summary>
@@ -611,8 +611,8 @@ namespace AW.Data
 		IsOnlyStateProvinceFlag,
 		///<summary>Name. </summary>
 		Name,
-		///<summary>TerritoryId. </summary>
-		TerritoryId,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
 		///<summary>Rowguid. </summary>
 		Rowguid,
 		///<summary>ModifiedDate. </summary>
@@ -677,8 +677,8 @@ namespace AW.Data
 		AddressLine2,
 		///<summary>City</summary>
 		City,
-		///<summary>AddressType</summary>
-		AddressType,
+		///<summary>Name</summary>
+		Name,
 		///<summary>Title</summary>
 		Title,
 		///<summary>FirstName</summary>

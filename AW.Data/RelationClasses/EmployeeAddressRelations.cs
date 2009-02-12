@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,8 +32,8 @@ namespace AW.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 
 
-			toReturn.Add(this.AddressEntityUsingAddressId);
-			toReturn.Add(this.EmployeeEntityUsingEmployeeId);
+			toReturn.Add(this.AddressEntityUsingAddressID);
+			toReturn.Add(this.EmployeeEntityUsingEmployeeID);
 			return toReturn;
 		}
 
@@ -42,28 +42,28 @@ namespace AW.Data.RelationClasses
 
 
 		/// <summary>Returns a new IEntityRelation object, between EmployeeAddressEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
-		/// EmployeeAddress.AddressId - Address.AddressId
+		/// EmployeeAddress.AddressID - Address.AddressID
 		/// </summary>
-		public virtual IEntityRelation AddressEntityUsingAddressId
+		public virtual IEntityRelation AddressEntityUsingAddressID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
-				relation.AddEntityFieldPair(AddressFields.AddressId, EmployeeAddressFields.AddressId);
+				relation.AddEntityFieldPair(AddressFields.AddressID, EmployeeAddressFields.AddressID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeAddressEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between EmployeeAddressEntity and EmployeeEntity over the m:1 relation they have, using the relation between the fields:
-		/// EmployeeAddress.EmployeeId - Employee.EmployeeId
+		/// EmployeeAddress.EmployeeID - Employee.EmployeeID
 		/// </summary>
-		public virtual IEntityRelation EmployeeEntityUsingEmployeeId
+		public virtual IEntityRelation EmployeeEntityUsingEmployeeID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Employee", false);
-				relation.AddEntityFieldPair(EmployeeFields.EmployeeId, EmployeeAddressFields.EmployeeId);
+				relation.AddEntityFieldPair(EmployeeFields.EmployeeID, EmployeeAddressFields.EmployeeID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeAddressEntity", true);
 				return relation;

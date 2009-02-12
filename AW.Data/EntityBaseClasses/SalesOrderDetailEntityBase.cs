@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -56,7 +56,7 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 			/// <summary>Member name SalesOrderHeader</summary>
 			public static readonly string SalesOrderHeader = "SalesOrderHeader";
@@ -82,29 +82,29 @@ namespace AW.Data.EntityClasses
 
 	
 		/// <summary>CTor</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		public SalesOrderDetailEntityBase(System.Int32 salesOrderId, System.Int32 salesOrderDetailId)
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		public SalesOrderDetailEntityBase(System.Int32 salesOrderID, System.Int32 salesOrderDetailID)
 		{
-			InitClassFetch(salesOrderId, salesOrderDetailId, null, null);
+			InitClassFetch(salesOrderID, salesOrderDetailID, null, null);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesOrderDetailEntityBase(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse)
+		public SalesOrderDetailEntityBase(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(salesOrderId, salesOrderDetailId, null, prefetchPathToUse);
+			InitClassFetch(salesOrderID, salesOrderDetailID, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="validator">The custom validator object for this SalesOrderDetailEntity</param>
-		public SalesOrderDetailEntityBase(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IValidator validator)
+		public SalesOrderDetailEntityBase(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IValidator validator)
 		{
-			InitClassFetch(salesOrderId, salesOrderDetailId, validator, null);
+			InitClassFetch(salesOrderID, salesOrderDetailID, validator, null);
 		}
 	
 
@@ -145,15 +145,15 @@ namespace AW.Data.EntityClasses
 		{
 			switch((SalesOrderDetailFieldIndex)fieldIndex)
 			{
-				case SalesOrderDetailFieldIndex.SalesOrderId:
+				case SalesOrderDetailFieldIndex.SalesOrderID:
 					DesetupSyncSalesOrderHeader(true, false);
 					_alreadyFetchedSalesOrderHeader = false;
 					break;
-				case SalesOrderDetailFieldIndex.ProductId:
+				case SalesOrderDetailFieldIndex.ProductID:
 					DesetupSyncSpecialOfferProduct(true, false);
 					_alreadyFetchedSpecialOfferProduct = false;
 					break;
-				case SalesOrderDetailFieldIndex.SpecialOfferId:
+				case SalesOrderDetailFieldIndex.SpecialOfferID:
 					DesetupSyncSpecialOfferProduct(true, false);
 					_alreadyFetchedSpecialOfferProduct = false;
 					break;
@@ -197,10 +197,10 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 				case "SalesOrderHeader":
-					toReturn.Add(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId);
+					toReturn.Add(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderID);
 					break;
 				case "SpecialOfferProduct":
-					toReturn.Add(SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId);
+					toReturn.Add(SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIDProductID);
 					break;
 
 
@@ -355,47 +355,47 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 salesOrderId, System.Int32 salesOrderDetailId)
+		public bool FetchUsingPK(System.Int32 salesOrderID, System.Int32 salesOrderDetailID)
 		{
-			return FetchUsingPK(salesOrderId, salesOrderDetailId, null, null, null);
+			return FetchUsingPK(salesOrderID, salesOrderDetailID, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(salesOrderId, salesOrderDetailId, prefetchPathToUse, null, null);
+			return FetchUsingPK(salesOrderID, salesOrderDetailID, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(salesOrderId, salesOrderDetailId, prefetchPathToUse, contextToUse, null);
+			return Fetch(salesOrderID, salesOrderDetailID, prefetchPathToUse, contextToUse, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(salesOrderId, salesOrderDetailId, prefetchPathToUse, contextToUse, excludedIncludedFields);
+			return Fetch(salesOrderID, salesOrderDetailID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -403,7 +403,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.SalesOrderId, this.SalesOrderDetailId, null, null, null);
+			return Fetch(this.SalesOrderID, this.SalesOrderDetailID, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -449,7 +449,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedSalesOrderHeader || forceFetch || _alwaysFetchSalesOrderHeader) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderID);
 
 				SalesOrderHeaderEntity newEntity = new SalesOrderHeaderEntity();
 				if(base.ParticipatesInTransaction)
@@ -459,7 +459,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.SalesOrderId);
+					fetchResult = newEntity.FetchUsingPK(this.SalesOrderID);
 				}
 				if(fetchResult)
 				{
@@ -506,7 +506,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedSpecialOfferProduct || forceFetch || _alwaysFetchSpecialOfferProduct) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIDProductID);
 
 				SpecialOfferProductEntity newEntity = new SpecialOfferProductEntity();
 				if(base.ParticipatesInTransaction)
@@ -516,7 +516,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.SpecialOfferId, this.ProductId);
+					fetchResult = newEntity.FetchUsingPK(this.SpecialOfferID, this.ProductID);
 				}
 				if(fetchResult)
 				{
@@ -650,17 +650,17 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="validator">The validator object for this SalesOrderDetailEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IValidator validator, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			base.Validator = validator;
 			InitClassMembers();
 			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(salesOrderId, salesOrderDetailId, prefetchPathToUse, null, null);
+			bool wasSuccesful = Fetch(salesOrderID, salesOrderDetailID, prefetchPathToUse, null, null);
 			base.IsNew = !wasSuccesful;
 
 			
@@ -702,10 +702,10 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("SalesOrderId", fieldHashtable);
+			_fieldsCustomProperties.Add("SalesOrderID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("SalesOrderDetailId", fieldHashtable);
+			_fieldsCustomProperties.Add("SalesOrderDetailID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("CarrierTrackingNumber", fieldHashtable);
@@ -714,10 +714,10 @@ namespace AW.Data.EntityClasses
 			_fieldsCustomProperties.Add("OrderQty", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ProductId", fieldHashtable);
+			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("SpecialOfferId", fieldHashtable);
+			_fieldsCustomProperties.Add("SpecialOfferID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("UnitPrice", fieldHashtable);
@@ -742,7 +742,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncSalesOrderHeader(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _salesOrderHeader, new PropertyChangedEventHandler( OnSalesOrderHeaderPropertyChanged ), "SalesOrderHeader", SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId, true, signalRelatedEntity, "SalesOrderDetail", resetFKFields, new int[] { (int)SalesOrderDetailFieldIndex.SalesOrderId } );		
+			base.PerformDesetupSyncRelatedEntity( _salesOrderHeader, new PropertyChangedEventHandler( OnSalesOrderHeaderPropertyChanged ), "SalesOrderHeader", SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderID, true, signalRelatedEntity, "SalesOrderDetails", resetFKFields, new int[] { (int)SalesOrderDetailFieldIndex.SalesOrderID } );		
 			_salesOrderHeader = null;
 		}
 		
@@ -754,7 +754,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncSalesOrderHeader(true, true);
 				_salesOrderHeader = (SalesOrderHeaderEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _salesOrderHeader, new PropertyChangedEventHandler( OnSalesOrderHeaderPropertyChanged ), "SalesOrderHeader", SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId, true, ref _alreadyFetchedSalesOrderHeader, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _salesOrderHeader, new PropertyChangedEventHandler( OnSalesOrderHeaderPropertyChanged ), "SalesOrderHeader", SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderID, true, ref _alreadyFetchedSalesOrderHeader, new string[] {  } );
 			}
 		}
 
@@ -775,7 +775,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncSpecialOfferProduct(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _specialOfferProduct, new PropertyChangedEventHandler( OnSpecialOfferProductPropertyChanged ), "SpecialOfferProduct", SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId, true, signalRelatedEntity, "SalesOrderDetail", resetFKFields, new int[] { (int)SalesOrderDetailFieldIndex.SpecialOfferId, (int)SalesOrderDetailFieldIndex.ProductId } );		
+			base.PerformDesetupSyncRelatedEntity( _specialOfferProduct, new PropertyChangedEventHandler( OnSpecialOfferProductPropertyChanged ), "SpecialOfferProduct", SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIDProductID, true, signalRelatedEntity, "SalesOrderDetails", resetFKFields, new int[] { (int)SalesOrderDetailFieldIndex.SpecialOfferID, (int)SalesOrderDetailFieldIndex.ProductID } );		
 			_specialOfferProduct = null;
 		}
 		
@@ -787,7 +787,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncSpecialOfferProduct(true, true);
 				_specialOfferProduct = (SpecialOfferProductEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _specialOfferProduct, new PropertyChangedEventHandler( OnSpecialOfferProductPropertyChanged ), "SpecialOfferProduct", SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIdProductId, true, ref _alreadyFetchedSpecialOfferProduct, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _specialOfferProduct, new PropertyChangedEventHandler( OnSpecialOfferProductPropertyChanged ), "SpecialOfferProduct", SalesOrderDetailEntity.Relations.SpecialOfferProductEntityUsingSpecialOfferIDProductID, true, ref _alreadyFetchedSpecialOfferProduct, new string[] {  } );
 			}
 		}
 
@@ -805,22 +805,22 @@ namespace AW.Data.EntityClasses
 
 
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="salesOrderId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		/// <param name="salesOrderDetailId">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
+		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 salesOrderId, System.Int32 salesOrderDetailId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(System.Int32 salesOrderID, System.Int32 salesOrderDetailID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
-				base.Fields[(int)SalesOrderDetailFieldIndex.SalesOrderId].ForcedCurrentValueWrite(salesOrderId);
-				base.Fields[(int)SalesOrderDetailFieldIndex.SalesOrderDetailId].ForcedCurrentValueWrite(salesOrderDetailId);
+				base.Fields[(int)SalesOrderDetailFieldIndex.SalesOrderID].ForcedCurrentValueWrite(salesOrderID);
+				base.Fields[(int)SalesOrderDetailFieldIndex.SalesOrderDetailID].ForcedCurrentValueWrite(salesOrderDetailID);
 				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
 				return (base.Fields.State == EntityState.Fetched);
 			}
@@ -917,25 +917,25 @@ namespace AW.Data.EntityClasses
 			get { return SalesOrderDetailEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The SalesOrderId property of the Entity SalesOrderDetail<br/><br/>
+		/// <summary> The SalesOrderID property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SalesOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 SalesOrderId
+		public virtual System.Int32 SalesOrderID
 		{
-			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SalesOrderId, true); }
-			set	{ SetValue((int)SalesOrderDetailFieldIndex.SalesOrderId, value, true); }
+			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SalesOrderID, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.SalesOrderID, value, true); }
 		}
-		/// <summary> The SalesOrderDetailId property of the Entity SalesOrderDetail<br/><br/>
+		/// <summary> The SalesOrderDetailID property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SalesOrderDetailID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 SalesOrderDetailId
+		public virtual System.Int32 SalesOrderDetailID
 		{
-			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailId, true); }
-			set	{ SetValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailId, value, true); }
+			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailID, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailID, value, true); }
 		}
 		/// <summary> The CarrierTrackingNumber property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -957,25 +957,25 @@ namespace AW.Data.EntityClasses
 			get { return (System.Int16)GetValue((int)SalesOrderDetailFieldIndex.OrderQty, true); }
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.OrderQty, value, true); }
 		}
-		/// <summary> The ProductId property of the Entity SalesOrderDetail<br/><br/>
+		/// <summary> The ProductID property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 ProductId
+		public virtual System.Int32 ProductID
 		{
-			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.ProductId, true); }
-			set	{ SetValue((int)SalesOrderDetailFieldIndex.ProductId, value, true); }
+			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.ProductID, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.ProductID, value, true); }
 		}
-		/// <summary> The SpecialOfferId property of the Entity SalesOrderDetail<br/><br/>
+		/// <summary> The SpecialOfferID property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SpecialOfferID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 SpecialOfferId
+		public virtual System.Int32 SpecialOfferID
 		{
-			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SpecialOfferId, true); }
-			set	{ SetValue((int)SalesOrderDetailFieldIndex.SpecialOfferId, value, true); }
+			get { return (System.Int32)GetValue((int)SalesOrderDetailFieldIndex.SpecialOfferID, true); }
+			set	{ SetValue((int)SalesOrderDetailFieldIndex.SpecialOfferID, value, true); }
 		}
 		/// <summary> The UnitPrice property of the Entity SalesOrderDetail<br/><br/>
 		/// </summary>
@@ -1036,6 +1036,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesOrderHeader()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual SalesOrderHeaderEntity SalesOrderHeader
 		{
 			get	{ return GetSingleSalesOrderHeader(false); }
@@ -1051,14 +1052,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_salesOrderHeader != null)
 						{
-							_salesOrderHeader.UnsetRelatedEntity(this, "SalesOrderDetail");
+							_salesOrderHeader.UnsetRelatedEntity(this, "SalesOrderDetails");
 						}
 					}
 					else
 					{
 						if(_salesOrderHeader!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "SalesOrderDetail");
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderDetails");
 						}
 					}
 				}
@@ -1106,6 +1107,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSpecialOfferProduct()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual SpecialOfferProductEntity SpecialOfferProduct
 		{
 			get	{ return GetSingleSpecialOfferProduct(false); }
@@ -1121,14 +1123,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_specialOfferProduct != null)
 						{
-							_specialOfferProduct.UnsetRelatedEntity(this, "SalesOrderDetail");
+							_specialOfferProduct.UnsetRelatedEntity(this, "SalesOrderDetails");
 						}
 					}
 					else
 					{
 						if(_specialOfferProduct!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "SalesOrderDetail");
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderDetails");
 						}
 					}
 				}

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -39,8 +39,8 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AW.Data.CollectionClasses.SalesOrderDetailCollection	_salesOrderDetail;
-		private bool	_alwaysFetchSalesOrderDetail, _alreadyFetchedSalesOrderDetail;
+		private AW.Data.CollectionClasses.SalesOrderDetailCollection	_salesOrderDetails;
+		private bool	_alwaysFetchSalesOrderDetails, _alreadyFetchedSalesOrderDetails;
 		private AW.Data.CollectionClasses.SalesOrderHeaderCollection _salesOrderHeaderCollectionViaSalesOrderDetail;
 		private bool	_alwaysFetchSalesOrderHeaderCollectionViaSalesOrderDetail, _alreadyFetchedSalesOrderHeaderCollectionViaSalesOrderDetail;
 		private ProductEntity _product;
@@ -58,14 +58,14 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 			/// <summary>Member name Product</summary>
 			public static readonly string Product = "Product";
 			/// <summary>Member name SpecialOffer</summary>
 			public static readonly string SpecialOffer = "SpecialOffer";
-			/// <summary>Member name SalesOrderDetail</summary>
-			public static readonly string SalesOrderDetail = "SalesOrderDetail";
+			/// <summary>Member name SalesOrderDetails</summary>
+			public static readonly string SalesOrderDetails = "SalesOrderDetails";
 			/// <summary>Member name SalesOrderHeaderCollectionViaSalesOrderDetail</summary>
 			public static readonly string SalesOrderHeaderCollectionViaSalesOrderDetail = "SalesOrderHeaderCollectionViaSalesOrderDetail";
 
@@ -86,29 +86,29 @@ namespace AW.Data.EntityClasses
 
 	
 		/// <summary>CTor</summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		public SpecialOfferProductEntityBase(System.Int32 specialOfferId, System.Int32 productId)
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		public SpecialOfferProductEntityBase(System.Int32 specialOfferID, System.Int32 productID)
 		{
-			InitClassFetch(specialOfferId, productId, null, null);
+			InitClassFetch(specialOfferID, productID, null, null);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SpecialOfferProductEntityBase(System.Int32 specialOfferId, System.Int32 productId, IPrefetchPath prefetchPathToUse)
+		public SpecialOfferProductEntityBase(System.Int32 specialOfferID, System.Int32 productID, IPrefetchPath prefetchPathToUse)
 		{
-			InitClassFetch(specialOfferId, productId, null, prefetchPathToUse);
+			InitClassFetch(specialOfferID, productID, null, prefetchPathToUse);
 		}
 
 		/// <summary>CTor</summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="validator">The custom validator object for this SpecialOfferProductEntity</param>
-		public SpecialOfferProductEntityBase(System.Int32 specialOfferId, System.Int32 productId, IValidator validator)
+		public SpecialOfferProductEntityBase(System.Int32 specialOfferID, System.Int32 productID, IValidator validator)
 		{
-			InitClassFetch(specialOfferId, productId, validator, null);
+			InitClassFetch(specialOfferID, productID, validator, null);
 		}
 	
 
@@ -117,9 +117,9 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected SpecialOfferProductEntityBase(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_salesOrderDetail = (AW.Data.CollectionClasses.SalesOrderDetailCollection)info.GetValue("_salesOrderDetail", typeof(AW.Data.CollectionClasses.SalesOrderDetailCollection));
-			_alwaysFetchSalesOrderDetail = info.GetBoolean("_alwaysFetchSalesOrderDetail");
-			_alreadyFetchedSalesOrderDetail = info.GetBoolean("_alreadyFetchedSalesOrderDetail");
+			_salesOrderDetails = (AW.Data.CollectionClasses.SalesOrderDetailCollection)info.GetValue("_salesOrderDetails", typeof(AW.Data.CollectionClasses.SalesOrderDetailCollection));
+			_alwaysFetchSalesOrderDetails = info.GetBoolean("_alwaysFetchSalesOrderDetails");
+			_alreadyFetchedSalesOrderDetails = info.GetBoolean("_alreadyFetchedSalesOrderDetails");
 			_salesOrderHeaderCollectionViaSalesOrderDetail = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrderHeaderCollectionViaSalesOrderDetail", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
 			_alwaysFetchSalesOrderHeaderCollectionViaSalesOrderDetail = info.GetBoolean("_alwaysFetchSalesOrderHeaderCollectionViaSalesOrderDetail");
 			_alreadyFetchedSalesOrderHeaderCollectionViaSalesOrderDetail = info.GetBoolean("_alreadyFetchedSalesOrderHeaderCollectionViaSalesOrderDetail");
@@ -153,11 +153,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch((SpecialOfferProductFieldIndex)fieldIndex)
 			{
-				case SpecialOfferProductFieldIndex.SpecialOfferId:
+				case SpecialOfferProductFieldIndex.SpecialOfferID:
 					DesetupSyncSpecialOffer(true, false);
 					_alreadyFetchedSpecialOffer = false;
 					break;
-				case SpecialOfferProductFieldIndex.ProductId:
+				case SpecialOfferProductFieldIndex.ProductID:
 					DesetupSyncProduct(true, false);
 					_alreadyFetchedProduct = false;
 					break;
@@ -177,7 +177,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
-			_alreadyFetchedSalesOrderDetail = (_salesOrderDetail.Count > 0);
+			_alreadyFetchedSalesOrderDetails = (_salesOrderDetails.Count > 0);
 			_alreadyFetchedSalesOrderHeaderCollectionViaSalesOrderDetail = (_salesOrderHeaderCollectionViaSalesOrderDetail.Count > 0);
 			_alreadyFetchedProduct = (_product != null);
 			_alreadyFetchedSpecialOffer = (_specialOffer != null);
@@ -201,17 +201,17 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 				case "Product":
-					toReturn.Add(SpecialOfferProductEntity.Relations.ProductEntityUsingProductId);
+					toReturn.Add(SpecialOfferProductEntity.Relations.ProductEntityUsingProductID);
 					break;
 				case "SpecialOffer":
-					toReturn.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferId);
+					toReturn.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferID);
 					break;
-				case "SalesOrderDetail":
-					toReturn.Add(SpecialOfferProductEntity.Relations.SalesOrderDetailEntityUsingSpecialOfferIdProductId);
+				case "SalesOrderDetails":
+					toReturn.Add(SpecialOfferProductEntity.Relations.SalesOrderDetailEntityUsingSpecialOfferIDProductID);
 					break;
 				case "SalesOrderHeaderCollectionViaSalesOrderDetail":
-					toReturn.Add(SpecialOfferProductEntity.Relations.SalesOrderDetailEntityUsingSpecialOfferIdProductId, "SpecialOfferProductEntity__", "SalesOrderDetail_", JoinHint.None);
-					toReturn.Add(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderId, "SalesOrderDetail_", string.Empty, JoinHint.None);
+					toReturn.Add(SpecialOfferProductEntity.Relations.SalesOrderDetailEntityUsingSpecialOfferIDProductID, "SpecialOfferProductEntity__", "SalesOrderDetail_", JoinHint.None);
+					toReturn.Add(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderID, "SalesOrderDetail_", string.Empty, JoinHint.None);
 					break;
 
 				default:
@@ -230,9 +230,9 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_salesOrderDetail", (!this.MarkedForDeletion?_salesOrderDetail:null));
-			info.AddValue("_alwaysFetchSalesOrderDetail", _alwaysFetchSalesOrderDetail);
-			info.AddValue("_alreadyFetchedSalesOrderDetail", _alreadyFetchedSalesOrderDetail);
+			info.AddValue("_salesOrderDetails", (!this.MarkedForDeletion?_salesOrderDetails:null));
+			info.AddValue("_alwaysFetchSalesOrderDetails", _alwaysFetchSalesOrderDetails);
+			info.AddValue("_alreadyFetchedSalesOrderDetails", _alreadyFetchedSalesOrderDetails);
 			info.AddValue("_salesOrderHeaderCollectionViaSalesOrderDetail", (!this.MarkedForDeletion?_salesOrderHeaderCollectionViaSalesOrderDetail:null));
 			info.AddValue("_alwaysFetchSalesOrderHeaderCollectionViaSalesOrderDetail", _alwaysFetchSalesOrderHeaderCollectionViaSalesOrderDetail);
 			info.AddValue("_alreadyFetchedSalesOrderHeaderCollectionViaSalesOrderDetail", _alreadyFetchedSalesOrderHeaderCollectionViaSalesOrderDetail);
@@ -268,11 +268,11 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedSpecialOffer = true;
 					this.SpecialOffer = (SpecialOfferEntity)entity;
 					break;
-				case "SalesOrderDetail":
-					_alreadyFetchedSalesOrderDetail = true;
+				case "SalesOrderDetails":
+					_alreadyFetchedSalesOrderDetails = true;
 					if(entity!=null)
 					{
-						this.SalesOrderDetail.Add((SalesOrderDetailEntity)entity);
+						this.SalesOrderDetails.Add((SalesOrderDetailEntity)entity);
 					}
 					break;
 				case "SalesOrderHeaderCollectionViaSalesOrderDetail":
@@ -303,8 +303,8 @@ namespace AW.Data.EntityClasses
 				case "SpecialOffer":
 					SetupSyncSpecialOffer(relatedEntity);
 					break;
-				case "SalesOrderDetail":
-					_salesOrderDetail.Add((SalesOrderDetailEntity)relatedEntity);
+				case "SalesOrderDetails":
+					_salesOrderDetails.Add((SalesOrderDetailEntity)relatedEntity);
 					break;
 
 				default:
@@ -328,8 +328,8 @@ namespace AW.Data.EntityClasses
 				case "SpecialOffer":
 					DesetupSyncSpecialOffer(false, true);
 					break;
-				case "SalesOrderDetail":
-					base.PerformRelatedEntityRemoval(_salesOrderDetail, relatedEntity, signalRelatedEntityManyToOne);
+				case "SalesOrderDetails":
+					base.PerformRelatedEntityRemoval(_salesOrderDetails, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -374,7 +374,7 @@ namespace AW.Data.EntityClasses
 		public override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
-			toReturn.Add(_salesOrderDetail);
+			toReturn.Add(_salesOrderDetails);
 
 			return toReturn;
 		}
@@ -384,47 +384,47 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 specialOfferId, System.Int32 productId)
+		public bool FetchUsingPK(System.Int32 specialOfferID, System.Int32 productID)
 		{
-			return FetchUsingPK(specialOfferId, productId, null, null, null);
+			return FetchUsingPK(specialOfferID, productID, null, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 specialOfferId, System.Int32 productId, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(System.Int32 specialOfferID, System.Int32 productID, IPrefetchPath prefetchPathToUse)
 		{
-			return FetchUsingPK(specialOfferId, productId, prefetchPathToUse, null, null);
+			return FetchUsingPK(specialOfferID, productID, prefetchPathToUse, null, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 specialOfferId, System.Int32 productId, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(System.Int32 specialOfferID, System.Int32 productID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
-			return Fetch(specialOfferId, productId, prefetchPathToUse, contextToUse, null);
+			return Fetch(specialOfferID, productID, prefetchPathToUse, contextToUse, null);
 		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 specialOfferId, System.Int32 productId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(System.Int32 specialOfferID, System.Int32 productID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(specialOfferId, productId, prefetchPathToUse, contextToUse, excludedIncludedFields);
+			return Fetch(specialOfferID, productID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
 
 		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. 
@@ -432,7 +432,7 @@ namespace AW.Data.EntityClasses
 		/// <returns>true if Refetch succeeded, false otherwise</returns>
 		public override bool Refetch()
 		{
-			return Fetch(this.SpecialOfferId, this.ProductId, null, null, null);
+			return Fetch(this.SpecialOfferID, this.ProductID, null, null, null);
 		}
 
 		/// <summary> Returns true if the original value for the field with the fieldIndex passed in, read from the persistent storage was NULL, false otherwise.
@@ -465,27 +465,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'SalesOrderDetailEntity'</returns>
-		public AW.Data.CollectionClasses.SalesOrderDetailCollection GetMultiSalesOrderDetail(bool forceFetch)
+		public AW.Data.CollectionClasses.SalesOrderDetailCollection GetMultiSalesOrderDetails(bool forceFetch)
 		{
-			return GetMultiSalesOrderDetail(forceFetch, _salesOrderDetail.EntityFactoryToUse, null);
+			return GetMultiSalesOrderDetails(forceFetch, _salesOrderDetails.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'SalesOrderDetailEntity'</returns>
-		public AW.Data.CollectionClasses.SalesOrderDetailCollection GetMultiSalesOrderDetail(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.SalesOrderDetailCollection GetMultiSalesOrderDetails(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiSalesOrderDetail(forceFetch, _salesOrderDetail.EntityFactoryToUse, filter);
+			return GetMultiSalesOrderDetails(forceFetch, _salesOrderDetails.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.SalesOrderDetailCollection GetMultiSalesOrderDetail(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.SalesOrderDetailCollection GetMultiSalesOrderDetails(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiSalesOrderDetail(forceFetch, entityFactoryToUse, null);
+			return GetMultiSalesOrderDetails(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.</summary>
@@ -493,37 +493,37 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.SalesOrderDetailCollection GetMultiSalesOrderDetail(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.SalesOrderDetailCollection GetMultiSalesOrderDetails(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedSalesOrderDetail || forceFetch || _alwaysFetchSalesOrderDetail) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedSalesOrderDetails || forceFetch || _alwaysFetchSalesOrderDetails) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_salesOrderDetail.ParticipatesInTransaction)
+					if(!_salesOrderDetails.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_salesOrderDetail);
+						base.Transaction.Add(_salesOrderDetails);
 					}
 				}
-				_salesOrderDetail.SuppressClearInGetMulti=!forceFetch;
+				_salesOrderDetails.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_salesOrderDetail.EntityFactoryToUse = entityFactoryToUse;
+					_salesOrderDetails.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_salesOrderDetail.GetMultiManyToOne(null, this, filter);
-				_salesOrderDetail.SuppressClearInGetMulti=false;
-				_alreadyFetchedSalesOrderDetail = true;
+				_salesOrderDetails.GetMultiManyToOne(null, this, filter);
+				_salesOrderDetails.SuppressClearInGetMulti=false;
+				_alreadyFetchedSalesOrderDetails = true;
 			}
-			return _salesOrderDetail;
+			return _salesOrderDetails;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'SalesOrderDetail'. These settings will be taken into account
-		/// when the property SalesOrderDetail is requested or GetMultiSalesOrderDetail is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'SalesOrderDetails'. These settings will be taken into account
+		/// when the property SalesOrderDetails is requested or GetMultiSalesOrderDetails is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersSalesOrderDetail(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersSalesOrderDetails(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_salesOrderDetail.SortClauses=sortClauses;
-			_salesOrderDetail.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_salesOrderDetails.SortClauses=sortClauses;
+			_salesOrderDetails.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type 'm:n'.</summary>
@@ -550,8 +550,8 @@ namespace AW.Data.EntityClasses
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(SpecialOfferProductFields.SpecialOfferId, ComparisonOperator.Equal, this.SpecialOfferId, "SpecialOfferProductEntity__"));
-				filter.Add(new FieldCompareValuePredicate(SpecialOfferProductFields.ProductId, ComparisonOperator.Equal, this.ProductId, "SpecialOfferProductEntity__"));
+				filter.Add(new FieldCompareValuePredicate(SpecialOfferProductFields.SpecialOfferID, ComparisonOperator.Equal, this.SpecialOfferID, "SpecialOfferProductEntity__"));
+				filter.Add(new FieldCompareValuePredicate(SpecialOfferProductFields.ProductID, ComparisonOperator.Equal, this.ProductID, "SpecialOfferProductEntity__"));
 				_salesOrderHeaderCollectionViaSalesOrderDetail.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
@@ -588,7 +588,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedProduct || forceFetch || _alwaysFetchProduct) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SpecialOfferProductEntity.Relations.ProductEntityUsingProductId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SpecialOfferProductEntity.Relations.ProductEntityUsingProductID);
 
 				ProductEntity newEntity = new ProductEntity();
 				if(base.ParticipatesInTransaction)
@@ -598,7 +598,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.ProductId);
+					fetchResult = newEntity.FetchUsingPK(this.ProductID);
 				}
 				if(fetchResult)
 				{
@@ -645,7 +645,7 @@ namespace AW.Data.EntityClasses
 		{
 			if( ( !_alreadyFetchedSpecialOffer || forceFetch || _alwaysFetchSpecialOffer) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
 			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferId);
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferID);
 
 				SpecialOfferEntity newEntity = new SpecialOfferEntity();
 				if(base.ParticipatesInTransaction)
@@ -655,7 +655,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					fetchResult = newEntity.FetchUsingPK(this.SpecialOfferId);
+					fetchResult = newEntity.FetchUsingPK(this.SpecialOfferID);
 				}
 				if(fetchResult)
 				{
@@ -700,7 +700,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			_salesOrderDetail.ActiveContext = base.ActiveContext;
+			_salesOrderDetails.ActiveContext = base.ActiveContext;
 			_salesOrderHeaderCollectionViaSalesOrderDetail.ActiveContext = base.ActiveContext;
 			if(_product!=null)
 			{
@@ -781,7 +781,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Product", _product);
 			toReturn.Add("SpecialOffer", _specialOffer);
-			toReturn.Add("SalesOrderDetail", _salesOrderDetail);
+			toReturn.Add("SalesOrderDetails", _salesOrderDetails);
 			toReturn.Add("SalesOrderHeaderCollectionViaSalesOrderDetail", _salesOrderHeaderCollectionViaSalesOrderDetail);
 
 			return toReturn;
@@ -789,17 +789,17 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="validator">The validator object for this SpecialOfferProductEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		protected virtual void InitClassFetch(System.Int32 specialOfferId, System.Int32 productId, IValidator validator, IPrefetchPath prefetchPathToUse)
+		protected virtual void InitClassFetch(System.Int32 specialOfferID, System.Int32 productID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			base.Validator = validator;
 			InitClassMembers();
 			base.Fields = CreateFields();
-			bool wasSuccesful = Fetch(specialOfferId, productId, prefetchPathToUse, null, null);
+			bool wasSuccesful = Fetch(specialOfferID, productID, prefetchPathToUse, null, null);
 			base.IsNew = !wasSuccesful;
 
 			
@@ -812,10 +812,10 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
-			_salesOrderDetail = new AW.Data.CollectionClasses.SalesOrderDetailCollection(new SalesOrderDetailEntityFactory());
-			_salesOrderDetail.SetContainingEntityInfo(this, "SpecialOfferProduct");
-			_alwaysFetchSalesOrderDetail = false;
-			_alreadyFetchedSalesOrderDetail = false;
+			_salesOrderDetails = new AW.Data.CollectionClasses.SalesOrderDetailCollection(new SalesOrderDetailEntityFactory());
+			_salesOrderDetails.SetContainingEntityInfo(this, "SpecialOfferProduct");
+			_alwaysFetchSalesOrderDetails = false;
+			_alreadyFetchedSalesOrderDetails = false;
 			_salesOrderHeaderCollectionViaSalesOrderDetail = new AW.Data.CollectionClasses.SalesOrderHeaderCollection(new SalesOrderHeaderEntityFactory());
 			_alwaysFetchSalesOrderHeaderCollectionViaSalesOrderDetail = false;
 			_alreadyFetchedSalesOrderHeaderCollectionViaSalesOrderDetail = false;
@@ -846,10 +846,10 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("SpecialOfferId", fieldHashtable);
+			_fieldsCustomProperties.Add("SpecialOfferID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
-			_fieldsCustomProperties.Add("ProductId", fieldHashtable);
+			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
@@ -865,7 +865,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncProduct(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _product, new PropertyChangedEventHandler( OnProductPropertyChanged ), "Product", SpecialOfferProductEntity.Relations.ProductEntityUsingProductId, true, signalRelatedEntity, "SpecialOfferProduct", resetFKFields, new int[] { (int)SpecialOfferProductFieldIndex.ProductId } );		
+			base.PerformDesetupSyncRelatedEntity( _product, new PropertyChangedEventHandler( OnProductPropertyChanged ), "Product", SpecialOfferProductEntity.Relations.ProductEntityUsingProductID, true, signalRelatedEntity, "SpecialOfferProducts", resetFKFields, new int[] { (int)SpecialOfferProductFieldIndex.ProductID } );		
 			_product = null;
 		}
 		
@@ -877,7 +877,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncProduct(true, true);
 				_product = (ProductEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _product, new PropertyChangedEventHandler( OnProductPropertyChanged ), "Product", SpecialOfferProductEntity.Relations.ProductEntityUsingProductId, true, ref _alreadyFetchedProduct, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _product, new PropertyChangedEventHandler( OnProductPropertyChanged ), "Product", SpecialOfferProductEntity.Relations.ProductEntityUsingProductID, true, ref _alreadyFetchedProduct, new string[] {  } );
 			}
 		}
 
@@ -898,7 +898,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncSpecialOffer(bool signalRelatedEntity, bool resetFKFields)
 		{
-			base.PerformDesetupSyncRelatedEntity( _specialOffer, new PropertyChangedEventHandler( OnSpecialOfferPropertyChanged ), "SpecialOffer", SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferId, true, signalRelatedEntity, "SpecialOfferProduct", resetFKFields, new int[] { (int)SpecialOfferProductFieldIndex.SpecialOfferId } );		
+			base.PerformDesetupSyncRelatedEntity( _specialOffer, new PropertyChangedEventHandler( OnSpecialOfferPropertyChanged ), "SpecialOffer", SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferID, true, signalRelatedEntity, "SpecialOfferProducts", resetFKFields, new int[] { (int)SpecialOfferProductFieldIndex.SpecialOfferID } );		
 			_specialOffer = null;
 		}
 		
@@ -910,7 +910,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncSpecialOffer(true, true);
 				_specialOffer = (SpecialOfferEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _specialOffer, new PropertyChangedEventHandler( OnSpecialOfferPropertyChanged ), "SpecialOffer", SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferId, true, ref _alreadyFetchedSpecialOffer, new string[] {  } );
+				base.PerformSetupSyncRelatedEntity( _specialOffer, new PropertyChangedEventHandler( OnSpecialOfferPropertyChanged ), "SpecialOffer", SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferID, true, ref _alreadyFetchedSpecialOffer, new string[] {  } );
 			}
 		}
 
@@ -928,22 +928,22 @@ namespace AW.Data.EntityClasses
 
 
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="specialOfferId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
-		/// <param name="productId">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="specialOfferID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
+		/// <param name="productID">PK value for SpecialOfferProduct which data should be fetched into this SpecialOfferProduct object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 specialOfferId, System.Int32 productId, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(System.Int32 specialOfferID, System.Int32 productID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
 				OnFetch();
 				IDao dao = this.CreateDAOInstance();
-				base.Fields[(int)SpecialOfferProductFieldIndex.SpecialOfferId].ForcedCurrentValueWrite(specialOfferId);
-				base.Fields[(int)SpecialOfferProductFieldIndex.ProductId].ForcedCurrentValueWrite(productId);
+				base.Fields[(int)SpecialOfferProductFieldIndex.SpecialOfferID].ForcedCurrentValueWrite(specialOfferID);
+				base.Fields[(int)SpecialOfferProductFieldIndex.ProductID].ForcedCurrentValueWrite(productID);
 				dao.FetchExisting(this, base.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
 				return (base.Fields.State == EntityState.Fetched);
 			}
@@ -986,12 +986,12 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderDetail' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathSalesOrderDetail
+		public static IPrefetchPathElement PrefetchPathSalesOrderDetails
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderDetailCollection(),
-					(IEntityRelation)GetRelationsForField("SalesOrderDetail")[0], (int)AW.Data.EntityType.SpecialOfferProductEntity, (int)AW.Data.EntityType.SalesOrderDetailEntity, 0, null, null, null, "SalesOrderDetail", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("SalesOrderDetails")[0], (int)AW.Data.EntityType.SpecialOfferProductEntity, (int)AW.Data.EntityType.SalesOrderDetailEntity, 0, null, null, null, "SalesOrderDetails", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -1002,7 +1002,7 @@ namespace AW.Data.EntityClasses
 		{
 			get
 			{
-				IEntityRelation intermediateRelation = SpecialOfferProductEntity.Relations.SalesOrderDetailEntityUsingSpecialOfferIdProductId;
+				IEntityRelation intermediateRelation = SpecialOfferProductEntity.Relations.SalesOrderDetailEntityUsingSpecialOfferIDProductID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderDetail_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.SpecialOfferProductEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, GetRelationsForField("SalesOrderHeaderCollectionViaSalesOrderDetail"), "SalesOrderHeaderCollectionViaSalesOrderDetail", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
@@ -1064,25 +1064,25 @@ namespace AW.Data.EntityClasses
 			get { return SpecialOfferProductEntity.FieldsCustomProperties;}
 		}
 
-		/// <summary> The SpecialOfferId property of the Entity SpecialOfferProduct<br/><br/>
+		/// <summary> The SpecialOfferID property of the Entity SpecialOfferProduct<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "SpecialOfferProduct"."SpecialOfferID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 SpecialOfferId
+		public virtual System.Int32 SpecialOfferID
 		{
-			get { return (System.Int32)GetValue((int)SpecialOfferProductFieldIndex.SpecialOfferId, true); }
-			set	{ SetValue((int)SpecialOfferProductFieldIndex.SpecialOfferId, value, true); }
+			get { return (System.Int32)GetValue((int)SpecialOfferProductFieldIndex.SpecialOfferID, true); }
+			set	{ SetValue((int)SpecialOfferProductFieldIndex.SpecialOfferID, value, true); }
 		}
-		/// <summary> The ProductId property of the Entity SpecialOfferProduct<br/><br/>
+		/// <summary> The ProductID property of the Entity SpecialOfferProduct<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on  table field: "SpecialOfferProduct"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 ProductId
+		public virtual System.Int32 ProductID
 		{
-			get { return (System.Int32)GetValue((int)SpecialOfferProductFieldIndex.ProductId, true); }
-			set	{ SetValue((int)SpecialOfferProductFieldIndex.ProductId, value, true); }
+			get { return (System.Int32)GetValue((int)SpecialOfferProductFieldIndex.ProductID, true); }
+			set	{ SetValue((int)SpecialOfferProductFieldIndex.ProductID, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity SpecialOfferProduct<br/><br/>
 		/// </summary>
@@ -1106,36 +1106,36 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrderDetail()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrderDetails()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.SalesOrderDetailCollection SalesOrderDetail
+		public virtual AW.Data.CollectionClasses.SalesOrderDetailCollection SalesOrderDetails
 		{
-			get	{ return GetMultiSalesOrderDetail(false); }
+			get	{ return GetMultiSalesOrderDetails(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for SalesOrderDetail. When set to true, SalesOrderDetail is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time SalesOrderDetail is accessed. You can always execute
-		/// a forced fetch by calling GetMultiSalesOrderDetail(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for SalesOrderDetails. When set to true, SalesOrderDetails is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesOrderDetails is accessed. You can always execute
+		/// a forced fetch by calling GetMultiSalesOrderDetails(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchSalesOrderDetail
+		public bool AlwaysFetchSalesOrderDetails
 		{
-			get	{ return _alwaysFetchSalesOrderDetail; }
-			set	{ _alwaysFetchSalesOrderDetail = value; }	
+			get	{ return _alwaysFetchSalesOrderDetails; }
+			set	{ _alwaysFetchSalesOrderDetails = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrderDetail already has been fetched. Setting this property to false when SalesOrderDetail has been fetched
-		/// will clear the SalesOrderDetail collection well. Setting this property to true while SalesOrderDetail hasn't been fetched disables lazy loading for SalesOrderDetail</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrderDetails already has been fetched. Setting this property to false when SalesOrderDetails has been fetched
+		/// will clear the SalesOrderDetails collection well. Setting this property to true while SalesOrderDetails hasn't been fetched disables lazy loading for SalesOrderDetails</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedSalesOrderDetail
+		public bool AlreadyFetchedSalesOrderDetails
 		{
-			get { return _alreadyFetchedSalesOrderDetail;}
+			get { return _alreadyFetchedSalesOrderDetails;}
 			set 
 			{
-				if(_alreadyFetchedSalesOrderDetail && !value && (_salesOrderDetail != null))
+				if(_alreadyFetchedSalesOrderDetails && !value && (_salesOrderDetails != null))
 				{
-					_salesOrderDetail.Clear();
+					_salesOrderDetails.Clear();
 				}
-				_alreadyFetchedSalesOrderDetail = value;
+				_alreadyFetchedSalesOrderDetails = value;
 			}
 		}
 
@@ -1179,6 +1179,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleProduct()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual ProductEntity Product
 		{
 			get	{ return GetSingleProduct(false); }
@@ -1194,14 +1195,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_product != null)
 						{
-							_product.UnsetRelatedEntity(this, "SpecialOfferProduct");
+							_product.UnsetRelatedEntity(this, "SpecialOfferProducts");
 						}
 					}
 					else
 					{
 						if(_product!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "SpecialOfferProduct");
+							((IEntity)value).SetRelatedEntity(this, "SpecialOfferProducts");
 						}
 					}
 				}
@@ -1249,6 +1250,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSpecialOffer()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
 		public virtual SpecialOfferEntity SpecialOffer
 		{
 			get	{ return GetSingleSpecialOffer(false); }
@@ -1264,14 +1266,14 @@ namespace AW.Data.EntityClasses
 					{
 						if(_specialOffer != null)
 						{
-							_specialOffer.UnsetRelatedEntity(this, "SpecialOfferProduct");
+							_specialOffer.UnsetRelatedEntity(this, "SpecialOfferProducts");
 						}
 					}
 					else
 					{
 						if(_specialOffer!=value)
 						{
-							((IEntity)value).SetRelatedEntity(this, "SpecialOfferProduct");
+							((IEntity)value).SetRelatedEntity(this, "SpecialOfferProducts");
 						}
 					}
 				}

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -30,28 +30,25 @@ namespace AW.Data.EntityClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity base class which represents the base class for the entity 'Currency'.<br/><br/>
 	/// 
 	/// </summary>
 	[Serializable]
 	public abstract partial class CurrencyEntityBase : CommonEntityBase, ISerializable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AW.Data.CollectionClasses.CurrencyRateCollection	_currencyRate_;
-		private bool	_alwaysFetchCurrencyRate_, _alreadyFetchedCurrencyRate_;
-		private AW.Data.CollectionClasses.CurrencyRateCollection	_currencyRate;
-		private bool	_alwaysFetchCurrencyRate, _alreadyFetchedCurrencyRate;
+		private AW.Data.CollectionClasses.CurrencyRateCollection	_currencyRates_;
+		private bool	_alwaysFetchCurrencyRates_, _alreadyFetchedCurrencyRates_;
+		private AW.Data.CollectionClasses.CurrencyRateCollection	_currencyRates;
+		private bool	_alwaysFetchCurrencyRates, _alreadyFetchedCurrencyRates;
 
 
 
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 		
 		#region Statics
@@ -59,13 +56,13 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 
-			/// <summary>Member name CurrencyRate_</summary>
-			public static readonly string CurrencyRate_ = "CurrencyRate_";
-			/// <summary>Member name CurrencyRate</summary>
-			public static readonly string CurrencyRate = "CurrencyRate";
+			/// <summary>Member name CurrencyRates_</summary>
+			public static readonly string CurrencyRates_ = "CurrencyRates_";
+			/// <summary>Member name CurrencyRates</summary>
+			public static readonly string CurrencyRates = "CurrencyRates";
 
 
 		}
@@ -113,12 +110,12 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected CurrencyEntityBase(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_currencyRate_ = (AW.Data.CollectionClasses.CurrencyRateCollection)info.GetValue("_currencyRate_", typeof(AW.Data.CollectionClasses.CurrencyRateCollection));
-			_alwaysFetchCurrencyRate_ = info.GetBoolean("_alwaysFetchCurrencyRate_");
-			_alreadyFetchedCurrencyRate_ = info.GetBoolean("_alreadyFetchedCurrencyRate_");
-			_currencyRate = (AW.Data.CollectionClasses.CurrencyRateCollection)info.GetValue("_currencyRate", typeof(AW.Data.CollectionClasses.CurrencyRateCollection));
-			_alwaysFetchCurrencyRate = info.GetBoolean("_alwaysFetchCurrencyRate");
-			_alreadyFetchedCurrencyRate = info.GetBoolean("_alreadyFetchedCurrencyRate");
+			_currencyRates_ = (AW.Data.CollectionClasses.CurrencyRateCollection)info.GetValue("_currencyRates_", typeof(AW.Data.CollectionClasses.CurrencyRateCollection));
+			_alwaysFetchCurrencyRates_ = info.GetBoolean("_alwaysFetchCurrencyRates_");
+			_alreadyFetchedCurrencyRates_ = info.GetBoolean("_alreadyFetchedCurrencyRates_");
+			_currencyRates = (AW.Data.CollectionClasses.CurrencyRateCollection)info.GetValue("_currencyRates", typeof(AW.Data.CollectionClasses.CurrencyRateCollection));
+			_alwaysFetchCurrencyRates = info.GetBoolean("_alwaysFetchCurrencyRates");
+			_alreadyFetchedCurrencyRates = info.GetBoolean("_alreadyFetchedCurrencyRates");
 
 
 
@@ -126,7 +123,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 		
@@ -152,8 +148,8 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
-			_alreadyFetchedCurrencyRate_ = (_currencyRate_.Count > 0);
-			_alreadyFetchedCurrencyRate = (_currencyRate.Count > 0);
+			_alreadyFetchedCurrencyRates_ = (_currencyRates_.Count > 0);
+			_alreadyFetchedCurrencyRates = (_currencyRates.Count > 0);
 
 
 
@@ -176,10 +172,10 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "CurrencyRate_":
+				case "CurrencyRates_":
 					toReturn.Add(CurrencyEntity.Relations.CurrencyRateEntityUsingToCurrencyCode);
 					break;
-				case "CurrencyRate":
+				case "CurrencyRates":
 					toReturn.Add(CurrencyEntity.Relations.CurrencyRateEntityUsingFromCurrencyCode);
 					break;
 
@@ -200,19 +196,18 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_currencyRate_", (!this.MarkedForDeletion?_currencyRate_:null));
-			info.AddValue("_alwaysFetchCurrencyRate_", _alwaysFetchCurrencyRate_);
-			info.AddValue("_alreadyFetchedCurrencyRate_", _alreadyFetchedCurrencyRate_);
-			info.AddValue("_currencyRate", (!this.MarkedForDeletion?_currencyRate:null));
-			info.AddValue("_alwaysFetchCurrencyRate", _alwaysFetchCurrencyRate);
-			info.AddValue("_alreadyFetchedCurrencyRate", _alreadyFetchedCurrencyRate);
+			info.AddValue("_currencyRates_", (!this.MarkedForDeletion?_currencyRates_:null));
+			info.AddValue("_alwaysFetchCurrencyRates_", _alwaysFetchCurrencyRates_);
+			info.AddValue("_alreadyFetchedCurrencyRates_", _alreadyFetchedCurrencyRates_);
+			info.AddValue("_currencyRates", (!this.MarkedForDeletion?_currencyRates:null));
+			info.AddValue("_alwaysFetchCurrencyRates", _alwaysFetchCurrencyRates);
+			info.AddValue("_alreadyFetchedCurrencyRates", _alreadyFetchedCurrencyRates);
 
 
 
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -226,18 +221,18 @@ namespace AW.Data.EntityClasses
 			switch(propertyName)
 			{
 
-				case "CurrencyRate_":
-					_alreadyFetchedCurrencyRate_ = true;
+				case "CurrencyRates_":
+					_alreadyFetchedCurrencyRates_ = true;
 					if(entity!=null)
 					{
-						this.CurrencyRate_.Add((CurrencyRateEntity)entity);
+						this.CurrencyRates_.Add((CurrencyRateEntity)entity);
 					}
 					break;
-				case "CurrencyRate":
-					_alreadyFetchedCurrencyRate = true;
+				case "CurrencyRates":
+					_alreadyFetchedCurrencyRates = true;
 					if(entity!=null)
 					{
-						this.CurrencyRate.Add((CurrencyRateEntity)entity);
+						this.CurrencyRates.Add((CurrencyRateEntity)entity);
 					}
 					break;
 
@@ -257,11 +252,11 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "CurrencyRate_":
-					_currencyRate_.Add((CurrencyRateEntity)relatedEntity);
+				case "CurrencyRates_":
+					_currencyRates_.Add((CurrencyRateEntity)relatedEntity);
 					break;
-				case "CurrencyRate":
-					_currencyRate.Add((CurrencyRateEntity)relatedEntity);
+				case "CurrencyRates":
+					_currencyRates.Add((CurrencyRateEntity)relatedEntity);
 					break;
 
 				default:
@@ -280,11 +275,11 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "CurrencyRate_":
-					base.PerformRelatedEntityRemoval(_currencyRate_, relatedEntity, signalRelatedEntityManyToOne);
+				case "CurrencyRates_":
+					base.PerformRelatedEntityRemoval(_currencyRates_, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "CurrencyRate":
-					base.PerformRelatedEntityRemoval(_currencyRate, relatedEntity, signalRelatedEntityManyToOne);
+				case "CurrencyRates":
+					base.PerformRelatedEntityRemoval(_currencyRates, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -322,8 +317,8 @@ namespace AW.Data.EntityClasses
 		public override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
-			toReturn.Add(_currencyRate_);
-			toReturn.Add(_currencyRate);
+			toReturn.Add(_currencyRates_);
+			toReturn.Add(_currencyRates);
 
 			return toReturn;
 		}
@@ -410,27 +405,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'CurrencyRateEntity'</returns>
-		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRate_(bool forceFetch)
+		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRates_(bool forceFetch)
 		{
-			return GetMultiCurrencyRate_(forceFetch, _currencyRate_.EntityFactoryToUse, null);
+			return GetMultiCurrencyRates_(forceFetch, _currencyRates_.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'CurrencyRateEntity'</returns>
-		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRate_(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRates_(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiCurrencyRate_(forceFetch, _currencyRate_.EntityFactoryToUse, filter);
+			return GetMultiCurrencyRates_(forceFetch, _currencyRates_.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRate_(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRates_(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiCurrencyRate_(forceFetch, entityFactoryToUse, null);
+			return GetMultiCurrencyRates_(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
@@ -438,63 +433,63 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRate_(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRates_(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedCurrencyRate_ || forceFetch || _alwaysFetchCurrencyRate_) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedCurrencyRates_ || forceFetch || _alwaysFetchCurrencyRates_) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_currencyRate_.ParticipatesInTransaction)
+					if(!_currencyRates_.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_currencyRate_);
+						base.Transaction.Add(_currencyRates_);
 					}
 				}
-				_currencyRate_.SuppressClearInGetMulti=!forceFetch;
+				_currencyRates_.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_currencyRate_.EntityFactoryToUse = entityFactoryToUse;
+					_currencyRates_.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_currencyRate_.GetMultiManyToOne(this, null, filter);
-				_currencyRate_.SuppressClearInGetMulti=false;
-				_alreadyFetchedCurrencyRate_ = true;
+				_currencyRates_.GetMultiManyToOne(this, null, filter);
+				_currencyRates_.SuppressClearInGetMulti=false;
+				_alreadyFetchedCurrencyRates_ = true;
 			}
-			return _currencyRate_;
+			return _currencyRates_;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'CurrencyRate_'. These settings will be taken into account
-		/// when the property CurrencyRate_ is requested or GetMultiCurrencyRate_ is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'CurrencyRates_'. These settings will be taken into account
+		/// when the property CurrencyRates_ is requested or GetMultiCurrencyRates_ is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersCurrencyRate_(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersCurrencyRates_(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_currencyRate_.SortClauses=sortClauses;
-			_currencyRate_.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_currencyRates_.SortClauses=sortClauses;
+			_currencyRates_.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'CurrencyRateEntity'</returns>
-		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRate(bool forceFetch)
+		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRates(bool forceFetch)
 		{
-			return GetMultiCurrencyRate(forceFetch, _currencyRate.EntityFactoryToUse, null);
+			return GetMultiCurrencyRates(forceFetch, _currencyRates.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'CurrencyRateEntity'</returns>
-		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRate(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRates(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiCurrencyRate(forceFetch, _currencyRate.EntityFactoryToUse, filter);
+			return GetMultiCurrencyRates(forceFetch, _currencyRates.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRate(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRates(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiCurrencyRate(forceFetch, entityFactoryToUse, null);
+			return GetMultiCurrencyRates(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
@@ -502,37 +497,37 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRate(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.CurrencyRateCollection GetMultiCurrencyRates(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedCurrencyRate || forceFetch || _alwaysFetchCurrencyRate) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedCurrencyRates || forceFetch || _alwaysFetchCurrencyRates) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_currencyRate.ParticipatesInTransaction)
+					if(!_currencyRates.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_currencyRate);
+						base.Transaction.Add(_currencyRates);
 					}
 				}
-				_currencyRate.SuppressClearInGetMulti=!forceFetch;
+				_currencyRates.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_currencyRate.EntityFactoryToUse = entityFactoryToUse;
+					_currencyRates.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_currencyRate.GetMultiManyToOne(null, this, filter);
-				_currencyRate.SuppressClearInGetMulti=false;
-				_alreadyFetchedCurrencyRate = true;
+				_currencyRates.GetMultiManyToOne(null, this, filter);
+				_currencyRates.SuppressClearInGetMulti=false;
+				_alreadyFetchedCurrencyRates = true;
 			}
-			return _currencyRate;
+			return _currencyRates;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'CurrencyRate'. These settings will be taken into account
-		/// when the property CurrencyRate is requested or GetMultiCurrencyRate is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'CurrencyRates'. These settings will be taken into account
+		/// when the property CurrencyRates is requested or GetMultiCurrencyRates is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersCurrencyRate(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersCurrencyRates(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_currencyRate.SortClauses=sortClauses;
-			_currencyRate.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_currencyRates.SortClauses=sortClauses;
+			_currencyRates.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 
@@ -549,8 +544,8 @@ namespace AW.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			_currencyRate_.ActiveContext = base.ActiveContext;
-			_currencyRate.ActiveContext = base.ActiveContext;
+			_currencyRates_.ActiveContext = base.ActiveContext;
+			_currencyRates.ActiveContext = base.ActiveContext;
 
 
 
@@ -588,7 +583,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -624,8 +618,8 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-			toReturn.Add("CurrencyRate_", _currencyRate_);
-			toReturn.Add("CurrencyRate", _currencyRate);
+			toReturn.Add("CurrencyRates_", _currencyRates_);
+			toReturn.Add("CurrencyRates", _currencyRates);
 
 
 			return toReturn;
@@ -648,7 +642,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -656,14 +649,14 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
-			_currencyRate_ = new AW.Data.CollectionClasses.CurrencyRateCollection(new CurrencyRateEntityFactory());
-			_currencyRate_.SetContainingEntityInfo(this, "Currency_");
-			_alwaysFetchCurrencyRate_ = false;
-			_alreadyFetchedCurrencyRate_ = false;
-			_currencyRate = new AW.Data.CollectionClasses.CurrencyRateCollection(new CurrencyRateEntityFactory());
-			_currencyRate.SetContainingEntityInfo(this, "Currency");
-			_alwaysFetchCurrencyRate = false;
-			_alreadyFetchedCurrencyRate = false;
+			_currencyRates_ = new AW.Data.CollectionClasses.CurrencyRateCollection(new CurrencyRateEntityFactory());
+			_currencyRates_.SetContainingEntityInfo(this, "Currency_");
+			_alwaysFetchCurrencyRates_ = false;
+			_alreadyFetchedCurrencyRates_ = false;
+			_currencyRates = new AW.Data.CollectionClasses.CurrencyRateCollection(new CurrencyRateEntityFactory());
+			_currencyRates.SetContainingEntityInfo(this, "Currency");
+			_alwaysFetchCurrencyRates = false;
+			_alreadyFetchedCurrencyRates = false;
 
 
 
@@ -672,7 +665,6 @@ namespace AW.Data.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -756,24 +748,24 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'CurrencyRate' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathCurrencyRate_
+		public static IPrefetchPathElement PrefetchPathCurrencyRates_
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.CurrencyRateCollection(),
-					(IEntityRelation)GetRelationsForField("CurrencyRate_")[0], (int)AW.Data.EntityType.CurrencyEntity, (int)AW.Data.EntityType.CurrencyRateEntity, 0, null, null, null, "CurrencyRate_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("CurrencyRates_")[0], (int)AW.Data.EntityType.CurrencyEntity, (int)AW.Data.EntityType.CurrencyRateEntity, 0, null, null, null, "CurrencyRates_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'CurrencyRate' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathCurrencyRate
+		public static IPrefetchPathElement PrefetchPathCurrencyRates
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.CurrencyRateCollection(),
-					(IEntityRelation)GetRelationsForField("CurrencyRate")[0], (int)AW.Data.EntityType.CurrencyEntity, (int)AW.Data.EntityType.CurrencyRateEntity, 0, null, null, null, "CurrencyRate", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("CurrencyRates")[0], (int)AW.Data.EntityType.CurrencyEntity, (int)AW.Data.EntityType.CurrencyRateEntity, 0, null, null, null, "CurrencyRates", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -842,69 +834,69 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiCurrencyRate_()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiCurrencyRates_()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.CurrencyRateCollection CurrencyRate_
+		public virtual AW.Data.CollectionClasses.CurrencyRateCollection CurrencyRates_
 		{
-			get	{ return GetMultiCurrencyRate_(false); }
+			get	{ return GetMultiCurrencyRates_(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for CurrencyRate_. When set to true, CurrencyRate_ is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time CurrencyRate_ is accessed. You can always execute
-		/// a forced fetch by calling GetMultiCurrencyRate_(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for CurrencyRates_. When set to true, CurrencyRates_ is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time CurrencyRates_ is accessed. You can always execute
+		/// a forced fetch by calling GetMultiCurrencyRates_(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchCurrencyRate_
+		public bool AlwaysFetchCurrencyRates_
 		{
-			get	{ return _alwaysFetchCurrencyRate_; }
-			set	{ _alwaysFetchCurrencyRate_ = value; }	
+			get	{ return _alwaysFetchCurrencyRates_; }
+			set	{ _alwaysFetchCurrencyRates_ = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property CurrencyRate_ already has been fetched. Setting this property to false when CurrencyRate_ has been fetched
-		/// will clear the CurrencyRate_ collection well. Setting this property to true while CurrencyRate_ hasn't been fetched disables lazy loading for CurrencyRate_</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property CurrencyRates_ already has been fetched. Setting this property to false when CurrencyRates_ has been fetched
+		/// will clear the CurrencyRates_ collection well. Setting this property to true while CurrencyRates_ hasn't been fetched disables lazy loading for CurrencyRates_</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedCurrencyRate_
+		public bool AlreadyFetchedCurrencyRates_
 		{
-			get { return _alreadyFetchedCurrencyRate_;}
+			get { return _alreadyFetchedCurrencyRates_;}
 			set 
 			{
-				if(_alreadyFetchedCurrencyRate_ && !value && (_currencyRate_ != null))
+				if(_alreadyFetchedCurrencyRates_ && !value && (_currencyRates_ != null))
 				{
-					_currencyRate_.Clear();
+					_currencyRates_.Clear();
 				}
-				_alreadyFetchedCurrencyRate_ = value;
+				_alreadyFetchedCurrencyRates_ = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'CurrencyRateEntity' using a relation of type '1:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiCurrencyRate()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiCurrencyRates()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.CurrencyRateCollection CurrencyRate
+		public virtual AW.Data.CollectionClasses.CurrencyRateCollection CurrencyRates
 		{
-			get	{ return GetMultiCurrencyRate(false); }
+			get	{ return GetMultiCurrencyRates(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for CurrencyRate. When set to true, CurrencyRate is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time CurrencyRate is accessed. You can always execute
-		/// a forced fetch by calling GetMultiCurrencyRate(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for CurrencyRates. When set to true, CurrencyRates is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time CurrencyRates is accessed. You can always execute
+		/// a forced fetch by calling GetMultiCurrencyRates(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchCurrencyRate
+		public bool AlwaysFetchCurrencyRates
 		{
-			get	{ return _alwaysFetchCurrencyRate; }
-			set	{ _alwaysFetchCurrencyRate = value; }	
+			get	{ return _alwaysFetchCurrencyRates; }
+			set	{ _alwaysFetchCurrencyRates = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property CurrencyRate already has been fetched. Setting this property to false when CurrencyRate has been fetched
-		/// will clear the CurrencyRate collection well. Setting this property to true while CurrencyRate hasn't been fetched disables lazy loading for CurrencyRate</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property CurrencyRates already has been fetched. Setting this property to false when CurrencyRates has been fetched
+		/// will clear the CurrencyRates collection well. Setting this property to true while CurrencyRates hasn't been fetched disables lazy loading for CurrencyRates</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedCurrencyRate
+		public bool AlreadyFetchedCurrencyRates
 		{
-			get { return _alreadyFetchedCurrencyRate;}
+			get { return _alreadyFetchedCurrencyRates;}
 			set 
 			{
-				if(_alreadyFetchedCurrencyRate && !value && (_currencyRate != null))
+				if(_alreadyFetchedCurrencyRates && !value && (_currencyRates != null))
 				{
-					_currencyRate.Clear();
+					_currencyRates.Clear();
 				}
-				_alreadyFetchedCurrencyRate = value;
+				_alreadyFetchedCurrencyRates = value;
 			}
 		}
 
@@ -938,7 +930,6 @@ namespace AW.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code

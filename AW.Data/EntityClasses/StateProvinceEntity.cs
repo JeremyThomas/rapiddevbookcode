@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -48,9 +48,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
-		public StateProvinceEntity(System.Int32 stateProvinceId):
-			base(stateProvinceId)
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		public StateProvinceEntity(System.Int32 stateProvinceID):
+			base(stateProvinceID)
 		{
 		}
 
@@ -58,10 +58,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public StateProvinceEntity(System.Int32 stateProvinceId, IPrefetchPath prefetchPathToUse):
-			base(stateProvinceId, prefetchPathToUse)
+		public StateProvinceEntity(System.Int32 stateProvinceID, IPrefetchPath prefetchPathToUse):
+			base(stateProvinceID, prefetchPathToUse)
 		{
 		}
 
@@ -69,10 +69,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="stateProvinceId">PK value for StateProvince which data should be fetched into this StateProvince object</param>
+		/// <param name="stateProvinceID">PK value for StateProvince which data should be fetched into this StateProvince object</param>
 		/// <param name="validator">The custom validator object for this StateProvinceEntity</param>
-		public StateProvinceEntity(System.Int32 stateProvinceId, IValidator validator):
-			base(stateProvinceId, validator)
+		public StateProvinceEntity(System.Int32 stateProvinceID, IValidator validator):
+			base(stateProvinceID, validator)
 		{
 		}
 	

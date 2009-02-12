@@ -76,7 +76,7 @@ namespace AW.Test
     public void GetPrefetchedEmployeeEntityTest()
     {
       var actual = OrganizationManager.GetPrefetchedEmployeeEntity(SyedAbbasID);
-      Assert.AreEqual(SyedAbbasID, actual.EmployeeId);
+      Assert.AreEqual(SyedAbbasID, actual.EmployeeID);
     }
 
     /// <summary>

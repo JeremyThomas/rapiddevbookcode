@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -167,15 +167,15 @@ namespace AW.Data.DaoClasses
 			
 			if(addressInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)CustomerAddressFieldIndex.AddressId], ComparisonOperator.Equal, ((AddressEntity)addressInstance).AddressId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)CustomerAddressFieldIndex.AddressID], ComparisonOperator.Equal, ((AddressEntity)addressInstance).AddressID));
 			}
 			if(addressTypeInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)CustomerAddressFieldIndex.AddressTypeId], ComparisonOperator.Equal, ((AddressTypeEntity)addressTypeInstance).AddressTypeId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)CustomerAddressFieldIndex.AddressTypeID], ComparisonOperator.Equal, ((AddressTypeEntity)addressTypeInstance).AddressTypeID));
 			}
 			if(customerInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)CustomerAddressFieldIndex.CustomerId], ComparisonOperator.Equal, ((CustomerEntity)customerInstance).CustomerId));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)CustomerAddressFieldIndex.CustomerID], ComparisonOperator.Equal, ((CustomerEntity)customerInstance).CustomerID));
 			}
 			return selectFilter;
 		}

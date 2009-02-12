@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -87,10 +87,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ProductEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ProductEntity.Relations.SpecialOfferProductEntityUsingProductId, "SpecialOfferProduct_");
-			relations.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferId, "SpecialOfferProduct_", string.Empty, JoinHint.None);
+			relations.Add(ProductEntity.Relations.SpecialOfferProductEntityUsingProductID, "SpecialOfferProduct_");
+			relations.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferID, "SpecialOfferProduct_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(specialOfferInstance.Fields[(int)SpecialOfferFieldIndex.SpecialOfferId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(specialOfferInstance.Fields[(int)SpecialOfferFieldIndex.SpecialOfferID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
 		}
 
@@ -111,10 +111,10 @@ namespace AW.Data.DaoClasses
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ProductEntity);
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ProductEntity.Relations.SpecialOfferProductEntityUsingProductId, "SpecialOfferProduct_");
-			relations.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferId, "SpecialOfferProduct_", string.Empty, JoinHint.None);
+			relations.Add(ProductEntity.Relations.SpecialOfferProductEntityUsingProductID, "SpecialOfferProduct_");
+			relations.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferID, "SpecialOfferProduct_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(specialOfferInstance.Fields[(int)SpecialOfferFieldIndex.SpecialOfferId], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(specialOfferInstance.Fields[(int)SpecialOfferFieldIndex.SpecialOfferID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -47,10 +47,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		public EmployeeAddressEntity(System.Int32 employeeId, System.Int32 addressId):
-			base(employeeId, addressId)
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		public EmployeeAddressEntity(System.Int32 employeeID, System.Int32 addressID):
+			base(employeeID, addressID)
 		{
 		}
 
@@ -58,11 +58,11 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public EmployeeAddressEntity(System.Int32 employeeId, System.Int32 addressId, IPrefetchPath prefetchPathToUse):
-			base(employeeId, addressId, prefetchPathToUse)
+		public EmployeeAddressEntity(System.Int32 employeeID, System.Int32 addressID, IPrefetchPath prefetchPathToUse):
+			base(employeeID, addressID, prefetchPathToUse)
 		{
 		}
 
@@ -70,11 +70,11 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="employeeId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
-		/// <param name="addressId">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="employeeID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
+		/// <param name="addressID">PK value for EmployeeAddress which data should be fetched into this EmployeeAddress object</param>
 		/// <param name="validator">The custom validator object for this EmployeeAddressEntity</param>
-		public EmployeeAddressEntity(System.Int32 employeeId, System.Int32 addressId, IValidator validator):
-			base(employeeId, addressId, validator)
+		public EmployeeAddressEntity(System.Int32 employeeID, System.Int32 addressID, IValidator validator):
+			base(employeeID, addressID, validator)
 		{
 		}
 	

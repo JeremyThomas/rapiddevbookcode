@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -47,9 +47,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="customerId">PK value for Individual which data should be fetched into this Individual object</param>
-		public IndividualEntity(System.Int32 customerId):
-			base(customerId)
+		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
+		public IndividualEntity(System.Int32 customerID):
+			base(customerID)
 		{
 		}
 
@@ -57,10 +57,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="customerId">PK value for Individual which data should be fetched into this Individual object</param>
+		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public IndividualEntity(System.Int32 customerId, IPrefetchPath prefetchPathToUse):
-			base(customerId, prefetchPathToUse)
+		public IndividualEntity(System.Int32 customerID, IPrefetchPath prefetchPathToUse):
+			base(customerID, prefetchPathToUse)
 		{
 		}
 
@@ -68,10 +68,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="customerId">PK value for Individual which data should be fetched into this Individual object</param>
+		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
 		/// <param name="validator">The custom validator object for this IndividualEntity</param>
-		public IndividualEntity(System.Int32 customerId, IValidator validator):
-			base(customerId, validator)
+		public IndividualEntity(System.Int32 customerID, IValidator validator):
+			base(customerID, validator)
 		{
 		}
 	

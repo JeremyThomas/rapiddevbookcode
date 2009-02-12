@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -39,8 +39,8 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AW.Data.CollectionClasses.StateProvinceCollection	_stateProvince;
-		private bool	_alwaysFetchStateProvince, _alreadyFetchedStateProvince;
+		private AW.Data.CollectionClasses.StateProvinceCollection	_stateProvinces;
+		private bool	_alwaysFetchStateProvinces, _alreadyFetchedStateProvinces;
 		private AW.Data.CollectionClasses.SalesTerritoryCollection _salesTerritoryCollectionViaStateProvince;
 		private bool	_alwaysFetchSalesTerritoryCollectionViaStateProvince, _alreadyFetchedSalesTerritoryCollectionViaStateProvince;
 
@@ -55,11 +55,11 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static class MemberNames
+		public static partial class MemberNames
 		{
 
-			/// <summary>Member name StateProvince</summary>
-			public static readonly string StateProvince = "StateProvince";
+			/// <summary>Member name StateProvinces</summary>
+			public static readonly string StateProvinces = "StateProvinces";
 			/// <summary>Member name SalesTerritoryCollectionViaStateProvince</summary>
 			public static readonly string SalesTerritoryCollectionViaStateProvince = "SalesTerritoryCollectionViaStateProvince";
 
@@ -108,9 +108,9 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected CountryRegionEntityBase(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_stateProvince = (AW.Data.CollectionClasses.StateProvinceCollection)info.GetValue("_stateProvince", typeof(AW.Data.CollectionClasses.StateProvinceCollection));
-			_alwaysFetchStateProvince = info.GetBoolean("_alwaysFetchStateProvince");
-			_alreadyFetchedStateProvince = info.GetBoolean("_alreadyFetchedStateProvince");
+			_stateProvinces = (AW.Data.CollectionClasses.StateProvinceCollection)info.GetValue("_stateProvinces", typeof(AW.Data.CollectionClasses.StateProvinceCollection));
+			_alwaysFetchStateProvinces = info.GetBoolean("_alwaysFetchStateProvinces");
+			_alreadyFetchedStateProvinces = info.GetBoolean("_alreadyFetchedStateProvinces");
 			_salesTerritoryCollectionViaStateProvince = (AW.Data.CollectionClasses.SalesTerritoryCollection)info.GetValue("_salesTerritoryCollectionViaStateProvince", typeof(AW.Data.CollectionClasses.SalesTerritoryCollection));
 			_alwaysFetchSalesTerritoryCollectionViaStateProvince = info.GetBoolean("_alwaysFetchSalesTerritoryCollectionViaStateProvince");
 			_alreadyFetchedSalesTerritoryCollectionViaStateProvince = info.GetBoolean("_alreadyFetchedSalesTerritoryCollectionViaStateProvince");
@@ -145,7 +145,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
-			_alreadyFetchedStateProvince = (_stateProvince.Count > 0);
+			_alreadyFetchedStateProvinces = (_stateProvinces.Count > 0);
 			_alreadyFetchedSalesTerritoryCollectionViaStateProvince = (_salesTerritoryCollectionViaStateProvince.Count > 0);
 
 
@@ -168,12 +168,12 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "StateProvince":
+				case "StateProvinces":
 					toReturn.Add(CountryRegionEntity.Relations.StateProvinceEntityUsingCountryRegionCode);
 					break;
 				case "SalesTerritoryCollectionViaStateProvince":
 					toReturn.Add(CountryRegionEntity.Relations.StateProvinceEntityUsingCountryRegionCode, "CountryRegionEntity__", "StateProvince_", JoinHint.None);
-					toReturn.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryId, "StateProvince_", string.Empty, JoinHint.None);
+					toReturn.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "StateProvince_", string.Empty, JoinHint.None);
 					break;
 
 				default:
@@ -192,9 +192,9 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_stateProvince", (!this.MarkedForDeletion?_stateProvince:null));
-			info.AddValue("_alwaysFetchStateProvince", _alwaysFetchStateProvince);
-			info.AddValue("_alreadyFetchedStateProvince", _alreadyFetchedStateProvince);
+			info.AddValue("_stateProvinces", (!this.MarkedForDeletion?_stateProvinces:null));
+			info.AddValue("_alwaysFetchStateProvinces", _alwaysFetchStateProvinces);
+			info.AddValue("_alreadyFetchedStateProvinces", _alreadyFetchedStateProvinces);
 			info.AddValue("_salesTerritoryCollectionViaStateProvince", (!this.MarkedForDeletion?_salesTerritoryCollectionViaStateProvince:null));
 			info.AddValue("_alwaysFetchSalesTerritoryCollectionViaStateProvince", _alwaysFetchSalesTerritoryCollectionViaStateProvince);
 			info.AddValue("_alreadyFetchedSalesTerritoryCollectionViaStateProvince", _alreadyFetchedSalesTerritoryCollectionViaStateProvince);
@@ -216,11 +216,11 @@ namespace AW.Data.EntityClasses
 			switch(propertyName)
 			{
 
-				case "StateProvince":
-					_alreadyFetchedStateProvince = true;
+				case "StateProvinces":
+					_alreadyFetchedStateProvinces = true;
 					if(entity!=null)
 					{
-						this.StateProvince.Add((StateProvinceEntity)entity);
+						this.StateProvinces.Add((StateProvinceEntity)entity);
 					}
 					break;
 				case "SalesTerritoryCollectionViaStateProvince":
@@ -246,8 +246,8 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "StateProvince":
-					_stateProvince.Add((StateProvinceEntity)relatedEntity);
+				case "StateProvinces":
+					_stateProvinces.Add((StateProvinceEntity)relatedEntity);
 					break;
 
 				default:
@@ -266,8 +266,8 @@ namespace AW.Data.EntityClasses
 			switch(fieldName)
 			{
 
-				case "StateProvince":
-					base.PerformRelatedEntityRemoval(_stateProvince, relatedEntity, signalRelatedEntityManyToOne);
+				case "StateProvinces":
+					base.PerformRelatedEntityRemoval(_stateProvinces, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -305,7 +305,7 @@ namespace AW.Data.EntityClasses
 		public override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
-			toReturn.Add(_stateProvince);
+			toReturn.Add(_stateProvinces);
 
 			return toReturn;
 		}
@@ -392,27 +392,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'StateProvinceEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'StateProvinceEntity'</returns>
-		public AW.Data.CollectionClasses.StateProvinceCollection GetMultiStateProvince(bool forceFetch)
+		public AW.Data.CollectionClasses.StateProvinceCollection GetMultiStateProvinces(bool forceFetch)
 		{
-			return GetMultiStateProvince(forceFetch, _stateProvince.EntityFactoryToUse, null);
+			return GetMultiStateProvinces(forceFetch, _stateProvinces.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'StateProvinceEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'StateProvinceEntity'</returns>
-		public AW.Data.CollectionClasses.StateProvinceCollection GetMultiStateProvince(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.StateProvinceCollection GetMultiStateProvinces(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiStateProvince(forceFetch, _stateProvince.EntityFactoryToUse, filter);
+			return GetMultiStateProvinces(forceFetch, _stateProvinces.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'StateProvinceEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.StateProvinceCollection GetMultiStateProvince(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.StateProvinceCollection GetMultiStateProvinces(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiStateProvince(forceFetch, entityFactoryToUse, null);
+			return GetMultiStateProvinces(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'StateProvinceEntity' using a relation of type '1:n'.</summary>
@@ -420,37 +420,37 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.StateProvinceCollection GetMultiStateProvince(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.StateProvinceCollection GetMultiStateProvinces(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedStateProvince || forceFetch || _alwaysFetchStateProvince) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedStateProvinces || forceFetch || _alwaysFetchStateProvinces) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_stateProvince.ParticipatesInTransaction)
+					if(!_stateProvinces.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_stateProvince);
+						base.Transaction.Add(_stateProvinces);
 					}
 				}
-				_stateProvince.SuppressClearInGetMulti=!forceFetch;
+				_stateProvinces.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_stateProvince.EntityFactoryToUse = entityFactoryToUse;
+					_stateProvinces.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_stateProvince.GetMultiManyToOne(this, null, filter);
-				_stateProvince.SuppressClearInGetMulti=false;
-				_alreadyFetchedStateProvince = true;
+				_stateProvinces.GetMultiManyToOne(this, null, filter);
+				_stateProvinces.SuppressClearInGetMulti=false;
+				_alreadyFetchedStateProvinces = true;
 			}
-			return _stateProvince;
+			return _stateProvinces;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'StateProvince'. These settings will be taken into account
-		/// when the property StateProvince is requested or GetMultiStateProvince is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'StateProvinces'. These settings will be taken into account
+		/// when the property StateProvinces is requested or GetMultiStateProvinces is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersStateProvince(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersStateProvinces(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_stateProvince.SortClauses=sortClauses;
-			_stateProvince.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_stateProvinces.SortClauses=sortClauses;
+			_stateProvinces.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesTerritoryEntity' using a relation of type 'm:n'.</summary>
@@ -513,7 +513,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			_stateProvince.ActiveContext = base.ActiveContext;
+			_stateProvinces.ActiveContext = base.ActiveContext;
 			_salesTerritoryCollectionViaStateProvince.ActiveContext = base.ActiveContext;
 
 
@@ -586,7 +586,7 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
-			toReturn.Add("StateProvince", _stateProvince);
+			toReturn.Add("StateProvinces", _stateProvinces);
 			toReturn.Add("SalesTerritoryCollectionViaStateProvince", _salesTerritoryCollectionViaStateProvince);
 
 			return toReturn;
@@ -616,10 +616,10 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
-			_stateProvince = new AW.Data.CollectionClasses.StateProvinceCollection(new StateProvinceEntityFactory());
-			_stateProvince.SetContainingEntityInfo(this, "CountryRegion");
-			_alwaysFetchStateProvince = false;
-			_alreadyFetchedStateProvince = false;
+			_stateProvinces = new AW.Data.CollectionClasses.StateProvinceCollection(new StateProvinceEntityFactory());
+			_stateProvinces.SetContainingEntityInfo(this, "CountryRegion");
+			_alwaysFetchStateProvinces = false;
+			_alreadyFetchedStateProvinces = false;
 			_salesTerritoryCollectionViaStateProvince = new AW.Data.CollectionClasses.SalesTerritoryCollection(new SalesTerritoryEntityFactory());
 			_alwaysFetchSalesTerritoryCollectionViaStateProvince = false;
 			_alreadyFetchedSalesTerritoryCollectionViaStateProvince = false;
@@ -713,12 +713,12 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'StateProvince' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathStateProvince
+		public static IPrefetchPathElement PrefetchPathStateProvinces
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.StateProvinceCollection(),
-					(IEntityRelation)GetRelationsForField("StateProvince")[0], (int)AW.Data.EntityType.CountryRegionEntity, (int)AW.Data.EntityType.StateProvinceEntity, 0, null, null, null, "StateProvince", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+					(IEntityRelation)GetRelationsForField("StateProvinces")[0], (int)AW.Data.EntityType.CountryRegionEntity, (int)AW.Data.EntityType.StateProvinceEntity, 0, null, null, null, "StateProvinces", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
 			}
 		}
 
@@ -800,36 +800,36 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Retrieves all related entities of type 'StateProvinceEntity' using a relation of type '1:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiStateProvince()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiStateProvinces()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.StateProvinceCollection StateProvince
+		public virtual AW.Data.CollectionClasses.StateProvinceCollection StateProvinces
 		{
-			get	{ return GetMultiStateProvince(false); }
+			get	{ return GetMultiStateProvinces(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for StateProvince. When set to true, StateProvince is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time StateProvince is accessed. You can always execute
-		/// a forced fetch by calling GetMultiStateProvince(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for StateProvinces. When set to true, StateProvinces is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time StateProvinces is accessed. You can always execute
+		/// a forced fetch by calling GetMultiStateProvinces(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchStateProvince
+		public bool AlwaysFetchStateProvinces
 		{
-			get	{ return _alwaysFetchStateProvince; }
-			set	{ _alwaysFetchStateProvince = value; }	
+			get	{ return _alwaysFetchStateProvinces; }
+			set	{ _alwaysFetchStateProvinces = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property StateProvince already has been fetched. Setting this property to false when StateProvince has been fetched
-		/// will clear the StateProvince collection well. Setting this property to true while StateProvince hasn't been fetched disables lazy loading for StateProvince</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property StateProvinces already has been fetched. Setting this property to false when StateProvinces has been fetched
+		/// will clear the StateProvinces collection well. Setting this property to true while StateProvinces hasn't been fetched disables lazy loading for StateProvinces</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedStateProvince
+		public bool AlreadyFetchedStateProvinces
 		{
-			get { return _alreadyFetchedStateProvince;}
+			get { return _alreadyFetchedStateProvinces;}
 			set 
 			{
-				if(_alreadyFetchedStateProvince && !value && (_stateProvince != null))
+				if(_alreadyFetchedStateProvinces && !value && (_stateProvinces != null))
 				{
-					_stateProvince.Clear();
+					_stateProvinces.Clear();
 				}
-				_alreadyFetchedStateProvince = value;
+				_alreadyFetchedStateProvinces = value;
 			}
 		}
 

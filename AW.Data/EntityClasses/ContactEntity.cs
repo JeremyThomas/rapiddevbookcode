@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: 
+// Code is generated on: Thursday, 12 February 2009 11:38:24 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -47,9 +47,9 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="contactId">PK value for Contact which data should be fetched into this Contact object</param>
-		public ContactEntity(System.Int32 contactId):
-			base(contactId)
+		/// <param name="contactID">PK value for Contact which data should be fetched into this Contact object</param>
+		public ContactEntity(System.Int32 contactID):
+			base(contactID)
 		{
 		}
 
@@ -57,10 +57,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="contactId">PK value for Contact which data should be fetched into this Contact object</param>
+		/// <param name="contactID">PK value for Contact which data should be fetched into this Contact object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ContactEntity(System.Int32 contactId, IPrefetchPath prefetchPathToUse):
-			base(contactId, prefetchPathToUse)
+		public ContactEntity(System.Int32 contactID, IPrefetchPath prefetchPathToUse):
+			base(contactID, prefetchPathToUse)
 		{
 		}
 
@@ -68,10 +68,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>
 		/// CTor
 		/// </summary>
-		/// <param name="contactId">PK value for Contact which data should be fetched into this Contact object</param>
+		/// <param name="contactID">PK value for Contact which data should be fetched into this Contact object</param>
 		/// <param name="validator">The custom validator object for this ContactEntity</param>
-		public ContactEntity(System.Int32 contactId, IValidator validator):
-			base(contactId, validator)
+		public ContactEntity(System.Int32 contactID, IValidator validator):
+			base(contactID, validator)
 		{
 		}
 	
