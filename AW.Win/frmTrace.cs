@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Properties;
-using Logging;
 using SD.LLBLGen.Pro.DQE.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers;
 using SD.LLBLGen.Pro.ORMSupportClasses;

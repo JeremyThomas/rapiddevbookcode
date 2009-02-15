@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "href.Controls", "href.controls\href.Controls.csproj", "{D8041984-1823-4672-9B6E-3E99AB6A3A7A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Winforms.Helpers", "href.controls\AW.Winforms.Helpers.csproj", "{D8041984-1823-4672-9B6E-3E99AB6A3A7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Business", "AW.Business\AW.Business.csproj", "{78186ECB-5408-400B-B1A7-10F4A150BC56}"
 EndProject
@@ -34,18 +34,18 @@ Global
 		SccProjectUniqueName2 = AW.Data\\AW.Data.csproj
 		SccProjectName2 = AW.Data
 		SccLocalPath2 = AW.Data
-		SccProjectUniqueName3 = href.controls\\href.Controls.csproj
-		SccProjectName3 = href.controls
-		SccLocalPath3 = href.controls
-		SccProjectUniqueName4 = AW.Business\\AW.Business.csproj
-		SccProjectName4 = AW.Business
-		SccLocalPath4 = AW.Business
-		SccProjectUniqueName5 = AW.LinqToSQL\\AW.LinqToSQL.csproj
-		SccProjectName5 = AW.LinqToSQL
-		SccLocalPath5 = AW.LinqToSQL
-		SccProjectUniqueName6 = AW.Test\\AW.Test.csproj
-		SccProjectName6 = AW.Test
-		SccLocalPath6 = AW.Test
+		SccProjectUniqueName3 = AW.Business\\AW.Business.csproj
+		SccProjectName3 = AW.Business
+		SccLocalPath3 = AW.Business
+		SccProjectUniqueName4 = AW.LinqToSQL\\AW.LinqToSQL.csproj
+		SccProjectName4 = AW.LinqToSQL
+		SccLocalPath4 = AW.LinqToSQL
+		SccProjectUniqueName5 = AW.Test\\AW.Test.csproj
+		SccProjectName5 = AW.Test
+		SccLocalPath5 = AW.Test
+		SccProjectUniqueName6 = href.controls\\AW.Winforms.Helpers.csproj
+		SccProjectName6 = href.controls
+		SccLocalPath6 = href.controls
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
