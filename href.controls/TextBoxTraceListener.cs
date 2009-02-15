@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace Logging
+namespace AW.Winforms.Helpers
 {
   /// <summary>
   /// Trace listener that outputs to a text box
