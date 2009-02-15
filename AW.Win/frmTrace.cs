@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using AW.Win.Properties;
+using AW.Winforms.Helpers.Properties;
 using Logging;
 using SD.LLBLGen.Pro.DQE.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
   public partial class frmTrace : Form
   {

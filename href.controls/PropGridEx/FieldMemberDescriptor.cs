@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Reflection;
 
 //http://www.codeproject.com/KB/grid/PropertyGridExWinForms.aspx
-namespace href.Controls.PropGridEx
+namespace AW.Winforms.Helpers.PropGridEx
 {
   /// <summary>
   /// Custom PropertyDescriptor for Fields

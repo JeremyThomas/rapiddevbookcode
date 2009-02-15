@@ -1,9 +1,10 @@
 using System;
 using System.Windows.Forms;
 using AW.Business;
-using AW.Win.Properties;
+using AW.Winforms.Helpers.EntityViewer;
+using AW.Winforms.Helpers.Properties;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
   public partial class frmCustomers : Form
   {

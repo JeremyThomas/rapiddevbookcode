@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Specialized;
 using System.Windows.Forms;
-using AW.Win.Properties;
+using AW.Winforms.Helpers.Properties;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
   public partial class frmMain : Form
   {

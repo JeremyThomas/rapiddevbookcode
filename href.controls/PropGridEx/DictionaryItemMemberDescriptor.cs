@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace href.Controls.PropGridEx
+namespace AW.Winforms.Helpers.PropGridEx
 {
   /// <summary>
   /// PropertyDescriptor for all items in an IDictionary

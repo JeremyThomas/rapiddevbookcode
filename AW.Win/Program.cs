@@ -3,7 +3,7 @@ using System.Threading;
 using System.Windows.Forms;
 using AW.Data;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
   internal static class Program
   {

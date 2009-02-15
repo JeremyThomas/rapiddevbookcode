@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("href.controls")]
-[assembly: AssemblyDescription("sample controls")]
+[assembly: AssemblyTitle("AW.Winforms.Helpers")]
+[assembly: AssemblyDescription("Controls, forms and static Winforms/LLBL Helper methods")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("href.controls")]
-[assembly: AssemblyCopyright("left")]
+[assembly: AssemblyProduct("AW.Winforms.Helpers")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -1,6 +1,10 @@
 namespace AW.LinqToSQL
 {
-  partial class CustomerAddress
+  partial class       AWDataClassesDataContext
   {
+    public static AWDataClassesDataContext GetNew()
+    {
+      return new AWDataClassesDataContext();
+    }
   }
 }

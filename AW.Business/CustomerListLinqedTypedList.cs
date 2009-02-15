@@ -2,7 +2,7 @@
 using AW.Data;
 using AW.Data.EntityClasses;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
   public class CustomerListLinqedTypedList
   {

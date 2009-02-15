@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace href.Controls.Properties {
+namespace AW.Winforms.Helpers.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace href.Controls.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("href.Controls.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AW.Winforms.Helpers.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,41 +57,6 @@ namespace href.Controls.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        internal static System.Drawing.Bitmap Members {
-            get {
-                object obj = ResourceManager.GetObject("Members", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap save_as16 {
-            get {
-                object obj = ResourceManager.GetObject("save_as16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap save16 {
-            get {
-                object obj = ResourceManager.GetObject("save16", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap XmlAttribute {
-            get {
-                object obj = ResourceManager.GetObject("XmlAttribute", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap XmlElement {
-            get {
-                object obj = ResourceManager.GetObject("XmlElement", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

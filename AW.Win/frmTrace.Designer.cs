@@ -1,4 +1,4 @@
-﻿namespace AW.Win
+﻿namespace AW.Winforms.Helpers
 {
   partial class frmTrace
   {

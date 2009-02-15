@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
-using href.Controls.PropGridEx;
+using AW.Winforms.Helpers.PropGridEx;
 
 //http://msdn.microsoft.com/en-us/magazine/cc163804.aspx
 

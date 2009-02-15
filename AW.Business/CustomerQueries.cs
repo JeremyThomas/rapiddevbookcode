@@ -4,7 +4,7 @@ using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.TypedListClasses;
 using AW.Data.TypedViewClasses;
-using AW.Win;
+using AW.Winforms.Helpers;
 
 namespace AW.Business
 {

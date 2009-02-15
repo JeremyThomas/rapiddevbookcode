@@ -1,4 +1,4 @@
-﻿namespace AW.Win
+﻿namespace AW.Winforms.Helpers.EntityViewer
 {
   partial class FrmEntityViewer
   {
@@ -69,7 +69,7 @@
       this.actAsDerivedTableFieldDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.entityFieldBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-      this.propertyGrid1 = new href.Controls.PropGridEx.PropertyGridEx();
+      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.selectObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -113,42 +113,42 @@
       this.dataGridViewFields.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridViewFields.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridViewFields.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn,
-            this.isChangedDataGridViewCheckBoxColumn,
-            this.isNullDataGridViewCheckBoxColumn,
-            this.dataTypeDataGridViewTextBoxColumn,
-            this.isNullableDataGridViewCheckBoxColumn,
-            this.isReadOnlyDataGridViewCheckBoxColumn,
-            this.fieldIndexDataGridViewTextBoxColumn,
-            this.isPrimaryKeyDataGridViewCheckBoxColumn,
-            this.actualDotNetTypeDataGridViewTextBoxColumn,
-            this.sourceCatalogNameDataGridViewTextBoxColumn,
-            this.sourceSchemaNameDataGridViewTextBoxColumn,
-            this.sourceObjectNameDataGridViewTextBoxColumn,
-            this.sourceColumnNameDataGridViewTextBoxColumn,
-            this.sourceColumnMaxLengthDataGridViewTextBoxColumn,
-            this.sourceColumnDbTypeDataGridViewTextBoxColumn,
-            this.sourceColumnIsNullableDataGridViewCheckBoxColumn,
-            this.sourceColumnScaleDataGridViewTextBoxColumn,
-            this.sourceColumnPrecisionDataGridViewTextBoxColumn,
-            this.isIdentityDataGridViewCheckBoxColumn,
-            this.identityValueSequenceNameDataGridViewTextBoxColumn,
-            this.typeConverterToUseDataGridViewTextBoxColumn,
-            this.linkedSuperTypeFieldDataGridViewTextBoxColumn,
-            this.maxLengthDataGridViewTextBoxColumn,
-            this.scaleDataGridViewTextBoxColumn,
-            this.precisionDataGridViewTextBoxColumn,
-            this.aliasDataGridViewTextBoxColumn,
-            this.containingObjectNameDataGridViewTextBoxColumn,
-            this.objectAliasDataGridViewTextBoxColumn,
-            this.aggregateFunctionToApplyDataGridViewTextBoxColumn,
-            this.expressionToApplyDataGridViewTextBoxColumn,
-            this.isForeignKeyDataGridViewCheckBoxColumn,
-            this.actualContainingObjectNameDataGridViewTextBoxColumn,
-            this.isInMultiTargetEntityDataGridViewCheckBoxColumn,
-            this.actAsDerivedTableFieldDataGridViewCheckBoxColumn,
-            this.currentValueDataGridViewTextBoxColumn,
-            this.dbValueDataGridViewTextBoxColumn});
+                                                                                               this.nameDataGridViewTextBoxColumn,
+                                                                                               this.isChangedDataGridViewCheckBoxColumn,
+                                                                                               this.isNullDataGridViewCheckBoxColumn,
+                                                                                               this.dataTypeDataGridViewTextBoxColumn,
+                                                                                               this.isNullableDataGridViewCheckBoxColumn,
+                                                                                               this.isReadOnlyDataGridViewCheckBoxColumn,
+                                                                                               this.fieldIndexDataGridViewTextBoxColumn,
+                                                                                               this.isPrimaryKeyDataGridViewCheckBoxColumn,
+                                                                                               this.actualDotNetTypeDataGridViewTextBoxColumn,
+                                                                                               this.sourceCatalogNameDataGridViewTextBoxColumn,
+                                                                                               this.sourceSchemaNameDataGridViewTextBoxColumn,
+                                                                                               this.sourceObjectNameDataGridViewTextBoxColumn,
+                                                                                               this.sourceColumnNameDataGridViewTextBoxColumn,
+                                                                                               this.sourceColumnMaxLengthDataGridViewTextBoxColumn,
+                                                                                               this.sourceColumnDbTypeDataGridViewTextBoxColumn,
+                                                                                               this.sourceColumnIsNullableDataGridViewCheckBoxColumn,
+                                                                                               this.sourceColumnScaleDataGridViewTextBoxColumn,
+                                                                                               this.sourceColumnPrecisionDataGridViewTextBoxColumn,
+                                                                                               this.isIdentityDataGridViewCheckBoxColumn,
+                                                                                               this.identityValueSequenceNameDataGridViewTextBoxColumn,
+                                                                                               this.typeConverterToUseDataGridViewTextBoxColumn,
+                                                                                               this.linkedSuperTypeFieldDataGridViewTextBoxColumn,
+                                                                                               this.maxLengthDataGridViewTextBoxColumn,
+                                                                                               this.scaleDataGridViewTextBoxColumn,
+                                                                                               this.precisionDataGridViewTextBoxColumn,
+                                                                                               this.aliasDataGridViewTextBoxColumn,
+                                                                                               this.containingObjectNameDataGridViewTextBoxColumn,
+                                                                                               this.objectAliasDataGridViewTextBoxColumn,
+                                                                                               this.aggregateFunctionToApplyDataGridViewTextBoxColumn,
+                                                                                               this.expressionToApplyDataGridViewTextBoxColumn,
+                                                                                               this.isForeignKeyDataGridViewCheckBoxColumn,
+                                                                                               this.actualContainingObjectNameDataGridViewTextBoxColumn,
+                                                                                               this.isInMultiTargetEntityDataGridViewCheckBoxColumn,
+                                                                                               this.actAsDerivedTableFieldDataGridViewCheckBoxColumn,
+                                                                                               this.currentValueDataGridViewTextBoxColumn,
+                                                                                               this.dbValueDataGridViewTextBoxColumn});
       this.dataGridViewFields.DataSource = this.entityFieldBindingSource;
       dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
       dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
@@ -443,7 +443,7 @@
       // 
       // splitContainer1
       // 
-      this.splitContainer1.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::href.Controls.Properties.Settings.Default, "FrmEntityViewerSplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.splitContainer1.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::AW.Winforms.Helpers.Properties.Settings.Default, "FrmEntityViewerSplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
       this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.splitContainer1.Location = new System.Drawing.Point(0, 0);
       this.splitContainer1.Name = "splitContainer1";
@@ -456,7 +456,7 @@
       // 
       this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
       this.splitContainer1.Size = new System.Drawing.Size(868, 562);
-      this.splitContainer1.SplitterDistance = global::href.Controls.Properties.Settings.Default.FrmEntityViewerSplitterDistance;
+      this.splitContainer1.SplitterDistance = global::AW.Winforms.Helpers.Properties.Settings.Default.FrmEntityViewerSplitterDistance;
       this.splitContainer1.TabIndex = 2;
       // 
       // propertyGrid1
@@ -477,7 +477,7 @@
       // contextMenuStrip1
       // 
       this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectObjectToolStripMenuItem});
+                                                                                       this.selectObjectToolStripMenuItem});
       this.contextMenuStrip1.Name = "contextMenuStrip1";
       this.contextMenuStrip1.Size = new System.Drawing.Size(147, 26);
       // 
@@ -604,7 +604,7 @@
 
     private System.Windows.Forms.DataGridView dataGridViewFields;
     private System.Windows.Forms.SplitContainer splitContainer1;
-    private href.Controls.PropGridEx.PropertyGridEx propertyGrid1;
+    private AW.Winforms.Helpers.PropGridEx.PropertyGridEx propertyGrid1;
     private System.Windows.Forms.BindingSource entityFieldBindingSource;
     private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
     private System.Windows.Forms.DataGridViewCheckBoxColumn isChangedDataGridViewCheckBoxColumn;

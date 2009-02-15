@@ -7,9 +7,9 @@ using System.Windows.Forms;
 using AW.Business;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Win.Properties;
+using AW.Winforms.Helpers.Properties;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
   public partial class frmOrderSearch2 : Form
   {

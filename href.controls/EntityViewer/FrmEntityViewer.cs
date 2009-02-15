@@ -3,11 +3,10 @@ using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using AW.Data.EntityClasses;
-using href.Controls.Properties;
+using AW.Winforms.Helpers.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers.EntityViewer
 {
   public partial class FrmEntityViewer : Form
   {

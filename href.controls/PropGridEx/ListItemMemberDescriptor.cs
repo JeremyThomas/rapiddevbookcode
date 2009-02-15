@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace href.Controls.PropGridEx
+namespace AW.Winforms.Helpers.PropGridEx
 {
   public abstract class ListItemAbstractDescriptor : PropertyDescriptor
   {

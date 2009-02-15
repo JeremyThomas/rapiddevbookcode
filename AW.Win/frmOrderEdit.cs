@@ -2,10 +2,11 @@ using System;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Win.Properties;
+using AW.Winforms.Helpers.EntityViewer;
+using AW.Winforms.Helpers.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
   public partial class frmOrderEdit: Form
   {

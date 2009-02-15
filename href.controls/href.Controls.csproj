@@ -7,8 +7,8 @@
     <ProjectGuid>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>href.Controls</RootNamespace>
-    <AssemblyName>href.Controls</AssemblyName>
+    <RootNamespace>AW.Winforms.Helpers</RootNamespace>
+    <AssemblyName>AW.Winforms.Helpers</AssemblyName>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
@@ -108,18 +108,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\xmlattribute.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\xmlelement.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\save_as16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\save16.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\Ancillary\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
     </None>
@@ -128,7 +116,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Resources\Members.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

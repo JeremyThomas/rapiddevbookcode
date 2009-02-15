@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
  	public delegate void CancelButtonEventHandler(
  		object sender, 

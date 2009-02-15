@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using AW.Data;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
   public static class AWHelper
   {

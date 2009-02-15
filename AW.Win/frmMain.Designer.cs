@@ -1,4 +1,4 @@
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
     partial class frmMain
     {
@@ -154,7 +154,7 @@ namespace AW.Win
           // 
           // reOpenWindowsToolStripMenuItem
           // 
-          this.reOpenWindowsToolStripMenuItem.Checked = global::AW.Win.Properties.Settings.Default.ReopenWindows;
+          this.reOpenWindowsToolStripMenuItem.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.ReopenWindows;
           this.reOpenWindowsToolStripMenuItem.CheckOnClick = true;
           this.reOpenWindowsToolStripMenuItem.Name = "reOpenWindowsToolStripMenuItem";
           this.reOpenWindowsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
@@ -166,13 +166,13 @@ namespace AW.Win
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(617, 443);
           this.Controls.Add(this.menuStrip1);
-          this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", global::AW.Win.Properties.Settings.Default, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", global::AW.Winforms.Helpers.Properties.Settings.Default, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.IsMdiContainer = true;
           this.MainMenuStrip = this.menuStrip1;
           this.Name = "frmMain";
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
           this.Text = "Adventure Works";
-          this.WindowState = global::AW.Win.Properties.Settings.Default.MainWindowState;
+          this.WindowState = global::AW.Winforms.Helpers.Properties.Settings.Default.MainWindowState;
           this.Load += new System.EventHandler(this.frmMain_Load);
           this.Shown += new System.EventHandler(this.frmMain_Shown);
           this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);

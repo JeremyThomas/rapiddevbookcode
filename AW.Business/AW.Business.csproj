@@ -47,6 +47,9 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
@@ -64,6 +67,10 @@
     <ProjectReference Include="..\AW.Data\AW.Data.csproj">
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.LinqToSQL\AW.LinqToSQL.csproj">
+      <Project>{3A769AFA-83F9-4CB0-8F69-60B8487055E0}</Project>
+      <Name>AW.LinqToSQL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

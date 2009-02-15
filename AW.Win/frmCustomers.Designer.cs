@@ -1,4 +1,4 @@
-namespace AW.Win
+namespace AW.Winforms.Helpers
 {
     partial class frmCustomers
     {
@@ -294,7 +294,7 @@ namespace AW.Win
           // 
           // numericUpDownNumRows
           // 
-          this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Winforms.Helpers.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.numericUpDownNumRows.Increment = new decimal(new int[] {
             5,
             0,
@@ -304,7 +304,7 @@ namespace AW.Win
           this.numericUpDownNumRows.Name = "numericUpDownNumRows";
           this.numericUpDownNumRows.Size = new System.Drawing.Size(59, 20);
           this.numericUpDownNumRows.TabIndex = 2;
-          this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
+          this.numericUpDownNumRows.Value = global::AW.Winforms.Helpers.Properties.Settings.Default.NumRows;
           // 
           // toolStripButtonViewAsEntityLinq
           // 
