@@ -200,7 +200,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TextBoxTraceListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -218,9 +217,9 @@
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\href.controls\href.Controls.csproj">
+    <ProjectReference Include="..\href.controls\AW.Winforms.Helpers.csproj">
       <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
-      <Name>href.Controls</Name>
+      <Name>AW.Winforms.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

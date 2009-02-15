@@ -96,6 +96,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="PropGridEx\RawMemberTab.cs" />
+    <Compile Include="TextBoxTraceListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EntityViewer\FrmEntityViewer.resx">
@@ -149,6 +150,9 @@
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Members.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
