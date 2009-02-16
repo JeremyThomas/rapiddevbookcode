@@ -28,9 +28,12 @@ namespace AW.Winforms.Helpers
         /// </summary>
         private void InitializeComponent()
         {
+          this.components = new System.ComponentModel.Container();
           this.menuStrip1 = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.fileToolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
+          this.mostRecentlyUsedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.orders2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,9 +43,20 @@ namespace AW.Winforms.Helpers
           this.utilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.vacationBonusUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
+          this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
+          this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
+          this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.tileHorizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.arrangeIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+          this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+          this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
           this.menuStrip1.SuspendLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
           this.SuspendLayout();
           // 
           // menuStrip1
@@ -52,9 +66,9 @@ namespace AW.Winforms.Helpers
             this.searchToolStripMenuItem,
             this.reportsToolStripMenuItem,
             this.utilitiesToolStripMenuItem,
-            this.windowToolStripMenuItem});
+            this.windowsMenu});
           this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-          this.menuStrip1.MdiWindowListItem = this.windowToolStripMenuItem;
+          this.menuStrip1.MdiWindowListItem = this.windowsMenu;
           this.menuStrip1.Name = "menuStrip1";
           this.menuStrip1.Size = new System.Drawing.Size(617, 24);
           this.menuStrip1.TabIndex = 1;
@@ -63,6 +77,10 @@ namespace AW.Winforms.Helpers
           // fileToolStripMenuItem
           // 
           this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItemOpen,
+            this.toolStripSeparator2,
+            this.mostRecentlyUsedToolStripMenuItem,
+            this.toolStripSeparator1,
             this.exitToolStripMenuItem});
           this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
           this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
@@ -71,9 +89,23 @@ namespace AW.Winforms.Helpers
           // exitToolStripMenuItem
           // 
           this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-          this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+          this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
           this.exitToolStripMenuItem.Text = "E&xit";
           this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+          // 
+          // fileToolStripMenuItemOpen
+          // 
+          this.fileToolStripMenuItemOpen.Name = "fileToolStripMenuItemOpen";
+          this.fileToolStripMenuItemOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+          this.fileToolStripMenuItemOpen.Size = new System.Drawing.Size(180, 22);
+          this.fileToolStripMenuItemOpen.Text = "&Open";
+          this.fileToolStripMenuItemOpen.Click += new System.EventHandler(this.fileToolStripMenuItemOpen_Click);
+          // 
+          // mostRecentlyUsedToolStripMenuItem
+          // 
+          this.mostRecentlyUsedToolStripMenuItem.Name = "mostRecentlyUsedToolStripMenuItem";
+          this.mostRecentlyUsedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+          this.mostRecentlyUsedToolStripMenuItem.Text = "Most Recently Used";
           // 
           // searchToolStripMenuItem
           // 
@@ -144,13 +176,66 @@ namespace AW.Winforms.Helpers
           this.traceToolStripMenuItem.Text = "Trace...";
           this.traceToolStripMenuItem.Click += new System.EventHandler(this.traceToolStripMenuItem_Click);
           // 
-          // windowToolStripMenuItem
+          // openFileDialogProject
           // 
-          this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+          this.openFileDialogProject.FileName = "AQDRenamedEntities.lgp";
+          this.openFileDialogProject.Filter = "\"LLBL Project Files\"|*.lgp";
+          // 
+          // mruHandlerProject
+          // 
+          this.mruHandlerProject.AutoSeparators = true;
+          this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
+          this.mruHandlerProject.StorageName = "mru";
+          this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
+          // 
+          // windowsMenu
+          // 
+          this.windowsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cascadeToolStripMenuItem,
+            this.tileVerticalToolStripMenuItem,
+            this.tileHorizontalToolStripMenuItem,
+            this.closeAllToolStripMenuItem,
+            this.arrangeIconsToolStripMenuItem,
+            this.toolStripSeparator3,
             this.reOpenWindowsToolStripMenuItem});
-          this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-          this.windowToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-          this.windowToolStripMenuItem.Text = "&Window";
+          this.windowsMenu.Name = "windowsMenu";
+          this.windowsMenu.Size = new System.Drawing.Size(62, 20);
+          this.windowsMenu.Text = "&Windows";
+          // 
+          // cascadeToolStripMenuItem
+          // 
+          this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
+          this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+          this.cascadeToolStripMenuItem.Text = "&Cascade";
+          this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.CascadeToolStripMenuItem_Click);
+          // 
+          // tileVerticalToolStripMenuItem
+          // 
+          this.tileVerticalToolStripMenuItem.Name = "tileVerticalToolStripMenuItem";
+          this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+          this.tileVerticalToolStripMenuItem.Text = "Tile &Vertical";
+          this.tileVerticalToolStripMenuItem.Click += new System.EventHandler(this.TileVerticalToolStripMenuItem_Click);
+          // 
+          // tileHorizontalToolStripMenuItem
+          // 
+          this.tileHorizontalToolStripMenuItem.Name = "tileHorizontalToolStripMenuItem";
+          this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+          this.tileHorizontalToolStripMenuItem.Text = "Tile &Horizontal";
+          this.tileHorizontalToolStripMenuItem.Click += new System.EventHandler(this.TileHorizontalToolStripMenuItem_Click);
+          // 
+          // closeAllToolStripMenuItem
+          // 
+          this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
+          this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+          this.closeAllToolStripMenuItem.Text = "C&lose All";
+          this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.CloseAllToolStripMenuItem_Click);
+          // 
+          // arrangeIconsToolStripMenuItem
+          // 
+          this.arrangeIconsToolStripMenuItem.Name = "arrangeIconsToolStripMenuItem";
+          this.arrangeIconsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+          this.arrangeIconsToolStripMenuItem.Text = "&Arrange Icons";
+          this.arrangeIconsToolStripMenuItem.Click += new System.EventHandler(this.ArrangeIconsToolStripMenuItem_Click);
           // 
           // reOpenWindowsToolStripMenuItem
           // 
@@ -159,6 +244,21 @@ namespace AW.Winforms.Helpers
           this.reOpenWindowsToolStripMenuItem.Name = "reOpenWindowsToolStripMenuItem";
           this.reOpenWindowsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
           this.reOpenWindowsToolStripMenuItem.Text = "Reopen Windows";
+          // 
+          // toolStripSeparator1
+          // 
+          this.toolStripSeparator1.Name = "toolStripSeparator1";
+          this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+          // 
+          // toolStripSeparator2
+          // 
+          this.toolStripSeparator2.Name = "toolStripSeparator2";
+          this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+          // 
+          // toolStripSeparator3
+          // 
+          this.toolStripSeparator3.Name = "toolStripSeparator3";
+          this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
           // 
           // frmMain
           // 
@@ -179,6 +279,7 @@ namespace AW.Winforms.Helpers
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
           this.menuStrip1.ResumeLayout(false);
           this.menuStrip1.PerformLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -195,10 +296,22 @@ namespace AW.Winforms.Helpers
         private System.Windows.Forms.ToolStripMenuItem customersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem organizationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem utilitiesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem windowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vacationBonusUtilityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem traceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orders2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItemOpen;
+        private AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler mruHandlerProject;
+        private System.Windows.Forms.ToolStripMenuItem mostRecentlyUsedToolStripMenuItem;
+        private System.Windows.Forms.OpenFileDialog openFileDialogProject;
+        private System.Windows.Forms.ToolStripMenuItem windowsMenu;
+        private System.Windows.Forms.ToolStripMenuItem cascadeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tileVerticalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tileHorizontalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem arrangeIconsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reOpenWindowsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

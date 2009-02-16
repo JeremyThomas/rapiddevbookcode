@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Properties;
+using SD.LLBLGen.Pro.ApplicationCore;
+using SD.LLBLGen.Pro.ApplicationCore.Entities;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
-  public partial class FrmEntityViewer : Form
+  public partial class FrmEntityViewer: Form
   {
     private static TypeDescriptionProvider CommonEntityBaseTypeDescriptionProvider;
     private static TypeDescriptionProvider EntityFieldsTypeDescriptionProvider; //
@@ -25,10 +27,8 @@ namespace AW.Winforms.Helpers.EntityViewer
       }
 
       if (EntityFieldsTypeDescriptionProvider == null)
-      {
         EntityFieldsTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (EntityFields));
         // TypeDescriptor.AddProvider(EntityFieldsTypeDescriptionProvider, typeof(EntityFields));
-      }
     }
 
     public FrmEntityViewer(object entity)
@@ -58,8 +58,15 @@ namespace AW.Winforms.Helpers.EntityViewer
         if (!(e.NewSelection.Value is string))
           if (e.NewSelection.Value is IEnumerable)
           {
-            var enumerable = (IEnumerable) e.NewSelection.Value;
-            bindingSourceEnumerable.DataSource = enumerable.AsQueryable();
+            var enumerable = (IEnumerable)e.NewSelection.Value;
+            try
+            {
+              bindingSourceEnumerable.DataSource = enumerable.AsQueryable();
+            }
+            catch (ArgumentException)
+            {
+              bindingSourceEnumerable.DataSource = enumerable;
+            }
           }
           else if (!e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
             bindingSourceEnumerable.DataSource = e.NewSelection.Value;
@@ -74,18 +81,40 @@ namespace AW.Winforms.Helpers.EntityViewer
     private void selectObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
       if (propertyGrid1.SelectedGridItem.Expandable)
-      {
         propertyGrid1.SelectedObject = propertyGrid1.SelectedGridItem.Value;
-      }
     }
 
     private void propertyGrid1_SelectedObjectsChanged(object sender, EventArgs e)
     {
       bindingSourceEnumerable.DataSource = propertyGrid1.SelectedObject;
       if (propertyGrid1.SelectedObject is IEntity)
+        entityFieldBindingSource.DataSource = ((IEntity)propertyGrid1.SelectedObject).Fields.AsQueryable();
+      if (propertyGrid1.SelectedObject is Project)
       {
-        entityFieldBindingSource.DataSource = ((IEntity) propertyGrid1.SelectedObject).Fields.AsQueryable();
+        Text = "ProjectBrowser";
+        dataGridViewFields.AutoGenerateColumns = true;
+        entityFieldBindingSource.DataSource = ((Project)propertyGrid1.SelectedObject).Entities;
+        toolStripButtonViewGroupedEntities.Visible = true;
       }
+    }
+
+    private void toolStripButtonViewGroupedEntities_Click(object sender, EventArgs e)
+    {
+      var project = (Project)propertyGrid1.SelectedObject;
+      var x = from entity in project.Entities.OfType<EntityDefinition>()
+              select
+                new { entity.ElementTargetName,entity.ElementName, 
+                  groups = string.Join(",",(from peg in project.ProjectElementGroups.Values.OfType<ProjectElementGroup>()
+              from ed in peg.Keys.OfType<EntityDefinition>()
+                           where !peg.IsSystemGroup && ed.ElementTargetName == entity.ElementTargetName
+                           select peg.Name).ToArray())
+                           //.Aggregate((current, next) => current + ", " + next)
+                };
+      var t = from peg in project.ProjectElementGroups.Values.OfType<ProjectElementGroup>()
+              from ed in peg.Keys.OfType<EntityDefinition>()
+              where !peg.IsSystemGroup && ed.ElementTargetName == "AQD.gn_Aircraft"
+              select new { ed.ElementTargetName, ed.ElementName, peg.Name};
+      bindingSourceEnumerable.DataSource = x;
     }
   }
 }
