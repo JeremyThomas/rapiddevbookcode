@@ -55,6 +55,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="SD.LLBLGen.Pro.ApplicationCore, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\SVNProjects\Prototype\ProjectConverter\ProjectConverter\bin\Debug\SD.LLBLGen.Pro.ApplicationCore.dll</HintPath>
@@ -120,6 +121,21 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="PropGridEx\RawMemberTab.cs" />
+    <Compile Include="Reporting\FrmReportViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\FrmReportViewer.designer.cs">
+      <DependentUpon>FrmReportViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\RdlGenerator.cs" />
+    <Compile Include="Reporting\ReportDefinition.cs" />
+    <Compile Include="Reporting\ReportOptionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\ReportOptionsDialog.designer.cs">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\TableRdlGenerator.cs" />
     <Compile Include="TextBoxTraceListener.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +149,12 @@
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\FrmReportViewer.resx">
+      <DependentUpon>FrmReportViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\ReportOptionsDialog.resx">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

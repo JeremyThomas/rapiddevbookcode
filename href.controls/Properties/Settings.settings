@@ -9,7 +9,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="FrmEntityViewerSplitterDistance" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">450</Value>
+      <Value Profile="(Default)">469</Value>
     </Setting>
   </Settings>
 </SettingsFile>

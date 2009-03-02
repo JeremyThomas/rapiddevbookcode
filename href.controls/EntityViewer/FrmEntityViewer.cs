@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Properties;
+using DynamicTable;
 using SD.LLBLGen.Pro.ApplicationCore;
 using SD.LLBLGen.Pro.ApplicationCore.Entities;
 using SD.LLBLGen.Pro.DBDriverCore;
@@ -145,6 +146,13 @@ namespace AW.Winforms.Helpers.EntityViewer
         Trace.WriteLine(lineToLog);
       else
         Trace.Write(lineToLog);
+    }
+
+    private void toolStripButtonViewReport_Click(object sender, EventArgs e)
+    {
+      var frm = new FrmReportViewer {MdiParent = this.MdiParent, WindowState = FormWindowState.Normal};
+      frm.OpenDataSet(bindingSourceEnumerable, false);
+      frm.Show();
     }
   }
 }
