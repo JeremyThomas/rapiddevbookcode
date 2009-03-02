@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,6 +32,7 @@ namespace AW.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity base class which represents the base class for the entity 'CustomerViewRelated'.<br/><br/>
 	/// 
+	/// MS_Description: Individual customers (names and addresses) that purchase Adventure Works Cycles products online.<br/>
 	/// </summary>
 	[Serializable]
 	public abstract partial class CustomerViewRelatedEntityBase : CommonEntityBase, ISerializable
@@ -1157,7 +1158,7 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
-
+			_customProperties.Add("MS_Description", @"Individual customers (names and addresses) that purchase Adventure Works Cycles products online.");
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
 

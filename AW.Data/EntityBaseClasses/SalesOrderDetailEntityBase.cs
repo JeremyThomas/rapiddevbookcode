@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,6 +32,7 @@ namespace AW.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity base class which represents the base class for the entity 'SalesOrderDetail'.<br/><br/>
 	/// 
+	/// MS_Description: Individual products associated with a specific sales order. See SalesOrderHeader.<br/>
 	/// </summary>
 	[Serializable]
 	public abstract partial class SalesOrderDetailEntityBase : CommonEntityBase, ISerializable
@@ -698,40 +699,40 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
-
+			_customProperties.Add("MS_Description", @"Individual products associated with a specific sales order. See SalesOrderHeader.");
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SalesOrderID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Primary key. One incremental unique number per product sold.");
 			_fieldsCustomProperties.Add("SalesOrderDetailID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("CarrierTrackingNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Quantity ordered per product.");
 			_fieldsCustomProperties.Add("OrderQty", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Product sold to customer. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Promotional code. Foreign key to SpecialOffer.SpecialOfferID.");
 			_fieldsCustomProperties.Add("SpecialOfferID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Selling price of a single product.");
 			_fieldsCustomProperties.Add("UnitPrice", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Discount amount.");
 			_fieldsCustomProperties.Add("UnitPriceDiscount", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.");
 			_fieldsCustomProperties.Add("LineTotal", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
@@ -918,7 +919,8 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesOrderID property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SalesOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -928,7 +930,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.SalesOrderID, value, true); }
 		}
 		/// <summary> The SalesOrderDetailID property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Primary key. One incremental unique number per product sold.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SalesOrderDetailID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -938,7 +941,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.SalesOrderDetailID, value, true); }
 		}
 		/// <summary> The CarrierTrackingNumber property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."CarrierTrackingNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -948,7 +952,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.CarrierTrackingNumber, value, true); }
 		}
 		/// <summary> The OrderQty property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Quantity ordered per product.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."OrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -958,7 +963,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.OrderQty, value, true); }
 		}
 		/// <summary> The ProductID property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Product sold to customer. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -968,7 +974,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.ProductID, value, true); }
 		}
 		/// <summary> The SpecialOfferID property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Promotional code. Foreign key to SpecialOffer.SpecialOfferID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SpecialOfferID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -978,7 +985,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.SpecialOfferID, value, true); }
 		}
 		/// <summary> The UnitPrice property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Selling price of a single product.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."UnitPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -988,7 +996,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.UnitPrice, value, true); }
 		}
 		/// <summary> The UnitPriceDiscount property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Discount amount.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."UnitPriceDiscount"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -998,7 +1007,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.UnitPriceDiscount, value, true); }
 		}
 		/// <summary> The LineTotal property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."LineTotal"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 38, 6, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1008,7 +1018,8 @@ namespace AW.Data.EntityClasses
 
 		}
 		/// <summary> The Rowguid property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1018,7 +1029,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderDetailFieldIndex.Rowguid, value, true); }
 		}
 		/// <summary> The ModifiedDate property of the Entity SalesOrderDetail<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

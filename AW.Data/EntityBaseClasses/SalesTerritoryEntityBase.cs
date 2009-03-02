@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,6 +32,7 @@ namespace AW.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity base class which represents the base class for the entity 'SalesTerritory'.<br/><br/>
 	/// 
+	/// MS_Description: Sales territory lookup table.<br/>
 	/// </summary>
 	[Serializable]
 	public abstract partial class SalesTerritoryEntityBase : CommonEntityBase, ISerializable
@@ -45,10 +46,10 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchSalesOrderHeaders, _alreadyFetchedSalesOrderHeaders;
 		private AW.Data.CollectionClasses.StateProvinceCollection	_stateProvinces;
 		private bool	_alwaysFetchStateProvinces, _alreadyFetchedStateProvinces;
-		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaSalesOrderHeader_;
-		private bool	_alwaysFetchAddressCollectionViaSalesOrderHeader_, _alreadyFetchedAddressCollectionViaSalesOrderHeader_;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaSalesOrderHeader;
 		private bool	_alwaysFetchAddressCollectionViaSalesOrderHeader, _alreadyFetchedAddressCollectionViaSalesOrderHeader;
+		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaSalesOrderHeader_;
+		private bool	_alwaysFetchAddressCollectionViaSalesOrderHeader_, _alreadyFetchedAddressCollectionViaSalesOrderHeader_;
 		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaSalesOrderHeader;
 		private bool	_alwaysFetchContactCollectionViaSalesOrderHeader, _alreadyFetchedContactCollectionViaSalesOrderHeader;
 		private AW.Data.CollectionClasses.CountryRegionCollection _countryRegionCollectionViaStateProvince;
@@ -84,10 +85,10 @@ namespace AW.Data.EntityClasses
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
 			/// <summary>Member name StateProvinces</summary>
 			public static readonly string StateProvinces = "StateProvinces";
-			/// <summary>Member name AddressCollectionViaSalesOrderHeader_</summary>
-			public static readonly string AddressCollectionViaSalesOrderHeader_ = "AddressCollectionViaSalesOrderHeader_";
 			/// <summary>Member name AddressCollectionViaSalesOrderHeader</summary>
 			public static readonly string AddressCollectionViaSalesOrderHeader = "AddressCollectionViaSalesOrderHeader";
+			/// <summary>Member name AddressCollectionViaSalesOrderHeader_</summary>
+			public static readonly string AddressCollectionViaSalesOrderHeader_ = "AddressCollectionViaSalesOrderHeader_";
 			/// <summary>Member name ContactCollectionViaSalesOrderHeader</summary>
 			public static readonly string ContactCollectionViaSalesOrderHeader = "ContactCollectionViaSalesOrderHeader";
 			/// <summary>Member name CountryRegionCollectionViaStateProvince</summary>
@@ -157,12 +158,12 @@ namespace AW.Data.EntityClasses
 			_stateProvinces = (AW.Data.CollectionClasses.StateProvinceCollection)info.GetValue("_stateProvinces", typeof(AW.Data.CollectionClasses.StateProvinceCollection));
 			_alwaysFetchStateProvinces = info.GetBoolean("_alwaysFetchStateProvinces");
 			_alreadyFetchedStateProvinces = info.GetBoolean("_alreadyFetchedStateProvinces");
-			_addressCollectionViaSalesOrderHeader_ = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaSalesOrderHeader_", typeof(AW.Data.CollectionClasses.AddressCollection));
-			_alwaysFetchAddressCollectionViaSalesOrderHeader_ = info.GetBoolean("_alwaysFetchAddressCollectionViaSalesOrderHeader_");
-			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = info.GetBoolean("_alreadyFetchedAddressCollectionViaSalesOrderHeader_");
 			_addressCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.AddressCollection));
 			_alwaysFetchAddressCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchAddressCollectionViaSalesOrderHeader");
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader = info.GetBoolean("_alreadyFetchedAddressCollectionViaSalesOrderHeader");
+			_addressCollectionViaSalesOrderHeader_ = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaSalesOrderHeader_", typeof(AW.Data.CollectionClasses.AddressCollection));
+			_alwaysFetchAddressCollectionViaSalesOrderHeader_ = info.GetBoolean("_alwaysFetchAddressCollectionViaSalesOrderHeader_");
+			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = info.GetBoolean("_alreadyFetchedAddressCollectionViaSalesOrderHeader_");
 			_contactCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.ContactCollection)info.GetValue("_contactCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.ContactCollection));
 			_alwaysFetchContactCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchContactCollectionViaSalesOrderHeader");
 			_alreadyFetchedContactCollectionViaSalesOrderHeader = info.GetBoolean("_alreadyFetchedContactCollectionViaSalesOrderHeader");
@@ -218,8 +219,8 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedCustomers = (_customers.Count > 0);
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
 			_alreadyFetchedStateProvinces = (_stateProvinces.Count > 0);
-			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = (_addressCollectionViaSalesOrderHeader_.Count > 0);
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader = (_addressCollectionViaSalesOrderHeader.Count > 0);
+			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = (_addressCollectionViaSalesOrderHeader_.Count > 0);
 			_alreadyFetchedContactCollectionViaSalesOrderHeader = (_contactCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedCountryRegionCollectionViaStateProvince = (_countryRegionCollectionViaStateProvince.Count > 0);
 			_alreadyFetchedCreditCardCollectionViaSalesOrderHeader = (_creditCardCollectionViaSalesOrderHeader.Count > 0);
@@ -257,13 +258,13 @@ namespace AW.Data.EntityClasses
 				case "StateProvinces":
 					toReturn.Add(SalesTerritoryEntity.Relations.StateProvinceEntityUsingTerritoryID);
 					break;
-				case "AddressCollectionViaSalesOrderHeader_":
-					toReturn.Add(SalesTerritoryEntity.Relations.SalesOrderHeaderEntityUsingTerritoryID, "SalesTerritoryEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-					break;
 				case "AddressCollectionViaSalesOrderHeader":
 					toReturn.Add(SalesTerritoryEntity.Relations.SalesOrderHeaderEntityUsingTerritoryID, "SalesTerritoryEntity__", "SalesOrderHeader_", JoinHint.None);
 					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					break;
+				case "AddressCollectionViaSalesOrderHeader_":
+					toReturn.Add(SalesTerritoryEntity.Relations.SalesOrderHeaderEntityUsingTerritoryID, "SalesTerritoryEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				case "ContactCollectionViaSalesOrderHeader":
 					toReturn.Add(SalesTerritoryEntity.Relations.SalesOrderHeaderEntityUsingTerritoryID, "SalesTerritoryEntity__", "SalesOrderHeader_", JoinHint.None);
@@ -319,12 +320,12 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_stateProvinces", (!this.MarkedForDeletion?_stateProvinces:null));
 			info.AddValue("_alwaysFetchStateProvinces", _alwaysFetchStateProvinces);
 			info.AddValue("_alreadyFetchedStateProvinces", _alreadyFetchedStateProvinces);
-			info.AddValue("_addressCollectionViaSalesOrderHeader_", (!this.MarkedForDeletion?_addressCollectionViaSalesOrderHeader_:null));
-			info.AddValue("_alwaysFetchAddressCollectionViaSalesOrderHeader_", _alwaysFetchAddressCollectionViaSalesOrderHeader_);
-			info.AddValue("_alreadyFetchedAddressCollectionViaSalesOrderHeader_", _alreadyFetchedAddressCollectionViaSalesOrderHeader_);
 			info.AddValue("_addressCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_addressCollectionViaSalesOrderHeader:null));
 			info.AddValue("_alwaysFetchAddressCollectionViaSalesOrderHeader", _alwaysFetchAddressCollectionViaSalesOrderHeader);
 			info.AddValue("_alreadyFetchedAddressCollectionViaSalesOrderHeader", _alreadyFetchedAddressCollectionViaSalesOrderHeader);
+			info.AddValue("_addressCollectionViaSalesOrderHeader_", (!this.MarkedForDeletion?_addressCollectionViaSalesOrderHeader_:null));
+			info.AddValue("_alwaysFetchAddressCollectionViaSalesOrderHeader_", _alwaysFetchAddressCollectionViaSalesOrderHeader_);
+			info.AddValue("_alreadyFetchedAddressCollectionViaSalesOrderHeader_", _alreadyFetchedAddressCollectionViaSalesOrderHeader_);
 			info.AddValue("_contactCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_contactCollectionViaSalesOrderHeader:null));
 			info.AddValue("_alwaysFetchContactCollectionViaSalesOrderHeader", _alwaysFetchContactCollectionViaSalesOrderHeader);
 			info.AddValue("_alreadyFetchedContactCollectionViaSalesOrderHeader", _alreadyFetchedContactCollectionViaSalesOrderHeader);
@@ -385,18 +386,18 @@ namespace AW.Data.EntityClasses
 						this.StateProvinces.Add((StateProvinceEntity)entity);
 					}
 					break;
-				case "AddressCollectionViaSalesOrderHeader_":
-					_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = true;
-					if(entity!=null)
-					{
-						this.AddressCollectionViaSalesOrderHeader_.Add((AddressEntity)entity);
-					}
-					break;
 				case "AddressCollectionViaSalesOrderHeader":
 					_alreadyFetchedAddressCollectionViaSalesOrderHeader = true;
 					if(entity!=null)
 					{
 						this.AddressCollectionViaSalesOrderHeader.Add((AddressEntity)entity);
+					}
+					break;
+				case "AddressCollectionViaSalesOrderHeader_":
+					_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = true;
+					if(entity!=null)
+					{
+						this.AddressCollectionViaSalesOrderHeader_.Add((AddressEntity)entity);
 					}
 					break;
 				case "ContactCollectionViaSalesOrderHeader":
@@ -816,53 +817,6 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaSalesOrderHeader_(bool forceFetch)
-		{
-			return GetMultiAddressCollectionViaSalesOrderHeader_(forceFetch, _addressCollectionViaSalesOrderHeader_.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaSalesOrderHeader_(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedAddressCollectionViaSalesOrderHeader_ || forceFetch || _alwaysFetchAddressCollectionViaSalesOrderHeader_) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
-			{
-				if(base.ParticipatesInTransaction)
-				{
-					if(!_addressCollectionViaSalesOrderHeader_.ParticipatesInTransaction)
-					{
-						base.Transaction.Add(_addressCollectionViaSalesOrderHeader_);
-					}
-				}
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(SalesTerritoryFields.TerritoryID, ComparisonOperator.Equal, this.TerritoryID, "SalesTerritoryEntity__"));
-				_addressCollectionViaSalesOrderHeader_.SuppressClearInGetMulti=!forceFetch;
-				if(entityFactoryToUse!=null)
-				{
-					_addressCollectionViaSalesOrderHeader_.EntityFactoryToUse = entityFactoryToUse;
-				}
-				_addressCollectionViaSalesOrderHeader_.GetMulti(filter, GetRelationsForField("AddressCollectionViaSalesOrderHeader_"));
-				_addressCollectionViaSalesOrderHeader_.SuppressClearInGetMulti=false;
-				_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = true;
-			}
-			return _addressCollectionViaSalesOrderHeader_;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaSalesOrderHeader_'. These settings will be taken into account
-		/// when the property AddressCollectionViaSalesOrderHeader_ is requested or GetMultiAddressCollectionViaSalesOrderHeader_ is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersAddressCollectionViaSalesOrderHeader_(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_addressCollectionViaSalesOrderHeader_.SortClauses=sortClauses;
-			_addressCollectionViaSalesOrderHeader_.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
 		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaSalesOrderHeader(bool forceFetch)
 		{
 			return GetMultiAddressCollectionViaSalesOrderHeader(forceFetch, _addressCollectionViaSalesOrderHeader.EntityFactoryToUse);
@@ -905,6 +859,53 @@ namespace AW.Data.EntityClasses
 		{
 			_addressCollectionViaSalesOrderHeader.SortClauses=sortClauses;
 			_addressCollectionViaSalesOrderHeader.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaSalesOrderHeader_(bool forceFetch)
+		{
+			return GetMultiAddressCollectionViaSalesOrderHeader_(forceFetch, _addressCollectionViaSalesOrderHeader_.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaSalesOrderHeader_(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedAddressCollectionViaSalesOrderHeader_ || forceFetch || _alwaysFetchAddressCollectionViaSalesOrderHeader_) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+			{
+				if(base.ParticipatesInTransaction)
+				{
+					if(!_addressCollectionViaSalesOrderHeader_.ParticipatesInTransaction)
+					{
+						base.Transaction.Add(_addressCollectionViaSalesOrderHeader_);
+					}
+				}
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(SalesTerritoryFields.TerritoryID, ComparisonOperator.Equal, this.TerritoryID, "SalesTerritoryEntity__"));
+				_addressCollectionViaSalesOrderHeader_.SuppressClearInGetMulti=!forceFetch;
+				if(entityFactoryToUse!=null)
+				{
+					_addressCollectionViaSalesOrderHeader_.EntityFactoryToUse = entityFactoryToUse;
+				}
+				_addressCollectionViaSalesOrderHeader_.GetMulti(filter, GetRelationsForField("AddressCollectionViaSalesOrderHeader_"));
+				_addressCollectionViaSalesOrderHeader_.SuppressClearInGetMulti=false;
+				_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = true;
+			}
+			return _addressCollectionViaSalesOrderHeader_;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaSalesOrderHeader_'. These settings will be taken into account
+		/// when the property AddressCollectionViaSalesOrderHeader_ is requested or GetMultiAddressCollectionViaSalesOrderHeader_ is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersAddressCollectionViaSalesOrderHeader_(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_addressCollectionViaSalesOrderHeader_.SortClauses=sortClauses;
+			_addressCollectionViaSalesOrderHeader_.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
@@ -1252,8 +1253,8 @@ namespace AW.Data.EntityClasses
 			_customers.ActiveContext = base.ActiveContext;
 			_salesOrderHeaders.ActiveContext = base.ActiveContext;
 			_stateProvinces.ActiveContext = base.ActiveContext;
-			_addressCollectionViaSalesOrderHeader_.ActiveContext = base.ActiveContext;
 			_addressCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
+			_addressCollectionViaSalesOrderHeader_.ActiveContext = base.ActiveContext;
 			_contactCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
 			_countryRegionCollectionViaStateProvince.ActiveContext = base.ActiveContext;
 			_creditCardCollectionViaSalesOrderHeader.ActiveContext = base.ActiveContext;
@@ -1335,8 +1336,8 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("Customers", _customers);
 			toReturn.Add("SalesOrderHeaders", _salesOrderHeaders);
 			toReturn.Add("StateProvinces", _stateProvinces);
-			toReturn.Add("AddressCollectionViaSalesOrderHeader_", _addressCollectionViaSalesOrderHeader_);
 			toReturn.Add("AddressCollectionViaSalesOrderHeader", _addressCollectionViaSalesOrderHeader);
+			toReturn.Add("AddressCollectionViaSalesOrderHeader_", _addressCollectionViaSalesOrderHeader_);
 			toReturn.Add("ContactCollectionViaSalesOrderHeader", _contactCollectionViaSalesOrderHeader);
 			toReturn.Add("CountryRegionCollectionViaStateProvince", _countryRegionCollectionViaStateProvince);
 			toReturn.Add("CreditCardCollectionViaSalesOrderHeader", _creditCardCollectionViaSalesOrderHeader);
@@ -1384,12 +1385,12 @@ namespace AW.Data.EntityClasses
 			_stateProvinces.SetContainingEntityInfo(this, "SalesTerritory");
 			_alwaysFetchStateProvinces = false;
 			_alreadyFetchedStateProvinces = false;
-			_addressCollectionViaSalesOrderHeader_ = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
-			_alwaysFetchAddressCollectionViaSalesOrderHeader_ = false;
-			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = false;
 			_addressCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
 			_alwaysFetchAddressCollectionViaSalesOrderHeader = false;
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader = false;
+			_addressCollectionViaSalesOrderHeader_ = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
+			_alwaysFetchAddressCollectionViaSalesOrderHeader_ = false;
+			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = false;
 			_contactCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.ContactCollection(new ContactEntityFactory());
 			_alwaysFetchContactCollectionViaSalesOrderHeader = false;
 			_alreadyFetchedContactCollectionViaSalesOrderHeader = false;
@@ -1427,37 +1428,37 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
-
+			_customProperties.Add("MS_Description", @"Sales territory lookup table.");
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Sales territory description");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index. Used to support replication samples.");
 			_fieldsCustomProperties.Add("CountryRegionCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Geographic area to which the sales territory belong.");
 			_fieldsCustomProperties.Add("Group", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Sales in the territory year to date.");
 			_fieldsCustomProperties.Add("SalesYtd", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Sales in the territory the previous year.");
 			_fieldsCustomProperties.Add("SalesLastYear", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Business costs in the territory year to date.");
 			_fieldsCustomProperties.Add("CostYtd", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Business costs in the territory the previous year.");
 			_fieldsCustomProperties.Add("CostLastYear", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
@@ -1558,20 +1559,6 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathAddressCollectionViaSalesOrderHeader_
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = SalesTerritoryEntity.Relations.SalesOrderHeaderEntityUsingTerritoryID;
-				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
-					(int)AW.Data.EntityType.SalesTerritoryEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaSalesOrderHeader_"), "AddressCollectionViaSalesOrderHeader_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathAddressCollectionViaSalesOrderHeader
 		{
 			get
@@ -1580,6 +1567,20 @@ namespace AW.Data.EntityClasses
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.SalesTerritoryEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaSalesOrderHeader"), "AddressCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathAddressCollectionViaSalesOrderHeader_
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = SalesTerritoryEntity.Relations.SalesOrderHeaderEntityUsingTerritoryID;
+				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
+					(int)AW.Data.EntityType.SalesTerritoryEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaSalesOrderHeader_"), "AddressCollectionViaSalesOrderHeader_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -1714,7 +1715,8 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TerritoryID property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1724,7 +1726,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.TerritoryID, value, true); }
 		}
 		/// <summary> The Name property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Sales territory description<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1734,7 +1737,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.Name, value, true); }
 		}
 		/// <summary> The CountryRegionCode property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CountryRegionCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1744,7 +1748,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.CountryRegionCode, value, true); }
 		}
 		/// <summary> The Group property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Geographic area to which the sales territory belong.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."Group"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1754,7 +1759,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.Group, value, true); }
 		}
 		/// <summary> The SalesYtd property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Sales in the territory year to date.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."SalesYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1764,7 +1770,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.SalesYtd, value, true); }
 		}
 		/// <summary> The SalesLastYear property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Sales in the territory the previous year.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."SalesLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1774,7 +1781,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.SalesLastYear, value, true); }
 		}
 		/// <summary> The CostYtd property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Business costs in the territory year to date.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CostYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1784,7 +1792,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.CostYtd, value, true); }
 		}
 		/// <summary> The CostLastYear property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Business costs in the territory the previous year.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CostLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1794,7 +1803,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.CostLastYear, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1804,7 +1814,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.Rowguid, value, true); }
 		}
 		/// <summary> The ModifiedDate property of the Entity SalesTerritory<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1915,39 +1926,6 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaSalesOrderHeader_()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaSalesOrderHeader_
-		{
-			get { return GetMultiAddressCollectionViaSalesOrderHeader_(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaSalesOrderHeader_. When set to true, AddressCollectionViaSalesOrderHeader_ is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaSalesOrderHeader_ is accessed. You can always execute
-		/// a forced fetch by calling GetMultiAddressCollectionViaSalesOrderHeader_(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchAddressCollectionViaSalesOrderHeader_
-		{
-			get	{ return _alwaysFetchAddressCollectionViaSalesOrderHeader_; }
-			set	{ _alwaysFetchAddressCollectionViaSalesOrderHeader_ = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaSalesOrderHeader_ already has been fetched. Setting this property to false when AddressCollectionViaSalesOrderHeader_ has been fetched
-		/// will clear the AddressCollectionViaSalesOrderHeader_ collection well. Setting this property to true while AddressCollectionViaSalesOrderHeader_ hasn't been fetched disables lazy loading for AddressCollectionViaSalesOrderHeader_</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedAddressCollectionViaSalesOrderHeader_
-		{
-			get { return _alreadyFetchedAddressCollectionViaSalesOrderHeader_;}
-			set 
-			{
-				if(_alreadyFetchedAddressCollectionViaSalesOrderHeader_ && !value && (_addressCollectionViaSalesOrderHeader_ != null))
-				{
-					_addressCollectionViaSalesOrderHeader_.Clear();
-				}
-				_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = value;
-			}
-		}
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaSalesOrderHeader()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
 		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaSalesOrderHeader
@@ -1978,6 +1956,39 @@ namespace AW.Data.EntityClasses
 					_addressCollectionViaSalesOrderHeader.Clear();
 				}
 				_alreadyFetchedAddressCollectionViaSalesOrderHeader = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaSalesOrderHeader_()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaSalesOrderHeader_
+		{
+			get { return GetMultiAddressCollectionViaSalesOrderHeader_(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaSalesOrderHeader_. When set to true, AddressCollectionViaSalesOrderHeader_ is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaSalesOrderHeader_ is accessed. You can always execute
+		/// a forced fetch by calling GetMultiAddressCollectionViaSalesOrderHeader_(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchAddressCollectionViaSalesOrderHeader_
+		{
+			get	{ return _alwaysFetchAddressCollectionViaSalesOrderHeader_; }
+			set	{ _alwaysFetchAddressCollectionViaSalesOrderHeader_ = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaSalesOrderHeader_ already has been fetched. Setting this property to false when AddressCollectionViaSalesOrderHeader_ has been fetched
+		/// will clear the AddressCollectionViaSalesOrderHeader_ collection well. Setting this property to true while AddressCollectionViaSalesOrderHeader_ hasn't been fetched disables lazy loading for AddressCollectionViaSalesOrderHeader_</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedAddressCollectionViaSalesOrderHeader_
+		{
+			get { return _alreadyFetchedAddressCollectionViaSalesOrderHeader_;}
+			set 
+			{
+				if(_alreadyFetchedAddressCollectionViaSalesOrderHeader_ && !value && (_addressCollectionViaSalesOrderHeader_ != null))
+				{
+					_addressCollectionViaSalesOrderHeader_.Clear();
+				}
+				_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>

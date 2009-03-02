@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:25 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SqlServerSpecific.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -33,6 +33,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <summary>
 		/// Calls stored procedure 'uspGetEmployeeManagers'.<br/><br/>
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect managers of the specified employee.<br/>
 		/// </summary>
 		/// <param name="employeeId">Input parameter of stored procedure</param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
@@ -53,6 +54,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <summary>
 		/// Calls stored procedure 'uspGetEmployeeManagers'. This version also returns the return value of the stored procedure.<br/><br/>
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect managers of the specified employee.<br/>
 		/// </summary>
 		/// <param name="employeeId">Input parameter of stored procedure</param>
 		/// <param name="returnValue">Return value of the stored procedure</param>
@@ -79,6 +81,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <summary>
 		/// Calls stored procedure 'uspGetEmployeeManagers'.<br/><br/>
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect managers of the specified employee.<br/>
 		/// </summary>
 		/// <param name="employeeId">Input parameter of stored procedure</param>
 		/// <param name="transactionToUse">the transaction to use, or null if no transaction is available.</param>
@@ -100,6 +103,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <summary>
 		/// Calls stored procedure 'uspGetEmployeeManagers'. This version also returns the return value of the stored procedure.<br/><br/>
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect managers of the specified employee.<br/>
 		/// </summary>
 		/// <param name="employeeId">Input parameter of stored procedure</param>
 		/// <param name="returnValue">Return value of the stored procedure</param>
@@ -125,6 +129,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 
 		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'uspGetEmployeeManagers'.
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect managers of the specified employee.<br/>
 		/// </summary>
 		/// <param name="employeeId">Input parameter of stored procedure</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>
@@ -142,6 +147,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <summary>
 		/// Calls stored procedure 'uspGetManagerEmployees'.<br/><br/>
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect employees of the specified manager.<br/>
 		/// </summary>
 		/// <param name="managerId">Input parameter of stored procedure</param>
 		/// <returns>Filled DataTable with resultset(s) of stored procedure</returns>
@@ -162,6 +168,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <summary>
 		/// Calls stored procedure 'uspGetManagerEmployees'. This version also returns the return value of the stored procedure.<br/><br/>
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect employees of the specified manager.<br/>
 		/// </summary>
 		/// <param name="managerId">Input parameter of stored procedure</param>
 		/// <param name="returnValue">Return value of the stored procedure</param>
@@ -188,6 +195,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <summary>
 		/// Calls stored procedure 'uspGetManagerEmployees'.<br/><br/>
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect employees of the specified manager.<br/>
 		/// </summary>
 		/// <param name="managerId">Input parameter of stored procedure</param>
 		/// <param name="transactionToUse">the transaction to use, or null if no transaction is available.</param>
@@ -209,6 +217,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <summary>
 		/// Calls stored procedure 'uspGetManagerEmployees'. This version also returns the return value of the stored procedure.<br/><br/>
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect employees of the specified manager.<br/>
 		/// </summary>
 		/// <param name="managerId">Input parameter of stored procedure</param>
 		/// <param name="returnValue">Return value of the stored procedure</param>
@@ -234,6 +243,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 
 		/// <summary>Creates an IRetrievalQuery object for a call to the procedure 'uspGetManagerEmployees'.
 		/// 
+		/// MS_Description: Stored procedure using a recursive query to return the direct and indirect employees of the specified manager.<br/>
 		/// </summary>
 		/// <param name="managerId">Input parameter of stored procedure</param>
 		/// <returns>IRetrievalQuery object which is ready to use for datafetching</returns>

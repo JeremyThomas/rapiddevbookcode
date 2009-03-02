@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,6 +32,7 @@ namespace AW.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity base class which represents the base class for the entity 'StateProvince'.<br/><br/>
 	/// 
+	/// MS_Description: State and province lookup table.<br/>
 	/// </summary>
 	[Serializable]
 	public abstract partial class StateProvinceEntityBase : CommonEntityBase, ISerializable
@@ -770,31 +771,31 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
-
+			_customProperties.Add("MS_Description", @"State and province lookup table.");
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("StateProvinceID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"ISO standard state or province code.");
 			_fieldsCustomProperties.Add("StateProvinceCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index.");
 			_fieldsCustomProperties.Add("CountryRegionCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.");
 			_fieldsCustomProperties.Add("IsOnlyStateProvinceFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"State or province description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID.");
 			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
@@ -990,7 +991,8 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StateProvinceID property of the Entity StateProvince<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."StateProvinceID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1000,7 +1002,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StateProvinceFieldIndex.StateProvinceID, value, true); }
 		}
 		/// <summary> The StateProvinceCode property of the Entity StateProvince<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: ISO standard state or province code.<br/></summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."StateProvinceCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1010,7 +1013,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StateProvinceFieldIndex.StateProvinceCode, value, true); }
 		}
 		/// <summary> The CountryRegionCode property of the Entity StateProvince<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Unique nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."CountryRegionCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1020,7 +1024,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StateProvinceFieldIndex.CountryRegionCode, value, true); }
 		}
 		/// <summary> The IsOnlyStateProvinceFlag property of the Entity StateProvince<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: 0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.<br/></summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."IsOnlyStateProvinceFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1030,7 +1035,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StateProvinceFieldIndex.IsOnlyStateProvinceFlag, value, true); }
 		}
 		/// <summary> The Name property of the Entity StateProvince<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: State or province description.<br/></summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1040,7 +1046,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StateProvinceFieldIndex.Name, value, true); }
 		}
 		/// <summary> The TerritoryID property of the Entity StateProvince<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1050,7 +1057,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StateProvinceFieldIndex.TerritoryID, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity StateProvince<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1060,7 +1068,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StateProvinceFieldIndex.Rowguid, value, true); }
 		}
 		/// <summary> The ModifiedDate property of the Entity StateProvince<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

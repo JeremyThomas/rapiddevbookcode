@@ -56,11 +56,11 @@
   <ItemGroup>
     <Reference Include="SD.LLBLGen.Pro.ApplicationCore, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\SVNProjects\Prototype\ProjectConverter\ProjectConverter\bin\Debug\SD.LLBLGen.Pro.ApplicationCore.dll</HintPath>
+      <HintPath>C:\Program Files\Solutions Design\LLBLGen Pro v2.6\SD.LLBLGen.Pro.ApplicationCore.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.DBDriverCore, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\SVNProjects\Prototype\ProjectConverter\ProjectConverter\bin\Debug\SD.LLBLGen.Pro.DBDriverCore.dll</HintPath>
+      <HintPath>C:\Program Files\Solutions Design\LLBLGen Pro v2.6\SD.LLBLGen.Pro.DBDriverCore.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,6 +32,7 @@ namespace AW.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity base class which represents the base class for the entity 'CountryRegion'.<br/><br/>
 	/// 
+	/// MS_Description: Lookup table containing the ISO standard codes for countries and regions.<br/>
 	/// </summary>
 	[Serializable]
 	public abstract partial class CountryRegionEntityBase : CommonEntityBase, ISerializable
@@ -639,16 +640,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
-
+			_customProperties.Add("MS_Description", @"Lookup table containing the ISO standard codes for countries and regions.");
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("CountryRegionCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Country or region name.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
@@ -769,7 +770,8 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CountryRegionCode property of the Entity CountryRegion<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "CountryRegion"."CountryRegionCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -779,7 +781,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CountryRegionFieldIndex.CountryRegionCode, value, true); }
 		}
 		/// <summary> The Name property of the Entity CountryRegion<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Country or region name.<br/></summary>
 		/// <remarks>Mapped on  table field: "CountryRegion"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -789,7 +792,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CountryRegionFieldIndex.Name, value, true); }
 		}
 		/// <summary> The ModifiedDate property of the Entity CountryRegion<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "CountryRegion"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

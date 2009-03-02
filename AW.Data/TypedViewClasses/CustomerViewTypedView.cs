@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:25 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,6 +32,7 @@ namespace AW.Data.TypedViewClasses
 	/// <summary>
 	/// Typed datatable for the view 'CustomerView'.<br/><br/>
 	/// 
+	/// MS_Description: Individual customers (names and addresses) that purchase Adventure Works Cycles products online.<br/>
 	/// </summary>
 	/// <remarks>
 	/// It embeds a fill method which accepts a filter.
@@ -336,7 +337,7 @@ namespace AW.Data.TypedViewClasses
 			_fieldsCustomProperties = new Hashtable();
 
 			// Add custom properties of this type
-
+			_customProperties.Add("MS_Description", "Individual customers (names and addresses) that purchase Adventure Works Cycles products online.");
 			// Add per Field a new Hashtable with its custom properties, indexed by the name of the field.
 			Hashtable fieldHashtable = null;
 			

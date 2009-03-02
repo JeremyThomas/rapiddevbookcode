@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:23 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,6 +32,7 @@ namespace AW.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity base class which represents the base class for the entity 'SalesOrderHeader'.<br/><br/>
 	/// 
+	/// MS_Description: General sales order information.<br/>
 	/// </summary>
 	[Serializable]
 	public abstract partial class SalesOrderHeaderEntityBase : CommonEntityBase, ISerializable
@@ -43,10 +44,10 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchSalesOrderDetails, _alreadyFetchedSalesOrderDetails;
 		private AW.Data.CollectionClasses.SpecialOfferProductCollection _specialOfferProductCollectionViaSalesOrderDetail;
 		private bool	_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail, _alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail;
-		private AddressEntity _shippingAddress;
-		private bool	_alwaysFetchShippingAddress, _alreadyFetchedShippingAddress, _shippingAddressReturnsNewIfNotFound;
 		private AddressEntity _billingAddress;
 		private bool	_alwaysFetchBillingAddress, _alreadyFetchedBillingAddress, _billingAddressReturnsNewIfNotFound;
+		private AddressEntity _shippingAddress;
+		private bool	_alwaysFetchShippingAddress, _alreadyFetchedShippingAddress, _shippingAddressReturnsNewIfNotFound;
 		private ContactEntity _contact;
 		private bool	_alwaysFetchContact, _alreadyFetchedContact, _contactReturnsNewIfNotFound;
 		private CreditCardEntity _creditCard;
@@ -74,10 +75,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name ShippingAddress</summary>
-			public static readonly string ShippingAddress = "ShippingAddress";
 			/// <summary>Member name BillingAddress</summary>
 			public static readonly string BillingAddress = "BillingAddress";
+			/// <summary>Member name ShippingAddress</summary>
+			public static readonly string ShippingAddress = "ShippingAddress";
 			/// <summary>Member name Contact</summary>
 			public static readonly string Contact = "Contact";
 			/// <summary>Member name CreditCard</summary>
@@ -148,14 +149,6 @@ namespace AW.Data.EntityClasses
 			_specialOfferProductCollectionViaSalesOrderDetail = (AW.Data.CollectionClasses.SpecialOfferProductCollection)info.GetValue("_specialOfferProductCollectionViaSalesOrderDetail", typeof(AW.Data.CollectionClasses.SpecialOfferProductCollection));
 			_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail = info.GetBoolean("_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail");
 			_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail = info.GetBoolean("_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail");
-			_shippingAddress = (AddressEntity)info.GetValue("_shippingAddress", typeof(AddressEntity));
-			if(_shippingAddress!=null)
-			{
-				_shippingAddress.AfterSave+=new EventHandler(OnEntityAfterSave);
-			}
-			_shippingAddressReturnsNewIfNotFound = info.GetBoolean("_shippingAddressReturnsNewIfNotFound");
-			_alwaysFetchShippingAddress = info.GetBoolean("_alwaysFetchShippingAddress");
-			_alreadyFetchedShippingAddress = info.GetBoolean("_alreadyFetchedShippingAddress");
 			_billingAddress = (AddressEntity)info.GetValue("_billingAddress", typeof(AddressEntity));
 			if(_billingAddress!=null)
 			{
@@ -164,6 +157,14 @@ namespace AW.Data.EntityClasses
 			_billingAddressReturnsNewIfNotFound = info.GetBoolean("_billingAddressReturnsNewIfNotFound");
 			_alwaysFetchBillingAddress = info.GetBoolean("_alwaysFetchBillingAddress");
 			_alreadyFetchedBillingAddress = info.GetBoolean("_alreadyFetchedBillingAddress");
+			_shippingAddress = (AddressEntity)info.GetValue("_shippingAddress", typeof(AddressEntity));
+			if(_shippingAddress!=null)
+			{
+				_shippingAddress.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_shippingAddressReturnsNewIfNotFound = info.GetBoolean("_shippingAddressReturnsNewIfNotFound");
+			_alwaysFetchShippingAddress = info.GetBoolean("_alwaysFetchShippingAddress");
+			_alreadyFetchedShippingAddress = info.GetBoolean("_alreadyFetchedShippingAddress");
 			_contact = (ContactEntity)info.GetValue("_contact", typeof(ContactEntity));
 			if(_contact!=null)
 			{
@@ -235,10 +236,10 @@ namespace AW.Data.EntityClasses
 			switch((SalesOrderHeaderFieldIndex)fieldIndex)
 			{
 				case SalesOrderHeaderFieldIndex.CustomerID:
-					DesetupSyncCustomer(true, false);
-					_alreadyFetchedCustomer = false;
 					DesetupSyncCustomerViewRelated(true, false);
 					_alreadyFetchedCustomerViewRelated = false;
+					DesetupSyncCustomer(true, false);
+					_alreadyFetchedCustomer = false;
 					break;
 				case SalesOrderHeaderFieldIndex.ContactID:
 					DesetupSyncContact(true, false);
@@ -286,8 +287,8 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedSalesOrderDetails = (_salesOrderDetails.Count > 0);
 			_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail = (_specialOfferProductCollectionViaSalesOrderDetail.Count > 0);
-			_alreadyFetchedShippingAddress = (_shippingAddress != null);
 			_alreadyFetchedBillingAddress = (_billingAddress != null);
+			_alreadyFetchedShippingAddress = (_shippingAddress != null);
 			_alreadyFetchedContact = (_contact != null);
 			_alreadyFetchedCreditCard = (_creditCard != null);
 			_alreadyFetchedCurrencyRate = (_currencyRate != null);
@@ -314,11 +315,11 @@ namespace AW.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "ShippingAddress":
-					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID);
-					break;
 				case "BillingAddress":
 					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressID);
+					break;
+				case "ShippingAddress":
+					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID);
 					break;
 				case "Contact":
 					toReturn.Add(SalesOrderHeaderEntity.Relations.ContactEntityUsingContactID);
@@ -371,14 +372,14 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_specialOfferProductCollectionViaSalesOrderDetail", (!this.MarkedForDeletion?_specialOfferProductCollectionViaSalesOrderDetail:null));
 			info.AddValue("_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail", _alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail);
 			info.AddValue("_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail", _alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail);
-			info.AddValue("_shippingAddress", (!this.MarkedForDeletion?_shippingAddress:null));
-			info.AddValue("_shippingAddressReturnsNewIfNotFound", _shippingAddressReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchShippingAddress", _alwaysFetchShippingAddress);
-			info.AddValue("_alreadyFetchedShippingAddress", _alreadyFetchedShippingAddress);
 			info.AddValue("_billingAddress", (!this.MarkedForDeletion?_billingAddress:null));
 			info.AddValue("_billingAddressReturnsNewIfNotFound", _billingAddressReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchBillingAddress", _alwaysFetchBillingAddress);
 			info.AddValue("_alreadyFetchedBillingAddress", _alreadyFetchedBillingAddress);
+			info.AddValue("_shippingAddress", (!this.MarkedForDeletion?_shippingAddress:null));
+			info.AddValue("_shippingAddressReturnsNewIfNotFound", _shippingAddressReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchShippingAddress", _alwaysFetchShippingAddress);
+			info.AddValue("_alreadyFetchedShippingAddress", _alreadyFetchedShippingAddress);
 			info.AddValue("_contact", (!this.MarkedForDeletion?_contact:null));
 			info.AddValue("_contactReturnsNewIfNotFound", _contactReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchContact", _alwaysFetchContact);
@@ -423,13 +424,13 @@ namespace AW.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "ShippingAddress":
-					_alreadyFetchedShippingAddress = true;
-					this.ShippingAddress = (AddressEntity)entity;
-					break;
 				case "BillingAddress":
 					_alreadyFetchedBillingAddress = true;
 					this.BillingAddress = (AddressEntity)entity;
+					break;
+				case "ShippingAddress":
+					_alreadyFetchedShippingAddress = true;
+					this.ShippingAddress = (AddressEntity)entity;
 					break;
 				case "Contact":
 					_alreadyFetchedContact = true;
@@ -488,11 +489,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "ShippingAddress":
-					SetupSyncShippingAddress(relatedEntity);
-					break;
 				case "BillingAddress":
 					SetupSyncBillingAddress(relatedEntity);
+					break;
+				case "ShippingAddress":
+					SetupSyncShippingAddress(relatedEntity);
 					break;
 				case "Contact":
 					SetupSyncContact(relatedEntity);
@@ -534,11 +535,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "ShippingAddress":
-					DesetupSyncShippingAddress(false, true);
-					break;
 				case "BillingAddress":
 					DesetupSyncBillingAddress(false, true);
+					break;
+				case "ShippingAddress":
+					DesetupSyncShippingAddress(false, true);
 					break;
 				case "Contact":
 					DesetupSyncContact(false, true);
@@ -588,13 +589,13 @@ namespace AW.Data.EntityClasses
 		public override List<IEntity> GetDependentRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
-			if(_shippingAddress!=null)
-			{
-				toReturn.Add(_shippingAddress);
-			}
 			if(_billingAddress!=null)
 			{
 				toReturn.Add(_billingAddress);
+			}
+			if(_shippingAddress!=null)
+			{
+				toReturn.Add(_shippingAddress);
 			}
 			if(_contact!=null)
 			{
@@ -832,63 +833,6 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
-		public AddressEntity GetSingleShippingAddress()
-		{
-			return GetSingleShippingAddress(false);
-		}
-
-		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
-		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
-		public virtual AddressEntity GetSingleShippingAddress(bool forceFetch)
-		{
-			if( ( !_alreadyFetchedShippingAddress || forceFetch || _alwaysFetchShippingAddress) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
-			{
-				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID);
-
-				AddressEntity newEntity = new AddressEntity();
-				if(base.ParticipatesInTransaction)
-				{
-					base.Transaction.Add(newEntity);
-				}
-				bool fetchResult = false;
-				if(performLazyLoading)
-				{
-					fetchResult = newEntity.FetchUsingPK(this.ShipToAddressID);
-				}
-				if(fetchResult)
-				{
-					if(base.ActiveContext!=null)
-					{
-						newEntity = (AddressEntity)base.ActiveContext.Get(newEntity);
-					}
-					this.ShippingAddress = newEntity;
-				}
-				else
-				{
-					if(_shippingAddressReturnsNewIfNotFound)
-					{
-						if(performLazyLoading || (!performLazyLoading && (_shippingAddress == null)))
-						{
-							this.ShippingAddress = newEntity;
-						}
-					}
-					else
-					{
-						this.ShippingAddress = null;
-					}
-				}
-				_alreadyFetchedShippingAddress = fetchResult;
-				if(base.ParticipatesInTransaction && !fetchResult)
-				{
-					base.Transaction.Remove(newEntity);
-				}
-			}
-			return _shippingAddress;
-		}
-
-		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
-		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
 		public AddressEntity GetSingleBillingAddress()
 		{
 			return GetSingleBillingAddress(false);
@@ -942,6 +886,63 @@ namespace AW.Data.EntityClasses
 				}
 			}
 			return _billingAddress;
+		}
+
+		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
+		public AddressEntity GetSingleShippingAddress()
+		{
+			return GetSingleShippingAddress(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
+		public virtual AddressEntity GetSingleShippingAddress(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedShippingAddress || forceFetch || _alwaysFetchShippingAddress) && !base.IsSerializing && !base.IsDeserializing  && !base.InDesignMode)			
+			{
+				bool performLazyLoading = base.CheckIfLazyLoadingShouldOccur(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID);
+
+				AddressEntity newEntity = new AddressEntity();
+				if(base.ParticipatesInTransaction)
+				{
+					base.Transaction.Add(newEntity);
+				}
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					fetchResult = newEntity.FetchUsingPK(this.ShipToAddressID);
+				}
+				if(fetchResult)
+				{
+					if(base.ActiveContext!=null)
+					{
+						newEntity = (AddressEntity)base.ActiveContext.Get(newEntity);
+					}
+					this.ShippingAddress = newEntity;
+				}
+				else
+				{
+					if(_shippingAddressReturnsNewIfNotFound)
+					{
+						if(performLazyLoading || (!performLazyLoading && (_shippingAddress == null)))
+						{
+							this.ShippingAddress = newEntity;
+						}
+					}
+					else
+					{
+						this.ShippingAddress = null;
+					}
+				}
+				_alreadyFetchedShippingAddress = fetchResult;
+				if(base.ParticipatesInTransaction && !fetchResult)
+				{
+					base.Transaction.Remove(newEntity);
+				}
+			}
+			return _shippingAddress;
 		}
 
 		/// <summary> Retrieves the related entity of type 'ContactEntity', using a relation of type 'n:1'</summary>
@@ -1357,13 +1358,13 @@ namespace AW.Data.EntityClasses
 		{
 			_salesOrderDetails.ActiveContext = base.ActiveContext;
 			_specialOfferProductCollectionViaSalesOrderDetail.ActiveContext = base.ActiveContext;
-			if(_shippingAddress!=null)
-			{
-				_shippingAddress.ActiveContext = base.ActiveContext;
-			}
 			if(_billingAddress!=null)
 			{
 				_billingAddress.ActiveContext = base.ActiveContext;
+			}
+			if(_shippingAddress!=null)
+			{
+				_shippingAddress.ActiveContext = base.ActiveContext;
 			}
 			if(_contact!=null)
 			{
@@ -1462,8 +1463,8 @@ namespace AW.Data.EntityClasses
 		public override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("ShippingAddress", _shippingAddress);
 			toReturn.Add("BillingAddress", _billingAddress);
+			toReturn.Add("ShippingAddress", _shippingAddress);
 			toReturn.Add("Contact", _contact);
 			toReturn.Add("CreditCard", _creditCard);
 			toReturn.Add("CurrencyRate", _currencyRate);
@@ -1508,14 +1509,14 @@ namespace AW.Data.EntityClasses
 			_specialOfferProductCollectionViaSalesOrderDetail = new AW.Data.CollectionClasses.SpecialOfferProductCollection(new SpecialOfferProductEntityFactory());
 			_alwaysFetchSpecialOfferProductCollectionViaSalesOrderDetail = false;
 			_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail = false;
-			_shippingAddress = null;
-			_shippingAddressReturnsNewIfNotFound = true;
-			_alwaysFetchShippingAddress = false;
-			_alreadyFetchedShippingAddress = false;
 			_billingAddress = null;
 			_billingAddressReturnsNewIfNotFound = true;
 			_alwaysFetchBillingAddress = false;
 			_alreadyFetchedBillingAddress = false;
+			_shippingAddress = null;
+			_shippingAddressReturnsNewIfNotFound = true;
+			_alwaysFetchShippingAddress = false;
+			_alreadyFetchedShippingAddress = false;
 			_contact = null;
 			_contactReturnsNewIfNotFound = true;
 			_alwaysFetchContact = false;
@@ -1559,125 +1560,92 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
-
+			_customProperties.Add("MS_Description", @"General sales order information.");
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SalesOrderID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Incremental number to track changes to the sales order over time.");
 			_fieldsCustomProperties.Add("RevisionNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index.");
 			_fieldsCustomProperties.Add("OrderDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Date the order is due to the customer.");
 			_fieldsCustomProperties.Add("DueDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("ShipDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled");
 			_fieldsCustomProperties.Add("Status", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"0 = Order placed by sales person. 1 = Order placed online by customer.");
 			_fieldsCustomProperties.Add("OnlineOrderFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Unique sales order identification number.");
 			_fieldsCustomProperties.Add("SalesOrderNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Customer purchase order number reference. ");
 			_fieldsCustomProperties.Add("PurchaseOrderNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Financial accounting number reference.");
 			_fieldsCustomProperties.Add("AccountNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Customer identification number. Foreign key to Customer.CustomerID.");
 			_fieldsCustomProperties.Add("CustomerID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Customer contact identification number. Foreign key to Contact.ContactID.");
 			_fieldsCustomProperties.Add("ContactID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Sales person who created the sales order. Foreign key to SalesPerson.SalePersonID.");
 			_fieldsCustomProperties.Add("SalesPersonID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.");
 			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Customer billing address. Foreign key to Address.AddressID.");
 			_fieldsCustomProperties.Add("BillToAddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Customer shipping address. Foreign key to Address.AddressID.");
 			_fieldsCustomProperties.Add("ShipToAddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Shipping method. Foreign key to ShipMethod.ShipMethodID.");
 			_fieldsCustomProperties.Add("ShipMethodID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Credit card identification number. Foreign key to CreditCard.CreditCardID.");
 			_fieldsCustomProperties.Add("CreditCardID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Approval code provided by the credit card company.");
 			_fieldsCustomProperties.Add("CreditCardApprovalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Currency exchange rate used. Foreign key to CurrencyRate.CurrencyRateID.");
 			_fieldsCustomProperties.Add("CurrencyRateID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.");
 			_fieldsCustomProperties.Add("SubTotal", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Tax amount.");
 			_fieldsCustomProperties.Add("TaxAmt", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Shipping cost.");
 			_fieldsCustomProperties.Add("Freight", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Total due from customer. Computed as Subtotal + TaxAmt + Freight.");
 			_fieldsCustomProperties.Add("TotalDue", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Sales representative comments.");
 			_fieldsCustomProperties.Add("Comment", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
 
-
-		/// <summary> Removes the sync logic for member _shippingAddress</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncShippingAddress(bool signalRelatedEntity, bool resetFKFields)
-		{
-			base.PerformDesetupSyncRelatedEntity( _shippingAddress, new PropertyChangedEventHandler( OnShippingAddressPropertyChanged ), "ShippingAddress", SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, true, signalRelatedEntity, "SalesOrderHeaders_", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.ShipToAddressID } );		
-			_shippingAddress = null;
-		}
-		
-		/// <summary> setups the sync logic for member _shippingAddress</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncShippingAddress(IEntity relatedEntity)
-		{
-			if(_shippingAddress!=relatedEntity)
-			{		
-				DesetupSyncShippingAddress(true, true);
-				_shippingAddress = (AddressEntity)relatedEntity;
-				base.PerformSetupSyncRelatedEntity( _shippingAddress, new PropertyChangedEventHandler( OnShippingAddressPropertyChanged ), "ShippingAddress", SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, true, ref _alreadyFetchedShippingAddress, new string[] {  } );
-			}
-		}
-
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnShippingAddressPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
 
 		/// <summary> Removes the sync logic for member _billingAddress</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
@@ -1704,6 +1672,39 @@ namespace AW.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnBillingAddressPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _shippingAddress</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncShippingAddress(bool signalRelatedEntity, bool resetFKFields)
+		{
+			base.PerformDesetupSyncRelatedEntity( _shippingAddress, new PropertyChangedEventHandler( OnShippingAddressPropertyChanged ), "ShippingAddress", SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, true, signalRelatedEntity, "SalesOrderHeaders_", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.ShipToAddressID } );		
+			_shippingAddress = null;
+		}
+		
+		/// <summary> setups the sync logic for member _shippingAddress</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncShippingAddress(IEntity relatedEntity)
+		{
+			if(_shippingAddress!=relatedEntity)
+			{		
+				DesetupSyncShippingAddress(true, true);
+				_shippingAddress = (AddressEntity)relatedEntity;
+				base.PerformSetupSyncRelatedEntity( _shippingAddress, new PropertyChangedEventHandler( OnShippingAddressPropertyChanged ), "ShippingAddress", SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, true, ref _alreadyFetchedShippingAddress, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnShippingAddressPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -2027,24 +2028,24 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathShippingAddress
-		{
-			get
-			{
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(),
-					(IEntityRelation)GetRelationsForField("ShippingAddress")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "ShippingAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
-		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathBillingAddress
 		{
 			get
 			{
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(),
 					(IEntityRelation)GetRelationsForField("BillingAddress")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "BillingAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathShippingAddress
+		{
+			get
+			{
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(),
+					(IEntityRelation)GetRelationsForField("ShippingAddress")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "ShippingAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne);
 			}
 		}
 
@@ -2164,7 +2165,8 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesOrderID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -2174,7 +2176,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.SalesOrderID, value, true); }
 		}
 		/// <summary> The RevisionNumber property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Incremental number to track changes to the sales order over time.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."RevisionNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2184,7 +2187,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.RevisionNumber, value, true); }
 		}
 		/// <summary> The OrderDate property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Unique nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."OrderDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2194,7 +2198,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.OrderDate, value, true); }
 		}
 		/// <summary> The DueDate property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Date the order is due to the customer.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."DueDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2204,7 +2209,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.DueDate, value, true); }
 		}
 		/// <summary> The ShipDate property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2214,7 +2220,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ShipDate, value, true); }
 		}
 		/// <summary> The Status property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Status"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2224,7 +2231,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.Status, value, true); }
 		}
 		/// <summary> The OnlineOrderFlag property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: 0 = Order placed by sales person. 1 = Order placed online by customer.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."OnlineOrderFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2234,7 +2242,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.OnlineOrderFlag, value, true); }
 		}
 		/// <summary> The SalesOrderNumber property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Unique sales order identification number.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesOrderNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2244,7 +2253,8 @@ namespace AW.Data.EntityClasses
 
 		}
 		/// <summary> The PurchaseOrderNumber property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Customer purchase order number reference. <br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."PurchaseOrderNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2254,7 +2264,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.PurchaseOrderNumber, value, true); }
 		}
 		/// <summary> The AccountNumber property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Financial accounting number reference.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."AccountNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2264,7 +2275,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.AccountNumber, value, true); }
 		}
 		/// <summary> The CustomerID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Customer identification number. Foreign key to Customer.CustomerID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2274,7 +2286,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CustomerID, value, true); }
 		}
 		/// <summary> The ContactID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Customer contact identification number. Foreign key to Contact.ContactID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2284,7 +2297,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ContactID, value, true); }
 		}
 		/// <summary> The SalesPersonID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Sales person who created the sales order. Foreign key to SalesPerson.SalePersonID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesPersonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2294,7 +2308,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.SalesPersonID, value, true); }
 		}
 		/// <summary> The TerritoryID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2304,7 +2319,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.TerritoryID, value, true); }
 		}
 		/// <summary> The BillToAddressID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Customer billing address. Foreign key to Address.AddressID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."BillToAddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2314,7 +2330,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.BillToAddressID, value, true); }
 		}
 		/// <summary> The ShipToAddressID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Customer shipping address. Foreign key to Address.AddressID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipToAddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2324,7 +2341,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ShipToAddressID, value, true); }
 		}
 		/// <summary> The ShipMethodID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Shipping method. Foreign key to ShipMethod.ShipMethodID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipMethodID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2334,7 +2352,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ShipMethodID, value, true); }
 		}
 		/// <summary> The CreditCardID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Credit card identification number. Foreign key to CreditCard.CreditCardID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CreditCardID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2344,7 +2363,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CreditCardID, value, true); }
 		}
 		/// <summary> The CreditCardApprovalCode property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Approval code provided by the credit card company.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CreditCardApprovalCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2354,7 +2374,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CreditCardApprovalCode, value, true); }
 		}
 		/// <summary> The CurrencyRateID property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Currency exchange rate used. Foreign key to CurrencyRate.CurrencyRateID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CurrencyRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2364,7 +2385,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CurrencyRateID, value, true); }
 		}
 		/// <summary> The SubTotal property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SubTotal"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2374,7 +2396,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.SubTotal, value, true); }
 		}
 		/// <summary> The TaxAmt property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Tax amount.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TaxAmt"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2384,7 +2407,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.TaxAmt, value, true); }
 		}
 		/// <summary> The Freight property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Shipping cost.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Freight"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2394,7 +2418,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.Freight, value, true); }
 		}
 		/// <summary> The TotalDue property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Total due from customer. Computed as Subtotal + TaxAmt + Freight.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TotalDue"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2404,7 +2429,8 @@ namespace AW.Data.EntityClasses
 
 		}
 		/// <summary> The Comment property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Sales representative comments.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Comment"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2414,7 +2440,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.Comment, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2424,7 +2451,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.Rowguid, value, true); }
 		}
 		/// <summary> The ModifiedDate property of the Entity SalesOrderHeader<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2505,77 +2533,6 @@ namespace AW.Data.EntityClasses
 		/// <summary> Gets / sets related entity of type 'AddressEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
 		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleShippingAddress()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
-		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(false)]
-		public virtual AddressEntity ShippingAddress
-		{
-			get	{ return GetSingleShippingAddress(false); }
-			set
-			{
-				if(base.IsDeserializing)
-				{
-					SetupSyncShippingAddress(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						if(_shippingAddress != null)
-						{
-							_shippingAddress.UnsetRelatedEntity(this, "SalesOrderHeaders_");
-						}
-					}
-					else
-					{
-						if(_shippingAddress!=value)
-						{
-							((IEntity)value).SetRelatedEntity(this, "SalesOrderHeaders_");
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for ShippingAddress. When set to true, ShippingAddress is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time ShippingAddress is accessed. You can always execute
-		/// a forced fetch by calling GetSingleShippingAddress(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchShippingAddress
-		{
-			get	{ return _alwaysFetchShippingAddress; }
-			set	{ _alwaysFetchShippingAddress = value; }	
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property ShippingAddress already has been fetched. Setting this property to false when ShippingAddress has been fetched
-		/// will set ShippingAddress to null as well. Setting this property to true while ShippingAddress hasn't been fetched disables lazy loading for ShippingAddress</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedShippingAddress
-		{
-			get { return _alreadyFetchedShippingAddress;}
-			set 
-			{
-				if(_alreadyFetchedShippingAddress && !value)
-				{
-					this.ShippingAddress = null;
-				}
-				_alreadyFetchedShippingAddress = value;
-			}
-		}
-
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property ShippingAddress is not found
-		/// in the database. When set to true, ShippingAddress will return a new entity instance if the related entity is not found, otherwise 
-		/// null be returned if the related entity is not found. Default: true.</summary>
-		[Browsable(false)]
-		public bool ShippingAddressReturnsNewIfNotFound
-		{
-			get	{ return _shippingAddressReturnsNewIfNotFound; }
-			set { _shippingAddressReturnsNewIfNotFound = value; }	
-		}
-		/// <summary> Gets / sets related entity of type 'AddressEntity'. This property is not visible in databound grids.
-		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
-		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleBillingAddress()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
@@ -2643,6 +2600,77 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _billingAddressReturnsNewIfNotFound; }
 			set { _billingAddressReturnsNewIfNotFound = value; }	
+		}
+		/// <summary> Gets / sets related entity of type 'AddressEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.</summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleShippingAddress()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(false)]
+		public virtual AddressEntity ShippingAddress
+		{
+			get	{ return GetSingleShippingAddress(false); }
+			set
+			{
+				if(base.IsDeserializing)
+				{
+					SetupSyncShippingAddress(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						if(_shippingAddress != null)
+						{
+							_shippingAddress.UnsetRelatedEntity(this, "SalesOrderHeaders_");
+						}
+					}
+					else
+					{
+						if(_shippingAddress!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "SalesOrderHeaders_");
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for ShippingAddress. When set to true, ShippingAddress is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ShippingAddress is accessed. You can always execute
+		/// a forced fetch by calling GetSingleShippingAddress(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchShippingAddress
+		{
+			get	{ return _alwaysFetchShippingAddress; }
+			set	{ _alwaysFetchShippingAddress = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property ShippingAddress already has been fetched. Setting this property to false when ShippingAddress has been fetched
+		/// will set ShippingAddress to null as well. Setting this property to true while ShippingAddress hasn't been fetched disables lazy loading for ShippingAddress</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedShippingAddress
+		{
+			get { return _alreadyFetchedShippingAddress;}
+			set 
+			{
+				if(_alreadyFetchedShippingAddress && !value)
+				{
+					this.ShippingAddress = null;
+				}
+				_alreadyFetchedShippingAddress = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property ShippingAddress is not found
+		/// in the database. When set to true, ShippingAddress will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool ShippingAddressReturnsNewIfNotFound
+		{
+			get	{ return _shippingAddressReturnsNewIfNotFound; }
+			set { _shippingAddressReturnsNewIfNotFound = value; }	
 		}
 		/// <summary> Gets / sets related entity of type 'ContactEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this

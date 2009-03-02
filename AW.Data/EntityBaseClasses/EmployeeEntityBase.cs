@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 2.6
-// Code is generated on: Thursday, 12 February 2009 11:38:22 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -32,6 +32,7 @@ namespace AW.Data.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity base class which represents the base class for the entity 'Employee'.<br/><br/>
 	/// 
+	/// MS_Description: Employee information such as salary, department, and title.<br/>
 	/// </summary>
 	[Serializable]
 	public abstract partial class EmployeeEntityBase : CommonEntityBase, ISerializable
@@ -43,8 +44,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchManages, _alreadyFetchedManages;
 		private AW.Data.CollectionClasses.EmployeeAddressCollection	_employeeAddresses;
 		private bool	_alwaysFetchEmployeeAddresses, _alreadyFetchedEmployeeAddresses;
-		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaEmployeeAddres;
-		private bool	_alwaysFetchAddressCollectionViaEmployeeAddres, _alreadyFetchedAddressCollectionViaEmployeeAddres;
+		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaEmployeeAddress;
+		private bool	_alwaysFetchAddressCollectionViaEmployeeAddress, _alreadyFetchedAddressCollectionViaEmployeeAddress;
 		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaEmployee;
 		private bool	_alwaysFetchContactCollectionViaEmployee, _alreadyFetchedContactCollectionViaEmployee;
 		private ContactEntity _contact;
@@ -72,8 +73,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string Manages = "Manages";
 			/// <summary>Member name EmployeeAddresses</summary>
 			public static readonly string EmployeeAddresses = "EmployeeAddresses";
-			/// <summary>Member name AddressCollectionViaEmployeeAddres</summary>
-			public static readonly string AddressCollectionViaEmployeeAddres = "AddressCollectionViaEmployeeAddres";
+			/// <summary>Member name AddressCollectionViaEmployeeAddress</summary>
+			public static readonly string AddressCollectionViaEmployeeAddress = "AddressCollectionViaEmployeeAddress";
 			/// <summary>Member name ContactCollectionViaEmployee</summary>
 			public static readonly string ContactCollectionViaEmployee = "ContactCollectionViaEmployee";
 
@@ -128,9 +129,9 @@ namespace AW.Data.EntityClasses
 			_employeeAddresses = (AW.Data.CollectionClasses.EmployeeAddressCollection)info.GetValue("_employeeAddresses", typeof(AW.Data.CollectionClasses.EmployeeAddressCollection));
 			_alwaysFetchEmployeeAddresses = info.GetBoolean("_alwaysFetchEmployeeAddresses");
 			_alreadyFetchedEmployeeAddresses = info.GetBoolean("_alreadyFetchedEmployeeAddresses");
-			_addressCollectionViaEmployeeAddres = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaEmployeeAddres", typeof(AW.Data.CollectionClasses.AddressCollection));
-			_alwaysFetchAddressCollectionViaEmployeeAddres = info.GetBoolean("_alwaysFetchAddressCollectionViaEmployeeAddres");
-			_alreadyFetchedAddressCollectionViaEmployeeAddres = info.GetBoolean("_alreadyFetchedAddressCollectionViaEmployeeAddres");
+			_addressCollectionViaEmployeeAddress = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaEmployeeAddress", typeof(AW.Data.CollectionClasses.AddressCollection));
+			_alwaysFetchAddressCollectionViaEmployeeAddress = info.GetBoolean("_alwaysFetchAddressCollectionViaEmployeeAddress");
+			_alreadyFetchedAddressCollectionViaEmployeeAddress = info.GetBoolean("_alreadyFetchedAddressCollectionViaEmployeeAddress");
 			_contactCollectionViaEmployee = (AW.Data.CollectionClasses.ContactCollection)info.GetValue("_contactCollectionViaEmployee", typeof(AW.Data.CollectionClasses.ContactCollection));
 			_alwaysFetchContactCollectionViaEmployee = info.GetBoolean("_alwaysFetchContactCollectionViaEmployee");
 			_alreadyFetchedContactCollectionViaEmployee = info.GetBoolean("_alreadyFetchedContactCollectionViaEmployee");
@@ -190,7 +191,7 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedManages = (_manages.Count > 0);
 			_alreadyFetchedEmployeeAddresses = (_employeeAddresses.Count > 0);
-			_alreadyFetchedAddressCollectionViaEmployeeAddres = (_addressCollectionViaEmployeeAddres.Count > 0);
+			_alreadyFetchedAddressCollectionViaEmployeeAddress = (_addressCollectionViaEmployeeAddress.Count > 0);
 			_alreadyFetchedContactCollectionViaEmployee = (_contactCollectionViaEmployee.Count > 0);
 			_alreadyFetchedContact = (_contact != null);
 			_alreadyFetchedManager = (_manager != null);
@@ -225,7 +226,7 @@ namespace AW.Data.EntityClasses
 				case "EmployeeAddresses":
 					toReturn.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeID);
 					break;
-				case "AddressCollectionViaEmployeeAddres":
+				case "AddressCollectionViaEmployeeAddress":
 					toReturn.Add(EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeID, "EmployeeEntity__", "EmployeeAddress_", JoinHint.None);
 					toReturn.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, "EmployeeAddress_", string.Empty, JoinHint.None);
 					break;
@@ -256,9 +257,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_employeeAddresses", (!this.MarkedForDeletion?_employeeAddresses:null));
 			info.AddValue("_alwaysFetchEmployeeAddresses", _alwaysFetchEmployeeAddresses);
 			info.AddValue("_alreadyFetchedEmployeeAddresses", _alreadyFetchedEmployeeAddresses);
-			info.AddValue("_addressCollectionViaEmployeeAddres", (!this.MarkedForDeletion?_addressCollectionViaEmployeeAddres:null));
-			info.AddValue("_alwaysFetchAddressCollectionViaEmployeeAddres", _alwaysFetchAddressCollectionViaEmployeeAddres);
-			info.AddValue("_alreadyFetchedAddressCollectionViaEmployeeAddres", _alreadyFetchedAddressCollectionViaEmployeeAddres);
+			info.AddValue("_addressCollectionViaEmployeeAddress", (!this.MarkedForDeletion?_addressCollectionViaEmployeeAddress:null));
+			info.AddValue("_alwaysFetchAddressCollectionViaEmployeeAddress", _alwaysFetchAddressCollectionViaEmployeeAddress);
+			info.AddValue("_alreadyFetchedAddressCollectionViaEmployeeAddress", _alreadyFetchedAddressCollectionViaEmployeeAddress);
 			info.AddValue("_contactCollectionViaEmployee", (!this.MarkedForDeletion?_contactCollectionViaEmployee:null));
 			info.AddValue("_alwaysFetchContactCollectionViaEmployee", _alwaysFetchContactCollectionViaEmployee);
 			info.AddValue("_alreadyFetchedContactCollectionViaEmployee", _alreadyFetchedContactCollectionViaEmployee);
@@ -308,11 +309,11 @@ namespace AW.Data.EntityClasses
 						this.EmployeeAddresses.Add((EmployeeAddressEntity)entity);
 					}
 					break;
-				case "AddressCollectionViaEmployeeAddres":
-					_alreadyFetchedAddressCollectionViaEmployeeAddres = true;
+				case "AddressCollectionViaEmployeeAddress":
+					_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
 					if(entity!=null)
 					{
-						this.AddressCollectionViaEmployeeAddres.Add((AddressEntity)entity);
+						this.AddressCollectionViaEmployeeAddress.Add((AddressEntity)entity);
 					}
 					break;
 				case "ContactCollectionViaEmployee":
@@ -636,48 +637,48 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddres(bool forceFetch)
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddress(bool forceFetch)
 		{
-			return GetMultiAddressCollectionViaEmployeeAddres(forceFetch, _addressCollectionViaEmployeeAddres.EntityFactoryToUse);
+			return GetMultiAddressCollectionViaEmployeeAddress(forceFetch, _addressCollectionViaEmployeeAddress.EntityFactoryToUse);
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddres(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
- 			if( ( !_alreadyFetchedAddressCollectionViaEmployeeAddres || forceFetch || _alwaysFetchAddressCollectionViaEmployeeAddres) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+ 			if( ( !_alreadyFetchedAddressCollectionViaEmployeeAddress || forceFetch || _alwaysFetchAddressCollectionViaEmployeeAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
 			{
 				if(base.ParticipatesInTransaction)
 				{
-					if(!_addressCollectionViaEmployeeAddres.ParticipatesInTransaction)
+					if(!_addressCollectionViaEmployeeAddress.ParticipatesInTransaction)
 					{
-						base.Transaction.Add(_addressCollectionViaEmployeeAddres);
+						base.Transaction.Add(_addressCollectionViaEmployeeAddress);
 					}
 				}
 				IPredicateExpression filter = new PredicateExpression();
 				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeID, ComparisonOperator.Equal, this.EmployeeID, "EmployeeEntity__"));
-				_addressCollectionViaEmployeeAddres.SuppressClearInGetMulti=!forceFetch;
+				_addressCollectionViaEmployeeAddress.SuppressClearInGetMulti=!forceFetch;
 				if(entityFactoryToUse!=null)
 				{
-					_addressCollectionViaEmployeeAddres.EntityFactoryToUse = entityFactoryToUse;
+					_addressCollectionViaEmployeeAddress.EntityFactoryToUse = entityFactoryToUse;
 				}
-				_addressCollectionViaEmployeeAddres.GetMulti(filter, GetRelationsForField("AddressCollectionViaEmployeeAddres"));
-				_addressCollectionViaEmployeeAddres.SuppressClearInGetMulti=false;
-				_alreadyFetchedAddressCollectionViaEmployeeAddres = true;
+				_addressCollectionViaEmployeeAddress.GetMulti(filter, GetRelationsForField("AddressCollectionViaEmployeeAddress"));
+				_addressCollectionViaEmployeeAddress.SuppressClearInGetMulti=false;
+				_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
 			}
-			return _addressCollectionViaEmployeeAddres;
+			return _addressCollectionViaEmployeeAddress;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaEmployeeAddres'. These settings will be taken into account
-		/// when the property AddressCollectionViaEmployeeAddres is requested or GetMultiAddressCollectionViaEmployeeAddres is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaEmployeeAddress'. These settings will be taken into account
+		/// when the property AddressCollectionViaEmployeeAddress is requested or GetMultiAddressCollectionViaEmployeeAddress is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersAddressCollectionViaEmployeeAddres(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersAddressCollectionViaEmployeeAddress(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_addressCollectionViaEmployeeAddres.SortClauses=sortClauses;
-			_addressCollectionViaEmployeeAddres.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_addressCollectionViaEmployeeAddress.SortClauses=sortClauses;
+			_addressCollectionViaEmployeeAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
@@ -855,7 +856,7 @@ namespace AW.Data.EntityClasses
 		{
 			_manages.ActiveContext = base.ActiveContext;
 			_employeeAddresses.ActiveContext = base.ActiveContext;
-			_addressCollectionViaEmployeeAddres.ActiveContext = base.ActiveContext;
+			_addressCollectionViaEmployeeAddress.ActiveContext = base.ActiveContext;
 			_contactCollectionViaEmployee.ActiveContext = base.ActiveContext;
 			if(_contact!=null)
 			{
@@ -938,7 +939,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("Manager", _manager);
 			toReturn.Add("Manages", _manages);
 			toReturn.Add("EmployeeAddresses", _employeeAddresses);
-			toReturn.Add("AddressCollectionViaEmployeeAddres", _addressCollectionViaEmployeeAddres);
+			toReturn.Add("AddressCollectionViaEmployeeAddress", _addressCollectionViaEmployeeAddress);
 			toReturn.Add("ContactCollectionViaEmployee", _contactCollectionViaEmployee);
 
 			return toReturn;
@@ -976,9 +977,9 @@ namespace AW.Data.EntityClasses
 			_employeeAddresses.SetContainingEntityInfo(this, "Employee");
 			_alwaysFetchEmployeeAddresses = false;
 			_alreadyFetchedEmployeeAddresses = false;
-			_addressCollectionViaEmployeeAddres = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
-			_alwaysFetchAddressCollectionViaEmployeeAddres = false;
-			_alreadyFetchedAddressCollectionViaEmployeeAddres = false;
+			_addressCollectionViaEmployeeAddress = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
+			_alwaysFetchAddressCollectionViaEmployeeAddress = false;
+			_alreadyFetchedAddressCollectionViaEmployeeAddress = false;
 			_contactCollectionViaEmployee = new AW.Data.CollectionClasses.ContactCollection(new ContactEntityFactory());
 			_alwaysFetchContactCollectionViaEmployee = false;
 			_alreadyFetchedContactCollectionViaEmployee = false;
@@ -1005,55 +1006,55 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
-
+			_customProperties.Add("MS_Description", @"Employee information such as salary, department, and title.");
 			Dictionary<string, string> fieldHashtable = null;
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("EmployeeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Unique national identification number such as a social security number.");
 			_fieldsCustomProperties.Add("NationalIdnumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index.");
 			_fieldsCustomProperties.Add("ContactID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Network login.");
 			_fieldsCustomProperties.Add("LoginID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("ManagerID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Work title such as Buyer or Sales Representative.");
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Date of birth.");
 			_fieldsCustomProperties.Add("BirthDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"M = Married, S = Single");
 			_fieldsCustomProperties.Add("MaritalStatus", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"M = Male, F = Female");
 			_fieldsCustomProperties.Add("Gender", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Employee hired on this date.");
 			_fieldsCustomProperties.Add("HireDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.");
 			_fieldsCustomProperties.Add("SalariedFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Number of available vacation hours.");
 			_fieldsCustomProperties.Add("VacationHours", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Number of available sick leave hours.");
 			_fieldsCustomProperties.Add("SickLeaveHours", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"0 = Inactive, 1 = Active");
 			_fieldsCustomProperties.Add("CurrentFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
@@ -1207,14 +1208,14 @@ namespace AW.Data.EntityClasses
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathAddressCollectionViaEmployeeAddres
+		public static IPrefetchPathElement PrefetchPathAddressCollectionViaEmployeeAddress
 		{
 			get
 			{
 				IEntityRelation intermediateRelation = EmployeeEntity.Relations.EmployeeAddressEntityUsingEmployeeID;
 				intermediateRelation.SetAliases(string.Empty, "EmployeeAddress_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
-					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaEmployeeAddres"), "AddressCollectionViaEmployeeAddres", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+					(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaEmployeeAddress"), "AddressCollectionViaEmployeeAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -1288,7 +1289,8 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmployeeID property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1298,7 +1300,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.EmployeeID, value, true); }
 		}
 		/// <summary> The NationalIdnumber property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Unique national identification number such as a social security number.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."NationalIDNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1308,7 +1311,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.NationalIdnumber, value, true); }
 		}
 		/// <summary> The ContactID property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Unique nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1318,7 +1322,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.ContactID, value, true); }
 		}
 		/// <summary> The LoginID property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Network login.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."LoginID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 256<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1328,7 +1333,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.LoginID, value, true); }
 		}
 		/// <summary> The ManagerID property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."ManagerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1338,7 +1344,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.ManagerID, value, true); }
 		}
 		/// <summary> The Title property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Work title such as Buyer or Sales Representative.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."Title"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1348,7 +1355,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Title, value, true); }
 		}
 		/// <summary> The BirthDate property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Date of birth.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."BirthDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1358,7 +1366,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.BirthDate, value, true); }
 		}
 		/// <summary> The MaritalStatus property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: M = Married, S = Single<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."MaritalStatus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1368,7 +1377,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.MaritalStatus, value, true); }
 		}
 		/// <summary> The Gender property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: M = Male, F = Female<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."Gender"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1378,7 +1388,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Gender, value, true); }
 		}
 		/// <summary> The HireDate property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Employee hired on this date.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."HireDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1388,7 +1399,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.HireDate, value, true); }
 		}
 		/// <summary> The SalariedFlag property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."SalariedFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1398,7 +1410,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.SalariedFlag, value, true); }
 		}
 		/// <summary> The VacationHours property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Number of available vacation hours.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."VacationHours"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1408,7 +1421,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.VacationHours, value, true); }
 		}
 		/// <summary> The SickLeaveHours property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Number of available sick leave hours.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."SickLeaveHours"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1418,7 +1432,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.SickLeaveHours, value, true); }
 		}
 		/// <summary> The CurrentFlag property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: 0 = Inactive, 1 = Active<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."CurrentFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1428,7 +1443,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.CurrentFlag, value, true); }
 		}
 		/// <summary> The Rowguid property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1438,7 +1454,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Rowguid, value, true); }
 		}
 		/// <summary> The ModifiedDate property of the Entity Employee<br/><br/>
-		/// </summary>
+		/// 
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employee"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1516,36 +1533,36 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaEmployeeAddres()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaEmployeeAddress()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaEmployeeAddres
+		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaEmployeeAddress
 		{
-			get { return GetMultiAddressCollectionViaEmployeeAddres(false); }
+			get { return GetMultiAddressCollectionViaEmployeeAddress(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaEmployeeAddres. When set to true, AddressCollectionViaEmployeeAddres is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaEmployeeAddres is accessed. You can always execute
-		/// a forced fetch by calling GetMultiAddressCollectionViaEmployeeAddres(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaEmployeeAddress. When set to true, AddressCollectionViaEmployeeAddress is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaEmployeeAddress is accessed. You can always execute
+		/// a forced fetch by calling GetMultiAddressCollectionViaEmployeeAddress(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchAddressCollectionViaEmployeeAddres
+		public bool AlwaysFetchAddressCollectionViaEmployeeAddress
 		{
-			get	{ return _alwaysFetchAddressCollectionViaEmployeeAddres; }
-			set	{ _alwaysFetchAddressCollectionViaEmployeeAddres = value; }
+			get	{ return _alwaysFetchAddressCollectionViaEmployeeAddress; }
+			set	{ _alwaysFetchAddressCollectionViaEmployeeAddress = value; }
 		}
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaEmployeeAddres already has been fetched. Setting this property to false when AddressCollectionViaEmployeeAddres has been fetched
-		/// will clear the AddressCollectionViaEmployeeAddres collection well. Setting this property to true while AddressCollectionViaEmployeeAddres hasn't been fetched disables lazy loading for AddressCollectionViaEmployeeAddres</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaEmployeeAddress already has been fetched. Setting this property to false when AddressCollectionViaEmployeeAddress has been fetched
+		/// will clear the AddressCollectionViaEmployeeAddress collection well. Setting this property to true while AddressCollectionViaEmployeeAddress hasn't been fetched disables lazy loading for AddressCollectionViaEmployeeAddress</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedAddressCollectionViaEmployeeAddres
+		public bool AlreadyFetchedAddressCollectionViaEmployeeAddress
 		{
-			get { return _alreadyFetchedAddressCollectionViaEmployeeAddres;}
+			get { return _alreadyFetchedAddressCollectionViaEmployeeAddress;}
 			set 
 			{
-				if(_alreadyFetchedAddressCollectionViaEmployeeAddres && !value && (_addressCollectionViaEmployeeAddres != null))
+				if(_alreadyFetchedAddressCollectionViaEmployeeAddress && !value && (_addressCollectionViaEmployeeAddress != null))
 				{
-					_addressCollectionViaEmployeeAddres.Clear();
+					_addressCollectionViaEmployeeAddress.Clear();
 				}
-				_alreadyFetchedAddressCollectionViaEmployeeAddres = value;
+				_alreadyFetchedAddressCollectionViaEmployeeAddress = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
