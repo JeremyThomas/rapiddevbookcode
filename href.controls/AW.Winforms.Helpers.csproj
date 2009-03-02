@@ -59,7 +59,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\SVNProjects\Prototype\ProjectConverter\ProjectConverter\bin\Debug\SD.LLBLGen.Pro.ApplicationCore.dll</HintPath>
     </Reference>
+    <Reference Include="SD.LLBLGen.Pro.DBDriverCore, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\SVNProjects\Prototype\ProjectConverter\ProjectConverter\bin\Debug\SD.LLBLGen.Pro.DBDriverCore.dll</HintPath>
+    </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
+    <Reference Include="sliver.Windows.Forms.StateBrowser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=34afe62596d00324, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\sliver.Windows.Forms.StateBrowser.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -85,6 +93,7 @@
       <DependentUpon>FrmEntityViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Hosting\DummySite.cs" />
+    <Compile Include="Misc\Inflector.cs" />
     <Compile Include="MostRecentlyUsedHandler\MRUHandler.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -181,6 +190,14 @@
     <ProjectReference Include="..\AW.Data\AW.Data.csproj">
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LLBLGen.Plugins\AW.LLBLGen.Plugins\AW.LLBLGen.Plugins.csproj">
+      <Project>{0455FCEB-846A-42C7-AECB-47A895213FF2}</Project>
+      <Name>AW.LLBLGen.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LLBLGen.Plugins\Refresh Custom Properties\RefreshCustomProperties.csproj">
+      <Project>{730F2F3D-0145-4A61-B7F8-E3926472E16A}</Project>
+      <Name>RefreshCustomProperties</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
