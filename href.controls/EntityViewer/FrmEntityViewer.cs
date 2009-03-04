@@ -24,6 +24,7 @@ namespace AW.Winforms.Helpers.EntityViewer
     public FrmEntityViewer()
     {
       InitializeComponent();
+      dataGridViewScript.AutoGenerateColumns = true;
       dataGridViewEnumerable.AutoGenerateColumns = true;
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
       if (CommonEntityBaseTypeDescriptionProvider == null)
@@ -42,40 +43,28 @@ namespace AW.Winforms.Helpers.EntityViewer
     {
       if (entity == null) throw new ArgumentNullException("entity");
       propertyGrid1.SelectedObject = entity;
-      stateBrowser.ObjectToBrowse = entity;
+      ObjectBrowser.ObjectToBrowse = entity;
     }
 
     private void FrmEntityViewer_FormClosing(object sender, FormClosingEventArgs e)
     {
       Settings.Default.EntityViewerSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-      Settings.Default.EntityFieldColumns = AWHelper.SaveColumnState(dataGridViewFields);
+      Settings.Default.EntityFieldColumns = AWHelper.SaveColumnState(dataGridViewEnumerable);
     }
 
     private void FrmEntityViewer_Load(object sender, EventArgs e)
     {
       propertyGrid1.RefreshSelectedObject();
-      AWHelper.RestoreColumnsState(Settings.Default.EntityFieldColumns, dataGridViewFields);
+      AWHelper.RestoreColumnsState(Settings.Default.EntityFieldColumns, dataGridViewEnumerable);
     }
 
     private void propertyGrid1_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
     {
       var x = e.NewSelection;
       var t = x.PropertyDescriptor;
-      if (e.NewSelection.Value != null && !(e.OldSelection == null && dataGridViewEnumerable.DataSource == propertyGrid1.SelectedObject))
-        if (!(e.NewSelection.Value is string))
-          if (e.NewSelection.Value is IEnumerable)
-          {
-            var enumerable = (IEnumerable) e.NewSelection.Value;
-            try
-            {
-              bindingSourceEnumerable.DataSource = enumerable.AsQueryable();
-            }
-            catch (ArgumentException)
-            {
-              bindingSourceEnumerable.DataSource = enumerable;
-            }
-          }
-          else if (!e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
+      if (e.NewSelection.Value != null && !(e.OldSelection == null && dataGridViewScript.DataSource == propertyGrid1.SelectedObject))
+        if (!ShowEnumerable(e.NewSelection.Value as IEnumerable))
+          if (!e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
             bindingSourceEnumerable.DataSource = e.NewSelection.Value;
     }
 
@@ -93,21 +82,15 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void propertyGrid1_SelectedObjectsChanged(object sender, EventArgs e)
     {
-      bindingSourceEnumerable.DataSource = propertyGrid1.SelectedObject;
-      if (propertyGrid1.SelectedObject is IEntity)
-        entityFieldBindingSource.DataSource = ((IEntity) propertyGrid1.SelectedObject).Fields.AsQueryable();
       if (propertyGrid1.SelectedObject is Project)
       {
-        Text = "ProjectBrowser";
-        dataGridViewFields.AutoGenerateColumns = true;
-        entityFieldBindingSource.DataSource = ((Project) propertyGrid1.SelectedObject).Entities;
-        toolStripButtonViewGroupedEntities.Visible = true;
+        Text = "ProjectBrowser";        
       }
     }
 
     private Project TheProject
     {
-      get { return (Project) propertyGrid1.SelectedObject; }
+      get { return (Project)ObjectBrowser.ObjectToBrowse; }
     }
 
     private void toolStripButtonViewGroupedEntities_Click(object sender, EventArgs e)
@@ -118,8 +101,8 @@ namespace AW.Winforms.Helpers.EntityViewer
       //        select new {ed.ElementTargetName, ed.ElementName, peg.Name};
 
       AsmHelper myAsmHelper;
-      var query = CreateQuery(out myAsmHelper);
-      bindingSourceEnumerable.DataSource = query.QueryProject(TheProject);
+      var query = CreateQuery(textBoxScript.Text, out myAsmHelper);
+      BindingSourceScript.DataSource = query.QueryProject(TheProject);
       myAsmHelper.Dispose();
       //bindingSourceEnumerable.DataSource = GetEntityTableMapping(TheProject);
     }
@@ -142,34 +125,6 @@ namespace AW.Winforms.Helpers.EntityViewer
                  };
     }
 
-    private const string GetEntityTableMappingTemplate = @"using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Forms;
-using AW.Winforms.Helpers.Properties;
-using DynamicTable;
-using SD.LLBLGen.Pro.ApplicationCore;
-using SD.LLBLGen.Pro.ApplicationCore.Entities;
-
-public class Script : MarshalByRefObject, IQueryScript
-{
-    public IEnumerable QueryProject(Project project);
-    {
-      return from entity in project.Entities.OfType<EntityDefinition>()
-             select
-               new
-                 {
-                   entity.ElementTargetName,
-                   entity.ElementName,
-                   entity.TargetType,
-                 };
-    }
-
-}";
-
     private void toolStripButtonRunPlugin_Click(object sender, EventArgs e)
     {
       PluginBase pluginToTest = new RenameRelatedFieldsPlugin {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack)ApplicationOutputLogLine}}};
@@ -190,14 +145,45 @@ public class Script : MarshalByRefObject, IQueryScript
     private void toolStripButtonViewReport_Click(object sender, EventArgs e)
     {
       var frm = new FrmReportViewer {MdiParent = MdiParent, WindowState = FormWindowState.Normal};
-      frm.OpenDataSet(bindingSourceEnumerable, false);
+      frm.OpenDataSet(BindingSourceScript, false);
       frm.Show();
     }
 
-    private static IQueryScript CreateQuery(out AsmHelper helper)
+    private static IQueryScript CreateQuery(string scriptText, out AsmHelper helper)
     {
-      helper = new AsmHelper(CSScript.LoadCode(GetEntityTableMappingTemplate, null, true));
+      helper = new AsmHelper(CSScript.LoadCode(scriptText, null, true));
       return (IQueryScript) helper.CreateObject("Script");
+    }
+
+    private void ObjectBrowser_NodeSelected(object sender, EventArgs e)
+    {
+      propertyGrid1.SelectedObject = sender;
+      if (!ShowEnumerable(sender as IEnumerable))
+      {
+        bindingSourceEnumerable.DataSource = null;
+        splitContainerValues.Panel2Collapsed = true;
+        //splitContainerValues.SplitterDistance = splitContainerValues.Height;
+      }
+      else 
+        splitContainerValues.Panel2Collapsed = false;
+    }
+
+    private bool ShowEnumerable(IEnumerable enumerable)
+    {
+      var showenEnumerable = enumerable != null && !(enumerable is string);
+      if (showenEnumerable)
+        try
+        {
+          var queryable = enumerable.AsQueryable();
+          showenEnumerable = queryable.ElementType != typeof (string);
+          if (showenEnumerable)
+            bindingSourceEnumerable.DataSource = queryable;
+        }
+        catch (ArgumentException)
+        {
+          bindingSourceEnumerable.DataSource = enumerable;
+        }
+      return showenEnumerable;
     }
   }
 

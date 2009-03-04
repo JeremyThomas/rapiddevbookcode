@@ -48,7 +48,7 @@ namespace AW.Winforms.Helpers.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("469")]
+        [global::System.Configuration.DefaultSettingValueAttribute("462")]
         public int FrmEntityViewerSplitterDistance {
             get {
                 return ((int)(this["FrmEntityViewerSplitterDistance"]));
