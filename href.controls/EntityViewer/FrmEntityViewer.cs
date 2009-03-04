@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using AW.LLBLGen.Plugins;
 using AW.Winforms.Helpers.Properties;
 using CSScriptLibrary;
 using DynamicTable;
@@ -171,8 +172,8 @@ public class Script : MarshalByRefObject, IQueryScript
 
     private void toolStripButtonRunPlugin_Click(object sender, EventArgs e)
     {
-      //PluginBase pluginToTest = new RenameRelatedFieldsPlugin {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack)ApplicationOutputLogLine}}};
-      PluginBase pluginToTest = new RefreshCustomProperties {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack) ApplicationOutputLogLine}}};
+      PluginBase pluginToTest = new RenameRelatedFieldsPlugin {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack)ApplicationOutputLogLine}}};
+      //PluginBase pluginToTest = new RefreshCustomProperties {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack) ApplicationOutputLogLine}}};
       pluginToTest.Entities.AddRange(TheProject.Entities);
       pluginToTest.GetConfigurationControl();
       pluginToTest.Execute();

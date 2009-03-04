@@ -11,16 +11,15 @@ namespace AW.LLBLGen.Plugins
   public class RenameRelatedFieldsPlugin: PluginBase
   {
     public const string Description = "Plug-in to rename related fields based on the related entity name. Useful if you change the name of an entity and want the fields of related entities to change as well.";
-    private const string Version = "1.0.0.0";
-    private const string Build = "02032009";
+    private const string Version = "1.1.0.0";
+    private const string Build = "04032009";
     public const string PluginName = "Rename related fields based on the related entity name";
-    private const string Vendor = "AW: Jeremy Thomas"; 
+    private const string Vendor = "AW: Jeremy Thomas";
 
     #region Overrides of PluginBase
 
     public override void Execute()
     {
-      var manyToManySeperator = ProjectToTarget.FieldMappedOnManyToManyPattern.Split('{', '}')[2]; //Brittle
       ProgressTaskInit(Entities.Count);
       foreach (EntityDefinition entity in Entities)
       {
@@ -28,36 +27,15 @@ namespace AW.LLBLGen.Plugins
         foreach (EntityRelation relation in entity.Relations)
         {
           var entityChanged = false;
-          var intermediateName = string.Empty;
-          if (relation.RelationType == EntityRelationType.ManyToMany)
-            intermediateName = relation.FullDescription.Substring(relation.FullDescription.IndexOf("via ") + 4).Trim(')'); //Brittle
-          if (!relation.UtilizingPropertyName.Contains(relation.RelationEndPoint.Name) || !relation.UtilizingPropertyName.Contains(intermediateName))
-            //Condition will pass when it shouldn't if the new entity name is a subset of the old i.e. the name is shortened
+          var oldPropertyName = relation.UtilizingPropertyName;
+          var newPropertyName = GeneralUtils.CreateUtilizingPropertyName(relation, ProjectToTarget.Properties);
+          //Make sure 'Setting up pluralization and singularization of names' is done as descibed here: http://www.llblgen.com/documentation/2.6/hh_start.htm
+          //else newPropertyName will be singular
+          if (relation.UtilizingPropertyName != newPropertyName)
           {
-            var oldPropertyName = relation.UtilizingPropertyName;
-            string newPropertyName;
-            switch (relation.RelationType)
-            {
-              case EntityRelationType.OneToMany:
-                newPropertyName = Inflector.Pluralize(relation.RelationEndPoint.Name);
-                break;
-              case EntityRelationType.ManyToOne:
-                newPropertyName = relation.RelationEndPoint.Name;
-                break;
-              case EntityRelationType.ManyToMany:
-                newPropertyName = relation.RelationEndName + manyToManySeperator + intermediateName;
-                break;
-              default:
-                newPropertyName = oldPropertyName;
-                break;
-            }
-
-            if (relation.UtilizingPropertyName != newPropertyName)
-            {
-              relation.UtilizingPropertyName = newPropertyName;
-              base.LogLineToApplicationOutput(string.Format("Related field '{0}' of entity '{1}' has been changed to '{2}' ", oldPropertyName, entity.Name, newPropertyName), "RenameRelatedFieldsPlugin", false, true);
-              entityChanged = true;
-            }
+            relation.UtilizingPropertyName = newPropertyName;
+            base.LogLineToApplicationOutput(string.Format("Related field '{0}' of entity '{1}' has been changed to '{2}' ", oldPropertyName, entity.Name, newPropertyName), "RenameRelatedFieldsPlugin", false, true);
+            entityChanged = true;
           }
           if (entityChanged)
           {
@@ -66,7 +44,7 @@ namespace AW.LLBLGen.Plugins
           }
         }
         ProgressTaskComplete();
-      }      
+      }
     }
 
     public override PluginDescription Describe()
@@ -84,7 +62,7 @@ namespace AW.LLBLGen.Plugins
       toReturn.Version = Version;
       return toReturn;
     }
-    
+
     /// <summary>
     /// Gets the configuration control.
     /// </summary>
