@@ -30,7 +30,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       if (CommonEntityBaseTypeDescriptionProvider == null)
       {
         CommonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));
-        TypeDescriptor.AddProvider(CommonEntityBaseTypeDescriptionProvider, typeof (object));
+      //  TypeDescriptor.AddProvider(CommonEntityBaseTypeDescriptionProvider, typeof (object));
       }
 
       if (EntityFieldsTypeDescriptionProvider == null)
@@ -170,7 +170,8 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private bool ShowEnumerable(IEnumerable enumerable)
     {
-      var showenEnumerable = enumerable != null && !(enumerable is string);
+      var showenEnumerable = enumerable != null && !(enumerable is string) && !(enumerable.ToString() == "System.Collections.Hashtable+KeyCollection");
+
       if (showenEnumerable)
         try
         {
@@ -184,6 +185,24 @@ namespace AW.Winforms.Helpers.EntityViewer
           bindingSourceEnumerable.DataSource = enumerable;
         }
       return showenEnumerable;
+    }
+
+    private void saveToolStripButton_Click(object sender, EventArgs e)
+    {
+      TheProject.Save();
+    }
+
+    private void copyToolStripButton_Click(object sender, EventArgs e)
+    {
+      dataGridViewEnumerable.SelectAll();
+      //Clipboard.SetData();
+    }
+
+    private void printToolStripButton_Click(object sender, EventArgs e)
+    {
+      var frm = new FrmReportViewer { MdiParent = MdiParent, WindowState = FormWindowState.Normal };
+      frm.OpenDataSet(bindingSourceEnumerable, false);
+      frm.Show();
     }
   }
 

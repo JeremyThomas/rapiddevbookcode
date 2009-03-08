@@ -29,11 +29,12 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEntityViewer));
       this.dataGridViewEnumerable = new System.Windows.Forms.DataGridView();
+      this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
       this.BindingSourceScript = new System.Windows.Forms.BindingSource(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.ObjectBrowser = new sliver.Windows.Forms.StateBrowser();
@@ -41,8 +42,7 @@
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.selectObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.dataGridViewScript = new System.Windows.Forms.DataGridView();
-      this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
-      this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+      this.bindingNavigatorScript = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
       this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
@@ -74,8 +74,25 @@
       this.textBoxScript = new System.Windows.Forms.TextBox();
       this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+      this.bindingNavigatorMoveFirstItem1 = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorMovePreviousItem1 = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+      this.bindingNavigatorPositionItem1 = new System.Windows.Forms.ToolStripTextBox();
+      this.bindingNavigatorCountItem1 = new System.Windows.Forms.ToolStripLabel();
+      this.bindingNavigatorSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+      this.bindingNavigatorMoveNextItem1 = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorMoveLastItem1 = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+      this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorDeleteItem1 = new System.Windows.Forms.ToolStripButton();
+      this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
+      this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.BindingSourceScript)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -85,15 +102,16 @@
       this.splitContainerValues.SuspendLayout();
       this.contextMenuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScript)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
-      this.bindingNavigator1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorScript)).BeginInit();
+      this.bindingNavigatorScript.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPageBrowser.SuspendLayout();
       this.tabPageScript.SuspendLayout();
       this.splitContainerScript.Panel1.SuspendLayout();
       this.splitContainerScript.Panel2.SuspendLayout();
       this.splitContainerScript.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
+      this.bindingNavigator1.SuspendLayout();
       this.SuspendLayout();
       // 
       // dataGridViewEnumerable
@@ -105,36 +123,36 @@
       this.dataGridViewEnumerable.AutoGenerateColumns = false;
       this.dataGridViewEnumerable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
       this.dataGridViewEnumerable.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-      dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-      dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dataGridViewEnumerable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
-      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-      dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-      dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle5;
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+      dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+      dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+      this.dataGridViewEnumerable.DefaultCellStyle = dataGridViewCellStyle2;
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataGridViewEnumerable.Location = new System.Drawing.Point(0, 0);
+      this.dataGridViewEnumerable.Location = new System.Drawing.Point(0, 25);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
-      dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-      dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-      dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-      this.dataGridViewEnumerable.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-      this.dataGridViewEnumerable.Size = new System.Drawing.Size(551, 261);
+      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dataGridViewEnumerable.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(551, 236);
       this.dataGridViewEnumerable.TabIndex = 1;
       // 
       // BindingSourceScript
@@ -183,6 +201,7 @@
       // splitContainerValues.Panel2
       // 
       this.splitContainerValues.Panel2.Controls.Add(this.dataGridViewEnumerable);
+      this.splitContainerValues.Panel2.Controls.Add(this.bindingNavigator1);
       this.splitContainerValues.Size = new System.Drawing.Size(551, 530);
       this.splitContainerValues.SplitterDistance = 265;
       this.splitContainerValues.TabIndex = 3;
@@ -216,13 +235,13 @@
       this.dataGridViewScript.Size = new System.Drawing.Size(1017, 251);
       this.dataGridViewScript.TabIndex = 3;
       // 
-      // bindingNavigator1
+      // bindingNavigatorScript
       // 
-      this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem;
-      this.bindingNavigator1.BindingSource = this.BindingSourceScript;
-      this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem;
-      this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem;
-      this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+      this.bindingNavigatorScript.AddNewItem = this.bindingNavigatorAddNewItem;
+      this.bindingNavigatorScript.BindingSource = this.BindingSourceScript;
+      this.bindingNavigatorScript.CountItem = this.bindingNavigatorCountItem;
+      this.bindingNavigatorScript.DeleteItem = this.bindingNavigatorDeleteItem;
+      this.bindingNavigatorScript.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
             this.bindingNavigatorSeparator,
@@ -237,16 +256,16 @@
             this.toolStripButtonViewGroupedEntities,
             this.toolStripButtonRunPlugin,
             this.toolStripButtonViewReport});
-      this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
-      this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-      this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem;
-      this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem;
-      this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-      this.bindingNavigator1.Name = "bindingNavigator1";
-      this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem;
-      this.bindingNavigator1.Size = new System.Drawing.Size(1017, 25);
-      this.bindingNavigator1.TabIndex = 4;
-      this.bindingNavigator1.Text = "bindingNavigator1";
+      this.bindingNavigatorScript.Location = new System.Drawing.Point(0, 0);
+      this.bindingNavigatorScript.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
+      this.bindingNavigatorScript.MoveLastItem = this.bindingNavigatorMoveLastItem;
+      this.bindingNavigatorScript.MoveNextItem = this.bindingNavigatorMoveNextItem;
+      this.bindingNavigatorScript.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+      this.bindingNavigatorScript.Name = "bindingNavigatorScript";
+      this.bindingNavigatorScript.PositionItem = this.bindingNavigatorPositionItem;
+      this.bindingNavigatorScript.Size = new System.Drawing.Size(1017, 25);
+      this.bindingNavigatorScript.TabIndex = 4;
+      this.bindingNavigatorScript.Text = "bindingNavigator1";
       // 
       // bindingNavigatorAddNewItem
       // 
@@ -482,7 +501,7 @@
       // splitContainerScript.Panel2
       // 
       this.splitContainerScript.Panel2.Controls.Add(this.dataGridViewScript);
-      this.splitContainerScript.Panel2.Controls.Add(this.bindingNavigator1);
+      this.splitContainerScript.Panel2.Controls.Add(this.bindingNavigatorScript);
       this.splitContainerScript.Size = new System.Drawing.Size(1017, 530);
       this.splitContainerScript.SplitterDistance = 250;
       this.splitContainerScript.TabIndex = 5;
@@ -513,6 +532,158 @@
       this.dataGridViewTextBoxColumn12.ReadOnly = true;
       this.dataGridViewTextBoxColumn12.Width = 73;
       // 
+      // bindingNavigator1
+      // 
+      this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem1;
+      this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem1;
+      this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem1;
+      this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bindingNavigatorMoveFirstItem1,
+            this.bindingNavigatorMovePreviousItem1,
+            this.bindingNavigatorSeparator3,
+            this.bindingNavigatorPositionItem1,
+            this.bindingNavigatorCountItem1,
+            this.bindingNavigatorSeparator4,
+            this.bindingNavigatorMoveNextItem1,
+            this.bindingNavigatorMoveLastItem1,
+            this.bindingNavigatorSeparator5,
+            this.bindingNavigatorAddNewItem1,
+            this.bindingNavigatorDeleteItem1,
+            this.saveToolStripButton,
+            this.printToolStripButton,
+            this.toolStripSeparator,
+            this.copyToolStripButton});
+      this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
+      this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
+      this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem1;
+      this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem1;
+      this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem1;
+      this.bindingNavigator1.Name = "bindingNavigator1";
+      this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem1;
+      this.bindingNavigator1.Size = new System.Drawing.Size(551, 25);
+      this.bindingNavigator1.TabIndex = 2;
+      this.bindingNavigator1.Text = "bindingNavigator1";
+      // 
+      // bindingNavigatorMoveFirstItem1
+      // 
+      this.bindingNavigatorMoveFirstItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorMoveFirstItem1.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem1.Image")));
+      this.bindingNavigatorMoveFirstItem1.Name = "bindingNavigatorMoveFirstItem";
+      this.bindingNavigatorMoveFirstItem1.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorMoveFirstItem1.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveFirstItem1.Text = "Move first";
+      // 
+      // bindingNavigatorMovePreviousItem1
+      // 
+      this.bindingNavigatorMovePreviousItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorMovePreviousItem1.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem1.Image")));
+      this.bindingNavigatorMovePreviousItem1.Name = "bindingNavigatorMovePreviousItem";
+      this.bindingNavigatorMovePreviousItem1.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorMovePreviousItem1.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMovePreviousItem1.Text = "Move previous";
+      // 
+      // bindingNavigatorSeparator3
+      // 
+      this.bindingNavigatorSeparator3.Name = "bindingNavigatorSeparator";
+      this.bindingNavigatorSeparator3.Size = new System.Drawing.Size(6, 25);
+      // 
+      // bindingNavigatorPositionItem1
+      // 
+      this.bindingNavigatorPositionItem1.AccessibleName = "Position";
+      this.bindingNavigatorPositionItem1.AutoSize = false;
+      this.bindingNavigatorPositionItem1.Name = "bindingNavigatorPositionItem";
+      this.bindingNavigatorPositionItem1.Size = new System.Drawing.Size(50, 21);
+      this.bindingNavigatorPositionItem1.Text = "0";
+      this.bindingNavigatorPositionItem1.ToolTipText = "Current position";
+      // 
+      // bindingNavigatorCountItem1
+      // 
+      this.bindingNavigatorCountItem1.Name = "bindingNavigatorCountItem";
+      this.bindingNavigatorCountItem1.Size = new System.Drawing.Size(36, 22);
+      this.bindingNavigatorCountItem1.Text = "of {0}";
+      this.bindingNavigatorCountItem1.ToolTipText = "Total number of items";
+      // 
+      // bindingNavigatorSeparator4
+      // 
+      this.bindingNavigatorSeparator4.Name = "bindingNavigatorSeparator";
+      this.bindingNavigatorSeparator4.Size = new System.Drawing.Size(6, 25);
+      // 
+      // bindingNavigatorMoveNextItem1
+      // 
+      this.bindingNavigatorMoveNextItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorMoveNextItem1.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem1.Image")));
+      this.bindingNavigatorMoveNextItem1.Name = "bindingNavigatorMoveNextItem";
+      this.bindingNavigatorMoveNextItem1.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorMoveNextItem1.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveNextItem1.Text = "Move next";
+      // 
+      // bindingNavigatorMoveLastItem1
+      // 
+      this.bindingNavigatorMoveLastItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorMoveLastItem1.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem1.Image")));
+      this.bindingNavigatorMoveLastItem1.Name = "bindingNavigatorMoveLastItem";
+      this.bindingNavigatorMoveLastItem1.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorMoveLastItem1.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveLastItem1.Text = "Move last";
+      // 
+      // bindingNavigatorSeparator5
+      // 
+      this.bindingNavigatorSeparator5.Name = "bindingNavigatorSeparator";
+      this.bindingNavigatorSeparator5.Size = new System.Drawing.Size(6, 25);
+      // 
+      // bindingNavigatorAddNewItem1
+      // 
+      this.bindingNavigatorAddNewItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorAddNewItem1.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem1.Image")));
+      this.bindingNavigatorAddNewItem1.Name = "bindingNavigatorAddNewItem";
+      this.bindingNavigatorAddNewItem1.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorAddNewItem1.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorAddNewItem1.Text = "Add new";
+      // 
+      // bindingNavigatorDeleteItem1
+      // 
+      this.bindingNavigatorDeleteItem1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorDeleteItem1.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem1.Image")));
+      this.bindingNavigatorDeleteItem1.Name = "bindingNavigatorDeleteItem";
+      this.bindingNavigatorDeleteItem1.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorDeleteItem1.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorDeleteItem1.Text = "Delete";
+      // 
+      // saveToolStripButton
+      // 
+      this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
+      this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.saveToolStripButton.Name = "saveToolStripButton";
+      this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
+      this.saveToolStripButton.Text = "&Save";
+      this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+      // 
+      // printToolStripButton
+      // 
+      this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
+      this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.printToolStripButton.Name = "printToolStripButton";
+      this.printToolStripButton.Size = new System.Drawing.Size(23, 22);
+      this.printToolStripButton.Text = "&Print";
+      this.printToolStripButton.Click += new System.EventHandler(this.printToolStripButton_Click);
+      // 
+      // toolStripSeparator
+      // 
+      this.toolStripSeparator.Name = "toolStripSeparator";
+      this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+      // 
+      // copyToolStripButton
+      // 
+      this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
+      this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.copyToolStripButton.Name = "copyToolStripButton";
+      this.copyToolStripButton.Size = new System.Drawing.Size(23, 22);
+      this.copyToolStripButton.Text = "&Copy";
+      this.copyToolStripButton.Click += new System.EventHandler(this.copyToolStripButton_Click);
+      // 
       // propertyGrid1
       // 
       this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
@@ -540,19 +711,20 @@
       this.Load += new System.EventHandler(this.FrmEntityViewer_Load);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmEntityViewer_FormClosing);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.BindingSourceScript)).EndInit();
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       this.splitContainer1.ResumeLayout(false);
       this.splitContainerValues.Panel1.ResumeLayout(false);
       this.splitContainerValues.Panel2.ResumeLayout(false);
+      this.splitContainerValues.Panel2.PerformLayout();
       this.splitContainerValues.ResumeLayout(false);
       this.contextMenuStrip1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScript)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
-      this.bindingNavigator1.ResumeLayout(false);
-      this.bindingNavigator1.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorScript)).EndInit();
+      this.bindingNavigatorScript.ResumeLayout(false);
+      this.bindingNavigatorScript.PerformLayout();
       this.tabControl1.ResumeLayout(false);
       this.tabPageBrowser.ResumeLayout(false);
       this.tabPageScript.ResumeLayout(false);
@@ -561,6 +733,9 @@
       this.splitContainerScript.Panel2.ResumeLayout(false);
       this.splitContainerScript.Panel2.PerformLayout();
       this.splitContainerScript.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
+      this.bindingNavigator1.ResumeLayout(false);
+      this.bindingNavigator1.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -580,7 +755,7 @@
     private System.Windows.Forms.BindingSource bindingSourceEnumerable;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-    private System.Windows.Forms.BindingNavigator bindingNavigator1;
+    private System.Windows.Forms.BindingNavigator bindingNavigatorScript;
     private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
     private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
     private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem;
@@ -609,6 +784,22 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
     private System.Windows.Forms.SplitContainer splitContainerScript;
     private System.Windows.Forms.TextBox textBoxScript;
+    private System.Windows.Forms.BindingNavigator bindingNavigator1;
+    private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem1;
+    private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem1;
+    private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem1;
+    private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem1;
+    private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem1;
+    private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator3;
+    private System.Windows.Forms.ToolStripTextBox bindingNavigatorPositionItem1;
+    private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator4;
+    private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem1;
+    private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem1;
+    private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator5;
+    private System.Windows.Forms.ToolStripButton saveToolStripButton;
+    private System.Windows.Forms.ToolStripButton printToolStripButton;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
+    private System.Windows.Forms.ToolStripButton copyToolStripButton;
 
   }
 }
