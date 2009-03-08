@@ -8,11 +8,11 @@ using AW.LLBLGen.Plugins;
 using AW.Winforms.Helpers.Properties;
 using CSScriptLibrary;
 using DynamicTable;
+using JesseJohnston;
 using SD.LLBLGen.Pro.ApplicationCore;
 using SD.LLBLGen.Pro.ApplicationCore.Entities;
 using SD.LLBLGen.Pro.DBDriverCore;
 using SD.LLBLGen.Pro.ORMSupportClasses;
-using WB.LLBLGen.Pro.Plugins;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
@@ -28,10 +28,8 @@ namespace AW.Winforms.Helpers.EntityViewer
       dataGridViewEnumerable.AutoGenerateColumns = true;
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
       if (CommonEntityBaseTypeDescriptionProvider == null)
-      {
         CommonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));
-      //  TypeDescriptor.AddProvider(CommonEntityBaseTypeDescriptionProvider, typeof (object));
-      }
+        //  TypeDescriptor.AddProvider(CommonEntityBaseTypeDescriptionProvider, typeof (object));
 
       if (EntityFieldsTypeDescriptionProvider == null)
         EntityFieldsTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (EntityFields));
@@ -83,14 +81,12 @@ namespace AW.Winforms.Helpers.EntityViewer
     private void propertyGrid1_SelectedObjectsChanged(object sender, EventArgs e)
     {
       if (propertyGrid1.SelectedObject is Project)
-      {
-        Text = "ProjectBrowser";        
-      }
+        Text = "ProjectBrowser";
     }
 
     private Project TheProject
     {
-      get { return (Project)ObjectBrowser.ObjectToBrowse; }
+      get { return (Project) ObjectBrowser.ObjectToBrowse; }
     }
 
     private void toolStripButtonViewGroupedEntities_Click(object sender, EventArgs e)
@@ -127,7 +123,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void toolStripButtonRunPlugin_Click(object sender, EventArgs e)
     {
-      PluginBase pluginToTest = new RenameRelatedFieldsPlugin {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack)ApplicationOutputLogLine}}};
+      PluginBase pluginToTest = new RenameRelatedFieldsPlugin {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack) ApplicationOutputLogLine}}};
       //PluginBase pluginToTest = new RefreshCustomProperties {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack) ApplicationOutputLogLine}}};
       pluginToTest.Entities.AddRange(TheProject.Entities);
       pluginToTest.GetConfigurationControl();
@@ -164,7 +160,7 @@ namespace AW.Winforms.Helpers.EntityViewer
         splitContainerValues.Panel2Collapsed = true;
         //splitContainerValues.SplitterDistance = splitContainerValues.Height;
       }
-      else 
+      else
         splitContainerValues.Panel2Collapsed = false;
     }
 
@@ -175,14 +171,46 @@ namespace AW.Winforms.Helpers.EntityViewer
       if (showenEnumerable)
         try
         {
-          var queryable = enumerable.AsQueryable();
-          showenEnumerable = queryable.ElementType != typeof (string);
+          showenEnumerable = enumerable is IList;
           if (showenEnumerable)
-            bindingSourceEnumerable.DataSource = queryable;
+          {
+            var objectListView = new ObjectListView((IList) enumerable);
+            showenEnumerable = objectListView.ItemType != null;
+            if (showenEnumerable)
+            {
+              showenEnumerable = objectListView.ItemType != typeof (string);
+              if (showenEnumerable)
+                bindingSourceEnumerable.DataSource = objectListView;
+            }
+            else
+              bindingSourceEnumerable.DataSource = enumerable;
+          }
+          else
+          {
+            var queryable = enumerable.AsQueryable();
+            showenEnumerable = queryable.ElementType != typeof (string);
+            if (showenEnumerable)
+              bindingSourceEnumerable.DataSource = queryable;
+          }
         }
-        catch (ArgumentException)
+        catch (Exception)
         {
-          bindingSourceEnumerable.DataSource = enumerable;
+          try
+          {
+            bindingSourceEnumerable.DataSource = new ObjectListView(new BindingSource(enumerable, null));
+          }
+          catch (Exception)
+          {
+            try
+            {
+              bindingSourceEnumerable.DataSource = enumerable;
+            }
+            catch (Exception)
+            {
+              bindingSourceEnumerable.DataSource = null;
+            }
+          }
+          showenEnumerable = bindingSourceEnumerable.DataSource != null;
         }
       return showenEnumerable;
     }
@@ -200,7 +228,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void printToolStripButton_Click(object sender, EventArgs e)
     {
-      var frm = new FrmReportViewer { MdiParent = MdiParent, WindowState = FormWindowState.Normal };
+      var frm = new FrmReportViewer {MdiParent = MdiParent, WindowState = FormWindowState.Normal};
       frm.OpenDataSet(bindingSourceEnumerable, false);
       frm.Show();
     }
