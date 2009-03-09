@@ -8,7 +8,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers
 {
-  public partial class frmOrderEdit: Form
+  public partial class frmOrderEdit : Form
   {
     private readonly SalesOrderHeaderEntity _order;
 
@@ -17,7 +17,7 @@ namespace AW.Winforms.Helpers
       InitializeComponent();
     }
 
-    public frmOrderEdit(SalesOrderHeaderEntity Order): this()
+    public frmOrderEdit(SalesOrderHeaderEntity Order) : this()
     {
       _order = Order;
     }
@@ -44,21 +44,12 @@ namespace AW.Winforms.Helpers
     private void PopulateOrderData()
     {
       salesOrderHeaderEntityBindingSource.DataSource = _order;
-      //tbPurchaseOrder.Text = _order.PurchaseOrderNumber;
-      //tbSubtotal.Text = _order.SubTotal.ToString("N2");
-      //tbTax.Text = _order.TaxAmt.ToString("N2");
-      //tbFreight.Text = _order.Freight.ToString("N2");
-      //lblTotal.Text = _order.TotalDue.ToString("N2");
-      //tbContact.Text = _order.Contact.DisplayName;
-      //tbCustomer.Text = _order.CustomerView_.DisplayName;
-      //cbOnlineOrder.Checked = _order.OnlineOrderFlag;
-      //dtpOrderDate.Value = _order.OrderDate;
-      //dtpDueDate.Value = _order.DueDate;
+      tbContact.Text = _order.Contact.DisplayName;
+      tbCustomer.Text = _order.CustomerViewRelated.DisplayName;
       if (_order.ShipDate != DateTime.MinValue)
         dtpShipDate.Value = _order.ShipDate.Value;
       else
         dtpShipDate.Checked = false;
-      //cbShipMethod.SelectedValue = _order.ShipMethodId;
     }
 
     private void PopulateOrderDetailData()
@@ -88,31 +79,28 @@ namespace AW.Winforms.Helpers
 
     private bool SaveData()
     {
-      var result = false;
+      bool result;
       if (dtpShipDate.Checked)
         _order.ShipDate = dtpShipDate.Value;
       else
         _order.SetNewFieldValue(
-          (int)SalesOrderHeaderFieldIndex.ShipDate, null);
+          (int) SalesOrderHeaderFieldIndex.ShipDate, null);
 
       try
-      {        
-       // if (!_order.Save(GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory.CreatePredicate(ConcurrencyPredicateType.Save, _order)))
+      {
+        // if (!_order.Save(GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory.CreatePredicate(ConcurrencyPredicateType.Save, _order)))
         if (!_order.Save())
-        {
           MessageBox.Show(
             "Record wasn't saved",
             "Save error",
             MessageBoxButtons.OK,
             MessageBoxIcon.Stop);
-        }
         result = true;
       }
       catch (ORMConcurrencyException ex)
       {
-        var frm = new FrmReconcile((IEntity)ex.EntityWhichFailed);
+        var frm = new FrmReconcile((IEntity) ex.EntityWhichFailed);
         result = frm.ShowDialog() == DialogResult.OK;
-
       }
       return result;
     }
@@ -138,7 +126,7 @@ namespace AW.Winforms.Helpers
     private void tbPurchaseOrder_TextChanged(object sender, EventArgs e)
     {
       //So we validate as we type rather than when we focus off the control
-      Validation.ValidatePropertyAssignment(tbPurchaseOrder.Text, _order, (int)SalesOrderHeaderFieldIndex.PurchaseOrderNumber);
+      Validation.ValidatePropertyAssignment(tbPurchaseOrder.Text, _order, (int) SalesOrderHeaderFieldIndex.PurchaseOrderNumber);
       // update the errors at GUI 
       myError.UpdateBinding();
     }
@@ -153,7 +141,7 @@ namespace AW.Winforms.Helpers
     private void toolStripButtonViewEntity_Click(object sender, EventArgs e)
     {
       var frm = new FrmEntityViewer(_order);
-      ((frmMain)MdiParent).LaunchChildForm(frm);
+      ((frmMain) MdiParent).LaunchChildForm(frm);
     }
 
     private void toolStripButtonRefetch_Click(object sender, EventArgs e)
@@ -165,14 +153,12 @@ namespace AW.Winforms.Helpers
 
     public void RevertEntity(EntityBase entity)
     {
-          foreach (EntityField field in entity.Fields)
-          {
-            if (field.IsChanged)
-            {
-              //field.CurrentValue = field.DbValue;
-              field.RejectChange();
-            }
-          }
+      foreach (EntityField field in entity.Fields)
+      {
+        if (field.IsChanged)
+          //field.CurrentValue = field.DbValue;
+          field.RejectChange();
+      }
     }
 
     private void toolStripButtonRevert_Click(object sender, EventArgs e)

@@ -13,6 +13,7 @@ using System.Collections;
 #if !CF
 using System.Runtime.Serialization;
 #endif
+using AW.Data.EntityValidators;
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
@@ -92,6 +93,46 @@ namespace AW.Data.EntityClasses
 		#region Custom Entity code
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
+
+    public string CustomerLastName
+    {
+      get { return CustomerViewRelated.LastName; }
+    }
+
+    public string CustomerFirstName
+    {
+      get { return CustomerViewRelated.FirstName; }
+    }
+
+    public string CustomerCity
+    {
+      get { return CustomerViewRelated.City; }
+    }
+
+    public string CustomerState
+    {
+      get { return CustomerViewRelated.StateProvinceName; }
+    }
+
+    public string CustomerCountry
+    {
+      get { return CustomerViewRelated.CountryRegionName; }
+    }
+
+    public string CustomerZip
+    {
+      get { return CustomerViewRelated.PostalCode; }
+    }
+
+    /// <summary>
+    /// Called at the end of the initialization routine. Raises Initialized event.
+    /// </summary>
+    protected override void OnInitialized()
+    {
+      // Set the validator to this customer instance.
+      Validator = new SalesOrderHeaderEntityValidator();
+    }
+
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 

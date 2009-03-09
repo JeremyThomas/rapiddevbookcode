@@ -56,7 +56,6 @@ namespace AW.Winforms.Helpers
           this.checkBoxUseLinq = new System.Windows.Forms.CheckBox();
           this.btnSearch = new System.Windows.Forms.Button();
           this.dgResults = new System.Windows.Forms.DataGridView();
-          this.salesOrderIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.salesOrderNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.orderDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.customerLastNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -382,7 +381,6 @@ namespace AW.Winforms.Helpers
           this.dgResults.BackgroundColor = System.Drawing.Color.White;
           this.dgResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
           this.dgResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.salesOrderIdDataGridViewTextBoxColumn,
             this.salesOrderNumberDataGridViewTextBoxColumn,
             this.orderDateDataGridViewTextBoxColumn,
             this.customerLastNameDataGridViewTextBoxColumn,
@@ -402,15 +400,6 @@ namespace AW.Winforms.Helpers
           this.dgResults.Size = new System.Drawing.Size(684, 431);
           this.dgResults.TabIndex = 1;
           this.dgResults.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
-          // 
-          // salesOrderIdDataGridViewTextBoxColumn
-          // 
-          this.salesOrderIdDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-          this.salesOrderIdDataGridViewTextBoxColumn.DataPropertyName = "SalesOrderId";
-          this.salesOrderIdDataGridViewTextBoxColumn.HeaderText = "ID";
-          this.salesOrderIdDataGridViewTextBoxColumn.Name = "salesOrderIdDataGridViewTextBoxColumn";
-          this.salesOrderIdDataGridViewTextBoxColumn.ReadOnly = true;
-          this.salesOrderIdDataGridViewTextBoxColumn.Width = 43;
           // 
           // salesOrderNumberDataGridViewTextBoxColumn
           // 

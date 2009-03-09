@@ -30,10 +30,10 @@ namespace AW.Winforms.Helpers
         {
           this.components = new System.ComponentModel.Container();
           System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderEdit));
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+          System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
           this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
           this.label8 = new System.Windows.Forms.Label();
           this.label3 = new System.Windows.Forms.Label();
@@ -279,7 +279,6 @@ namespace AW.Winforms.Helpers
           // 
           // tbCustomer
           // 
-          this.tbCustomer.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.salesOrderHeaderEntityBindingSource, "CustomerViewRelated.DisplayName", true));
           this.tbCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbCustomer.Location = new System.Drawing.Point(412, 3);
           this.tbCustomer.Name = "tbCustomer";
@@ -517,9 +516,9 @@ namespace AW.Winforms.Helpers
           // 
           this.orderQtyDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.orderQtyDataGridViewTextBoxColumn.DataPropertyName = "OrderQty";
-          dataGridViewCellStyle1.Format = "N0";
-          dataGridViewCellStyle1.NullValue = null;
-          this.orderQtyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+          dataGridViewCellStyle9.Format = "N0";
+          dataGridViewCellStyle9.NullValue = null;
+          this.orderQtyDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle9;
           this.orderQtyDataGridViewTextBoxColumn.HeaderText = "#";
           this.orderQtyDataGridViewTextBoxColumn.Name = "orderQtyDataGridViewTextBoxColumn";
           this.orderQtyDataGridViewTextBoxColumn.Width = 39;
@@ -528,9 +527,9 @@ namespace AW.Winforms.Helpers
           // 
           this.unitPriceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.unitPriceDataGridViewTextBoxColumn.DataPropertyName = "UnitPrice";
-          dataGridViewCellStyle2.Format = "C2";
-          dataGridViewCellStyle2.NullValue = null;
-          this.unitPriceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle2;
+          dataGridViewCellStyle10.Format = "C2";
+          dataGridViewCellStyle10.NullValue = null;
+          this.unitPriceDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle10;
           this.unitPriceDataGridViewTextBoxColumn.HeaderText = "Price/Unit";
           this.unitPriceDataGridViewTextBoxColumn.Name = "unitPriceDataGridViewTextBoxColumn";
           this.unitPriceDataGridViewTextBoxColumn.Width = 80;
@@ -539,9 +538,9 @@ namespace AW.Winforms.Helpers
           // 
           this.unitPriceDiscountDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
           this.unitPriceDiscountDataGridViewTextBoxColumn.DataPropertyName = "UnitPriceDiscount";
-          dataGridViewCellStyle3.Format = "C2";
-          dataGridViewCellStyle3.NullValue = null;
-          this.unitPriceDiscountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
+          dataGridViewCellStyle11.Format = "C2";
+          dataGridViewCellStyle11.NullValue = null;
+          this.unitPriceDiscountDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle11;
           this.unitPriceDiscountDataGridViewTextBoxColumn.HeaderText = "Discount/Unit";
           this.unitPriceDiscountDataGridViewTextBoxColumn.Name = "unitPriceDiscountDataGridViewTextBoxColumn";
           this.unitPriceDiscountDataGridViewTextBoxColumn.Width = 98;
@@ -550,9 +549,9 @@ namespace AW.Winforms.Helpers
           // 
           this.lineTotalDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
           this.lineTotalDataGridViewTextBoxColumn.DataPropertyName = "LineTotal";
-          dataGridViewCellStyle4.Format = "C2";
-          dataGridViewCellStyle4.NullValue = null;
-          this.lineTotalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle4;
+          dataGridViewCellStyle12.Format = "C2";
+          dataGridViewCellStyle12.NullValue = null;
+          this.lineTotalDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle12;
           this.lineTotalDataGridViewTextBoxColumn.HeaderText = "Total";
           this.lineTotalDataGridViewTextBoxColumn.Name = "lineTotalDataGridViewTextBoxColumn";
           this.lineTotalDataGridViewTextBoxColumn.ReadOnly = true;
