@@ -73,7 +73,14 @@
       this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonViewRunQuery = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.printToolStripButtonViewReport = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      this.copyToolStripButtonQuery = new System.Windows.Forms.ToolStripButton();
+      this.toolStripComboBoxClipboardCopyMode = new System.Windows.Forms.ToolStripComboBox();
+      this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonRunPlugin = new System.Windows.Forms.ToolStripButton();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -92,13 +99,6 @@
       this.textBoxScript = new System.Windows.Forms.TextBox();
       this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.printToolStripButtonViewReport = new System.Windows.Forms.ToolStripButton();
-      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.copyToolStripButtonQuery = new System.Windows.Forms.ToolStripButton();
-      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-      this.toolStripComboBoxClipboardCopyMode = new System.Windows.Forms.ToolStripComboBox();
-      this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
@@ -545,6 +545,11 @@
       this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
       this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
       // 
+      // toolStripSeparator4
+      // 
+      this.toolStripSeparator4.Name = "toolStripSeparator4";
+      this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+      // 
       // toolStripButtonViewRunQuery
       // 
       this.toolStripButtonViewRunQuery.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewRunQuery.Image")));
@@ -553,6 +558,48 @@
       this.toolStripButtonViewRunQuery.Size = new System.Drawing.Size(76, 22);
       this.toolStripButtonViewRunQuery.Text = "RunQuery";
       this.toolStripButtonViewRunQuery.Click += new System.EventHandler(this.toolStripButtonViewGroupedEntities_Click);
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+      // 
+      // printToolStripButtonViewReport
+      // 
+      this.printToolStripButtonViewReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.printToolStripButtonViewReport.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButtonViewReport.Image")));
+      this.printToolStripButtonViewReport.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.printToolStripButtonViewReport.Name = "printToolStripButtonViewReport";
+      this.printToolStripButtonViewReport.Size = new System.Drawing.Size(23, 22);
+      this.printToolStripButtonViewReport.Text = "&Print";
+      this.printToolStripButtonViewReport.Click += new System.EventHandler(this.toolStripButtonViewReport_Click);
+      // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+      // 
+      // copyToolStripButtonQuery
+      // 
+      this.copyToolStripButtonQuery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.copyToolStripButtonQuery.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButtonQuery.Image")));
+      this.copyToolStripButtonQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.copyToolStripButtonQuery.Name = "copyToolStripButtonQuery";
+      this.copyToolStripButtonQuery.Size = new System.Drawing.Size(23, 22);
+      this.copyToolStripButtonQuery.Text = "&Copy";
+      this.copyToolStripButtonQuery.Click += new System.EventHandler(this.copyToolStripButtonQuery_Click);
+      // 
+      // toolStripComboBoxClipboardCopyMode
+      // 
+      this.toolStripComboBoxClipboardCopyMode.Name = "toolStripComboBoxClipboardCopyMode";
+      this.toolStripComboBoxClipboardCopyMode.Size = new System.Drawing.Size(160, 25);
+      this.toolStripComboBoxClipboardCopyMode.Text = "ClipboardCopyMode";
+      this.toolStripComboBoxClipboardCopyMode.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxClipboardCopyMode_SelectedIndexChanged);
+      // 
+      // toolStripSeparator3
+      // 
+      this.toolStripSeparator3.Name = "toolStripSeparator3";
+      this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
       // 
       // toolStripButtonRunPlugin
       // 
@@ -715,53 +762,6 @@
       this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
       this.dataGridViewTextBoxColumn12.ReadOnly = true;
       this.dataGridViewTextBoxColumn12.Width = 73;
-      // 
-      // printToolStripButtonViewReport
-      // 
-      this.printToolStripButtonViewReport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.printToolStripButtonViewReport.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButtonViewReport.Image")));
-      this.printToolStripButtonViewReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.printToolStripButtonViewReport.Name = "printToolStripButtonViewReport";
-      this.printToolStripButtonViewReport.Size = new System.Drawing.Size(23, 22);
-      this.printToolStripButtonViewReport.Text = "&Print";
-      this.printToolStripButtonViewReport.Click += new System.EventHandler(this.toolStripButtonViewReport_Click);
-      // 
-      // toolStripSeparator1
-      // 
-      this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-      // 
-      // copyToolStripButtonQuery
-      // 
-      this.copyToolStripButtonQuery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.copyToolStripButtonQuery.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButtonQuery.Image")));
-      this.copyToolStripButtonQuery.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.copyToolStripButtonQuery.Name = "copyToolStripButtonQuery";
-      this.copyToolStripButtonQuery.Size = new System.Drawing.Size(23, 22);
-      this.copyToolStripButtonQuery.Text = "&Copy";
-      this.copyToolStripButtonQuery.Click += new System.EventHandler(this.copyToolStripButtonQuery_Click);
-      // 
-      // toolStripSeparator2
-      // 
-      this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-      // 
-      // toolStripComboBoxClipboardCopyMode
-      // 
-      this.toolStripComboBoxClipboardCopyMode.Name = "toolStripComboBoxClipboardCopyMode";
-      this.toolStripComboBoxClipboardCopyMode.Size = new System.Drawing.Size(160, 25);
-      this.toolStripComboBoxClipboardCopyMode.Text = "ClipboardCopyMode";
-      this.toolStripComboBoxClipboardCopyMode.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxClipboardCopyMode_SelectedIndexChanged);
-      // 
-      // toolStripSeparator3
-      // 
-      this.toolStripSeparator3.Name = "toolStripSeparator3";
-      this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-      // 
-      // toolStripSeparator4
-      // 
-      this.toolStripSeparator4.Name = "toolStripSeparator4";
-      this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
       // 
       // propertyGrid1
       // 

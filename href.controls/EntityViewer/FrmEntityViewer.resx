@@ -401,15 +401,14 @@ public class Script : MarshalByRefObject, IQueryScript
              select
                new
                  {
+                   Groups = string.Join(", ", (from peg in project.ProjectElementGroups.Values.OfType&lt;ProjectElementGroup&gt;()
+                                              from ed in peg.Keys.OfType&lt;EntityDefinition&gt;()
+                                              where !peg.IsSystemGroup &amp;&amp; ed.ElementName == entity.ElementName
+                                              select peg.Name).Distinct().ToArray()),
                    entity.ElementTargetName,
                    entity.ElementName,
                    entity.TargetType,
-                   groups = string.Join(",", (from peg in project.ProjectElementGroups.Values.OfType&lt;ProjectElementGroup&gt;()
-                                              from ed in peg.Keys.OfType&lt;EntityDefinition&gt;()
-                                              where !peg.IsSystemGroup &amp;&amp; ed.ElementTargetName == entity.ElementTargetName
-                                              select peg.Name).ToArray()),
                    Description = entity.CustomProperties.ContainsKey("MS_Description") ? entity.CustomProperties["MS_Description"].ToString() : string.Empty
-                   //.Aggregate((current, next) =&gt; current + ", " + next)
                  };
     }
 

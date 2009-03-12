@@ -112,15 +112,14 @@ namespace AW.Winforms.Helpers.EntityViewer
              select
                new
                  {
+                   Groups = string.Join(", ", (from peg in project.ProjectElementGroups.Values.OfType<ProjectElementGroup>()
+                                              from ed in peg.Keys.OfType<EntityDefinition>()
+                                              where !peg.IsSystemGroup && ed.ElementName == entity.ElementName
+                                              select peg.Name).Distinct().ToArray()),
                    entity.ElementTargetName,
                    entity.ElementName,
                    entity.TargetType,
-                   groups = string.Join(",", (from peg in project.ProjectElementGroups.Values.OfType<ProjectElementGroup>()
-                                              from ed in peg.Keys.OfType<EntityDefinition>()
-                                              where !peg.IsSystemGroup && ed.ElementTargetName == entity.ElementTargetName
-                                              select peg.Name).ToArray()),
                    Description = entity.CustomProperties.ContainsKey("MS_Description") ? entity.CustomProperties["MS_Description"].ToString() : string.Empty
-                   //.Aggregate((current, next) => current + ", " + next)
                  };
     }
 
