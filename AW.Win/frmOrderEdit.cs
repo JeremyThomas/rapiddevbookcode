@@ -45,7 +45,7 @@ namespace AW.Winforms.Helpers
     {
       salesOrderHeaderEntityBindingSource.DataSource = _order;
       tbContact.Text = _order.Contact.DisplayName;
-      tbCustomer.Text = _order.CustomerViewRelated.DisplayName;
+      if (_order.CustomerViewRelated != null) tbCustomer.Text = _order.CustomerViewRelated.DisplayName;
       if (_order.ShipDate != DateTime.MinValue)
         dtpShipDate.Value = _order.ShipDate.Value;
       else

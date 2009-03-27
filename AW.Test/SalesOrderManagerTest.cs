@@ -32,6 +32,7 @@ namespace AW.Test
     private static readonly string CountryName = string.Empty; // TODO: Initialize to an appropriate value
     private static readonly string Zip = string.Empty; // TODO: Initialize to an appropriate value
     private const int maxNumberOfItemsToReturn = 5;
+    private bool prefetch = true;
 
     // 
     //You can use the following additional attributes as you write your tests:
@@ -69,8 +70,9 @@ namespace AW.Test
     [TestMethod]
     public void GetSalesOrderHeaderCollectionWithLinqTest()
     {
-      var actual = SalesOrderManager.GetSalesOrderHeaderCollectionWithLinq(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, CountryName, Zip, maxNumberOfItemsToReturn);
+      var actual = SalesOrderManager.GetSalesOrderHeaderCollectionWithLinq(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, CountryName, Zip, maxNumberOfItemsToReturn, prefetch);
       Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count);
+      //Assert.IsNotNull(actual[0].CustomerViewRelated);
     }
 
     /// <summary>
@@ -79,8 +81,9 @@ namespace AW.Test
     [TestMethod]
     public void GetSalesOrderHeaderCollectionTest()
     {
-      var actual = SalesOrderManager.GetSalesOrderHeaderCollection(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, CountryName, Zip, maxNumberOfItemsToReturn);
+      var actual = SalesOrderManager.GetSalesOrderHeaderCollection(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, CountryName, Zip, maxNumberOfItemsToReturn, prefetch);
       Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count);
+      //Assert.IsNotNull(actual[0].CustomerViewRelated);
     }
 
     /// <summary>

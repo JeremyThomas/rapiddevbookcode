@@ -24,17 +24,18 @@ namespace AW.Business
       string StateName,
       string CountryName,
       string Zip,
-      int maxNumberOfItemsToReturn
+      int maxNumberOfItemsToReturn,
+      bool prefetch
       )
     {
       var relations = new RelationCollection();
       IPredicateExpression Filter = new PredicateExpression();
       if (
-        (FirstName != "") |
-        (LastName != "") |
-        (CityName != "") |
-        (StateName != "") |
-        (CountryName != "") |
+        (FirstName != "") ||
+        (LastName != "") ||
+        (CityName != "") ||
+        (StateName != "") ||
+        (CountryName != "") ||
         (Zip != "")
         )
         relations.Add(SalesOrderHeaderEntityBase.Relations.CustomerViewRelatedEntityUsingCustomerID);
@@ -61,7 +62,8 @@ namespace AW.Business
       ISortExpression Sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
       var Orders = new SalesOrderHeaderCollection();
       //note      Orders.SupportsSorting = true;
-      IPrefetchPath Prefetch = new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntityBase.PrefetchPathCustomerViewRelated};
+
+      IPrefetchPath Prefetch = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntityBase.PrefetchPathCustomerViewRelated}:null;
       Orders.GetMulti(Filter, maxNumberOfItemsToReturn, Sort, relations, Prefetch);
       return Orders;
     }
@@ -78,7 +80,8 @@ namespace AW.Business
       string StateName,
       string CountryName,
       string Zip,
-      int maxNumberOfItemsToReturn
+      int maxNumberOfItemsToReturn,
+      bool prefetch
       )
     {
       var predicate = MetaSingletons.MetaData.SalesOrderHeader.AsQueryable();
@@ -103,11 +106,12 @@ namespace AW.Business
         predicate = predicate.Where(soh => soh.SalesOrderID == OrderID);
       if (OrderNumber != "")
         predicate = predicate.Where(soh => soh.SalesOrderNumber == OrderNumber);
-      var q = (from c in predicate select c).WithPath(p => p.Prefetch(c => c.CustomerViewRelated));
-      q = q.OrderBy(s => s.OrderDate);
+      if (prefetch)
+       predicate = predicate.WithPath(p => p.Prefetch(c => c.CustomerViewRelated));
+      predicate= predicate.OrderBy(s => s.OrderDate);
       if (maxNumberOfItemsToReturn > 0)
-        q = q.Take(maxNumberOfItemsToReturn);
-      return ((ILLBLGenProQuery) q).Execute<SalesOrderHeaderCollection>();
+        predicate = predicate.Take(maxNumberOfItemsToReturn);
+      return ((ILLBLGenProQuery) predicate).Execute<SalesOrderHeaderCollection>();
     }
 
     public static IQueryable<SalesOrderHeaderEntity> DoSalesOrderHeaderLinqQuery

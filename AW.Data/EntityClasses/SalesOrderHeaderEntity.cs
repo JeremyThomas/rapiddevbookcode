@@ -96,32 +96,33 @@ namespace AW.Data.EntityClasses
 
     public string CustomerLastName
     {
-      get { return CustomerViewRelated.LastName; }
+      //CustomerViewRelated will be null if the customer is not an individual 
+      get { return CustomerViewRelated == null ? null : CustomerViewRelated.LastName; }
     }
 
     public string CustomerFirstName
     {
-      get { return CustomerViewRelated.FirstName; }
+      get { return CustomerViewRelated == null ? null : CustomerViewRelated.FirstName; }
     }
 
     public string CustomerCity
     {
-      get { return CustomerViewRelated.City; }
+      get { return CustomerViewRelated == null ? null : CustomerViewRelated.City; }
     }
 
     public string CustomerState
     {
-      get { return CustomerViewRelated.StateProvinceName; }
+      get { return CustomerViewRelated == null ? null : CustomerViewRelated.StateProvinceName; }
     }
 
     public string CustomerCountry
     {
-      get { return CustomerViewRelated.CountryRegionName; }
+      get { return CustomerViewRelated == null ? null : CustomerViewRelated.CountryRegionName; }
     }
 
     public string CustomerZip
     {
-      get { return CustomerViewRelated.PostalCode; }
+      get { return CustomerViewRelated == null ? null : CustomerViewRelated.PostalCode; }
     }
 
     /// <summary>

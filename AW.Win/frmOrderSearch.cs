@@ -22,6 +22,8 @@ namespace AW.Winforms.Helpers
     private string _state;
     private string _country;
     private string _zip;
+    private int _maxNumberOfItemsToReturn;
+    private bool _prefetch;
     private SalesOrderHeaderCollection _results;
 
     public frmOrderSearch()
@@ -123,6 +125,8 @@ namespace AW.Winforms.Helpers
       _state = cbState.Text;
       _country = cbCountry.Text;
       _zip = tbZip.Text;
+      _maxNumberOfItemsToReturn = Convert.ToInt32(numericUpDownNumRows.Value);
+      _prefetch = checkBoxPrefetch.Checked;
       btnSearch.Enabled = false;
       _frmStatusBar = new frmStatusBar();
       _frmStatusBar.Show();
@@ -165,7 +169,9 @@ namespace AW.Winforms.Helpers
           _state,
           _country,
           _zip,
-          Convert.ToInt32(numericUpDownNumRows.Value));
+          _maxNumberOfItemsToReturn,
+          _prefetch
+          );
       else
         _results = SalesOrderManager.GetSalesOrderHeaderCollection(
           _fromDate,
@@ -178,7 +184,8 @@ namespace AW.Winforms.Helpers
           _state,
           _country,
           _zip,
-          Convert.ToInt32(numericUpDownNumRows.Value));
+          _maxNumberOfItemsToReturn,
+          _prefetch);
     }
 
     private void searchWorker_RunWorkerCompleted(object sender,
@@ -194,6 +201,11 @@ namespace AW.Winforms.Helpers
       }
       btnSearch.Enabled = true;
       dgResults.DataSource = _results;
+    }
+
+    private void dgResults_DataError(object sender, DataGridViewDataErrorEventArgs e)
+    {
+      GlobalHelper.TraceOut(e.Exception.Message);
     }
 
   }

@@ -70,6 +70,7 @@ namespace AW.Winforms.Helpers
           this.salesOrderHeaderCollection1 = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
           this.searchWorker = new System.ComponentModel.BackgroundWorker();
           this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+          this.checkBoxPrefetch = new System.Windows.Forms.CheckBox();
           this.tableLayoutPanel1.SuspendLayout();
           this.tableLayoutPanel2.SuspendLayout();
           this.panel1.SuspendLayout();
@@ -333,6 +334,7 @@ namespace AW.Winforms.Helpers
           // 
           // panel1
           // 
+          this.panel1.Controls.Add(this.checkBoxPrefetch);
           this.panel1.Controls.Add(this.numericUpDownNumRows);
           this.panel1.Controls.Add(this.checkBoxUseLinq);
           this.panel1.Controls.Add(this.btnSearch);
@@ -345,7 +347,7 @@ namespace AW.Winforms.Helpers
           // numericUpDownNumRows
           // 
           this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Winforms.Helpers.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-          this.numericUpDownNumRows.Location = new System.Drawing.Point(201, 2);
+          this.numericUpDownNumRows.Location = new System.Drawing.Point(208, 2);
           this.numericUpDownNumRows.Name = "numericUpDownNumRows";
           this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
           this.numericUpDownNumRows.TabIndex = 23;
@@ -357,7 +359,7 @@ namespace AW.Winforms.Helpers
           this.checkBoxUseLinq.AutoSize = true;
           this.checkBoxUseLinq.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.UseLinq;
           this.checkBoxUseLinq.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Winforms.Helpers.Properties.Settings.Default, "UseLinq", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-          this.checkBoxUseLinq.Location = new System.Drawing.Point(102, 4);
+          this.checkBoxUseLinq.Location = new System.Drawing.Point(64, 3);
           this.checkBoxUseLinq.Name = "checkBoxUseLinq";
           this.checkBoxUseLinq.Size = new System.Drawing.Size(65, 17);
           this.checkBoxUseLinq.TabIndex = 22;
@@ -368,7 +370,7 @@ namespace AW.Winforms.Helpers
           // 
           this.btnSearch.Location = new System.Drawing.Point(3, 0);
           this.btnSearch.Name = "btnSearch";
-          this.btnSearch.Size = new System.Drawing.Size(75, 22);
+          this.btnSearch.Size = new System.Drawing.Size(55, 22);
           this.btnSearch.TabIndex = 21;
           this.btnSearch.Text = "Search";
           this.btnSearch.UseVisualStyleBackColor = true;
@@ -400,6 +402,7 @@ namespace AW.Winforms.Helpers
           this.dgResults.Size = new System.Drawing.Size(684, 431);
           this.dgResults.TabIndex = 1;
           this.dgResults.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
+          this.dgResults.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgResults_DataError);
           // 
           // salesOrderNumberDataGridViewTextBoxColumn
           // 
@@ -523,6 +526,19 @@ namespace AW.Winforms.Helpers
           this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
           this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
           // 
+          // checkBoxPrefetch
+          // 
+          this.checkBoxPrefetch.AutoSize = true;
+          this.checkBoxPrefetch.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.Prefetch;
+          this.checkBoxPrefetch.CheckState = System.Windows.Forms.CheckState.Checked;
+          this.checkBoxPrefetch.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Winforms.Helpers.Properties.Settings.Default, "Prefetch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.checkBoxPrefetch.Location = new System.Drawing.Point(136, 4);
+          this.checkBoxPrefetch.Name = "checkBoxPrefetch";
+          this.checkBoxPrefetch.Size = new System.Drawing.Size(66, 17);
+          this.checkBoxPrefetch.TabIndex = 24;
+          this.checkBoxPrefetch.Text = "Prefetch";
+          this.checkBoxPrefetch.UseVisualStyleBackColor = true;
+          // 
           // frmOrderSearch
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -593,5 +609,6 @@ namespace AW.Winforms.Helpers
         private System.Windows.Forms.CheckBox checkBoxUseLinq;
         private System.Windows.Forms.NumericUpDown numericUpDownNumRows;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox checkBoxPrefetch;
     }
 }
