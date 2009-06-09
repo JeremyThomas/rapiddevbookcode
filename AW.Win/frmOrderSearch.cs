@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using AW.Business;
 using AW.Data;
-using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Winforms.Helpers.Properties;
 
@@ -24,7 +23,6 @@ namespace AW.Winforms.Helpers
     private string _zip;
     private int _maxNumberOfItemsToReturn;
     private bool _prefetch;
-    private SalesOrderHeaderCollection _results;
 
     public frmOrderSearch()
     {
@@ -137,6 +135,8 @@ namespace AW.Winforms.Helpers
     private void _frmStatusBar_CancelButtonClicked(object sender, CancelEventArgs e)
     {
       searchWorker.CancelAsync();
+      while (searchWorker.IsBusy)
+        Application.DoEvents();
       btnSearch.Enabled = true;
     }
 
@@ -157,35 +157,41 @@ namespace AW.Winforms.Helpers
 
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      if (checkBoxUseLinq.Checked)
-        _results = SalesOrderManager.GetSalesOrderHeaderCollectionWithLinq(
-          _fromDate,
-          _toDate,
-          _firstName,
-          _lastName,
-          _orderID,
-          _orderName,
-          _cityName,
-          _state,
-          _country,
-          _zip,
-          _maxNumberOfItemsToReturn,
-          _prefetch
-          );
-      else
-        _results = SalesOrderManager.GetSalesOrderHeaderCollection(
-          _fromDate,
-          _toDate,
-          _firstName,
-          _lastName,
-          _orderID,
-          _orderName,
-          _cityName,
-          _state,
-          _country,
-          _zip,
-          _maxNumberOfItemsToReturn,
-          _prefetch);
+      e.Result = checkBoxUseLinq.Checked ? SalesOrderManager.GetSalesOrderHeaderCollectionWithLinq(
+                                             _fromDate,
+                                             _toDate,
+                                             _firstName,
+                                             _lastName,
+                                             _orderID,
+                                             _orderName,
+                                             _cityName,
+                                             _state,
+                                             _country,
+                                             _zip,
+                                             _maxNumberOfItemsToReturn,
+                                             _prefetch
+                                             ) : SalesOrderManager.GetSalesOrderHeaderCollection(
+                                                   _fromDate,
+                                                   _toDate,
+                                                   _firstName,
+                                                   _lastName,
+                                                   _orderID,
+                                                   _orderName,
+                                                   _cityName,
+                                                   _state,
+                                                   _country,
+                                                   _zip,
+                                                   _maxNumberOfItemsToReturn,
+                                                   _prefetch);
+      // Do not access the form's BackgroundWorker reference directly.
+      // Instead, use the reference provided by the sender parameter.
+      var bw = sender as BackgroundWorker;
+      // If the operation was canceled by the user, 
+      // set the DoWorkEventArgs.Cancel property to true.
+      if (bw != null && bw.CancellationPending)
+        {
+          e.Cancel = true;
+        }
     }
 
     private void searchWorker_RunWorkerCompleted(object sender,
@@ -200,7 +206,8 @@ namespace AW.Winforms.Helpers
         _frmStatusBar.Close();
       }
       btnSearch.Enabled = true;
-      dgResults.DataSource = _results;
+      if (!e.Cancelled)
+        dgResults.DataSource = e.Result;
     }
 
     private void dgResults_DataError(object sender, DataGridViewDataErrorEventArgs e)

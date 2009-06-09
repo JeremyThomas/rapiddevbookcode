@@ -52,6 +52,7 @@ namespace AW.Winforms.Helpers
           this.cbCountry = new System.Windows.Forms.ComboBox();
           this.tbOrderID = new System.Windows.Forms.TextBox();
           this.panel1 = new System.Windows.Forms.Panel();
+          this.checkBoxPrefetch = new System.Windows.Forms.CheckBox();
           this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
           this.checkBoxUseLinq = new System.Windows.Forms.CheckBox();
           this.btnSearch = new System.Windows.Forms.Button();
@@ -70,7 +71,6 @@ namespace AW.Winforms.Helpers
           this.salesOrderHeaderCollection1 = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
           this.searchWorker = new System.ComponentModel.BackgroundWorker();
           this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-          this.checkBoxPrefetch = new System.Windows.Forms.CheckBox();
           this.tableLayoutPanel1.SuspendLayout();
           this.tableLayoutPanel2.SuspendLayout();
           this.panel1.SuspendLayout();
@@ -344,6 +344,19 @@ namespace AW.Winforms.Helpers
           this.panel1.Size = new System.Drawing.Size(269, 23);
           this.panel1.TabIndex = 22;
           // 
+          // checkBoxPrefetch
+          // 
+          this.checkBoxPrefetch.AutoSize = true;
+          this.checkBoxPrefetch.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.Prefetch;
+          this.checkBoxPrefetch.CheckState = System.Windows.Forms.CheckState.Checked;
+          this.checkBoxPrefetch.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Winforms.Helpers.Properties.Settings.Default, "Prefetch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.checkBoxPrefetch.Location = new System.Drawing.Point(136, 4);
+          this.checkBoxPrefetch.Name = "checkBoxPrefetch";
+          this.checkBoxPrefetch.Size = new System.Drawing.Size(66, 17);
+          this.checkBoxPrefetch.TabIndex = 24;
+          this.checkBoxPrefetch.Text = "Prefetch";
+          this.checkBoxPrefetch.UseVisualStyleBackColor = true;
+          // 
           // numericUpDownNumRows
           // 
           this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Winforms.Helpers.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -525,19 +538,6 @@ namespace AW.Winforms.Helpers
           this.searchWorker.WorkerSupportsCancellation = true;
           this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
           this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
-          // 
-          // checkBoxPrefetch
-          // 
-          this.checkBoxPrefetch.AutoSize = true;
-          this.checkBoxPrefetch.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.Prefetch;
-          this.checkBoxPrefetch.CheckState = System.Windows.Forms.CheckState.Checked;
-          this.checkBoxPrefetch.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Winforms.Helpers.Properties.Settings.Default, "Prefetch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-          this.checkBoxPrefetch.Location = new System.Drawing.Point(136, 4);
-          this.checkBoxPrefetch.Name = "checkBoxPrefetch";
-          this.checkBoxPrefetch.Size = new System.Drawing.Size(66, 17);
-          this.checkBoxPrefetch.TabIndex = 24;
-          this.checkBoxPrefetch.Text = "Prefetch";
-          this.checkBoxPrefetch.UseVisualStyleBackColor = true;
           // 
           // frmOrderSearch
           // 
