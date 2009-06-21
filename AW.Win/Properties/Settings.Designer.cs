@@ -403,5 +403,17 @@ namespace AW.Winforms.Helpers.Properties {
                 this["Prefetch"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle SettingQueryRunnerSizeAndLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["SettingQueryRunnerSizeAndLocation"]));
+            }
+            set {
+                this["SettingQueryRunnerSizeAndLocation"] = value;
+            }
+        }
     }
 }

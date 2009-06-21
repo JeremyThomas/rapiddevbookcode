@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Winforms.Helpers.EntityViewer;
+using CSScriptLibrary;
+using JesseJohnston;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers
@@ -143,5 +149,75 @@ namespace AW.Winforms.Helpers
     }
 
     #endregion
+
+    public static void ApplicationOutputLogLine(string lineToLog, string source, bool isVerboseMessage, bool appendNewLine)
+    {
+      if (appendNewLine)
+        Trace.WriteLine(lineToLog);
+      else
+        Trace.Write(lineToLog);
+    }
+
+    public static IQueryScript CreateQuery(string scriptText, out AsmHelper helper)
+    {
+      helper = new AsmHelper(CSScript.LoadCode(scriptText, null, true));
+      return (IQueryScript)helper.CreateObject("Script");
+    }
+
+    public static bool BindEnumerable(IEnumerable enumerable, BindingSource bindingSource)
+    {
+      var showenEnumerable = enumerable != null && !(enumerable is string) && !(enumerable.ToString() == "System.Collections.Hashtable+KeyCollection");
+
+      if (showenEnumerable)
+        try
+        {
+          showenEnumerable = enumerable is IList;
+          if (showenEnumerable)
+          {
+            var objectListView = new ObjectListView((IList)enumerable);
+            showenEnumerable = objectListView.ItemType != null;
+            if (showenEnumerable)
+            {
+              showenEnumerable = objectListView.ItemType != typeof (string);
+              if (showenEnumerable)
+                bindingSource.DataSource = objectListView;
+            }
+            else
+              bindingSource.DataSource = enumerable;
+          }
+          else
+          {
+            var etype = enumerable.GetType();
+            if (etype.IsGenericType)
+            {
+              var queryable = enumerable.AsQueryable();
+              showenEnumerable = queryable.ElementType != typeof (string);
+              bindingSource.DataSource = showenEnumerable ? new ObjectListView(new BindingSource(queryable, null)) : null;
+            }
+            else
+              bindingSource.DataSource = new ObjectListView(new BindingSource(enumerable, null));
+          }
+        }
+        catch (Exception)
+        {
+          try
+          {
+            bindingSource.DataSource = enumerable;
+          }
+          catch (Exception)
+          {
+            bindingSource.DataSource = null;
+          }
+
+          showenEnumerable = bindingSource.DataSource != null;
+        }
+      return showenEnumerable;
+    }
+
+    public static void CopyEntireDataGridViewToClipboard(DataGridView dataGridView)
+    {
+      dataGridView.SelectAll();
+      Clipboard.SetDataObject(dataGridView.GetClipboardContent());
+    }
   }
 }

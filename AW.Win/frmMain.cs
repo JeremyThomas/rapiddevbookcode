@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.Properties;
+using AW.Winforms.Helpers.QueryRunner;
 using SD.LLBLGen.Pro.ApplicationCore;
 
 namespace AW.Winforms.Helpers
@@ -61,30 +63,36 @@ namespace AW.Winforms.Helpers
     //    ChildForm.WindowState = FormWindowState.Normal;
     //    ChildForm.Show();
     //}
-    public void LaunchChildForm(Form ChildForm)
+    public Form LaunchChildForm(Form childForm)
     {
-      if (ChildForm == null) throw new ArgumentNullException("ChildForm");
-      var FormAlreadyExists = false;
+      if (childForm == null) throw new ArgumentNullException("ChildForm");
+      var formAlreadyExists = false;
       foreach (var myForm in MdiChildren)
-        if (myForm.GetType() == ChildForm.GetType())
+        if (myForm.GetType() == childForm.GetType())
         {
-          FormAlreadyExists = true;
-          ChildForm = myForm;
+          formAlreadyExists = true;
+          childForm = myForm;
           break;
         }
-      if (FormAlreadyExists)
-        ChildForm.BringToFront();
+      if (formAlreadyExists)
+        childForm.BringToFront();
       else
       {
-        ChildForm.MdiParent = this;
-        ChildForm.WindowState = FormWindowState.Normal;
-        ChildForm.Show();
+        childForm.MdiParent = this;
+        childForm.WindowState = FormWindowState.Normal;
+        childForm.Show();
       }
+      return childForm;
     }
 
     public void LaunchChildForm(string formName)
     {
-      LaunchChildForm((Form) Activator.CreateInstance(Type.GetType(formName)));
+      LaunchChildForm(Type.GetType(formName));
+    }
+
+    public void LaunchChildForm(Type formType)
+    {
+      if (formType != null) LaunchChildForm((Form)Activator.CreateInstance(formType));
     }
 
     private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -123,25 +131,32 @@ namespace AW.Winforms.Helpers
 
       if (dr == DialogResult.OK)
       {
-        DoFileOpen(openFileDialogProject.FileName);
+          DoFileOpen(openFileDialogProject.FileName);
       }
     }
 
     private void DoFileOpen(string fileName)
     {
+      if (Path.GetExtension(fileName).Equals(".lgp", StringComparison.InvariantCultureIgnoreCase))
       try
       {
         var projectToBrowse = Project.Load(fileName);
         LaunchChildForm(new FrmEntityViewer(projectToBrowse));
-        mruHandlerProject.AddRecentlyUsedFile(fileName);
+
       }
       catch (SerializationException ex)
       {
         throw new ApplicationException(string.Format("The specified file \"{0}\" is not a valid LLBLGen Pro project file. Please verify that the project file is valid, that it has been saved in the most recent version available, and then try again.", fileName), ex);
       }
+      else
+      {
+        var frmQueryRunner = LaunchChildForm(new FrmQueryRunner()) as FrmQueryRunner;
+        frmQueryRunner.DoFileOpen(fileName);
+      }
+        mruHandlerProject.AddRecentlyUsedFile(fileName);
     }
 
-    private void mruHandlerProject_MRUItemClicked(object sender, AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedEventArgs e)
+    private void mruHandlerProject_MRUItemClicked(object sender, MostRecentlyUsedHandler.MRUItemClickedEventArgs e)
     {
       DoFileOpen(e.File);
     }
@@ -176,5 +191,10 @@ namespace AW.Winforms.Helpers
       }
     }
     #endregion
+
+    private void adHocLINQQueryRunnerToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      LaunchChildForm(new FrmQueryRunner());
+    }
   }
 }

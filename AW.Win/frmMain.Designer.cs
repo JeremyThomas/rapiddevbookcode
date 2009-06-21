@@ -31,9 +31,11 @@ namespace AW.Winforms.Helpers
           this.components = new System.ComponentModel.Container();
           this.menuStrip1 = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.fileToolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
+          this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.mostRecentlyUsedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+          this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.searchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.ordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.orders2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,18 +45,17 @@ namespace AW.Winforms.Helpers
           this.utilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.vacationBonusUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
-          this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
+          this.adHocLINQQueryRunnerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
           this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.tileHorizontalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.arrangeIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-          this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-          this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
           this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+          this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
+          this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
           this.menuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
           this.SuspendLayout();
@@ -86,13 +87,6 @@ namespace AW.Winforms.Helpers
           this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
           this.fileToolStripMenuItem.Text = "&File";
           // 
-          // exitToolStripMenuItem
-          // 
-          this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-          this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-          this.exitToolStripMenuItem.Text = "E&xit";
-          this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-          // 
           // fileToolStripMenuItemOpen
           // 
           this.fileToolStripMenuItemOpen.Name = "fileToolStripMenuItemOpen";
@@ -101,11 +95,28 @@ namespace AW.Winforms.Helpers
           this.fileToolStripMenuItemOpen.Text = "&Open";
           this.fileToolStripMenuItemOpen.Click += new System.EventHandler(this.fileToolStripMenuItemOpen_Click);
           // 
+          // toolStripSeparator2
+          // 
+          this.toolStripSeparator2.Name = "toolStripSeparator2";
+          this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+          // 
           // mostRecentlyUsedToolStripMenuItem
           // 
           this.mostRecentlyUsedToolStripMenuItem.Name = "mostRecentlyUsedToolStripMenuItem";
           this.mostRecentlyUsedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
           this.mostRecentlyUsedToolStripMenuItem.Text = "Most Recently Used";
+          // 
+          // toolStripSeparator1
+          // 
+          this.toolStripSeparator1.Name = "toolStripSeparator1";
+          this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+          // 
+          // exitToolStripMenuItem
+          // 
+          this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+          this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+          this.exitToolStripMenuItem.Text = "E&xit";
+          this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
           // 
           // searchToolStripMenuItem
           // 
@@ -157,7 +168,8 @@ namespace AW.Winforms.Helpers
           // 
           this.utilitiesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.vacationBonusUtilityToolStripMenuItem,
-            this.traceToolStripMenuItem});
+            this.traceToolStripMenuItem,
+            this.adHocLINQQueryRunnerToolStripMenuItem});
           this.utilitiesToolStripMenuItem.Name = "utilitiesToolStripMenuItem";
           this.utilitiesToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
           this.utilitiesToolStripMenuItem.Text = "&Utilities";
@@ -165,28 +177,23 @@ namespace AW.Winforms.Helpers
           // vacationBonusUtilityToolStripMenuItem
           // 
           this.vacationBonusUtilityToolStripMenuItem.Name = "vacationBonusUtilityToolStripMenuItem";
-          this.vacationBonusUtilityToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+          this.vacationBonusUtilityToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
           this.vacationBonusUtilityToolStripMenuItem.Text = "Vacation Bonus Utility ...";
           this.vacationBonusUtilityToolStripMenuItem.Click += new System.EventHandler(this.vacationBonusUtilityToolStripMenuItem_Click);
           // 
           // traceToolStripMenuItem
           // 
           this.traceToolStripMenuItem.Name = "traceToolStripMenuItem";
-          this.traceToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+          this.traceToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
           this.traceToolStripMenuItem.Text = "Trace...";
           this.traceToolStripMenuItem.Click += new System.EventHandler(this.traceToolStripMenuItem_Click);
           // 
-          // openFileDialogProject
+          // adHocLINQQueryRunnerToolStripMenuItem
           // 
-          this.openFileDialogProject.FileName = "AQDRenamedEntities.lgp";
-          this.openFileDialogProject.Filter = "\"LLBL Project Files\"|*.lgp";
-          // 
-          // mruHandlerProject
-          // 
-          this.mruHandlerProject.AutoSeparators = true;
-          this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
-          this.mruHandlerProject.StorageName = "mru";
-          this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
+          this.adHocLINQQueryRunnerToolStripMenuItem.Name = "adHocLINQQueryRunnerToolStripMenuItem";
+          this.adHocLINQQueryRunnerToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+          this.adHocLINQQueryRunnerToolStripMenuItem.Text = "AdHoc LINQ Query Runner";
+          this.adHocLINQQueryRunnerToolStripMenuItem.Click += new System.EventHandler(this.adHocLINQQueryRunnerToolStripMenuItem_Click);
           // 
           // windowsMenu
           // 
@@ -237,6 +244,11 @@ namespace AW.Winforms.Helpers
           this.arrangeIconsToolStripMenuItem.Text = "&Arrange Icons";
           this.arrangeIconsToolStripMenuItem.Click += new System.EventHandler(this.ArrangeIconsToolStripMenuItem_Click);
           // 
+          // toolStripSeparator3
+          // 
+          this.toolStripSeparator3.Name = "toolStripSeparator3";
+          this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
+          // 
           // reOpenWindowsToolStripMenuItem
           // 
           this.reOpenWindowsToolStripMenuItem.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.ReopenWindows;
@@ -245,20 +257,18 @@ namespace AW.Winforms.Helpers
           this.reOpenWindowsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
           this.reOpenWindowsToolStripMenuItem.Text = "Reopen Windows";
           // 
-          // toolStripSeparator1
+          // openFileDialogProject
           // 
-          this.toolStripSeparator1.Name = "toolStripSeparator1";
-          this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+          this.openFileDialogProject.FileName = "AQDRenamedEntities.lgp";
+          this.openFileDialogProject.Filter = "\"LLBL Project Files\"|*.lgp|C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)" +
+              "|*.* ";
           // 
-          // toolStripSeparator2
+          // mruHandlerProject
           // 
-          this.toolStripSeparator2.Name = "toolStripSeparator2";
-          this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
-          // 
-          // toolStripSeparator3
-          // 
-          this.toolStripSeparator3.Name = "toolStripSeparator3";
-          this.toolStripSeparator3.Size = new System.Drawing.Size(165, 6);
+          this.mruHandlerProject.AutoSeparators = true;
+          this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
+          this.mruHandlerProject.StorageName = "mru";
+          this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
           // 
           // frmMain
           // 
@@ -313,5 +323,6 @@ namespace AW.Winforms.Helpers
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem adHocLINQQueryRunnerToolStripMenuItem;
     }
 }

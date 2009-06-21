@@ -38,7 +38,6 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridViewEnumerable = new System.Windows.Forms.DataGridView();
       this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
-      this.BindingSourceScript = new System.Windows.Forms.BindingSource(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.ObjectBrowser = new sliver.Windows.Forms.StateBrowser();
       this.splitContainerValues = new System.Windows.Forms.SplitContainer();
@@ -61,6 +60,7 @@
       this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
       this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.dataGridViewScript = new System.Windows.Forms.DataGridView();
+      this.BindingSourceScript = new System.Windows.Forms.BindingSource(this.components);
       this.bindingNavigatorScript = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
@@ -93,6 +93,10 @@
       this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.tabControl1 = new System.Windows.Forms.TabControl();
+      this.contextMenuStripTab = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.toolStripMenuItemSave = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
       this.tabPageBrowser = new System.Windows.Forms.TabPage();
       this.tabPageScript = new System.Windows.Forms.TabPage();
       this.splitContainerScript = new System.Windows.Forms.SplitContainer();
@@ -102,7 +106,6 @@
       this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.BindingSourceScript)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
@@ -113,9 +116,11 @@
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
       this.bindingNavigator1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScript)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.BindingSourceScript)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorScript)).BeginInit();
       this.bindingNavigatorScript.SuspendLayout();
       this.tabControl1.SuspendLayout();
+      this.contextMenuStripTab.SuspendLayout();
       this.tabPageBrowser.SuspendLayout();
       this.tabPageScript.SuspendLayout();
       this.splitContainerScript.Panel1.SuspendLayout();
@@ -163,10 +168,6 @@
       this.dataGridViewEnumerable.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
       this.dataGridViewEnumerable.Size = new System.Drawing.Size(551, 236);
       this.dataGridViewEnumerable.TabIndex = 1;
-      // 
-      // BindingSourceScript
-      // 
-      this.BindingSourceScript.AllowNew = false;
       // 
       // splitContainer1
       // 
@@ -398,6 +399,7 @@
       dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
       this.dataGridViewScript.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
       this.dataGridViewScript.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridViewScript.ContextMenuStrip = this.contextMenuStrip1;
       this.dataGridViewScript.DataSource = this.BindingSourceScript;
       dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
       dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
@@ -422,10 +424,15 @@
       this.dataGridViewScript.Size = new System.Drawing.Size(1017, 251);
       this.dataGridViewScript.TabIndex = 3;
       // 
+      // BindingSourceScript
+      // 
+      this.BindingSourceScript.AllowNew = false;
+      // 
       // bindingNavigatorScript
       // 
       this.bindingNavigatorScript.AddNewItem = this.bindingNavigatorAddNewItem;
       this.bindingNavigatorScript.BindingSource = this.BindingSourceScript;
+      this.bindingNavigatorScript.ContextMenuStrip = this.contextMenuStrip1;
       this.bindingNavigatorScript.CountItem = this.bindingNavigatorCountItem;
       this.bindingNavigatorScript.DeleteItem = this.bindingNavigatorDeleteItem;
       this.bindingNavigatorScript.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -687,6 +694,7 @@
       // 
       // tabControl1
       // 
+      this.tabControl1.ContextMenuStrip = this.contextMenuStripTab;
       this.tabControl1.Controls.Add(this.tabPageBrowser);
       this.tabControl1.Controls.Add(this.tabPageScript);
       this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -695,6 +703,33 @@
       this.tabControl1.SelectedIndex = 0;
       this.tabControl1.Size = new System.Drawing.Size(1031, 562);
       this.tabControl1.TabIndex = 1;
+      // 
+      // contextMenuStripTab
+      // 
+      this.contextMenuStripTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemSave,
+            this.toolStripMenuItemOpen,
+            this.toolStripMenuItemClose});
+      this.contextMenuStripTab.Name = "contextMenuStripTab";
+      this.contextMenuStripTab.Size = new System.Drawing.Size(112, 70);
+      // 
+      // toolStripMenuItemSave
+      // 
+      this.toolStripMenuItemSave.Name = "toolStripMenuItemSave";
+      this.toolStripMenuItemSave.Size = new System.Drawing.Size(111, 22);
+      this.toolStripMenuItemSave.Text = "Save";
+      // 
+      // toolStripMenuItemOpen
+      // 
+      this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
+      this.toolStripMenuItemOpen.Size = new System.Drawing.Size(111, 22);
+      this.toolStripMenuItemOpen.Text = "Open";
+      // 
+      // toolStripMenuItemClose
+      // 
+      this.toolStripMenuItemClose.Name = "toolStripMenuItemClose";
+      this.toolStripMenuItemClose.Size = new System.Drawing.Size(111, 22);
+      this.toolStripMenuItemClose.Text = "Close";
       // 
       // tabPageBrowser
       // 
@@ -791,7 +826,6 @@
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmEntityViewer_FormClosing);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.BindingSourceScript)).EndInit();
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       this.splitContainer1.ResumeLayout(false);
@@ -804,10 +838,12 @@
       this.bindingNavigator1.ResumeLayout(false);
       this.bindingNavigator1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScript)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.BindingSourceScript)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorScript)).EndInit();
       this.bindingNavigatorScript.ResumeLayout(false);
       this.bindingNavigatorScript.PerformLayout();
       this.tabControl1.ResumeLayout(false);
+      this.contextMenuStripTab.ResumeLayout(false);
       this.tabPageBrowser.ResumeLayout(false);
       this.tabPageScript.ResumeLayout(false);
       this.splitContainerScript.Panel1.ResumeLayout(false);
@@ -885,6 +921,10 @@
     private System.Windows.Forms.ToolStripComboBox toolStripComboBoxClipboardCopyMode;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+    private System.Windows.Forms.ContextMenuStrip contextMenuStripTab;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSave;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpen;
+    private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemClose;
 
   }
 }

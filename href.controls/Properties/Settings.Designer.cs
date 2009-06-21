@@ -57,5 +57,17 @@ namespace AW.Winforms.Helpers.Properties {
                 this["FrmEntityViewerSplitterDistance"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle QueryRunnerSizeAndLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["QueryRunnerSizeAndLocation"]));
+            }
+            set {
+                this["QueryRunnerSizeAndLocation"] = value;
+            }
+        }
     }
 }

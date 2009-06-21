@@ -100,8 +100,8 @@ namespace AW.Winforms.Helpers.EntityViewer
       //        select new {ed.ElementTargetName, ed.ElementName, peg.Name};
 
       AsmHelper myAsmHelper;
-      var query = CreateQuery(textBoxScript.Text, out myAsmHelper);
-      BindEnumerable(query.QueryProject(TheProject), BindingSourceScript);
+      var query = AWHelper.CreateQuery(textBoxScript.Text, out myAsmHelper);
+      AWHelper.BindEnumerable(query.QueryProject(TheProject), BindingSourceScript);
       myAsmHelper.Dispose();
       //bindingSourceEnumerable.DataSource = GetEntityTableMapping(TheProject);
     }
@@ -125,19 +125,11 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void toolStripButtonRunPlugin_Click(object sender, EventArgs e)
     {
-      PluginBase pluginToTest = new RenameRelatedFieldsPlugin {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack)ApplicationOutputLogLine}}};
+      PluginBase pluginToTest = new RenameRelatedFieldsPlugin {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack)AWHelper.ApplicationOutputLogLine}}};
       //PluginBase pluginToTest = new RefreshCustomProperties {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack) ApplicationOutputLogLine}}};
       pluginToTest.Entities.AddRange(TheProject.Entities);
       pluginToTest.GetConfigurationControl();
       pluginToTest.Execute();
-    }
-
-    private static void ApplicationOutputLogLine(string lineToLog, string source, bool isVerboseMessage, bool appendNewLine)
-    {
-      if (appendNewLine)
-        Trace.WriteLine(lineToLog);
-      else
-        Trace.Write(lineToLog);
     }
 
     private void toolStripButtonViewReport_Click(object sender, EventArgs e)
@@ -145,12 +137,6 @@ namespace AW.Winforms.Helpers.EntityViewer
       var frm = new FrmReportViewer {MdiParent = MdiParent, WindowState = FormWindowState.Normal};
       frm.OpenDataSet(BindingSourceScript, false);
       frm.Show();
-    }
-
-    private static IQueryScript CreateQuery(string scriptText, out AsmHelper helper)
-    {
-      helper = new AsmHelper(CSScript.LoadCode(scriptText, null, true));
-      return (IQueryScript)helper.CreateObject("Script");
     }
 
     private void ObjectBrowser_NodeSelected(object sender, EventArgs e)
@@ -168,57 +154,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private bool ShowEnumerable(IEnumerable enumerable)
     {
-      return BindEnumerable(enumerable, bindingSourceEnumerable);
-    }
-
-    private static bool BindEnumerable(IEnumerable enumerable, BindingSource bindingSource)
-    {
-      var showenEnumerable = enumerable != null && !(enumerable is string) && !(enumerable.ToString() == "System.Collections.Hashtable+KeyCollection");
-
-      if (showenEnumerable)
-        try
-        {
-          showenEnumerable = enumerable is IList;
-          if (showenEnumerable)
-          {
-            var objectListView = new ObjectListView((IList)enumerable);
-            showenEnumerable = objectListView.ItemType != null;
-            if (showenEnumerable)
-            {
-              showenEnumerable = objectListView.ItemType != typeof (string);
-              if (showenEnumerable)
-                bindingSource.DataSource = objectListView;
-            }
-            else
-              bindingSource.DataSource = enumerable;
-          }
-          else
-          {
-            var etype = enumerable.GetType();
-            if (etype.IsGenericType)
-            {
-              var queryable = enumerable.AsQueryable();
-              showenEnumerable = queryable.ElementType != typeof (string);
-              bindingSource.DataSource = showenEnumerable ? new ObjectListView(new BindingSource(queryable, null)) : null;
-            }
-            else
-              bindingSource.DataSource = new ObjectListView(new BindingSource(enumerable, null));
-          }
-        }
-        catch (Exception)
-        {
-          try
-          {
-            bindingSource.DataSource = enumerable;
-          }
-          catch (Exception)
-          {
-            bindingSource.DataSource = null;
-          }
-
-          showenEnumerable = bindingSource.DataSource != null;
-        }
-      return showenEnumerable;
+      return AWHelper.BindEnumerable(enumerable, bindingSourceEnumerable);
     }
 
     private void saveToolStripButton_Click(object sender, EventArgs e)
@@ -228,7 +164,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void copyToolStripButton_Click(object sender, EventArgs e)
     {
-      CopyEntireDataGridViewToClipboard(dataGridViewEnumerable);
+      AWHelper.CopyEntireDataGridViewToClipboard(dataGridViewEnumerable);
     }
 
     private void printToolStripButton_Click(object sender, EventArgs e)
@@ -240,13 +176,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void copyToolStripButtonQuery_Click(object sender, EventArgs e)
     {
-      CopyEntireDataGridViewToClipboard(dataGridViewScript);
-    }
-
-    private static void CopyEntireDataGridViewToClipboard(DataGridView dataGridView)
-    {
-      dataGridView.SelectAll();
-      Clipboard.SetDataObject(dataGridView.GetClipboardContent());
+      AWHelper.CopyEntireDataGridViewToClipboard(dataGridViewScript);
     }
 
     private void toolStripComboBoxClipboardCopyMode_SelectedIndexChanged(object sender, EventArgs e)
