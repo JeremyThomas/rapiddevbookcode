@@ -34,14 +34,15 @@
       this.toolStripMenuItemSave = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
-      this.tabPageSample = new System.Windows.Forms.TabPage();
-      this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-      this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
       this.closeAllButThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.tabPageSample = new System.Windows.Forms.TabPage();
       this.contextMenuStripBlank = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.queryRunner1 = new AW.Winforms.Helpers.QueryRunner.QueryRunner();
       this.blankToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+      this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+      this.queryRunner1 = new AW.Winforms.Helpers.QueryRunner.QueryRunner();
+      this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabControl.SuspendLayout();
       this.contextMenuStripTab.SuspendLayout();
       this.tabPageSample.SuspendLayout();
@@ -66,9 +67,10 @@
             this.toolStripMenuItemOpen,
             this.toolStripMenuItemClose,
             this.closeAllButThisToolStripMenuItem,
-            this.saveAsToolStripMenuItem});
+            this.saveAsToolStripMenuItem,
+            this.newToolStripMenuItem});
       this.contextMenuStripTab.Name = "contextMenuStripTab";
-      this.contextMenuStripTab.Size = new System.Drawing.Size(167, 114);
+      this.contextMenuStripTab.Size = new System.Drawing.Size(167, 158);
       this.contextMenuStripTab.Text = "Save As...";
       this.contextMenuStripTab.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTab_Opening);
       // 
@@ -93,27 +95,6 @@
       this.toolStripMenuItemClose.Text = "Close";
       this.toolStripMenuItemClose.Click += new System.EventHandler(this.toolStripMenuItemClose_Click);
       // 
-      // tabPageSample
-      // 
-      this.tabPageSample.Controls.Add(this.queryRunner1);
-      this.tabPageSample.Location = new System.Drawing.Point(4, 22);
-      this.tabPageSample.Name = "tabPageSample";
-      this.tabPageSample.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageSample.Size = new System.Drawing.Size(910, 598);
-      this.tabPageSample.TabIndex = 0;
-      this.tabPageSample.Text = "Sample";
-      this.tabPageSample.ToolTipText = "Sample";
-      this.tabPageSample.UseVisualStyleBackColor = true;
-      // 
-      // openFileDialog
-      // 
-      this.openFileDialog.DefaultExt = "cs";
-      this.openFileDialog.Filter = "C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)|*.* ";
-      // 
-      // saveFileDialog
-      // 
-      this.saveFileDialog.Filter = "C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)|*.* ";
-      // 
       // closeAllButThisToolStripMenuItem
       // 
       this.closeAllButThisToolStripMenuItem.Name = "closeAllButThisToolStripMenuItem";
@@ -128,12 +109,39 @@
       this.saveAsToolStripMenuItem.Text = "Save As...";
       this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
       // 
+      // tabPageSample
+      // 
+      this.tabPageSample.Controls.Add(this.queryRunner1);
+      this.tabPageSample.Location = new System.Drawing.Point(4, 22);
+      this.tabPageSample.Name = "tabPageSample";
+      this.tabPageSample.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageSample.Size = new System.Drawing.Size(910, 598);
+      this.tabPageSample.TabIndex = 0;
+      this.tabPageSample.Text = "Sample";
+      this.tabPageSample.ToolTipText = "Sample";
+      this.tabPageSample.UseVisualStyleBackColor = true;
+      // 
       // contextMenuStripBlank
       // 
       this.contextMenuStripBlank.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.blankToolStripMenuItem});
       this.contextMenuStripBlank.Name = "contextMenuStripBlank";
       this.contextMenuStripBlank.Size = new System.Drawing.Size(111, 26);
+      // 
+      // blankToolStripMenuItem
+      // 
+      this.blankToolStripMenuItem.Name = "blankToolStripMenuItem";
+      this.blankToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+      this.blankToolStripMenuItem.Text = "blank";
+      // 
+      // openFileDialog
+      // 
+      this.openFileDialog.DefaultExt = "cs";
+      this.openFileDialog.Filter = "C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)|*.* ";
+      // 
+      // saveFileDialog
+      // 
+      this.saveFileDialog.Filter = "C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)|*.* ";
       // 
       // queryRunner1
       // 
@@ -144,11 +152,12 @@
       this.queryRunner1.Size = new System.Drawing.Size(904, 592);
       this.queryRunner1.TabIndex = 0;
       // 
-      // blankToolStripMenuItem
+      // newToolStripMenuItem
       // 
-      this.blankToolStripMenuItem.Name = "blankToolStripMenuItem";
-      this.blankToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-      this.blankToolStripMenuItem.Text = "blank";
+      this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+      this.newToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+      this.newToolStripMenuItem.Text = "New";
+      this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
       // 
       // FrmQueryRunner
       // 
@@ -184,5 +193,6 @@
     private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
     private System.Windows.Forms.ContextMenuStrip contextMenuStripBlank;
     private System.Windows.Forms.ToolStripMenuItem blankToolStripMenuItem;
+    private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
   }
 }

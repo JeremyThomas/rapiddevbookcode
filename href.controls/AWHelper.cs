@@ -158,12 +158,6 @@ namespace AW.Winforms.Helpers
         Trace.Write(lineToLog);
     }
 
-    public static IQueryScript CreateQuery(string scriptText, out AsmHelper helper)
-    {
-      helper = new AsmHelper(CSScript.LoadCode(scriptText, null, true));
-      return (IQueryScript)helper.CreateObject("Script");
-    }
-
     public static bool BindEnumerable(IEnumerable enumerable, BindingSource bindingSource)
     {
       var showenEnumerable = enumerable != null && !(enumerable is string) && !(enumerable.ToString() == "System.Collections.Hashtable+KeyCollection");
@@ -174,11 +168,11 @@ namespace AW.Winforms.Helpers
           showenEnumerable = enumerable is IList;
           if (showenEnumerable)
           {
-            var objectListView = new ObjectListView((IList)enumerable);
+            var objectListView = new ObjectListView((IList) enumerable);
             showenEnumerable = objectListView.ItemType != null;
             if (showenEnumerable)
             {
-              showenEnumerable = objectListView.ItemType != typeof (string);
+              showenEnumerable = objectListView.ItemType != typeof (string); //strings just show the length
               if (showenEnumerable)
                 bindingSource.DataSource = objectListView;
             }
@@ -191,11 +185,14 @@ namespace AW.Winforms.Helpers
             if (etype.IsGenericType)
             {
               var queryable = enumerable.AsQueryable();
-              showenEnumerable = queryable.ElementType != typeof (string);
+              showenEnumerable = queryable.ElementType != typeof(string);
               bindingSource.DataSource = showenEnumerable ? new ObjectListView(new BindingSource(queryable, null)) : null;
             }
             else
+            {
               bindingSource.DataSource = new ObjectListView(new BindingSource(enumerable, null));
+              showenEnumerable = bindingSource.Count>0;
+            }
           }
         }
         catch (Exception)
@@ -219,5 +216,104 @@ namespace AW.Winforms.Helpers
       dataGridView.SelectAll();
       Clipboard.SetDataObject(dataGridView.GetClipboardContent());
     }
+
+    #region Dynamic Instantiation
+
+    /// <summary>
+    /// Creates an instance of type if type is an ancestorType or a descendant
+    /// </summary>
+    /// <param name="ancestorType">Type of the ancestor.</param>
+    /// <param name="type">The type.</param>
+    /// <param name="args">The args.</param>
+    /// <returns>The Instance</returns>
+    public static object CreateInstanceOf(Type ancestorType, Type type, params Object[] args)
+    {
+      return ancestorType.IsAssignableFrom(type) ? Activator.CreateInstance(type, args) : null;
+    }
+
+    public static Form CreateForm(Type formType, params Object[] args)
+    {
+      return CreateInstanceOf(typeof (Form), formType, args) as Form;
+    }
+
+    public static void ShowForm(Type formType, bool modal)
+    {
+      var aForm = CreateForm(formType);
+      if (aForm != null)
+        if (modal)
+          aForm.ShowDialog();
+        else
+          aForm.Show();
+    }
+
+    public static void ShowDialog(Type formType)
+    {
+      ShowForm(formType, true);
+    }
+
+    public static Form LaunchChildForm(Type formType, params Object[] args)
+    {
+      return formType != null ? Application.OpenForms[0].LaunchChildForm(formType, args) : null;
+    }
+
+    public static Form LaunchChildForm(this Form mdiParent, Type childFormType, params Object[] args)
+    {
+      if (childFormType == null) throw new ArgumentNullException("childFormType");
+      Form childForm = null;
+      foreach (var myForm in mdiParent.MdiChildren)
+        if (myForm.GetType() == childFormType)
+        {
+          childForm = myForm;
+          break;
+        }
+      if (childForm != null)
+        childForm.BringToFront();
+      else
+      {
+        childForm = CreateForm(childFormType, args);
+        ShowChildForm(childForm, mdiParent);
+      }
+      return childForm;
+    }
+
+    public static Form GetMdiParent()
+    {
+      //foreach (Form form in Application.OpenForms)
+      //{
+      //  if (form.IsMdiContainer)
+      //    return form;
+      //}
+      //return null;
+
+      return (from form in Application.OpenForms.Cast<Form>()
+               where form.IsMdiContainer
+               select form).FirstOrDefault();
+    }
+
+    public static int GetIndexOfForm(Form form)
+    {
+      for (var i = 0; i < Application.OpenForms.Count; i++)
+      {
+        if (Application.OpenForms[i] == form)
+          return i;
+      }
+      return -1;
+    }
+
+    public static void ShowChildForm(Form childForm, Form mdiParent)
+    {
+      if (mdiParent == null) throw new ArgumentNullException("mdiParent");
+
+      childForm.MdiParent = mdiParent;
+      childForm.WindowState = FormWindowState.Normal;
+      childForm.Show();
+    }
+
+    public static void ShowChildForm(Form childForm)
+    {
+      ShowChildForm(childForm, GetMdiParent());
+    }
+
+    #endregion
   }
 }

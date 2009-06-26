@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Properties;
 
@@ -26,12 +21,10 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void FrmQueryRunner_Load(object sender, EventArgs e)
     {
-
     }
 
     private void contextMenuStripTab_Opening(object sender, CancelEventArgs e)
     {
-
     }
 
     private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
@@ -39,39 +32,46 @@ namespace AW.Winforms.Helpers.QueryRunner
       var dr = openFileDialog.ShowDialog();
 
       if (dr == DialogResult.OK)
-      {
         DoFileOpen(openFileDialog.FileName);
-      }
     }
 
     public void DoFileOpen(string fileName)
     {
       var fileKeyIndex = tabControl.TabPages.IndexOfKey(fileName);
-      if (fileKeyIndex>-1)
+      if (fileKeyIndex > -1)
       {
         tabControl.SelectedTab = tabControl.TabPages[fileKeyIndex];
         return;
       }
+      var queryRunner = AddNew(fileName);
+      queryRunner.LoadFile(fileName);
+      if (tabControl.TabPages[0].ToolTipText == "Sample")
+        tabControl.TabPages.RemoveAt(0);
+    }
+
+    private QueryRunner AddNew(string fileName)
+    {
       tabControl.TabPages.Add(fileName, Path.GetFileNameWithoutExtension(fileName));
       var queryRunner = new QueryRunner();
       var tp = tabControl.TabPages[fileName];
       tp.ToolTipText = fileName;
       tp.Controls.Add(queryRunner);
       queryRunner.Dock = DockStyle.Fill;
-      queryRunner.LoadFile(fileName);
       tabControl.SelectedTab = tp;
-      if (tabControl.TabPages[0].ToolTipText=="Sample")
-        tabControl.TabPages.RemoveAt(0);
+      return queryRunner;
+    }
+
+    private void newToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      AddNew("Query" + tabControl.TabPages.Count);
     }
 
     private void toolStripMenuItemSave_Click(object sender, EventArgs e)
     {
       if (File.Exists(tabControl.SelectedTab.ToolTipText))
-      {
         SaveScript(tabControl.SelectedTab.ToolTipText);
-      }
       else
-        saveAsToolStripMenuItem_Click(sender, e); 
+        saveAsToolStripMenuItem_Click(sender, e);
     }
 
     private QueryRunner CurrentQueryRunner()
@@ -91,7 +91,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       foreach (TabPage page in tabControl.TabPages)
       {
         if (page != tabControl.SelectedTab)
-        tabControl.TabPages.Remove(page);
+          tabControl.TabPages.Remove(page);
       }
     }
 
@@ -100,7 +100,11 @@ namespace AW.Winforms.Helpers.QueryRunner
       saveFileDialog.FileName = tabControl.SelectedTab.ToolTipText;
       var dr = saveFileDialog.ShowDialog();
       if (dr == DialogResult.OK)
+      {
         SaveScript(saveFileDialog.FileName);
+        tabControl.SelectedTab.ToolTipText = saveFileDialog.FileName;
+        tabControl.SelectedTab.Text = Path.GetFileNameWithoutExtension(saveFileDialog.FileName);
+      }
     }
 
     private void SaveScript(string filename)

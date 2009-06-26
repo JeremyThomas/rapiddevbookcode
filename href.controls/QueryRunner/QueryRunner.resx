@@ -119,6 +119,7 @@
   </resheader>
   <data name="textBoxScript.Text" xml:space="preserve">
     <value>//css_ref SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll;
+//css_ref SD.LLBLGen.Pro.LinqSupportClasses.NET35;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -129,34 +130,35 @@ using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, ILinqToLLBLQueryScript
 {
-    public IEnumerable QueryProject(LinqMetaData metaData)
-    {
-        var customerlist = from customer in (metaData).Customer
-                         from customerAddress in customer.CustomerAddresses
-                         select new
-                                  {
-                                    customerAddress.Address.AddressLine1,
-                                    customerAddress.Address.AddressLine2,
-                                    customerAddress.Address.City,
-                                    AddressType = customerAddress.AddressType.Name,
-                                    customer.Individual.Contact.Title,
-                                    customer.Individual.Contact.FirstName,
-                                    customer.Individual.Contact.MiddleName,
-                                    customer.Individual.Contact.LastName,
-                                    customer.Individual.Contact.Suffix,
-                                    customer.Individual.Contact.EmailAddress,
-                                    customer.Individual.Contact.EmailPromotion,
-                                    CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
-                                    StateProvinceName = customerAddress.Address.StateProvince.Name,
-                                    customer.CustomerID
-                                  };
-      return customerlist.Take(5);
-    }
+  public IEnumerable Query()
+  {
+    //Copy of CustomerQueries.GetCustomerListAnonymousLinq
+    var customerlist = from customer in MetaSingletons.MetaData.Customer
+                       from customerAddress in customer.CustomerAddresses
+                       select new
+                                {
+                                  customerAddress.Address.AddressLine1,
+                                  customerAddress.Address.AddressLine2,
+                                  customerAddress.Address.City,
+                                  AddressType = customerAddress.AddressType.Name,
+                                  customer.Individual.Contact.Title,
+                                  customer.Individual.Contact.FirstName,
+                                  customer.Individual.Contact.MiddleName,
+                                  customer.Individual.Contact.LastName,
+                                  customer.Individual.Contact.Suffix,
+                                  customer.Individual.Contact.EmailAddress,
+                                  customer.Individual.Contact.EmailPromotion,
+                                  CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
+                                  StateProvinceName = customerAddress.Address.StateProvince.Name,
+                                  customer.CustomerID
+                                };
+    return customerlist.Take(5);
+  }
 
 }</value>
   </data>
-  <metadata name="contextMenuStripBlank.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>331, 17</value>
+  <metadata name="contextMenuStripGrid.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>497, 17</value>
   </metadata>
   <metadata name="BindingSourceScript.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>181, 17</value>
@@ -177,6 +179,9 @@ public class Script : MarshalByRefObject, ILinqToLLBLQueryScript
         GfxviDf8XxNr/L8y2oR0A0hO++RqAAAkI9ieo+gjUwAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="contextMenuStripBlank.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>331, 17</value>
+  </metadata>
   <data name="bindingNavigatorDeleteItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -278,6 +283,21 @@ public class Script : MarshalByRefObject, ILinqToLLBLQueryScript
         6auUqlU/KwBZJV4skWUuvMmYV8b+Ls6jQQ81DfryO3KtfUoA/p3810G37T3VJ3TlARdvukhldjANeemx
         z2B8MS0mq80GyySHj98rD2jQOpXbtgrVNprRnO2h5lQX1Sc7leYODh27W3nN9/WZDnroDx0A5wwhdtmt
         AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonBrowse.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAgxJREFUOE+lkvtL
+        U2EYx+0PEbtpFwnBKPGKiJImGP0gYhIYs1E5GF5gIxkpA00JRSmMEF0ohMh+GaRWYlqabMVcNdS2QpaI
+        VqiDIYhk397vA6fXhCjyhYdzeM/5fp7vczkAdeL2cwho7v/wWzT1zcN+Pwhr51uY2/y41PQaF+wzKKiZ
+        QvaN58g0jyLd5KEUcQbg+84P/Cm2tncQjW3j68YWIqubCC3FcOJc478BAuGoZM6zvoRnakXEruEIjhc4
+        /g5gZop9c+voGAyLbQIfeBZxLL9BA1jzXvuGbWamuKh+GmmVbswE19A59FEBbmoAG7YbsLtm2mZmiml9
+        cvabNDwpz6YB7LYBoMXCumkJr7LOmnnHzBQ/9X2Bo2cOibm1GsBREbAQiYmw/8lnuCeWkVzcgnZlnw1j
+        3HV/wuNXK6i/9x5Hc6wawDlTXHbLJ+LZUBQPRyKwdQdxutwl1h+NLXHh5Ht1ewBHsiwawCW57HyDAfWR
+        dvl0uhZQ1eqX8aVc7EKLqrum651ATLf9OJx5XQM4KmY0xPzZ0hFAiQJnXB0WwME0E3IsL5B17ZlADqWb
+        NYDrOepdlcysmTWWOrxqbceRWtaLk0VO1XW72D5Vckd2gMBfq8zdpmUG62NJvKM4+XyziDk24xmfWoGE
+        s1c0gHPmbrPTpHNJKOCo2G1mZs20zcwUJ5yp1AB5+8/zEwgF5GMVDxh4AAAAAElFTkSuQmCC
 </value>
   </data>
 </root>

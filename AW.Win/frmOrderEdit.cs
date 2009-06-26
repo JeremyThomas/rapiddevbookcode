@@ -140,8 +140,7 @@ namespace AW.Winforms.Helpers
 
     private void toolStripButtonViewEntity_Click(object sender, EventArgs e)
     {
-      var frm = new FrmEntityViewer(_order);
-      ((frmMain) MdiParent).LaunchChildForm(frm);
+      ((frmMain)MdiParent).LaunchChildForm(typeof(FrmEntityViewer), _order);
     }
 
     private void toolStripButtonRefetch_Click(object sender, EventArgs e)

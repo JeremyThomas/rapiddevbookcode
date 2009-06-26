@@ -69,5 +69,41 @@ namespace AW.Winforms.Helpers.Properties {
                 this["QueryRunnerSizeAndLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowDataTypes {
+            get {
+                return ((bool)(this["ShowDataTypes"]));
+            }
+            set {
+                this["ShowDataTypes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowNonPublicMembers {
+            get {
+                return ((bool)(this["ShowNonPublicMembers"]));
+            }
+            set {
+                this["ShowNonPublicMembers"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowStaticMembers {
+            get {
+                return ((bool)(this["ShowStaticMembers"]));
+            }
+            set {
+                this["ShowStaticMembers"] = value;
+            }
+        }
     }
 }

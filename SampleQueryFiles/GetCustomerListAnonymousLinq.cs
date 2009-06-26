@@ -1,4 +1,5 @@
 //css_ref SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll;
+//css_ref SD.LLBLGen.Pro.LinqSupportClasses.NET35;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, ILinqToLLBLQueryScript
 {
-  public IEnumerable QueryProject(LinqMetaData metaData)
+  public IEnumerable Query()
   {
     //Copy of CustomerQueries.GetCustomerListAnonymousLinq
-    var customerlist = from customer in (metaData).Customer
+    var customerlist = from customer in MetaSingletons.MetaData.Customer
                        from customerAddress in customer.CustomerAddresses
                        select new
                                 {

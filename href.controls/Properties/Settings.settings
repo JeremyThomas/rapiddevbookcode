@@ -14,5 +14,14 @@
     <Setting Name="QueryRunnerSizeAndLocation" Type="System.Drawing.Rectangle" Scope="User">
       <Value Profile="(Default)">0, 0, 0, 0</Value>
     </Setting>
+    <Setting Name="ShowDataTypes" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShowNonPublicMembers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShowStaticMembers" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

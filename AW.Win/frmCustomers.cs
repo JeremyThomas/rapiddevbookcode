@@ -90,8 +90,7 @@ namespace AW.Winforms.Helpers
 
     private void view()
     {
-      var frm = new FrmEntityViewer(bindingSourceCustomerList.Current);
-      ((frmMain)MdiParent).LaunchChildForm(frm);
+      ((frmMain)MdiParent).LaunchChildForm(typeof(FrmEntityViewer),bindingSourceCustomerList.Current);
     }
 
     private void dgvResults_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

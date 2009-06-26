@@ -130,15 +130,13 @@ namespace AW.Winforms.Helpers
     private void newOrderToolStripMenuItem_Click(object sender, EventArgs e)
     {
       var Order = new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810};
-      var frm = new frmOrderEdit(Order);
-      ((frmMain) MdiParent).LaunchChildForm(frm);
+      ((frmMain)MdiParent).LaunchChildForm(typeof(SalesOrderHeaderEntity), Order);
     }
 
     private void dgResults_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
       var Order = salesOrderHeaderEntityDataGridView.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
-      var frm = new frmOrderEdit(Order);
-      ((frmMain) MdiParent).LaunchChildForm(frm);
+      ((frmMain)MdiParent).LaunchChildForm(typeof(frmOrderEdit), Order);
     }
 
     /// <summary>

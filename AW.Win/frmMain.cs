@@ -57,72 +57,51 @@ namespace AW.Winforms.Helpers
             Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
     }
 
-    //private void LaunchChildForm(Form ChildForm)
-    //{
-    //    ChildForm.MdiParent = this;
-    //    ChildForm.WindowState = FormWindowState.Normal;
-    //    ChildForm.Show();
-    //}
-    public Form LaunchChildForm(Form childForm)
-    {
-      if (childForm == null) throw new ArgumentNullException("ChildForm");
-      var formAlreadyExists = false;
-      foreach (var myForm in MdiChildren)
-        if (myForm.GetType() == childForm.GetType())
-        {
-          formAlreadyExists = true;
-          childForm = myForm;
-          break;
-        }
-      if (formAlreadyExists)
-        childForm.BringToFront();
-      else
-      {
-        childForm.MdiParent = this;
-        childForm.WindowState = FormWindowState.Normal;
-        childForm.Show();
-      }
-      return childForm;
-    }
-
     public void LaunchChildForm(string formName)
     {
-      LaunchChildForm(Type.GetType(formName));
+      var formType = Type.GetType(formName);
+      if (formType==null)
+      {
+        if (formName == typeof(FrmQueryRunner).FullName)
+          adHocLINQQueryRunnerToolStripMenuItem_Click(this, null);
+      }
+      else
+      LaunchChildForm(formType);
     }
 
-    public void LaunchChildForm(Type formType)
+    public Form LaunchChildForm(Type formType, params Object[] args)
     {
-      if (formType != null) LaunchChildForm((Form)Activator.CreateInstance(formType));
+      return formType != null ? AWHelper.LaunchChildForm(this, formType, args) : null;
     }
 
     private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(new frmOrderSearch());
+      LaunchChildForm(typeof(frmOrderSearch));
     }
 
     private void orders2ToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(new frmOrderSearch2());
+      LaunchChildForm(typeof(frmOrderSearch2));
     }
 
     private void customersToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(new frmCustomers());
+      LaunchChildForm(typeof(frmCustomers));
     }
 
     private void organizationToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(new frmOrganization());
+      LaunchChildForm(typeof(frmOrganization));
     }
 
     private void vacationBonusUtilityToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(new frmVacationBonus());
+      LaunchChildForm(typeof(frmVacationBonus));
     }
 
     private void traceToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(new frmTrace());
+      LaunchChildForm(typeof(frmTrace));
     }
 
     private void fileToolStripMenuItemOpen_Click(object sender, EventArgs e)
@@ -141,7 +120,7 @@ namespace AW.Winforms.Helpers
       try
       {
         var projectToBrowse = Project.Load(fileName);
-        LaunchChildForm(new FrmEntityViewer(projectToBrowse));
+        LaunchChildForm(typeof(FrmEntityViewer),projectToBrowse);
 
       }
       catch (SerializationException ex)
@@ -150,7 +129,7 @@ namespace AW.Winforms.Helpers
       }
       else
       {
-        var frmQueryRunner = LaunchChildForm(new FrmQueryRunner()) as FrmQueryRunner;
+        var frmQueryRunner = LaunchChildForm(typeof( FrmQueryRunner)) as FrmQueryRunner;
         frmQueryRunner.DoFileOpen(fileName);
       }
         mruHandlerProject.AddRecentlyUsedFile(fileName);
@@ -194,7 +173,7 @@ namespace AW.Winforms.Helpers
 
     private void adHocLINQQueryRunnerToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(new FrmQueryRunner());
+      LaunchChildForm(typeof(FrmQueryRunner));
     }
   }
 }

@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using AW.Data;
-using AW.Data.Linq;
+using ACorns.Hawkeye;
 using AW.Winforms.Helpers.EntityViewer;
 using CSScriptLibrary;
 using DynamicTable;
+using JesseJohnston;
 
 namespace AW.Winforms.Helpers.QueryRunner
 {
@@ -24,50 +18,21 @@ namespace AW.Winforms.Helpers.QueryRunner
       dataGridViewScript.AutoGenerateColumns = true;
     }
 
-    public IEnumerable QueryProject(LinqMetaData metaData)
-    {
-        var customerlist = from customer in (metaData).Customer
-                         from customerAddress in customer.CustomerAddresses
-                         select new
-                                  {
-                                    customerAddress.Address.AddressLine1,
-                                    customerAddress.Address.AddressLine2,
-                                    customerAddress.Address.City,
-                                    AddressType = customerAddress.AddressType.Name,
-                                    customer.Individual.Contact.Title,
-                                    customer.Individual.Contact.FirstName,
-                                    customer.Individual.Contact.MiddleName,
-                                    customer.Individual.Contact.LastName,
-                                    customer.Individual.Contact.Suffix,
-                                    customer.Individual.Contact.EmailAddress,
-                                    customer.Individual.Contact.EmailPromotion,
-                                    CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
-                                    StateProvinceName = customerAddress.Address.StateProvince.Name,
-                                    customer.CustomerID
-                                  };
-      return customerlist.Take(5);
-    }
-
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
     {
-      //BindingSourceScript.DataSource = QueryProject(MetaSingletons.MetaData);
-      AsmHelper myAsmHelper;
-      var query = CreateQuery(textBoxScript.Text, out myAsmHelper);
-      AWHelper.BindEnumerable(query.QueryProject(MetaSingletons.MetaData), BindingSourceScript);
-      myAsmHelper.Dispose();
+      var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.Text, null, true));
+      using (helper)
+      {
+        AWHelper.BindEnumerable(((ILinqToLLBLQueryScript) helper.CreateObject("Script")).Query(), BindingSourceScript);
+      }
       if (BindingSourceScript.Count > 0)
       {
         copyToolStripButtonQuery.Enabled = true;
+        toolStripButtonBrowse.Enabled = true;
         printToolStripButtonViewReport.Enabled = true;
-          if (dataGridViewScript.Height < 30)
-        splitContainerScript.SplitterDistance = Height/2;
+        if (dataGridViewScript.Height < 30)
+          splitContainerScript.SplitterDistance = Height/2;
       }
-    }
-
-    private static ILinqToLLBLQueryScript CreateQuery(string scriptText, out AsmHelper helper)
-    {
-      helper = new AsmHelper(CSScript.LoadCode(scriptText, null, true));
-      return (ILinqToLLBLQueryScript)helper.CreateObject("Script");
     }
 
     private void printToolStripButtonViewReport_Click(object sender, EventArgs e)
@@ -85,14 +50,14 @@ namespace AW.Winforms.Helpers.QueryRunner
     private void QueryRunner_Load(object sender, EventArgs e)
     {
       var dataGridViewScriptClipboardCopyMode = dataGridViewScript.ClipboardCopyMode;
-      toolStripComboBoxClipboardCopyMode.ComboBox.DataSource = Enum.GetValues(typeof(DataGridViewClipboardCopyMode));
+      toolStripComboBoxClipboardCopyMode.ComboBox.DataSource = Enum.GetValues(typeof (DataGridViewClipboardCopyMode));
       toolStripComboBoxClipboardCopyMode.SelectedItem = dataGridViewScriptClipboardCopyMode;
       splitContainerScript.SplitterDistance = Height - bindingNavigatorScript.Height;
     }
 
     internal void Save(string fileName)
     {
-       File.WriteAllText(fileName,textBoxScript.Text);
+      File.WriteAllText(fileName, textBoxScript.Text);
     }
 
     internal void LoadFile(string fileName)
@@ -110,10 +75,25 @@ namespace AW.Winforms.Helpers.QueryRunner
     {
       textBoxScript.Text = streamReader.ReadToEnd();
     }
+
+    private void viewObjectToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      ObjectEditor.Instance.Show(BindingSourceScript.Current);
+    }
+
+    private void toolStripButtonBrowse_Click(object sender, EventArgs e)
+    {
+      FrmEntityViewer.LaunchAsChildForm(((ObjectListView) BindingSourceScript.DataSource).List);
+    }
+
+    private void browseObjectToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      FrmEntityViewer.LaunchAsChildForm(BindingSourceScript.Current);
+    }
   }
 
   public interface ILinqToLLBLQueryScript
   {
-    IEnumerable QueryProject(LinqMetaData metaData);
+    IEnumerable Query();
   }
 }

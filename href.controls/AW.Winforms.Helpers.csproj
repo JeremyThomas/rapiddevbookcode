@@ -55,6 +55,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ACorns.Hawkeye.Core, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ACorns.Hawkeye.CoreUI, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.CoreUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ACorns.Hawkeye.Injector, Version=1.1.10.0, Culture=neutral, PublicKeyToken=7026c9d4d4143548, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.Injector.dll</HintPath>
+    </Reference>
     <Reference Include="CSScriptLibrary, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\CSScriptLibrary.dll</HintPath>

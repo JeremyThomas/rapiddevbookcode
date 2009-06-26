@@ -30,6 +30,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBLGen.Plugins", "LLBLGen.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2CA-4CCC-9960-748D511B5BAC}"
 	ProjectSection(SolutionItems) = preProject
+		Lib\ACorns.Hawkeye.Core.dll = Lib\ACorns.Hawkeye.Core.dll
+		Lib\ACorns.Hawkeye.Core.pdb = Lib\ACorns.Hawkeye.Core.pdb
+		Lib\ACorns.Hawkeye.CoreUI.dll = Lib\ACorns.Hawkeye.CoreUI.dll
+		Lib\ACorns.Hawkeye.CoreUI.pdb = Lib\ACorns.Hawkeye.CoreUI.pdb
 		Lib\CSScriptLibrary.dll = Lib\CSScriptLibrary.dll
 		Lib\CSScriptLibrary.pdb = Lib\CSScriptLibrary.pdb
 		Lib\ObjectListView.dll = Lib\ObjectListView.dll
@@ -39,6 +43,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQueryFiles", "{2FB4C735-0EB2-47B5-8D3D-5AAE437AA294}"
 	ProjectSection(SolutionItems) = preProject
 		SampleQueryFiles\GetCustomerListAnonymousLinq.cs = SampleQueryFiles\GetCustomerListAnonymousLinq.cs
+		SampleQueryFiles\LLBL Project Entity Table Mapping.cs = SampleQueryFiles\LLBL Project Entity Table Mapping.cs
 		SampleQueryFiles\LLBL Project Entity Table Mapping.linq = SampleQueryFiles\LLBL Project Entity Table Mapping.linq
 		SampleQueryFiles\LLBL_AWcustomerlist.linq = SampleQueryFiles\LLBL_AWcustomerlist.linq
 	EndProjectSection
