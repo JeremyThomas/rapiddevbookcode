@@ -36,7 +36,7 @@
       this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.selectObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.BindingSourceScript = new System.Windows.Forms.BindingSource(this.components);
+      this.copyObjectRefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,16 +49,12 @@
       this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPageBrowser = new System.Windows.Forms.TabPage();
-      this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-      this.toolStripStatusLabelInstance = new System.Windows.Forms.ToolStripStatusLabel();
-      this.copyObjectRefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.ObjectBrowser = new sliver.Windows.Forms.StateBrowser();
       this.splitContainerValues = new System.Windows.Forms.SplitContainer();
       this.panel1 = new System.Windows.Forms.Panel();
+      this.buttonRunPlugin = new System.Windows.Forms.Button();
+      this.textBoxObjectBeingBrowsed = new System.Windows.Forms.TextBox();
       this.checkBoxShowNonPublicMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowStaticMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowDataTypes = new System.Windows.Forms.CheckBox();
@@ -78,17 +74,18 @@
       this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-      this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
-      this.textBoxObjectBeingBrowsed = new System.Windows.Forms.TextBox();
-      this.buttonRunPlugin = new System.Windows.Forms.Button();
-      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       this.toolStripComboBoxClipboardCopyMode = new System.Windows.Forms.ToolStripComboBox();
+      this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+      this.toolStripStatusLabelInstance = new System.Windows.Forms.ToolStripStatusLabel();
+      this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
+      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       this.contextMenuStrip1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.BindingSourceScript)).BeginInit();
       this.tabControl1.SuspendLayout();
       this.tabPageBrowser.SuspendLayout();
-      this.statusStrip1.SuspendLayout();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
       this.splitContainer1.SuspendLayout();
@@ -99,6 +96,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
       this.bindingNavigator1.SuspendLayout();
+      this.statusStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
       // contextMenuStrip1
@@ -116,9 +114,12 @@
       this.selectObjectToolStripMenuItem.Text = "SelectObject";
       this.selectObjectToolStripMenuItem.Click += new System.EventHandler(this.selectObjectToolStripMenuItem_Click);
       // 
-      // BindingSourceScript
+      // copyObjectRefToolStripMenuItem
       // 
-      this.BindingSourceScript.AllowNew = false;
+      this.copyObjectRefToolStripMenuItem.Name = "copyObjectRefToolStripMenuItem";
+      this.copyObjectRefToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+      this.copyObjectRefToolStripMenuItem.Text = "Copy Object Ref";
+      this.copyObjectRefToolStripMenuItem.Click += new System.EventHandler(this.copyObjectRefToolStripMenuItem_Click);
       // 
       // dataGridViewTextBoxColumn1
       // 
@@ -216,51 +217,6 @@
       this.tabPageBrowser.Text = "Browser";
       this.tabPageBrowser.UseVisualStyleBackColor = true;
       // 
-      // dataGridViewTextBoxColumn11
-      // 
-      this.dataGridViewTextBoxColumn11.DataPropertyName = "CurrentValue";
-      this.dataGridViewTextBoxColumn11.HeaderText = "CurrentValue";
-      this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-      this.dataGridViewTextBoxColumn11.Width = 93;
-      // 
-      // dataGridViewTextBoxColumn12
-      // 
-      this.dataGridViewTextBoxColumn12.DataPropertyName = "DbValue";
-      this.dataGridViewTextBoxColumn12.HeaderText = "DbValue";
-      this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-      this.dataGridViewTextBoxColumn12.ReadOnly = true;
-      this.dataGridViewTextBoxColumn12.Width = 73;
-      // 
-      // statusStrip1
-      // 
-      this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelInstance,
-            this.toolStripStatusLabelSelectePath});
-      this.statusStrip1.Location = new System.Drawing.Point(0, 540);
-      this.statusStrip1.Name = "statusStrip1";
-      this.statusStrip1.Size = new System.Drawing.Size(1031, 22);
-      this.statusStrip1.TabIndex = 2;
-      this.statusStrip1.Text = "statusStrip1";
-      // 
-      // toolStripStatusLabelInstance
-      // 
-      this.toolStripStatusLabelInstance.Name = "toolStripStatusLabelInstance";
-      this.toolStripStatusLabelInstance.Size = new System.Drawing.Size(49, 17);
-      this.toolStripStatusLabelInstance.Text = "Instance";
-      // 
-      // copyObjectRefToolStripMenuItem
-      // 
-      this.copyObjectRefToolStripMenuItem.Name = "copyObjectRefToolStripMenuItem";
-      this.copyObjectRefToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-      this.copyObjectRefToolStripMenuItem.Text = "Copy Object Ref";
-      this.copyObjectRefToolStripMenuItem.Click += new System.EventHandler(this.copyObjectRefToolStripMenuItem_Click);
-      // 
-      // toolStripStatusLabelSelectePath
-      // 
-      this.toolStripStatusLabelSelectePath.Name = "toolStripStatusLabelSelectePath";
-      this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(109, 17);
-      this.toolStripStatusLabelSelectePath.Text = "toolStripStatusLabel1";
-      // 
       // splitContainer1
       // 
       this.splitContainer1.DataBindings.Add(new System.Windows.Forms.Binding("SplitterDistance", global::AW.Winforms.Helpers.Properties.Settings.Default, "FrmEntityViewerSplitterDistance", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -321,6 +277,25 @@
       this.panel1.Name = "panel1";
       this.panel1.Size = new System.Drawing.Size(551, 63);
       this.panel1.TabIndex = 1;
+      // 
+      // buttonRunPlugin
+      // 
+      this.buttonRunPlugin.Location = new System.Drawing.Point(439, 4);
+      this.buttonRunPlugin.Name = "buttonRunPlugin";
+      this.buttonRunPlugin.Size = new System.Drawing.Size(75, 23);
+      this.buttonRunPlugin.TabIndex = 4;
+      this.buttonRunPlugin.Text = "RunPlugin";
+      this.buttonRunPlugin.UseVisualStyleBackColor = true;
+      this.buttonRunPlugin.Visible = false;
+      this.buttonRunPlugin.Click += new System.EventHandler(this.toolStripButtonRunPlugin_Click);
+      // 
+      // textBoxObjectBeingBrowsed
+      // 
+      this.textBoxObjectBeingBrowsed.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.textBoxObjectBeingBrowsed.Location = new System.Drawing.Point(0, 43);
+      this.textBoxObjectBeingBrowsed.Name = "textBoxObjectBeingBrowsed";
+      this.textBoxObjectBeingBrowsed.Size = new System.Drawing.Size(551, 20);
+      this.textBoxObjectBeingBrowsed.TabIndex = 3;
       // 
       // checkBoxShowNonPublicMembers
       // 
@@ -405,6 +380,7 @@
       // bindingNavigator1
       // 
       this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem1;
+      this.bindingNavigator1.BindingSource = this.bindingSourceEnumerable;
       this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem1;
       this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem1;
       this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -545,6 +521,13 @@
       this.toolStripSeparator.Name = "toolStripSeparator";
       this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
       // 
+      // toolStripComboBoxClipboardCopyMode
+      // 
+      this.toolStripComboBoxClipboardCopyMode.Name = "toolStripComboBoxClipboardCopyMode";
+      this.toolStripComboBoxClipboardCopyMode.Size = new System.Drawing.Size(160, 25);
+      this.toolStripComboBoxClipboardCopyMode.Text = "ClipboardCopyMode";
+      this.toolStripComboBoxClipboardCopyMode.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxClipboardCopyMode_SelectedIndexChanged);
+      // 
       // copyToolStripButton
       // 
       this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -555,24 +538,43 @@
       this.copyToolStripButton.Text = "&Copy";
       this.copyToolStripButton.Click += new System.EventHandler(this.copyToolStripButton_Click);
       // 
-      // textBoxObjectBeingBrowsed
+      // dataGridViewTextBoxColumn11
       // 
-      this.textBoxObjectBeingBrowsed.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.textBoxObjectBeingBrowsed.Location = new System.Drawing.Point(0, 43);
-      this.textBoxObjectBeingBrowsed.Name = "textBoxObjectBeingBrowsed";
-      this.textBoxObjectBeingBrowsed.Size = new System.Drawing.Size(551, 20);
-      this.textBoxObjectBeingBrowsed.TabIndex = 3;
+      this.dataGridViewTextBoxColumn11.DataPropertyName = "CurrentValue";
+      this.dataGridViewTextBoxColumn11.HeaderText = "CurrentValue";
+      this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+      this.dataGridViewTextBoxColumn11.Width = 93;
       // 
-      // buttonRunPlugin
+      // dataGridViewTextBoxColumn12
       // 
-      this.buttonRunPlugin.Location = new System.Drawing.Point(439, 4);
-      this.buttonRunPlugin.Name = "buttonRunPlugin";
-      this.buttonRunPlugin.Size = new System.Drawing.Size(75, 23);
-      this.buttonRunPlugin.TabIndex = 4;
-      this.buttonRunPlugin.Text = "RunPlugin";
-      this.buttonRunPlugin.UseVisualStyleBackColor = true;
-      this.buttonRunPlugin.Visible = false;
-      this.buttonRunPlugin.Click += new System.EventHandler(this.toolStripButtonRunPlugin_Click);
+      this.dataGridViewTextBoxColumn12.DataPropertyName = "DbValue";
+      this.dataGridViewTextBoxColumn12.HeaderText = "DbValue";
+      this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+      this.dataGridViewTextBoxColumn12.ReadOnly = true;
+      this.dataGridViewTextBoxColumn12.Width = 73;
+      // 
+      // statusStrip1
+      // 
+      this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabelInstance,
+            this.toolStripStatusLabelSelectePath});
+      this.statusStrip1.Location = new System.Drawing.Point(0, 540);
+      this.statusStrip1.Name = "statusStrip1";
+      this.statusStrip1.Size = new System.Drawing.Size(1031, 22);
+      this.statusStrip1.TabIndex = 2;
+      this.statusStrip1.Text = "statusStrip1";
+      // 
+      // toolStripStatusLabelInstance
+      // 
+      this.toolStripStatusLabelInstance.Name = "toolStripStatusLabelInstance";
+      this.toolStripStatusLabelInstance.Size = new System.Drawing.Size(49, 17);
+      this.toolStripStatusLabelInstance.Text = "Instance";
+      // 
+      // toolStripStatusLabelSelectePath
+      // 
+      this.toolStripStatusLabelSelectePath.Name = "toolStripStatusLabelSelectePath";
+      this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(109, 17);
+      this.toolStripStatusLabelSelectePath.Text = "toolStripStatusLabel1";
       // 
       // propertyGrid1
       // 
@@ -589,13 +591,6 @@
       this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       this.propertyGrid1.SelectedObjectsChanged += new System.EventHandler(this.propertyGrid1_SelectedObjectsChanged);
       // 
-      // toolStripComboBoxClipboardCopyMode
-      // 
-      this.toolStripComboBoxClipboardCopyMode.Name = "toolStripComboBoxClipboardCopyMode";
-      this.toolStripComboBoxClipboardCopyMode.Size = new System.Drawing.Size(160, 25);
-      this.toolStripComboBoxClipboardCopyMode.Text = "ClipboardCopyMode";
-      this.toolStripComboBoxClipboardCopyMode.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxClipboardCopyMode_SelectedIndexChanged);
-      // 
       // FrmEntityViewer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -610,11 +605,8 @@
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmEntityViewer_FormClosing);
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
       this.contextMenuStrip1.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.BindingSourceScript)).EndInit();
       this.tabControl1.ResumeLayout(false);
       this.tabPageBrowser.ResumeLayout(false);
-      this.statusStrip1.ResumeLayout(false);
-      this.statusStrip1.PerformLayout();
       this.splitContainer1.Panel1.ResumeLayout(false);
       this.splitContainer1.Panel2.ResumeLayout(false);
       this.splitContainer1.ResumeLayout(false);
@@ -628,6 +620,8 @@
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
       this.bindingNavigator1.ResumeLayout(false);
       this.bindingNavigator1.PerformLayout();
+      this.statusStrip1.ResumeLayout(false);
+      this.statusStrip1.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -638,7 +632,6 @@
     private System.Windows.Forms.DataGridView dataGridViewEnumerable;
     private System.Windows.Forms.SplitContainer splitContainer1;
     private AW.Winforms.Helpers.PropGridEx.PropertyGridEx propertyGrid1;
-    private System.Windows.Forms.BindingSource BindingSourceScript;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;

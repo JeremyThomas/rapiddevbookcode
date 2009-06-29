@@ -18,6 +18,7 @@ namespace AW.Winforms.Helpers.EntityViewer
   {
     private static TypeDescriptionProvider CommonEntityBaseTypeDescriptionProvider;
     private static TypeDescriptionProvider EntityFieldsTypeDescriptionProvider; //
+    private bool DoingObjectBrowserNodeSelection;
 
     public FrmEntityViewer()
     {
@@ -36,7 +37,6 @@ namespace AW.Winforms.Helpers.EntityViewer
     public FrmEntityViewer(object entity) : this()
     {
       if (entity == null) throw new ArgumentNullException("entity");
-      propertyGrid1.SelectedObject = entity;
       ObjectBrowser.ObjectToBrowse = entity;
     }
 
@@ -55,7 +55,19 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void FrmEntityViewer_Load(object sender, EventArgs e)
     {
-      propertyGrid1.RefreshSelectedObject();
+      //((TreeView) (ObjectBrowser.ActiveControl)).SelectedNode = ((TreeView) (ObjectBrowser.ActiveControl)).TopNode;
+  //    propertyGrid1.SelectedObject = ObjectBeingBrowsed;
+    //  propertyGrid1.RefreshSelectedObject();
+      splitContainerValues.Panel2Collapsed = true;
+      DoingObjectBrowserNodeSelection = true;
+      try
+      {
+        propertyGrid1.SelectedObject = ObjectBeingBrowsed;
+      }
+      finally
+      {
+        DoingObjectBrowserNodeSelection = false;
+      }
       AWHelper.RestoreColumnsState(Settings.Default.EntityFieldColumns, dataGridViewEnumerable);
       var dataGridViewScriptClipboardCopyMode = dataGridViewEnumerable.ClipboardCopyMode;
       toolStripComboBoxClipboardCopyMode.ComboBox.DataSource = Enum.GetValues(typeof (DataGridViewClipboardCopyMode));
@@ -75,18 +87,36 @@ namespace AW.Winforms.Helpers.EntityViewer
     {
       var x = e.NewSelection;
       var t = x.PropertyDescriptor;
-      if (e.NewSelection.Value != null && !(e.OldSelection == null && bindingSourceEnumerable.DataSource == propertyGrid1.SelectedObject))
+      if (!DoingObjectBrowserNodeSelection && e.NewSelection.Value != null && !(e.OldSelection == null && bindingSourceEnumerable.DataSource == propertyGrid1.SelectedObject))
         if (!ShowEnumerable(e.NewSelection.Value as IEnumerable))
           if (!e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
             bindingSourceEnumerable.DataSource = e.NewSelection.Value;
     }
 
-    private void propertyGrid2_SelectedGridItemChanged(object sender, SelectedGridItemChangedEventArgs e)
+    private void ObjectBrowser_NodeSelected(object sender, EventArgs e)
     {
-      var x = e.NewSelection;
-      var t = x.PropertyDescriptor;
+      DoingObjectBrowserNodeSelection = true;
+      try
+      {
+        toolStripStatusLabelSelectePath.Text = (((TreeView)(ObjectBrowser.ActiveControl)).SelectedNode).FullPath;
+        propertyGrid1.SelectedObject = sender;
+        if (!ShowEnumerable(sender as IEnumerable))
+        {
+          bindingSourceEnumerable.DataSource = null;
+        }
+      }
+      finally
+      {
+        DoingObjectBrowserNodeSelection = false;
+      }
     }
 
+    private bool ShowEnumerable(IEnumerable enumerable)
+    {
+      var iSEnumerable = AWHelper.BindEnumerable(enumerable, bindingSourceEnumerable);
+      splitContainerValues.Panel2Collapsed = !iSEnumerable;
+      return iSEnumerable;
+    }
     private void selectObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
       if (propertyGrid1.SelectedGridItem.Expandable)
@@ -121,22 +151,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       pluginToTest.Execute();
     }
 
-    private void ObjectBrowser_NodeSelected(object sender, EventArgs e)
-    {
-      toolStripStatusLabelSelectePath.Text = (((TreeView) (ObjectBrowser.ActiveControl)).SelectedNode).FullPath;
-      propertyGrid1.SelectedObject = sender;
-      if (!ShowEnumerable(sender as IEnumerable))
-      {
-        bindingSourceEnumerable.DataSource = null;
-      }
-    }
 
-    private bool ShowEnumerable(IEnumerable enumerable)
-    {
-      var iSEnumerable = AWHelper.BindEnumerable(enumerable, bindingSourceEnumerable);
-      splitContainerValues.Panel2Collapsed = !iSEnumerable;
-      return iSEnumerable;
-    }
 
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {

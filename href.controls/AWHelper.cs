@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Winforms.Helpers.EntityViewer;
@@ -186,6 +187,7 @@ namespace AW.Winforms.Helpers
             {
               var queryable = enumerable.AsQueryable();
               showenEnumerable = queryable.ElementType != typeof(string);
+              queryable = queryable.Take(50);
               bindingSource.DataSource = showenEnumerable ? new ObjectListView(new BindingSource(queryable, null)) : null;
             }
             else

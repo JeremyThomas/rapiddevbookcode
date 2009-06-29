@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
+using AW.Data;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.Properties;
 using AW.Winforms.Helpers.QueryRunner;
@@ -174,6 +175,11 @@ namespace AW.Winforms.Helpers
     private void adHocLINQQueryRunnerToolStripMenuItem_Click(object sender, EventArgs e)
     {
       LaunchChildForm(typeof(FrmQueryRunner));
+    }
+
+    private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData);
     }
   }
 }

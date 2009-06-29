@@ -55,6 +55,7 @@ namespace AW.Winforms.Helpers
           this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
           this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
+          this.viewMetadataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
           this.menuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
@@ -169,7 +170,8 @@ namespace AW.Winforms.Helpers
           this.utilitiesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.vacationBonusUtilityToolStripMenuItem,
             this.traceToolStripMenuItem,
-            this.adHocLINQQueryRunnerToolStripMenuItem});
+            this.adHocLINQQueryRunnerToolStripMenuItem,
+            this.viewMetadataToolStripMenuItem});
           this.utilitiesToolStripMenuItem.Name = "utilitiesToolStripMenuItem";
           this.utilitiesToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
           this.utilitiesToolStripMenuItem.Text = "&Utilities";
@@ -263,6 +265,13 @@ namespace AW.Winforms.Helpers
           this.openFileDialogProject.Filter = "\"LLBL Project Files\"|*.lgp|C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)" +
               "|*.* ";
           // 
+          // viewMetadataToolStripMenuItem
+          // 
+          this.viewMetadataToolStripMenuItem.Name = "viewMetadataToolStripMenuItem";
+          this.viewMetadataToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+          this.viewMetadataToolStripMenuItem.Text = "View Metadata";
+          this.viewMetadataToolStripMenuItem.Click += new System.EventHandler(this.viewMetadataToolStripMenuItem_Click);
+          // 
           // mruHandlerProject
           // 
           this.mruHandlerProject.AutoSeparators = true;
@@ -324,5 +333,6 @@ namespace AW.Winforms.Helpers
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem adHocLINQQueryRunnerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewMetadataToolStripMenuItem;
     }
 }

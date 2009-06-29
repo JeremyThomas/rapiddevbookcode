@@ -48,9 +48,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 		SampleQueryFiles\LLBL_AWcustomerlist.linq = SampleQueryFiles\LLBL_AWcustomerlist.linq
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 9
+		SccNumberOfProjects = 10
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -80,6 +82,9 @@ Global
 		SccProjectTopLevelParentUniqueName8 = AW.sln
 		SccProjectName8 = LLBLGen.Plugins/AW.LLBLGen.Plugins
 		SccLocalPath8 = LLBLGen.Plugins\\AW.LLBLGen.Plugins
+		SccProjectUniqueName9 = DynamicQuery\\DynamicQuery.csproj
+		SccProjectName9 = DynamicQuery
+		SccLocalPath9 = DynamicQuery
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -121,6 +126,10 @@ Global
 		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
