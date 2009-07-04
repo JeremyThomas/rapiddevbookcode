@@ -194,6 +194,11 @@ namespace AW.Winforms.Helpers.EntityViewer
     {
       ObjectBrowser.ShowDataTypes = checkBoxShowDataTypes.Checked;
     }
+
+    private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
+    {
+
+    }
   }
 
 }

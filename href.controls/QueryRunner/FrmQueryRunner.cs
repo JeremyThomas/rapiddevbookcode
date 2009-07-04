@@ -111,5 +111,30 @@ namespace AW.Winforms.Helpers.QueryRunner
     {
       CurrentQueryRunner().Save(filename);
     }
+
+    private void tabControl_DragDrop(object sender, DragEventArgs e)
+    {
+      try
+      {
+        var a = (Array) e.Data.GetData(DataFormats.FileDrop);
+        if (a != null)
+        {
+          var s = a.GetValue(0).ToString();
+          Activate();
+          DoFileOpen(s);
+        }
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show("Error in DragDrop function: " + ex.Message);
+      }
+    }
+
+    private void tabControl_DragOver(object sender, DragEventArgs e)
+    {
+      if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        e.Effect = DragDropEffects.Move;
+      else e.Effect = DragDropEffects.None;
+    }
   }
 }

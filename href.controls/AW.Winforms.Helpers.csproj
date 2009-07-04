@@ -107,6 +107,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWHelper.cs" />
+    <Compile Include="EntityViewer\FrmEntitiesAndFields.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EntityViewer\FrmEntitiesAndFields.Designer.cs">
+      <DependentUpon>FrmEntitiesAndFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="QueryRunner\FrmQueryRunner.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +178,9 @@
     <Compile Include="TextBoxTraceListener.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EntityViewer\FrmEntitiesAndFields.resx">
+      <DependentUpon>FrmEntitiesAndFields.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="QueryRunner\FrmQueryRunner.resx">
       <DependentUpon>FrmQueryRunner.cs</DependentUpon>
     </EmbeddedResource>

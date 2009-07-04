@@ -90,6 +90,58 @@ namespace AW.Winforms.Helpers.QueryRunner
     {
       FrmEntityViewer.LaunchAsChildForm(BindingSourceScript.Current);
     }
+
+    private void dataGridViewScript_DataError(object sender, DataGridViewDataErrorEventArgs e)
+    {
+
+    }
+
+    private void textBoxScript_DragDrop(object sender, DragEventArgs e)
+    {
+      if (!e.Data.GetDataPresent(typeof(TreeNode))) 
+        return;
+      var node = (TreeNode)e.Data.GetData(typeof(TreeNode));
+
+      textBoxScript.Paste(node.Text);
+      
+      //try
+      //{
+      //  Array a = (Array)e.Data.GetData(DataFormats.FileDrop);
+      //  if (a != null)
+      //  {
+      //    string s = a.GetValue(0).ToString();
+      //    //this.Activate();
+      //    //OpenFile(s);
+      //  }
+      //}
+      //catch (Exception ex)
+      //{
+      //  MessageBox.Show("Error in DragDrop function: " + ex.Message);
+      //}
+
+    }
+
+    private void textBoxScript_DragEnter(object sender, DragEventArgs e)
+    {
+      if (e.Data.GetDataPresent(typeof(TreeNode)))
+        e.Effect = DragDropEffects.Copy;
+      else
+        e.Effect = DragDropEffects.None;
+
+    }
+
+    private void textBoxScript_DragOver(object sender, DragEventArgs e)
+    {
+      if (e.Data.GetDataPresent(typeof(TreeNode)))
+        e.Effect = DragDropEffects.Move;
+      else e.Effect = DragDropEffects.None;
+    }
+
+    private void textBoxScript_MouseDown(object sender, MouseEventArgs e)
+    {
+      //var txt = (TextBox)sender;
+      //txt.DoDragDrop(txt.Text, DragDropEffects.Copy);
+    }
   }
 
   public interface ILinqToLLBLQueryScript

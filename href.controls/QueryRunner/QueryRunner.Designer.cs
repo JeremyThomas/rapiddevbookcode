@@ -93,6 +93,7 @@
       // 
       // textBoxScript
       // 
+      this.textBoxScript.AllowDrop = true;
       this.textBoxScript.Dock = System.Windows.Forms.DockStyle.Fill;
       this.textBoxScript.Location = new System.Drawing.Point(0, 0);
       this.textBoxScript.Multiline = true;
@@ -101,6 +102,10 @@
       this.textBoxScript.Size = new System.Drawing.Size(841, 280);
       this.textBoxScript.TabIndex = 0;
       this.textBoxScript.Text = resources.GetString("textBoxScript.Text");
+      this.textBoxScript.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragDrop);
+      this.textBoxScript.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBoxScript_MouseDown);
+      this.textBoxScript.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragEnter);
+      this.textBoxScript.DragOver += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragOver);
       // 
       // dataGridViewScript
       // 
@@ -143,6 +148,7 @@
       this.dataGridViewScript.RowHeadersVisible = false;
       this.dataGridViewScript.Size = new System.Drawing.Size(841, 286);
       this.dataGridViewScript.TabIndex = 3;
+      this.dataGridViewScript.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewScript_DataError);
       // 
       // contextMenuStripGrid
       // 

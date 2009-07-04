@@ -36,13 +36,13 @@
       this.toolStripMenuItemClose = new System.Windows.Forms.ToolStripMenuItem();
       this.closeAllButThisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabPageSample = new System.Windows.Forms.TabPage();
+      this.queryRunner1 = new AW.Winforms.Helpers.QueryRunner.QueryRunner();
       this.contextMenuStripBlank = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.blankToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
       this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-      this.queryRunner1 = new AW.Winforms.Helpers.QueryRunner.QueryRunner();
-      this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tabControl.SuspendLayout();
       this.contextMenuStripTab.SuspendLayout();
       this.tabPageSample.SuspendLayout();
@@ -51,6 +51,7 @@
       // 
       // tabControl
       // 
+      this.tabControl.AllowDrop = true;
       this.tabControl.ContextMenuStrip = this.contextMenuStripTab;
       this.tabControl.Controls.Add(this.tabPageSample);
       this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -59,6 +60,8 @@
       this.tabControl.SelectedIndex = 0;
       this.tabControl.Size = new System.Drawing.Size(918, 624);
       this.tabControl.TabIndex = 0;
+      this.tabControl.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
+      this.tabControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
       // 
       // contextMenuStripTab
       // 
@@ -70,7 +73,7 @@
             this.saveAsToolStripMenuItem,
             this.newToolStripMenuItem});
       this.contextMenuStripTab.Name = "contextMenuStripTab";
-      this.contextMenuStripTab.Size = new System.Drawing.Size(167, 158);
+      this.contextMenuStripTab.Size = new System.Drawing.Size(167, 136);
       this.contextMenuStripTab.Text = "Save As...";
       this.contextMenuStripTab.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTab_Opening);
       // 
@@ -109,6 +112,13 @@
       this.saveAsToolStripMenuItem.Text = "Save As...";
       this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
       // 
+      // newToolStripMenuItem
+      // 
+      this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+      this.newToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+      this.newToolStripMenuItem.Text = "New";
+      this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
+      // 
       // tabPageSample
       // 
       this.tabPageSample.Controls.Add(this.queryRunner1);
@@ -120,6 +130,18 @@
       this.tabPageSample.Text = "Sample";
       this.tabPageSample.ToolTipText = "Sample";
       this.tabPageSample.UseVisualStyleBackColor = true;
+      // 
+      // queryRunner1
+      // 
+      this.queryRunner1.AllowDrop = true;
+      this.queryRunner1.ContextMenuStrip = this.contextMenuStripBlank;
+      this.queryRunner1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.queryRunner1.Location = new System.Drawing.Point(3, 3);
+      this.queryRunner1.Name = "queryRunner1";
+      this.queryRunner1.Size = new System.Drawing.Size(904, 592);
+      this.queryRunner1.TabIndex = 0;
+      this.queryRunner1.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
+      this.queryRunner1.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
       // 
       // contextMenuStripBlank
       // 
@@ -142,22 +164,6 @@
       // saveFileDialog
       // 
       this.saveFileDialog.Filter = "C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)|*.* ";
-      // 
-      // queryRunner1
-      // 
-      this.queryRunner1.ContextMenuStrip = this.contextMenuStripBlank;
-      this.queryRunner1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.queryRunner1.Location = new System.Drawing.Point(3, 3);
-      this.queryRunner1.Name = "queryRunner1";
-      this.queryRunner1.Size = new System.Drawing.Size(904, 592);
-      this.queryRunner1.TabIndex = 0;
-      // 
-      // newToolStripMenuItem
-      // 
-      this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-      this.newToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-      this.newToolStripMenuItem.Text = "New";
-      this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
       // 
       // FrmQueryRunner
       // 

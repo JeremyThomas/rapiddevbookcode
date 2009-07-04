@@ -46,6 +46,7 @@ namespace AW.Winforms.Helpers
           this.vacationBonusUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.adHocLINQQueryRunnerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.viewMetadataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
           this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,8 +56,8 @@ namespace AW.Winforms.Helpers
           this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
           this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
-          this.viewMetadataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
+          this.viewEntitiesAndFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
           this.SuspendLayout();
@@ -171,7 +172,8 @@ namespace AW.Winforms.Helpers
             this.vacationBonusUtilityToolStripMenuItem,
             this.traceToolStripMenuItem,
             this.adHocLINQQueryRunnerToolStripMenuItem,
-            this.viewMetadataToolStripMenuItem});
+            this.viewMetadataToolStripMenuItem,
+            this.viewEntitiesAndFieldsToolStripMenuItem});
           this.utilitiesToolStripMenuItem.Name = "utilitiesToolStripMenuItem";
           this.utilitiesToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
           this.utilitiesToolStripMenuItem.Text = "&Utilities";
@@ -196,6 +198,13 @@ namespace AW.Winforms.Helpers
           this.adHocLINQQueryRunnerToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
           this.adHocLINQQueryRunnerToolStripMenuItem.Text = "AdHoc LINQ Query Runner";
           this.adHocLINQQueryRunnerToolStripMenuItem.Click += new System.EventHandler(this.adHocLINQQueryRunnerToolStripMenuItem_Click);
+          // 
+          // viewMetadataToolStripMenuItem
+          // 
+          this.viewMetadataToolStripMenuItem.Name = "viewMetadataToolStripMenuItem";
+          this.viewMetadataToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+          this.viewMetadataToolStripMenuItem.Text = "View Metadata";
+          this.viewMetadataToolStripMenuItem.Click += new System.EventHandler(this.viewMetadataToolStripMenuItem_Click);
           // 
           // windowsMenu
           // 
@@ -265,19 +274,19 @@ namespace AW.Winforms.Helpers
           this.openFileDialogProject.Filter = "\"LLBL Project Files\"|*.lgp|C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)" +
               "|*.* ";
           // 
-          // viewMetadataToolStripMenuItem
-          // 
-          this.viewMetadataToolStripMenuItem.Name = "viewMetadataToolStripMenuItem";
-          this.viewMetadataToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-          this.viewMetadataToolStripMenuItem.Text = "View Metadata";
-          this.viewMetadataToolStripMenuItem.Click += new System.EventHandler(this.viewMetadataToolStripMenuItem_Click);
-          // 
           // mruHandlerProject
           // 
           this.mruHandlerProject.AutoSeparators = true;
           this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
           this.mruHandlerProject.StorageName = "mru";
           this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
+          // 
+          // viewEntitiesAndFieldsToolStripMenuItem
+          // 
+          this.viewEntitiesAndFieldsToolStripMenuItem.Name = "viewEntitiesAndFieldsToolStripMenuItem";
+          this.viewEntitiesAndFieldsToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+          this.viewEntitiesAndFieldsToolStripMenuItem.Text = "View Entities and Fields";
+          this.viewEntitiesAndFieldsToolStripMenuItem.Click += new System.EventHandler(this.viewEntitiesAndFieldsToolStripMenuItem_Click);
           // 
           // frmMain
           // 
@@ -334,5 +343,6 @@ namespace AW.Winforms.Helpers
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem adHocLINQQueryRunnerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewMetadataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewEntitiesAndFieldsToolStripMenuItem;
     }
 }

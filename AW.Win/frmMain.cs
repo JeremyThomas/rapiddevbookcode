@@ -181,5 +181,10 @@ namespace AW.Winforms.Helpers
     {
       LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData);
     }
+
+    private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      LaunchChildForm(typeof(FrmEntitiesAndFields));
+    }
   }
 }
