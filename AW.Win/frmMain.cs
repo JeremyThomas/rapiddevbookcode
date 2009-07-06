@@ -33,7 +33,11 @@ namespace AW.Winforms.Helpers
       if (Settings.Default.ReopenWindows && Settings.Default.OpenWindows != null)
         foreach (var formName in Settings.Default.OpenWindows)
         {
-          LaunchChildForm(formName);
+          var frm = LaunchChildForm(formName);
+          if (frm is FrmQueryRunner)
+          {
+            ((FrmQueryRunner)frm).OpenFiles(Settings.Default.QueryFilesToReopen);
+          }
           Application.DoEvents();
         }
     }
@@ -55,19 +59,25 @@ namespace AW.Winforms.Helpers
       if (Settings.Default.ReopenWindows && MdiChildren.Length > 0)
         foreach (var myForm in MdiChildren)
           if (Convert.ToBoolean(myForm.Tag))
+          {
             Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
+            if (myForm is FrmQueryRunner )
+            {
+              Settings.Default.QueryFilesToReopen = ((FrmQueryRunner) myForm).GetOpenFiles();
+            }
+          }
     }
 
-    public void LaunchChildForm(string formName)
+    public Form LaunchChildForm(string formName)
     {
       var formType = Type.GetType(formName);
       if (formType==null)
       {
         if (formName == typeof(FrmQueryRunner).FullName)
-          adHocLINQQueryRunnerToolStripMenuItem_Click(this, null);
+          return LaunchChildForm(typeof(FrmQueryRunner));
+        return null;
       }
-      else
-      LaunchChildForm(formType);
+      return LaunchChildForm(formType);
     }
 
     public Form LaunchChildForm(Type formType, params Object[] args)
@@ -185,6 +195,24 @@ namespace AW.Winforms.Helpers
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
       LaunchChildForm(typeof(FrmEntitiesAndFields));
+    }
+
+    private void frmMain_DragDrop(object sender, DragEventArgs e)
+    {
+      var a = (Array)e.Data.GetData(DataFormats.FileDrop);
+      if (a != null)
+      {
+        var s = a.GetValue(0).ToString();
+        Activate();
+        DoFileOpen(s);
+      }
+    }
+
+    private void frmMain_DragOver(object sender, DragEventArgs e)
+    {
+      if (e.Data.GetDataPresent(DataFormats.FileDrop))
+        e.Effect = DragDropEffects.Move;
+      else e.Effect = DragDropEffects.None;
     }
   }
 }

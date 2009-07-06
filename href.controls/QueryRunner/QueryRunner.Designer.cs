@@ -34,7 +34,7 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
       this.splitContainerScript = new System.Windows.Forms.SplitContainer();
-      this.textBoxScript = new System.Windows.Forms.TextBox();
+      this.textBoxScript = new System.Windows.Forms.RichTextBox();
       this.dataGridViewScript = new System.Windows.Forms.DataGridView();
       this.contextMenuStripGrid = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.viewObjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,10 +95,9 @@
       // 
       this.textBoxScript.AllowDrop = true;
       this.textBoxScript.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.textBoxScript.EnableAutoDragDrop = true;
       this.textBoxScript.Location = new System.Drawing.Point(0, 0);
-      this.textBoxScript.Multiline = true;
       this.textBoxScript.Name = "textBoxScript";
-      this.textBoxScript.ScrollBars = System.Windows.Forms.ScrollBars.Both;
       this.textBoxScript.Size = new System.Drawing.Size(841, 280);
       this.textBoxScript.TabIndex = 0;
       this.textBoxScript.Text = resources.GetString("textBoxScript.Text");
@@ -380,8 +379,8 @@
       this.Name = "QueryRunner";
       this.Size = new System.Drawing.Size(841, 595);
       this.Load += new System.EventHandler(this.QueryRunner_Load);
+      this.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragDrop);
       this.splitContainerScript.Panel1.ResumeLayout(false);
-      this.splitContainerScript.Panel1.PerformLayout();
       this.splitContainerScript.Panel2.ResumeLayout(false);
       this.splitContainerScript.Panel2.PerformLayout();
       this.splitContainerScript.ResumeLayout(false);
@@ -398,7 +397,7 @@
     #endregion
 
     private System.Windows.Forms.SplitContainer splitContainerScript;
-    private System.Windows.Forms.TextBox textBoxScript;
+    private System.Windows.Forms.RichTextBox textBoxScript;
     private System.Windows.Forms.DataGridView dataGridViewScript;
     private System.Windows.Forms.BindingNavigator bindingNavigatorScript;
     private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;

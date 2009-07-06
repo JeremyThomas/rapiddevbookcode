@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
+using System.Linq.Dynamic;
 using System.Windows.Forms;
+using System.Linq;
 using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers.QueryRunner
@@ -34,6 +38,17 @@ namespace AW.Winforms.Helpers.QueryRunner
       if (dr == DialogResult.OK)
         DoFileOpen(openFileDialog.FileName);
     }
+
+    public void OpenFiles(StringCollection files)
+    {
+      if (files != null) OpenFiles(files.Cast<string>());
+    }
+
+    public void OpenFiles(IEnumerable<string> files)
+     {
+       foreach (var file in files)
+         DoFileOpen(file);
+     }
 
     public void DoFileOpen(string fileName)
     {
@@ -110,6 +125,16 @@ namespace AW.Winforms.Helpers.QueryRunner
     private void SaveScript(string filename)
     {
       CurrentQueryRunner().Save(filename);
+    }
+
+    public StringCollection GetOpenFiles()
+    {
+      var t = from tabs in tabControl.TabPages.Cast<TabPage>()
+              where File.Exists(tabs.ToolTipText)
+              select tabs.ToolTipText;
+      var openFiles = new StringCollection();
+      openFiles.AddRange(t.ToArray());
+      return openFiles;
     }
 
     private void tabControl_DragDrop(object sender, DragEventArgs e)

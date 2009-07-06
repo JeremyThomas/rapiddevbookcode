@@ -47,6 +47,7 @@ namespace AW.Winforms.Helpers
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.adHocLINQQueryRunnerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.viewMetadataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.viewEntitiesAndFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
           this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +58,6 @@ namespace AW.Winforms.Helpers
           this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
           this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
-          this.viewEntitiesAndFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
           this.SuspendLayout();
@@ -206,6 +206,13 @@ namespace AW.Winforms.Helpers
           this.viewMetadataToolStripMenuItem.Text = "View Metadata";
           this.viewMetadataToolStripMenuItem.Click += new System.EventHandler(this.viewMetadataToolStripMenuItem_Click);
           // 
+          // viewEntitiesAndFieldsToolStripMenuItem
+          // 
+          this.viewEntitiesAndFieldsToolStripMenuItem.Name = "viewEntitiesAndFieldsToolStripMenuItem";
+          this.viewEntitiesAndFieldsToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+          this.viewEntitiesAndFieldsToolStripMenuItem.Text = "View Entities and Fields";
+          this.viewEntitiesAndFieldsToolStripMenuItem.Click += new System.EventHandler(this.viewEntitiesAndFieldsToolStripMenuItem_Click);
+          // 
           // windowsMenu
           // 
           this.windowsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -281,15 +288,9 @@ namespace AW.Winforms.Helpers
           this.mruHandlerProject.StorageName = "mru";
           this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
           // 
-          // viewEntitiesAndFieldsToolStripMenuItem
-          // 
-          this.viewEntitiesAndFieldsToolStripMenuItem.Name = "viewEntitiesAndFieldsToolStripMenuItem";
-          this.viewEntitiesAndFieldsToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
-          this.viewEntitiesAndFieldsToolStripMenuItem.Text = "View Entities and Fields";
-          this.viewEntitiesAndFieldsToolStripMenuItem.Click += new System.EventHandler(this.viewEntitiesAndFieldsToolStripMenuItem_Click);
-          // 
           // frmMain
           // 
+          this.AllowDrop = true;
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(617, 443);
@@ -303,8 +304,10 @@ namespace AW.Winforms.Helpers
           this.WindowState = global::AW.Winforms.Helpers.Properties.Settings.Default.MainWindowState;
           this.Load += new System.EventHandler(this.frmMain_Load);
           this.Shown += new System.EventHandler(this.frmMain_Shown);
+          this.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
           this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
+          this.DragOver += new System.Windows.Forms.DragEventHandler(this.frmMain_DragOver);
           this.menuStrip1.ResumeLayout(false);
           this.menuStrip1.PerformLayout();
           ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).EndInit();

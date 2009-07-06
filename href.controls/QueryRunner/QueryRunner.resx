@@ -128,7 +128,7 @@ using AW.Data;
 using AW.Data.Linq;
 using AW.Winforms.Helpers.QueryRunner;
 
-public class Script : MarshalByRefObject, ILinqToLLBLQueryScript
+public class Script : MarshalByRefObject, IQueryScript
 {
   public IEnumerable Query()
   {

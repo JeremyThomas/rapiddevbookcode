@@ -415,5 +415,16 @@ namespace AW.Winforms.Helpers.Properties {
                 this["SettingQueryRunnerSizeAndLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection QueryFilesToReopen {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["QueryFilesToReopen"]));
+            }
+            set {
+                this["QueryFilesToReopen"] = value;
+            }
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.Text, null, true));
       using (helper)
       {
-        AWHelper.BindEnumerable(((ILinqToLLBLQueryScript) helper.CreateObject("Script")).Query(), BindingSourceScript);
+        AWHelper.BindEnumerable(((IQueryScript) helper.CreateObject("Script")).Query(), BindingSourceScript);
       }
       if (BindingSourceScript.Count > 0)
       {
@@ -98,11 +98,14 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void textBoxScript_DragDrop(object sender, DragEventArgs e)
     {
-      if (!e.Data.GetDataPresent(typeof(TreeNode))) 
+      if (!e.Data.GetDataPresent(typeof(TreeNode)))
+      {
+        //this.DragDrop(sender, e);
         return;
+      }
       var node = (TreeNode)e.Data.GetData(typeof(TreeNode));
 
-      textBoxScript.Paste(node.Text);
+      textBoxScript.SelectedText = node.Text;
       
       //try
       //{
@@ -123,18 +126,18 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void textBoxScript_DragEnter(object sender, DragEventArgs e)
     {
-      if (e.Data.GetDataPresent(typeof(TreeNode)))
-        e.Effect = DragDropEffects.Copy;
-      else
-        e.Effect = DragDropEffects.None;
+      //if (e.Data.GetDataPresent(typeof(TreeNode)))
+      //  e.Effect = DragDropEffects.Copy;
+      //else
+      //  e.Effect = DragDropEffects.None;
 
     }
 
     private void textBoxScript_DragOver(object sender, DragEventArgs e)
     {
-      if (e.Data.GetDataPresent(typeof(TreeNode)))
-        e.Effect = DragDropEffects.Move;
-      else e.Effect = DragDropEffects.None;
+      //if (e.Data.GetDataPresent(typeof(TreeNode)))
+      //  e.Effect = DragDropEffects.Move;
+      //else e.Effect = DragDropEffects.None;
     }
 
     private void textBoxScript_MouseDown(object sender, MouseEventArgs e)
@@ -144,7 +147,7 @@ namespace AW.Winforms.Helpers.QueryRunner
     }
   }
 
-  public interface ILinqToLLBLQueryScript
+  public interface IQueryScript
   {
     IEnumerable Query();
   }
