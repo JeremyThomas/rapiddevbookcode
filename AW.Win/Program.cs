@@ -31,7 +31,7 @@ namespace AW.Winforms.Helpers
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
       Application.ThreadException += Application_ThreadException;
-      Application.Run(new frmMain());
+      Application.Run(new FrmMain());
     }
   }
 }

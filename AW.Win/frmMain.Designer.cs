@@ -1,6 +1,6 @@
 namespace AW.Winforms.Helpers
 {
-    partial class frmMain
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -288,7 +288,7 @@ namespace AW.Winforms.Helpers
           this.mruHandlerProject.StorageName = "mru";
           this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
           // 
-          // frmMain
+          // FrmMain
           // 
           this.AllowDrop = true;
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -298,7 +298,7 @@ namespace AW.Winforms.Helpers
           this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", global::AW.Winforms.Helpers.Properties.Settings.Default, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.IsMdiContainer = true;
           this.MainMenuStrip = this.menuStrip1;
-          this.Name = "frmMain";
+          this.Name = "FrmMain";
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
           this.Text = "Adventure Works";
           this.WindowState = global::AW.Winforms.Helpers.Properties.Settings.Default.MainWindowState;

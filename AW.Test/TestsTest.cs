@@ -1,5 +1,5 @@
-﻿using System.Windows.Forms;
-using AW.Business;
+﻿using AW.Business;
+using System.Linq.Dynamic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -56,9 +56,8 @@ namespace AW.Test
     [TestMethod]
     public void LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrderTest()
     {
-      var maxNumberOfItemsToReturn = 5;
-      var actual = new BindingSource(Tests.LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(maxNumberOfItemsToReturn), "");
-      Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count);
+      const int maxNumberOfItemsToReturn = 5;
+      Assert.AreEqual(maxNumberOfItemsToReturn, Tests.LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(maxNumberOfItemsToReturn).Count());
     }
 
     /// <summary>

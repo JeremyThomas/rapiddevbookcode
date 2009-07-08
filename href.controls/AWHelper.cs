@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Specialized;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Data;
-using AW.Winforms.Helpers.EntityViewer;
-using CSScriptLibrary;
 using JesseJohnston;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -180,20 +179,25 @@ namespace AW.Winforms.Helpers
             else
               bindingSource.DataSource = enumerable;
           }
+          else if (enumerable is DataTable)
+          {
+            bindingSource.DataSource = enumerable;
+            showenEnumerable = bindingSource.Count > 0;
+          }
           else
           {
             var etype = enumerable.GetType();
             if (etype.IsGenericType)
             {
               var queryable = enumerable.AsQueryable();
-              showenEnumerable = queryable.ElementType != typeof(string);
+              showenEnumerable = queryable.ElementType != typeof (string);
               queryable = queryable.Take(50);
               bindingSource.DataSource = showenEnumerable ? new ObjectListView(new BindingSource(queryable, null)) : null;
             }
             else
             {
               bindingSource.DataSource = new ObjectListView(new BindingSource(enumerable, null));
-              showenEnumerable = bindingSource.Count>0;
+              showenEnumerable = bindingSource.Count > 0;
             }
           }
         }
@@ -288,8 +292,8 @@ namespace AW.Winforms.Helpers
       //return null;
 
       return (from form in Application.OpenForms.Cast<Form>()
-               where form.IsMdiContainer
-               select form).FirstOrDefault();
+              where form.IsMdiContainer
+              select form).FirstOrDefault();
     }
 
     public static int GetIndexOfForm(Form form)

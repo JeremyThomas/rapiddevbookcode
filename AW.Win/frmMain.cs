@@ -1,19 +1,21 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Winforms.Helpers.EntityViewer;
+using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.Properties;
 using AW.Winforms.Helpers.QueryRunner;
 using SD.LLBLGen.Pro.ApplicationCore;
 
 namespace AW.Winforms.Helpers
 {
-  public partial class frmMain : Form
+  public partial class FrmMain : Form
   {
-    public frmMain()
+    public FrmMain()
     {
       InitializeComponent();
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.MainWindowSizeLocation);
@@ -35,9 +37,7 @@ namespace AW.Winforms.Helpers
         {
           var frm = LaunchChildForm(formName);
           if (frm is FrmQueryRunner)
-          {
-            ((FrmQueryRunner)frm).OpenFiles(Settings.Default.QueryFilesToReopen);
-          }
+            ((FrmQueryRunner) frm).OpenFiles(Settings.Default.QueryFilesToReopen);
           Application.DoEvents();
         }
     }
@@ -51,30 +51,28 @@ namespace AW.Winforms.Helpers
     {
       Settings.Default.MainWindowSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
 
-      Settings.Default.ReopenWindows = reOpenWindowsToolStripMenuItem.Checked;        
+      Settings.Default.ReopenWindows = reOpenWindowsToolStripMenuItem.Checked;
       if (Settings.Default.OpenWindows == null)
-          Settings.Default.OpenWindows = new StringCollection();
-        else
-          Settings.Default.OpenWindows.Clear();
+        Settings.Default.OpenWindows = new StringCollection();
+      else
+        Settings.Default.OpenWindows.Clear();
       if (Settings.Default.ReopenWindows && MdiChildren.Length > 0)
         foreach (var myForm in MdiChildren)
           if (Convert.ToBoolean(myForm.Tag))
           {
             Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
-            if (myForm is FrmQueryRunner )
-            {
+            if (myForm is FrmQueryRunner)
               Settings.Default.QueryFilesToReopen = ((FrmQueryRunner) myForm).GetOpenFiles();
-            }
           }
     }
 
     public Form LaunchChildForm(string formName)
     {
       var formType = Type.GetType(formName);
-      if (formType==null)
+      if (formType == null)
       {
-        if (formName == typeof(FrmQueryRunner).FullName)
-          return LaunchChildForm(typeof(FrmQueryRunner));
+        if (formName == typeof (FrmQueryRunner).FullName)
+          return LaunchChildForm(typeof (FrmQueryRunner));
         return null;
       }
       return LaunchChildForm(formType);
@@ -87,32 +85,32 @@ namespace AW.Winforms.Helpers
 
     private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(frmOrderSearch));
+      LaunchChildForm(typeof (frmOrderSearch));
     }
 
     private void orders2ToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(frmOrderSearch2));
+      LaunchChildForm(typeof (frmOrderSearch2));
     }
 
     private void customersToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(frmCustomers));
+      LaunchChildForm(typeof (frmCustomers));
     }
 
     private void organizationToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(frmOrganization));
+      LaunchChildForm(typeof (frmOrganization));
     }
 
     private void vacationBonusUtilityToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(frmVacationBonus));
+      LaunchChildForm(typeof (frmVacationBonus));
     }
 
     private void traceToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(frmTrace));
+      LaunchChildForm(typeof (frmTrace));
     }
 
     private void fileToolStripMenuItemOpen_Click(object sender, EventArgs e)
@@ -120,33 +118,31 @@ namespace AW.Winforms.Helpers
       var dr = openFileDialogProject.ShowDialog();
 
       if (dr == DialogResult.OK)
-      {
-          DoFileOpen(openFileDialogProject.FileName);
-      }
+        DoFileOpen(openFileDialogProject.FileName);
     }
 
     private void DoFileOpen(string fileName)
     {
       if (Path.GetExtension(fileName).Equals(".lgp", StringComparison.InvariantCultureIgnoreCase))
-      try
-      {
-        var projectToBrowse = Project.Load(fileName);
-        LaunchChildForm(typeof(FrmEntityViewer),projectToBrowse);
-
-      }
-      catch (SerializationException ex)
-      {
-        throw new ApplicationException(string.Format("The specified file \"{0}\" is not a valid LLBLGen Pro project file. Please verify that the project file is valid, that it has been saved in the most recent version available, and then try again.", fileName), ex);
-      }
+        try
+        {
+          var projectToBrowse = Project.Load(fileName);
+          LaunchChildForm(typeof (FrmEntityViewer), projectToBrowse);
+        }
+        catch (SerializationException ex)
+        {
+          throw new ApplicationException(string.Format("The specified file \"{0}\" is not a valid LLBLGen Pro project file. Please verify that the project file is valid, that it has been saved in the most recent version available, and then try again.", fileName), ex);
+        }
       else
       {
-        var frmQueryRunner = LaunchChildForm(typeof( FrmQueryRunner)) as FrmQueryRunner;
+        var frmQueryRunner = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
         frmQueryRunner.DoFileOpen(fileName);
       }
-        mruHandlerProject.AddRecentlyUsedFile(fileName);
+      openFileDialogProject.InitialDirectory = Path.GetDirectoryName(fileName);
+      mruHandlerProject.AddRecentlyUsedFile(fileName);
     }
 
-    private void mruHandlerProject_MRUItemClicked(object sender, MostRecentlyUsedHandler.MRUItemClickedEventArgs e)
+    private void mruHandlerProject_MRUItemClicked(object sender, MRUItemClickedEventArgs e)
     {
       DoFileOpen(e.File);
     }
@@ -175,44 +171,43 @@ namespace AW.Winforms.Helpers
 
     private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      foreach (Form childForm in MdiChildren)
+      foreach (var childForm in MdiChildren)
       {
         childForm.Close();
       }
     }
+
     #endregion
 
     private void adHocLINQQueryRunnerToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(FrmQueryRunner));
+      LaunchChildForm(typeof (FrmQueryRunner));
     }
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData);
+      LaunchChildForm(typeof (FrmEntityViewer), MetaSingletons.MetaData);
     }
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(FrmEntitiesAndFields));
+      LaunchChildForm(typeof (FrmEntitiesAndFields));
     }
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
     {
-      var a = (Array)e.Data.GetData(DataFormats.FileDrop);
-      if (a != null)
+      var files = (IEnumerable<string>) e.Data.GetData(DataFormats.FileDrop);
+      if (files != null)
       {
-        var s = a.GetValue(0).ToString();
         Activate();
-        DoFileOpen(s);
+        foreach (var file in files)
+          DoFileOpen(file);
       }
     }
 
     private void frmMain_DragOver(object sender, DragEventArgs e)
     {
-      if (e.Data.GetDataPresent(DataFormats.FileDrop))
-        e.Effect = DragDropEffects.Move;
-      else e.Effect = DragDropEffects.None;
+      e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
     }
   }
 }

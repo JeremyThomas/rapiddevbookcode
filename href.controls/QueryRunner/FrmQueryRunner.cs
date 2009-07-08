@@ -132,6 +132,11 @@ namespace AW.Winforms.Helpers.QueryRunner
       var t = from tabs in tabControl.TabPages.Cast<TabPage>()
               where File.Exists(tabs.ToolTipText)
               select tabs.ToolTipText;
+      return CreateStringCollection(t);
+    }
+
+    private static StringCollection CreateStringCollection(IEnumerable<string> t)
+    {
       var openFiles = new StringCollection();
       openFiles.AddRange(t.ToArray());
       return openFiles;

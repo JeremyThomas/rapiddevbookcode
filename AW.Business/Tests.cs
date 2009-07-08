@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using AW.Data;
 
 namespace AW.Business
@@ -104,7 +105,7 @@ namespace AW.Business
     /// Test fetching the CustomerID, SalesOrderID, AddressId of all customers which have addresses and may have orders
     /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14210
     /// </summary>
-    public static object LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(int maxNumberOfItemsToReturn)
+    public static IQueryable LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(int maxNumberOfItemsToReturn)
     {
       var customers = MetaSingletons.MetaData.Customer.AsQueryable();
       //var customersDerivedTable = customers.Select(customer => customer);

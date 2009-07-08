@@ -101,6 +101,7 @@
       this.textBoxScript.Size = new System.Drawing.Size(841, 280);
       this.textBoxScript.TabIndex = 0;
       this.textBoxScript.Text = resources.GetString("textBoxScript.Text");
+      this.textBoxScript.WordWrap = false;
       this.textBoxScript.DragDrop += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragDrop);
       this.textBoxScript.MouseDown += new System.Windows.Forms.MouseEventHandler(this.textBoxScript_MouseDown);
       this.textBoxScript.DragEnter += new System.Windows.Forms.DragEventHandler(this.textBoxScript_DragEnter);

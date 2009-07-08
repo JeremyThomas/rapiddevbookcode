@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using System.Windows.Forms;
+using System.Linq.Dynamic;
 using AW.Business;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -50,15 +50,16 @@ namespace AW.Test
 
     #endregion
 
+    const int MaxNumberOfItemsToReturn = 5;
+
     /// <summary>
-    ///A test for GetCustomerViewTypedView
-    ///</summary>
+    /// A test for GetCustomerViewTypedView
+    /// </summary>
     [TestMethod]
     public void GetCustomerViewTypedViewTest()
     {
-      var maxNumberOfItemsToReturn = 5;
-      var actual = CustomerQueries.GetCustomerViewTypedView(maxNumberOfItemsToReturn);
-      Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count);
+      var actual = CustomerQueries.GetCustomerViewTypedView(MaxNumberOfItemsToReturn);
+      Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
     }
 
     /// <summary>
@@ -88,9 +89,7 @@ namespace AW.Test
     [TestMethod]
     public void GetCustomerListAnonymousLinqTest()
     {
-      var maxNumberOfItemsToReturn = 5;
-      var actual = new BindingSource(CustomerQueries.GetCustomerListAnonymousLinq(maxNumberOfItemsToReturn), "");
-      Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count);
+      Assert.AreEqual(MaxNumberOfItemsToReturn, CustomerQueries.GetCustomerListAnonymousLinq(MaxNumberOfItemsToReturn).Count());
     }
 
     /// <summary>
@@ -99,9 +98,8 @@ namespace AW.Test
     [TestMethod]
     public void GetCustomerListLinqedTypedListTest()
     {
-      var maxNumberOfItemsToReturn = 5;
-      var actual = CustomerQueries.GetCustomerListLinqedTypedList(maxNumberOfItemsToReturn);
-      Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count());
+      var actual = CustomerQueries.GetCustomerListLinqedTypedList(MaxNumberOfItemsToReturn);
+      Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
     }
 
     /// <summary>
@@ -110,9 +108,8 @@ namespace AW.Test
     [TestMethod]
     public void GetCustomerListTypedListTest()
     {
-      var maxNumberOfItemsToReturn = 5;
-      var actual = CustomerQueries.GetCustomerListTypedList(maxNumberOfItemsToReturn);
-      Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count());
+      var actual = CustomerQueries.GetCustomerListTypedList(MaxNumberOfItemsToReturn);
+      Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
     }
   }
 }
