@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.Properties;
 using AW.Winforms.Helpers.QueryRunner;
-using SD.LLBLGen.Pro.ApplicationCore;
 
 namespace AW.Winforms.Helpers
 {
@@ -118,26 +116,14 @@ namespace AW.Winforms.Helpers
       var dr = openFileDialogProject.ShowDialog();
 
       if (dr == DialogResult.OK)
-        DoFileOpen(openFileDialogProject.FileName);
+        DoFileOpen(openFileDialogProject.FileNames);
     }
 
     private void DoFileOpen(string fileName)
     {
-      if (Path.GetExtension(fileName).Equals(".lgp", StringComparison.InvariantCultureIgnoreCase))
-        try
-        {
-          var projectToBrowse = Project.Load(fileName);
-          LaunchChildForm(typeof (FrmEntityViewer), projectToBrowse);
-        }
-        catch (SerializationException ex)
-        {
-          throw new ApplicationException(string.Format("The specified file \"{0}\" is not a valid LLBLGen Pro project file. Please verify that the project file is valid, that it has been saved in the most recent version available, and then try again.", fileName), ex);
-        }
-      else
-      {
-        var frmQueryRunner = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
-        frmQueryRunner.DoFileOpen(fileName);
-      }
+      var frmQueryRunner = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
+      if (frmQueryRunner != null) frmQueryRunner.DoFileOpen(fileName);
+
       openFileDialogProject.InitialDirectory = Path.GetDirectoryName(fileName);
       mruHandlerProject.AddRecentlyUsedFile(fileName);
     }
@@ -196,13 +182,18 @@ namespace AW.Winforms.Helpers
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
     {
-      var files = (IEnumerable<string>) e.Data.GetData(DataFormats.FileDrop);
+      var files = (string[]) e.Data.GetData(DataFormats.FileDrop);
       if (files != null)
       {
         Activate();
-        foreach (var file in files)
-          DoFileOpen(file);
+        DoFileOpen(files);
       }
+    }
+
+    private void DoFileOpen(params string[] fileNames)
+    {
+      foreach (var fileName in fileNames)
+        DoFileOpen(fileName);
     }
 
     private void frmMain_DragOver(object sender, DragEventArgs e)

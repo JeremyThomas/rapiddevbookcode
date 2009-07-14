@@ -54,7 +54,6 @@
       this.splitContainerValues = new System.Windows.Forms.SplitContainer();
       this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       this.panel1 = new System.Windows.Forms.Panel();
-      this.buttonRunPlugin = new System.Windows.Forms.Button();
       this.textBoxObjectBeingBrowsed = new System.Windows.Forms.TextBox();
       this.checkBoxShowNonPublicMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowStaticMembers = new System.Windows.Forms.CheckBox();
@@ -278,11 +277,9 @@
       this.propertyGrid1.Size = new System.Drawing.Size(551, 202);
       this.propertyGrid1.TabIndex = 0;
       this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
-      this.propertyGrid1.SelectedObjectsChanged += new System.EventHandler(this.propertyGrid1_SelectedObjectsChanged);
       // 
       // panel1
       // 
-      this.panel1.Controls.Add(this.buttonRunPlugin);
       this.panel1.Controls.Add(this.textBoxObjectBeingBrowsed);
       this.panel1.Controls.Add(this.checkBoxShowNonPublicMembers);
       this.panel1.Controls.Add(this.checkBoxShowStaticMembers);
@@ -292,17 +289,6 @@
       this.panel1.Name = "panel1";
       this.panel1.Size = new System.Drawing.Size(551, 63);
       this.panel1.TabIndex = 1;
-      // 
-      // buttonRunPlugin
-      // 
-      this.buttonRunPlugin.Location = new System.Drawing.Point(439, 4);
-      this.buttonRunPlugin.Name = "buttonRunPlugin";
-      this.buttonRunPlugin.Size = new System.Drawing.Size(75, 23);
-      this.buttonRunPlugin.TabIndex = 4;
-      this.buttonRunPlugin.Text = "RunPlugin";
-      this.buttonRunPlugin.UseVisualStyleBackColor = true;
-      this.buttonRunPlugin.Visible = false;
-      this.buttonRunPlugin.Click += new System.EventHandler(this.toolStripButtonRunPlugin_Click);
       // 
       // textBoxObjectBeingBrowsed
       // 
@@ -520,7 +506,6 @@
       this.saveToolStripButton.Name = "saveToolStripButton";
       this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
       this.saveToolStripButton.Text = "&Save";
-      this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
       // 
       // printToolStripButton
       // 
@@ -677,7 +662,6 @@
     private System.Windows.Forms.CheckBox checkBoxShowNonPublicMembers;
     private System.Windows.Forms.CheckBox checkBoxShowStaticMembers;
     private System.Windows.Forms.TextBox textBoxObjectBeingBrowsed;
-    private System.Windows.Forms.Button buttonRunPlugin;
     private System.Windows.Forms.ToolStripComboBox toolStripComboBoxClipboardCopyMode;
 
   }

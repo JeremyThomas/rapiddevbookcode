@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
-using AW.LLBLGen.Plugins;
 using AW.Winforms.Helpers.Properties;
-using CSScriptLibrary;
 using DynamicTable;
-using SD.LLBLGen.Pro.ApplicationCore;
-using SD.LLBLGen.Pro.ApplicationCore.Entities;
-using SD.LLBLGen.Pro.DBDriverCore;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.EntityViewer
@@ -56,8 +50,8 @@ namespace AW.Winforms.Helpers.EntityViewer
     private void FrmEntityViewer_Load(object sender, EventArgs e)
     {
       //((TreeView) (ObjectBrowser.ActiveControl)).SelectedNode = ((TreeView) (ObjectBrowser.ActiveControl)).TopNode;
-  //    propertyGrid1.SelectedObject = ObjectBeingBrowsed;
-    //  propertyGrid1.RefreshSelectedObject();
+      //    propertyGrid1.SelectedObject = ObjectBeingBrowsed;
+      //  propertyGrid1.RefreshSelectedObject();
       splitContainerValues.Panel2Collapsed = true;
       DoingObjectBrowserNodeSelection = true;
       try
@@ -78,7 +72,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       //checkBoxShowStaticMembers.Checked = ObjectBrowser.ShowStaticMembers;
       //checkBoxShowNonPublicMembers.Checked = ObjectBrowser.ShowNonPublicMembers;
       //checkBoxShowDataTypes.Checked = ObjectBrowser.ShowDataTypes;
-      checkBoxShowStaticMembers_CheckedChanged(this,e);
+      checkBoxShowStaticMembers_CheckedChanged(this, e);
       checkBoxShowNonPublicMembers_CheckedChanged(this, e);
       checkBoxShowDataTypes_CheckedChanged(this, e);
     }
@@ -98,12 +92,10 @@ namespace AW.Winforms.Helpers.EntityViewer
       DoingObjectBrowserNodeSelection = true;
       try
       {
-        toolStripStatusLabelSelectePath.Text = (((TreeView)(ObjectBrowser.ActiveControl)).SelectedNode).FullPath;
+        toolStripStatusLabelSelectePath.Text = (((TreeView) (ObjectBrowser.ActiveControl)).SelectedNode).FullPath;
         propertyGrid1.SelectedObject = sender;
         if (!ShowEnumerable(sender as IEnumerable))
-        {
           bindingSourceEnumerable.DataSource = null;
-        }
       }
       finally
       {
@@ -117,45 +109,16 @@ namespace AW.Winforms.Helpers.EntityViewer
       splitContainerValues.Panel2Collapsed = !iSEnumerable;
       return iSEnumerable;
     }
+
     private void selectObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
       if (propertyGrid1.SelectedGridItem.Expandable)
         propertyGrid1.SelectedObject = propertyGrid1.SelectedGridItem.Value;
     }
 
-    private void propertyGrid1_SelectedObjectsChanged(object sender, EventArgs e)
-    {
-      if (propertyGrid1.SelectedObject is Project)
-      {
-        Text = "ProjectBrowser";
-        buttonRunPlugin.Visible = true;
-      }
-    }
-
-    private Project TheProject
-    {
-      get { return (Project) ObjectBeingBrowsed; }
-    }
-
     public object ObjectBeingBrowsed
     {
       get { return ObjectBrowser.ObjectToBrowse; }
-    }
-
-    private void toolStripButtonRunPlugin_Click(object sender, EventArgs e)
-    {
-      PluginBase pluginToTest = new RenameRelatedFieldsPlugin {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack) AWHelper.ApplicationOutputLogLine}}};
-      //PluginBase pluginToTest = new RefreshCustomProperties {ProjectToTarget = TheProject, Callbacks = new Hashtable {{ProgressCallBack.LogLineToApplicationOutputCallBack, (ApplicationOutputLogLineCallBack) ApplicationOutputLogLine}}};
-      pluginToTest.Entities.AddRange(TheProject.Entities);
-      pluginToTest.GetConfigurationControl();
-      pluginToTest.Execute();
-    }
-
-
-
-    private void saveToolStripButton_Click(object sender, EventArgs e)
-    {
-      TheProject.Save();
     }
 
     private void copyToolStripButton_Click(object sender, EventArgs e)
@@ -172,7 +135,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void toolStripComboBoxClipboardCopyMode_SelectedIndexChanged(object sender, EventArgs e)
     {
-      dataGridViewEnumerable.ClipboardCopyMode = (DataGridViewClipboardCopyMode)toolStripComboBoxClipboardCopyMode.SelectedItem;
+      dataGridViewEnumerable.ClipboardCopyMode = (DataGridViewClipboardCopyMode) toolStripComboBoxClipboardCopyMode.SelectedItem;
     }
 
     private void copyObjectRefToolStripMenuItem_Click(object sender, EventArgs e)
@@ -197,8 +160,6 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
     {
-
     }
   }
-
 }

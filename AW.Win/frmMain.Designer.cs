@@ -277,9 +277,9 @@ namespace AW.Winforms.Helpers
           // 
           // openFileDialogProject
           // 
-          this.openFileDialogProject.FileName = "AQDRenamedEntities.lgp";
-          this.openFileDialogProject.Filter = "\"LLBL Project Files\"|*.lgp|C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)" +
-              "|*.* ";
+          this.openFileDialogProject.Filter = "C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)|*.*";
+          this.openFileDialogProject.Multiselect = true;
+          this.openFileDialogProject.Title = "Open query script files";
           // 
           // mruHandlerProject
           // 

@@ -22,12 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LinqToSQL", "AW.LinqToSQ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test", "AW.Test\AW.Test.csproj", "{80418BDD-8FF2-4F01-8782-AD22A496AF79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RefreshCustomProperties", "LLBLGen.Plugins\Refresh Custom Properties\RefreshCustomProperties.csproj", "{730F2F3D-0145-4A61-B7F8-E3926472E16A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.Plugins", "LLBLGen.Plugins\AW.LLBLGen.Plugins\AW.LLBLGen.Plugins.csproj", "{0455FCEB-846A-42C7-AECB-47A895213FF2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBLGen.Plugins", "LLBLGen.Plugins", "{690C6BC7-AAEF-4E18-A497-5C301CAD65FB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2CA-4CCC-9960-748D511B5BAC}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\ACorns.Hawkeye.Core.dll = Lib\ACorns.Hawkeye.Core.dll
@@ -59,9 +53,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E5E0-4B67-A97C-464F8697A452}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml
+		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll
+		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -83,17 +88,9 @@ Global
 		SccProjectUniqueName6 = href.controls\\AW.Winforms.Helpers.csproj
 		SccProjectName6 = href.controls
 		SccLocalPath6 = href.controls
-		SccProjectUniqueName7 = LLBLGen.Plugins\\Refresh\u0020Custom\u0020Properties\\RefreshCustomProperties.csproj
-		SccProjectTopLevelParentUniqueName7 = AW.sln
-		SccProjectName7 = LLBLGen.Plugins/Refresh\u0020Custom\u0020Properties
-		SccLocalPath7 = LLBLGen.Plugins\\Refresh\u0020Custom\u0020Properties
-		SccProjectUniqueName8 = LLBLGen.Plugins\\AW.LLBLGen.Plugins\\AW.LLBLGen.Plugins.csproj
-		SccProjectTopLevelParentUniqueName8 = AW.sln
-		SccProjectName8 = LLBLGen.Plugins/AW.LLBLGen.Plugins
-		SccLocalPath8 = LLBLGen.Plugins\\AW.LLBLGen.Plugins
-		SccProjectUniqueName9 = DynamicQuery\\DynamicQuery.csproj
-		SccProjectName9 = DynamicQuery
-		SccLocalPath9 = DynamicQuery
+		SccProjectUniqueName7 = DynamicQuery\\DynamicQuery.csproj
+		SccProjectName7 = DynamicQuery
+		SccLocalPath7 = DynamicQuery
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -127,14 +124,6 @@ Global
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{730F2F3D-0145-4A61-B7F8-E3926472E16A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{730F2F3D-0145-4A61-B7F8-E3926472E16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{730F2F3D-0145-4A61-B7F8-E3926472E16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{730F2F3D-0145-4A61-B7F8-E3926472E16A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0455FCEB-846A-42C7-AECB-47A895213FF2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -144,7 +133,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{0455FCEB-846A-42C7-AECB-47A895213FF2} = {690C6BC7-AAEF-4E18-A497-5C301CAD65FB}
-		{730F2F3D-0145-4A61-B7F8-E3926472E16A} = {690C6BC7-AAEF-4E18-A497-5C301CAD65FB}
+		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 	EndGlobalSection
 EndGlobal
