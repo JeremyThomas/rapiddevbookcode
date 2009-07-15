@@ -3,12 +3,13 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using AW.Data.EntityClasses;
+using AW.Helper;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
 {
   [DisplayName("An Order")]
-  [MetadataType(typeof (SalesOrderHeaderMetadata))]
+  [MetadataType(typeof (ISalesOrderHeaderMetadata))]
   public partial class SalesOrderHeaderEntity
   {
     public const string PurchaseOrderError = "Purchase order number must be 4 - 8 characters.";
@@ -16,7 +17,7 @@ namespace AW.Data.EntityClasses
 
     [Category("Sales")]
     [Description("You can use this page to find out what is happening with an order")]
-    private interface SalesOrderHeaderMetadata
+    private interface ISalesOrderHeaderMetadata
     {
       [RegularExpression(PurchaseOrderRegularExpression, ErrorMessage = PurchaseOrderError)]
       object PurchaseOrderNumber { get; set; }

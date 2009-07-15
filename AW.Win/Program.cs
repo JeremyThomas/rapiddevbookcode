@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Helper;
 
 namespace AW.Winforms.Helpers
 {
@@ -17,7 +18,7 @@ namespace AW.Winforms.Helpers
     {
       using (var dialog = new ThreadExceptionDialog(e.Exception))
       {
-        GlobalHelper.TraceOut(e.Exception.ToString());
+        GeneralHelper.TraceOut(e.Exception.ToString());
         dialog.ShowDialog();
       }
     }

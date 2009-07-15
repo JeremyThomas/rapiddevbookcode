@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{78186ECB-5408-400B-B1A7-10F4A150BC56}</ProjectGuid>
+    <ProjectGuid>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AW.Business</RootNamespace>
-    <AssemblyName>AW.Business</AssemblyName>
+    <RootNamespace>AW.Helper</RootNamespace>
+    <AssemblyName>AW.Helper</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -37,51 +37,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</HintPath>
-    </Reference>
-    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
-    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerListLinqedTypedList.cs" />
-    <Compile Include="CustomerQueries.cs" />
-    <Compile Include="LookUpQueries.cs" />
-    <Compile Include="OrganizationManager.cs" />
-    <Compile Include="SalesOrderManager.cs" />
+    <Compile Include="GeneralHelper.cs" />
+    <Compile Include="MetaDataHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AW.Data\AW.Data.csproj">
-      <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
-      <Name>AW.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">
-      <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
-      <Name>AW.Helper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AW.LinqToSQL\AW.LinqToSQL.csproj">
-      <Project>{3A769AFA-83F9-4CB0-8F69-60B8487055E0}</Project>
-      <Name>AW.LinqToSQL</Name>
-    </ProjectReference>
+    <Compile Include="Validation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Ancillary\AdventureWorks.snk">

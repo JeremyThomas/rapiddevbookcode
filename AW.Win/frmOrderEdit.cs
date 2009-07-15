@@ -2,6 +2,7 @@ using System;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Helper;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -126,7 +127,7 @@ namespace AW.Winforms.Helpers
     private void tbPurchaseOrder_TextChanged(object sender, EventArgs e)
     {
       //So we validate as we type rather than when we focus off the control
-      Validation.ValidatePropertyAssignment(tbPurchaseOrder.Text, _order, (int) SalesOrderHeaderFieldIndex.PurchaseOrderNumber);
+      Validation.ValidatePropertyAssignment(_order, (int) SalesOrderHeaderFieldIndex.PurchaseOrderNumber, tbPurchaseOrder.Text);
       // update the errors at GUI 
       myError.UpdateBinding();
     }
@@ -140,7 +141,7 @@ namespace AW.Winforms.Helpers
 
     private void toolStripButtonViewEntity_Click(object sender, EventArgs e)
     {
-      ((FrmMain)MdiParent).LaunchChildForm(typeof(FrmEntityViewer), _order);
+      ((FrmMain) MdiParent).LaunchChildForm(typeof (FrmEntityViewer), _order);
     }
 
     private void toolStripButtonRefetch_Click(object sender, EventArgs e)

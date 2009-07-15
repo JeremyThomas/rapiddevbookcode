@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Linq;
 using AW.Data;
+using AW.Helper;
 
 namespace AW.Business
 {
@@ -113,7 +114,7 @@ namespace AW.Business
       customersDerivedTable = customers.Where(c => c.CustomerID > 10); //To force a derived table
 
 //      var q = AWHelper.MetaData.Customer.SelectMany(customer => Customer.CustomerAddresses, (customer, ca) => new {customer, ca}).GroupJoin(AWHelper.MetaData.SalesOrderHeader, @t => @t.customer.CustomerID, soh => soh.CustomerID, (@t, oc) => new {@t, oc}).SelectMany(@t => @t.oc.DefaultIfEmpty(), (@t, nullableSOH) => new {@t.@t.customer.CustomerID, @t.@t.ca.AddressId, nullableSOH.SalesOrderID});
-      GlobalHelper.TraceOut("ExplicitJoin with Derived Table");
+      GeneralHelper.TraceOut("ExplicitJoin with Derived Table");
       var q = from customer in customersDerivedTable
               join soh in
                 (from s in MetaSingletons.MetaData.SalesOrderHeader where s.SalesPersonID > 22 select s) on customer.CustomerID equals soh.CustomerID into oc

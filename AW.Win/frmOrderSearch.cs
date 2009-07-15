@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using AW.Business;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Helper;
 using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers
@@ -210,7 +211,7 @@ namespace AW.Winforms.Helpers
 
     private void dgResults_DataError(object sender, DataGridViewDataErrorEventArgs e)
     {
-      GlobalHelper.TraceOut(e.Exception.Message);
+      GeneralHelper.TraceOut(e.Exception.Message);
     }
 
   }

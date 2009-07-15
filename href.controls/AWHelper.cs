@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Helper;
 using JesseJohnston;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -89,7 +90,7 @@ namespace AW.Winforms.Helpers
           if (screen.WorkingArea.Contains(location))
           {
             form.Location = location;
-            GlobalHelper.DebugOut("setting form: '" + form + "' location to: " + location);
+            GeneralHelper.DebugOut("setting form: '" + form + "' location to: " + location);
             break;
           }
         }
@@ -149,14 +150,6 @@ namespace AW.Winforms.Helpers
     }
 
     #endregion
-
-    public static void ApplicationOutputLogLine(string lineToLog, string source, bool isVerboseMessage, bool appendNewLine)
-    {
-      if (appendNewLine)
-        Trace.WriteLine(lineToLog);
-      else
-        Trace.Write(lineToLog);
-    }
 
     public static bool BindEnumerable(IEnumerable enumerable, BindingSource bindingSource)
     {
