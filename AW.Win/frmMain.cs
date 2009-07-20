@@ -200,5 +200,10 @@ namespace AW.Winforms.Helpers
     {
       e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
     }
+
+    private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      LaunchChildForm(typeof(frmOrganizationStructure));
+    }
   }
 }

@@ -1,11 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using System.Linq;
+using LINQPad;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
 {
   /// <summary>Common base class which is the base class for all generated entities which aren't a subtype of another entity.</summary>
-  public abstract partial class CommonEntityBase
+  public abstract partial class CommonEntityBase : ICustomMemberProvider
   {
     /// <summary>
     /// Called at the end of the initialization routine. Raises Initialized event.
@@ -77,5 +81,28 @@ namespace AW.Data.EntityClasses
 
       base.OnSetValue(fieldIndex, valueToSet, out cancel);
     }
+
+    #region Implementation of ICustomMemberProvider
+
+    public IEnumerable<string> GetNames()
+    {
+      var x = from field in Fields.Cast<IEntityField>()
+              select field.Name;
+      return x;
+    }
+
+    public IEnumerable<Type> GetTypes()
+    {
+      return from field in Fields.Cast<IEntityField>()
+              select field.DataType;
+    }
+
+    public IEnumerable<object> GetValues()
+    {
+      return from field in Fields.Cast<IEntityField>()
+             select field.CurrentValue;
+    }
+
+    #endregion
   }
 }

@@ -96,6 +96,12 @@
     <Compile Include="frmOrderSearch2.Designer.cs">
       <DependentUpon>frmOrderSearch2.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmOrganizationStructure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrganizationStructure.Designer.cs">
+      <DependentUpon>frmOrganizationStructure.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmReconcile.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,9 @@
       <DependentUpon>frmOrderSearch2.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmOrganizationStructure.resx">
+      <DependentUpon>frmOrganizationStructure.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmReconcile.resx">
       <DependentUpon>FrmReconcile.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,6 +205,7 @@
     </Compile>
     <None Include="App.config" />
     <None Include="Properties\DataSources\AW.Data.CollectionClasses.SalesOrderHeaderCollection.datasource" />
+    <None Include="Properties\DataSources\AW.Data.EntityClasses.EmployeeEntity.datasource" />
     <None Include="Properties\DataSources\AW.Data.EntityClasses.SalesOrderHeaderEntity.datasource" />
     <None Include="Properties\DataSources\SD.LLBLGen.Pro.ORMSupportClasses.EntityField.datasource" />
     <None Include="Properties\DataSources\SD.LLBLGen.Pro.ORMSupportClasses.EntityFields.datasource" />

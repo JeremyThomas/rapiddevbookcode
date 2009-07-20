@@ -29,6 +29,7 @@ namespace AW.Winforms.Helpers
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
+          AW.Winforms.Helpers.Properties.Settings settings1 = new AW.Winforms.Helpers.Properties.Settings();
           this.menuStrip1 = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.fileToolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,6 +59,7 @@ namespace AW.Winforms.Helpers
           this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
           this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
+          this.organizationStructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
           this.SuspendLayout();
@@ -147,7 +149,8 @@ namespace AW.Winforms.Helpers
           // 
           this.reportsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.customersToolStripMenuItem,
-            this.organizationToolStripMenuItem});
+            this.organizationToolStripMenuItem,
+            this.organizationStructureToolStripMenuItem});
           this.reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
           this.reportsToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
           this.reportsToolStripMenuItem.Text = "&Reports";
@@ -155,14 +158,14 @@ namespace AW.Winforms.Helpers
           // customersToolStripMenuItem
           // 
           this.customersToolStripMenuItem.Name = "customersToolStripMenuItem";
-          this.customersToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+          this.customersToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
           this.customersToolStripMenuItem.Text = "&Customers";
           this.customersToolStripMenuItem.Click += new System.EventHandler(this.customersToolStripMenuItem_Click);
           // 
           // organizationToolStripMenuItem
           // 
           this.organizationToolStripMenuItem.Name = "organizationToolStripMenuItem";
-          this.organizationToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+          this.organizationToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
           this.organizationToolStripMenuItem.Text = "&Organization";
           this.organizationToolStripMenuItem.Click += new System.EventHandler(this.organizationToolStripMenuItem_Click);
           // 
@@ -269,7 +272,46 @@ namespace AW.Winforms.Helpers
           // 
           // reOpenWindowsToolStripMenuItem
           // 
-          this.reOpenWindowsToolStripMenuItem.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.ReopenWindows;
+          settings1.City = "";
+          settings1.Countries = null;
+          settings1.Country = "";
+          settings1.CustomersSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.DateFrom = new System.DateTime(2008, 8, 24, 21, 34, 1, 0);
+          settings1.DateTo = new System.DateTime(2008, 8, 24, 21, 34, 1, 0);
+          settings1.EntityFieldColumns = null;
+          settings1.EntityViewerSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.FilterOnFromDate = true;
+          settings1.FilterOnToDate = false;
+          settings1.FirstName = "";
+          settings1.FrmEntityViewerSplitterDistance = 289;
+          settings1.LastName = "";
+          settings1.LinqTraceLevel = System.Diagnostics.TraceLevel.Off;
+          settings1.MainWindowSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.MainWindowState = System.Windows.Forms.FormWindowState.Normal;
+          settings1.NumRows = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+          settings1.OpenTraceWindosOnStart = false;
+          settings1.OpenWindows = null;
+          settings1.OrderEditSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.OrderID = "";
+          settings1.OrderSearchSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.OrganizationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.Prefetch = true;
+          settings1.QueryFilesToReopen = null;
+          settings1.ReopenWindows = false;
+          settings1.SettingQueryRunnerSizeAndLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.SettingsKey = "";
+          settings1.State = "";
+          settings1.TraceLevel = System.Diagnostics.TraceLevel.Off;
+          settings1.TraceSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.TraceWindowSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.UseLinq = false;
+          settings1.VacationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings1.Zip = "";
+          this.reOpenWindowsToolStripMenuItem.Checked = settings1.ReopenWindows;
           this.reOpenWindowsToolStripMenuItem.CheckOnClick = true;
           this.reOpenWindowsToolStripMenuItem.Name = "reOpenWindowsToolStripMenuItem";
           this.reOpenWindowsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
@@ -288,6 +330,13 @@ namespace AW.Winforms.Helpers
           this.mruHandlerProject.StorageName = "mru";
           this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
           // 
+          // organizationStructureToolStripMenuItem
+          // 
+          this.organizationStructureToolStripMenuItem.Name = "organizationStructureToolStripMenuItem";
+          this.organizationStructureToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+          this.organizationStructureToolStripMenuItem.Text = "Organization Structure";
+          this.organizationStructureToolStripMenuItem.Click += new System.EventHandler(this.organizationStructureToolStripMenuItem_Click);
+          // 
           // FrmMain
           // 
           this.AllowDrop = true;
@@ -295,13 +344,13 @@ namespace AW.Winforms.Helpers
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(617, 443);
           this.Controls.Add(this.menuStrip1);
-          this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", global::AW.Winforms.Helpers.Properties.Settings.Default, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", settings1, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.IsMdiContainer = true;
           this.MainMenuStrip = this.menuStrip1;
           this.Name = "FrmMain";
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
           this.Text = "Adventure Works";
-          this.WindowState = global::AW.Winforms.Helpers.Properties.Settings.Default.MainWindowState;
+          this.WindowState = settings1.MainWindowState;
           this.Load += new System.EventHandler(this.frmMain_Load);
           this.Shown += new System.EventHandler(this.frmMain_Shown);
           this.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);
@@ -347,5 +396,6 @@ namespace AW.Winforms.Helpers
         private System.Windows.Forms.ToolStripMenuItem adHocLINQQueryRunnerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewMetadataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewEntitiesAndFieldsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem organizationStructureToolStripMenuItem;
     }
 }

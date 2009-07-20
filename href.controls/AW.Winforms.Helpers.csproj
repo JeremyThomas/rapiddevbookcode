@@ -105,6 +105,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWHelper.cs" />
+    <Compile Include="Controls\DataTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\DropDownTypeEditor.cs" />
+    <Compile Include="Controls\FieldTypeEditor.cs" />
     <Compile Include="EntityViewer\FrmEntitiesAndFields.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +181,9 @@
     <Compile Include="TextBoxTraceListener.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\DataTreeView.resx">
+      <DependentUpon>DataTreeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EntityViewer\FrmEntitiesAndFields.resx">
       <DependentUpon>FrmEntitiesAndFields.cs</DependentUpon>
     </EmbeddedResource>
