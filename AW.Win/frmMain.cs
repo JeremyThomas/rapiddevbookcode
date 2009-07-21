@@ -203,7 +203,7 @@ namespace AW.Winforms.Helpers
 
     private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(frmOrganizationStructure));
+      LaunchChildForm(typeof(FrmOrganizationStructure));
     }
   }
 }

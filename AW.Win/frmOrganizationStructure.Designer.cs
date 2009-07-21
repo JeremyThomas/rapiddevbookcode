@@ -1,6 +1,6 @@
 ﻿namespace AW.Winforms.Helpers
 {
-  partial class frmOrganizationStructure
+  partial class FrmOrganizationStructure
   {
     /// <summary>
     /// Required designer variable.
@@ -29,21 +29,21 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrganizationStructure));
-      this.dataTreeViewrOganizationStructure = new Chaliy.Windows.Forms.DataTreeView();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmOrganizationStructure));
       this.employeeEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.employeeEntityBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+      this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+      this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
       this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-      this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
       this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-      this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorDeleteItem = new System.Windows.Forms.ToolStripButton();
       this.employeeEntityBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
       this.employeeEntityDataGridView = new System.Windows.Forms.DataGridView();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,31 +63,23 @@
       this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataTreeViewrOganizationStructure = new Chaliy.Windows.Forms.DataTreeView();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingNavigator)).BeginInit();
       this.employeeEntityBindingNavigator.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityDataGridView)).BeginInit();
       this.SuspendLayout();
       // 
-      // dataTreeViewrOganizationStructure
-      // 
-      this.dataTreeViewrOganizationStructure.DataMember = null;
-      this.dataTreeViewrOganizationStructure.DataSource = this.employeeEntityBindingSource;
-      this.dataTreeViewrOganizationStructure.Dock = System.Windows.Forms.DockStyle.Top;
-      this.dataTreeViewrOganizationStructure.FullRowSelect = true;
-      this.dataTreeViewrOganizationStructure.HideSelection = false;
-      this.dataTreeViewrOganizationStructure.HotTracking = true;
-      this.dataTreeViewrOganizationStructure.IDColumn = "EmployeeID";
-      this.dataTreeViewrOganizationStructure.Location = new System.Drawing.Point(0, 0);
-      this.dataTreeViewrOganizationStructure.Name = "dataTreeViewrOganizationStructure";
-      this.dataTreeViewrOganizationStructure.NameColumn = "EmployeeDisplayName";
-      this.dataTreeViewrOganizationStructure.ParentIDColumn = "ManagerID";
-      this.dataTreeViewrOganizationStructure.Size = new System.Drawing.Size(422, 209);
-      this.dataTreeViewrOganizationStructure.TabIndex = 0;
-      // 
       // employeeEntityBindingSource
       // 
       this.employeeEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.EmployeeEntity);
+      // 
+      // imageList1
+      // 
+      this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+      this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+      this.imageList1.Images.SetKeyName(0, "");
+      this.imageList1.Images.SetKeyName(1, "");
       // 
       // employeeEntityBindingNavigator
       // 
@@ -118,6 +110,31 @@
       this.employeeEntityBindingNavigator.Size = new System.Drawing.Size(422, 25);
       this.employeeEntityBindingNavigator.TabIndex = 1;
       this.employeeEntityBindingNavigator.Text = "bindingNavigator1";
+      // 
+      // bindingNavigatorAddNewItem
+      // 
+      this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
+      this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
+      this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorAddNewItem.Text = "Add new";
+      // 
+      // bindingNavigatorCountItem
+      // 
+      this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
+      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
+      this.bindingNavigatorCountItem.Text = "of {0}";
+      this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
+      // 
+      // bindingNavigatorDeleteItem
+      // 
+      this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
+      this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
+      this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorDeleteItem.Text = "Delete";
       // 
       // bindingNavigatorMoveFirstItem
       // 
@@ -151,16 +168,9 @@
       this.bindingNavigatorPositionItem.Text = "0";
       this.bindingNavigatorPositionItem.ToolTipText = "Current position";
       // 
-      // bindingNavigatorCountItem
-      // 
-      this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
-      this.bindingNavigatorCountItem.Text = "of {0}";
-      this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-      // 
       // bindingNavigatorSeparator1
       // 
-      this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator";
+      this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
       this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
       // 
       // bindingNavigatorMoveNextItem
@@ -183,26 +193,8 @@
       // 
       // bindingNavigatorSeparator2
       // 
-      this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator";
+      this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
       this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
-      // 
-      // bindingNavigatorAddNewItem
-      // 
-      this.bindingNavigatorAddNewItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.bindingNavigatorAddNewItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorAddNewItem.Image")));
-      this.bindingNavigatorAddNewItem.Name = "bindingNavigatorAddNewItem";
-      this.bindingNavigatorAddNewItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorAddNewItem.Size = new System.Drawing.Size(23, 22);
-      this.bindingNavigatorAddNewItem.Text = "Add new";
-      // 
-      // bindingNavigatorDeleteItem
-      // 
-      this.bindingNavigatorDeleteItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.bindingNavigatorDeleteItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorDeleteItem.Image")));
-      this.bindingNavigatorDeleteItem.Name = "bindingNavigatorDeleteItem";
-      this.bindingNavigatorDeleteItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorDeleteItem.Size = new System.Drawing.Size(23, 22);
-      this.bindingNavigatorDeleteItem.Text = "Delete";
       // 
       // employeeEntityBindingNavigatorSaveItem
       // 
@@ -347,7 +339,26 @@
       this.dataGridViewTextBoxColumn15.HeaderText = "ModifiedDate";
       this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
       // 
-      // frmOrganizationStructure
+      // dataTreeViewrOganizationStructure
+      // 
+      this.dataTreeViewrOganizationStructure.DataMember = "";
+      this.dataTreeViewrOganizationStructure.DataSource = this.employeeEntityBindingSource;
+      this.dataTreeViewrOganizationStructure.Dock = System.Windows.Forms.DockStyle.Top;
+      this.dataTreeViewrOganizationStructure.FullRowSelect = true;
+      this.dataTreeViewrOganizationStructure.HideSelection = false;
+      this.dataTreeViewrOganizationStructure.HotTracking = true;
+      this.dataTreeViewrOganizationStructure.IDColumn = "EmployeeID";
+      this.dataTreeViewrOganizationStructure.ImageIndex = 0;
+      this.dataTreeViewrOganizationStructure.ImageList = this.imageList1;
+      this.dataTreeViewrOganizationStructure.Location = new System.Drawing.Point(0, 0);
+      this.dataTreeViewrOganizationStructure.Name = "dataTreeViewrOganizationStructure";
+      this.dataTreeViewrOganizationStructure.NameColumn = "LoginID";
+      this.dataTreeViewrOganizationStructure.ParentIDColumn = "ManagerID";
+      this.dataTreeViewrOganizationStructure.SelectedImageIndex = 0;
+      this.dataTreeViewrOganizationStructure.Size = new System.Drawing.Size(422, 209);
+      this.dataTreeViewrOganizationStructure.TabIndex = 0;
+      // 
+      // FrmOrganizationStructure
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -355,9 +366,9 @@
       this.Controls.Add(this.employeeEntityDataGridView);
       this.Controls.Add(this.employeeEntityBindingNavigator);
       this.Controls.Add(this.dataTreeViewrOganizationStructure);
-      this.Name = "frmOrganizationStructure";
+      this.Name = "FrmOrganizationStructure";
       this.Tag = "True";
-      this.Text = "frmOrganizationStructure";
+      this.Text = "Organization Structure";
       this.Load += new System.EventHandler(this.frmOrganizationStructure_Load);
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingNavigator)).EndInit();
@@ -404,5 +415,6 @@
     private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+    private System.Windows.Forms.ImageList imageList1;
   }
 }

@@ -108,8 +108,6 @@
     <Compile Include="Controls\DataTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\DropDownTypeEditor.cs" />
-    <Compile Include="Controls\FieldTypeEditor.cs" />
     <Compile Include="EntityViewer\FrmEntitiesAndFields.cs">
       <SubType>Form</SubType>
     </Compile>
