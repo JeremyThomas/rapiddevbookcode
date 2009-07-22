@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Data.EntityClasses;
+using AW.Helper;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
@@ -21,11 +22,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       {
         var entityNode = treeViewEntities.Nodes.Add(entityType.Name);
 
-        var browsableProperties = from p in entityType.GetProperties()
-                                  let browsableAtt = p.GetCustomAttributes(typeof (BrowsableAttribute), true).FirstOrDefault() as BrowsableAttribute
-                                  where browsableAtt == null || browsableAtt.Browsable
-                                  select p;
-        foreach (var browsableProperty in browsableProperties)
+        foreach (var browsableProperty in MetaDataHelper.GetBrowsableProperties(entityType))
           entityNode.Nodes.Add(browsableProperty.Name);
 
         //foreach (var info in entityType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
@@ -45,14 +42,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     public static IEnumerable<Type> GetEntitiesTypes()
     {
-      return GetDescendance(typeof (CommonEntityBase));
-    }
-
-    public static IEnumerable<Type> GetDescendance(Type ancestorType)
-    {
-      return from type in ancestorType.Assembly.GetExportedTypes()
-             where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
-             select type;
+      return MetaDataHelper.GetDescendance(typeof (CommonEntityBase));
     }
 
     private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)

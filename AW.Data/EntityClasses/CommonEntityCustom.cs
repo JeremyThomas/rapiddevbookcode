@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Text;
 using System.Linq;
+using AW.Helper;
 using LINQPad;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -86,21 +88,28 @@ namespace AW.Data.EntityClasses
 
     public IEnumerable<string> GetNames()
     {
-      var x = from field in Fields.Cast<IEntityField>()
+      return GetBrowsableProperties().Select(p => p.Name);
+      return from field in Fields.Cast<IEntityField>()
               select field.Name;
-      return x;
     }
 
     public IEnumerable<Type> GetTypes()
     {
+      return GetBrowsableProperties().Select(p => p.PropertyType);
       return from field in Fields.Cast<IEntityField>()
               select field.DataType;
     }
 
     public IEnumerable<object> GetValues()
     {
+      return GetBrowsableProperties().Select(p => p.GetValue(this, null));
       return from field in Fields.Cast<IEntityField>()
              select field.CurrentValue;
+    }    
+    
+    private IEnumerable<PropertyInfo> GetBrowsableProperties()
+    {
+      return MetaDataHelper.GetBrowsableProperties(GetType()).Where(p=>p.PropertyType.IsValueType);
     }
 
     #endregion

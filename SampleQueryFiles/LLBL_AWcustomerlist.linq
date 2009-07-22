@@ -1,18 +1,10 @@
 <Query Kind="Statements">
-  <Connection>
-    <ID>32af3654-c2ab-47d4-a02e-9e58b1a413cc</ID>
-    <Server>DELL-8600\SQLEXPRESS</Server>
-    <Persist>true</Persist>
-    <Driver>LinqToSql</Driver>
-    <CustomAssemblyPath>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.LinqToSQL\bin\Debug\AW.LinqToSQL.dll</CustomAssemblyPath>
-    <CustomTypeName>AW.LinqToSQL.AWDataClassesDataContext</CustomTypeName>
-    <Database>AdventureWorks</Database>
-  </Connection>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Business.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Data.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</Reference>
+  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Helper.dll</Reference>
   <Namespace>AW.Data</Namespace>
   <Namespace>AW.Data.Linq</Namespace>
   <Namespace>AW.Data.HelperClasses</Namespace>

@@ -3,11 +3,37 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 
 namespace AW.Helper
 {
   public static class MetaDataHelper
   {
+    /// <summary>
+    /// Gets the public concrete descendance of a type.
+    /// </summary>
+    /// <param name="ancestorType">Type of the ancestor.</param>
+    /// <returns>the descendance.</returns>
+    public static IEnumerable<Type> GetDescendance(Type ancestorType)
+    {
+      return from type in ancestorType.Assembly.GetExportedTypes()
+             where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
+             select type;
+    }
+
+    /// <summary>
+    /// Gets the browsable properties of a type.
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <returns>The browsable properties.</returns>
+    public static IEnumerable<PropertyInfo> GetBrowsableProperties(Type type)
+    {
+      return from properties in type.GetProperties()
+             let browsableAtt = properties.GetCustomAttributes(typeof(BrowsableAttribute), true).FirstOrDefault() as BrowsableAttribute
+             where browsableAtt == null || browsableAtt.Browsable
+             select properties;
+    }
+
     /// <summary>
     /// Gets the property descriptors for a class including those in any MetadataClass.
     /// </summary>
@@ -45,14 +71,14 @@ namespace AW.Helper
     /// <summary>
     /// Gets the validation attributes of a type of entity.
     /// </summary>
-    /// <param name="entityType">The type of the entity.</param>
+    /// <param name="type">The type.</param>
     /// <param name="fieldName">Name of the field.</param>
     /// <returns>The validation attributes.</returns>
-    public static IEnumerable<ValidationAttribute> GetValidationAttributes(Type entityType, string fieldName)
+    public static IEnumerable<ValidationAttribute> GetValidationAttributes(Type type, string fieldName)
     {
-      return GetValidationAttributes(GetPropertyDescriptors(entityType), fieldName);
-    }
-
+      return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);
+    }    
+    
     /// <summary>
     /// Gets the validation attributes of a type of entity if there is a MetaModel defined.
     /// </summary>
@@ -66,7 +92,6 @@ namespace AW.Helper
     //{
     //  return metaModel.GetTable(entityType).GetColumn(fieldName).Attributes.OfType<ValidationAttribute>();
     //}
-
   }
 }
 
