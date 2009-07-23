@@ -97,6 +97,10 @@ namespace AW.Helper
 
 namespace LINQPad
 {
+  /// <summary>
+  ///  To control what fields/properties of custom types are displayed via LINQPad's Dump method implement this interface
+  /// </summary>
+  /// <see cref="http://www.linqpad.net/FAQ.aspx"/>
   public interface ICustomMemberProvider
   {
     // Each of these methods must return a sequence

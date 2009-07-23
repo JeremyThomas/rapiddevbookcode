@@ -1,46 +1,42 @@
-/********************************************************************
-	created:	2005/03/27
-	created:	27:3:2005   7:05
-	filename: 	DataTreeView.cs	
-	author:		Mike Chaliy
-	url: http://www.codeproject.com/KB/tree/bindablehierarchicaltree.aspx
-	purpose:	Data binding enabled hierarchical tree view control.
- 
-  Modifications by Jeremmy Thomas: Added Drag-drop, adding and deleting, Removed internal lists
-                uses DataMemberListEditor and DataMemberFieldEditor
-*********************************************************************/
 using System;
 using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Data;
-using System.Windows.Forms;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-
+using System.Windows.Forms;
 
 namespace Chaliy.Windows.Forms
 {
   /// <summary>
   /// Data binding enabled hierarchical tree view control.
   /// </summary>
+  /// <remarks>
+  /// created:	2005/03/27
+  /// created:	27:3:2005   7:05
+  /// filename: 	DataTreeView.cs
+  /// author:		Mike Chaliy
+  /// url: http://www.codeproject.com/KB/tree/bindablehierarchicaltree.aspx
+  /// purpose:	Data binding enabled hierarchical tree view control.
+  /// Modifications by Jeremy Thomas: Added Drag-drop, adding and deleting, Removed internal lists,
+  /// uses DataMemberListEditor and DataMemberFieldEditor
+  /// </remarks>
   public class DataTreeView : TreeView
   {
-    const int SB_HORZ = 0;
+    private const int SB_HORZ = 0;
 
     #region Fields
 
-    private System.ComponentModel.Container components = null;
-    private BindingSource m_BindingSource;
+    private readonly Container components;
+    private readonly BindingSource m_BindingSource;
     private CurrencyManager listManager;
 
     private string idPropertyName;
     private string namePropertyName;
     private string parentIdPropertyName;
     private string valuePropertyName;
-    private Char[] DataMemberFieldSeperator = new Char[] { '.' };
+    private readonly Char[] DataMemberFieldSeperator = new[] {'.'};
 
     private PropertyDescriptor idProperty;
     private PropertyDescriptor nameProperty;
@@ -60,22 +56,22 @@ namespace Chaliy.Windows.Forms
     /// </summary>
     public DataTreeView()
     {
-      this.idPropertyName = string.Empty;
-      this.namePropertyName = string.Empty;
-      this.parentIdPropertyName = string.Empty;
-      this.selectionChanging = false;
+      idPropertyName = string.Empty;
+      namePropertyName = string.Empty;
+      parentIdPropertyName = string.Empty;
+      selectionChanging = false;
 
       m_BindingSource = new BindingSource();
 
-      this.FullRowSelect = true;
-      this.HideSelection = false;
-      this.HotTracking = true;
-      this.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.DataTreeView_AfterSelect);
-      this.BindingContextChanged += new System.EventHandler(this.DataTreeView_BindingContextChanged);
-      this.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.DataTreeView_AfterLabelEdit);
-      this.DragDrop += new System.Windows.Forms.DragEventHandler(this.DataTreeView_DragDrop);
-      this.DragOver += new System.Windows.Forms.DragEventHandler(this.DataTreeView_DragOver);
-      this.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.DataTreeView_ItemDrag);
+      FullRowSelect = true;
+      HideSelection = false;
+      HotTracking = true;
+      AfterSelect += DataTreeView_AfterSelect;
+      BindingContextChanged += DataTreeView_BindingContextChanged;
+      AfterLabelEdit += DataTreeView_AfterLabelEdit;
+      DragDrop += DataTreeView_DragDrop;
+      DragOver += DataTreeView_DragOver;
+      ItemDrag += DataTreeView_ItemDrag;
     }
 
     /// <summary>
@@ -84,10 +80,8 @@ namespace Chaliy.Windows.Forms
     protected override void Dispose(bool disposing)
     {
       if (disposing)
-      {
         if (components != null)
           components.Dispose();
-      }
       base.Dispose(disposing);
     }
 
@@ -96,15 +90,15 @@ namespace Chaliy.Windows.Forms
     #region Win32
 
     [DllImport("User32.dll")]
-    static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
+    private static extern bool ShowScrollBar(IntPtr hWnd, int wBar, bool bShow);
 
     #endregion
 
     #region Properties
 
-    [AttributeProvider(typeof(IListSource)),
-            Category("Data"),
-        Description("Data source of the tree.")]
+    [AttributeProvider(typeof (IListSource)),
+     Category("Data"),
+     Description("Data source of the tree.")]
     public object DataSource
     {
       get { return m_BindingSource.DataSource; }
@@ -113,48 +107,42 @@ namespace Chaliy.Windows.Forms
         if (m_BindingSource.DataSource != value)
         {
           m_BindingSource.DataSource = value;
-          this.ResetData();
+          ResetData();
         }
       }
     }
 
-    [Editor("System.Windows.Forms.Design.DataMemberListEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
-        RefreshProperties(RefreshProperties.Repaint),
-    Category("Data"),
-    Description("Data member of the tree.")]
+    [Editor("System.Windows.Forms.Design.DataMemberListEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof (UITypeEditor)),
+     RefreshProperties(RefreshProperties.Repaint),
+     Category("Data"),
+     Description("Data member of the tree.")]
     public string DataMember
     {
       get { return m_BindingSource.DataMember; }
       set
       {
         if (m_BindingSource.DataMember != value)
-        {
           m_BindingSource.DataMember = value;
-          //this.ResetData();
-        }
+        //this.ResetData();
       }
     }
-
 
 
     /// <summary>
     /// Identifier member, in most cases this is primary column of the table.
     /// </summary>
     [
-    DefaultValue(""),
-Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
-    Category("Data"),
-    Description("Identifier member, in most cases this is primary column of the table.")
+      DefaultValue(""),
+      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof (UITypeEditor)),
+      Category("Data"),
+      Description("Identifier member, in most cases this is primary column of the table.")
     ]
     public string IDColumn
     {
-      get
-      {
-        return this.idPropertyName;
-      }
+      get { return idPropertyName; }
       set
       {
-        if (this.idPropertyName != value)
+        if (idPropertyName != value)
           if (value == null)
           {
             DataMember = string.Empty;
@@ -162,11 +150,11 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
           }
           else
           {
-            string[] split = value.Split(DataMemberFieldSeperator);
+            var split = value.Split(DataMemberFieldSeperator);
             string temp;
             if (split.Length > 1)
             {
-              this.DataMember = split[0];
+              DataMember = split[0];
               temp = split[1];
             }
             else
@@ -175,25 +163,21 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
               temp = value;
             }
             idProperty = null;
-            if (this.DataSource != null && temp != string.Empty)
+            if (DataSource != null && temp != string.Empty)
             {
-              CurrencyManager currencyManager = new BindingContext()[DataSource, DataMember] as CurrencyManager;
+              var currencyManager = new BindingContext()[DataSource, DataMember] as CurrencyManager;
               if (currencyManager != null)
               {
-                PropertyDescriptorCollection APropertyDescriptorCollection = currencyManager.GetItemProperties();
+                var APropertyDescriptorCollection = currencyManager.GetItemProperties();
                 idProperty = APropertyDescriptorCollection.Find(temp, true);
                 if (APropertyDescriptorCollection.Count == 0)
-                {
-                  this.idPropertyName = value;
-                }
+                  idPropertyName = value;
               }
-              if (this.idProperty != null)
-              {
-                this.idPropertyName = value;
-              }
+              if (idProperty != null)
+                idPropertyName = value;
             }
             else
-              this.idPropertyName = value;
+              idPropertyName = value;
           }
         //  this.ResetData();
       }
@@ -203,27 +187,22 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
     /// Name member. Note: editing of this column available only with types that support converting from string.
     /// </summary>
     [
-    DefaultValue(""),
-Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
-    Category("Data"),
-    Description("Name member. Note: editing of this column available only with types that support converting from string.")
+      DefaultValue(""),
+      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof (UITypeEditor)),
+      Category("Data"),
+      Description("Name member. Note: editing of this column available only with types that support converting from string.")
     ]
     public string NameColumn
     {
-      get
-      {
-        return this.namePropertyName;
-      }
+      get { return namePropertyName; }
       set
       {
-        if (this.namePropertyName != value)
+        if (namePropertyName != value)
           if (value == null)
-          {
             namePropertyName = string.Empty;
-          }
           else
           {
-            string[] split = value.Split(DataMemberFieldSeperator);
+            var split = value.Split(DataMemberFieldSeperator);
             string temp;
             string tempDataMember;
             if (split.Length > 1)
@@ -237,30 +216,26 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
               temp = value;
             }
             nameProperty = null;
-            if (this.DataSource != null && temp != string.Empty)
+            if (DataSource != null && temp != string.Empty)
             {
               if (tempDataMember == DataMember || DataMember == string.Empty)
               {
-                CurrencyManager currencyManager = new BindingContext()[DataSource, DataMember] as CurrencyManager;
+                var currencyManager = new BindingContext()[DataSource, DataMember] as CurrencyManager;
                 if (currencyManager != null)
                 {
                   if (DataMember == null)
                     DataMember = tempDataMember;
-                  PropertyDescriptorCollection APropertyDescriptorCollection = currencyManager.GetItemProperties();
+                  var APropertyDescriptorCollection = currencyManager.GetItemProperties();
                   nameProperty = APropertyDescriptorCollection.Find(temp, true);
                   if (APropertyDescriptorCollection.Count == 0)
-                  {
-                    this.namePropertyName = value;
-                  }
+                    namePropertyName = value;
                 }
-                if (this.nameProperty != null)
-                {
-                  this.namePropertyName = value;
-                }
+                if (nameProperty != null)
+                  namePropertyName = value;
               }
             }
             else
-              this.namePropertyName = value;
+              namePropertyName = value;
           }
         //  this.ResetData();
       }
@@ -270,27 +245,22 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
     /// Identifier of the parent. Note: this member must have the same type as identifier column.
     /// </summary>
     [
-    DefaultValue(""),
-Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor)),
-    Category("Data"),
-    Description("Identifier of the parent. Note: this member must have the same type as identifier column.")
+      DefaultValue(""),
+      Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof (UITypeEditor)),
+      Category("Data"),
+      Description("Identifier of the parent. Note: this member must have the same type as identifier column.")
     ]
     public string ParentIDColumn
     {
-      get
-      {
-        return this.parentIdPropertyName;
-      }
+      get { return parentIdPropertyName; }
       set
       {
-        if (this.namePropertyName != value)
+        if (namePropertyName != value)
           if (value == null)
-          {
             namePropertyName = string.Empty;
-          }
           else
           {
-            string[] split = value.Split(DataMemberFieldSeperator);
+            var split = value.Split(DataMemberFieldSeperator);
             string temp;
             string tempDataMember;
             if (split.Length > 1)
@@ -304,30 +274,26 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
               temp = value;
             }
             parentIdProperty = null;
-            if (this.DataSource != null && temp != string.Empty)
+            if (DataSource != null && temp != string.Empty)
             {
               if (tempDataMember == DataMember || DataMember == string.Empty)
               {
-                CurrencyManager currencyManager = new BindingContext()[DataSource, DataMember] as CurrencyManager;
+                var currencyManager = new BindingContext()[DataSource, DataMember] as CurrencyManager;
                 if (currencyManager != null)
                 {
                   if (DataMember == null)
                     DataMember = tempDataMember;
-                  PropertyDescriptorCollection APropertyDescriptorCollection = currencyManager.GetItemProperties();
+                  var APropertyDescriptorCollection = currencyManager.GetItemProperties();
                   parentIdProperty = APropertyDescriptorCollection.Find(temp, true);
                   if (APropertyDescriptorCollection.Count == 0)
-                  {
-                    this.parentIdPropertyName = value;
-                  }
+                    parentIdPropertyName = value;
                 }
-                if (this.parentIdProperty != null)
-                {
-                  this.parentIdPropertyName = value;
-                }
+                if (parentIdProperty != null)
+                  parentIdPropertyName = value;
               }
             }
             else
-              this.parentIdPropertyName = value;
+              parentIdPropertyName = value;
           }
         //  this.ResetData();
       }
@@ -343,87 +309,83 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
         listManager.Position = listManager.List.IndexOf(itemToSelect);
     }
 
-    private void DataTreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+    private void DataTreeView_AfterSelect(object sender, TreeViewEventArgs e)
     {
-      if (!this.selectionChanging)
+      if (!selectionChanging)
       {
-        this.BeginSelectionChanging();
+        BeginSelectionChanging();
         try
         {
           if (e.Node != null)
-          {
             MoveToItem(e.Node.Tag);
-          }
         }
         finally
         {
-          this.EndSelectionChanging();
+          EndSelectionChanging();
         }
       }
     }
 
-    private void DataTreeView_AfterLabelEdit(object sender, System.Windows.Forms.NodeLabelEditEventArgs e)
+    private void DataTreeView_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
     {
       if (e.Node != null && e.Label != null)
-      {
-        if (this.PrepareValueConvertor()
-          && this.valueConverter.IsValid(e.Label)
+        if (PrepareValueConvertor()
+            && valueConverter.IsValid(e.Label)
           )
         {
-          this.nameProperty.SetValue(
+          nameProperty.SetValue(
             e.Node.Tag,
-            this.valueConverter.ConvertFromString(e.Label)
+            valueConverter.ConvertFromString(e.Label)
             );
-          this.listManager.EndCurrentEdit();
+          listManager.EndCurrentEdit();
           return;
         }
-      }
       e.CancelEdit = true;
     }
 
     private void DataTreeView_ItemDrag(object sender, ItemDragEventArgs e)
     {
-      DoDragDrop((TreeNode)e.Item, DragDropEffects.Copy | DragDropEffects.Move); //Begin the drag-drop operation
+      DoDragDrop(e.Item, DragDropEffects.Copy | DragDropEffects.Move); //Begin the drag-drop operation
     }
 
     private void DataTreeView_DragOver(object sender, DragEventArgs e)
     {
-      TreeView tv = (TreeView)sender;
-      Point position = tv.PointToClient(new Point(e.X, e.Y)); //Get the co-ordinates of the mouse
-      TreeNode destinationNode = tv.GetNodeAt(position);     //Get the node at the current mouse position
+      var tv = (TreeView) sender;
+      var position = tv.PointToClient(new Point(e.X, e.Y)); //Get the co-ordinates of the mouse
+      var destinationNode = tv.GetNodeAt(position); //Get the node at the current mouse position
 
-      tv.SelectedNode = destinationNode;                     //Highlight the node in relations to the mouse position
+      tv.SelectedNode = destinationNode; //Highlight the node in relations to the mouse position
       e.Effect = DragDropEffects.Move;
     }
 
     private void DataTreeView_DragDrop(object sender, DragEventArgs e)
     {
-      TreeNode dragNode;                                             //Used to hold a reference to the node that is being dragged
-      TreeNode dropNode;                                                     //Used to hold a reference to the destination node (where the dragged node is released)
+      TreeNode dragNode; //Used to hold a reference to the node that is being dragged
+      TreeNode dropNode; //Used to hold a reference to the destination node (where the dragged node is released)
 
-      if (e.Data.GetDataPresent(typeof(TreeNode)))                   //Continue only if the item being dragged is a TreeNode object
+      if (e.Data.GetDataPresent(typeof (TreeNode))) //Continue only if the item being dragged is a TreeNode object
       {
-        TreeView tv = (TreeView)sender;
-        Point position = tv.PointToClient(new Point(e.X, e.Y));               //Get the mouse co-ordinates
-        dropNode = (TreeNode)tv.GetNodeAt(position);                          //Get the node at the current mouse position
-        dragNode = (TreeNode)e.Data.GetData(typeof(TreeNode));    //Get the reference to node that is being dragged  
-        if ((dropNode != null && dragNode != null) && (dropNode != dragNode))     //Continue only if we have both node references and that they are not the same reference
+        var tv = (TreeView) sender;
+        var position = tv.PointToClient(new Point(e.X, e.Y)); //Get the mouse co-ordinates
+        dropNode = tv.GetNodeAt(position); //Get the node at the current mouse position
+        dragNode = (TreeNode) e.Data.GetData(typeof (TreeNode)); //Get the reference to node that is being dragged  
+        if ((dropNode != null && dragNode != null) && (dropNode != dragNode)) //Continue only if we have both node references and that they are not the same reference
         {
           ChangeParent(dragNode, dropNode);
-          dropNode.ExpandAll();                                                //Expand all the child nodes for the users sake 
+          dropNode.ExpandAll(); //Expand all the child nodes for the users sake 
         }
       }
     }
 
-    private void DataTreeView_BindingContextChanged(object sender, System.EventArgs e)
+    private void DataTreeView_BindingContextChanged(object sender, EventArgs e)
     {
-      this.ResetData();
+      ResetData();
     }
 
     private void listManager_PositionChanged(object sender, EventArgs e)
     {
       if (PropertyAreSet())
-        this.SynchronizeSelection();
+        SynchronizeSelection();
       else
         ResetData();
     }
@@ -437,12 +399,10 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
             try
             {
               if (!IsIDNull(GetCurrentID(e.NewIndex)))
-                if (TryAddNode(this.CreateNode(e.NewIndex)))
-                {
+                if (TryAddNode(CreateNode(e.NewIndex)))
                   Trace.Write(e);
-                }
             }
-            catch (System.ArgumentException ae)
+            catch (ArgumentException ae)
             {
               Trace.Write(ae);
             }
@@ -450,28 +410,20 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
 
           case ListChangedType.ItemChanged:
 
-            TreeNode changedNode = GetDatasNode(e.NewIndex);
+            var changedNode = GetDatasNode(e.NewIndex);
             if (changedNode != null)
-            {
               RefreshData(changedNode, e.NewIndex);
-            }
+            else if (IsIDNull(GetCurrentID(e.NewIndex)))
+              throw new ApplicationException("Item not found or wrong type.");
+            else if (TryAddNode(CreateNode(e.NewIndex)))
+              ResetData();
             else
-              if (IsIDNull(GetCurrentID(e.NewIndex)))
-              {
-                throw new ApplicationException("Item not found or wrong type.");
-              }
-              else
-              {
-                if (TryAddNode(this.CreateNode(e.NewIndex)))
-                  this.ResetData();
-                else
-                  throw new ApplicationException("Item not found or wrong type.");
-              }
+              throw new ApplicationException("Item not found or wrong type.");
             break;
 
           case ListChangedType.ItemDeleted:
             if (SelectedNode != null && (listManager.List.IndexOf(SelectedNode.Tag) == -1)
-              || listManager.List.IndexOf(SelectedNode.Tag) == e.NewIndex)
+                || listManager.List.IndexOf(SelectedNode.Tag) == e.NewIndex)
             {
               SelectedNode.Remove();
               RefreshAllData(e.NewIndex);
@@ -479,9 +431,8 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
             break;
 
           case ListChangedType.Reset:
-            this.ResetData();
+            ResetData();
             break;
-
         }
       else
         ResetData();
@@ -493,56 +444,49 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
 
     private void Clear()
     {
-      this.Nodes.Clear();
+      Nodes.Clear();
     }
 
     private bool PrepareDataSource()
     {
-      if (this.BindingContext != null)
-      {
-        if (this.m_BindingSource.DataSource != null)
+      if (BindingContext != null)
+        if (m_BindingSource.DataSource != null)
         {
-          this.listManager = this.BindingContext[this.m_BindingSource.DataSource, this.m_BindingSource.DataMember] as CurrencyManager;
-          return listManager!=null;
+          listManager = BindingContext[m_BindingSource.DataSource, m_BindingSource.DataMember] as CurrencyManager;
+          return listManager != null;
         }
         else
         {
-          this.listManager = null;
-          this.Clear();
+          listManager = null;
+          Clear();
         }
-      }
       return false;
     }
 
     #region Descriptors
+
     private bool PropertyAreSet()
     {
-      return (this.idProperty != null
-        && this.nameProperty != null
-        && this.parentIdProperty != null);
+      return (idProperty != null
+              && nameProperty != null
+              && parentIdProperty != null);
     }
 
     private bool PrepareDescriptors()
     {
-      if (this.idPropertyName.Length != 0
-        && this.namePropertyName.Length != 0
-        && this.parentIdPropertyName.Length != 0)
+      if (idPropertyName.Length != 0
+          && namePropertyName.Length != 0
+          && parentIdPropertyName.Length != 0)
       {
         PropertyDescriptorCollection APropertyDescriptorCollection;
-        APropertyDescriptorCollection = this.listManager.GetItemProperties();
+        APropertyDescriptorCollection = listManager.GetItemProperties();
         //APropertyDescriptorCollection.Find
-        if (this.idProperty == null)
-        {
-          this.idProperty = APropertyDescriptorCollection[this.idPropertyName];
-        }
-        if (this.nameProperty == null)
-        {
-          this.nameProperty = APropertyDescriptorCollection[this.namePropertyName];
-        }
-        if (this.parentIdProperty == null)
-        {
-          this.parentIdProperty = APropertyDescriptorCollection[this.parentIdPropertyName];
-        }
+        if (idProperty == null)
+          idProperty = APropertyDescriptorCollection[idPropertyName];
+        if (nameProperty == null)
+          nameProperty = APropertyDescriptorCollection[namePropertyName];
+        if (parentIdProperty == null)
+          parentIdProperty = APropertyDescriptorCollection[parentIdPropertyName];
       }
 
       return PropertyAreSet();
@@ -550,55 +494,52 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
 
     private bool PrepareValueDescriptor()
     {
-      if (this.valueProperty == null)
+      if (valueProperty == null)
       {
-        if (this.valuePropertyName == string.Empty)
-        {
-          this.valuePropertyName = this.idPropertyName;
-        }
-        this.valueProperty = this.listManager.GetItemProperties()[this.valuePropertyName];
+        if (valuePropertyName == string.Empty)
+          valuePropertyName = idPropertyName;
+        valueProperty = listManager.GetItemProperties()[valuePropertyName];
       }
 
-      return (this.valueProperty != null);
+      return (valueProperty != null);
     }
 
     private bool PrepareValueConvertor()
     {
-      if (this.valueConverter == null)
-      {
-        this.valueConverter = TypeDescriptor.GetConverter(this.nameProperty.PropertyType) as TypeConverter;
-      }
+      if (valueConverter == null)
+        valueConverter = TypeDescriptor.GetConverter(nameProperty.PropertyType);
 
-      return (this.valueConverter != null
-        && this.valueConverter.CanConvertFrom(typeof(string))
-        );
+      return (valueConverter != null
+              && valueConverter.CanConvertFrom(typeof (string))
+             );
     }
+
     #endregion
 
     private void WireDataSource()
     {
-      this.listManager.PositionChanged += new EventHandler(listManager_PositionChanged);
-      ((IBindingList)this.listManager.List).ListChanged += new ListChangedEventHandler(DataTreeView_ListChanged);
+      listManager.PositionChanged += listManager_PositionChanged;
+      ((IBindingList) listManager.List).ListChanged += DataTreeView_ListChanged;
     }
 
     public void ResetData()
     {
-      this.BeginUpdate();
+      BeginUpdate();
 
-      this.Clear();
+      Clear();
 
       try
       {
-        if (this.PrepareDataSource())
+        if (PrepareDataSource())
         {
-          this.WireDataSource();
-          if (this.PrepareDescriptors())
+          WireDataSource();
+          if (PrepareDescriptors())
           {
-            ArrayList unsortedNodes = new ArrayList();
+            var unsortedNodes = new ArrayList();
 
-            for (int i = 0; i < this.listManager.Count; i++)
+            for (var i = 0; i < listManager.Count; i++)
             {
-              unsortedNodes.Add(this.CreateNode(i));
+              unsortedNodes.Add(CreateNode(i));
             }
 
             int startCount;
@@ -607,18 +548,16 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
             {
               startCount = unsortedNodes.Count;
 
-              for (int i = unsortedNodes.Count - 1; i >= 0; i--)
+              for (var i = unsortedNodes.Count - 1; i >= 0; i--)
               {
-                if (this.TryAddNode((TreeNode)unsortedNodes[i]))
-                {
+                if (TryAddNode((TreeNode) unsortedNodes[i]))
                   unsortedNodes.RemoveAt(i);
-                }
               }
 
               if (startCount == unsortedNodes.Count)
               {
-                ApplicationException AE = new ApplicationException("Tree view confused when try to make your data hierarchical.");
-                foreach (object Node in unsortedNodes)
+                var AE = new ApplicationException("Tree view confused when try to make your data hierarchical.");
+                foreach (var Node in unsortedNodes)
                 {
                   AE.Data.Add(Node.ToString(), Node);
                 }
@@ -630,24 +569,24 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
       }
       finally
       {
-        this.EndUpdate();
+        EndUpdate();
       }
     }
 
     private bool TryAddNode(TreeNode node)
     {
-      if (this.HasParent(node))
+      if (HasParent(node))
       {
-        TreeNode parentNode = GetDataParent(node);
+        var parentNode = GetDataParent(node);
         if (parentNode != null)
         {
-          this.AddNode(parentNode.Nodes, node);
+          AddNode(parentNode.Nodes, node);
           return true;
         }
       }
       else
       {
-        this.AddNode(this.Nodes, node);
+        AddNode(Nodes, node);
         return true;
       }
       return false;
@@ -662,16 +601,16 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
     {
       if (Childnode != null && ParentNode != null)
       {
-        object ParentID = idProperty.GetValue(ParentNode.Tag);
-        if (this.PrepareValueConvertor()
-          && this.valueConverter.IsValid(ParentID)
+        var ParentID = idProperty.GetValue(ParentNode.Tag);
+        if (PrepareValueConvertor()
+            && valueConverter.IsValid(ParentID)
           )
         {
-          this.parentIdProperty.SetValue(
+          parentIdProperty.SetValue(
             Childnode.Tag,
             ParentID
             );
-          this.listManager.EndCurrentEdit();
+          listManager.EndCurrentEdit();
           return;
         }
       }
@@ -679,13 +618,11 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
 
     private TreeNode FindFirst(object iD)
     {
-      TreeNode[] FoundNodes = this.Nodes.Find(iD.ToString(), true);
+      var FoundNodes = Nodes.Find(iD.ToString(), true);
       if (FoundNodes.Length == 0)
         return null;
       else
-      {
         return FoundNodes[0];
-      }
     }
 
     private object GetCurrentID()
@@ -705,7 +642,7 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
 
     private TreeNode GetDatasNode(object DataObject)
     {
-      object dataID = idProperty.GetValue(DataObject);
+      var dataID = idProperty.GetValue(DataObject);
       return FindFirst(dataID);
     }
 
@@ -722,23 +659,21 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
     private void ChangeParent(TreeNode node)
     {
       object CurrentParentID = null;
-      object dataParentID = this.parentIdProperty.GetValue(node.Tag);
+      var dataParentID = parentIdProperty.GetValue(node.Tag);
       if (dataParentID != null)
       {
         if (node.Parent != null)
           CurrentParentID = idProperty.GetValue(node.Parent.Tag);
         if (!dataParentID.Equals(CurrentParentID))
-        {
           if (HasParent(node, dataParentID) || node.Parent != null)
           {
             node.Remove();
             if (node.Nodes.Find(dataParentID.ToString(), true).Length > 0)
               throw new ApplicationException("A Parent can't be the child of a child!");
-            TreeNode newParentNode = FindFirst(dataParentID);
+            var newParentNode = FindFirst(dataParentID);
             if (newParentNode != null)
               newParentNode.Nodes.Add(node);
           }
-        }
       }
     }
 
@@ -753,13 +688,13 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
       node.Name = GetID(node).ToString();
       try
       {
-        node.Text = (string)this.nameProperty.GetValue(node.Tag);
+        node.Text = (string) nameProperty.GetValue(node.Tag);
       }
       catch (Exception e)
       {
         node.Text = e.Message;
       }
-      this.ChangeParent(node);
+      ChangeParent(node);
     }
 
     private void RefreshData(TreeNode node)
@@ -774,17 +709,15 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
 
     private void RefreshData(int position)
     {
-      object DataObject = listManager.List[position];
-      TreeNode Node = GetDatasNode(DataObject);
+      var DataObject = listManager.List[position];
+      var Node = GetDatasNode(DataObject);
       if (Node != null)
-      {
         RefreshData(Node, DataObject);
-      }
     }
 
     private void RefreshAllData(int fromPosition)
     {
-      for (int i = fromPosition; i < listManager.Count; i++)
+      for (var i = fromPosition; i < listManager.Count; i++)
       {
         RefreshData(i);
       }
@@ -792,16 +725,16 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
 
     private void SynchronizeSelection()
     {
-      if (!this.selectionChanging)
+      if (!selectionChanging)
       {
-        this.BeginSelectionChanging();
+        BeginSelectionChanging();
         try
         {
-          this.SelectedNode = GetCurrentNodeFromData();
+          SelectedNode = GetCurrentNodeFromData();
         }
         finally
         {
-          this.EndSelectionChanging();
+          EndSelectionChanging();
         }
       }
     }
@@ -814,47 +747,36 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
     /// <returns></returns>
     private TreeNode CreateNode(int position)
     {
-      TreeNode node = new TreeNode();
-      this.RefreshData(node, position);
+      var node = new TreeNode();
+      RefreshData(node, position);
       return node;
     }
 
     private TreeNode CreateNode()
     {
-      TreeNode node = new TreeNode();
-      this.RefreshData(node);
+      var node = new TreeNode();
+      RefreshData(node);
       return node;
     }
 
-    private bool IsIDNull(object id)
+    private static bool IsIDNull(object id)
     {
       if (id == null
-        || Convert.IsDBNull(id))
-      {
+          || Convert.IsDBNull(id))
         return true;
-      }
-      else
-      {
-        if (id.GetType() == typeof(string))
-        {
-          return (((string)id).Length == 0);
-        }
-        else if (id.GetType() == typeof(Guid))
-        {
-          return ((Guid)id == Guid.Empty);
-        }
-        else if (id.GetType() == typeof(int))
-        {
-          return ((int)id == 0);
-        }
-      }
+      else if (id.GetType() == typeof (string))
+        return (((string) id).Length == 0);
+      else if (id.GetType() == typeof (Guid))
+        return ((Guid) id == Guid.Empty);
+      else if (id.GetType() == typeof (int))
+        return ((int) id == 0);
       return false;
     }
 
-    private bool ObjectValuesEqual(object object1, object object2)
+    private static bool ObjectValuesEqual(object object1, object object2)
     {
       return object1.Equals(object2)
-        || (object1.GetType() == object2.GetType() && object1.GetHashCode() == object2.GetHashCode());
+             || (object1.GetType() == object2.GetType() && object1.GetHashCode() == object2.GetHashCode());
     }
 
     private bool HasParent(TreeNode node, object parentID)
@@ -875,12 +797,12 @@ Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Versio
 
     private void BeginSelectionChanging()
     {
-      this.selectionChanging = true;
+      selectionChanging = true;
     }
 
     private void EndSelectionChanging()
     {
-      this.selectionChanging = false;
+      selectionChanging = false;
     }
 
     #endregion

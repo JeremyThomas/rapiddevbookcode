@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.EntityClasses;
 
 namespace AW.Winforms.Helpers
 {
@@ -13,7 +14,7 @@ namespace AW.Winforms.Helpers
 
     private void frmOrganizationStructure_Load(object sender, EventArgs e)
     {
-      employeeEntityBindingSource.DataSource = MetaSingletons.MetaData.Employee;
+      employeeEntityBindingSource.DataSource = EmployeeEntity.GetEmployees();
     }
 
     private void employeeEntityDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)

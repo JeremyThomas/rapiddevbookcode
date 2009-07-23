@@ -88,28 +88,26 @@ namespace AW.Data.EntityClasses
 
     public IEnumerable<string> GetNames()
     {
-      return GetBrowsableProperties().Select(p => p.Name);
-      return from field in Fields.Cast<IEntityField>()
-              select field.Name;
+      return GetPropertiesToDisplay().Select(p => p.Name);
     }
 
     public IEnumerable<Type> GetTypes()
     {
-      return GetBrowsableProperties().Select(p => p.PropertyType);
-      return from field in Fields.Cast<IEntityField>()
-              select field.DataType;
+      return GetPropertiesToDisplay().Select(p => p.PropertyType);
     }
 
     public IEnumerable<object> GetValues()
     {
-      return GetBrowsableProperties().Select(p => p.GetValue(this, null));
-      return from field in Fields.Cast<IEntityField>()
-             select field.CurrentValue;
-    }    
-    
-    private IEnumerable<PropertyInfo> GetBrowsableProperties()
+      return GetPropertiesToDisplay().Select(p => p.GetValue(this, null));
+    }
+
+    /// <summary>
+    /// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
+    /// </summary>
+    /// <returns>The properties to display in LINQPad's Dump</returns>
+    private IEnumerable<PropertyInfo> GetPropertiesToDisplay()
     {
-      return MetaDataHelper.GetBrowsableProperties(GetType()).Where(p=>p.PropertyType.IsValueType);
+      return MetaDataHelper.GetBrowsableProperties(GetType()).Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
     }
 
     #endregion
