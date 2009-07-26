@@ -86,17 +86,17 @@ namespace AW.Data.EntityClasses
 
     #region Implementation of ICustomMemberProvider
 
-    public IEnumerable<string> GetNames()
+    IEnumerable<string> ICustomMemberProvider.GetNames()
     {
       return GetPropertiesToDisplay().Select(p => p.Name);
     }
 
-    public IEnumerable<Type> GetTypes()
+    IEnumerable<Type> ICustomMemberProvider.GetTypes()
     {
       return GetPropertiesToDisplay().Select(p => p.PropertyType);
     }
 
-    public IEnumerable<object> GetValues()
+    IEnumerable<object> ICustomMemberProvider.GetValues()
     {
       return GetPropertiesToDisplay().Select(p => p.GetValue(this, null));
     }
@@ -107,7 +107,7 @@ namespace AW.Data.EntityClasses
     /// <returns>The properties to display in LINQPad's Dump</returns>
     private IEnumerable<PropertyInfo> GetPropertiesToDisplay()
     {
-      return MetaDataHelper.GetBrowsableProperties(GetType()).Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
+      return MetaDataHelper.GetPropertiesToDisplay(GetType());
     }
 
     #endregion

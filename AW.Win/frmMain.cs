@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.EntityClasses;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.Properties;
@@ -177,7 +178,12 @@ namespace AW.Winforms.Helpers
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (FrmEntitiesAndFields));
+      LaunchChildForm(typeof(FrmEntitiesAndFields), typeof(CommonEntityBase));
+    }
+
+    private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      LaunchChildForm(typeof(FrmOrganizationStructure));
     }
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
@@ -201,9 +207,6 @@ namespace AW.Winforms.Helpers
       e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
     }
 
-    private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      LaunchChildForm(typeof(FrmOrganizationStructure));
-    }
+
   }
 }

@@ -16,7 +16,28 @@ namespace AW.Helper
     /// <returns>the descendance.</returns>
     public static IEnumerable<Type> GetDescendance(Type ancestorType)
     {
-      return from type in ancestorType.Assembly.GetExportedTypes()
+  return GetDescendance(ancestorType, ancestorType.Assembly.GetExportedTypes());
+    }
+
+    public static IEnumerable<Type> GetAllLoadedDescendance(Type ancestorType)
+    {
+      return GetDescendance(ancestorType, GetAllExportedTypes());
+    }
+
+    /// <summary>
+    /// Gets all exported types in the Current Domain.
+    /// </summary>
+    /// <returns>All exported types in the Current Domain.</returns>
+    private static IEnumerable<Type> GetAllExportedTypes()
+    {
+      return from assemby in AppDomain.CurrentDomain.GetAssemblies()
+             from exportedType in assemby.GetExportedTypes()
+             select exportedType;
+    }
+
+    public static IEnumerable<Type> GetDescendance(Type ancestorType, IEnumerable<Type> exportedTypes)
+    {
+      return from type in exportedTypes
              where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
              select type;
     }
@@ -32,6 +53,15 @@ namespace AW.Helper
              let browsableAtt = properties.GetCustomAttributes(typeof(BrowsableAttribute), true).FirstOrDefault() as BrowsableAttribute
              where browsableAtt == null || browsableAtt.Browsable
              select properties;
+    }
+
+    /// <summary>
+    /// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
+    /// </summary>
+    /// <returns>The properties to display in LINQPad's Dump</returns>
+    public static IEnumerable<PropertyInfo> GetPropertiesToDisplay(Type type)
+    {
+      return GetBrowsableProperties(type).Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
     }
 
     /// <summary>

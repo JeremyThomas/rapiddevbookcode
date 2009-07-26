@@ -1,19 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using AW.Data.EntityClasses;
 using AW.Helper;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
   public partial class FrmEntitiesAndFields : Form
   {
+    private readonly Type BaseType;
+    private readonly Assembly EntityAssembly;
+
     public FrmEntitiesAndFields()
     {
       InitializeComponent();
+    }
+
+    public FrmEntitiesAndFields(Assembly entityAssembly) : this()
+    {
+      EntityAssembly = entityAssembly;
+    }
+
+    public FrmEntitiesAndFields(Type baseType) : this(baseType.Assembly)
+    {
+      BaseType = baseType;
     }
 
     private void EntitiesAndFields_Load(object sender, EventArgs e)
@@ -34,15 +46,18 @@ namespace AW.Winforms.Helpers.EntityViewer
       }
     }
 
-    public static IEnumerable<PropertyInfo[]> GetFields()
+    public IEnumerable<PropertyInfo[]> GetFields()
     {
       return from entityType in GetEntitiesTypes()
              select entityType.GetProperties();
     }
 
-    public static IEnumerable<Type> GetEntitiesTypes()
+    public IEnumerable<Type> GetEntitiesTypes()
     {
-      return MetaDataHelper.GetDescendance(typeof (CommonEntityBase));
+      if (BaseType != null)
+        return MetaDataHelper.GetDescendance(BaseType);
+      return EntityAssembly != null ? MetaDataHelper.GetDescendance(typeof (EntityBase), EntityAssembly.GetExportedTypes()) :
+        MetaDataHelper.GetAllLoadedDescendance(typeof (EntityBase));
     }
 
     private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)
