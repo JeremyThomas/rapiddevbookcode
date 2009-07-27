@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -12,6 +13,23 @@ namespace AW.Winforms.Helpers.EntityViewer
   {
     private readonly Type BaseType;
     private readonly Assembly EntityAssembly;
+    private static FrmEntitiesAndFields FormSingleton;
+
+
+    public static void ShowEntitiesAndFields(Type baseType)
+    {
+      ShowEntitiesAndFields(baseType, null);
+    }
+
+    public static void ShowEntitiesAndFields(Type baseType, Form parent)
+    {
+      if (FormSingleton == null)
+        FormSingleton = new FrmEntitiesAndFields(baseType);
+      if (parent != null)
+        FormSingleton.Parent = parent;
+      FormSingleton.WindowState = FormWindowState.Normal;
+      FormSingleton.Show();
+    }
 
     public FrmEntitiesAndFields()
     {
@@ -34,15 +52,8 @@ namespace AW.Winforms.Helpers.EntityViewer
       {
         var entityNode = treeViewEntities.Nodes.Add(entityType.Name);
 
-        foreach (var browsableProperty in MetaDataHelper.GetBrowsableProperties(entityType))
+        foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>())
           entityNode.Nodes.Add(browsableProperty.Name);
-
-        //foreach (var info in entityType.GetProperties(BindingFlags.Instance | BindingFlags.Public))
-        //{
-        //  var browsableAttributes = info.GetCustomAttributes(typeof(BrowsableAttribute), true);
-        //  if (browsableAttributes.Count()==0 || ((BrowsableAttribute)browsableAttributes[0]).Browsable)
-        //    entityNode.Nodes.Add(info.Name);
-        //}
       }
     }
 
@@ -57,7 +68,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       if (BaseType != null)
         return MetaDataHelper.GetDescendance(BaseType);
       return EntityAssembly != null ? MetaDataHelper.GetDescendance(typeof (EntityBase), EntityAssembly.GetExportedTypes()) :
-        MetaDataHelper.GetAllLoadedDescendance(typeof (EntityBase));
+                                                                                                                              MetaDataHelper.GetAllLoadedDescendance(typeof (EntityBase));
     }
 
     private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)

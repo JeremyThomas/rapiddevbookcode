@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Linq;
-using System.Reflection;
+using System.Windows.Forms;
 
 namespace AW.Helper
 {
@@ -16,7 +18,7 @@ namespace AW.Helper
     /// <returns>the descendance.</returns>
     public static IEnumerable<Type> GetDescendance(Type ancestorType)
     {
-  return GetDescendance(ancestorType, ancestorType.Assembly.GetExportedTypes());
+      return GetDescendance(ancestorType, ancestorType.Assembly.GetExportedTypes());
     }
 
     public static IEnumerable<Type> GetAllLoadedDescendance(Type ancestorType)
@@ -43,36 +45,39 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Gets the browsable properties of a type.
-    /// </summary>
-    /// <param name="type">The type.</param>
-    /// <returns>The browsable properties.</returns>
-    public static IEnumerable<PropertyInfo> GetBrowsableProperties(Type type)
-    {
-      return from properties in type.GetProperties()
-             let browsableAtt = properties.GetCustomAttributes(typeof(BrowsableAttribute), true).FirstOrDefault() as BrowsableAttribute
-             where browsableAtt == null || browsableAtt.Browsable
-             select properties;
-    }
-
-    /// <summary>
     /// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
     /// </summary>
+    /// <remarks>Where clause copied from DataGridViewDataConnection.GetCollectionOfBoundDataGridViewColumns()</remarks>
     /// <returns>The properties to display in LINQPad's Dump</returns>
-    public static IEnumerable<PropertyInfo> GetPropertiesToDisplay(Type type)
+    public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(Type type)
     {
-      return GetBrowsableProperties(type).Where(p => p.PropertyType.IsValueType || p.PropertyType == typeof(string));
+      return from propertyDescriptor in ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>()
+             where (!typeof (IList).IsAssignableFrom(propertyDescriptor.PropertyType) || TypeDescriptor.GetConverter(typeof (Image)).CanConvertFrom(propertyDescriptor.PropertyType))
+             select propertyDescriptor;
     }
 
     /// <summary>
-    /// Gets the property descriptors for a class including those in any MetadataClass.
+    /// Adds the associated metadata providers for each type.
+    /// </summary>
+    /// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
+    /// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
+    public static void AddAssociatedMetadataProviders(IEnumerable<Type> typesWhichMayHaveBuddyClasses)
+    {
+      foreach (var typeWithBuddyClass in typesWhichMayHaveBuddyClasses)
+        TypeDescriptor.AddProvider(new AssociatedMetadataTypeTypeDescriptionProvider(typeWithBuddyClass), typeWithBuddyClass);
+    }
+
+    /// <summary>
+    /// Gets the property descriptors for a class including those in any MetadataClass(buddy class).
     /// </summary>
     /// <param name="modelClass">The model class.</param>
     /// <returns>The property descriptors for a class including those in any MetadataClass.</returns>
     public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass)
-    {
-      var metadataAttrib = modelClass.GetCustomAttributes(typeof(MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
+    {     
       var modelClassProperties = TypeDescriptor.GetProperties(modelClass).Cast<PropertyDescriptor>();
+      if (TypeDescriptor.GetProvider(modelClass) is AssociatedMetadataTypeTypeDescriptionProvider)
+        return modelClassProperties; //No need to get the MetadataType(buddy class)
+      var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
       return metadataAttrib == null ? modelClassProperties : modelClassProperties.Union(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>());
     }
 
@@ -107,8 +112,8 @@ namespace AW.Helper
     public static IEnumerable<ValidationAttribute> GetValidationAttributes(Type type, string fieldName)
     {
       return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);
-    }    
-    
+    }
+
     /// <summary>
     /// Gets the validation attributes of a type of entity if there is a MetaModel defined.
     /// </summary>

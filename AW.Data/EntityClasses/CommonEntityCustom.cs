@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
-using System.Text;
 using System.Linq;
+using System.Text;
 using AW.Helper;
 using LINQPad;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -37,8 +36,8 @@ namespace AW.Data.EntityClasses
       foreach (IEntityField field in Fields)
         /// IEntity implements IDataErrorInfo, and it contains a collections of field errors already set. 
         /// For more info read the docs (LLBLGen Pro Help -> Using generated code -> Validation per field or per entity -> IDataErrorInfo implementation).
-        if (!string.IsNullOrEmpty(((IDataErrorInfo)this)[field.Name]))
-          sbErrors.Append(((IDataErrorInfo)this)[field.Name] + ";");
+        if (!string.IsNullOrEmpty(((IDataErrorInfo) this)[field.Name]))
+          sbErrors.Append(((IDataErrorInfo) this)[field.Name] + ";");
 
       // determine if there was errors and cut off the extra ';'
       if (sbErrors.ToString() != string.Empty)
@@ -78,7 +77,7 @@ namespace AW.Data.EntityClasses
     {
       if (Fields[fieldIndex].CurrentValue != null)
         if (Fields[fieldIndex].CurrentValue.Equals(valueToSet)
-            && !string.IsNullOrEmpty(((IDataErrorInfo)this)[Fields[fieldIndex].Name]))
+            && !string.IsNullOrEmpty(((IDataErrorInfo) this)[Fields[fieldIndex].Name]))
           SetEntityFieldError(Fields[fieldIndex].Name, string.Empty, false);
 
       base.OnSetValue(fieldIndex, valueToSet, out cancel);
@@ -98,14 +97,14 @@ namespace AW.Data.EntityClasses
 
     IEnumerable<object> ICustomMemberProvider.GetValues()
     {
-      return GetPropertiesToDisplay().Select(p => p.GetValue(this, null));
+      return GetPropertiesToDisplay().Select(p => p.GetValue(this));
     }
 
     /// <summary>
     /// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
     /// </summary>
     /// <returns>The properties to display in LINQPad's Dump</returns>
-    private IEnumerable<PropertyInfo> GetPropertiesToDisplay()
+    private IEnumerable<PropertyDescriptor> GetPropertiesToDisplay()
     {
       return MetaDataHelper.GetPropertiesToDisplay(GetType());
     }

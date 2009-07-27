@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Helper;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.Properties;
@@ -27,6 +28,7 @@ namespace AW.Winforms.Helpers
 
     private void frmMain_Load(object sender, EventArgs e)
     {
+      MetaDataHelper.AddAssociatedMetadataProviders(MetaDataHelper.GetDescendance(typeof (CommonEntityBase)));
     }
 
     private void frmMain_Shown(object sender, EventArgs e)
