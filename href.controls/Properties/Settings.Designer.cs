@@ -105,5 +105,17 @@ namespace AW.Winforms.Helpers.Properties {
                 this["ShowStaticMembers"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle EntitiesAndFieldsSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["EntitiesAndFieldsSizeLocation"]));
+            }
+            set {
+                this["EntitiesAndFieldsSizeLocation"] = value;
+            }
+        }
     }
 }

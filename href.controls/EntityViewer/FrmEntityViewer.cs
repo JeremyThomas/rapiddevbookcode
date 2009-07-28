@@ -45,6 +45,7 @@ namespace AW.Winforms.Helpers.EntityViewer
     {
       Settings.Default.EntityViewerSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
       Settings.Default.EntityFieldColumns = AWHelper.SaveColumnState(dataGridViewEnumerable);
+      Settings.Default.Save();
     }
 
     private void FrmEntityViewer_Load(object sender, EventArgs e)

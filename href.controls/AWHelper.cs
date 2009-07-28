@@ -264,7 +264,11 @@ namespace AW.Winforms.Helpers
           break;
         }
       if (childForm != null)
+      {
+        if (childForm.WindowState == FormWindowState.Minimized)
+          childForm.WindowState = FormWindowState.Normal;
         childForm.BringToFront();
+      }
       else
       {
         childForm = CreateForm(childFormType, args);

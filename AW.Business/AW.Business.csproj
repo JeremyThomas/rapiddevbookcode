@@ -78,10 +78,6 @@
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AW.LinqToSQL\AW.LinqToSQL.csproj">
-      <Project>{3A769AFA-83F9-4CB0-8F69-60B8487055E0}</Project>
-      <Name>AW.LinqToSQL</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Ancillary\AdventureWorks.snk">

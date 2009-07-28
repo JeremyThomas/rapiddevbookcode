@@ -49,6 +49,7 @@
       this.Name = "FrmEntitiesAndFields";
       this.Text = "Entities And Fields";
       this.Load += new System.EventHandler(this.EntitiesAndFields_Load);
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEntitiesAndFields_FormClosed);
       this.ResumeLayout(false);
 
     }

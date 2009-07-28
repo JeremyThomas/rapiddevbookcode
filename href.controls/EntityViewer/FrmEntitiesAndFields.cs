@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Winforms.Helpers.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.EntityViewer
@@ -15,7 +16,6 @@ namespace AW.Winforms.Helpers.EntityViewer
     private readonly Assembly EntityAssembly;
     private static FrmEntitiesAndFields FormSingleton;
 
-
     public static void ShowEntitiesAndFields(Type baseType)
     {
       ShowEntitiesAndFields(baseType, null);
@@ -25,10 +25,14 @@ namespace AW.Winforms.Helpers.EntityViewer
     {
       if (FormSingleton == null)
         FormSingleton = new FrmEntitiesAndFields(baseType);
-      if (parent != null)
-        FormSingleton.Parent = parent;
       FormSingleton.WindowState = FormWindowState.Normal;
-      FormSingleton.Show();
+      if (parent == null)
+        FormSingleton.ShowDialog();
+      else
+      {
+        FormSingleton.Parent = parent;
+        FormSingleton.Show();
+      }
     }
 
     public FrmEntitiesAndFields()
@@ -46,8 +50,16 @@ namespace AW.Winforms.Helpers.EntityViewer
       BaseType = baseType;
     }
 
+    private void FrmEntitiesAndFields_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      Settings.Default.EntitiesAndFieldsSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+      Settings.Default.Save();
+    }
+
     private void EntitiesAndFields_Load(object sender, EventArgs e)
     {
+      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntitiesAndFieldsSizeLocation);
+      treeViewEntities.Nodes.Clear();
       foreach (var entityType in GetEntitiesTypes())
       {
         var entityNode = treeViewEntities.Nodes.Add(entityType.Name);
@@ -57,23 +69,20 @@ namespace AW.Winforms.Helpers.EntityViewer
       }
     }
 
-    public IEnumerable<PropertyInfo[]> GetFields()
-    {
-      return from entityType in GetEntitiesTypes()
-             select entityType.GetProperties();
-    }
-
     public IEnumerable<Type> GetEntitiesTypes()
     {
       if (BaseType != null)
         return MetaDataHelper.GetDescendance(BaseType);
-      return EntityAssembly != null ? MetaDataHelper.GetDescendance(typeof (EntityBase), EntityAssembly.GetExportedTypes()) :
-                                                                                                                              MetaDataHelper.GetAllLoadedDescendance(typeof (EntityBase));
+      if (EntityAssembly == null) 
+        return MetaDataHelper.GetAllLoadedDescendance(typeof (EntityBase));
+      return MetaDataHelper.GetDescendance(typeof (EntityBase), EntityAssembly.GetExportedTypes());
     }
 
     private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)
     {
-      DoDragDrop(e.Item, DragDropEffects.Move);
+      DoDragDrop(((TreeNode) e.Item).Text, DragDropEffects.All);
     }
+
+
   }
 }
