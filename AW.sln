@@ -22,10 +22,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test", "AW.Test\AW.Test.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2CA-4CCC-9960-748D511B5BAC}"
 	ProjectSection(SolutionItems) = preProject
-		Lib\ACorns.Hawkeye.Core.dll = Lib\ACorns.Hawkeye.Core.dll
-		Lib\ACorns.Hawkeye.Core.pdb = Lib\ACorns.Hawkeye.Core.pdb
-		Lib\ACorns.Hawkeye.CoreUI.dll = Lib\ACorns.Hawkeye.CoreUI.dll
-		Lib\ACorns.Hawkeye.CoreUI.pdb = Lib\ACorns.Hawkeye.CoreUI.pdb
 		Lib\CSScriptLibrary.dll = Lib\CSScriptLibrary.dll
 		Lib\CSScriptLibrary.pdb = Lib\CSScriptLibrary.pdb
 		Lib\CSScriptLibrary.xml = Lib\CSScriptLibrary.xml
@@ -72,6 +68,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{F1
 		Documentation\Hawkeye MPL License.txt = Documentation\Hawkeye MPL License.txt
 		Documentation\PropertyGridEx CPOL License.html = Documentation\PropertyGridEx CPOL License.html
 		Documentation\TextBox TraceListener MIT License.txt = Documentation\TextBox TraceListener MIT License.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hawkeye", "Hawkeye", "{A951B179-B81E-42E2-81CD-242D8E1D278D}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\ACorns.Hawkeye.Core.dll = Lib\ACorns.Hawkeye.Core.dll
+		Lib\ACorns.Hawkeye.Core.pdb = Lib\ACorns.Hawkeye.Core.pdb
+		Lib\ACorns.Hawkeye.CoreUI.dll = Lib\ACorns.Hawkeye.CoreUI.dll
+		Lib\ACorns.Hawkeye.CoreUI.pdb = Lib\ACorns.Hawkeye.CoreUI.pdb
+		Lib\ACorns.Hawkeye.Injector.dll = Lib\ACorns.Hawkeye.Injector.dll
+		Lib\ACorns.Hawkeye.Injector.pdb = Lib\ACorns.Hawkeye.Injector.pdb
+		Lib\ACorns.PropertyGridExtender.dll = Lib\ACorns.PropertyGridExtender.dll
 	EndProjectSection
 EndProject
 Global
@@ -144,5 +151,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
+		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 	EndGlobalSection
 EndGlobal
