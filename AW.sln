@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Winforms.Helpers", "href.controls\AW.Winforms.Helpers.csproj", "{D8041984-1823-4672-9B6E-3E99AB6A3A7A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Business", "AW.Business\AW.Business.csproj", "{78186ECB-5408-400B-B1A7-10F4A150BC56}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test", "AW.Test\AW.Test.csproj", "{80418BDD-8FF2-4F01-8782-AD22A496AF79}"
@@ -81,6 +79,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hawkeye", "Hawkeye", "{A951
 		Lib\ACorns.PropertyGridExtender.dll = Lib\ACorns.PropertyGridExtender.dll
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Winforms.Helpers", "AW.Winforms.Helpers\AW.Winforms.Helpers.csproj", "{D8041984-1823-4672-9B6E-3E99AB6A3A7A}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 8
@@ -99,15 +99,15 @@ Global
 		SccProjectUniqueName4 = AW.Test\\AW.Test.csproj
 		SccProjectName4 = AW.Test
 		SccLocalPath4 = AW.Test
-		SccProjectUniqueName5 = href.controls\\AW.Winforms.Helpers.csproj
-		SccProjectName5 = href.controls
-		SccLocalPath5 = href.controls
-		SccProjectUniqueName6 = DynamicQuery\\DynamicQuery.csproj
-		SccProjectName6 = DynamicQuery
-		SccLocalPath6 = DynamicQuery
-		SccProjectUniqueName7 = AW.Helper\\AW.Helper.csproj
-		SccProjectName7 = AW.Helper
-		SccLocalPath7 = AW.Helper
+		SccProjectUniqueName5 = DynamicQuery\\DynamicQuery.csproj
+		SccProjectName5 = DynamicQuery
+		SccLocalPath5 = DynamicQuery
+		SccProjectUniqueName6 = AW.Helper\\AW.Helper.csproj
+		SccProjectName6 = AW.Helper
+		SccLocalPath6 = AW.Helper
+		SccProjectUniqueName7 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
+		SccProjectName7 = AW.Winforms.Helpers
+		SccLocalPath7 = AW.Winforms.Helpers
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -125,10 +125,6 @@ Global
 		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -145,6 +141,10 @@ Global
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
