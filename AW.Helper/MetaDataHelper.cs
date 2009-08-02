@@ -44,6 +44,13 @@ namespace AW.Helper
              select type;
     }
 
+		public static Type GetTypeParameterOfGenericType(Type type)
+		{
+			if (type == typeof(object))
+			return null;
+			return type.IsGenericType ? type.GetGenericArguments().First() : GetTypeParameterOfGenericType(type.BaseType);
+		}
+
     /// <summary>
     /// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
     /// </summary>

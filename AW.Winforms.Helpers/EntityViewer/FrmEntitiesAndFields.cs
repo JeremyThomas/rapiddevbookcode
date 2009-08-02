@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,79 +11,116 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
-  public partial class FrmEntitiesAndFields : Form
-  {
-    private readonly Type BaseType;
-    private readonly Assembly EntityAssembly;
-    private static FrmEntitiesAndFields FormSingleton;
+	public partial class FrmEntitiesAndFields: Form
+	{
+		private static FrmEntitiesAndFields _formSingleton;
+		private readonly Type _baseType;
+		private readonly Assembly _entityAssembly;
 
-    public static void ShowEntitiesAndFields(Type baseType)
-    {
-      ShowEntitiesAndFields(baseType, null);
-    }
+		public FrmEntitiesAndFields()
+		{
+			InitializeComponent();
+		}
 
-    public static void ShowEntitiesAndFields(Type baseType, Form parent)
-    {
-      if (FormSingleton == null)
-        FormSingleton = new FrmEntitiesAndFields(baseType);
-      FormSingleton.WindowState = FormWindowState.Normal;
-      if (parent == null)
-        FormSingleton.ShowDialog();
-      else
-      {
-        FormSingleton.Parent = parent;
-        FormSingleton.Show();
-      }
-    }
+		public FrmEntitiesAndFields(Assembly entityAssembly): this()
+		{
+			_entityAssembly = entityAssembly;
+		}
 
-    public FrmEntitiesAndFields()
-    {
-      InitializeComponent();
-    }
+		public FrmEntitiesAndFields(Type baseType): this(baseType.Assembly)
+		{
+			_baseType = baseType;
+		}
 
-    public FrmEntitiesAndFields(Assembly entityAssembly) : this()
-    {
-      EntityAssembly = entityAssembly;
-    }
+		public static void ShowEntitiesAndFields(Type baseType)
+		{
+			ShowEntitiesAndFields(baseType, null);
+		}
 
-    public FrmEntitiesAndFields(Type baseType) : this(baseType.Assembly)
-    {
-      BaseType = baseType;
-    }
+		public static void ShowEntitiesAndFields(Type baseType, Form parent)
+		{
+			if (_formSingleton == null)
+				_formSingleton = new FrmEntitiesAndFields(baseType);
+			_formSingleton.WindowState = FormWindowState.Normal;
+			if (parent == null)
+				_formSingleton.ShowDialog();
+			else
+			{
+				_formSingleton.Parent = parent;
+				_formSingleton.Show();
+			}
+		}
 
-    private void FrmEntitiesAndFields_FormClosed(object sender, FormClosedEventArgs e)
-    {
-      Settings.Default.EntitiesAndFieldsSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-      Settings.Default.Save();
-    }
+		private void FrmEntitiesAndFields_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			Settings.Default.EntitiesAndFieldsSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+			Settings.Default.Save();
+		}
 
-    private void EntitiesAndFields_Load(object sender, EventArgs e)
-    {
-      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntitiesAndFieldsSizeLocation);
-      treeViewEntities.Nodes.Clear();
-      foreach (var entityType in GetEntitiesTypes())
-      {
-        var entityNode = treeViewEntities.Nodes.Add(entityType.Name);
+		private void EntitiesAndFields_Load(object sender, EventArgs e)
+		{
+			AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntitiesAndFieldsSizeLocation);
+			treeViewEntities.Nodes.Clear();
+			foreach (var entityType in GetEntitiesTypes().OrderBy(t => t.Name))
+			{
+				var entityNode = treeViewEntities.Nodes.Add(entityType.Name, entityType.Name.Replace("Entity", ""));
 
-        foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>())
-          entityNode.Nodes.Add(browsableProperty.Name);
-      }
-    }
+				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
+					Where(p => !typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
+				{
+					var fieldNode = entityNode.Nodes.Add(browsableProperty.Name);
+					if (typeof(IEntityCore).IsAssignableFrom(browsableProperty.PropertyType))
+					{
+						fieldNode.ImageIndex = 3;
+						fieldNode.Tag = browsableProperty;
+					}
+					else
+						fieldNode.ImageIndex = 1;
+				}
 
-    public IEnumerable<Type> GetEntitiesTypes()
-    {
-      if (BaseType != null)
-        return MetaDataHelper.GetDescendance(BaseType);
-      if (EntityAssembly == null) 
-        return MetaDataHelper.GetAllLoadedDescendance(typeof (EntityBase));
-      return MetaDataHelper.GetDescendance(typeof (EntityBase), EntityAssembly.GetExportedTypes());
-    }
+				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
+					Where(p => typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
+				{
+					var fieldNode = entityNode.Nodes.Add(browsableProperty.Name);
+					fieldNode.Tag = browsableProperty;
+					fieldNode.ImageIndex = 2;
+				}
+			}
+		}
 
-    private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)
-    {
-      DoDragDrop(((TreeNode) e.Item).Text, DragDropEffects.All);
-    }
+		public IEnumerable<Type> GetEntitiesTypes()
+		{
+			if (_baseType != null)
+				return MetaDataHelper.GetDescendance(_baseType);
+			if (_entityAssembly == null)
+				return MetaDataHelper.GetAllLoadedDescendance(typeof (EntityBase));
+			return MetaDataHelper.GetDescendance(typeof (EntityBase), _entityAssembly.GetExportedTypes());
+		}
 
+		private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)
+		{
+			DoDragDrop(((TreeNode)e.Item).Text, DragDropEffects.All);
+		}
 
-  }
+		private void treeViewEntities_Click(object sender, EventArgs e)
+		{
+		}
+
+		private void treeViewEntities_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			var prop = treeViewEntities.SelectedNode.Tag as PropertyDescriptor;
+			if (prop != null)
+			{
+				var typeParameter = MetaDataHelper.GetTypeParameterOfGenericType(prop.PropertyType);
+				if (typeParameter != null)
+
+					if (treeViewEntities.Nodes.ContainsKey(typeParameter.Name))
+					{
+						treeViewEntities.SelectedNode = treeViewEntities.Nodes[typeParameter.Name];
+						treeViewEntities.SelectedNode.Expand();
+					}
+			}
+			toolStripStatusLabelSelected.Text = treeViewEntities.SelectedNode.Text;
+		}
+	}
 }
