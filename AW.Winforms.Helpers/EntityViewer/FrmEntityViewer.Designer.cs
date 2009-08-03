@@ -52,7 +52,6 @@
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.ObjectBrowser = new sliver.Windows.Forms.StateBrowser();
       this.splitContainerValues = new System.Windows.Forms.SplitContainer();
-      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       this.panel1 = new System.Windows.Forms.Panel();
       this.textBoxObjectBeingBrowsed = new System.Windows.Forms.TextBox();
       this.checkBoxShowNonPublicMembers = new System.Windows.Forms.CheckBox();
@@ -81,6 +80,7 @@
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabelInstance = new System.Windows.Forms.ToolStripStatusLabel();
       this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
+      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
@@ -97,6 +97,10 @@
       this.bindingNavigator1.SuspendLayout();
       this.statusStrip1.SuspendLayout();
       this.SuspendLayout();
+      // 
+      // bindingSourceEnumerable
+      // 
+      this.bindingSourceEnumerable.AllowNew = false;
       // 
       // contextMenuStrip1
       // 
@@ -263,20 +267,6 @@
       this.splitContainerValues.Size = new System.Drawing.Size(551, 530);
       this.splitContainerValues.SplitterDistance = 265;
       this.splitContainerValues.TabIndex = 3;
-      // 
-      // propertyGrid1
-      // 
-      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
-      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
-      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.propertyGrid1.DrawFlat = true;
-      this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
-      this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(551, 202);
-      this.propertyGrid1.TabIndex = 0;
-      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       // 
       // panel1
       // 
@@ -501,11 +491,13 @@
       // saveToolStripButton
       // 
       this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.saveToolStripButton.Enabled = false;
       this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
       this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.saveToolStripButton.Name = "saveToolStripButton";
       this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
       this.saveToolStripButton.Text = "&Save";
+      this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
       // 
       // printToolStripButton
       // 
@@ -576,6 +568,20 @@
       this.toolStripStatusLabelSelectePath.Name = "toolStripStatusLabelSelectePath";
       this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(109, 17);
       this.toolStripStatusLabelSelectePath.Text = "toolStripStatusLabel1";
+      // 
+      // propertyGrid1
+      // 
+      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
+      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
+      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.propertyGrid1.DrawFlat = true;
+      this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
+      this.propertyGrid1.Name = "propertyGrid1";
+      this.propertyGrid1.Size = new System.Drawing.Size(551, 202);
+      this.propertyGrid1.TabIndex = 0;
+      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       // 
       // FrmEntityViewer
       // 

@@ -208,6 +208,23 @@ namespace AW.Winforms.Helpers
       return showenEnumerable;
     }
 
+    public static object GetDataSource(BindingSource bindingSource)
+    {
+      if (bindingSource.DataSource is BindingSource)
+        return GetDataSource((BindingSource) bindingSource.DataSource);
+      var objectListView = bindingSource.DataSource as ObjectListView;
+      return objectListView == null ? bindingSource.DataSource : GetDataSource(objectListView);
+    }
+
+    public static object GetDataSource(ObjectListView objectListView)
+    {
+      var bindingSource = objectListView.List as BindingSource;
+      if (bindingSource != null)
+        return GetDataSource(bindingSource);
+      var objectListViewSource = objectListView.List as ObjectListView;
+      return objectListViewSource == null ? objectListView.List : GetDataSource(objectListViewSource);
+    }
+
     public static void CopyEntireDataGridViewToClipboard(DataGridView dataGridView)
     {
       dataGridView.SelectAll();

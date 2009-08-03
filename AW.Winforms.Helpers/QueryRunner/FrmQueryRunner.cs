@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-using System.Linq.Dynamic;
 using System.Windows.Forms;
 using System.Linq;
 using AW.Winforms.Helpers.Properties;
@@ -12,10 +11,20 @@ namespace AW.Winforms.Helpers.QueryRunner
 {
   public partial class FrmQueryRunner : Form
   {
+    private readonly Type[] _saveableTypes;
+    public event Func<object, int> SaveFunction;
+
     public FrmQueryRunner()
     {
       InitializeComponent();
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.QueryRunnerSizeAndLocation);
+    }
+
+    public FrmQueryRunner(Func<object, int> saveFunction, params Type[] saveableTypes)
+      : this()
+    {
+      _saveableTypes = saveableTypes;
+      SaveFunction += saveFunction;
     }
 
     private void FrmQueryRunner_FormClosing(object sender, FormClosingEventArgs e)
@@ -67,7 +76,7 @@ namespace AW.Winforms.Helpers.QueryRunner
     private QueryRunner AddNew(string fileName)
     {
       tabControl.TabPages.Add(fileName, Path.GetFileNameWithoutExtension(fileName));
-      var queryRunner = new QueryRunner();
+      var queryRunner = new QueryRunner(SaveFunction, _saveableTypes);
       var tp = tabControl.TabPages[fileName];
       tp.ToolTipText = fileName;
       tp.Controls.Add(queryRunner);

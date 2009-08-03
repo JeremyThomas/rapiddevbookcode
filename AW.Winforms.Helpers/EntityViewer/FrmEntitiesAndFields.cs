@@ -92,9 +92,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 		{
 			if (_baseType != null)
 				return MetaDataHelper.GetDescendance(_baseType);
-			if (_entityAssembly == null)
-				return MetaDataHelper.GetAllLoadedDescendance(typeof (EntityBase));
-			return MetaDataHelper.GetDescendance(typeof (EntityBase), _entityAssembly.GetExportedTypes());
+			return _entityAssembly == null ? MetaDataHelper.GetAllLoadedDescendance(typeof (IEntityCore)) : typeof(IEntityCore).GetAssignable(_entityAssembly.GetExportedTypes());
 		}
 
 		private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)

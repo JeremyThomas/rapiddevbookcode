@@ -18,12 +18,12 @@ namespace AW.Helper
     /// <returns>the descendance.</returns>
     public static IEnumerable<Type> GetDescendance(Type ancestorType)
     {
-      return GetDescendance(ancestorType, ancestorType.Assembly.GetExportedTypes());
+      return GetAssignable(ancestorType, ancestorType.Assembly.GetExportedTypes());
     }
 
     public static IEnumerable<Type> GetAllLoadedDescendance(Type ancestorType)
     {
-      return GetDescendance(ancestorType, GetAllExportedTypes());
+      return GetAssignable(ancestorType, GetAllExportedTypes());
     }
 
     /// <summary>
@@ -37,19 +37,32 @@ namespace AW.Helper
              select exportedType;
     }
 
-    public static IEnumerable<Type> GetDescendance(Type ancestorType, IEnumerable<Type> exportedTypes)
+    /// <summary>
+    /// Gets the public concrete descendance of a type from a list of types.
+    /// </summary>
+    /// <param name="ancestorType">Type of the ancestor.</param>
+    /// <param name="descendantTypes">The descendant types.</param>
+    /// <returns></returns>
+    public static IEnumerable<Type> GetAssignable(this Type ancestorType, IEnumerable<Type> descendantTypes)
     {
-      return from type in exportedTypes
-             where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
+      return from type in descendantTypes
+             where type.IsPublic && !type.IsAbstract && ancestorType.IsAssignableFrom(type)
              select type;
     }
 
-		public static Type GetTypeParameterOfGenericType(Type type)
-		{
-			if (type == typeof(object))
-			return null;
-			return type.IsGenericType ? type.GetGenericArguments().First() : GetTypeParameterOfGenericType(type.BaseType);
-		}
+    public static bool IsAssignableTo(this Type type, params Type[] ancestorTypes)
+    {
+      return (from ancestorType in ancestorTypes
+              where ancestorType.IsAssignableFrom(type)
+              select type).Count() > 0;
+    }
+
+    public static Type GetTypeParameterOfGenericType(Type type)
+    {
+      if (type == typeof (object))
+        return null;
+      return type.IsGenericType ? type.GetGenericArguments().First() : GetTypeParameterOfGenericType(type.BaseType);
+    }
 
     /// <summary>
     /// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
@@ -80,7 +93,7 @@ namespace AW.Helper
     /// <param name="modelClass">The model class.</param>
     /// <returns>The property descriptors for a class including those in any MetadataClass.</returns>
     public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass)
-    {     
+    {
       var modelClassProperties = TypeDescriptor.GetProperties(modelClass).Cast<PropertyDescriptor>();
       if (TypeDescriptor.GetProvider(modelClass) is AssociatedMetadataTypeTypeDescriptionProvider)
         return modelClassProperties; //No need to get the MetadataType(buddy class)

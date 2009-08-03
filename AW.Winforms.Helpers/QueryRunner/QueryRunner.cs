@@ -7,15 +7,26 @@ using AW.Winforms.Helpers.EntityViewer;
 using CSScriptLibrary;
 using DynamicTable;
 using JesseJohnston;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.QueryRunner
 {
   public partial class QueryRunner : UserControl
   {
+    private readonly Type[] _saveableTypes;
+    public event Func<object, int> SaveFunction;
+
     public QueryRunner()
     {
       InitializeComponent();
       dataGridViewScript.AutoGenerateColumns = true;
+    }
+
+    public QueryRunner(Func<object, int> saveFunction, params Type[] saveableTypes)
+      : this()
+    {
+      _saveableTypes = saveableTypes;
+      SaveFunction += saveFunction;
     }
 
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
@@ -83,12 +94,12 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void toolStripButtonBrowse_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(((ObjectListView) BindingSourceScript.DataSource).List);
+      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)BindingSourceScript.DataSource).List, SaveFunction, _saveableTypes);
     }
 
     private void browseObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(BindingSourceScript.Current);
+      FrmEntityViewer.LaunchAsChildForm(BindingSourceScript.Current, SaveFunction, _saveableTypes);
     }
 
     private void dataGridViewScript_DataError(object sender, DataGridViewDataErrorEventArgs e)

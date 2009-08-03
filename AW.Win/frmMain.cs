@@ -1,15 +1,18 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.FactoryClasses;
 using AW.Helper;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.Properties;
 using AW.Winforms.Helpers.QueryRunner;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers
 {
@@ -81,7 +84,7 @@ namespace AW.Winforms.Helpers
 
     public Form LaunchChildForm(Type formType, params Object[] args)
     {
-      return formType != null ? AWHelper.LaunchChildForm(this, formType, args) : null;
+      return formType == null ? null : AWHelper.LaunchChildForm(this, formType, args);
     }
 
     private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -124,7 +127,7 @@ namespace AW.Winforms.Helpers
 
     private void DoFileOpen(string fileName)
     {
-      var frmQueryRunner = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
+      var frmQueryRunner = LaunchQueryRunner();
       if (frmQueryRunner != null) frmQueryRunner.DoFileOpen(fileName);
 
       openFileDialogProject.InitialDirectory = Path.GetDirectoryName(fileName);
@@ -170,12 +173,20 @@ namespace AW.Winforms.Helpers
 
     private void adHocLINQQueryRunnerToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (FrmQueryRunner));
+      LaunchQueryRunner();
+    }
+
+    private FrmQueryRunner LaunchQueryRunner()
+    {
+      var qr = LaunchChildForm(typeof(FrmQueryRunner)) as FrmQueryRunner;
+      if (qr != null) qr.SaveFunction += MetaSingletons.Save;
+      return qr;
     }
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (FrmEntityViewer), MetaSingletons.MetaData);
+      FrmEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, MetaSingletons.Save, typeof(IEntity));
+      //LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData, Save);
     }
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
