@@ -108,6 +108,12 @@
     <Compile Include="Controls\DataTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\GridDataEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GridDataEditor.Designer.cs">
+      <DependentUpon>GridDataEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="EntityViewer\FrmEntitiesAndFields.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,6 +187,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\DataTreeView.resx">
       <DependentUpon>DataTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GridDataEditor.resx">
+      <DependentUpon>GridDataEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EntityViewer\FrmEntitiesAndFields.resx">
       <DependentUpon>FrmEntitiesAndFields.cs</DependentUpon>

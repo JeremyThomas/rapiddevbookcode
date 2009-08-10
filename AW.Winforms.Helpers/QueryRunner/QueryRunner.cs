@@ -5,28 +5,25 @@ using System.Windows.Forms;
 using ACorns.Hawkeye;
 using AW.Winforms.Helpers.EntityViewer;
 using CSScriptLibrary;
-using DynamicTable;
 using JesseJohnston;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.QueryRunner
 {
   public partial class QueryRunner : UserControl
   {
-    private readonly Type[] _saveableTypes;
     public event Func<object, int> SaveFunction;
 
     public QueryRunner()
     {
       InitializeComponent();
-      dataGridViewScript.AutoGenerateColumns = true;
     }
 
     public QueryRunner(Func<object, int> saveFunction, params Type[] saveableTypes)
       : this()
     {
-      _saveableTypes = saveableTypes;
-      SaveFunction += saveFunction;
+      gridDataEditorScript.SaveableTypes = saveableTypes;
+      SaveFunction = saveFunction;
+      gridDataEditorScript.SaveFunction += saveFunction;
     }
 
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
@@ -34,36 +31,22 @@ namespace AW.Winforms.Helpers.QueryRunner
       var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.Text, null, true));
       using (helper)
       {
-        AWHelper.BindEnumerable(((IQueryScript) helper.CreateObject("Script")).Query(), BindingSourceScript);
+        gridDataEditorScript.BindEnumerable(((IQueryScript)helper.CreateObject("Script")).Query());
       }
-      if (BindingSourceScript.Count > 0)
-      {
-        copyToolStripButtonQuery.Enabled = true;
-        toolStripButtonBrowse.Enabled = true;
-        printToolStripButtonViewReport.Enabled = true;
-        if (dataGridViewScript.Height < 30)
+      if (gridDataEditorScript.BindingSource.Count > 0)
+        if (gridDataEditorScript.Height < 30)
+        {
           splitContainerScript.SplitterDistance = Height/2;
-      }
+          toolStripButtonBrowse.Enabled = true;
+        }
     }
 
-    private void printToolStripButtonViewReport_Click(object sender, EventArgs e)
-    {
-      var frm = new FrmReportViewer {WindowState = FormWindowState.Normal};
-      frm.OpenDataSet(BindingSourceScript, false);
-      frm.Show();
-    }
-
-    private void copyToolStripButtonQuery_Click(object sender, EventArgs e)
-    {
-      AWHelper.CopyEntireDataGridViewToClipboard(dataGridViewScript);
-    }
 
     private void QueryRunner_Load(object sender, EventArgs e)
     {
-      var dataGridViewScriptClipboardCopyMode = dataGridViewScript.ClipboardCopyMode;
-      toolStripComboBoxClipboardCopyMode.ComboBox.DataSource = Enum.GetValues(typeof (DataGridViewClipboardCopyMode));
-      toolStripComboBoxClipboardCopyMode.SelectedItem = dataGridViewScriptClipboardCopyMode;
-      splitContainerScript.SplitterDistance = Height - bindingNavigatorScript.Height;
+      splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height;
+      gridDataEditorScript.Items.Remove(toolStripButtonRunQuery);
+      gridDataEditorScript.Items.Insert(0, toolStripButtonRunQuery);
     }
 
     internal void Save(string fileName)
@@ -89,35 +72,28 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void viewObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      ObjectEditor.Instance.Show(BindingSourceScript.Current);
+      ObjectEditor.Instance.Show(gridDataEditorScript.BindingSource.Current);
     }
 
     private void toolStripButtonBrowse_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)BindingSourceScript.DataSource).List, SaveFunction, _saveableTypes);
+      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)gridDataEditorScript.BindingSource.DataSource).List, SaveFunction, gridDataEditorScript.SaveableTypes);
     }
 
     private void browseObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(BindingSourceScript.Current, SaveFunction, _saveableTypes);
-    }
-
-    private void dataGridViewScript_DataError(object sender, DataGridViewDataErrorEventArgs e)
-    {
-
+      FrmEntityViewer.LaunchAsChildForm(gridDataEditorScript.BindingSource.Current, SaveFunction, gridDataEditorScript.SaveableTypes);
     }
 
     private void textBoxScript_DragDrop(object sender, DragEventArgs e)
     {
-      if (!e.Data.GetDataPresent(typeof(TreeNode)))
-      {
+      if (!e.Data.GetDataPresent(typeof (TreeNode)))
         //this.DragDrop(sender, e);
         return;
-      }
-      var node = (TreeNode)e.Data.GetData(typeof(TreeNode));
+      var node = (TreeNode) e.Data.GetData(typeof (TreeNode));
 
       textBoxScript.SelectedText = node.Text;
-      
+
       //try
       //{
       //  Array a = (Array)e.Data.GetData(DataFormats.FileDrop);
@@ -132,7 +108,6 @@ namespace AW.Winforms.Helpers.QueryRunner
       //{
       //  MessageBox.Show("Error in DragDrop function: " + ex.Message);
       //}
-
     }
 
     private void textBoxScript_DragEnter(object sender, DragEventArgs e)
@@ -141,7 +116,6 @@ namespace AW.Winforms.Helpers.QueryRunner
       //  e.Effect = DragDropEffects.Copy;
       //else
       //  e.Effect = DragDropEffects.None;
-
     }
 
     private void textBoxScript_DragOver(object sender, DragEventArgs e)

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Winforms.Helpers.Controls;
 using JesseJohnston;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -148,6 +149,30 @@ namespace AW.Winforms.Helpers
     }
 
     #endregion
+
+    public static void ViewInDataGridView(this IEnumerable enumerable)
+    {
+      EditInDataGridView(enumerable, null);
+    }
+
+    public static void EditInDataGridView(this IEnumerable enumerable, Func<object, int> saveFunction, params Type[] saveableTypes)
+    {
+      var dataGridView = new Form {Width = 700, Text = enumerable.ToString()};
+      var gridDataEditor = new GridDataEditor(enumerable, saveFunction, saveableTypes) {  Dock = DockStyle.Fill };
+      dataGridView.Controls.Add(gridDataEditor);
+      ShowForm(dataGridView);
+      //if (Application.MessageLoop)
+      //{
+      //  var mainWindowHandle = Process.GetCurrentProcess().MainWindowHandle;
+      //  if (mainWindowHandle.ToInt64() > 0)
+      //    dataGridView.Show(new WindowWrapper(mainWindowHandle));
+      //  else
+      //    dataGridView.Show();
+      //}
+      //else
+      //  dataGridView.ShowDialog();
+    }
+
 
     public static bool BindEnumerable(IEnumerable enumerable, BindingSource bindingSource)
     {
@@ -294,15 +319,12 @@ namespace AW.Winforms.Helpers
       return childForm;
     }
 
+    #endregion
+
+    #region Forms
+
     public static Form GetMdiParent()
     {
-      //foreach (Form form in Application.OpenForms)
-      //{
-      //  if (form.IsMdiContainer)
-      //    return form;
-      //}
-      //return null;
-
       return (from form in Application.OpenForms.Cast<Form>()
               where form.IsMdiContainer
               select form).FirstOrDefault();
@@ -311,18 +333,15 @@ namespace AW.Winforms.Helpers
     public static int GetIndexOfForm(Form form)
     {
       for (var i = 0; i < Application.OpenForms.Count; i++)
-      {
         if (Application.OpenForms[i] == form)
           return i;
-      }
       return -1;
     }
 
     public static void ShowChildForm(Form childForm, Form mdiParent)
     {
-      if (mdiParent == null) throw new ArgumentNullException("mdiParent");
-
-      childForm.MdiParent = mdiParent;
+      if (mdiParent != null)
+        childForm.MdiParent = mdiParent;
       childForm.WindowState = FormWindowState.Normal;
       childForm.Show();
     }
@@ -332,6 +351,39 @@ namespace AW.Winforms.Helpers
       ShowChildForm(childForm, GetMdiParent());
     }
 
+    public static void ShowForm(Form form)
+    {
+      ShowForm(form, GetMdiParent());
+    }
+
+    public static void ShowForm(Form form, Form mdiParent)
+    {
+      if (Application.MessageLoop)
+      {
+        if (mdiParent != null)
+          form.MdiParent = mdiParent;
+        form.WindowState = FormWindowState.Normal;
+        form.Show();
+      }
+      else
+        form.ShowDialog();
+    }
+
     #endregion
+  }
+
+  public class WindowWrapper : IWin32Window
+  {
+    public WindowWrapper(IntPtr handle)
+    {
+      _hwnd = handle;
+    }
+
+    public IntPtr Handle
+    {
+      get { return _hwnd; }
+    }
+
+    private readonly IntPtr _hwnd;
   }
 }

@@ -12,8 +12,6 @@ namespace AW.Winforms.Helpers.EntityViewer
 {
   public partial class FrmEntityViewer : Form
   {
-    private readonly Type[] _saveableTypes;
-    public event Func<object, int> SaveFunction;
     private static TypeDescriptionProvider _commonEntityBaseTypeDescriptionProvider;
     private static TypeDescriptionProvider _entityFieldsTypeDescriptionProvider;
     private bool _doingObjectBrowserNodeSelection;
@@ -21,7 +19,6 @@ namespace AW.Winforms.Helpers.EntityViewer
     public FrmEntityViewer()
     {
       InitializeComponent();
-      dataGridViewEnumerable.AutoGenerateColumns = true;
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
       if (_commonEntityBaseTypeDescriptionProvider == null)
         _commonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));
@@ -41,8 +38,8 @@ namespace AW.Winforms.Helpers.EntityViewer
     public FrmEntityViewer(object entity, Func<object, int> saveFunction, params Type[] saveableTypes)
       : this(entity)
     {
-      _saveableTypes = saveableTypes;
-      SaveFunction += saveFunction;
+      gridDataEditor.SaveableTypes = saveableTypes;
+      gridDataEditor.SaveFunction += saveFunction;
     }
 
     public static Form LaunchAsChildForm(object entity)
@@ -62,7 +59,6 @@ namespace AW.Winforms.Helpers.EntityViewer
     private void FrmEntityViewer_FormClosing(object sender, FormClosingEventArgs e)
     {
       Settings.Default.EntityViewerSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-      Settings.Default.EntityFieldColumns = AWHelper.SaveColumnState(dataGridViewEnumerable);
       Settings.Default.Save();
     }
 
@@ -81,10 +77,6 @@ namespace AW.Winforms.Helpers.EntityViewer
       {
         _doingObjectBrowserNodeSelection = false;
       }
-      AWHelper.RestoreColumnsState(Settings.Default.EntityFieldColumns, dataGridViewEnumerable);
-      var dataGridViewScriptClipboardCopyMode = dataGridViewEnumerable.ClipboardCopyMode;
-      if (toolStripComboBoxClipboardCopyMode.ComboBox != null) toolStripComboBoxClipboardCopyMode.ComboBox.DataSource = Enum.GetValues(typeof (DataGridViewClipboardCopyMode));
-      toolStripComboBoxClipboardCopyMode.SelectedItem = dataGridViewScriptClipboardCopyMode;
       toolStripStatusLabelInstance.Text = string.Format("(({0})((FrmEntityViewer)Application.OpenForms[{1}]).ObjectBeingBrowsed)", ObjectBeingBrowsed.GetType(), AWHelper.GetIndexOfForm(this));
       textBoxObjectBeingBrowsed.Text = toolStripStatusLabelInstance.Text;
 
@@ -100,10 +92,10 @@ namespace AW.Winforms.Helpers.EntityViewer
     {
       var x = e.NewSelection;
       var t = x.PropertyDescriptor;
-      if (!_doingObjectBrowserNodeSelection && e.NewSelection.Value != null && !(e.OldSelection == null && bindingSourceEnumerable.DataSource == propertyGrid1.SelectedObject))
+      if (!_doingObjectBrowserNodeSelection && e.NewSelection.Value != null && !(e.OldSelection == null && gridDataEditor.DataSource == propertyGrid1.SelectedObject))
         if (!ShowEnumerable(e.NewSelection.Value as IEnumerable))
           if (!e.NewSelection.PropertyDescriptor.PropertyType.IsValueType)
-            bindingSourceEnumerable.DataSource = e.NewSelection.Value;
+            gridDataEditor.DataSource = e.NewSelection.Value;
     }
 
     private void ObjectBrowser_NodeSelected(object sender, EventArgs e)
@@ -114,7 +106,7 @@ namespace AW.Winforms.Helpers.EntityViewer
         toolStripStatusLabelSelectePath.Text = (((TreeView) (ObjectBrowser.ActiveControl)).SelectedNode).FullPath;
         propertyGrid1.SelectedObject = sender;
         if (!ShowEnumerable(sender as IEnumerable))
-          bindingSourceEnumerable.DataSource = null;
+          gridDataEditor.DataSource = null;
       }
       finally
       {
@@ -124,23 +116,11 @@ namespace AW.Winforms.Helpers.EntityViewer
 
     private bool ShowEnumerable(IEnumerable enumerable)
     {
-      var iSEnumerable = AWHelper.BindEnumerable(enumerable, bindingSourceEnumerable);
+      var iSEnumerable = gridDataEditor.BindEnumerable(enumerable);
       splitContainerValues.Panel2Collapsed = !iSEnumerable;
-      if (iSEnumerable)
-        saveToolStripButton.Enabled = CanEditEnumerable();
-      else
-        saveToolStripButton.Enabled = false;
-      EnableEnumerableEditing();
       return iSEnumerable;
     }
 
-    private void EnableEnumerableEditing()
-    {
-      saveToolStripButton.Enabled = CanEditEnumerable();
-      bindingSourceEnumerable.AllowNew = saveToolStripButton.Enabled;
-      dataGridViewEnumerable.ReadOnly = !saveToolStripButton.Enabled;
-      bindingNavigatorDeleteItem1.Enabled = saveToolStripButton.Enabled;
-    }
 
     private void selectObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -153,23 +133,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       get { return ObjectBrowser.ObjectToBrowse; }
     }
 
-    private void copyToolStripButton_Click(object sender, EventArgs e)
-    {
-      AWHelper.CopyEntireDataGridViewToClipboard(dataGridViewEnumerable);
-    }
-
-    private void printToolStripButton_Click(object sender, EventArgs e)
-    {
-      var frm = new FrmReportViewer {MdiParent = MdiParent, WindowState = FormWindowState.Normal};
-      frm.OpenDataSet(bindingSourceEnumerable, false);
-      frm.Show();
-    }
-
-    private void toolStripComboBoxClipboardCopyMode_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      dataGridViewEnumerable.ClipboardCopyMode = (DataGridViewClipboardCopyMode) toolStripComboBoxClipboardCopyMode.SelectedItem;
-    }
-
+ 
     private void copyObjectRefToolStripMenuItem_Click(object sender, EventArgs e)
     {
       Clipboard.SetText(toolStripStatusLabelInstance.Text);
@@ -190,48 +154,26 @@ namespace AW.Winforms.Helpers.EntityViewer
       ObjectBrowser.ShowDataTypes = checkBoxShowDataTypes.Checked;
     }
 
-    private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
-    {
-    }
+    //private void saveToolStripButton_Click(object sender, EventArgs e)
+    //{
+    //  var ds = bindingSourceEnumerable.List;
+    //  if (ds != null)
+    //  {
+    //    var f = ListBindingHelper.GetListItemType(ds);
+    //    if (_saveableTypes != null && _saveableTypes.Contains(f))
+    //      return;
+    //    //ds.
+    //    //var x = ds.ElementType;
+    //    //var d = new EntityCollectionNonGeneric();
+    //    //d.AddRange(ds.Cast<EntityBase2>());
+    //    if (CanSave())
+    //    {
+    //      var numSaved = SaveFunction(ds);
+    //      MessageBox.Show("numSaved"+numSaved);
+    //    }
+    //  }
+    //}
 
-    private void saveToolStripButton_Click(object sender, EventArgs e)
-    {
-      var ds = bindingSourceEnumerable.List;
-      if (ds != null)
-      {
-        var f = ListBindingHelper.GetListItemType(ds);
-        if (_saveableTypes != null && _saveableTypes.Contains(f))
-          return;
-        //ds.
-        //var x = ds.ElementType;
-        //var d = new EntityCollectionNonGeneric();
-        //d.AddRange(ds.Cast<EntityBase2>());
-        if (CanSave())
-        {
-          var numSaved = SaveFunction(ds);
-          MessageBox.Show("numSaved"+numSaved);
-        }
-      }
-    }
 
-    private bool CanSave()
-    {
-      return SaveFunction != null;
-    }
-
-    private bool CanEdit(Type typeToEdit)
-    {
-      return CanSave() && (_saveableTypes == null || typeToEdit.IsAssignableTo(_saveableTypes));
-    }
-
-    private bool CanEditEnumerable()
-    {
-      return CanEdit(ListBindingHelper.GetListItemType(bindingSourceEnumerable.List));
-    }
-
-    private object GetDataSource()
-    {
-      return AWHelper.GetDataSource(bindingSourceEnumerable);
-    }
   }
 }

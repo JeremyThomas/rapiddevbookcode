@@ -38,6 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 		SampleQueryFiles\LLBL Project Entity Table Mapping.cs = SampleQueryFiles\LLBL Project Entity Table Mapping.cs
 		SampleQueryFiles\LLBL Project Entity Table Mapping.linq = SampleQueryFiles\LLBL Project Entity Table Mapping.linq
 		SampleQueryFiles\LLBL_AW_Alberts.linq = SampleQueryFiles\LLBL_AW_Alberts.linq
+		SampleQueryFiles\LLBL_AW_EditInDataGridView.linq = SampleQueryFiles\LLBL_AW_EditInDataGridView.linq
 		SampleQueryFiles\LLBL_AWcustomerlist.linq = SampleQueryFiles\LLBL_AWcustomerlist.linq
 		SampleQueryFiles\SalesOrderHeader_Albert_Perth.cs = SampleQueryFiles\SalesOrderHeader_Albert_Perth.cs
 		SampleQueryFiles\ShowEntitiesAndFields.linq = SampleQueryFiles\ShowEntitiesAndFields.linq
@@ -103,9 +104,6 @@ Global
 		SccProjectUniqueName6 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
 		SccProjectName6 = AW.Winforms.Helpers
 		SccLocalPath6 = AW.Winforms.Helpers
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = AW.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
