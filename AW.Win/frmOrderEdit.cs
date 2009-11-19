@@ -4,6 +4,7 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Winforms.Helpers.EntityViewer;
+using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -63,7 +64,7 @@ namespace AW.Winforms.Helpers
       // there are errors, cancel the save until the user fixes them.
       if (_order.GetEntityFieldsErrors() != string.Empty)
         MessageBox.Show("There are errors in the entity. Please fix them prior to save.", "Please fix the errors.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-      else if (AWHelper.ValidateForm(this, myError))
+      else if (LLBLWinformHelper.ValidateForm(this, myError))
       {
         salesOrderHeaderEntityBindingSource.EndEdit();
         if (SaveData())

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
-using AW.Helper;
 using AW.Winforms.Helpers.Properties;
-using DynamicTable;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
@@ -24,8 +20,8 @@ namespace AW.Winforms.Helpers.EntityViewer
         _commonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));
       //  TypeDescriptor.AddProvider(_commonEntityBaseTypeDescriptionProvider, typeof (object));
 
-      if (_entityFieldsTypeDescriptionProvider == null)
-        _entityFieldsTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (EntityFields));
+   //   if (_entityFieldsTypeDescriptionProvider == null)
+   //     _entityFieldsTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (EntityFields));
       // TypeDescriptor.AddProvider(_entityFieldsTypeDescriptionProvider, typeof(EntityFields));
     }
 

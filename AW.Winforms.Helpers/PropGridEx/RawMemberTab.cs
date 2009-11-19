@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms.Design;
 using AW.Winforms.Helpers.Properties;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.PropGridEx
 {
@@ -130,18 +129,18 @@ namespace AW.Winforms.Helpers.PropGridEx
       var list = component as IList;
       if (list != null)
       {
-        var entityFields = component as IEntityFields;
-        if (entityFields == null)
+        //var entityFields = component as IEntityFields;
+        //if (entityFields == null)
           // add an ListItemMemberDescriptor fore each item in the list
           for (var i = 0; i < list.Count; i++)
           {
             fields.Add(new ListItemMemberDescriptor(list, i));
           }
-        else
-          for (var i = 0; i < entityFields.Count; i++)
-          {
-            fields.Add(new EntityFieldMemberDescriptor(entityFields, i));
-          }
+        //else
+        //  for (var i = 0; i < entityFields.Count; i++)
+        //  {
+        //    fields.Add(new EntityFieldMemberDescriptor(entityFields, i));
+        //  }
       }
 
       // special treatment for classes implementing IDictionary

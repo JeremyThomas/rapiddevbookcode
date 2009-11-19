@@ -2,7 +2,7 @@
 using AW.Data;
 using AW.Data.EntityClasses;
 
-namespace AW.Winforms.Helpers
+namespace AW.Business
 {
   public class CustomerListLinqedTypedList
   {
@@ -108,7 +108,7 @@ namespace AW.Winforms.Helpers
       this.emailPromotion = emailPromotion;
       this.countryRegionName = countryRegionName;
       this.stateProvinceName = stateProvinceName;
-      this.customerID = CustomerID;
+      customerID = CustomerID;
     }
 
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery()

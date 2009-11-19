@@ -1,10 +1,9 @@
-﻿using System.Linq;
+using System.Linq;
 using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.TypedListClasses;
 using AW.Data.TypedViewClasses;
-using AW.Winforms.Helpers;
 
 namespace AW.Business
 {

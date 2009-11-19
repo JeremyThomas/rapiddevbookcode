@@ -24,7 +24,7 @@ namespace AW.Business
 
       var w = (from soh in query
                from sod in soh.SalesOrderDetails
-               select new {soh.SalesOrderID, soh.Customer.AccountNumber, soh.CreditCard.CardNumber}).ToList();
+               select new { soh.SalesOrderID, soh.Customer.AccountNumber, soh.CreditCard.CardNumber }).ToList();
     }
 
     public static void BarfonMultipleTableJoins()
@@ -36,7 +36,7 @@ namespace AW.Business
 
       var w = (from soh in query
                from sod3 in soh.SalesOrderDetails
-               select soh).Take(1).ToList();
+               select soh).Take(1).ToEntityCollection();
 
       var c = from Address in MetaSingletons.MetaData.Address
               from EmployeeAddresses in Address.EmployeeAddresses
@@ -46,7 +46,7 @@ namespace AW.Business
               from EmployeeAddresses in Address.EmployeeAddresses
               from SalesOrderHeader in Address.SalesOrderHeaders.DefaultIfEmpty()
               select Address;
-      x.ToList();
+      x.ToEntityCollection();
     }
 
     public static void Barf1()
@@ -56,7 +56,7 @@ namespace AW.Business
               from Individual in EmployeeAddresses.Employee.Contact.Individuals
               select Address;
 
-      c.ToList(); //ORMRelationException: Relation at index 1 doesn't contain an entity already added to the FROM clause. Bad alias?
+      c.ToEntityCollection(); //ORMRelationException: Relation at index 1 doesn't contain an entity already added to the FROM clause. Bad alias?
       //http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15159
 
       var x = from CountryRegion in MetaSingletons.MetaData.CountryRegion
@@ -65,7 +65,7 @@ namespace AW.Business
               from EmployeeAddresses in Address.EmployeeAddresses
               from Individual in EmployeeAddresses.Employee.Contact.Individuals
               select CountryRegion;
-      x.ToList();
+      x.ToEntityCollection();
 
       var f = from Address in MetaSingletons.MetaData.Address
               select new {Address.StateProvince.Name};
@@ -77,12 +77,12 @@ namespace AW.Business
       //        join individual in Validation.MetaData.Individual on EmployeeAddresses.Employee.Contact.ContactId equals individual.ContactId
       //        //where EmployeeAddresses.Employee.Contact != null
       //        select address;
-      //d.ToList();
+      //d.ToEntityCollection();
 
       var q = from Address in MetaSingletons.MetaData.Address
               from EmployeeAddresses in Address.EmployeeAddresses
               select EmployeeAddresses.Employee.Contact;
-      q.ToList();
+      q.ToEntityCollection();
 
       var g = from Address in MetaSingletons.MetaData.Address
               from EmployeeAddresses in Address.EmployeeAddresses
