@@ -58,7 +58,7 @@ namespace AW.Test
     /// <summary>
     ///A test for MakeNode
     ///</summary>
-    //[TestMethod()]
+    [TestMethod(), Ignore]
     public void MakeNodeTest()
     {
       EmployeeEntity Employee = null; // TODO: Initialize to an appropriate value
@@ -113,7 +113,7 @@ namespace AW.Test
     /// <summary>
     ///A test for GetManagerEmployees
     ///</summary>
-    //[TestMethod()]
+    [TestMethod(), Ignore]
     public void GetManagerEmployeesTest()
     {
       TreeNode MasterNode = null; // TODO: Initialize to an appropriate value
@@ -145,7 +145,7 @@ namespace AW.Test
     /// <summary>
     ///A test for GetChildRow
     ///</summary>
-    //[TestMethod()]
+    [TestMethod(), Ignore]
     public void GetChildRowTest()
     {
       DataRow row = null; // TODO: Initialize to an appropriate value
@@ -160,7 +160,7 @@ namespace AW.Test
     /// <summary>
     ///A test for FindLowestNode
     ///</summary>
-    //[TestMethod()]
+    [TestMethod(), Ignore]
     public void FindLowestNodeTest()
     {
       TreeNode Node = null; // TODO: Initialize to an appropriate value
@@ -174,7 +174,7 @@ namespace AW.Test
     /// <summary>
     ///A test for FindEmployeeRecursive
     ///</summary>
-    //[TestMethod()]
+    [TestMethod(), Ignore]
     public void FindEmployeeRecursiveTest()
     {
       TreeNodeCollection Nodes = null; // TODO: Initialize to an appropriate value
@@ -188,7 +188,7 @@ namespace AW.Test
     /// <summary>
     ///A test for CreateNode
     ///</summary>
-    //[TestMethod()]
+    [TestMethod(),Ignore]
     public void CreateNodeTest()
     {
       DataRow row = null; // TODO: Initialize to an appropriate value

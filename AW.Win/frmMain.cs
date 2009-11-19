@@ -1,14 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Data.FactoryClasses;
 using AW.Helper;
 using AW.Winforms.Helpers.EntityViewer;
+using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.Properties;
 using AW.Winforms.Helpers.QueryRunner;
@@ -89,12 +87,12 @@ namespace AW.Winforms.Helpers
 
     private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (frmOrderSearch));
+      LaunchChildForm(typeof (FrmOrderSearch));
     }
 
     private void orders2ToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (frmOrderSearch2));
+      LaunchChildForm(typeof (FrmOrderSearch2));
     }
 
     private void customersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -178,25 +176,25 @@ namespace AW.Winforms.Helpers
 
     private FrmQueryRunner LaunchQueryRunner()
     {
-      var qr = LaunchChildForm(typeof(FrmQueryRunner)) as FrmQueryRunner;
+      var qr = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
       if (qr != null) qr.SaveFunction += MetaSingletons.Save;
       return qr;
     }
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, MetaSingletons.Save, typeof(IEntity));
+      FrmEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, MetaSingletons.Save, typeof (IEntity));
       //LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData, Save);
     }
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(FrmEntitiesAndFields), typeof(CommonEntityBase));
+      LaunchChildForm(typeof (FrmEntitiesAndFields), typeof (CommonEntityBase));
     }
 
     private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(FrmOrganizationStructure));
+      LaunchChildForm(typeof (FrmOrganizationStructure));
     }
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
@@ -219,7 +217,5 @@ namespace AW.Winforms.Helpers
     {
       e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
     }
-
-
   }
 }

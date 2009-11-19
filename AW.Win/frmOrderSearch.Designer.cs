@@ -1,6 +1,6 @@
 namespace AW.Winforms.Helpers
 {
-    partial class frmOrderSearch
+    partial class FrmOrderSearch
     {
         /// <summary>
         /// Required designer variable.
@@ -539,14 +539,14 @@ namespace AW.Winforms.Helpers
           this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
           this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
           // 
-          // frmOrderSearch
+          // FrmOrderSearch
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(694, 578);
           this.Controls.Add(this.tableLayoutPanel1);
           this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-          this.Name = "frmOrderSearch";
+          this.Name = "FrmOrderSearch";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
           this.Tag = "True";

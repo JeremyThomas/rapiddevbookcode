@@ -10,18 +10,18 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers
 {
-  public partial class frmOrderEdit : Form
+  public partial class FrmOrderEdit : Form
   {
     private readonly SalesOrderHeaderEntity _order;
 
-    public frmOrderEdit()
+    public FrmOrderEdit()
     {
       InitializeComponent();
     }
 
-    public frmOrderEdit(SalesOrderHeaderEntity Order) : this()
+    public FrmOrderEdit(SalesOrderHeaderEntity order) : this()
     {
-      _order = Order;
+      _order = order;
     }
 
     private void frmOrderEdit_Load(object sender, EventArgs e)

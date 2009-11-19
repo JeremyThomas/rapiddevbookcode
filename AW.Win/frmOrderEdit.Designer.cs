@@ -1,6 +1,6 @@
 namespace AW.Winforms.Helpers
 {
-    partial class frmOrderEdit
+    partial class FrmOrderEdit
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace AW.Winforms.Helpers
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderEdit));
+          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmOrderEdit));
           System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
           System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
           System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -578,7 +578,7 @@ namespace AW.Winforms.Helpers
           this.myError.ContainerControl = this;
           this.myError.DataSource = this.salesOrderHeaderEntityBindingSource;
           // 
-          // frmOrderEdit
+          // FrmOrderEdit
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -586,7 +586,7 @@ namespace AW.Winforms.Helpers
           this.Controls.Add(this.tableLayoutPanel2);
           this.Controls.Add(this.toolStrip1);
           this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-          this.Name = "frmOrderEdit";
+          this.Name = "FrmOrderEdit";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
           this.Text = "Order Edit";

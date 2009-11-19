@@ -235,6 +235,10 @@
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
+      <Project>{7919C746-73F3-4279-A53B-CC6C08F42318}</Project>
+      <Name>AW.Helper.LLBL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>

@@ -1,6 +1,6 @@
 namespace AW.Winforms.Helpers
 {
-    partial class frmOrderSearch2
+    partial class FrmOrderSearch2
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@ namespace AW.Winforms.Helpers
           System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
           System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
           System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmOrderSearch2));
+          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmOrderSearch2));
           this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
           this.label9 = new System.Windows.Forms.Label();
           this.tbCity = new System.Windows.Forms.TextBox();
@@ -791,7 +791,7 @@ namespace AW.Winforms.Helpers
           this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
           this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
           // 
-          // frmOrderSearch2
+          // FrmOrderSearch2
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -800,7 +800,7 @@ namespace AW.Winforms.Helpers
           this.Controls.Add(this.tableLayoutPanel2);
           this.Controls.Add(this.salesOrderHeaderEntityBindingNavigator);
           this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-          this.Name = "frmOrderSearch2";
+          this.Name = "FrmOrderSearch2";
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
           this.Tag = "True";

@@ -11,22 +11,22 @@ using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers
 {
-  public partial class frmOrderSearch2 : Form
+  public partial class FrmOrderSearch2 : Form
   {
-    private frmStatusBar frmStatusBar;
-    private DateTime fromDate;
-    private DateTime toDate;
-    private string firstName;
-    private string lastName;
-    private int orderID;
-    private string orderName;
-    private string cityName;
-    private string state;
-    private List<string> countries;
-    private string zip;
-    private object results;
+    private frmStatusBar _frmStatusBar;
+    private DateTime _fromDate;
+    private DateTime _toDate;
+    private string _firstName;
+    private string _lastName;
+    private int _orderID;
+    private string _orderName;
+    private string _cityName;
+    private string _state;
+    private List<string> _countries;
+    private string _zip;
+    private object _results;
 
-    public frmOrderSearch2()
+    public FrmOrderSearch2()
     {
       InitializeComponent();
     }
@@ -80,29 +80,29 @@ namespace AW.Winforms.Helpers
 
     private void btnSearch_Click(object sender, EventArgs e)
     {
-      fromDate = DateTime.MinValue;
+      _fromDate = DateTime.MinValue;
       if (dtpDateFrom.Checked)
-        fromDate = dtpDateFrom.Value;
-      toDate = DateTime.MinValue;
+        _fromDate = dtpDateFrom.Value;
+      _toDate = DateTime.MinValue;
       if (dtpDateTo.Checked)
-        toDate = dtpDateTo.Value;
-      orderID = 0;
-      orderName = "";
+        _toDate = dtpDateTo.Value;
+      _orderID = 0;
+      _orderName = "";
       if (tbOrderID.Text != "")
         try
         {
-          orderID = Convert.ToInt32(tbOrderID.Text);
+          _orderID = Convert.ToInt32(tbOrderID.Text);
         }
         catch
         {
-          orderName = tbOrderID.Text;
+          _orderName = tbOrderID.Text;
         }
-      firstName = tbFirstName.Text;
-      lastName = tbLastName.Text;
-      cityName = tbCity.Text;
-      state = cbState.Text;
-      countries = (from country in listBoxCountry.SelectedItems.OfType<CountryRegionEntity>() select country.Name).ToList();
-      zip = tbZip.Text;
+      _firstName = tbFirstName.Text;
+      _lastName = tbLastName.Text;
+      _cityName = tbCity.Text;
+      _state = cbState.Text;
+      _countries = (from country in listBoxCountry.SelectedItems.OfType<CountryRegionEntity>() select country.Name).ToList();
+      _zip = tbZip.Text;
       if (sender == buttonBarf)
       {
         Tests.Barf();
@@ -114,14 +114,14 @@ namespace AW.Winforms.Helpers
       else
       {
         btnSearch.Enabled = false;
-        frmStatusBar = new frmStatusBar();
-        frmStatusBar.Show();
-        frmStatusBar.CancelButtonClicked += frmStatusBar_CancelButtonClicked;
+        _frmStatusBar = new frmStatusBar();
+        _frmStatusBar.Show();
+        _frmStatusBar.CancelButtonClicked += FrmStatusBarCancelButtonClicked;
         searchWorker.RunWorkerAsync();
       }
     }
 
-    private void frmStatusBar_CancelButtonClicked(object sender, CancelEventArgs e)
+    private void FrmStatusBarCancelButtonClicked(object sender, CancelEventArgs e)
     {
       searchWorker.CancelAsync();
       btnSearch.Enabled = true;
@@ -129,14 +129,14 @@ namespace AW.Winforms.Helpers
 
     private void newOrderToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var Order = new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810};
-      ((FrmMain)MdiParent).LaunchChildForm(typeof(SalesOrderHeaderEntity), Order);
+      var order = new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810};
+      ((FrmMain)MdiParent).LaunchChildForm(typeof(SalesOrderHeaderEntity), order);
     }
 
     private void dgResults_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
-      var Order = salesOrderHeaderEntityDataGridView.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
-      ((FrmMain)MdiParent).LaunchChildForm(typeof(frmOrderEdit), Order);
+      var order = salesOrderHeaderEntityDataGridView.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
+      ((FrmMain)MdiParent).LaunchChildForm(typeof(FrmOrderEdit), order);
     }
 
     /// <summary>
@@ -146,16 +146,16 @@ namespace AW.Winforms.Helpers
     /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      results = SalesOrderManager.DoSalesOrderHeaderLinqQuery(fromDate,
-                                                                         toDate,
-                                                                         firstName,
-                                                                         lastName,
-                                                                         orderID,
-                                                                         orderName,
-                                                                         cityName,
-                                                                         state,
-                                                                         countries,
-                                                                         zip, MaxNumberOfItemsToReturn).ToList();
+      _results = SalesOrderManager.DoSalesOrderHeaderLinqQuery(_fromDate,
+                                                                         _toDate,
+                                                                         _firstName,
+                                                                         _lastName,
+                                                                         _orderID,
+                                                                         _orderName,
+                                                                         _cityName,
+                                                                         _state,
+                                                                         _countries,
+                                                                         _zip, MaxNumberOfItemsToReturn).ToList();
 
     }
 
@@ -169,10 +169,10 @@ namespace AW.Winforms.Helpers
     {
       if (e.Error != null)
         Application.OnThreadException(e.Error);
-      if (frmStatusBar != null)
-        frmStatusBar.Close();
+      if (_frmStatusBar != null)
+        _frmStatusBar.Close();
       btnSearch.Enabled = true;
-      salesOrderHeaderEntityBindingSource.DataSource = results;
+      salesOrderHeaderEntityBindingSource.DataSource = _results;
     }
 
     private void buttonClear_Click(object sender, EventArgs e)

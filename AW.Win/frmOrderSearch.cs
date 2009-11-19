@@ -9,7 +9,7 @@ using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers
 {
-  public partial class frmOrderSearch : Form
+  public partial class FrmOrderSearch : Form
   {
     private frmStatusBar _frmStatusBar;
     private DateTime _fromDate;
@@ -25,7 +25,7 @@ namespace AW.Winforms.Helpers
     private int _maxNumberOfItemsToReturn;
     private bool _prefetch;
 
-    public frmOrderSearch()
+    public FrmOrderSearch()
     {
       InitializeComponent();
     }
@@ -129,11 +129,11 @@ namespace AW.Winforms.Helpers
       btnSearch.Enabled = false;
       _frmStatusBar = new frmStatusBar();
       _frmStatusBar.Show();
-      _frmStatusBar.CancelButtonClicked += _frmStatusBar_CancelButtonClicked;
+      _frmStatusBar.CancelButtonClicked += FrmStatusBarCancelButtonClicked;
       searchWorker.RunWorkerAsync();
     }
 
-    private void _frmStatusBar_CancelButtonClicked(object sender, CancelEventArgs e)
+    private void FrmStatusBarCancelButtonClicked(object sender, CancelEventArgs e)
     {
       searchWorker.CancelAsync();
       while (searchWorker.IsBusy)
@@ -143,15 +143,15 @@ namespace AW.Winforms.Helpers
 
     private void newOrderToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var Order = new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810};
-      ((FrmMain)MdiParent).LaunchChildForm(typeof(SalesOrderHeaderEntity), Order);
+      var order = new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810};
+      ((FrmMain)MdiParent).LaunchChildForm(typeof(SalesOrderHeaderEntity), order);
     }
 
     private void dgResults_CellContentDoubleClick(
       object sender, DataGridViewCellEventArgs e)
     {
-      var Order = dgResults.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
-      ((FrmMain)MdiParent).LaunchChildForm(typeof(frmOrderEdit), Order);
+      var order = dgResults.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
+      ((FrmMain)MdiParent).LaunchChildForm(typeof(FrmOrderEdit), order);
     }
 
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)

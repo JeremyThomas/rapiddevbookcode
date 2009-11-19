@@ -6,10 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
-using AW.Winforms.Helpers.Properties;
+using AW.Winforms.Helpers.LLBL.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Winforms.Helpers.EntityViewer
+namespace AW.Winforms.Helpers.LLBL
 {
   public partial class FrmEntitiesAndFields : Form
   {
