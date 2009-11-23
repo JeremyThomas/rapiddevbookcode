@@ -47,18 +47,18 @@
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.ObjectBrowser = new sliver.Windows.Forms.StateBrowser();
       this.splitContainerValues = new System.Windows.Forms.SplitContainer();
+      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       this.panel1 = new System.Windows.Forms.Panel();
       this.textBoxObjectBeingBrowsed = new System.Windows.Forms.TextBox();
       this.checkBoxShowNonPublicMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowStaticMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowDataTypes = new System.Windows.Forms.CheckBox();
+      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabelInstance = new System.Windows.Forms.ToolStripStatusLabel();
       this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
-      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
-      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPageBrowser.SuspendLayout();
@@ -237,6 +237,20 @@
       this.splitContainerValues.SplitterDistance = 265;
       this.splitContainerValues.TabIndex = 3;
       // 
+      // propertyGrid1
+      // 
+      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
+      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
+      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.propertyGrid1.DrawFlat = true;
+      this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
+      this.propertyGrid1.Name = "propertyGrid1";
+      this.propertyGrid1.Size = new System.Drawing.Size(551, 202);
+      this.propertyGrid1.TabIndex = 0;
+      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
+      // 
       // panel1
       // 
       this.panel1.Controls.Add(this.textBoxObjectBeingBrowsed);
@@ -296,6 +310,16 @@
       this.checkBoxShowDataTypes.UseVisualStyleBackColor = true;
       this.checkBoxShowDataTypes.CheckedChanged += new System.EventHandler(this.checkBoxShowDataTypes_CheckedChanged);
       // 
+      // gridDataEditor
+      // 
+      this.gridDataEditor.DataMember = "";
+      this.gridDataEditor.DataSource = null;
+      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.Name = "gridDataEditor";
+      this.gridDataEditor.Size = new System.Drawing.Size(551, 261);
+      this.gridDataEditor.TabIndex = 3;
+      // 
       // dataGridViewTextBoxColumn11
       // 
       this.dataGridViewTextBoxColumn11.DataPropertyName = "CurrentValue";
@@ -334,29 +358,6 @@
       this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(109, 17);
       this.toolStripStatusLabelSelectePath.Text = "toolStripStatusLabel1";
       // 
-      // propertyGrid1
-      // 
-      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
-      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
-      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.propertyGrid1.DrawFlat = true;
-      this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
-      this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(551, 202);
-      this.propertyGrid1.TabIndex = 0;
-      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
-      // 
-      // gridDataEditor
-      // 
-      this.gridDataEditor.DataMember = "";
-      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
-      this.gridDataEditor.Name = "gridDataEditor";
-      this.gridDataEditor.Size = new System.Drawing.Size(551, 261);
-      this.gridDataEditor.TabIndex = 3;
-      // 
       // FrmEntityViewer
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -390,7 +391,6 @@
     #endregion
 
     private System.Windows.Forms.SplitContainer splitContainer1;
-    private AW.Winforms.Helpers.PropGridEx.PropertyGridEx propertyGrid1;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -402,7 +402,6 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-    private sliver.Windows.Forms.StateBrowser ObjectBrowser;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
     private System.Windows.Forms.TabControl tabControl1;
@@ -418,7 +417,9 @@
     private System.Windows.Forms.CheckBox checkBoxShowNonPublicMembers;
     private System.Windows.Forms.CheckBox checkBoxShowStaticMembers;
     private System.Windows.Forms.TextBox textBoxObjectBeingBrowsed;
-    private AW.Winforms.Helpers.Controls.GridDataEditor gridDataEditor;
+    protected AW.Winforms.Helpers.PropGridEx.PropertyGridEx propertyGrid1;
+    protected sliver.Windows.Forms.StateBrowser ObjectBrowser;
+    protected AW.Winforms.Helpers.Controls.GridDataEditor gridDataEditor;
 
   }
 }

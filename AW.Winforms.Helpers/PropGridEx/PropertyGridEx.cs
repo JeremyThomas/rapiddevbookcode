@@ -13,9 +13,9 @@ namespace AW.Winforms.Helpers.PropGridEx
   /// </summary>
   public class PropertyGridEx : PropertyGrid
   {
-    private IServiceProvider m_ServiceProvider;
-    private ServiceContainer m_PrivateContainer; // if no service provider is provided
-    private DummySite m_DummySite;
+    private IServiceProvider _serviceProvider;
+    private ServiceContainer _privateContainer; // if no service provider is provided
+    private DummySite _dummySite;
 
     /// <summary>
     /// Default constructor
@@ -48,19 +48,19 @@ namespace AW.Winforms.Helpers.PropGridEx
       if (serviceProvider == null)
       {
         // create own
-        if (m_PrivateContainer == null)
-          m_PrivateContainer = new ServiceContainer();
+        if (_privateContainer == null)
+          _privateContainer = new ServiceContainer();
           // add our own IPropertyValueUIService
           //this.m_PrivateContainer.AddService(typeof(IPropertyValueUIService), new AW.Winforms.Helpers.Hosting.PropertyValueUIService());
-        m_ServiceProvider = m_PrivateContainer;
+        _serviceProvider = _privateContainer;
       }
       else
         // use provided one (if no IPropertyValueUIService is provided, the overlay icons will not work)
-        m_ServiceProvider = serviceProvider;
+        _serviceProvider = serviceProvider;
 
       // propagate ServiceProvider to the DummySite
-      if (m_DummySite != null)
-        m_DummySite.ServiceProvider = m_ServiceProvider;
+      if (_dummySite != null)
+        _dummySite.ServiceProvider = _serviceProvider;
     }
 
     #region Stuff needed for the PropView to have access to our IServiceProvider
@@ -72,8 +72,8 @@ namespace AW.Winforms.Helpers.PropGridEx
     protected override object GetService(Type service)
     {
       var result = base.GetService(service);
-      if ((result == null) && (m_ServiceProvider != null))
-        return m_ServiceProvider.GetService(service);
+      if ((result == null) && (_serviceProvider != null))
+        return _serviceProvider.GetService(service);
       return result;
     }
 
@@ -89,9 +89,7 @@ namespace AW.Winforms.Helpers.PropGridEx
         // make sure we have a site
         if (base.Site == null)
         {
-          if (m_DummySite == null)
-            m_DummySite = new DummySite(this, m_ServiceProvider, "PropertyGridEx");
-          return m_DummySite;
+          return _dummySite ?? (_dummySite = new DummySite(this, _serviceProvider, "PropertyGridEx"));
         }
         return base.Site;
       }
@@ -110,7 +108,7 @@ namespace AW.Winforms.Helpers.PropGridEx
     {
       if (show)
         PropertyTabs.AddTabType(typeof (EventsTab));
-      base.ShowEventsButton(show);
+      ShowEventsButton(show);
     }
 
     /// <summary>

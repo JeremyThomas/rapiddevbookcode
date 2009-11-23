@@ -1,5 +1,6 @@
 //css_ref SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll;
 //css_ref SD.LLBLGen.Pro.LinqSupportClasses.NET35;
+//css_ref AW.Winforms.Helpers.LLBL.dll;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ public class Script : MarshalByRefObject, IQueryScript
 {
   public IEnumerable Query()
   {
-    return AW.Winforms.Helpers.EntityViewer.FrmEntitiesAndFields.GetEntitiesTypes();
+    return AW.Winforms.Helpers.LLBL.EntityViewer.FrmEntitiesAndFields.GetEntitiesTypes();
   }
 
 }

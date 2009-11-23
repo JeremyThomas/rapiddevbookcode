@@ -7,6 +7,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.LLBL;
+using AW.Winforms.Helpers.LLBL.PropGridEx;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.Properties;
 using AW.Winforms.Helpers.QueryRunner;
@@ -183,7 +184,7 @@ namespace AW.Winforms.Helpers
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, MetaSingletons.Save, typeof (IEntity));
+      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, MetaSingletons.Save, typeof(IEntity));
       //LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData, Save);
     }
 

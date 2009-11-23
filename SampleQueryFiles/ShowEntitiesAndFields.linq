@@ -4,6 +4,7 @@
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Helper.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;System.Windows.Forms.dll</Reference>
+  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.LLBL.dll</Reference>
 </Query>
 
-AW.Winforms.Helpers.EntityViewer.FrmEntitiesAndFields.ShowEntitiesAndFields(typeof(AW.Data.EntityClasses.CommonEntityBase));
+AW.Winforms.Helpers.LLBL.FrmEntitiesAndFields.ShowEntitiesAndFields(typeof(AW.Data.EntityClasses.CommonEntityBase));

@@ -3,13 +3,13 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Properties;
+using AW.Winforms.Helpers.PropGridEx;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
   public partial class FrmEntityViewer : Form
   {
     private static TypeDescriptionProvider _commonEntityBaseTypeDescriptionProvider;
-    private static TypeDescriptionProvider _entityFieldsTypeDescriptionProvider;
     private bool _doingObjectBrowserNodeSelection;
 
     public FrmEntityViewer()
@@ -17,12 +17,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       InitializeComponent();
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
       if (_commonEntityBaseTypeDescriptionProvider == null)
-        _commonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));
-      //  TypeDescriptor.AddProvider(_commonEntityBaseTypeDescriptionProvider, typeof (object));
-
-   //   if (_entityFieldsTypeDescriptionProvider == null)
-   //     _entityFieldsTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (EntityFields));
-      // TypeDescriptor.AddProvider(_entityFieldsTypeDescriptionProvider, typeof(EntityFields));
+        _commonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));    
     }
 
     public FrmEntityViewer(object entity) : this()

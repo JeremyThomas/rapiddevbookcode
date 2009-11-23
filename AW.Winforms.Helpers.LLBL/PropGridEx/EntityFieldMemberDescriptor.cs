@@ -1,21 +1,22 @@
 using System;
+using AW.Winforms.Helpers.PropGridEx;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Winforms.Helpers.PropGridEx
+namespace AW.Winforms.Helpers.LLBL.PropGridEx
 {
   class EntityFieldMemberDescriptor : ListItemAbstractDescriptor
   {
-    private readonly IEntityField entityField;
+    private readonly IEntityField _entityField;
 
     public EntityFieldMemberDescriptor(IEntityFields entityFields, int index)
       : base(entityFields[index].Name)
     {
-      entityField = entityFields[index];
+      _entityField = entityFields[index];
     }
 
     public override object GetValue(object component)
     {
-      return entityField;
+      return _entityField;
     }
 
     public override Type ComponentType

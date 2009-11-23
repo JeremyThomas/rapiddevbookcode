@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms.Design;
 using AW.Winforms.Helpers.Properties;
@@ -67,7 +68,7 @@ namespace AW.Winforms.Helpers.PropGridEx
     /// <summary>
     /// Add the instance fields of an object
     /// </summary>
-    private static void AddTypeFields(object component, Type type, ICollection<PropertyDescriptor> fields, ICollection<string> addedMemberNames)
+    private static void AddTypeFields(IReflect type, ICollection<PropertyDescriptor> fields, ICollection<string> addedMemberNames)
     {
       // stop at List / ArrayList / Dictionary / SortedList / Hashtable 
       if ((type == typeof (ArrayList)) ||
@@ -82,14 +83,8 @@ namespace AW.Winforms.Helpers.PropGridEx
                                       BindingFlags.NonPublic);
 
 
-      for (var i = 0; i < fieldInfos.Length; i++)
+      foreach (var field in fieldInfos.Where(field => !addedMemberNames.Contains(field.Name)))
       {
-        var field = fieldInfos[i];
-
-        // ignore doublette names
-        if (addedMemberNames.Contains(field.Name))
-          continue;
-
         // this one made it in the list... 
         addedMemberNames.Add(field.Name);
         fields.Add(new FieldMemberDescriptor(field));
@@ -127,40 +122,30 @@ namespace AW.Winforms.Helpers.PropGridEx
 
       // special treatment for classes implementing IList
       var list = component as IList;
-      if (list != null)
-      {
-        //var entityFields = component as IEntityFields;
-        //if (entityFields == null)
-          // add an ListItemMemberDescriptor fore each item in the list
-          for (var i = 0; i < list.Count; i++)
-          {
-            fields.Add(new ListItemMemberDescriptor(list, i));
-          }
-        //else
-        //  for (var i = 0; i < entityFields.Count; i++)
-        //  {
-        //    fields.Add(new EntityFieldMemberDescriptor(entityFields, i));
-        //  }
-      }
+      GetProperties(list, fields);
 
       // special treatment for classes implementing IDictionary
       var dict = component as IDictionary;
       if (dict != null)
-        foreach (var key in dict.Keys)
-        {
-          // add an DictionaryItemMemberDescriptor fore each key in the list
-          fields.Add(new DictionaryItemMemberDescriptor(dict, key));
-        }
+        fields.AddRange((from object key in dict.Keys select new DictionaryItemMemberDescriptor(dict, key)).Cast<PropertyDescriptor>());
 
 
       // add all the instance fields
       while (objectHierarchy.Count > 0)
       {
-        AddTypeFields(component, objectHierarchy.Pop(), fields, addedMemberNames);
-      }
-
+        AddTypeFields(objectHierarchy.Pop(), fields, addedMemberNames);
+      }     
 
       return new PropertyDescriptorCollection(fields.ToArray());
+    }
+
+    public virtual void GetProperties(IList list, List<PropertyDescriptor> fields)
+    {
+      if (list != null)
+      {
+        // add an ListItemMemberDescriptor fore each item in the list
+        fields.AddRange(list.Cast<object>().Select((t, i) => new ListItemMemberDescriptor(list, i)).Cast<PropertyDescriptor>());
+      }
     }
   }
 }

@@ -5,6 +5,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Winforms.Helpers.EntityViewer;
 using AW.Winforms.Helpers.LLBL;
+using AW.Winforms.Helpers.LLBL.PropGridEx;
 using AW.Winforms.Helpers.Properties;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -143,7 +144,7 @@ namespace AW.Winforms.Helpers
     private void toolStripButtonViewEntity_Click(object sender, EventArgs e)
     {
       //((FrmMain) MdiParent).LaunchChildForm(typeof (FrmEntityViewer), _order);
-      FrmEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, MetaSingletons.Save, typeof (IEntity));
+      FrmLLBLEntityViewer.LaunchAsChildForm(_order, MetaSingletons.Save, typeof(IEntity));
     }
 
     private void toolStripButtonRefetch_Click(object sender, EventArgs e)
