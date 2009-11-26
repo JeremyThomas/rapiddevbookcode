@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -21,12 +23,12 @@ namespace AW.Winforms.Helpers
       if (cols == null || dataGridView == null)
         return;
 
-      var MaxDisplayIndex = dataGridView.ColumnCount - 1;
+      var maxDisplayIndex = dataGridView.ColumnCount - 1;
       // Restore the columns' state
       for (var i = 0; i < Math.Min(cols.Count, dataGridView.ColumnCount); ++i)
       {
         var a = cols[i].Split(',');
-        dataGridView.Columns[i].DisplayIndex = Math.Min(Int16.Parse(a[0]), MaxDisplayIndex);
+        dataGridView.Columns[i].DisplayIndex = Math.Min(Int16.Parse(a[0]), maxDisplayIndex);
         dataGridView.Columns[i].Width = Int16.Parse(a[1]);
         dataGridView.Columns[i].Visible = Boolean.Parse(a[2]);
       }
@@ -67,12 +69,12 @@ namespace AW.Winforms.Helpers
       return form.WindowState == FormWindowState.Normal ? new Rectangle(form.Location, form.Size) : form.RestoreBounds;
     }
 
-    public static void SetWindowSizeAndLocation(Form form, Rectangle SizeAndLocation)
+    public static void SetWindowSizeAndLocation(Form form, Rectangle sizeAndLocation)
     {
-      if (!SizeAndLocation.Location.IsEmpty)
-        form.Location = SizeAndLocation.Location;
-      if (!SizeAndLocation.Size.IsEmpty)
-        form.Size = SizeAndLocation.Size;
+      if (!sizeAndLocation.Location.IsEmpty)
+        form.Location = sizeAndLocation.Location;
+      if (!sizeAndLocation.Size.IsEmpty)
+        form.Size = sizeAndLocation.Size;
     }
 
     /// <summary>
@@ -83,44 +85,81 @@ namespace AW.Winforms.Helpers
     public static void SetWindowLocationSafely(Form form, Point location)
     {
       if (!location.IsEmpty)
-        foreach (var screen in Screen.AllScreens)
+        if (Screen.AllScreens.Any(screen => screen.WorkingArea.Contains(location)))
         {
-          if (screen.WorkingArea.Contains(location))
-          {
-            form.Location = location;
-            GeneralHelper.DebugOut("setting form: '" + form + "' location to: " + location);
-            break;
-          }
+          form.Location = location;
+          GeneralHelper.DebugOut("setting form: '" + form + "' location to: " + location);
         }
     }
 
     #endregion
 
-
-
-    public static void ViewInDataGridView(this IEnumerable enumerable)
+    public static IEnumerable ViewInDataGridView(this IEnumerable enumerable)
     {
-      EditInDataGridView(enumerable, null);
+      return EditInDataGridView(enumerable, null);
     }
 
-    public static void EditInDataGridView(this IEnumerable enumerable, Func<object, int> saveFunction, params Type[] saveableTypes)
+    public static IEnumerable<T> ViewInDataGridView<T>(this IEnumerable<T> enumerable)
+    {
+      return EditInDataGridView(enumerable, null);
+    }
+
+    public static IEnumerable EditInDataGridView(this IEnumerable enumerable, Func<object, int> saveFunction, params Type[] saveableTypes)
     {
       var dataGridView = new Form {Width = 700, Text = enumerable.ToString()};
-      var gridDataEditor = new GridDataEditor(enumerable, saveFunction, saveableTypes) {  Dock = DockStyle.Fill };
+      var gridDataEditor = new GridDataEditor(enumerable, saveFunction, saveableTypes) {Dock = DockStyle.Fill};
       dataGridView.Controls.Add(gridDataEditor);
-      ShowForm(dataGridView);
-      //if (Application.MessageLoop)
-      //{
-      //  var mainWindowHandle = Process.GetCurrentProcess().MainWindowHandle;
-      //  if (mainWindowHandle.ToInt64() > 0)
-      //    dataGridView.Show(new WindowWrapper(mainWindowHandle));
-      //  else
-      //    dataGridView.Show();
-      //}
-      //else
-      //  dataGridView.ShowDialog();
+      dataGridView.ShowDialog();
+      return enumerable;
     }
 
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction, params Type[] saveableTypes)
+    {
+      var dataGridView = new Form {Width = 700, Text = enumerable.ToString()};
+      var gridDataEditor = new GridDataEditorT<T>(enumerable, saveFunction, saveableTypes) {Dock = DockStyle.Fill};
+      dataGridView.Controls.Add(gridDataEditor);
+      dataGridView.ShowDialog();
+      return enumerable;
+    }
+
+    //public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction, params Type[] saveableTypes)
+    //{
+    //  return (IEnumerable<T>) EditInDataGridView((IEnumerable) enumerable, saveFunction, saveableTypes);
+    //}
+
+    public static bool BindIQueryable<T>(this BindingSource bindingSource, IQueryable<T> queryable, bool setReadonly)
+    {
+      var showenEnumerable = queryable != null;
+      if (showenEnumerable)
+        if (queryable is IBindingListView)
+          bindingSource.DataSource = queryable;
+        else
+        {
+          var asList = queryable.ToList();
+          var objectListView = setReadonly ? new ObjectListView(asList.AsReadOnly()) : new ObjectListView(asList);
+          showenEnumerable = objectListView.ItemType != typeof (string); //strings just show the length
+          if (showenEnumerable)
+            bindingSource.DataSource = objectListView;
+        }
+      return showenEnumerable && bindingSource.Count > 0;
+    }
+
+    public static bool BindEnumerable<T>(this BindingSource bindingSource, IEnumerable<T> enumerable)
+    {
+      var showenEnumerable = enumerable != null;
+
+      if (showenEnumerable)
+        if (enumerable is IBindingListView)
+          bindingSource.DataSource = enumerable;
+        else
+        {
+          var objectListView = new ObjectListView(enumerable.ToList());
+          showenEnumerable = objectListView.ItemType != typeof (string); //strings just show the length
+          if (showenEnumerable)
+            bindingSource.DataSource = objectListView;
+        }
+      return showenEnumerable && bindingSource.Count > 0;
+    }
 
     public static bool BindEnumerable(IEnumerable enumerable, BindingSource bindingSource)
     {
@@ -246,13 +285,7 @@ namespace AW.Winforms.Helpers
     public static Form LaunchChildForm(this Form mdiParent, Type childFormType, params Object[] args)
     {
       if (childFormType == null) throw new ArgumentNullException("childFormType");
-      Form childForm = null;
-      foreach (var myForm in mdiParent.MdiChildren)
-        if (myForm.GetType() == childFormType)
-        {
-          childForm = myForm;
-          break;
-        }
+      var childForm = mdiParent.MdiChildren.FirstOrDefault(myForm => myForm.GetType() == childFormType);
       if (childForm != null)
       {
         if (childForm.WindowState == FormWindowState.Minimized)
