@@ -5,6 +5,7 @@ using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Winforms.Helpers.DataEditor;
 using DynamicTable;
 
 namespace AW.Winforms.Helpers.Controls
@@ -18,21 +19,6 @@ namespace AW.Winforms.Helpers.Controls
     {
       InitializeComponent();
       dataGridViewEnumerable.AutoGenerateColumns = true;
-    }
-
-    public GridDataEditorT(IEnumerable<T> dataSource, Func<object, int> saveFunction, params Type[] saveableTypes)
-      : this()
-    {
-      SaveableTypes = saveableTypes;
-      if (saveFunction != null)
-        SaveFunction += saveFunction;
-      //BindEnumerable(dataSource);
-      var queryable = dataSource as IQueryable<T>;
-      if (queryable == null)
-        //dataSourceIsIQueryable = dataSource is IQueryable;
-        BindEnumerable(dataSource);
-      else
-        bindingSourceEnumerable.BindIQueryable(queryable, !CanSave(typeof(T)));
     }
 
     #region Properties
@@ -91,7 +77,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void copyToolStripButton_Click(object sender, EventArgs e)
     {
-      AWHelper.CopyEntireDataGridViewToClipboard(dataGridViewEnumerable);
+      dataGridViewEnumerable.CopyEntireDataGridViewToClipboard();
     }
 
     private void toolStripComboBoxClipboardCopyMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -130,18 +116,12 @@ namespace AW.Winforms.Helpers.Controls
       EnableEnumerableEditing();
     }
 
-    public bool BindEnumerable(IEnumerable<T> enumerable)
-    {
-      var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable);
-      return iSEnumerable;
-    }
-
     private bool CanSave()
     {
       return SaveFunction != null;
     }
 
-    private bool CanSave(Type typeToEdit)
+    public bool CanSave(Type typeToEdit)
     {
       return CanSave() && (SaveableTypes == null || typeToEdit.IsAssignableTo(SaveableTypes));
     }

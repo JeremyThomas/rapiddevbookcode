@@ -5,6 +5,7 @@ using System.Drawing.Design;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Winforms.Helpers.DataEditor;
 using DynamicTable;
 
 namespace AW.Winforms.Helpers.Controls
@@ -13,27 +14,11 @@ namespace AW.Winforms.Helpers.Controls
   {
     public Type[] SaveableTypes;
     public event Func<object, int> SaveFunction;
-    private bool dataSourceIsIQueryable;
 
     public GridDataEditor()
     {
       InitializeComponent();
       dataGridViewEnumerable.AutoGenerateColumns = true;
-    }
-
-    public GridDataEditor(IEnumerable dataSource, Func<object, int> saveFunction, params Type[] saveableTypes)
-      : this()
-    {
-      SaveableTypes = saveableTypes;
-      if (saveFunction != null)
-        SaveFunction += saveFunction;
-      //BindEnumerable(dataSource);
-      var queryable = dataSource as IQueryable;
-      if (queryable == null)
-        //dataSourceIsIQueryable = dataSource is IQueryable;
-        BindEnumerable(dataSource.Cast<object>());
-      else
-        bindingSourceEnumerable.BindIQueryable(queryable.Cast<object>(), true);
     }
 
     #region Properties
@@ -92,7 +77,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void copyToolStripButton_Click(object sender, EventArgs e)
     {
-      AWHelper.CopyEntireDataGridViewToClipboard(dataGridViewEnumerable);
+      dataGridViewEnumerable.CopyEntireDataGridViewToClipboard();
     }
 
     private void toolStripComboBoxClipboardCopyMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -128,19 +113,33 @@ namespace AW.Winforms.Helpers.Controls
 
       else
         saveToolStripButton.Enabled = false;
-      EnableEnumerableEditing();
+
     }
 
     public bool BindEnumerable(IEnumerable enumerable)
     {
-      var iSEnumerable = AWHelper.BindEnumerable(enumerable, bindingSourceEnumerable);
+      var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, null));
 
       return iSEnumerable;
     }
 
+    private bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
+    {
+      var queryable = enumerable as IQueryable;
+      var shouldBeReadonly = queryable != null;
+      if (shouldBeReadonly)
+      {
+        if (typeToEdit==null)
+          typeToEdit = queryable.ElementType;
+        shouldBeReadonly = !CanSave(typeToEdit);
+      }
+      return shouldBeReadonly;
+    }
+
     public bool BindEnumerable<T>(System.Collections.Generic.IEnumerable<T> enumerable)
     {
-      var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable);
+      var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, typeof(T)));
+
       return iSEnumerable;
     }
 
@@ -154,23 +153,9 @@ namespace AW.Winforms.Helpers.Controls
       return CanSave() && (SaveableTypes == null || typeToEdit.IsAssignableTo(SaveableTypes));
     }
 
-    private bool CanEditEnumerable()
-    {
-      return CanSaveEnumerable() || !(AWHelper.GetDataSource(bindingSourceEnumerable) is IQueryable);
-    }
-
     private bool CanSaveEnumerable()
     {
       return CanSave(ListBindingHelper.GetListItemType(bindingSourceEnumerable.List));
-    }
-
-    private void EnableEnumerableEditing()
-    {
-      saveToolStripButton.Enabled = CanSaveEnumerable();
-      bindingSourceEnumerable.AllowNew = CanEditEnumerable();
-      dataGridViewEnumerable.ReadOnly = !bindingSourceEnumerable.AllowNew;
- // bindingSourceEnumerable.
-      bindingNavigatorDeleteItem1.Enabled = bindingSourceEnumerable.AllowNew; 
     }
 
     private void bindingSourceEnumerable_BindingComplete(object sender, BindingCompleteEventArgs e)

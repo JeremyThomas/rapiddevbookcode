@@ -112,6 +112,13 @@
     <Compile Include="Controls\GridDataEditor.Designer.cs">
       <DependentUpon>GridDataEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataEditor\DataEditorExtensions.cs" />
+    <Compile Include="DataEditor\FrmDataEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataEditor\FrmDataEditor.Designer.cs">
+      <DependentUpon>FrmDataEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="QueryRunner\FrmQueryRunner.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GridDataEditor.resx">
       <DependentUpon>GridDataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataEditor\FrmDataEditor.resx">
+      <DependentUpon>FrmDataEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="QueryRunner\FrmQueryRunner.resx">
       <DependentUpon>FrmQueryRunner.cs</DependentUpon>
