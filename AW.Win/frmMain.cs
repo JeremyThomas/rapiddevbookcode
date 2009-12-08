@@ -190,7 +190,7 @@ namespace AW.Winforms.Helpers
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (FrmEntitiesAndFields), typeof (CommonEntityBase));
+      LaunchChildForm(typeof (FrmEntitiesAndFields), typeof (CommonEntityBase), MetaSingletons.MetaData);
     }
 
     private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)

@@ -43,14 +43,17 @@ namespace AW.Winforms.Helpers.DataEditor
 
     public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction)
     {
-      var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
-      var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
-      frmDataEditor.Controls.Add(gridDataEditor);
-      if (saveFunction != null)
-        gridDataEditor.SaveFunction += saveFunction;
-      gridDataEditor.BindEnumerable(enumerable);
-      frmDataEditor.ShowDialog();
-      return enumerable;
+    	if (enumerable != null)
+    	{
+    		var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
+    		var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
+    		frmDataEditor.Controls.Add(gridDataEditor);
+    		if (saveFunction != null)
+    			gridDataEditor.SaveFunction += saveFunction;
+    		gridDataEditor.BindEnumerable(enumerable);
+    		frmDataEditor.ShowDialog();
+    	}
+    	return enumerable;
     }
 
     public static bool Bind<T>(this BindingSource bindingSource, IEnumerable<T> enumerable, bool setReadonly)

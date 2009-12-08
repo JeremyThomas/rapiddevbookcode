@@ -348,6 +348,7 @@
       <SubType>Code</SubType>
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="HelperClasses\FactoryHelper.cs" />
     <Compile Include="HelperClasses\PersistenceInfoProvider.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

@@ -8,6 +8,13 @@ namespace AW.Helper
 {
   public static class GeneralHelper
   {
+		/// <summary>
+		/// Used for converting any spaces in the string version of an enum name to a substitute in the CLR enum name.
+		/// </summary>
+		/// <example>In_Progress -to- "In Progress"</example>
+		public static readonly char EnumSpaceSubstitute = '_';
+		public static readonly char EnumNumberPrefix = '_';
+
     #region Debuging
 
     /// <summary>
@@ -33,5 +40,36 @@ namespace AW.Helper
       else
         Trace.Write(lineToLog);
     }
+
+		/// <summary>
+		/// Converts the string to the enum.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="strOfEnum">The string version of the enum.</param>
+		/// <returns></returns>
+		public static T ToEnum<T>(this string strOfEnum)
+		{
+			return string.IsNullOrEmpty(strOfEnum) ? default(T) : strOfEnum.ToEnum<T>(EnumSpaceSubstitute);
+		}
+
+		/// <summary>
+		/// Converts the string to the enum.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="strOfEnum">The string version of the enum.</param>
+		/// <param name="spaceSubstitute">The space substitute.</param>
+		/// <returns></returns>
+		public static T ToEnum<T>(this string strOfEnum, char spaceSubstitute)
+		{
+			var fixedString = strOfEnum.Replace(' ', spaceSubstitute);
+			if (Char.IsDigit(fixedString, 0))
+			{
+				int enumindex;
+				if (int.TryParse(fixedString, out enumindex))
+					return (T)Enum.ToObject(typeof(T), enumindex);
+				fixedString = EnumNumberPrefix + fixedString;
+			}
+			return (T)Enum.Parse(typeof(T), fixedString, true);
+		}
   }
 }
