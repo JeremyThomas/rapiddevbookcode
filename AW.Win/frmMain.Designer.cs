@@ -1,4 +1,6 @@
-namespace AW.Winforms.Helpers
+using AW.Winforms.Helpers.MostRecentlyUsedHandler;
+
+namespace AW.Win
 {
     partial class FrmMain
     {
@@ -29,7 +31,7 @@ namespace AW.Winforms.Helpers
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          AW.Winforms.Helpers.Properties.Settings settings1 = new AW.Winforms.Helpers.Properties.Settings();
+          Win.Properties.Settings settings1 = new Win.Properties.Settings();
           this.menuStrip1 = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.fileToolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +60,7 @@ namespace AW.Winforms.Helpers
           this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
           this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
-          this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
+          this.mruHandlerProject = new MRUHandler(this.components);
           this.organizationStructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.menuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
@@ -328,7 +330,7 @@ namespace AW.Winforms.Helpers
           this.mruHandlerProject.AutoSeparators = true;
           this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
           this.mruHandlerProject.StorageName = "mru";
-          this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
+          this.mruHandlerProject.MRUItemClicked += new MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
           // 
           // organizationStructureToolStripMenuItem
           // 
@@ -380,7 +382,7 @@ namespace AW.Winforms.Helpers
         private System.Windows.Forms.ToolStripMenuItem traceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orders2ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItemOpen;
-        private AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler mruHandlerProject;
+        private MRUHandler mruHandlerProject;
         private System.Windows.Forms.ToolStripMenuItem mostRecentlyUsedToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialogProject;
         private System.Windows.Forms.ToolStripMenuItem windowsMenu;

@@ -5,15 +5,15 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
-using AW.Winforms.Helpers.EntityViewer;
+using AW.Win.Properties;
 using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.LLBL.PropGridEx;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
-using AW.Winforms.Helpers.Properties;
 using AW.Winforms.Helpers.QueryRunner;
+using AW.Winforms.Helpers;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
   public partial class FrmMain : Form
   {
@@ -98,22 +98,22 @@ namespace AW.Winforms.Helpers
 
     private void customersToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (frmCustomers));
+      LaunchChildForm(typeof (FrmCustomers));
     }
 
     private void organizationToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (frmOrganization));
+      LaunchChildForm(typeof (FrmOrganization));
     }
 
     private void vacationBonusUtilityToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (frmVacationBonus));
+      LaunchChildForm(typeof (FrmVacationBonus));
     }
 
     private void traceToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (frmTrace));
+      LaunchChildForm(typeof (FrmTrace));
     }
 
     private void fileToolStripMenuItemOpen_Click(object sender, EventArgs e)

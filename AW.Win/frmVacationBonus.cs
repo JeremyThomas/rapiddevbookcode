@@ -1,13 +1,14 @@
 using System;
 using System.Windows.Forms;
 using AW.Data.EntityClasses;
-using AW.Winforms.Helpers.Properties;
+using AW.Win.Properties;
+using AW.Winforms.Helpers;
 
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
-  public partial class frmVacationBonus : Form
+  public partial class FrmVacationBonus : Form
   {
-    public frmVacationBonus()
+    public FrmVacationBonus()
     {
       InitializeComponent();
     }

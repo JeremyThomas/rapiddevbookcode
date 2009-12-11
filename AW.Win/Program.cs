@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Helper;
 
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
   internal static class Program
   {

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
   public partial class FrmOrganizationStructure : Form
   {

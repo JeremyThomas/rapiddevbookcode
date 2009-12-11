@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using AW.Winforms.Helpers.Properties;
+using AW.Win.Properties;
+using AW.Winforms.Helpers;
 using SD.LLBLGen.Pro.DQE.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
-  public partial class frmTrace : Form
+  public partial class FrmTrace : Form
   {
-    private int textBoxTraceListenerIndex;
+    private int _textBoxTraceListenerIndex;
 
-    public frmTrace()
+    public FrmTrace()
     {
       InitializeComponent();
       var dummy = DynamicQueryEngine.ArithAbortOn;
@@ -31,7 +32,7 @@ namespace AW.Winforms.Helpers
 
     private void frmTrace_Shown(object sender, EventArgs e)
     {
-      textBoxTraceListenerIndex = Trace.Listeners.Add(new TextBoxTraceListener(textBoxTrace));
+      _textBoxTraceListenerIndex = Trace.Listeners.Add(new TextBoxTraceListener(textBoxTrace));
     }
 
     private void frmTrace_FormClosing(object sender, FormClosingEventArgs e)
@@ -41,7 +42,7 @@ namespace AW.Winforms.Helpers
 
     private void frmTrace_FormClosed(object sender, FormClosedEventArgs e)
     {
-      Trace.Listeners.RemoveAt(textBoxTraceListenerIndex);
+      Trace.Listeners.RemoveAt(_textBoxTraceListenerIndex);
     }
 
     public TraceLevel DQETraceLevel

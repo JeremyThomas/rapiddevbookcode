@@ -1,4 +1,4 @@
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
     partial class FrmOrderSearch
     {
@@ -146,13 +146,13 @@ namespace AW.Winforms.Helpers
           // 
           // tbCity
           // 
-          this.tbCity.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Winforms.Helpers.Properties.Settings.Default, "City", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbCity.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "City", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.tbCity.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbCity.Location = new System.Drawing.Point(412, 3);
           this.tbCity.Name = "tbCity";
           this.tbCity.Size = new System.Drawing.Size(269, 20);
           this.tbCity.TabIndex = 16;
-          this.tbCity.Text = global::AW.Winforms.Helpers.Properties.Settings.Default.City;
+          this.tbCity.Text = global::AW.Win.Properties.Settings.Default.City;
           // 
           // label8
           // 
@@ -167,7 +167,7 @@ namespace AW.Winforms.Helpers
           // 
           // dtpDateFrom
           // 
-          this.dtpDateFrom.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Winforms.Helpers.Properties.Settings.Default, "DateFrom", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.dtpDateFrom.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "DateFrom", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.dtpDateFrom.Dock = System.Windows.Forms.DockStyle.Fill;
           this.dtpDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
           this.dtpDateFrom.Location = new System.Drawing.Point(71, 3);
@@ -175,11 +175,11 @@ namespace AW.Winforms.Helpers
           this.dtpDateFrom.ShowCheckBox = true;
           this.dtpDateFrom.Size = new System.Drawing.Size(267, 20);
           this.dtpDateFrom.TabIndex = 0;
-          this.dtpDateFrom.Value = global::AW.Winforms.Helpers.Properties.Settings.Default.DateFrom;
+          this.dtpDateFrom.Value = global::AW.Win.Properties.Settings.Default.DateFrom;
           // 
           // dtpDateTo
           // 
-          this.dtpDateTo.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Winforms.Helpers.Properties.Settings.Default, "DateTo", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.dtpDateTo.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "DateTo", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.dtpDateTo.Dock = System.Windows.Forms.DockStyle.Fill;
           this.dtpDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
           this.dtpDateTo.Location = new System.Drawing.Point(71, 28);
@@ -187,7 +187,7 @@ namespace AW.Winforms.Helpers
           this.dtpDateTo.ShowCheckBox = true;
           this.dtpDateTo.Size = new System.Drawing.Size(267, 20);
           this.dtpDateTo.TabIndex = 1;
-          this.dtpDateTo.Value = global::AW.Winforms.Helpers.Properties.Settings.Default.DateTo;
+          this.dtpDateTo.Value = global::AW.Win.Properties.Settings.Default.DateTo;
           // 
           // label1
           // 
@@ -268,69 +268,69 @@ namespace AW.Winforms.Helpers
           // 
           // tbZip
           // 
-          this.tbZip.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Winforms.Helpers.Properties.Settings.Default, "Zip", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbZip.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "Zip", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.tbZip.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbZip.Location = new System.Drawing.Point(412, 78);
           this.tbZip.Name = "tbZip";
           this.tbZip.Size = new System.Drawing.Size(269, 20);
           this.tbZip.TabIndex = 13;
-          this.tbZip.Text = global::AW.Winforms.Helpers.Properties.Settings.Default.Zip;
+          this.tbZip.Text = global::AW.Win.Properties.Settings.Default.Zip;
           // 
           // tbFirstName
           // 
-          this.tbFirstName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Winforms.Helpers.Properties.Settings.Default, "FirstName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbFirstName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "FirstName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.tbFirstName.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbFirstName.Location = new System.Drawing.Point(71, 53);
           this.tbFirstName.Name = "tbFirstName";
           this.tbFirstName.Size = new System.Drawing.Size(267, 20);
           this.tbFirstName.TabIndex = 11;
-          this.tbFirstName.Text = global::AW.Winforms.Helpers.Properties.Settings.Default.FirstName;
+          this.tbFirstName.Text = global::AW.Win.Properties.Settings.Default.FirstName;
           // 
           // tbLastName
           // 
-          this.tbLastName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Winforms.Helpers.Properties.Settings.Default, "LastName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbLastName.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "LastName", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.tbLastName.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbLastName.Location = new System.Drawing.Point(71, 78);
           this.tbLastName.Name = "tbLastName";
           this.tbLastName.Size = new System.Drawing.Size(267, 20);
           this.tbLastName.TabIndex = 12;
-          this.tbLastName.Text = global::AW.Winforms.Helpers.Properties.Settings.Default.LastName;
+          this.tbLastName.Text = global::AW.Win.Properties.Settings.Default.LastName;
           // 
           // cbState
           // 
           this.cbState.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
           this.cbState.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-          this.cbState.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Winforms.Helpers.Properties.Settings.Default, "State", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.cbState.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "State", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.cbState.Dock = System.Windows.Forms.DockStyle.Fill;
           this.cbState.FormattingEnabled = true;
           this.cbState.Location = new System.Drawing.Point(412, 28);
           this.cbState.Name = "cbState";
           this.cbState.Size = new System.Drawing.Size(269, 21);
           this.cbState.TabIndex = 14;
-          this.cbState.Text = global::AW.Winforms.Helpers.Properties.Settings.Default.State;
+          this.cbState.Text = global::AW.Win.Properties.Settings.Default.State;
           // 
           // cbCountry
           // 
           this.cbCountry.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
           this.cbCountry.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-          this.cbCountry.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Winforms.Helpers.Properties.Settings.Default, "Country", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.cbCountry.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "Country", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.cbCountry.Dock = System.Windows.Forms.DockStyle.Fill;
           this.cbCountry.FormattingEnabled = true;
           this.cbCountry.Location = new System.Drawing.Point(412, 53);
           this.cbCountry.Name = "cbCountry";
           this.cbCountry.Size = new System.Drawing.Size(269, 21);
           this.cbCountry.TabIndex = 15;
-          this.cbCountry.Text = global::AW.Winforms.Helpers.Properties.Settings.Default.Country;
+          this.cbCountry.Text = global::AW.Win.Properties.Settings.Default.Country;
           // 
           // tbOrderID
           // 
-          this.tbOrderID.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Winforms.Helpers.Properties.Settings.Default, "OrderID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbOrderID.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "OrderID", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.tbOrderID.Dock = System.Windows.Forms.DockStyle.Fill;
           this.tbOrderID.Location = new System.Drawing.Point(71, 103);
           this.tbOrderID.Name = "tbOrderID";
           this.tbOrderID.Size = new System.Drawing.Size(267, 20);
           this.tbOrderID.TabIndex = 17;
-          this.tbOrderID.Text = global::AW.Winforms.Helpers.Properties.Settings.Default.OrderID;
+          this.tbOrderID.Text = global::AW.Win.Properties.Settings.Default.OrderID;
           // 
           // panel1
           // 
@@ -347,9 +347,9 @@ namespace AW.Winforms.Helpers
           // checkBoxPrefetch
           // 
           this.checkBoxPrefetch.AutoSize = true;
-          this.checkBoxPrefetch.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.Prefetch;
+          this.checkBoxPrefetch.Checked = global::AW.Win.Properties.Settings.Default.Prefetch;
           this.checkBoxPrefetch.CheckState = System.Windows.Forms.CheckState.Checked;
-          this.checkBoxPrefetch.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Winforms.Helpers.Properties.Settings.Default, "Prefetch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.checkBoxPrefetch.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "Prefetch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.checkBoxPrefetch.Location = new System.Drawing.Point(136, 4);
           this.checkBoxPrefetch.Name = "checkBoxPrefetch";
           this.checkBoxPrefetch.Size = new System.Drawing.Size(66, 17);
@@ -359,19 +359,19 @@ namespace AW.Winforms.Helpers
           // 
           // numericUpDownNumRows
           // 
-          this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Winforms.Helpers.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.numericUpDownNumRows.Location = new System.Drawing.Point(208, 2);
           this.numericUpDownNumRows.Name = "numericUpDownNumRows";
           this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
           this.numericUpDownNumRows.TabIndex = 23;
           this.toolTip1.SetToolTip(this.numericUpDownNumRows, "max Number Of Items To Return");
-          this.numericUpDownNumRows.Value = global::AW.Winforms.Helpers.Properties.Settings.Default.NumRows;
+          this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
           // 
           // checkBoxUseLinq
           // 
           this.checkBoxUseLinq.AutoSize = true;
-          this.checkBoxUseLinq.Checked = global::AW.Winforms.Helpers.Properties.Settings.Default.UseLinq;
-          this.checkBoxUseLinq.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Winforms.Helpers.Properties.Settings.Default, "UseLinq", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.checkBoxUseLinq.Checked = global::AW.Win.Properties.Settings.Default.UseLinq;
+          this.checkBoxUseLinq.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "UseLinq", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.checkBoxUseLinq.Location = new System.Drawing.Point(64, 3);
           this.checkBoxUseLinq.Name = "checkBoxUseLinq";
           this.checkBoxUseLinq.Size = new System.Drawing.Size(65, 17);

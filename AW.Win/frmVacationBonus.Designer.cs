@@ -1,6 +1,6 @@
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
-    partial class frmVacationBonus
+    partial class FrmVacationBonus
     {
         /// <summary>
         /// Required designer variable.

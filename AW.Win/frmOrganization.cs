@@ -3,13 +3,14 @@ using System.Windows.Forms;
 using AW.Business;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Winforms.Helpers.Properties;
+using AW.Win.Properties;
+using AW.Winforms.Helpers;
 
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
-  public partial class frmOrganization : Form
+  public partial class FrmOrganization : Form
   {
-    public frmOrganization()
+    public FrmOrganization()
     {
       InitializeComponent();
     }

@@ -1,6 +1,6 @@
-﻿namespace AW.Winforms.Helpers
+﻿namespace AW.Win
 {
-  partial class frmTrace
+  partial class FrmTrace
   {
     /// <summary>
     /// Required designer variable.

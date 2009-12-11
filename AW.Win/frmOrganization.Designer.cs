@@ -1,6 +1,6 @@
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
-    partial class frmOrganization
+    partial class FrmOrganization
     {
         /// <summary>
         /// Required designer variable.

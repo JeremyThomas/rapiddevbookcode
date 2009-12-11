@@ -1,4 +1,4 @@
-﻿namespace AW.Winforms.Helpers
+﻿namespace AW.Win
 {
   partial class FrmReconcile
   {

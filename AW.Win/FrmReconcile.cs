@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Winforms.Helpers
+namespace AW.Win
 {
   public partial class FrmReconcile: Form
   {
