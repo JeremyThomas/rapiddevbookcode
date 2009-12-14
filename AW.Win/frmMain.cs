@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.LLBL.PropGridEx;
@@ -178,13 +179,13 @@ namespace AW.Win
     private FrmQueryRunner LaunchQueryRunner()
     {
       var qr = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
-      if (qr != null) qr.SaveFunction += MetaSingletons.Save;
+      if (qr != null) qr.SaveFunction += EntityHelper.Save;
       return qr;
     }
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, MetaSingletons.Save, typeof(IEntity));
+      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, EntityHelper.Save, typeof(IEntity));
       //LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData, Save);
     }
 

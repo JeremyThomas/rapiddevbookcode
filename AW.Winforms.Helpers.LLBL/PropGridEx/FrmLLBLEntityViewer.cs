@@ -37,14 +37,14 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
     public new static Form LaunchAsChildForm(object entity)
     {
       var frm = new FrmLLBLEntityViewer(entity);
-      AWHelper.ShowChildForm(frm);
+      AWHelper.ShowFormModalIfParentLess(frm);
       return frm;
     }
 
     public new static Form LaunchAsChildForm(object entity, Func<object, int> saveFunction, params Type[] saveableTypes)
     {
       var frm = new FrmLLBLEntityViewer(entity, saveFunction, saveableTypes);
-      AWHelper.ShowChildForm(frm);
+      AWHelper.ShowFormModalIfParentLess(frm);
       return frm;
     }
   }

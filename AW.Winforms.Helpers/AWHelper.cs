@@ -87,23 +87,11 @@ namespace AW.Winforms.Helpers
 
     #endregion
 
-    #region Dynamic Instantiation
-
-    /// <summary>
-    /// Creates an instance of type if type is an ancestorType or a descendant
-    /// </summary>
-    /// <param name="ancestorType">Type of the ancestor.</param>
-    /// <param name="type">The type.</param>
-    /// <param name="args">The args.</param>
-    /// <returns>The Instance</returns>
-    public static object CreateInstanceOf(Type ancestorType, Type type, params Object[] args)
-    {
-      return ancestorType.IsAssignableFrom(type) ? Activator.CreateInstance(type, args) : null;
-    }
+    #region Dynamic Form Instantiation
 
     public static Form CreateForm(Type formType, params Object[] args)
     {
-      return CreateInstanceOf(typeof (Form), formType, args) as Form;
+      return MetaDataHelper.CreateInstanceOf(typeof (Form), formType, args) as Form;
     }
 
     public static void ShowForm(Type formType, bool modal)
@@ -163,25 +151,26 @@ namespace AW.Winforms.Helpers
       return -1;
     }
 
-    public static void ShowChildForm(Form childForm, Form mdiParent)
+    public static Form ShowChildForm(Form childForm, Form mdiParent)
     {
       if (mdiParent != null)
         childForm.MdiParent = mdiParent;
       childForm.WindowState = FormWindowState.Normal;
       childForm.Show();
+      return childForm;
     }
 
-    public static void ShowChildForm(Form childForm)
+    public static Form ShowChildForm(Form childForm)
     {
-      ShowChildForm(childForm, GetMdiParent());
+      return ShowChildForm(childForm, GetMdiParent());
     }
 
-    public static void ShowForm(Form form)
+    public static Form ShowForm(Form form)
     {
-      ShowForm(form, GetMdiParent());
+      return ShowForm(form, GetMdiParent());
     }
 
-    public static void ShowForm(Form form, Form mdiParent)
+    public static Form ShowForm(Form form, Form mdiParent)
     {
       if (Application.MessageLoop)
       {
@@ -192,6 +181,25 @@ namespace AW.Winforms.Helpers
       }
       else
         form.ShowDialog();
+      return form;
+    }
+
+    public static Form ShowFormModalIfParentLess(Form form)
+    {
+      return ShowFormModalIfParentLess(form, GetMdiParent());
+    }
+
+    public static Form ShowFormModalIfParentLess(Form form, Control parent)
+    {
+      form.WindowState = FormWindowState.Normal;
+      if (parent == null)
+        form.ShowDialog();
+      else
+      {
+        form.Parent = parent;
+        form.Show();
+      }
+      return form;
     }
 
     #endregion

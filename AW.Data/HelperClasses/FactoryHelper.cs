@@ -34,6 +34,16 @@ namespace AW.Data.HelperClasses
 			return EntityFactoryFactory.GetFactory(typeOfEntity);
 		}
 
+    /// <summary>
+    /// Gets the factory of the entity with the .NET type specified
+    /// </summary>
+    /// <typeparam name="T">The type of entity.</typeparam>
+    /// <returns>factory to use or null if not found</returns>
+    public static IEntityFactory GetFactory<T>() where T : class, IEntityCore
+    {
+      return GetFactory(typeof(T));
+    }
+
 		/// <summary>
 		/// Creates the entity from the .NET type specified. Rather than use Activator.CreateInstance(typeOfEntity) directly.
 		/// </summary>
@@ -77,13 +87,21 @@ namespace AW.Data.HelperClasses
 		/// </summary>
 		/// <param name="typeOfEntity">The type of entity.</param>
 		/// <returns>the EntityType value as integer for the entity type passed in</returns>
-		/// <remarks>From	AuditorBase</remarks>
-		[SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
 		public static int GetEntityTypeValueForType(Type typeOfEntity)
 		{
 			var entity = CreateEntity(typeOfEntity);
 			return entity == null ? 0 : entity.LLBLGenProEntityTypeValue;
 		}
+
+    public static EntityType GetEntityTypeValueForType<T>() where T : class, IEntityCore
+    {
+      return (EntityType)GetEntityTypeValueForType(typeof(T));
+    }
+
+    public static EntityCollectionBase<T> CreateEntityCollection<T>() where T : EntityBase
+    {
+      return GeneralEntityCollectionFactory.Create(GetEntityTypeValueForType<T>())as EntityCollectionBase<T>;
+    }
 
 		/// <summary>returns the datasource to use in a Linq query for the entity type specified</summary>
 		/// <typeparam name="T">the type of the entity to get the datasource for</typeparam>

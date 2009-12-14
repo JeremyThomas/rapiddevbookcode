@@ -42,23 +42,21 @@ namespace AW.Winforms.Helpers.LLBL
 			_linqMetaData = linqMetaData;
 		}
 
-  	public static void ShowEntitiesAndFields(Type baseType)
+    public static void ShowEntitiesAndFields(Type baseType, ILinqMetaData linqMetaData)
     {
-      ShowEntitiesAndFields(baseType, null);
+      ShowEntitiesAndFields(baseType, linqMetaData, null);
     }
 
-    public static void ShowEntitiesAndFields(Type baseType, Form parent)
+  	public static void ShowEntitiesAndFields(Type baseType)
+    {
+      ShowEntitiesAndFields(baseType, null, null);
+    }
+
+    public static void ShowEntitiesAndFields(Type baseType, ILinqMetaData linqMetaData, Form parent)
     {
       if (_formSingleton == null)
-        _formSingleton = new FrmEntitiesAndFields(baseType);
-      _formSingleton.WindowState = FormWindowState.Normal;
-      if (parent == null)
-        _formSingleton.ShowDialog();
-      else
-      {
-        _formSingleton.Parent = parent;
-        _formSingleton.Show();
-      }
+        _formSingleton = new FrmEntitiesAndFields(baseType, linqMetaData);
+      AWHelper.ShowFormModalIfParentLess(_formSingleton, parent);
     }
 
     private void FrmEntitiesAndFields_FormClosed(object sender, FormClosedEventArgs e)
@@ -159,37 +157,14 @@ namespace AW.Winforms.Helpers.LLBL
 			var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
 			if (typeOfEntity != null && _linqMetaData != null)
 			{
-				var entityQueryable = _linqMetaData.GetQueryableForEntity(CreateEntity(typeOfEntity).LLBLGenProEntityTypeValue) as IQueryable;
-				entityQueryable.ViewInDataGridViewx();
+        var entityQueryable = _linqMetaData.GetQueryableForEntity(EntityHelper.GetEntityTypeValueForType(typeOfEntity)) as IQueryable;
+        if (typeof(IEntity).IsAssignableFrom(typeOfEntity))
+          entityQueryable.EditInDataGridViewx(EntityHelper.Save);
+        else
+          entityQueryable.ViewInDataGridViewx();
 			}
 		}
 
-  	/// <summary>returns the datasource to use in a Linq query for the entity type specified</summary>
-		/// <typeparam name="T">the type of the entity to get the datasource for</typeparam>
-		/// <returns>the requested datasource</returns>
-		public static DataSourceBase<T> GetQueryableForEntity<T>(ILinqMetaData linqMetaData) where T : class, IEntityCore
-		{
-			return linqMetaData.GetQueryableForEntity(CreateEntity<T>());
-		}
 
-		/// <summary>
-		/// Creates the entity from the .NET type specified. 
-		/// </summary>
-		/// <param name="typeOfEntity">The type of entity.</param>
-		/// <returns>An instance of the type.</returns>
-		public static IEntityCore CreateEntity(Type typeOfEntity)
-		{
-			return Activator.CreateInstance(typeOfEntity) as IEntityCore;
-		}
-
-		/// <summary>
-		/// Creates the entity from the .NET type specified. 
-		/// </summary>
-		/// <typeparam name="T">The type of entity.</typeparam>
-		/// <returns>An instance of the type.</returns>
-		public static T CreateEntity<T>() where T : class, IEntityCore
-		{
-			return CreateEntity(typeof(T)) as T;
-		}
   }
 }
