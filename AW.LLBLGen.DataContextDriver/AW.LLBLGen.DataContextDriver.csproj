@@ -80,10 +80,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Universal\ConnectionDialog.xaml.cs">
+    <Compile Include="Static\ConnectionDialog.xaml.cs">
       <DependentUpon>ConnectionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Universal\UniversalStaticDriver.cs" />
+    <Compile Include="Static\LLBLGenStaticDriver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Ancillary\AdventureWorks.snk">
@@ -99,7 +99,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Universal\ConnectionDialog.xaml">
+    <Page Include="Static\ConnectionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
