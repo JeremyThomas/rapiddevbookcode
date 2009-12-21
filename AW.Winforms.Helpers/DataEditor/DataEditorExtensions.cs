@@ -124,7 +124,7 @@ namespace AW.Winforms.Helpers.DataEditor
               {
                 var queryable = enumerable.AsQueryable();
                 showenEnumerable = queryable.ElementType != typeof (string);
-                queryable = queryable.Take(50);
+                queryable = queryable.Take(200);
                 bindingSource.DataSource = showenEnumerable ? new ObjectListView(new BindingSource(queryable, null)) : null;
               }
               else
