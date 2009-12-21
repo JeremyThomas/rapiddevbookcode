@@ -42,7 +42,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 		SampleQueryFiles\LLBL Project Entity Table Mapping.linq = SampleQueryFiles\LLBL Project Entity Table Mapping.linq
 		SampleQueryFiles\LLBL Project Inspector.linq = SampleQueryFiles\LLBL Project Inspector.linq
 		SampleQueryFiles\LLBL_AW_Alberts.linq = SampleQueryFiles\LLBL_AW_Alberts.linq
-		SampleQueryFiles\LLBL_AW_EditInDataGridView.linq = SampleQueryFiles\LLBL_AW_EditInDataGridView.linq
 		SampleQueryFiles\LLBL_AW_ShowLinqMetaData.linq = SampleQueryFiles\LLBL_AW_ShowLinqMetaData.linq
 		SampleQueryFiles\LLBL_AWcustomerlist.linq = SampleQueryFiles\LLBL_AWcustomerlist.linq
 		SampleQueryFiles\SalesOrderHeader_Albert_Perth.cs = SampleQueryFiles\SalesOrderHeader_Albert_Perth.cs
@@ -92,9 +91,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Helper.LLBL", "AW.Helper
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Winforms.Helpers.LLBL", "AW.Winforms.Helpers.LLBL\AW.Winforms.Helpers.LLBL.csproj", "{A67A2102-BA0E-48B3-9EF8-831F72B47160}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.DataContextDriver", "AW.LLBLGen.DataContextDriver\AW.LLBLGen.DataContextDriver.csproj", "{2661F1B5-62FB-4783-A1A0-57445F397F9E}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 11
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -125,6 +126,9 @@ Global
 		SccProjectUniqueName9 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
 		SccProjectName9 = AW.Winforms.Helpers.LLBL
 		SccLocalPath9 = AW.Winforms.Helpers.LLBL
+		SccProjectUniqueName10 = AW.LLBLGen.DataContextDriver\\AW.LLBLGen.DataContextDriver.csproj
+		SccProjectName10 = AW.LLBLGen.DataContextDriver
+		SccLocalPath10 = AW.LLBLGen.DataContextDriver
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -188,6 +192,12 @@ Global
 		{A67A2102-BA0E-48B3-9EF8-831F72B47160}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A67A2102-BA0E-48B3-9EF8-831F72B47160}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A67A2102-BA0E-48B3-9EF8-831F72B47160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2661F1B5-62FB-4783-A1A0-57445F397F9E}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{2661F1B5-62FB-4783-A1A0-57445F397F9E}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{2661F1B5-62FB-4783-A1A0-57445F397F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2661F1B5-62FB-4783-A1A0-57445F397F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2661F1B5-62FB-4783-A1A0-57445F397F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2661F1B5-62FB-4783-A1A0-57445F397F9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -195,5 +205,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
+	EndGlobalSection
+	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
+		SpecExplorer.ActivityCompletionStatus = 
 	EndGlobalSection
 EndGlobal

@@ -3,14 +3,4 @@
   <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
     <RunConfiguration id="8fb1e20f-22fd-4d66-88ae-880abd55c932" name="Local Test Run" storage="localtestrun.testrunconfig" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common,   PublicKeyToken=b03f5f7f11d50a3a" />
   </TestList>
-  <TestList name="Tests Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d">
-    <TestLinks>
-      <TestLink id="be0c85b7-a1a1-64f7-6838-239a9a309f16" name="GetManagerEmployeesTest" storage="aw.test\bin\debug\aw.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="53dab345-110c-0118-72f8-f8ad00661fc2" name="GetChildRowTest" storage="aw.test\bin\debug\aw.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="de53f835-a2be-3367-2cf4-4714ba587c2e" name="MakeNodeTest" storage="aw.test\bin\debug\aw.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="6c2a9abc-74c8-16c6-ff44-4e70ae8260fe" name="FindEmployeeRecursiveTest" storage="aw.test\bin\debug\aw.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="424cdb34-217d-ac44-a1a4-e63131d3994a" name="FindLowestNodeTest" storage="aw.test\bin\debug\aw.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="3f3cef5f-7ddf-9068-cf2a-cb6803680e31" name="CreateNodeTest" storage="aw.test\bin\debug\aw.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-    </TestLinks>
-  </TestList>
 </TestLists>
