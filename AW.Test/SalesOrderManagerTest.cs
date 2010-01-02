@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AW.Business;
+using AW.Data.Queries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Test

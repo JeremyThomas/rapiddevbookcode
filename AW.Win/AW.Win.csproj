@@ -150,6 +150,7 @@
     <Compile Include="frmVacationBonus.Designer.cs">
       <DependentUpon>frmVacationBonus.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrganizationManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmOrderSearch.resx">
@@ -227,10 +228,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AW.Business\AW.Business.csproj">
-      <Project>{78186ECB-5408-400B-B1A7-10F4A150BC56}</Project>
-      <Name>AW.Business</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AW.Data\AW.Data.csproj">
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>

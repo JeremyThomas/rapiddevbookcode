@@ -1,6 +1,6 @@
 using System;
 using System.Windows.Forms;
-using AW.Business;
+using AW.Data.Queries;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.EntityViewer;

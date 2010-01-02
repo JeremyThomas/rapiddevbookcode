@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
-using AW.Business;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.Queries;
 using AW.Helper;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;

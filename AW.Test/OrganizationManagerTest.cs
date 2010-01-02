@@ -1,7 +1,7 @@
-﻿using System.Data;
+using System.Data;
 using System.Windows.Forms;
-using AW.Business;
 using AW.Data.EntityClasses;
+using AW.Win;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Test
@@ -24,7 +24,7 @@ namespace AW.Test
     private const int SyedAbbasID = 288;
     private const string SyedAbbas = "Abbas, Syed [288]";
     private const string SyedAbbas_ = "Abbas, Syed [288 ]";
-    private const string KenSánchez = "Sánchez, Ken [109 ]";
+    private const string KenS�nchez = "S�nchez, Ken [109 ]";
     // 
     //You can use the following additional attributes as you write your tests:
     //
@@ -63,8 +63,7 @@ namespace AW.Test
     {
       EmployeeEntity Employee = null; // TODO: Initialize to an appropriate value
       TreeNode expected = null; // TODO: Initialize to an appropriate value
-      TreeNode actual;
-      actual = OrganizationManager.MakeNode(Employee);
+      TreeNode actual = OrganizationManager.MakeNode(Employee);
       Assert.AreEqual(expected, actual);
       Assert.Inconclusive("Verify the correctness of this test method.");
     }
@@ -86,7 +85,7 @@ namespace AW.Test
     public void GetMasterNodeTest()
     {
       var actual = OrganizationManager.GetMasterNode(SyedAbbasID);
-      Assert.AreEqual("TreeNode: Sánchez, Ken [109]", actual.ToString());
+      Assert.AreEqual("TreeNode: S�nchez, Ken [109]", actual.ToString());
     }
 
     /// <summary>
@@ -97,7 +96,7 @@ namespace AW.Test
     {
       EmployeeEntityBase Employee = new EmployeeEntity(SyedAbbasID);
       var actual = OrganizationManager.GetManagersRecursive(Employee);
-      Assert.AreEqual(KenSánchez, actual.Text);
+      Assert.AreEqual(KenS�nchez, actual.Text);
     }
 
     /// <summary>
@@ -107,7 +106,7 @@ namespace AW.Test
     public void GetManagersRecursiveTest()
     {
       var actual = OrganizationManager.GetManagersRecursive(new EmployeeEntity(SyedAbbasID));
-      Assert.AreEqual(KenSánchez, actual.Text);
+      Assert.AreEqual(KenS�nchez, actual.Text);
     }
 
     /// <summary>
@@ -151,8 +150,7 @@ namespace AW.Test
       DataRow row = null; // TODO: Initialize to an appropriate value
       DataTable table = null; // TODO: Initialize to an appropriate value
       DataRow expected = null; // TODO: Initialize to an appropriate value
-      DataRow actual;
-      actual = OrganizationManager.GetChildRow(row, table);
+      DataRow actual = OrganizationManager.GetChildRow(row, table);
       Assert.AreEqual(expected, actual);
       Assert.Inconclusive("Verify the correctness of this test method.");
     }
@@ -165,8 +163,7 @@ namespace AW.Test
     {
       TreeNode Node = null; // TODO: Initialize to an appropriate value
       TreeNode expected = null; // TODO: Initialize to an appropriate value
-      TreeNode actual;
-      actual = OrganizationManager.FindLowestNode(Node);
+      TreeNode actual = OrganizationManager.FindLowestNode(Node);
       Assert.AreEqual(expected, actual);
       Assert.Inconclusive("Verify the correctness of this test method.");
     }
@@ -179,8 +176,7 @@ namespace AW.Test
     {
       TreeNodeCollection Nodes = null; // TODO: Initialize to an appropriate value
       TreeNode expected = null; // TODO: Initialize to an appropriate value
-      TreeNode actual;
-      actual = OrganizationManager.FindEmployeeRecursive(SyedAbbasID, Nodes);
+      TreeNode actual = OrganizationManager.FindEmployeeRecursive(SyedAbbasID, Nodes);
       Assert.AreEqual(expected, actual);
       Assert.Inconclusive("Verify the correctness of this test method.");
     }

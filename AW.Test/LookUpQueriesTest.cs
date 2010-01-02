@@ -1,4 +1,4 @@
-﻿using AW.Business;
+using AW.Data.Queries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Test

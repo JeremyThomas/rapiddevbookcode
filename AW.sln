@@ -14,8 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Business", "AW.Business\AW.Business.csproj", "{78186ECB-5408-400B-B1A7-10F4A150BC56}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Test", "AW.Test\AW.Test.csproj", "{80418BDD-8FF2-4F01-8782-AD22A496AF79}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2CA-4CCC-9960-748D511B5BAC}"
@@ -95,7 +93,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.DataContextDrive
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
+		SccNumberOfProjects = 10
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -105,30 +103,27 @@ Global
 		SccProjectUniqueName2 = AW.Data\\AW.Data.csproj
 		SccProjectName2 = AW.Data
 		SccLocalPath2 = AW.Data
-		SccProjectUniqueName3 = AW.Business\\AW.Business.csproj
-		SccProjectName3 = AW.Business
-		SccLocalPath3 = AW.Business
-		SccProjectUniqueName4 = AW.Test\\AW.Test.csproj
-		SccProjectName4 = AW.Test
-		SccLocalPath4 = AW.Test
-		SccProjectUniqueName5 = DynamicQuery\\DynamicQuery.csproj
-		SccProjectName5 = DynamicQuery
-		SccLocalPath5 = DynamicQuery
-		SccProjectUniqueName6 = AW.Helper\\AW.Helper.csproj
-		SccProjectName6 = AW.Helper
-		SccLocalPath6 = AW.Helper
-		SccProjectUniqueName7 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
-		SccProjectName7 = AW.Winforms.Helpers
-		SccLocalPath7 = AW.Winforms.Helpers
-		SccProjectUniqueName8 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
-		SccProjectName8 = AW.Helper.LLBL
-		SccLocalPath8 = AW.Helper.LLBL
-		SccProjectUniqueName9 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
-		SccProjectName9 = AW.Winforms.Helpers.LLBL
-		SccLocalPath9 = AW.Winforms.Helpers.LLBL
-		SccProjectUniqueName10 = AW.LLBLGen.DataContextDriver\\AW.LLBLGen.DataContextDriver.csproj
-		SccProjectName10 = AW.LLBLGen.DataContextDriver
-		SccLocalPath10 = AW.LLBLGen.DataContextDriver
+		SccProjectUniqueName3 = AW.Test\\AW.Test.csproj
+		SccProjectName3 = AW.Test
+		SccLocalPath3 = AW.Test
+		SccProjectUniqueName4 = DynamicQuery\\DynamicQuery.csproj
+		SccProjectName4 = DynamicQuery
+		SccLocalPath4 = DynamicQuery
+		SccProjectUniqueName5 = AW.Helper\\AW.Helper.csproj
+		SccProjectName5 = AW.Helper
+		SccLocalPath5 = AW.Helper
+		SccProjectUniqueName6 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
+		SccProjectName6 = AW.Winforms.Helpers
+		SccLocalPath6 = AW.Winforms.Helpers
+		SccProjectUniqueName7 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
+		SccProjectName7 = AW.Helper.LLBL
+		SccLocalPath7 = AW.Helper.LLBL
+		SccProjectUniqueName8 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
+		SccProjectName8 = AW.Winforms.Helpers.LLBL
+		SccLocalPath8 = AW.Winforms.Helpers.LLBL
+		SccProjectUniqueName9 = AW.LLBLGen.DataContextDriver\\AW.LLBLGen.DataContextDriver.csproj
+		SccProjectName9 = AW.LLBLGen.DataContextDriver
+		SccLocalPath9 = AW.LLBLGen.DataContextDriver
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -151,12 +146,6 @@ Global
 		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47F52527-A001-405B-9CEC-FCBF7FA10855}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
-		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
-		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78186ECB-5408-400B-B1A7-10F4A150BC56}.Release|Any CPU.Build.0 = Release|Any CPU
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Debug|Any CPU.Build.0 = Debug|Any CPU

@@ -1,7 +1,7 @@
 ﻿using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 
-namespace AW.Business
+namespace AW.Data.Queries
 {
   public static class LookUpQueries
   {

@@ -1,6 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Linq.Dynamic;
-using AW.Business;
+using AW.Data.Queries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Test

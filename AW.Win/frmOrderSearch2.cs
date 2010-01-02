@@ -4,9 +4,9 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using AW.Business;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.Queries;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
 

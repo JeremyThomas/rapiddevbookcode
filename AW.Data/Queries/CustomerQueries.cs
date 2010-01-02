@@ -1,11 +1,11 @@
 using System.Linq;
-using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.TypedListClasses;
 using AW.Data.TypedViewClasses;
+using AW.Data.ViewModels;
 
-namespace AW.Business
+namespace AW.Data.Queries
 {
   public static class CustomerQueries
   {
@@ -36,9 +36,9 @@ namespace AW.Business
     /// </remarks>
     public static CustomerViewTypedView GetCustomerViewTypedView(int maxNumberOfItemsToReturn)
     {
-      var Customers = new CustomerViewTypedView();
-      Customers.Fill(maxNumberOfItemsToReturn, null);
-      return Customers;
+      var customers = new CustomerViewTypedView();
+      customers.Fill(maxNumberOfItemsToReturn, null);
+      return customers;
     }
 
     /// <summary>
@@ -122,9 +122,9 @@ namespace AW.Business
     /// Person.CountryRegion ON Person.CountryRegion.CountryRegionCode = Person.StateProvince.CountryRegionCode</remarks>
     public static CustomerListTypedList GetCustomerListTypedList(int maxNumberOfItemsToReturn)
     {
-      var Customers = new CustomerListTypedList();
-      Customers.Fill(maxNumberOfItemsToReturn, null);
-      return Customers;
+      var customers = new CustomerListTypedList();
+      customers.Fill(maxNumberOfItemsToReturn, null);
+      return customers;
     }
 
     /// <summary>

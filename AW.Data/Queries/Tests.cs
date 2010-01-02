@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Linq;
-using AW.Data;
+﻿using System.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
 
-namespace AW.Business
+namespace AW.Data.Queries
 {
   public static class Tests
   {

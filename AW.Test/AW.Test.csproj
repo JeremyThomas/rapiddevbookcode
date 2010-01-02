@@ -85,10 +85,6 @@
     <Content Include="AuthoringTests.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AW.Business\AW.Business.csproj">
-      <Project>{78186ECB-5408-400B-B1A7-10F4A150BC56}</Project>
-      <Name>AW.Business</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AW.Data\AW.Data.csproj">
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>
@@ -100,6 +96,10 @@
     <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Win\AW.Win.csproj">
+      <Project>{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}</Project>
+      <Name>AW.Win</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
       <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>

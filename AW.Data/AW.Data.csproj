@@ -373,6 +373,10 @@
     <Compile Include="Linq\LinqMetaData.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="Queries\CustomerQueries.cs" />
+    <Compile Include="Queries\LookUpQueries.cs" />
+    <Compile Include="Queries\SalesOrderManager.cs" />
+    <Compile Include="Queries\Tests.cs" />
     <Compile Include="RelationClasses\DynamicRelation.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -514,6 +518,7 @@
     <Compile Include="RelationClasses\CurrencyRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="ViewModels\CustomerListLinqedTypedList.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">

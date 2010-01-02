@@ -1,114 +1,113 @@
 ﻿using System.Linq;
-using AW.Data;
 using AW.Data.EntityClasses;
 
-namespace AW.Business
+namespace AW.Data.ViewModels
 {
   public class CustomerListLinqedTypedList
   {
-    private readonly string addressLine1;
-    private readonly string addressLine2;
-    private readonly string city;
-    private readonly string addressType;
-    private readonly string title;
-    private readonly string firstName;
-    private readonly string middleName;
-    private readonly string lastName;
-    private readonly string suffix;
-    private readonly string emailAddress;
-    private readonly int emailPromotion;
-    private readonly string countryRegionName;
-    private readonly string stateProvinceName;
-    private readonly int customerID;
+    private readonly string _addressLine1;
+    private readonly string _addressLine2;
+    private readonly string _city;
+    private readonly string _addressType;
+    private readonly string _title;
+    private readonly string _firstName;
+    private readonly string _middleName;
+    private readonly string _lastName;
+    private readonly string _suffix;
+    private readonly string _emailAddress;
+    private readonly int _emailPromotion;
+    private readonly string _countryRegionName;
+    private readonly string _stateProvinceName;
+    private readonly int _customerID;
 
     public string AddressLine1
     {
-      get { return addressLine1; }
+      get { return _addressLine1; }
     }
 
     public string AddressLine2
     {
-      get { return addressLine2; }
+      get { return _addressLine2; }
     }
 
     public string City
     {
-      get { return city; }
+      get { return _city; }
     }
 
     public string AddressType
     {
-      get { return addressType; }
+      get { return _addressType; }
     }
 
     public string Title
     {
-      get { return title; }
+      get { return _title; }
     }
 
     public string FirstName
     {
-      get { return firstName; }
+      get { return _firstName; }
     }
 
     public string MiddleName
     {
-      get { return middleName; }
+      get { return _middleName; }
     }
 
     public string LastName
     {
-      get { return lastName; }
+      get { return _lastName; }
     }
 
     public string Suffix
     {
-      get { return suffix; }
+      get { return _suffix; }
     }
 
     public string EmailAddress
     {
-      get { return emailAddress; }
+      get { return _emailAddress; }
     }
 
     public int EmailPromotion
     {
-      get { return emailPromotion; }
+      get { return _emailPromotion; }
     }
 
     public string CountryRegionName
     {
-      get { return countryRegionName; }
+      get { return _countryRegionName; }
     }
 
     public string StateProvinceName
     {
-      get { return stateProvinceName; }
+      get { return _stateProvinceName; }
     }
 
     public int CustomerID
     {
-      get { return customerID; }
+      get { return _customerID; }
     }
 
     public CustomerListLinqedTypedList(string addressLine1, string addressLine2, string city, string addressType, string title,
                                        string firstName, string middleName, string lastName, string suffix, string emailAddress,
-                                       int emailPromotion, string countryRegionName, string stateProvinceName, int CustomerID)
+                                       int emailPromotion, string countryRegionName, string stateProvinceName, int customerID)
     {
-      this.addressLine1 = addressLine1;
-      this.addressLine2 = addressLine2;
-      this.city = city;
-      this.addressType = addressType;
-      this.title = title;
-      this.firstName = firstName;
-      this.middleName = middleName;
-      this.lastName = lastName;
-      this.suffix = suffix;
-      this.emailAddress = emailAddress;
-      this.emailPromotion = emailPromotion;
-      this.countryRegionName = countryRegionName;
-      this.stateProvinceName = stateProvinceName;
-      customerID = CustomerID;
+      _addressLine1 = addressLine1;
+      _addressLine2 = addressLine2;
+      _city = city;
+      _addressType = addressType;
+      _title = title;
+      _firstName = firstName;
+      _middleName = middleName;
+      _lastName = lastName;
+      _suffix = suffix;
+      _emailAddress = emailAddress;
+      _emailPromotion = emailPromotion;
+      _countryRegionName = countryRegionName;
+      _stateProvinceName = stateProvinceName;
+      _customerID = customerID;
     }
 
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery()

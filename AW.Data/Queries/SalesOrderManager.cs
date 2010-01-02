@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.HelperClasses;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Business
+namespace AW.Data.Queries
 {
   public static class SalesOrderManager
   {
@@ -107,7 +106,7 @@ namespace AW.Business
       if (OrderNumber != "")
         predicate = predicate.Where(soh => soh.SalesOrderNumber == OrderNumber);
       if (prefetch)
-       predicate = predicate.WithPath(p => p.Prefetch(c => c.CustomerViewRelated));
+        predicate = predicate.WithPath(p => p.Prefetch(c => c.CustomerViewRelated));
       predicate= predicate.OrderBy(s => s.OrderDate);
       if (maxNumberOfItemsToReturn > 0)
         predicate = predicate.Take(maxNumberOfItemsToReturn);
