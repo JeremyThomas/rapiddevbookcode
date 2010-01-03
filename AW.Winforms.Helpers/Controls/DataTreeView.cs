@@ -24,7 +24,7 @@ namespace Chaliy.Windows.Forms
   /// </remarks>
   public class DataTreeView : TreeView
   {
-    private const int SB_HORZ = 0;
+    private const int SbHorz = 0;
 
     #region Fields
 
@@ -168,9 +168,9 @@ namespace Chaliy.Windows.Forms
               var currencyManager = new BindingContext()[DataSource, DataMember] as CurrencyManager;
               if (currencyManager != null)
               {
-                var APropertyDescriptorCollection = currencyManager.GetItemProperties();
-                idProperty = APropertyDescriptorCollection.Find(temp, true);
-                if (APropertyDescriptorCollection.Count == 0)
+                var propertyDescriptorCollection = currencyManager.GetItemProperties();
+                idProperty = propertyDescriptorCollection.Find(temp, true);
+                if (propertyDescriptorCollection.Count == 0)
                   idPropertyName = value;
               }
               if (idProperty != null)
@@ -225,9 +225,9 @@ namespace Chaliy.Windows.Forms
                 {
                   if (DataMember == null)
                     DataMember = tempDataMember;
-                  var APropertyDescriptorCollection = currencyManager.GetItemProperties();
-                  nameProperty = APropertyDescriptorCollection.Find(temp, true);
-                  if (APropertyDescriptorCollection.Count == 0)
+                  var propertyDescriptorCollection = currencyManager.GetItemProperties();
+                  nameProperty = propertyDescriptorCollection.Find(temp, true);
+                  if (propertyDescriptorCollection.Count == 0)
                     namePropertyName = value;
                 }
                 if (nameProperty != null)
@@ -283,9 +283,9 @@ namespace Chaliy.Windows.Forms
                 {
                   if (DataMember == null)
                     DataMember = tempDataMember;
-                  var APropertyDescriptorCollection = currencyManager.GetItemProperties();
-                  parentIdProperty = APropertyDescriptorCollection.Find(temp, true);
-                  if (APropertyDescriptorCollection.Count == 0)
+                  var propertyDescriptorCollection = currencyManager.GetItemProperties();
+                  parentIdProperty = propertyDescriptorCollection.Find(temp, true);
+                  if (propertyDescriptorCollection.Count == 0)
                     parentIdPropertyName = value;
                 }
                 if (parentIdProperty != null)
@@ -382,7 +382,7 @@ namespace Chaliy.Windows.Forms
       ResetData();
     }
 
-    private void listManager_PositionChanged(object sender, EventArgs e)
+    private void ListManagerPositionChanged(object sender, EventArgs e)
     {
       if (PropertyAreSet())
         SynchronizeSelection();
@@ -422,8 +422,8 @@ namespace Chaliy.Windows.Forms
             break;
 
           case ListChangedType.ItemDeleted:
-            if (SelectedNode != null && (listManager.List.IndexOf(SelectedNode.Tag) == -1)
-                || listManager.List.IndexOf(SelectedNode.Tag) == e.NewIndex)
+            if (SelectedNode != null && ((listManager.List.IndexOf(SelectedNode.Tag) == -1)
+                || listManager.List.IndexOf(SelectedNode.Tag) == e.NewIndex))
             {
               SelectedNode.Remove();
               RefreshAllData(e.NewIndex);
@@ -478,15 +478,14 @@ namespace Chaliy.Windows.Forms
           && namePropertyName.Length != 0
           && parentIdPropertyName.Length != 0)
       {
-        PropertyDescriptorCollection APropertyDescriptorCollection;
-        APropertyDescriptorCollection = listManager.GetItemProperties();
+        var propertyDescriptorCollection = listManager.GetItemProperties();
         //APropertyDescriptorCollection.Find
         if (idProperty == null)
-          idProperty = APropertyDescriptorCollection[idPropertyName];
+          idProperty = propertyDescriptorCollection[idPropertyName];
         if (nameProperty == null)
-          nameProperty = APropertyDescriptorCollection[namePropertyName];
+          nameProperty = propertyDescriptorCollection[namePropertyName];
         if (parentIdProperty == null)
-          parentIdProperty = APropertyDescriptorCollection[parentIdPropertyName];
+          parentIdProperty = propertyDescriptorCollection[parentIdPropertyName];
       }
 
       return PropertyAreSet();
@@ -518,7 +517,7 @@ namespace Chaliy.Windows.Forms
 
     private void WireDataSource()
     {
-      listManager.PositionChanged += listManager_PositionChanged;
+      listManager.PositionChanged += ListManagerPositionChanged;
       ((IBindingList) listManager.List).ListChanged += DataTreeView_ListChanged;
     }
 
@@ -557,9 +556,9 @@ namespace Chaliy.Windows.Forms
               if (startCount == unsortedNodes.Count)
               {
                 var AE = new ApplicationException("Tree view confused when try to make your data hierarchical.");
-                foreach (var Node in unsortedNodes)
+                foreach (var node in unsortedNodes)
                 {
-                  AE.Data.Add(Node.ToString(), Node);
+                  AE.Data.Add(node.ToString(), node);
                 }
                 throw AE;
               }
@@ -592,22 +591,22 @@ namespace Chaliy.Windows.Forms
       return false;
     }
 
-    private void AddNode(TreeNodeCollection nodes, TreeNode node)
+    private static void AddNode(TreeNodeCollection nodes, TreeNode node)
     {
       nodes.Add(node);
     }
 
-    private void ChangeParent(TreeNode Childnode, TreeNode ParentNode)
+    private void ChangeParent(TreeNode childnode, TreeNode parentNode)
     {
-      if (Childnode != null && ParentNode != null)
+      if (childnode != null && parentNode != null)
       {
-        var ParentID = idProperty.GetValue(ParentNode.Tag);
+        var ParentID = idProperty.GetValue(parentNode.Tag);
         if (PrepareValueConvertor()
             && valueConverter.IsValid(ParentID)
           )
         {
           parentIdProperty.SetValue(
-            Childnode.Tag,
+            childnode.Tag,
             ParentID
             );
           listManager.EndCurrentEdit();
@@ -618,11 +617,8 @@ namespace Chaliy.Windows.Forms
 
     private TreeNode FindFirst(object iD)
     {
-      var FoundNodes = Nodes.Find(iD.ToString(), true);
-      if (FoundNodes.Length == 0)
-        return null;
-      else
-        return FoundNodes[0];
+      var foundNodes = Nodes.Find(iD.ToString(), true);
+      return foundNodes.Length == 0 ? null : foundNodes[0];
     }
 
     private object GetCurrentID()
@@ -640,9 +636,9 @@ namespace Chaliy.Windows.Forms
       return GetDatasNode(listManager.Current);
     }
 
-    private TreeNode GetDatasNode(object DataObject)
+    private TreeNode GetDatasNode(object dataObject)
     {
-      var dataID = idProperty.GetValue(DataObject);
+      var dataID = idProperty.GetValue(dataObject);
       return FindFirst(dataID);
     }
 
@@ -658,13 +654,13 @@ namespace Chaliy.Windows.Forms
 
     private void ChangeParent(TreeNode node)
     {
-      object CurrentParentID = null;
+      object currentParentID = null;
       var dataParentID = parentIdProperty.GetValue(node.Tag);
       if (dataParentID != null)
       {
         if (node.Parent != null)
-          CurrentParentID = idProperty.GetValue(node.Parent.Tag);
-        if (!dataParentID.Equals(CurrentParentID))
+          currentParentID = idProperty.GetValue(node.Parent.Tag);
+        if (!dataParentID.Equals(currentParentID))
           if (HasParent(node, dataParentID) || node.Parent != null)
           {
             node.Remove();
@@ -764,11 +760,11 @@ namespace Chaliy.Windows.Forms
       if (id == null
           || Convert.IsDBNull(id))
         return true;
-      else if (id.GetType() == typeof (string))
+      if (id.GetType() == typeof (string))
         return (((string) id).Length == 0);
-      else if (id.GetType() == typeof (Guid))
+      if (id.GetType() == typeof (Guid))
         return ((Guid) id == Guid.Empty);
-      else if (id.GetType() == typeof (int))
+      if (id.GetType() == typeof (int))
         return ((int) id == 0);
       return false;
     }
@@ -792,7 +788,7 @@ namespace Chaliy.Windows.Forms
     protected override void InitLayout()
     {
       base.InitLayout();
-      ShowScrollBar(Handle, SB_HORZ, false);
+      ShowScrollBar(Handle, SbHorz, false);
     }
 
     private void BeginSelectionChanging()

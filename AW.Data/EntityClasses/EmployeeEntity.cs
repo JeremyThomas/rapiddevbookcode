@@ -93,17 +93,7 @@ namespace AW.Data.EntityClasses
 		#region Custom Entity code
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
-        public static EmployeeCollection GetEmployees()
-        {
-            RelationCollection Relations = new RelationCollection();
-            Relations.Add(EmployeeEntity.Relations.ContactEntityUsingContactID);
-            ISortExpression LastFirstAlpha = 
-                (ContactFields.LastName  | SortOperator.Ascending)
-              & (ContactFields.FirstName | SortOperator.Ascending);
-            EmployeeCollection Employees = new EmployeeCollection();
-            Employees.GetMulti(null,0, LastFirstAlpha,Relations);
-            return Employees;
-        }
+
         public string EmployeeDisplayName
         {
             get

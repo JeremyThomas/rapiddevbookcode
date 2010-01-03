@@ -338,6 +338,7 @@
     <Compile Include="FactoryClasses\PredicateFactory.cs" />
     <Compile Include="FactoryClasses\PropertyDescriptorFactory.cs" />
     <Compile Include="FactoryClasses\SortClauseFactory.cs" />
+    <Compile Include="Filters\SalesOrderHeaderFilters.cs" />
     <Compile Include="HelperClasses\DbUtils.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

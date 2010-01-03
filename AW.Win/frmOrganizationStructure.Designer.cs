@@ -64,15 +64,20 @@
       this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataTreeViewrOganizationStructure = new Chaliy.Windows.Forms.DataTreeView();
+      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingNavigator)).BeginInit();
       this.employeeEntityBindingNavigator.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityDataGridView)).BeginInit();
+      this.splitContainer1.Panel1.SuspendLayout();
+      this.splitContainer1.Panel2.SuspendLayout();
+      this.splitContainer1.SuspendLayout();
       this.SuspendLayout();
       // 
       // employeeEntityBindingSource
       // 
       this.employeeEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.EmployeeEntity);
+      this.employeeEntityBindingSource.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.employeeEntityBindingSource_ListChanged);
       // 
       // imageList1
       // 
@@ -100,7 +105,7 @@
             this.bindingNavigatorAddNewItem,
             this.bindingNavigatorDeleteItem,
             this.employeeEntityBindingNavigatorSaveItem});
-      this.employeeEntityBindingNavigator.Location = new System.Drawing.Point(0, 209);
+      this.employeeEntityBindingNavigator.Location = new System.Drawing.Point(0, 0);
       this.employeeEntityBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
       this.employeeEntityBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
       this.employeeEntityBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
@@ -204,6 +209,7 @@
       this.employeeEntityBindingNavigatorSaveItem.Name = "employeeEntityBindingNavigatorSaveItem";
       this.employeeEntityBindingNavigatorSaveItem.Size = new System.Drawing.Size(23, 22);
       this.employeeEntityBindingNavigatorSaveItem.Text = "Save Data";
+      this.employeeEntityBindingNavigatorSaveItem.Click += new System.EventHandler(this.employeeEntityBindingNavigatorSaveItem_Click);
       // 
       // employeeEntityDataGridView
       // 
@@ -230,9 +236,9 @@
             this.dataGridViewTextBoxColumn15});
       this.employeeEntityDataGridView.DataSource = this.employeeEntityBindingSource;
       this.employeeEntityDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.employeeEntityDataGridView.Location = new System.Drawing.Point(0, 234);
+      this.employeeEntityDataGridView.Location = new System.Drawing.Point(0, 25);
       this.employeeEntityDataGridView.Name = "employeeEntityDataGridView";
-      this.employeeEntityDataGridView.Size = new System.Drawing.Size(422, 307);
+      this.employeeEntityDataGridView.Size = new System.Drawing.Size(422, 266);
       this.employeeEntityDataGridView.TabIndex = 2;
       this.employeeEntityDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.employeeEntityDataGridView_DataError);
       // 
@@ -341,9 +347,10 @@
       // 
       // dataTreeViewrOganizationStructure
       // 
+      this.dataTreeViewrOganizationStructure.AllowDrop = true;
       this.dataTreeViewrOganizationStructure.DataMember = "";
       this.dataTreeViewrOganizationStructure.DataSource = this.employeeEntityBindingSource;
-      this.dataTreeViewrOganizationStructure.Dock = System.Windows.Forms.DockStyle.Top;
+      this.dataTreeViewrOganizationStructure.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataTreeViewrOganizationStructure.FullRowSelect = true;
       this.dataTreeViewrOganizationStructure.HideSelection = false;
       this.dataTreeViewrOganizationStructure.HotTracking = true;
@@ -352,31 +359,51 @@
       this.dataTreeViewrOganizationStructure.ImageList = this.imageList1;
       this.dataTreeViewrOganizationStructure.Location = new System.Drawing.Point(0, 0);
       this.dataTreeViewrOganizationStructure.Name = "dataTreeViewrOganizationStructure";
-      this.dataTreeViewrOganizationStructure.NameColumn = "LoginID";
+      this.dataTreeViewrOganizationStructure.NameColumn = "EmployeeDisplayName";
       this.dataTreeViewrOganizationStructure.ParentIDColumn = "ManagerID";
       this.dataTreeViewrOganizationStructure.SelectedImageIndex = 0;
-      this.dataTreeViewrOganizationStructure.Size = new System.Drawing.Size(422, 209);
+      this.dataTreeViewrOganizationStructure.Size = new System.Drawing.Size(422, 246);
       this.dataTreeViewrOganizationStructure.TabIndex = 0;
+      // 
+      // splitContainer1
+      // 
+      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer1.Name = "splitContainer1";
+      this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      // 
+      // splitContainer1.Panel1
+      // 
+      this.splitContainer1.Panel1.Controls.Add(this.dataTreeViewrOganizationStructure);
+      // 
+      // splitContainer1.Panel2
+      // 
+      this.splitContainer1.Panel2.Controls.Add(this.employeeEntityDataGridView);
+      this.splitContainer1.Panel2.Controls.Add(this.employeeEntityBindingNavigator);
+      this.splitContainer1.Size = new System.Drawing.Size(422, 541);
+      this.splitContainer1.SplitterDistance = 246;
+      this.splitContainer1.TabIndex = 3;
       // 
       // FrmOrganizationStructure
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(422, 541);
-      this.Controls.Add(this.employeeEntityDataGridView);
-      this.Controls.Add(this.employeeEntityBindingNavigator);
-      this.Controls.Add(this.dataTreeViewrOganizationStructure);
+      this.Controls.Add(this.splitContainer1);
       this.Name = "FrmOrganizationStructure";
       this.Tag = "True";
       this.Text = "Organization Structure";
-      this.Load += new System.EventHandler(this.frmOrganizationStructure_Load);
+      this.Load += new System.EventHandler(this.FrmOrganizationStructureLoad);
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingNavigator)).EndInit();
       this.employeeEntityBindingNavigator.ResumeLayout(false);
       this.employeeEntityBindingNavigator.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityDataGridView)).EndInit();
+      this.splitContainer1.Panel1.ResumeLayout(false);
+      this.splitContainer1.Panel2.ResumeLayout(false);
+      this.splitContainer1.Panel2.PerformLayout();
+      this.splitContainer1.ResumeLayout(false);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
@@ -416,5 +443,6 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
     private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
     private System.Windows.Forms.ImageList imageList1;
+    private System.Windows.Forms.SplitContainer splitContainer1;
   }
 }
