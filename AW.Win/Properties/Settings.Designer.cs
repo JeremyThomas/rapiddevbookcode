@@ -426,5 +426,17 @@ namespace AW.Win.Properties {
                 this["QueryFilesToReopen"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0, 0, 0")]
+        public global::System.Drawing.Rectangle OrganizationStructureSizeLocation {
+            get {
+                return ((global::System.Drawing.Rectangle)(this["OrganizationStructureSizeLocation"]));
+            }
+            set {
+                this["OrganizationStructureSizeLocation"] = value;
+            }
+        }
     }
 }

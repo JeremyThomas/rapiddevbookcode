@@ -390,6 +390,8 @@ namespace Chaliy.Windows.Forms
         ResetData();
     }
 
+    private bool handelingItemChanged;
+
     private void DataTreeView_ListChanged(object sender, ListChangedEventArgs e)
     {
       if (PropertyAreSet())
@@ -409,16 +411,24 @@ namespace Chaliy.Windows.Forms
             break;
 
           case ListChangedType.ItemChanged:
-
-            var changedNode = GetDatasNode(e.NewIndex);
-            if (changedNode != null)
-              RefreshData(changedNode, e.NewIndex);
-            else if (IsIDNull(GetCurrentID(e.NewIndex)))
-              throw new ApplicationException("Item not found or wrong type.");
-            else if (TryAddNode(CreateNode(e.NewIndex)))
-              ResetData();
-            else
-              throw new ApplicationException("Item not found or wrong type.");
+            if (!handelingItemChanged)
+              try
+              {
+                handelingItemChanged = true;
+                var changedNode = GetDatasNode(e.NewIndex);
+                if (changedNode != null)
+                  RefreshData(changedNode, e.NewIndex);
+                else if (IsIDNull(GetCurrentID(e.NewIndex)))
+                  throw new ApplicationException("Item not found or wrong type.");
+                else if (TryAddNode(CreateNode(e.NewIndex)))
+                  ResetData();
+                else
+                  throw new ApplicationException("Item not found or wrong type.");
+              }
+              finally
+              {
+                handelingItemChanged = false;
+              }
             break;
 
           case ListChangedType.ItemDeleted:
@@ -432,6 +442,9 @@ namespace Chaliy.Windows.Forms
 
           case ListChangedType.Reset:
             ResetData();
+            break;
+
+          case ListChangedType.ItemMoved:
             break;
         }
       else
@@ -577,7 +590,7 @@ namespace Chaliy.Windows.Forms
       if (HasParent(node))
       {
         var parentNode = GetDataParent(node);
-        if (parentNode != null)
+        if (parentNode != null && !parentNode.Nodes.Contains(node))
         {
           AddNode(parentNode.Nodes, node);
           return true;
