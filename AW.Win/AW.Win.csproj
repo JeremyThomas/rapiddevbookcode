@@ -150,7 +150,7 @@
     <Compile Include="frmVacationBonus.Designer.cs">
       <DependentUpon>frmVacationBonus.cs</DependentUpon>
     </Compile>
-    <Compile Include="OrganizationManager.cs" />
+    <Compile Include="OrganizationHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmOrderSearch.resx">

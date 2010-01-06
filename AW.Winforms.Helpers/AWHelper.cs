@@ -173,12 +173,7 @@ namespace AW.Winforms.Helpers
     public static Form ShowForm(Form form, Form mdiParent)
     {
       if (Application.MessageLoop)
-      {
-        if (mdiParent != null)
-          form.MdiParent = mdiParent;
-        form.WindowState = FormWindowState.Normal;
-        form.Show();
-      }
+        ShowChildForm(form, mdiParent);
       else
         form.ShowDialog();
       return form;
@@ -196,7 +191,11 @@ namespace AW.Winforms.Helpers
         form.ShowDialog();
       else
       {
-        form.Parent = parent;
+        var mdiParent = parent as Form;
+        if (mdiParent != null && mdiParent.IsMdiContainer)
+          form.MdiParent = mdiParent;
+        else
+          form.Parent = parent;
         form.Show();
       }
       return form;

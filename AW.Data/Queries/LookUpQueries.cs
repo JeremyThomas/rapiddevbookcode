@@ -26,7 +26,8 @@ namespace AW.Data.Queries
       ISortExpression lastFirstAlpha = (ContactFields.LastName | SortOperator.Ascending) & (ContactFields.FirstName | SortOperator.Ascending);
       var employees = new EmployeeCollection();
       IPrefetchPath prefetch = new PrefetchPath((int) EntityType.EmployeeEntity) {EmployeeEntityBase.PrefetchPathContact};
-      employees.GetMulti(null, 0, lastFirstAlpha, relations, prefetch);
+      var includeFields = new IncludeFieldsList(ContactFields.LastName, ContactFields.FirstName, EmployeeFields.EmployeeID);
+      employees.GetMulti(null, 0, lastFirstAlpha, relations, prefetch, includeFields,0,0);
       return employees;
     }
 

@@ -176,7 +176,7 @@
       this.tabControl1.Location = new System.Drawing.Point(0, 0);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(1031, 562);
+      this.tabControl1.Size = new System.Drawing.Size(1031, 540);
       this.tabControl1.TabIndex = 1;
       // 
       // tabPageBrowser
@@ -185,7 +185,7 @@
       this.tabPageBrowser.Location = new System.Drawing.Point(4, 22);
       this.tabPageBrowser.Name = "tabPageBrowser";
       this.tabPageBrowser.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageBrowser.Size = new System.Drawing.Size(1023, 536);
+      this.tabPageBrowser.Size = new System.Drawing.Size(1023, 514);
       this.tabPageBrowser.TabIndex = 0;
       this.tabPageBrowser.Text = "Browser";
       this.tabPageBrowser.UseVisualStyleBackColor = true;
@@ -204,7 +204,7 @@
       // splitContainer1.Panel2
       // 
       this.splitContainer1.Panel2.Controls.Add(this.splitContainerValues);
-      this.splitContainer1.Size = new System.Drawing.Size(1017, 530);
+      this.splitContainer1.Size = new System.Drawing.Size(1017, 508);
       this.splitContainer1.SplitterDistance = global::AW.Winforms.Helpers.Properties.Settings.Default.FrmEntityViewerSplitterDistance;
       this.splitContainer1.TabIndex = 2;
       // 
@@ -214,7 +214,7 @@
       this.ObjectBrowser.Location = new System.Drawing.Point(0, 0);
       this.ObjectBrowser.Name = "ObjectBrowser";
       this.ObjectBrowser.ObjectToBrowse = null;
-      this.ObjectBrowser.Size = new System.Drawing.Size(462, 530);
+      this.ObjectBrowser.Size = new System.Drawing.Size(462, 508);
       this.ObjectBrowser.TabIndex = 0;
       this.ObjectBrowser.NodeSelected += new System.EventHandler(this.ObjectBrowser_NodeSelected);
       // 
@@ -233,8 +233,8 @@
       // splitContainerValues.Panel2
       // 
       this.splitContainerValues.Panel2.Controls.Add(this.gridDataEditor);
-      this.splitContainerValues.Size = new System.Drawing.Size(551, 530);
-      this.splitContainerValues.SplitterDistance = 265;
+      this.splitContainerValues.Size = new System.Drawing.Size(551, 508);
+      this.splitContainerValues.SplitterDistance = 254;
       this.splitContainerValues.TabIndex = 3;
       // 
       // propertyGrid1
@@ -247,7 +247,7 @@
       this.propertyGrid1.DrawFlat = true;
       this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
       this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(551, 202);
+      this.propertyGrid1.Size = new System.Drawing.Size(551, 191);
       this.propertyGrid1.TabIndex = 0;
       this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       // 
@@ -317,7 +317,7 @@
       this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
       this.gridDataEditor.Name = "gridDataEditor";
-      this.gridDataEditor.Size = new System.Drawing.Size(551, 261);
+      this.gridDataEditor.Size = new System.Drawing.Size(551, 250);
       this.gridDataEditor.TabIndex = 3;
       // 
       // dataGridViewTextBoxColumn11
@@ -363,8 +363,8 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1031, 562);
-      this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.tabControl1);
+      this.Controls.Add(this.statusStrip1);
       this.Name = "FrmEntityViewer";
       this.Tag = "False";
       this.Text = "Entity Viewer";

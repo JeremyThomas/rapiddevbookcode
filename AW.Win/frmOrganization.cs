@@ -1,18 +1,26 @@
 using System;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Win
 {
   public partial class FrmOrganization : Form
   {
+
     public FrmOrganization()
     {
       InitializeComponent();
+    }
+
+    public int SelectedEmployeeID
+    {
+      get { return Convert.ToInt32(cbEmployee.SelectedValue); }
     }
 
     private void frmOrganization_Load(object sender, EventArgs e)
@@ -28,8 +36,6 @@ namespace AW.Win
       Settings.Default.OrderSearchSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
 
-    #region Stored procedure version
-
     /// <summary>
     /// Stored Procedure Version
     /// </summary>
@@ -37,96 +43,25 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
     private void btnSearchSP_Click(object sender, EventArgs e)
     {
-      tvOrganization.Nodes.Clear();
-      var EmployeeID = Convert.ToInt32(cbEmployee.SelectedValue);
-      var MasterNode = OrganizationManager.GetMasterNode(EmployeeID);
-      OrganizationManager.GetManagerEmployees(EmployeeID, MasterNode);
-      tvOrganization.Nodes.Add(MasterNode);
-      tvOrganization.Nodes[0].ExpandAll();
+      OrganizationHelper.ShowEmployeesPlaceInOrganization(SelectedEmployeeID, tvOrganization.Nodes);
     }
-
-    #endregion
-
-    #region Dynamic Version with prefetch
 
     private void btnSearch_Click(object sender, EventArgs e)
     {
-      tvOrganization.Nodes.Clear();
-      TreeNode MasterNode;
-      var emp = OrganizationManager.GetPrefetchedEmployeeEntity(Convert.ToInt32(cbEmployee.SelectedValue));
-      var EmployeeNode = new TreeNode {Text = (emp.Contact.FirstName + ", " + emp.Contact.LastName + " [" + emp.EmployeeID + "]"), Tag = emp.EmployeeID};
-      if (emp.Manages.Count > 0)
-        foreach (var Subordinate in emp.Manages)
-        {
-          EmployeeNode.Nodes.Add(OrganizationManager.GetEmployeesRecursive(Subordinate));
-        }
-      if (emp.ManagerID != 0)
-      {
-        var ManagersNode = OrganizationManager.GetManagersRecursive(emp.Manager);
-        OrganizationManager.FindLowestNode(ManagersNode).Nodes.Add(EmployeeNode);
-        MasterNode = ManagersNode;
-      }
-      else
-        MasterNode = EmployeeNode;
-      MasterNode.ExpandAll();
-      tvOrganization.Nodes.Add(MasterNode);
+      OrganizationHelper.ShowEmployeesPlaceInOrganization(new EmployeeEntity(SelectedEmployeeID, OrganizationHelper.GetManagesPrefetchPath()), tvOrganization.Nodes);
     }
 
-    #endregion
-
-    #region Dynamic Version
-
-    private void buttonSearchNP_Click(object sender, EventArgs e)
+    private void buttonSearchNoPrefetch_Click(object sender, EventArgs e)
     {
-      tvOrganization.Nodes.Clear();
-      TreeNode MasterNode;
-      var Employee = new EmployeeEntity(Convert.ToInt32(cbEmployee.SelectedValue));
-      var EmployeeNode = OrganizationManager.MakeNode(Employee);
-      if (Employee.Manages.Count > 0)
-        foreach (var Subordinate in Employee.Manages)
-        {
-          EmployeeNode.Nodes.Add(OrganizationManager.GetEmployeesRecursive(Subordinate));
-        }
-      if (Employee.ManagerID != 0)
-      {
-        var ManagersNode = OrganizationManager.GetManagersRecursive(Employee.Manager);
-        OrganizationManager.FindLowestNode(ManagersNode).Nodes.Add(EmployeeNode);
-        MasterNode = ManagersNode;
-      }
-      else
-        MasterNode = EmployeeNode;
-      MasterNode.ExpandAll();
-      tvOrganization.Nodes.Add(MasterNode);
-    }
+      OrganizationHelper.ShowEmployeesPlaceInOrganization(new EmployeeEntity(SelectedEmployeeID), tvOrganization.Nodes);
+    }   
 
-    #endregion
-
-    #region Testing Code
-
-    private void btnSearchNon_Click(object sender, EventArgs e)
+    private void BtnSearchLinqPrefetchClick(object sender, EventArgs e)
     {
-      tvOrganization.Nodes.Clear();
-      TreeNode MasterNode;
-
-      var emp = new EmployeeEntity(Convert.ToInt32(cbEmployee.SelectedValue));
-      var EmployeeNode = new TreeNode {Text = (emp.Contact.FirstName + ", " + emp.Contact.LastName + " [" + emp.EmployeeID + "]"), Tag = emp.EmployeeID};
-      if (emp.Manages.Count > 0)
-        foreach (var Subordinate in emp.Manages)
-        {
-          EmployeeNode.Nodes.Add(OrganizationManager.GetEmployeesRecursive(Subordinate));
-        }
-      if (emp.ManagerID != 0)
-      {
-        var ManagersNode = OrganizationManager.GetManagersRecursive(emp.Manager);
-        OrganizationManager.FindLowestNode(ManagersNode).Nodes.Add(EmployeeNode);
-        MasterNode = ManagersNode;
-      }
-      else
-        MasterNode = EmployeeNode;
-      MasterNode.ExpandAll();
-      tvOrganization.Nodes.Add(MasterNode);
+      OrganizationHelper.ShowEmployeesPlaceInOrganization(MetaSingletons.MetaData.Employee.Where(employee => employee.EmployeeID == SelectedEmployeeID)
+        .WithPath(OrganizationHelper.GetManagesPrefetchPath()).Single(), 
+        tvOrganization.Nodes);
     }
 
-    #endregion
   }
 }

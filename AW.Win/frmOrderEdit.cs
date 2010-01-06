@@ -155,20 +155,10 @@ namespace AW.Win
 			salesOrderHeaderEntityBindingSource.ResetBindings(false);
 		}
 
-		public void RevertEntity(EntityBase entity)
-		{
-			foreach (EntityField field in entity.Fields)
-			{
-				if (field.IsChanged)
-					//field.CurrentValue = field.DbValue;
-					field.RejectChange();
-			}
-		}
-
 		private void toolStripButtonRevert_Click(object sender, EventArgs e)
 		{
 			salesOrderHeaderEntityBindingSource.CancelEdit();
-			RevertEntity(_order);
+      _order.RevertChangesToDBValue();
 		}
 	}
 }

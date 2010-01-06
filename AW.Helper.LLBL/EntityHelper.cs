@@ -40,15 +40,28 @@ namespace AW.Helper.LLBL
       return entityFields.Cast<IEntityField>();
     }
 
-    public static IEnumerable<IEntityField> GetChangedFields(IEntity entity)
+    public static IEnumerable<IEntityField> GetChangedFields(this IEntity entity)
     {
       return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Where(f => f.IsChanged) : null;
     }
 
-    public static int GetNumberOfChangedFields(IEntity entity)
+    public static int GetNumberOfChangedFields(this IEntity entity)
     {
       return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Count(f => f.IsChanged) : 0;
     }
+
+    public static void RevertChangesToDBValue(this IEntity entity)
+    {
+      foreach (var changedField in entity.GetChangedFields())
+        changedField.ForcedCurrentValueWrite(changedField.DbValue, changedField.DbValue);
+      entity.IsDirty = false;
+    }
+
+    public static void RevertChangesToDBValue<T>(this CollectionCore<T> entityCollection) where T : class, IEntity
+    {
+      foreach (var dirtyEntity in entityCollection.DirtyEntities)
+        dirtyEntity.RevertChangesToDBValue();
+    }   
 
     /// <summary>
     /// Gets the entity field from the name of the field.
@@ -156,7 +169,7 @@ namespace AW.Helper.LLBL
     public static int SaveEntities(IEnumerable entitiesToSave, IDataAccessAdapter dataAccessAdapter)
     {
       if (entitiesToSave is IEntityCollection2)
-        return SaveEntityCollection((IEntityCollection2)entitiesToSave,dataAccessAdapter);
+        return SaveEntityCollection((IEntityCollection2) entitiesToSave, dataAccessAdapter);
       return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
     }
 
@@ -169,7 +182,7 @@ namespace AW.Helper.LLBL
     /// <returns>the amount of persisted entities</returns>
     public static int SaveEntityCollection(IEntityCollection2 collectionToSave, IDataAccessAdapter dataAccessAdapter)
     {
-        return dataAccessAdapter.SaveEntityCollection(collectionToSave);
+      return dataAccessAdapter.SaveEntityCollection(collectionToSave);
     }
 
     /// <summary>
@@ -195,7 +208,7 @@ namespace AW.Helper.LLBL
     /// </returns>
     public static bool SaveEntity(this IEntity2 entityToSave, IDataAccessAdapter dataAccessAdapter)
     {
-        return dataAccessAdapter.SaveEntity(entityToSave);
+      return dataAccessAdapter.SaveEntity(entityToSave);
     }
 
     /// <summary>
@@ -223,10 +236,10 @@ namespace AW.Helper.LLBL
     public static int Save(object dataToSave, IDataAccessAdapter dataAccessAdapter)
     {
       var listItemType = ListBindingHelper.GetListItemType(dataToSave);
-      if (typeof(IEntity2).IsAssignableFrom(listItemType))
+      if (typeof (IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(SaveEntity((IEntity2)dataToSave, dataAccessAdapter)) : SaveEntities(enumerable, dataAccessAdapter);
+        return enumerable == null ? Convert.ToInt32(SaveEntity((IEntity2) dataToSave, dataAccessAdapter)) : SaveEntities(enumerable, dataAccessAdapter);
       }
       return 0;
     }

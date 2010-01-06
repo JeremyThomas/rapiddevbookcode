@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
+using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
 
@@ -55,10 +56,7 @@ namespace AW.Win
     
     private void toolStripButtonRevert_Click(object sender, EventArgs e)
     {
-      foreach (var employeeEntity in EmployeeCollection.DirtyEntities)
-      {
-        employeeEntity.Refetch();
-      }
+      EmployeeCollection.RevertChangesToDBValue();
       foreach (var employeeEntity in EmployeeCollection.RemovedEntitiesTracker.Cast<EmployeeEntity>())
       {
         EmployeeCollection.Add(employeeEntity);
