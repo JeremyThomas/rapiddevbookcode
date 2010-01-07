@@ -1,45 +1,28 @@
-﻿using AW.Data;
+using System.Linq;
+using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Data.FactoryClasses;
-using AW.Helper.LLBL;
 using AW.Data.HelperClasses;
+using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace AW.Test
 {
-    
-    
-    /// <summary>
-    ///This is a test class for EntityHelperTest and is intended
-    ///to contain all EntityHelperTest Unit Tests
-    ///</summary>
-  [TestClass()]
+  /// <summary>
+  ///This is a test class for EntityHelpe and is intended
+  ///to contain all EntityHelper Unit Tests
+  ///</summary>
+  [TestClass]
   public class EntityHelperTest
   {
-
-
-    private TestContext testContextInstance;
-
     /// <summary>
     ///Gets or sets the test context which provides
     ///information about and functionality for the current test run.
     ///</summary>
-    public TestContext TestContext
-    {
-      get
-      {
-        return testContextInstance;
-      }
-      set
-      {
-        testContextInstance = value;
-      }
-    }
+    public TestContext TestContext { get; set; }
 
     #region Additional test attributes
+
     // 
     //You can use the following additional attributes as you write your tests:
     //
@@ -67,8 +50,8 @@ namespace AW.Test
     //{
     //}
     //
-    #endregion
 
+    #endregion
 
     public static void ToEntityCollectionTestHelper<T>() where T : CommonEntityBase
     {
@@ -102,6 +85,5 @@ namespace AW.Test
     {
       ToEntityCollectionTestHelper<AddressTypeEntity>();
     }
-
   }
 }

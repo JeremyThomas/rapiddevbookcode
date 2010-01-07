@@ -31,7 +31,7 @@ namespace AW.Win
         private void InitializeComponent()
         {
           this.components = new System.ComponentModel.Container();
-          Win.Properties.Settings settings1 = new Win.Properties.Settings();
+          AW.Win.Properties.Settings settings2 = new AW.Win.Properties.Settings();
           this.menuStrip1 = new System.Windows.Forms.MenuStrip();
           this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.fileToolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +45,7 @@ namespace AW.Win
           this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.customersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.organizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.organizationStructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.utilitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.vacationBonusUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.traceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,8 +61,7 @@ namespace AW.Win
           this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
           this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
           this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
-          this.mruHandlerProject = new MRUHandler(this.components);
-          this.organizationStructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+          this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
           this.menuStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
           this.SuspendLayout();
@@ -136,15 +136,15 @@ namespace AW.Win
           // ordersToolStripMenuItem
           // 
           this.ordersToolStripMenuItem.Name = "ordersToolStripMenuItem";
-          this.ordersToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+          this.ordersToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
           this.ordersToolStripMenuItem.Text = "&Orders ...";
           this.ordersToolStripMenuItem.Click += new System.EventHandler(this.ordersToolStripMenuItem_Click);
           // 
           // orders2ToolStripMenuItem
           // 
           this.orders2ToolStripMenuItem.Name = "orders2ToolStripMenuItem";
-          this.orders2ToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-          this.orders2ToolStripMenuItem.Text = "Orders2 ...";
+          this.orders2ToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+          this.orders2ToolStripMenuItem.Text = "Orders without CustomerViewRelated ...";
           this.orders2ToolStripMenuItem.Click += new System.EventHandler(this.orders2ToolStripMenuItem_Click);
           // 
           // reportsToolStripMenuItem
@@ -170,6 +170,13 @@ namespace AW.Win
           this.organizationToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
           this.organizationToolStripMenuItem.Text = "&Organization";
           this.organizationToolStripMenuItem.Click += new System.EventHandler(this.organizationToolStripMenuItem_Click);
+          // 
+          // organizationStructureToolStripMenuItem
+          // 
+          this.organizationStructureToolStripMenuItem.Name = "organizationStructureToolStripMenuItem";
+          this.organizationStructureToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+          this.organizationStructureToolStripMenuItem.Text = "Organization Structure";
+          this.organizationStructureToolStripMenuItem.Click += new System.EventHandler(this.organizationStructureToolStripMenuItem_Click);
           // 
           // utilitiesToolStripMenuItem
           // 
@@ -274,46 +281,47 @@ namespace AW.Win
           // 
           // reOpenWindowsToolStripMenuItem
           // 
-          settings1.City = "";
-          settings1.Countries = null;
-          settings1.Country = "";
-          settings1.CustomersSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.DateFrom = new System.DateTime(2008, 8, 24, 21, 34, 1, 0);
-          settings1.DateTo = new System.DateTime(2008, 8, 24, 21, 34, 1, 0);
-          settings1.EntityFieldColumns = null;
-          settings1.EntityViewerSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.FilterOnFromDate = true;
-          settings1.FilterOnToDate = false;
-          settings1.FirstName = "";
-          settings1.FrmEntityViewerSplitterDistance = 289;
-          settings1.LastName = "";
-          settings1.LinqTraceLevel = System.Diagnostics.TraceLevel.Off;
-          settings1.MainWindowSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.MainWindowState = System.Windows.Forms.FormWindowState.Normal;
-          settings1.NumRows = new decimal(new int[] {
+          settings2.City = "";
+          settings2.Countries = null;
+          settings2.Country = "";
+          settings2.CustomersSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.DateFrom = new System.DateTime(2008, 8, 24, 21, 34, 1, 0);
+          settings2.DateTo = new System.DateTime(2008, 8, 24, 21, 34, 1, 0);
+          settings2.EntityFieldColumns = null;
+          settings2.EntityViewerSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.FilterOnFromDate = true;
+          settings2.FilterOnToDate = false;
+          settings2.FirstName = "";
+          settings2.FrmEntityViewerSplitterDistance = 289;
+          settings2.LastName = "";
+          settings2.LinqTraceLevel = System.Diagnostics.TraceLevel.Off;
+          settings2.MainWindowSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.MainWindowState = System.Windows.Forms.FormWindowState.Normal;
+          settings2.NumRows = new decimal(new int[] {
             100,
             0,
             0,
             0});
-          settings1.OpenTraceWindosOnStart = false;
-          settings1.OpenWindows = null;
-          settings1.OrderEditSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.OrderID = "";
-          settings1.OrderSearchSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.OrganizationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.Prefetch = true;
-          settings1.QueryFilesToReopen = null;
-          settings1.ReopenWindows = false;
-          settings1.SettingQueryRunnerSizeAndLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.SettingsKey = "";
-          settings1.State = "";
-          settings1.TraceLevel = System.Diagnostics.TraceLevel.Off;
-          settings1.TraceSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.TraceWindowSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.UseLinq = false;
-          settings1.VacationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
-          settings1.Zip = "";
-          this.reOpenWindowsToolStripMenuItem.Checked = settings1.ReopenWindows;
+          settings2.OpenTraceWindosOnStart = false;
+          settings2.OpenWindows = null;
+          settings2.OrderEditSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.OrderID = "";
+          settings2.OrderSearchSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.OrganizationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.OrganizationStructureSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.Prefetch = true;
+          settings2.QueryFilesToReopen = null;
+          settings2.ReopenWindows = false;
+          settings2.SettingQueryRunnerSizeAndLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.SettingsKey = "";
+          settings2.State = "";
+          settings2.TraceLevel = System.Diagnostics.TraceLevel.Off;
+          settings2.TraceSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.TraceWindowSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.UseLinq = false;
+          settings2.VacationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+          settings2.Zip = "";
+          this.reOpenWindowsToolStripMenuItem.Checked = settings2.ReopenWindows;
           this.reOpenWindowsToolStripMenuItem.CheckOnClick = true;
           this.reOpenWindowsToolStripMenuItem.Name = "reOpenWindowsToolStripMenuItem";
           this.reOpenWindowsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
@@ -330,14 +338,7 @@ namespace AW.Win
           this.mruHandlerProject.AutoSeparators = true;
           this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
           this.mruHandlerProject.StorageName = "mru";
-          this.mruHandlerProject.MRUItemClicked += new MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
-          // 
-          // organizationStructureToolStripMenuItem
-          // 
-          this.organizationStructureToolStripMenuItem.Name = "organizationStructureToolStripMenuItem";
-          this.organizationStructureToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-          this.organizationStructureToolStripMenuItem.Text = "Organization Structure";
-          this.organizationStructureToolStripMenuItem.Click += new System.EventHandler(this.organizationStructureToolStripMenuItem_Click);
+          this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
           // 
           // FrmMain
           // 
@@ -346,13 +347,13 @@ namespace AW.Win
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(617, 443);
           this.Controls.Add(this.menuStrip1);
-          this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", settings1, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.DataBindings.Add(new System.Windows.Forms.Binding("WindowState", settings2, "MainWindowState", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
           this.IsMdiContainer = true;
           this.MainMenuStrip = this.menuStrip1;
           this.Name = "FrmMain";
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
           this.Text = "Adventure Works";
-          this.WindowState = settings1.MainWindowState;
+          this.WindowState = settings2.MainWindowState;
           this.Load += new System.EventHandler(this.frmMain_Load);
           this.Shown += new System.EventHandler(this.frmMain_Shown);
           this.DragDrop += new System.Windows.Forms.DragEventHandler(this.frmMain_DragDrop);

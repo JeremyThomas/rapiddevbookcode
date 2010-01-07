@@ -1,16 +1,14 @@
 using System.Linq.Dynamic;
 using AW.Data.Queries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Test
 {
   /// <summary>
-  ///This is a test class for TestsTest and is intended
-  ///to contain all TestsTest Unit Tests
+  ///This is a test class to execute Queries that demonstrate some bugs found in the LLBL LINQ provider
   ///</summary>
   [TestClass]
-  public class TestsTest
+  public class BugsTest
   {
     /// <summary>
     ///Gets or sets the test context which provides
@@ -50,41 +48,35 @@ namespace AW.Test
 
     #endregion
 
-    /// <summary>
-    ///A test for LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder
-    ///</summary>
-    [TestMethod]
+    [TestMethod, Description("A test for LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder")]
     public void LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrderTest()
     {
       const int maxNumberOfItemsToReturn = 5;
-      Assert.AreEqual(maxNumberOfItemsToReturn, Tests.LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(maxNumberOfItemsToReturn).Count());
+      Assert.AreEqual(maxNumberOfItemsToReturn, Bugs.LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(maxNumberOfItemsToReturn).Count());
     }
 
-    /// <summary>
-    ///A test for BarfonMultipleTableJoins
-    ///</summary>
-    [TestMethod]
-    public void BarfonMultipleTableJoinsTest()
+    [TestMethod, Description("A test for MultipleTableJoins")]
+    public void MultipleTableJoinsTest()
     {
-      Tests.BarfonMultipleTableJoins();
+      Bugs.MultipleTableJoins();
     }
 
-    /// <summary>
-    ///A test for Barf1
-    ///</summary>
-    [TestMethod, ExpectedException(typeof(ORMQueryConstructionException))]
-    public void Barf1Test()
+    [TestMethod, Description("A test for EmployeeAddresses")]
+    public void EmployeeAddressesTest()
     {
-      Tests.Barf1();
+      Bugs.EmployeeAddresses();
     }
 
-    /// <summary>
-    ///A test for Barf
-    ///</summary>
-    [TestMethod]
-    public void BarfTest()
+    [TestMethod, Description("A test for SalesOrderHeader")]
+    public void SalesOrderHeaderTest()
     {
-      Tests.Barf();
+      Bugs.SalesOrderHeader();
+    }
+
+    [TestMethod, Description("Fails with: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeID', however this field wasn't found in the projection of the entity..	")]
+    public void EmployeeAddressesEmployeeContactIndividualsTest()
+    {
+      Bugs.EmployeeAddressesEmployeeContactIndividuals();
     }
   }
 }

@@ -6,8 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AW.Test
 {
   /// <summary>
-  ///This is a test class for CustomerQueriesTest and is intended
-  ///to contain all CustomerQueriesTest Unit Tests
+  ///This is a test class for CustomerQueries and is intended
+  ///to contain all CustomerQueries Unit Tests
   ///</summary>
   [TestClass]
   public class CustomerQueriesTest

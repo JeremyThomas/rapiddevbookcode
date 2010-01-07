@@ -11,7 +11,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.Queries
 {
-  public static class SalesOrderManager
+  public static class SalesOrderQueries
   {
     public static SalesOrderHeaderCollection GetSalesOrderHeaderCollection
       (
@@ -76,12 +76,12 @@ namespace AW.Data.Queries
       string orderNumber,
       string cityName,
       string stateName,
-      List<string> countries,
+      IEnumerable<string> countries,
       string zip,
       int maxNumberOfItemsToReturn
       )
     {
-      var query = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(fromDate, toDate, orderID, orderNumber, firstName, lastName, cityName, stateName, countries, zip);
+      var query = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(fromDate, toDate, orderID, orderNumber, firstName, lastName, cityName, stateName, zip, countries);
 
       if (maxNumberOfItemsToReturn > 0)
         query = query.Take(maxNumberOfItemsToReturn);

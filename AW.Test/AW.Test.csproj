@@ -82,8 +82,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SalesOrderManagerTest.cs" />
-    <Compile Include="TestsTest.cs" />
+    <Compile Include="SalesOrderQueriesTest.cs" />
+    <Compile Include="BugsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />

@@ -4,12 +4,15 @@ using AW.Helper.LLBL;
 
 namespace AW.Data.Queries
 {
-  public static class Tests
+  /// <summary>
+  /// Queries used to demonstrate some bugs found in the LLBL LINQ provider
+  /// </summary>
+  public static class Bugs
   {
     /// <summary>
     /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=14181
     /// </summary>
-    public static void Barf()
+    public static void SalesOrderHeader()
     {
       var query = from soh in MetaSingletons.MetaData.SalesOrderHeader
                   from sod in soh.SalesOrderDetails
@@ -26,7 +29,7 @@ namespace AW.Data.Queries
                select new { soh.SalesOrderID, soh.Customer.AccountNumber, soh.CreditCard.CardNumber }).ToList();
     }
 
-    public static void BarfonMultipleTableJoins()
+    public static void MultipleTableJoins()
     {
       var query = from soh in MetaSingletons.MetaData.SalesOrderHeader
                   from sod in soh.SalesOrderDetails
@@ -48,7 +51,7 @@ namespace AW.Data.Queries
       x.ToEntityCollection();
     }
 
-    public static void Barf1()
+    public static void EmployeeAddresses()
     {
       var c = from Address in MetaSingletons.MetaData.Address
               from EmployeeAddresses in Address.EmployeeAddresses
@@ -71,9 +74,9 @@ namespace AW.Data.Queries
 
       f.ToList();
 
-      //var d = from address in Validation.MetaData.Address
-      //        join EmployeeAddresses in Validation.MetaData.EmployeeAddresses on address.AddressId equals EmployeeAddresses.AddressId
-      //        join individual in Validation.MetaData.Individual on EmployeeAddresses.Employee.Contact.ContactId equals individual.ContactId
+      //var d = from address in MetaSingletons.MetaData.Address
+      //        join employeeAddresses in MetaSingletons.MetaData.EmployeeAddress on address.AddressID equals EmployeeAddresses.AddressID
+      //        join individual in MetaSingletons.MetaData.Individual on EmployeeAddresses.Employee.Contact.ContactId equals individual.ContactID
       //        //where EmployeeAddresses.Employee.Contact != null
       //        select address;
       //d.ToEntityCollection();
@@ -87,10 +90,17 @@ namespace AW.Data.Queries
               from EmployeeAddresses in Address.EmployeeAddresses
               select EmployeeAddresses.Employee.Contact.Phone;
 
-      g.ToList();
+      g.ToList();     
 
-      var k = from EmployeeAddresses in MetaSingletons.MetaData.EmployeeAddress
-              select EmployeeAddresses.Employee.Contact.Individuals;
+    }
+
+    /// <summary>
+    /// Fails with a ORMQueryConstructionException.
+    /// </summary>
+    public static void EmployeeAddressesEmployeeContactIndividuals()
+    {
+      var k=  from EmployeeAddresses in MetaSingletons.MetaData.EmployeeAddress
+             select EmployeeAddresses.Employee.Contact.Individuals;
 
       k.ToList(); //Application_ThreadException: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeID', however this field wasn't found in the projection of the entity.
 

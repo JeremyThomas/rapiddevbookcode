@@ -42,7 +42,7 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<IEntityField> GetChangedFields(this IEntity entity)
     {
-      return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Where(f => f.IsChanged) : null;
+      return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Where(f => f.IsChanged) : new EntityFields(0);
     }
 
     public static int GetNumberOfChangedFields(this IEntity entity)

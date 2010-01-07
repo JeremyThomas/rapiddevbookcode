@@ -7,11 +7,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AW.Test
 {
   /// <summary>
-  ///This is a test class for SalesOrderManagerTest and is intended
-  ///to contain all SalesOrderManagerTest Unit Tests
+  ///This is a test class for SalesOrderQueries and is intended
+  ///to contain all SalesOrderQueries Unit Tests
   ///</summary>
   [TestClass]
-  public class SalesOrderManagerTest
+  public class SalesOrderQueriesTest
   {
     /// <summary>
     ///Gets or sets the test context which provides
@@ -70,7 +70,7 @@ namespace AW.Test
     [TestMethod]
     public void GetSalesOrderHeaderCollectionWithLinqTest()
     {
-      var actual = SalesOrderManager.GetSalesOrderHeaderCollectionWithLinq(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, CountryName, Zip, maxNumberOfItemsToReturn, prefetch);
+      var actual = SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, CountryName, Zip, maxNumberOfItemsToReturn, prefetch);
       Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count);
       //Assert.IsNotNull(actual[0].CustomerViewRelated);
     }
@@ -81,7 +81,7 @@ namespace AW.Test
     [TestMethod]
     public void GetSalesOrderHeaderCollectionTest()
     {
-      var actual = SalesOrderManager.GetSalesOrderHeaderCollection(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, CountryName, Zip, maxNumberOfItemsToReturn, prefetch);
+      var actual = SalesOrderQueries.GetSalesOrderHeaderCollection(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, CountryName, Zip, maxNumberOfItemsToReturn, prefetch);
       Assert.AreEqual(maxNumberOfItemsToReturn, actual.Count);
       //Assert.IsNotNull(actual[0].CustomerViewRelated);
     }
@@ -93,7 +93,7 @@ namespace AW.Test
     public void DoSalesOrderHeaderLinqQueryTest()
     {
       var countries = new List<string>(); 
-      var actual = SalesOrderManager.DoSalesOrderHeaderLinqQuery(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, countries, Zip, maxNumberOfItemsToReturn);
+      var actual = SalesOrderQueries.DoSalesOrderHeaderLinqQuery(FromDate, ToDate, FirstName, LastName, OrderID, OrderNumber, CityName, StateName, countries, Zip, maxNumberOfItemsToReturn);
       Assert.AreEqual(maxNumberOfItemsToReturn, actual.ToList().Count());
     }
   }

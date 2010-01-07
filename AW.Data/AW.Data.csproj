@@ -376,8 +376,8 @@
     </Compile>
     <Compile Include="Queries\CustomerQueries.cs" />
     <Compile Include="Queries\LookUpQueries.cs" />
-    <Compile Include="Queries\SalesOrderManager.cs" />
-    <Compile Include="Queries\Tests.cs" />
+    <Compile Include="Queries\SalesOrderQueries.cs" />
+    <Compile Include="Queries\Bugs.cs" />
     <Compile Include="RelationClasses\DynamicRelation.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

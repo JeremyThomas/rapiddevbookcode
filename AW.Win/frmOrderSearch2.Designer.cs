@@ -49,8 +49,6 @@ namespace AW.Win
           this.tbOrderID = new System.Windows.Forms.TextBox();
           this.panel1 = new System.Windows.Forms.Panel();
           this.buttonClear = new System.Windows.Forms.Button();
-          this.buttonBarf2 = new System.Windows.Forms.Button();
-          this.buttonBarf = new System.Windows.Forms.Button();
           this.btnSearch = new System.Windows.Forms.Button();
           this.tbZip = new System.Windows.Forms.TextBox();
           this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
@@ -60,7 +58,6 @@ namespace AW.Win
           this.listBoxCountry = new System.Windows.Forms.ListBox();
           this.buttonClearCountries = new System.Windows.Forms.Button();
           this.salesOrderHeaderEntityDataGridView = new System.Windows.Forms.DataGridView();
-          this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,16 +67,7 @@ namespace AW.Win
           this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-          this.dataGridViewTextBoxColumn25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn26 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn27 = new System.Windows.Forms.DataGridViewTextBoxColumn();
           this.dataGridViewTextBoxColumn28 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -133,7 +121,6 @@ namespace AW.Win
           this.tableLayoutPanel2.Controls.Add(this.tbOrderID, 1, 4);
           this.tableLayoutPanel2.Controls.Add(this.panel1, 1, 5);
           this.tableLayoutPanel2.Controls.Add(this.tbZip, 3, 1);
-          this.tableLayoutPanel2.Controls.Add(this.numericUpDownNumRows, 0, 5);
           this.tableLayoutPanel2.Controls.Add(this.label7, 2, 1);
           this.tableLayoutPanel2.Controls.Add(this.cbState, 3, 5);
           this.tableLayoutPanel2.Controls.Add(this.label5, 2, 5);
@@ -296,9 +283,8 @@ namespace AW.Win
           // panel1
           // 
           this.panel1.Controls.Add(this.buttonClear);
-          this.panel1.Controls.Add(this.buttonBarf2);
-          this.panel1.Controls.Add(this.buttonBarf);
           this.panel1.Controls.Add(this.btnSearch);
+          this.panel1.Controls.Add(this.numericUpDownNumRows);
           this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
           this.panel1.Location = new System.Drawing.Point(72, 135);
           this.panel1.Name = "panel1";
@@ -307,33 +293,13 @@ namespace AW.Win
           // 
           // buttonClear
           // 
-          this.buttonClear.Location = new System.Drawing.Point(201, 4);
+          this.buttonClear.Location = new System.Drawing.Point(63, 4);
           this.buttonClear.Name = "buttonClear";
           this.buttonClear.Size = new System.Drawing.Size(54, 23);
           this.buttonClear.TabIndex = 26;
           this.buttonClear.Text = "Clear All";
           this.buttonClear.UseVisualStyleBackColor = true;
           this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
-          // 
-          // buttonBarf2
-          // 
-          this.buttonBarf2.Location = new System.Drawing.Point(135, 4);
-          this.buttonBarf2.Name = "buttonBarf2";
-          this.buttonBarf2.Size = new System.Drawing.Size(54, 23);
-          this.buttonBarf2.TabIndex = 25;
-          this.buttonBarf2.Text = "Barf2";
-          this.buttonBarf2.UseVisualStyleBackColor = true;
-          this.buttonBarf2.Click += new System.EventHandler(this.buttonBarf2_Click);
-          // 
-          // buttonBarf
-          // 
-          this.buttonBarf.Location = new System.Drawing.Point(69, 4);
-          this.buttonBarf.Name = "buttonBarf";
-          this.buttonBarf.Size = new System.Drawing.Size(54, 23);
-          this.buttonBarf.TabIndex = 24;
-          this.buttonBarf.Text = "Barf";
-          this.buttonBarf.UseVisualStyleBackColor = true;
-          this.buttonBarf.Click += new System.EventHandler(this.buttonBarf_Click);
           // 
           // btnSearch
           // 
@@ -357,8 +323,7 @@ namespace AW.Win
           // numericUpDownNumRows
           // 
           this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-          this.numericUpDownNumRows.Dock = System.Windows.Forms.DockStyle.Fill;
-          this.numericUpDownNumRows.Location = new System.Drawing.Point(3, 135);
+          this.numericUpDownNumRows.Location = new System.Drawing.Point(123, 7);
           this.numericUpDownNumRows.Name = "numericUpDownNumRows";
           this.numericUpDownNumRows.Size = new System.Drawing.Size(63, 20);
           this.numericUpDownNumRows.TabIndex = 23;
@@ -438,7 +403,6 @@ namespace AW.Win
           this.salesOrderHeaderEntityDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
           this.salesOrderHeaderEntityDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
           this.salesOrderHeaderEntityDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn7,
             this.dataGridViewTextBoxColumn8,
             this.dataGridViewTextBoxColumn9,
             this.dataGridViewTextBoxColumn10,
@@ -448,16 +412,7 @@ namespace AW.Win
             this.dataGridViewTextBoxColumn13,
             this.dataGridViewTextBoxColumn14,
             this.dataGridViewTextBoxColumn15,
-            this.dataGridViewTextBoxColumn16,
-            this.dataGridViewTextBoxColumn17,
-            this.dataGridViewTextBoxColumn18,
-            this.dataGridViewTextBoxColumn19,
-            this.dataGridViewTextBoxColumn20,
-            this.dataGridViewTextBoxColumn21,
-            this.dataGridViewTextBoxColumn22,
-            this.dataGridViewTextBoxColumn23,
             this.dataGridViewTextBoxColumn24,
-            this.dataGridViewTextBoxColumn25,
             this.dataGridViewTextBoxColumn26,
             this.dataGridViewTextBoxColumn27,
             this.dataGridViewTextBoxColumn28,
@@ -488,13 +443,6 @@ namespace AW.Win
           this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(694, 398);
           this.salesOrderHeaderEntityDataGridView.TabIndex = 2;
           this.salesOrderHeaderEntityDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
-          // 
-          // dataGridViewTextBoxColumn7
-          // 
-          this.dataGridViewTextBoxColumn7.DataPropertyName = "SalesOrderId";
-          this.dataGridViewTextBoxColumn7.HeaderText = "SalesOrderId";
-          this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-          this.dataGridViewTextBoxColumn7.ReadOnly = true;
           // 
           // dataGridViewTextBoxColumn8
           // 
@@ -559,75 +507,12 @@ namespace AW.Win
           this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
           this.dataGridViewTextBoxColumn15.ReadOnly = true;
           // 
-          // dataGridViewTextBoxColumn16
-          // 
-          this.dataGridViewTextBoxColumn16.DataPropertyName = "CustomerId";
-          this.dataGridViewTextBoxColumn16.HeaderText = "CustomerId";
-          this.dataGridViewTextBoxColumn16.Name = "dataGridViewTextBoxColumn16";
-          this.dataGridViewTextBoxColumn16.ReadOnly = true;
-          // 
-          // dataGridViewTextBoxColumn17
-          // 
-          this.dataGridViewTextBoxColumn17.DataPropertyName = "ContactId";
-          this.dataGridViewTextBoxColumn17.HeaderText = "ContactId";
-          this.dataGridViewTextBoxColumn17.Name = "dataGridViewTextBoxColumn17";
-          this.dataGridViewTextBoxColumn17.ReadOnly = true;
-          // 
-          // dataGridViewTextBoxColumn18
-          // 
-          this.dataGridViewTextBoxColumn18.DataPropertyName = "SalesPersonId";
-          this.dataGridViewTextBoxColumn18.HeaderText = "SalesPersonId";
-          this.dataGridViewTextBoxColumn18.Name = "dataGridViewTextBoxColumn18";
-          this.dataGridViewTextBoxColumn18.ReadOnly = true;
-          // 
-          // dataGridViewTextBoxColumn19
-          // 
-          this.dataGridViewTextBoxColumn19.DataPropertyName = "TerritoryId";
-          this.dataGridViewTextBoxColumn19.HeaderText = "TerritoryId";
-          this.dataGridViewTextBoxColumn19.Name = "dataGridViewTextBoxColumn19";
-          this.dataGridViewTextBoxColumn19.ReadOnly = true;
-          // 
-          // dataGridViewTextBoxColumn20
-          // 
-          this.dataGridViewTextBoxColumn20.DataPropertyName = "BillToAddressId";
-          this.dataGridViewTextBoxColumn20.HeaderText = "BillToAddressId";
-          this.dataGridViewTextBoxColumn20.Name = "dataGridViewTextBoxColumn20";
-          this.dataGridViewTextBoxColumn20.ReadOnly = true;
-          // 
-          // dataGridViewTextBoxColumn21
-          // 
-          this.dataGridViewTextBoxColumn21.DataPropertyName = "ShipToAddressId";
-          this.dataGridViewTextBoxColumn21.HeaderText = "ShipToAddressId";
-          this.dataGridViewTextBoxColumn21.Name = "dataGridViewTextBoxColumn21";
-          this.dataGridViewTextBoxColumn21.ReadOnly = true;
-          // 
-          // dataGridViewTextBoxColumn22
-          // 
-          this.dataGridViewTextBoxColumn22.DataPropertyName = "ShipMethodId";
-          this.dataGridViewTextBoxColumn22.HeaderText = "ShipMethodId";
-          this.dataGridViewTextBoxColumn22.Name = "dataGridViewTextBoxColumn22";
-          this.dataGridViewTextBoxColumn22.ReadOnly = true;
-          // 
-          // dataGridViewTextBoxColumn23
-          // 
-          this.dataGridViewTextBoxColumn23.DataPropertyName = "CreditCardId";
-          this.dataGridViewTextBoxColumn23.HeaderText = "CreditCardId";
-          this.dataGridViewTextBoxColumn23.Name = "dataGridViewTextBoxColumn23";
-          this.dataGridViewTextBoxColumn23.ReadOnly = true;
-          // 
           // dataGridViewTextBoxColumn24
           // 
           this.dataGridViewTextBoxColumn24.DataPropertyName = "CreditCardApprovalCode";
           this.dataGridViewTextBoxColumn24.HeaderText = "CreditCardApprovalCode";
           this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
           this.dataGridViewTextBoxColumn24.ReadOnly = true;
-          // 
-          // dataGridViewTextBoxColumn25
-          // 
-          this.dataGridViewTextBoxColumn25.DataPropertyName = "CurrencyRateId";
-          this.dataGridViewTextBoxColumn25.HeaderText = "CurrencyRateId";
-          this.dataGridViewTextBoxColumn25.Name = "dataGridViewTextBoxColumn25";
-          this.dataGridViewTextBoxColumn25.ReadOnly = true;
           // 
           // dataGridViewTextBoxColumn26
           // 
@@ -804,7 +689,7 @@ namespace AW.Win
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
           this.Tag = "True";
-          this.Text = "Order Search 2";
+          this.Text = "Order Search No CustomerViewRelated";
           this.Load += new System.EventHandler(this.frmOrderSearch_Load);
           this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderSearch_FormClosed);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmOrderSearch_FormClosing);
@@ -851,7 +736,6 @@ namespace AW.Win
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.NumericUpDown numericUpDownNumRows;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Button buttonBarf;
         private System.Windows.Forms.DataGridView salesOrderHeaderEntityDataGridView;
         private System.Windows.Forms.BindingSource salesOrderHeaderEntityBindingSource;
         private System.Windows.Forms.BindingNavigator salesOrderHeaderEntityBindingNavigator;
@@ -890,7 +774,6 @@ namespace AW.Win
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn29;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn30;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn32;
-        private System.Windows.Forms.Button buttonBarf2;
         private System.Windows.Forms.Button buttonClear;
         private System.Windows.Forms.ListBox listBoxCountry;
         private System.Windows.Forms.Button buttonClearCountries;

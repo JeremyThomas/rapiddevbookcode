@@ -4,8 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AW.Test
 {
   /// <summary>
-  ///This is a test class for LookUpQueriesTest and is intended
-  ///to contain all LookUpQueriesTest Unit Tests
+  ///This is a test class for LookUpQueries and is intended
+  ///to contain all LookUpQueries Unit Tests
   ///</summary>
   [TestClass]
   public class LookUpQueriesTest

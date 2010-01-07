@@ -65,41 +65,6 @@ namespace AW.Win
       Settings.Default.FilterOnToDate = dtpDateTo.Checked;
     }
 
-    //private void btnSearch_Click(object sender, EventArgs e)
-    //{
-    //    DateTime DateFrom = DateTime.MinValue;
-    //    if (dtpDateFrom.Checked)
-    //        DateFrom = dtpDateFrom.Value;
-    //    DateTime DateTo = DateTime.MinValue;
-    //    if (dtpDateTo.Checked)
-    //        DateTo = dtpDateTo.Value;
-    //    int OrderID = 0;
-    //    string OrderNumber = "";
-    //    if (tbOrderID.Text != "")
-    //    {
-    //        try
-    //        {
-    //            OrderID = Convert.ToInt32(tbOrderID.Text);
-    //        }
-    //        catch
-    //        {
-    //            OrderNumber = tbOrderID.Text;
-    //        }
-    //    }
-    //    this.dgResults.DataSource =
-    //        SalesOrderHeaderEntity.GetSalesOrderHeaderCollection(
-    //        DateFrom,
-    //        DateTo,
-    //        tbFirstName.Text,
-    //        tbLastName.Text,
-    //        OrderID,
-    //        OrderNumber,
-    //        tbCity.Text,
-    //        cbState.Text,
-    //        cbCountry.Text,
-    //        tbZip.Text);                
-    //}
-
     private void btnSearch_Click(object sender, EventArgs e)
     {
       _fromDate = DateTime.MinValue;
@@ -144,20 +109,22 @@ namespace AW.Win
 
     private void newOrderToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var order = new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810};
-      ((FrmMain)MdiParent).LaunchChildForm(typeof(SalesOrderHeaderEntity), order);
+      EditOrder( new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810});
     }
 
-    private void dgResults_CellContentDoubleClick(
-      object sender, DataGridViewCellEventArgs e)
+    private void dgResults_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
-      var order = dgResults.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
+      EditOrder(dgResults.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity);
+    }
+
+    private void EditOrder(SalesOrderHeaderEntity order)
+    {
       ((FrmMain)MdiParent).LaunchChildForm(typeof(FrmOrderEdit), order);
     }
 
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      e.Result = checkBoxUseLinq.Checked ? SalesOrderManager.GetSalesOrderHeaderCollectionWithLinq(
+      e.Result = checkBoxUseLinq.Checked ? SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(
                                              _fromDate,
                                              _toDate,
                                              _firstName,
@@ -170,7 +137,7 @@ namespace AW.Win
                                              _zip,
                                              _maxNumberOfItemsToReturn,
                                              _prefetch
-                                             ) : SalesOrderManager.GetSalesOrderHeaderCollection(
+                                             ) : SalesOrderQueries.GetSalesOrderHeaderCollection(
                                                    _fromDate,
                                                    _toDate,
                                                    _firstName,

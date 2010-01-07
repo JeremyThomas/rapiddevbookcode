@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
+using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
 
@@ -23,7 +24,7 @@ namespace AW.Win
     private string _orderName;
     private string _cityName;
     private string _state;
-    private List<string> _countries;
+    private IEnumerable<string> _countries;
     private string _zip;
     private object _results;
 
@@ -102,24 +103,14 @@ namespace AW.Win
       _lastName = tbLastName.Text;
       _cityName = tbCity.Text;
       _state = cbState.Text;
-      _countries = (from country in listBoxCountry.SelectedItems.OfType<CountryRegionEntity>() select country.Name).ToList();
+      _countries = from country in listBoxCountry.SelectedItems.OfType<CountryRegionEntity>() select country.Name;
       _zip = tbZip.Text;
-      if (sender == buttonBarf)
-      {
-        Tests.Barf();
-      }
-      else if (sender == buttonBarf2)
-      {
-        salesOrderHeaderEntityBindingSource.DataSource = Tests.LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(MaxNumberOfItemsToReturn);
-      }
-      else
-      {
-        btnSearch.Enabled = false;
-        _frmStatusBar = new frmStatusBar();
-        _frmStatusBar.Show();
-        _frmStatusBar.CancelButtonClicked += FrmStatusBarCancelButtonClicked;
-        searchWorker.RunWorkerAsync();
-      }
+
+      btnSearch.Enabled = false;
+      _frmStatusBar = new frmStatusBar();
+      _frmStatusBar.Show();
+      _frmStatusBar.CancelButtonClicked += FrmStatusBarCancelButtonClicked;
+      searchWorker.RunWorkerAsync();
     }
 
     private void FrmStatusBarCancelButtonClicked(object sender, CancelEventArgs e)
@@ -131,13 +122,13 @@ namespace AW.Win
     private void newOrderToolStripMenuItem_Click(object sender, EventArgs e)
     {
       var order = new SalesOrderHeaderEntity {CustomerID = 17018, ContactID = 4975, BillToAddressID = 14810, ShipToAddressID = 14810};
-      ((FrmMain)MdiParent).LaunchChildForm(typeof(SalesOrderHeaderEntity), order);
+      ((FrmMain) MdiParent).LaunchChildForm(typeof (SalesOrderHeaderEntity), order);
     }
 
     private void dgResults_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
       var order = salesOrderHeaderEntityDataGridView.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity;
-      ((FrmMain)MdiParent).LaunchChildForm(typeof(FrmOrderEdit), order);
+      ((FrmMain) MdiParent).LaunchChildForm(typeof (FrmOrderEdit), order);
     }
 
     /// <summary>
@@ -147,17 +138,16 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      _results = SalesOrderManager.DoSalesOrderHeaderLinqQuery(_fromDate,
-                                                                         _toDate,
-                                                                         _firstName,
-                                                                         _lastName,
-                                                                         _orderID,
-                                                                         _orderName,
-                                                                         _cityName,
-                                                                         _state,
-                                                                         _countries,
-                                                                         _zip, MaxNumberOfItemsToReturn).ToList();
-
+      _results = SalesOrderQueries.DoSalesOrderHeaderLinqQuery(_fromDate,
+                                                               _toDate,
+                                                               _firstName,
+                                                               _lastName,
+                                                               _orderID,
+                                                               _orderName,
+                                                               _cityName,
+                                                               _state,
+                                                               _countries,
+                                                               _zip, MaxNumberOfItemsToReturn).ToEntityCollection();
     }
 
     public int MaxNumberOfItemsToReturn
@@ -198,14 +188,5 @@ namespace AW.Win
       listBoxCountry.SelectedItems.Clear();
     }
 
-    private void buttonBarf_Click(object sender, EventArgs e)
-    {
-      Tests.Barf1();
-    }
-
-    private void buttonBarf2_Click(object sender, EventArgs e)
-    {
-      Tests.BarfonMultipleTableJoins();
-    }
   }
 }
