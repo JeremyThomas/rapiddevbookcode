@@ -50,8 +50,8 @@ namespace AW.Win
           this.panel1 = new System.Windows.Forms.Panel();
           this.buttonClear = new System.Windows.Forms.Button();
           this.btnSearch = new System.Windows.Forms.Button();
-          this.tbZip = new System.Windows.Forms.TextBox();
           this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
+          this.tbZip = new System.Windows.Forms.TextBox();
           this.label7 = new System.Windows.Forms.Label();
           this.cbState = new System.Windows.Forms.ComboBox();
           this.label5 = new System.Windows.Forms.Label();
@@ -311,15 +311,6 @@ namespace AW.Win
           this.btnSearch.UseVisualStyleBackColor = true;
           this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
           // 
-          // tbZip
-          // 
-          this.tbZip.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "Zip", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-          this.tbZip.Location = new System.Drawing.Point(418, 28);
-          this.tbZip.Name = "tbZip";
-          this.tbZip.Size = new System.Drawing.Size(269, 20);
-          this.tbZip.TabIndex = 13;
-          this.tbZip.Text = global::AW.Win.Properties.Settings.Default.Zip;
-          // 
           // numericUpDownNumRows
           // 
           this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
@@ -329,6 +320,15 @@ namespace AW.Win
           this.numericUpDownNumRows.TabIndex = 23;
           this.toolTip1.SetToolTip(this.numericUpDownNumRows, "max Number Of Items To Return");
           this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
+          // 
+          // tbZip
+          // 
+          this.tbZip.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::AW.Win.Properties.Settings.Default, "Zip", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+          this.tbZip.Location = new System.Drawing.Point(418, 28);
+          this.tbZip.Name = "tbZip";
+          this.tbZip.Size = new System.Drawing.Size(269, 20);
+          this.tbZip.TabIndex = 13;
+          this.tbZip.Text = global::AW.Win.Properties.Settings.Default.Zip;
           // 
           // label7
           // 

@@ -3,17 +3,10 @@
   <TestList name="CurrentLLBLBugs" id="2f5fe1b8-b7af-462b-a4cf-1920d91189b4" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
     <Description>Tests that fail because of bugs in the LLBL LINQ provider</Description>
     <TestLinks>
-      <TestLink id="3c814056-7b6f-06f3-6752-8ffd11f1e8b7" name="EmployeeAddressesEmployeeContactIndividualsTest" storage="aw.test\bin\debug\aw.test.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+      <TestLink id="3c814056-7b6f-06f3-6752-8ffd11f1e8b7" name="EmployeeAddressesEmployeeContactIndividualsTest" storage="aw.test\bin\debug\aw.test.dll" enabled="false" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
     </TestLinks>
   </TestList>
   <TestList name="Lists of Tests" id="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
     <RunConfiguration id="8fb1e20f-22fd-4d66-88ae-880abd55c932" name="Local Test Run" storage="localtestrun.testrunconfig" type="Microsoft.VisualStudio.TestTools.Common.TestRunConfiguration, Microsoft.VisualStudio.QualityTools.Common,   PublicKeyToken=b03f5f7f11d50a3a" />
-  </TestList>
-  <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d">
-    <TestLinks>
-      <TestLink id="8386f69d-a10b-3b8f-cccf-a6ca551bf126" name="SalesOrderHeaderTest" storage="aw.test\bin\debug\aw.test.dll" enabled="false" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="d9254c43-213c-681f-4c40-e556a4624294" name="GetCustomerListTypedListTest" storage="aw.test\bin\debug\aw.test.dll" enabled="false" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-      <TestLink id="51a15e4f-f35e-d847-3a27-2ac4facb64ea" name="GetCustomerViewTypedViewTest" storage="aw.test\bin\debug\aw.test.dll" enabled="false" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
-    </TestLinks>
   </TestList>
 </TestLists>

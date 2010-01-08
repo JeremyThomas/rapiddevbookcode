@@ -52,60 +52,41 @@ namespace AW.Test
 
     const int MaxNumberOfItemsToReturn = 5;
 
-    /// <summary>
-    /// A test for GetCustomerViewTypedView
-    /// </summary>
-    [TestMethod]
+    [TestMethod, Description("A test for GetCustomerViewTypedView. Example 5.18. pg59 maxNumberOfItemsToReturn does not result in a SQL TOP command")]
     public void GetCustomerViewTypedViewTest()
     {
       var actual = CustomerQueries.GetCustomerViewTypedView(MaxNumberOfItemsToReturn);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
     }
 
-    /// <summary>
-    ///A test for GetCustomerViewRelatedLinq
-    ///</summary>
-    [TestMethod]
+    [TestMethod, Description("A test for GetCustomerViewRelatedLinq. Gets the related customer view of SalesOrder 46117 with linq. Example 5.27 pg63.")]
     public void GetCustomerViewRelatedLinqTest()
     {
       var actual = CustomerQueries.GetCustomerViewRelatedLinq();
       Assert.AreEqual(46117, actual.SalesOrderHeader[0].SalesOrderID);
     }
 
-    /// <summary>
-    ///A test for GetCustomerViewRelatedCollection
-    ///</summary>
-    [TestMethod]
+    [TestMethod, Description("A test for GetCustomerViewRelatedCollection. Gets the related customer view of SalesOrder 46117. Example 5.27 pg63.")]
     public void GetCustomerViewRelatedCollectionTest()
     {
       var actual = CustomerQueries.GetCustomerViewRelatedCollection();
-      Assert.AreEqual(1, actual.Count);
-      Assert.AreEqual(46117, actual[0].SalesOrderHeader[0].SalesOrderID);
+   Assert.AreEqual(46117, actual.SalesOrderHeader[0].SalesOrderID);
     }
 
-    /// <summary>
-    ///A test for GetCustomerListAnonymousLinq
-    ///</summary>
-    [TestMethod]
+    [TestMethod, Description("A test for GetCustomerListAnonymousLinq.")]
     public void GetCustomerListAnonymousLinqTest()
     {
       Assert.AreEqual(MaxNumberOfItemsToReturn, CustomerQueries.GetCustomerListAnonymousLinq(MaxNumberOfItemsToReturn).Count());
     }
 
-    /// <summary>
-    ///A test for GetCustomerListLinqedTypedList
-    ///</summary>
-    [TestMethod]
+    [TestMethod, Description("A test for GetCustomerListLinqedTypedList")]
     public void GetCustomerListLinqedTypedListTest()
     {
       var actual = CustomerQueries.GetCustomerListLinqedTypedList(MaxNumberOfItemsToReturn);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
     }
 
-    /// <summary>
-    ///A test for GetCustomerListTypedList
-    ///</summary>
-    [TestMethod]
+    [TestMethod, Description("A test for GetCustomerListTypedList. Example 5.29. pg64.")]
     public void GetCustomerListTypedListTest()
     {
       var actual = CustomerQueries.GetCustomerListTypedList(MaxNumberOfItemsToReturn);
