@@ -1,14 +1,25 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using AW.Helper.LLBL;
+using AW.Winforms.Helpers.DataEditor;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
   public static class LLBLWinformHelper
   {
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    {
+      return enumerable.EditInDataGridView(EntityHelper.Save, EntityHelper.Delete);
+    }
+
+    public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable)
+    {
+      return enumerable.EditInDataGridViewx(EntityHelper.Save, EntityHelper.Delete, typeof (EntityBase));
+    }
+
     #region Validatation
 
     public static bool ValidatePropertyAssignment<T>(

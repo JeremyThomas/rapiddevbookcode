@@ -3,7 +3,6 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Properties;
-using AW.Winforms.Helpers.PropGridEx;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
@@ -17,7 +16,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       InitializeComponent();
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
       if (_commonEntityBaseTypeDescriptionProvider == null)
-        _commonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));    
+        _commonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));
     }
 
     public FrmEntityViewer(object entity) : this()
@@ -26,11 +25,12 @@ namespace AW.Winforms.Helpers.EntityViewer
       ObjectBrowser.ObjectToBrowse = entity;
     }
 
-    public FrmEntityViewer(object entity, Func<object, int> saveFunction, params Type[] saveableTypes)
+    public FrmEntityViewer(object entity, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
       : this(entity)
     {
       gridDataEditor.SaveableTypes = saveableTypes;
       gridDataEditor.SaveFunction += saveFunction;
+      gridDataEditor.DeleteFunction += deleteFunction;
     }
 
     public static Form LaunchAsChildForm(object entity)
@@ -40,9 +40,9 @@ namespace AW.Winforms.Helpers.EntityViewer
       return frm;
     }
 
-    public static Form LaunchAsChildForm(object entity, Func<object, int> saveFunction, params Type[] saveableTypes)
+    public static Form LaunchAsChildForm(object entity, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
     {
-      var frm = new FrmEntityViewer(entity, saveFunction, saveableTypes);
+      var frm = new FrmEntityViewer(entity, saveFunction, deleteFunction, saveableTypes);
       AWHelper.ShowChildForm(frm);
       return frm;
     }
@@ -124,7 +124,7 @@ namespace AW.Winforms.Helpers.EntityViewer
       get { return ObjectBrowser.ObjectToBrowse; }
     }
 
- 
+
     private void copyObjectRefToolStripMenuItem_Click(object sender, EventArgs e)
     {
       Clipboard.SetText(toolStripStatusLabelInstance.Text);
@@ -164,7 +164,5 @@ namespace AW.Winforms.Helpers.EntityViewer
     //    }
     //  }
     //}
-
-
   }
 }

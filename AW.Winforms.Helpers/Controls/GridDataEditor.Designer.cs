@@ -48,6 +48,8 @@
       this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripComboBoxClipboardCopyMode = new System.Windows.Forms.ToolStripComboBox();
       this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
+      this.toolStripLabelDeleteCount = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabelSaveResult = new System.Windows.Forms.ToolStripLabel();
       this.dataGridViewEnumerable = new System.Windows.Forms.DataGridView();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -60,6 +62,7 @@
       this.bindingSourceEnumerable.AllowNew = false;
       this.bindingSourceEnumerable.BindingComplete += new System.Windows.Forms.BindingCompleteEventHandler(this.bindingSourceEnumerable_BindingComplete);
       this.bindingSourceEnumerable.DataSourceChanged += new System.EventHandler(this.bindingSourceEnumerable_DataSourceChanged);
+      this.bindingSourceEnumerable.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.bindingSourceEnumerable_ListChanged);
       // 
       // bindingNavigator1
       // 
@@ -83,7 +86,9 @@
             this.printToolStripButton,
             this.toolStripSeparator,
             this.toolStripComboBoxClipboardCopyMode,
-            this.copyToolStripButton});
+            this.copyToolStripButton,
+            this.toolStripLabelDeleteCount,
+            this.toolStripLabelSaveResult});
       this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
       this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
       this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem1;
@@ -208,9 +213,9 @@
       // 
       // toolStripComboBoxClipboardCopyMode
       // 
+      this.toolStripComboBoxClipboardCopyMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.toolStripComboBoxClipboardCopyMode.Name = "toolStripComboBoxClipboardCopyMode";
       this.toolStripComboBoxClipboardCopyMode.Size = new System.Drawing.Size(160, 25);
-      this.toolStripComboBoxClipboardCopyMode.Text = "ClipboardCopyMode";
       this.toolStripComboBoxClipboardCopyMode.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxClipboardCopyMode_SelectedIndexChanged);
       // 
       // copyToolStripButton
@@ -222,6 +227,16 @@
       this.copyToolStripButton.Size = new System.Drawing.Size(23, 22);
       this.copyToolStripButton.Text = "&Copy";
       this.copyToolStripButton.Click += new System.EventHandler(this.copyToolStripButton_Click);
+      // 
+      // toolStripLabelDeleteCount
+      // 
+      this.toolStripLabelDeleteCount.Name = "toolStripLabelDeleteCount";
+      this.toolStripLabelDeleteCount.Size = new System.Drawing.Size(0, 22);
+      // 
+      // toolStripLabelSaveResult
+      // 
+      this.toolStripLabelSaveResult.Name = "toolStripLabelSaveResult";
+      this.toolStripLabelSaveResult.Size = new System.Drawing.Size(0, 22);
       // 
       // dataGridViewEnumerable
       // 
@@ -277,5 +292,7 @@
     private System.Windows.Forms.BindingSource bindingSourceEnumerable;
     private System.Windows.Forms.BindingNavigator bindingNavigator1;
     private System.Windows.Forms.DataGridView dataGridViewEnumerable;
+    private System.Windows.Forms.ToolStripLabel toolStripLabelDeleteCount;
+    private System.Windows.Forms.ToolStripLabel toolStripLabelSaveResult;
   }
 }

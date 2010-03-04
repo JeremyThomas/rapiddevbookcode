@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.DataEditor;
 using DynamicTable;
+using JesseJohnston;
 
 namespace AW.Winforms.Helpers.Controls
 {
@@ -14,6 +16,9 @@ namespace AW.Winforms.Helpers.Controls
   {
     public Type[] SaveableTypes;
     public event Func<object, int> SaveFunction;
+    public event Func<object, int> DeleteFunction;
+    private readonly ArrayList _deleteItems = new ArrayList();
+    private bool _canSave;
 
     public GridDataEditor()
     {
@@ -95,7 +100,20 @@ namespace AW.Winforms.Helpers.Controls
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {
       var numSaved = SaveFunction(bindingSourceEnumerable.List);
-      MessageBox.Show("numSaved" + numSaved);
+      toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
+      if (DeleteFunction != null && _deleteItems != null)
+      {
+        var numDeleted = DeleteFunction(_deleteItems);
+        toolStripLabelSaveResult.Text += @" numDeleted: " + numDeleted;
+        if (_deleteItems.Count == numDeleted)
+        {
+          _deleteItems.Clear();
+          toolStripLabelDeleteCount.Text = "";
+          saveToolStripButton.Enabled = false;
+        }
+      }
+      else
+        saveToolStripButton.Enabled = numSaved == 0;
     }
 
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -106,20 +124,20 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (bindingSourceEnumerable.Count > 0)
       {
-        saveToolStripButton.Enabled = CanSaveEnumerable();
+        _canSave = CanSaveEnumerable();
         copyToolStripButton.Enabled = true;
         printToolStripButton.Enabled = true;
       }
 
       else
         saveToolStripButton.Enabled = false;
-
+      toolStripLabelSaveResult.Text = "";
     }
 
     public bool BindEnumerable(IEnumerable enumerable)
     {
       var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, null));
-
+      SetRemovingItem();
       return iSEnumerable;
     }
 
@@ -129,18 +147,33 @@ namespace AW.Winforms.Helpers.Controls
       var shouldBeReadonly = queryable != null;
       if (shouldBeReadonly)
       {
-        if (typeToEdit==null)
+        if (typeToEdit == null)
           typeToEdit = queryable.ElementType;
         shouldBeReadonly = !CanSave(typeToEdit);
       }
       return shouldBeReadonly;
     }
 
-    public bool BindEnumerable<T>(System.Collections.Generic.IEnumerable<T> enumerable)
+    public bool BindEnumerable<T>(IEnumerable<T> enumerable)
     {
-      var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, typeof(T)));
-
+      var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, typeof (T)));
+      if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
+        ((ObjectListView<T>) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
+      else
+        SetRemovingItem();
       return iSEnumerable;
+    }
+
+    private void SetRemovingItem()
+    {
+      if (bindingSourceEnumerable.DataSource is ObjectListView)
+        ((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
+    }
+
+    private void GridDataEditor_RemovingItem(object sender, RemovingItemEventArgs e)
+    {
+      _deleteItems.Add(bindingSourceEnumerable[e.Index]);
+      toolStripLabelDeleteCount.Text = @"Num removed=" + _deleteItems.Count;
     }
 
     private bool CanSave()
@@ -161,6 +194,19 @@ namespace AW.Winforms.Helpers.Controls
     private void bindingSourceEnumerable_BindingComplete(object sender, BindingCompleteEventArgs e)
     {
       bindingSourceEnumerable_DataSourceChanged(sender, e);
+    }
+
+    private void bindingSourceEnumerable_ListChanged(object sender, ListChangedEventArgs e)
+    {
+      toolStripLabelSaveResult.Text = "";
+      switch (e.ListChangedType)
+      {
+        case ListChangedType.ItemDeleted:
+        case ListChangedType.ItemChanged:
+        case ListChangedType.ItemAdded:
+          saveToolStripButton.Enabled = _canSave;
+          break;
+      }
     }
   }
 }

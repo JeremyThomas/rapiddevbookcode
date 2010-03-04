@@ -13,6 +13,7 @@ namespace AW.Winforms.Helpers.QueryRunner
   {
     private readonly Type[] _saveableTypes;
     public event Func<object, int> SaveFunction;
+    public event Func<object, int> DeleteFunction;
 
     public FrmQueryRunner()
     {
@@ -20,11 +21,12 @@ namespace AW.Winforms.Helpers.QueryRunner
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.QueryRunnerSizeAndLocation);
     }
 
-    public FrmQueryRunner(Func<object, int> saveFunction, params Type[] saveableTypes)
+    public FrmQueryRunner(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
       : this()
     {
       _saveableTypes = saveableTypes;
       SaveFunction += saveFunction;
+      DeleteFunction += deleteFunction;
     }
 
     private void FrmQueryRunner_FormClosing(object sender, FormClosingEventArgs e)
@@ -76,7 +78,7 @@ namespace AW.Winforms.Helpers.QueryRunner
     private QueryRunner AddNew(string fileName)
     {
       tabControl.TabPages.Add(fileName, Path.GetFileNameWithoutExtension(fileName));
-      var queryRunner = new QueryRunner(SaveFunction, _saveableTypes);
+      var queryRunner = new QueryRunner(SaveFunction, DeleteFunction, _saveableTypes);
       var tp = tabControl.TabPages[fileName];
       tp.ToolTipText = fileName;
       tp.Controls.Add(queryRunner);
@@ -112,10 +114,9 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void closeAllButThisToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      foreach (TabPage page in tabControl.TabPages)
+      foreach (TabPage page in tabControl.TabPages.Cast<TabPage>().Where(page => page != tabControl.SelectedTab))
       {
-        if (page != tabControl.SelectedTab)
-          tabControl.TabPages.Remove(page);
+        tabControl.TabPages.Remove(page);
       }
     }
 
@@ -171,9 +172,7 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void tabControl_DragOver(object sender, DragEventArgs e)
     {
-      if (e.Data.GetDataPresent(DataFormats.FileDrop))
-        e.Effect = DragDropEffects.Move;
-      else e.Effect = DragDropEffects.None;
+      e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
     }
   }
 }

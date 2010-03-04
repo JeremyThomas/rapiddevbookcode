@@ -15,16 +15,18 @@ namespace AW.Winforms.Helpers.DataEditor
   {
     public static IEnumerable ViewInDataGridViewx(this IQueryable enumerable)
     {
-      return EditInDataGridViewx(enumerable, null);
+      return EditInDataGridViewx(enumerable, null, null);
     }
 
-    public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable, Func<object, int> saveFunction, params Type[] saveableTypes)
+    public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
     {
       var dataGridView = new FrmDataEditor {Text = enumerable.ToString()};
       var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
       dataGridView.Controls.Add(gridDataEditor);
       if (saveFunction != null)
         gridDataEditor.SaveFunction += saveFunction;
+      if (deleteFunction != null)
+        gridDataEditor.DeleteFunction += deleteFunction;
       gridDataEditor.BindEnumerable(enumerable);
       // AWHelper.BindEnumerable(enumerable,gridDataEditor.BindingSource);
       dataGridView.ShowDialog();
@@ -36,12 +38,12 @@ namespace AW.Winforms.Helpers.DataEditor
       return EditInDataGridView(enumerable, null);
     }
 
-    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable)
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction)
     {
-      return EditInDataGridView(enumerable, null);
+      return EditInDataGridView(enumerable, saveFunction, null);
     }
 
-    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction)
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction)
     {
     	if (enumerable != null)
     	{
@@ -50,6 +52,8 @@ namespace AW.Winforms.Helpers.DataEditor
     		frmDataEditor.Controls.Add(gridDataEditor);
     		if (saveFunction != null)
     			gridDataEditor.SaveFunction += saveFunction;
+        if (deleteFunction != null)
+          gridDataEditor.DeleteFunction += deleteFunction;
     		gridDataEditor.BindEnumerable(enumerable);
     		frmDataEditor.ShowDialog();
     	}

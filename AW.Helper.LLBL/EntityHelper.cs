@@ -31,6 +31,83 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
+    /// Creates the entity from the .NET type specified. 
+    /// </summary>
+    /// <param name="typeOfEntity">The type of entity.</param>
+    /// <returns>An instance of the type.</returns>
+    public static IEntityCore CreateEntity(Type typeOfEntity)
+    {
+      return Activator.CreateInstance(typeOfEntity) as IEntityCore;
+    }
+
+    /// <summary>
+    /// Creates the entity from the .NET type specified. 
+    /// </summary>
+    /// <typeparam name="T">The type of entity.</typeparam>
+    /// <returns>An instance of the type.</returns>
+    public static T CreateEntity<T>() where T : class, IEntityCore
+    {
+      return CreateEntity(typeof (T)) as T;
+    }
+
+    /// <summary>
+    /// Gets the EntityType value as integer for the entity type passed in
+    /// </summary>
+    /// <param name="typeOfEntity">The type of entity.</param>
+    /// <returns>the EntityType value as integer for the entity type passed in</returns>
+    public static int GetEntityTypeValueForType(Type typeOfEntity)
+    {
+      var entity = CreateEntity(typeOfEntity);
+      return entity == null ? 0 : entity.LLBLGenProEntityTypeValue;
+    }
+   
+    public static int GetEntityTypeValueForType<T>() where T : class, IEntityCore
+    {
+      return GetEntityTypeValueForType(typeof (T));
+    }
+
+    #region Self Servicing
+
+    /// <summary>
+    /// Executes the query this object represents and returns its results in its native container - an entity collection.
+    /// </summary>
+    /// <typeparam name="T">EntityBase2</typeparam>
+    /// <param name="query">The query.</param>
+    /// <returns>Results of the query in an entity collection.</returns>
+    public static CollectionCore<T> ToEntityCollection<T>(this IQueryable<T> query) where T : EntityBase
+    {
+      var llblQuery = query as ILLBLGenProQuery;
+      return llblQuery == null ? ((IEnumerable<T>)query).ToEntityCollection() : llblQuery.Execute<CollectionCore<T>>();
+    }
+
+    /// <summary>
+    /// Converts an entity enumeration to an entity collection.
+    /// </summary>
+    /// <typeparam name="T">EntityBase2</typeparam>
+    /// <param name="enumerable">The enumerable.</param>
+    /// <returns></returns>
+    public static CollectionCore<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    {
+      if (enumerable.Count() == 0)
+        return GetFactory<T>().CreateEntityCollection() as CollectionCore<T>;
+      var entities = enumerable.First().GetEntityFactory().CreateEntityCollection() as CollectionCore<T>;
+      if (entities != null)
+        entities.AddRange(enumerable);
+      return entities;
+    }
+
+    /// <summary>
+    /// Gets the entity field from the name of the field.
+    /// </summary>
+    /// <param name="entity">The entity.</param>
+    /// <param name="fieldName">Name of the field.</param>
+    /// <returns>the entity field</returns>
+    public static IEntityField GetFieldFromFieldName(IEntity entity, string fieldName)
+    {
+      return entity.Fields[fieldName] ?? entity.Fields.Cast<IEntityField>().FirstOrDefault(ef => ef.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    /// <summary>
     /// Gets a entity field enumeration from entity fields.
     /// </summary>
     /// <param name="entityFields">The entity fields.</param>
@@ -61,53 +138,6 @@ namespace AW.Helper.LLBL
     {
       foreach (var dirtyEntity in entityCollection.DirtyEntities)
         dirtyEntity.RevertChangesToDBValue();
-    }   
-
-    /// <summary>
-    /// Gets the entity field from the name of the field.
-    /// </summary>
-    /// <param name="entity">The entity.</param>
-    /// <param name="fieldName">Name of the field.</param>
-    /// <returns>the entity field</returns>
-    public static IEntityField GetFieldFromFieldName(IEntity entity, string fieldName)
-    {
-      return entity.Fields[fieldName] ?? entity.Fields.Cast<IEntityField>().FirstOrDefault(ef => ef.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
-    }
-
-    /// <summary>
-    /// Creates the entity from the .NET type specified. 
-    /// </summary>
-    /// <param name="typeOfEntity">The type of entity.</param>
-    /// <returns>An instance of the type.</returns>
-    public static IEntityCore CreateEntity(Type typeOfEntity)
-    {
-      return Activator.CreateInstance(typeOfEntity) as IEntityCore;
-    }
-
-    /// <summary>
-    /// Creates the entity from the .NET type specified. 
-    /// </summary>
-    /// <typeparam name="T">The type of entity.</typeparam>
-    /// <returns>An instance of the type.</returns>
-    public static T CreateEntity<T>() where T : class, IEntityCore
-    {
-      return CreateEntity(typeof (T)) as T;
-    }
-
-    /// <summary>
-    /// Gets the EntityType value as integer for the entity type passed in
-    /// </summary>
-    /// <param name="typeOfEntity">The type of entity.</param>
-    /// <returns>the EntityType value as integer for the entity type passed in</returns>
-    public static int GetEntityTypeValueForType(Type typeOfEntity)
-    {
-      var entity = CreateEntity(typeOfEntity);
-      return entity == null ? 0 : entity.LLBLGenProEntityTypeValue;
-    }
-
-    public static int GetEntityTypeValueForType<T>() where T : class, IEntityCore
-    {
-      return GetEntityTypeValueForType(typeof (T));
     }
 
     /// <summary>
@@ -121,31 +151,31 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Executes the query this object represents and returns its results in its native container - an entity collection.
+    /// Deletes the entities.
     /// </summary>
-    /// <typeparam name="T">EntityBase2</typeparam>
-    /// <param name="query">The query.</param>
-    /// <returns>Results of the query in an entity collection.</returns>
-    public static CollectionCore<T> ToEntityCollection<T>(this IQueryable<T> query) where T : EntityBase
+    /// <param name="entitiesToDelete">The entities to delete.</param>
+    /// <returns></returns>
+    public static int DeleteEntities(IEnumerable entitiesToDelete)
     {
-      var llblQuery = query as ILLBLGenProQuery;
-      return llblQuery == null ? ((IEnumerable<T>) query).ToEntityCollection() : llblQuery.Execute<CollectionCore<T>>();
+      if (entitiesToDelete is EntityCollectionBase<EntityBase>)
+        return ((EntityCollectionBase<EntityBase>)entitiesToDelete).DeleteMulti();
+      return entitiesToDelete.Cast<EntityBase>().Count(entity => entity.Delete() || entity.IsNew);
     }
 
     /// <summary>
-    /// Converts an entity enumeration to an entity collection.
+    /// Deletes the specified data from the DB.
     /// </summary>
-    /// <typeparam name="T">EntityBase2</typeparam>
-    /// <param name="enumerable">The enumerable.</param>
+    /// <param name="dataToDelete">The data to delete.</param>
     /// <returns></returns>
-    public static CollectionCore<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    public static int Delete(object dataToDelete)
     {
-      if (enumerable.Count() == 0)
-        return GetFactory<T>().CreateEntityCollection() as CollectionCore<T>;
-      var entities = enumerable.First().GetEntityFactory().CreateEntityCollection() as CollectionCore<T>;
-      if (entities != null)
-        entities.AddRange(enumerable);
-      return entities;
+      var listItemType = ListBindingHelper.GetListItemType(dataToDelete);
+      if (typeof(IEntity).IsAssignableFrom(listItemType))
+      {
+        var enumerable = dataToDelete as IEnumerable;
+        return enumerable == null ? Convert.ToInt32(((IEntity)dataToDelete).Delete()) : DeleteEntities(enumerable);
+      }
+      return 0;
     }
 
     /// <summary>
@@ -159,6 +189,26 @@ namespace AW.Helper.LLBL
         return ((EntityCollectionBase<EntityBase>) entitiesToSave).SaveMulti();
       return entitiesToSave.Cast<EntityBase>().Count(entity => entity.IsDirty && entity.Save());
     }
+
+    /// <summary>
+    /// Saves any changes to the specified data to the DB.
+    /// </summary>
+    /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
+    /// <returns>The number of persisted entities.</returns>
+    public static int Save(object dataToSave)
+    {
+      var listItemType = ListBindingHelper.GetListItemType(dataToSave);
+      if (typeof (IEntity).IsAssignableFrom(listItemType))
+      {
+        var enumerable = dataToSave as IEnumerable;
+        return enumerable == null ? Convert.ToInt32(((IEntity) dataToSave).Save()) : SaveEntities(enumerable);
+      }
+      return 0;
+    }
+
+    #endregion
+
+    #region Adapter
 
     /// <summary>
     /// Saves all dirty objects inside the enumeration passed to the persistent storage.
@@ -215,22 +265,6 @@ namespace AW.Helper.LLBL
     /// Saves any changes to the specified data to the DB.
     /// </summary>
     /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
-    /// <returns>The number of persisted entities.</returns>
-    public static int Save(object dataToSave)
-    {
-      var listItemType = ListBindingHelper.GetListItemType(dataToSave);
-      if (typeof (IEntity).IsAssignableFrom(listItemType))
-      {
-        var enumerable = dataToSave as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(((IEntity) dataToSave).Save()) : SaveEntities(enumerable);
-      }
-      return 0;
-    }
-
-    /// <summary>
-    /// Saves any changes to the specified data to the DB.
-    /// </summary>
-    /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
     /// <returns>The number of persisted entities.</returns>
     public static int Save(object dataToSave, IDataAccessAdapter dataAccessAdapter)
@@ -243,5 +277,42 @@ namespace AW.Helper.LLBL
       }
       return 0;
     }
+
+    /// <summary>
+    /// Deletes all entities inside the enumeration passed from the DB.
+    /// </summary>
+    /// <param name="entitiesToDelete">The entities to delete.</param>
+    /// <param name="dataAccessAdapter">The data access adapter.</param>
+    /// <returns>the amount of persisted entities</returns>
+    public static int DeleteEntities(IEnumerable<IEntity2> entitiesToDelete, IDataAccessAdapter dataAccessAdapter)
+    {
+      return entitiesToDelete.Count(dataAccessAdapter.DeleteEntity);
+    }
+
+    /// <summary>
+    /// Deletes the entities.
+    /// </summary>
+    /// <param name="entitiesToDelete">The entities to delete.</param>
+    /// <param name="dataAccessAdapter">The data access adapter.</param>
+    /// <returns></returns>
+    public static int DeleteEntities(IEnumerable entitiesToDelete, IDataAccessAdapter dataAccessAdapter)
+    {
+      if (entitiesToDelete is IEntityCollection2)
+        return dataAccessAdapter.DeleteEntityCollection((IEntityCollection2) entitiesToDelete);  
+      return DeleteEntities(entitiesToDelete.Cast<IEntity2>(), dataAccessAdapter);
+    }
+
+    public static int Delete(object dataToDelete, IDataAccessAdapter dataAccessAdapter)
+    {
+      var listItemType = ListBindingHelper.GetListItemType(dataToDelete);
+      if (typeof(IEntity2).IsAssignableFrom(listItemType))
+      {
+        var enumerable = dataToDelete as IEnumerable;
+        return enumerable == null ? Convert.ToInt32(dataAccessAdapter.DeleteEntity((IEntity2)dataToDelete)) : DeleteEntities(enumerable, dataAccessAdapter);
+      }
+      return 0;
+    }
+
+    #endregion
   }
 }

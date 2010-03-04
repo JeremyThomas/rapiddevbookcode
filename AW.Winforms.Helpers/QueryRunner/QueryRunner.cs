@@ -12,18 +12,21 @@ namespace AW.Winforms.Helpers.QueryRunner
   public partial class QueryRunner : UserControl
   {
     public event Func<object, int> SaveFunction;
+    public event Func<object, int> DeleteFunction;
 
     public QueryRunner()
     {
       InitializeComponent();
     }
 
-    public QueryRunner(Func<object, int> saveFunction, params Type[] saveableTypes)
+    public QueryRunner(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
       : this()
     {
       gridDataEditorScript.SaveableTypes = saveableTypes;
       SaveFunction = saveFunction;
+      DeleteFunction = deleteFunction;
       gridDataEditorScript.SaveFunction += saveFunction;
+      gridDataEditorScript.DeleteFunction += deleteFunction;
     }
 
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
@@ -77,12 +80,13 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void toolStripButtonBrowse_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)gridDataEditorScript.BindingSource.DataSource).List, SaveFunction, gridDataEditorScript.SaveableTypes);
+      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)gridDataEditorScript.BindingSource.DataSource).List, SaveFunction, DeleteFunction, gridDataEditorScript.SaveableTypes);
     }
 
     private void browseObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(gridDataEditorScript.BindingSource.Current, SaveFunction, gridDataEditorScript.SaveableTypes);
+      if (gridDataEditorScript.BindingSource.Current != null) 
+        FrmEntityViewer.LaunchAsChildForm(gridDataEditorScript.BindingSource.Current, SaveFunction, DeleteFunction, gridDataEditorScript.SaveableTypes);
     }
 
     private void textBoxScript_DragDrop(object sender, DragEventArgs e)

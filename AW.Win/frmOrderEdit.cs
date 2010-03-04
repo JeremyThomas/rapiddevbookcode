@@ -145,7 +145,7 @@ namespace AW.Win
     private void toolStripButtonViewEntity_Click(object sender, EventArgs e)
     {
       //((FrmMain) MdiParent).LaunchChildForm(typeof (FrmEntityViewer), _order);
-      FrmLLBLEntityViewer.LaunchAsChildForm(_order, EntityHelper.Save, typeof (IEntity));
+      FrmLLBLEntityViewer.LaunchAsChildForm(_order, EntityHelper.Save, EntityHelper.Delete, typeof(IEntity));
     }
 
     private void toolStripButtonRefetch_Click(object sender, EventArgs e)

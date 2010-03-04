@@ -27,11 +27,12 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
       ObjectBrowser.ObjectToBrowse = entity;
     }
 
-    public FrmLLBLEntityViewer(object entity, Func<object, int> saveFunction, params Type[] saveableTypes)
+    public FrmLLBLEntityViewer(object entity, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
       : this(entity)
     {
       gridDataEditor.SaveableTypes = saveableTypes;
       gridDataEditor.SaveFunction += saveFunction;
+      gridDataEditor.DeleteFunction += deleteFunction;
     }
 
     public new static Form LaunchAsChildForm(object entity)
@@ -41,9 +42,9 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
       return frm;
     }
 
-    public new static Form LaunchAsChildForm(object entity, Func<object, int> saveFunction, params Type[] saveableTypes)
+    public static Form LaunchAsChildForm(object entity, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
     {
-      var frm = new FrmLLBLEntityViewer(entity, saveFunction, saveableTypes);
+      var frm = new FrmLLBLEntityViewer(entity, saveFunction, deleteFunction, saveableTypes);
       AWHelper.ShowFormModalIfParentLess(frm);
       return frm;
     }

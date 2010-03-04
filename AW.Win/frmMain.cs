@@ -179,13 +179,17 @@ namespace AW.Win
     private FrmQueryRunner LaunchQueryRunner()
     {
       var qr = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
-      if (qr != null) qr.SaveFunction += EntityHelper.Save;
+      if (qr != null)
+      {
+        qr.SaveFunction += EntityHelper.Save;
+        qr.DeleteFunction += EntityHelper.Delete;
+      }
       return qr;
     }
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, EntityHelper.Save, typeof(IEntity));
+      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, EntityHelper.Save,EntityHelper.Delete, typeof(IEntity));
       //LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData, Save);
     }
 

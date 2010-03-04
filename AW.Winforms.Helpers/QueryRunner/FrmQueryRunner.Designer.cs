@@ -121,6 +121,7 @@
       // 
       // tabPageSample
       // 
+      this.tabPageSample.ContextMenuStrip = this.contextMenuStripTab;
       this.tabPageSample.Controls.Add(this.queryRunner1);
       this.tabPageSample.Location = new System.Drawing.Point(4, 22);
       this.tabPageSample.Name = "tabPageSample";

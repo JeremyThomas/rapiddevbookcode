@@ -30,6 +30,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQueryFiles", "{2FB4C735-0EB2-47B5-8D3D-5AAE437AA294}"
 	ProjectSection(SolutionItems) = preProject
 		SampleQueryFiles\Alberts.cs = SampleQueryFiles\Alberts.cs
+		SampleQueryFiles\EditAddressTypeInDataGridView.cs = SampleQueryFiles\EditAddressTypeInDataGridView.cs
 		SampleQueryFiles\EditInDataGridView.cs = SampleQueryFiles\EditInDataGridView.cs
 		SampleQueryFiles\EmployeeEntity.GetEmployees.cs = SampleQueryFiles\EmployeeEntity.GetEmployees.cs
 		SampleQueryFiles\GetCustomerListAnonymousLinq.cs = SampleQueryFiles\GetCustomerListAnonymousLinq.cs
