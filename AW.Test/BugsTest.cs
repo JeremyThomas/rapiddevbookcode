@@ -1,5 +1,8 @@
+using System.Linq;
 using System.Linq.Dynamic;
+using AW.Data;
 using AW.Data.Queries;
+using AW.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Test
@@ -78,5 +81,19 @@ namespace AW.Test
     {
       Bugs.EmployeeAddressesEmployeeContactIndividuals();
     }
+
+		[TestMethod, Description("")]
+		public void CountryRegionTest()
+		{
+			var query = from countryRegion in MetaSingletons.MetaData.CountryRegion
+							from stateProvince in countryRegion.StateProvinces
+							select new
+							{
+								countryRegion.Name,
+								cities = (from address in stateProvince.Addresses
+													select address.City).Distinct().JoinAsString()
+							};
+			query.ToList();
+		}
   }
 }

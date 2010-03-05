@@ -219,20 +219,8 @@ namespace AW.Helper.LLBL
     public static int SaveEntities(IEnumerable entitiesToSave, IDataAccessAdapter dataAccessAdapter)
     {
       if (entitiesToSave is IEntityCollection2)
-        return SaveEntityCollection((IEntityCollection2) entitiesToSave, dataAccessAdapter);
+				return dataAccessAdapter.SaveEntityCollection((IEntityCollection2) entitiesToSave);
       return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
-    }
-
-    /// <summary>
-    /// Saves all dirty objects inside the collection passed to the persistent storage. It will do this inside a transaction if a transaction
-    /// is not yet available.
-    /// </summary>
-    /// <param name="collectionToSave">EntityCollection with one or more dirty entities which have to be persisted</param>
-    /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <returns>the amount of persisted entities</returns>
-    public static int SaveEntityCollection(IEntityCollection2 collectionToSave, IDataAccessAdapter dataAccessAdapter)
-    {
-      return dataAccessAdapter.SaveEntityCollection(collectionToSave);
     }
 
     /// <summary>
@@ -243,22 +231,7 @@ namespace AW.Helper.LLBL
     /// <returns>the amount of persisted entities</returns>
     public static int SaveEntities(IEnumerable<IEntity2> entitiesToSave, IDataAccessAdapter dataAccessAdapter)
     {
-      return entitiesToSave.Count(entity => entity.IsDirty && entity.SaveEntity(dataAccessAdapter));
-    }
-
-    /// <summary>
-    /// Saves the passed in entity to the persistent storage. Will not refetch the entity after this save.
-    /// The entity will stay out-of-sync. If the entity is new, it will be inserted, if the entity is existent,
-    /// the changed entity fields will be changed in the database. Will do a recursive save.
-    /// </summary>
-    /// <param name="entityToSave">The entity to save.</param>
-    /// <param name="dataAccessAdapter">The data access adapter.</param>
-    /// <returns>
-    /// true if the save was succesful or the entity was not dirty, false otherwise.
-    /// </returns>
-    public static bool SaveEntity(this IEntity2 entityToSave, IDataAccessAdapter dataAccessAdapter)
-    {
-      return dataAccessAdapter.SaveEntity(entityToSave);
+      return entitiesToSave.Count(entity => entity.IsDirty && dataAccessAdapter.SaveEntity(entity));
     }
 
     /// <summary>
@@ -273,7 +246,7 @@ namespace AW.Helper.LLBL
       if (typeof (IEntity2).IsAssignableFrom(listItemType))
       {
         var enumerable = dataToSave as IEnumerable;
-        return enumerable == null ? Convert.ToInt32(SaveEntity((IEntity2) dataToSave, dataAccessAdapter)) : SaveEntities(enumerable, dataAccessAdapter);
+				return enumerable == null ? Convert.ToInt32(dataAccessAdapter.SaveEntity((IEntity2)dataToSave)) : SaveEntities(enumerable, dataAccessAdapter);
       }
       return 0;
     }
@@ -312,6 +285,49 @@ namespace AW.Helper.LLBL
       }
       return 0;
     }
+
+		/// <summary>
+		/// Gets the data access adapter from a ILinqMetaData.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="linqMetaData">The linq meta data.</param>
+		/// <returns></returns>
+		public static IDataAccessAdapter GetDataAccessAdapter<T>(ILinqMetaData linqMetaData) where T : EntityBase2
+		{
+			return GetDataAccessAdapter(GetQueryableForEntity<T>(linqMetaData) as DataSource2<T>);
+		}
+
+		/// <summary>
+		/// 	Gets the data access adapter from a DataSource2.
+		/// </summary>
+		/// <typeparam name = "T"></typeparam>
+		/// <param name = "query">The query.</param>
+		/// <returns></returns>
+		public static IDataAccessAdapter GetDataAccessAdapter<T>(DataSource2<T> query) where T : EntityBase2
+		{
+			return query == null ? null : GetDataAccessAdapter(query.Provider);
+		}
+
+		/// <summary>
+		/// Gets the data access adapter from a query.
+		/// </summary>
+		/// <param name="query">The query.</param>
+		/// <returns></returns>
+		public static IDataAccessAdapter GetDataAccessAdapter(IQueryable query)
+		{
+			return GetDataAccessAdapter(query.Provider);
+		}
+
+  	/// <summary>
+		/// 	Gets the data access adapter from a LLBLGenProProvider2.
+		/// </summary>
+		/// <param name = "provider">The provider.</param>
+		/// <returns></returns>
+		public static IDataAccessAdapter GetDataAccessAdapter(IQueryProvider provider)
+		{
+			var llblGenProProvider2 = (LLBLGenProProvider2)provider;
+			return llblGenProProvider2 == null ? null : llblGenProProvider2.AdapterToUse;
+		}
 
     #endregion
   }

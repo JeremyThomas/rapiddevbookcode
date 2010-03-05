@@ -14,6 +14,7 @@ namespace AW.Helper
 		/// <example>In_Progress -to- "In Progress"</example>
 		public static readonly char EnumSpaceSubstitute = '_';
 		public static readonly char EnumNumberPrefix = '_';
+		public const string StringJoinSeperator = ", ";
 
     #region Debuging
 
@@ -70,6 +71,17 @@ namespace AW.Helper
 				fixedString = EnumNumberPrefix + fixedString;
 			}
 			return (T)Enum.Parse(typeof(T), fixedString, true);
+		}
+
+		public static string JoinAsString<T>(this IEnumerable<T> input)
+		{
+			return JoinAsString(input, StringJoinSeperator);
+		}
+
+		public static string JoinAsString<T>(this IEnumerable<T> input, string seperator)
+		{
+			var ar = input.Select(i => i.ToString()).ToArray();
+			return String.Join(seperator, ar);
 		}
   }
 }
