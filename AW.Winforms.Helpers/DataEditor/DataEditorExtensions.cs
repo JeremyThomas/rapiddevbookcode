@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Windows.Forms;
@@ -45,19 +44,19 @@ namespace AW.Winforms.Helpers.DataEditor
 
     public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction)
     {
-    	if (enumerable != null)
-    	{
-    		var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
-    		var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
-    		frmDataEditor.Controls.Add(gridDataEditor);
-    		if (saveFunction != null)
-    			gridDataEditor.SaveFunction += saveFunction;
+      if (enumerable != null)
+      {
+        var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
+        var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
+        frmDataEditor.Controls.Add(gridDataEditor);
+        if (saveFunction != null)
+          gridDataEditor.SaveFunction += saveFunction;
         if (deleteFunction != null)
           gridDataEditor.DeleteFunction += deleteFunction;
-    		gridDataEditor.BindEnumerable(enumerable);
-    		frmDataEditor.ShowDialog();
-    	}
-    	return enumerable;
+        gridDataEditor.BindEnumerable(enumerable);
+        frmDataEditor.ShowDialog();
+      }
+      return enumerable;
     }
 
     public static bool Bind<T>(this BindingSource bindingSource, IEnumerable<T> enumerable, bool setReadonly)
@@ -79,78 +78,102 @@ namespace AW.Winforms.Helpers.DataEditor
       return showenEnumerable && bindingSource.Count > 0;
     }
 
+    public static IBindingListView ToBindingListView(this IEnumerable enumerable)
+    {
+      var showenEnumerable = enumerable != null && !(enumerable is string) && enumerable.ToString() != "System.Collections.Hashtable+KeyCollection";
+      if (showenEnumerable)
+      {
+        if (enumerable is IBindingListView)
+          return (IBindingListView) enumerable;
+        if (enumerable is IListSource)
+        {
+          var bindingListView = ListSourceToBindingListView((IListSource)enumerable);
+          if (bindingListView != null)
+            return bindingListView;
+        }
+        return ToObjectListView(enumerable);
+      }
+      return null;
+    }
+
+    public static IBindingListView ListSourceToBindingListView(IListSource listSource)
+    {
+      if (listSource != null)
+      {
+        var list = listSource.GetList();
+        if (list != null) 
+          return list.ToBindingListView();
+      }
+      return null;
+    }
+
+    private static IBindingListView ToObjectListView(this IList list)
+    {
+      if (list != null)
+      {
+        var objectListView = new ObjectListView(list);
+        if (objectListView.ItemType != null)
+          return objectListView;
+      }
+      return null;
+    }
+
+    private static IBindingListView ToObjectListView(this IEnumerable enumerable)
+    {
+      if (enumerable is IList)
+      {
+        var objectListView = ((IList) enumerable).ToObjectListView();
+        if (objectListView != null)
+          return objectListView;
+      }
+      var alist = ListBindingHelper.GetList(enumerable);
+      if (alist is IList)
+      {
+        var objectListView = ((IList) alist).ToObjectListView();
+        if (objectListView != null)
+          return objectListView;
+      }
+
+      if (enumerable is IQueryable)
+      {
+        var queryable = enumerable.AsQueryable();
+        if (queryable.ElementType != typeof (string))
+        {
+          queryable = queryable.Take(200);
+          return CreateObjectListViewViaBindingSource(queryable);
+        }
+      }
+      else
+        return CreateObjectListViewViaBindingSource(enumerable);
+      return null;
+    }
+
+    private static IBindingListView CreateObjectListViewViaBindingSource(IEnumerable queryable)
+    {
+      var bindingSource = new BindingSource(queryable, null);
+      return bindingSource.Count > 0 ? new ObjectListView(bindingSource.List) : null;
+    }
+
     public static bool BindEnumerable(this BindingSource bindingSource, IEnumerable enumerable, bool setReadonly)
     {
-      var showenEnumerable = enumerable != null && !(enumerable is string) && !(enumerable.ToString() == "System.Collections.Hashtable+KeyCollection");
-      //ListBindingHelper.GetListItemType(enumerable)      
-      if (showenEnumerable)
+      bool showenEnumerable;
+      try
+      {
+        bindingSource.DataSource = enumerable.ToBindingListView();
+        showenEnumerable = bindingSource.DataSource != null && bindingSource.Count > 0;
+      }
+      catch (Exception)
+      {
         try
         {
-          showenEnumerable = enumerable is IBindingListView;
-          if (showenEnumerable)
-          {
-            bindingSource.DataSource = enumerable;
-            showenEnumerable = bindingSource.Count > 0;
-          }
-          else
-          {
-            showenEnumerable = enumerable is IList;
-            if (!showenEnumerable)
-            {
-              var alist = ListBindingHelper.GetList(enumerable);
-              showenEnumerable = enumerable is IList;
-              if (showenEnumerable)
-                enumerable = (IList) alist;
-            }
-            if (showenEnumerable)
-            {
-              var objectListView = new ObjectListView((IList) enumerable);
-              showenEnumerable = objectListView.ItemType != null;
-              if (showenEnumerable)
-              {
-                showenEnumerable = objectListView.ItemType != typeof (string); //strings just show the length
-                if (showenEnumerable)
-                  bindingSource.DataSource = objectListView;
-              }
-              else
-                bindingSource.DataSource = enumerable;
-            }
-            else if (enumerable is DataTable)
-            {
-              bindingSource.DataSource = enumerable;
-              showenEnumerable = bindingSource.Count > 0;
-            }
-            else
-            {
-              var etype = enumerable.GetType();
-
-              if (etype.IsGenericType)
-              {
-                var queryable = enumerable.AsQueryable();
-                showenEnumerable = queryable.ElementType != typeof (string);
-                queryable = queryable.Take(200);
-                bindingSource.DataSource = showenEnumerable ? new ObjectListView(new BindingSource(queryable, null)) : null;
-              }
-              else
-              {
-                bindingSource.DataSource = new ObjectListView(new BindingSource(enumerable, null));
-                showenEnumerable = bindingSource.Count > 0;
-              }
-            }
-          }
+          bindingSource.DataSource = enumerable;
         }
         catch (Exception)
         {
-          try
-          {
-            bindingSource.DataSource = enumerable;
-          }
-          catch (Exception)
-          {
-            bindingSource.DataSource = null;
-          }
-          showenEnumerable = bindingSource.DataSource != null;
+          bindingSource.DataSource = null;
         }
+        showenEnumerable = bindingSource.DataSource != null && bindingSource.Count > 0;
+      }
       if (showenEnumerable)
         if (setReadonly && bindingSource.AllowEdit && bindingSource.DataSource is ObjectListView)
         {

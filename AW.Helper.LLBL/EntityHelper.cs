@@ -74,10 +74,10 @@ namespace AW.Helper.LLBL
     /// <typeparam name="T">EntityBase2</typeparam>
     /// <param name="query">The query.</param>
     /// <returns>Results of the query in an entity collection.</returns>
-    public static CollectionCore<T> ToEntityCollection<T>(this IQueryable<T> query) where T : EntityBase
+    public static EntityCollectionBase<T> ToEntityCollection<T>(this IQueryable<T> query) where T : EntityBase
     {
       var llblQuery = query as ILLBLGenProQuery;
-      return llblQuery == null ? ((IEnumerable<T>)query).ToEntityCollection() : llblQuery.Execute<CollectionCore<T>>();
+      return llblQuery == null ? ((IEnumerable<T>)query).ToEntityCollection() : llblQuery.Execute<EntityCollectionBase<T>>();
     }
 
     /// <summary>
@@ -86,11 +86,11 @@ namespace AW.Helper.LLBL
     /// <typeparam name="T">EntityBase2</typeparam>
     /// <param name="enumerable">The enumerable.</param>
     /// <returns></returns>
-    public static CollectionCore<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    public static EntityCollectionBase<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
     {
       if (enumerable.Count() == 0)
-        return GetFactory<T>().CreateEntityCollection() as CollectionCore<T>;
-      var entities = enumerable.First().GetEntityFactory().CreateEntityCollection() as CollectionCore<T>;
+        return GetFactory<T>().CreateEntityCollection() as EntityCollectionBase<T>;
+      var entities = enumerable.First().GetEntityFactory().CreateEntityCollection() as EntityCollectionBase<T>;
       if (entities != null)
         entities.AddRange(enumerable);
       return entities;

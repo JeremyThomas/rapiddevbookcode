@@ -50,6 +50,7 @@
       this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
       this.toolStripLabelDeleteCount = new System.Windows.Forms.ToolStripLabel();
       this.toolStripLabelSaveResult = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
       this.dataGridViewEnumerable = new System.Windows.Forms.DataGridView();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
@@ -61,6 +62,7 @@
       // 
       this.bindingSourceEnumerable.AllowNew = false;
       this.bindingSourceEnumerable.BindingComplete += new System.Windows.Forms.BindingCompleteEventHandler(this.bindingSourceEnumerable_BindingComplete);
+      this.bindingSourceEnumerable.PositionChanged += new System.EventHandler(this.bindingSourceEnumerable_PositionChanged);
       this.bindingSourceEnumerable.DataSourceChanged += new System.EventHandler(this.bindingSourceEnumerable_DataSourceChanged);
       this.bindingSourceEnumerable.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.bindingSourceEnumerable_ListChanged);
       // 
@@ -88,7 +90,8 @@
             this.toolStripComboBoxClipboardCopyMode,
             this.copyToolStripButton,
             this.toolStripLabelDeleteCount,
-            this.toolStripLabelSaveResult});
+            this.toolStripLabelSaveResult,
+            this.toolStripButtonCancelEdit});
       this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
       this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
       this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem1;
@@ -238,6 +241,17 @@
       this.toolStripLabelSaveResult.Name = "toolStripLabelSaveResult";
       this.toolStripLabelSaveResult.Size = new System.Drawing.Size(0, 22);
       // 
+      // toolStripButtonCancelEdit
+      // 
+      this.toolStripButtonCancelEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripButtonCancelEdit.Enabled = false;
+      this.toolStripButtonCancelEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCancelEdit.Image")));
+      this.toolStripButtonCancelEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonCancelEdit.Name = "toolStripButtonCancelEdit";
+      this.toolStripButtonCancelEdit.Size = new System.Drawing.Size(23, 22);
+      this.toolStripButtonCancelEdit.Text = "Cancel";
+      this.toolStripButtonCancelEdit.Click += new System.EventHandler(this.toolStripButtonCancelEdit_Click);
+      // 
       // dataGridViewEnumerable
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
@@ -294,5 +308,6 @@
     private System.Windows.Forms.DataGridView dataGridViewEnumerable;
     private System.Windows.Forms.ToolStripLabel toolStripLabelDeleteCount;
     private System.Windows.Forms.ToolStripLabel toolStripLabelSaveResult;
+    private System.Windows.Forms.ToolStripButton toolStripButtonCancelEdit;
   }
 }

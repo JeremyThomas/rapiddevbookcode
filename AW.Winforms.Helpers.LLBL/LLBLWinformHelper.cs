@@ -71,10 +71,15 @@ namespace AW.Winforms.Helpers.LLBL
 			return (new DataGridViewAdapterHelper<T>(dataAccessAdapter)).EditInDataGrid(enumerable);
 		}
 
-		public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query) where T : EntityBase2
+		public static IEnumerable<T> EditInDataGridViewa<T>(this IQueryable<T> query) where T : EntityBase2
 		{
 			return EditInDataGridView(query, EntityHelper.GetDataAccessAdapter(query));
-		}	
+		}
+
+    public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query) where T : EntityBase
+    {
+      return EditInDataGridView((IEnumerable<T>)query);
+    }	
 
 		public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable) where T : EntityBase
 		{

@@ -114,6 +114,7 @@ namespace AW.Winforms.Helpers.Controls
       }
       else
         saveToolStripButton.Enabled = numSaved == 0;
+      toolStripButtonCancelEdit.Enabled = false; 
     }
 
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -205,8 +206,20 @@ namespace AW.Winforms.Helpers.Controls
         case ListChangedType.ItemChanged:
         case ListChangedType.ItemAdded:
           saveToolStripButton.Enabled = _canSave;
+          toolStripButtonCancelEdit.Enabled = true;          
           break;
       }
+    }
+
+    private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
+    {
+      bindingSourceEnumerable.CancelEdit();
+      toolStripButtonCancelEdit.Enabled = false; 
+    }
+
+    private void bindingSourceEnumerable_PositionChanged(object sender, EventArgs e)
+    {
+      toolStripButtonCancelEdit.Enabled = false; 
     }
   }
 }

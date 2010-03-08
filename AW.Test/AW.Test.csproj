@@ -35,7 +35,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ACorns.Hawkeye.Core, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ACorns.Hawkeye.CoreUI, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.CoreUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ACorns.Hawkeye.Injector, Version=1.1.10.0, Culture=neutral, PublicKeyToken=7026c9d4d4143548, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.Injector.dll</HintPath>
+    </Reference>
+    <Reference Include="CSScriptLibrary, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\CSScriptLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="ObjectListView, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ObjectListView.dll</HintPath>
+    </Reference>
     <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll</HintPath>
@@ -47,6 +68,10 @@
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
+    </Reference>
+    <Reference Include="sliver.Windows.Forms.StateBrowser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=34afe62596d00324, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\sliver.Windows.Forms.StateBrowser.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -73,7 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerQueriesTest.cs" />
+    <Compile Include="DataEditorExtensionsTest.cs" />
     <Compile Include="EntityHelperTest.cs" />
+    <Compile Include="LLBLWinformHelperTest.cs" />
     <Compile Include="LookUpQueriesTest.cs" />
     <Compile Include="OrganizationHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
