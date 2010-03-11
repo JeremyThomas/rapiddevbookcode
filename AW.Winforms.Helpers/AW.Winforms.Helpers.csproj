@@ -119,6 +119,7 @@
     <Compile Include="DataEditor\FrmDataEditor.Designer.cs">
       <DependentUpon>FrmDataEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="BindingListHelper.cs" />
     <Compile Include="QueryRunner\FrmQueryRunner.cs">
       <SubType>Form</SubType>
     </Compile>

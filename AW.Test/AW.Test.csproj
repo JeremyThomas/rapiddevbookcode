@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerQueriesTest.cs" />
-    <Compile Include="DataEditorExtensionsTest.cs" />
+    <Compile Include="BindingListHelperTest.cs" />
     <Compile Include="EntityHelperTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />
     <Compile Include="LookUpQueriesTest.cs" />

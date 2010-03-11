@@ -137,9 +137,9 @@ namespace AW.Winforms.Helpers.Controls
 
     public bool BindEnumerable(IEnumerable enumerable)
     {
-      var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, null));
+      var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, null));
       SetRemovingItem();
-      return iSEnumerable;
+      return isEnumerable;
     }
 
     private bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
@@ -157,12 +157,12 @@ namespace AW.Winforms.Helpers.Controls
 
     public bool BindEnumerable<T>(IEnumerable<T> enumerable)
     {
-      var iSEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, typeof (T)));
+      var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, typeof(T)));
       if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
         ((ObjectListView<T>) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
       else
         SetRemovingItem();
-      return iSEnumerable;
+      return isEnumerable;
     }
 
     private void SetRemovingItem()
