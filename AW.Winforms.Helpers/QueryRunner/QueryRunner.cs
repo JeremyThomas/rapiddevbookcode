@@ -34,7 +34,7 @@ namespace AW.Winforms.Helpers.QueryRunner
       var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.Text, null, true));
       using (helper)
       {
-        gridDataEditorScript.BindEnumerable(((IQueryScript)helper.CreateObject("Script")).Query());
+        gridDataEditorScript.BindEnumerable(((IQueryScript) helper.CreateObject("Script")).Query());
       }
       if (gridDataEditorScript.BindingSource.Count > 0)
         if (gridDataEditorScript.Height < 30)
@@ -44,10 +44,9 @@ namespace AW.Winforms.Helpers.QueryRunner
         }
     }
 
-
     private void QueryRunner_Load(object sender, EventArgs e)
     {
-      splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height;
+      splitContainerScript.SplitterDistance = Height - gridDataEditorScript.BindingNavigator.Height - gridDataEditorScript.BindingNavigator.Height;
       gridDataEditorScript.Items.Remove(toolStripButtonRunQuery);
       gridDataEditorScript.Items.Insert(0, toolStripButtonRunQuery);
     }
@@ -80,12 +79,12 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void toolStripButtonBrowse_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)gridDataEditorScript.BindingSource.DataSource).List, SaveFunction, DeleteFunction, gridDataEditorScript.SaveableTypes);
+      FrmEntityViewer.LaunchAsChildForm(((ObjectListView) gridDataEditorScript.BindingSource.DataSource).List, SaveFunction, DeleteFunction, gridDataEditorScript.SaveableTypes);
     }
 
     private void browseObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      if (gridDataEditorScript.BindingSource.Current != null) 
+      if (gridDataEditorScript.BindingSource.Current != null)
         FrmEntityViewer.LaunchAsChildForm(gridDataEditorScript.BindingSource.Current, SaveFunction, DeleteFunction, gridDataEditorScript.SaveableTypes);
     }
 

@@ -83,12 +83,14 @@
       // 
       this.gridDataEditorScript.ContextMenuStrip = this.contextMenuStripGrid;
       this.gridDataEditorScript.DataMember = "";
+      this.gridDataEditorScript.DataSource = null;
       this.gridDataEditorScript.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gridDataEditorScript.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonRunQuery,
             this.toolStripButtonBrowse});
       this.gridDataEditorScript.Location = new System.Drawing.Point(0, 0);
       this.gridDataEditorScript.Name = "gridDataEditorScript";
+      this.gridDataEditorScript.PageSize = ((ushort)(0));
       this.gridDataEditorScript.Size = new System.Drawing.Size(841, 311);
       this.gridDataEditorScript.TabIndex = 5;
       // 

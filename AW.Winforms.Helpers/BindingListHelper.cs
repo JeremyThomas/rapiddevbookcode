@@ -71,21 +71,15 @@ namespace AW.Winforms.Helpers
       if (enumerable is IQueryable)
       {
         var queryable = enumerable.AsQueryable();
-        if (queryable.ElementType != typeof (string))
-        {
-          queryable = queryable.Take(200);
-          return CreateObjectListViewViaBindingSource(queryable);
-        }
+        return queryable.ElementType != typeof (string) ? CreateObjectListViewViaBindingSource(queryable) : null;
       }
-      else
-        return CreateObjectListViewViaBindingSource(enumerable);
-      return null;
+      return CreateObjectListViewViaBindingSource(enumerable);
     }
 
     private static IBindingListView CreateObjectListViewViaBindingSource(IEnumerable queryable)
     {
       var bindingSource = new BindingSource(queryable, null);
-      return bindingSource.Count > 0 ? new ObjectListView(bindingSource.List) : null;
+      return bindingSource.Count > 0 ? bindingSource.List.ToObjectListView() : null;
     }
 
     public static bool BindEnumerable<T>(this BindingSource bindingSource, IEnumerable<T> enumerable, bool setReadonly)

@@ -11,10 +11,20 @@ namespace AW.Winforms.Helpers.DataEditor
   {
     public static IEnumerable ViewInDataGridViewx(this IQueryable enumerable)
     {
-      return EditInDataGridViewx(enumerable, null, null);
+      return ViewInDataGridViewx(enumerable, 0);
     }
 
-    public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
+    public static IEnumerable ViewInDataGridViewx(this IQueryable enumerable, ushort pageSize)
+    {
+      return EditInDataGridViewx(enumerable, null, null, pageSize);
+    }
+
+    public static IEnumerable EditInDataGridView(this IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction)
+    {
+      return EditInDataGridViewx(enumerable, saveFunction, deleteFunction, 0);
+    }
+
+    public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction, ushort pageSize, params Type[] saveableTypes)
     {
       var dataGridView = new FrmDataEditor {Text = enumerable.ToString()};
       var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
@@ -23,8 +33,7 @@ namespace AW.Winforms.Helpers.DataEditor
         gridDataEditor.SaveFunction += saveFunction;
       if (deleteFunction != null)
         gridDataEditor.DeleteFunction += deleteFunction;
-      gridDataEditor.BindEnumerable(enumerable);
-      // AWHelper.BindEnumerable(enumerable,gridDataEditor.BindingSource);
+      gridDataEditor.BindEnumerable(enumerable, pageSize);
       dataGridView.ShowDialog();
       return enumerable;
     }
@@ -41,6 +50,11 @@ namespace AW.Winforms.Helpers.DataEditor
 
     public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction)
     {
+      return EditInDataGridView(enumerable, saveFunction, deleteFunction, 0);
+    }
+
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction, ushort pageSize)
+    {
       if (enumerable != null)
       {
         var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
@@ -50,7 +64,7 @@ namespace AW.Winforms.Helpers.DataEditor
           gridDataEditor.SaveFunction += saveFunction;
         if (deleteFunction != null)
           gridDataEditor.DeleteFunction += deleteFunction;
-        gridDataEditor.BindEnumerable(enumerable);
+        gridDataEditor.BindEnumerable(enumerable, pageSize);
         frmDataEditor.ShowDialog();
       }
       return enumerable;

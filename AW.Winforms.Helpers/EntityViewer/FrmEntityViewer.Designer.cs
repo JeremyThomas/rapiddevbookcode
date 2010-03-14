@@ -47,18 +47,18 @@
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.ObjectBrowser = new sliver.Windows.Forms.StateBrowser();
       this.splitContainerValues = new System.Windows.Forms.SplitContainer();
-      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
       this.panel1 = new System.Windows.Forms.Panel();
       this.textBoxObjectBeingBrowsed = new System.Windows.Forms.TextBox();
       this.checkBoxShowNonPublicMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowStaticMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowDataTypes = new System.Windows.Forms.CheckBox();
-      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabelInstance = new System.Windows.Forms.ToolStripStatusLabel();
       this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
+      this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
+      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.contextMenuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPageBrowser.SuspendLayout();
@@ -237,20 +237,6 @@
       this.splitContainerValues.SplitterDistance = 254;
       this.splitContainerValues.TabIndex = 3;
       // 
-      // propertyGrid1
-      // 
-      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
-      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
-      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
-      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.propertyGrid1.DrawFlat = true;
-      this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
-      this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(551, 191);
-      this.propertyGrid1.TabIndex = 0;
-      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
-      // 
       // panel1
       // 
       this.panel1.Controls.Add(this.textBoxObjectBeingBrowsed);
@@ -310,16 +296,6 @@
       this.checkBoxShowDataTypes.UseVisualStyleBackColor = true;
       this.checkBoxShowDataTypes.CheckedChanged += new System.EventHandler(this.checkBoxShowDataTypes_CheckedChanged);
       // 
-      // gridDataEditor
-      // 
-      this.gridDataEditor.DataMember = "";
-      this.gridDataEditor.DataSource = null;
-      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
-      this.gridDataEditor.Name = "gridDataEditor";
-      this.gridDataEditor.Size = new System.Drawing.Size(551, 250);
-      this.gridDataEditor.TabIndex = 3;
-      // 
       // dataGridViewTextBoxColumn11
       // 
       this.dataGridViewTextBoxColumn11.DataPropertyName = "CurrentValue";
@@ -357,6 +333,31 @@
       this.toolStripStatusLabelSelectePath.Name = "toolStripStatusLabelSelectePath";
       this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(109, 17);
       this.toolStripStatusLabelSelectePath.Text = "toolStripStatusLabel1";
+      // 
+      // propertyGrid1
+      // 
+      this.propertyGrid1.CommandsActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.CommandsDisabledLinkColor = System.Drawing.SystemColors.ControlDark;
+      this.propertyGrid1.CommandsLinkColor = System.Drawing.SystemColors.ActiveCaption;
+      this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
+      this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.propertyGrid1.DrawFlat = true;
+      this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
+      this.propertyGrid1.Name = "propertyGrid1";
+      this.propertyGrid1.Size = new System.Drawing.Size(551, 191);
+      this.propertyGrid1.TabIndex = 0;
+      this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
+      // 
+      // gridDataEditor
+      // 
+      this.gridDataEditor.DataMember = "";
+      this.gridDataEditor.DataSource = null;
+      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.Name = "gridDataEditor";
+      this.gridDataEditor.PageSize = ((ushort)(20));
+      this.gridDataEditor.Size = new System.Drawing.Size(551, 250);
+      this.gridDataEditor.TabIndex = 3;
       // 
       // FrmEntityViewer
       // 

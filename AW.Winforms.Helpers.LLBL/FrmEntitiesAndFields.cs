@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
@@ -20,7 +21,6 @@ namespace AW.Winforms.Helpers.LLBL
     private readonly Type _baseType;
     private readonly Assembly _entityAssembly;
     private readonly ILinqMetaData _linqMetaData;
-    private IDataAccessAdapter _dataAccessAdapter;
 
     public FrmEntitiesAndFields()
     {
@@ -151,35 +151,52 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
     {
+      Open(0);
+    }
+
+    private void Open(ushort pageSize)
+    {
+      var entityQueryable = GetEntityQueryable();
+      if (entityQueryable != null)
+        ViewEntities(entityQueryable, pageSize);
+    }
+
+    private IQueryable GetEntityQueryable()
+    {
       var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
+      IQueryable entityQueryable = null;
       if (typeOfEntity != null && _linqMetaData != null)
       {
         var dataSource = _linqMetaData.GetQueryableForEntity(EntityHelper.GetEntityTypeValueForType(typeOfEntity));
-        var entityQueryable = dataSource as IQueryable;
-        if (typeof (IEntity).IsAssignableFrom(typeOfEntity))
-          entityQueryable.EditInDataGridViewx(EntityHelper.Save, EntityHelper.Delete);
+        entityQueryable = dataSource as IQueryable;
+      }
+      return entityQueryable;
+    }
+
+    private static void ViewEntities(IQueryable entityQueryable, ushort pageSize)
+    {
+      if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
+        entityQueryable.EditInDataGridViewx(pageSize);
+      else
+      {
+        var provider = entityQueryable.Provider as LLBLGenProProvider2;
+        if (provider == null)
+          entityQueryable.ViewInDataGridViewx(pageSize);
         else
-        {
-          var provider = dataSource.Provider as LLBLGenProProvider2;
-          if (provider == null)
-            entityQueryable.ViewInDataGridViewx();
-          else
-          {
-            _dataAccessAdapter = provider.AdapterToUse;
-            entityQueryable.EditInDataGridViewx(Save, Delete);
-          }
-        }
+          entityQueryable.EditInDataGridView(provider.AdapterToUse, pageSize);
       }
     }
 
-    public int Save(object dataToSave)
+    private void openPaged20ToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      return EntityHelper.Save(dataToSave, _dataAccessAdapter);
+      Open(30);
     }
 
-    public int Delete(object dataToSave)
+    private void getCountToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      return EntityHelper.Delete(dataToSave, _dataAccessAdapter);
+      var entityQueryable = GetEntityQueryable();
+      if (entityQueryable != null)
+        toolStripStatusLabelSelected.Text = entityQueryable.Count().ToString();
     }
 
     private void treeViewEntities_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -195,6 +212,10 @@ namespace AW.Winforms.Helpers.LLBL
         treeViewEntities.SelectedNode = e.Node;
         contextMenuStrip1.Show(treeViewEntities, e.Location);
       }
+    }
+
+    private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+    {
     }
   }
 }

@@ -58,25 +58,24 @@ namespace AW.Test
     /// <summary>
     ///A test for EditInDataGridView
     ///</summary>
-    public void EditInDataGridViewTestHelper<T>()
-      where T : EntityBase
+    public void EditInDataGridViewTestHelper<T>(ushort pageSize)where T : EntityBase
     {
       IEnumerable<T> enumerable = EntityHelper.GetQueryableForEntity<T>(MetaSingletons.MetaData);
       var expected = enumerable;
-      var actual = enumerable.EditInDataGridView();
+      var actual = enumerable.EditInDataGridView(pageSize);
       Assert.AreEqual(expected, actual);
     }
 
     [TestMethod]
     public void EditInDataGridViewTest()
     {
-      EditInDataGridViewTestHelper<AddressEntity>();
+      EditInDataGridViewTestHelper<AddressEntity>(20);
 
       var addressTypes = from at in MetaSingletons.MetaData.AddressType
                          select at;
-      addressTypes.ToEntityCollection().DefaultView.EditInDataGridView();
+      addressTypes.ToEntityCollection().DefaultView.EditInDataGridView(2);
 
-      addressTypes.EditInDataGridView();
+      addressTypes.EditInDataGridView(3);
     }
   }
 }

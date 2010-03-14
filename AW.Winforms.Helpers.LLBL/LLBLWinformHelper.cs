@@ -5,115 +5,130 @@ using System.Linq;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.DataEditor;
-using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-	public static class LLBLWinformHelper
-	{
+  public static class LLBLWinformHelper
+  {
+    #region Validatation
 
-		#region Validatation
-
-		public static bool ValidatePropertyAssignment<T>(
-			Control ControltoValidate,
-			int FieldToValidate,
-			T Value, string ErrorMessage,
-			ErrorProvider myError,
-			EntityBase Entity)
-		{
-			var Validated = true;
-			try
-			{
-				var Validator = Entity.Validator;
-				if (Value.Equals(Entity.GetCurrentFieldValue(FieldToValidate)) == false
-				    && Validator.ValidateFieldValue(Entity, FieldToValidate, Value) == false
-					)
-				{
-					myError.SetError(ControltoValidate, ErrorMessage);
-					Validated = false;
-				}
-				else
-					myError.SetError(ControltoValidate, "");
-			}
-			catch (Exception err)
-			{
-				myError.SetError(ControltoValidate, err.Message);
-				Validated = false;
-			}
-			return Validated;
-		}
-
-		public static bool ValidateForm(Control mycontrol, ErrorProvider MyError)
-		{
-			var IsValid = true;
-			foreach (Control ChildControl in mycontrol.Controls)
-			{
-				if (MyError.GetError(ChildControl) != "")
-				{
-					IsValid = false;
-					break;
-				}
-				if (ChildControl.Controls.Count > 0)
-				{
-					IsValid = ValidateForm(ChildControl, MyError);
-					if (IsValid == false)
-						break;
-				}
-			}
-			return IsValid;
-		}
-
-		#endregion
-
-		public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter) where T : EntityBase2
-		{
-			return (new DataGridViewAdapterHelper<T>(dataAccessAdapter)).EditInDataGrid(enumerable);
-		}
-
-		public static IEnumerable<T> EditInDataGridViewa<T>(this IQueryable<T> query) where T : EntityBase2
-		{
-			return EditInDataGridView(query, EntityHelper.GetDataAccessAdapter(query));
-		}
-
-    public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query) where T : EntityBase
+    public static bool ValidatePropertyAssignment<T>(
+      Control controltoValidate,
+      int fieldToValidate,
+      T value, string errorMessage,
+      ErrorProvider myError,
+      EntityBase entity)
     {
-      return EditInDataGridView((IEnumerable<T>)query);
-    }	
+      var validated = true;
+      try
+      {
+        var validator = entity.Validator;
+        if (value.Equals(entity.GetCurrentFieldValue(fieldToValidate)) == false
+            && validator.ValidateFieldValue(entity, fieldToValidate, value) == false
+          )
+        {
+          myError.SetError(controltoValidate, errorMessage);
+          validated = false;
+        }
+        else
+          myError.SetError(controltoValidate, "");
+      }
+      catch (Exception err)
+      {
+        myError.SetError(controltoValidate, err.Message);
+        validated = false;
+      }
+      return validated;
+    }
 
-		public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable) where T : EntityBase
-		{
-			return enumerable.EditInDataGridView(EntityHelper.Save, EntityHelper.Delete);
-		}
+    public static bool ValidateForm(Control mycontrol, ErrorProvider myError)
+    {
+      var isValid = true;
+      foreach (Control childControl in mycontrol.Controls)
+      {
+        if (myError.GetError(childControl) != "")
+        {
+          isValid = false;
+          break;
+        }
+        if (childControl.Controls.Count > 0)
+        {
+          isValid = ValidateForm(childControl, myError);
+          if (isValid == false)
+            break;
+        }
+      }
+      return isValid;
+    }
 
-		public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable)
-		{
-			return enumerable.EditInDataGridViewx(EntityHelper.Save, EntityHelper.Delete, typeof(EntityBase));
-		}
+    #endregion
 
-		private class DataGridViewAdapterHelper<T> where T : EntityBase2
-		{
-			private readonly IDataAccessAdapter _dataAccessAdapter;
+    public static IEnumerable EditInDataGridView(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
+    {
+      return (new DataGridViewAdapterHelper(dataAccessAdapter)).EditInDataGrid(enumerable, pageSize);
+    }
 
-			public DataGridViewAdapterHelper(IDataAccessAdapter dataAccessAdapter)
-			{
-				_dataAccessAdapter = dataAccessAdapter;
-			}
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter) where T : EntityBase2
+    {
+      return (new DataGridViewAdapterHelper<T>(dataAccessAdapter)).EditInDataGrid(enumerable);
+    }
 
-			private int Save(object dataToSave)
-			{
-				return EntityHelper.Save(dataToSave, _dataAccessAdapter);
-			}
+    public static IEnumerable<T> EditInDataGridViewa<T>(this IQueryable<T> query) where T : EntityBase2
+    {
+      return EditInDataGridView(query, EntityHelper.GetDataAccessAdapter(query));
+    }
 
-			private int Delete(object dataToSave)
-			{
-				return EntityHelper.Delete(dataToSave, _dataAccessAdapter);
-			}
+    public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase
+    {
+      return EditInDataGridView((IEnumerable<T>) query, pageSize);
+    }
 
-			internal IEnumerable<T> EditInDataGrid(IEnumerable<T> enumerable)
-			{
-				return enumerable.EditInDataGridView(Save, Delete);
-			}
-		}
-	}
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
+    {
+      return enumerable.EditInDataGridView(EntityHelper.Save, EntityHelper.Delete, pageSize);
+    }
+
+    public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable, ushort pageSize)
+    {
+      return enumerable.EditInDataGridViewx(EntityHelper.Save, EntityHelper.Delete, pageSize, typeof(EntityBase));
+    }
+
+    private class DataGridViewAdapterHelper
+    {
+      private readonly IDataAccessAdapter _dataAccessAdapter;
+
+      public DataGridViewAdapterHelper(IDataAccessAdapter dataAccessAdapter)
+      {
+        _dataAccessAdapter = dataAccessAdapter;
+      }
+
+      protected int Save(object dataToSave)
+      {
+        return EntityHelper.Save(dataToSave, _dataAccessAdapter);
+      }
+
+      protected int Delete(object dataToSave)
+      {
+        return EntityHelper.Delete(dataToSave, _dataAccessAdapter);
+      }
+
+      internal IEnumerable EditInDataGrid(IEnumerable enumerable, ushort pageSize)
+      {
+        return enumerable.EditInDataGridViewx(Save, Delete, pageSize, typeof(EntityBase2));
+      }
+    }
+
+    private class DataGridViewAdapterHelper<T> : DataGridViewAdapterHelper where T : EntityBase2
+    {
+      public DataGridViewAdapterHelper(IDataAccessAdapter dataAccessAdapter) : base(dataAccessAdapter)
+      {
+      }
+
+      internal IEnumerable<T> EditInDataGrid(IEnumerable<T> enumerable)
+      {
+        return enumerable.EditInDataGridView(Save, Delete);
+      }
+    }
+  }
 }

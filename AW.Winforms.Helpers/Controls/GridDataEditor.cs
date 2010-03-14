@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.DataEditor;
@@ -19,6 +20,8 @@ namespace AW.Winforms.Helpers.Controls
     public event Func<object, int> DeleteFunction;
     private readonly ArrayList _deleteItems = new ArrayList();
     private bool _canSave;
+    private IEnumerable _superset;
+
 
     public GridDataEditor()
     {
@@ -27,6 +30,10 @@ namespace AW.Winforms.Helpers.Controls
     }
 
     #region Properties
+
+    [Category("Data"),
+     Description("Size of the page")]
+    public ushort PageSize { get;  set; }
 
     [AttributeProvider(typeof (IListSource)),
      Category("Data"),
@@ -137,9 +144,13 @@ namespace AW.Winforms.Helpers.Controls
 
     public bool BindEnumerable(IEnumerable enumerable)
     {
-      var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, null));
-      SetRemovingItem();
-      return isEnumerable;
+      return BindEnumerable(enumerable, PageSize);
+    }
+
+    public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
+    {
+      bindingSourcePaging.DataSource = CreeatePageDataSource(pageSize, enumerable);
+      return GetFirstPage(enumerable);
     }
 
     private bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
@@ -157,12 +168,81 @@ namespace AW.Winforms.Helpers.Controls
 
     public bool BindEnumerable<T>(IEnumerable<T> enumerable)
     {
+      return BindEnumerable(enumerable, PageSize);
+    }
+
+    public bool BindEnumerable<T>(IEnumerable<T> enumerable, ushort pageSize)
+    {
+      bindingSourcePaging.DataSource = CreeatePageDataSource(pageSize, enumerable);
+      return GetFirstPage(enumerable);
+    }
+
+    private bool GetFirstPage<T>(IEnumerable<T> enumerable)
+    {
+      if (Paging())
+        enumerable = enumerable.Take(PageSize);
       var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, typeof(T)));
       if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
         ((ObjectListView<T>) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
       else
         SetRemovingItem();
       return isEnumerable;
+    }
+
+    private bool GetFirstPage(IEnumerable enumerable)
+    {
+      if (Paging())
+        enumerable = enumerable.AsQueryable().Take(PageSize);
+      var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, null));
+      SetRemovingItem();
+      return isEnumerable;
+    }
+
+    private bool Paging()
+    {
+      return bindingSourcePaging.Count > 0;
+    }
+
+    private IEnumerable<int> CreeatePageDataSource(ushort pageSize, IEnumerable enumerable)
+    {
+      if (pageSize == 0)
+        return Enumerable.Empty<int>();
+      //  return new int[GetPageCount(pageSize, enumerable.Count())];
+      _superset = enumerable;
+      PageSize = pageSize;
+      return Enumerable.Range(1, GetPageCount(pageSize, enumerable.AsQueryable().Count()));
+    }
+
+    private IEnumerable<int> CreeatePageDataSource<T>(ushort pageSize, IEnumerable<T> enumerable)
+    {
+      if (pageSize == 0)
+        return Enumerable.Empty<int>();
+    //  return new int[GetPageCount(pageSize, enumerable.Count())];
+      _superset = enumerable;
+      PageSize = pageSize;
+      return Enumerable.Range(1, GetPageCount(pageSize, enumerable.Count()));
+    }
+
+    private static int	GetPageCount(int pageSize, int totalItemCount)
+		{
+      if (totalItemCount > 0)
+        return (int)Math.Ceiling(totalItemCount / (double)pageSize);
+      return 0;
+		}
+
+    private void bindingSourcePaging_PositionChanged(object sender, EventArgs e)
+    {
+      if (GetPageIndex()>0)
+        bindingSourceEnumerable.BindEnumerable(_superset.AsQueryable().Skip((GetPageIndex()) * PageSize).Take(PageSize), false);
+      else
+        GetFirstPage(_superset);
+    }
+
+    private int GetPageIndex()
+    {
+      if (bindingSourcePaging.Current == null)
+        return 0;
+      return (int)bindingSourcePaging.Current -1;
     }
 
     private void SetRemovingItem()
@@ -221,5 +301,7 @@ namespace AW.Winforms.Helpers.Controls
     {
       toolStripButtonCancelEdit.Enabled = false; 
     }
+
+
   }
 }

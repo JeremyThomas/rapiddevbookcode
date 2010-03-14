@@ -114,7 +114,7 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void closeAllButThisToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      foreach (TabPage page in tabControl.TabPages.Cast<TabPage>().Where(page => page != tabControl.SelectedTab))
+      foreach (var page in tabControl.TabPages.Cast<TabPage>().Where(page => page != tabControl.SelectedTab))
       {
         tabControl.TabPages.Remove(page);
       }
