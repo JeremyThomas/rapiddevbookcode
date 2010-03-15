@@ -20,7 +20,7 @@ namespace AW.Winforms.Helpers.Controls
     public event Func<object, int> DeleteFunction;
     private readonly ArrayList _deleteItems = new ArrayList();
     private bool _canSave;
-    private IEnumerable _superset;
+    private IQueryable _superset;
 
 
     public GridDataEditor()
@@ -33,7 +33,7 @@ namespace AW.Winforms.Helpers.Controls
 
     [Category("Data"),
      Description("Size of the page")]
-    public ushort PageSize { get;  set; }
+    public ushort PageSize { get; set; }
 
     [AttributeProvider(typeof (IListSource)),
      Category("Data"),
@@ -121,7 +121,7 @@ namespace AW.Winforms.Helpers.Controls
       }
       else
         saveToolStripButton.Enabled = numSaved == 0;
-      toolStripButtonCancelEdit.Enabled = false; 
+      toolStripButtonCancelEdit.Enabled = false;
     }
 
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -149,11 +149,11 @@ namespace AW.Winforms.Helpers.Controls
 
     public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
     {
-      bindingSourcePaging.DataSource = CreeatePageDataSource(pageSize, enumerable);
+      bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
       return GetFirstPage(enumerable);
     }
 
-    private bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
+    protected bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
     {
       var queryable = enumerable as IQueryable;
       var shouldBeReadonly = queryable != null;
@@ -166,29 +166,6 @@ namespace AW.Winforms.Helpers.Controls
       return shouldBeReadonly;
     }
 
-    public bool BindEnumerable<T>(IEnumerable<T> enumerable)
-    {
-      return BindEnumerable(enumerable, PageSize);
-    }
-
-    public bool BindEnumerable<T>(IEnumerable<T> enumerable, ushort pageSize)
-    {
-      bindingSourcePaging.DataSource = CreeatePageDataSource(pageSize, enumerable);
-      return GetFirstPage(enumerable);
-    }
-
-    private bool GetFirstPage<T>(IEnumerable<T> enumerable)
-    {
-      if (Paging())
-        enumerable = enumerable.Take(PageSize);
-      var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, typeof(T)));
-      if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
-        ((ObjectListView<T>) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
-      else
-        SetRemovingItem();
-      return isEnumerable;
-    }
-
     private bool GetFirstPage(IEnumerable enumerable)
     {
       if (Paging())
@@ -198,60 +175,70 @@ namespace AW.Winforms.Helpers.Controls
       return isEnumerable;
     }
 
-    private bool Paging()
+    protected bool Paging()
     {
       return bindingSourcePaging.Count > 0;
     }
 
-    private IEnumerable<int> CreeatePageDataSource(ushort pageSize, IEnumerable enumerable)
+    protected virtual IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
     {
-      if (pageSize == 0)
+      if (pageSize == 0 || enumerable == null)
         return Enumerable.Empty<int>();
-      //  return new int[GetPageCount(pageSize, enumerable.Count())];
-      _superset = enumerable;
+      try
+      {
+        _superset = enumerable.AsQueryable();
+      }
+      catch (ArgumentException)
+      {
+        PageSize = 0;
+        return Enumerable.Empty<int>();
+      }
       PageSize = pageSize;
-      return Enumerable.Range(1, GetPageCount(pageSize, enumerable.AsQueryable().Count()));
+      return Enumerable.Range(1, GetPageCount());
     }
 
-    private IEnumerable<int> CreeatePageDataSource<T>(ushort pageSize, IEnumerable<T> enumerable)
+    protected int GetPageCount()
     {
-      if (pageSize == 0)
-        return Enumerable.Empty<int>();
-    //  return new int[GetPageCount(pageSize, enumerable.Count())];
-      _superset = enumerable;
-      PageSize = pageSize;
-      return Enumerable.Range(1, GetPageCount(pageSize, enumerable.Count()));
+      return GeneralHelper.GetPageCount(PageSize, SuperSetCount());
     }
 
-    private static int	GetPageCount(int pageSize, int totalItemCount)
-		{
-      if (totalItemCount > 0)
-        return (int)Math.Ceiling(totalItemCount / (double)pageSize);
-      return 0;
-		}
+    protected virtual int SuperSetCount()
+    {
+      return _superset.Count();
+    }
 
     private void bindingSourcePaging_PositionChanged(object sender, EventArgs e)
     {
-      if (GetPageIndex()>0)
-        bindingSourceEnumerable.BindEnumerable(_superset.AsQueryable().Skip((GetPageIndex()) * PageSize).Take(PageSize), false);
+      BindPage();
+    }
+
+    protected virtual void BindPage()
+    {
+      if (GetPageIndex() > 0)
+        bindingSourceEnumerable.BindEnumerable(SkipTake(), false);
       else
         GetFirstPage(_superset);
     }
 
-    private int GetPageIndex()
+    private IEnumerable SkipTake()
+    {
+      return _superset.Skip((GetPageIndex())*PageSize).Take(PageSize);
+    }
+
+    protected int GetPageIndex()
     {
       if (bindingSourcePaging.Current == null)
         return 0;
-      return (int)bindingSourcePaging.Current -1;
+      return (int) bindingSourcePaging.Current - 1;
     }
 
-    private void SetRemovingItem()
+    protected void SetRemovingItem()
     {
       if (bindingSourceEnumerable.DataSource is ObjectListView)
         ((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
     }
 
-    private void GridDataEditor_RemovingItem(object sender, RemovingItemEventArgs e)
+    protected void GridDataEditor_RemovingItem(object sender, RemovingItemEventArgs e)
     {
       _deleteItems.Add(bindingSourceEnumerable[e.Index]);
       toolStripLabelDeleteCount.Text = @"Num removed=" + _deleteItems.Count;
@@ -286,7 +273,7 @@ namespace AW.Winforms.Helpers.Controls
         case ListChangedType.ItemChanged:
         case ListChangedType.ItemAdded:
           saveToolStripButton.Enabled = _canSave;
-          toolStripButtonCancelEdit.Enabled = true;          
+          toolStripButtonCancelEdit.Enabled = true;
           break;
       }
     }
@@ -294,14 +281,12 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
     {
       bindingSourceEnumerable.CancelEdit();
-      toolStripButtonCancelEdit.Enabled = false; 
+      toolStripButtonCancelEdit.Enabled = false;
     }
 
     private void bindingSourceEnumerable_PositionChanged(object sender, EventArgs e)
     {
-      toolStripButtonCancelEdit.Enabled = false; 
+      toolStripButtonCancelEdit.Enabled = false;
     }
-
-
   }
 }

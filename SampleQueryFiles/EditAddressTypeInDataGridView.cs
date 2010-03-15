@@ -18,7 +18,7 @@ public class Script : MarshalByRefObject, IQueryScript
     var addressTypes = from at in MetaSingletons.MetaData.AddressType
                        select at;
 
-    return addressTypes.EditInDataGridView();
+    return addressTypes.AsEnumerable().EditInDataGridView();
   }
 
 }

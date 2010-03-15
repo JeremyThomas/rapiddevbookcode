@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Windows.Forms;
 using JesseJohnston;
 
@@ -45,6 +44,8 @@ namespace AW.Winforms.Helpers
     {
       if (list != null)
       {
+        if (list is IBindingListView)
+          return (IBindingListView)list;
         var objectListView = new ObjectListView(list);
         if (objectListView.ItemType != null)
           return objectListView;
@@ -54,31 +55,33 @@ namespace AW.Winforms.Helpers
 
     private static IBindingListView ToObjectListView(this IEnumerable enumerable)
     {
+      var itemType = GetListItemType(enumerable);
+      if (itemType == typeof(string))
+        return null;
+      enumerable = (IEnumerable)ListBindingHelper.GetList(enumerable);
       if (enumerable is IList)
       {
         var objectListView = ((IList) enumerable).ToObjectListView();
         if (objectListView != null)
           return objectListView;
       }
-      var alist = ListBindingHelper.GetList(enumerable);
-      if (alist is IList)
-      {
-        var objectListView = ((IList) alist).ToObjectListView();
-        if (objectListView != null)
-          return objectListView;
-      }
-
-      if (enumerable is IQueryable)
-      {
-        var queryable = enumerable.AsQueryable();
-        return queryable.ElementType != typeof (string) ? CreateObjectListViewViaBindingSource(queryable) : null;
-      }
       return CreateObjectListViewViaBindingSource(enumerable);
     }
 
-    private static IBindingListView CreateObjectListViewViaBindingSource(IEnumerable queryable)
+    private static Type GetListItemType(IEnumerable enumerable)
     {
-      var bindingSource = new BindingSource(queryable, null);
+      var itemType = ListBindingHelper.GetListItemType(enumerable);
+      if (itemType == null)
+      {
+        var queryable = enumerable.AsQueryable();
+        return queryable.ElementType;
+      }
+      return itemType;
+    }
+
+    private static IBindingListView CreateObjectListViewViaBindingSource(IEnumerable enumerable)
+    {
+      var bindingSource = new BindingSource(enumerable, null);
       return bindingSource.Count > 0 ? bindingSource.List.ToObjectListView() : null;
     }
 

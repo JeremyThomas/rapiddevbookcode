@@ -421,14 +421,14 @@
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
     private System.Windows.Forms.ToolStripComboBox toolStripComboBoxClipboardCopyMode;
     private System.Windows.Forms.ToolStripButton copyToolStripButton;
-    private System.Windows.Forms.BindingSource bindingSourceEnumerable;
+    protected System.Windows.Forms.BindingSource bindingSourceEnumerable;
     private System.Windows.Forms.BindingNavigator bindingNavigator1;
     private System.Windows.Forms.DataGridView dataGridViewEnumerable;
     private System.Windows.Forms.ToolStripLabel toolStripLabelDeleteCount;
     private System.Windows.Forms.ToolStripLabel toolStripLabelSaveResult;
     private System.Windows.Forms.ToolStripButton toolStripButtonCancelEdit;
     private System.Windows.Forms.BindingNavigator bindingNavigatorPaging;
-    private System.Windows.Forms.BindingSource bindingSourcePaging;
+    protected System.Windows.Forms.BindingSource bindingSourcePaging;
     private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem;

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.EntityClasses;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -119,6 +121,8 @@ namespace AW.Test
       Assert.AreEqual(addressTypeEntityCollection.DefaultView, list);
 
       Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestToBindingListView(addressTypeEntityCollection));
+      CollectionAssert.AreEqual(addressTypeEntityCollection, TestToBindingListView(addressTypeEntityCollection.AsQueryable()));
+      CollectionAssert.AreEqual(addressTypeEntityCollection, TestToBindingListView(addressTypeEntityCollection.Cast<CommonEntityBase>()));
 
       TestToBindingListView(MetaSingletons.MetaData.AddressType);
 
@@ -126,6 +130,14 @@ namespace AW.Test
       addressTypeEntityCollection.CreateHierarchicalProjection(dt);
       var dataTable = dt.Tables[0];
       Assert.AreEqual(dataTable.DefaultView, TestListSourceToBindingListView(dataTable));
+
+      var enumerable = Enumerable.Range(1, 100);
+      var actual = TestToBindingListView(enumerable);
+      CollectionAssert.AreEqual(enumerable.ToList(), actual);
+
+      Assert.IsNull("A string".ToBindingListView());
+
+      Assert.IsNull((new []{"s1", "s2", "s3"}).ToBindingListView());
     }
 
     private static IBindingListView TestToBindingListView(IEnumerable enumerable)
@@ -134,6 +146,17 @@ namespace AW.Test
       Assert.IsInstanceOfType(bindingListView, typeof (IBindingListView));
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;
+    }
+
+    [TestMethod]
+    public void ListSourceToBindingListViewTest()
+    {
+      var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+
+      var dt = new DataSet();
+      addressTypeEntityCollection.CreateHierarchicalProjection(dt);
+      var dataTable = dt.Tables[0];
+      Assert.AreEqual(dataTable.DefaultView, TestListSourceToBindingListView(dataTable));
     }
 
     private static IBindingListView TestListSourceToBindingListView(IListSource enumerable)

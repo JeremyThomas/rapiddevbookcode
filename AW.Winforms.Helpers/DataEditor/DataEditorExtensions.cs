@@ -9,38 +9,47 @@ namespace AW.Winforms.Helpers.DataEditor
 {
   public static class DataEditorExtensions
   {
-    public static IEnumerable ViewInDataGridViewx(this IQueryable enumerable)
+    #region DataGridView
+
+    public static IQueryable ViewInDataGridView(this IQueryable enumerable)
     {
-      return ViewInDataGridViewx(enumerable, 0);
+      return ViewInDataGridView(enumerable, 0) as IQueryable;
     }
 
-    public static IEnumerable ViewInDataGridViewx(this IQueryable enumerable, ushort pageSize)
+    public static IEnumerable ViewInDataGridView(this IQueryable enumerable, ushort pageSize)
     {
-      return EditInDataGridViewx(enumerable, null, null, pageSize);
+      return EditInDataGridView(enumerable, null, null, pageSize);
     }
 
     public static IEnumerable EditInDataGridView(this IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction)
     {
-      return EditInDataGridViewx(enumerable, saveFunction, deleteFunction, 0);
+      return EditInDataGridView(enumerable, saveFunction, deleteFunction, 0);
     }
 
-    public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction, ushort pageSize, params Type[] saveableTypes)
+    public static IEnumerable EditInDataGridView(this IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction, ushort pageSize, params Type[] saveableTypes)
     {
-      var dataGridView = new FrmDataEditor {Text = enumerable.ToString()};
-      var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
-      dataGridView.Controls.Add(gridDataEditor);
-      if (saveFunction != null)
-        gridDataEditor.SaveFunction += saveFunction;
-      if (deleteFunction != null)
-        gridDataEditor.DeleteFunction += deleteFunction;
-      gridDataEditor.BindEnumerable(enumerable, pageSize);
-      dataGridView.ShowDialog();
+      if (enumerable != null)
+      {
+        var dataGridView = new FrmDataEditor {Text = enumerable.ToString()};
+        var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
+        dataGridView.Controls.Add(gridDataEditor);
+        if (saveFunction != null)
+          gridDataEditor.SaveFunction += saveFunction;
+        if (deleteFunction != null)
+          gridDataEditor.DeleteFunction += deleteFunction;
+        gridDataEditor.BindEnumerable(enumerable, pageSize);
+        dataGridView.ShowDialog();
+      }
       return enumerable;
     }
 
-    public static IEnumerable<T> ViewInDataGridView<T>(this IQueryable<T> enumerable)
+    #endregion
+
+    #region DataGridViewGeneric
+
+    public static IQueryable<T> ViewInDataGridView<T>(this IQueryable<T> enumerable)
     {
-      return EditInDataGridView(enumerable, null);
+      return EditInDataGridView(enumerable, null).AsQueryable();
     }
 
     public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, Func<object, int> saveFunction)
@@ -58,7 +67,7 @@ namespace AW.Winforms.Helpers.DataEditor
       if (enumerable != null)
       {
         var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
-        var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
+        var gridDataEditor = new GridDataEditorT<T> {Dock = DockStyle.Fill};
         frmDataEditor.Controls.Add(gridDataEditor);
         if (saveFunction != null)
           gridDataEditor.SaveFunction += saveFunction;
@@ -69,6 +78,8 @@ namespace AW.Winforms.Helpers.DataEditor
       }
       return enumerable;
     }
+
+    #endregion
 
     public static void CopyEntireDataGridViewToClipboard(this DataGridView dataGridView)
     {

@@ -64,34 +64,45 @@ namespace AW.Winforms.Helpers.LLBL
 
     #endregion
 
-    public static IEnumerable EditInDataGridView(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
-    {
-      return (new DataGridViewAdapterHelper(dataAccessAdapter)).EditInDataGrid(enumerable, pageSize);
-    }
-
-    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter) where T : EntityBase2
-    {
-      return (new DataGridViewAdapterHelper<T>(dataAccessAdapter)).EditInDataGrid(enumerable);
-    }
-
-    public static IEnumerable<T> EditInDataGridViewa<T>(this IQueryable<T> query) where T : EntityBase2
-    {
-      return EditInDataGridView(query, EntityHelper.GetDataAccessAdapter(query));
-    }
-
-    public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase
-    {
-      return EditInDataGridView((IEnumerable<T>) query, pageSize);
-    }
+    #region Self Servicing
 
     public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
     {
       return enumerable.EditInDataGridView(EntityHelper.Save, EntityHelper.Delete, pageSize);
     }
 
-    public static IEnumerable EditInDataGridViewx(this IEnumerable enumerable, ushort pageSize)
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable) where T : EntityBase
     {
-      return enumerable.EditInDataGridViewx(EntityHelper.Save, EntityHelper.Delete, pageSize, typeof(EntityBase));
+      return enumerable.EditInDataGridView(0);
+    }
+
+    public static IEnumerable EditInDataGridView(this IEnumerable enumerable, ushort pageSize)
+    {
+      return enumerable.EditInDataGridView(EntityHelper.Save, EntityHelper.Delete, pageSize, typeof (EntityBase));
+    }
+
+    #endregion
+
+    #region Adapter
+
+    public static IEnumerable EditInDataGridView(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
+    {
+      return (new DataGridViewAdapterHelper(dataAccessAdapter)).EditInDataGrid(enumerable, pageSize);
+    }
+    
+    public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
+    {
+      return (new DataGridViewAdapterHelper<T>(dataAccessAdapter)).EditInDataGrid(enumerable, pageSize);
+    }
+
+    public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
+    {
+      return EditInDataGridView(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
+    }
+
+    public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query) where T : EntityBase2
+    {
+      return EditInDataGridView(query, 0);
     }
 
     private class DataGridViewAdapterHelper
@@ -115,20 +126,23 @@ namespace AW.Winforms.Helpers.LLBL
 
       internal IEnumerable EditInDataGrid(IEnumerable enumerable, ushort pageSize)
       {
-        return enumerable.EditInDataGridViewx(Save, Delete, pageSize, typeof(EntityBase2));
+        return enumerable.EditInDataGridView(Save, Delete, pageSize, typeof (EntityBase2));
       }
     }
 
     private class DataGridViewAdapterHelper<T> : DataGridViewAdapterHelper where T : EntityBase2
     {
-      public DataGridViewAdapterHelper(IDataAccessAdapter dataAccessAdapter) : base(dataAccessAdapter)
+      public DataGridViewAdapterHelper(IDataAccessAdapter dataAccessAdapter)
+        : base(dataAccessAdapter)
       {
       }
 
-      internal IEnumerable<T> EditInDataGrid(IEnumerable<T> enumerable)
+      internal IEnumerable<T> EditInDataGrid(IEnumerable<T> enumerable, ushort pageSize)
       {
-        return enumerable.EditInDataGridView(Save, Delete);
+        return enumerable.EditInDataGridView(Save, Delete, pageSize);
       }
     }
+
+    #endregion
   }
 }

@@ -1,22 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AW.Data;
-using AW.Data.CollectionClasses;
-using AW.Data.EntityClasses;
-using AW.Helper.LLBL;
+﻿using System.Collections;
+using System.Collections.Generic;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
-using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Test
 {
   /// <summary>
-  ///This is a test class for LLBLWinformHelperTest and is intended
-  ///to contain all LLBLWinformHelperTest Unit Tests
+  ///This is a test class for DataEditorExtensionsTest and is intended
+  ///to contain all DataEditorExtensionsTest Unit Tests
   ///</summary>
   [TestClass]
-  public class LLBLWinformHelperTest
+  public class DataEditorExtensionsTest
   {
     /// <summary>
     ///Gets or sets the test context which provides
@@ -59,28 +54,35 @@ namespace AW.Test
     /// <summary>
     ///A test for EditInDataGridView
     ///</summary>
-    public void EditInDataGridViewTestHelper<T>(ushort pageSize)where T : EntityBase
-    {
-      var enumerable = EntityHelper.GetQueryableForEntity<T>(MetaSingletons.MetaData).AsEnumerable();
-      var expected = enumerable;
-      var actual = enumerable.EditInDataGridView(pageSize);
-      Assert.AreEqual(expected, actual);
-    }
-
     [TestMethod]
     public void EditInDataGridViewTest()
     {
-      EditInDataGridViewTestHelper<AddressEntity>(20);
+      var enumerable = new[] {"s1", "s2", "s3"};
+      TestEditInDataGridView(enumerable);
+      TestEditInDataGridView(null);
+      enumerable = null;
+      TestEditInDataGridView(enumerable);
+      var gridDataEditor = new GridDataEditor();
+      gridDataEditor.BindEnumerable(null, 1);
 
-      var addressTypes = from at in MetaSingletons.MetaData.AddressType
-                         select at;
-      var addressTypeEntities = addressTypes.ToEntityCollection();
-      addressTypeEntities.EditInDataGridView(2);
-      addressTypeEntities.DefaultView.EditInDataGridView(3);
+      var arrayList = new ArrayList {1, 2, 3};
+      gridDataEditor.BindEnumerable(arrayList);
 
-      addressTypes.AsEnumerable().EditInDataGridView(3);
+      gridDataEditor.BindEnumerable(arrayList, 1);
 
-      addressTypeEntities.AsQueryable().ViewInDataGridView();
+      TestEditInDataGridView(arrayList);
+    }
+
+    private static void TestEditInDataGridView<T>(IEnumerable<T> enumerable)
+    {
+      var actual = enumerable.EditInDataGridView(null, null);
+      Assert.AreEqual(enumerable, actual);
+    }
+
+    private static void TestEditInDataGridView(IEnumerable enumerable)
+    {
+      var actual = enumerable.EditInDataGridView(null, null);
+      Assert.AreEqual(enumerable, actual);
     }
   }
 }

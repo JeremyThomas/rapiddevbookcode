@@ -83,5 +83,17 @@ namespace AW.Helper
 			var ar = input.Select(i => i.ToString()).ToArray();
 			return String.Join(seperator, ar);
 		}
+
+    public static IEnumerable<T> SkipTake<T>(this IEnumerable<T> superset, int pageIndex, int pageSize) 
+    {
+      return superset.Skip(pageIndex * pageSize).Take(pageSize);
+    }
+
+    public static int GetPageCount(int pageSize, int totalItemCount)
+    {
+      if (totalItemCount > 0)
+        return (int)Math.Ceiling(totalItemCount / (double)pageSize);
+      return 0;
+    }
   }
 }
