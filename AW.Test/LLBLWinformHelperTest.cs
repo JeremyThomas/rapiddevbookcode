@@ -73,6 +73,7 @@ namespace AW.Test
       EditInDataGridViewTestHelper<AddressEntity>(20);
 
       var addressTypes = from at in MetaSingletons.MetaData.AddressType
+                         orderby at.AddressTypeID
                          select at;
       var addressTypeEntities = addressTypes.ToEntityCollection();
       addressTypeEntities.EditInDataGridView(2);
