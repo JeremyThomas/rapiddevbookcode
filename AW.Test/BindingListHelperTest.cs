@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
@@ -137,7 +138,7 @@ namespace AW.Test
 
       Assert.IsNull("A string".ToBindingListView());
 
-      Assert.IsNull((new []{"s1", "s2", "s3"}).ToBindingListView());
+      Assert.IsNull((new[] {"s1", "s2", "s3"}).ToBindingListView());
     }
 
     private static IBindingListView TestToBindingListView(IEnumerable enumerable)
@@ -165,6 +166,20 @@ namespace AW.Test
       Assert.IsInstanceOfType(bindingListView, typeof (IBindingListView));
       Assert.IsTrue(bindingListView.Count > 0);
       return bindingListView;
+    }
+
+    /// <summary>
+    ///A test for GetEnumerableItemType
+    ///</summary>
+    [TestMethod]
+    public void GetEnumerableItemTypeTest()
+    {
+      Assert.AreEqual(typeof (int), BindingListHelper.GetEnumerableItemType(new List<int>()));
+      Assert.AreEqual(typeof (AddressTypeEntity), BindingListHelper.GetEnumerableItemType(new AddressTypeCollection()));
+      Assert.AreEqual(typeof(AddressTypeEntity), BindingListHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
+      Assert.AreEqual(typeof (int), BindingListHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
+      Assert.AreEqual(typeof(object), BindingListHelper.GetEnumerableItemType(new ArrayList ()));
+      //Assert.IsNull(BindingListHelper.GetEnumerableItemType(new ArrayList()));
     }
   }
 }

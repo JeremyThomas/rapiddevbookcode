@@ -55,7 +55,7 @@ namespace AW.Winforms.Helpers
 
     private static IBindingListView ToObjectListView(this IEnumerable enumerable)
     {
-      var itemType = GetListItemType(enumerable);
+      var itemType = GetEnumerableItemType(enumerable);
       if (itemType == typeof(string))
         return null;
       enumerable = (IEnumerable)ListBindingHelper.GetList(enumerable);
@@ -68,12 +68,15 @@ namespace AW.Winforms.Helpers
       return CreateObjectListViewViaBindingSource(enumerable);
     }
 
-    private static Type GetListItemType(IEnumerable enumerable)
+    public static Type GetEnumerableItemType(IEnumerable enumerable)
     {
+      var queryable = enumerable as IQueryable;
+      if (queryable != null)
+        return queryable.ElementType;
       var itemType = ListBindingHelper.GetListItemType(enumerable);
       if (itemType == null)
       {
-        var queryable = enumerable.AsQueryable();
+        queryable = enumerable.AsQueryable();
         return queryable.ElementType;
       }
       return itemType;
