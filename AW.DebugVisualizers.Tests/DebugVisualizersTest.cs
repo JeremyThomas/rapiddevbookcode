@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.DebuggerVisualizers;
@@ -48,6 +50,19 @@ namespace AW.DebugVisualizers.Tests
 
     #endregion
 
+
+    [TestMethod]
+    public void DataTableTest()
+    {
+      var nonSerializableClasseDataTable = GeneralHelper.CopyToDataTable(GetListofNonSerializableClasses());
+      TestShow(nonSerializableClasseDataTable);
+      TestShow(nonSerializableClasseDataTable.DefaultView);
+
+      var addressTypeDataTable = GeneralHelper.CopyToDataTable(MetaSingletons.MetaData.AddressType);
+      TestShow(addressTypeDataTable);
+      TestShow(addressTypeDataTable.DefaultView);
+    }
+
     [TestMethod]
     public void SerializableEnumerableTest()
     {
@@ -56,24 +71,31 @@ namespace AW.DebugVisualizers.Tests
     }
 
     [TestMethod]
-    public void NonSerializableEnumerableTest()
+    public void NonSerializableEnumerationTest()
     {
       TestShow(MetaSingletons.MetaData.AddressType);
       TestShow(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > 2));
-      TestShow(GetListofNonSerializableClasses());
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       TestShow(addressTypeEntityCollection.DefaultView);
       TestShow(new BindingSource(addressTypeEntityCollection, null));
       TestShow(addressTypeEntityCollection.Where(at => at.AddressTypeID > 2));
     }
 
-    private static IEnumerable<NonSerializableClass> GetListofNonSerializableClasses()
+    [TestMethod]
+    public void NonSerializableItemTest()
+    {
+      var listofNonSerializableClasses = GetListofNonSerializableClasses();
+      TestShow(listofNonSerializableClasses);
+      listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString()});
+      TestShow(listofNonSerializableClasses);
+      TestShow(new ArrayList(listofNonSerializableClasses));
+    }
+
+    private static List<NonSerializableClass> GetListofNonSerializableClasses()
     {
       var list = new List<NonSerializableClass>();
       for (var i = 0; i < 10; i++)
         list.Add(new NonSerializableClass {DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString()});
-
-
       return list;
     }
 
@@ -83,17 +105,12 @@ namespace AW.DebugVisualizers.Tests
       visualizerHost.ShowVisualizer();
     }
 
-    /// <summary>
-    ///A test for Serialize
-    ///</summary>
-    [TestMethod()]
-    public void SerializeTest()
+    public static void TestShow(DataTable dataTableToVisualize)
     {
-      IList list = new List<int>();
-      Stream outgoingData = new MemoryStream();
-      Type itemType = BindingListHelper.GetEnumerableItemType(list);
-      EnumerableVisualizerObjectSource.Serialize(list, outgoingData, itemType);
+      var visualizerHost = new VisualizerDevelopmentHost(dataTableToVisualize, typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource));
+      visualizerHost.ShowVisualizer();
     }
+
   }
 
   public class NonSerializableClass
@@ -101,5 +118,35 @@ namespace AW.DebugVisualizers.Tests
     public int IntField;
     public string StringField;
     public DateTime DateTimeField;
+
+    public int IntProperty
+    {
+      get { return IntField; }
+      set { IntField = value; }
+    }
+
+    public string StringProperty
+    {
+      get { return StringField; }
+      set { StringField = value; }
+    }
+
+    public DateTime DateTimeProperty
+    {
+      get { return DateTimeField; }
+      set { DateTimeField = value; }
+    }
+  }
+
+  [Serializable]
+  internal class SerializableClass : NonSerializableClass
+  {
+    public int? NulllableIntField;
+
+    public int? NulllableIntProperty
+    {
+      get { return NulllableIntField; }
+      set { NulllableIntField = value; }
+    }
   }
 }

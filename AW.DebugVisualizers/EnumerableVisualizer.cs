@@ -5,9 +5,8 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.Serialization;
+using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using AW.DebugVisualizers;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
@@ -35,9 +34,10 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 [assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (Collection<>), Description = "Enumerable Visualizer")]
 
 //Not serializable
-[assembly : DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(VisualizerObjectSource), Target = typeof(BindingSource), Description = "Enumerable Visualizer")]
-[assembly : DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(VisualizerObjectSource), Target = typeof(LLBLGenProQuery<>), Description = "Enumerable Visualizer")]
-[assembly : DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(VisualizerObjectSource), TargetTypeName = "System.Linq.EnumerableQuery, System.Core", Description = "Enumerable Visualizer")]
+
+[assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (BindingSource), Description = "Enumerable Visualizer")]
+[assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (LLBLGenProQuery<>), Description = "Enumerable Visualizer")]
+[assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), TargetTypeName = "System.Linq.EnumerableQuery, System.Core", Description = "Enumerable Visualizer")]
 [assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (DataSourceBase<>), Description = "Enumerable Visualizer")]
 [assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (EntityViewBase<>), Description = "Enumerable Visualizer")]
 
@@ -53,16 +53,13 @@ namespace AW.DebugVisualizers
       if (_modalService == null)
         throw new NotSupportedException("This debugger does not support modal visualizers");
 
-      IEnumerable enumerable = null;
-      try
+      var o = objectProvider.GetObject();
+      var enumerable = o as IEnumerable;
+      if (enumerable == null)
       {
-        enumerable = objectProvider.GetObject() as IEnumerable;
-      }
-      catch (SerializationException)
-      {
-        var xmlStream = objectProvider.GetData();
-        var x = new XmlSerializer(typeof(ObjectListView));
-        var r = x.Deserialize(xmlStream);
+        var dataTable = o as DataTable;
+        if (dataTable != null)
+          enumerable = dataTable.DefaultView;
       }
 
       if (enumerable != null)
@@ -78,6 +75,10 @@ namespace AW.DebugVisualizers
   {
     #region Overrides of VisualizerObjectSource
 
+    /// <summary>
+    /// </summary>
+    /// <param name="target">Object being visualized.</param>
+    /// <param name="outgoingData">Outgoing data stream.</param>
     public override void GetData(object target, Stream outgoingData)
     {
       var enumerable = target as IEnumerable;
@@ -91,24 +92,46 @@ namespace AW.DebugVisualizers
         {
           var bindingListView = enumerable.ToBindingListView();
           if (!bindingListView.GetType().IsSerializable)
-          {
             bindingListView = new ObjectListView(new ArrayList(bindingListView));
-          }
           base.GetData(bindingListView, outgoingData);
         }
         else
-        {
-          var list = enumerable as IList;
-          if (list != null)
-            Serialize(list, outgoingData, itemType);
-        }
+          base.GetData(ObtainDataTableFromIEnumerable(enumerable), outgoingData);
       }
+      else if (target is DataTable)
+        base.GetData(target, outgoingData);
     }
 
-    public static void Serialize(IList list, Stream outgoingData, Type itemType)
+    //public  void GetData(DataTable target, Stream outgoingData)
+    //{
+    //  GetData(DataTable target, Stream outgoingData)
+    //}
+
+    private static DataTable ObtainDataTableFromIEnumerable(IEnumerable ien)
     {
-      var x = new XmlSerializer(typeof (ObjectListView), new[] {itemType});
-      x.Serialize(outgoingData, new ObjectListView(list));
+      var dataView = ien as DataView;
+      if (dataView != null && dataView.Table != null)
+        return dataView.Table;
+      var dt = new DataTable();
+      foreach (var obj in ien)
+      {
+        var t = obj.GetType();
+
+        var pis = t.GetProperties().Where(p => p.PropertyType.IsSerializable);
+        if (dt.Columns.Count == 0)
+          foreach (var pi in pis)
+          {
+            dt.Columns.Add(pi.Name, pi.PropertyType);
+          }
+        var dr = dt.NewRow();
+        foreach (var pi in pis)
+        {
+          var value = pi.GetValue(obj, null);
+          dr[pi.Name] = value;
+        }
+        dt.Rows.Add(dr);
+      }
+      return dt;
     }
 
     #endregion

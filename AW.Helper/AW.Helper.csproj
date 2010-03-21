@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="GeneralHelper.cs" />
     <Compile Include="MetaDataHelper.cs" />
+    <Compile Include="ObjectShredder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

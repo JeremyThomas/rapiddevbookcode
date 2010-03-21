@@ -73,7 +73,15 @@ namespace AW.Winforms.Helpers
       var queryable = enumerable as IQueryable;
       if (queryable != null)
         return queryable.ElementType;
-      var itemType = ListBindingHelper.GetListItemType(enumerable);
+      Type itemType;
+      try
+      {
+        itemType = ListBindingHelper.GetListItemType(enumerable);
+      }
+      catch (NotImplementedException)
+      {
+        itemType = null;
+      }
       if (itemType == null)
       {
         queryable = enumerable.AsQueryable();

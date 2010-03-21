@@ -175,10 +175,11 @@ namespace AW.Test
     public void GetEnumerableItemTypeTest()
     {
       Assert.AreEqual(typeof (int), BindingListHelper.GetEnumerableItemType(new List<int>()));
+      Assert.AreEqual(typeof (int), BindingListHelper.GetEnumerableItemType((new List<int> {1, 2, 3, 4}).Where(i => i > 2)));
       Assert.AreEqual(typeof (AddressTypeEntity), BindingListHelper.GetEnumerableItemType(new AddressTypeCollection()));
-      Assert.AreEqual(typeof(AddressTypeEntity), BindingListHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
+      Assert.AreEqual(typeof (AddressTypeEntity), BindingListHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
       Assert.AreEqual(typeof (int), BindingListHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
-      Assert.AreEqual(typeof(object), BindingListHelper.GetEnumerableItemType(new ArrayList ()));
+      Assert.AreEqual(typeof (object), BindingListHelper.GetEnumerableItemType(new ArrayList()));
       //Assert.IsNull(BindingListHelper.GetEnumerableItemType(new ArrayList()));
     }
   }
