@@ -5,9 +5,10 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
+using System.Runtime.Serialization;
 using System.Windows.Forms;
 using AW.DebugVisualizers;
+using AW.Helper;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
 using JesseJohnston;
@@ -38,6 +39,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 [assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (BindingSource), Description = "Enumerable Visualizer")]
 [assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (LLBLGenProQuery<>), Description = "Enumerable Visualizer")]
 [assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), TargetTypeName = "System.Linq.EnumerableQuery, System.Core", Description = "Enumerable Visualizer")]
+[assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), TargetTypeName = "System.Linq.Iterator`1, System.Core", Description = "Enumerable Visualizer")]
 [assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (DataSourceBase<>), Description = "Enumerable Visualizer")]
 [assembly : DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (VisualizerObjectSource), Target = typeof (EntityViewBase<>), Description = "Enumerable Visualizer")]
 
@@ -64,7 +66,7 @@ namespace AW.DebugVisualizers
 
       if (enumerable != null)
       {
-        var gridDataEditor = new GridDataEditor();
+        var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
         gridDataEditor.BindEnumerable(enumerable);
         _modalService.ShowDialog(gridDataEditor);
       }
@@ -85,53 +87,33 @@ namespace AW.DebugVisualizers
       if (enumerable != null)
       {
         var enumerableType = enumerable.GetType();
-        var itemType = BindingListHelper.GetEnumerableItemType(enumerable);
+        var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
         if (enumerableType.IsSerializable && itemType.IsSerializable)
-          base.GetData(target, outgoingData);
+          TryGetData(enumerable, outgoingData);
         else if (itemType.IsSerializable)
         {
           var bindingListView = enumerable.ToBindingListView();
           if (!bindingListView.GetType().IsSerializable)
             bindingListView = new ObjectListView(new ArrayList(bindingListView));
-          base.GetData(bindingListView, outgoingData);
+          TryGetData(bindingListView, outgoingData);
         }
         else
-          base.GetData(ObtainDataTableFromIEnumerable(enumerable), outgoingData);
+          base.GetData(enumerable.CopyToDataTable(), outgoingData);
       }
       else if (target is DataTable)
         base.GetData(target, outgoingData);
     }
 
-    //public  void GetData(DataTable target, Stream outgoingData)
-    //{
-    //  GetData(DataTable target, Stream outgoingData)
-    //}
-
-    private static DataTable ObtainDataTableFromIEnumerable(IEnumerable ien)
+    public void TryGetData(IEnumerable enumerable, Stream outgoingData)
     {
-      var dataView = ien as DataView;
-      if (dataView != null && dataView.Table != null)
-        return dataView.Table;
-      var dt = new DataTable();
-      foreach (var obj in ien)
+      try
       {
-        var t = obj.GetType();
-
-        var pis = t.GetProperties().Where(p => p.PropertyType.IsSerializable);
-        if (dt.Columns.Count == 0)
-          foreach (var pi in pis)
-          {
-            dt.Columns.Add(pi.Name, pi.PropertyType);
-          }
-        var dr = dt.NewRow();
-        foreach (var pi in pis)
-        {
-          var value = pi.GetValue(obj, null);
-          dr[pi.Name] = value;
-        }
-        dt.Rows.Add(dr);
+        base.GetData(enumerable, outgoingData);
       }
-      return dt;
+      catch (SerializationException)
+      {
+        base.GetData(enumerable.CopyToDataTable(), outgoingData);
+      }
     }
 
     #endregion

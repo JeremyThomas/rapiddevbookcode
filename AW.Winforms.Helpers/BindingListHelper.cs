@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using AW.Helper;
 using JesseJohnston;
 
 namespace AW.Winforms.Helpers
@@ -55,7 +56,7 @@ namespace AW.Winforms.Helpers
 
     private static IBindingListView ToObjectListView(this IEnumerable enumerable)
     {
-      var itemType = GetEnumerableItemType(enumerable);
+      var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
       if (itemType == typeof(string))
         return null;
       enumerable = (IEnumerable)ListBindingHelper.GetList(enumerable);
@@ -66,28 +67,6 @@ namespace AW.Winforms.Helpers
           return objectListView;
       }
       return CreateObjectListViewViaBindingSource(enumerable);
-    }
-
-    public static Type GetEnumerableItemType(IEnumerable enumerable)
-    {
-      var queryable = enumerable as IQueryable;
-      if (queryable != null)
-        return queryable.ElementType;
-      Type itemType;
-      try
-      {
-        itemType = ListBindingHelper.GetListItemType(enumerable);
-      }
-      catch (NotImplementedException)
-      {
-        itemType = null;
-      }
-      if (itemType == null)
-      {
-        queryable = enumerable.AsQueryable();
-        return queryable.ElementType;
-      }
-      return itemType;
     }
 
     private static IBindingListView CreateObjectListViewViaBindingSource(IEnumerable enumerable)

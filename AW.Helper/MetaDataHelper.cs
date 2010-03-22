@@ -65,6 +65,52 @@ namespace AW.Helper
     }
 
     /// <summary>
+    /// Determine of specified type is nullable
+    /// </summary>
+    public static bool IsNullable(Type t)
+    {
+      return !t.IsValueType || (t.IsGenericType && t.GetGenericTypeDefinition() == typeof (Nullable<>));
+    }
+
+    /// <summary>
+    /// Return underlying type if type is Nullable otherwise return the type
+    /// </summary>
+    public static Type GetCoreType(Type t)
+    {
+      if (t != null && IsNullable(t))
+        return t.IsValueType ? Nullable.GetUnderlyingType(t) : t;
+      return t;
+    }
+
+    /// <summary>
+    /// Returns the data type of the items in the specified list.
+    /// </summary>
+    /// <param name="enumerable">The enumerable to be examined for type information.</param>
+    /// <returns>The System.Type of the items contained in the list.</returns>
+    public static Type GetEnumerableItemType(IEnumerable enumerable)
+    {
+      var queryable = enumerable as IQueryable;
+      if (queryable != null)
+        return queryable.ElementType;
+      Type itemType;
+      try
+      {
+        itemType = ListBindingHelper.GetListItemType(enumerable);
+      }
+      catch (NotImplementedException)
+      {
+        itemType = null;
+      }
+      if (itemType == null)
+      {
+        queryable = enumerable.AsQueryable();
+        return queryable.ElementType;
+      }
+      return itemType;
+    }
+
+
+    /// <summary>
     /// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
     /// </summary>
     /// <remarks>Where clause copied from DataGridViewDataConnection.GetCollectionOfBoundDataGridViewColumns()</remarks>

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace AW.Helper
 {
@@ -51,7 +53,7 @@ namespace AW.Helper
     /// <returns></returns>
     public static T ToEnum<T>(this string strOfEnum)
     {
-      return string.IsNullOrEmpty(strOfEnum) ? default(T) : strOfEnum.ToEnum<T>(EnumSpaceSubstitute);
+      return String.IsNullOrEmpty(strOfEnum) ? default(T) : strOfEnum.ToEnum<T>(EnumSpaceSubstitute);
     }
 
     /// <summary>
@@ -67,7 +69,7 @@ namespace AW.Helper
       if (Char.IsDigit(fixedString, 0))
       {
         int enumindex;
-        if (int.TryParse(fixedString, out enumindex))
+        if (Int32.TryParse(fixedString, out enumindex))
           return (T) Enum.ToObject(typeof (T), enumindex);
         fixedString = EnumNumberPrefix + fixedString;
       }
@@ -97,6 +99,14 @@ namespace AW.Helper
       return 0;
     }
 
+    public static DataTable CopyToDataTable(this IEnumerable source)
+    {
+      var dataView = source as DataView;
+      if (dataView != null && dataView.Table != null)
+        return dataView.Table;
+      return new ObjectShredder().Shred(source, null, null);
+    }
+
     /// <summary>
     /// Copies enumerable to a data table.
     /// </summary>
@@ -111,7 +121,37 @@ namespace AW.Helper
 
     public static DataTable CopyToDataTable<T>(this IEnumerable<T> source, DataTable table, LoadOption? options)
     {
-      return new ObjectShredder<T>().Shred(source, table, options);
+      return new ObjectShredder().Shred(source, table, options);
+    }
+
+    /// <summary>
+    /// Convert a List{T} to a DataTable.
+    /// </summary>
+    public static DataTable ToDataTable<T>(List<T> items)
+    {
+      var tb = new DataTable(typeof (T).Name);
+
+      var props = typeof (T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+      foreach (var prop in props)
+      {
+        var t = MetaDataHelper.GetCoreType(prop.PropertyType);
+        tb.Columns.Add(prop.Name, t);
+      }
+
+      foreach (var item in items)
+      {
+        var values = new object[props.Length];
+
+        for (var i = 0; i < props.Length; i++)
+        {
+          values[i] = props[i].GetValue(item, null);
+        }
+
+        tb.Rows.Add(values);
+      }
+
+      return tb;
     }
   }
 }

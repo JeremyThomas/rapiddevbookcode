@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
@@ -6,24 +7,35 @@ using System.Reflection;
 namespace AW.Helper
 {
   /// <summary>
-  /// How to: Implement CopyToDataTable Where the Generic Type T Is Not a DataRow. 
+  /// How to: Implement CopyToDataTable Where the Enumerable Item Type Is Not a DataRow. 
   /// </summary>
   /// <see cref="http://msdn.microsoft.com/en-us/library/bb669096.aspx"/>
-  /// <typeparam name="T"></typeparam>
-  public class ObjectShredder<T>
+  public class ObjectShredder
   {
-    private readonly FieldInfo[] _fi;
-    private readonly PropertyInfo[] _pi;
-    private readonly Dictionary<string, int> _ordinalMap;
-    private readonly Type _type;
+    protected FieldInfo[] Fi;
+    protected PropertyInfo[] Pi;
+    protected readonly Dictionary<string, int> OrdinalMap;
+    protected Type Type;
 
     // ObjectShredder constructor.
     public ObjectShredder()
     {
-      _type = typeof (T);
-      _fi = _type.GetFields();
-      _pi = _type.GetProperties();
-      _ordinalMap = new Dictionary<string, int>();
+      OrdinalMap = new Dictionary<string, int>();
+    }
+
+    public void SetType(IEnumerable source)
+    {
+      if (Type == null)
+      {
+        Type = MetaDataHelper.GetEnumerableItemType(source);
+        SetFieldsAndProperties(Type);
+      }
+    }
+
+    private void SetFieldsAndProperties(Type type)
+    {
+      Fi = type.GetFields();
+      Pi = type.GetProperties();
     }
 
     /// <summary>
@@ -36,22 +48,23 @@ namespace AW.Helper
     /// <param name="options">Specifies how values from the source sequence will be applied to 
     /// existing rows in the table.</param>
     /// <returns>A DataTable created from the source sequence.</returns>
-    public DataTable Shred(IEnumerable<T> source, DataTable table, LoadOption? options)
+    public DataTable Shred(IEnumerable source, DataTable table, LoadOption? options)
     {
-      // Load the table from the scalar sequence if T is a primitive type.
-      if (typeof (T).IsPrimitive)
+      SetType(source);
+      // Load the table from the scalar sequence if _type is a primitive type.
+      if (Type.IsPrimitive)
         return ShredPrimitive(source, table, options);
 
       // Create a new table if the input table is null.
       if (table == null)
-        table = new DataTable(typeof (T).Name);
+        table = new DataTable(Type.Name);
 
       // Initialize the ordinal map and extend the table schema based on type T.
-      table = ExtendTable(table, typeof (T));
+      table = ExtendTable(table, Type);
 
       // Enumerate the source sequence and load the object values into rows.
       table.BeginLoadData();
-      using (var e = source.GetEnumerator())
+      var e = source.GetEnumerator();
       {
         while (e.MoveNext())
         {
@@ -67,18 +80,19 @@ namespace AW.Helper
       return table;
     }
 
-    public DataTable ShredPrimitive(IEnumerable<T> source, DataTable table, LoadOption? options)
+    public DataTable ShredPrimitive(IEnumerable source, DataTable table, LoadOption? options)
     {
+      SetType(source);
       // Create a new table if the input table is null.
       if (table == null)
-        table = new DataTable(typeof (T).Name);
+        table = new DataTable(Type.Name);
 
       if (!table.Columns.Contains("Value"))
-        table.Columns.Add("Value", typeof (T));
+        table.Columns.Add("Value", Type);
 
       // Enumerate the source sequence and load the scalar values into rows.
       table.BeginLoadData();
-      using (var e = source.GetEnumerator())
+      var e = source.GetEnumerator();
       {
         var values = new object[table.Columns.Count];
         while (e.MoveNext())
@@ -97,69 +111,80 @@ namespace AW.Helper
       return table;
     }
 
-    public object[] ShredObject(DataTable table, T instance)
+    private object[] ShredObject(DataTable table, object instance)
     {
-      var fi = _fi;
-      var pi = _pi;
+      var fi = Fi;
+      var pi = Pi;
 
-      if (instance.GetType() != typeof (T))
+      var type = instance.GetType();
+      if (type != Type)
       {
         // If the instance is derived from T, extend the table schema
         // and get the properties and fields.
-        ExtendTable(table, instance.GetType());
-        fi = instance.GetType().GetFields();
-        pi = instance.GetType().GetProperties();
+        ExtendTable(table, type);
+        SetFieldsAndProperties(type);
       }
 
       // Add the property and field values of the instance to an array.
       var values = new object[table.Columns.Count];
-      foreach (var f in fi)
+      foreach (var f in type.GetFields())
       {
-        values[_ordinalMap[f.Name]] = f.GetValue(instance);
+        values[OrdinalMap[f.Name]] = f.GetValue(instance);
       }
 
-      foreach (var p in pi)
+      foreach (var p in type.GetProperties())
       {
-        values[_ordinalMap[p.Name]] = p.GetValue(instance, null);
+        values[OrdinalMap[p.Name]] = p.GetValue(instance, null);
       }
 
       // Return the property and field values of the instance.
       return values;
     }
 
-    public DataTable ExtendTable(DataTable table, Type type)
+    private DataTable ExtendTable(DataTable table, Type type)
     {
       // Extend the table schema if the input table was null or if the value 
       // in the sequence is derived from type T.            
       foreach (var f in type.GetFields())
       {
-        if (!_ordinalMap.ContainsKey(f.Name))
+        if (!OrdinalMap.ContainsKey(f.Name))
         {
           // Add the field as a column in the table if it doesn't exist
           // already.
           var dc = table.Columns.Contains(f.Name) ? table.Columns[f.Name]
-                     : table.Columns.Add(f.Name, f.FieldType);
+                     : table.Columns.Add(f.Name, MetaDataHelper.GetCoreType(f.FieldType));
 
           // Add the field to the ordinal map.
-          _ordinalMap.Add(f.Name, dc.Ordinal);
+          OrdinalMap.Add(f.Name, dc.Ordinal);
         }
       }
       foreach (var p in type.GetProperties())
       {
-        if (!_ordinalMap.ContainsKey(p.Name))
+        if (!OrdinalMap.ContainsKey(p.Name))
         {
           // Add the property as a column in the table if it doesn't exist
           // already.
           var dc = table.Columns.Contains(p.Name) ? table.Columns[p.Name]
-                     : table.Columns.Add(p.Name, p.PropertyType);
+                     : table.Columns.Add(p.Name, MetaDataHelper.GetCoreType(p.PropertyType));
 
           // Add the property to the ordinal map.
-          _ordinalMap.Add(p.Name, dc.Ordinal);
+          OrdinalMap.Add(p.Name, dc.Ordinal);
         }
       }
 
       // Return the table.
       return table;
+    }
+  }
+
+  class ObjectShredder<T>: ObjectShredder
+  {
+    // ObjectShredder constructor.
+    public ObjectShredder()
+    {
+      Type = typeof(T);
+      Fi = Type.GetFields();
+      Pi = Type.GetProperties();
     }
   }
 }

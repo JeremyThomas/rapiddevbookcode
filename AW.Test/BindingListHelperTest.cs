@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -168,19 +169,5 @@ namespace AW.Test
       return bindingListView;
     }
 
-    /// <summary>
-    ///A test for GetEnumerableItemType
-    ///</summary>
-    [TestMethod]
-    public void GetEnumerableItemTypeTest()
-    {
-      Assert.AreEqual(typeof (int), BindingListHelper.GetEnumerableItemType(new List<int>()));
-      Assert.AreEqual(typeof (int), BindingListHelper.GetEnumerableItemType((new List<int> {1, 2, 3, 4}).Where(i => i > 2)));
-      Assert.AreEqual(typeof (AddressTypeEntity), BindingListHelper.GetEnumerableItemType(new AddressTypeCollection()));
-      Assert.AreEqual(typeof (AddressTypeEntity), BindingListHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
-      Assert.AreEqual(typeof (int), BindingListHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
-      Assert.AreEqual(typeof (object), BindingListHelper.GetEnumerableItemType(new ArrayList()));
-      //Assert.IsNull(BindingListHelper.GetEnumerableItemType(new ArrayList()));
-    }
   }
 }
