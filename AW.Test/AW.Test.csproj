@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="SalesOrderQueriesTest.cs" />
     <Compile Include="BugsTest.cs" />
+    <Compile Include="TestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AuthoringTests.txt" />

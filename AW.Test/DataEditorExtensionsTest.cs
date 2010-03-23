@@ -57,6 +57,8 @@ namespace AW.Test
     [TestMethod]
     public void EditInDataGridViewTest()
     {
+			TestEditInDataGridView(NonSerializableClass.GenerateList());
+			TestEditInDataGridView(SerializableClass.GenerateList());
       var enumerable = new[] {"s1", "s2", "s3"};
       TestEditInDataGridView(enumerable);
       TestEditInDataGridView(null);

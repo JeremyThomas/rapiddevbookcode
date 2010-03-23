@@ -30,20 +30,30 @@ namespace AW.Winforms.Helpers.DataEditor
     {
       if (enumerable != null)
       {
-        var dataGridView = new FrmDataEditor {Text = enumerable.ToString()};
-        var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
-        dataGridView.Controls.Add(gridDataEditor);
-        if (saveFunction != null)
-          gridDataEditor.SaveFunction += saveFunction;
-        if (deleteFunction != null)
-          gridDataEditor.DeleteFunction += deleteFunction;
-        gridDataEditor.BindEnumerable(enumerable, pageSize);
-        dataGridView.ShowDialog();
+			  CreateDataEditorForm(enumerable, saveFunction, deleteFunction, pageSize).ShowDialog();
       }
-      return enumerable;
+    	return enumerable;
     }
 
-    #endregion
+  	public static FrmDataEditor CreateDataEditorForm(IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction, ushort pageSize)
+  	{
+  		var dataGridView = new FrmDataEditor {Text = enumerable.ToString()};
+  		var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
+  		dataGridView.Controls.Add(gridDataEditor);
+  		if (saveFunction != null)
+  			gridDataEditor.SaveFunction += saveFunction;
+  		if (deleteFunction != null)
+  			gridDataEditor.DeleteFunction += deleteFunction;
+  		gridDataEditor.BindEnumerable(enumerable, pageSize);
+  		return dataGridView;
+  	}
+
+		public static FrmDataEditor CreateDataViewForm(IEnumerable enumerable)
+		{
+			return CreateDataEditorForm(enumerable, null, null, 0);
+		}
+
+  	#endregion
 
     #region DataGridViewGeneric
 

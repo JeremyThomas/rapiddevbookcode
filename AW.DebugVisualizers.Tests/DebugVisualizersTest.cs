@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Helper;
@@ -54,99 +56,62 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void DataTableTest()
     {
-      var nonSerializableClasseDataTable = GeneralHelper.CopyToDataTable(GetListofNonSerializableClasses());
-      TestShow(nonSerializableClasseDataTable);
-      TestShow(nonSerializableClasseDataTable.DefaultView);
+			var nonSerializableClasseDataTable = GeneralHelper.CopyToDataTable(NonSerializableClass.GenerateList());
+			TestSerialize(nonSerializableClasseDataTable);
+			TestSerialize(nonSerializableClasseDataTable.DefaultView);
 
       var addressTypeDataTable = GeneralHelper.CopyToDataTable(MetaSingletons.MetaData.AddressType);
-      TestShow(addressTypeDataTable);
-      TestShow(addressTypeDataTable.DefaultView);
+			TestSerialize(addressTypeDataTable);
+			TestSerialize(addressTypeDataTable.DefaultView);
     }
 
     [TestMethod]
     public void SerializableEnumerableTest()
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-      TestShow(addressTypeEntityCollection);
+			TestSerialize(addressTypeEntityCollection);
+			TestShow(SerializableClass.GenerateList());
     }
 
     [TestMethod]
     public void NonSerializableEnumerationTest()
     {
-      TestShow(MetaSingletons.MetaData.AddressType);
-      TestShow(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > 2));
+			TestSerialize(MetaSingletons.MetaData.AddressType);
+			TestSerialize(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > 2));
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-      TestShow(addressTypeEntityCollection.DefaultView);
-      TestShow(new BindingSource(addressTypeEntityCollection, null));
-      TestShow(addressTypeEntityCollection.Where(at => at.AddressTypeID > 2));
+			TestSerialize(addressTypeEntityCollection.DefaultView);
+			TestSerialize(new BindingSource(addressTypeEntityCollection, null));
+			TestSerialize(addressTypeEntityCollection.Where(at => at.AddressTypeID > 2));
     }
 
     [TestMethod]
     public void NonSerializableItemTest()
     {
-      var listofNonSerializableClasses = GetListofNonSerializableClasses();
-      TestShow(listofNonSerializableClasses);
+			var listofNonSerializableClasses = NonSerializableClass.GenerateList();
+			TestSerialize(listofNonSerializableClasses);
       listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString()});
-      TestShow(listofNonSerializableClasses);
-      TestShow(new ArrayList(listofNonSerializableClasses));
+			TestSerialize(listofNonSerializableClasses);
+			TestSerialize(new ArrayList(listofNonSerializableClasses));
     }
 
-    private static List<NonSerializableClass> GetListofNonSerializableClasses()
-    {
-      var list = new List<NonSerializableClass>();
-      for (var i = 0; i < 10; i++)
-        list.Add(new NonSerializableClass {DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString()});
-      return list;
-    }
+		public static void TestSerialize(object enumerableToVisualize)
+		{
+			var enumerableVisualizerObjectSource = new EnumerableVisualizerObjectSource();
+			var memoryStream = new MemoryStream();
+			enumerableVisualizerObjectSource.GetData(enumerableToVisualize, memoryStream);
+			memoryStream.Position = 0;
+			var binaryFormatter = new BinaryFormatter();
+			var value = binaryFormatter.Deserialize(memoryStream);
+			if (!(value is DataTable) && !(value is IListSource))
+				Assert.IsInstanceOfType(value, typeof(IBindingListView)); ;
+		}
 
-    public static void TestShow(IEnumerable enumerableToVisualize)
+		public static void TestShow(object enumerableOrDataTableToVisualize)
     {
-      var visualizerHost = new VisualizerDevelopmentHost(enumerableToVisualize, typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource));
+			var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource));
       visualizerHost.ShowVisualizer();
     }
 
-    public static void TestShow(DataTable dataTableToVisualize)
-    {
-      var visualizerHost = new VisualizerDevelopmentHost(dataTableToVisualize, typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource));
-      visualizerHost.ShowVisualizer();
-    }
-
   }
 
-  public class NonSerializableClass
-  {
-    public int IntField;
-    public string StringField;
-    public DateTime DateTimeField;
-
-    public int IntProperty
-    {
-      get { return IntField; }
-      set { IntField = value; }
-    }
-
-    public string StringProperty
-    {
-      get { return StringField; }
-      set { StringField = value; }
-    }
-
-    public DateTime DateTimeProperty
-    {
-      get { return DateTimeField; }
-      set { DateTimeField = value; }
-    }
-  }
-
-  [Serializable]
-  internal class SerializableClass : NonSerializableClass
-  {
-    public int? NulllableIntField;
-
-    public int? NulllableIntProperty
-    {
-      get { return NulllableIntField; }
-      set { NulllableIntField = value; }
-    }
-  }
 }
