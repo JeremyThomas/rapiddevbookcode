@@ -1,5 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using AW.Data;
+using AW.Data.EntityClasses;
+using AW.Helper;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -57,8 +61,11 @@ namespace AW.Test
     [TestMethod]
     public void EditInDataGridViewTest()
     {
+			TestEditInDataGridView(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
+    	TestEditInDataGridView(MetaSingletons.MetaData.AddressType.First().CustomPropertiesOfType);
 			TestEditInDataGridView(NonSerializableClass.GenerateList());
 			TestEditInDataGridView(SerializableClass.GenerateList());
+			TestEditInDataGridView(SerializableClass.GenerateListWithBoth());
       var enumerable = new[] {"s1", "s2", "s3"};
       TestEditInDataGridView(enumerable);
       TestEditInDataGridView(null);
@@ -67,7 +74,7 @@ namespace AW.Test
       var gridDataEditor = new GridDataEditor();
       gridDataEditor.BindEnumerable(null, 1);
 
-      var arrayList = new ArrayList {1, 2, 3};
+      var arrayList = new ArrayList {1, 2, "3"};
       gridDataEditor.BindEnumerable(arrayList);
 
       gridDataEditor.BindEnumerable(arrayList, 1);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
@@ -60,9 +61,19 @@ namespace AW.DebugVisualizers.Tests
 			TestSerialize(nonSerializableClasseDataTable);
 			TestSerialize(nonSerializableClasseDataTable.DefaultView);
 
-      var addressTypeDataTable = GeneralHelper.CopyToDataTable(MetaSingletons.MetaData.AddressType);
-			TestSerialize(addressTypeDataTable);
-			TestSerialize(addressTypeDataTable.DefaultView);
+			var serializableClassDataTable = GeneralHelper.CopyToDataTable(SerializableClass.GenerateList());
+			TestSerialize(serializableClassDataTable);
+			TestSerialize(serializableClassDataTable.DefaultView);
+
+			var dt = new DataSet();
+			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+			addressTypeEntityCollection.CreateHierarchicalProjection(dt);
+			TestShow(dt.Tables[0]);
+			TestSerialize(dt.Tables[0].DefaultView);
+
+			//var addressTypeDataTable = GeneralHelper.CopyToDataTable(MetaSingletons.MetaData.AddressType);
+			//TestSerialize(addressTypeDataTable);
+			//TestSerialize(addressTypeDataTable.DefaultView);
     }
 
     [TestMethod]
@@ -70,7 +81,10 @@ namespace AW.DebugVisualizers.Tests
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			TestSerialize(addressTypeEntityCollection);
-			TestShow(SerializableClass.GenerateList());
+			TestSerialize(SerializableBaseClass.GenerateList());
+    	TestSerialize(addressTypeEntityCollection.First().CustomPropertiesOfType);
+			TestShow(SerializableBaseClass2.GenerateListWithBothSerializableClasses());
+			TestSerialize(SerializableClass.GenerateList());
     }
 
     [TestMethod]
@@ -92,6 +106,7 @@ namespace AW.DebugVisualizers.Tests
       listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString()});
 			TestSerialize(listofNonSerializableClasses);
 			TestSerialize(new ArrayList(listofNonSerializableClasses));
+    	TestShow(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
     }
 
 		public static void TestSerialize(object enumerableToVisualize)
@@ -99,10 +114,9 @@ namespace AW.DebugVisualizers.Tests
 			var enumerableVisualizerObjectSource = new EnumerableVisualizerObjectSource();
 			var memoryStream = new MemoryStream();
 			enumerableVisualizerObjectSource.GetData(enumerableToVisualize, memoryStream);
-			memoryStream.Position = 0;
-			var binaryFormatter = new BinaryFormatter();
-			var value = binaryFormatter.Deserialize(memoryStream);
-			if (!(value is DataTable) && !(value is IListSource))
+			memoryStream.Position = 0;			
+			var value = VisualizerObjectSource.Deserialize(memoryStream);
+			if (!(value is DataTableSurrogate) && !(value is IListSource) && value.GetType() != enumerableToVisualize.GetType())
 				Assert.IsInstanceOfType(value, typeof(IBindingListView)); ;
 		}
 

@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Configuration.Provider;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
@@ -42,6 +44,8 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), TargetTypeName = "System.Linq.Iterator`1, System.Core", Description = "Enumerable Visualizer")]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (DataSourceBase<>), Description = "Enumerable Visualizer")]
 [assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (EntityViewBase<>), Description = "Enumerable Visualizer")]
+[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (ProviderCollection), Description = "Enumerable Visualizer")]
+[assembly: DebuggerVisualizer(typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource), Target = typeof (PropertyDescriptorCollection), Description = "Enumerable Visualizer")]
 
 namespace AW.DebugVisualizers
 {
@@ -60,6 +64,12 @@ namespace AW.DebugVisualizers
 			if (enumerable == null)
 			{
 				var dataTable = o as DataTable;
+				if (dataTable == null)
+				{
+					var dataTableSurrogate = o as DataTableSurrogate;
+					if (dataTableSurrogate != null)
+						dataTable = dataTableSurrogate.ConvertToDataTable();
+				}
 				if (dataTable != null)
 					enumerable = dataTable.DefaultView;
 			}
@@ -86,21 +96,29 @@ namespace AW.DebugVisualizers
 			{
 				var enumerableType = enumerable.GetType();
 				var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
-				GeneralHelper.TraceOut("enumerableType.IsSerializable " + enumerableType.IsSerializable + " itemType.IsSerializable" + itemType.IsSerializable);
-				if (enumerableType.IsSerializable && itemType.IsSerializable)
-					TryGetData(enumerable, outgoingData);
-				else if (itemType.IsSerializable)
+				if (itemType.IsSerializable)
 				{
-					var bindingListView = enumerable.ToBindingListView();
-					if (!bindingListView.GetType().IsSerializable)
-						bindingListView = new ObjectListView(new ArrayList(bindingListView));
-					TryGetData(bindingListView, outgoingData);
+					if (enumerableType.IsSerializable)
+						TryGetData(enumerable, outgoingData);
+					else
+					{
+						var bindingListView = enumerable.ToBindingListView();
+						if (!bindingListView.GetType().IsSerializable)
+							bindingListView = new ObjectListView(new ArrayList(bindingListView));
+						TryGetData(bindingListView, outgoingData);
+					}
 				}
 				else
-					base.GetData(enumerable.CopyToDataTable(), outgoingData);
+					GetData(enumerable.CopyToDataTable(), outgoingData);
 			}
 			else if (target is DataTable)
-				base.GetData(target, outgoingData);
+				GetData((DataTable) target, outgoingData);
+		}
+
+		public void GetData(DataTable target, Stream outgoingData)
+		{
+			var dataTableSurrogate = new DataTableSurrogate(target);
+			base.GetData(dataTableSurrogate, outgoingData);
 		}
 
 		public void TryGetData(IEnumerable enumerable, Stream outgoingData)
@@ -111,7 +129,8 @@ namespace AW.DebugVisualizers
 			}
 			catch (SerializationException)
 			{
-				base.GetData(enumerable.CopyToDataTable(), outgoingData);
+				outgoingData.Position = 0;
+				GetData(enumerable.CopyToDataTable(), outgoingData);
 			}
 		}
 

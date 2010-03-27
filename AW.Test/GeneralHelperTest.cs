@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
@@ -93,7 +94,8 @@ namespace AW.Test
       CopyToDataTableAndAssert(MetaSingletons.MetaData.AddressType);
       listofNonSerializableClasses.Add(new SerializableClass { DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString() });
       CopyToDataTableAndAssert(listofNonSerializableClasses, typeof(SerializableClass));
-      listofNonSerializableClasses.Insert(0, new SerializableClass { DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString() });
+    	var d = new DataGridView {AutoGenerateColumns = true, DataSource = listofNonSerializableClasses};
+    	listofNonSerializableClasses.Insert(0, new SerializableClass { DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString() });
       CopyToDataTableAndAssert(listofNonSerializableClasses, typeof(SerializableClass));
     }
 

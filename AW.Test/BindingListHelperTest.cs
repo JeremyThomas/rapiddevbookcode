@@ -97,6 +97,9 @@ namespace AW.Test
       var dt = new DataSet();
       addressTypeEntityCollection.CreateHierarchicalProjection(dt);
       TestBindEnumerable(dt.Tables[0].DefaultView);
+			var bindingSource = new BindingSource();
+			Assert.IsTrue(bindingSource.BindEnumerable(SerializableClass.GenerateListWithBoth(), false));
+
     }
 
     private static IList TestBindEnumerable(IEnumerable enumerable)
@@ -140,6 +143,8 @@ namespace AW.Test
       Assert.IsNull("A string".ToBindingListView());
 
       Assert.IsNull((new[] {"s1", "s2", "s3"}).ToBindingListView());
+
+			TestToBindingListView(SerializableClass.GenerateList().ToBindingListView());
     }
 
     private static IBindingListView TestToBindingListView(IEnumerable enumerable)

@@ -12,9 +12,11 @@ namespace AW.Winforms.Helpers
 {
   public static class BindingListHelper
   {
+		
+		//&& enumerable.ToString() != "System.Collections.Hashtable+KeyCollection"
     public static IBindingListView ToBindingListView(this IEnumerable enumerable)
     {
-      var showenEnumerable = enumerable != null && !(enumerable is string) && enumerable.ToString() != "System.Collections.Hashtable+KeyCollection";
+      var showenEnumerable = enumerable != null && !(enumerable is string);
       if (showenEnumerable)
       {
         if (enumerable is IBindingListView)
