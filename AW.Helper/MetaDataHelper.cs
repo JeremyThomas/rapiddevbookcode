@@ -122,6 +122,28 @@ namespace AW.Helper
              select propertyDescriptor;
     }
 
+		/// <summary>
+		/// Gets the properties to serialize to display in a DataGridView.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns></returns>
+		public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
+		{
+			return GetPropertiesToDisplay(type).FilterBySerializable();
+		}
+
+		/// <summary>
+		/// Gets the properties that can be serialized.
+		/// </summary>
+		/// <param name="propertyDescriptors">The property descriptors.</param>
+		/// <returns></returns>
+		public static IEnumerable<PropertyDescriptor> FilterBySerializable(this IEnumerable<PropertyDescriptor> propertyDescriptors)
+		{
+			return from propertyDescriptor in propertyDescriptors
+						 where propertyDescriptor.PropertyType.IsSerializable
+						 select propertyDescriptor;
+		}
+
     /// <summary>
     /// Adds the associated metadata providers for each type.
     /// </summary>

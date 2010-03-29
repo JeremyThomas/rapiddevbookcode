@@ -1,190 +1,178 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
-using System.Reflection;
+using System.Linq;
 
 namespace AW.Helper
 {
-  /// <summary>
-  /// How to: Implement CopyToDataTable Where the Enumerable Item Type Is Not a DataRow. 
-  /// </summary>
-  /// <see cref="http://msdn.microsoft.com/en-us/library/bb669096.aspx"/>
-  public class ObjectShredder
-  {
-    protected FieldInfo[] Fi;
-    protected PropertyInfo[] Pi;
-    protected readonly Dictionary<string, int> OrdinalMap;
-    protected Type Type;
+	public delegate IEnumerable<PropertyDescriptor> PropertyDescriptorGenerator(Type type);
 
-    // ObjectShredder constructor.
-    public ObjectShredder()
-    {
-      OrdinalMap = new Dictionary<string, int>();
-    }
+	/// <summary>
+	/// 	How to: Implement CopyToDataTable Where the Enumerable Item Type Is Not a DataRow.
+	/// </summary>
+	/// <see cref = "http://msdn.microsoft.com/en-us/library/bb669096.aspx" />
+	public class ObjectShredder
+	{
+		protected IEnumerable<PropertyDescriptor> Pd;
+		protected readonly Dictionary<string, int> OrdinalMap;
+		protected Type Type;
+		protected PropertyDescriptorGenerator PropertyDescriptorGenerator;
 
-    public void SetType(IEnumerable source)
-    {
-      if (Type == null)
-      {
-        Type = MetaDataHelper.GetEnumerableItemType(source);
-        SetFieldsAndProperties(Type);
-      }
-    }
+		// ObjectShredder constructor.
+		public ObjectShredder(PropertyDescriptorGenerator propertyDescriptorGenerator)
+		{
+			PropertyDescriptorGenerator = propertyDescriptorGenerator;
+			OrdinalMap = new Dictionary<string, int>();
+		}
 
-    private void SetFieldsAndProperties(Type type)
-    {
-      Fi = type.GetFields();
-      Pi = type.GetProperties();
-    }
+		public void SetType(IEnumerable source)
+		{
+			if (Type == null)
+			{
+				Type = MetaDataHelper.GetEnumerableItemType(source);
+				SetProperties(Type);
+			}
+		}
 
-    /// <summary>
-    /// Loads a DataTable from a sequence of objects.
-    /// </summary>
-    /// <param name="source">The sequence of objects to load into the DataTable.</param>
-    /// <param name="table">The input table. The schema of the table must match that 
-    /// the type T.  If the table is null, a new table is created with a schema 
-    /// created from the public properties and fields of the type T.</param>
-    /// <param name="options">Specifies how values from the source sequence will be applied to 
-    /// existing rows in the table.</param>
-    /// <returns>A DataTable created from the source sequence.</returns>
-    public DataTable Shred(IEnumerable source, DataTable table, LoadOption? options)
-    {
-      SetType(source);
-      // Load the table from the scalar sequence if _type is a primitive type.
-      if (Type.IsPrimitive)
-        return ShredPrimitive(source, table, options);
+		protected void SetProperties(Type type)
+		{
+			Pd = GetProperties(type);
+		}
 
-      // Create a new table if the input table is null.
-      if (table == null)
-        table = new DataTable(Type.Name);
+		private IEnumerable<PropertyDescriptor> GetProperties(Type type)
+		{
+			return PropertyDescriptorGenerator == null ? TypeDescriptor.GetProperties(type).Cast<PropertyDescriptor>() : PropertyDescriptorGenerator(type);
+		}
 
-      // Initialize the ordinal map and extend the table schema based on type T.
-      table = ExtendTable(table, Type);
+		/// <summary>
+		/// 	Loads a DataTable from a sequence of objects.
+		/// </summary>
+		/// <param name = "source">The sequence of objects to load into the DataTable.</param>
+		/// <param name = "table">The input table. The schema of the table must match that 
+		/// 	the type T.  If the table is null, a new table is created with a schema 
+		/// 	created from the public properties and fields of the type T.</param>
+		/// <param name = "options">Specifies how values from the source sequence will be applied to 
+		/// 	existing rows in the table.</param>
+		/// <returns>A DataTable created from the source sequence.</returns>
+		public DataTable Shred(IEnumerable source, DataTable table, LoadOption? options)
+		{
+			SetType(source);
+			// Load the table from the scalar sequence if _type is a primitive type.
+			if (Type.IsPrimitive)
+				return ShredPrimitive(source, table, options);
 
-      // Enumerate the source sequence and load the object values into rows.
-      table.BeginLoadData();
-      var e = source.GetEnumerator();
-      {
-        while (e.MoveNext())
-        {
-          if (options != null)
-            table.LoadDataRow(ShredObject(table, e.Current), (LoadOption) options);
-          else
-            table.LoadDataRow(ShredObject(table, e.Current), true);
-        }
-      }
-      table.EndLoadData();
+			// Create a new table if the input table is null.
+			if (table == null)
+				table = new DataTable(Type.Name);
 
-      // Return the table.
-      return table;
-    }
+			// Initialize the ordinal map and extend the table schema based on type T.
+			table = ExtendTable(table, Type);
 
-    public DataTable ShredPrimitive(IEnumerable source, DataTable table, LoadOption? options)
-    {
-      SetType(source);
-      // Create a new table if the input table is null.
-      if (table == null)
-        table = new DataTable(Type.Name);
+			// Enumerate the source sequence and load the object values into rows.
+			table.BeginLoadData();
+			var e = source.GetEnumerator();
+			{
+				while (e.MoveNext())
+				{
+					if (options != null)
+						table.LoadDataRow(ShredObject(table, e.Current), (LoadOption) options);
+					else
+						table.LoadDataRow(ShredObject(table, e.Current), true);
+				}
+			}
+			table.EndLoadData();
 
-      if (!table.Columns.Contains("Value"))
-        table.Columns.Add("Value", Type);
+			// Return the table.
+			return table;
+		}
 
-      // Enumerate the source sequence and load the scalar values into rows.
-      table.BeginLoadData();
-      var e = source.GetEnumerator();
-      {
-        var values = new object[table.Columns.Count];
-        while (e.MoveNext())
-        {
-          values[table.Columns["Value"].Ordinal] = e.Current;
+		public DataTable ShredPrimitive(IEnumerable source, DataTable table, LoadOption? options)
+		{
+			SetType(source);
+			// Create a new table if the input table is null.
+			if (table == null)
+				table = new DataTable(Type.Name);
 
-          if (options != null)
-            table.LoadDataRow(values, (LoadOption) options);
-          else
-            table.LoadDataRow(values, true);
-        }
-      }
-      table.EndLoadData();
+			if (!table.Columns.Contains("Value"))
+				table.Columns.Add("Value", Type);
 
-      // Return the table.
-      return table;
-    }
+			// Enumerate the source sequence and load the scalar values into rows.
+			table.BeginLoadData();
+			var e = source.GetEnumerator();
+			{
+				var values = new object[table.Columns.Count];
+				while (e.MoveNext())
+				{
+					values[table.Columns["Value"].Ordinal] = e.Current;
 
-    private object[] ShredObject(DataTable table, object instance)
-    {
-      var fi = Fi;
-      var pi = Pi;
+					if (options != null)
+						table.LoadDataRow(values, (LoadOption) options);
+					else
+						table.LoadDataRow(values, true);
+				}
+			}
+			table.EndLoadData();
 
-      var type = instance.GetType();
-      if (type != Type)
-      {
-        // If the instance is derived from T, extend the table schema
-        // and get the properties and fields.
-        ExtendTable(table, type);
-        SetFieldsAndProperties(type);
-      }
+			// Return the table.
+			return table;
+		}
 
-      // Add the property and field values of the instance to an array.
-      var values = new object[table.Columns.Count];
-      foreach (var f in type.GetFields())
-      {
-        values[OrdinalMap[f.Name]] = f.GetValue(instance);
-      }
+		private object[] ShredObject(DataTable table, object instance)
+		{
+			var type = instance.GetType();
+			if (type != Type)
+			{
+				// If the instance is derived from T, extend the table schema
+				// and get the properties and fields.
+				ExtendTable(table, type);
+				SetProperties(type);
+			}
 
-      foreach (var p in type.GetProperties())
-      {
-        values[OrdinalMap[p.Name]] = p.GetValue(instance, null);
-      }
+			// Add the property and field values of the instance to an array.
+			var values = new object[table.Columns.Count];
 
-      // Return the property and field values of the instance.
-      return values;
-    }
+			foreach (var p in GetProperties(type))
+			{
+				values[OrdinalMap[p.Name]] = p.GetValue(instance);
+			}
 
-    private DataTable ExtendTable(DataTable table, Type type)
-    {
-      // Extend the table schema if the input table was null or if the value 
-      // in the sequence is derived from type T.            
-      foreach (var f in type.GetFields())
-      {
-        if (!OrdinalMap.ContainsKey(f.Name))
-        {
-          // Add the field as a column in the table if it doesn't exist
-          // already.
-          var dc = table.Columns.Contains(f.Name) ? table.Columns[f.Name]
-                     : table.Columns.Add(f.Name, MetaDataHelper.GetCoreType(f.FieldType));
+			// Return the property and field values of the instance.
+			return values;
+		}
 
-          // Add the field to the ordinal map.
-          OrdinalMap.Add(f.Name, dc.Ordinal);
-        }
-      }
-      foreach (var p in type.GetProperties())
-      {
-        if (!OrdinalMap.ContainsKey(p.Name))
-        {
-          // Add the property as a column in the table if it doesn't exist
-          // already.
-          var dc = table.Columns.Contains(p.Name) ? table.Columns[p.Name]
-                     : table.Columns.Add(p.Name, MetaDataHelper.GetCoreType(p.PropertyType));
+		private DataTable ExtendTable(DataTable table, Type type)
+		{
+			// Extend the table schema if the input table was null or if the value 
+			// in the sequence is derived from type T.            
+			foreach (var p in GetProperties(type))
+			{
+				if (!OrdinalMap.ContainsKey(p.Name))
+				{
+					// Add the property as a column in the table if it doesn't exist
+					// already.
+					var dc = table.Columns.Contains(p.Name) ? table.Columns[p.Name]
+					         	: table.Columns.Add(p.Name, MetaDataHelper.GetCoreType(p.PropertyType));
 
-          // Add the property to the ordinal map.
-          OrdinalMap.Add(p.Name, dc.Ordinal);
-        }
-      }
+					// Add the property to the ordinal map.
+					OrdinalMap.Add(p.Name, dc.Ordinal);
+				}
+			}
 
-      // Return the table.
-      return table;
-    }
-  }
+			// Return the table.
+			return table;
+		}
+	}
 
-  class ObjectShredder<T>: ObjectShredder
-  {
-    // ObjectShredder constructor.
-    public ObjectShredder()
-    {
-      Type = typeof(T);
-      Fi = Type.GetFields();
-      Pi = Type.GetProperties();
-    }
-  }
+	internal class ObjectShredder<T> : ObjectShredder
+	{
+		// ObjectShredder constructor.
+		public ObjectShredder(PropertyDescriptorGenerator propertyDescriptorGenerator)
+			: base(propertyDescriptorGenerator)
+		{
+			Type = typeof (T);
+			SetProperties(Type);
+		}
+	}
 }

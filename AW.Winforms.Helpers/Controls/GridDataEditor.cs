@@ -78,7 +78,9 @@ namespace AW.Winforms.Helpers.Controls
       get { return bindingSourceEnumerable; }
     }
 
-    #endregion
+  	public bool Readonly { get; set; }
+
+  	#endregion
 
     private void printToolStripButton_Click(object sender, EventArgs e)
     {
@@ -155,7 +157,9 @@ namespace AW.Winforms.Helpers.Controls
 
     protected bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
     {
-      var queryable = enumerable as IQueryable;
+			if (Readonly)
+				return Readonly;
+			var queryable = enumerable as IQueryable;
       var shouldBeReadonly = queryable != null;
       if (shouldBeReadonly)
       {

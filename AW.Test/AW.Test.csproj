@@ -100,6 +100,7 @@
     <Compile Include="CustomerQueriesTest.cs" />
     <Compile Include="BindingListHelperTest.cs" />
     <Compile Include="DataEditorExtensionsTest.cs" />
+    <Compile Include="DataTableSurrogateTest.cs" />
     <Compile Include="EntityHelperTest.cs" />
     <Compile Include="GeneralHelperTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />

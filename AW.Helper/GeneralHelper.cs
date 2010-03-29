@@ -104,7 +104,7 @@ namespace AW.Helper
       var dataView = source as DataView;
       if (dataView != null && dataView.Table != null)
         return dataView.Table;
-      return new ObjectShredder().Shred(source, null, null);
+			return new ObjectShredder(MetaDataHelper.GetPropertiesToSerialize).Shred(source, null, null);
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ namespace AW.Helper
 
     public static DataTable CopyToDataTable<T>(this IEnumerable<T> source, DataTable table, LoadOption? options)
     {
-      return new ObjectShredder().Shred(source, table, options);
+			return new ObjectShredder(MetaDataHelper.GetPropertiesToSerialize).Shred(source, table, options);
     }
 
     /// <summary>
