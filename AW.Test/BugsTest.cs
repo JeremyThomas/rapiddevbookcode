@@ -5,7 +5,7 @@ using AW.Data.Queries;
 using AW.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AW.Test
+namespace AW.Tests
 {
   /// <summary>
   ///This is a test class to execute Queries that demonstrate some bugs found in the LLBL LINQ provider

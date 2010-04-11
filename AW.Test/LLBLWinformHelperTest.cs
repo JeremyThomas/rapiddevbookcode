@@ -9,7 +9,7 @@ using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Test
+namespace AW.Tests
 {
   /// <summary>
   ///This is a test class for LLBLWinformHelperTest and is intended

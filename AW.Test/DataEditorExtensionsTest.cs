@@ -8,7 +8,7 @@ using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AW.Test
+namespace AW.Tests
 {
   /// <summary>
   ///This is a test class for DataEditorExtensionsTest and is intended

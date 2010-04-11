@@ -4,7 +4,7 @@ using System.Linq;
 using AW.Data.Queries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AW.Test
+namespace AW.Tests
 {
   /// <summary>
   ///This is a test class for SalesOrderQueries and is intended

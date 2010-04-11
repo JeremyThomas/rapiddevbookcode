@@ -11,7 +11,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AW.Test
+namespace AW.Tests
 {
 	///<summary>
 	///	This is a test class for GeneralHelperTest and is intended

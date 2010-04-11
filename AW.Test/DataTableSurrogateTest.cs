@@ -7,7 +7,7 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AW.Test
+namespace AW.Tests
 {
 	///<summary>
 	///	This is a test class for DataTableSurrogateTest and is intended

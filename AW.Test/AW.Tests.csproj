@@ -7,8 +7,8 @@
     <ProjectGuid>{80418BDD-8FF2-4F01-8782-AD22A496AF79}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AW.Test</RootNamespace>
-    <AssemblyName>AW.Test</AssemblyName>
+    <RootNamespace>AW.Tests</RootNamespace>
+    <AssemblyName>AW.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -105,7 +105,6 @@
     <Compile Include="GeneralHelperTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />
     <Compile Include="LookUpQueriesTest.cs" />
-    <Compile Include="OrganizationHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -115,9 +114,6 @@
     <Compile Include="SalesOrderQueriesTest.cs" />
     <Compile Include="BugsTest.cs" />
     <Compile Include="TestData.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="AuthoringTests.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Data\AW.Data.csproj">
@@ -139,10 +135,6 @@
     <ProjectReference Include="..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
       <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
       <Name>AW.Winforms.Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AW.Win\AW.Win.csproj">
-      <Project>{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}</Project>
-      <Name>AW.Win</Name>
     </ProjectReference>
     <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
       <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>

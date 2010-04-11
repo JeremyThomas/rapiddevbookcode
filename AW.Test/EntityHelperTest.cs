@@ -6,7 +6,7 @@ using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-namespace AW.Test
+namespace AW.Tests
 {
   /// <summary>
   ///This is a test class for EntityHelpe and is intended

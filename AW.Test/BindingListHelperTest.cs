@@ -5,14 +5,13 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
-using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
-using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Tests;
 using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AW.Test
+namespace AW.Tests
 {
   /// <summary>
   ///This is a test class for BindingListHelperTest and is intended
