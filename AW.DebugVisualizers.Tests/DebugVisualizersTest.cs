@@ -73,6 +73,18 @@ namespace AW.DebugVisualizers.Tests
       TestSerialize(addressTypeDataTable.DefaultView);
     }
 
+		[TestMethod]
+		public void SerializableQueryTest()
+		{
+			TestSerialize(MetaSingletons.MetaData.AddressType);
+			var addressTypeQueryable = MetaSingletons.MetaData.AddressType.Distinct();
+			TestSerialize(addressTypeQueryable);
+			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+			var addressTypeEntityCollectionQueryable = addressTypeEntityCollection.AsQueryable();
+			TestSerialize(addressTypeEntityCollectionQueryable);
+			//TestShow(MetaSingletons.MetaData.AddressType);
+		}
+
     [TestMethod]
     public void SerializableEnumerableTest()
     {
@@ -106,6 +118,14 @@ namespace AW.DebugVisualizers.Tests
       TestSerialize(new ArrayList(listofNonSerializableClasses));
       TestShow(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
     }
+
+		[TestMethod]
+		public void DifferentItemTypesTest()
+		{
+			var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
+			TestSerialize(listofNonSerializableClasses);
+			TestSerialize(listofNonSerializableClasses.Distinct());
+		}
 
     public static void TestSerialize(object enumerableToVisualize)
     {

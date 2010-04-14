@@ -19,17 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E5E0-4B67-A97C-464F8697A452}"
-	ProjectSection(SolutionItems) = preProject
-		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
-		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml
-		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll
-		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Helper", "AW.Helper\AW.Helper.csproj", "{FFC5B55E-9157-4CE6-81BD-E593E4C08422}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{F15CB949-7617-4315-BC90-9A4A94633C86}"
@@ -109,7 +98,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution

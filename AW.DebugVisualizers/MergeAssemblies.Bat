@@ -1,0 +1,1 @@
+"C:\Program Files\Microsoft\ILMerge\ILMerge.exe" /out:bin\release\AW.EnumerableVisualizer.dll bin\release\AW.DebugVisualizers.dll bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll
