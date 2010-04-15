@@ -87,6 +87,7 @@
     <Compile Include="FilterEvaluator.cs" />
     <Compile Include="FilterEvaluatorT.cs" />
     <Compile Include="LogicalOperator.cs" />
+    <Compile Include="ObjectListViewHelper.cs" />
     <Compile Include="Predicate.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

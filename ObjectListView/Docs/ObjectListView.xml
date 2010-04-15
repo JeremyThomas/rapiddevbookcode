@@ -143,21 +143,6 @@
             </summary>
             <value>The object.</value>
         </member>
-        <member name="M:JesseJohnston.Tests.Generic.IBindingListTests.ListChangedSimpleItemChanged">
-            <summary>
-            List items that don't support INotifyPropertyChanged or xxxChanged shouldn't cause ListChanged to be raised.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.Tests.Generic.IBindingListTests.ListChangedNotifyingItemChanged">
-            <summary>
-            List items that support INotifyPropertyChanged will cause ListChanged to be raised.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.Tests.Generic.IBindingListTests.ListChangedNotifyingEventItemChanged">
-            <summary>
-            List items that support xxxChanged events will cause ListChanged to be raised.
-            </summary>
-        </member>
         <member name="T:JesseJohnston.PropertyComparerCollection">
             <summary>
             Collection of <seealso cref="T:System.Collections.IComparer"/> objects to compare property values for a specified type.
@@ -752,11 +737,6 @@
             Argument type for the <seealso cref="E:JesseJohnston.ObjectListView`1.AddingNew"/> event.
             </summary>
         </member>
-        <member name="M:JesseJohnston.ObjectListView`1.AddingNewEventArgs.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.ObjectListView`1.AddingNewEventArgs"/> class.
-            </summary>
-        </member>
         <member name="P:JesseJohnston.ObjectListView`1.AddingNewEventArgs.NewObject">
             <summary>
             Gets or sets the new object provided by the event handler (if any).
@@ -881,21 +861,6 @@
             </summary>
             <value></value>
             <returns>The number of elements contained in the collection.</returns>
-        </member>
-        <member name="M:JesseJohnston.Tests.IBindingListTests.ListChangedSimpleItemChanged">
-            <summary>
-            List items that don't support INotifyPropertyChanged or xxxChanged shouldn't cause ListChanged to be raised.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.Tests.IBindingListTests.ListChangedNotifyingItemChanged">
-            <summary>
-            List items that support INotifyPropertyChanged will cause ListChanged to be raised.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.Tests.IBindingListTests.ListChangedNotifyingEventItemChanged">
-            <summary>
-            List items that support xxxChanged events will cause ListChanged to be raised.
-            </summary>
         </member>
         <member name="T:JesseJohnston.ObjectListView">
             <summary>
@@ -1573,12 +1538,6 @@
             </summary>
             <remarks>This class is used by Visual Studio, and is not intended to be called from your code.</remarks>
         </member>
-        <member name="M:JesseJohnston.ObjectListViewVisualizer.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.ObjectListViewVisualizer"/> class.
-            </summary>
-            <remarks>This method is used by Visual Studio, and is not intended to be called from your code.</remarks>
-        </member>
         <member name="M:JesseJohnston.ObjectListViewVisualizer.Show(Microsoft.VisualStudio.DebuggerVisualizers.IDialogVisualizerService,Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider)">
             <summary>
             Display the visualizer user interface.
@@ -1916,5 +1875,6 @@
             </summary>
             <value>The object.</value>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:JesseJohnston.ObjectListViewHelper.CreateVisualizerForm(System.Object)" -->
     </members>
 </doc>

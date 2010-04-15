@@ -296,7 +296,9 @@ namespace AW.Winforms.Helpers.Controls
 
     private void toolStripButtonObjectListViewVisualizer_Click(object sender, EventArgs e)
     {
-    //  ObjectListViewVisualizer.TestShowVisualizer(bindingSourceEnumerable.List);
+      var visualizerForm = ObjectListViewHelper.CreateVisualizerForm(bindingSourceEnumerable.List);
+      if (visualizerForm != null)
+        visualizerForm.ShowDialog();
     }
   }
 }
