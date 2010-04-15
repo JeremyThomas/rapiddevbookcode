@@ -53,16 +53,17 @@
       this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
       this.dataGridViewEnumerable = new System.Windows.Forms.DataGridView();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
+      this.bindingSourcePaging = new System.Windows.Forms.BindingSource(this.components);
+      this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
       this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
       this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-      this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
       this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-      this.bindingSourcePaging = new System.Windows.Forms.BindingSource(this.components);
+      this.toolStripButtonObjectListViewVisualizer = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
       this.bindingNavigator1.SuspendLayout();
@@ -105,7 +106,8 @@
             this.copyToolStripButton,
             this.toolStripLabelDeleteCount,
             this.toolStripLabelSaveResult,
-            this.toolStripButtonCancelEdit});
+            this.toolStripButtonCancelEdit,
+            this.toolStripButtonObjectListViewVisualizer});
       this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
       this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
       this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem1;
@@ -308,6 +310,17 @@
       this.bindingNavigatorPaging.TabIndex = 5;
       this.bindingNavigatorPaging.Text = "bindingNavigator2";
       // 
+      // bindingSourcePaging
+      // 
+      this.bindingSourcePaging.PositionChanged += new System.EventHandler(this.bindingSourcePaging_PositionChanged);
+      // 
+      // bindingNavigatorCountItem
+      // 
+      this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
+      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
+      this.bindingNavigatorCountItem.Text = "of {0}";
+      this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
+      // 
       // bindingNavigatorMoveFirstItem
       // 
       this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -340,16 +353,9 @@
       this.bindingNavigatorPositionItem.Text = "0";
       this.bindingNavigatorPositionItem.ToolTipText = "Current position";
       // 
-      // bindingNavigatorCountItem
-      // 
-      this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
-      this.bindingNavigatorCountItem.Text = "of {0}";
-      this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-      // 
       // bindingNavigatorSeparator1
       // 
-      this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator";
+      this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
       this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
       // 
       // bindingNavigatorMoveNextItem
@@ -372,12 +378,18 @@
       // 
       // bindingNavigatorSeparator2
       // 
-      this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator";
+      this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
       this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
       // 
-      // bindingSourcePaging
+      // toolStripButtonObjectListViewVisualizer
       // 
-      this.bindingSourcePaging.PositionChanged += new System.EventHandler(this.bindingSourcePaging_PositionChanged);
+      this.toolStripButtonObjectListViewVisualizer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectListViewVisualizer.Image")));
+      this.toolStripButtonObjectListViewVisualizer.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonObjectListViewVisualizer.Name = "toolStripButtonObjectListViewVisualizer";
+      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 22);
+      this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListViewVisualizer";
+      this.toolStripButtonObjectListViewVisualizer.Visible = false;
+      this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
       // 
       // GridDataEditor
       // 
@@ -438,5 +450,6 @@
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
     private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+    private System.Windows.Forms.ToolStripButton toolStripButtonObjectListViewVisualizer;
   }
 }

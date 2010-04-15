@@ -4,15 +4,22 @@
         <name>ObjectListView</name>
     </assembly>
     <members>
-        <member name="T:JesseJohnston.ObjectView">
+        <member name="F:JesseJohnston.AnalysisForm.components">
             <summary>
-            Wrapper returned by <seealso cref="M:JesseJohnston.ObjectListView.AddNew"/>
+            Required designer variable.
             </summary>
-            <remarks>
-            This type is returned from <seealso cref="M:JesseJohnston.ObjectListView.AddNew"/> so that if the added object supports <see cref="T:System.ComponentModel.IEditableObject"/>, 
-            calling <see cref="M:JesseJohnston.ObjectView.EndEdit"/> or <see cref="M:JesseJohnston.ObjectView.CancelEdit"/> through the wrapper will notify the ObjectListView that the object addition has been committed
-            or cancelled.
-            </remarks>
+        </member>
+        <member name="M:JesseJohnston.AnalysisForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JesseJohnston.AnalysisForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
         </member>
         <member name="T:JesseJohnston.IEditableObjectEvents">
             <summary>
@@ -33,6 +40,87 @@
             <summary>
             Raised when <seealso cref="M:System.ComponentModel.IEditableObject.EndEdit"/> is called.
             </summary>
+        </member>
+        <member name="T:JesseJohnston.Predicate">
+            <summary>
+            Callback type for the <seealso cref="P:JesseJohnston.ObjectListView.FilterPredicate"/> property.
+            </summary>
+            <param name="listItem">The list item to be checked against the filter criteria.</param>
+            <returns><b>true</b> if the list item matches the filter; <b>false</b> if it does not.</returns>
+        </member>
+        <member name="F:JesseJohnston.VisualizerTForm`1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.VisualizerTForm`1.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JesseJohnston.VisualizerTForm`1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.PropertyPathDescriptor">
+            <summary>
+            Describes a property of a property, and provides access to the property value.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.FilterNode">
+            <summary>
+            A node in the filter expression tree.  A node may be a terminal expression (i.e. property name, value, and relational operator)
+            or a sub-tree containing a logical operator, left and right terms.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.#ctor(JesseJohnston.RelationalExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.FilterNode"/> class that is a terminal node.
+            </summary>
+            <remarks>
+            A terminal node is a relational expression, and contains no child nodes.
+            </remarks>
+            <param name="term">The expression term.</param>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.#ctor(JesseJohnston.FilterNode,JesseJohnston.FilterNode,JesseJohnston.LogicalOperator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.FilterNode"/> class that is not a terminal node.
+            </summary>
+            <param name="left">The left child node.</param>
+            <param name="right">The right node.</param>
+            <param name="op">The operator relating the child nodes.</param>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.Parse(System.String)">
+            <summary>
+            Parses the specified text into a binary expression tree.
+            </summary>
+            <param name="expression">The expression text to parse.</param>
+            <returns></returns>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.Evaluate(JesseJohnston.ExpressionEvaluator)">
+            <summary>
+            Evaluates the current node and it's child nodes.
+            </summary>
+            <param name="evaluator">The delegate used to evaluate terminal nodes.</param>
+            <returns>True if the current node and it's children evaluate to true; false otherwise.</returns>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.Reset">
+            <summary>
+            Resets the evaluation status for each node in the expression tree, so that it can be re-evaluated.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.ObjectView">
+            <summary>
+            Wrapper returned by <seealso cref="M:JesseJohnston.ObjectListView.AddNew"/>
+            </summary>
+            <remarks>
+            This type is returned from <seealso cref="M:JesseJohnston.ObjectListView.AddNew"/> so that if the added object supports <see cref="T:System.ComponentModel.IEditableObject"/>, 
+            calling <see cref="M:JesseJohnston.ObjectView.EndEdit"/> or <see cref="M:JesseJohnston.ObjectView.CancelEdit"/> through the wrapper will notify the ObjectListView that the object addition has been committed
+            or cancelled.
+            </remarks>
         </member>
         <member name="M:JesseJohnston.ObjectView.BeginEdit">
             <summary>
@@ -55,22 +143,70 @@
             </summary>
             <value>The object.</value>
         </member>
-        <member name="F:JesseJohnston.AnalysisForm.components">
+        <member name="M:JesseJohnston.Tests.Generic.IBindingListTests.ListChangedSimpleItemChanged">
             <summary>
-            Required designer variable.
+            List items that don't support INotifyPropertyChanged or xxxChanged shouldn't cause ListChanged to be raised.
             </summary>
         </member>
-        <member name="M:JesseJohnston.AnalysisForm.Dispose(System.Boolean)">
+        <member name="M:JesseJohnston.Tests.Generic.IBindingListTests.ListChangedNotifyingItemChanged">
             <summary>
-            Clean up any resources being used.
+            List items that support INotifyPropertyChanged will cause ListChanged to be raised.
             </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         </member>
-        <member name="M:JesseJohnston.AnalysisForm.InitializeComponent">
+        <member name="M:JesseJohnston.Tests.Generic.IBindingListTests.ListChangedNotifyingEventItemChanged">
             <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
+            List items that support xxxChanged events will cause ListChanged to be raised.
             </summary>
+        </member>
+        <member name="T:JesseJohnston.PropertyComparerCollection">
+            <summary>
+            Collection of <seealso cref="T:System.Collections.IComparer"/> objects to compare property values for a specified type.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.PropertyComparerCollection.Add(System.String,System.Collections.IComparer)">
+            <summary>
+            Adds an <see cref="T:System.Collections.IComparer"/> for the provided property name.
+            </summary>
+            <param name="key">The property name.</param>
+            <param name="value">The <seealso cref="T:System.Collections.IComparer"/> to use when comparing values of the property.</param>
+            <exception cref="T:System.ArgumentException">An element with the same key already exists in the <see cref="T:System.Collections.Generic.IDictionary`2"></see>.</exception>
+            <exception cref="T:System.ArgumentNullException">key is null.</exception>
+        </member>
+        <member name="M:JesseJohnston.PropertyComparerCollection.ContainsKey(System.String)">
+            <summary>
+            Determines whether the collection contains an <see cref="T:System.Collections.IComparer"/> for the specified property name.
+            </summary>
+            <param name="key">The property name.</param>
+            <returns>
+            <b>true</b> if the contains contains an element with the key; otherwise, <b>false</b>.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">key is null.</exception>
+        </member>
+        <member name="M:JesseJohnston.PropertyComparerCollection.Remove(System.String)">
+            <summary>
+            Removes the <see cref="T:System.Collections.IComparer"/> associated with the specified property name from the collection.
+            </summary>
+            <param name="key">The property name associated with the <seealso cref="T:System.Collections.IComparer"/> to remove.</param>
+            <returns>
+            <b>true</b> if the element is successfully removed; otherwise, <b>false</b>.  This method also returns false if key was not found in the original collection.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">key is null.</exception>
+        </member>
+        <member name="M:JesseJohnston.PropertyComparerCollection.Clear">
+            <summary>
+            Removes all <see cref="T:System.Collections.IComparer"/>s from the collection.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.PropertyComparerCollection.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:System.Collections.IComparer"/> for the specified property name.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.PropertyComparerCollection.Count">
+            <summary>
+            Gets the number of <see cref="T:System.Collections.IComparer"/>s contained in the collection.
+            </summary>
+            <returns>The number of elements contained in the collection.</returns>
         </member>
         <member name="T:JesseJohnston.ObjectListView`1">
             <summary>
@@ -633,199 +769,6 @@
             </summary>
             <value><b>true</b> if a new object was provided; otherwise, <b>false</b>.</value>
         </member>
-        <member name="T:JesseJohnston.ListItemChangeEvents">
-            <summary>
-            Describes the ways that a list item reports changes to it's property values.
-            </summary>
-        </member>
-        <member name="F:JesseJohnston.ListItemChangeEvents.None">
-            <summary>
-            The list item does not raise events when it's property values change.
-            </summary>
-        </member>
-        <member name="F:JesseJohnston.ListItemChangeEvents.INotifyPropertyChanged">
-            <summary>
-            The list item class implements the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface.
-            </summary>
-        </member>
-        <member name="F:JesseJohnston.ListItemChangeEvents.PropertyChangedEvents">
-            <summary>
-            The list item class provides an event named <b><i>propertyName</i>Changed</b> for each property.
-            </summary>
-        </member>
-        <member name="T:JesseJohnston.Properties.Resources">
-            <summary>
-              A strongly-typed resource class, for looking up localized strings, etc.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.ResourceManager">
-            <summary>
-              Returns the cached ResourceManager instance used by this class.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.Culture">
-            <summary>
-              Overrides the current thread's CurrentUICulture property for all
-              resource lookups using this strongly typed resource class.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisColorFontHeader">
-            <summary>
-              Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fswiss\fprq2\fcharset0 Verdana;}{\f1{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;\red0\green128\blue0;}\fswiss\fcharset0 Arial;}}.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisHeaderText">
-            <summary>
-              Looks up a localized string similar to {\*\generator Msftedit 5.41.21.2506;}\viewkind4\uc1\pard\cf0\f0\fs20 If you&apos;re having trouble with ObjectListView, consider the following analysis of your list and list item types.  The list is the object that you provided in the ObjectListView constructor.  The list items are the objects contained in the list.\par\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoIEditableObject">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support IEditableObject, which means that you cannot cancel changes made through a bound control such as the DataGridView.\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoINotifyPropertyChanged">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support INotifyPropertyChanged, but \cf3 does\cf0  supply one or more property change events.  This means some or all changes to property values will be reflected in the view.\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoINotifyPropertyChangedNoPropertyChangedEvents">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support INotifyPropertyChanged or property change events, which means that changes to property values will not be refected in the view.\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListItemOptimal">
-            <summary>
-              Looks up a localized string similar to \cf3\b Your list item type \cf0\i {0}\cf3\i0  is optimal.\cf0\b0\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSubOptimal">
-            <summary>
-              Looks up a localized string similar to \pard\cf1\b\f0\fs20 Your list item type \cf0\i {0}\cf1\i0  is sub-optimal.\cf0\b0\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSupportsIEditableObject">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support IEditableObject, which allows you to cancel changes made through a bound control such as the DataGridView.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSupportsINotifyPropertyChanged">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support INotifyPropertyChanged, which means that changes to property values will be refected in the view.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListModifications">
-            <summary>
-              Looks up a localized string similar to \pard\par\cf2\b List modifications:\cf0\b0\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListNoIRaiseItemChangedEvents">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support IRaiseItemChangedEvents, which means that list item changes reported as PropertyChanged events will not be reflected in the view.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListNoListChanged">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support the ListChanged event, which means that added and deleted items will not be reflected in the view.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListNotSynced">
-            <summary>
-              Looks up a localized string similar to The list makes no claims to thread safety.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListOptimal">
-            <summary>
-              Looks up a localized string similar to \pard\par\cf3\b Your list type \cf0\i {0}\cf3\i0  is optimal.\cf0\b0\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListReadOnly">
-            <summary>
-              Looks up a localized string similar to The list is read-only, which means that you cannot add, change, or delete list items through the view or a bound control.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListSubOptimal">
-            <summary>
-              Looks up a localized string similar to \pard\par\cf1\b Your list type \cf0\i {0}\cf1\i0  is sub-optimal.\cf0\b0\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListSupportsIRaiseItemChangedEvents">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support IRaiseItemChangedEvents, which means that list item changes reported as PropertyChanged events will be reflected in the view.\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListSupportsListChanged">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support the ListChanged event, which means that added and deleted items will be reflected in the view.\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListSynced">
-            <summary>
-              Looks up a localized string similar to The list claims to be thread-safe, and offers a SyncRoot object for lock operations.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListThreadSafety">
-            <summary>
-              Looks up a localized string similar to \pard\par\cf2\b List thread safety:\cf0\b0\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListWritableFixedSize">
-            <summary>
-              Looks up a localized string similar to The list is writable but is fixed in size, which means that you can change or replace list items through the view or a bound control, but cannot add or remove items.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisListWritableVariableSize">
-            <summary>
-              Looks up a localized string similar to The list is writable and can change in size, which allows you to add, change, and remove list items through the view or a bound control.\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendations">
-            <summary>
-              Looks up a localized string similar to \pard\par\cf2\b Recommendations:\cf0\b0\par .
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsBindingListT">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360\f1 A recommended list type is BindingList&lt;T&gt;, where T is your list item type.  BindingList&lt;T&gt; implements both IBindingList and IRaiseItemChangedEvents.\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsIEditableObject">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IEditableObject for your list item type (\cf2 optional\cf0 ).\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsINotifyPropertyChanged">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement INotifyPropertyChanged for your list item type (\cf1 important\cf0 ).\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsIRaiseItemChangedEvents">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IRaiseItemChangedEvents for your list type (\cf1 important\cf0 ).\par.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsListChanged">
-            <summary>
-              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IBindingList or provide a ListChanged event for your list type (\cf1 important\cf0 ).\par.
-            </summary>
-        </member>
-        <member name="F:JesseJohnston.VisualizerTForm`1.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.VisualizerTForm`1.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:JesseJohnston.VisualizerTForm`1.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
-            </summary>
-        </member>
         <member name="F:JesseJohnston.VisualizerForm.components">
             <summary>
             Required designer variable.
@@ -841,6 +784,117 @@
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.SortDescriptionCollection">
+            <summary>
+            Collection of <seealso cref="T:JesseJohnston.SortDescription"/> objects for a specific list item type.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescriptionCollection"/> class.
+            </summary>
+            <param name="targetType">Type of the list item.</param>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.#ctor(System.Type,System.ComponentModel.ListSortDescriptionCollection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescriptionCollection"/> class.
+            </summary>
+            <param name="targetType">Type of the list item.</param>
+            <param name="sorts">A set of <seealso cref="T:System.ComponentModel.ListSortDescription"/> objects to populate the collection with.</param>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Contains(System.String)">
+            <summary>
+            Determines whether the collection contains a <seealso cref="T:JesseJohnston.SortDescription"/> for the specified property name.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <returns>
+            	<c>true</c> if the collection contains a corresponding <seealso cref="T:JesseJohnston.SortDescription"/>; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.GetListSortDescriptions">
+            <summary>
+            Creates a <seealso cref="T:System.ComponentModel.ListSortDescriptionCollection"/> from the sort descriptions in the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.ComponentModel.ListSortDescriptionCollection"/> representing the sort descriptions.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Add(JesseJohnston.SortDescription)">
+            <summary>
+            Adds an item to the collection.
+            </summary>
+            <param name="item">The object to add to the collection.</param>
+            <exception cref="T:System.ArgumentException">The property specified in the <seealso cref="T:JesseJohnston.SortDescription"/> is not a property of the target (list item) type.</exception>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Clear">
+            <summary>
+            Removes all items from the collection.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Contains(JesseJohnston.SortDescription)">
+            <summary>
+            Determines whether the collection contains a specific value.
+            </summary>
+            <param name="item">The object to locate in the collection.</param>
+            <returns>
+            true if item is found in the collection; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.CopyTo(JesseJohnston.SortDescription[],System.Int32)">
+            <summary>
+            Copies the elements of the collection to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.
+            </summary>
+            <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from the collection. The <see cref="T:System.Array"></see> must have zero-based indexing.</param>
+            <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">arrayIndex is less than 0.</exception>
+            <exception cref="T:System.ArgumentNullException">array is null.</exception>
+            <exception cref="T:System.ArgumentException">array is multidimensional.-or-arrayIndex is equal to or greater than the length of array.-or-The number of elements in the source collection is greater than the available space from arrayIndex to the end of the destination array.-or-Type T cannot be cast automatically to the type of the destination array.</exception>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Remove(JesseJohnston.SortDescription)">
+            <summary>
+            Removes the first occurrence of a specific object from the collection.
+            </summary>
+            <param name="item">The object to remove from the collection.</param>
+            <returns>
+            true if item was successfully removed from the collection; otherwise, false. This method also returns false if item is not found in the original collection.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"></see> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="P:JesseJohnston.SortDescriptionCollection.Item(System.Int32)">
+            <summary>
+            Gets the <see cref="T:JesseJohnston.SortDescription"/> at the specified index.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:JesseJohnston.SortDescriptionCollection.Count">
+            <summary>
+            Gets the number of elements contained in the collection.
+            </summary>
+            <value></value>
+            <returns>The number of elements contained in the collection.</returns>
+        </member>
+        <member name="M:JesseJohnston.Tests.IBindingListTests.ListChangedSimpleItemChanged">
+            <summary>
+            List items that don't support INotifyPropertyChanged or xxxChanged shouldn't cause ListChanged to be raised.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.Tests.IBindingListTests.ListChangedNotifyingItemChanged">
+            <summary>
+            List items that support INotifyPropertyChanged will cause ListChanged to be raised.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.Tests.IBindingListTests.ListChangedNotifyingEventItemChanged">
+            <summary>
+            List items that support xxxChanged events will cause ListChanged to be raised.
             </summary>
         </member>
         <member name="T:JesseJohnston.ObjectListView">
@@ -1412,249 +1466,6 @@
             </summary>
             <returns>An object that can be used to synchronize access to the view.</returns>
         </member>
-        <member name="T:JesseJohnston.PropertyComparerCollection">
-            <summary>
-            Collection of <seealso cref="T:System.Collections.IComparer"/> objects to compare property values for a specified type.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.PropertyComparerCollection.Add(System.String,System.Collections.IComparer)">
-            <summary>
-            Adds an <see cref="T:System.Collections.IComparer"/> for the provided property name.
-            </summary>
-            <param name="key">The property name.</param>
-            <param name="value">The <seealso cref="T:System.Collections.IComparer"/> to use when comparing values of the property.</param>
-            <exception cref="T:System.ArgumentException">An element with the same key already exists in the <see cref="T:System.Collections.Generic.IDictionary`2"></see>.</exception>
-            <exception cref="T:System.ArgumentNullException">key is null.</exception>
-        </member>
-        <member name="M:JesseJohnston.PropertyComparerCollection.ContainsKey(System.String)">
-            <summary>
-            Determines whether the collection contains an <see cref="T:System.Collections.IComparer"/> for the specified property name.
-            </summary>
-            <param name="key">The property name.</param>
-            <returns>
-            <b>true</b> if the contains contains an element with the key; otherwise, <b>false</b>.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">key is null.</exception>
-        </member>
-        <member name="M:JesseJohnston.PropertyComparerCollection.Remove(System.String)">
-            <summary>
-            Removes the <see cref="T:System.Collections.IComparer"/> associated with the specified property name from the collection.
-            </summary>
-            <param name="key">The property name associated with the <seealso cref="T:System.Collections.IComparer"/> to remove.</param>
-            <returns>
-            <b>true</b> if the element is successfully removed; otherwise, <b>false</b>.  This method also returns false if key was not found in the original collection.
-            </returns>
-            <exception cref="T:System.ArgumentNullException">key is null.</exception>
-        </member>
-        <member name="M:JesseJohnston.PropertyComparerCollection.Clear">
-            <summary>
-            Removes all <see cref="T:System.Collections.IComparer"/>s from the collection.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.PropertyComparerCollection.Item(System.String)">
-            <summary>
-            Gets or sets the <see cref="T:System.Collections.IComparer"/> for the specified property name.
-            </summary>
-        </member>
-        <member name="P:JesseJohnston.PropertyComparerCollection.Count">
-            <summary>
-            Gets the number of <see cref="T:System.Collections.IComparer"/>s contained in the collection.
-            </summary>
-            <returns>The number of elements contained in the collection.</returns>
-        </member>
-        <member name="T:JesseJohnston.ObjectListViewVisualizer">
-            <summary>
-            A debugger visualizer for ObjectListView.
-            </summary>
-            <remarks>This class is used by Visual Studio, and is not intended to be called from your code.</remarks>
-        </member>
-        <member name="M:JesseJohnston.ObjectListViewVisualizer.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.ObjectListViewVisualizer"/> class.
-            </summary>
-            <remarks>This method is used by Visual Studio, and is not intended to be called from your code.</remarks>
-        </member>
-        <member name="M:JesseJohnston.ObjectListViewVisualizer.Show(Microsoft.VisualStudio.DebuggerVisualizers.IDialogVisualizerService,Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider)">
-            <summary>
-            Display the visualizer user interface.
-            </summary>
-            <remarks>This method is used by Visual Studio, and is not intended to be called from your code.</remarks>
-            <param name="windowService">An object of type <see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.IDialogVisualizerService"></see>, which provides methods your visualizer can use to display Windows forms, controls, and dialogs.</param>
-            <param name="objectProvider">An object of type <see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider"></see>. This object provides communication from the debugger side of the visualizer to the object source (<see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.VisualizerObjectSource"></see>) on the debuggee side.</param>
-        </member>
-        <member name="M:JesseJohnston.ObjectListViewVisualizer.TestShowVisualizer(System.Object)">
-            <summary>
-            Tests the visualizer by hosting it outside of the debugger.
-            </summary>
-            <remarks>This method is not intended to be called from your code.</remarks>
-            <param name="objectToVisualize">The object to display in the visualizer.</param>
-        </member>
-        <member name="T:JesseJohnston.SortDescriptionCollection">
-            <summary>
-            Collection of <seealso cref="T:JesseJohnston.SortDescription"/> objects for a specific list item type.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.#ctor(System.Type)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescriptionCollection"/> class.
-            </summary>
-            <param name="targetType">Type of the list item.</param>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.#ctor(System.Type,System.ComponentModel.ListSortDescriptionCollection)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescriptionCollection"/> class.
-            </summary>
-            <param name="targetType">Type of the list item.</param>
-            <param name="sorts">A set of <seealso cref="T:System.ComponentModel.ListSortDescription"/> objects to populate the collection with.</param>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.Contains(System.String)">
-            <summary>
-            Determines whether the collection contains a <seealso cref="T:JesseJohnston.SortDescription"/> for the specified property name.
-            </summary>
-            <param name="propertyName">Name of the property.</param>
-            <returns>
-            	<c>true</c> if the collection contains a corresponding <seealso cref="T:JesseJohnston.SortDescription"/>; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.GetListSortDescriptions">
-            <summary>
-            Creates a <seealso cref="T:System.ComponentModel.ListSortDescriptionCollection"/> from the sort descriptions in the collection.
-            </summary>
-            <returns>
-            A <see cref="T:System.ComponentModel.ListSortDescriptionCollection"/> representing the sort descriptions.
-            </returns>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.Add(JesseJohnston.SortDescription)">
-            <summary>
-            Adds an item to the collection.
-            </summary>
-            <param name="item">The object to add to the collection.</param>
-            <exception cref="T:System.ArgumentException">The property specified in the <seealso cref="T:JesseJohnston.SortDescription"/> is not a property of the target (list item) type.</exception>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.Clear">
-            <summary>
-            Removes all items from the collection.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.Contains(JesseJohnston.SortDescription)">
-            <summary>
-            Determines whether the collection contains a specific value.
-            </summary>
-            <param name="item">The object to locate in the collection.</param>
-            <returns>
-            true if item is found in the collection; otherwise, false.
-            </returns>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.CopyTo(JesseJohnston.SortDescription[],System.Int32)">
-            <summary>
-            Copies the elements of the collection to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.
-            </summary>
-            <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from the collection. The <see cref="T:System.Array"></see> must have zero-based indexing.</param>
-            <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">arrayIndex is less than 0.</exception>
-            <exception cref="T:System.ArgumentNullException">array is null.</exception>
-            <exception cref="T:System.ArgumentException">array is multidimensional.-or-arrayIndex is equal to or greater than the length of array.-or-The number of elements in the source collection is greater than the available space from arrayIndex to the end of the destination array.-or-Type T cannot be cast automatically to the type of the destination array.</exception>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.Remove(JesseJohnston.SortDescription)">
-            <summary>
-            Removes the first occurrence of a specific object from the collection.
-            </summary>
-            <param name="item">The object to remove from the collection.</param>
-            <returns>
-            true if item was successfully removed from the collection; otherwise, false. This method also returns false if item is not found in the original collection.
-            </returns>
-        </member>
-        <member name="M:JesseJohnston.SortDescriptionCollection.GetEnumerator">
-            <summary>
-            Returns an enumerator that iterates through the collection.
-            </summary>
-            <returns>
-            A <see cref="T:System.Collections.Generic.IEnumerator`1"></see> that can be used to iterate through the collection.
-            </returns>
-        </member>
-        <member name="P:JesseJohnston.SortDescriptionCollection.Item(System.Int32)">
-            <summary>
-            Gets the <see cref="T:JesseJohnston.SortDescription"/> at the specified index.
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:JesseJohnston.SortDescriptionCollection.Count">
-            <summary>
-            Gets the number of elements contained in the collection.
-            </summary>
-            <value></value>
-            <returns>The number of elements contained in the collection.</returns>
-        </member>
-        <member name="T:JesseJohnston.SortDescription">
-            <summary>
-            Represents a sort defined by a list item property name and sort direction.
-            </summary>
-        </member>
-        <member name="M:JesseJohnston.SortDescription.#ctor(System.String,System.ComponentModel.ListSortDirection)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescription"/> class.
-            </summary>
-            <param name="propertyName">Name of the property to sort on.</param>
-            <param name="direction">The sort direction.</param>
-        </member>
-        <member name="M:JesseJohnston.SortDescription.#ctor(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescription"/> class.
-            </summary>
-            <param name="property">The property to sort on.</param>
-            <param name="direction">The sort direction.</param>
-        </member>
-        <member name="M:JesseJohnston.SortDescription.Equals(System.Object)">
-            <summary>
-            Determines whether the specified <see cref="T:System.Object"></see> is equal to the current <see cref="T:System.Object"></see>.
-            </summary>
-            <param name="obj">The <see cref="T:System.Object"></see> to compare with the current <see cref="T:System.Object"></see>.</param>
-            <returns>
-            true if the specified <see cref="T:System.Object"></see> is equal to the current <see cref="T:System.Object"></see>; otherwise, false.
-            </returns>
-        </member>
-        <member name="M:JesseJohnston.SortDescription.GetHashCode">
-            <summary>
-            Serves as a hash function for a particular type. <see cref="M:System.Object.GetHashCode"></see> is suitable for use in hashing algorithms and data structures like a hash table.
-            </summary>
-            <returns>
-            A hash code for the current <see cref="T:System.Object"></see>.
-            </returns>
-        </member>
-        <member name="M:JesseJohnston.SortDescription.op_Equality(JesseJohnston.SortDescription,JesseJohnston.SortDescription)">
-            <summary>
-            Determines if two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the same property name and sort direction.
-            </summary>
-            <param name="desc1">The first <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
-            <param name="desc2">The second <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
-            <returns>true if the two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the same property name and sort direction; otherwise false.</returns>
-        </member>
-        <member name="M:JesseJohnston.SortDescription.op_Inequality(JesseJohnston.SortDescription,JesseJohnston.SortDescription)">
-            <summary>
-            Determines if two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the different property names or sort directions.
-            </summary>
-            <param name="desc1">The first <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
-            <param name="desc2">The second <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
-            <returns>true if the two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to different property names or sort directions; otherwise false.</returns>
-        </member>
-        <member name="P:JesseJohnston.SortDescription.Direction">
-            <summary>
-            Gets the sort direction.
-            </summary>
-            <value>The direction.</value>
-        </member>
-        <member name="P:JesseJohnston.SortDescription.PropertyDescriptor">
-            <summary>
-            Gets the property descriptor (if provided in the constructor).
-            </summary>
-            <value>The property descriptor.</value>
-        </member>
-        <member name="P:JesseJohnston.SortDescription.PropertyName">
-            <summary>
-            Gets the name of the property that is to be used in sorting the items.
-            </summary>
-            <value>The name of the property.</value>
-        </member>
         <member name="T:JesseJohnston.RemovingItemEventArgs">
             <summary>
             Class providing information about an item about to be deleted from the underlying list.
@@ -1756,44 +1567,208 @@
             The Value property of <seealso cref="T:JesseJohnston.ExtendedPropertyEventArgs"/> contains the new value for the property.
             </remarks>
         </member>
-        <member name="T:JesseJohnston.Predicate">
+        <member name="T:JesseJohnston.ObjectListViewVisualizer">
             <summary>
-            Callback type for the <seealso cref="P:JesseJohnston.ObjectListView.FilterPredicate"/> property.
+            A debugger visualizer for ObjectListView.
             </summary>
-            <param name="listItem">The list item to be checked against the filter criteria.</param>
-            <returns><b>true</b> if the list item matches the filter; <b>false</b> if it does not.</returns>
+            <remarks>This class is used by Visual Studio, and is not intended to be called from your code.</remarks>
         </member>
-        <member name="T:JesseJohnston.ObjectView`1">
+        <member name="M:JesseJohnston.ObjectListViewVisualizer.#ctor">
             <summary>
-            Wrapper returned by <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/>
+            Initializes a new instance of the <see cref="T:JesseJohnston.ObjectListViewVisualizer"/> class.
             </summary>
-            <remarks>
-            This type is returned from <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/> so that if the added object supports <seealso cref="T:System.ComponentModel.IEditableObject"/>, 
-            calling <see cref="M:JesseJohnston.ObjectView`1.EndEdit"/> or <see cref="M:JesseJohnston.ObjectView`1.CancelEdit"/> through the wrapper will notify the ObjectListView that the object addition has been committed
-            or cancelled.
-            </remarks>
-            <typeparam name="T"></typeparam>
+            <remarks>This method is used by Visual Studio, and is not intended to be called from your code.</remarks>
         </member>
-        <member name="M:JesseJohnston.ObjectView`1.BeginEdit">
+        <member name="M:JesseJohnston.ObjectListViewVisualizer.Show(Microsoft.VisualStudio.DebuggerVisualizers.IDialogVisualizerService,Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider)">
             <summary>
-            Begins an edit on an object.
+            Display the visualizer user interface.
+            </summary>
+            <remarks>This method is used by Visual Studio, and is not intended to be called from your code.</remarks>
+            <param name="windowService">An object of type <see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.IDialogVisualizerService"></see>, which provides methods your visualizer can use to display Windows forms, controls, and dialogs.</param>
+            <param name="objectProvider">An object of type <see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider"></see>. This object provides communication from the debugger side of the visualizer to the object source (<see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.VisualizerObjectSource"></see>) on the debuggee side.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListViewVisualizer.TestShowVisualizer(System.Object)">
+            <summary>
+            Tests the visualizer by hosting it outside of the debugger.
+            </summary>
+            <remarks>This method is not intended to be called from your code.</remarks>
+            <param name="objectToVisualize">The object to display in the visualizer.</param>
+        </member>
+        <member name="T:JesseJohnston.ListItemChangeEvents">
+            <summary>
+            Describes the ways that a list item reports changes to it's property values.
             </summary>
         </member>
-        <member name="M:JesseJohnston.ObjectView`1.CancelEdit">
+        <member name="F:JesseJohnston.ListItemChangeEvents.None">
             <summary>
-            Discards changes made since the last <see cref="M:JesseJohnston.ObjectView`1.BeginEdit"/> call.
+            The list item does not raise events when it's property values change.
             </summary>
         </member>
-        <member name="M:JesseJohnston.ObjectView`1.EndEdit">
+        <member name="F:JesseJohnston.ListItemChangeEvents.INotifyPropertyChanged">
             <summary>
-            Commits changes made since the last <see cref="M:JesseJohnston.ObjectView`1.BeginEdit"/> or <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/> call.
+            The list item class implements the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface.
             </summary>
         </member>
-        <member name="P:JesseJohnston.ObjectView`1.Object">
+        <member name="F:JesseJohnston.ListItemChangeEvents.PropertyChangedEvents">
             <summary>
-            Gets the object wrapped by this instance.
+            The list item class provides an event named <b><i>propertyName</i>Changed</b> for each property.
             </summary>
-            <value>The object.</value>
+        </member>
+        <member name="T:JesseJohnston.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisColorFontHeader">
+            <summary>
+              Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fswiss\fprq2\fcharset0 Verdana;}{\f1{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;\red0\green128\blue0;}\fswiss\fcharset0 Arial;}}.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisHeaderText">
+            <summary>
+              Looks up a localized string similar to {\*\generator Msftedit 5.41.21.2506;}\viewkind4\uc1\pard\cf0\f0\fs20 If you&apos;re having trouble with ObjectListView, consider the following analysis of your list and list item types.  The list is the object that you provided in the ObjectListView constructor.  The list items are the objects contained in the list.\par\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoIEditableObject">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support IEditableObject, which means that you cannot cancel changes made through a bound control such as the DataGridView.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoINotifyPropertyChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support INotifyPropertyChanged, but \cf3 does\cf0  supply one or more property change events.  This means some or all changes to property values will be reflected in the view.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoINotifyPropertyChangedNoPropertyChangedEvents">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support INotifyPropertyChanged or property change events, which means that changes to property values will not be refected in the view.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemOptimal">
+            <summary>
+              Looks up a localized string similar to \cf3\b Your list item type \cf0\i {0}\cf3\i0  is optimal.\cf0\b0\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSubOptimal">
+            <summary>
+              Looks up a localized string similar to \pard\cf1\b\f0\fs20 Your list item type \cf0\i {0}\cf1\i0  is sub-optimal.\cf0\b0\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSupportsIEditableObject">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support IEditableObject, which allows you to cancel changes made through a bound control such as the DataGridView.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSupportsINotifyPropertyChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support INotifyPropertyChanged, which means that changes to property values will be refected in the view.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListModifications">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf2\b List modifications:\cf0\b0\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListNoIRaiseItemChangedEvents">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support IRaiseItemChangedEvents, which means that list item changes reported as PropertyChanged events will not be reflected in the view.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListNoListChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support the ListChanged event, which means that added and deleted items will not be reflected in the view.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListNotSynced">
+            <summary>
+              Looks up a localized string similar to The list makes no claims to thread safety.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListOptimal">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf3\b Your list type \cf0\i {0}\cf3\i0  is optimal.\cf0\b0\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListReadOnly">
+            <summary>
+              Looks up a localized string similar to The list is read-only, which means that you cannot add, change, or delete list items through the view or a bound control.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListSubOptimal">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf1\b Your list type \cf0\i {0}\cf1\i0  is sub-optimal.\cf0\b0\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListSupportsIRaiseItemChangedEvents">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support IRaiseItemChangedEvents, which means that list item changes reported as PropertyChanged events will be reflected in the view.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListSupportsListChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support the ListChanged event, which means that added and deleted items will be reflected in the view.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListSynced">
+            <summary>
+              Looks up a localized string similar to The list claims to be thread-safe, and offers a SyncRoot object for lock operations.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListThreadSafety">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf2\b List thread safety:\cf0\b0\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListWritableFixedSize">
+            <summary>
+              Looks up a localized string similar to The list is writable but is fixed in size, which means that you can change or replace list items through the view or a bound control, but cannot add or remove items.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListWritableVariableSize">
+            <summary>
+              Looks up a localized string similar to The list is writable and can change in size, which allows you to add, change, and remove list items through the view or a bound control.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendations">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf2\b Recommendations:\cf0\b0\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsBindingListT">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360\f1 A recommended list type is BindingList&lt;T&gt;, where T is your list item type.  BindingList&lt;T&gt; implements both IBindingList and IRaiseItemChangedEvents.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsIEditableObject">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IEditableObject for your list item type (\cf2 optional\cf0 ).\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsINotifyPropertyChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement INotifyPropertyChanged for your list item type (\cf1 important\cf0 ).\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsIRaiseItemChangedEvents">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IRaiseItemChangedEvents for your list type (\cf1 important\cf0 ).\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsListChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IBindingList or provide a ListChanged event for your list type (\cf1 important\cf0 ).\par.
+            </summary>
         </member>
         <member name="T:JesseJohnston.ExtendedPropertyEventArgs">
             <summary>
@@ -1839,52 +1814,107 @@
             </remarks>
             <value>The value.</value>
         </member>
-        <member name="T:JesseJohnston.FilterNode">
+        <member name="T:JesseJohnston.SortDescription">
             <summary>
-            A node in the filter expression tree.  A node may be a terminal expression (i.e. property name, value, and relational operator)
-            or a sub-tree containing a logical operator, left and right terms.
+            Represents a sort defined by a list item property name and sort direction.
             </summary>
         </member>
-        <member name="M:JesseJohnston.FilterNode.#ctor(JesseJohnston.RelationalExpression)">
+        <member name="M:JesseJohnston.SortDescription.#ctor(System.String,System.ComponentModel.ListSortDirection)">
             <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.FilterNode"/> class that is a terminal node.
+            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescription"/> class.
+            </summary>
+            <param name="propertyName">Name of the property to sort on.</param>
+            <param name="direction">The sort direction.</param>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.#ctor(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescription"/> class.
+            </summary>
+            <param name="property">The property to sort on.</param>
+            <param name="direction">The sort direction.</param>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"></see> is equal to the current <see cref="T:System.Object"></see>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"></see> to compare with the current <see cref="T:System.Object"></see>.</param>
+            <returns>
+            true if the specified <see cref="T:System.Object"></see> is equal to the current <see cref="T:System.Object"></see>; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. <see cref="M:System.Object.GetHashCode"></see> is suitable for use in hashing algorithms and data structures like a hash table.
+            </summary>
+            <returns>
+            A hash code for the current <see cref="T:System.Object"></see>.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.op_Equality(JesseJohnston.SortDescription,JesseJohnston.SortDescription)">
+            <summary>
+            Determines if two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the same property name and sort direction.
+            </summary>
+            <param name="desc1">The first <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
+            <param name="desc2">The second <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
+            <returns>true if the two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the same property name and sort direction; otherwise false.</returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.op_Inequality(JesseJohnston.SortDescription,JesseJohnston.SortDescription)">
+            <summary>
+            Determines if two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the different property names or sort directions.
+            </summary>
+            <param name="desc1">The first <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
+            <param name="desc2">The second <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
+            <returns>true if the two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to different property names or sort directions; otherwise false.</returns>
+        </member>
+        <member name="P:JesseJohnston.SortDescription.Direction">
+            <summary>
+            Gets the sort direction.
+            </summary>
+            <value>The direction.</value>
+        </member>
+        <member name="P:JesseJohnston.SortDescription.PropertyDescriptor">
+            <summary>
+            Gets the property descriptor (if provided in the constructor).
+            </summary>
+            <value>The property descriptor.</value>
+        </member>
+        <member name="P:JesseJohnston.SortDescription.PropertyName">
+            <summary>
+            Gets the name of the property that is to be used in sorting the items.
+            </summary>
+            <value>The name of the property.</value>
+        </member>
+        <member name="T:JesseJohnston.ObjectView`1">
+            <summary>
+            Wrapper returned by <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/>
             </summary>
             <remarks>
-            A terminal node is a relational expression, and contains no child nodes.
+            This type is returned from <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/> so that if the added object supports <seealso cref="T:System.ComponentModel.IEditableObject"/>, 
+            calling <see cref="M:JesseJohnston.ObjectView`1.EndEdit"/> or <see cref="M:JesseJohnston.ObjectView`1.CancelEdit"/> through the wrapper will notify the ObjectListView that the object addition has been committed
+            or cancelled.
             </remarks>
-            <param name="term">The expression term.</param>
+            <typeparam name="T"></typeparam>
         </member>
-        <member name="M:JesseJohnston.FilterNode.#ctor(JesseJohnston.FilterNode,JesseJohnston.FilterNode,JesseJohnston.LogicalOperator)">
+        <member name="M:JesseJohnston.ObjectView`1.BeginEdit">
             <summary>
-            Initializes a new instance of the <see cref="T:JesseJohnston.FilterNode"/> class that is not a terminal node.
-            </summary>
-            <param name="left">The left child node.</param>
-            <param name="right">The right node.</param>
-            <param name="op">The operator relating the child nodes.</param>
-        </member>
-        <member name="M:JesseJohnston.FilterNode.Parse(System.String)">
-            <summary>
-            Parses the specified text into a binary expression tree.
-            </summary>
-            <param name="expression">The expression text to parse.</param>
-            <returns></returns>
-        </member>
-        <member name="M:JesseJohnston.FilterNode.Evaluate(JesseJohnston.ExpressionEvaluator)">
-            <summary>
-            Evaluates the current node and it's child nodes.
-            </summary>
-            <param name="evaluator">The delegate used to evaluate terminal nodes.</param>
-            <returns>True if the current node and it's children evaluate to true; false otherwise.</returns>
-        </member>
-        <member name="M:JesseJohnston.FilterNode.Reset">
-            <summary>
-            Resets the evaluation status for each node in the expression tree, so that it can be re-evaluated.
+            Begins an edit on an object.
             </summary>
         </member>
-        <member name="T:JesseJohnston.PropertyPathDescriptor">
+        <member name="M:JesseJohnston.ObjectView`1.CancelEdit">
             <summary>
-            Describes a property of a property, and provides access to the property value.
+            Discards changes made since the last <see cref="M:JesseJohnston.ObjectView`1.BeginEdit"/> call.
             </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectView`1.EndEdit">
+            <summary>
+            Commits changes made since the last <see cref="M:JesseJohnston.ObjectView`1.BeginEdit"/> or <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/> call.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.ObjectView`1.Object">
+            <summary>
+            Gets the object wrapped by this instance.
+            </summary>
+            <value>The object.</value>
         </member>
     </members>
 </doc>

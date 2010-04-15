@@ -72,10 +72,6 @@
       <HintPath>..\Lib\CSScriptLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="ObjectListView, Version=1.0.0.12, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\ObjectListView.dll</HintPath>
-    </Reference>
     <Reference Include="sliver.Windows.Forms.StateBrowser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=34afe62596d00324, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\sliver.Windows.Forms.StateBrowser.dll</HintPath>
@@ -280,6 +276,10 @@
     <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
       <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>
       <Name>DynamicQuery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
+      <Project>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</Project>
+      <Name>ObjectListView</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

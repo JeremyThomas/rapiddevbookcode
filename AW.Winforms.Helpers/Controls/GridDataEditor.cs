@@ -137,6 +137,7 @@ namespace AW.Winforms.Helpers.Controls
         _canSave = CanSaveEnumerable();
         copyToolStripButton.Enabled = true;
         printToolStripButton.Enabled = true;
+        toolStripButtonObjectListViewVisualizer.Visible = bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof (ObjectListView<>);
       }
 
       else
@@ -291,6 +292,11 @@ namespace AW.Winforms.Helpers.Controls
     private void bindingSourceEnumerable_PositionChanged(object sender, EventArgs e)
     {
       toolStripButtonCancelEdit.Enabled = false;
+    }
+
+    private void toolStripButtonObjectListViewVisualizer_Click(object sender, EventArgs e)
+    {
+    //  ObjectListViewVisualizer.TestShowVisualizer(bindingSourceEnumerable.List);
     }
   }
 }
