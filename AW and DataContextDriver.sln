@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2C
 		Lib\CSScriptLibrary.dll = Lib\CSScriptLibrary.dll
 		Lib\CSScriptLibrary.pdb = Lib\CSScriptLibrary.pdb
 		Lib\CSScriptLibrary.xml = Lib\CSScriptLibrary.xml
+		Lib\nunit.framework.dll = Lib\nunit.framework.dll
 		Lib\sliver.Windows.Forms.StateBrowser.dll = Lib\sliver.Windows.Forms.StateBrowser.dll
 	EndProjectSection
 EndProject
