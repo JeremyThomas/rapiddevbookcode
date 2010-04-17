@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Controls;
@@ -37,7 +38,17 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		public static FrmDataEditor CreateDataEditorForm(IEnumerable enumerable, Func<object, int> saveFunction, Func<object, int> deleteFunction, ushort pageSize, bool readOnly, params Type[] saveableTypes)
 		{
-			var dataGridView = new FrmDataEditor {Text = enumerable.ToString()};
+			string text;
+			if (enumerable is DataView)
+			{
+				var dataView = ((DataView)enumerable);
+				text = dataView.Table.TableName + " via a DataView";
+			}
+			else
+			{
+				text = enumerable.ToString();
+			}
+			var dataGridView = new FrmDataEditor {Text = text};
 			var gridDataEditor = new GridDataEditor {Dock = DockStyle.Fill};
 			dataGridView.Controls.Add(gridDataEditor);
 			gridDataEditor.SaveableTypes = saveableTypes;

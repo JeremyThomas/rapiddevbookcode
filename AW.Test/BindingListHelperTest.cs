@@ -73,6 +73,15 @@ namespace AW.Tests
       Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection, false));
     }
 
+		[TestMethod]
+		public void DifferentItemTypesTest()
+		{
+			var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
+			var bindingSource = new BindingSource();
+			Assert.IsTrue(bindingSource.BindEnumerable(listofNonSerializableClasses, false));
+			Assert.AreEqual(listofNonSerializableClasses, bindingSource.List);
+		}
+
     private static IList TestBindEnumerable<T>(IEnumerable<T> enumerable, bool setReadonly)
     {
       var bindingSource = new BindingSource();

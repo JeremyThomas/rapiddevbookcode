@@ -1,0 +1,1 @@
+xcopy bin\release\AW.EnumerableVisualizer.dll "%userprofile%\My Documents\Visual Studio 2008\Visualizers" /y
