@@ -371,6 +371,7 @@
     <Compile Include="HelperClasses\FieldCreationClasses.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="Linq\ICustomMemberProvider.cs" />
     <Compile Include="Linq\LinqMetaData.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

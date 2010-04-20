@@ -156,6 +156,18 @@ namespace AW.Helper
     }
 
     /// <summary>
+    /// Creates an instance of type if type is an ancestorType or a descendant
+    /// </summary>
+    /// <param name="ancestorType">Type of the ancestor.</param>
+    /// <param name="type">The type.</param>
+    /// <param name="args">The args.</param>
+    /// <returns>The Instance</returns>
+    public static object CreateInstanceOf(Type ancestorType, Type type, params Object[] args)
+    {
+      return ancestorType.IsAssignableFrom(type) ? Activator.CreateInstance(type, args) : null;
+    }
+
+    /// <summary>
     /// Gets the property descriptors for a class including those in any MetadataClass(buddy class).
     /// </summary>
     /// <param name="modelClass">The model class.</param>
@@ -202,45 +214,5 @@ namespace AW.Helper
       return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);
     }
 
-    /// <summary>
-    /// Gets the validation attributes of a type of entity if there is a MetaModel defined.
-    /// </summary>
-    /// <param name="metaModel">The meta model.</param>
-    /// <param name="entityType">Type of the entity.</param>
-    /// <param name="fieldName">Name of the field.</param>
-    /// <returns>The validation attributes.</returns>
-    /// <example>var model = new MetaModel();
-    /// model.RegisterContext(new LLBLGenProDataModelProvider(typeof (EntityType), MetaData, new ElementCreator()));</example>
-    //public static IEnumerable<ValidationAttribute> GetValidationAttributes(System.Web.DynamicData.MetaModel metaModel, Type entityType, string fieldName)
-    //{
-    //  return metaModel.GetTable(entityType).GetColumn(fieldName).Attributes.OfType<ValidationAttribute>();
-    //}
-    /// <summary>
-    /// Creates an instance of type if type is an ancestorType or a descendant
-    /// </summary>
-    /// <param name="ancestorType">Type of the ancestor.</param>
-    /// <param name="type">The type.</param>
-    /// <param name="args">The args.</param>
-    /// <returns>The Instance</returns>
-    public static object CreateInstanceOf(Type ancestorType, Type type, params Object[] args)
-    {
-      return ancestorType.IsAssignableFrom(type) ? Activator.CreateInstance(type, args) : null;
-    }
-  }
-}
-
-namespace LINQPad
-{
-  /// <summary>
-  ///  To control what fields/properties of custom types are displayed via LINQPad's Dump method implement this interface
-  /// </summary>
-  /// <see cref="http://www.linqpad.net/FAQ.aspx"/>
-  public interface ICustomMemberProvider
-  {
-    // Each of these methods must return a sequence
-    // with the same number of elements:
-    IEnumerable<string> GetNames();
-    IEnumerable<Type> GetTypes();
-    IEnumerable<object> GetValues();
   }
 }
