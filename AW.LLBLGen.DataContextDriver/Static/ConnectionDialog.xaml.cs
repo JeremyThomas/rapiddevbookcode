@@ -23,6 +23,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private void btnOK_Click(object sender, RoutedEventArgs e)
     {
+      _cxInfo.DatabaseInfo.CustomCxString = textBoxDatabaseConnectionString.Text;
       DialogResult = true;
     }
 
@@ -35,7 +36,43 @@ namespace AW.LLBLGen.DataContextDriver.Static
                      };
 
       if (dialog.ShowDialog() == true)
+      {
         _cxInfo.CustomTypeInfo.CustomAssemblyPath = dialog.FileName;
+        string[] customTypes;
+        try
+        {
+          customTypes = _cxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.LinqSupportClasses.ILinqMetaData");
+          if (customTypes.Length == 1)
+            _cxInfo.CustomTypeInfo.CustomTypeName = customTypes[0];
+        }
+        catch (Exception)
+        {
+          return;
+        }
+      }
+    }
+
+     private void BrowseDataAccessAdapterAssembly(object sender, RoutedEventArgs e)
+    {
+      var dialog = new OpenFileDialog
+                     {
+                       Title = "Choose Data Access Adapter assembly",
+                       DefaultExt = ".dll",
+                     };
+
+      if (dialog.ShowDialog() == true)
+      {
+        _cxInfo.CustomTypeInfo.CustomMetadataPath = dialog.FileName;
+        string[] customTypes;
+        try
+        {
+
+        }
+        catch (Exception)
+        {
+          return;
+        }
+      }
     }
 
     private void BrowseAppConfig(object sender, RoutedEventArgs e)

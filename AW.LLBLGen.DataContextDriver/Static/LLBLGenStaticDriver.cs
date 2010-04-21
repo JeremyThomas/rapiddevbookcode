@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using LINQPad;
 using LINQPad.Extensibility.DataContext;
@@ -30,7 +31,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public override string GetConnectionDescription(IConnectionInfo cxInfo)
     {
       // For static drivers, we can use the description of the custom type & its assembly:
-      return cxInfo.CustomTypeInfo.GetCustomTypeDescription() + cxInfo.CustomTypeInfo.CustomTypeName;
+      return cxInfo.CustomTypeInfo.CustomTypeName + " - " + Name + " - " + cxInfo.DatabaseInfo.CustomCxString;
     }
 
     public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
@@ -41,9 +42,21 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     public override void InitializeContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
     {
-      // If the data context happens to be a LINQ to SQL DataContext, we can look up the SQL translation window.
-      //var l2s = context as DataContext;
-      //if (l2s != null) l2s.Log = executionManager.SqlTranslationWriter;
+      //SD.LLBLGen.Pro.ORMSupportClasses. HelperClasses DbUtils.ActualConnectionString
+      // var assembly = Assembly.GetAssembly(context.GetType());
+      var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
+      var type = assembly.GetType("AW.Data.HelperClasses.DbUtils");
+      if (type == null)
+      {
+         var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
+        var types = dataAccessAdapterAssembly.GetTypes();
+      }
+      else
+      {
+       var actualConnectionString = type.GetField("ActualConnectionString");
+        actualConnectionString.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
+        var x = actualConnectionString.GetValue(context);
+      }
     }
 
     public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
@@ -87,7 +100,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       return new[]
                {
                  "SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll", "SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll", "AW.Helper.dll",
-                 "AW.Winforms.Helpers.dll", "System.Windows.Forms.dll", "AW.Winforms.Helpers.LLBL.dll"
+                 "AW.Winforms.Helpers.dll", "System.Windows.Forms.dll", "AW.Helper.LLBL.dll", "AW.Winforms.Helpers.LLBL.dll"
                };
     }
 
@@ -96,7 +109,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       return new[]
                {
-                 "SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper.LLBL", "AW.Helper.LLBL",
+                 "SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper", "AW.Helper.LLBL",
                  "AW.Winforms.Helpers.DataEditor", "AW.Winforms.Helpers.LLBL"
                };
     }
