@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Win32;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.LLBLGen.DataContextDriver.Static
 {
@@ -63,10 +66,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
       if (dialog.ShowDialog() == true)
       {
         _cxInfo.CustomTypeInfo.CustomMetadataPath = dialog.FileName;
-        string[] customTypes;
+        var dataAccessAdapterAssembly  = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
+        var customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t)).Select(t=>t.Name);
         try
         {
-
+          if (customTypes.Count() == 1)
+            _cxInfo.DriverData.Add( customTypes.First());
         }
         catch (Exception)
         {
@@ -125,6 +130,42 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
       var result = (string) Dialogs.PickFromList("Choose Custom Type", customTypes);
       if (result != null) _cxInfo.CustomTypeInfo.CustomTypeName = result;
+    }
+
+    private void ChooseAdapter(object sender, RoutedEventArgs e)
+    {
+      var assemPath = _cxInfo.CustomTypeInfo.CustomMetadataPath;
+      if (assemPath.Length == 0)
+      {
+        MessageBox.Show("First enter a path to an assembly.");
+        return;
+      }
+
+      if (!File.Exists(assemPath))
+      {
+        MessageBox.Show("File '" + assemPath + "' does not exist.");
+        return;
+      }
+
+      string[] customTypes;
+      try
+      {
+        var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
+        customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t)).Select(t => t.Name).ToArray();
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show("Error obtaining adapter types: " + ex.Message);
+        return;
+      }
+      if (customTypes.Length == 0)
+      {
+        MessageBox.Show("There are no public types in that assembly."); // based on.........
+        return;
+      }
+
+      var result = (string)Dialogs.PickFromList("Choose adapter Type", customTypes);
+      if (result != null) _cxInfo.DriverData.Add(result);
     }
   }
 }

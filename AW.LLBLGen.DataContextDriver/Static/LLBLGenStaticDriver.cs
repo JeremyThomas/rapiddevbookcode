@@ -4,8 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using AW.Helper;
 using LINQPad;
 using LINQPad.Extensibility.DataContext;
+using SD.LLBLGen.Pro.DQE.SqlServer;
+using SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.LLBLGen.DataContextDriver.Static
@@ -31,7 +34,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public override string GetConnectionDescription(IConnectionInfo cxInfo)
     {
       // For static drivers, we can use the description of the custom type & its assembly:
-      return cxInfo.CustomTypeInfo.CustomTypeName + " - " + Name + " - " + cxInfo.DatabaseInfo.CustomCxString;
+      return new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.CustomCxString, cxInfo.AppConfigPath}.JoinAsString(" - ");
     }
 
     public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
@@ -42,20 +45,33 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     public override void InitializeContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
     {
-      //SD.LLBLGen.Pro.ORMSupportClasses. HelperClasses DbUtils.ActualConnectionString
-      // var assembly = Assembly.GetAssembly(context.GetType());
-      var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
-      var type = assembly.GetType("AW.Data.HelperClasses.DbUtils");
-      if (type == null)
+      try
       {
-         var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
-        var types = dataAccessAdapterAssembly.GetTypes();
+        //SD.LLBLGen.Pro.ORMSupportClasses. HelperClasses DbUtils.ActualConnectionString
+        // var assembly = Assembly.GetAssembly(context.GetType());
+        GeneralHelper.TraceOut(cxInfo.DatabaseInfo.CustomCxString);
+        GeneralHelper.TraceOut(cxInfo.AppConfigPath);
+        var dummy = DynamicQueryEngine.ArithAbortOn;
+        DynamicQueryEngineBase.Switch.Level = System.Diagnostics.TraceLevel.Verbose;
+        GenericExpressionHandler.Switch.Level = System.Diagnostics.TraceLevel.Verbose;
+        var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
+        var type = assembly.GetType("AW.Data.HelperClasses.DbUtils");
+        if (type == null)
+        {
+          var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
+          var types = dataAccessAdapterAssembly.GetTypes();
+        }
+        else
+        {
+          var actualConnectionString = type.GetField("ActualConnectionString");
+          GeneralHelper.TraceOut(Convert.ToString(actualConnectionString.GetValue(context)));
+          actualConnectionString.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
+          GeneralHelper.TraceOut(Convert.ToString(actualConnectionString.GetValue(context)));
+        }
       }
-      else
-      {
-       var actualConnectionString = type.GetField("ActualConnectionString");
-        actualConnectionString.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
-        var x = actualConnectionString.GetValue(context);
+      catch (Exception e)
+      {        
+        GeneralHelper.TraceOut(e.Message);
       }
     }
 

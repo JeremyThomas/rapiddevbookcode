@@ -12,7 +12,7 @@
             <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Click="BrowseAssembly">Browse...</Hyperlink>
             </Label>
-            <Label Padding="0,0,0,1">Path to custom assembly:</Label>
+            <Label Padding="0,0,0,1">Path to LLBL assembly:</Label>
         </DockPanel>
 
         <TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.CustomAssemblyPath}"/>
@@ -21,7 +21,7 @@
             <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Click="ChooseType">Choose...</Hyperlink>
             </Label>
-            <Label Padding="0,0,0,1">Full name of custom type:</Label>
+            <Label Padding="0,0,0,1">Full name of LinqMetaData type:</Label>
         </DockPanel>
 
         <TextBox Name="txtTypeName" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.CustomTypeName}"/>
@@ -34,19 +34,29 @@
         </DockPanel>
 
         <TextBox Name="txtAppConfigPath" Margin="0,0,0,12" Text="{Binding AppConfigPath}"/>
-
+        <DockPanel>
+            <Label Height="13" Padding="0,0,0,1" Width="270.727">Database connection string (if required):</Label></DockPanel>
+        <TextBox Height="19.277" Name="textBoxDatabaseConnectionString" Text="{Binding DatabaseInfo.CustomCxString}" Width="318" ClipToBounds="True" />
+        <DockPanel>
+            <Label Height="15.277" Padding="0,0,0,1" Width="270.727">Path to DataAccessAdapter assembly:</Label>
+        <Label Height="15.277" Padding="1" Width="47.273">
+            <Hyperlink Click="BrowseDataAccessAdapterAssembly">Browse...</Hyperlink>
+        </Label>
+            </DockPanel>
+        <TextBox Height="19.277" Name="textBoxDataAccessAdapterAssemblyPath" Text="{Binding CustomTypeInfo.CustomMetadataPath}" Width="318" />
+        <DockPanel>
+            <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Click="ChooseAdapter">Choose...</Hyperlink>
+            </Label>
+            <Label Padding="0,0,0,1">Full name of adapter type:</Label>
+        </DockPanel>
+        <TextBox Height="19.277" Name="textBoxAdapterType" Text="{Binding CustomTypeInfo.DriverData}" Width="318" />
+        
         <CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
 
         <DockPanel LastChildFill="False" Margin="0,10,0,0">
             <Button Name="btnCancel" DockPanel.Dock="Right" Content="Cancel" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsCancel="True" TabIndex="2" />
             <Button Name="btnOK" DockPanel.Dock="Right" Content="OK" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsDefault="True" TabIndex="1" Click="btnOK_Click" />
         </DockPanel>
-        <Label Height="13" Padding="0,0,0,1" Width="270.727">Database connection string (if required):</Label>
-        <TextBox Height="19.277" Name="textBoxDatabaseConnectionString" Text="{Binding DatabaseInfo.CustomCxString}" Width="318" ClipToBounds="True" />
-        <Label Height="15.277" Padding="1" Width="47.273">
-            <Hyperlink Click="BrowseDataAccessAdapterAssembly">Browse...</Hyperlink>
-        </Label>
-        <TextBox Height="19.277" Name="textBoxDataAccessAdapterAssemblyPath" Text="{Binding CustomTypeInfo.CustomMetadataPath}" Width="318" />
-        <Label Height="15.277" Padding="0,0,0,1" Width="270.727">Path to DataAccessAdapter assembly:</Label>
     </StackPanel>
 </Window>
