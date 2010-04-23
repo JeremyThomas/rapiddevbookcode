@@ -66,12 +66,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
       if (dialog.ShowDialog() == true)
       {
         _cxInfo.CustomTypeInfo.CustomMetadataPath = dialog.FileName;
-        var dataAccessAdapterAssembly  = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-        var customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t)).Select(t=>t.Name);
+        //var dataAccessAdapterAssembly  = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
+				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
+				var customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t)).Select(t => t.FullName);
         try
         {
           if (customTypes.Count() == 1)
-            _cxInfo.DriverData.Add( customTypes.First());
+            _cxInfo.DriverData.Value = customTypes.First();
         }
         catch (Exception)
         {
@@ -150,8 +151,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
       string[] customTypes;
       try
       {
-        var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-        customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t)).Select(t => t.Name).ToArray();
+        //var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
+				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
+        customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t)).Select(t => t.FullName).ToArray();
       }
       catch (Exception ex)
       {
@@ -165,7 +167,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
 
       var result = (string)Dialogs.PickFromList("Choose adapter Type", customTypes);
-      if (result != null) _cxInfo.DriverData.Add(result);
+      if (result != null) 
+				_cxInfo.DriverData.Value = result;
     }
   }
 }

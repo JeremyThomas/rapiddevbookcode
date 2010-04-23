@@ -9,6 +9,7 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.LinqToSQL;
 using AW.Tests;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -125,6 +126,14 @@ namespace AW.DebugVisualizers.Tests
 			var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
 			TestSerialize(listofNonSerializableClasses);
 			TestSerialize(listofNonSerializableClasses.Distinct());
+		}
+
+		[TestMethod]
+		public void LinqtoSQLTest()
+		{
+			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
+			TestShow(awDataClassesDataContext.AddressTypes);
+			TestSerialize(awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID));
 		}
 
     public static void TestSerialize(object enumerableToVisualize)

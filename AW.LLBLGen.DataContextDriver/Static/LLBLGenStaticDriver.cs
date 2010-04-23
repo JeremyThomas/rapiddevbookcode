@@ -58,8 +58,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
         var type = assembly.GetType("AW.Data.HelperClasses.DbUtils");
         if (type == null)
         {
-          var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
-          var types = dataAccessAdapterAssembly.GetTypes();
+        	var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
+        	if (string.IsNullOrEmpty(cxInfo.DriverData.Value))
+        	{
+        		var types = dataAccessAdapterAssembly.GetType(cxInfo.DriverData.Value);
+        	}
         }
         else
         {

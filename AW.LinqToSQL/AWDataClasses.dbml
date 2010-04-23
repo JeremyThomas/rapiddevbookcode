@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="AdventureWorks" Class="AWDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DELL-8600\SQLEXPRESS;Initial Catalog=AdventureWorks;Integrated Security=True" SettingsObjectName="AW.LinqToSQL.Properties.Settings" SettingsPropertyName="AdventureWorksConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(local)\SQLEXPRESS;Initial Catalog=AdventureWorks;Integrated Security=True" SettingsObjectName="AW.LinqToSQL.Properties.Settings" SettingsPropertyName="AdventureWorksConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="Sales.SalesOrderHeader" Member="SalesOrderHeaders">
     <Type Name="SalesOrderHeader">
       <Column Name="SalesOrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

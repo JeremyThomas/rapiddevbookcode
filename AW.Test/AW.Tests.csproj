@@ -128,6 +128,10 @@
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AW.LinqToSQL\AW.LinqToSQL.csproj">
+      <Project>{3A769AFA-83F9-4CB0-8F69-60B8487055E0}</Project>
+      <Name>AW.LinqToSQL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AW.Winforms.Helpers.LLBL\AW.Winforms.Helpers.LLBL.csproj">
       <Project>{A67A2102-BA0E-48B3-9EF8-831F72B47160}</Project>
       <Name>AW.Winforms.Helpers.LLBL</Name>

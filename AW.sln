@@ -27,6 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 	ProjectSection(SolutionItems) = preProject
 		SampleQueryFiles\Alberts.cs = SampleQueryFiles\Alberts.cs
 		SampleQueryFiles\EditAddressTypeInDataGridView.cs = SampleQueryFiles\EditAddressTypeInDataGridView.cs
+		SampleQueryFiles\EditInDataGridView - Northwind - Contacts.linq = SampleQueryFiles\EditInDataGridView - Northwind - Contacts.linq
+		SampleQueryFiles\EditInDataGridView - NutShell - Customers.linq = SampleQueryFiles\EditInDataGridView - NutShell - Customers.linq
+		SampleQueryFiles\EditInDataGridView AddressType.linq = SampleQueryFiles\EditInDataGridView AddressType.linq
 		SampleQueryFiles\EditInDataGridView.cs = SampleQueryFiles\EditInDataGridView.cs
 		SampleQueryFiles\EmployeeEntity.GetEmployees.cs = SampleQueryFiles\EmployeeEntity.GetEmployees.cs
 		SampleQueryFiles\GetCustomerListAnonymousLinq.cs = SampleQueryFiles\GetCustomerListAnonymousLinq.cs
@@ -92,9 +95,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Win.Tests", "AW.Win.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView", "ObjectListView\ObjectListView.csproj", "{3A62F36D-4E53-4532-B9EF-3B303A578B5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LinqToSQL", "AW.LinqToSQL\AW.LinqToSQL.csproj", "{3A769AFA-83F9-4CB0-8F69-60B8487055E0}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -128,6 +133,9 @@ Global
 		SccProjectUniqueName10 = ObjectListView\\ObjectListView.csproj
 		SccProjectName10 = ObjectListView
 		SccLocalPath10 = ObjectListView
+		SccProjectUniqueName11 = AW.LinqToSQL\\AW.LinqToSQL.csproj
+		SccProjectName11 = AW.LinqToSQL
+		SccLocalPath11 = AW.LinqToSQL
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
@@ -216,6 +224,14 @@ Global
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release - Test|Any CPU.Build.0 = Release - Test|Any CPU
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

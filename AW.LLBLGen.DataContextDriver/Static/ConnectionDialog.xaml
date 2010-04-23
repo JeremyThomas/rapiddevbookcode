@@ -50,7 +50,7 @@
             </Label>
             <Label Padding="0,0,0,1">Full name of adapter type:</Label>
         </DockPanel>
-        <TextBox Height="19.277" Name="textBoxAdapterType" Text="{Binding CustomTypeInfo.DriverData}" Width="318" />
+        <TextBox Height="19.277" Name="textBoxAdapterType" Text="{Binding DriverData.Value}" Width="318" />
         
         <CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Linq;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Controls;
@@ -103,6 +104,23 @@ namespace AW.Winforms.Helpers.DataEditor
 		}
 
 		#endregion
+
+		public static IEnumerable<T> EditInDataGridView<T>(this Table<T> enumerable) where T : class
+		{
+			return EditInDataGridView(enumerable, SubmitChangesToDataContext); 
+		}
+
+		/// <param name="aDataContext">A data context.</param>
+		/// <returns>The number of persisted entities.</returns>
+		public static int SubmitChangesToDataContext(object aDataContext)
+		{
+			var dataContext = ListBindingHelper.GetList(aDataContext) as DataContext;
+			if (dataContext != null)
+			{
+				dataContext.SubmitChanges();
+			}
+			return 0;
+		}
 
 		public static void CopyEntireDataGridViewToClipboard(this DataGridView dataGridView)
 		{
