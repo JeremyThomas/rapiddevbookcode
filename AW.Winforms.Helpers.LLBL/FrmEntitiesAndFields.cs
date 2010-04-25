@@ -176,7 +176,7 @@ namespace AW.Winforms.Helpers.LLBL
     private static void ViewEntities(IQueryable entityQueryable, ushort pageSize)
     {
       if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
-        entityQueryable.EditInDataGridView(pageSize);
+        entityQueryable.EditSelfServicingInDataGridView(pageSize);
       else
       {
         var provider = entityQueryable.Provider as LLBLGenProProvider2;

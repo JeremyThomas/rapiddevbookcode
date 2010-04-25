@@ -63,7 +63,7 @@ namespace AW.Tests
     {
       var enumerable = EntityHelper.GetQueryableForEntity<T>(MetaSingletons.MetaData).AsEnumerable();
       var expected = enumerable;
-      var actual = enumerable.EditInDataGridView(pageSize);
+      var actual = enumerable.EditSelfServicingInDataGridView(pageSize);
       Assert.AreEqual(expected, actual);
     }
 
@@ -76,10 +76,10 @@ namespace AW.Tests
                          orderby at.AddressTypeID
                          select at;
       var addressTypeEntities = addressTypes.ToEntityCollection();
-      addressTypeEntities.EditInDataGridView(2);
-      addressTypeEntities.DefaultView.EditInDataGridView(3);
+      addressTypeEntities.EditSelfServicingInDataGridView(2);
+      addressTypeEntities.DefaultView.EditSelfServicingInDataGridView(3);
 
-      addressTypes.AsEnumerable().EditInDataGridView(3);
+      addressTypes.AsEnumerable().EditSelfServicingInDataGridView(3);
 
       addressTypeEntities.AsQueryable().ViewInDataGridView();
     }

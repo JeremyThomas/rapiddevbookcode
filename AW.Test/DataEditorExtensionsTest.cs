@@ -90,7 +90,8 @@ namespace AW.Tests
 			//		awDataClassesDataContext. = DbUtils.ActualConnectionString;
 			//awDataClassesDataContext.Connection.ConnectionString
 			TestEditInDataGridView(awDataClassesDataContext.AddressTypes);
-			TestEditInDataGridView(awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID));
+		  var addressTypesQuery = awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID);
+      addressTypesQuery.EditInDataGridView(awDataClassesDataContext);
 			//TestEditInDataGridView(awDataClassesDataContext.);
 			var actual = awDataClassesDataContext.AddressTypes.EditInDataGridView();
 			Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
@@ -98,13 +99,13 @@ namespace AW.Tests
 
 		private static void TestEditInDataGridView<T>(IEnumerable<T> enumerable)
 		{
-			var actual = enumerable.EditInDataGridView(null, null);
+			var actual = enumerable.EditInDataGridView(null, 0);
 			Assert.AreEqual(enumerable, actual);
 		}
 
 		private static void TestEditInDataGridView(IEnumerable enumerable)
 		{
-			var actual = enumerable.EditInDataGridView(null, null);
+			var actual = enumerable.EditInDataGridView(null, 0);
 			Assert.AreEqual(enumerable, actual);
 		}
 	}

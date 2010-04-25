@@ -11,9 +11,9 @@
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Windows.Forms.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.LLBL.dll</Reference>
+  <Namespace>AW.Winforms.Helpers.DataEditor</Namespace>
 </Query>
-
 var contacts = from c in Customers
 	where c.ContactName.StartsWith("A") 
 	select c;
-AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(contacts, null).Dump();
+contacts.EditInDataGridView(Customers.Context).Dump();

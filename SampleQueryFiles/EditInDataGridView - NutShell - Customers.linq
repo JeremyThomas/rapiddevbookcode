@@ -13,7 +13,4 @@
   <Reference>&lt;RuntimeDirectory&gt;\System.Windows.Forms.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.LLBL.dll</Reference>
 </Query>
-
-// In LINQPad we're *inside* the DataContext, so don't need to instantiate it:
-
-AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(Customers, null).Dump ("All customers");
+AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(Customers).Dump ("All customers");

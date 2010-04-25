@@ -2,6 +2,7 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers.EntityViewer
@@ -15,6 +16,11 @@ namespace AW.Winforms.Helpers.EntityViewer
     {
       InitializeComponent();
       AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
+      Initialize();
+    }
+
+    protected virtual void Initialize()
+    {
       if (_commonEntityBaseTypeDescriptionProvider == null)
         _commonEntityBaseTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeof (object));
     }
@@ -25,12 +31,10 @@ namespace AW.Winforms.Helpers.EntityViewer
       ObjectBrowser.ObjectToBrowse = entity;
     }
 
-    public FrmEntityViewer(object entity, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
+    public FrmEntityViewer(object entity, IGridDataEditorPersister gridDataEditorPersister)
       : this(entity)
     {
-      gridDataEditor.SaveableTypes = saveableTypes;
-      gridDataEditor.SaveFunction += saveFunction;
-      gridDataEditor.DeleteFunction += deleteFunction;
+      gridDataEditor.GridDataEditorPersister = gridDataEditorPersister;
     }
 
     public static Form LaunchAsChildForm(object entity)
@@ -40,9 +44,9 @@ namespace AW.Winforms.Helpers.EntityViewer
       return frm;
     }
 
-    public static Form LaunchAsChildForm(object entity, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
+    public static Form LaunchAsChildForm(object entity, IGridDataEditorPersister gridDataEditorPersister)
     {
-      var frm = new FrmEntityViewer(entity, saveFunction, deleteFunction, saveableTypes);
+      var frm = new FrmEntityViewer(entity, gridDataEditorPersister);
       AWHelper.ShowChildForm(frm);
       return frm;
     }

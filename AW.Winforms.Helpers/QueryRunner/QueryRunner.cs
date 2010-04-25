@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Windows.Forms;
 using ACorns.Hawkeye;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.EntityViewer;
 using CSScriptLibrary;
 using JesseJohnston;
@@ -22,11 +23,9 @@ namespace AW.Winforms.Helpers.QueryRunner
     public QueryRunner(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
       : this()
     {
-      gridDataEditorScript.SaveableTypes = saveableTypes;
       SaveFunction = saveFunction;
       DeleteFunction = deleteFunction;
-      gridDataEditorScript.SaveFunction += saveFunction;
-      gridDataEditorScript.DeleteFunction += deleteFunction;
+      gridDataEditorScript.GridDataEditorPersister = new GridDataEditorPersister(saveFunction, deleteFunction, saveableTypes);
     }
 
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
@@ -79,13 +78,13 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void toolStripButtonBrowse_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(((ObjectListView) gridDataEditorScript.BindingSource.DataSource).List, SaveFunction, DeleteFunction, gridDataEditorScript.SaveableTypes);
+      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)gridDataEditorScript.BindingSource.DataSource).List, gridDataEditorScript.GridDataEditorPersister);
     }
 
     private void browseObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
       if (gridDataEditorScript.BindingSource.Current != null)
-        FrmEntityViewer.LaunchAsChildForm(gridDataEditorScript.BindingSource.Current, SaveFunction, DeleteFunction, gridDataEditorScript.SaveableTypes);
+        FrmEntityViewer.LaunchAsChildForm(gridDataEditorScript.BindingSource.Current, gridDataEditorScript.GridDataEditorPersister);
     }
 
     private void textBoxScript_DragDrop(object sender, DragEventArgs e)

@@ -13,15 +13,13 @@ using JesseJohnston;
 
 namespace AW.Winforms.Helpers.Controls
 {
+
   public partial class GridDataEditor : UserControl
   {
-    public Type[] SaveableTypes;
-    public event Func<object, int> SaveFunction;
-    public event Func<object, int> DeleteFunction;
     private readonly ArrayList _deleteItems = new ArrayList();
     private bool _canSave;
     private IQueryable _superset;
-
+    public IGridDataEditorPersister GridDataEditorPersister;
 
     public GridDataEditor()
     {
@@ -108,11 +106,11 @@ namespace AW.Winforms.Helpers.Controls
 
     private void saveToolStripButton_Click(object sender, EventArgs e)
     {
-      var numSaved = SaveFunction(bindingSourceEnumerable.List);
+      var numSaved = GridDataEditorPersister.Save(bindingSourceEnumerable.List);
       toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
-      if (DeleteFunction != null && _deleteItems != null)
+      if ( _deleteItems != null)
       {
-        var numDeleted = DeleteFunction(_deleteItems);
+        var numDeleted = GridDataEditorPersister.Delete(_deleteItems);
         toolStripLabelSaveResult.Text += @" numDeleted: " + numDeleted;
         if (_deleteItems.Count == numDeleted)
         {
@@ -138,6 +136,7 @@ namespace AW.Winforms.Helpers.Controls
         copyToolStripButton.Enabled = true;
         printToolStripButton.Enabled = true;
         toolStripButtonObjectListViewVisualizer.Visible = bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof (ObjectListView<>);
+        toolStripButtonObjectListViewVisualizer.Enabled = toolStripButtonObjectListViewVisualizer.Visible;
       }
 
       else
@@ -249,14 +248,9 @@ namespace AW.Winforms.Helpers.Controls
       toolStripLabelDeleteCount.Text = @"Num removed=" + _deleteItems.Count;
     }
 
-    private bool CanSave()
-    {
-      return SaveFunction != null;
-    }
-
     private bool CanSave(Type typeToEdit)
     {
-      return CanSave() && (SaveableTypes == null || typeToEdit.IsAssignableTo(SaveableTypes));
+      return GridDataEditorPersister != null && GridDataEditorPersister.CanSave(typeToEdit);
     }
 
     private bool CanSaveEnumerable()
@@ -300,5 +294,42 @@ namespace AW.Winforms.Helpers.Controls
       if (visualizerForm != null)
         visualizerForm.ShowDialog();
     }
+  }
+
+  public interface IGridDataEditorPersister
+  {
+    int Save(object dataToSave);
+    int Delete(object dataToSave);
+    bool CanSave(Type typeToSave);
+  }
+
+  public class GridDataEditorPersister : IGridDataEditorPersister
+  {
+    public Type[] SaveableTypes;
+    public Func<object, int> SaveFunction;
+    public Func<object, int> DeleteFunction;
+
+    public GridDataEditorPersister(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
+    {
+      SaveableTypes = saveableTypes;
+      SaveFunction = saveFunction;
+      DeleteFunction = deleteFunction;
+    }
+
+    public int Save(object dataToSave)
+    {
+      return SaveFunction != null ? SaveFunction(dataToSave) : 0;
+    }
+
+    public int Delete(object dataToSave)
+    {
+      return DeleteFunction != null ? DeleteFunction(dataToSave) : 0;
+    }
+
+    public bool CanSave(Type typeToSave)
+    {
+      return SaveFunction != null && (SaveableTypes == null || typeToSave.IsAssignableTo(SaveableTypes));
+    }
+
   }
 }

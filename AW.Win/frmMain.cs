@@ -7,12 +7,11 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
+using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.LLBL.PropGridEx;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.QueryRunner;
-using AW.Winforms.Helpers;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
@@ -189,8 +188,7 @@ namespace AW.Win
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, EntityHelper.Save,EntityHelper.Delete, typeof(IEntity));
-      //LaunchChildForm(typeof(FrmEntityViewer), MetaSingletons.MetaData, Save);
+      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, new LLBLWinformHelper.GridDataEditorLLBLSelfServicingPersister());
     }
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
