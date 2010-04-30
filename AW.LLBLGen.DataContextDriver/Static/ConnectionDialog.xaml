@@ -4,9 +4,9 @@
     Title="LLBL Connection"
     Background="{x:Static SystemColors.ControlBrush}"
     SizeToContent="Height"
-    Width="354" 
-    WindowStartupLocation="CenterScreen" Height="374">
-    <StackPanel Margin="7">
+    Width="435" 
+    WindowStartupLocation="CenterScreen" Height="331">
+    <StackPanel Margin="7" >
 
         <DockPanel>
             <Label DockPanel.Dock="Right" Padding="1">
@@ -33,24 +33,26 @@
             <Label Padding="0,0,0,1">Application config file (if required):</Label>
         </DockPanel>
 
-        <TextBox Name="txtAppConfigPath" Margin="0,0,0,12" Text="{Binding AppConfigPath}"/>
+        <TextBox Name="txtAppConfigPath" Text="{Binding AppConfigPath}"/>
         <DockPanel>
-            <Label Height="13" Padding="0,0,0,1" Width="270.727">Database connection string (if required):</Label></DockPanel>
-        <TextBox Height="19.277" Name="textBoxDatabaseConnectionString" Text="{Binding DatabaseInfo.CustomCxString}" Width="318" ClipToBounds="True" />
+            <Label Padding="0,0,0,1" >Database connection string (if required):</Label>
+        </DockPanel>
+        <TextBox Name="textBoxDatabaseConnectionString" Margin="0,0,0,6" Text="{Binding DatabaseInfo.CustomCxString}"  />
         <DockPanel>
-            <Label Height="15.277" Padding="0,0,0,1" Width="270.727">Path to DataAccessAdapter assembly:</Label>
-        <Label Height="15.277" Padding="1" Width="47.273">
+    
+        <Label DockPanel.Dock="Right" Padding="1" >
             <Hyperlink Click="BrowseDataAccessAdapterAssembly">Browse...</Hyperlink>
         </Label>
-            </DockPanel>
-        <TextBox Height="19.277" Name="textBoxDataAccessAdapterAssemblyPath" Text="{Binding CustomTypeInfo.CustomMetadataPath}" Width="318" />
+            <Label Padding="0,0,0,1">Path to DataAccessAdapter assembly:</Label>
+        </DockPanel>
+        <TextBox  Name="textBoxDataAccessAdapterAssemblyPath" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.CustomMetadataPath}"  />
         <DockPanel>
             <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Click="ChooseAdapter">Choose...</Hyperlink>
             </Label>
             <Label Padding="0,0,0,1">Full name of adapter type:</Label>
         </DockPanel>
-        <TextBox Height="19.277" Name="textBoxAdapterType" Text="{Binding DriverData.Value}" Width="318" />
+        <TextBox  Name="textBoxAdapterType" Text="{Binding DriverData.Value}"  />
         
         <CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
 
