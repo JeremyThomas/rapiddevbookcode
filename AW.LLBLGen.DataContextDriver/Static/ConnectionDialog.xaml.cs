@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using AW.Helper;
 using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Win32;
@@ -167,8 +168,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
 
       var result = (string)Dialogs.PickFromList("Choose adapter Type", customTypes);
-      if (result != null) 
+			if (result != null)
+			{
 				_cxInfo.DriverData.Value = result;
+				GeneralHelper.TraceOut(_cxInfo.DriverData.Value);
+			}
     }
   }
 }

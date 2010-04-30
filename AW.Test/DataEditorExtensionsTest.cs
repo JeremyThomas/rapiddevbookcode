@@ -7,6 +7,7 @@ using AW.Helper;
 using AW.LinqToSQL;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
+using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
@@ -83,6 +84,15 @@ namespace AW.Tests
 			TestEditInDataGridView(arrayList);
 		}
 
+
+		[TestMethod]
+		public void EditPagedQueryInDataGridViewTest()
+		{
+			var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 15);
+			addressEntities.EditSelfServicingInDataGridView(0);
+			addressEntities.EditSelfServicingInDataGridView(20);
+		}
+
 		[TestMethod]
 		public void EditLinqtoSQLInDataGridViewTest()
 		{
@@ -99,13 +109,13 @@ namespace AW.Tests
 
 		private static void TestEditInDataGridView<T>(IEnumerable<T> enumerable)
 		{
-			var actual = enumerable.EditInDataGridView(null, 0);
+			var actual = enumerable.EditInDataGridView(null);
 			Assert.AreEqual(enumerable, actual);
 		}
 
 		private static void TestEditInDataGridView(IEnumerable enumerable)
 		{
-			var actual = enumerable.EditInDataGridView(null, 0);
+			var actual = enumerable.EditInDataGridView(null);
 			Assert.AreEqual(enumerable, actual);
 		}
 	}

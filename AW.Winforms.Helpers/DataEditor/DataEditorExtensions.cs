@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Linq;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace AW.Winforms.Helpers.DataEditor
 {
   public static class DataEditorExtensions
   {
-    public const int DefaultPageSize = 0;
+    public const int DefaultPageSize = 30;
 
     #region DataGridView
 
@@ -91,7 +92,15 @@ namespace AW.Winforms.Helpers.DataEditor
         var gridDataEditor = new GridDataEditorT<T> {Dock = DockStyle.Fill};
         frmDataEditor.Controls.Add(gridDataEditor);
         gridDataEditor.GridDataEditorPersister = gridDataEditorPersister;
-        gridDataEditor.BindEnumerable(enumerable, pageSize);
+						
+				//var type = typeof(T);
+				//var typeDescriptionProvider = TypeDescriptor.GetProvider(type);
+				//if (!(typeDescriptionProvider is FieldsToPropertiesTypeDescriptionProvider))
+				//{
+				//  var entityFieldsTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(type);
+				//  TypeDescriptor.AddProvider(entityFieldsTypeDescriptionProvider, type);
+				//}
+      	gridDataEditor.BindEnumerable(enumerable, pageSize);
         frmDataEditor.ShowDialog();
       }
       return enumerable;
@@ -140,14 +149,15 @@ namespace AW.Winforms.Helpers.DataEditor
 
       public int Save(object dataToSave)
       {
-        _dataContext.SubmitChanges();
-        return DefaultPageSize;
+      	var changeSet = _dataContext.GetChangeSet();
+      	_dataContext.SubmitChanges();
+				return changeSet.Inserts.Count + changeSet.Updates.Count;
       }
 
       public int Delete(object dataToSave)
       {
         _dataContext.SubmitChanges();
-        return DefaultPageSize;
+				return _dataContext.GetChangeSet().Deletes.Count;
       }
 
       public bool CanSave(Type typeToSave)

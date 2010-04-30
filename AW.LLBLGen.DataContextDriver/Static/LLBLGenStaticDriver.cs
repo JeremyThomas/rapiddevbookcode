@@ -59,17 +59,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
         if (type == null)
         {
         	var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
-        	if (string.IsNullOrEmpty(cxInfo.DriverData.Value))
+        	if (!string.IsNullOrEmpty(cxInfo.DriverData.Value))
         	{
         		var types = dataAccessAdapterAssembly.GetType(cxInfo.DriverData.Value);
         	}
         }
         else
         {
-          var actualConnectionString = type.GetField("ActualConnectionString");
-          GeneralHelper.TraceOut(Convert.ToString(actualConnectionString.GetValue(context)));
-          actualConnectionString.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
-          GeneralHelper.TraceOut(Convert.ToString(actualConnectionString.GetValue(context)));
+          var actualConnectionStringField = type.GetField("ActualConnectionString");
+					var actualConnectionString = Convert.ToString(actualConnectionStringField.GetValue(context));
+					GeneralHelper.TraceOut(actualConnectionString);
+					actualConnectionStringField.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
+					GeneralHelper.TraceOut(Convert.ToString(actualConnectionStringField.GetValue(context)));
         }
       }
       catch (Exception e)
@@ -143,10 +144,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
     /// </summary>
     /// <param name="objectToWrite">The object to write.</param>
     /// <returns></returns>
-    public override ICustomMemberProvider GetCustomDisplayMemberProvider(object objectToWrite)
-    {
-      return LLBLMemberProvider.IsEntityOrEntities(objectToWrite) ? new LLBLMemberProvider(objectToWrite) : null;
-    }
+		public override ICustomMemberProvider GetCustomDisplayMemberProvider(object objectToWrite)
+		{
+			return LLBLMemberProvider.CreateCustomDisplayMemberProviderIfNeeded(objectToWrite);
+		}
 
     #endregion
 

@@ -94,7 +94,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     public static IEnumerable<T> EditSelfServicingInDataGridView<T>(this IEnumerable<T> enumerable) where T : EntityBase
     {
-      return enumerable.EditSelfServicingInDataGridView(0);
+			return enumerable.EditSelfServicingInDataGridView(DataEditorExtensions.DefaultPageSize);
     }
 
     public static IEnumerable EditSelfServicingInDataGridView(this IEnumerable enumerable, ushort pageSize)
@@ -116,14 +116,14 @@ namespace AW.Winforms.Helpers.LLBL
       return enumerable.EditInDataGridView(new GridDataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
     }
 
-    public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
+		public static IEnumerable<T> EditAdapterInDataGridView<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
     {
       return EditInDataGridView(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
     }
 
-    public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> query) where T : EntityBase2
+		public static IEnumerable<T> EditAdapterInDataGridView<T>(this IQueryable<T> query) where T : EntityBase2
     {
-      return EditInDataGridView(query, 0);
+			return EditAdapterInDataGridView(query, DataEditorExtensions.DefaultPageSize);
     }
 
     public class GridDataEditorLLBLAdapterPersister : IGridDataEditorPersister
