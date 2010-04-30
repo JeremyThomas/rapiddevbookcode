@@ -69,7 +69,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         _cxInfo.CustomTypeInfo.CustomMetadataPath = dialog.FileName;
         //var dataAccessAdapterAssembly  = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
 				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-				var customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t)).Select(t => t.FullName);
+				var customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
         try
         {
           if (customTypes.Count() == 1)
@@ -154,7 +154,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         //var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
 				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-        customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t)).Select(t => t.FullName).ToArray();
+        customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName).ToArray();
       }
       catch (Exception ex)
       {
@@ -171,6 +171,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (result != null)
 			{
 				_cxInfo.DriverData.Value = result;
+				_cxInfo.DatabaseInfo.DbVersion = result;
 				GeneralHelper.TraceOut(_cxInfo.DriverData.Value);
 			}
     }
