@@ -109,6 +109,18 @@ namespace AW.Helper
       return itemType;
     }
 
+		/// <summary>
+		/// Gets the type of the object type if it isn't enumerable or if it is get the enumerable Item Type.
+		/// </summary>
+		/// <param name="o">The object.</param>
+		/// <returns></returns>
+		public static Type GetObjectTypeorEnumerableItemType(object o)
+		{
+			if (o == null)
+				return null;
+			var objects = o as IEnumerable;
+			return objects == null ? o.GetType() : GetEnumerableItemType(objects);
+		}
 
     /// <summary>
     /// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.

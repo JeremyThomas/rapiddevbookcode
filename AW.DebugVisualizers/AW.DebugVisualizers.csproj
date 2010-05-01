@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="EnumerableVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VisualizerRegistrations.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">

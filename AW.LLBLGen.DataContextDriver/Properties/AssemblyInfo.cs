@@ -7,9 +7,8 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("AW.LLBLGen.DataContextDriver")]
 [assembly: AssemblyDescription("AW LLBLGen LINQPad static data context driver")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jeremy Thomas")]
 [assembly: AssemblyProduct("AW.LLBLGen.DataContextDriver")]
+[assembly: AssemblyCompany("Jeremy Thomas")]
 [assembly: AssemblyCopyright("Jeremy Thomas")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -16,29 +16,20 @@ namespace AW.LLBLGen.DataContextDriver
 			return typeof (IEntityCore).IsAssignableFrom(t);
 		}
 
-		public static Type GetObjectToWriteType(object objectToWrite)
-		{
-			if (objectToWrite == null)
-				return null;
-			var objects = objectToWrite as IEnumerable;
-			return objects == null ? objectToWrite.GetType() : MetaDataHelper.GetEnumerableItemType(objects);
-		}
-
 		public static ICustomMemberProvider CreateCustomDisplayMemberProviderIfNeeded(object objectToWrite)
 		{
-			var objectToWriteType = GetObjectToWriteType(objectToWrite);
+			var objectToWriteType = objectToWrite.GetType(); //MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToWrite);
 			var isCustomMemberProvider = objectToWriteType.GetInterface("ICustomMemberProvider", true) != null;
-			//var isCustomMemberProvider = typeof(ICustomMemberProvider).IsAssignableFrom(objectToWriteType);
-			return !isCustomMemberProvider && IsEntity(objectToWriteType) ? new LLBLMemberProvider(objectToWrite) : null;
+			return !isCustomMemberProvider && IsEntity(objectToWriteType) ? new LLBLMemberProvider(objectToWrite, objectToWriteType) : null;
 		}
 
 		private readonly object _objectToWrite;
 		private readonly IEnumerable<PropertyDescriptor> _propsToWrite;
 
-		public LLBLMemberProvider(object objectToWrite)
+		public LLBLMemberProvider(object objectToWrite, Type itemType)
 		{
 			_objectToWrite = objectToWrite;
-			_propsToWrite = MetaDataHelper.GetPropertiesToDisplay(objectToWrite.GetType());
+			_propsToWrite = MetaDataHelper.GetPropertiesToDisplay(itemType).ToList();
 		}
 
 		IEnumerable<string> ICustomMemberProvider.GetNames()

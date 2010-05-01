@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Enumerable Debugger Visualizer")]
 [assembly: AssemblyProduct("Enumerable Debugger Visualizer")]
 [assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2010")]
+[assembly: AssemblyCompany("Jeremy Thomas")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -32,4 +33,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: AssemblyVersion("1.1.*")]
-[assembly: AssemblyFileVersion("1.1.0.1")]
+[assembly: AssemblyFileVersion("1.1.0.2")]

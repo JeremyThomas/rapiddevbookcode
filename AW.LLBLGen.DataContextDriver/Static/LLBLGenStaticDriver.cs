@@ -50,13 +50,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			try
 			{
-				//SD.LLBLGen.Pro.ORMSupportClasses. HelperClasses DbUtils.ActualConnectionString
-				// var assembly = Assembly.GetAssembly(context.GetType());
-				GeneralHelper.TraceOut(cxInfo.DatabaseInfo.CustomCxString);
-				GeneralHelper.TraceOut(cxInfo.AppConfigPath);
-				var dummy = DynamicQueryEngine.ArithAbortOn;
-				DynamicQueryEngineBase.Switch.Level = TraceLevel.Verbose;
-				GenericExpressionHandler.Switch.Level = TraceLevel.Verbose;
 				var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
 				var type = assembly.GetType("AW.Data.HelperClasses.DbUtils");
 				if (type == null)
@@ -83,8 +76,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 											adapter.ConnectionString = cxInfo.DatabaseInfo.CustomCxString;
 										else if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
 										{
-											ConfigurationManager.OpenExeConfiguration(cxInfo.AppConfigPath);
-											var y = ConfigFileHelper.ReadConnectionStringFromConfig("Main.ConnectionString");
 											var firstConnectionString = (from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
 											                             select connectionStringSetting).FirstOrDefault();
 											if (firstConnectionString != null) 

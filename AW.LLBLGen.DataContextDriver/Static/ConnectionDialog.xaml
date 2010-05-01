@@ -52,7 +52,7 @@
             </Label>
             <Label Padding="0,0,0,1">Full name of adapter type:</Label>
         </DockPanel>
-        <TextBox  Name="textBoxAdapterType" Text="{Binding DriverData.Value}"  />
+        <TextBox  Name="textBoxAdapterType" Text="{Binding cxInfo.DatabaseInfo.DbVersion}"  />
         
         <CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
 
