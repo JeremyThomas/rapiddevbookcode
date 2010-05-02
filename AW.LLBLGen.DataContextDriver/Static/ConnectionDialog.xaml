@@ -5,7 +5,7 @@
     Background="{x:Static SystemColors.ControlBrush}"
     SizeToContent="Height"
     Width="435" 
-    WindowStartupLocation="CenterScreen" Height="331">
+    WindowStartupLocation="CenterScreen" Height="431">
     <StackPanel Margin="7" >
 
         <DockPanel>
@@ -34,13 +34,26 @@
         </DockPanel>
 
         <TextBox Name="txtAppConfigPath" Text="{Binding AppConfigPath}"/>
+			
         <DockPanel>
-            <Label Padding="0,0,0,1" >Database connection string (if required):</Label>
+            <Label Padding="0,0,0,1" >Database Provider (if required):</Label>
         </DockPanel>
-        <TextBox Name="textBoxDatabaseConnectionString" Margin="0,0,0,6" Text="{Binding DatabaseInfo.CustomCxString}"  />
-        <DockPanel>
-    
-        <Label DockPanel.Dock="Right" Padding="1" >
+        <TextBox Name="textBoxDatabaseProvider" Margin="0,0,0,6" Text="{Binding DatabaseInfo.Provider}"  />
+
+			<DockPanel>
+				<Label Padding="0,0,0,1" >Database connection string (if required):</Label>
+			</DockPanel>
+			<TextBox Name="textBoxDatabaseConnectionString" Margin="0,0,0,6" Text="{Binding DatabaseInfo.CustomCxString}"  />
+
+
+		<DockPanel>
+			<Label Padding="0,0,0,1" >Connection Description (optional):</Label>
+		</DockPanel>
+		<TextBox Name="textBoxConnectionDescription" Margin="0,0,0,6" Text="{Binding DatabaseInfo.Server}"  />
+
+		<DockPanel>
+
+				<Label DockPanel.Dock="Right" Padding="1" >
             <Hyperlink Click="BrowseDataAccessAdapterAssembly">Browse...</Hyperlink>
         </Label>
             <Label Padding="0,0,0,1">Path to DataAccessAdapter assembly:</Label>
@@ -52,7 +65,7 @@
             </Label>
             <Label Padding="0,0,0,1">Full name of adapter type:</Label>
         </DockPanel>
-        <TextBox  Name="textBoxAdapterType" Text="{Binding cxInfo.DatabaseInfo.DbVersion}"  />
+        <TextBox  Name="textBoxAdapterType" Text="{Binding DatabaseInfo.DbVersion}"  />
         
         <CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
 

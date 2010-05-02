@@ -36,8 +36,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override string GetConnectionDescription(IConnectionInfo cxInfo)
 		{
-			// For static drivers, we can use the description of the custom type & its assembly:
-			return new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.CustomCxString, cxInfo.AppConfigPath}.JoinAsString(" - ");
+			if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.Server))
+				// For static drivers, we can use the description of the custom type & its assembly:
+				return new[] { cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath }.JoinAsString(" - ");
+			else
+				return cxInfo.DatabaseInfo.Server;
 		}
 
 		public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
@@ -54,31 +57,56 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var type = assembly.GetType("AW.Data.HelperClasses.DbUtils");
 				if (type == null)
 				{
-					var adapterTypeName = cxInfo.DriverData.Value;
-					if (string.IsNullOrEmpty(adapterTypeName))
-						adapterTypeName = cxInfo.DatabaseInfo.DbVersion;
+					var adapterTypeName = ConnectionDialog.GetAdapterType(cxInfo);
 					if (!string.IsNullOrEmpty(adapterTypeName))
 					{
 						var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
 						var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
 						if (dataAccessAdapterType != null)
 						{
-							var x = context as ILinqMetaData;
-							if (x != null)
+							var linqMetaData = context as ILinqMetaData;
+							if (linqMetaData != null)
 							{
-								var adapterToUseProperty = x.GetType().GetProperty("AdapterToUse");
-								var adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as IDataAccessAdapter;
+								var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
+								DataAccessAdapterBase adapter;
+								if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
+								{
+									adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
+								}
+								else
+								{
+									if (cxInfo.DatabaseInfo.IsSqlServer)
+										adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+									                                                          	{
+									                                                          		cxInfo.DatabaseInfo.CustomCxString,
+									                                                          		true, CatalogNameUsage.Clear, null
+									                                                          	}) as DataAccessAdapterBase;
+									else
+									{
+										if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
+										  adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+									                                                          	{
+									                                                          		cxInfo.DatabaseInfo.CustomCxString,
+									                                                          		true, SchemaNameUsage.Default, null
+									                                                          	}) as DataAccessAdapterBase;
+										else
+											adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+									                                                          	{
+									                                                          		cxInfo.DatabaseInfo.CustomCxString
+									                                                          	}) as DataAccessAdapterBase;
+									}
+
+								}
+
 								if (adapter != null)
 								{
-									adapterToUseProperty.SetValue(x, adapter, null);
+									adapterToUseProperty.SetValue(linqMetaData, adapter, null);
 									if (string.IsNullOrEmpty(adapter.ConnectionString))
-										if (!string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
-											adapter.ConnectionString = cxInfo.DatabaseInfo.CustomCxString;
-										else if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
+										if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
 										{
 											var firstConnectionString = (from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
-											                             select connectionStringSetting).FirstOrDefault();
-											if (firstConnectionString != null) 
+																									 select connectionStringSetting).FirstOrDefault();
+											if (firstConnectionString != null)
 												adapter.ConnectionString = firstConnectionString.ConnectionString;
 										}
 								}
