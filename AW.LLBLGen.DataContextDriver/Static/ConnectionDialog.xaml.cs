@@ -9,6 +9,8 @@ using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Win32;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using System.Data.Common;
+using System.Data;
 
 namespace AW.LLBLGen.DataContextDriver.Static
 {
@@ -22,8 +24,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public ConnectionDialog(IConnectionInfo cxInfo)
 		{
 			_cxInfo = cxInfo;
-			DataContext = cxInfo.CustomTypeInfo;
+			DataContext = cxInfo;
 			InitializeComponent();
+//      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
+//.OfType<DataRow>()
+//.Select(r => r["InvariantName"])
+//.ToArray();
+//      foreach (var item in factoryClasses)
+//      {
+//        comboBoxDatabaseProvider.Items.Add(item);
+//      }
+
 		}
 
 		private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -208,7 +219,71 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				adapterTypeElement.Value = adapterType;
 			}
 			connectionInfo.DatabaseInfo.DbVersion = adapterType;
+		}
 
+
+		public static void AddAssembly(IConnectionInfo connectionInfo, string assemblyName)
+		{
+			if (string.IsNullOrEmpty(assemblyName))
+				return;
+			GeneralHelper.TraceOut(assemblyName);
+			assemblyName = Path.GetFileName(assemblyName);
+			if (connectionInfo.DriverData == null)
+				return;
+			var additionalAssembliesElement = connectionInfo.DriverData.Element("AdditionalAssemblies");
+			if (additionalAssembliesElement == null)
+			{
+				additionalAssembliesElement = new XElement("AdditionalAssemblies");
+				connectionInfo.DriverData.Add(additionalAssembliesElement);
+			}
+
+			var c = (from e in additionalAssembliesElement.Elements()
+							 where e.Value == assemblyName
+							 select e).Count();
+
+			if (c == 0)
+				additionalAssembliesElement.Add(new XElement("AssemblyName") { Value = assemblyName });
+			connectionInfo.DatabaseInfo.Database = GetAdditionalAssemblies(additionalAssembliesElement);
+		}
+
+		private static string GetAdditionalAssemblies(XElement additionalAssembliesElement)
+		{
+
+			var y = from e in additionalAssembliesElement.Elements()
+							select e.Value;
+			var additionalAssemblies = y.JoinAsString();
+			return additionalAssemblies;
+		}
+
+		public static string GetAdditionalAssemblies(IConnectionInfo connectionInfo)
+		{
+			if (connectionInfo.DriverData == null)
+				return null;
+			var additionalAssembliesElement = connectionInfo.DriverData.Element("AdditionalAssemblies");
+			if (additionalAssembliesElement == null)
+				return null;
+			return GetAdditionalAssemblies(additionalAssembliesElement);
+		}
+
+		private void ChooseAssemblies(object sender, RoutedEventArgs e)
+		{
+
+			var dialog = new OpenFileDialog
+			{
+				Title = "Choose extra assembly",
+				DefaultExt = ".dll",
+				Multiselect = true
+			};
+
+			if (dialog.ShowDialog() == true)
+			{
+
+				foreach (var fileName in dialog.FileNames)
+				{
+					AddAssembly(_cxInfo, fileName);
+				}
+
+			}
 		}
 
 	}
