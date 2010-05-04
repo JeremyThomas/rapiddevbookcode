@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.LLBLGen.DataContextDriver.Properties;
 using LINQPad;
 using LINQPad.Extensibility.DataContext;
-using SD.LLBLGen.Pro.DQE.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
-using SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.LLBLGen.DataContextDriver.Static
@@ -22,6 +20,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	/// </summary>
 	public class LLBLGenStaticDriver : StaticDataContextDriver
 	{
+		private static readonly string[] AdditionalAssemblies = new[]
+		                                                        	{
+		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
+		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
+		                                                        		"AW.Helper.dll",
+		                                                        		"AW.Winforms.Helpers.dll", "System.Windows.Forms.dll",
+		                                                        		"AW.Helper.LLBL.dll", "AW.Winforms.Helpers.LLBL.dll"
+		                                                        	};
+
+		private static readonly string[] AdditionalNamespaces = new[]
+		                                                         	{
+		                                                         		"SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper",
+		                                                         		"AW.Helper.LLBL",
+		                                                         		"AW.Winforms.Helpers.DataEditor",
+		                                                         		"AW.Winforms.Helpers.LLBL"
+		                                                         	};
+
 		#region Overrides of DataContextDriver
 
 		public override string Name
@@ -36,11 +51,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override string GetConnectionDescription(IConnectionInfo cxInfo)
 		{
-			if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.Server))
+			if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.Server)) //For now using this field to store the description
 				// For static drivers, we can use the description of the custom type & its assembly:
-				return new[] { cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath }.JoinAsString(" - ");
-			else
-				return cxInfo.DatabaseInfo.Server;
+				return
+					new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath}.
+						JoinAsString(" - ");
+			return cxInfo.DatabaseInfo.Server;
 		}
 
 		public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
@@ -77,25 +93,24 @@ namespace AW.LLBLGen.DataContextDriver.Static
 								{
 									if (cxInfo.DatabaseInfo.IsSqlServer)
 										adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-									                                                          	{
-									                                                          		cxInfo.DatabaseInfo.CustomCxString,
-									                                                          		true, CatalogNameUsage.Clear, null
-									                                                          	}) as DataAccessAdapterBase;
+										                                                          	{
+										                                                          		cxInfo.DatabaseInfo.CustomCxString,
+										                                                          		true, CatalogNameUsage.Clear, null
+										                                                          	}) as DataAccessAdapterBase;
 									else
 									{
 										if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
-										  adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-									                                                          	{
-									                                                          		cxInfo.DatabaseInfo.CustomCxString,
-									                                                          		true, SchemaNameUsage.Default, null
-									                                                          	}) as DataAccessAdapterBase;
+											adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+											                                                          	{
+											                                                          		cxInfo.DatabaseInfo.CustomCxString,
+											                                                          		true, SchemaNameUsage.Default, null
+											                                                          	}) as DataAccessAdapterBase;
 										else
 											adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-									                                                          	{
-									                                                          		cxInfo.DatabaseInfo.CustomCxString
-									                                                          	}) as DataAccessAdapterBase;
+											                                                          	{
+											                                                          		cxInfo.DatabaseInfo.CustomCxString
+											                                                          	}) as DataAccessAdapterBase;
 									}
-
 								}
 
 								if (adapter != null)
@@ -104,8 +119,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 									if (string.IsNullOrEmpty(adapter.ConnectionString))
 										if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
 										{
-											var firstConnectionString = (from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
-																									 select connectionStringSetting).FirstOrDefault();
+											var firstConnectionString =
+												(from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
+												 select connectionStringSetting).FirstOrDefault();
 											if (firstConnectionString != null)
 												adapter.ConnectionString = firstConnectionString.ConnectionString;
 										}
@@ -167,21 +183,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override IEnumerable<string> GetAssembliesToAdd()
 		{
-			return new[]
-			       	{
-			       		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll", "SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll", "AW.Helper.dll",
-			       		"AW.Winforms.Helpers.dll", "System.Windows.Forms.dll", "AW.Helper.LLBL.dll", "AW.Winforms.Helpers.LLBL.dll"
-			       	};
+			return Settings.Default.AdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(Settings.Default.AdditionalAssemblies.Cast<string>());
 		}
-
 
 		public override IEnumerable<string> GetNamespacesToAdd()
 		{
-			return new[]
-			       	{
-			       		"SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper", "AW.Helper.LLBL",
-			       		"AW.Winforms.Helpers.DataEditor", "AW.Winforms.Helpers.LLBL"
-			       	};
+			return Settings.Default.AdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(Settings.Default.AdditionalNamespaces.Cast<string>());
 		}
 
 		public override IEnumerable<string> GetNamespacesToRemove()
