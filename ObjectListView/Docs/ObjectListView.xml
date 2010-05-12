@@ -1,0 +1,1880 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ObjectListView</name>
+    </assembly>
+    <members>
+        <member name="F:JesseJohnston.AnalysisForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.AnalysisForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JesseJohnston.AnalysisForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.IEditableObjectEvents">
+            <summary>
+            Events raised when methods of <seealso cref="T:System.ComponentModel.IEditableObject"/> are called.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.IEditableObjectEvents.Began">
+            <summary>
+            Raised when <seealso cref="M:System.ComponentModel.IEditableObject.BeginEdit"/> is called.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.IEditableObjectEvents.Cancelled">
+            <summary>
+            Raised when <seealso cref="M:System.ComponentModel.IEditableObject.CancelEdit"/> is called.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.IEditableObjectEvents.Ended">
+            <summary>
+            Raised when <seealso cref="M:System.ComponentModel.IEditableObject.EndEdit"/> is called.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.Predicate">
+            <summary>
+            Callback type for the <seealso cref="P:JesseJohnston.ObjectListView.FilterPredicate"/> property.
+            </summary>
+            <param name="listItem">The list item to be checked against the filter criteria.</param>
+            <returns><b>true</b> if the list item matches the filter; <b>false</b> if it does not.</returns>
+        </member>
+        <member name="F:JesseJohnston.VisualizerTForm`1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.VisualizerTForm`1.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JesseJohnston.VisualizerTForm`1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.PropertyPathDescriptor">
+            <summary>
+            Describes a property of a property, and provides access to the property value.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.FilterNode">
+            <summary>
+            A node in the filter expression tree.  A node may be a terminal expression (i.e. property name, value, and relational operator)
+            or a sub-tree containing a logical operator, left and right terms.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.#ctor(JesseJohnston.RelationalExpression)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.FilterNode"/> class that is a terminal node.
+            </summary>
+            <remarks>
+            A terminal node is a relational expression, and contains no child nodes.
+            </remarks>
+            <param name="term">The expression term.</param>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.#ctor(JesseJohnston.FilterNode,JesseJohnston.FilterNode,JesseJohnston.LogicalOperator)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.FilterNode"/> class that is not a terminal node.
+            </summary>
+            <param name="left">The left child node.</param>
+            <param name="right">The right node.</param>
+            <param name="op">The operator relating the child nodes.</param>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.Parse(System.String)">
+            <summary>
+            Parses the specified text into a binary expression tree.
+            </summary>
+            <param name="expression">The expression text to parse.</param>
+            <returns></returns>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.Evaluate(JesseJohnston.ExpressionEvaluator)">
+            <summary>
+            Evaluates the current node and it's child nodes.
+            </summary>
+            <param name="evaluator">The delegate used to evaluate terminal nodes.</param>
+            <returns>True if the current node and it's children evaluate to true; false otherwise.</returns>
+        </member>
+        <member name="M:JesseJohnston.FilterNode.Reset">
+            <summary>
+            Resets the evaluation status for each node in the expression tree, so that it can be re-evaluated.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.ObjectView">
+            <summary>
+            Wrapper returned by <seealso cref="M:JesseJohnston.ObjectListView.AddNew"/>
+            </summary>
+            <remarks>
+            This type is returned from <seealso cref="M:JesseJohnston.ObjectListView.AddNew"/> so that if the added object supports <see cref="T:System.ComponentModel.IEditableObject"/>, 
+            calling <see cref="M:JesseJohnston.ObjectView.EndEdit"/> or <see cref="M:JesseJohnston.ObjectView.CancelEdit"/> through the wrapper will notify the ObjectListView that the object addition has been committed
+            or cancelled.
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectView.BeginEdit">
+            <summary>
+            Begins an edit on an object.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectView.CancelEdit">
+            <summary>
+            Discards changes made since the last <see cref="M:JesseJohnston.ObjectView.BeginEdit"/> call.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectView.EndEdit">
+            <summary>
+            Commits changes made since the last <see cref="M:JesseJohnston.ObjectView.BeginEdit"/> or <seealso cref="M:JesseJohnston.ObjectListView.AddNew"/> call.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.ObjectView.Object">
+            <summary>
+            Gets the object wrapped by this instance.
+            </summary>
+            <value>The object.</value>
+        </member>
+        <member name="T:JesseJohnston.PropertyComparerCollection">
+            <summary>
+            Collection of <seealso cref="T:System.Collections.IComparer"/> objects to compare property values for a specified type.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.PropertyComparerCollection.Add(System.String,System.Collections.IComparer)">
+            <summary>
+            Adds an <see cref="T:System.Collections.IComparer"/> for the provided property name.
+            </summary>
+            <param name="key">The property name.</param>
+            <param name="value">The <seealso cref="T:System.Collections.IComparer"/> to use when comparing values of the property.</param>
+            <exception cref="T:System.ArgumentException">An element with the same key already exists in the <see cref="T:System.Collections.Generic.IDictionary`2"></see>.</exception>
+            <exception cref="T:System.ArgumentNullException">key is null.</exception>
+        </member>
+        <member name="M:JesseJohnston.PropertyComparerCollection.ContainsKey(System.String)">
+            <summary>
+            Determines whether the collection contains an <see cref="T:System.Collections.IComparer"/> for the specified property name.
+            </summary>
+            <param name="key">The property name.</param>
+            <returns>
+            <b>true</b> if the contains contains an element with the key; otherwise, <b>false</b>.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">key is null.</exception>
+        </member>
+        <member name="M:JesseJohnston.PropertyComparerCollection.Remove(System.String)">
+            <summary>
+            Removes the <see cref="T:System.Collections.IComparer"/> associated with the specified property name from the collection.
+            </summary>
+            <param name="key">The property name associated with the <seealso cref="T:System.Collections.IComparer"/> to remove.</param>
+            <returns>
+            <b>true</b> if the element is successfully removed; otherwise, <b>false</b>.  This method also returns false if key was not found in the original collection.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">key is null.</exception>
+        </member>
+        <member name="M:JesseJohnston.PropertyComparerCollection.Clear">
+            <summary>
+            Removes all <see cref="T:System.Collections.IComparer"/>s from the collection.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.PropertyComparerCollection.Item(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:System.Collections.IComparer"/> for the specified property name.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.PropertyComparerCollection.Count">
+            <summary>
+            Gets the number of <see cref="T:System.Collections.IComparer"/>s contained in the collection.
+            </summary>
+            <returns>The number of elements contained in the collection.</returns>
+        </member>
+        <member name="T:JesseJohnston.ObjectListView`1">
+            <summary>
+            View of a list of objects of type T.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.ObjectListView`1"/> class.
+            </summary>
+            <param name="list">The list of objects to view.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.ApplyFilter">
+            <summary>
+            Applies the existing <see cref="P:JesseJohnston.ObjectListView`1.Filter"/> or <see cref="P:JesseJohnston.ObjectListView`1.FilterPredicate"/>.
+            </summary>
+            <remarks>
+            This method is only required when using a <see cref="P:JesseJohnston.ObjectListView`1.FilterPredicate"/> that contains criteria that varies over time, or that references
+            criteria other than that based on properties of the the list items (for example, criteria based on a property of a class that is a
+            list item property).
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.BeginUpdate">
+            <summary>
+            Suppresses sorting, filtering, and <see cref="E:JesseJohnston.ObjectListView`1.ListChanged"/> events until <see cref="M:JesseJohnston.ObjectListView`1.EndUpdate"/> is called.
+            </summary>
+            <remarks>
+            This improves performance when making a large number of changes to the underlying list.  When <see cref="M:JesseJohnston.ObjectListView`1.EndUpdate"/> is called,
+            the pending <see cref="E:JesseJohnston.ObjectListView`1.ListChanged"/> events are replaced with a single ListChanged+Reset event.  Sorting and filtering is also
+            deferred until EndUpdate is called.
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.EndUpdate">
+            <summary>
+            Resumes the raising of <see cref="E:JesseJohnston.ObjectListView`1.ListChanged"/> events that have been suppressed with a previous call to <see cref="M:JesseJohnston.ObjectListView`1.BeginUpdate"/>.
+            </summary>
+            <remarks>
+            If there are any pending <see cref="E:JesseJohnston.ObjectListView`1.ListChanged"/> events since <see cref="M:JesseJohnston.ObjectListView`1.BeginUpdate"/> was called, these are cleared, and
+            a single ListChanged+Reset event is raised.
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Find(System.String)">
+            <summary>
+            Finds the index of the first list item matching the specified criteria.
+            </summary>
+            <remarks>
+            The find criteria can be any expression that would be valid for the <seealso cref="P:JesseJohnston.ObjectListView`1.Filter"/> property.
+            </remarks>
+            <param name="criteria">The criteria.</param>
+            <returns>The index of the list item found, or -1 if not found.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Find(System.Predicate{`0})">
+            <summary>
+            Finds the index of the first item matching the specified criteria.
+            </summary>
+            <remarks>
+            This overload of Find is a code-based alternative to providing a string expression criteria.
+            Find returns the first item for which predicate returns true.
+            </remarks>
+            <param name="predicate">Delegate that evaluates list items.</param>
+            <returns>The index of the list item found, or -1 if not found.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Select(System.String)">
+            <summary>
+            Returns the list items that match the specified criteria.
+            </summary>
+            <remarks>
+            The select criteria can be any expression that would be valid for the <seealso cref="P:JesseJohnston.ObjectListView`1.Filter"/> property.
+            </remarks>
+            <param name="criteria">The criteria.</param>
+            <returns>The matching items.  If no items match the critiera, an empty list is returned.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Select(System.Predicate{`0})">
+            <summary>
+            Returns the list items that match the specified criteria.
+            </summary>
+            <remarks>
+            This overload of Select is a code-based alternative to providing a string expression criteria.
+            Select returns all of the items for which predicate returns true.
+            </remarks>
+            <param name="predicate">Delegate that evaluates list items.</param>
+            <returns>The matching items.  If no items match the critiera, an empty list is returned.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.ToArray">
+            <summary>
+            Copies the list items in the view to a new array of the list item type.
+            </summary>
+            <returns>
+            An array of the list item type containing all of the items in the view.  If there are no items in the view, a zero-length
+            array is returned.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.ApplySort(System.ComponentModel.ListSortDescriptionCollection)">
+            <summary>
+            Sorts the view of the underlying list based on the given <see cref="T:System.ComponentModel.ListSortDescriptionCollection"></see>.
+            </summary>
+            <param name="sorts">The <see cref="T:System.ComponentModel.ListSortDescriptionCollection"></see> containing the sorts to apply to the view.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.RemoveFilter">
+            <summary>
+            Removes the current filter applied to the view.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.AddNew">
+            <summary>
+            Adds a new item to the list.
+            </summary>
+            <returns>The item added to the list (wrapped in an <see cref="T:JesseJohnston.ObjectView`1"/>).</returns>
+            <exception cref="T:System.Data.DataException"><see cref="P:System.ComponentModel.IBindingList.AllowNew"></see> is false. </exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.ApplySort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sorts the view based on a <see cref="T:System.ComponentModel.PropertyDescriptor"></see> and a <see cref="T:System.ComponentModel.ListSortDirection"></see>.
+            </summary>
+            <param name="property">The <see cref="T:System.ComponentModel.PropertyDescriptor"></see> to sort by.</param>
+            <param name="direction">One of the <see cref="T:System.ComponentModel.ListSortDirection"></see> values.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.System#ComponentModel#IBindingList#Find(System.ComponentModel.PropertyDescriptor,System.Object)">
+            <summary>
+            Returns the index of the list item that has the given property value.
+            </summary>
+            <param name="property">The <see cref="T:System.ComponentModel.PropertyDescriptor"></see> representing the property to search on.</param>
+            <param name="key">The value of the property parameter to search for.</param>
+            <returns>
+            The index of the list item that has the given property value, or <b>-1</b> if a matching item was not found.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.RemoveSort">
+            <summary>
+            Removes any sort applied using <see cref="M:System.ComponentModel.IBindingList.ApplySort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)"></see>.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.IndexOf(`0)">
+            <summary>
+            Determines the index of a specific item in the view.
+            </summary>
+            <param name="item">The object to locate in the view.</param>
+            <returns>
+            The index of <i>item</i> if found in the view; otherwise, <b>-1</b>.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Insert(System.Int32,`0)">
+            <summary>
+            Inserts an item into the list at the specified view index.
+            </summary>
+            <remarks>
+            If the view is sorted, inserting at a specific position is not meaningul; the new item will appear at the index
+            appropriate to the it's position in the sort.
+            If the view is filtered, the index specified is interpreted is the view index of the new item.  The position in the
+            underlying list may be different.
+            </remarks>
+            <param name="index">The zero-based view index at which item should be inserted.</param>
+            <param name="item">The object to insert into the list.</param>
+            <exception cref="T:System.Data.DataException"><see cref="P:JesseJohnston.ObjectListView`1.AllowNew"/> is false.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">index is not a valid index in the view.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.RemoveAt(System.Int32)">
+            <summary>
+            Removes the <see cref="T:System.Collections.IList"></see> item at the specified view index.
+            </summary>
+            <param name="index">The zero-based view index of the item to remove.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">index is not a valid index in the view. </exception>
+            <exception cref="T:System.Data.DataException"><see cref="P:JesseJohnston.ObjectListView`1.AllowRemove"/> is false.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Add(`0)">
+            <summary>
+            Adds an item to the view.
+            </summary>
+            <param name="item">The object to add to the view.</param>
+            <exception cref="T:System.Data.DataException"><see cref="P:JesseJohnston.ObjectListView`1.AllowNew"/> is false.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Clear">
+            <summary>
+            Removes all items from the list.
+            </summary>
+            <exception cref="T:System.NotSupportedException">The list is read-only.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Contains(`0)">
+            <summary>
+            Determines whether the view contains a specific value.
+            </summary>
+            <param name="item">The object to locate in the view.</param>
+            <returns>
+            <b>true</b> if item is found in the view; otherwise, <b>false</b>.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies the elements of the view to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.
+            </summary>
+            <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from the view. The <see cref="T:System.Array"></see> must have zero-based indexing.</param>
+            <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">arrayIndex is less than 0.</exception>
+            <exception cref="T:System.ArgumentNullException">array is null.</exception>
+            <exception cref="T:System.ArgumentException">array is multidimensional.<br></br>-or-<br></br>arrayIndex is equal to or greater than the length of array.<br></br>-or-<br></br>The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1"></see> is greater than the available space from arrayIndex to the end of the destination array.<br></br>-or-<br></br>Type T cannot be cast automatically to the type of the destination array.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.Remove(`0)">
+            <summary>
+            Removes the first occurrence of a specific object from the list.
+            </summary>
+            <param name="item">The object to remove from the list.</param>
+            <returns>
+            <b>true</b> if item was successfully removed from the list; otherwise, <b>false</b>. This method also returns false if <i>item</i> is not found in the original list.
+            </returns>
+            <exception cref="T:System.Data.DataException"><see cref="P:JesseJohnston.ObjectListView`1.AllowRemove"/> is false.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the view.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.Generic.IEnumerator`1"></see> that can be used to iterate through the view.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.System#Runtime#Serialization#IDeserializationCallback#OnDeserialization(System.Object)">
+            <summary>
+            Runs when the entire object graph has been deserialized.
+            </summary>
+            <remarks>
+            This method is provided only as a serialization helper for the debugger visualizer.
+            </remarks>
+            <param name="sender">The object that initiated the callback.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnAddingNew(JesseJohnston.ObjectListView{`0}.AddingNewEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView`1.AddingNew"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:JesseJohnston.ObjectListView`1.AddingNewEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnAfterListChanged(System.ComponentModel.ListChangedEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView`1.AfterListChanged"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:System.ComponentModel.ListChangedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnBeforeListChanged(System.ComponentModel.ListChangedEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView`1.BeforeListChanged"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:System.ComponentModel.ListChangedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnListChanged(System.ComponentModel.ListChangedEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView`1.ListChanged"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:System.ComponentModel.ListChangedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnRemovingItem(JesseJohnston.RemovingItemEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView`1.RemovingItem"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:JesseJohnston.RemovingItemEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnSorted">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView`1.Sorted"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnItemAdded(System.Int32)">
+            <summary>
+            Called when an item is added to the list.
+            </summary>
+            <remarks>
+            This method is called when the Add method is called, and also when an item is added through a method of the list
+            itself (if the list supports the ListChanged event).
+            </remarks>
+            <param name="listIndex">Index of the item in the list.</param>
+            <returns>The index of the item in the sort.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnItemChanged(System.Int32,System.String)">
+            <summary>
+            Called when an item in the list is changed.
+            </summary>
+            <remarks>
+            This method is called when an item property change is reported by the item's INotifyPropertyChanged.PropertyChanged event
+            (but not converted to ListChanged by the containing list), and also when an item property change is reported via a
+            .NET 1.x-style propertyNameChanged event.
+            </remarks>
+            <param name="listIndex">Index of the item in the list.</param>
+            <param name="propertyName">Name of the property changed, or null if the item has been replaced in the list.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnItemChanged(System.Int32,System.ComponentModel.PropertyDescriptor)">
+            <summary>
+            Called when an item in the list is changed.
+            </summary>
+            <remarks>
+            This method is called when an item is replaced through the indexer, and when a list item change is reported by the
+            containing list through the ListChanged event.
+            </remarks>
+            <param name="listIndex">Index of the item in the list.</param>
+            <param name="property">The changed property, or null if the item has been replaced in the list.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnItemDeleted(System.Int32,System.Int32)">
+            <summary>
+            Called when an item is deleted from the list.
+            </summary>
+            <remarks>
+            This method is called when an item is removed using the Remove or RemoveAt methods.  It is also called when an item is
+            removed from the list through a method of the list itself (if the list supports the ListChanged event).
+            </remarks>
+            <param name="viewIndex">Index of the item in the sorted filtered view.</param>
+            <param name="listIndex">Index of the item in the list.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnItemMoved(System.Int32,System.Int32)">
+            <summary>
+            Called when an item is moved in the list.
+            </summary>
+            <remarks>
+            This method is only called as the result of a call to a method on the underlying list.
+            </remarks>
+            <param name="newListIndex">New index of item in the list.</param>
+            <param name="oldListIndex">Old index of item in the list.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView`1.OnReset">
+            <summary>
+            Called when the list is reset.
+            </summary>
+            <remarks>
+            This is called when the list is cleared, or when "much of the list has changed".
+            </remarks>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.FilterPredicate">
+            <summary>
+            Gets or sets the filter predicate.
+            </summary>
+            <remarks>
+            A delegate that performs filtering on the items in the list.  FilterPredicate is a code-based alternative
+            to the <see cref="P:JesseJohnston.ObjectListView`1.Filter"/> expression property.  If both Filter and FilterPredicate have been set, the last one set
+            takes precedence.  Setting either Filter or FilterPredicate to null removes the filter from the view.
+            </remarks>
+            <returns>The filter predicate.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.List">
+            <summary>
+            Gets the underlying list.
+            </summary>
+            <returns>The list supplied in the ObjectListView constructor.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.ListItemChangeMonitoring">
+            <summary>
+            Gets or sets a value indicating how list item changes should be monitored.
+            </summary>
+            <remarks>
+            When this value is set to a value other than <b>None</b>, ObjectListView will raise <see cref="E:JesseJohnston.ObjectListView`1.ListChanged"/> events when list item
+            property values change, in addition to when the underlying list raises <see cref="E:System.ComponentModel.BindingList`1.ListChanged"/>.<br></br><br></br>
+            Normally the underlying list raises <see cref="E:System.ComponentModel.BindingList`1.ListChanged"/> events when list item property values change, and ListItemChangeMonitoring may be set
+            to <b>None</b>.  This property is set automatically for common scenarios, and is needed only in advanced scenarios when the underlying data list does
+            not correctly support list item change notifications.  For example, <see cref="T:System.ComponentModel.BindingList`1"/> raises ListChanged for item changes when the list item
+            type implements <see cref="T:System.ComponentModel.INotifyPropertyChanged"/>, but not when <b><i>property</i>NameChanged</b> events are raised.
+            </remarks>
+            <returns>
+            	<b>None</b> if ListChanged should be raised only when the underlying list raises ListChanged.<br></br>
+            	<b>INotifyPropertyChanged</b> if ListChanged should be raised when a list item raises <seealso cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/>.<br></br>
+            	<b>PropertyChangedEvents</b> if ListChanged should be raised when a list item raises a <b><i>propertyName</i>Changed</b> event.
+            </returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.PropertyComparers">
+            <summary>
+            Gets the collection of <seealso cref="T:System.Collections.IComparer"/> objects used to compare property values when sorting.
+            </summary>
+            <remarks>
+            If a property comparer is not provided, the default <seealso cref="T:System.IComparable"/> implementation of the property type is used.
+            </remarks>
+            <returns>The property comparers.  If no comparers have been added, an empty collection is returned.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.Sort">
+            <summary>
+            Gets or sets the sort for the view.
+            </summary>
+            <remarks>
+            This property is an alternative to the ApplySort methods.  It consists of a list of property names separaterd by commas.
+            Each property name can optionally be followed by ASC or DESC, indicating an ascending or descending sort direction for that property.
+            If a direction is not specified, the sort for that column will be ascending.
+            </remarks>
+            
+            <example>
+            <code>
+            	ObjectListView view = new ObjectListView(someList);
+            	view.Sort = "LastName, State DESC";
+            ...
+            	view.Sort = "Date ASC, Name ASC, Orders DESC";
+            ...
+            	view.Sort = "AccountID ASC";
+            </code>
+            </example>
+            <value>The sort.</value>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView`1.AddingNew">
+            <summary>
+            Raised when a list item is added to the view with <see cref="M:JesseJohnston.ObjectListView`1.AddNew"/>.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView`1.AfterListChanged">
+            <summary>
+            Raised after <seealso cref="E:JesseJohnston.ObjectListView`1.ListChanged"/>.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView`1.BeforeListChanged">
+            <summary>
+            Raised before <seealso cref="E:JesseJohnston.ObjectListView`1.ListChanged"/>.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView`1.RemovingItem">
+            <summary>
+            Raised when a list item is removed with <see cref="M:JesseJohnston.ObjectListView`1.Remove(`0)"/> or <see cref="M:JesseJohnston.ObjectListView`1.RemoveAt(System.Int32)"/>
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView`1.Sorted">
+            <summary>
+            Raised when the view is sorted.
+            </summary>
+            <remarks>
+            The view can be sorted explicitly, with a call to <see cref="M:JesseJohnston.ObjectListView`1.ApplySort(System.ComponentModel.ListSortDescriptionCollection)"/>,
+            or implicitly when a sort has been applied and a list item is added or changed.
+            </remarks>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.Filter">
+            <summary>
+            Gets or sets the filter to be used to exclude items from the view of the underlying list.
+            </summary>
+            <remarks>
+            The filter expression consists of one or more relational expressions comparing a list item property with a literal value.
+            The supported relational operators are &lt; &lt;= = == &gt;= &gt; &lt;&gt; !=.  Relational expressions can be connected with AND or OR.
+            String literals must be quoted if they include whitespace or operators.
+            Properties of properties ("property paths") may be expressed with a dotted notation: <italic>property1.property2.property3</italic>.
+            
+            <example>
+            <code>
+            	ObjectListView view = new ObjectListView(someList);
+            	view.Filter = "LastName = Smith AND State = WA";
+            ...
+            	view.Filter = "Orders &gt; 5 OR Date = 12/31/2005";
+            ...
+            	view.Filter = "Customer.AccountRep.Department == 12";
+            </code>
+            </example>
+            
+            <bold>Note:</bold> Automatic update of the view when a property of a filter property path changes is not supported in this release.
+            
+            Filter and <see cref="P:JesseJohnston.ObjectListView`1.FilterPredicate"/> are mutually exclusive.  If both Filter and FilterPredicate have been set,
+            the last one set takes precedence.  Setting either Filter or FilterPredicate to null removes the filter from the view.
+            </remarks>
+            <returns>The string used to filter items out in the view of the underlying list, or <b>null</b> if no filter is set.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.SortDescriptions">
+            <summary>
+            Gets the collection of sort descriptions currently applied to the view.
+            </summary>
+            <returns>
+            The <see cref="T:System.ComponentModel.ListSortDescriptionCollection"></see> currently applied to the view.  If no sort
+            is currently in effect, an empty collection is returned.
+            </returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.AllowEdit">
+            <summary>
+            Gets whether you can update items in the list.
+            </summary>
+            <returns><b>true</b> if you can update the items in the list; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.AllowNew">
+            <summary>
+            Gets whether you can add items to the list using <see cref="M:JesseJohnston.ObjectListView`1.AddNew"/>
+            </summary>
+            <returns><b>true</b> if you can add items to the list using <see cref="M:JesseJohnston.ObjectListView`1.AddNew"></see>; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.AllowRemove">
+            <summary>
+            Gets whether you can remove items from the list, using <see cref="M:System.Collections.IList.Remove(System.Object)"></see> or <see cref="M:System.Collections.IList.RemoveAt(System.Int32)"></see>.
+            </summary>
+            <returns><b>true</b> if you can remove items from the list; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.IsSorted">
+            <summary>
+            Gets whether the items in the view are sorted.
+            </summary>
+            <returns><b>true</b> if <see cref="M:System.ComponentModel.IBindingList.ApplySort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)"></see> has been called and <see cref="M:System.ComponentModel.IBindingList.RemoveSort"></see> has not been called; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView`1.ListChanged">
+            <summary>
+            Raised when a list item is added to the list, changed, or removed from the list.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.SortDirection">
+            <summary>
+            Gets the direction of the current sort.
+            </summary>
+            <remarks>
+            If the current sort includes more than one property, the direction of the primary sort property is returned.
+            If no sort is in effect, <b>Ascending</b> is returned.
+            </remarks>
+            <returns>One of the <see cref="T:System.ComponentModel.ListSortDirection"></see> values.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.SortProperty">
+            <summary>
+            Gets the <see cref="T:System.ComponentModel.PropertyDescriptor"></see> that is being used for sorting.
+            </summary>
+            <remarks>
+            If the current sort includes more than one property, the primary sort property is returned.
+            If no sort is in effect, <b>null</b> is returned.
+            </remarks>
+            <returns>
+            The <see cref="T:System.ComponentModel.PropertyDescriptor"></see> that is being used for sorting.
+            </returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.Item(System.Int32)">
+            <summary>
+            Gets or sets the list item at the specified index in the view.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.Count">
+            <summary>
+            Gets the number of elements contained in the view.
+            </summary>
+            <returns>The number of elements contained in the view.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the list is read-only.
+            </summary>
+            <returns><b>true</b> if the list is read-only; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="T:JesseJohnston.ObjectListView`1.AddingNewEventArgs">
+            <summary>
+            Argument type for the <seealso cref="E:JesseJohnston.ObjectListView`1.AddingNew"/> event.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.AddingNewEventArgs.NewObject">
+            <summary>
+            Gets or sets the new object provided by the event handler (if any).
+            </summary>
+            <value>The new object.</value>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView`1.AddingNewEventArgs.UserSetNewObject">
+            <summary>
+            Gets a value indicating whether a new object was provided by an event handler.
+            </summary>
+            <value><b>true</b> if a new object was provided; otherwise, <b>false</b>.</value>
+        </member>
+        <member name="F:JesseJohnston.VisualizerForm.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.VisualizerForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:JesseJohnston.VisualizerForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.SortDescriptionCollection">
+            <summary>
+            Collection of <seealso cref="T:JesseJohnston.SortDescription"/> objects for a specific list item type.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescriptionCollection"/> class.
+            </summary>
+            <param name="targetType">Type of the list item.</param>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.#ctor(System.Type,System.ComponentModel.ListSortDescriptionCollection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescriptionCollection"/> class.
+            </summary>
+            <param name="targetType">Type of the list item.</param>
+            <param name="sorts">A set of <seealso cref="T:System.ComponentModel.ListSortDescription"/> objects to populate the collection with.</param>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Contains(System.String)">
+            <summary>
+            Determines whether the collection contains a <seealso cref="T:JesseJohnston.SortDescription"/> for the specified property name.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <returns>
+            	<c>true</c> if the collection contains a corresponding <seealso cref="T:JesseJohnston.SortDescription"/>; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.GetListSortDescriptions">
+            <summary>
+            Creates a <seealso cref="T:System.ComponentModel.ListSortDescriptionCollection"/> from the sort descriptions in the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.ComponentModel.ListSortDescriptionCollection"/> representing the sort descriptions.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Add(JesseJohnston.SortDescription)">
+            <summary>
+            Adds an item to the collection.
+            </summary>
+            <param name="item">The object to add to the collection.</param>
+            <exception cref="T:System.ArgumentException">The property specified in the <seealso cref="T:JesseJohnston.SortDescription"/> is not a property of the target (list item) type.</exception>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Clear">
+            <summary>
+            Removes all items from the collection.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Contains(JesseJohnston.SortDescription)">
+            <summary>
+            Determines whether the collection contains a specific value.
+            </summary>
+            <param name="item">The object to locate in the collection.</param>
+            <returns>
+            true if item is found in the collection; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.CopyTo(JesseJohnston.SortDescription[],System.Int32)">
+            <summary>
+            Copies the elements of the collection to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.
+            </summary>
+            <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from the collection. The <see cref="T:System.Array"></see> must have zero-based indexing.</param>
+            <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">arrayIndex is less than 0.</exception>
+            <exception cref="T:System.ArgumentNullException">array is null.</exception>
+            <exception cref="T:System.ArgumentException">array is multidimensional.-or-arrayIndex is equal to or greater than the length of array.-or-The number of elements in the source collection is greater than the available space from arrayIndex to the end of the destination array.-or-Type T cannot be cast automatically to the type of the destination array.</exception>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.Remove(JesseJohnston.SortDescription)">
+            <summary>
+            Removes the first occurrence of a specific object from the collection.
+            </summary>
+            <param name="item">The object to remove from the collection.</param>
+            <returns>
+            true if item was successfully removed from the collection; otherwise, false. This method also returns false if item is not found in the original collection.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescriptionCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1"></see> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="P:JesseJohnston.SortDescriptionCollection.Item(System.Int32)">
+            <summary>
+            Gets the <see cref="T:JesseJohnston.SortDescription"/> at the specified index.
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:JesseJohnston.SortDescriptionCollection.Count">
+            <summary>
+            Gets the number of elements contained in the collection.
+            </summary>
+            <value></value>
+            <returns>The number of elements contained in the collection.</returns>
+        </member>
+        <member name="T:JesseJohnston.ObjectListView">
+            <summary>
+            View of a list of objects.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.#ctor(System.Collections.IList)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.ObjectListView"/> class.
+            </summary>
+            <param name="list">The list of objects to view.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.ApplyFilter">
+            <summary>
+            Applies the existing <see cref="P:JesseJohnston.ObjectListView.Filter"/> or <see cref="P:JesseJohnston.ObjectListView.FilterPredicate"/>.
+            </summary>
+            <remarks>
+            This method is only required when using a <see cref="P:JesseJohnston.ObjectListView.FilterPredicate"/> that contains criteria that varies over time, or that references
+            criteria other than that based on properties of the the list items (for example, criteria based on a property of a class that is a
+            list item property).
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.BeginUpdate">
+            <summary>
+            Suppresses sorting, filtering, and <see cref="E:JesseJohnston.ObjectListView.ListChanged"/> events until <see cref="M:JesseJohnston.ObjectListView.EndUpdate"/> is called.
+            </summary>
+            <remarks>
+            This improves performance when making a large number of changes to the underlying list.  When <see cref="M:JesseJohnston.ObjectListView.EndUpdate"/> is called,
+            the pending <see cref="E:JesseJohnston.ObjectListView.ListChanged"/> events are replaced with a single ListChanged+Reset event.  Sorting and filtering is also
+            deferred until EndUpdate is called.
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.EndUpdate">
+            <summary>
+            Resumes the raising of <see cref="E:JesseJohnston.ObjectListView.ListChanged"/> events that have been suppressed with a previous call to <see cref="M:JesseJohnston.ObjectListView.BeginUpdate"/>.
+            </summary>
+            <remarks>
+            If there are any pending <see cref="E:JesseJohnston.ObjectListView.ListChanged"/> events since <see cref="M:JesseJohnston.ObjectListView.BeginUpdate"/> was called, these are cleared, and
+            a single ListChanged+Reset event is raised.
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Find(System.String)">
+            <summary>
+            Finds the index of the first list item matching the specified criteria.
+            </summary>
+            <remarks>
+            The find criteria can be any expression that would be valid for the <seealso cref="P:JesseJohnston.ObjectListView.Filter"/> property.
+            </remarks>
+            <param name="criteria">The criteria.</param>
+            <returns>The index of the list item found, or -1 if not found.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Find(JesseJohnston.Predicate)">
+            <summary>
+            Finds the index of the first item matching the specified criteria.
+            </summary>
+            <remarks>
+            This overload of Find is a code-based alternative to providing a string expression criteria.
+            Find returns the first item for which predicate returns true.
+            </remarks>
+            <param name="predicate">Delegate that evaluates list items.</param>
+            <returns>The index of the list item found, or -1 if not found.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Select(System.String)">
+            <summary>
+            Returns the list items that match the specified criteria.
+            </summary>
+            <remarks>
+            The select criteria can be any expression that would be valid for the <seealso cref="P:JesseJohnston.ObjectListView.Filter"/> property.
+            </remarks>
+            <param name="criteria">The criteria.</param>
+            <returns>The matching items.  If no items match the critiera, an empty list is returned.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Select(JesseJohnston.Predicate)">
+            <summary>
+            Returns the list items that match the specified criteria.
+            </summary>
+            <remarks>
+            This overload of Select is a code-based alternative to providing a string expression criteria.
+            Select returns all of the items for which predicate returns true.
+            </remarks>
+            <param name="predicate">Delegate that evaluates list items.</param>
+            <returns>The matching items.  If no items match the critiera, an empty list is returned.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.ToArray">
+            <summary>
+            Copies the list items in the view to a new array of the list item type.
+            </summary>
+            <returns>
+            An array of the list item type containing all of the items in the view.  If there are no items in the view, a zero-length
+            array is returned.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.ApplySort(System.ComponentModel.ListSortDescriptionCollection)">
+            <summary>
+            Sorts the view of the underlying list based on the given <see cref="T:System.ComponentModel.ListSortDescriptionCollection"></see>.
+            </summary>
+            <param name="sorts">The <see cref="T:System.ComponentModel.ListSortDescriptionCollection"></see> containing the sorts to apply to the view.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.RemoveFilter">
+            <summary>
+            Removes the current filter applied to the view.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.AddNew">
+            <summary>
+            Adds a new item to the list.
+            </summary>
+            <returns>The item added to the list (wrapped in an <see cref="T:JesseJohnston.ObjectView"/>).</returns>
+            <exception cref="T:System.Data.DataException"><see cref="P:System.ComponentModel.IBindingList.AllowNew"></see> is false. </exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.ApplySort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Sorts the view based on a <see cref="T:System.ComponentModel.PropertyDescriptor"></see> and a <see cref="T:System.ComponentModel.ListSortDirection"></see>.
+            </summary>
+            <param name="property">The <see cref="T:System.ComponentModel.PropertyDescriptor"></see> to sort by.</param>
+            <param name="direction">One of the <see cref="T:System.ComponentModel.ListSortDirection"></see> values.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.System#ComponentModel#IBindingList#Find(System.ComponentModel.PropertyDescriptor,System.Object)">
+            <summary>
+            Returns the index of the list item that has the given property value.
+            </summary>
+            <param name="property">The <see cref="T:System.ComponentModel.PropertyDescriptor"></see> representing the property to search on.</param>
+            <param name="key">The value of the property parameter to search for.</param>
+            <returns>
+            The index of the list item that has the given property value, or <b>-1</b> if a matching item was not found.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.RemoveSort">
+            <summary>
+            Removes any sort applied using <see cref="M:System.ComponentModel.IBindingList.ApplySort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)"></see>.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Add(System.Object)">
+            <summary>
+            Adds an item to the list.
+            </summary>
+            <param name="value">The <see cref="T:System.Object"></see> to add to the list.</param>
+            <returns>
+            The position into which the new element was inserted.
+            </returns>
+            <exception cref="T:System.Data.DataException"><see cref="P:JesseJohnston.ObjectListView.AllowNew"/> is false.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Clear">
+            <summary>
+            Removes all items from the list.
+            </summary>
+            <exception cref="T:System.NotSupportedException">The list is read-only. </exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Contains(System.Object)">
+            <summary>
+            Determines whether the view contains a specific value.
+            </summary>
+            <param name="value">The <see cref="T:System.Object"></see> to locate in the view.</param>
+            <returns>
+            <b>true</b> if the <see cref="T:System.Object"></see> is found in the view; otherwise, <b>false</b>.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.IndexOf(System.Object)">
+            <summary>
+            Determines the index of a specific item in the view.
+            </summary>
+            <param name="value">The <see cref="T:System.Object"></see> to locate in the view.</param>
+            <returns>
+            The index of <i>value</i> if found in the view; otherwise, <b>-1</b>.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Insert(System.Int32,System.Object)">
+            <summary>
+            Inserts an item into the list at the specified view index.
+            </summary>
+            <remarks>
+            If the view is sorted, inserting at a specific position is not meaningul; the new item will appear at the index
+            appropriate to the it's position in the sort.
+            If the view is filtered, the index specified is interpreted is the view index of the new item.  The position in the
+            underlying list may be different.
+            </remarks>
+            <param name="index">The zero-based view index at which item should be inserted.</param>
+            <param name="item">The object to insert into the list.</param>
+            <exception cref="T:System.Data.DataException"><see cref="P:JesseJohnston.ObjectListView.AllowNew"/> is false.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">index is not a valid index in the view.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.Remove(System.Object)">
+            <summary>
+            Removes the first occurrence of a specific object from the list.
+            </summary>
+            <param name="value">The <see cref="T:System.Object"></see> to remove from the list.</param>
+            <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.IList"></see> is read-only.<br></br>-or-<br></br>The <see cref="T:System.Collections.IList"></see> has a fixed size.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.RemoveAt(System.Int32)">
+            <summary>
+            Removes the <see cref="T:System.Collections.IList"></see> item at the specified view index.
+            </summary>
+            <param name="index">The zero-based view index of the item to remove.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">index is not a valid index in the view.</exception>
+            <exception cref="T:System.NotSupportedException">The <see cref="T:System.Collections.IList"></see> is read-only.<br></br>-or-<br></br>The <see cref="T:System.Collections.IList"></see> has a fixed size.</exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.CopyTo(System.Array,System.Int32)">
+            <summary>
+            Copies the elements of the view to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.
+            </summary>
+            <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from the view. The <see cref="T:System.Array"></see> must have zero-based indexing.</param>
+            <param name="index">The zero-based index in array at which copying begins.</param>
+            <exception cref="T:System.ArgumentNullException">array is null. </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">index is less than zero. </exception>
+            <exception cref="T:System.ArgumentException">array is multidimensional.<br></br>-or-<br></br>index is equal to or greater than the length of array.<br></br>-or-<br></br>The number of elements in the source view is greater than the available space from index to the end of the destination array.</exception>
+            <exception cref="T:System.InvalidCastException">The type of the source view cannot be cast automatically to the type of the destination array. </exception>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the view.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the view.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.System#Runtime#Serialization#IDeserializationCallback#OnDeserialization(System.Object)">
+            <summary>
+            Runs when the entire object graph has been deserialized.
+            </summary>
+            <remarks>
+            This method is provided only as a serialization helper for the debugger visualizer.
+            </remarks>
+            <param name="sender">The object that initiated the callback.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnAddingNew(System.ComponentModel.AddingNewEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView.AddingNew"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:System.ComponentModel.AddingNewEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnAfterListChanged(System.ComponentModel.ListChangedEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView.AfterListChanged"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:System.ComponentModel.ListChangedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnBeforeListChanged(System.ComponentModel.ListChangedEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView.BeforeListChanged"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:System.ComponentModel.ListChangedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnListChanged(System.ComponentModel.ListChangedEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView.ListChanged"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:System.ComponentModel.ListChangedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnRemovingItem(JesseJohnston.RemovingItemEventArgs)">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView.RemovingItem"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+            <param name="args">The <see cref="T:JesseJohnston.RemovingItemEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnSorted">
+            <summary>
+            Raises the <see cref="E:JesseJohnston.ObjectListView.Sorted"/> event.
+            </summary>
+            <remarks>
+            When overriding this method, you should call the base implementation to assure that the event is raised.
+            </remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnItemAdded(System.Int32)">
+            <summary>
+            Called when an item is added to the list.
+            </summary>
+            <remarks>
+            This method is called when the Add method is called, and also when an item is added through a method of the list
+            itself (if the list supports the ListChanged event).
+            </remarks>
+            <param name="listIndex">Index of the item in the list.</param>
+            <returns>The index of the item in the sort.</returns>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnItemChanged(System.Int32,System.String)">
+            <summary>
+            Called when an item in the list is changed.
+            </summary>
+            <remarks>
+            This method is called when an item property change is reported by the item's INotifyPropertyChanged.PropertyChanged event
+            (but not converted to ListChanged by the containing list), and also when an item property change is reported via a
+            .NET 1.x-style propertyNameChanged event.
+            </remarks>
+            <param name="listIndex">Index of the item in the list.</param>
+            <param name="propertyName">Name of the property changed, or null if the item has been replaced in the list.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnItemChanged(System.Int32,System.ComponentModel.PropertyDescriptor)">
+            <summary>
+            Called when an item in the list is changed.
+            </summary>
+            <remarks>
+            This method is called when an item is replaced through the indexer, and when a list item change is reported by the
+            containing list through the ListChanged event.
+            </remarks>
+            <param name="listIndex">Index of the item in the list.</param>
+            <param name="property">The changed property, or null if the item has been replaced in the list.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnItemDeleted(System.Int32,System.Int32)">
+            <summary>
+            Called when an item is deleted from the list.
+            </summary>
+            <remarks>
+            This method is called when an item is removed using the Remove or RemoveAt methods.  It is also called when an item is
+            removed from the list through a method of the list itself (if the list supports the ListChanged event).
+            </remarks>
+            <param name="viewIndex">Index of the item in the sorted filtered view.</param>
+            <param name="listIndex">Index of the item in the list.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnItemMoved(System.Int32,System.Int32)">
+            <summary>
+            Called when an item is moved in the list.
+            </summary>
+            <remarks>
+            This method is only called as the result of a call to a method on the underlying list.
+            </remarks>
+            <param name="newListIndex">New index of item in the list.</param>
+            <param name="oldListIndex">Old index of item in the list.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListView.OnReset">
+            <summary>
+            Called when the list is reset.
+            </summary>
+            <remarks>
+            This is called when the list is cleared, or when "much of the list has changed".
+            </remarks>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.FilterPredicate">
+            <summary>
+            Gets or sets the filter predicate.
+            </summary>
+            <remarks>
+            A delegate that performs filtering on the items in the list.  FilterPredicate is a code-based alternative
+            to the <see cref="P:JesseJohnston.ObjectListView.Filter"/> expression property.  If both Filter and FilterPredicate have been set, the last one set
+            takes precedence.  Setting either Filter or FilterPredicate to null removes the filter from the view.
+            </remarks>
+            <returns>The filter predicate.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.ItemType">
+            <summary>
+            Gets or sets the type of the item stored in the underlying list.
+            </summary>
+            <remarks>
+            This property only needs to be set when ObjectListView is constructed with an empty, weakly-typed list such as
+            <see cref="T:System.Collections.ArrayList"/>.  If the list already contains one or more list items, or if the list is strongly-typed, such as
+            <see cref="T:System.Collections.Generic.List`1"/>, ItemType should not be set (it will throw InvalidOperationException in this case).
+            It is an error to set ItemType more than once.
+            </remarks>
+            <returns>The type of the item.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.List">
+            <summary>
+            Gets the underlying list.
+            </summary>
+            <returns>The list supplied in the ObjectListView constructor.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.ListItemChangeMonitoring">
+            <summary>
+            Gets or sets a value indicating how list item changes should be monitored.
+            </summary>
+            <remarks>
+            When this value is set to a value other than <b>None</b>, ObjectListView will raise <see cref="E:JesseJohnston.ObjectListView.ListChanged"/> events when list item
+            property values change, in addition to when the underlying list raises <see cref="E:System.ComponentModel.BindingList`1.ListChanged"/>.<br></br><br></br>
+            Normally the underlying list raises <see cref="E:System.ComponentModel.BindingList`1.ListChanged"/> events when list item property values change, and ListItemChangeMonitoring may be set
+            to <b>None</b>.  This property is set automatically for common scenarios, and is needed only in advanced scenarios when the underlying data list does
+            not correctly support list item change notifications.  For example, <see cref="T:System.ComponentModel.BindingList`1"/> raises ListChanged for item changes when the list item
+            type implements <see cref="T:System.ComponentModel.INotifyPropertyChanged"/>, but not when <b><i>property</i>NameChanged</b> events are raised.
+            </remarks>
+            <returns>
+            	<b>None</b> if ListChanged should be raised only when the underlying list raises ListChanged.<br></br>
+            	<b>INotifyPropertyChanged</b> if ListChanged should be raised when a list item raises <seealso cref="E:System.ComponentModel.INotifyPropertyChanged.PropertyChanged"/>.<br></br>
+            	<b>PropertyChangedEvents</b> if ListChanged should be raised when a list item raises a <b><i>propertyName</i>Changed</b> event.
+            </returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.PropertyComparers">
+            <summary>
+            Gets the collection of <seealso cref="T:System.Collections.IComparer"/> objects used to compare property values when sorting.
+            </summary>
+            <remarks>
+            If a property comparer is not provided, the default <seealso cref="T:System.IComparable"/> implementation of the property type is used.
+            </remarks>
+            <returns>The property comparers.  If no comparers have been added, an empty collection is returned.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.Sort">
+            <summary>
+            Gets or sets the sort for the view.
+            </summary>
+            <remarks>
+            This property is an alternative to the ApplySort methods.  It consists of a list of property names separaterd by commas.
+            Each property name can optionally be followed by ASC or DESC, indicating an ascending or descending sort direction for that property.
+            If a direction is not specified, the sort for that column will be ascending.
+            </remarks>
+            
+            <example>
+            <code>
+            	ObjectListView view = new ObjectListView(someList);
+            	view.Sort = "LastName, State DESC";
+            ...
+            	view.Sort = "Date ASC, Name ASC, Orders DESC";
+            ...
+            	view.Sort = "AccountID ASC";
+            </code>
+            </example>
+            <value>The sort.</value>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView.AddingNew">
+            <summary>
+            Raised when a list item is added to the view with <see cref="M:JesseJohnston.ObjectListView.AddNew"/>.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView.AfterListChanged">
+            <summary>
+            Raised after <seealso cref="E:JesseJohnston.ObjectListView.ListChanged"/>.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView.BeforeListChanged">
+            <summary>
+            Raised before <seealso cref="E:JesseJohnston.ObjectListView.ListChanged"/>.
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView.RemovingItem">
+            <summary>
+            Raised when a list item is removed with <see cref="M:JesseJohnston.ObjectListView.Remove(System.Object)"/> or <see cref="M:JesseJohnston.ObjectListView.RemoveAt(System.Int32)"/>
+            </summary>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView.Sorted">
+            <summary>
+            Raised when the view is sorted.
+            </summary>
+            <remarks>
+            The view can be sorted explicitly, with a call to <see cref="M:JesseJohnston.ObjectListView.ApplySort(System.ComponentModel.ListSortDescriptionCollection)"/>,
+            or implicitly when a sort has been applied and a list item is added or changed.
+            </remarks>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.Filter">
+            <summary>
+            Gets or sets the filter to be used to exclude items from the view of the underlying list.
+            </summary>
+            <remarks>
+            The filter expression consists of one or more relational expressions comparing a list item property with a literal value.
+            The supported relational operators are &lt; &lt;= = == &gt;= &gt; &lt;&gt; !=.  Relational expressions can be connected with AND or OR.
+            String literals must be quoted if they include whitespace or operators.
+            Properties of properties ("property paths") may be expressed with a dotted notation: <italic>property1.property2.property3</italic>.
+            
+            <example>
+            <code>
+            	ObjectListView view = new ObjectListView(someList);
+            	view.Filter = "LastName = Smith AND State = WA";
+            ...
+            	view.Filter = "Orders &gt; 5 OR Date = 12/31/2005";
+            ...
+            	view.Filter = "Customer.AccountRep.Department == 12";
+            </code>
+            </example>
+            
+            <bold>Note:</bold> Automatic update of the view when a property of a filter property path changes is not supported in this release.
+            
+            Filter and <see cref="P:JesseJohnston.ObjectListView.FilterPredicate"/> are mutually exclusive.  If both Filter and FilterPredicate have been set,
+            the last one set takes precedence.  Setting either Filter or FilterPredicate to null removes the filter from the view.
+            </remarks>
+            <returns>The string used to filter items out in the view of the underlying list, or <b>null</b> if no filter is set.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.SortDescriptions">
+            <summary>
+            Gets the collection of sort descriptions currently applied to the view.
+            </summary>
+            <returns>
+            The <see cref="T:System.ComponentModel.ListSortDescriptionCollection"></see> currently applied to the view.  If no sort
+            is currently in effect, an empty collection is returned.
+            </returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.AllowEdit">
+            <summary>
+            Gets whether you can update items in the list.
+            </summary>
+            <returns><b>true</b> if you can update the items in the list; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.AllowNew">
+            <summary>
+            Gets whether you can add items to the list using <see cref="M:JesseJohnston.ObjectListView.AddNew"></see>.
+            </summary>
+            <returns><b>true</b> if you can add items to the list using <see cref="M:JesseJohnston.ObjectListView.AddNew"></see>; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.AllowRemove">
+            <summary>
+            Gets whether you can remove items from the list, using <see cref="M:System.Collections.IList.Remove(System.Object)"></see> or <see cref="M:System.Collections.IList.RemoveAt(System.Int32)"></see>.
+            </summary>
+            <returns><b>true</b> if you can remove items from the list; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.IsSorted">
+            <summary>
+            Gets whether the items in the view are sorted.
+            </summary>
+            <returns><b>true</b> if <see cref="M:System.ComponentModel.IBindingList.ApplySort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)"></see> has been called and <see cref="M:System.ComponentModel.IBindingList.RemoveSort"></see> has not been called; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="E:JesseJohnston.ObjectListView.ListChanged">
+            <summary>
+            Raised when a list item is added to the list, changed, or removed from the list.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.SortDirection">
+            <summary>
+            Gets the direction of the current sort.
+            </summary>
+            <remarks>
+            If the current sort includes more than one property, the direction of the primary sort property is returned.
+            If no sort is in effect, <b>Ascending</b> is returned.
+            </remarks>
+            <returns>One of the <see cref="T:System.ComponentModel.ListSortDirection"></see> values.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.SortProperty">
+            <summary>
+            Gets the <see cref="T:System.ComponentModel.PropertyDescriptor"></see> that is being used for sorting.
+            </summary>
+            <remarks>
+            If the current sort includes more than one property, the primary sort property is returned.
+            If no sort is in effect, <b>null</b> is returned.
+            </remarks>
+            <returns>
+            The <see cref="T:System.ComponentModel.PropertyDescriptor"></see> that is being used for sorting.
+            </returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.IsFixedSize">
+            <summary>
+            Gets a value indicating whether the list has a fixed size.
+            </summary>
+            <returns><b>true</b> if the list has a fixed size; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the list is read-only.
+            </summary>
+            <returns><b>true</b> if the list is read-only; otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.Item(System.Int32)">
+            <summary>
+            Gets or sets the <see cref="T:System.Object"/> at the specified view index.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.Count">
+            <summary>
+            Gets the number of elements contained in the view.
+            </summary>
+            <returns>The number of elements contained in the view.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.IsSynchronized">
+            <summary>
+            Gets a value indicating whether access to the view is synchronized (thread safe).
+            </summary>
+            <returns><b>true</b> if access to the view is synchronized (thread safe); otherwise, <b>false</b>.</returns>
+        </member>
+        <member name="P:JesseJohnston.ObjectListView.SyncRoot">
+            <summary>
+            Gets an object that can be used to synchronize access to the view.
+            </summary>
+            <returns>An object that can be used to synchronize access to the view.</returns>
+        </member>
+        <member name="T:JesseJohnston.RemovingItemEventArgs">
+            <summary>
+            Class providing information about an item about to be deleted from the underlying list.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.RemovingItemEventArgs.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.RemovingItemEventArgs"/> class.
+            </summary>
+            <param name="index">The view index of the item to be deleted.</param>
+        </member>
+        <member name="P:JesseJohnston.RemovingItemEventArgs.Index">
+            <summary>
+            Gets the view index of the item about to be deleted.
+            </summary>
+            <value>The index.</value>
+        </member>
+        <member name="T:JesseJohnston.ExtendedProperty">
+            <summary>
+            This class represents a dynamic property of an <seealso cref="T:JesseJohnston.ObjectListView"/> list item type.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ExtendedProperty.#ctor(System.Type,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.ExtendedProperty"/> class.
+            </summary>
+            <remarks>
+            This overload of the constructor creates a read-only string property with a default value of null.
+            </remarks>
+            <param name="componentType">Type of the component to which the property will be added.</param>
+            <param name="propertyName">Name of the property.</param>
+        </member>
+        <member name="M:JesseJohnston.ExtendedProperty.#ctor(System.Type,System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.ExtendedProperty"/> class.
+            </summary>
+            <remarks>
+            This overload of the constructor creates a read-only property with a default value of null.
+            </remarks>
+            <param name="componentType">Type of the component to which the property will be added.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="propertyType">Type of the property.</param>
+        </member>
+        <member name="M:JesseJohnston.ExtendedProperty.#ctor(System.Type,System.String,System.Type,System.Boolean,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.ExtendedProperty"/> class.
+            </summary>
+            <param name="componentType">Type of the component to which the property will be added.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="propertyType">Type of the property.</param>
+            <param name="writable">if set to <c>true</c>, the property value can be set.</param>
+            <param name="defaultValue">The default value of the property.</param>
+        </member>
+        <member name="P:JesseJohnston.ExtendedProperty.Default">
+            <summary>
+            Gets the default value of this property.
+            </summary>
+            <value>The default.</value>
+        </member>
+        <member name="P:JesseJohnston.ExtendedProperty.Name">
+            <summary>
+            Gets the name of this property.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:JesseJohnston.ExtendedProperty.PropertyDescriptor">
+            <summary>
+            Gets a property descriptor representing this property.
+            </summary>
+            <value>The property descriptor.</value>
+        </member>
+        <member name="P:JesseJohnston.ExtendedProperty.PropertyType">
+            <summary>
+            Gets the type of the property.
+            </summary>
+            <value>The type of the property.</value>
+        </member>
+        <member name="P:JesseJohnston.ExtendedProperty.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this property is read only.
+            </summary>
+            <value>
+            	<c>true</c> if this property is read only; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="E:JesseJohnston.ExtendedProperty.GetValue">
+            <summary>
+            Raised when the property value is being read through the property descriptor.
+            </summary>
+            <remarks>
+            Set the Value property of <seealso cref="T:JesseJohnston.ExtendedPropertyEventArgs"/> to supply the value for the property.
+            </remarks>
+        </member>
+        <member name="E:JesseJohnston.ExtendedProperty.SetValue">
+            <summary>
+            Raised when the property value is being set through the property descriptor.
+            </summary>
+            <remarks>
+            The Value property of <seealso cref="T:JesseJohnston.ExtendedPropertyEventArgs"/> contains the new value for the property.
+            </remarks>
+        </member>
+        <member name="T:JesseJohnston.ObjectListViewVisualizer">
+            <summary>
+            A debugger visualizer for ObjectListView.
+            </summary>
+            <remarks>This class is used by Visual Studio, and is not intended to be called from your code.</remarks>
+        </member>
+        <member name="M:JesseJohnston.ObjectListViewVisualizer.Show(Microsoft.VisualStudio.DebuggerVisualizers.IDialogVisualizerService,Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider)">
+            <summary>
+            Display the visualizer user interface.
+            </summary>
+            <remarks>This method is used by Visual Studio, and is not intended to be called from your code.</remarks>
+            <param name="windowService">An object of type <see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.IDialogVisualizerService"></see>, which provides methods your visualizer can use to display Windows forms, controls, and dialogs.</param>
+            <param name="objectProvider">An object of type <see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider"></see>. This object provides communication from the debugger side of the visualizer to the object source (<see cref="T:Microsoft.VisualStudio.DebuggerVisualizers.VisualizerObjectSource"></see>) on the debuggee side.</param>
+        </member>
+        <member name="M:JesseJohnston.ObjectListViewVisualizer.TestShowVisualizer(System.Object)">
+            <summary>
+            Tests the visualizer by hosting it outside of the debugger.
+            </summary>
+            <remarks>This method is not intended to be called from your code.</remarks>
+            <param name="objectToVisualize">The object to display in the visualizer.</param>
+        </member>
+        <member name="T:JesseJohnston.ListItemChangeEvents">
+            <summary>
+            Describes the ways that a list item reports changes to it's property values.
+            </summary>
+        </member>
+        <member name="F:JesseJohnston.ListItemChangeEvents.None">
+            <summary>
+            The list item does not raise events when it's property values change.
+            </summary>
+        </member>
+        <member name="F:JesseJohnston.ListItemChangeEvents.INotifyPropertyChanged">
+            <summary>
+            The list item class implements the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface.
+            </summary>
+        </member>
+        <member name="F:JesseJohnston.ListItemChangeEvents.PropertyChangedEvents">
+            <summary>
+            The list item class provides an event named <b><i>propertyName</i>Changed</b> for each property.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisColorFontHeader">
+            <summary>
+              Looks up a localized string similar to {\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fswiss\fprq2\fcharset0 Verdana;}{\f1{\colortbl ;\red255\green0\blue0;\red0\green0\blue255;\red0\green128\blue0;}\fswiss\fcharset0 Arial;}}.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisHeaderText">
+            <summary>
+              Looks up a localized string similar to {\*\generator Msftedit 5.41.21.2506;}\viewkind4\uc1\pard\cf0\f0\fs20 If you&apos;re having trouble with ObjectListView, consider the following analysis of your list and list item types.  The list is the object that you provided in the ObjectListView constructor.  The list items are the objects contained in the list.\par\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoIEditableObject">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support IEditableObject, which means that you cannot cancel changes made through a bound control such as the DataGridView.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoINotifyPropertyChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support INotifyPropertyChanged, but \cf3 does\cf0  supply one or more property change events.  This means some or all changes to property values will be reflected in the view.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemNoINotifyPropertyChangedNoPropertyChangedEvents">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support INotifyPropertyChanged or property change events, which means that changes to property values will not be refected in the view.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemOptimal">
+            <summary>
+              Looks up a localized string similar to \cf3\b Your list item type \cf0\i {0}\cf3\i0  is optimal.\cf0\b0\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSubOptimal">
+            <summary>
+              Looks up a localized string similar to \pard\cf1\b\f0\fs20 Your list item type \cf0\i {0}\cf1\i0  is sub-optimal.\cf0\b0\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSupportsIEditableObject">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support IEditableObject, which allows you to cancel changes made through a bound control such as the DataGridView.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListItemSupportsINotifyPropertyChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support INotifyPropertyChanged, which means that changes to property values will be refected in the view.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListModifications">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf2\b List modifications:\cf0\b0\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListNoIRaiseItemChangedEvents">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support IRaiseItemChangedEvents, which means that list item changes reported as PropertyChanged events will not be reflected in the view.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListNoListChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It does \cf1 not\cf0  support the ListChanged event, which means that added and deleted items will not be reflected in the view.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListNotSynced">
+            <summary>
+              Looks up a localized string similar to The list makes no claims to thread safety.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListOptimal">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf3\b Your list type \cf0\i {0}\cf3\i0  is optimal.\cf0\b0\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListReadOnly">
+            <summary>
+              Looks up a localized string similar to The list is read-only, which means that you cannot add, change, or delete list items through the view or a bound control.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListSubOptimal">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf1\b Your list type \cf0\i {0}\cf1\i0  is sub-optimal.\cf0\b0\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListSupportsIRaiseItemChangedEvents">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support IRaiseItemChangedEvents, which means that list item changes reported as PropertyChanged events will be reflected in the view.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListSupportsListChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 It \cf3 does\cf0  support the ListChanged event, which means that added and deleted items will be reflected in the view.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListSynced">
+            <summary>
+              Looks up a localized string similar to The list claims to be thread-safe, and offers a SyncRoot object for lock operations.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListThreadSafety">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf2\b List thread safety:\cf0\b0\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListWritableFixedSize">
+            <summary>
+              Looks up a localized string similar to The list is writable but is fixed in size, which means that you can change or replace list items through the view or a bound control, but cannot add or remove items.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisListWritableVariableSize">
+            <summary>
+              Looks up a localized string similar to The list is writable and can change in size, which allows you to add, change, and remove list items through the view or a bound control.\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendations">
+            <summary>
+              Looks up a localized string similar to \pard\par\cf2\b Recommendations:\cf0\b0\par .
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsBindingListT">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360\f1 A recommended list type is BindingList&lt;T&gt;, where T is your list item type.  BindingList&lt;T&gt; implements both IBindingList and IRaiseItemChangedEvents.\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsIEditableObject">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IEditableObject for your list item type (\cf2 optional\cf0 ).\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsINotifyPropertyChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement INotifyPropertyChanged for your list item type (\cf1 important\cf0 ).\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsIRaiseItemChangedEvents">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IRaiseItemChangedEvents for your list type (\cf1 important\cf0 ).\par.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.Properties.Resources.analysisRecommendationsListChanged">
+            <summary>
+              Looks up a localized string similar to \pard{\pntext\f2\&apos;B7\tab}{\*\pn\pnlvlblt\pnf2\pnindent0{\pntxtb\&apos;B7}}\fi-360\li360 Implement IBindingList or provide a ListChanged event for your list type (\cf1 important\cf0 ).\par.
+            </summary>
+        </member>
+        <member name="T:JesseJohnston.ExtendedPropertyEventArgs">
+            <summary>
+            This class contains information about the <seealso cref="E:JesseJohnston.ExtendedProperty.GetValue"/> and <seealso cref="E:JesseJohnston.ExtendedProperty.SetValue"/>
+            events.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ExtendedPropertyEventArgs.#ctor(System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.ExtendedPropertyEventArgs"/> class.
+            </summary>
+            <param name="propertyName">Name of the property being read.</param>
+            <param name="target">The object that contains the property.</param>
+        </member>
+        <member name="M:JesseJohnston.ExtendedPropertyEventArgs.#ctor(System.String,System.Object,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.ExtendedPropertyEventArgs"/> class.
+            </summary>
+            <param name="propertyName">Name of the property being written.</param>
+            <param name="target">The object that contains the property.</param>
+            <param name="newValue">The new value of the property.</param>
+        </member>
+        <member name="P:JesseJohnston.ExtendedPropertyEventArgs.PropertyName">
+            <summary>
+            Gets the name of the property being set or get.
+            </summary>
+            <value>The name of the property.</value>
+        </member>
+        <member name="P:JesseJohnston.ExtendedPropertyEventArgs.Target">
+            <summary>
+            Gets the target object on which the property is being set or get.
+            </summary>
+            <value>The target.</value>
+        </member>
+        <member name="P:JesseJohnston.ExtendedPropertyEventArgs.Value">
+            <summary>
+            Gets or sets the value of the property.
+            </summary>
+            <remarks>
+            When the event <seealso cref="E:JesseJohnston.ExtendedProperty.GetValue"/> is raised, Value should be set to the value to be returned.
+            When the event <seealso cref="E:JesseJohnston.ExtendedProperty.SetValue"/> is raised, Value contains the new value of the property, and 
+            setting it performs no useful function.
+            </remarks>
+            <value>The value.</value>
+        </member>
+        <member name="T:JesseJohnston.SortDescription">
+            <summary>
+            Represents a sort defined by a list item property name and sort direction.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.#ctor(System.String,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescription"/> class.
+            </summary>
+            <param name="propertyName">Name of the property to sort on.</param>
+            <param name="direction">The sort direction.</param>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.#ctor(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JesseJohnston.SortDescription"/> class.
+            </summary>
+            <param name="property">The property to sort on.</param>
+            <param name="direction">The sort direction.</param>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"></see> is equal to the current <see cref="T:System.Object"></see>.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"></see> to compare with the current <see cref="T:System.Object"></see>.</param>
+            <returns>
+            true if the specified <see cref="T:System.Object"></see> is equal to the current <see cref="T:System.Object"></see>; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.GetHashCode">
+            <summary>
+            Serves as a hash function for a particular type. <see cref="M:System.Object.GetHashCode"></see> is suitable for use in hashing algorithms and data structures like a hash table.
+            </summary>
+            <returns>
+            A hash code for the current <see cref="T:System.Object"></see>.
+            </returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.op_Equality(JesseJohnston.SortDescription,JesseJohnston.SortDescription)">
+            <summary>
+            Determines if two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the same property name and sort direction.
+            </summary>
+            <param name="desc1">The first <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
+            <param name="desc2">The second <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
+            <returns>true if the two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the same property name and sort direction; otherwise false.</returns>
+        </member>
+        <member name="M:JesseJohnston.SortDescription.op_Inequality(JesseJohnston.SortDescription,JesseJohnston.SortDescription)">
+            <summary>
+            Determines if two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to the different property names or sort directions.
+            </summary>
+            <param name="desc1">The first <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
+            <param name="desc2">The second <seealso cref="T:JesseJohnston.SortDescription"/>.</param>
+            <returns>true if the two <seealso cref="T:JesseJohnston.SortDescription"/> objects refer to different property names or sort directions; otherwise false.</returns>
+        </member>
+        <member name="P:JesseJohnston.SortDescription.Direction">
+            <summary>
+            Gets the sort direction.
+            </summary>
+            <value>The direction.</value>
+        </member>
+        <member name="P:JesseJohnston.SortDescription.PropertyDescriptor">
+            <summary>
+            Gets the property descriptor (if provided in the constructor).
+            </summary>
+            <value>The property descriptor.</value>
+        </member>
+        <member name="P:JesseJohnston.SortDescription.PropertyName">
+            <summary>
+            Gets the name of the property that is to be used in sorting the items.
+            </summary>
+            <value>The name of the property.</value>
+        </member>
+        <member name="T:JesseJohnston.ObjectView`1">
+            <summary>
+            Wrapper returned by <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/>
+            </summary>
+            <remarks>
+            This type is returned from <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/> so that if the added object supports <seealso cref="T:System.ComponentModel.IEditableObject"/>, 
+            calling <see cref="M:JesseJohnston.ObjectView`1.EndEdit"/> or <see cref="M:JesseJohnston.ObjectView`1.CancelEdit"/> through the wrapper will notify the ObjectListView that the object addition has been committed
+            or cancelled.
+            </remarks>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:JesseJohnston.ObjectView`1.BeginEdit">
+            <summary>
+            Begins an edit on an object.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectView`1.CancelEdit">
+            <summary>
+            Discards changes made since the last <see cref="M:JesseJohnston.ObjectView`1.BeginEdit"/> call.
+            </summary>
+        </member>
+        <member name="M:JesseJohnston.ObjectView`1.EndEdit">
+            <summary>
+            Commits changes made since the last <see cref="M:JesseJohnston.ObjectView`1.BeginEdit"/> or <seealso cref="M:JesseJohnston.ObjectListView`1.AddNew"/> call.
+            </summary>
+        </member>
+        <member name="P:JesseJohnston.ObjectView`1.Object">
+            <summary>
+            Gets the object wrapped by this instance.
+            </summary>
+            <value>The object.</value>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:JesseJohnston.ObjectListViewHelper.CreateVisualizerForm(System.Object)" -->
+    </members>
+</doc>
