@@ -1,0 +1,297 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AW.Winforms.Helpers</RootNamespace>
+    <AssemblyName>AW.Winforms.Helpers</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SignAssembly>false</SignAssembly>
+    <PublishUrl>http://localhost/href.Controls/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ACorns.Hawkeye.Core, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ACorns.Hawkeye.CoreUI, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.CoreUI.dll</HintPath>
+    </Reference>
+    <Reference Include="ACorns.Hawkeye.Injector, Version=1.1.10.0, Culture=neutral, PublicKeyToken=7026c9d4d4143548, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ACorns.Hawkeye.Injector.dll</HintPath>
+    </Reference>
+    <Reference Include="CSScriptLibrary, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\CSScriptLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="sliver.Windows.Forms.StateBrowser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=34afe62596d00324, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\sliver.Windows.Forms.StateBrowser.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.Linq, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AWHelper.cs" />
+    <Compile Include="Controls\GridDataEditorT.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GridDataEditorT.Designer.cs">
+      <DependentUpon>GridDataEditorT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DataTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GridDataEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GridDataEditor.Designer.cs">
+      <DependentUpon>GridDataEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataEditor\DataEditorExtensions.cs" />
+    <Compile Include="DataEditor\FrmDataEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataEditor\FrmDataEditor.Designer.cs">
+      <DependentUpon>FrmDataEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BindingListHelper.cs" />
+    <Compile Include="QueryRunner\FrmQueryRunner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryRunner\FrmQueryRunner.Designer.cs">
+      <DependentUpon>FrmQueryRunner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryRunner\QueryRunner.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="QueryRunner\QueryRunner.Designer.cs">
+      <DependentUpon>QueryRunner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EntityViewer\FieldsToPropertiesTypeDescriptionProvider.cs" />
+    <Compile Include="EntityViewer\FrmEntityViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EntityViewer\FrmEntityViewer.Designer.cs">
+      <DependentUpon>FrmEntityViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Hosting\DummySite.cs" />
+    <Compile Include="Misc\Inflector.cs" />
+    <Compile Include="MostRecentlyUsedHandler\MRUHandler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MostRecentlyUsedHandler\MRUListFile.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MRUListFile.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="PropGridEx\DictionaryItemMemberDescriptor.cs" />
+    <Compile Include="PropGridEx\FieldMemberDescriptor.cs" />
+    <Compile Include="PropGridEx\ListItemMemberDescriptor.cs" />
+    <Compile Include="PropGridEx\PropertyGridEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PropGridEx\RawMemberTab.cs" />
+    <Compile Include="Reporting\FrmReportViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\FrmReportViewer.designer.cs">
+      <DependentUpon>FrmReportViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\RdlGenerator.cs" />
+    <Compile Include="Reporting\ReportDefinition.cs" />
+    <Compile Include="Reporting\ReportOptionsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\ReportOptionsDialog.designer.cs">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\TableRdlGenerator.cs" />
+    <Compile Include="TextBoxTraceListener.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\GridDataEditorT.resx">
+      <DependentUpon>GridDataEditorT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DataTreeView.resx">
+      <DependentUpon>DataTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GridDataEditor.resx">
+      <DependentUpon>GridDataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataEditor\FrmDataEditor.resx">
+      <DependentUpon>FrmDataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryRunner\FrmQueryRunner.resx">
+      <DependentUpon>FrmQueryRunner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryRunner\QueryRunner.resx">
+      <DependentUpon>QueryRunner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EntityViewer\FrmEntityViewer.resx">
+      <DependentUpon>FrmEntityViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MostRecentlyUsedHandler\MRUHandler.resx">
+      <DependentUpon>MRUHandler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\FrmReportViewer.resx">
+      <DependentUpon>FrmReportViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\ReportOptionsDialog.resx">
+      <DependentUpon>ReportOptionsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Ancillary\AdventureWorks.snk">
+      <Link>AdventureWorks.snk</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="MostRecentlyUsedHandler\MRUListFile.xsc">
+      <DependentUpon>MRUListFile.xsd</DependentUpon>
+    </None>
+    <None Include="MostRecentlyUsedHandler\MRUListFile.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>MRUListFile.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="MostRecentlyUsedHandler\MRUListFile.xss">
+      <DependentUpon>MRUListFile.xsd</DependentUpon>
+    </None>
+    <None Include="MostRecentlyUsedHandler\MRUListFile.xsx">
+      <DependentUpon>MRUListFile.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">
+      <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
+      <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>
+      <Name>DynamicQuery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
+      <Project>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</Project>
+      <Name>ObjectListView</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MostRecentlyUsedHandler\MRUHandler.bmp" />
+    <Content Include="Resources\Members.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
