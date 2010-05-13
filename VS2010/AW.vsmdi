@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestLists xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
   <TestList name="CurrentLLBLBugs" id="2f5fe1b8-b7af-462b-a4cf-1920d91189b4" parentListId="8c43106b-9dc1-4907-a29f-aa66a61bf5b6">
     <Description>Tests that fail because of bugs in the LLBL LINQ provider</Description>
     <TestLinks>
