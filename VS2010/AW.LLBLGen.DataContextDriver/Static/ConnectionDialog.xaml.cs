@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -82,9 +83,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				_cxInfo.CustomTypeInfo.CustomMetadataPath = dialog.FileName;
 				//var dataAccessAdapterAssembly  = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
 				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-				var customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
 				try
 				{
+					var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
 					if (customTypes.Count() == 1)
 						AdapterType = customTypes.First();
 				}
@@ -93,6 +94,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					return;
 				}
 			}
+		}
+
+		private static IEnumerable<string> GetDataAccessAdapterTypeNames(Assembly dataAccessAdapterAssembly)
+		{
+			return dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
 		}
 
 		private void BrowseAppConfig(object sender, RoutedEventArgs e)
@@ -167,7 +173,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				//var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
 				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-				customTypes = dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName).ToArray();
+				customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly).ToArray();
+			}
+			catch (ReflectionTypeLoadException ex)
+			{
+				MessageBox.Show("Error obtaining adapter types: " + ex.Message + Environment.NewLine + ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
+				return;
 			}
 			catch (Exception ex)
 			{
