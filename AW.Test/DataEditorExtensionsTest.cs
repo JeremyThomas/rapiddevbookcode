@@ -9,6 +9,7 @@ using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
 {
@@ -64,7 +65,7 @@ namespace AW.Tests
 		public void EditInDataGridViewTest()
 		{
 			TestEditInDataGridView(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
-			TestEditInDataGridView(MetaSingletons.MetaData.AddressType.First().CustomPropertiesOfType);
+			TestEditInDataGridView(((IEntity)MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
 			TestEditInDataGridView(NonSerializableClass.GenerateList());
 			TestEditInDataGridView(SerializableClass.GenerateList());
 			TestEditInDataGridView(SerializableClass.GenerateListWithBoth());

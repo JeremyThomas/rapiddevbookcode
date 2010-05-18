@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.0
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -33,8 +33,6 @@ namespace AW.Data.RelationClasses
 			toReturn.Add(this.CustomerEntityUsingTerritoryID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingTerritoryID);
 			toReturn.Add(this.StateProvinceEntityUsingTerritoryID);
-
-
 			return toReturn;
 		}
 
@@ -86,12 +84,10 @@ namespace AW.Data.RelationClasses
 		}
 
 
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code

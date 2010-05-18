@@ -41,8 +41,14 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
-    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
+    <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
+    </Reference>
     <Reference Include="sliver.Windows.Forms.StateBrowser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=34afe62596d00324, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\sliver.Windows.Forms.StateBrowser.dll</HintPath>

@@ -112,6 +112,7 @@
     <None Include="DevDeploy.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Properties\DataSources\LINQPad.Extensibility.DataContext.IConnectionInfo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

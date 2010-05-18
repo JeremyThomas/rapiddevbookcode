@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.0
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -30,10 +30,8 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-
-
 			toReturn.Add(this.SalesOrderHeaderEntityUsingSalesOrderID);
-			toReturn.Add(this.SpecialOfferProductEntityUsingSpecialOfferIDProductID);
+			toReturn.Add(this.SpecialOfferProductEntityUsingProductIDSpecialOfferID);
 			return toReturn;
 		}
 
@@ -56,27 +54,25 @@ namespace AW.Data.RelationClasses
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderDetailEntity and SpecialOfferProductEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderDetail.SpecialOfferID - SpecialOfferProduct.SpecialOfferID
 		/// SalesOrderDetail.ProductID - SpecialOfferProduct.ProductID
+		/// SalesOrderDetail.SpecialOfferID - SpecialOfferProduct.SpecialOfferID
 		/// </summary>
-		public virtual IEntityRelation SpecialOfferProductEntityUsingSpecialOfferIDProductID
+		public virtual IEntityRelation SpecialOfferProductEntityUsingProductIDSpecialOfferID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SpecialOfferProduct", false);
-				relation.AddEntityFieldPair(SpecialOfferProductFields.SpecialOfferID, SalesOrderDetailFields.SpecialOfferID);
 				relation.AddEntityFieldPair(SpecialOfferProductFields.ProductID, SalesOrderDetailFields.ProductID);
+				relation.AddEntityFieldPair(SpecialOfferProductFields.SpecialOfferID, SalesOrderDetailFields.SpecialOfferID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferProductEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderDetailEntity", true);
 				return relation;
 			}
 		}
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code

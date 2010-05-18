@@ -1,9 +1,8 @@
 using System.Windows.Forms;
 using AW.Data.EntityClasses;
-using AW.Win;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AW.Test
+namespace AW.Win.Tests
 {
   /// <summary>
   ///This is a test class for OrganizationHelper and is intended
@@ -70,8 +69,8 @@ namespace AW.Test
     [TestMethod]
     public void GetManagersRecursiveTest1()
     {
-      var Employee = new EmployeeEntity(SyedAbbasID);
-      var actual = OrganizationHelper.GetManagersRecursive(Employee);
+      var employee = new EmployeeEntity(SyedAbbasID);
+      var actual = OrganizationHelper.GetManagersRecursive(employee);
       Assert.AreEqual(KenSánchez, actual.Text);
     }
 
@@ -101,8 +100,8 @@ namespace AW.Test
     [TestMethod]
     public void GetEmployeesRecursiveTest()
     {
-      var Employee = new EmployeeEntity(SyedAbbasID);
-      var actual = OrganizationHelper.GetEmployeesRecursive(Employee);
+      var employee = new EmployeeEntity(SyedAbbasID);
+      var actual = OrganizationHelper.GetEmployeesRecursive(employee);
       Assert.AreEqual(SyedAbbas, actual.Text);
     }
 

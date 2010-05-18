@@ -341,9 +341,6 @@
     <Compile Include="FactoryClasses\PropertyDescriptorFactory.cs" />
     <Compile Include="FactoryClasses\SortClauseFactory.cs" />
     <Compile Include="Filters\SalesOrderHeaderFilters.cs" />
-    <Compile Include="HelperClasses\DbUtils.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
     <Compile Include="HelperClasses\DbUtilsComPlus.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -523,6 +520,9 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="ViewModels\CustomerListLinqedTypedList.cs" />
+    <Compile Include="DaoClasses\CommonDaoBase.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">

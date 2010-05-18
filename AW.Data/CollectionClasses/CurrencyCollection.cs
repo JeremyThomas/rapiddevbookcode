@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.0
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -40,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public CurrencyCollection(IList<CurrencyEntity> initialContents):base(new CurrencyEntityFactory())
+		public CurrencyCollection(IEnumerable<CurrencyEntity> initialContents):base(new CurrencyEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -57,7 +56,6 @@ namespace AW.Data.CollectionClasses
 		protected CurrencyCollection(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}
-
 
 
 
@@ -118,8 +116,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -162,8 +159,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			CurrencyDAO dao = DAOFactory.CreateCurrencyDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateCurrencyDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -179,7 +175,6 @@ namespace AW.Data.CollectionClasses
 		{
 			return new Transaction(levelOfIsolation, name);
 		}
-
 
 		#region Custom EntityCollection code
 		
