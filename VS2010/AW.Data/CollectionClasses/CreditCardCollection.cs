@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.0
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -40,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public CreditCardCollection(IList<CreditCardEntity> initialContents):base(new CreditCardEntityFactory())
+		public CreditCardCollection(IEnumerable<CreditCardEntity> initialContents):base(new CreditCardEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -60,17 +59,15 @@ namespace AW.Data.CollectionClasses
 
 
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance)
 		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -80,8 +77,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -90,26 +95,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingAddressCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingAddressCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -117,25 +110,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingAddressCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, prefetchPathToUse);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingAddressCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance)
 		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -145,8 +135,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -155,26 +153,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingAddressCollectionViaSalesOrderHeader_(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingAddressCollectionViaSalesOrderHeader_(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -182,25 +168,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingAddressCollectionViaSalesOrderHeader_(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, prefetchPathToUse);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingAddressCollectionViaSalesOrderHeader_(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance)
 		{
-			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -210,8 +193,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -220,26 +211,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingContactCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, contactInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingContactCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, contactInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -247,25 +226,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingContactCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, contactInstance, prefetchPathToUse);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingContactCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, contactInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance)
 		{
-			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -275,8 +251,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -285,26 +269,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, currencyRateInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, currencyRateInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -312,25 +284,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, currencyRateInstance, prefetchPathToUse);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, currencyRateInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in CustomerEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in CustomerEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="customerInstance">CustomerEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(IEntity customerInstance)
 		{
-			return GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(customerInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(customerInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="customerInstance">CustomerEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -340,8 +309,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(customerInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in CustomerEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="customerInstance">CustomerEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(IEntity customerInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(customerInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="customerInstance">CustomerEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -350,26 +327,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(IEntity customerInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingCustomerCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, customerInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingCustomerCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, customerInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in CustomerEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="customerInstance">CustomerEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(IEntity customerInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(customerInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="customerInstance">CustomerEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -377,25 +342,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingCustomerCollectionViaSalesOrderHeader(IEntity customerInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingCustomerCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, customerInstance, prefetchPathToUse);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingCustomerCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, customerInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(IEntity customerViewRelatedInstance)
 		{
-			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(customerViewRelatedInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(customerViewRelatedInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -405,8 +367,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(customerViewRelatedInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(IEntity customerViewRelatedInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(customerViewRelatedInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -415,26 +385,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(IEntity customerViewRelatedInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, customerViewRelatedInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, customerViewRelatedInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(IEntity customerViewRelatedInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(customerViewRelatedInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -442,25 +400,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(IEntity customerViewRelatedInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, customerViewRelatedInstance, prefetchPathToUse);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader___(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, customerViewRelatedInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance)
 		{
-			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -470,8 +425,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -480,26 +443,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesTerritoryInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, salesTerritoryInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -507,25 +458,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesTerritoryInstance, prefetchPathToUse);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, salesTerritoryInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  Relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance)
 		{
-			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -535,8 +483,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -545,26 +501,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingShipMethodCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, shipMethodInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingShipMethodCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, shipMethodInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a Relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CreditCardCollection object all CreditCardEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -572,14 +516,12 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetMultiUsingShipMethodCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, shipMethodInstance, prefetchPathToUse);
+			return DAOFactory.CreateCreditCardDAO().GetMultiUsingShipMethodCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, shipMethodInstance, prefetchPathToUse, 0, 0);
 		}
-
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
 		/// <param name="selectFilter">A predicate or predicate expression which should be used as filter for the entities to retrieve.</param>
@@ -637,8 +579,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -681,8 +622,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			CreditCardDAO dao = DAOFactory.CreateCreditCardDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateCreditCardDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -698,7 +638,6 @@ namespace AW.Data.CollectionClasses
 		{
 			return new Transaction(levelOfIsolation, name);
 		}
-
 
 		#region Custom EntityCollection code
 		

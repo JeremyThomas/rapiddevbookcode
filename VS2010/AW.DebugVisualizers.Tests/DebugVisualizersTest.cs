@@ -14,6 +14,7 @@ using AW.LinqToSQL;
 using AW.Tests;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.DebugVisualizers.Tests
 {
@@ -93,7 +94,7 @@ namespace AW.DebugVisualizers.Tests
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       TestSerialize(addressTypeEntityCollection);
       TestSerialize(SerializableBaseClass.GenerateList());
-      TestSerialize(addressTypeEntityCollection.First().CustomPropertiesOfType);
+      TestSerialize(((IEntity)addressTypeEntityCollection.First()).CustomPropertiesOfType);
       TestShow(SerializableBaseClass2.GenerateListWithBothSerializableClasses());
       TestSerialize(SerializableClass.GenerateList());
     }

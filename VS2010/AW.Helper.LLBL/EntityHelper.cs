@@ -90,7 +90,7 @@ namespace AW.Helper.LLBL
     {
       if (enumerable.Count() == 0)
         return GetFactory<T>().CreateEntityCollection() as EntityCollectionBase<T>;
-      var entities = enumerable.First().GetEntityFactory().CreateEntityCollection() as EntityCollectionBase<T>;
+      var entities = ((IEntity)enumerable.First()).GetEntityFactory().CreateEntityCollection() as EntityCollectionBase<T>;
       if (entities != null)
         entities.AddRange(enumerable);
       return entities;
@@ -147,7 +147,7 @@ namespace AW.Helper.LLBL
     /// <returns>factory to use or null if not found</returns>
     public static IEntityFactory GetFactory<T>() where T : EntityBase
     {
-      return CreateEntity<T>().GetEntityFactory();
+      return ((IEntity)CreateEntity<T>()).GetEntityFactory();
     }
 
     /// <summary>

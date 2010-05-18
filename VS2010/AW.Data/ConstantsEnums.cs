@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.0
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -11,11 +11,8 @@ using System;
 
 namespace AW.Data
 {
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Address.
-	/// </summary>
-	public enum AddressFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Address.</summary>
+	public enum AddressFieldIndex
 	{
 		///<summary>AddressID. </summary>
 		AddressID,
@@ -25,104 +22,88 @@ namespace AW.Data
 		AddressLine2,
 		///<summary>City. </summary>
 		City,
-		///<summary>StateProvinceID. </summary>
-		StateProvinceID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
 		///<summary>PostalCode. </summary>
 		PostalCode,
 		///<summary>Rowguid. </summary>
 		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
+		///<summary>StateProvinceID. </summary>
+		StateProvinceID,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AddressType.
-	/// </summary>
-	public enum AddressTypeFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AddressType.</summary>
+	public enum AddressTypeFieldIndex
 	{
 		///<summary>AddressTypeID. </summary>
 		AddressTypeID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
 		///<summary>Name. </summary>
 		Name,
 		///<summary>Rowguid. </summary>
 		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Contact.
-	/// </summary>
-	public enum ContactFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Contact.</summary>
+	public enum ContactFieldIndex
 	{
+		///<summary>AdditionalContactInfo. </summary>
+		AdditionalContactInfo,
 		///<summary>ContactID. </summary>
 		ContactID,
-		///<summary>NameStyle. </summary>
-		NameStyle,
-		///<summary>Title. </summary>
-		Title,
-		///<summary>FirstName. </summary>
-		FirstName,
-		///<summary>MiddleName. </summary>
-		MiddleName,
-		///<summary>LastName. </summary>
-		LastName,
-		///<summary>Suffix. </summary>
-		Suffix,
 		///<summary>EmailAddress. </summary>
 		EmailAddress,
 		///<summary>EmailPromotion. </summary>
 		EmailPromotion,
-		///<summary>Phone. </summary>
-		Phone,
+		///<summary>FirstName. </summary>
+		FirstName,
+		///<summary>LastName. </summary>
+		LastName,
+		///<summary>MiddleName. </summary>
+		MiddleName,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>NameStyle. </summary>
+		NameStyle,
 		///<summary>PasswordHash. </summary>
 		PasswordHash,
 		///<summary>PasswordSalt. </summary>
 		PasswordSalt,
-		///<summary>AdditionalContactInfo. </summary>
-		AdditionalContactInfo,
+		///<summary>Phone. </summary>
+		Phone,
 		///<summary>Rowguid. </summary>
 		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
+		///<summary>Suffix. </summary>
+		Suffix,
+		///<summary>Title. </summary>
+		Title,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CountryRegion.
-	/// </summary>
-	public enum CountryRegionFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CountryRegion.</summary>
+	public enum CountryRegionFieldIndex
 	{
 		///<summary>CountryRegionCode. </summary>
 		CountryRegionCode,
-		///<summary>Name. </summary>
-		Name,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CreditCard.
-	/// </summary>
-	public enum CreditCardFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CreditCard.</summary>
+	public enum CreditCardFieldIndex
 	{
-		///<summary>CreditCardID. </summary>
-		CreditCardID,
-		///<summary>CardType. </summary>
-		CardType,
 		///<summary>CardNumber. </summary>
 		CardNumber,
+		///<summary>CardType. </summary>
+		CardType,
+		///<summary>CreditCardID. </summary>
+		CreditCardID,
 		///<summary>ExpMonth. </summary>
 		ExpMonth,
 		///<summary>ExpYear. </summary>
@@ -132,203 +113,171 @@ namespace AW.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Currency.
-	/// </summary>
-	public enum CurrencyFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Currency.</summary>
+	public enum CurrencyFieldIndex
 	{
 		///<summary>CurrencyCode. </summary>
 		CurrencyCode,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
 		///<summary>Name. </summary>
 		Name,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CurrencyRate.
-	/// </summary>
-	public enum CurrencyRateFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CurrencyRate.</summary>
+	public enum CurrencyRateFieldIndex
 	{
-		///<summary>CurrencyRateID. </summary>
-		CurrencyRateID,
-		///<summary>CurrencyRateDate. </summary>
-		CurrencyRateDate,
-		///<summary>FromCurrencyCode. </summary>
-		FromCurrencyCode,
-		///<summary>ToCurrencyCode. </summary>
-		ToCurrencyCode,
 		///<summary>AverageRate. </summary>
 		AverageRate,
+		///<summary>CurrencyRateDate. </summary>
+		CurrencyRateDate,
+		///<summary>CurrencyRateID. </summary>
+		CurrencyRateID,
 		///<summary>EndOfDayRate. </summary>
 		EndOfDayRate,
+		///<summary>FromCurrencyCode. </summary>
+		FromCurrencyCode,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
+		///<summary>ToCurrencyCode. </summary>
+		ToCurrencyCode,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Customer.
-	/// </summary>
-	public enum CustomerFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Customer.</summary>
+	public enum CustomerFieldIndex
 	{
-		///<summary>CustomerID. </summary>
-		CustomerID,
-		///<summary>TerritoryID. </summary>
-		TerritoryID,
 		///<summary>AccountNumber. </summary>
 		AccountNumber,
+		///<summary>CustomerID. </summary>
+		CustomerID,
 		///<summary>CustomerType. </summary>
 		CustomerType,
-		///<summary>Rowguid. </summary>
-		Rowguid,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CustomerAddress.
-	/// </summary>
-	public enum CustomerAddressFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CustomerAddress.</summary>
+	public enum CustomerAddressFieldIndex
 	{
-		///<summary>CustomerID. </summary>
-		CustomerID,
 		///<summary>AddressID. </summary>
 		AddressID,
 		///<summary>AddressTypeID. </summary>
 		AddressTypeID,
-		///<summary>Rowguid. </summary>
-		Rowguid,
+		///<summary>CustomerID. </summary>
+		CustomerID,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
+		///<summary>Rowguid. </summary>
+		Rowguid,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CustomerViewRelated.
-	/// </summary>
-	public enum CustomerViewRelatedFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CustomerViewRelated.</summary>
+	public enum CustomerViewRelatedFieldIndex
 	{
-		///<summary>CustomerId. </summary>
-		CustomerId,
-		///<summary>Title. </summary>
-		Title,
-		///<summary>FirstName. </summary>
-		FirstName,
-		///<summary>MiddleName. </summary>
-		MiddleName,
-		///<summary>LastName. </summary>
-		LastName,
-		///<summary>Suffix. </summary>
-		Suffix,
-		///<summary>Phone. </summary>
-		Phone,
-		///<summary>EmailAddress. </summary>
-		EmailAddress,
-		///<summary>EmailPromotion. </summary>
-		EmailPromotion,
-		///<summary>AddressType. </summary>
-		AddressType,
 		///<summary>AddressLine1. </summary>
 		AddressLine1,
 		///<summary>AddressLine2. </summary>
 		AddressLine2,
+		///<summary>AddressType. </summary>
+		AddressType,
 		///<summary>City. </summary>
 		City,
-		///<summary>StateProvinceName. </summary>
-		StateProvinceName,
-		///<summary>PostalCode. </summary>
-		PostalCode,
 		///<summary>CountryRegionName. </summary>
 		CountryRegionName,
+		///<summary>CustomerId. </summary>
+		CustomerId,
 		///<summary>Demographics. </summary>
 		Demographics,
+		///<summary>EmailAddress. </summary>
+		EmailAddress,
+		///<summary>EmailPromotion. </summary>
+		EmailPromotion,
+		///<summary>FirstName. </summary>
+		FirstName,
+		///<summary>LastName. </summary>
+		LastName,
+		///<summary>MiddleName. </summary>
+		MiddleName,
+		///<summary>Phone. </summary>
+		Phone,
+		///<summary>PostalCode. </summary>
+		PostalCode,
+		///<summary>StateProvinceName. </summary>
+		StateProvinceName,
+		///<summary>Suffix. </summary>
+		Suffix,
+		///<summary>Title. </summary>
+		Title,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Employee.
-	/// </summary>
-	public enum EmployeeFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Employee.</summary>
+	public enum EmployeeFieldIndex
 	{
-		///<summary>EmployeeID. </summary>
-		EmployeeID,
-		///<summary>NationalIdnumber. </summary>
-		NationalIdnumber,
-		///<summary>ContactID. </summary>
-		ContactID,
-		///<summary>LoginID. </summary>
-		LoginID,
-		///<summary>ManagerID. </summary>
-		ManagerID,
-		///<summary>Title. </summary>
-		Title,
 		///<summary>BirthDate. </summary>
 		BirthDate,
-		///<summary>MaritalStatus. </summary>
-		MaritalStatus,
+		///<summary>ContactID. </summary>
+		ContactID,
+		///<summary>CurrentFlag. </summary>
+		CurrentFlag,
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
 		///<summary>Gender. </summary>
 		Gender,
 		///<summary>HireDate. </summary>
 		HireDate,
+		///<summary>LoginID. </summary>
+		LoginID,
+		///<summary>ManagerID. </summary>
+		ManagerID,
+		///<summary>MaritalStatus. </summary>
+		MaritalStatus,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>NationalIdnumber. </summary>
+		NationalIdnumber,
+		///<summary>Rowguid. </summary>
+		Rowguid,
 		///<summary>SalariedFlag. </summary>
 		SalariedFlag,
-		///<summary>VacationHours. </summary>
-		VacationHours,
 		///<summary>SickLeaveHours. </summary>
 		SickLeaveHours,
-		///<summary>CurrentFlag. </summary>
-		CurrentFlag,
-		///<summary>Rowguid. </summary>
-		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
+		///<summary>Title. </summary>
+		Title,
+		///<summary>VacationHours. </summary>
+		VacationHours,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: EmployeeAddress.
-	/// </summary>
-	public enum EmployeeAddressFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: EmployeeAddress.</summary>
+	public enum EmployeeAddressFieldIndex
 	{
-		///<summary>EmployeeID. </summary>
-		EmployeeID,
 		///<summary>AddressID. </summary>
 		AddressID,
-		///<summary>Rowguid. </summary>
-		Rowguid,
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
+		///<summary>Rowguid. </summary>
+		Rowguid,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Individual.
-	/// </summary>
-	public enum IndividualFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Individual.</summary>
+	public enum IndividualFieldIndex
 	{
-		///<summary>CustomerID. </summary>
-		CustomerID,
 		///<summary>ContactID. </summary>
 		ContactID,
+		///<summary>CustomerID. </summary>
+		CustomerID,
 		///<summary>Demographics. </summary>
 		Demographics,
 		///<summary>ModifiedDate. </summary>
@@ -336,340 +285,302 @@ namespace AW.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Product.
-	/// </summary>
-	public enum ProductFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Product.</summary>
+	public enum ProductFieldIndex
 	{
-		///<summary>ProductID. </summary>
-		ProductID,
-		///<summary>Name. </summary>
-		Name,
-		///<summary>ProductNumber. </summary>
-		ProductNumber,
-		///<summary>MakeFlag. </summary>
-		MakeFlag,
-		///<summary>FinishedGoodsFlag. </summary>
-		FinishedGoodsFlag,
+		///<summary>Class. </summary>
+		Class,
 		///<summary>Color. </summary>
 		Color,
-		///<summary>SafetyStockLevel. </summary>
-		SafetyStockLevel,
-		///<summary>ReorderPoint. </summary>
-		ReorderPoint,
-		///<summary>StandardCost. </summary>
-		StandardCost,
+		///<summary>DaysToManufacture. </summary>
+		DaysToManufacture,
+		///<summary>DiscontinuedDate. </summary>
+		DiscontinuedDate,
+		///<summary>FinishedGoodsFlag. </summary>
+		FinishedGoodsFlag,
 		///<summary>ListPrice. </summary>
 		ListPrice,
+		///<summary>MakeFlag. </summary>
+		MakeFlag,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>ProductLine. </summary>
+		ProductLine,
+		///<summary>ProductModelID. </summary>
+		ProductModelID,
+		///<summary>ProductNumber. </summary>
+		ProductNumber,
+		///<summary>ProductSubcategoryID. </summary>
+		ProductSubcategoryID,
+		///<summary>ReorderPoint. </summary>
+		ReorderPoint,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SafetyStockLevel. </summary>
+		SafetyStockLevel,
+		///<summary>SellEndDate. </summary>
+		SellEndDate,
+		///<summary>SellStartDate. </summary>
+		SellStartDate,
 		///<summary>Size. </summary>
 		Size,
 		///<summary>SizeUnitMeasureCode. </summary>
 		SizeUnitMeasureCode,
-		///<summary>WeightUnitMeasureCode. </summary>
-		WeightUnitMeasureCode,
-		///<summary>Weight. </summary>
-		Weight,
-		///<summary>DaysToManufacture. </summary>
-		DaysToManufacture,
-		///<summary>ProductLine. </summary>
-		ProductLine,
-		///<summary>Class. </summary>
-		Class,
+		///<summary>StandardCost. </summary>
+		StandardCost,
 		///<summary>Style. </summary>
 		Style,
-		///<summary>ProductSubcategoryID. </summary>
-		ProductSubcategoryID,
-		///<summary>ProductModelID. </summary>
-		ProductModelID,
-		///<summary>SellStartDate. </summary>
-		SellStartDate,
-		///<summary>SellEndDate. </summary>
-		SellEndDate,
-		///<summary>DiscontinuedDate. </summary>
-		DiscontinuedDate,
-		///<summary>Rowguid. </summary>
-		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
+		///<summary>Weight. </summary>
+		Weight,
+		///<summary>WeightUnitMeasureCode. </summary>
+		WeightUnitMeasureCode,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesOrderDetail.
-	/// </summary>
-	public enum SalesOrderDetailFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesOrderDetail.</summary>
+	public enum SalesOrderDetailFieldIndex
 	{
-		///<summary>SalesOrderID. </summary>
-		SalesOrderID,
-		///<summary>SalesOrderDetailID. </summary>
-		SalesOrderDetailID,
 		///<summary>CarrierTrackingNumber. </summary>
 		CarrierTrackingNumber,
+		///<summary>LineTotal. </summary>
+		LineTotal,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
 		///<summary>OrderQty. </summary>
 		OrderQty,
 		///<summary>ProductID. </summary>
 		ProductID,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SalesOrderDetailID. </summary>
+		SalesOrderDetailID,
+		///<summary>SalesOrderID. </summary>
+		SalesOrderID,
 		///<summary>SpecialOfferID. </summary>
 		SpecialOfferID,
 		///<summary>UnitPrice. </summary>
 		UnitPrice,
 		///<summary>UnitPriceDiscount. </summary>
 		UnitPriceDiscount,
-		///<summary>LineTotal. </summary>
-		LineTotal,
-		///<summary>Rowguid. </summary>
-		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesOrderHeader.
-	/// </summary>
-	public enum SalesOrderHeaderFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesOrderHeader.</summary>
+	public enum SalesOrderHeaderFieldIndex
 	{
-		///<summary>SalesOrderID. </summary>
-		SalesOrderID,
-		///<summary>RevisionNumber. </summary>
-		RevisionNumber,
-		///<summary>OrderDate. </summary>
-		OrderDate,
-		///<summary>DueDate. </summary>
-		DueDate,
-		///<summary>ShipDate. </summary>
-		ShipDate,
-		///<summary>Status. </summary>
-		Status,
-		///<summary>OnlineOrderFlag. </summary>
-		OnlineOrderFlag,
-		///<summary>SalesOrderNumber. </summary>
-		SalesOrderNumber,
-		///<summary>PurchaseOrderNumber. </summary>
-		PurchaseOrderNumber,
 		///<summary>AccountNumber. </summary>
 		AccountNumber,
-		///<summary>CustomerID. </summary>
-		CustomerID,
-		///<summary>ContactID. </summary>
-		ContactID,
-		///<summary>SalesPersonID. </summary>
-		SalesPersonID,
-		///<summary>TerritoryID. </summary>
-		TerritoryID,
 		///<summary>BillToAddressID. </summary>
 		BillToAddressID,
-		///<summary>ShipToAddressID. </summary>
-		ShipToAddressID,
-		///<summary>ShipMethodID. </summary>
-		ShipMethodID,
-		///<summary>CreditCardID. </summary>
-		CreditCardID,
+		///<summary>Comment. </summary>
+		Comment,
+		///<summary>ContactID. </summary>
+		ContactID,
 		///<summary>CreditCardApprovalCode. </summary>
 		CreditCardApprovalCode,
+		///<summary>CreditCardID. </summary>
+		CreditCardID,
 		///<summary>CurrencyRateID. </summary>
 		CurrencyRateID,
+		///<summary>CustomerID. </summary>
+		CustomerID,
+		///<summary>DueDate. </summary>
+		DueDate,
+		///<summary>Freight. </summary>
+		Freight,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>OnlineOrderFlag. </summary>
+		OnlineOrderFlag,
+		///<summary>OrderDate. </summary>
+		OrderDate,
+		///<summary>PurchaseOrderNumber. </summary>
+		PurchaseOrderNumber,
+		///<summary>RevisionNumber. </summary>
+		RevisionNumber,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SalesOrderID. </summary>
+		SalesOrderID,
+		///<summary>SalesOrderNumber. </summary>
+		SalesOrderNumber,
+		///<summary>SalesPersonID. </summary>
+		SalesPersonID,
+		///<summary>ShipDate. </summary>
+		ShipDate,
+		///<summary>ShipMethodID. </summary>
+		ShipMethodID,
+		///<summary>ShipToAddressID. </summary>
+		ShipToAddressID,
+		///<summary>Status. </summary>
+		Status,
 		///<summary>SubTotal. </summary>
 		SubTotal,
 		///<summary>TaxAmt. </summary>
 		TaxAmt,
-		///<summary>Freight. </summary>
-		Freight,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
 		///<summary>TotalDue. </summary>
 		TotalDue,
-		///<summary>Comment. </summary>
-		Comment,
-		///<summary>Rowguid. </summary>
-		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesTerritory.
-	/// </summary>
-	public enum SalesTerritoryFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesTerritory.</summary>
+	public enum SalesTerritoryFieldIndex
 	{
-		///<summary>TerritoryID. </summary>
-		TerritoryID,
-		///<summary>Name. </summary>
-		Name,
+		///<summary>CostLastYear. </summary>
+		CostLastYear,
+		///<summary>CostYtd. </summary>
+		CostYtd,
 		///<summary>CountryRegionCode. </summary>
 		CountryRegionCode,
 		///<summary>Group. </summary>
 		Group,
-		///<summary>SalesYtd. </summary>
-		SalesYtd,
-		///<summary>SalesLastYear. </summary>
-		SalesLastYear,
-		///<summary>CostYtd. </summary>
-		CostYtd,
-		///<summary>CostLastYear. </summary>
-		CostLastYear,
-		///<summary>Rowguid. </summary>
-		Rowguid,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
-		/// <summary></summary>
-		AmountOfFields
-	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ShipMethod.
-	/// </summary>
-	public enum ShipMethodFieldIndex:int
-	{
-		///<summary>ShipMethodID. </summary>
-		ShipMethodID,
 		///<summary>Name. </summary>
 		Name,
-		///<summary>ShipBase. </summary>
-		ShipBase,
-		///<summary>ShipRate. </summary>
-		ShipRate,
 		///<summary>Rowguid. </summary>
 		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
+		///<summary>SalesLastYear. </summary>
+		SalesLastYear,
+		///<summary>SalesYtd. </summary>
+		SalesYtd,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SpecialOffer.
-	/// </summary>
-	public enum SpecialOfferFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ShipMethod.</summary>
+	public enum ShipMethodFieldIndex
 	{
-		///<summary>SpecialOfferID. </summary>
-		SpecialOfferID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>ShipBase. </summary>
+		ShipBase,
+		///<summary>ShipMethodID. </summary>
+		ShipMethodID,
+		///<summary>ShipRate. </summary>
+		ShipRate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SpecialOffer.</summary>
+	public enum SpecialOfferFieldIndex
+	{
+		///<summary>Category. </summary>
+		Category,
 		///<summary>Description. </summary>
 		Description,
 		///<summary>DiscountPct. </summary>
 		DiscountPct,
-		///<summary>Type. </summary>
-		Type,
-		///<summary>Category. </summary>
-		Category,
-		///<summary>StartDate. </summary>
-		StartDate,
 		///<summary>EndDate. </summary>
 		EndDate,
-		///<summary>MinQty. </summary>
-		MinQty,
 		///<summary>MaxQty. </summary>
 		MaxQty,
-		///<summary>Rowguid. </summary>
-		Rowguid,
+		///<summary>MinQty. </summary>
+		MinQty,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SpecialOfferID. </summary>
+		SpecialOfferID,
+		///<summary>StartDate. </summary>
+		StartDate,
+		///<summary>Type. </summary>
+		Type,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SpecialOfferProduct.
-	/// </summary>
-	public enum SpecialOfferProductFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SpecialOfferProduct.</summary>
+	public enum SpecialOfferProductFieldIndex
 	{
-		///<summary>SpecialOfferID. </summary>
-		SpecialOfferID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
 		///<summary>ProductID. </summary>
 		ProductID,
 		///<summary>Rowguid. </summary>
 		Rowguid,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
+		///<summary>SpecialOfferID. </summary>
+		SpecialOfferID,
 		/// <summary></summary>
 		AmountOfFields
 	}
-
-
-	/// <summary>
-	/// Index enum to fast-access EntityFields in the IEntityFields collection for the entity: StateProvince.
-	/// </summary>
-	public enum StateProvinceFieldIndex:int
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: StateProvince.</summary>
+	public enum StateProvinceFieldIndex
 	{
-		///<summary>StateProvinceID. </summary>
-		StateProvinceID,
-		///<summary>StateProvinceCode. </summary>
-		StateProvinceCode,
 		///<summary>CountryRegionCode. </summary>
 		CountryRegionCode,
 		///<summary>IsOnlyStateProvinceFlag. </summary>
 		IsOnlyStateProvinceFlag,
-		///<summary>Name. </summary>
-		Name,
-		///<summary>TerritoryID. </summary>
-		TerritoryID,
-		///<summary>Rowguid. </summary>
-		Rowguid,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>StateProvinceCode. </summary>
+		StateProvinceCode,
+		///<summary>StateProvinceID. </summary>
+		StateProvinceID,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
 		/// <summary></summary>
 		AmountOfFields
 	}
 
-
-	/// <summary>
-	/// Index enum to fast-access Typed View EntityFields in the IEntityFields collection for the typed view : CustomerView.
-	/// </summary>
-	public enum CustomerViewFieldIndex:int
+	/// <summary>Index enum to fast-access Typed View EntityFields in the IEntityFields collection for the typed view : CustomerView.</summary>
+	public enum CustomerViewFieldIndex
 	{
-		///<summary>CustomerId</summary>
-		CustomerId,
-		///<summary>Title</summary>
-		Title,
-		///<summary>FirstName</summary>
-		FirstName,
-		///<summary>MiddleName</summary>
-		MiddleName,
-		///<summary>LastName</summary>
-		LastName,
-		///<summary>Suffix</summary>
-		Suffix,
-		///<summary>Phone</summary>
-		Phone,
-		///<summary>EmailAddress</summary>
-		EmailAddress,
-		///<summary>EmailPromotion</summary>
-		EmailPromotion,
-		///<summary>AddressType</summary>
-		AddressType,
 		///<summary>AddressLine1</summary>
 		AddressLine1,
 		///<summary>AddressLine2</summary>
 		AddressLine2,
+		///<summary>AddressType</summary>
+		AddressType,
 		///<summary>City</summary>
 		City,
-		///<summary>StateProvinceName</summary>
-		StateProvinceName,
-		///<summary>PostalCode</summary>
-		PostalCode,
 		///<summary>CountryRegionName</summary>
 		CountryRegionName,
+		///<summary>CustomerId</summary>
+		CustomerId,
 		///<summary>Demographics</summary>
 		Demographics,
+		///<summary>EmailAddress</summary>
+		EmailAddress,
+		///<summary>EmailPromotion</summary>
+		EmailPromotion,
+		///<summary>FirstName</summary>
+		FirstName,
+		///<summary>LastName</summary>
+		LastName,
+		///<summary>MiddleName</summary>
+		MiddleName,
+		///<summary>Phone</summary>
+		Phone,
+		///<summary>PostalCode</summary>
+		PostalCode,
+		///<summary>StateProvinceName</summary>
+		StateProvinceName,
+		///<summary>Suffix</summary>
+		Suffix,
+		///<summary>Title</summary>
+		Title,
 		/// <summary></summary>
 		AmountOfFields
 	}
 
- 
-	/// <summary>
-	/// Index enum to fast-access TypedList Fields in the Columns collection of the Typed List: CustomerList
-	/// </summary>
-	public enum CustomerListTypedListFieldIndex:int
+	/// <summary>Index enum to fast-access TypedList Fields in the Columns collection of the Typed List: CustomerList</summary>
+	public enum CustomerListTypedListFieldIndex
 	{
 		///<summary>AddressLine1</summary>
 		AddressLine1,
@@ -703,12 +614,8 @@ namespace AW.Data
 		AmountOfFields
 	}
 
-
-
-	/// <summary>
-	/// Enum definition for all the entity types defined in this namespace. Used by the entityfields factory.
-	/// </summary>
-	public enum EntityType:int
+	/// <summary>Enum definition for all the entity types defined in this namespace. Used by the entityfields factory.</summary>
+	public enum EntityType
 	{
 		///<summary>Address</summary>
 		AddressEntity,
@@ -754,17 +661,12 @@ namespace AW.Data
 		StateProvinceEntity
 	}
 
-
-
-	/// <summary>
-	/// Enum definition for all the typed view types defined in this namespace. Used by the entityfields factory.
-	/// </summary>
-	public enum TypedViewType:int
+	/// <summary>Enum definition for all the typed view types defined in this namespace. Used by the entityfields factory.</summary>
+	public enum TypedViewType
 	{
 		///<summary>CustomerView</summary>
 		CustomerViewTypedView
 	}
-
 
 	#region Custom ConstantsEnums Code
 	
@@ -776,5 +678,4 @@ namespace AW.Data
 
 	#endregion
 }
-
 

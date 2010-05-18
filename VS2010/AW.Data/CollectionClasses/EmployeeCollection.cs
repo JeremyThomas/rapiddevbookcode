@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.0
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -40,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public EmployeeCollection(IList<EmployeeEntity> initialContents):base(new EmployeeEntityFactory())
+		public EmployeeCollection(IEnumerable<EmployeeEntity> initialContents):base(new EmployeeEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -66,7 +65,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiManyToOne(IEntity contactInstance, IEntity managerInstance)
 		{
-			return GetMultiManyToOne(contactInstance, managerInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(contactInstance, managerInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which have data in common with the specified related Entities.
@@ -77,7 +76,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiManyToOne(IEntity contactInstance, IEntity managerInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(contactInstance, managerInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(contactInstance, managerInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which have data in common with the specified related Entities.
@@ -112,12 +111,11 @@ namespace AW.Data.CollectionClasses
 			{
 				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
 			}
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			EmployeeDAO dao = DAOFactory.CreateEmployeeDAO();
-			return dao.GetMulti(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, filter, contactInstance, managerInstance, pageNumber, pageSize);
+			return DAOFactory.CreateEmployeeDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, contactInstance, managerInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all Employee entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
@@ -127,8 +125,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
 		public int DeleteMultiManyToOne(IEntity contactInstance, IEntity managerInstance)
 		{
-			EmployeeDAO dao = DAOFactory.CreateEmployeeDAO();
-			return dao.DeleteMulti(base.Transaction, contactInstance, managerInstance);
+			return DAOFactory.CreateEmployeeDAO().DeleteMulti(this.Transaction, contactInstance, managerInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all Employee entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
@@ -139,21 +136,18 @@ namespace AW.Data.CollectionClasses
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
 		public int UpdateMultiManyToOne(EmployeeEntity entityWithNewValues, IEntity contactInstance, IEntity managerInstance)
 		{
-			EmployeeDAO dao = DAOFactory.CreateEmployeeDAO();
-			return dao.UpdateMulti(entityWithNewValues, base.Transaction, contactInstance, managerInstance);
+			return DAOFactory.CreateEmployeeDAO().UpdateMulti(entityWithNewValues, this.Transaction, contactInstance, managerInstance);
 		}
 
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(IEntity addressInstance)
 		{
-			return GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -163,8 +157,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(addressInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -173,26 +175,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			EmployeeDAO dao = DAOFactory.CreateEmployeeDAO();
-			return dao.GetMultiUsingAddressCollectionViaEmployeeAddress(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, pageNumber, pageSize);
+			return DAOFactory.CreateEmployeeDAO().GetMultiUsingAddressCollectionViaEmployeeAddress(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -200,25 +190,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaEmployeeAddress(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			EmployeeDAO dao = DAOFactory.CreateEmployeeDAO();
-			return dao.GetMultiUsingAddressCollectionViaEmployeeAddress(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, prefetchPathToUse);
+			return DAOFactory.CreateEmployeeDAO().GetMultiUsingAddressCollectionViaEmployeeAddress(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  Relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  Relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingContactCollectionViaEmployee(IEntity contactInstance)
 		{
-			return GetMultiManyToManyUsingContactCollectionViaEmployee(contactInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingContactCollectionViaEmployee(contactInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -228,8 +215,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingContactCollectionViaEmployee(contactInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a Relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingContactCollectionViaEmployee(IEntity contactInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingContactCollectionViaEmployee(contactInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -238,26 +233,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingContactCollectionViaEmployee(IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			EmployeeDAO dao = DAOFactory.CreateEmployeeDAO();
-			return dao.GetMultiUsingContactCollectionViaEmployee(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, contactInstance, pageNumber, pageSize);
+			return DAOFactory.CreateEmployeeDAO().GetMultiUsingContactCollectionViaEmployee(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, contactInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a Relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingContactCollectionViaEmployee(IEntity contactInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingContactCollectionViaEmployee(contactInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -265,14 +248,12 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingContactCollectionViaEmployee(IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			EmployeeDAO dao = DAOFactory.CreateEmployeeDAO();
-			return dao.GetMultiUsingContactCollectionViaEmployee(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, contactInstance, prefetchPathToUse);
+			return DAOFactory.CreateEmployeeDAO().GetMultiUsingContactCollectionViaEmployee(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, contactInstance, prefetchPathToUse, 0, 0);
 		}
-
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
 		/// <param name="selectFilter">A predicate or predicate expression which should be used as filter for the entities to retrieve.</param>
@@ -330,8 +311,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -374,8 +354,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			EmployeeDAO dao = DAOFactory.CreateEmployeeDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateEmployeeDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -391,7 +370,6 @@ namespace AW.Data.CollectionClasses
 		{
 			return new Transaction(levelOfIsolation, name);
 		}
-
 
 		#region Custom EntityCollection code
 		
