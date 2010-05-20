@@ -1,7 +1,7 @@
 ﻿<Window x:Class="AW.LLBLGen.DataContextDriver.Static.ConnectionDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="LLBL Connection"
+    Title="LLBLGen Pro 3.0 Connection"
     Background="{x:Static SystemColors.ControlBrush}"
     SizeToContent="Height"
     Width="435" 
@@ -12,7 +12,7 @@
             <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Click="BrowseAssembly">Browse...</Hyperlink>
             </Label>
-            <Label Padding="0,0,0,1">Path to LLBL assembly:</Label>
+            <Label Padding="0,0,0,1" Content="Path to LLBL assembly containing a ILinqMetaData:"></Label>
         </DockPanel>
 
         <TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.CustomAssemblyPath}"/>

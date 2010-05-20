@@ -41,7 +41,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override string Name
 		{
-			get { return "AW LLBL Driver"; }
+			get { return "AW LLBL V3.0 Driver"; }
 		}
 
 		public override string Author
@@ -223,14 +223,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		}
 
 		/// <summary>
-		/// 	Gets the properties of type entity since for selfservicing these properties are not browsable so they need to be handled as a special case.
+		/// 	Gets the properties of type entity since these properties are not browsable so they need to be handled as a special case.
 		/// </summary>
 		/// <param name = "type">The type.</param>
 		/// <returns></returns>
 		private static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
 		{
 			return from propertyDescriptor in TypeDescriptor.GetProperties(type, null).Cast<PropertyDescriptor>()
-			       where typeof (IEntity).IsAssignableFrom(propertyDescriptor.PropertyType)
+						 where typeof(IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
 			       select propertyDescriptor;
 		}
 

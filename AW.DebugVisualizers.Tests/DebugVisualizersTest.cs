@@ -93,10 +93,10 @@ namespace AW.DebugVisualizers.Tests
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       TestSerialize(addressTypeEntityCollection);
-      TestSerialize(SerializableBaseClass.GenerateList());
+			TestShow(SerializableBaseClass.GenerateList());
       TestSerialize(((IEntity)addressTypeEntityCollection.First()).CustomPropertiesOfType);
       TestShow(SerializableBaseClass2.GenerateListWithBothSerializableClasses());
-      TestSerialize(SerializableClass.GenerateList());
+			TestShow(SerializableClass.GenerateList());
     }
 
     [TestMethod]

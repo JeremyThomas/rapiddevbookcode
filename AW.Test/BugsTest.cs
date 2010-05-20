@@ -55,7 +55,8 @@ namespace AW.Tests
     public void LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrderTest()
     {
       const int maxNumberOfItemsToReturn = 5;
-      Assert.AreEqual(maxNumberOfItemsToReturn, Bugs.LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(maxNumberOfItemsToReturn).Count());
+    	var leftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder = Bugs.LeftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder(maxNumberOfItemsToReturn);
+    	Assert.AreEqual(maxNumberOfItemsToReturn, leftJoinUsingDefaultIfEmptyToFetchCustomersWithoutAnOrder.Count());
     }
 
     [TestMethod, Description("A test for MultipleTableJoins")]

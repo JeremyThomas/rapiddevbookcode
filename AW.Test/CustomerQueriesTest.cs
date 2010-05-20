@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Linq.Dynamic;
 using AW.Data.Queries;
+using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
@@ -76,13 +77,16 @@ namespace AW.Tests
     [TestMethod, Description("A test for GetCustomerListAnonymousLinq.")]
     public void GetCustomerListAnonymousLinqTest()
     {
-      Assert.AreEqual(MaxNumberOfItemsToReturn, CustomerQueries.GetCustomerListAnonymousLinq(MaxNumberOfItemsToReturn).Count());
+    	var customerListAnonymousLinq = CustomerQueries.GetCustomerListAnonymousLinq(MaxNumberOfItemsToReturn);
+			//Assert.AreEqual(MaxNumberOfItemsToReturn, customerListAnonymousLinq.AsQueryable(). ToList().Count());
+    	Assert.AreEqual(MaxNumberOfItemsToReturn, customerListAnonymousLinq.Count());
     }
 
-    [TestMethod, Description("A test for GetCustomerListLinqedTypedList")]
+  	[TestMethod, Description("A test for GetCustomerListLinqedTypedList")]
     public void GetCustomerListLinqedTypedListTest()
     {
       var actual = CustomerQueries.GetCustomerListLinqedTypedList(MaxNumberOfItemsToReturn);
+			Assert.AreEqual(MaxNumberOfItemsToReturn, actual.ToList().Count());
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
     }
 
@@ -90,6 +94,7 @@ namespace AW.Tests
     public void GetCustomerListTypedListTest()
     {
       var actual = CustomerQueries.GetCustomerListTypedList(MaxNumberOfItemsToReturn);
+			Assert.AreEqual(MaxNumberOfItemsToReturn, actual.ToList().Count());
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
     }
   }
