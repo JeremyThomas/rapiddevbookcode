@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.DataEditor;
@@ -20,8 +21,9 @@ namespace AW.Winforms.Helpers.Controls
     private bool _canSave;
     private IQueryable _superset;
     public IGridDataEditorPersister GridDataEditorPersister;
+  	private static FieldsToPropertiesTypeDescriptionProvider FieldsToPropertiesTypeDescriptionProvider;
 
-    public GridDataEditor()
+  	public GridDataEditor()
     {
       InitializeComponent();
       dataGridViewEnumerable.AutoGenerateColumns = true;
@@ -165,12 +167,12 @@ namespace AW.Winforms.Helpers.Controls
       {
         if (typeToEdit == null)
           typeToEdit = queryable.ElementType;
-        shouldBeReadonly = !CanSave(typeToEdit);
+      	shouldBeReadonly = !CanSave(typeToEdit);
       }
       return shouldBeReadonly;
     }
 
-    private bool GetFirstPage(IEnumerable enumerable)
+  	private bool GetFirstPage(IEnumerable enumerable)
     {
       if (Paging())
         enumerable = enumerable.AsQueryable().Take(PageSize);
@@ -248,8 +250,36 @@ namespace AW.Winforms.Helpers.Controls
       toolStripLabelDeleteCount.Text = @"Num removed=" + _deleteItems.Count;
     }
 
-    private bool CanSave(Type typeToEdit)
+		private static void AddFieldsToPropertiesTypeDescriptionProvider(Type typeToEdit)
+		{
+			if (FieldsToPropertiesTypeDescriptionProvider == null && typeToEdit != null)
+			{
+				FieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
+				TypeDescriptor.AddProvider(FieldsToPropertiesTypeDescriptionProvider, typeToEdit);
+			}
+		}
+
+  	protected void TidyUp()
+  	{
+			if (FieldsToPropertiesTypeDescriptionProvider != null && ItemType != null)
+			{
+				TypeDescriptor.RemoveProvider(FieldsToPropertiesTypeDescriptionProvider, ItemType);
+				FieldsToPropertiesTypeDescriptionProvider = null;
+			}
+  	}
+
+  	protected override void OnHandleDestroyed(EventArgs e)
+  	{
+			base.OnHandleDestroyed(e);
+			TidyUp();
+  	}
+
+  	protected virtual Type ItemType { get; set; }
+
+  	private bool CanSave(Type typeToEdit)
     {
+  		ItemType = typeToEdit;
+			AddFieldsToPropertiesTypeDescriptionProvider(typeToEdit);
       return GridDataEditorPersister != null && GridDataEditorPersister.CanSave(typeToEdit);
     }
 

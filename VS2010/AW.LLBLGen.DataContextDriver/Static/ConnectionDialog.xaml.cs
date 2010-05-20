@@ -10,8 +10,6 @@ using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Win32;
 using SD.LLBLGen.Pro.ORMSupportClasses;
-using System.Data.Common;
-using System.Data;
 
 namespace AW.LLBLGen.DataContextDriver.Static
 {
@@ -65,6 +63,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				catch (Exception)
 				{
+					System.Diagnostics.Debugger.Break();
 					return;
 				}
 			}
@@ -91,6 +90,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				catch (Exception)
 				{
+					System.Diagnostics.Debugger.Break();
 					return;
 				}
 			}
@@ -136,11 +136,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (Exception ex)
 			{
 				MessageBox.Show("Error obtaining custom types: " + ex.Message);
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 0)
 			{
 				MessageBox.Show("There are no public types in that assembly."); // based on.........
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 1)
@@ -178,16 +180,19 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (ReflectionTypeLoadException ex)
 			{
 				MessageBox.Show("Error obtaining adapter types: " + ex.Message + Environment.NewLine + ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show("Error obtaining adapter types: " + ex.Message);
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 0)
 			{
 				MessageBox.Show("There are no public types in that assembly."); // based on.........
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 
@@ -288,7 +293,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 			if (dialog.ShowDialog() == true)
 			{
-
 				foreach (var fileName in dialog.FileNames)
 				{
 					AddAssembly(_cxInfo, fileName);

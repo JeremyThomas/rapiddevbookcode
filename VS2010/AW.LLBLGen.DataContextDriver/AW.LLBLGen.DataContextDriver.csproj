@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>AW.LLBLGen.DataContextDriver.3.0.snk</AssemblyOriginatorKeyFile>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -102,9 +102,7 @@
     <Compile Include="LLBLMemberProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Ancillary\AdventureWorks.snk">
-      <Link>AdventureWorks.snk</Link>
-    </None>
+    <None Include="AW.LLBLGen.DataContextDriver.3.0.snk" />
     <None Include="app.config" />
     <None Include="DevDeploy4.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

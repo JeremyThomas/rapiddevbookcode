@@ -12,16 +12,23 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
   private readonly TypeDescriptionProvider _baseProvider;
   private PropertyDescriptorCollection _propCache;
   private FilterCache _filterCache;
+	private readonly BindingFlags _bindingFlag = BindingFlags.Instance | BindingFlags.Public |
+											BindingFlags.NonPublic | BindingFlags.Static;
 
-  public FieldsToPropertiesTypeDescriptionProvider(Type t)
+	public FieldsToPropertiesTypeDescriptionProvider(Type t) 
+	{
+		_baseProvider = TypeDescriptor.GetProvider(t);
+	}
+
+	public FieldsToPropertiesTypeDescriptionProvider(Type t, BindingFlags bindingAttr): this(t)
   {
-    _baseProvider = TypeDescriptor.GetProvider(t);
+		_bindingFlag = bindingAttr;
   }
 
   public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
   {
     return new FieldsToPropertiesTypeDescriptor(
-      this, _baseProvider.GetTypeDescriptor(objectType, instance), objectType);
+			this, _baseProvider.GetTypeDescriptor(objectType, instance), objectType, _bindingFlag);
   }
 
   private class FilterCache
@@ -353,17 +360,21 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
   {
     private readonly Type _objectType;
     private readonly FieldsToPropertiesTypeDescriptionProvider _provider;
+		private static BindingFlags _bindingFlags = BindingFlags.Instance | BindingFlags.Public |
+											BindingFlags.NonPublic | BindingFlags.Static;
 
-    public FieldsToPropertiesTypeDescriptor(FieldsToPropertiesTypeDescriptionProvider provider, ICustomTypeDescriptor descriptor, Type objectType) : base(descriptor)
+		public FieldsToPropertiesTypeDescriptor(FieldsToPropertiesTypeDescriptionProvider provider, ICustomTypeDescriptor descriptor, Type objectType, BindingFlags bindingAttr)
+			: base(descriptor)
     {
       if (provider == null) throw new ArgumentNullException("provider");
       if (descriptor == null) throw new ArgumentNullException("descriptor");
       if (objectType == null) throw new ArgumentNullException("objectType");
       _objectType = objectType;
       _provider = provider;
+			_bindingFlags = bindingAttr;
     }
 
-    public override PropertyDescriptorCollection GetProperties()
+  	public override PropertyDescriptorCollection GetProperties()
     {
       return GetProperties(null);
     }
@@ -430,8 +441,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
         return;
 
       // get all instance FieldInfos
-      var fieldInfos = type.GetFields(BindingFlags.Instance | BindingFlags.Public |
-      BindingFlags.NonPublic | BindingFlags.Static);
+      var fieldInfos = type.GetFields(_bindingFlags);
 
       var filtering = attributes != null && attributes.Length > 0;
 
@@ -458,8 +468,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
     {
       var filtering = attributes != null && attributes.Length > 0;
 
-      foreach (var prop in type.GetProperties(BindingFlags.Instance | BindingFlags.Public |
-                                               BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy))
+      foreach (var prop in type.GetProperties(_bindingFlags | BindingFlags.FlattenHierarchy))
       {
         var fieldDesc = new MyReflectedPropertyDescriptor(prop);
         if (!filtering || fieldDesc.Attributes.Contains(attributes))
