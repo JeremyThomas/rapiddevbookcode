@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
@@ -135,6 +136,14 @@ namespace AW.DebugVisualizers.Tests
 			TestShow(awDataClassesDataContext.AddressTypes);
 			TestSerialize(awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID));
 		}
+
+    [TestMethod]
+    public void KeysCollectionTest()
+    {
+      var nv = new NameValueCollection {{"foo", "foo"}, {"b", "b"}};
+      TestSerialize(nv);
+      TestSerialize(nv.Keys);
+    }
 
     public static void TestSerialize(object enumerableToVisualize)
     {

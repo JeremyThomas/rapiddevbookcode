@@ -866,5 +866,9 @@ namespace AW.Data.TypedViewClasses
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomTypedViewRowCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
+		
+		#region Included Row Code
+
+		#endregion		
 	}
 }

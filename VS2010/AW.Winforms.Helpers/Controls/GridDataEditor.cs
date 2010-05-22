@@ -193,6 +193,8 @@ namespace AW.Winforms.Helpers.Controls
       try
       {
         _superset = enumerable.AsQueryable();
+				if (_superset.ElementType == typeof(string))
+					_superset = ((IEnumerable<string>) enumerable).CreateStringWrapperForBinding().AsQueryable();
       }
       catch (ArgumentException)
       {

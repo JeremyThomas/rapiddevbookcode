@@ -131,7 +131,7 @@ namespace AW.Data.Queries
               from ca in customer.CustomerAddresses.DefaultIfEmpty()
               select new { customer.CustomerID, ca.AddressID, nullableSOH.SalesOrderID, customer.SalesTerritory.Name };
       if (maxNumberOfItemsToReturn > 0)
-        q = q.Take(maxNumberOfItemsToReturn);
+        q = q.Distinct().Take(maxNumberOfItemsToReturn);
 
       var q4 = from customer in customers
                from soh in customer.SalesOrderHeaders.Where(soh => soh.SalesOrderID < 10).DefaultIfEmpty()

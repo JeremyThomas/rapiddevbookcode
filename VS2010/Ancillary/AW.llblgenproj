@@ -38,8 +38,8 @@
     <Property Name="PreferDecimalOverCurrencyTypes" Value="true" />
     <Property Name="PreferNaturalCharacterTypes" Value="true" />
     <Property Name="PreferVariableLengthTypes" Value="true" />
-    <Property Name="ProjectCreator" Value="Jeremy Thomas" />
-    <Property Name="ProjectName" Value="AW.Data" />
+    <Property Name="ProjectCreator" Value="Jeremy" />
+    <Property Name="ProjectName" Value="AW.Data.Plural" />
     <Property Name="RelationalModelDataElementNameCasingCaseSensitiveDBs" Value="3" />
     <Property Name="RelationshipsFollowDBForeignKeyConstraints" Value="0" />
     <Property Name="RemoveUnderscoresFromElementName" Value="true" />
@@ -93,11 +93,11 @@
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
     <TargetElement Type="256">
-      <Defaults>
+      <OutputSettingValues>
         <Attributes>
           <Attribute Value="Browsable($true)" />
         </Attributes>
-      </Defaults>
+      </OutputSettingValues>
     </TargetElement>
   </CodeGenerationMetaDataDefaults>
   <EntityModel>
@@ -605,13 +605,13 @@
         <Field FieldAlias="CustomerId" TargetField="Customer.CustomerID" />
       </Fields>
       <Relationships>
-        <Relationship Name="Address.StateProvince-StateProvince.Addresses" StartAlias="Address" EndAlias="StateProvince" JoinHint="1" StartAliasIsStartVertex="true" />
-        <Relationship Name="CustomerAddress.Address-Address.CustomerAddresses" StartAlias="Address" EndAlias="CustomerAddress" JoinHint="1" />
-        <Relationship Name="CustomerAddress.AddressType-AddressType.CustomerAddresses" StartAlias="CustomerAddress" EndAlias="AddressType" JoinHint="1" StartAliasIsStartVertex="true" />
-        <Relationship Name="CustomerAddress.Customer-Customer.CustomerAddresses" StartAlias="CustomerAddress" EndAlias="Customer" JoinHint="1" StartAliasIsStartVertex="true" />
-        <Relationship Name="Individual.Contact-Contact.Individuals" StartAlias="Individual" EndAlias="Contact" JoinHint="1" StartAliasIsStartVertex="true" />
-        <Relationship Name="Individual.Customer-Customer.Individual" StartAlias="Customer" EndAlias="Individual" JoinHint="1" />
-        <Relationship Name="StateProvince.CountryRegion-CountryRegion.StateProvinces" StartAlias="StateProvince" EndAlias="CountryRegion" JoinHint="1" StartAliasIsStartVertex="true" />
+        <Relationship Name="Address.StateProvince-StateProvince.Addresses" StartAlias="StateProvince" EndAlias="Address" JoinHint="1" />
+        <Relationship Name="CustomerAddress.Address-Address.CustomerAddresses" StartAlias="CustomerAddress" EndAlias="Address" JoinHint="1" StartAliasIsStartVertex="true" />
+        <Relationship Name="CustomerAddress.AddressType-AddressType.CustomerAddresses" StartAlias="AddressType" EndAlias="CustomerAddress" JoinHint="1" />
+        <Relationship Name="CustomerAddress.Customer-Customer.CustomerAddresses" StartAlias="Customer" EndAlias="CustomerAddress" JoinHint="1" />
+        <Relationship Name="Individual.Contact-Contact.Individuals" StartAlias="Contact" EndAlias="Individual" JoinHint="1" />
+        <Relationship Name="Individual.Customer-Customer.Individual" StartAlias="Individual" EndAlias="Customer" JoinHint="1" StartAliasIsStartVertex="true" />
+        <Relationship Name="StateProvince.CountryRegion-CountryRegion.StateProvinces" StartAlias="CountryRegion" EndAlias="StateProvince" JoinHint="1" />
       </Relationships>
     </TypedListDefinition>
   </TypedListDefinitions>
@@ -670,7 +670,7 @@
               <Tables>
                 <Table Name="AWBuildVersion">
                   <Fields>
-                    <Field Name="SystemInformationID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_5823d134798b0047c43025d1a3c" DbType="22" Precision="3" />
+                    <Field Name="SystemInformationID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_aab50e04090b633570ac17b6c3c" DbType="22" Precision="3" />
                     <Field Name="Database Version" Ordinal="2" DbType="12" Length="25" />
                     <Field Name="VersionDate" Ordinal="3" DbType="4" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -678,7 +678,7 @@
                 </Table>
                 <Table Name="DatabaseLog">
                   <Fields>
-                    <Field Name="DatabaseLogID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ac223764688bc5c841f145cf7c3" DbType="8" Precision="10" />
+                    <Field Name="DatabaseLogID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_51ccc10475ab08717dff6cf7059" DbType="8" Precision="10" />
                     <Field Name="PostTime" Ordinal="2" DbType="4" />
                     <Field Name="DatabaseUser" Ordinal="3" DbType="12" Length="128" />
                     <Field Name="Event" Ordinal="4" DbType="12" Length="128" />
@@ -690,7 +690,7 @@
                 </Table>
                 <Table Name="ErrorLog">
                   <Fields>
-                    <Field Name="ErrorLogID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_cf31ad348ebb02aa58b0c45845e" DbType="8" Precision="10" />
+                    <Field Name="ErrorLogID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_7a6eaeb420dbeeee223ad6281f5" DbType="8" Precision="10" />
                     <Field Name="ErrorTime" Ordinal="2" DefaultValue="(getdate())" DbType="4" />
                     <Field Name="UserName" Ordinal="3" DbType="12" Length="128" />
                     <Field Name="ErrorNumber" Ordinal="4" DbType="8" Precision="10" />
@@ -779,7 +779,7 @@
               <Tables>
                 <Table Name="Department">
                   <Fields>
-                    <Field Name="DepartmentID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ce59331426aa7a3fc9f90ad3d5e" DbType="16" Precision="5" />
+                    <Field Name="DepartmentID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_90de09d44b3b6b5b2a7c10b8db3" DbType="16" Precision="5" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="HumanResources" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="GroupName" Ordinal="3" UdtCatalog="AdventureWorks" UdtOwner="HumanResources" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -787,7 +787,7 @@
                 </Table>
                 <Table Name="Employee">
                   <Fields>
-                    <Field Name="EmployeeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_284c8c5444fbcd2735bc06231ba" DbType="8" Precision="10" />
+                    <Field Name="EmployeeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_e61ce8945a78e46cd04b4a2a2c6" DbType="8" Precision="10" />
                     <Field Name="NationalIDNumber" Ordinal="2" DbType="12" Length="15" />
                     <Field Name="ContactID" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="LoginID" Ordinal="4" DbType="12" Length="256" />
@@ -807,26 +807,26 @@
                 </Table>
                 <Table Name="EmployeeAddress">
                   <Fields>
-                    <Field Name="EmployeeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_b729ff04392985121561a1aef26" DbType="8" Precision="10" />
-                    <Field Name="AddressID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_b729ff04392985121561a1aef26" DbType="8" Precision="10" />
+                    <Field Name="EmployeeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_da662e54c608aa40c34e2dfd475" DbType="8" Precision="10" />
+                    <Field Name="AddressID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_da662e54c608aa40c34e2dfd475" DbType="8" Precision="10" />
                     <Field Name="rowguid" Ordinal="3" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="EmployeeDepartmentHistory">
                   <Fields>
-                    <Field Name="EmployeeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_c97f42b4286837701dd197da05b" DbType="8" Precision="10" />
-                    <Field Name="DepartmentID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_c97f42b4286837701dd197da05b" DbType="16" Precision="5" />
-                    <Field Name="ShiftID" Ordinal="3" IsPrimaryKey="true" PkConstraintName="PK_c97f42b4286837701dd197da05b" DbType="22" Precision="3" />
-                    <Field Name="StartDate" Ordinal="4" IsPrimaryKey="true" PkConstraintName="PK_c97f42b4286837701dd197da05b" DbType="4" />
+                    <Field Name="EmployeeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_cecc6984199b9bacc1adb07951e" DbType="8" Precision="10" />
+                    <Field Name="DepartmentID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_cecc6984199b9bacc1adb07951e" DbType="16" Precision="5" />
+                    <Field Name="ShiftID" Ordinal="3" IsPrimaryKey="true" PkConstraintName="PK_cecc6984199b9bacc1adb07951e" DbType="22" Precision="3" />
+                    <Field Name="StartDate" Ordinal="4" IsPrimaryKey="true" PkConstraintName="PK_cecc6984199b9bacc1adb07951e" DbType="4" />
                     <Field Name="EndDate" Ordinal="5" IsOptional="true" DbType="4" />
                     <Field Name="ModifiedDate" Ordinal="6" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="EmployeePayHistory">
                   <Fields>
-                    <Field Name="EmployeeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_1ed6ca44561882741951caf9b2f" DbType="8" Precision="10" />
-                    <Field Name="RateChangeDate" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_1ed6ca44561882741951caf9b2f" DbType="4" />
+                    <Field Name="EmployeeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_40d05dd43b8a41fbcb2cf5a900a" DbType="8" Precision="10" />
+                    <Field Name="RateChangeDate" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_40d05dd43b8a41fbcb2cf5a900a" DbType="4" />
                     <Field Name="Rate" Ordinal="3" DbType="9" Precision="19" Scale="4" />
                     <Field Name="PayFrequency" Ordinal="4" DbType="22" Precision="3" />
                     <Field Name="ModifiedDate" Ordinal="5" DefaultValue="(getdate())" DbType="4" />
@@ -834,7 +834,7 @@
                 </Table>
                 <Table Name="JobCandidate">
                   <Fields>
-                    <Field Name="JobCandidateID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_90f18da48169295a6e7acb024a4" DbType="8" Precision="10" />
+                    <Field Name="JobCandidateID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_26cf4ae4f33a3d665e238f46754" DbType="8" Precision="10" />
                     <Field Name="EmployeeID" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="Resume" Ordinal="3" IsOptional="true" DbType="26" Length="2147483647" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -842,7 +842,7 @@
                 </Table>
                 <Table Name="Shift">
                   <Fields>
-                    <Field Name="ShiftID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_a8eaa914e05b9fd38462e43b8ba" DbType="22" Precision="3" />
+                    <Field Name="ShiftID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_0469cac445a8b261a0a3fc8dc18" DbType="22" Precision="3" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="HumanResources" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="StartTime" Ordinal="3" DbType="4" />
                     <Field Name="EndTime" Ordinal="4" DbType="4" />
@@ -991,7 +991,7 @@
               <Tables>
                 <Table Name="Address">
                   <Fields>
-                    <Field Name="AddressID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ee288304607aebd09bb4aad32e1" DbType="8" Precision="10" />
+                    <Field Name="AddressID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_acd50b446ada77d4f085df349ed" DbType="8" Precision="10" />
                     <Field Name="AddressLine1" Ordinal="2" DbType="12" Length="60" />
                     <Field Name="AddressLine2" Ordinal="3" IsOptional="true" DbType="12" Length="60" />
                     <Field Name="City" Ordinal="4" DbType="12" Length="30" />
@@ -1003,7 +1003,7 @@
                 </Table>
                 <Table Name="AddressType">
                   <Fields>
-                    <Field Name="AddressTypeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_69819b24ecd8a5f43a29954608b" DbType="8" Precision="10" />
+                    <Field Name="AddressTypeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_445888c4031a34bfe306a2f6b18" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Person" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="rowguid" Ordinal="3" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -1011,7 +1011,7 @@
                 </Table>
                 <Table Name="Contact">
                   <Fields>
-                    <Field Name="ContactID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_b113bfd4ff38f370b0ab24fda31" DbType="8" Precision="10" />
+                    <Field Name="ContactID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_4e235b144c8a37b29f707ddbf13" DbType="8" Precision="10" />
                     <Field Name="NameStyle" Ordinal="2" DefaultValue="((0))" UdtCatalog="AdventureWorks" UdtOwner="Person" UdtName="NameStyle" DbType="2" DbTypeAsNetType="System.Boolean" />
                     <Field Name="Title" Ordinal="3" IsOptional="true" DbType="12" Length="8" />
                     <Field Name="FirstName" Ordinal="4" UdtCatalog="AdventureWorks" UdtOwner="Person" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
@@ -1030,21 +1030,21 @@
                 </Table>
                 <Table Name="ContactType">
                   <Fields>
-                    <Field Name="ContactTypeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_5b5310e4e3fb3a96b4dca83401d" DbType="8" Precision="10" />
+                    <Field Name="ContactTypeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_13b981742b88ac04a2cfb6fb15f" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Person" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="CountryRegion">
                   <Fields>
-                    <Field Name="CountryRegionCode" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ae6f02c4b04be1e22e7dbf97d14" DbType="12" Length="3" />
+                    <Field Name="CountryRegionCode" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ba9f1e948a99ad8684aa4177d1a" DbType="12" Length="3" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Person" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="StateProvince">
                   <Fields>
-                    <Field Name="StateProvinceID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_90f60b6405e8b3ef37b42d38bdd" DbType="8" Precision="10" />
+                    <Field Name="StateProvinceID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_51e04424d7e9400b561e140fc2f" DbType="8" Precision="10" />
                     <Field Name="StateProvinceCode" Ordinal="2" DbType="10" Length="3" />
                     <Field Name="CountryRegionCode" Ordinal="3" DbType="12" Length="3" />
                     <Field Name="IsOnlyStateProvinceFlag" Ordinal="4" DefaultValue="((1))" UdtCatalog="AdventureWorks" UdtOwner="Person" UdtName="Flag" DbType="2" DbTypeAsNetType="System.Boolean" />
@@ -1094,7 +1094,7 @@
               <Tables>
                 <Table Name="BillOfMaterials">
                   <Fields>
-                    <Field Name="BillOfMaterialsID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_1204c8a4b468c1a341db180fe7e" DbType="8" Precision="10" />
+                    <Field Name="BillOfMaterialsID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_50f389d4549a674ac93803c6623" DbType="8" Precision="10" />
                     <Field Name="ProductAssemblyID" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="ComponentID" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="StartDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -1107,14 +1107,14 @@
                 </Table>
                 <Table Name="Culture">
                   <Fields>
-                    <Field Name="CultureID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_5203ab24150a7cae5a622f6077b" DbType="10" Length="6" />
+                    <Field Name="CultureID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_440ef3740faa43ae13a9ccd6dcf" DbType="10" Length="6" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="Document">
                   <Fields>
-                    <Field Name="DocumentID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_9c69dcb422092925bd617ffcabc" DbType="8" Precision="10" />
+                    <Field Name="DocumentID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_946dcc64eb0a65ffed9d54469eb" DbType="8" Precision="10" />
                     <Field Name="Title" Ordinal="2" DbType="12" Length="50" />
                     <Field Name="FileName" Ordinal="3" DbType="12" Length="400" />
                     <Field Name="FileExtension" Ordinal="4" DbType="12" Length="8" />
@@ -1128,14 +1128,14 @@
                 </Table>
                 <Table Name="Illustration">
                   <Fields>
-                    <Field Name="IllustrationID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_791dff14eb18c843c58d57b41d9" DbType="8" Precision="10" />
+                    <Field Name="IllustrationID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_df464314b1196f67399bcba9a21" DbType="8" Precision="10" />
                     <Field Name="Diagram" Ordinal="2" IsOptional="true" DbType="26" Length="2147483647" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="Location">
                   <Fields>
-                    <Field Name="LocationID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_b3899c14ba59ec9df9da4891e7f" DbType="16" Precision="5" />
+                    <Field Name="LocationID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_02832a742228c02476bed93dbb7" DbType="16" Precision="5" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="CostRate" Ordinal="3" DefaultValue="((0.00))" DbType="17" Precision="10" Scale="4" />
                     <Field Name="Availability" Ordinal="4" DefaultValue="((0.00))" DbType="5" Precision="8" Scale="2" />
@@ -1144,7 +1144,7 @@
                 </Table>
                 <Table Name="Product">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_c35a0984e82af6f8d4596e2b784" DbType="8" Precision="10" />
+                    <Field Name="ProductID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_218e3a0440180c1806cc4c52636" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ProductNumber" Ordinal="3" DbType="12" Length="25" />
                     <Field Name="MakeFlag" Ordinal="4" DefaultValue="((1))" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Flag" DbType="2" DbTypeAsNetType="System.Boolean" />
@@ -1173,7 +1173,7 @@
                 </Table>
                 <Table Name="ProductCategory">
                   <Fields>
-                    <Field Name="ProductCategoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_68b4ab7459cb895b12c2b3df414" DbType="8" Precision="10" />
+                    <Field Name="ProductCategoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_70e3f5a45019ba1544b7ee0fd83" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="rowguid" Ordinal="3" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -1181,8 +1181,8 @@
                 </Table>
                 <Table Name="ProductCostHistory">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_e15c076438a9ac0aaf38d4aa57e" DbType="8" Precision="10" />
-                    <Field Name="StartDate" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_e15c076438a9ac0aaf38d4aa57e" DbType="4" />
+                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_3f46f974389b16e4a42427295fb" DbType="8" Precision="10" />
+                    <Field Name="StartDate" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_3f46f974389b16e4a42427295fb" DbType="4" />
                     <Field Name="EndDate" Ordinal="3" IsOptional="true" DbType="4" />
                     <Field Name="StandardCost" Ordinal="4" DbType="9" Precision="19" Scale="4" />
                     <Field Name="ModifiedDate" Ordinal="5" DefaultValue="(getdate())" DbType="4" />
@@ -1190,7 +1190,7 @@
                 </Table>
                 <Table Name="ProductDescription">
                   <Fields>
-                    <Field Name="ProductDescriptionID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ce227364d4bb97c9d9dbed9e69e" DbType="8" Precision="10" />
+                    <Field Name="ProductDescriptionID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_551133644229d51dc4084b4ed4f" DbType="8" Precision="10" />
                     <Field Name="Description" Ordinal="2" DbType="12" Length="400" />
                     <Field Name="rowguid" Ordinal="3" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -1198,15 +1198,15 @@
                 </Table>
                 <Table Name="ProductDocument">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_c87e6bc490b89f9820b63b5cfb8" DbType="8" Precision="10" />
-                    <Field Name="DocumentID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_c87e6bc490b89f9820b63b5cfb8" DbType="8" Precision="10" />
+                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_3f79a3143f78ffd6a819df68a6c" DbType="8" Precision="10" />
+                    <Field Name="DocumentID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_3f79a3143f78ffd6a819df68a6c" DbType="8" Precision="10" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="ProductInventory">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_d7a8b8549b19a86be029bdb2634" DbType="8" Precision="10" />
-                    <Field Name="LocationID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_d7a8b8549b19a86be029bdb2634" DbType="16" Precision="5" />
+                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_09cdd86425c833903fa92a82736" DbType="8" Precision="10" />
+                    <Field Name="LocationID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_09cdd86425c833903fa92a82736" DbType="16" Precision="5" />
                     <Field Name="Shelf" Ordinal="3" DbType="12" Length="10" />
                     <Field Name="Bin" Ordinal="4" DbType="22" Precision="3" />
                     <Field Name="Quantity" Ordinal="5" DefaultValue="((0))" DbType="16" Precision="5" />
@@ -1216,8 +1216,8 @@
                 </Table>
                 <Table Name="ProductListPriceHistory">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ae464764fcb906485d38a949946" DbType="8" Precision="10" />
-                    <Field Name="StartDate" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_ae464764fcb906485d38a949946" DbType="4" />
+                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_7922e064c84bc0bac0ebb184286" DbType="8" Precision="10" />
+                    <Field Name="StartDate" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_7922e064c84bc0bac0ebb184286" DbType="4" />
                     <Field Name="EndDate" Ordinal="3" IsOptional="true" DbType="4" />
                     <Field Name="ListPrice" Ordinal="4" DbType="9" Precision="19" Scale="4" />
                     <Field Name="ModifiedDate" Ordinal="5" DefaultValue="(getdate())" DbType="4" />
@@ -1225,7 +1225,7 @@
                 </Table>
                 <Table Name="ProductModel">
                   <Fields>
-                    <Field Name="ProductModelID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_18f6a2d4146aa5e4b659e41b1fd" DbType="8" Precision="10" />
+                    <Field Name="ProductModelID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_43782524adca2673ae81c23829c" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="CatalogDescription" Ordinal="3" IsOptional="true" DbType="26" Length="2147483647" />
                     <Field Name="Instructions" Ordinal="4" IsOptional="true" DbType="26" Length="2147483647" />
@@ -1235,22 +1235,22 @@
                 </Table>
                 <Table Name="ProductModelIllustration">
                   <Fields>
-                    <Field Name="ProductModelID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_1c11d014067ad7f90cbd81ae866" DbType="8" Precision="10" />
-                    <Field Name="IllustrationID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_1c11d014067ad7f90cbd81ae866" DbType="8" Precision="10" />
+                    <Field Name="ProductModelID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_93829b142d59234f39f88530950" DbType="8" Precision="10" />
+                    <Field Name="IllustrationID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_93829b142d59234f39f88530950" DbType="8" Precision="10" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="ProductModelProductDescriptionCulture">
                   <Fields>
-                    <Field Name="ProductModelID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_1ab7c804e02bc0ae5277c358958" DbType="8" Precision="10" />
-                    <Field Name="ProductDescriptionID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_1ab7c804e02bc0ae5277c358958" DbType="8" Precision="10" />
-                    <Field Name="CultureID" Ordinal="3" IsPrimaryKey="true" PkConstraintName="PK_1ab7c804e02bc0ae5277c358958" DbType="10" Length="6" />
+                    <Field Name="ProductModelID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_8a59c3e4bb0a8616176230a5f15" DbType="8" Precision="10" />
+                    <Field Name="ProductDescriptionID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_8a59c3e4bb0a8616176230a5f15" DbType="8" Precision="10" />
+                    <Field Name="CultureID" Ordinal="3" IsPrimaryKey="true" PkConstraintName="PK_8a59c3e4bb0a8616176230a5f15" DbType="10" Length="6" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="ProductPhoto">
                   <Fields>
-                    <Field Name="ProductPhotoID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_777d1844fc4a587e874e23cd5a3" DbType="8" Precision="10" />
+                    <Field Name="ProductPhotoID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_9e092a84561a4dd85c2ca56e332" DbType="8" Precision="10" />
                     <Field Name="ThumbNailPhoto" Ordinal="2" IsOptional="true" DbType="23" Length="2147483647" />
                     <Field Name="ThumbnailPhotoFileName" Ordinal="3" IsOptional="true" DbType="12" Length="50" />
                     <Field Name="LargePhoto" Ordinal="4" IsOptional="true" DbType="23" Length="2147483647" />
@@ -1260,15 +1260,15 @@
                 </Table>
                 <Table Name="ProductProductPhoto">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_5daa5704482bd3e07d28a154e61" DbType="8" Precision="10" />
-                    <Field Name="ProductPhotoID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_5daa5704482bd3e07d28a154e61" DbType="8" Precision="10" />
+                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_0a26d294981980a74853ab251c5" DbType="8" Precision="10" />
+                    <Field Name="ProductPhotoID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_0a26d294981980a74853ab251c5" DbType="8" Precision="10" />
                     <Field Name="Primary" Ordinal="3" DefaultValue="((0))" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Flag" DbType="2" DbTypeAsNetType="System.Boolean" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="ProductReview">
                   <Fields>
-                    <Field Name="ProductReviewID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_937c7f54143813da742e8b5ae67" DbType="8" Precision="10" />
+                    <Field Name="ProductReviewID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_a21c4b6449e849f6c4ecbecdaad" DbType="8" Precision="10" />
                     <Field Name="ProductID" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="ReviewerName" Ordinal="3" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ReviewDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -1280,7 +1280,7 @@
                 </Table>
                 <Table Name="ProductSubcategory">
                   <Fields>
-                    <Field Name="ProductSubcategoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_17423454341b27e6773113012bd" DbType="8" Precision="10" />
+                    <Field Name="ProductSubcategoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_b67503343b09cb982a42783b7b9" DbType="8" Precision="10" />
                     <Field Name="ProductCategoryID" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="3" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="rowguid" Ordinal="4" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
@@ -1289,14 +1289,14 @@
                 </Table>
                 <Table Name="ScrapReason">
                   <Fields>
-                    <Field Name="ScrapReasonID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_b9fbd084578b06dd986b6be75b2" DbType="16" Precision="5" />
+                    <Field Name="ScrapReasonID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_bca72b8439485742f5618e71f9a" DbType="16" Precision="5" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="TransactionHistory">
                   <Fields>
-                    <Field Name="TransactionID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_dc42d5b46db83c0a244a9325280" DbType="8" Precision="10" />
+                    <Field Name="TransactionID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_3387a2143bebaf54b718775a66f" DbType="8" Precision="10" />
                     <Field Name="ProductID" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="ReferenceOrderID" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="ReferenceOrderLineID" Ordinal="4" DefaultValue="((0))" DbType="8" Precision="10" />
@@ -1309,7 +1309,7 @@
                 </Table>
                 <Table Name="TransactionHistoryArchive">
                   <Fields>
-                    <Field Name="TransactionID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_4c4d0964b67bca6acccec75377c" DbType="8" Precision="10" />
+                    <Field Name="TransactionID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_eae587c42ea8f5a77ee72305d9c" DbType="8" Precision="10" />
                     <Field Name="ProductID" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="ReferenceOrderID" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="ReferenceOrderLineID" Ordinal="4" DefaultValue="((0))" DbType="8" Precision="10" />
@@ -1322,14 +1322,14 @@
                 </Table>
                 <Table Name="UnitMeasure">
                   <Fields>
-                    <Field Name="UnitMeasureCode" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_da75a7a4d05ae387be4465c3e4c" DbType="10" Length="3" />
+                    <Field Name="UnitMeasureCode" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_25b9c8345af9d6352e16ac027cf" DbType="10" Length="3" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Production" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="WorkOrder">
                   <Fields>
-                    <Field Name="WorkOrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_bf809bc4ba5940a878153c1f83d" DbType="8" Precision="10" />
+                    <Field Name="WorkOrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_b9e7b2543fc993a1956a67aa50a" DbType="8" Precision="10" />
                     <Field Name="ProductID" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="OrderQty" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="StockedQty" Ordinal="4" IsComputed="true" DbType="8" Precision="10" />
@@ -1343,9 +1343,9 @@
                 </Table>
                 <Table Name="WorkOrderRouting">
                   <Fields>
-                    <Field Name="WorkOrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_35b23a945e79fca31153b571cba" DbType="8" Precision="10" />
-                    <Field Name="ProductID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_35b23a945e79fca31153b571cba" DbType="8" Precision="10" />
-                    <Field Name="OperationSequence" Ordinal="3" IsPrimaryKey="true" PkConstraintName="PK_35b23a945e79fca31153b571cba" DbType="16" Precision="5" />
+                    <Field Name="WorkOrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_3d8a78f4af1a0ab60390d059d3a" DbType="8" Precision="10" />
+                    <Field Name="ProductID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_3d8a78f4af1a0ab60390d059d3a" DbType="8" Precision="10" />
+                    <Field Name="OperationSequence" Ordinal="3" IsPrimaryKey="true" PkConstraintName="PK_3d8a78f4af1a0ab60390d059d3a" DbType="16" Precision="5" />
                     <Field Name="LocationID" Ordinal="4" DbType="16" Precision="5" />
                     <Field Name="ScheduledStartDate" Ordinal="5" DbType="4" />
                     <Field Name="ScheduledEndDate" Ordinal="6" DbType="4" />
@@ -1418,8 +1418,8 @@
               <Tables>
                 <Table Name="ProductVendor">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_208ecbb4b7783d9b9c86518fcd4" DbType="8" Precision="10" />
-                    <Field Name="VendorID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_208ecbb4b7783d9b9c86518fcd4" DbType="8" Precision="10" />
+                    <Field Name="ProductID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_0e13f4342aea0a07be3c692570d" DbType="8" Precision="10" />
+                    <Field Name="VendorID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_0e13f4342aea0a07be3c692570d" DbType="8" Precision="10" />
                     <Field Name="AverageLeadTime" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="StandardPrice" Ordinal="4" DbType="9" Precision="19" Scale="4" />
                     <Field Name="LastReceiptCost" Ordinal="5" IsOptional="true" DbType="9" Precision="19" Scale="4" />
@@ -1433,8 +1433,8 @@
                 </Table>
                 <Table Name="PurchaseOrderDetail">
                   <Fields>
-                    <Field Name="PurchaseOrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_a6ba1f2412e863711f6ba5364ff" DbType="8" Precision="10" />
-                    <Field Name="PurchaseOrderDetailID" Ordinal="2" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_a6ba1f2412e863711f6ba5364ff" DbType="8" Precision="10" />
+                    <Field Name="PurchaseOrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_aba765b4795b35bdf3e01d58265" DbType="8" Precision="10" />
+                    <Field Name="PurchaseOrderDetailID" Ordinal="2" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_aba765b4795b35bdf3e01d58265" DbType="8" Precision="10" />
                     <Field Name="DueDate" Ordinal="3" DbType="4" />
                     <Field Name="OrderQty" Ordinal="4" DbType="16" Precision="5" />
                     <Field Name="ProductID" Ordinal="5" DbType="8" Precision="10" />
@@ -1448,7 +1448,7 @@
                 </Table>
                 <Table Name="PurchaseOrderHeader">
                   <Fields>
-                    <Field Name="PurchaseOrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_380fc0c45b59e44cfdd84960fab" DbType="8" Precision="10" />
+                    <Field Name="PurchaseOrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_28717d644f3aa7db8a2af35d2ea" DbType="8" Precision="10" />
                     <Field Name="RevisionNumber" Ordinal="2" DefaultValue="((0))" DbType="22" Precision="3" />
                     <Field Name="Status" Ordinal="3" DefaultValue="((1))" DbType="22" Precision="3" />
                     <Field Name="EmployeeID" Ordinal="4" DbType="8" Precision="10" />
@@ -1465,7 +1465,7 @@
                 </Table>
                 <Table Name="ShipMethod">
                   <Fields>
-                    <Field Name="ShipMethodID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_e99bd7f4ec680f0e85c97f31634" DbType="8" Precision="10" />
+                    <Field Name="ShipMethodID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ee447c24a38892857a573b97745" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Purchasing" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ShipBase" Ordinal="3" DefaultValue="((0.00))" DbType="9" Precision="19" Scale="4" />
                     <Field Name="ShipRate" Ordinal="4" DefaultValue="((0.00))" DbType="9" Precision="19" Scale="4" />
@@ -1475,7 +1475,7 @@
                 </Table>
                 <Table Name="Vendor">
                   <Fields>
-                    <Field Name="VendorID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_53804cd460fbe17b074ee2948b6" DbType="8" Precision="10" />
+                    <Field Name="VendorID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_7d4f651413bbd52148e2333d980" DbType="8" Precision="10" />
                     <Field Name="AccountNumber" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Purchasing" UdtName="AccountNumber" DbType="12" Length="15" DbTypeAsNetType="System.String" />
                     <Field Name="Name" Ordinal="3" UdtCatalog="AdventureWorks" UdtOwner="Purchasing" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="CreditRating" Ordinal="4" DbType="22" Precision="3" />
@@ -1487,16 +1487,16 @@
                 </Table>
                 <Table Name="VendorAddress">
                   <Fields>
-                    <Field Name="VendorID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_1cb14ff43d99f7eeb5f1dca18b7" DbType="8" Precision="10" />
-                    <Field Name="AddressID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_1cb14ff43d99f7eeb5f1dca18b7" DbType="8" Precision="10" />
+                    <Field Name="VendorID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_155e45a4c8bb740ebbb256cd808" DbType="8" Precision="10" />
+                    <Field Name="AddressID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_155e45a4c8bb740ebbb256cd808" DbType="8" Precision="10" />
                     <Field Name="AddressTypeID" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="VendorContact">
                   <Fields>
-                    <Field Name="VendorID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_51972cd42b897218eb364cddc9b" DbType="8" Precision="10" />
-                    <Field Name="ContactID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_51972cd42b897218eb364cddc9b" DbType="8" Precision="10" />
+                    <Field Name="VendorID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_a7260c74f48904f055e75c72a80" DbType="8" Precision="10" />
+                    <Field Name="ContactID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_a7260c74f48904f055e75c72a80" DbType="8" Precision="10" />
                     <Field Name="ContactTypeID" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
@@ -1530,21 +1530,21 @@
               <Tables>
                 <Table Name="ContactCreditCard">
                   <Fields>
-                    <Field Name="ContactID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_2d4bc2c4bf7a0768ba01d0df669" DbType="8" Precision="10" />
-                    <Field Name="CreditCardID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_2d4bc2c4bf7a0768ba01d0df669" DbType="8" Precision="10" />
+                    <Field Name="ContactID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_394bf064e07b2216d14a297d7d4" DbType="8" Precision="10" />
+                    <Field Name="CreditCardID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_394bf064e07b2216d14a297d7d4" DbType="8" Precision="10" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="CountryRegionCurrency">
                   <Fields>
-                    <Field Name="CountryRegionCode" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_dd7c5934e57918cb8d7dec6cf07" DbType="12" Length="3" />
-                    <Field Name="CurrencyCode" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_dd7c5934e57918cb8d7dec6cf07" DbType="10" Length="3" />
+                    <Field Name="CountryRegionCode" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_e2d34194bebbd5d20dd6fda354e" DbType="12" Length="3" />
+                    <Field Name="CurrencyCode" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_e2d34194bebbd5d20dd6fda354e" DbType="10" Length="3" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="CreditCard">
                   <Fields>
-                    <Field Name="CreditCardID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ec9f6f84132a2a8e088d0d0394b" DbType="8" Precision="10" />
+                    <Field Name="CreditCardID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_a8190c34f0ebbd462f18d4ddf38" DbType="8" Precision="10" />
                     <Field Name="CardType" Ordinal="2" DbType="12" Length="50" />
                     <Field Name="CardNumber" Ordinal="3" DbType="12" Length="25" />
                     <Field Name="ExpMonth" Ordinal="4" DbType="22" Precision="3" />
@@ -1554,14 +1554,14 @@
                 </Table>
                 <Table Name="Currency">
                   <Fields>
-                    <Field Name="CurrencyCode" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_734df024c378bfc5f08898726a5" DbType="10" Length="3" />
+                    <Field Name="CurrencyCode" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_3b5731448cdbbde8f9a38bbf9f8" DbType="10" Length="3" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Sales" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="CurrencyRate">
                   <Fields>
-                    <Field Name="CurrencyRateID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_1a138534ff4b13841c888812621" DbType="8" Precision="10" />
+                    <Field Name="CurrencyRateID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_95adb984dbe89e01c299f14473e" DbType="8" Precision="10" />
                     <Field Name="CurrencyRateDate" Ordinal="2" DbType="4" />
                     <Field Name="FromCurrencyCode" Ordinal="3" DbType="10" Length="3" />
                     <Field Name="ToCurrencyCode" Ordinal="4" DbType="10" Length="3" />
@@ -1572,7 +1572,7 @@
                 </Table>
                 <Table Name="Customer">
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_0b0c242431b91797effdc289215" DbType="8" Precision="10" />
+                    <Field Name="CustomerID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_949692643d28d0e8290ecc64f27" DbType="8" Precision="10" />
                     <Field Name="TerritoryID" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="AccountNumber" Ordinal="3" IsComputed="true" DbType="24" Length="10" />
                     <Field Name="CustomerType" Ordinal="4" DbType="10" Length="1" />
@@ -1582,8 +1582,8 @@
                 </Table>
                 <Table Name="CustomerAddress">
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_291624d4c27b41f6ca9aecdbbb8" DbType="8" Precision="10" />
-                    <Field Name="AddressID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_291624d4c27b41f6ca9aecdbbb8" DbType="8" Precision="10" />
+                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_bf9903f4fd4a7ccf8239edb2b2a" DbType="8" Precision="10" />
+                    <Field Name="AddressID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_bf9903f4fd4a7ccf8239edb2b2a" DbType="8" Precision="10" />
                     <Field Name="AddressTypeID" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="rowguid" Ordinal="4" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="5" DefaultValue="(getdate())" DbType="4" />
@@ -1591,7 +1591,7 @@
                 </Table>
                 <Table Name="Individual">
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_cb4072144f99f3314c8ac79fbc3" DbType="8" Precision="10" />
+                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_857826748b48aafd2801dc7bae4" DbType="8" Precision="10" />
                     <Field Name="ContactID" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="Demographics" Ordinal="3" IsOptional="true" DbType="26" Length="2147483647" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -1599,8 +1599,8 @@
                 </Table>
                 <Table Name="SalesOrderDetail">
                   <Fields>
-                    <Field Name="SalesOrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_9c5345242e0954e0a4825ef5c86" DbType="8" Precision="10" />
-                    <Field Name="SalesOrderDetailID" Ordinal="2" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_9c5345242e0954e0a4825ef5c86" DbType="8" Precision="10" />
+                    <Field Name="SalesOrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_5785cdc4322a93e3c34e376e34d" DbType="8" Precision="10" />
+                    <Field Name="SalesOrderDetailID" Ordinal="2" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_5785cdc4322a93e3c34e376e34d" DbType="8" Precision="10" />
                     <Field Name="CarrierTrackingNumber" Ordinal="3" IsOptional="true" DbType="12" Length="25" />
                     <Field Name="OrderQty" Ordinal="4" DbType="16" Precision="5" />
                     <Field Name="ProductID" Ordinal="5" DbType="8" Precision="10" />
@@ -1614,7 +1614,7 @@
                 </Table>
                 <Table Name="SalesOrderHeader">
                   <Fields>
-                    <Field Name="SalesOrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ed044c049c4b77bb095ac2aa452" DbType="8" Precision="10" />
+                    <Field Name="SalesOrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_93e23ea4b67a4b5288deeec6ada" DbType="8" Precision="10" />
                     <Field Name="RevisionNumber" Ordinal="2" DefaultValue="((0))" DbType="22" Precision="3" />
                     <Field Name="OrderDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                     <Field Name="DueDate" Ordinal="4" DbType="4" />
@@ -1645,14 +1645,14 @@
                 </Table>
                 <Table Name="SalesOrderHeaderSalesReason">
                   <Fields>
-                    <Field Name="SalesOrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_4cc96d848c484e2462e107f30d5" DbType="8" Precision="10" />
-                    <Field Name="SalesReasonID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_4cc96d848c484e2462e107f30d5" DbType="8" Precision="10" />
+                    <Field Name="SalesOrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_11656ef4b3f87452e09c65d0890" DbType="8" Precision="10" />
+                    <Field Name="SalesReasonID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_11656ef4b3f87452e09c65d0890" DbType="8" Precision="10" />
                     <Field Name="ModifiedDate" Ordinal="3" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="SalesPerson">
                   <Fields>
-                    <Field Name="SalesPersonID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_f9d478944448ad90f9911e0e6ea" DbType="8" Precision="10" />
+                    <Field Name="SalesPersonID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_38985e9479e84eaab1fcb72161e" DbType="8" Precision="10" />
                     <Field Name="TerritoryID" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="SalesQuota" Ordinal="3" IsOptional="true" DbType="9" Precision="19" Scale="4" />
                     <Field Name="Bonus" Ordinal="4" DefaultValue="((0.00))" DbType="9" Precision="19" Scale="4" />
@@ -1665,8 +1665,8 @@
                 </Table>
                 <Table Name="SalesPersonQuotaHistory">
                   <Fields>
-                    <Field Name="SalesPersonID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_e2c0d38473f992431e62ebe7a36" DbType="8" Precision="10" />
-                    <Field Name="QuotaDate" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_e2c0d38473f992431e62ebe7a36" DbType="4" />
+                    <Field Name="SalesPersonID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_9d2e9bd4afea5ee61a12c645c30" DbType="8" Precision="10" />
+                    <Field Name="QuotaDate" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_9d2e9bd4afea5ee61a12c645c30" DbType="4" />
                     <Field Name="SalesQuota" Ordinal="3" DbType="9" Precision="19" Scale="4" />
                     <Field Name="rowguid" Ordinal="4" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="5" DefaultValue="(getdate())" DbType="4" />
@@ -1674,7 +1674,7 @@
                 </Table>
                 <Table Name="SalesReason">
                   <Fields>
-                    <Field Name="SalesReasonID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_0ab77fe4c50bbf36aac3ce89853" DbType="8" Precision="10" />
+                    <Field Name="SalesReasonID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_42b59cf465da63444e4309cd5a4" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Sales" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ReasonType" Ordinal="3" UdtCatalog="AdventureWorks" UdtOwner="Sales" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
@@ -1682,7 +1682,7 @@
                 </Table>
                 <Table Name="SalesTaxRate">
                   <Fields>
-                    <Field Name="SalesTaxRateID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_cd35ab64c938f0de3fdd5d2900e" DbType="8" Precision="10" />
+                    <Field Name="SalesTaxRateID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_92536f643fe9655fd2e10830f44" DbType="8" Precision="10" />
                     <Field Name="StateProvinceID" Ordinal="2" DbType="8" Precision="10" />
                     <Field Name="TaxType" Ordinal="3" DbType="22" Precision="3" />
                     <Field Name="TaxRate" Ordinal="4" DefaultValue="((0.00))" DbType="17" Precision="10" Scale="4" />
@@ -1693,7 +1693,7 @@
                 </Table>
                 <Table Name="SalesTerritory">
                   <Fields>
-                    <Field Name="TerritoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_0fb5def49569e7ee347b0470aa1" DbType="8" Precision="10" />
+                    <Field Name="TerritoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_241c1114358babca024fe57c14a" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Sales" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="CountryRegionCode" Ordinal="3" DbType="12" Length="3" />
                     <Field Name="Group" Ordinal="4" DbType="12" Length="50" />
@@ -1707,9 +1707,9 @@
                 </Table>
                 <Table Name="SalesTerritoryHistory">
                   <Fields>
-                    <Field Name="SalesPersonID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_e78d0de4fbd8c86575884e564d8" DbType="8" Precision="10" />
-                    <Field Name="TerritoryID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_e78d0de4fbd8c86575884e564d8" DbType="8" Precision="10" />
-                    <Field Name="StartDate" Ordinal="3" IsPrimaryKey="true" PkConstraintName="PK_e78d0de4fbd8c86575884e564d8" DbType="4" />
+                    <Field Name="SalesPersonID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_42fcdc143abbbee8dae8a5e5ad8" DbType="8" Precision="10" />
+                    <Field Name="TerritoryID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_42fcdc143abbbee8dae8a5e5ad8" DbType="8" Precision="10" />
+                    <Field Name="StartDate" Ordinal="3" IsPrimaryKey="true" PkConstraintName="PK_42fcdc143abbbee8dae8a5e5ad8" DbType="4" />
                     <Field Name="EndDate" Ordinal="4" IsOptional="true" DbType="4" />
                     <Field Name="rowguid" Ordinal="5" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="6" DefaultValue="(getdate())" DbType="4" />
@@ -1717,7 +1717,7 @@
                 </Table>
                 <Table Name="ShoppingCartItem">
                   <Fields>
-                    <Field Name="ShoppingCartItemID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_5fd3a514cb7a30e3649a5b0eae6" DbType="8" Precision="10" />
+                    <Field Name="ShoppingCartItemID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_e99c97e4b24bce02970773633b8" DbType="8" Precision="10" />
                     <Field Name="ShoppingCartID" Ordinal="2" DbType="12" Length="50" />
                     <Field Name="Quantity" Ordinal="3" DefaultValue="((1))" DbType="8" Precision="10" />
                     <Field Name="ProductID" Ordinal="4" DbType="8" Precision="10" />
@@ -1727,7 +1727,7 @@
                 </Table>
                 <Table Name="SpecialOffer">
                   <Fields>
-                    <Field Name="SpecialOfferID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_376614f400e935a02bc5ecf008a" DbType="8" Precision="10" />
+                    <Field Name="SpecialOfferID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_31362cd4d7d9e9dfde69c62d48c" DbType="8" Precision="10" />
                     <Field Name="Description" Ordinal="2" DbType="12" Length="255" />
                     <Field Name="DiscountPct" Ordinal="3" DefaultValue="((0.00))" DbType="17" Precision="10" Scale="4" />
                     <Field Name="Type" Ordinal="4" DbType="12" Length="50" />
@@ -1742,15 +1742,15 @@
                 </Table>
                 <Table Name="SpecialOfferProduct">
                   <Fields>
-                    <Field Name="SpecialOfferID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_b2cb66144dc967f71cfc31d13fd" DbType="8" Precision="10" />
-                    <Field Name="ProductID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_b2cb66144dc967f71cfc31d13fd" DbType="8" Precision="10" />
+                    <Field Name="SpecialOfferID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_b8f0f9744dc80c28286d467046e" DbType="8" Precision="10" />
+                    <Field Name="ProductID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_b8f0f9744dc80c28286d467046e" DbType="8" Precision="10" />
                     <Field Name="rowguid" Ordinal="3" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="4" DefaultValue="(getdate())" DbType="4" />
                   </Fields>
                 </Table>
                 <Table Name="Store">
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_dc6723d460ba78bb60a70038b2a" DbType="8" Precision="10" />
+                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_befc3d4482090e96bae50b9d96d" DbType="8" Precision="10" />
                     <Field Name="Name" Ordinal="2" UdtCatalog="AdventureWorks" UdtOwner="Sales" UdtName="Name" DbType="12" Length="50" DbTypeAsNetType="System.String" />
                     <Field Name="SalesPersonID" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
                     <Field Name="Demographics" Ordinal="4" IsOptional="true" DbType="26" Length="2147483647" />
@@ -1760,8 +1760,8 @@
                 </Table>
                 <Table Name="StoreContact">
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_a5edbcc4621ab82f272797ec6f5" DbType="8" Precision="10" />
-                    <Field Name="ContactID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_a5edbcc4621ab82f272797ec6f5" DbType="8" Precision="10" />
+                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_2d97d3c4e52b18d6678b50f09e6" DbType="8" Precision="10" />
+                    <Field Name="ContactID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_2d97d3c4e52b18d6678b50f09e6" DbType="8" Precision="10" />
                     <Field Name="ContactTypeID" Ordinal="3" DbType="8" Precision="10" />
                     <Field Name="rowguid" Ordinal="4" IsRowGUID="true" DefaultValue="(newid())" DbType="25" />
                     <Field Name="ModifiedDate" Ordinal="5" DefaultValue="(getdate())" DbType="4" />
