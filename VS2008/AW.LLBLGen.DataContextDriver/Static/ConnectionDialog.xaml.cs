@@ -10,8 +10,6 @@ using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Win32;
 using SD.LLBLGen.Pro.ORMSupportClasses;
-using System.Data.Common;
-using System.Data;
 
 namespace AW.LLBLGen.DataContextDriver.Static
 {
@@ -65,6 +63,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				catch (Exception)
 				{
+					System.Diagnostics.Debugger.Break();
 					return;
 				}
 			}
@@ -91,6 +90,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				catch (Exception)
 				{
+					System.Diagnostics.Debugger.Break();
 					return;
 				}
 			}
@@ -98,7 +98,25 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static IEnumerable<string> GetDataAccessAdapterTypeNames(Assembly dataAccessAdapterAssembly)
 		{
-			return dataAccessAdapterAssembly.GetTypes().Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
+			return GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly.GetTypes());
+		}
+
+		private static IEnumerable<string> GetDataAccessAdapterTypeNames(IEnumerable<Type> types)
+		{
+			return types.Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
+		}
+
+		private static string[] GetDataAccessAdapterTypeNamesBothWays(IEnumerable<Type> types)
+		{
+			var customTypes = GetDataAccessAdapterTypeNames(types).ToArray();
+			if (customTypes.Length == 0)
+				customTypes = GetDataAccessAdapterTypeNamesByName(types).ToArray();
+			return customTypes;
+		}	
+
+		private static IEnumerable<string> GetDataAccessAdapterTypeNamesByName(IEnumerable<Type> types)
+		{
+			return types.Where(t => t.Name.Contains("DataAccessAdapter")).Select(t => t.FullName);
 		}
 
 		private void BrowseAppConfig(object sender, RoutedEventArgs e)
@@ -136,11 +154,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (Exception ex)
 			{
 				MessageBox.Show("Error obtaining custom types: " + ex.Message);
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 0)
 			{
 				MessageBox.Show("There are no public types in that assembly."); // based on.........
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 1)
@@ -171,23 +191,31 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			string[] customTypes;
 			try
 			{
-				//var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
 				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-				customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly).ToArray();
+				var types = dataAccessAdapterAssembly.GetTypes();
+				customTypes = GetDataAccessAdapterTypeNamesBothWays(types);
 			}
 			catch (ReflectionTypeLoadException ex)
 			{
-				MessageBox.Show("Error obtaining adapter types: " + ex.Message + Environment.NewLine + ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
-				return;
+				customTypes = GetDataAccessAdapterTypeNamesBothWays(ex.Types);
+				if (customTypes.Length == 0)
+				{
+					MessageBox.Show("Error obtaining adapter types: " + ex.Message + Environment.NewLine +
+					                ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
+					System.Diagnostics.Debugger.Break();
+					return;
+				}
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show("Error obtaining adapter types: " + ex.Message);
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 0)
 			{
-				MessageBox.Show("There are no public types in that assembly."); // based on.........
+				MessageBox.Show("There are no public types in that assembly that implement IDataAccessAdapter.");
+				System.Diagnostics.Debugger.Break();
 				return;
 			}
 
@@ -288,7 +316,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 			if (dialog.ShowDialog() == true)
 			{
-
 				foreach (var fileName in dialog.FileNames)
 				{
 					AddAssembly(_cxInfo, fileName);
