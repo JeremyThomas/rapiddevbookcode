@@ -118,8 +118,13 @@ namespace AW.Data.TypedListClasses
 		{
 			IRelationCollection toReturn = new RelationCollection();
 			toReturn.ObeyWeakRelations = this.ObeyWeakRelations;
-			toReturn.Add(StateProvinceEntity.Relations.CountryRegionEntityUsingCountryRegionCode, "", "", JoinHint.Inner);
-			toReturn.Add(AddressEntity.Relations.StateProvinceEntityUsingStateProvinceID, "", "", JoinHint.Inner);
+			toReturn.Add(CustomerAddressEntity.Relations.AddressEntityUsingAddressID, "", "", JoinHint.Inner);
+			toReturn.Add(StateProvinceEntity.Relations.AddressEntityUsingStateProvinceID, "", "", JoinHint.Inner);
+			toReturn.Add(AddressTypeEntity.Relations.CustomerAddressEntityUsingAddressTypeID, "", "", JoinHint.Inner);
+			toReturn.Add(CustomerEntity.Relations.CustomerAddressEntityUsingCustomerID, "", "", JoinHint.Inner);
+			toReturn.Add(CountryRegionEntity.Relations.StateProvinceEntityUsingCountryRegionCode, "", "", JoinHint.Inner);
+			toReturn.Add(IndividualEntity.Relations.CustomerEntityUsingCustomerID, "", "", JoinHint.Inner);
+			toReturn.Add(ContactEntity.Relations.IndividualEntityUsingContactID, "", "", JoinHint.Inner);
 			// __LLBLGENPRO_USER_CODE_REGION_START AdditionalRelations
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			OnRelationSetBuilt(toReturn);
@@ -677,5 +682,9 @@ namespace AW.Data.TypedListClasses
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomTypedListRowCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
+		
+		#region Included Row Code
+
+		#endregion	
 	}
 }

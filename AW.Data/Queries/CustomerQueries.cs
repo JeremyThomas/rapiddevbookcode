@@ -243,7 +243,7 @@ namespace AW.Data.Queries
     {
       var customers = MetaSingletons.MetaData.Customer.AsQueryable();
       customers = customers.Where(c => c.CustomerID > 10);
-      return CustomerListLinqedTypedList.GetCustomerListQuery(customers).Take(maxNumberOfItemsToReturn);
+      return CustomerListLinqedTypedList.GetCustomerListQuery(customers).Distinct().Take(maxNumberOfItemsToReturn);
     }
 
     /// <summary>
@@ -303,7 +303,7 @@ namespace AW.Data.Queries
                                     StateProvinceName = customerAddress.Address.StateProvince.Name,
                                     customer.CustomerID
                                   };
-      return customerlist.Take(maxNumberOfItemsToReturn);
+      return customerlist.Distinct().Take(maxNumberOfItemsToReturn);
     }
   }
 }

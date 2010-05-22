@@ -49,10 +49,10 @@ namespace AW.Winforms.Helpers.Controls
 
     protected override int SuperSetCount()
     {
-      return _supersetG.Count();
+    	return _supersetG != null ? _supersetG.Count() : 0;
     }
 
-    protected override void BindPage()
+  	protected override void BindPage()
     {
       if (GetPageIndex() > 0)
         bindingSourceEnumerable.BindEnumerable(SkipTake(), false);

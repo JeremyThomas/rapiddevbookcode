@@ -12625,6 +12625,71 @@
             <param name="toRemove">To remove.</param>
             <remarks>generic version for both SelfServicing and Adapter.</remarks>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnAddCollectionComplete(SD.LLBLGen.Pro.ORMSupportClasses.IEntityCollection)">
+            <summary>
+            Called at the end of Add(IEntityCollection)
+            </summary>
+            <param name="toAdd">To add.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnAddCollection(SD.LLBLGen.Pro.ORMSupportClasses.IEntityCollection)">
+            <summary>
+            Called at the start of Add(IEntityCollection)
+            </summary>
+            <param name="toAdd">To add.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnAddCollectionComplete(SD.LLBLGen.Pro.ORMSupportClasses.IEntityCollection2)">
+            <summary>
+            Called at the end of Add(IEntityCollection2)
+            </summary>
+            <param name="toAdd">To add.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnAddCollection(SD.LLBLGen.Pro.ORMSupportClasses.IEntityCollection2)">
+            <summary>
+            Called at the start of Add(IEntityCollection2)
+            </summary>
+            <param name="toAdd">To add.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnClearComplete">
+            <summary>
+            Called at the end of the Clear() method
+            </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnClear">
+            <summary>
+            Called at the start of the Clear() method
+            </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnAdd``1(``0)">
+            <summary>
+            Called at the start of Add(TEntity)
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <param name="toAdd">To add.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnAddComplete``1(``0)">
+            <summary>
+            Called at the end of Add(TEntity)
+            </summary>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+            <param name="toAdd">To add.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnRemoveComplete(SD.LLBLGen.Pro.ORMSupportClasses.IEntityCore)">
+            <summary>
+            Called at the end of Remove(IEntityCore), when toRemove has been removed from this context
+            </summary>
+            <param name="toRemove">To remove.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnRemove(SD.LLBLGen.Pro.ORMSupportClasses.IEntityCore)">
+            <summary>
+            Called at the start of the remove action for toRemove
+            </summary>
+            <param name="toRemove">To remove.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.OnInitComplete">
+            <summary>
+            Called at the end of the InitClass method, which initializes datastructures from the ctor
+            </summary>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Context.FindEntity``1(``0)">
             <summary>
             Tries to find the passed in entity in the store, based on its contained data. It assumes the passed in entity isn't new. 
@@ -12656,6 +12721,21 @@
             <summary>
             Gets / sets SetExistingEntityFieldsInGet flag. When set to false (default is true), an existing
             entity's fields is not set to the fields of the passed in entity. Fields are only set if the entity isn't dirty.
+            </summary>
+        </member>
+        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.Context.ObjectIDToEntityInstance">
+            <summary>
+            Gets the object ID to entity instance.
+            </summary>
+        </member>
+        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.Context.EntityTypeHashtables">
+            <summary>
+            Gets the entity type hashtables / dictionaries. Dictionaries which store per entity hash value, the entity's objectid
+            </summary>
+        </member>
+        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.Context.NewEntities">
+            <summary>
+            Gets the new entities.
             </summary>
         </member>
         <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.DataProjectorToCustomClass`1">
@@ -29248,6 +29328,37 @@
             bind to an instance of this class.
             </summary>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.Refresh">
+            <summary>
+            Refreshes this view by re-applying filter and sorter on the related collection
+            </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.Contains(`0)">
+            <summary>
+            Determines whether this entity view contains the entity passed in. This method returns false if the entity is outside the filter, but in the related
+            entity collection, as it's then not contained in the entity view.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.IndexOf(`0)">
+            <summary>
+            Determines the index of the entity passed in in the entity view in filtered and sorted state.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.CopyTo(System.Array,System.Int32)">
+            <summary>
+            Copies the elements of the <see cref="T:System.Collections.ICollection"></see> to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.
+            </summary>
+            <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection"></see>. The <see cref="T:System.Array"></see> must have zero-based indexing.</param>
+            <param name="index">The zero-based index in array at which copying begins.</param>
+            <exception cref="T:System.ArgumentNullException">array is null. </exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">index is less than zero. </exception>
+            <exception cref="T:System.ArgumentException">array is multidimensional.-or- index is equal to or greater than the length of array.-or- The number of elements in the source <see cref="T:System.Collections.ICollection"></see> is greater than the available space from index to the end of the destination array. </exception>
+            <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.ICollection"></see> cannot be cast automatically to the type of the destination array. </exception>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.System#Collections#Generic#IEnumerable{TEntity}#GetEnumerator">
             <summary>
             Returns an enumerator that iterates through the collection.
@@ -29371,32 +29482,6 @@
             Removes any sort applied using <see cref="M:System.ComponentModel.IBindingList.ApplySort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)"></see>.
             </summary>
             <exception cref="T:System.NotSupportedException"><see cref="P:System.ComponentModel.IBindingList.SupportsSorting"></see> is false. </exception>
-        </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.Contains(`0)">
-            <summary>
-            Determines whether this entity view contains the entity passed in. This method returns false if the entity is outside the filter, but in the related
-            entity collection, as it's then not contained in the entity view.
-            </summary>
-            <param name="value">The value.</param>
-            <returns></returns>
-        </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.IndexOf(`0)">
-            <summary>
-            Determines the index of the entity passed in in the entity view in filtered and sorted state.
-            </summary>
-            <param name="value">The value.</param>
-            <returns></returns>
-        </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.CopyTo(System.Array,System.Int32)">
-            <summary>
-            Copies the elements of the <see cref="T:System.Collections.ICollection"></see> to an <see cref="T:System.Array"></see>, starting at a particular <see cref="T:System.Array"></see> index.
-            </summary>
-            <param name="array">The one-dimensional <see cref="T:System.Array"></see> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection"></see>. The <see cref="T:System.Array"></see> must have zero-based indexing.</param>
-            <param name="index">The zero-based index in array at which copying begins.</param>
-            <exception cref="T:System.ArgumentNullException">array is null. </exception>
-            <exception cref="T:System.ArgumentOutOfRangeException">index is less than zero. </exception>
-            <exception cref="T:System.ArgumentException">array is multidimensional.-or- index is equal to or greater than the length of array.-or- The number of elements in the source <see cref="T:System.Collections.ICollection"></see> is greater than the available space from index to the end of the destination array. </exception>
-            <exception cref="T:System.InvalidCastException">The type of the source <see cref="T:System.Collections.ICollection"></see> cannot be cast automatically to the type of the destination array. </exception>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1.GetEntityAtIndex(System.Int32)">
             <summary>
@@ -32431,6 +32516,12 @@
             Gets or sets the SortExpression to use.
             </summary>
         </member>
+        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.LLBLGenProDataSourceBase.TotalRowCount">
+            <summary>
+            Gets the total row count for the last query executed. Only valid if the query is a paging query and the datasource is ordered to
+            obtain the total row count by the bound control.
+            </summary>
+        </member>
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.LLBLGenProDataSourceBase.AllFieldsKeepEmptyStringAsValue">
             <summary>
             Gets / sets the allFieldsKeepEmptyStringAsValue value. Setting this parameter to true will disable FieldNamesKeepEmptyStringAsValue. Default: false.
@@ -33035,6 +33126,12 @@
             <value></value>
             <returns>true if the operation is supported; otherwise, false. The base class implementation returns false.</returns>
         </member>
+        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.LLBLGenProDataSourceViewBase.TotalRowCount">
+            <summary>
+            Gets or sets the total row count as obtained by the last fetch query. Only valid if the query is a paging query and the datasource is ordered to
+            obtain the total row count by the bound control.
+            </summary>
+        </member>
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.LLBLGenProDataSourceViewBase.GroupBy">
             <summary>
             Gets or sets the group by.
@@ -33058,12 +33155,6 @@
             Gets or sets the size of the page.
             </summary>
             <value>The size of the page.</value>
-        </member>
-        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.LLBLGenProDataSourceViewBase.TotalRowCount">
-            <summary>
-            Gets or sets the total row count.
-            </summary>
-            <value>The total row count.</value>
         </member>
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.LLBLGenProDataSourceViewBase.Owner">
             <summary>

@@ -78,7 +78,6 @@ namespace AW.Tests
     public void GetCustomerListAnonymousLinqTest()
     {
     	var customerListAnonymousLinq = CustomerQueries.GetCustomerListAnonymousLinq(MaxNumberOfItemsToReturn);
-			//Assert.AreEqual(MaxNumberOfItemsToReturn, customerListAnonymousLinq.AsQueryable(). ToList().Count());
     	Assert.AreEqual(MaxNumberOfItemsToReturn, customerListAnonymousLinq.Count());
     }
 

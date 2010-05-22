@@ -155,5 +155,13 @@ namespace AW.Helper
 
 			return tb;
 		}
+
+		public static IEnumerable CreateStringWrapperForBinding(this IEnumerable<string> strings)
+		{
+			var values = from data in strings
+									 select new { Value = data };
+
+			return values.ToList();
+		}
 	}
 }

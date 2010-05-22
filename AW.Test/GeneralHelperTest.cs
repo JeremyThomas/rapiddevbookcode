@@ -9,6 +9,7 @@ using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Helper;
+using AW.Winforms.Helpers.DataEditor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
@@ -77,7 +78,7 @@ namespace AW.Tests
 		{
 			var actual = GeneralHelper.CopyToDataTable(source);
 			Assert.AreEqual(source.Count(), actual.Rows.Count);
-			AssertCopyToDataTable(typeof(T), actual);
+			AssertCopyToDataTable(typeof (T), actual);
 		}
 
 		public void CopyToDataTableAndAssert(ICollection source, Type type)
@@ -109,5 +110,116 @@ namespace AW.Tests
 			CopyToDataTableAndAssert(listofNonSerializableClasses, typeof (SerializableClass));
 			CopyToDataTableAndAssert(MetaDataHelper.GetPropertiesToSerialize(typeof (AddressTypeEntity)));
 		}
+
+		[TestMethod]
+		public void StringPropertiesTest()
+		{
+			var strings = new[] {"one", "two", "a string"};
+			var stringWrapperForBinding = strings.CreateStringWrapperForBinding();
+			var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
+			Assert.AreEqual(1, stringWrapperProperties.Count);
+			Assert.AreEqual(typeof(string), stringWrapperProperties[0].PropertyType);
+			//stringWrapperForBinding.EditInDataGridView(null);
+			//strings.EditInDataGridView(null);
+
+			//TypeDescriptor.AddProvider(new StringTypeDescriptorProvider(typeof(string)), typeof(string));
+			//var stringProperties = ListBindingHelper.GetListItemProperties(strings);
+			//Assert.AreEqual(1, stringProperties.Count);
+			//Assert.AreEqual(typeof(string), stringProperties[0].PropertyType);
+			//strings.EditInDataGridView(null);
+		}
 	}
+
+	public class StringPropertyDescriptor : PropertyDescriptor
+	{
+		public StringPropertyDescriptor(string name, Attribute[] attrs) : base(name, attrs)
+		{
+		}
+
+
+		public override TypeConverter Converter
+		{
+			get { return new StringConverter(); }
+		}
+
+		public override bool CanResetValue(object component)
+		{
+			return false;
+		}
+
+		public override object GetValue(object component)
+		{
+			return component;
+		}
+
+		public override void ResetValue(object component)
+		{
+			
+		}
+
+		public override void SetValue(object component, object value)
+		{
+
+		}
+
+		public override bool ShouldSerializeValue(object component)
+		{
+			return true;
+		}
+
+		public override Type ComponentType
+		{
+			get { return typeof(string); }
+		}
+
+		public override bool IsReadOnly
+		{
+			get { return true; }
+		}
+
+		public override Type PropertyType
+		{
+			get { return typeof(string); }
+		}
+	}
+
+	public class StringTypeDescriptor : CustomTypeDescriptor
+	{
+		private readonly TypeDescriptionProvider _baseProvider;
+		private readonly string _aString;
+
+		public StringTypeDescriptor(TypeDescriptionProvider baseProvider)
+		{
+			_baseProvider = baseProvider;
+		}
+
+		public override PropertyDescriptorCollection GetProperties(Attribute[] attributes)
+		{
+			return new PropertyDescriptorCollection(null) { new StringPropertyDescriptor("StringPropertyDescriptor", attributes) };
+			//return _baseProvider.GetTypeDescriptor(typeof(string)).GetProperties(attributes);
+		}
+
+		public override PropertyDescriptorCollection GetProperties()
+		{
+			return _baseProvider.GetTypeDescriptor(typeof(string)).GetProperties();
+		}
+	}
+
+	public class StringTypeDescriptorProvider : TypeDescriptionProvider
+	{
+
+		  private readonly TypeDescriptionProvider _baseProvider;
+
+			public StringTypeDescriptorProvider(Type t) 
+	{
+		_baseProvider = TypeDescriptor.GetProvider(t);
+	}
+
+		public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
+		{
+			return objectType == typeof(string) ? new StringTypeDescriptor(_baseProvider) : _baseProvider.GetTypeDescriptor(objectType, instance);
+		}
+	}
+
+	
 }
