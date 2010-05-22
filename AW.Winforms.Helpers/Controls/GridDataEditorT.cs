@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AW.Helper;
 using JesseJohnston;
@@ -9,7 +10,12 @@ namespace AW.Winforms.Helpers.Controls
   {
     private IEnumerable<T> _supersetG;
 
-    public bool BindEnumerable(IEnumerable<T> enumerable)
+  	protected override Type ItemType
+  	{
+			get { return typeof(T); }
+  	}
+
+  	public bool BindEnumerable(IEnumerable<T> enumerable)
     {
       return BindEnumerable(enumerable, PageSize);
     }
@@ -43,10 +49,10 @@ namespace AW.Winforms.Helpers.Controls
 
     protected override int SuperSetCount()
     {
-      return _supersetG.Count();
+    	return _supersetG != null ? _supersetG.Count() : 0;
     }
 
-    protected override void BindPage()
+  	protected override void BindPage()
     {
       if (GetPageIndex() > 0)
         bindingSourceEnumerable.BindEnumerable(SkipTake(), false);

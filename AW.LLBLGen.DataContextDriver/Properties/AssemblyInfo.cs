@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("AW.LLBLGen.DataContextDriver")]
-[assembly: AssemblyDescription("AW LLBLGen LINQPad static data context driver")]
-[assembly: AssemblyProduct("AW.LLBLGen.DataContextDriver")]
+[assembly: AssemblyTitle("AW.LLBLGen.DataContextDriver 2.6")]
+[assembly: AssemblyDescription("AW LLBLGen 2.6 LINQPad static data context driver")]
+[assembly: AssemblyProduct("AW LLBLGen 2.6 LINQPad static data context driver")]
 [assembly: AssemblyCompany("Jeremy Thomas")]
 [assembly: AssemblyCopyright("Jeremy Thomas")]
 [assembly: AssemblyTrademark("")]
@@ -38,4 +38,4 @@ using System.Runtime.InteropServices;
 
 // The AssemblyFileVersion appears to users when they import Data Context Drivers.
 
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.1")]
