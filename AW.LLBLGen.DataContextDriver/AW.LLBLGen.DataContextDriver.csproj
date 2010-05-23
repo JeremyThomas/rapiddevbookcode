@@ -156,6 +156,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>DevDeploy.bat</PostBuildEvent>
+    <PostBuildEvent>DevDeploy4.bat</PostBuildEvent>
   </PropertyGroup>
 </Project>

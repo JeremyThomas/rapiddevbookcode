@@ -70,7 +70,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			try
 			{
 				var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
-				var type = assembly.GetType("AW.Data.HelperClasses.DbUtils");
+				var type = assembly.GetTypes().Where(t => t.Name.Contains("CommonDaoBase") && t.IsClass).First();
 				if (type == null)
 				{
 					var adapterTypeName = ConnectionDialog.GetAdapterType(cxInfo);
@@ -113,7 +113,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 									}
 								}
 
-								if (adapter != null)
+								if (adapter == null)
+									System.Diagnostics.Debugger.Break();
+								else
 								{
 									adapterToUseProperty.SetValue(linqMetaData, adapter, null);
 									if (string.IsNullOrEmpty(adapter.ConnectionString))
@@ -142,6 +144,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (Exception e)
 			{
 				GeneralHelper.TraceOut(e.Message);
+				System.Diagnostics.Debugger.Break();
 			}
 		}
 
