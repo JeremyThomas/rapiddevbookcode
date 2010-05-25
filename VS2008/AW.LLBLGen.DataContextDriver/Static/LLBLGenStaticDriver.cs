@@ -70,64 +70,63 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			try
 			{
 				var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
-				var type = assembly.GetTypes().Where(t => t.Name.Contains("DbUtils") && t.IsClass).First();
+				var type = assembly.GetTypes().Where(t => t.Name.Equals("DbUtils") && t.IsClass).SingleOrDefault();
 				if (type == null)
 				{
 					var adapterTypeName = ConnectionDialog.GetAdapterType(cxInfo);
-					if (!string.IsNullOrEmpty(adapterTypeName))
+					if (string.IsNullOrEmpty(adapterTypeName))
+						throw new ApplicationException("DbUtils or adapter not found!");
+					var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
+					var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
+					if (dataAccessAdapterType != null)
 					{
-						var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
-						var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
-						if (dataAccessAdapterType != null)
+						var linqMetaData = context as ILinqMetaData;
+						if (linqMetaData != null)
 						{
-							var linqMetaData = context as ILinqMetaData;
-							if (linqMetaData != null)
+							var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
+							DataAccessAdapterBase adapter;
+							if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
 							{
-								var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
-								DataAccessAdapterBase adapter;
-								if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
-								{
-									adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
-								}
+								adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
+							}
+							else
+							{
+								if (cxInfo.DatabaseInfo.IsSqlServer)
+									adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+									                                                          	{
+									                                                          		cxInfo.DatabaseInfo.CustomCxString,
+									                                                          		true, CatalogNameUsage.Clear, null
+									                                                          	}) as DataAccessAdapterBase;
 								else
 								{
-									if (cxInfo.DatabaseInfo.IsSqlServer)
+									if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
 										adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
 										                                                          	{
 										                                                          		cxInfo.DatabaseInfo.CustomCxString,
-										                                                          		true, CatalogNameUsage.Clear, null
+										                                                          		true, SchemaNameUsage.Default, null
 										                                                          	}) as DataAccessAdapterBase;
 									else
-									{
-										if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
-											adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-											                                                          	{
-											                                                          		cxInfo.DatabaseInfo.CustomCxString,
-											                                                          		true, SchemaNameUsage.Default, null
-											                                                          	}) as DataAccessAdapterBase;
-										else
-											adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-											                                                          	{
-											                                                          		cxInfo.DatabaseInfo.CustomCxString
-											                                                          	}) as DataAccessAdapterBase;
-									}
+										adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+										                                                          	{
+										                                                          		cxInfo.DatabaseInfo.CustomCxString
+										                                                          	}) as DataAccessAdapterBase;
 								}
+							}
 
-								if (adapter == null)
-									System.Diagnostics.Debugger.Break();
-								else
-								{
-									adapterToUseProperty.SetValue(linqMetaData, adapter, null);
-									if (string.IsNullOrEmpty(adapter.ConnectionString))
-										if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
-										{
-											var firstConnectionString =
-												(from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
-												 select connectionStringSetting).FirstOrDefault();
-											if (firstConnectionString != null)
-												adapter.ConnectionString = firstConnectionString.ConnectionString;
-										}
-								}
+							if (adapter == null)
+								System.Diagnostics.Debugger.Break();
+							else
+							{
+								adapterToUseProperty.SetValue(linqMetaData, adapter, null);
+								if (string.IsNullOrEmpty(adapter.ConnectionString))
+									if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
+									{
+										var firstConnectionString =
+											(from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
+											 select connectionStringSetting).FirstOrDefault();
+										if (firstConnectionString != null)
+											adapter.ConnectionString = firstConnectionString.ConnectionString;
+									}
 							}
 						}
 					}
@@ -135,10 +134,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				else
 				{
 					var actualConnectionStringField = type.GetField("ActualConnectionString");
+#if DEBUG
 					var actualConnectionString = Convert.ToString(actualConnectionStringField.GetValue(context));
-					GeneralHelper.TraceOut(actualConnectionString);
+					GeneralHelper.DebugOut(actualConnectionString); 
+#endif
 					actualConnectionStringField.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
-					GeneralHelper.TraceOut(Convert.ToString(actualConnectionStringField.GetValue(context)));
+#if DEBUG
+					GeneralHelper.DebugOut(Convert.ToString(actualConnectionStringField.GetValue(context)));
+#endif
 				}
 			}
 			catch (Exception e)

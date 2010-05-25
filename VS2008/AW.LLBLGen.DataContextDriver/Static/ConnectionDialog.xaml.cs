@@ -219,10 +219,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				return;
 			}
 
-			var result = (string)Dialogs.PickFromList("Choose adapter Type", customTypes);
-			if (result != null)
+			if (customTypes.Length == 1)
+				AdapterType = customTypes.First();
+			else
 			{
-				AdapterType = result;
+				var result = (string)Dialogs.PickFromList("Choose adapter Type", customTypes);
+				if (result != null)
+					AdapterType = result;
 			}
 		}
 
