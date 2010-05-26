@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -33,7 +34,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 //      {
 //        comboBoxDatabaseProvider.Items.Add(item);
 //      }
-
 		}
 
 		private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -45,10 +45,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void BrowseAssembly(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
-			{
-				Title = "Choose LLBL entity assembly",
-				DefaultExt = ".dll",
-			};
+			             	{
+			             		Title = "Choose LLBL entity assembly",
+			             		DefaultExt = ".dll",
+			             	};
 
 			if (dialog.ShowDialog() == true)
 			{
@@ -63,7 +63,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				catch (Exception)
 				{
-					System.Diagnostics.Debugger.Break();
+					Debugger.Break();
 					return;
 				}
 			}
@@ -73,10 +73,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void BrowseDataAccessAdapterAssembly(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
-			{
-				Title = "Choose Data Access Adapter assembly",
-				DefaultExt = ".dll",
-			};
+			             	{
+			             		Title = "Choose Data Access Adapter assembly",
+			             		DefaultExt = ".dll",
+			             	};
 
 			if (dialog.ShowDialog() == true)
 			{
@@ -91,7 +91,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				catch (Exception)
 				{
-					System.Diagnostics.Debugger.Break();
+					Debugger.Break();
 					return;
 				}
 			}
@@ -104,7 +104,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static IEnumerable<string> GetDataAccessAdapterTypeNames(IEnumerable<Type> types)
 		{
-			return types.Where(t => typeof(IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
+			return types.Where(t => typeof (IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
 		}
 
 		private static string[] GetDataAccessAdapterTypeNamesBothWays(IEnumerable<Type> types)
@@ -123,10 +123,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void BrowseAppConfig(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
-			{
-				Title = "Choose application config file",
-				DefaultExt = ".config",
-			};
+			             	{
+			             		Title = "Choose application config file",
+			             		DefaultExt = ".config",
+			             	};
 
 			if (dialog.ShowDialog() == true)
 				_cxInfo.AppConfigPath = dialog.FileName;
@@ -155,13 +155,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (Exception ex)
 			{
 				MessageBox.Show("Error obtaining custom types: " + ex.Message);
-				System.Diagnostics.Debugger.Break();
+				Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 0)
 			{
-				MessageBox.Show("There are no public types in that assembly."); // based on.........
-				System.Diagnostics.Debugger.Break();
+				MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData.");
+				Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 1)
@@ -170,7 +170,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				return;
 			}
 
-			var result = (string)Dialogs.PickFromList("Choose Custom Type", customTypes);
+			var result = (string) Dialogs.PickFromList("Choose Custom Type", customTypes);
 			if (result != null) _cxInfo.CustomTypeInfo.CustomTypeName = result;
 		}
 
@@ -202,37 +202,36 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				if (customTypes.Length == 0)
 				{
 					MessageBox.Show("Error obtaining adapter types: " + ex.Message + Environment.NewLine +
-													ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
-					System.Diagnostics.Debugger.Break();
+					                ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
+					Debugger.Break();
 					return;
 				}
 			}
 			catch (Exception ex)
 			{
 				MessageBox.Show("Error obtaining adapter types: " + ex.Message);
-				System.Diagnostics.Debugger.Break();
+				Debugger.Break();
 				return;
 			}
 			if (customTypes.Length == 0)
 			{
 				MessageBox.Show("There are no public types in that assembly that implement IDataAccessAdapter.");
-				System.Diagnostics.Debugger.Break();
+				Debugger.Break();
 				return;
 			}
-
-			var result = (string)Dialogs.PickFromList("Choose adapter Type", customTypes);
-			if (result != null)
+			if (customTypes.Length == 1)
+				AdapterType = customTypes.First();
+			else
 			{
-				AdapterType = result;
+				var result = (string) Dialogs.PickFromList("Choose adapter Type", customTypes);
+				if (result != null)
+					AdapterType = result;
 			}
 		}
 
 		public string AdapterType
 		{
-			get
-			{
-				return GetAdapterType(_cxInfo);
-			}
+			get { return GetAdapterType(_cxInfo); }
 			set { SetAdapterType(_cxInfo, value); }
 		}
 
@@ -253,7 +252,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				return;
 			var adapterTypeElement = connectionInfo.DriverData.Element("AdapterType");
 			if (adapterTypeElement == null)
-				connectionInfo.DriverData.Add(new XElement("AdapterType") { Value = adapterType });
+				connectionInfo.DriverData.Add(new XElement("AdapterType") {Value = adapterType});
 			else
 			{
 				adapterTypeElement.Value = adapterType;
@@ -278,19 +277,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 
 			var c = (from e in additionalAssembliesElement.Elements()
-							 where e.Value == assemblyName
-							 select e).Count();
+			         where e.Value == assemblyName
+			         select e).Count();
 
 			if (c == 0)
-				additionalAssembliesElement.Add(new XElement("AssemblyName") { Value = assemblyName });
+				additionalAssembliesElement.Add(new XElement("AssemblyName") {Value = assemblyName});
 			connectionInfo.DatabaseInfo.Database = GetAdditionalAssemblies(additionalAssembliesElement);
 		}
 
 		private static string GetAdditionalAssemblies(XElement additionalAssembliesElement)
 		{
-
 			var y = from e in additionalAssembliesElement.Elements()
-							select e.Value;
+			        select e.Value;
 			var additionalAssemblies = y.JoinAsString();
 			return additionalAssemblies;
 		}
@@ -307,13 +305,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void ChooseAssemblies(object sender, RoutedEventArgs e)
 		{
-
 			var dialog = new OpenFileDialog
-			{
-				Title = "Choose extra assembly",
-				DefaultExt = ".dll",
-				Multiselect = true
-			};
+			             	{
+			             		Title = "Choose extra assembly",
+			             		DefaultExt = ".dll",
+			             		Multiselect = true
+			             	};
 
 			if (dialog.ShowDialog() == true)
 			{
@@ -321,9 +318,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					AddAssembly(_cxInfo, fileName);
 				}
-
 			}
 		}
-
 	}
 }
