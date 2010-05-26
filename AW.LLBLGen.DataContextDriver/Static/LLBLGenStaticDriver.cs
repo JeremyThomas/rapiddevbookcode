@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -22,20 +24,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	{
 		private static readonly string[] AdditionalAssemblies = new[]
 		                                                        	{
+		                                                        		"AW.Helper.dll",
 		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
 		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
-		                                                        		"AW.Helper.dll",
-		                                                        		"AW.Winforms.Helpers.dll", "System.Windows.Forms.dll",
-		                                                        		"AW.Helper.LLBL.dll", "AW.Winforms.Helpers.LLBL.dll"
+		                                                        		"AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
+		                                                        		"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll"
 		                                                        	};
 
 		private static readonly string[] AdditionalNamespaces = new[]
-		                                                         	{
-		                                                         		"SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper",
-		                                                         		"AW.Helper.LLBL",
-		                                                         		"AW.Winforms.Helpers.DataEditor",
-		                                                         		"AW.Winforms.Helpers.LLBL"
-		                                                         	};
+		                                                        	{
+		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper",
+		                                                        		"AW.Helper.LLBL",
+		                                                        		"AW.Winforms.Helpers.DataEditor",
+		                                                        		"AW.Winforms.Helpers.LLBL"
+		                                                        	};
 
 		#region Overrides of DataContextDriver
 
@@ -53,9 +55,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.Server)) //For now using this field to store the description
 				// For static drivers, we can use the description of the custom type & its assembly:
-				return
-					new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath}.
-						JoinAsString(" - ");
+				return new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath}.JoinAsString(" - ");
 			return cxInfo.DatabaseInfo.Server;
 		}
 
@@ -70,11 +70,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			try
 			{
 				var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
-				var type = assembly.GetTypes().Where(t => t.Name.Contains("CommonDaoBase") && t.IsClass).First();
+				var type = assembly.GetTypes().Where(t => t.Name.Contains("CommonDaoBase") && t.IsClass).SingleOrDefault();
 				if (type == null)
 				{
 					var adapterTypeName = ConnectionDialog.GetAdapterType(cxInfo);
-					if (!string.IsNullOrEmpty(adapterTypeName))
+					if (string.IsNullOrEmpty(adapterTypeName))
+					{
+						throw new ApplicationException("CommonDaoBase or adapter not found!");
+					}
+					if (File.Exists(cxInfo.CustomTypeInfo.CustomMetadataPath))
 					{
 						var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
 						var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
@@ -114,16 +118,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 								}
 
 								if (adapter == null)
-									System.Diagnostics.Debugger.Break();
+									Debugger.Break();
 								else
 								{
 									adapterToUseProperty.SetValue(linqMetaData, adapter, null);
 									if (string.IsNullOrEmpty(adapter.ConnectionString))
 										if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
 										{
-											var firstConnectionString =
-												(from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
-												 select connectionStringSetting).FirstOrDefault();
+											var firstConnectionString = (from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
+											                             select connectionStringSetting).FirstOrDefault();
 											if (firstConnectionString != null)
 												adapter.ConnectionString = firstConnectionString.ConnectionString;
 										}
@@ -131,20 +134,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 							}
 						}
 					}
+					else
+						throw new ApplicationException("Adapter assembly: " + cxInfo.CustomTypeInfo.CustomMetadataPath + " not found!");
 				}
 				else
 				{
 					var actualConnectionStringField = type.GetField("ActualConnectionString");
+#if DEBUG
 					var actualConnectionString = Convert.ToString(actualConnectionStringField.GetValue(context));
-					GeneralHelper.TraceOut(actualConnectionString);
+					GeneralHelper.DebugOut(actualConnectionString);
+#endif
 					actualConnectionStringField.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
-					GeneralHelper.TraceOut(Convert.ToString(actualConnectionStringField.GetValue(context)));
+#if DEBUG
+					GeneralHelper.DebugOut(Convert.ToString(actualConnectionStringField.GetValue(context)));
+#endif
 				}
 			}
 			catch (Exception e)
 			{
 				GeneralHelper.TraceOut(e.Message);
-				System.Diagnostics.Debugger.Break();
+				Debugger.Break();
 			}
 		}
 
@@ -233,7 +242,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
 		{
 			return from propertyDescriptor in TypeDescriptor.GetProperties(type, null).Cast<PropertyDescriptor>()
-						 where typeof(IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
+			       where typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
 			       select propertyDescriptor;
 		}
 
