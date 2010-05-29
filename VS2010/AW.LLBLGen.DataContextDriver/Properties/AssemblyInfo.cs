@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("AW.LLBLGen.DataContextDriver")]
-[assembly: AssemblyDescription("AW LLBLGen LINQPad static data context driver")]
+[assembly: AssemblyDescription("AW LLBLGen v3.0 LINQPad static data context driver")]
 [assembly: AssemblyProduct("AW.LLBLGen.DataContextDriver")]
 [assembly: AssemblyCompany("Jeremy Thomas")]
 [assembly: AssemblyCopyright("Jeremy Thomas")]
@@ -38,4 +38,4 @@ using System.Runtime.InteropServices;
 
 // The AssemblyFileVersion appears to users when they import Data Context Drivers.
 
-[assembly: AssemblyFileVersion("1.0.0.3")]
+[assembly: AssemblyFileVersion("1.0.0.4")]

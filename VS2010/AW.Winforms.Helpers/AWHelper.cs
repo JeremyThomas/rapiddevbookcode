@@ -117,6 +117,7 @@ namespace AW.Winforms.Helpers
     public static Form LaunchChildForm(this Form mdiParent, Type childFormType, params Object[] args)
     {
       if (childFormType == null) throw new ArgumentNullException("childFormType");
+			if (mdiParent == null) throw new ArgumentNullException("mdiParent");
       var childForm = mdiParent.MdiChildren.FirstOrDefault(myForm => myForm.GetType() == childFormType);
       if (childForm != null)
       {
