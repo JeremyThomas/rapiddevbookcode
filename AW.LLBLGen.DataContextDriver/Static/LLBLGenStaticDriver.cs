@@ -53,10 +53,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override string GetConnectionDescription(IConnectionInfo cxInfo)
 		{
-			if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.Server)) //For now using this field to store the description
 				// For static drivers, we can use the description of the custom type & its assembly:
-				return new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath}.JoinAsString(" - ");
-			return cxInfo.DatabaseInfo.Server;
+			return new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath}.JoinAsString(" - ");
 		}
 
 		public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)

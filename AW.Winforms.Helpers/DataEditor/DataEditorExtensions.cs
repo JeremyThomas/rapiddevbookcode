@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.Controls;
+using Chaliy.Windows.Forms;
 
 namespace AW.Winforms.Helpers.DataEditor
 {
@@ -88,7 +89,7 @@ namespace AW.Winforms.Helpers.DataEditor
 		{
 			if (enumerable != null)
 				if (typeof (T) == typeof (string))
-					((IEnumerable<string>)enumerable).CreateStringWrapperForBinding().EditInDataGridView(gridDataEditorPersister, pageSize);
+					((IEnumerable<string>) enumerable).CreateStringWrapperForBinding().EditInDataGridView(gridDataEditorPersister, pageSize);
 				else
 				{
 					var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
@@ -169,6 +170,25 @@ namespace AW.Winforms.Helpers.DataEditor
 		{
 			dataGridView.SelectAll();
 			Clipboard.SetDataObject(dataGridView.GetClipboardContent());
+		}
+
+		public static IEnumerable<T> ShowHierarchicyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
+		{
+			CreateHierarchicyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn).ShowDialog();
+			return enumerable;
+		}
+
+		public static FrmDataEditor CreateHierarchicyEditor<T>(IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
+		{
+			var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
+			var gridDataEditor = new DataTreeView { Dock = DockStyle.Fill, AllowDrop = Application.MessageLoop };
+			frmDataEditor.Controls.Add(gridDataEditor);
+
+			gridDataEditor.DataSource = enumerable;
+			gridDataEditor.IDColumn = iDPropertyName;
+			gridDataEditor.ParentIDColumn = parentIDPropertyName;
+			gridDataEditor.NameColumn = nameColumn;
+			return frmDataEditor;
 		}
 	}
 }
