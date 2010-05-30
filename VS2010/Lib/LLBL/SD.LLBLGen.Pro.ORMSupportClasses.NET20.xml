@@ -6935,7 +6935,7 @@
             </summary>
             <value>The runtime build.</value>
         </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMConcurrencyException.#ctor(System.String,System.Object)">
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMConcurrencyException.#ctor(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntityCore)">
             <summary>
             CTor
             </summary>
@@ -6967,11 +6967,12 @@
             marked as Deleted.
             </summary>
         </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityIsDeletedException.#ctor(System.String)">
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityIsDeletedException.#ctor(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntityCore)">
             <summary>
-            CTor
+            Initializes a new instance of the <see cref="T:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityIsDeletedException"/> class.
             </summary>
-            <param name="message">The message of the exception</param>
+            <param name="message">The message.</param>
+            <param name="deletedEntity">The deleted entity.</param>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityIsDeletedException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
@@ -6980,17 +6981,30 @@
             <param name="info"></param>
             <param name="context"></param>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityIsDeletedException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serialization override
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityIsDeletedException.DeletedEntity">
+            <summary>
+            Gets / sets the entity which was deleted and which triggered the exception
+            </summary>
+        </member>
         <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityOutOfSyncException">
             <summary>
             General exception class which is thrown when a user tries to get a value from a field of an entity which is
             marked as OutOfSync, and needs to be refetched.
             </summary>
         </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityOutOfSyncException.#ctor(System.String)">
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityOutOfSyncException.#ctor(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntityCore)">
             <summary>
-            CTor
+            Initializes a new instance of the <see cref="T:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityOutOfSyncException"/> class.
             </summary>
-            <param name="message">The message of the exception</param>
+            <param name="message">The message.</param>
+            <param name="outOfSyncEntity">The out of sync entity.</param>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityOutOfSyncException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
@@ -6998,6 +7012,18 @@
             </summary>
             <param name="info"></param>
             <param name="context"></param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityOutOfSyncException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serialization override
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityOutOfSyncException.OutOfSyncEntity">
+            <summary>
+            Gets / sets the entity which was out of sync
+            </summary>
         </member>
         <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.ORMEntityValidationException">
             <summary>
@@ -11558,17 +11584,17 @@
         </member>
         <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.SqlServerCompatibilityLevel.SqlServer2000">
             <summary>
-            Produce SQL which is compatible with SqlServer 2000 and up (default)
+            Produce SQL which is compatible with SqlServer 2000 and up 
             </summary>
         </member>
         <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.SqlServerCompatibilityLevel.SqlServer2005">
             <summary>
-            Produce SQL which is compatible with SqlServer 2005 and up
+            Produce SQL which is compatible with SqlServer 2005 and up (default)
             </summary>
         </member>
         <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.SqlServerCompatibilityLevel.SqlServerCE3x">
             <summary>
-            Produce SQL which is compatible with SqlServer CE 3.0 and 3.1. (default for Compact Framework builds of SqlServer CE DQE)
+            Produce SQL which is compatible with SqlServer CE 3.0 and 3.1.
             </summary>
         </member>
         <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.SqlServerCompatibilityLevel.SqlServerCE35">
@@ -19170,14 +19196,6 @@
             Collection with 0 or more IEntityCollection objects, referenced by this entity
             </returns>
         </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase.SetRelatedEntityProperty(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntity)">
-            <summary>
-            Sets the related entity property to the entity specified. If the property is a collection, it will add the entity specified to that collection.
-            </summary>
-            <param name="propertyName">Name of the property.</param>
-            <param name="entity">Entity to set as an related entity</param>
-            <remarks>Used by prefetch path logic.</remarks>
-        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase.GetAllRelations">
             <summary>
             Gets a list of all the EntityRelation objects the type of this instance has. 
@@ -19212,6 +19230,14 @@
             <param name="levelOfIsolation">The level of isolation.</param>
             <param name="name">The name.</param>
             <returns>Transaction ready to use</returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase.SetRelatedEntityProperty(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntity)">
+            <summary>
+            Sets the related entity property to the entity specified. If the property is a collection, it will add the entity specified to that collection.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="entity">Entity to set as an related entity</param>
+            <remarks>Used by prefetch path logic.</remarks>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
@@ -19535,6 +19561,13 @@
             </summary>
             <param name="relatedEntity">The related entity.</param>
             <param name="fieldName">Name of the field mapped onto the relation which resolves to the instance relatedEntity</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase.OnSetRelatedEntityProperty(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntity)">
+            <summary>
+            Method which is called in the default clause of the SetRelatedEntityProperty method during the merge process of prefetch path fetches.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="entity">Entity to set as an related entity</param>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase.OnInitializing">
             <summary>
@@ -21031,14 +21064,6 @@
             Collection with 0 or more IEntityCollection2 objects, referenced by this entity
             </returns>
         </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2.SetRelatedEntityProperty(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntity2)">
-            <summary>
-            Sets the related entity property to the entity specified. If the property is a collection, it will add the entity specified to that collection.
-            </summary>
-            <param name="propertyName">Name of the property.</param>
-            <param name="entity">Entity to set as an related entity</param>
-            <remarks>Used by prefetch path logic.</remarks>
-        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2.GetAllRelations">
             <summary>
             Gets a list of all the EntityRelation objects the type of this instance has. 
@@ -21061,6 +21086,14 @@
             Gets the inheritance info for this entity, if applicable (it's then overriden) or null if not.
             </summary>
             <returns>InheritanceInfo object if this entity is in a hierarchy of type TargetPerEntity, or null otherwise</returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2.SetRelatedEntityProperty(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntity2)">
+            <summary>
+            Sets the related entity property to the entity specified. If the property is a collection, it will add the entity specified to that collection.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="entity">Entity to set as an related entity</param>
+            <remarks>Used by prefetch path logic.</remarks>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2.GetInheritanceInfoProvider">
             <summary>Gets the inheritance info provider instance of the project this entity instance is located in. </summary>
@@ -21333,6 +21366,13 @@
             </summary>
             <param name="relatedEntity">The related entity.</param>
             <param name="fieldName">Name of the field mapped onto the relation which resolves to the instance relatedEntity</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2.OnSetRelatedEntityProperty(System.String,SD.LLBLGen.Pro.ORMSupportClasses.IEntity2)">
+            <summary>
+            Method which is called in the default clause of the SetRelatedEntityProperty method during the merge process of prefetch path fetches.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+            <param name="entity">Entity to set as an related entity</param>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2.OnGetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>

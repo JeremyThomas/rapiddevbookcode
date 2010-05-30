@@ -172,16 +172,17 @@ namespace AW.Winforms.Helpers.DataEditor
 			Clipboard.SetDataObject(dataGridView.GetClipboardContent());
 		}
 
-		public static IEnumerable<T> ShowHierarchicyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
+		public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
 		{
-			CreateHierarchicyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn).ShowDialog();
+			CreateHierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn).ShowDialog();
+			//Application.Run(CreateHierarchicyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn));
 			return enumerable;
 		}
 
-		public static FrmDataEditor CreateHierarchicyEditor<T>(IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
+		public static FrmDataEditor CreateHierarchyEditor<T>(IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
 		{
 			var frmDataEditor = new FrmDataEditor {Text = enumerable.ToString()};
-			var gridDataEditor = new DataTreeView { Dock = DockStyle.Fill, AllowDrop = Application.MessageLoop };
+			var gridDataEditor = new DataTreeView { Dock = DockStyle.Fill, AllowDrop = true };
 			frmDataEditor.Controls.Add(gridDataEditor);
 
 			gridDataEditor.DataSource = enumerable;
