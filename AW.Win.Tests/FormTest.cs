@@ -51,9 +51,6 @@ namespace AW.Win.Tests
 		[TestMethod, Description("A test for FrmOrganizationStructure")]
 		public void FrmOrganizationStructureTest()
 		{
-			//var target = new FrmMain();
-			//target.LaunchChildForm(typeof(FrmOrganizationStructure));
-
 			AWHelper.ShowDialog(typeof (FrmOrganizationStructure));
 		}
 	}

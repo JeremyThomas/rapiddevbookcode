@@ -11,4 +11,4 @@
   </Connection>
 </Query>
 
-Employee.ToEntityCollection().ShowHierarchicyInTree("EmployeeID", "ManagerID", "EmployeeDisplayName")
+Employee.ToEntityCollection().ShowHierarchyInTree("EmployeeID", "ManagerID", "EmployeeDisplayName")
