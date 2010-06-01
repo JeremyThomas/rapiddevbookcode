@@ -333,6 +333,7 @@ namespace Chaliy.Windows.Forms
       if (e.Node != null && e.Label != null)
         if (PrepareValueConvertor()
             && _valueConverter.IsValid(e.Label)
+					&& !_nameProperty.IsReadOnly
           )
         {
           _nameProperty.SetValue(
