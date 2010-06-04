@@ -164,6 +164,7 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="Concurrency.cs" />
+    <Compile Include="DaoClasses\CommonDaoBase.Extended.cs" />
     <Compile Include="DaoClasses\SpecialOfferProductDAO.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
