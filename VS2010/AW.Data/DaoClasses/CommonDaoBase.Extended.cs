@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.Common;
 using AW.Helper.LLBL;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -18,7 +19,7 @@ namespace AW.Data.DaoClasses
 		/// </returns>
 		public override int ExecuteActionQuery(IActionQuery queryToExecute, ITransaction containingTransaction)
 		{
-			QueryToSQL.LogQuery(queryToExecute);
+			OnExecuteQuery(queryToExecute);
 			return base.ExecuteActionQuery(queryToExecute, containingTransaction);
 		}
 
@@ -31,7 +32,7 @@ namespace AW.Data.DaoClasses
 		/// </returns>
 		public override bool ExecuteMultiRowDataTableRetrievalQuery(IRetrievalQuery queryToExecute, DbDataAdapter dataAdapterToUse, DataTable tableToFill, IEntityFields fieldsToReturn)
 		{
-			QueryToSQL.LogQuery(queryToExecute);
+			OnExecuteQuery(queryToExecute);
 			return base.ExecuteMultiRowDataTableRetrievalQuery(queryToExecute, dataAdapterToUse, tableToFill, fieldsToReturn);
 		}
 
@@ -42,7 +43,7 @@ namespace AW.Data.DaoClasses
 		///             fields and is necessary for the row fetcher. Overriders of this method should pass fieldsToFill.GetAsPersistenceInfoArray() to this parameter</param>
 		public override void ExecuteMultiRowRetrievalQuery(IRetrievalQuery queryToExecute, ITransaction containingTransaction, IEntityCollection collectionToFill, bool allowDuplicates, IEntityFields fieldsUsedForQuery, IFieldPersistenceInfo[] fieldPersistenceInfos)
 		{
-			QueryToSQL.LogQuery(queryToExecute);
+			OnExecuteQuery(queryToExecute);
 			base.ExecuteMultiRowRetrievalQuery(queryToExecute, containingTransaction, collectionToFill, allowDuplicates, fieldsUsedForQuery, fieldPersistenceInfos);
 		}
 
@@ -55,7 +56,7 @@ namespace AW.Data.DaoClasses
 		/// </returns>
 		public override object ExecuteScalarQuery(IRetrievalQuery queryToExecute, ITransaction containingTransaction)
 		{
-			QueryToSQL.LogQuery(queryToExecute);
+			OnExecuteQuery(queryToExecute);
 			return base.ExecuteScalarQuery(queryToExecute, containingTransaction);
 		}
 
@@ -66,7 +67,7 @@ namespace AW.Data.DaoClasses
 		///             fields and is necessary for the row fetcher. Overriders of this method should pass fieldsToFill.GetAsPersistenceInfoArray() to this parameter</param>
 		public override void ExecuteSingleRowRetrievalQuery(IRetrievalQuery queryToExecute, ITransaction containingTransaction, IEntityFields fieldsToFill, IFieldPersistenceInfo[] fieldPersistenceInfos)
 		{
-			QueryToSQL.LogQuery(queryToExecute);
+			OnExecuteQuery(queryToExecute);
 			base.ExecuteSingleRowRetrievalQuery(queryToExecute, containingTransaction, fieldsToFill, fieldPersistenceInfos);
 		}
 
@@ -77,16 +78,21 @@ namespace AW.Data.DaoClasses
 		/// <returns>
 		/// live datareader created by the execute method
 		/// </returns>
-		/// <remarks>
-		/// Use this method to pass a different command behavior to queryToExecute.Execute(), which is necessary for ASE sybase for example, as the 
-		///             Sybase ASE provider has a critical bug in some versions where SingleRow doesn't work but SingleResult will.
-		/// </remarks>
 		protected override IDataReader PerformExecuteSingleRowRetrievalQuery(IRetrievalQuery queryToExecute, CommandBehavior behavior)
 		{
-			QueryToSQL.LogQuery(queryToExecute);
+			OnExecuteQuery(queryToExecute);
 			return base.PerformExecuteSingleRowRetrievalQuery(queryToExecute, behavior);
 		}
 
 		#endregion
+
+		public void OnExecuteQuery(IQuery query)
+		{
+			if (SQLTraceEvent != null)
+				SQLTraceEvent(this, new SQLTraceEventArgs(query));
+		}
+
+		public static event EventHandler<SQLTraceEventArgs> SQLTraceEvent;
 	}
+
 }

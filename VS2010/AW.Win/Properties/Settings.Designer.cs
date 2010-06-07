@@ -438,5 +438,17 @@ namespace AW.Win.Properties {
                 this["OrganizationStructureSizeLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SQLTrace {
+            get {
+                return ((bool)(this["SQLTrace"]));
+            }
+            set {
+                this["SQLTrace"] = value;
+            }
+        }
     }
 }
