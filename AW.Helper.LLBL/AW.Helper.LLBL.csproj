@@ -72,6 +72,7 @@
     <Compile Include="QueryToSQL.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLTraceEventArgs.cs" />
     <Compile Include="Validation.cs" />
   </ItemGroup>
   <ItemGroup>

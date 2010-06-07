@@ -18,24 +18,6 @@ namespace AW.Helper.LLBL
 	{
 		private static readonly string[] CommonKeywords = new[] {"FROM", "WHERE", "GROUP BY", "HAVING", "INNER JOIN", "LEFT JOIN", "RIGHT JOIN"};
 
-		public static void LogQuery(IQuery query)
-		{
-			var dumpFormattedQuery = DynamicQueryEngineBase.Switch.TraceVerbose;
-			if (!dumpFormattedQuery) DumpIfDebug(ref dumpFormattedQuery);
-
-			if (dumpFormattedQuery)
-			{
-				var formattedQuery = GetExecutableSQLFromQuery(query);
-				Trace.WriteLine(formattedQuery);
-			}
-		}
-
-		[Conditional("DEBUG")]
-		private static void DumpIfDebug(ref bool dumpFormattedQuery)
-		{
-			dumpFormattedQuery = true;
-		}
-
 		/// <summary>
 		/// Gets SQL from query such that it can be executed/run.
 		/// </summary>
