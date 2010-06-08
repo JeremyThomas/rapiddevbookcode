@@ -32,10 +32,10 @@
 			this.comboBoxDQETraceLevel = new System.Windows.Forms.ComboBox();
 			this.buttonClearTrace = new System.Windows.Forms.Button();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.checkBoxSQLTrace = new System.Windows.Forms.CheckBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.comboBoxLinqTraceLevel = new System.Windows.Forms.ComboBox();
-			this.checkBoxSQLTrace = new System.Windows.Forms.CheckBox();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
@@ -94,6 +94,19 @@
 			this.splitContainer1.SplitterDistance = 36;
 			this.splitContainer1.TabIndex = 3;
 			// 
+			// checkBoxSQLTrace
+			// 
+			this.checkBoxSQLTrace.AutoSize = true;
+			this.checkBoxSQLTrace.Checked = global::AW.Win.Properties.Settings.Default.SQLTrace;
+			this.checkBoxSQLTrace.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "SQLTrace", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+			this.checkBoxSQLTrace.Location = new System.Drawing.Point(519, 15);
+			this.checkBoxSQLTrace.Name = "checkBoxSQLTrace";
+			this.checkBoxSQLTrace.Size = new System.Drawing.Size(75, 17);
+			this.checkBoxSQLTrace.TabIndex = 5;
+			this.checkBoxSQLTrace.Text = "SQLTrace";
+			this.checkBoxSQLTrace.UseVisualStyleBackColor = true;
+			this.checkBoxSQLTrace.CheckedChanged += new System.EventHandler(this.checkBoxSQLTrace_CheckedChanged);
+			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
@@ -121,19 +134,6 @@
 			this.comboBoxLinqTraceLevel.TabIndex = 2;
 			this.comboBoxLinqTraceLevel.SelectedIndexChanged += new System.EventHandler(this.comboBoxLinqTraceLevel_SelectedIndexChanged);
 			// 
-			// checkBoxSQLTrace
-			// 
-			this.checkBoxSQLTrace.AutoSize = true;
-			this.checkBoxSQLTrace.Checked = global::AW.Win.Properties.Settings.Default.SQLTrace;
-			this.checkBoxSQLTrace.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "SQLTrace", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-			this.checkBoxSQLTrace.Location = new System.Drawing.Point(519, 15);
-			this.checkBoxSQLTrace.Name = "checkBoxSQLTrace";
-			this.checkBoxSQLTrace.Size = new System.Drawing.Size(75, 17);
-			this.checkBoxSQLTrace.TabIndex = 5;
-			this.checkBoxSQLTrace.Text = "SQLTrace";
-			this.checkBoxSQLTrace.UseVisualStyleBackColor = true;
-			this.checkBoxSQLTrace.CheckedChanged += new System.EventHandler(this.checkBoxSQLTrace_CheckedChanged);
-			// 
 			// FrmTrace
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,7 +142,7 @@
 			this.Controls.Add(this.splitContainer1);
 			this.Name = "FrmTrace";
 			this.Tag = "True";
-			this.Text = "FormTrace";
+			this.Text = "Trace form";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmTrace_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmTrace_FormClosed);
 			this.Load += new System.EventHandler(this.FrmTrace_Load);

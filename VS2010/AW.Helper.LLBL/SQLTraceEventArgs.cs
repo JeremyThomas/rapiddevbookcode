@@ -3,6 +3,17 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Helper.LLBL
 {
+	public class QueryTraceEventArgs : EventArgs
+	{
+		public QueryTraceEventArgs(IQuery query)
+		{
+			if (query == null) throw new ArgumentNullException("query");
+			Query = query;
+		}
+
+		public IQuery Query { get; private set; }
+	}
+
 	public class SQLTraceEventArgs : EventArgs
 	{
 		private string _sqlTrace;

@@ -97,27 +97,9 @@ namespace AW.Win
 		private void SetSQLTrace(bool traceON)
 		{
 			if (traceON)
-			{
-				//	CommonDaoBase.SQLTraceEvent += CommonDaoBase_SQLTraceEvent;
-				EventHandler<SQLTraceEventArgs> handler = (sender, e) =>
-				{
-					//if (!string.IsNullOrEmpty(e.SQLTrace))
-					//  _textBoxTraceListener.WriteLine(e.SQLTrace);
-				};
-
-				//CommonDaoBase.SQLTraceEvent += handler;
-				var eventInfo = typeof(CommonDaoBase).GetEvent("SQLTraceEvent");
-				if (eventInfo.EventHandlerType != null)
-				{
-					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Method);
-					eventInfo.GetAddMethod().Invoke(null, new[] { typedDelegate });
-				}
-			}
+				CommonDaoBase.SQLTraceEvent += CommonDaoBase_SQLTraceEvent;
 			else
-			{
 				CommonDaoBase.SQLTraceEvent -= CommonDaoBase_SQLTraceEvent;
-				//CommonDaoBase.SQLTraceEvent -= new EventHandler<Helper.LLBL.SQLTraceEventArgs>(CommonDaoBase_SQLTraceEvent);
-			}
 		}
 
 		private void CommonDaoBase_SQLTraceEvent(object sender, SQLTraceEventArgs e)
