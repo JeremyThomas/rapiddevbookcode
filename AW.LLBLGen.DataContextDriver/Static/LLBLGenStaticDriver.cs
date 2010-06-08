@@ -172,22 +172,28 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void SetSQLTranslationWriter(Type typeBeingTraced, QueryExecutionManager executionManager)
 		{
+			SetSQLTranslationWriter(typeBeingTraced, null, executionManager);
+		}
+
+		private void SetSQLTranslationWriter(DataAccessAdapterBase adapter, QueryExecutionManager executionManager)
+		{
+			SetSQLTranslationWriter(adapter.GetType(), adapter, executionManager);
+		}
+
+		private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
+		{
 			var eventInfo = typeBeingTraced.GetEvent("SQLTraceEvent");
-			if (eventInfo != null)
+			if (eventInfo != null && eventInfo.EventHandlerType != null)
 				try
 				{
-					//EventHandler<SQLTraceEventArgs> handler = (sender, e) =>
-					//                                            {
-					//                                              if (!string.IsNullOrEmpty(e.SQLTrace))
-					//                                                executionManager.SqlTranslationWriter.WriteLine(e.SQLTrace);
-					//                                            };
+					//EventHandler<SQLTraceEventArgs> handler = (sender, e) => WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
+					//Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Method);
 
 					var handlerSQLTraceEvent = GetType().GetMethod("SQLTraceEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
 
 					_executionManager = executionManager;
 					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
-					eventInfo.GetAddMethod().Invoke(null, new[] {typedDelegate});
-					//Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Method);
+					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] { typedDelegate });
 				}
 				catch (Exception e)
 				{
@@ -197,52 +203,60 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private QueryExecutionManager _executionManager;
 
-		private void SQLTraceEventHandler(object sender, SQLTraceEventArgs e)
+		private void SQLTraceEventHandler(object sender, EventArgs e)
 		{
-			if (_executionManager != null && _executionManager.SqlTranslationWriter != null)
-				_executionManager.SqlTranslationWriter.WriteLine(e.SQLTrace);
+			if (_executionManager != null)
+				WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
 		}
 
-		private void SQLTraceEventHandlerWithReflection(object sender, EventArgs e)
+		private static void WriteSQLTranslation(TextWriter sqlTranslationWriter, EventArgs e)
 		{
-			if (_executionManager != null && _executionManager.SqlTranslationWriter != null)
+			if (sqlTranslationWriter != null && e != null)
 			{
-				var pi = e.GetType().GetProperty("SQLTrace");
-				if (pi != null)
+				if (e is SQLTraceEventArgs)
 				{
-					var sqlTrace = pi.GetValue(e, null) as string;
-					if (!string.IsNullOrEmpty(sqlTrace))
-						_executionManager.SqlTranslationWriter.WriteLine(sqlTrace);
+					var sqlTraceEventArgs = (SQLTraceEventArgs) e;
+					if (!string.IsNullOrEmpty(sqlTraceEventArgs.SQLTrace))
+					{
+						sqlTranslationWriter.WriteLine(sqlTraceEventArgs.SQLTrace);
+						return;
+					}
+					if (sqlTraceEventArgs.Query != null)
+					{
+						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(sqlTraceEventArgs.Query));
+						return;
+					}
+				}
+				else if (e is QueryTraceEventArgs)
+				{
+					var queryTraceEventArgs = (QueryTraceEventArgs)e;
+					if (queryTraceEventArgs.Query != null)
+					{
+						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(queryTraceEventArgs.Query));
+						return;
+					}
+				}
+				else
+				{
+					var sqlTracePi = e.GetType().GetProperty("SQLTrace");
+					if (sqlTracePi != null)
+					{
+						var sqlTrace = sqlTracePi.GetValue(e, null) as string;
+						if (!string.IsNullOrEmpty(sqlTrace))
+						{
+							sqlTranslationWriter.WriteLine(sqlTrace);
+							return;
+						}
+					}
+					var queryPi = e.GetType().GetProperty("Query");
+					if (queryPi != null)
+					{
+						var query = queryPi.GetValue(e, null) as IQuery;
+						if (query != null)
+							sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(query));
+					}
 				}
 			}
-		}
-
-		private void SetSQLTranslationWriter(DataAccessAdapterBase adapter, QueryExecutionManager executionManager)
-		{
-			var eventInfo = adapter.GetType().GetEvent("SQLTraceEvent");
-			if (eventInfo != null)
-				try
-				{
-					var handlerSQLTraceEvent = GetType().GetMethod("SQLTraceEventHandlerWithReflection", BindingFlags.NonPublic | BindingFlags.Instance);
-					_executionManager = executionManager;
-					//EventHandler<EventArgs> handler = (sender, e) =>
-					//{
-					//  var pi = e.GetType().GetProperty("SQLTrace");
-					//  if (pi != null)
-					//  {
-					//    var sqlTrace = pi.GetValue(e, null) as string;
-					//    if (!string.IsNullOrEmpty(sqlTrace))
-					//      executionManager.SqlTranslationWriter.WriteLine(sqlTrace);
-					//  }
-					//};
-					//var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handler.Method);
-					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
-					eventInfo.GetAddMethod().Invoke(adapter, new[] {typedDelegate});
-				}
-				catch (Exception e)
-				{
-					GeneralHelper.TraceOut(e.Message);
-				}
 		}
 
 		#endregion
