@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.LLBLGen.DataContextDriver.Properties;
 using LINQPad;
 using LINQPad.Extensibility.DataContext;
@@ -22,20 +25,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	{
 		private static readonly string[] AdditionalAssemblies = new[]
 		                                                        	{
+		                                                        		"AW.Helper.dll",
 		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
 		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
-		                                                        		"AW.Helper.dll",
-		                                                        		"AW.Winforms.Helpers.dll", "System.Windows.Forms.dll",
-		                                                        		"AW.Helper.LLBL.dll", "AW.Winforms.Helpers.LLBL.dll"
+		                                                        		"AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
+		                                                        		"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll"
 		                                                        	};
 
 		private static readonly string[] AdditionalNamespaces = new[]
-		                                                         	{
-		                                                         		"SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper",
-		                                                         		"AW.Helper.LLBL",
-		                                                         		"AW.Winforms.Helpers.DataEditor",
-		                                                         		"AW.Winforms.Helpers.LLBL"
-		                                                         	};
+		                                                        	{
+		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper",
+		                                                        		"AW.Helper.LLBL",
+		                                                        		"AW.Winforms.Helpers.DataEditor",
+		                                                        		"AW.Winforms.Helpers.LLBL"
+		                                                        	};
 
 		#region Overrides of DataContextDriver
 
@@ -51,12 +54,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override string GetConnectionDescription(IConnectionInfo cxInfo)
 		{
-			if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.Server)) //For now using this field to store the description
-				// For static drivers, we can use the description of the custom type & its assembly:
-				return
-					new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath}.
-						JoinAsString(" - ");
-			return cxInfo.DatabaseInfo.Server;
+			// For static drivers, we can use the description of the custom type & its assembly:
+			return new[] {cxInfo.CustomTypeInfo.CustomTypeName, cxInfo.DatabaseInfo.GetDatabaseDescription(), cxInfo.AppConfigPath}.JoinAsString(" - ");
 		}
 
 		public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
@@ -73,83 +72,194 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var type = assembly.GetTypes().Where(t => t.Name.Equals("DbUtils") && t.IsClass).SingleOrDefault();
 				if (type == null)
 				{
-					var adapterTypeName = ConnectionDialog.GetAdapterType(cxInfo);
-					if (string.IsNullOrEmpty(adapterTypeName))
-						throw new ApplicationException("DbUtils or adapter not found!");
-					var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
-					var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
-					if (dataAccessAdapterType != null)
-					{
-						var linqMetaData = context as ILinqMetaData;
-						if (linqMetaData != null)
-						{
-							var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
-							DataAccessAdapterBase adapter;
-							if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
-							{
-								adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
-							}
-							else
-							{
-								if (cxInfo.DatabaseInfo.IsSqlServer)
-									adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-									                                                          	{
-									                                                          		cxInfo.DatabaseInfo.CustomCxString,
-									                                                          		true, CatalogNameUsage.Clear, null
-									                                                          	}) as DataAccessAdapterBase;
-								else
-								{
-									if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
-										adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-										                                                          	{
-										                                                          		cxInfo.DatabaseInfo.CustomCxString,
-										                                                          		true, SchemaNameUsage.Default, null
-										                                                          	}) as DataAccessAdapterBase;
-									else
-										adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-										                                                          	{
-										                                                          		cxInfo.DatabaseInfo.CustomCxString
-										                                                          	}) as DataAccessAdapterBase;
-								}
-							}
-
-							if (adapter == null)
-								System.Diagnostics.Debugger.Break();
-							else
-							{
-								adapterToUseProperty.SetValue(linqMetaData, adapter, null);
-								if (string.IsNullOrEmpty(adapter.ConnectionString))
-									if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
-									{
-										var firstConnectionString =
-											(from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
-											 select connectionStringSetting).FirstOrDefault();
-										if (firstConnectionString != null)
-											adapter.ConnectionString = firstConnectionString.ConnectionString;
-									}
-							}
-						}
-					}
+					InitializeAdapter(cxInfo, context, executionManager);
 				}
 				else
 				{
-					var actualConnectionStringField = type.GetField("ActualConnectionString");
-#if DEBUG
-					var actualConnectionString = Convert.ToString(actualConnectionStringField.GetValue(context));
-					GeneralHelper.DebugOut(actualConnectionString); 
-#endif
-					actualConnectionStringField.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
-#if DEBUG
-					GeneralHelper.DebugOut(Convert.ToString(actualConnectionStringField.GetValue(context)));
-#endif
+					InitializeSelfservicing(cxInfo, type, context, executionManager);
 				}
 			}
 			catch (Exception e)
 			{
 				GeneralHelper.TraceOut(e.Message);
-				System.Diagnostics.Debugger.Break();
+				Debugger.Break();
 			}
 		}
+
+		private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)
+		{
+			var actualConnectionStringField = commonDaoBaseType.GetField("ActualConnectionString");
+#if DEBUG
+			var actualConnectionString = Convert.ToString(actualConnectionStringField.GetValue(context));
+			GeneralHelper.DebugOut(actualConnectionString);
+#endif
+			actualConnectionStringField.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
+#if DEBUG
+			GeneralHelper.DebugOut(Convert.ToString(actualConnectionStringField.GetValue(context)));
+#endif
+			SetSQLTranslationWriter(commonDaoBaseType, executionManager);
+		}
+
+		private void InitializeAdapter(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
+		{
+			var adapterTypeName = ConnectionDialog.GetAdapterType(cxInfo);
+			if (string.IsNullOrEmpty(adapterTypeName))
+			{
+				throw new ApplicationException("DbUtils or adapter not found!");
+			}
+			if (File.Exists(cxInfo.CustomTypeInfo.CustomMetadataPath))
+			{
+				var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
+				var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
+				if (dataAccessAdapterType != null)
+				{
+					var linqMetaData = context as ILinqMetaData;
+					if (linqMetaData != null)
+					{
+						var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
+						DataAccessAdapterBase adapter;
+						if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
+						{
+							adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
+						}
+						else
+						{
+							if (cxInfo.DatabaseInfo.IsSqlServer)
+								adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+								                                                          	{
+								                                                          		cxInfo.DatabaseInfo.CustomCxString,
+								                                                          		true, CatalogNameUsage.Clear, null
+								                                                          	}) as DataAccessAdapterBase;
+							else
+							{
+								if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
+									adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+									                                                          	{
+									                                                          		cxInfo.DatabaseInfo.CustomCxString,
+									                                                          		true, SchemaNameUsage.Default, null
+									                                                          	}) as DataAccessAdapterBase;
+								else
+									adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+									                                                          	{
+									                                                          		cxInfo.DatabaseInfo.CustomCxString
+									                                                          	}) as DataAccessAdapterBase;
+							}
+						}
+
+						if (adapter == null)
+							Debugger.Break();
+						else
+						{
+							adapterToUseProperty.SetValue(linqMetaData, adapter, null);
+							if (string.IsNullOrEmpty(adapter.ConnectionString))
+								if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
+								{
+									var firstConnectionString = (from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
+									                             select connectionStringSetting).FirstOrDefault();
+									if (firstConnectionString != null)
+										adapter.ConnectionString = firstConnectionString.ConnectionString;
+								}
+							SetSQLTranslationWriter(adapter, executionManager);
+						}
+					}
+				}
+			}
+			else
+				throw new ApplicationException("Adapter assembly: " + cxInfo.CustomTypeInfo.CustomMetadataPath + " not found!");
+		}
+
+		#region SQLTranslationWriter
+
+		private void SetSQLTranslationWriter(Type typeBeingTraced, QueryExecutionManager executionManager)
+		{
+			SetSQLTranslationWriter(typeBeingTraced, null, executionManager);
+		}
+
+		private void SetSQLTranslationWriter(DataAccessAdapterBase adapter, QueryExecutionManager executionManager)
+		{
+			SetSQLTranslationWriter(adapter.GetType(), adapter, executionManager);
+		}
+
+		private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
+		{
+			var eventInfo = typeBeingTraced.GetEvent("SQLTraceEvent");
+			if (eventInfo != null && eventInfo.EventHandlerType != null)
+				try
+				{
+					//EventHandler<SQLTraceEventArgs> handler = (sender, e) => WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
+					//Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Method);
+
+					var handlerSQLTraceEvent = GetType().GetMethod("SQLTraceEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
+
+					_executionManager = executionManager;
+					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
+					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] { typedDelegate });
+				}
+				catch (Exception e)
+				{
+					GeneralHelper.TraceOut(e.Message);
+				}
+		}
+
+		private QueryExecutionManager _executionManager;
+
+		private void SQLTraceEventHandler(object sender, EventArgs e)
+		{
+			if (_executionManager != null)
+				WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
+		}
+
+		private static void WriteSQLTranslation(TextWriter sqlTranslationWriter, EventArgs e)
+		{
+			if (sqlTranslationWriter != null && e != null)
+			{
+				if (e is SQLTraceEventArgs)
+				{
+					var sqlTraceEventArgs = (SQLTraceEventArgs) e;
+					if (!string.IsNullOrEmpty(sqlTraceEventArgs.SQLTrace))
+					{
+						sqlTranslationWriter.WriteLine(sqlTraceEventArgs.SQLTrace);
+						return;
+					}
+					if (sqlTraceEventArgs.Query != null)
+					{
+						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(sqlTraceEventArgs.Query));
+						return;
+					}
+				}
+				else if (e is QueryTraceEventArgs)
+				{
+					var queryTraceEventArgs = (QueryTraceEventArgs)e;
+					if (queryTraceEventArgs.Query != null)
+					{
+						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(queryTraceEventArgs.Query));
+						return;
+					}
+				}
+				else
+				{
+					var sqlTracePi = e.GetType().GetProperty("SQLTrace");
+					if (sqlTracePi != null)
+					{
+						var sqlTrace = sqlTracePi.GetValue(e, null) as string;
+						if (!string.IsNullOrEmpty(sqlTrace))
+						{
+							sqlTranslationWriter.WriteLine(sqlTrace);
+							return;
+						}
+					}
+					var queryPi = e.GetType().GetProperty("Query");
+					if (queryPi != null)
+					{
+						var query = queryPi.GetValue(e, null) as IQuery;
+						if (query != null)
+							sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(query));
+					}
+				}
+			}
+		}
+
+		#endregion
 
 		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
 		{
@@ -236,7 +346,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
 		{
 			return from propertyDescriptor in TypeDescriptor.GetProperties(type, null).Cast<PropertyDescriptor>()
-						 where typeof(IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
+			       where typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
 			       select propertyDescriptor;
 		}
 

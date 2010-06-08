@@ -102,6 +102,11 @@ namespace AW.Winforms.Helpers.LLBL
       return enumerable.EditInDataGridView(new GridDataEditorLLBLSelfServicingPersister(), pageSize);
     }
 
+		public static IEnumerable<T> ShowSelfServicingHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase
+		{
+			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new GridDataEditorLLBLSelfServicingPersister());
+		}
+
     #endregion
 
     #region Adapter
@@ -125,6 +130,16 @@ namespace AW.Winforms.Helpers.LLBL
     {
 			return EditAdapterInDataGridView(query, DataEditorExtensions.DefaultPageSize);
     }
+
+		public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
+		{
+			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new GridDataEditorLLBLAdapterPersister(dataAccessAdapter));
+		}
+
+		public static IEnumerable<T> ShowAdapterHierarchyInTree<T>(this IQueryable<T> query, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
+		{
+			return query.ShowHierarchyInTree(EntityHelper.GetDataAccessAdapter(query), iDPropertyName, parentIDPropertyName, nameColumn);
+		}
 
     public class GridDataEditorLLBLAdapterPersister : IGridDataEditorPersister
     {

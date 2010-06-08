@@ -99,6 +99,7 @@
     <Compile Include="DataTableSurrogateTest.cs" />
     <Compile Include="EntityHelperTest.cs" />
     <Compile Include="GeneralHelperTest.cs" />
+    <Compile Include="HierarchyEditorTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />
     <Compile Include="LookUpQueriesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
