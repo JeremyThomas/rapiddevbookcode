@@ -42,6 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 		SampleQueryFiles\LLBL_AW_EditInDataGridView.linq = SampleQueryFiles\LLBL_AW_EditInDataGridView.linq
 		SampleQueryFiles\LLBL_AW_ShowLinqMetaData.linq = SampleQueryFiles\LLBL_AW_ShowLinqMetaData.linq
 		SampleQueryFiles\LLBL_AWcustomerlist.linq = SampleQueryFiles\LLBL_AWcustomerlist.linq
+		SampleQueryFiles\LLBL_ShowEmployeesInTree.linq = SampleQueryFiles\LLBL_ShowEmployeesInTree.linq
 		SampleQueryFiles\SalesOrderHeader_Albert_Perth.cs = SampleQueryFiles\SalesOrderHeader_Albert_Perth.cs
 		SampleQueryFiles\ShowEntitiesAndFields.cs = SampleQueryFiles\ShowEntitiesAndFields.cs
 		SampleQueryFiles\ShowEntitiesAndFields.linq = SampleQueryFiles\ShowEntitiesAndFields.linq
