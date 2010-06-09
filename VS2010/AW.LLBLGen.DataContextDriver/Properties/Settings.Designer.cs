@@ -44,5 +44,29 @@ namespace AW.LLBLGen.DataContextDriver.Properties {
                 this["AdditionalNamespaces"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultDataAccessAdapterFactoryMethod {
+            get {
+                return ((string)(this["DefaultDataAccessAdapterFactoryMethod"]));
+            }
+            set {
+                this["DefaultDataAccessAdapterFactoryMethod"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultDataAccessAdapterFactoryType {
+            get {
+                return ((string)(this["DefaultDataAccessAdapterFactoryType"]));
+            }
+            set {
+                this["DefaultDataAccessAdapterFactoryType"] = value;
+            }
+        }
     }
 }
