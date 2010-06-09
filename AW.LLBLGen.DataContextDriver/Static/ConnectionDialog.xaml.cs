@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Windows;
 using System.Xml.Linq;
 using AW.Helper;
+using AW.LLBLGen.DataContextDriver.Properties;
 using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Win32;
@@ -26,6 +27,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			_cxInfo = cxInfo;
 			DataContext = cxInfo;
 			InitializeComponent();
+			var defaultDataAccessAdapterFactoryMethod = Settings.Default.DefaultDataAccessAdapterFactoryMethod;
+			if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryMethod))
+				comboBoxDatabaseProvider.Text = defaultDataAccessAdapterFactoryMethod;
+
+			var defaultDataAccessAdapterFactoryType = Settings.Default.DefaultDataAccessAdapterFactoryType;
+			if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryType) && string.IsNullOrEmpty(textBoxAdapterType.Text))
+			  textBoxAdapterType.Text = Settings.Default.DefaultDataAccessAdapterFactoryType;
 //      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
 //.OfType<DataRow>()
 //.Select(r => r["InvariantName"])
@@ -240,6 +248,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (connectionInfo.DriverData == null)
 				return null;
 			var adapterType = connectionInfo.DriverData.Element("AdapterType");
+			if (adapterType == null && !string.IsNullOrEmpty(connectionInfo.DatabaseInfo.DbVersion))
+			{
+				connectionInfo.DriverData.Add(new XElement("AdapterType") {Value = connectionInfo.DatabaseInfo.DbVersion});
+				adapterType = connectionInfo.DriverData.Element("AdapterType");
+			}
 			return adapterType == null ? null : adapterType.Value;
 		}
 
