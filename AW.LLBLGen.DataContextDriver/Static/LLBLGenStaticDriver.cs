@@ -61,7 +61,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
 		{
 			// Prompt the user for a custom assembly and type name:
-			return new ConnectionDialog(cxInfo).ShowDialog() == true;
+			return new ConnectionDialog(cxInfo, isNewConnection).ShowDialog() == true;
 		}
 
 		public override void InitializeContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
