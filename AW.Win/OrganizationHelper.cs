@@ -105,21 +105,21 @@ namespace AW.Win
     public static IPrefetchPath GetManagesPrefetchPath()
     {
       IPrefetchPath prefetch =
-        new PrefetchPath((int)EntityType.EmployeeEntity) { EmployeeEntityBase.PrefetchPathContact };
-      prefetch.Add(EmployeeEntityBase.PrefetchPathManages)
-        .SubPath.Add(EmployeeEntityBase.PrefetchPathManages)
-        .SubPath.Add(EmployeeEntityBase.PrefetchPathManages)
-        .SubPath.Add(EmployeeEntityBase.PrefetchPathManages)
-        .SubPath.Add(EmployeeEntityBase.PrefetchPathManages);
-      prefetch[1].SubPath.Add(EmployeeEntityBase.PrefetchPathContact);
+        new PrefetchPath((int)EntityType.EmployeeEntity) { EmployeeEntity.PrefetchPathContact };
+      prefetch.Add(EmployeeEntity.PrefetchPathManages)
+        .SubPath.Add(EmployeeEntity.PrefetchPathManages)
+        .SubPath.Add(EmployeeEntity.PrefetchPathManages)
+        .SubPath.Add(EmployeeEntity.PrefetchPathManages)
+        .SubPath.Add(EmployeeEntity.PrefetchPathManages);
+      prefetch[1].SubPath.Add(EmployeeEntity.PrefetchPathContact);
       prefetch[1].SubPath[0].SubPath.Add(
-        EmployeeEntityBase.PrefetchPathContact);
+        EmployeeEntity.PrefetchPathContact);
       prefetch[1].SubPath[0].SubPath[0].SubPath.Add(
-        EmployeeEntityBase.PrefetchPathContact);
+        EmployeeEntity.PrefetchPathContact);
       prefetch[1].SubPath[0].SubPath[0].SubPath[0].SubPath.Add(
-        EmployeeEntityBase.PrefetchPathContact);
+        EmployeeEntity.PrefetchPathContact);
       prefetch[1].SubPath[0].SubPath[0].SubPath[0].SubPath[0].SubPath.Add(
-        EmployeeEntityBase.PrefetchPathContact);
+        EmployeeEntity.PrefetchPathContact);
       return prefetch;
     }
 
@@ -128,7 +128,7 @@ namespace AW.Win
       return node.Nodes.Count > 0 ? FindLowestNode(node.Nodes[0]) : node;
     }
 
-    private static TreeNode MakeNode(EmployeeEntityBase employee)
+    private static TreeNode MakeNode(EmployeeEntity employee)
     {
       return MakeNode(employee.Contact.LastName, employee.Contact.FirstName, employee.EmployeeID);
     }

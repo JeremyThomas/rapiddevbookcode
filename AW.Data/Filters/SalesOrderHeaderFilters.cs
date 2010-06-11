@@ -91,7 +91,7 @@ namespace AW.Data.Filters
         (countryName != "") ||
         (zip != "")
         )
-        relations.Add(SalesOrderHeaderEntityBase.Relations.CustomerViewRelatedEntityUsingCustomerID);
+        relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID);
       if (fromDate != DateTime.MinValue)
         filter.Add(SalesOrderHeaderFields.OrderDate >= fromDate);
       if (toDate != DateTime.MinValue)
