@@ -43,6 +43,8 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.AddressCollection	_addresses;
 		private bool	_alwaysFetchAddresses, _alreadyFetchedAddresses;
+		private AW.Data.CollectionClasses.SalesTaxRateCollection	_salesTaxRates;
+		private bool	_alwaysFetchSalesTaxRates, _alreadyFetchedSalesTaxRates;
 		private CountryRegionEntity _countryRegion;
 		private bool	_alwaysFetchCountryRegion, _alreadyFetchedCountryRegion, _countryRegionReturnsNewIfNotFound;
 		private SalesTerritoryEntity _salesTerritory;
@@ -50,7 +52,6 @@ namespace AW.Data.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -66,6 +67,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string SalesTerritory = "SalesTerritory";
 			/// <summary>Member name Addresses</summary>
 			public static readonly string Addresses = "Addresses";
+			/// <summary>Member name SalesTaxRates</summary>
+			public static readonly string SalesTaxRates = "SalesTaxRates";
 		}
 		#endregion
 		
@@ -112,6 +115,10 @@ namespace AW.Data.EntityClasses
 			_addresses = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addresses", typeof(AW.Data.CollectionClasses.AddressCollection));
 			_alwaysFetchAddresses = info.GetBoolean("_alwaysFetchAddresses");
 			_alreadyFetchedAddresses = info.GetBoolean("_alreadyFetchedAddresses");
+
+			_salesTaxRates = (AW.Data.CollectionClasses.SalesTaxRateCollection)info.GetValue("_salesTaxRates", typeof(AW.Data.CollectionClasses.SalesTaxRateCollection));
+			_alwaysFetchSalesTaxRates = info.GetBoolean("_alwaysFetchSalesTaxRates");
+			_alreadyFetchedSalesTaxRates = info.GetBoolean("_alreadyFetchedSalesTaxRates");
 			_countryRegion = (CountryRegionEntity)info.GetValue("_countryRegion", typeof(CountryRegionEntity));
 			if(_countryRegion!=null)
 			{
@@ -159,6 +166,7 @@ namespace AW.Data.EntityClasses
 		protected override void PostReadXmlFixups()
 		{
 			_alreadyFetchedAddresses = (_addresses.Count > 0);
+			_alreadyFetchedSalesTaxRates = (_salesTaxRates.Count > 0);
 			_alreadyFetchedCountryRegion = (_countryRegion != null);
 			_alreadyFetchedSalesTerritory = (_salesTerritory != null);
 		}
@@ -188,6 +196,9 @@ namespace AW.Data.EntityClasses
 				case "Addresses":
 					toReturn.Add(Relations.AddressEntityUsingStateProvinceID);
 					break;
+				case "SalesTaxRates":
+					toReturn.Add(Relations.SalesTaxRateEntityUsingStateProvinceID);
+					break;
 				default:
 					break;				
 			}
@@ -205,6 +216,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_addresses", (!this.MarkedForDeletion?_addresses:null));
 			info.AddValue("_alwaysFetchAddresses", _alwaysFetchAddresses);
 			info.AddValue("_alreadyFetchedAddresses", _alreadyFetchedAddresses);
+			info.AddValue("_salesTaxRates", (!this.MarkedForDeletion?_salesTaxRates:null));
+			info.AddValue("_alwaysFetchSalesTaxRates", _alwaysFetchSalesTaxRates);
+			info.AddValue("_alreadyFetchedSalesTaxRates", _alreadyFetchedSalesTaxRates);
 			info.AddValue("_countryRegion", (!this.MarkedForDeletion?_countryRegion:null));
 			info.AddValue("_countryRegionReturnsNewIfNotFound", _countryRegionReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchCountryRegion", _alwaysFetchCountryRegion);
@@ -216,7 +230,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -244,6 +257,13 @@ namespace AW.Data.EntityClasses
 						this.Addresses.Add((AddressEntity)entity);
 					}
 					break;
+				case "SalesTaxRates":
+					_alreadyFetchedSalesTaxRates = true;
+					if(entity!=null)
+					{
+						this.SalesTaxRates.Add((SalesTaxRateEntity)entity);
+					}
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -267,6 +287,9 @@ namespace AW.Data.EntityClasses
 				case "Addresses":
 					_addresses.Add((AddressEntity)relatedEntity);
 					break;
+				case "SalesTaxRates":
+					_salesTaxRates.Add((SalesTaxRateEntity)relatedEntity);
+					break;
 				default:
 					break;
 			}
@@ -289,6 +312,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "Addresses":
 					this.PerformRelatedEntityRemoval(_addresses, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "SalesTaxRates":
+					this.PerformRelatedEntityRemoval(_salesTaxRates, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				default:
 					break;
@@ -325,6 +351,7 @@ namespace AW.Data.EntityClasses
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_addresses);
+			toReturn.Add(_salesTaxRates);
 
 			return toReturn;
 		}
@@ -441,6 +468,61 @@ namespace AW.Data.EntityClasses
 			_addresses.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'SalesTaxRateEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'SalesTaxRateEntity'</returns>
+		public AW.Data.CollectionClasses.SalesTaxRateCollection GetMultiSalesTaxRates(bool forceFetch)
+		{
+			return GetMultiSalesTaxRates(forceFetch, _salesTaxRates.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesTaxRateEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'SalesTaxRateEntity'</returns>
+		public AW.Data.CollectionClasses.SalesTaxRateCollection GetMultiSalesTaxRates(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiSalesTaxRates(forceFetch, _salesTaxRates.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesTaxRateEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.SalesTaxRateCollection GetMultiSalesTaxRates(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiSalesTaxRates(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesTaxRateEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.SalesTaxRateCollection GetMultiSalesTaxRates(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedSalesTaxRates || forceFetch || _alwaysFetchSalesTaxRates) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_salesTaxRates);
+				_salesTaxRates.SuppressClearInGetMulti=!forceFetch;
+				_salesTaxRates.EntityFactoryToUse = entityFactoryToUse;
+				_salesTaxRates.GetMultiManyToOne(this, filter);
+				_salesTaxRates.SuppressClearInGetMulti=false;
+				_alreadyFetchedSalesTaxRates = true;
+			}
+			return _salesTaxRates;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'SalesTaxRates'. These settings will be taken into account
+		/// when the property SalesTaxRates is requested or GetMultiSalesTaxRates is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersSalesTaxRates(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_salesTaxRates.SortClauses=sortClauses;
+			_salesTaxRates.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves the related entity of type 'CountryRegionEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'CountryRegionEntity' which is related to this entity.</returns>
 		public CountryRegionEntity GetSingleCountryRegion()
@@ -526,6 +608,7 @@ namespace AW.Data.EntityClasses
 		protected override void AddInternalsToContext()
 		{
 			_addresses.ActiveContext = this.ActiveContext;
+			_salesTaxRates.ActiveContext = this.ActiveContext;
 			if(_countryRegion!=null)
 			{
 				_countryRegion.ActiveContext = this.ActiveContext;
@@ -544,6 +627,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("CountryRegion", _countryRegion);
 			toReturn.Add("SalesTerritory", _salesTerritory);
 			toReturn.Add("Addresses", _addresses);
+			toReturn.Add("SalesTaxRates", _salesTaxRates);
 			return toReturn;
 		}
 	
@@ -558,7 +642,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}		
@@ -577,7 +660,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -587,13 +669,15 @@ namespace AW.Data.EntityClasses
 		{
 			_addresses = new AW.Data.CollectionClasses.AddressCollection();
 			_addresses.SetContainingEntityInfo(this, "StateProvince");
+
+			_salesTaxRates = new AW.Data.CollectionClasses.SalesTaxRateCollection();
+			_salesTaxRates.SetContainingEntityInfo(this, "StateProvince");
 			_countryRegionReturnsNewIfNotFound = true;
 			_salesTerritoryReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -745,6 +829,13 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathAddresses
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), (IEntityRelation)GetRelationsForField("Addresses")[0], (int)AW.Data.EntityType.StateProvinceEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "Addresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesTaxRate' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesTaxRates
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTaxRateCollection(), (IEntityRelation)GetRelationsForField("SalesTaxRates")[0], (int)AW.Data.EntityType.StateProvinceEntity, (int)AW.Data.EntityType.SalesTaxRateEntity, 0, null, null, null, "SalesTaxRates", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'CountryRegion'  for this entity.</summary>
@@ -902,6 +993,39 @@ namespace AW.Data.EntityClasses
 					_addresses.Clear();
 				}
 				_alreadyFetchedAddresses = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'SalesTaxRateEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesTaxRates()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.SalesTaxRateCollection SalesTaxRates
+		{
+			get	{ return GetMultiSalesTaxRates(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesTaxRates. When set to true, SalesTaxRates is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesTaxRates is accessed. You can always execute/ a forced fetch by calling GetMultiSalesTaxRates(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesTaxRates
+		{
+			get	{ return _alwaysFetchSalesTaxRates; }
+			set	{ _alwaysFetchSalesTaxRates = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesTaxRates already has been fetched. Setting this property to false when SalesTaxRates has been fetched
+		/// will clear the SalesTaxRates collection well. Setting this property to true while SalesTaxRates hasn't been fetched disables lazy loading for SalesTaxRates</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesTaxRates
+		{
+			get { return _alreadyFetchedSalesTaxRates;}
+			set 
+			{
+				if(_alreadyFetchedSalesTaxRates && !value && (_salesTaxRates != null))
+				{
+					_salesTaxRates.Clear();
+				}
+				_alreadyFetchedSalesTaxRates = value;
 			}
 		}
 

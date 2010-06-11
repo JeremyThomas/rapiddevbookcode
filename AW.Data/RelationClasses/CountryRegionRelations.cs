@@ -30,11 +30,27 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.CountryRegionCurrencyEntityUsingCountryRegionCode);
 			toReturn.Add(this.StateProvinceEntityUsingCountryRegionCode);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between CountryRegionEntity and CountryRegionCurrencyEntity over the 1:n relation they have, using the relation between the fields:
+		/// CountryRegion.CountryRegionCode - CountryRegionCurrency.CountryRegionCode
+		/// </summary>
+		public virtual IEntityRelation CountryRegionCurrencyEntityUsingCountryRegionCode
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CountryRegionCurrencies" , true);
+				relation.AddEntityFieldPair(CountryRegionFields.CountryRegionCode, CountryRegionCurrencyFields.CountryRegionCode);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionCurrencyEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between CountryRegionEntity and StateProvinceEntity over the 1:n relation they have, using the relation between the fields:
 		/// CountryRegion.CountryRegionCode - StateProvince.CountryRegionCode

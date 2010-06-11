@@ -45,6 +45,14 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchManages, _alreadyFetchedManages;
 		private AW.Data.CollectionClasses.EmployeeAddressCollection	_employeeAddresses;
 		private bool	_alwaysFetchEmployeeAddresses, _alreadyFetchedEmployeeAddresses;
+		private AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection	_employeeDepartmentHistories;
+		private bool	_alwaysFetchEmployeeDepartmentHistories, _alreadyFetchedEmployeeDepartmentHistories;
+		private AW.Data.CollectionClasses.EmployeePayHistoryCollection	_employeePayHistories;
+		private bool	_alwaysFetchEmployeePayHistories, _alreadyFetchedEmployeePayHistories;
+		private AW.Data.CollectionClasses.JobCandidateCollection	_jobCandidates;
+		private bool	_alwaysFetchJobCandidates, _alreadyFetchedJobCandidates;
+		private AW.Data.CollectionClasses.PurchaseOrderHeaderCollection	_purchaseOrderHeaders;
+		private bool	_alwaysFetchPurchaseOrderHeaders, _alreadyFetchedPurchaseOrderHeaders;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaEmployeeAddress;
 		private bool	_alwaysFetchAddressCollectionViaEmployeeAddress, _alreadyFetchedAddressCollectionViaEmployeeAddress;
 		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaEmployee;
@@ -53,10 +61,11 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchContact, _alreadyFetchedContact, _contactReturnsNewIfNotFound;
 		private EmployeeEntity _manager;
 		private bool	_alwaysFetchManager, _alreadyFetchedManager, _managerReturnsNewIfNotFound;
+		private SalesPersonEntity _salesPerson;
+		private bool	_alwaysFetchSalesPerson, _alreadyFetchedSalesPerson, _salesPersonReturnsNewIfNotFound;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -74,10 +83,20 @@ namespace AW.Data.EntityClasses
 			public static readonly string Manages = "Manages";
 			/// <summary>Member name EmployeeAddresses</summary>
 			public static readonly string EmployeeAddresses = "EmployeeAddresses";
+			/// <summary>Member name EmployeeDepartmentHistories</summary>
+			public static readonly string EmployeeDepartmentHistories = "EmployeeDepartmentHistories";
+			/// <summary>Member name EmployeePayHistories</summary>
+			public static readonly string EmployeePayHistories = "EmployeePayHistories";
+			/// <summary>Member name JobCandidates</summary>
+			public static readonly string JobCandidates = "JobCandidates";
+			/// <summary>Member name PurchaseOrderHeaders</summary>
+			public static readonly string PurchaseOrderHeaders = "PurchaseOrderHeaders";
 			/// <summary>Member name AddressCollectionViaEmployeeAddress</summary>
 			public static readonly string AddressCollectionViaEmployeeAddress = "AddressCollectionViaEmployeeAddress";
 			/// <summary>Member name ContactCollectionViaEmployee</summary>
 			public static readonly string ContactCollectionViaEmployee = "ContactCollectionViaEmployee";
+			/// <summary>Member name SalesPerson</summary>
+			public static readonly string SalesPerson = "SalesPerson";
 		}
 		#endregion
 		
@@ -128,6 +147,22 @@ namespace AW.Data.EntityClasses
 			_employeeAddresses = (AW.Data.CollectionClasses.EmployeeAddressCollection)info.GetValue("_employeeAddresses", typeof(AW.Data.CollectionClasses.EmployeeAddressCollection));
 			_alwaysFetchEmployeeAddresses = info.GetBoolean("_alwaysFetchEmployeeAddresses");
 			_alreadyFetchedEmployeeAddresses = info.GetBoolean("_alreadyFetchedEmployeeAddresses");
+
+			_employeeDepartmentHistories = (AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection)info.GetValue("_employeeDepartmentHistories", typeof(AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection));
+			_alwaysFetchEmployeeDepartmentHistories = info.GetBoolean("_alwaysFetchEmployeeDepartmentHistories");
+			_alreadyFetchedEmployeeDepartmentHistories = info.GetBoolean("_alreadyFetchedEmployeeDepartmentHistories");
+
+			_employeePayHistories = (AW.Data.CollectionClasses.EmployeePayHistoryCollection)info.GetValue("_employeePayHistories", typeof(AW.Data.CollectionClasses.EmployeePayHistoryCollection));
+			_alwaysFetchEmployeePayHistories = info.GetBoolean("_alwaysFetchEmployeePayHistories");
+			_alreadyFetchedEmployeePayHistories = info.GetBoolean("_alreadyFetchedEmployeePayHistories");
+
+			_jobCandidates = (AW.Data.CollectionClasses.JobCandidateCollection)info.GetValue("_jobCandidates", typeof(AW.Data.CollectionClasses.JobCandidateCollection));
+			_alwaysFetchJobCandidates = info.GetBoolean("_alwaysFetchJobCandidates");
+			_alreadyFetchedJobCandidates = info.GetBoolean("_alreadyFetchedJobCandidates");
+
+			_purchaseOrderHeaders = (AW.Data.CollectionClasses.PurchaseOrderHeaderCollection)info.GetValue("_purchaseOrderHeaders", typeof(AW.Data.CollectionClasses.PurchaseOrderHeaderCollection));
+			_alwaysFetchPurchaseOrderHeaders = info.GetBoolean("_alwaysFetchPurchaseOrderHeaders");
+			_alreadyFetchedPurchaseOrderHeaders = info.GetBoolean("_alreadyFetchedPurchaseOrderHeaders");
 			_addressCollectionViaEmployeeAddress = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaEmployeeAddress", typeof(AW.Data.CollectionClasses.AddressCollection));
 			_alwaysFetchAddressCollectionViaEmployeeAddress = info.GetBoolean("_alwaysFetchAddressCollectionViaEmployeeAddress");
 			_alreadyFetchedAddressCollectionViaEmployeeAddress = info.GetBoolean("_alreadyFetchedAddressCollectionViaEmployeeAddress");
@@ -152,6 +187,14 @@ namespace AW.Data.EntityClasses
 			_managerReturnsNewIfNotFound = info.GetBoolean("_managerReturnsNewIfNotFound");
 			_alwaysFetchManager = info.GetBoolean("_alwaysFetchManager");
 			_alreadyFetchedManager = info.GetBoolean("_alreadyFetchedManager");
+			_salesPerson = (SalesPersonEntity)info.GetValue("_salesPerson", typeof(SalesPersonEntity));
+			if(_salesPerson!=null)
+			{
+				_salesPerson.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_salesPersonReturnsNewIfNotFound = info.GetBoolean("_salesPersonReturnsNewIfNotFound");
+			_alwaysFetchSalesPerson = info.GetBoolean("_alwaysFetchSalesPerson");
+			_alreadyFetchedSalesPerson = info.GetBoolean("_alreadyFetchedSalesPerson");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -185,10 +228,15 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedManages = (_manages.Count > 0);
 			_alreadyFetchedEmployeeAddresses = (_employeeAddresses.Count > 0);
+			_alreadyFetchedEmployeeDepartmentHistories = (_employeeDepartmentHistories.Count > 0);
+			_alreadyFetchedEmployeePayHistories = (_employeePayHistories.Count > 0);
+			_alreadyFetchedJobCandidates = (_jobCandidates.Count > 0);
+			_alreadyFetchedPurchaseOrderHeaders = (_purchaseOrderHeaders.Count > 0);
 			_alreadyFetchedAddressCollectionViaEmployeeAddress = (_addressCollectionViaEmployeeAddress.Count > 0);
 			_alreadyFetchedContactCollectionViaEmployee = (_contactCollectionViaEmployee.Count > 0);
 			_alreadyFetchedContact = (_contact != null);
 			_alreadyFetchedManager = (_manager != null);
+			_alreadyFetchedSalesPerson = (_salesPerson != null);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -219,6 +267,18 @@ namespace AW.Data.EntityClasses
 				case "EmployeeAddresses":
 					toReturn.Add(Relations.EmployeeAddressEntityUsingEmployeeID);
 					break;
+				case "EmployeeDepartmentHistories":
+					toReturn.Add(Relations.EmployeeDepartmentHistoryEntityUsingEmployeeID);
+					break;
+				case "EmployeePayHistories":
+					toReturn.Add(Relations.EmployeePayHistoryEntityUsingEmployeeID);
+					break;
+				case "JobCandidates":
+					toReturn.Add(Relations.JobCandidateEntityUsingEmployeeID);
+					break;
+				case "PurchaseOrderHeaders":
+					toReturn.Add(Relations.PurchaseOrderHeaderEntityUsingEmployeeID);
+					break;
 				case "AddressCollectionViaEmployeeAddress":
 					toReturn.Add(Relations.EmployeeAddressEntityUsingEmployeeID, "EmployeeEntity__", "EmployeeAddress_", JoinHint.None);
 					toReturn.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, "EmployeeAddress_", string.Empty, JoinHint.None);
@@ -226,6 +286,9 @@ namespace AW.Data.EntityClasses
 				case "ContactCollectionViaEmployee":
 					toReturn.Add(Relations.EmployeeEntityUsingManagerID, "EmployeeEntity__", "Employee_", JoinHint.None);
 					toReturn.Add(EmployeeEntity.Relations.ContactEntityUsingContactID, "Employee_", string.Empty, JoinHint.None);
+					break;
+				case "SalesPerson":
+					toReturn.Add(Relations.SalesPersonEntityUsingSalesPersonID);
 					break;
 				default:
 					break;				
@@ -247,6 +310,18 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_employeeAddresses", (!this.MarkedForDeletion?_employeeAddresses:null));
 			info.AddValue("_alwaysFetchEmployeeAddresses", _alwaysFetchEmployeeAddresses);
 			info.AddValue("_alreadyFetchedEmployeeAddresses", _alreadyFetchedEmployeeAddresses);
+			info.AddValue("_employeeDepartmentHistories", (!this.MarkedForDeletion?_employeeDepartmentHistories:null));
+			info.AddValue("_alwaysFetchEmployeeDepartmentHistories", _alwaysFetchEmployeeDepartmentHistories);
+			info.AddValue("_alreadyFetchedEmployeeDepartmentHistories", _alreadyFetchedEmployeeDepartmentHistories);
+			info.AddValue("_employeePayHistories", (!this.MarkedForDeletion?_employeePayHistories:null));
+			info.AddValue("_alwaysFetchEmployeePayHistories", _alwaysFetchEmployeePayHistories);
+			info.AddValue("_alreadyFetchedEmployeePayHistories", _alreadyFetchedEmployeePayHistories);
+			info.AddValue("_jobCandidates", (!this.MarkedForDeletion?_jobCandidates:null));
+			info.AddValue("_alwaysFetchJobCandidates", _alwaysFetchJobCandidates);
+			info.AddValue("_alreadyFetchedJobCandidates", _alreadyFetchedJobCandidates);
+			info.AddValue("_purchaseOrderHeaders", (!this.MarkedForDeletion?_purchaseOrderHeaders:null));
+			info.AddValue("_alwaysFetchPurchaseOrderHeaders", _alwaysFetchPurchaseOrderHeaders);
+			info.AddValue("_alreadyFetchedPurchaseOrderHeaders", _alreadyFetchedPurchaseOrderHeaders);
 			info.AddValue("_addressCollectionViaEmployeeAddress", (!this.MarkedForDeletion?_addressCollectionViaEmployeeAddress:null));
 			info.AddValue("_alwaysFetchAddressCollectionViaEmployeeAddress", _alwaysFetchAddressCollectionViaEmployeeAddress);
 			info.AddValue("_alreadyFetchedAddressCollectionViaEmployeeAddress", _alreadyFetchedAddressCollectionViaEmployeeAddress);
@@ -262,9 +337,13 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_alwaysFetchManager", _alwaysFetchManager);
 			info.AddValue("_alreadyFetchedManager", _alreadyFetchedManager);
 
+			info.AddValue("_salesPerson", (!this.MarkedForDeletion?_salesPerson:null));
+			info.AddValue("_salesPersonReturnsNewIfNotFound", _salesPersonReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchSalesPerson", _alwaysFetchSalesPerson);
+			info.AddValue("_alreadyFetchedSalesPerson", _alreadyFetchedSalesPerson);
+
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -299,6 +378,34 @@ namespace AW.Data.EntityClasses
 						this.EmployeeAddresses.Add((EmployeeAddressEntity)entity);
 					}
 					break;
+				case "EmployeeDepartmentHistories":
+					_alreadyFetchedEmployeeDepartmentHistories = true;
+					if(entity!=null)
+					{
+						this.EmployeeDepartmentHistories.Add((EmployeeDepartmentHistoryEntity)entity);
+					}
+					break;
+				case "EmployeePayHistories":
+					_alreadyFetchedEmployeePayHistories = true;
+					if(entity!=null)
+					{
+						this.EmployeePayHistories.Add((EmployeePayHistoryEntity)entity);
+					}
+					break;
+				case "JobCandidates":
+					_alreadyFetchedJobCandidates = true;
+					if(entity!=null)
+					{
+						this.JobCandidates.Add((JobCandidateEntity)entity);
+					}
+					break;
+				case "PurchaseOrderHeaders":
+					_alreadyFetchedPurchaseOrderHeaders = true;
+					if(entity!=null)
+					{
+						this.PurchaseOrderHeaders.Add((PurchaseOrderHeaderEntity)entity);
+					}
+					break;
 				case "AddressCollectionViaEmployeeAddress":
 					_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
 					if(entity!=null)
@@ -312,6 +419,10 @@ namespace AW.Data.EntityClasses
 					{
 						this.ContactCollectionViaEmployee.Add((ContactEntity)entity);
 					}
+					break;
+				case "SalesPerson":
+					_alreadyFetchedSalesPerson = true;
+					this.SalesPerson = (SalesPersonEntity)entity;
 					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
@@ -339,6 +450,21 @@ namespace AW.Data.EntityClasses
 				case "EmployeeAddresses":
 					_employeeAddresses.Add((EmployeeAddressEntity)relatedEntity);
 					break;
+				case "EmployeeDepartmentHistories":
+					_employeeDepartmentHistories.Add((EmployeeDepartmentHistoryEntity)relatedEntity);
+					break;
+				case "EmployeePayHistories":
+					_employeePayHistories.Add((EmployeePayHistoryEntity)relatedEntity);
+					break;
+				case "JobCandidates":
+					_jobCandidates.Add((JobCandidateEntity)relatedEntity);
+					break;
+				case "PurchaseOrderHeaders":
+					_purchaseOrderHeaders.Add((PurchaseOrderHeaderEntity)relatedEntity);
+					break;
+				case "SalesPerson":
+					SetupSyncSalesPerson(relatedEntity);
+					break;
 				default:
 					break;
 			}
@@ -365,6 +491,21 @@ namespace AW.Data.EntityClasses
 				case "EmployeeAddresses":
 					this.PerformRelatedEntityRemoval(_employeeAddresses, relatedEntity, signalRelatedEntityManyToOne);
 					break;
+				case "EmployeeDepartmentHistories":
+					this.PerformRelatedEntityRemoval(_employeeDepartmentHistories, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "EmployeePayHistories":
+					this.PerformRelatedEntityRemoval(_employeePayHistories, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "JobCandidates":
+					this.PerformRelatedEntityRemoval(_jobCandidates, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "PurchaseOrderHeaders":
+					this.PerformRelatedEntityRemoval(_purchaseOrderHeaders, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "SalesPerson":
+					DesetupSyncSalesPerson(false, true);
+					break;
 				default:
 					break;
 			}
@@ -375,6 +516,10 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntity> GetDependingRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
+			if(_salesPerson!=null)
+			{
+				toReturn.Add(_salesPerson);
+			}
 			return toReturn;
 		}
 		
@@ -401,6 +546,10 @@ namespace AW.Data.EntityClasses
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_manages);
 			toReturn.Add(_employeeAddresses);
+			toReturn.Add(_employeeDepartmentHistories);
+			toReturn.Add(_employeePayHistories);
+			toReturn.Add(_jobCandidates);
+			toReturn.Add(_purchaseOrderHeaders);
 
 			return toReturn;
 		}
@@ -572,6 +721,226 @@ namespace AW.Data.EntityClasses
 			_employeeAddresses.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'EmployeeDepartmentHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'EmployeeDepartmentHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection GetMultiEmployeeDepartmentHistories(bool forceFetch)
+		{
+			return GetMultiEmployeeDepartmentHistories(forceFetch, _employeeDepartmentHistories.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeeDepartmentHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'EmployeeDepartmentHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection GetMultiEmployeeDepartmentHistories(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiEmployeeDepartmentHistories(forceFetch, _employeeDepartmentHistories.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeeDepartmentHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection GetMultiEmployeeDepartmentHistories(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiEmployeeDepartmentHistories(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeeDepartmentHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection GetMultiEmployeeDepartmentHistories(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedEmployeeDepartmentHistories || forceFetch || _alwaysFetchEmployeeDepartmentHistories) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_employeeDepartmentHistories);
+				_employeeDepartmentHistories.SuppressClearInGetMulti=!forceFetch;
+				_employeeDepartmentHistories.EntityFactoryToUse = entityFactoryToUse;
+				_employeeDepartmentHistories.GetMultiManyToOne(this, null, null, filter);
+				_employeeDepartmentHistories.SuppressClearInGetMulti=false;
+				_alreadyFetchedEmployeeDepartmentHistories = true;
+			}
+			return _employeeDepartmentHistories;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'EmployeeDepartmentHistories'. These settings will be taken into account
+		/// when the property EmployeeDepartmentHistories is requested or GetMultiEmployeeDepartmentHistories is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersEmployeeDepartmentHistories(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_employeeDepartmentHistories.SortClauses=sortClauses;
+			_employeeDepartmentHistories.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeePayHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'EmployeePayHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.EmployeePayHistoryCollection GetMultiEmployeePayHistories(bool forceFetch)
+		{
+			return GetMultiEmployeePayHistories(forceFetch, _employeePayHistories.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeePayHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'EmployeePayHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.EmployeePayHistoryCollection GetMultiEmployeePayHistories(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiEmployeePayHistories(forceFetch, _employeePayHistories.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeePayHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.EmployeePayHistoryCollection GetMultiEmployeePayHistories(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiEmployeePayHistories(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeePayHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.EmployeePayHistoryCollection GetMultiEmployeePayHistories(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedEmployeePayHistories || forceFetch || _alwaysFetchEmployeePayHistories) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_employeePayHistories);
+				_employeePayHistories.SuppressClearInGetMulti=!forceFetch;
+				_employeePayHistories.EntityFactoryToUse = entityFactoryToUse;
+				_employeePayHistories.GetMultiManyToOne(this, filter);
+				_employeePayHistories.SuppressClearInGetMulti=false;
+				_alreadyFetchedEmployeePayHistories = true;
+			}
+			return _employeePayHistories;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'EmployeePayHistories'. These settings will be taken into account
+		/// when the property EmployeePayHistories is requested or GetMultiEmployeePayHistories is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersEmployeePayHistories(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_employeePayHistories.SortClauses=sortClauses;
+			_employeePayHistories.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'JobCandidateEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'JobCandidateEntity'</returns>
+		public AW.Data.CollectionClasses.JobCandidateCollection GetMultiJobCandidates(bool forceFetch)
+		{
+			return GetMultiJobCandidates(forceFetch, _jobCandidates.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'JobCandidateEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'JobCandidateEntity'</returns>
+		public AW.Data.CollectionClasses.JobCandidateCollection GetMultiJobCandidates(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiJobCandidates(forceFetch, _jobCandidates.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'JobCandidateEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.JobCandidateCollection GetMultiJobCandidates(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiJobCandidates(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'JobCandidateEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.JobCandidateCollection GetMultiJobCandidates(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedJobCandidates || forceFetch || _alwaysFetchJobCandidates) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_jobCandidates);
+				_jobCandidates.SuppressClearInGetMulti=!forceFetch;
+				_jobCandidates.EntityFactoryToUse = entityFactoryToUse;
+				_jobCandidates.GetMultiManyToOne(this, filter);
+				_jobCandidates.SuppressClearInGetMulti=false;
+				_alreadyFetchedJobCandidates = true;
+			}
+			return _jobCandidates;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'JobCandidates'. These settings will be taken into account
+		/// when the property JobCandidates is requested or GetMultiJobCandidates is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersJobCandidates(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_jobCandidates.SortClauses=sortClauses;
+			_jobCandidates.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHeaderEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'PurchaseOrderHeaderEntity'</returns>
+		public AW.Data.CollectionClasses.PurchaseOrderHeaderCollection GetMultiPurchaseOrderHeaders(bool forceFetch)
+		{
+			return GetMultiPurchaseOrderHeaders(forceFetch, _purchaseOrderHeaders.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHeaderEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'PurchaseOrderHeaderEntity'</returns>
+		public AW.Data.CollectionClasses.PurchaseOrderHeaderCollection GetMultiPurchaseOrderHeaders(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiPurchaseOrderHeaders(forceFetch, _purchaseOrderHeaders.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHeaderEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.PurchaseOrderHeaderCollection GetMultiPurchaseOrderHeaders(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiPurchaseOrderHeaders(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHeaderEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.PurchaseOrderHeaderCollection GetMultiPurchaseOrderHeaders(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedPurchaseOrderHeaders || forceFetch || _alwaysFetchPurchaseOrderHeaders) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_purchaseOrderHeaders);
+				_purchaseOrderHeaders.SuppressClearInGetMulti=!forceFetch;
+				_purchaseOrderHeaders.EntityFactoryToUse = entityFactoryToUse;
+				_purchaseOrderHeaders.GetMultiManyToOne(this, null, null, filter);
+				_purchaseOrderHeaders.SuppressClearInGetMulti=false;
+				_alreadyFetchedPurchaseOrderHeaders = true;
+			}
+			return _purchaseOrderHeaders;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'PurchaseOrderHeaders'. These settings will be taken into account
+		/// when the property PurchaseOrderHeaders is requested or GetMultiPurchaseOrderHeaders is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersPurchaseOrderHeaders(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_purchaseOrderHeaders.SortClauses=sortClauses;
+			_purchaseOrderHeaders.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
@@ -729,11 +1098,55 @@ namespace AW.Data.EntityClasses
 			return _manager;
 		}
 
+		/// <summary> Retrieves the related entity of type 'SalesPersonEntity', using a relation of type '1:1'</summary>
+		/// <returns>A fetched entity of type 'SalesPersonEntity' which is related to this entity.</returns>
+		public SalesPersonEntity GetSingleSalesPerson()
+		{
+			return GetSingleSalesPerson(false);
+		}
+		
+		/// <summary> Retrieves the related entity of type 'SalesPersonEntity', using a relation of type '1:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'SalesPersonEntity' which is related to this entity.</returns>
+		public virtual SalesPersonEntity GetSingleSalesPerson(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedSalesPerson || forceFetch || _alwaysFetchSalesPerson) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode )
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.SalesPersonEntityUsingSalesPersonID);
+				SalesPersonEntity newEntity = new SalesPersonEntity();
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					AddToTransactionIfNecessary(newEntity);
+					fetchResult = newEntity.FetchUsingPK(this.EmployeeID);
+				}
+				if(fetchResult)
+				{
+					newEntity = (SalesPersonEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_salesPersonReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.SalesPerson = newEntity;
+				_alreadyFetchedSalesPerson = fetchResult;
+			}
+			return _salesPerson;
+		}
+
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
 			_manages.ActiveContext = this.ActiveContext;
 			_employeeAddresses.ActiveContext = this.ActiveContext;
+			_employeeDepartmentHistories.ActiveContext = this.ActiveContext;
+			_employeePayHistories.ActiveContext = this.ActiveContext;
+			_jobCandidates.ActiveContext = this.ActiveContext;
+			_purchaseOrderHeaders.ActiveContext = this.ActiveContext;
 			_addressCollectionViaEmployeeAddress.ActiveContext = this.ActiveContext;
 			_contactCollectionViaEmployee.ActiveContext = this.ActiveContext;
 			if(_contact!=null)
@@ -743,6 +1156,10 @@ namespace AW.Data.EntityClasses
 			if(_manager!=null)
 			{
 				_manager.ActiveContext = this.ActiveContext;
+			}
+			if(_salesPerson!=null)
+			{
+				_salesPerson.ActiveContext = this.ActiveContext;
 			}
 		}
 
@@ -755,8 +1172,13 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("Manager", _manager);
 			toReturn.Add("Manages", _manages);
 			toReturn.Add("EmployeeAddresses", _employeeAddresses);
+			toReturn.Add("EmployeeDepartmentHistories", _employeeDepartmentHistories);
+			toReturn.Add("EmployeePayHistories", _employeePayHistories);
+			toReturn.Add("JobCandidates", _jobCandidates);
+			toReturn.Add("PurchaseOrderHeaders", _purchaseOrderHeaders);
 			toReturn.Add("AddressCollectionViaEmployeeAddress", _addressCollectionViaEmployeeAddress);
 			toReturn.Add("ContactCollectionViaEmployee", _contactCollectionViaEmployee);
+			toReturn.Add("SalesPerson", _salesPerson);
 			return toReturn;
 		}
 	
@@ -771,7 +1193,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}		
@@ -790,7 +1211,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -803,15 +1223,27 @@ namespace AW.Data.EntityClasses
 
 			_employeeAddresses = new AW.Data.CollectionClasses.EmployeeAddressCollection();
 			_employeeAddresses.SetContainingEntityInfo(this, "Employee");
+
+			_employeeDepartmentHistories = new AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection();
+			_employeeDepartmentHistories.SetContainingEntityInfo(this, "Employee");
+
+			_employeePayHistories = new AW.Data.CollectionClasses.EmployeePayHistoryCollection();
+			_employeePayHistories.SetContainingEntityInfo(this, "Employee");
+
+			_jobCandidates = new AW.Data.CollectionClasses.JobCandidateCollection();
+			_jobCandidates.SetContainingEntityInfo(this, "Employee");
+
+			_purchaseOrderHeaders = new AW.Data.CollectionClasses.PurchaseOrderHeaderCollection();
+			_purchaseOrderHeaders.SetContainingEntityInfo(this, "Employee");
 			_addressCollectionViaEmployeeAddress = new AW.Data.CollectionClasses.AddressCollection();
 			_contactCollectionViaEmployee = new AW.Data.CollectionClasses.ContactCollection();
 			_contactReturnsNewIfNotFound = true;
 			_managerReturnsNewIfNotFound = true;
+			_salesPersonReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -923,6 +1355,39 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _salesPerson</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncSalesPerson(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _salesPerson, new PropertyChangedEventHandler( OnSalesPersonPropertyChanged ), "SalesPerson", Relations.SalesPersonEntityUsingSalesPersonID, false, signalRelatedEntity, "Employee", false, new int[] { (int)EmployeeFieldIndex.EmployeeID } );
+			_salesPerson = null;
+		}
+	
+		/// <summary> setups the sync logic for member _salesPerson</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncSalesPerson(IEntity relatedEntity)
+		{
+			if(_salesPerson!=relatedEntity)
+			{
+				DesetupSyncSalesPerson(true, true);
+				_salesPerson = (SalesPersonEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _salesPerson, new PropertyChangedEventHandler( OnSalesPersonPropertyChanged ), "SalesPerson", Relations.SalesPersonEntityUsingSalesPersonID, false, ref _alreadyFetchedSalesPerson, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSalesPersonPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
 		/// <param name="employeeID">PK value for Employee which data should be fetched into this Employee object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
@@ -988,6 +1453,34 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeAddressCollection(), (IEntityRelation)GetRelationsForField("EmployeeAddresses")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeAddressEntity, 0, null, null, null, "EmployeeAddresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'EmployeeDepartmentHistory' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathEmployeeDepartmentHistories
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection(), (IEntityRelation)GetRelationsForField("EmployeeDepartmentHistories")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeDepartmentHistoryEntity, 0, null, null, null, "EmployeeDepartmentHistories", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'EmployeePayHistory' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathEmployeePayHistories
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeePayHistoryCollection(), (IEntityRelation)GetRelationsForField("EmployeePayHistories")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeePayHistoryEntity, 0, null, null, null, "EmployeePayHistories", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'JobCandidate' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathJobCandidates
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.JobCandidateCollection(), (IEntityRelation)GetRelationsForField("JobCandidates")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.JobCandidateEntity, 0, null, null, null, "JobCandidates", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'PurchaseOrderHeader' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathPurchaseOrderHeaders
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.PurchaseOrderHeaderCollection(), (IEntityRelation)GetRelationsForField("PurchaseOrderHeaders")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.PurchaseOrderHeaderEntity, 0, null, null, null, "PurchaseOrderHeaders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathAddressCollectionViaEmployeeAddress
@@ -1024,6 +1517,13 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathManager
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(), (IEntityRelation)GetRelationsForField("Manager")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Manager", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesPerson'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesPerson
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesPersonCollection(), (IEntityRelation)GetRelationsForField("SalesPerson")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.SalesPersonEntity, 0, null, null, null, "SalesPerson", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
@@ -1282,6 +1782,138 @@ namespace AW.Data.EntityClasses
 				_alreadyFetchedEmployeeAddresses = value;
 			}
 		}
+		/// <summary> Retrieves all related entities of type 'EmployeeDepartmentHistoryEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiEmployeeDepartmentHistories()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.EmployeeDepartmentHistoryCollection EmployeeDepartmentHistories
+		{
+			get	{ return GetMultiEmployeeDepartmentHistories(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for EmployeeDepartmentHistories. When set to true, EmployeeDepartmentHistories is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time EmployeeDepartmentHistories is accessed. You can always execute/ a forced fetch by calling GetMultiEmployeeDepartmentHistories(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchEmployeeDepartmentHistories
+		{
+			get	{ return _alwaysFetchEmployeeDepartmentHistories; }
+			set	{ _alwaysFetchEmployeeDepartmentHistories = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property EmployeeDepartmentHistories already has been fetched. Setting this property to false when EmployeeDepartmentHistories has been fetched
+		/// will clear the EmployeeDepartmentHistories collection well. Setting this property to true while EmployeeDepartmentHistories hasn't been fetched disables lazy loading for EmployeeDepartmentHistories</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedEmployeeDepartmentHistories
+		{
+			get { return _alreadyFetchedEmployeeDepartmentHistories;}
+			set 
+			{
+				if(_alreadyFetchedEmployeeDepartmentHistories && !value && (_employeeDepartmentHistories != null))
+				{
+					_employeeDepartmentHistories.Clear();
+				}
+				_alreadyFetchedEmployeeDepartmentHistories = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'EmployeePayHistoryEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiEmployeePayHistories()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.EmployeePayHistoryCollection EmployeePayHistories
+		{
+			get	{ return GetMultiEmployeePayHistories(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for EmployeePayHistories. When set to true, EmployeePayHistories is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time EmployeePayHistories is accessed. You can always execute/ a forced fetch by calling GetMultiEmployeePayHistories(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchEmployeePayHistories
+		{
+			get	{ return _alwaysFetchEmployeePayHistories; }
+			set	{ _alwaysFetchEmployeePayHistories = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property EmployeePayHistories already has been fetched. Setting this property to false when EmployeePayHistories has been fetched
+		/// will clear the EmployeePayHistories collection well. Setting this property to true while EmployeePayHistories hasn't been fetched disables lazy loading for EmployeePayHistories</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedEmployeePayHistories
+		{
+			get { return _alreadyFetchedEmployeePayHistories;}
+			set 
+			{
+				if(_alreadyFetchedEmployeePayHistories && !value && (_employeePayHistories != null))
+				{
+					_employeePayHistories.Clear();
+				}
+				_alreadyFetchedEmployeePayHistories = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'JobCandidateEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiJobCandidates()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.JobCandidateCollection JobCandidates
+		{
+			get	{ return GetMultiJobCandidates(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for JobCandidates. When set to true, JobCandidates is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time JobCandidates is accessed. You can always execute/ a forced fetch by calling GetMultiJobCandidates(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchJobCandidates
+		{
+			get	{ return _alwaysFetchJobCandidates; }
+			set	{ _alwaysFetchJobCandidates = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property JobCandidates already has been fetched. Setting this property to false when JobCandidates has been fetched
+		/// will clear the JobCandidates collection well. Setting this property to true while JobCandidates hasn't been fetched disables lazy loading for JobCandidates</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedJobCandidates
+		{
+			get { return _alreadyFetchedJobCandidates;}
+			set 
+			{
+				if(_alreadyFetchedJobCandidates && !value && (_jobCandidates != null))
+				{
+					_jobCandidates.Clear();
+				}
+				_alreadyFetchedJobCandidates = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'PurchaseOrderHeaderEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiPurchaseOrderHeaders()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.PurchaseOrderHeaderCollection PurchaseOrderHeaders
+		{
+			get	{ return GetMultiPurchaseOrderHeaders(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for PurchaseOrderHeaders. When set to true, PurchaseOrderHeaders is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time PurchaseOrderHeaders is accessed. You can always execute/ a forced fetch by calling GetMultiPurchaseOrderHeaders(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchPurchaseOrderHeaders
+		{
+			get	{ return _alwaysFetchPurchaseOrderHeaders; }
+			set	{ _alwaysFetchPurchaseOrderHeaders = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property PurchaseOrderHeaders already has been fetched. Setting this property to false when PurchaseOrderHeaders has been fetched
+		/// will clear the PurchaseOrderHeaders collection well. Setting this property to true while PurchaseOrderHeaders hasn't been fetched disables lazy loading for PurchaseOrderHeaders</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedPurchaseOrderHeaders
+		{
+			get { return _alreadyFetchedPurchaseOrderHeaders;}
+			set 
+			{
+				if(_alreadyFetchedPurchaseOrderHeaders && !value && (_purchaseOrderHeaders != null))
+				{
+					_purchaseOrderHeaders.Clear();
+				}
+				_alreadyFetchedPurchaseOrderHeaders = value;
+			}
+		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.<br/><br/>
 		/// </summary>
@@ -1469,6 +2101,79 @@ namespace AW.Data.EntityClasses
 			set { _managerReturnsNewIfNotFound = value; }	
 		}
 
+		/// <summary> Gets / sets related entity of type 'SalesPersonEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/></summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesPerson()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(true)]
+		public virtual SalesPersonEntity SalesPerson
+		{
+			get	{ return GetSingleSalesPerson(false); }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncSalesPerson(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						bool raisePropertyChanged = (_salesPerson !=null);
+						DesetupSyncSalesPerson(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("SalesPerson");
+						}
+					}
+					else
+					{
+						if(_salesPerson!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "Employee");
+							SetupSyncSalesPerson(value);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesPerson. When set to true, SalesPerson is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesPerson is accessed. You can always execute a forced fetch by calling GetSingleSalesPerson(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesPerson
+		{
+			get	{ return _alwaysFetchSalesPerson; }
+			set	{ _alwaysFetchSalesPerson = value; }	
+		}
+		
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesPerson already has been fetched. Setting this property to false when SalesPerson has been fetched
+		/// will set SalesPerson to null as well. Setting this property to true while SalesPerson hasn't been fetched disables lazy loading for SalesPerson</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesPerson
+		{
+			get { return _alreadyFetchedSalesPerson;}
+			set 
+			{
+				if(_alreadyFetchedSalesPerson && !value)
+				{
+					this.SalesPerson = null;
+				}
+				_alreadyFetchedSalesPerson = value;
+			}
+		}
+		
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SalesPerson is not found
+		/// in the database. When set to true, SalesPerson will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool SalesPersonReturnsNewIfNotFound
+		{
+			get	{ return _salesPersonReturnsNewIfNotFound; }
+			set	{ _salesPersonReturnsNewIfNotFound = value; }	
+		}
 
 		/// <summary> Gets or sets a value indicating whether this entity is a subtype</summary>
 		protected override bool LLBLGenProIsSubType

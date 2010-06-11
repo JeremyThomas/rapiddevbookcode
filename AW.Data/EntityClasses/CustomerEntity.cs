@@ -68,10 +68,11 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchSalesTerritory, _alreadyFetchedSalesTerritory, _salesTerritoryReturnsNewIfNotFound;
 		private IndividualEntity _individual;
 		private bool	_alwaysFetchIndividual, _alreadyFetchedIndividual, _individualReturnsNewIfNotFound;
+		private StoreEntity _store;
+		private bool	_alwaysFetchStore, _alreadyFetchedStore, _storeReturnsNewIfNotFound;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -109,6 +110,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string ShipMethodCollectionViaSalesOrderHeader = "ShipMethodCollectionViaSalesOrderHeader";
 			/// <summary>Member name Individual</summary>
 			public static readonly string Individual = "Individual";
+			/// <summary>Member name Store</summary>
+			public static readonly string Store = "Store";
 		}
 		#endregion
 		
@@ -214,6 +217,15 @@ namespace AW.Data.EntityClasses
 			_individualReturnsNewIfNotFound = info.GetBoolean("_individualReturnsNewIfNotFound");
 			_alwaysFetchIndividual = info.GetBoolean("_alwaysFetchIndividual");
 			_alreadyFetchedIndividual = info.GetBoolean("_alreadyFetchedIndividual");
+
+			_store = (StoreEntity)info.GetValue("_store", typeof(StoreEntity));
+			if(_store!=null)
+			{
+				_store.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_storeReturnsNewIfNotFound = info.GetBoolean("_storeReturnsNewIfNotFound");
+			_alwaysFetchStore = info.GetBoolean("_alwaysFetchStore");
+			_alreadyFetchedStore = info.GetBoolean("_alreadyFetchedStore");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -253,6 +265,7 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = (_shipMethodCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedSalesTerritory = (_salesTerritory != null);
 			_alreadyFetchedIndividual = (_individual != null);
+			_alreadyFetchedStore = (_store != null);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -323,6 +336,9 @@ namespace AW.Data.EntityClasses
 				case "Individual":
 					toReturn.Add(Relations.IndividualEntityUsingCustomerID);
 					break;
+				case "Store":
+					toReturn.Add(Relations.StoreEntityUsingCustomerID);
+					break;
 				default:
 					break;				
 			}
@@ -383,9 +399,13 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_alwaysFetchIndividual", _alwaysFetchIndividual);
 			info.AddValue("_alreadyFetchedIndividual", _alreadyFetchedIndividual);
 
+			info.AddValue("_store", (!this.MarkedForDeletion?_store:null));
+			info.AddValue("_storeReturnsNewIfNotFound", _storeReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchStore", _alwaysFetchStore);
+			info.AddValue("_alreadyFetchedStore", _alreadyFetchedStore);
+
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -490,6 +510,10 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedIndividual = true;
 					this.Individual = (IndividualEntity)entity;
 					break;
+				case "Store":
+					_alreadyFetchedStore = true;
+					this.Store = (StoreEntity)entity;
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -515,6 +539,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "Individual":
 					SetupSyncIndividual(relatedEntity);
+					break;
+				case "Store":
+					SetupSyncStore(relatedEntity);
 					break;
 				default:
 					break;
@@ -542,6 +569,9 @@ namespace AW.Data.EntityClasses
 				case "Individual":
 					DesetupSyncIndividual(false, true);
 					break;
+				case "Store":
+					DesetupSyncStore(false, true);
+					break;
 				default:
 					break;
 			}
@@ -555,6 +585,10 @@ namespace AW.Data.EntityClasses
 			if(_individual!=null)
 			{
 				toReturn.Add(_individual);
+			}
+			if(_store!=null)
+			{
+				toReturn.Add(_store);
 			}
 			return toReturn;
 		}
@@ -732,7 +766,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeaders);
 				_salesOrderHeaders.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeaders.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeaders.GetMultiManyToOne(null, null, null, null, null, this, null, null, null, filter);
+				_salesOrderHeaders.GetMultiManyToOne(null, null, null, null, null, this, null, null, null, null, filter);
 				_salesOrderHeaders.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeaders = true;
 			}
@@ -1209,6 +1243,46 @@ namespace AW.Data.EntityClasses
 			return _individual;
 		}
 
+		/// <summary> Retrieves the related entity of type 'StoreEntity', using a relation of type '1:1'</summary>
+		/// <returns>A fetched entity of type 'StoreEntity' which is related to this entity.</returns>
+		public StoreEntity GetSingleStore()
+		{
+			return GetSingleStore(false);
+		}
+		
+		/// <summary> Retrieves the related entity of type 'StoreEntity', using a relation of type '1:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'StoreEntity' which is related to this entity.</returns>
+		public virtual StoreEntity GetSingleStore(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedStore || forceFetch || _alwaysFetchStore) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode )
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.StoreEntityUsingCustomerID);
+				StoreEntity newEntity = new StoreEntity();
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					AddToTransactionIfNecessary(newEntity);
+					fetchResult = newEntity.FetchUsingPK(this.CustomerID);
+				}
+				if(fetchResult)
+				{
+					newEntity = (StoreEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_storeReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.Store = newEntity;
+				_alreadyFetchedStore = fetchResult;
+			}
+			return _store;
+		}
+
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
@@ -1232,6 +1306,10 @@ namespace AW.Data.EntityClasses
 			{
 				_individual.ActiveContext = this.ActiveContext;
 			}
+			if(_store!=null)
+			{
+				_store.ActiveContext = this.ActiveContext;
+			}
 		}
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
@@ -1253,6 +1331,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("SalesTerritoryCollectionViaSalesOrderHeader", _salesTerritoryCollectionViaSalesOrderHeader);
 			toReturn.Add("ShipMethodCollectionViaSalesOrderHeader", _shipMethodCollectionViaSalesOrderHeader);
 			toReturn.Add("Individual", _individual);
+			toReturn.Add("Store", _store);
 			return toReturn;
 		}
 	
@@ -1267,7 +1346,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}		
@@ -1286,7 +1364,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -1311,11 +1388,11 @@ namespace AW.Data.EntityClasses
 			_shipMethodCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.ShipMethodCollection();
 			_salesTerritoryReturnsNewIfNotFound = true;
 			_individualReturnsNewIfNotFound = true;
+			_storeReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -1399,6 +1476,39 @@ namespace AW.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnIndividualPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _store</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncStore(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _store, new PropertyChangedEventHandler( OnStorePropertyChanged ), "Store", Relations.StoreEntityUsingCustomerID, false, signalRelatedEntity, "Customer", false, new int[] { (int)CustomerFieldIndex.CustomerID } );
+			_store = null;
+		}
+	
+		/// <summary> setups the sync logic for member _store</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncStore(IEntity relatedEntity)
+		{
+			if(_store!=relatedEntity)
+			{
+				DesetupSyncStore(true, true);
+				_store = (StoreEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _store, new PropertyChangedEventHandler( OnStorePropertyChanged ), "Store", Relations.StoreEntityUsingCustomerID, false, ref _alreadyFetchedStore, new string[] {  } );
+			}
+		}
+		
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnStorePropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1604,6 +1714,13 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathIndividual
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.IndividualCollection(), (IEntityRelation)GetRelationsForField("Individual")[0], (int)AW.Data.EntityType.CustomerEntity, (int)AW.Data.EntityType.IndividualEntity, 0, null, null, null, "Individual", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Store'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathStore
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.StoreCollection(), (IEntityRelation)GetRelationsForField("Store")[0], (int)AW.Data.EntityType.CustomerEntity, (int)AW.Data.EntityType.StoreEntity, 0, null, null, null, "Store", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
@@ -2234,6 +2351,79 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _individualReturnsNewIfNotFound; }
 			set	{ _individualReturnsNewIfNotFound = value; }	
+		}
+		/// <summary> Gets / sets related entity of type 'StoreEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/></summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleStore()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(true)]
+		public virtual StoreEntity Store
+		{
+			get	{ return GetSingleStore(false); }
+			set
+			{
+				if(this.IsDeserializing)
+				{
+					SetupSyncStore(value);
+				}
+				else
+				{
+					if(value==null)
+					{
+						bool raisePropertyChanged = (_store !=null);
+						DesetupSyncStore(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("Store");
+						}
+					}
+					else
+					{
+						if(_store!=value)
+						{
+							((IEntity)value).SetRelatedEntity(this, "Customer");
+							SetupSyncStore(value);
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Store. When set to true, Store is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Store is accessed. You can always execute a forced fetch by calling GetSingleStore(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchStore
+		{
+			get	{ return _alwaysFetchStore; }
+			set	{ _alwaysFetchStore = value; }	
+		}
+		
+		/// <summary>Gets / Sets the lazy loading flag if the property Store already has been fetched. Setting this property to false when Store has been fetched
+		/// will set Store to null as well. Setting this property to true while Store hasn't been fetched disables lazy loading for Store</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedStore
+		{
+			get { return _alreadyFetchedStore;}
+			set 
+			{
+				if(_alreadyFetchedStore && !value)
+				{
+					this.Store = null;
+				}
+				_alreadyFetchedStore = value;
+			}
+		}
+		
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Store is not found
+		/// in the database. When set to true, Store will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool StoreReturnsNewIfNotFound
+		{
+			get	{ return _storeReturnsNewIfNotFound; }
+			set	{ _storeReturnsNewIfNotFound = value; }	
 		}
 
 		/// <summary> Gets or sets a value indicating whether this entity is a subtype</summary>

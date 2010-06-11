@@ -44,6 +44,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchCustomerAddresses, _alreadyFetchedCustomerAddresses;
 		private AW.Data.CollectionClasses.EmployeeAddressCollection	_employeeAddresses;
 		private bool	_alwaysFetchEmployeeAddresses, _alreadyFetchedEmployeeAddresses;
+		private AW.Data.CollectionClasses.VendorAddressCollection	_vendorAddresses;
+		private bool	_alwaysFetchVendorAddresses, _alreadyFetchedVendorAddresses;
 		private AW.Data.CollectionClasses.SalesOrderHeaderCollection	_salesOrderHeaders;
 		private bool	_alwaysFetchSalesOrderHeaders, _alreadyFetchedSalesOrderHeaders;
 		private AW.Data.CollectionClasses.SalesOrderHeaderCollection	_salesOrderHeaders_;
@@ -87,7 +89,6 @@ namespace AW.Data.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -103,6 +104,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string CustomerAddresses = "CustomerAddresses";
 			/// <summary>Member name EmployeeAddresses</summary>
 			public static readonly string EmployeeAddresses = "EmployeeAddresses";
+			/// <summary>Member name VendorAddresses</summary>
+			public static readonly string VendorAddresses = "VendorAddresses";
 			/// <summary>Member name SalesOrderHeaders</summary>
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
 			/// <summary>Member name SalesOrderHeaders_</summary>
@@ -191,6 +194,10 @@ namespace AW.Data.EntityClasses
 			_employeeAddresses = (AW.Data.CollectionClasses.EmployeeAddressCollection)info.GetValue("_employeeAddresses", typeof(AW.Data.CollectionClasses.EmployeeAddressCollection));
 			_alwaysFetchEmployeeAddresses = info.GetBoolean("_alwaysFetchEmployeeAddresses");
 			_alreadyFetchedEmployeeAddresses = info.GetBoolean("_alreadyFetchedEmployeeAddresses");
+
+			_vendorAddresses = (AW.Data.CollectionClasses.VendorAddressCollection)info.GetValue("_vendorAddresses", typeof(AW.Data.CollectionClasses.VendorAddressCollection));
+			_alwaysFetchVendorAddresses = info.GetBoolean("_alwaysFetchVendorAddresses");
+			_alreadyFetchedVendorAddresses = info.GetBoolean("_alreadyFetchedVendorAddresses");
 
 			_salesOrderHeaders = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrderHeaders", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
 			_alwaysFetchSalesOrderHeaders = info.GetBoolean("_alwaysFetchSalesOrderHeaders");
@@ -301,6 +308,7 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedCustomerAddresses = (_customerAddresses.Count > 0);
 			_alreadyFetchedEmployeeAddresses = (_employeeAddresses.Count > 0);
+			_alreadyFetchedVendorAddresses = (_vendorAddresses.Count > 0);
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
 			_alreadyFetchedSalesOrderHeaders_ = (_salesOrderHeaders_.Count > 0);
 			_alreadyFetchedAddressTypeCollectionViaCustomerAddres = (_addressTypeCollectionViaCustomerAddres.Count > 0);
@@ -347,6 +355,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "EmployeeAddresses":
 					toReturn.Add(Relations.EmployeeAddressEntityUsingAddressID);
+					break;
+				case "VendorAddresses":
+					toReturn.Add(Relations.VendorAddressEntityUsingAddressID);
 					break;
 				case "SalesOrderHeaders":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingBillToAddressID);
@@ -442,6 +453,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_employeeAddresses", (!this.MarkedForDeletion?_employeeAddresses:null));
 			info.AddValue("_alwaysFetchEmployeeAddresses", _alwaysFetchEmployeeAddresses);
 			info.AddValue("_alreadyFetchedEmployeeAddresses", _alreadyFetchedEmployeeAddresses);
+			info.AddValue("_vendorAddresses", (!this.MarkedForDeletion?_vendorAddresses:null));
+			info.AddValue("_alwaysFetchVendorAddresses", _alwaysFetchVendorAddresses);
+			info.AddValue("_alreadyFetchedVendorAddresses", _alreadyFetchedVendorAddresses);
 			info.AddValue("_salesOrderHeaders", (!this.MarkedForDeletion?_salesOrderHeaders:null));
 			info.AddValue("_alwaysFetchSalesOrderHeaders", _alwaysFetchSalesOrderHeaders);
 			info.AddValue("_alreadyFetchedSalesOrderHeaders", _alreadyFetchedSalesOrderHeaders);
@@ -506,7 +520,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -535,6 +548,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.EmployeeAddresses.Add((EmployeeAddressEntity)entity);
+					}
+					break;
+				case "VendorAddresses":
+					_alreadyFetchedVendorAddresses = true;
+					if(entity!=null)
+					{
+						this.VendorAddresses.Add((VendorAddressEntity)entity);
 					}
 					break;
 				case "SalesOrderHeaders":
@@ -693,6 +713,9 @@ namespace AW.Data.EntityClasses
 				case "EmployeeAddresses":
 					_employeeAddresses.Add((EmployeeAddressEntity)relatedEntity);
 					break;
+				case "VendorAddresses":
+					_vendorAddresses.Add((VendorAddressEntity)relatedEntity);
+					break;
 				case "SalesOrderHeaders":
 					_salesOrderHeaders.Add((SalesOrderHeaderEntity)relatedEntity);
 					break;
@@ -721,6 +744,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "EmployeeAddresses":
 					this.PerformRelatedEntityRemoval(_employeeAddresses, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "VendorAddresses":
+					this.PerformRelatedEntityRemoval(_vendorAddresses, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "SalesOrderHeaders":
 					this.PerformRelatedEntityRemoval(_salesOrderHeaders, relatedEntity, signalRelatedEntityManyToOne);
@@ -760,6 +786,7 @@ namespace AW.Data.EntityClasses
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_customerAddresses);
 			toReturn.Add(_employeeAddresses);
+			toReturn.Add(_vendorAddresses);
 			toReturn.Add(_salesOrderHeaders);
 			toReturn.Add(_salesOrderHeaders_);
 
@@ -933,6 +960,61 @@ namespace AW.Data.EntityClasses
 			_employeeAddresses.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'VendorAddressEntity'</returns>
+		public AW.Data.CollectionClasses.VendorAddressCollection GetMultiVendorAddresses(bool forceFetch)
+		{
+			return GetMultiVendorAddresses(forceFetch, _vendorAddresses.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'VendorAddressEntity'</returns>
+		public AW.Data.CollectionClasses.VendorAddressCollection GetMultiVendorAddresses(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiVendorAddresses(forceFetch, _vendorAddresses.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.VendorAddressCollection GetMultiVendorAddresses(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiVendorAddresses(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.VendorAddressCollection GetMultiVendorAddresses(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedVendorAddresses || forceFetch || _alwaysFetchVendorAddresses) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_vendorAddresses);
+				_vendorAddresses.SuppressClearInGetMulti=!forceFetch;
+				_vendorAddresses.EntityFactoryToUse = entityFactoryToUse;
+				_vendorAddresses.GetMultiManyToOne(this, null, null, filter);
+				_vendorAddresses.SuppressClearInGetMulti=false;
+				_alreadyFetchedVendorAddresses = true;
+			}
+			return _vendorAddresses;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'VendorAddresses'. These settings will be taken into account
+		/// when the property VendorAddresses is requested or GetMultiVendorAddresses is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersVendorAddresses(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_vendorAddresses.SortClauses=sortClauses;
+			_vendorAddresses.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'SalesOrderHeaderEntity'</returns>
@@ -971,7 +1053,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeaders);
 				_salesOrderHeaders.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeaders.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeaders.GetMultiManyToOne(this, null, null, null, null, null, null, null, null, filter);
+				_salesOrderHeaders.GetMultiManyToOne(this, null, null, null, null, null, null, null, null, null, filter);
 				_salesOrderHeaders.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeaders = true;
 			}
@@ -1026,7 +1108,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeaders_);
 				_salesOrderHeaders_.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeaders_.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeaders_.GetMultiManyToOne(null, this, null, null, null, null, null, null, null, filter);
+				_salesOrderHeaders_.GetMultiManyToOne(null, this, null, null, null, null, null, null, null, null, filter);
 				_salesOrderHeaders_.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeaders_ = true;
 			}
@@ -1734,6 +1816,7 @@ namespace AW.Data.EntityClasses
 		{
 			_customerAddresses.ActiveContext = this.ActiveContext;
 			_employeeAddresses.ActiveContext = this.ActiveContext;
+			_vendorAddresses.ActiveContext = this.ActiveContext;
 			_salesOrderHeaders.ActiveContext = this.ActiveContext;
 			_salesOrderHeaders_.ActiveContext = this.ActiveContext;
 			_addressTypeCollectionViaCustomerAddres.ActiveContext = this.ActiveContext;
@@ -1767,6 +1850,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("StateProvince", _stateProvince);
 			toReturn.Add("CustomerAddresses", _customerAddresses);
 			toReturn.Add("EmployeeAddresses", _employeeAddresses);
+			toReturn.Add("VendorAddresses", _vendorAddresses);
 			toReturn.Add("SalesOrderHeaders", _salesOrderHeaders);
 			toReturn.Add("SalesOrderHeaders_", _salesOrderHeaders_);
 			toReturn.Add("AddressTypeCollectionViaCustomerAddres", _addressTypeCollectionViaCustomerAddres);
@@ -1800,7 +1884,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}		
@@ -1819,7 +1902,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -1832,6 +1914,9 @@ namespace AW.Data.EntityClasses
 
 			_employeeAddresses = new AW.Data.CollectionClasses.EmployeeAddressCollection();
 			_employeeAddresses.SetContainingEntityInfo(this, "Address");
+
+			_vendorAddresses = new AW.Data.CollectionClasses.VendorAddressCollection();
+			_vendorAddresses.SetContainingEntityInfo(this, "Address");
 
 			_salesOrderHeaders = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
 			_salesOrderHeaders.SetContainingEntityInfo(this, "BillingAddress");
@@ -1860,7 +1945,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -1986,6 +2070,13 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathEmployeeAddresses
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeAddressCollection(), (IEntityRelation)GetRelationsForField("EmployeeAddresses")[0], (int)AW.Data.EntityType.AddressEntity, (int)AW.Data.EntityType.EmployeeAddressEntity, 0, null, null, null, "EmployeeAddresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'VendorAddress' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathVendorAddresses
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.VendorAddressCollection(), (IEntityRelation)GetRelationsForField("VendorAddresses")[0], (int)AW.Data.EntityType.AddressEntity, (int)AW.Data.EntityType.VendorAddressEntity, 0, null, null, null, "VendorAddresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHeader' for this entity.</summary>
@@ -2387,6 +2478,39 @@ namespace AW.Data.EntityClasses
 					_employeeAddresses.Clear();
 				}
 				_alreadyFetchedEmployeeAddresses = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiVendorAddresses()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.VendorAddressCollection VendorAddresses
+		{
+			get	{ return GetMultiVendorAddresses(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for VendorAddresses. When set to true, VendorAddresses is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time VendorAddresses is accessed. You can always execute/ a forced fetch by calling GetMultiVendorAddresses(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchVendorAddresses
+		{
+			get	{ return _alwaysFetchVendorAddresses; }
+			set	{ _alwaysFetchVendorAddresses = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property VendorAddresses already has been fetched. Setting this property to false when VendorAddresses has been fetched
+		/// will clear the VendorAddresses collection well. Setting this property to true while VendorAddresses hasn't been fetched disables lazy loading for VendorAddresses</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedVendorAddresses
+		{
+			get { return _alreadyFetchedVendorAddresses;}
+			set 
+			{
+				if(_alreadyFetchedVendorAddresses && !value && (_vendorAddresses != null))
+				{
+					_vendorAddresses.Clear();
+				}
+				_alreadyFetchedVendorAddresses = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.<br/><br/>

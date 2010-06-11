@@ -58,6 +58,100 @@ namespace AW.Data.CollectionClasses
 		}
 
 
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which have data in common with the specified related Entities.
+		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance)
+		{
+			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which have data in common with the specified related Entities.
+		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance, IPredicateExpression filter)
+		{
+			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which have data in common with the specified related Entities.
+		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
+		{
+			return GetMultiManyToOne(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which have data in common with the specified related Entities.
+		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
+		{
+			bool validParameters = false;
+			validParameters |= (productModelInstance!=null);
+			validParameters |= (productSubcategoryInstance!=null);
+			validParameters |= (unitMeasureInstance!=null);
+			validParameters |= (unitMeasure_Instance!=null);
+			if(!validParameters)
+			{
+				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
+			}
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateProductDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, pageNumber, pageSize);
+		}
+
+		/// <summary> Deletes from the persistent storage all Product entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
+		/// <remarks>Runs directly on the persistent storage. It will not delete entity objects from the current collection.</remarks>
+		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public int DeleteMultiManyToOne(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance)
+		{
+			return DAOFactory.CreateProductDAO().DeleteMulti(this.Transaction, productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance);
+		}
+
+		/// <summary> Updates in the persistent storage all Product entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
+		/// Which fields are updated in those matching entities depends on which fields are <i>changed</i> in the passed in entity entityWithNewValues. The new values of these fields are read from entityWithNewValues. </summary>
+		/// <param name="entityWithNewValues">ProductEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
+		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public int UpdateMultiManyToOne(ProductEntity entityWithNewValues, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance)
+		{
+			return DAOFactory.CreateProductDAO().UpdateMulti(entityWithNewValues, this.Transaction, productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance);
+		}
 
 		/// <summary> Retrieves in this ProductCollection object all ProductEntity objects which are related via a  Relation of type 'm:n' with the passed in SpecialOfferEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="specialOfferInstance">SpecialOfferEntity object to be used as a filter in the m:n relation</param>

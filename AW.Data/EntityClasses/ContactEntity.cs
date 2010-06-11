@@ -44,6 +44,12 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchEmployees, _alreadyFetchedEmployees;
 		private AW.Data.CollectionClasses.IndividualCollection	_individuals;
 		private bool	_alwaysFetchIndividuals, _alreadyFetchedIndividuals;
+		private AW.Data.CollectionClasses.VendorContactCollection	_vendorContacts;
+		private bool	_alwaysFetchVendorContacts, _alreadyFetchedVendorContacts;
+		private AW.Data.CollectionClasses.ContactCreditCardCollection	_contactCreditCards;
+		private bool	_alwaysFetchContactCreditCards, _alreadyFetchedContactCreditCards;
+		private AW.Data.CollectionClasses.StoreContactCollection	_storeContacts;
+		private bool	_alwaysFetchStoreContacts, _alreadyFetchedStoreContacts;
 		private AW.Data.CollectionClasses.SalesOrderHeaderCollection	_salesOrderHeaders;
 		private bool	_alwaysFetchSalesOrderHeaders, _alreadyFetchedSalesOrderHeaders;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaSalesOrderHeader;
@@ -67,7 +73,6 @@ namespace AW.Data.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -81,6 +86,12 @@ namespace AW.Data.EntityClasses
 			public static readonly string Employees = "Employees";
 			/// <summary>Member name Individuals</summary>
 			public static readonly string Individuals = "Individuals";
+			/// <summary>Member name VendorContacts</summary>
+			public static readonly string VendorContacts = "VendorContacts";
+			/// <summary>Member name ContactCreditCards</summary>
+			public static readonly string ContactCreditCards = "ContactCreditCards";
+			/// <summary>Member name StoreContacts</summary>
+			public static readonly string StoreContacts = "StoreContacts";
 			/// <summary>Member name SalesOrderHeaders</summary>
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
 			/// <summary>Member name AddressCollectionViaSalesOrderHeader</summary>
@@ -152,6 +163,18 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchIndividuals = info.GetBoolean("_alwaysFetchIndividuals");
 			_alreadyFetchedIndividuals = info.GetBoolean("_alreadyFetchedIndividuals");
 
+			_vendorContacts = (AW.Data.CollectionClasses.VendorContactCollection)info.GetValue("_vendorContacts", typeof(AW.Data.CollectionClasses.VendorContactCollection));
+			_alwaysFetchVendorContacts = info.GetBoolean("_alwaysFetchVendorContacts");
+			_alreadyFetchedVendorContacts = info.GetBoolean("_alreadyFetchedVendorContacts");
+
+			_contactCreditCards = (AW.Data.CollectionClasses.ContactCreditCardCollection)info.GetValue("_contactCreditCards", typeof(AW.Data.CollectionClasses.ContactCreditCardCollection));
+			_alwaysFetchContactCreditCards = info.GetBoolean("_alwaysFetchContactCreditCards");
+			_alreadyFetchedContactCreditCards = info.GetBoolean("_alreadyFetchedContactCreditCards");
+
+			_storeContacts = (AW.Data.CollectionClasses.StoreContactCollection)info.GetValue("_storeContacts", typeof(AW.Data.CollectionClasses.StoreContactCollection));
+			_alwaysFetchStoreContacts = info.GetBoolean("_alwaysFetchStoreContacts");
+			_alreadyFetchedStoreContacts = info.GetBoolean("_alreadyFetchedStoreContacts");
+
 			_salesOrderHeaders = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrderHeaders", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
 			_alwaysFetchSalesOrderHeaders = info.GetBoolean("_alwaysFetchSalesOrderHeaders");
 			_alreadyFetchedSalesOrderHeaders = info.GetBoolean("_alreadyFetchedSalesOrderHeaders");
@@ -201,6 +224,9 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedEmployees = (_employees.Count > 0);
 			_alreadyFetchedIndividuals = (_individuals.Count > 0);
+			_alreadyFetchedVendorContacts = (_vendorContacts.Count > 0);
+			_alreadyFetchedContactCreditCards = (_contactCreditCards.Count > 0);
+			_alreadyFetchedStoreContacts = (_storeContacts.Count > 0);
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader = (_addressCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = (_addressCollectionViaSalesOrderHeader_.Count > 0);
@@ -234,6 +260,15 @@ namespace AW.Data.EntityClasses
 					break;
 				case "Individuals":
 					toReturn.Add(Relations.IndividualEntityUsingContactID);
+					break;
+				case "VendorContacts":
+					toReturn.Add(Relations.VendorContactEntityUsingContactID);
+					break;
+				case "ContactCreditCards":
+					toReturn.Add(Relations.ContactCreditCardEntityUsingContactID);
+					break;
+				case "StoreContacts":
+					toReturn.Add(Relations.StoreContactEntityUsingContactID);
 					break;
 				case "SalesOrderHeaders":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID);
@@ -294,6 +329,15 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_individuals", (!this.MarkedForDeletion?_individuals:null));
 			info.AddValue("_alwaysFetchIndividuals", _alwaysFetchIndividuals);
 			info.AddValue("_alreadyFetchedIndividuals", _alreadyFetchedIndividuals);
+			info.AddValue("_vendorContacts", (!this.MarkedForDeletion?_vendorContacts:null));
+			info.AddValue("_alwaysFetchVendorContacts", _alwaysFetchVendorContacts);
+			info.AddValue("_alreadyFetchedVendorContacts", _alreadyFetchedVendorContacts);
+			info.AddValue("_contactCreditCards", (!this.MarkedForDeletion?_contactCreditCards:null));
+			info.AddValue("_alwaysFetchContactCreditCards", _alwaysFetchContactCreditCards);
+			info.AddValue("_alreadyFetchedContactCreditCards", _alreadyFetchedContactCreditCards);
+			info.AddValue("_storeContacts", (!this.MarkedForDeletion?_storeContacts:null));
+			info.AddValue("_alwaysFetchStoreContacts", _alwaysFetchStoreContacts);
+			info.AddValue("_alreadyFetchedStoreContacts", _alreadyFetchedStoreContacts);
 			info.AddValue("_salesOrderHeaders", (!this.MarkedForDeletion?_salesOrderHeaders:null));
 			info.AddValue("_alwaysFetchSalesOrderHeaders", _alwaysFetchSalesOrderHeaders);
 			info.AddValue("_alreadyFetchedSalesOrderHeaders", _alreadyFetchedSalesOrderHeaders);
@@ -327,7 +371,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -352,6 +395,27 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.Individuals.Add((IndividualEntity)entity);
+					}
+					break;
+				case "VendorContacts":
+					_alreadyFetchedVendorContacts = true;
+					if(entity!=null)
+					{
+						this.VendorContacts.Add((VendorContactEntity)entity);
+					}
+					break;
+				case "ContactCreditCards":
+					_alreadyFetchedContactCreditCards = true;
+					if(entity!=null)
+					{
+						this.ContactCreditCards.Add((ContactCreditCardEntity)entity);
+					}
+					break;
+				case "StoreContacts":
+					_alreadyFetchedStoreContacts = true;
+					if(entity!=null)
+					{
+						this.StoreContacts.Add((StoreContactEntity)entity);
 					}
 					break;
 				case "SalesOrderHeaders":
@@ -444,6 +508,15 @@ namespace AW.Data.EntityClasses
 				case "Individuals":
 					_individuals.Add((IndividualEntity)relatedEntity);
 					break;
+				case "VendorContacts":
+					_vendorContacts.Add((VendorContactEntity)relatedEntity);
+					break;
+				case "ContactCreditCards":
+					_contactCreditCards.Add((ContactCreditCardEntity)relatedEntity);
+					break;
+				case "StoreContacts":
+					_storeContacts.Add((StoreContactEntity)relatedEntity);
+					break;
 				case "SalesOrderHeaders":
 					_salesOrderHeaders.Add((SalesOrderHeaderEntity)relatedEntity);
 					break;
@@ -466,6 +539,15 @@ namespace AW.Data.EntityClasses
 					break;
 				case "Individuals":
 					this.PerformRelatedEntityRemoval(_individuals, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "VendorContacts":
+					this.PerformRelatedEntityRemoval(_vendorContacts, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "ContactCreditCards":
+					this.PerformRelatedEntityRemoval(_contactCreditCards, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "StoreContacts":
+					this.PerformRelatedEntityRemoval(_storeContacts, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "SalesOrderHeaders":
 					this.PerformRelatedEntityRemoval(_salesOrderHeaders, relatedEntity, signalRelatedEntityManyToOne);
@@ -498,6 +580,9 @@ namespace AW.Data.EntityClasses
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_employees);
 			toReturn.Add(_individuals);
+			toReturn.Add(_vendorContacts);
+			toReturn.Add(_contactCreditCards);
+			toReturn.Add(_storeContacts);
 			toReturn.Add(_salesOrderHeaders);
 
 			return toReturn;
@@ -670,6 +755,171 @@ namespace AW.Data.EntityClasses
 			_individuals.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'VendorContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'VendorContactEntity'</returns>
+		public AW.Data.CollectionClasses.VendorContactCollection GetMultiVendorContacts(bool forceFetch)
+		{
+			return GetMultiVendorContacts(forceFetch, _vendorContacts.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'VendorContactEntity'</returns>
+		public AW.Data.CollectionClasses.VendorContactCollection GetMultiVendorContacts(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiVendorContacts(forceFetch, _vendorContacts.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.VendorContactCollection GetMultiVendorContacts(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiVendorContacts(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.VendorContactCollection GetMultiVendorContacts(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedVendorContacts || forceFetch || _alwaysFetchVendorContacts) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_vendorContacts);
+				_vendorContacts.SuppressClearInGetMulti=!forceFetch;
+				_vendorContacts.EntityFactoryToUse = entityFactoryToUse;
+				_vendorContacts.GetMultiManyToOne(this, null, null, filter);
+				_vendorContacts.SuppressClearInGetMulti=false;
+				_alreadyFetchedVendorContacts = true;
+			}
+			return _vendorContacts;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'VendorContacts'. These settings will be taken into account
+		/// when the property VendorContacts is requested or GetMultiVendorContacts is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersVendorContacts(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_vendorContacts.SortClauses=sortClauses;
+			_vendorContacts.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'ContactCreditCardEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ContactCreditCardEntity'</returns>
+		public AW.Data.CollectionClasses.ContactCreditCardCollection GetMultiContactCreditCards(bool forceFetch)
+		{
+			return GetMultiContactCreditCards(forceFetch, _contactCreditCards.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ContactCreditCardEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'ContactCreditCardEntity'</returns>
+		public AW.Data.CollectionClasses.ContactCreditCardCollection GetMultiContactCreditCards(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiContactCreditCards(forceFetch, _contactCreditCards.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ContactCreditCardEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ContactCreditCardCollection GetMultiContactCreditCards(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiContactCreditCards(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ContactCreditCardEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.ContactCreditCardCollection GetMultiContactCreditCards(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedContactCreditCards || forceFetch || _alwaysFetchContactCreditCards) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_contactCreditCards);
+				_contactCreditCards.SuppressClearInGetMulti=!forceFetch;
+				_contactCreditCards.EntityFactoryToUse = entityFactoryToUse;
+				_contactCreditCards.GetMultiManyToOne(this, null, filter);
+				_contactCreditCards.SuppressClearInGetMulti=false;
+				_alreadyFetchedContactCreditCards = true;
+			}
+			return _contactCreditCards;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'ContactCreditCards'. These settings will be taken into account
+		/// when the property ContactCreditCards is requested or GetMultiContactCreditCards is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersContactCreditCards(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_contactCreditCards.SortClauses=sortClauses;
+			_contactCreditCards.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'StoreContactEntity'</returns>
+		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch)
+		{
+			return GetMultiStoreContacts(forceFetch, _storeContacts.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'StoreContactEntity'</returns>
+		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiStoreContacts(forceFetch, _storeContacts.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiStoreContacts(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedStoreContacts || forceFetch || _alwaysFetchStoreContacts) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_storeContacts);
+				_storeContacts.SuppressClearInGetMulti=!forceFetch;
+				_storeContacts.EntityFactoryToUse = entityFactoryToUse;
+				_storeContacts.GetMultiManyToOne(this, null, null, filter);
+				_storeContacts.SuppressClearInGetMulti=false;
+				_alreadyFetchedStoreContacts = true;
+			}
+			return _storeContacts;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'StoreContacts'. These settings will be taken into account
+		/// when the property StoreContacts is requested or GetMultiStoreContacts is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersStoreContacts(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_storeContacts.SortClauses=sortClauses;
+			_storeContacts.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'SalesOrderHeaderEntity'</returns>
@@ -708,7 +958,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeaders);
 				_salesOrderHeaders.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeaders.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeaders.GetMultiManyToOne(null, null, this, null, null, null, null, null, null, filter);
+				_salesOrderHeaders.GetMultiManyToOne(null, null, this, null, null, null, null, null, null, null, filter);
 				_salesOrderHeaders.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeaders = true;
 			}
@@ -1072,6 +1322,9 @@ namespace AW.Data.EntityClasses
 		{
 			_employees.ActiveContext = this.ActiveContext;
 			_individuals.ActiveContext = this.ActiveContext;
+			_vendorContacts.ActiveContext = this.ActiveContext;
+			_contactCreditCards.ActiveContext = this.ActiveContext;
+			_storeContacts.ActiveContext = this.ActiveContext;
 			_salesOrderHeaders.ActiveContext = this.ActiveContext;
 			_addressCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
 			_addressCollectionViaSalesOrderHeader_.ActiveContext = this.ActiveContext;
@@ -1091,6 +1344,9 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Employees", _employees);
 			toReturn.Add("Individuals", _individuals);
+			toReturn.Add("VendorContacts", _vendorContacts);
+			toReturn.Add("ContactCreditCards", _contactCreditCards);
+			toReturn.Add("StoreContacts", _storeContacts);
 			toReturn.Add("SalesOrderHeaders", _salesOrderHeaders);
 			toReturn.Add("AddressCollectionViaSalesOrderHeader", _addressCollectionViaSalesOrderHeader);
 			toReturn.Add("AddressCollectionViaSalesOrderHeader_", _addressCollectionViaSalesOrderHeader_);
@@ -1115,7 +1371,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}		
@@ -1134,7 +1389,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -1147,6 +1401,15 @@ namespace AW.Data.EntityClasses
 
 			_individuals = new AW.Data.CollectionClasses.IndividualCollection();
 			_individuals.SetContainingEntityInfo(this, "Contact");
+
+			_vendorContacts = new AW.Data.CollectionClasses.VendorContactCollection();
+			_vendorContacts.SetContainingEntityInfo(this, "Contact");
+
+			_contactCreditCards = new AW.Data.CollectionClasses.ContactCreditCardCollection();
+			_contactCreditCards.SetContainingEntityInfo(this, "Contact");
+
+			_storeContacts = new AW.Data.CollectionClasses.StoreContactCollection();
+			_storeContacts.SetContainingEntityInfo(this, "Contact");
 
 			_salesOrderHeaders = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
 			_salesOrderHeaders.SetContainingEntityInfo(this, "Contact");
@@ -1163,7 +1426,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -1270,6 +1532,27 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathIndividuals
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.IndividualCollection(), (IEntityRelation)GetRelationsForField("Individuals")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.IndividualEntity, 0, null, null, null, "Individuals", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'VendorContact' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathVendorContacts
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.VendorContactCollection(), (IEntityRelation)GetRelationsForField("VendorContacts")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.VendorContactEntity, 0, null, null, null, "VendorContacts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ContactCreditCard' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathContactCreditCards
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCreditCardCollection(), (IEntityRelation)GetRelationsForField("ContactCreditCards")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.ContactCreditCardEntity, 0, null, null, null, "ContactCreditCards", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'StoreContact' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathStoreContacts
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.StoreContactCollection(), (IEntityRelation)GetRelationsForField("StoreContacts")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.StoreContactEntity, 0, null, null, null, "StoreContacts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHeader' for this entity.</summary>
@@ -1631,6 +1914,105 @@ namespace AW.Data.EntityClasses
 					_individuals.Clear();
 				}
 				_alreadyFetchedIndividuals = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'VendorContactEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiVendorContacts()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.VendorContactCollection VendorContacts
+		{
+			get	{ return GetMultiVendorContacts(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for VendorContacts. When set to true, VendorContacts is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time VendorContacts is accessed. You can always execute/ a forced fetch by calling GetMultiVendorContacts(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchVendorContacts
+		{
+			get	{ return _alwaysFetchVendorContacts; }
+			set	{ _alwaysFetchVendorContacts = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property VendorContacts already has been fetched. Setting this property to false when VendorContacts has been fetched
+		/// will clear the VendorContacts collection well. Setting this property to true while VendorContacts hasn't been fetched disables lazy loading for VendorContacts</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedVendorContacts
+		{
+			get { return _alreadyFetchedVendorContacts;}
+			set 
+			{
+				if(_alreadyFetchedVendorContacts && !value && (_vendorContacts != null))
+				{
+					_vendorContacts.Clear();
+				}
+				_alreadyFetchedVendorContacts = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'ContactCreditCardEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiContactCreditCards()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ContactCreditCardCollection ContactCreditCards
+		{
+			get	{ return GetMultiContactCreditCards(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for ContactCreditCards. When set to true, ContactCreditCards is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ContactCreditCards is accessed. You can always execute/ a forced fetch by calling GetMultiContactCreditCards(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchContactCreditCards
+		{
+			get	{ return _alwaysFetchContactCreditCards; }
+			set	{ _alwaysFetchContactCreditCards = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property ContactCreditCards already has been fetched. Setting this property to false when ContactCreditCards has been fetched
+		/// will clear the ContactCreditCards collection well. Setting this property to true while ContactCreditCards hasn't been fetched disables lazy loading for ContactCreditCards</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedContactCreditCards
+		{
+			get { return _alreadyFetchedContactCreditCards;}
+			set 
+			{
+				if(_alreadyFetchedContactCreditCards && !value && (_contactCreditCards != null))
+				{
+					_contactCreditCards.Clear();
+				}
+				_alreadyFetchedContactCreditCards = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiStoreContacts()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.StoreContactCollection StoreContacts
+		{
+			get	{ return GetMultiStoreContacts(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for StoreContacts. When set to true, StoreContacts is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time StoreContacts is accessed. You can always execute/ a forced fetch by calling GetMultiStoreContacts(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchStoreContacts
+		{
+			get	{ return _alwaysFetchStoreContacts; }
+			set	{ _alwaysFetchStoreContacts = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property StoreContacts already has been fetched. Setting this property to false when StoreContacts has been fetched
+		/// will clear the StoreContacts collection well. Setting this property to true while StoreContacts hasn't been fetched disables lazy loading for StoreContacts</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedStoreContacts
+		{
+			get { return _alreadyFetchedStoreContacts;}
+			set 
+			{
+				if(_alreadyFetchedStoreContacts && !value && (_storeContacts != null))
+				{
+					_storeContacts.Clear();
+				}
+				_alreadyFetchedStoreContacts = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.<br/><br/>

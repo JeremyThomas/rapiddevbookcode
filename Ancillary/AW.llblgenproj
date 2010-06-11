@@ -94,11 +94,11 @@
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
     <TargetElement Type="256">
-      <OutputSettingValues>
+      <Defaults>
         <Attributes>
           <Attribute Value="Browsable($true)" />
         </Attributes>
-      </OutputSettingValues>
+      </Defaults>
     </TargetElement>
   </CodeGenerationMetaDataDefaults>
   <EntityModel>
@@ -122,6 +122,14 @@
           <Field Name="ModifiedDate" Type="datetime" />
           <Field Name="Name" Type="string" MaxLength="50" />
           <Field Name="Rowguid" Type="guid" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="AwbuildVersion">
+        <Fields>
+          <Field Name="DatabaseVersion" Type="string" MaxLength="25" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="SystemInformationID" Type="byte" IsReadOnly="true" Precision="3" IsPrimaryKey="true" />
+          <Field Name="VersionDate" Type="datetime" />
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="Contact">
@@ -218,6 +226,18 @@
           <Field Name="Title" Type="string" MaxLength="8" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="DatabaseLog">
+        <Fields>
+          <Field Name="DatabaseLogID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="DatabaseUser" Type="string" MaxLength="128" />
+          <Field Name="Event" Type="string" MaxLength="128" />
+          <Field Name="Object" Type="string" IsOptional="true" MaxLength="128" />
+          <Field Name="PostTime" Type="datetime" />
+          <Field Name="Schema" Type="string" IsOptional="true" MaxLength="128" />
+          <Field Name="Tsql" Type="string" MaxLength="2147483647" />
+          <Field Name="XmlEvent" Type="string" MaxLength="2147483647" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="Employee">
         <Fields>
           <Field Name="BirthDate" Type="datetime" />
@@ -246,6 +266,19 @@
           <Field Name="Rowguid" Type="guid" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="ErrorLog">
+        <Fields>
+          <Field Name="ErrorLine" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="ErrorLogID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ErrorMessage" Type="string" MaxLength="4000" />
+          <Field Name="ErrorNumber" Type="int" Precision="10" />
+          <Field Name="ErrorProcedure" Type="string" IsOptional="true" MaxLength="126" />
+          <Field Name="ErrorSeverity" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="ErrorState" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="ErrorTime" Type="datetime" />
+          <Field Name="UserName" Type="string" MaxLength="128" />
+        </Fields>
+      </EntityDefinition>
       <EntityDefinition Name="Individual">
         <Fields>
           <Field Name="ContactID" Type="int" IsAutoCreated="true" />
@@ -267,9 +300,9 @@
           <Field Name="Name" Type="string" MaxLength="50" />
           <Field Name="ProductID" Type="int" IsReadOnly="true" IsPrimaryKey="true" />
           <Field Name="ProductLine" Type="string" IsOptional="true" MaxLength="2" />
-          <Field Name="ProductModelID" Type="int" IsOptional="true" />
+          <Field Name="ProductModelID" Type="int" IsOptional="true" Precision="10" />
           <Field Name="ProductNumber" Type="string" MaxLength="25" />
-          <Field Name="ProductSubcategoryID" Type="int" IsOptional="true" />
+          <Field Name="ProductSubcategoryID" Type="int" IsOptional="true" Precision="10" />
           <Field Name="ReorderPoint" Type="short" />
           <Field Name="Rowguid" Type="guid" />
           <Field Name="SafetyStockLevel" Type="short" />
@@ -388,6 +421,469 @@
           <Field Name="TerritoryID" Type="int" IsAutoCreated="true" />
         </Fields>
       </EntityDefinition>
+      <EntityDefinition Name="Department" GroupName="HumanResources">
+        <Fields>
+          <Field Name="DepartmentID" Type="short" IsReadOnly="true" Precision="5" IsPrimaryKey="true" />
+          <Field Name="GroupName" Type="string" MaxLength="50" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="EmployeeDepartmentHistory" GroupName="HumanResources">
+        <Fields>
+          <Field Name="DepartmentID" Type="short" Precision="5" IsPrimaryKey="true" />
+          <Field Name="EmployeeID" Type="int" IsPrimaryKey="true" />
+          <Field Name="EndDate" Type="datetime" IsOptional="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ShiftID" Type="byte" Precision="3" IsPrimaryKey="true" />
+          <Field Name="StartDate" Type="datetime" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="EmployeePayHistory" GroupName="HumanResources">
+        <Fields>
+          <Field Name="EmployeeID" Type="int" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="PayFrequency" Type="byte" Precision="3" />
+          <Field Name="Rate" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="RateChangeDate" Type="datetime" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="JobCandidate" GroupName="HumanResources">
+        <Fields>
+          <Field Name="EmployeeID" Type="int" IsOptional="true" />
+          <Field Name="JobCandidateID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Resume" Type="string" IsOptional="true" MaxLength="2147483647" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Shift" GroupName="HumanResources">
+        <Fields>
+          <Field Name="EndTime" Type="datetime" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="ShiftID" Type="byte" IsReadOnly="true" Precision="3" IsPrimaryKey="true" />
+          <Field Name="StartTime" Type="datetime" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ContactType" GroupName="Person">
+        <Fields>
+          <Field Name="ContactTypeID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="BillOfMaterial" GroupName="Production">
+        <Fields>
+          <Field Name="BillOfMaterialsID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Bomlevel" Type="short" Precision="5" />
+          <Field Name="ComponentID" Type="int" />
+          <Field Name="EndDate" Type="datetime" IsOptional="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="PerAssemblyQuantity" Type="decimal" Precision="8" Scale="2" />
+          <Field Name="ProductAssemblyID" Type="int" IsOptional="true" />
+          <Field Name="StartDate" Type="datetime" />
+          <Field Name="UnitMeasureCode" Type="string" MaxLength="3" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Culture" GroupName="Production">
+        <Fields>
+          <Field Name="CultureID" Type="string" MaxLength="6" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Document" GroupName="Production">
+        <Fields>
+          <Field Name="ChangeNumber" Type="int" Precision="10" />
+          <Field Name="Document" Type="byte[]" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="DocumentID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="DocumentSummary" Type="string" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="FileExtension" Type="string" MaxLength="8" />
+          <Field Name="FileName" Type="string" MaxLength="400" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Revision" Type="string" MaxLength="5" />
+          <Field Name="Status" Type="byte" Precision="3" />
+          <Field Name="Title" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Illustration" GroupName="Production">
+        <Fields>
+          <Field Name="Diagram" Type="string" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="IllustrationID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Location" GroupName="Production">
+        <Fields>
+          <Field Name="Availability" Type="decimal" Precision="8" Scale="2" />
+          <Field Name="CostRate" Type="decimal" Precision="10" Scale="4" />
+          <Field Name="LocationID" Type="short" IsReadOnly="true" Precision="5" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductCategory" GroupName="Production">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="ProductCategoryID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Rowguid" Type="guid" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductCostHistory" GroupName="Production">
+        <Fields>
+          <Field Name="EndDate" Type="datetime" IsOptional="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductID" Type="int" IsPrimaryKey="true" />
+          <Field Name="StandardCost" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="StartDate" Type="datetime" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductDescription" GroupName="Production">
+        <Fields>
+          <Field Name="Description" Type="string" MaxLength="400" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductDescriptionID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Rowguid" Type="guid" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductDocument" GroupName="Production">
+        <Fields>
+          <Field Name="DocumentID" Type="int" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductID" Type="int" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductInventory" GroupName="Production">
+        <Fields>
+          <Field Name="Bin" Type="byte" Precision="3" />
+          <Field Name="LocationID" Type="short" Precision="5" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductID" Type="int" IsPrimaryKey="true" />
+          <Field Name="Quantity" Type="short" Precision="5" />
+          <Field Name="Rowguid" Type="guid" />
+          <Field Name="Shelf" Type="string" MaxLength="10" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductListPriceHistory" GroupName="Production">
+        <Fields>
+          <Field Name="EndDate" Type="datetime" IsOptional="true" />
+          <Field Name="ListPrice" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductID" Type="int" IsPrimaryKey="true" />
+          <Field Name="StartDate" Type="datetime" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductModel" GroupName="Production">
+        <Fields>
+          <Field Name="CatalogDescription" Type="string" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="Instructions" Type="string" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="ProductModelID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Rowguid" Type="guid" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductModelIllustration" GroupName="Production">
+        <Fields>
+          <Field Name="IllustrationID" Type="int" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductModelID" Type="int" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductModelProductDescriptionCulture" GroupName="Production">
+        <Fields>
+          <Field Name="CultureID" Type="string" MaxLength="6" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductDescriptionID" Type="int" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ProductModelID" Type="int" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductPhoto" GroupName="Production">
+        <Fields>
+          <Field Name="LargePhoto" Type="byte[]" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="LargePhotoFileName" Type="string" IsOptional="true" MaxLength="50" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductPhotoID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ThumbNailPhoto" Type="byte[]" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="ThumbnailPhotoFileName" Type="string" IsOptional="true" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductProductPhoto" GroupName="Production">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Primary" Type="bool" />
+          <Field Name="ProductID" Type="int" IsPrimaryKey="true" />
+          <Field Name="ProductPhotoID" Type="int" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductReview" GroupName="Production">
+        <Fields>
+          <Field Name="Comments" Type="string" IsOptional="true" MaxLength="3850" />
+          <Field Name="EmailAddress" Type="string" MaxLength="50" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductID" Type="int" />
+          <Field Name="ProductReviewID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Rating" Type="int" Precision="10" />
+          <Field Name="ReviewDate" Type="datetime" />
+          <Field Name="ReviewerName" Type="string" MaxLength="50" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductSubcategory" GroupName="Production">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="ProductCategoryID" Type="int" Precision="10" />
+          <Field Name="ProductSubcategoryID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Rowguid" Type="guid" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ScrapReason" GroupName="Production">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="ScrapReasonID" Type="short" IsReadOnly="true" Precision="5" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="TransactionHistory" GroupName="Production">
+        <Fields>
+          <Field Name="ActualCost" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductID" Type="int" />
+          <Field Name="Quantity" Type="int" Precision="10" />
+          <Field Name="ReferenceOrderID" Type="int" Precision="10" />
+          <Field Name="ReferenceOrderLineID" Type="int" Precision="10" />
+          <Field Name="TransactionDate" Type="datetime" />
+          <Field Name="TransactionID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="TransactionType" Type="string" MaxLength="1" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="TransactionHistoryArchive" GroupName="Production">
+        <Fields>
+          <Field Name="ActualCost" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductID" Type="int" Precision="10" />
+          <Field Name="Quantity" Type="int" Precision="10" />
+          <Field Name="ReferenceOrderID" Type="int" Precision="10" />
+          <Field Name="ReferenceOrderLineID" Type="int" Precision="10" />
+          <Field Name="TransactionDate" Type="datetime" />
+          <Field Name="TransactionID" Type="int" Precision="10" IsPrimaryKey="true" />
+          <Field Name="TransactionType" Type="string" MaxLength="1" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="UnitMeasure" GroupName="Production">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="UnitMeasureCode" Type="string" MaxLength="3" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="WorkOrder" GroupName="Production">
+        <Fields>
+          <Field Name="DueDate" Type="datetime" />
+          <Field Name="EndDate" Type="datetime" IsOptional="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="OrderQuantity" Type="int" Precision="10" />
+          <Field Name="ProductID" Type="int" />
+          <Field Name="ScrappedQuantity" Type="short" Precision="5" />
+          <Field Name="ScrapReasonID" Type="short" IsOptional="true" Precision="5" />
+          <Field Name="StartDate" Type="datetime" />
+          <Field Name="StockedQuantity" Type="int" IsReadOnly="true" Precision="10" />
+          <Field Name="WorkOrderID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="WorkOrderRouting" GroupName="Production">
+        <Fields>
+          <Field Name="ActualCost" Type="decimal" IsOptional="true" Precision="19" Scale="4" />
+          <Field Name="ActualEndDate" Type="datetime" IsOptional="true" />
+          <Field Name="ActualResourceHrs" Type="decimal" IsOptional="true" Precision="9" Scale="4" />
+          <Field Name="ActualStartDate" Type="datetime" IsOptional="true" />
+          <Field Name="LocationID" Type="short" Precision="5" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="OperationSequence" Type="short" Precision="5" IsPrimaryKey="true" />
+          <Field Name="PlannedCost" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="ProductID" Type="int" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ScheduledEndDate" Type="datetime" />
+          <Field Name="ScheduledStartDate" Type="datetime" />
+          <Field Name="WorkOrderID" Type="int" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ProductVendor" GroupName="Purchasing">
+        <Fields>
+          <Field Name="AverageLeadTime" Type="int" Precision="10" />
+          <Field Name="LastReceiptCost" Type="decimal" IsOptional="true" Precision="19" Scale="4" />
+          <Field Name="LastReceiptDate" Type="datetime" IsOptional="true" />
+          <Field Name="MaxOrderQuantity" Type="int" Precision="10" />
+          <Field Name="MinOrderQuantity" Type="int" Precision="10" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="OnOrderQuantity" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="ProductID" Type="int" IsPrimaryKey="true" />
+          <Field Name="StandardPrice" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="UnitMeasureCode" Type="string" MaxLength="3" />
+          <Field Name="VendorID" Type="int" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="PurchaseOrderDetail" GroupName="Purchasing">
+        <Fields>
+          <Field Name="DueDate" Type="datetime" />
+          <Field Name="LineTotal" Type="decimal" IsReadOnly="true" Precision="19" Scale="4" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="OrderQuantity" Type="short" Precision="5" />
+          <Field Name="ProductID" Type="int" />
+          <Field Name="PurchaseOrderDetailID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="PurchaseOrderID" Type="int" Precision="10" IsPrimaryKey="true" />
+          <Field Name="ReceivedQuantity" Type="decimal" Precision="8" Scale="2" />
+          <Field Name="RejectedQuantity" Type="decimal" Precision="8" Scale="2" />
+          <Field Name="StockedQuantity" Type="decimal" IsReadOnly="true" Precision="9" Scale="2" />
+          <Field Name="UnitPrice" Type="decimal" Precision="19" Scale="4" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="PurchaseOrderHeader" GroupName="Purchasing">
+        <Fields>
+          <Field Name="EmployeeID" Type="int" />
+          <Field Name="Freight" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="OrderDate" Type="datetime" />
+          <Field Name="PurchaseOrderID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="RevisionNumber" Type="byte" Precision="3" />
+          <Field Name="ShipDate" Type="datetime" IsOptional="true" />
+          <Field Name="ShipMethodID" Type="int" />
+          <Field Name="Status" Type="byte" Precision="3" />
+          <Field Name="SubTotal" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="TaxAmt" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="TotalDue" Type="decimal" IsReadOnly="true" Precision="19" Scale="4" />
+          <Field Name="VendorID" Type="int" Precision="10" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Vendor" GroupName="Purchasing">
+        <Fields>
+          <Field Name="AccountNumber" Type="string" MaxLength="15" />
+          <Field Name="ActiveFlag" Type="bool" />
+          <Field Name="CreditRating" Type="byte" Precision="3" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="PreferredVendorStatus" Type="bool" />
+          <Field Name="PurchasingWebServiceUrl" Type="string" IsOptional="true" MaxLength="1024" />
+          <Field Name="VendorID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="VendorAddress" GroupName="Purchasing">
+        <Fields>
+          <Field Name="AddressID" Type="int" IsPrimaryKey="true" />
+          <Field Name="AddressTypeID" Type="int" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="VendorID" Type="int" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="VendorContact" GroupName="Purchasing">
+        <Fields>
+          <Field Name="ContactID" Type="int" IsPrimaryKey="true" />
+          <Field Name="ContactTypeID" Type="int" Precision="10" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="VendorID" Type="int" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ContactCreditCard" GroupName="Sales">
+        <Fields>
+          <Field Name="ContactID" Type="int" IsPrimaryKey="true" />
+          <Field Name="CreditCardID" Type="int" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="CountryRegionCurrency" GroupName="Sales">
+        <Fields>
+          <Field Name="CountryRegionCode" Type="string" MaxLength="3" IsPrimaryKey="true" />
+          <Field Name="CurrencyCode" Type="string" MaxLength="3" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="SalesOrderHeaderSalesReason" GroupName="Sales">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="SalesOrderID" Type="int" IsPrimaryKey="true" />
+          <Field Name="SalesReasonID" Type="int" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="SalesPerson" GroupName="Sales">
+        <Fields>
+          <Field Name="Bonus" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="CommissionPct" Type="decimal" Precision="10" Scale="4" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Rowguid" Type="guid" />
+          <Field Name="SalesLastYear" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="SalesPersonID" Type="int" IsPrimaryKey="true" />
+          <Field Name="SalesQuota" Type="decimal" IsOptional="true" Precision="19" Scale="4" />
+          <Field Name="SalesYtd" Type="decimal" Precision="19" Scale="4" />
+          <Field Name="TerritoryID" Type="int" IsOptional="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="SalesPersonQuotaHistory" GroupName="Sales">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="QuotaDate" Type="datetime" IsPrimaryKey="true" />
+          <Field Name="Rowguid" Type="guid" />
+          <Field Name="SalesPersonID" Type="int" IsPrimaryKey="true" />
+          <Field Name="SalesQuota" Type="decimal" Precision="19" Scale="4" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="SalesReason" GroupName="Sales">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="ReasonType" Type="string" MaxLength="50" />
+          <Field Name="SalesReasonID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="SalesTaxRate" GroupName="Sales">
+        <Fields>
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="Rowguid" Type="guid" />
+          <Field Name="SalesTaxRateID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="StateProvinceID" Type="int" />
+          <Field Name="TaxRate" Type="decimal" Precision="10" Scale="4" />
+          <Field Name="TaxType" Type="byte" Precision="3" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="SalesTerritoryHistory" GroupName="Sales">
+        <Fields>
+          <Field Name="EndDate" Type="datetime" IsOptional="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Rowguid" Type="guid" />
+          <Field Name="SalesPersonID" Type="int" IsPrimaryKey="true" />
+          <Field Name="StartDate" Type="datetime" IsPrimaryKey="true" />
+          <Field Name="TerritoryID" Type="int" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="ShoppingCartItem" GroupName="Sales">
+        <Fields>
+          <Field Name="DateCreated" Type="datetime" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="ProductID" Type="int" />
+          <Field Name="Quantity" Type="int" Precision="10" />
+          <Field Name="ShoppingCartID" Type="string" MaxLength="50" />
+          <Field Name="ShoppingCartItemID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="Store" GroupName="Sales">
+        <Fields>
+          <Field Name="CustomerID" Type="int" IsPrimaryKey="true" />
+          <Field Name="Demographics" Type="string" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Name" Type="string" MaxLength="50" />
+          <Field Name="Rowguid" Type="guid" />
+          <Field Name="SalesPersonID" Type="int" IsOptional="true" />
+        </Fields>
+      </EntityDefinition>
+      <EntityDefinition Name="StoreContact" GroupName="Sales">
+        <Fields>
+          <Field Name="ContactID" Type="int" IsPrimaryKey="true" />
+          <Field Name="ContactTypeID" Type="int" Precision="10" />
+          <Field Name="CustomerID" Type="int" IsPrimaryKey="true" />
+          <Field Name="ModifiedDate" Type="datetime" />
+          <Field Name="Rowguid" Type="guid" />
+        </Fields>
+      </EntityDefinition>
     </EntityDefinitions>
     <Relationships>
       <NormalRelationship Name="Address.StateProvince-StateProvince.Addresses" Start=":Address" End=":StateProvince" StartNavigator="StateProvince" EndNavigator="Addresses" Type="4">
@@ -445,12 +941,332 @@
           <FieldFieldRelationship FkField="EmployeeID" PkField="EmployeeID" />
         </FieldRelationships>
       </NormalRelationship>
+      <NormalRelationship Name="HumanResources.EmployeeDepartmentHistory.Department-HumanResources.Department.EmployeeDepartmentHistories" Start="HumanResources:EmployeeDepartmentHistory" End="HumanResources:Department" StartNavigator="Department" EndNavigator="EmployeeDepartmentHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="DepartmentID" PkField="DepartmentID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="HumanResources.EmployeeDepartmentHistory.Employee-Employee.EmployeeDepartmentHistories" Start="HumanResources:EmployeeDepartmentHistory" End=":Employee" StartNavigator="Employee" EndNavigator="EmployeeDepartmentHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="EmployeeID" PkField="EmployeeID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="HumanResources.EmployeeDepartmentHistory.Shift-HumanResources.Shift.EmployeeDepartmentHistories" Start="HumanResources:EmployeeDepartmentHistory" End="HumanResources:Shift" StartNavigator="Shift" EndNavigator="EmployeeDepartmentHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ShiftID" PkField="ShiftID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="HumanResources.EmployeePayHistory.Employee-Employee.EmployeePayHistories" Start="HumanResources:EmployeePayHistory" End=":Employee" StartNavigator="Employee" EndNavigator="EmployeePayHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="EmployeeID" PkField="EmployeeID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="HumanResources.JobCandidate.Employee-Employee.JobCandidates" Start="HumanResources:JobCandidate" End=":Employee" StartNavigator="Employee" EndNavigator="JobCandidates" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="EmployeeID" PkField="EmployeeID" />
+        </FieldRelationships>
+      </NormalRelationship>
       <NormalRelationship Name="Individual.Contact-Contact.Individuals" Start=":Individual" End=":Contact" StartNavigator="Contact" EndNavigator="Individuals" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="ContactID" PkField="ContactID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Individual.Customer-Customer.Individual" Start=":Individual" End=":Customer" StartNavigator="Customer" EndNavigator="Individual" Type="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Product.ProductModel-Production.ProductModel.Products" Start=":Product" End="Production:ProductModel" StartNavigator="ProductModel" EndNavigator="Products" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductModelID" PkField="ProductModelID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Product.ProductSubcategory-Production.ProductSubcategory.Products" Start=":Product" End="Production:ProductSubcategory" StartNavigator="ProductSubcategory" EndNavigator="Products" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductSubcategoryID" PkField="ProductSubcategoryID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Product.UnitMeasure-Production.UnitMeasure.Products" Start=":Product" End="Production:UnitMeasure" StartNavigator="UnitMeasure" EndNavigator="Products" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SizeUnitMeasureCode" PkField="UnitMeasureCode" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Product.UnitMeasure_-Production.UnitMeasure.Products_" Start=":Product" End="Production:UnitMeasure" StartNavigator="UnitMeasure_" EndNavigator="Products_" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="WeightUnitMeasureCode" PkField="UnitMeasureCode" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.BillOfMaterial.Product-Product.BillOfMaterials" Start="Production:BillOfMaterial" End=":Product" StartNavigator="Product" EndNavigator="BillOfMaterials" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ComponentID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.BillOfMaterial.Product_-Product.BillOfMaterials_" Start="Production:BillOfMaterial" End=":Product" StartNavigator="Product_" EndNavigator="BillOfMaterials_" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductAssemblyID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.BillOfMaterial.UnitMeasure-Production.UnitMeasure.BillOfMaterials" Start="Production:BillOfMaterial" End="Production:UnitMeasure" StartNavigator="UnitMeasure" EndNavigator="BillOfMaterials" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="UnitMeasureCode" PkField="UnitMeasureCode" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductCostHistory.Product-Product.ProductCostHistories" Start="Production:ProductCostHistory" End=":Product" StartNavigator="Product" EndNavigator="ProductCostHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductDocument.Document-Production.Document.ProductDocuments" Start="Production:ProductDocument" End="Production:Document" StartNavigator="Document" EndNavigator="ProductDocuments" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="DocumentID" PkField="DocumentID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductDocument.Product-Product.ProductDocuments" Start="Production:ProductDocument" End=":Product" StartNavigator="Product" EndNavigator="ProductDocuments" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductInventory.Location-Production.Location.ProductInventories" Start="Production:ProductInventory" End="Production:Location" StartNavigator="Location" EndNavigator="ProductInventories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="LocationID" PkField="LocationID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductInventory.Product-Product.ProductInventories" Start="Production:ProductInventory" End=":Product" StartNavigator="Product" EndNavigator="ProductInventories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductListPriceHistory.Product-Product.ProductListPriceHistories" Start="Production:ProductListPriceHistory" End=":Product" StartNavigator="Product" EndNavigator="ProductListPriceHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductModelIllustration.Illustration-Production.Illustration.ProductModelIllustrations" Start="Production:ProductModelIllustration" End="Production:Illustration" StartNavigator="Illustration" EndNavigator="ProductModelIllustrations" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="IllustrationID" PkField="IllustrationID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductModelIllustration.ProductModel-Production.ProductModel.ProductModelIllustrations" Start="Production:ProductModelIllustration" End="Production:ProductModel" StartNavigator="ProductModel" EndNavigator="ProductModelIllustrations" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductModelID" PkField="ProductModelID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductModelProductDescriptionCulture.Culture-Production.Culture.ProductModelProductDescriptionCultures" Start="Production:ProductModelProductDescriptionCulture" End="Production:Culture" StartNavigator="Culture" EndNavigator="ProductModelProductDescriptionCultures" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CultureID" PkField="CultureID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductModelProductDescriptionCulture.ProductDescription-Production.ProductDescription.ProductModelProductDescriptionCultures" Start="Production:ProductModelProductDescriptionCulture" End="Production:ProductDescription" StartNavigator="ProductDescription" EndNavigator="ProductModelProductDescriptionCultures" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductDescriptionID" PkField="ProductDescriptionID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductModelProductDescriptionCulture.ProductModel-Production.ProductModel.ProductModelProductDescriptionCultures" Start="Production:ProductModelProductDescriptionCulture" End="Production:ProductModel" StartNavigator="ProductModel" EndNavigator="ProductModelProductDescriptionCultures" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductModelID" PkField="ProductModelID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductProductPhoto.Product-Product.ProductProductPhotos" Start="Production:ProductProductPhoto" End=":Product" StartNavigator="Product" EndNavigator="ProductProductPhotos" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductProductPhoto.ProductPhoto-Production.ProductPhoto.ProductProductPhotos" Start="Production:ProductProductPhoto" End="Production:ProductPhoto" StartNavigator="ProductPhoto" EndNavigator="ProductProductPhotos" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductPhotoID" PkField="ProductPhotoID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductReview.Product-Product.ProductReviews" Start="Production:ProductReview" End=":Product" StartNavigator="Product" EndNavigator="ProductReviews" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.ProductSubcategory.ProductCategory-Production.ProductCategory.ProductSubcategories" Start="Production:ProductSubcategory" End="Production:ProductCategory" StartNavigator="ProductCategory" EndNavigator="ProductSubcategories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductCategoryID" PkField="ProductCategoryID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.TransactionHistory.Product-Product.TransactionHistories" Start="Production:TransactionHistory" End=":Product" StartNavigator="Product" EndNavigator="TransactionHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.WorkOrder.Product-Product.WorkOrders" Start="Production:WorkOrder" End=":Product" StartNavigator="Product" EndNavigator="WorkOrders" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.WorkOrder.ScrapReason-Production.ScrapReason.WorkOrders" Start="Production:WorkOrder" End="Production:ScrapReason" StartNavigator="ScrapReason" EndNavigator="WorkOrders" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ScrapReasonID" PkField="ScrapReasonID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.WorkOrderRouting.Location-Production.Location.WorkOrderRoutings" Start="Production:WorkOrderRouting" End="Production:Location" StartNavigator="Location" EndNavigator="WorkOrderRoutings" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="LocationID" PkField="LocationID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.WorkOrderRouting.WorkOrder-Production.WorkOrder.WorkOrderRoutings" Start="Production:WorkOrderRouting" End="Production:WorkOrder" StartNavigator="WorkOrder" EndNavigator="WorkOrderRoutings" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="WorkOrderID" PkField="WorkOrderID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.ProductVendor.Product-Product.ProductVendors" Start="Purchasing:ProductVendor" End=":Product" StartNavigator="Product" EndNavigator="ProductVendors" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.ProductVendor.UnitMeasure-Production.UnitMeasure.ProductVendors" Start="Purchasing:ProductVendor" End="Production:UnitMeasure" StartNavigator="UnitMeasure" EndNavigator="ProductVendors" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="UnitMeasureCode" PkField="UnitMeasureCode" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.ProductVendor.Vendor-Purchasing.Vendor.ProductVendors" Start="Purchasing:ProductVendor" End="Purchasing:Vendor" StartNavigator="Vendor" EndNavigator="ProductVendors" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="VendorID" PkField="VendorID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.PurchaseOrderDetail.Product-Product.PurchaseOrderDetails" Start="Purchasing:PurchaseOrderDetail" End=":Product" StartNavigator="Product" EndNavigator="PurchaseOrderDetails" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.PurchaseOrderDetail.PurchaseOrderHeader-Purchasing.PurchaseOrderHeader.PurchaseOrderDetails" Start="Purchasing:PurchaseOrderDetail" End="Purchasing:PurchaseOrderHeader" StartNavigator="PurchaseOrderHeader" EndNavigator="PurchaseOrderDetails" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="PurchaseOrderID" PkField="PurchaseOrderID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.PurchaseOrderHeader.Employee-Employee.PurchaseOrderHeaders" Start="Purchasing:PurchaseOrderHeader" End=":Employee" StartNavigator="Employee" EndNavigator="PurchaseOrderHeaders" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="EmployeeID" PkField="EmployeeID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.PurchaseOrderHeader.ShipMethod-ShipMethod.PurchaseOrderHeaders" Start="Purchasing:PurchaseOrderHeader" End=":ShipMethod" StartNavigator="ShipMethod" EndNavigator="PurchaseOrderHeaders" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ShipMethodID" PkField="ShipMethodID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.PurchaseOrderHeader.Vendor-Purchasing.Vendor.PurchaseOrderHeaders" Start="Purchasing:PurchaseOrderHeader" End="Purchasing:Vendor" StartNavigator="Vendor" EndNavigator="PurchaseOrderHeaders" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="VendorID" PkField="VendorID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.VendorAddress.Address-Address.VendorAddresses" Start="Purchasing:VendorAddress" End=":Address" StartNavigator="Address" EndNavigator="VendorAddresses" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AddressID" PkField="AddressID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.VendorAddress.AddressType-AddressType.VendorAddresses" Start="Purchasing:VendorAddress" End=":AddressType" StartNavigator="AddressType" EndNavigator="VendorAddresses" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="AddressTypeID" PkField="AddressTypeID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.VendorAddress.Vendor-Purchasing.Vendor.VendorAddresses" Start="Purchasing:VendorAddress" End="Purchasing:Vendor" StartNavigator="Vendor" EndNavigator="VendorAddresses" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="VendorID" PkField="VendorID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.VendorContact.Contact-Contact.VendorContacts" Start="Purchasing:VendorContact" End=":Contact" StartNavigator="Contact" EndNavigator="VendorContacts" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ContactID" PkField="ContactID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.VendorContact.ContactType-Person.ContactType.VendorContacts" Start="Purchasing:VendorContact" End="Person:ContactType" StartNavigator="ContactType" EndNavigator="VendorContacts" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ContactTypeID" PkField="ContactTypeID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Purchasing.VendorContact.Vendor-Purchasing.Vendor.VendorContacts" Start="Purchasing:VendorContact" End="Purchasing:Vendor" StartNavigator="Vendor" EndNavigator="VendorContacts" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="VendorID" PkField="VendorID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.ContactCreditCard.Contact-Contact.ContactCreditCards" Start="Sales:ContactCreditCard" End=":Contact" StartNavigator="Contact" EndNavigator="ContactCreditCards" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ContactID" PkField="ContactID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.ContactCreditCard.CreditCard-CreditCard.ContactCreditCards" Start="Sales:ContactCreditCard" End=":CreditCard" StartNavigator="CreditCard" EndNavigator="ContactCreditCards" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CreditCardID" PkField="CreditCardID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.CountryRegionCurrency.CountryRegion-CountryRegion.CountryRegionCurrencies" Start="Sales:CountryRegionCurrency" End=":CountryRegion" StartNavigator="CountryRegion" EndNavigator="CountryRegionCurrencies" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CountryRegionCode" PkField="CountryRegionCode" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.CountryRegionCurrency.Currency-Currency.CountryRegionCurrencies" Start="Sales:CountryRegionCurrency" End=":Currency" StartNavigator="Currency" EndNavigator="CountryRegionCurrencies" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CurrencyCode" PkField="CurrencyCode" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesOrderHeaderSalesReason.SalesOrderHeader-SalesOrderHeader.SalesOrderHeaderSalesReasons" Start="Sales:SalesOrderHeaderSalesReason" End=":SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderHeaderSalesReasons" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SalesOrderID" PkField="SalesOrderID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesOrderHeaderSalesReason.SalesReason-Sales.SalesReason.SalesOrderHeaderSalesReasons" Start="Sales:SalesOrderHeaderSalesReason" End="Sales:SalesReason" StartNavigator="SalesReason" EndNavigator="SalesOrderHeaderSalesReasons" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SalesReasonID" PkField="SalesReasonID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesPerson.Employee-Employee.SalesPerson" Start="Sales:SalesPerson" End=":Employee" StartNavigator="Employee" EndNavigator="SalesPerson" Type="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="EmployeeID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesPerson.SalesTerritory-SalesTerritory.SalesPeople" Start="Sales:SalesPerson" End=":SalesTerritory" StartNavigator="SalesTerritory" EndNavigator="SalesPeople" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="TerritoryID" PkField="TerritoryID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesPersonQuotaHistory.SalesPerson-Sales.SalesPerson.SalesPersonQuotaHistories" Start="Sales:SalesPersonQuotaHistory" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="SalesPersonQuotaHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="SalesPersonID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesTaxRate.StateProvince-StateProvince.SalesTaxRates" Start="Sales:SalesTaxRate" End=":StateProvince" StartNavigator="StateProvince" EndNavigator="SalesTaxRates" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="StateProvinceID" PkField="StateProvinceID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesTerritoryHistory.SalesPerson-Sales.SalesPerson.SalesTerritoryHistories" Start="Sales:SalesTerritoryHistory" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="SalesTerritoryHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="SalesPersonID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesTerritoryHistory.SalesTerritory-SalesTerritory.SalesTerritoryHistories" Start="Sales:SalesTerritoryHistory" End=":SalesTerritory" StartNavigator="SalesTerritory" EndNavigator="SalesTerritoryHistories" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="TerritoryID" PkField="TerritoryID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.ShoppingCartItem.Product-Product.ShoppingCartItems" Start="Sales:ShoppingCartItem" End=":Product" StartNavigator="Product" EndNavigator="ShoppingCartItems" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ProductID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.Store.Customer-Customer.Store" Start="Sales:Store" End=":Customer" StartNavigator="Customer" EndNavigator="Store" Type="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.Store.SalesPerson-Sales.SalesPerson.Stores" Start="Sales:Store" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="Stores" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="SalesPersonID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.StoreContact.Contact-Contact.StoreContacts" Start="Sales:StoreContact" End=":Contact" StartNavigator="Contact" EndNavigator="StoreContacts" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ContactID" PkField="ContactID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.StoreContact.ContactType-Person.ContactType.StoreContacts" Start="Sales:StoreContact" End="Person:ContactType" StartNavigator="ContactType" EndNavigator="StoreContacts" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ContactTypeID" PkField="ContactTypeID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.StoreContact.Store-Sales.Store.StoreContacts" Start="Sales:StoreContact" End="Sales:Store" StartNavigator="Store" EndNavigator="StoreContacts" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
         </FieldRelationships>
@@ -494,6 +1310,11 @@
       <NormalRelationship Name="SalesOrderHeader.CustomerViewRelated-CustomerViewRelated.SalesOrderHeader" Start=":SalesOrderHeader" End=":CustomerViewRelated" StartNavigator="CustomerViewRelated" EndNavigator="SalesOrderHeader" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="CustomerID" PkField="CustomerId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="SalesOrderHeader.SalesPerson-Sales.SalesPerson.SalesOrderHeaders" Start=":SalesOrderHeader" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="SalesOrderHeaders" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="SalesPersonID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="SalesOrderHeader.SalesTerritory-SalesTerritory.SalesOrderHeaders" Start=":SalesOrderHeader" End=":SalesTerritory" StartNavigator="SalesTerritory" EndNavigator="SalesOrderHeaders" Type="4">
@@ -2369,6 +3190,14 @@
             <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
           </FieldMappings>
         </EntityMapping>
+        <EntityMapping EntityName=":AwbuildVersion" TargetName="AdventureWorks:dbo:AWBuildVersion">
+          <FieldMappings>
+            <FieldMapping FieldName="DatabaseVersion" TargetFieldName="Database Version" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="SystemInformationID" TargetFieldName="SystemInformationID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="VersionDate" TargetFieldName="VersionDate" />
+          </FieldMappings>
+        </EntityMapping>
         <EntityMapping EntityName=":Contact" TargetName="AdventureWorks:Person:Contact">
           <FieldMappings>
             <FieldMapping FieldName="AdditionalContactInfo" TargetFieldName="AdditionalContactInfo" />
@@ -2463,6 +3292,18 @@
             <FieldMapping FieldName="Title" TargetFieldName="Title" />
           </FieldMappings>
         </EntityMapping>
+        <EntityMapping EntityName=":DatabaseLog" TargetName="AdventureWorks:dbo:DatabaseLog">
+          <FieldMappings>
+            <FieldMapping FieldName="DatabaseLogID" TargetFieldName="DatabaseLogID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="DatabaseUser" TargetFieldName="DatabaseUser" />
+            <FieldMapping FieldName="Event" TargetFieldName="Event" />
+            <FieldMapping FieldName="Object" TargetFieldName="Object" />
+            <FieldMapping FieldName="PostTime" TargetFieldName="PostTime" />
+            <FieldMapping FieldName="Schema" TargetFieldName="Schema" />
+            <FieldMapping FieldName="Tsql" TargetFieldName="TSQL" />
+            <FieldMapping FieldName="XmlEvent" TargetFieldName="XmlEvent" />
+          </FieldMappings>
+        </EntityMapping>
         <EntityMapping EntityName=":Employee" TargetName="AdventureWorks:HumanResources:Employee">
           <FieldMappings>
             <FieldMapping FieldName="BirthDate" TargetFieldName="BirthDate" />
@@ -2491,12 +3332,76 @@
             <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
           </FieldMappings>
         </EntityMapping>
+        <EntityMapping EntityName=":ErrorLog" TargetName="AdventureWorks:dbo:ErrorLog">
+          <FieldMappings>
+            <FieldMapping FieldName="ErrorLine" TargetFieldName="ErrorLine" />
+            <FieldMapping FieldName="ErrorLogID" TargetFieldName="ErrorLogID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ErrorMessage" TargetFieldName="ErrorMessage" />
+            <FieldMapping FieldName="ErrorNumber" TargetFieldName="ErrorNumber" />
+            <FieldMapping FieldName="ErrorProcedure" TargetFieldName="ErrorProcedure" />
+            <FieldMapping FieldName="ErrorSeverity" TargetFieldName="ErrorSeverity" />
+            <FieldMapping FieldName="ErrorState" TargetFieldName="ErrorState" />
+            <FieldMapping FieldName="ErrorTime" TargetFieldName="ErrorTime" />
+            <FieldMapping FieldName="UserName" TargetFieldName="UserName" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="HumanResources:Department" TargetName="AdventureWorks:HumanResources:Department">
+          <FieldMappings>
+            <FieldMapping FieldName="DepartmentID" TargetFieldName="DepartmentID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="GroupName" TargetFieldName="GroupName" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="HumanResources:EmployeeDepartmentHistory" TargetName="AdventureWorks:HumanResources:EmployeeDepartmentHistory">
+          <FieldMappings>
+            <FieldMapping FieldName="DepartmentID" TargetFieldName="DepartmentID" />
+            <FieldMapping FieldName="EmployeeID" TargetFieldName="EmployeeID" />
+            <FieldMapping FieldName="EndDate" TargetFieldName="EndDate" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ShiftID" TargetFieldName="ShiftID" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="StartDate" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="HumanResources:EmployeePayHistory" TargetName="AdventureWorks:HumanResources:EmployeePayHistory">
+          <FieldMappings>
+            <FieldMapping FieldName="EmployeeID" TargetFieldName="EmployeeID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="PayFrequency" TargetFieldName="PayFrequency" />
+            <FieldMapping FieldName="Rate" TargetFieldName="Rate" />
+            <FieldMapping FieldName="RateChangeDate" TargetFieldName="RateChangeDate" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="HumanResources:JobCandidate" TargetName="AdventureWorks:HumanResources:JobCandidate">
+          <FieldMappings>
+            <FieldMapping FieldName="EmployeeID" TargetFieldName="EmployeeID" />
+            <FieldMapping FieldName="JobCandidateID" TargetFieldName="JobCandidateID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Resume" TargetFieldName="Resume" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="HumanResources:Shift" TargetName="AdventureWorks:HumanResources:Shift">
+          <FieldMappings>
+            <FieldMapping FieldName="EndTime" TargetFieldName="EndTime" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="ShiftID" TargetFieldName="ShiftID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="StartTime" TargetFieldName="StartTime" />
+          </FieldMappings>
+        </EntityMapping>
         <EntityMapping EntityName=":Individual" TargetName="AdventureWorks:Sales:Individual">
           <FieldMappings>
             <FieldMapping FieldName="ContactID" TargetFieldName="ContactID" />
             <FieldMapping FieldName="CustomerID" TargetFieldName="CustomerID" />
             <FieldMapping FieldName="Demographics" TargetFieldName="Demographics" />
             <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Person:ContactType" TargetName="AdventureWorks:Person:ContactType">
+          <FieldMappings>
+            <FieldMapping FieldName="ContactTypeID" TargetFieldName="ContactTypeID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Product" TargetName="AdventureWorks:Production:Product">
@@ -2526,6 +3431,418 @@
             <FieldMapping FieldName="Style" TargetFieldName="Style" />
             <FieldMapping FieldName="Weight" TargetFieldName="Weight" />
             <FieldMapping FieldName="WeightUnitMeasureCode" TargetFieldName="WeightUnitMeasureCode" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:BillOfMaterial" TargetName="AdventureWorks:Production:BillOfMaterials">
+          <FieldMappings>
+            <FieldMapping FieldName="BillOfMaterialsID" TargetFieldName="BillOfMaterialsID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Bomlevel" TargetFieldName="BOMLevel" />
+            <FieldMapping FieldName="ComponentID" TargetFieldName="ComponentID" />
+            <FieldMapping FieldName="EndDate" TargetFieldName="EndDate" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="PerAssemblyQuantity" TargetFieldName="PerAssemblyQty" />
+            <FieldMapping FieldName="ProductAssemblyID" TargetFieldName="ProductAssemblyID" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="StartDate" />
+            <FieldMapping FieldName="UnitMeasureCode" TargetFieldName="UnitMeasureCode" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:Culture" TargetName="AdventureWorks:Production:Culture">
+          <FieldMappings>
+            <FieldMapping FieldName="CultureID" TargetFieldName="CultureID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:Document" TargetName="AdventureWorks:Production:Document">
+          <FieldMappings>
+            <FieldMapping FieldName="ChangeNumber" TargetFieldName="ChangeNumber" />
+            <FieldMapping FieldName="Document" TargetFieldName="Document" />
+            <FieldMapping FieldName="DocumentID" TargetFieldName="DocumentID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="DocumentSummary" TargetFieldName="DocumentSummary" />
+            <FieldMapping FieldName="FileExtension" TargetFieldName="FileExtension" />
+            <FieldMapping FieldName="FileName" TargetFieldName="FileName" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Revision" TargetFieldName="Revision" />
+            <FieldMapping FieldName="Status" TargetFieldName="Status" />
+            <FieldMapping FieldName="Title" TargetFieldName="Title" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:Illustration" TargetName="AdventureWorks:Production:Illustration">
+          <FieldMappings>
+            <FieldMapping FieldName="Diagram" TargetFieldName="Diagram" />
+            <FieldMapping FieldName="IllustrationID" TargetFieldName="IllustrationID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:Location" TargetName="AdventureWorks:Production:Location">
+          <FieldMappings>
+            <FieldMapping FieldName="Availability" TargetFieldName="Availability" />
+            <FieldMapping FieldName="CostRate" TargetFieldName="CostRate" />
+            <FieldMapping FieldName="LocationID" TargetFieldName="LocationID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductCategory" TargetName="AdventureWorks:Production:ProductCategory">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="ProductCategoryID" TargetFieldName="ProductCategoryID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductCostHistory" TargetName="AdventureWorks:Production:ProductCostHistory">
+          <FieldMappings>
+            <FieldMapping FieldName="EndDate" TargetFieldName="EndDate" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="StandardCost" TargetFieldName="StandardCost" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="StartDate" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductDescription" TargetName="AdventureWorks:Production:ProductDescription">
+          <FieldMappings>
+            <FieldMapping FieldName="Description" TargetFieldName="Description" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductDescriptionID" TargetFieldName="ProductDescriptionID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductDocument" TargetName="AdventureWorks:Production:ProductDocument">
+          <FieldMappings>
+            <FieldMapping FieldName="DocumentID" TargetFieldName="DocumentID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductInventory" TargetName="AdventureWorks:Production:ProductInventory">
+          <FieldMappings>
+            <FieldMapping FieldName="Bin" TargetFieldName="Bin" />
+            <FieldMapping FieldName="LocationID" TargetFieldName="LocationID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="Quantity" TargetFieldName="Quantity" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+            <FieldMapping FieldName="Shelf" TargetFieldName="Shelf" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductListPriceHistory" TargetName="AdventureWorks:Production:ProductListPriceHistory">
+          <FieldMappings>
+            <FieldMapping FieldName="EndDate" TargetFieldName="EndDate" />
+            <FieldMapping FieldName="ListPrice" TargetFieldName="ListPrice" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="StartDate" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductModel" TargetName="AdventureWorks:Production:ProductModel">
+          <FieldMappings>
+            <FieldMapping FieldName="CatalogDescription" TargetFieldName="CatalogDescription" />
+            <FieldMapping FieldName="Instructions" TargetFieldName="Instructions" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="ProductModelID" TargetFieldName="ProductModelID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductModelIllustration" TargetName="AdventureWorks:Production:ProductModelIllustration">
+          <FieldMappings>
+            <FieldMapping FieldName="IllustrationID" TargetFieldName="IllustrationID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductModelID" TargetFieldName="ProductModelID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductModelProductDescriptionCulture" TargetName="AdventureWorks:Production:ProductModelProductDescriptionCulture">
+          <FieldMappings>
+            <FieldMapping FieldName="CultureID" TargetFieldName="CultureID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductDescriptionID" TargetFieldName="ProductDescriptionID" />
+            <FieldMapping FieldName="ProductModelID" TargetFieldName="ProductModelID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductPhoto" TargetName="AdventureWorks:Production:ProductPhoto">
+          <FieldMappings>
+            <FieldMapping FieldName="LargePhoto" TargetFieldName="LargePhoto" />
+            <FieldMapping FieldName="LargePhotoFileName" TargetFieldName="LargePhotoFileName" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductPhotoID" TargetFieldName="ProductPhotoID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ThumbNailPhoto" TargetFieldName="ThumbNailPhoto" />
+            <FieldMapping FieldName="ThumbnailPhotoFileName" TargetFieldName="ThumbnailPhotoFileName" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductProductPhoto" TargetName="AdventureWorks:Production:ProductProductPhoto">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Primary" TargetFieldName="Primary" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="ProductPhotoID" TargetFieldName="ProductPhotoID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductReview" TargetName="AdventureWorks:Production:ProductReview">
+          <FieldMappings>
+            <FieldMapping FieldName="Comments" TargetFieldName="Comments" />
+            <FieldMapping FieldName="EmailAddress" TargetFieldName="EmailAddress" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="ProductReviewID" TargetFieldName="ProductReviewID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Rating" TargetFieldName="Rating" />
+            <FieldMapping FieldName="ReviewDate" TargetFieldName="ReviewDate" />
+            <FieldMapping FieldName="ReviewerName" TargetFieldName="ReviewerName" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ProductSubcategory" TargetName="AdventureWorks:Production:ProductSubcategory">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="ProductCategoryID" TargetFieldName="ProductCategoryID" />
+            <FieldMapping FieldName="ProductSubcategoryID" TargetFieldName="ProductSubcategoryID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:ScrapReason" TargetName="AdventureWorks:Production:ScrapReason">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="ScrapReasonID" TargetFieldName="ScrapReasonID" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:TransactionHistory" TargetName="AdventureWorks:Production:TransactionHistory">
+          <FieldMappings>
+            <FieldMapping FieldName="ActualCost" TargetFieldName="ActualCost" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="Quantity" TargetFieldName="Quantity" />
+            <FieldMapping FieldName="ReferenceOrderID" TargetFieldName="ReferenceOrderID" />
+            <FieldMapping FieldName="ReferenceOrderLineID" TargetFieldName="ReferenceOrderLineID" />
+            <FieldMapping FieldName="TransactionDate" TargetFieldName="TransactionDate" />
+            <FieldMapping FieldName="TransactionID" TargetFieldName="TransactionID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="TransactionType" TargetFieldName="TransactionType" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:TransactionHistoryArchive" TargetName="AdventureWorks:Production:TransactionHistoryArchive">
+          <FieldMappings>
+            <FieldMapping FieldName="ActualCost" TargetFieldName="ActualCost" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="Quantity" TargetFieldName="Quantity" />
+            <FieldMapping FieldName="ReferenceOrderID" TargetFieldName="ReferenceOrderID" />
+            <FieldMapping FieldName="ReferenceOrderLineID" TargetFieldName="ReferenceOrderLineID" />
+            <FieldMapping FieldName="TransactionDate" TargetFieldName="TransactionDate" />
+            <FieldMapping FieldName="TransactionID" TargetFieldName="TransactionID" />
+            <FieldMapping FieldName="TransactionType" TargetFieldName="TransactionType" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:UnitMeasure" TargetName="AdventureWorks:Production:UnitMeasure">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="UnitMeasureCode" TargetFieldName="UnitMeasureCode" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:WorkOrder" TargetName="AdventureWorks:Production:WorkOrder">
+          <FieldMappings>
+            <FieldMapping FieldName="DueDate" TargetFieldName="DueDate" />
+            <FieldMapping FieldName="EndDate" TargetFieldName="EndDate" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="OrderQuantity" TargetFieldName="OrderQty" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="ScrappedQuantity" TargetFieldName="ScrappedQty" />
+            <FieldMapping FieldName="ScrapReasonID" TargetFieldName="ScrapReasonID" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="StartDate" />
+            <FieldMapping FieldName="StockedQuantity" TargetFieldName="StockedQty" />
+            <FieldMapping FieldName="WorkOrderID" TargetFieldName="WorkOrderID" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:WorkOrderRouting" TargetName="AdventureWorks:Production:WorkOrderRouting">
+          <FieldMappings>
+            <FieldMapping FieldName="ActualCost" TargetFieldName="ActualCost" />
+            <FieldMapping FieldName="ActualEndDate" TargetFieldName="ActualEndDate" />
+            <FieldMapping FieldName="ActualResourceHrs" TargetFieldName="ActualResourceHrs" />
+            <FieldMapping FieldName="ActualStartDate" TargetFieldName="ActualStartDate" />
+            <FieldMapping FieldName="LocationID" TargetFieldName="LocationID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="OperationSequence" TargetFieldName="OperationSequence" />
+            <FieldMapping FieldName="PlannedCost" TargetFieldName="PlannedCost" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="ScheduledEndDate" TargetFieldName="ScheduledEndDate" />
+            <FieldMapping FieldName="ScheduledStartDate" TargetFieldName="ScheduledStartDate" />
+            <FieldMapping FieldName="WorkOrderID" TargetFieldName="WorkOrderID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Purchasing:ProductVendor" TargetName="AdventureWorks:Purchasing:ProductVendor">
+          <FieldMappings>
+            <FieldMapping FieldName="AverageLeadTime" TargetFieldName="AverageLeadTime" />
+            <FieldMapping FieldName="LastReceiptCost" TargetFieldName="LastReceiptCost" />
+            <FieldMapping FieldName="LastReceiptDate" TargetFieldName="LastReceiptDate" />
+            <FieldMapping FieldName="MaxOrderQuantity" TargetFieldName="MaxOrderQty" />
+            <FieldMapping FieldName="MinOrderQuantity" TargetFieldName="MinOrderQty" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="OnOrderQuantity" TargetFieldName="OnOrderQty" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="StandardPrice" TargetFieldName="StandardPrice" />
+            <FieldMapping FieldName="UnitMeasureCode" TargetFieldName="UnitMeasureCode" />
+            <FieldMapping FieldName="VendorID" TargetFieldName="VendorID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Purchasing:PurchaseOrderDetail" TargetName="AdventureWorks:Purchasing:PurchaseOrderDetail">
+          <FieldMappings>
+            <FieldMapping FieldName="DueDate" TargetFieldName="DueDate" />
+            <FieldMapping FieldName="LineTotal" TargetFieldName="LineTotal" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="OrderQuantity" TargetFieldName="OrderQty" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="PurchaseOrderDetailID" TargetFieldName="PurchaseOrderDetailID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="PurchaseOrderID" TargetFieldName="PurchaseOrderID" />
+            <FieldMapping FieldName="ReceivedQuantity" TargetFieldName="ReceivedQty" />
+            <FieldMapping FieldName="RejectedQuantity" TargetFieldName="RejectedQty" />
+            <FieldMapping FieldName="StockedQuantity" TargetFieldName="StockedQty" />
+            <FieldMapping FieldName="UnitPrice" TargetFieldName="UnitPrice" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Purchasing:PurchaseOrderHeader" TargetName="AdventureWorks:Purchasing:PurchaseOrderHeader">
+          <FieldMappings>
+            <FieldMapping FieldName="EmployeeID" TargetFieldName="EmployeeID" />
+            <FieldMapping FieldName="Freight" TargetFieldName="Freight" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="OrderDate" TargetFieldName="OrderDate" />
+            <FieldMapping FieldName="PurchaseOrderID" TargetFieldName="PurchaseOrderID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="RevisionNumber" TargetFieldName="RevisionNumber" />
+            <FieldMapping FieldName="ShipDate" TargetFieldName="ShipDate" />
+            <FieldMapping FieldName="ShipMethodID" TargetFieldName="ShipMethodID" />
+            <FieldMapping FieldName="Status" TargetFieldName="Status" />
+            <FieldMapping FieldName="SubTotal" TargetFieldName="SubTotal" />
+            <FieldMapping FieldName="TaxAmt" TargetFieldName="TaxAmt" />
+            <FieldMapping FieldName="TotalDue" TargetFieldName="TotalDue" />
+            <FieldMapping FieldName="VendorID" TargetFieldName="VendorID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Purchasing:Vendor" TargetName="AdventureWorks:Purchasing:Vendor">
+          <FieldMappings>
+            <FieldMapping FieldName="AccountNumber" TargetFieldName="AccountNumber" />
+            <FieldMapping FieldName="ActiveFlag" TargetFieldName="ActiveFlag" />
+            <FieldMapping FieldName="CreditRating" TargetFieldName="CreditRating" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="PreferredVendorStatus" TargetFieldName="PreferredVendorStatus" />
+            <FieldMapping FieldName="PurchasingWebServiceUrl" TargetFieldName="PurchasingWebServiceURL" />
+            <FieldMapping FieldName="VendorID" TargetFieldName="VendorID" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Purchasing:VendorAddress" TargetName="AdventureWorks:Purchasing:VendorAddress">
+          <FieldMappings>
+            <FieldMapping FieldName="AddressID" TargetFieldName="AddressID" />
+            <FieldMapping FieldName="AddressTypeID" TargetFieldName="AddressTypeID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="VendorID" TargetFieldName="VendorID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Purchasing:VendorContact" TargetName="AdventureWorks:Purchasing:VendorContact">
+          <FieldMappings>
+            <FieldMapping FieldName="ContactID" TargetFieldName="ContactID" />
+            <FieldMapping FieldName="ContactTypeID" TargetFieldName="ContactTypeID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="VendorID" TargetFieldName="VendorID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:ContactCreditCard" TargetName="AdventureWorks:Sales:ContactCreditCard">
+          <FieldMappings>
+            <FieldMapping FieldName="ContactID" TargetFieldName="ContactID" />
+            <FieldMapping FieldName="CreditCardID" TargetFieldName="CreditCardID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:CountryRegionCurrency" TargetName="AdventureWorks:Sales:CountryRegionCurrency">
+          <FieldMappings>
+            <FieldMapping FieldName="CountryRegionCode" TargetFieldName="CountryRegionCode" />
+            <FieldMapping FieldName="CurrencyCode" TargetFieldName="CurrencyCode" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:SalesOrderHeaderSalesReason" TargetName="AdventureWorks:Sales:SalesOrderHeaderSalesReason">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="SalesOrderID" TargetFieldName="SalesOrderID" />
+            <FieldMapping FieldName="SalesReasonID" TargetFieldName="SalesReasonID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:SalesPerson" TargetName="AdventureWorks:Sales:SalesPerson">
+          <FieldMappings>
+            <FieldMapping FieldName="Bonus" TargetFieldName="Bonus" />
+            <FieldMapping FieldName="CommissionPct" TargetFieldName="CommissionPct" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+            <FieldMapping FieldName="SalesLastYear" TargetFieldName="SalesLastYear" />
+            <FieldMapping FieldName="SalesPersonID" TargetFieldName="SalesPersonID" />
+            <FieldMapping FieldName="SalesQuota" TargetFieldName="SalesQuota" />
+            <FieldMapping FieldName="SalesYtd" TargetFieldName="SalesYTD" />
+            <FieldMapping FieldName="TerritoryID" TargetFieldName="TerritoryID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:SalesPersonQuotaHistory" TargetName="AdventureWorks:Sales:SalesPersonQuotaHistory">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="QuotaDate" TargetFieldName="QuotaDate" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+            <FieldMapping FieldName="SalesPersonID" TargetFieldName="SalesPersonID" />
+            <FieldMapping FieldName="SalesQuota" TargetFieldName="SalesQuota" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:SalesReason" TargetName="AdventureWorks:Sales:SalesReason">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="ReasonType" TargetFieldName="ReasonType" />
+            <FieldMapping FieldName="SalesReasonID" TargetFieldName="SalesReasonID" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:SalesTaxRate" TargetName="AdventureWorks:Sales:SalesTaxRate">
+          <FieldMappings>
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+            <FieldMapping FieldName="SalesTaxRateID" TargetFieldName="SalesTaxRateID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="StateProvinceID" TargetFieldName="StateProvinceID" />
+            <FieldMapping FieldName="TaxRate" TargetFieldName="TaxRate" />
+            <FieldMapping FieldName="TaxType" TargetFieldName="TaxType" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:SalesTerritoryHistory" TargetName="AdventureWorks:Sales:SalesTerritoryHistory">
+          <FieldMappings>
+            <FieldMapping FieldName="EndDate" TargetFieldName="EndDate" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+            <FieldMapping FieldName="SalesPersonID" TargetFieldName="SalesPersonID" />
+            <FieldMapping FieldName="StartDate" TargetFieldName="StartDate" />
+            <FieldMapping FieldName="TerritoryID" TargetFieldName="TerritoryID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:ShoppingCartItem" TargetName="AdventureWorks:Sales:ShoppingCartItem">
+          <FieldMappings>
+            <FieldMapping FieldName="DateCreated" TargetFieldName="DateCreated" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" />
+            <FieldMapping FieldName="Quantity" TargetFieldName="Quantity" />
+            <FieldMapping FieldName="ShoppingCartID" TargetFieldName="ShoppingCartID" />
+            <FieldMapping FieldName="ShoppingCartItemID" TargetFieldName="ShoppingCartItemID" SequenceToUse="SCOPE_IDENTITY()" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:Store" TargetName="AdventureWorks:Sales:Store">
+          <FieldMappings>
+            <FieldMapping FieldName="CustomerID" TargetFieldName="CustomerID" />
+            <FieldMapping FieldName="Demographics" TargetFieldName="Demographics" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Name" TargetFieldName="Name" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+            <FieldMapping FieldName="SalesPersonID" TargetFieldName="SalesPersonID" />
+          </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Sales:StoreContact" TargetName="AdventureWorks:Sales:StoreContact">
+          <FieldMappings>
+            <FieldMapping FieldName="ContactID" TargetFieldName="ContactID" />
+            <FieldMapping FieldName="ContactTypeID" TargetFieldName="ContactTypeID" />
+            <FieldMapping FieldName="CustomerID" TargetFieldName="CustomerID" />
+            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
+            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":SalesOrderDetail" TargetName="AdventureWorks:Sales:SalesOrderDetail">

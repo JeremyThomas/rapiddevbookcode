@@ -32,6 +32,7 @@ namespace AW.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.CustomerAddressEntityUsingAddressID);
 			toReturn.Add(this.EmployeeAddressEntityUsingAddressID);
+			toReturn.Add(this.VendorAddressEntityUsingAddressID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingBillToAddressID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingShipToAddressID);
 			toReturn.Add(this.StateProvinceEntityUsingStateProvinceID);
@@ -66,6 +67,21 @@ namespace AW.Data.RelationClasses
 				relation.AddEntityFieldPair(AddressFields.AddressID, EmployeeAddressFields.AddressID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeAddressEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AddressEntity and VendorAddressEntity over the 1:n relation they have, using the relation between the fields:
+		/// Address.AddressID - VendorAddress.AddressID
+		/// </summary>
+		public virtual IEntityRelation VendorAddressEntityUsingAddressID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "VendorAddresses" , true);
+				relation.AddEntityFieldPair(AddressFields.AddressID, VendorAddressFields.AddressID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("VendorAddressEntity", false);
 				return relation;
 			}
 		}

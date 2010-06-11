@@ -84,6 +84,31 @@ namespace AW.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity AwbuildVersionEntity</summary>
+	public partial class AwbuildVersionFields
+	{
+		/// <summary>Creates a new AwbuildVersionEntity.DatabaseVersion field instance</summary>
+		public static EntityField DatabaseVersion
+		{
+			get { return (EntityField)EntityFieldFactory.Create(AwbuildVersionFieldIndex.DatabaseVersion);}
+		}
+		/// <summary>Creates a new AwbuildVersionEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(AwbuildVersionFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new AwbuildVersionEntity.SystemInformationID field instance</summary>
+		public static EntityField SystemInformationID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(AwbuildVersionFieldIndex.SystemInformationID);}
+		}
+		/// <summary>Creates a new AwbuildVersionEntity.VersionDate field instance</summary>
+		public static EntityField VersionDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(AwbuildVersionFieldIndex.VersionDate);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity ContactEntity</summary>
 	public partial class ContactFields
 	{
@@ -434,6 +459,51 @@ namespace AW.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity DatabaseLogEntity</summary>
+	public partial class DatabaseLogFields
+	{
+		/// <summary>Creates a new DatabaseLogEntity.DatabaseLogID field instance</summary>
+		public static EntityField DatabaseLogID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DatabaseLogFieldIndex.DatabaseLogID);}
+		}
+		/// <summary>Creates a new DatabaseLogEntity.DatabaseUser field instance</summary>
+		public static EntityField DatabaseUser
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DatabaseLogFieldIndex.DatabaseUser);}
+		}
+		/// <summary>Creates a new DatabaseLogEntity.Event field instance</summary>
+		public static EntityField Event
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DatabaseLogFieldIndex.Event);}
+		}
+		/// <summary>Creates a new DatabaseLogEntity.Object field instance</summary>
+		public static EntityField Object
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DatabaseLogFieldIndex.Object);}
+		}
+		/// <summary>Creates a new DatabaseLogEntity.PostTime field instance</summary>
+		public static EntityField PostTime
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DatabaseLogFieldIndex.PostTime);}
+		}
+		/// <summary>Creates a new DatabaseLogEntity.Schema field instance</summary>
+		public static EntityField Schema
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DatabaseLogFieldIndex.Schema);}
+		}
+		/// <summary>Creates a new DatabaseLogEntity.Tsql field instance</summary>
+		public static EntityField Tsql
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DatabaseLogFieldIndex.Tsql);}
+		}
+		/// <summary>Creates a new DatabaseLogEntity.XmlEvent field instance</summary>
+		public static EntityField XmlEvent
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DatabaseLogFieldIndex.XmlEvent);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity EmployeeEntity</summary>
 	public partial class EmployeeFields
 	{
@@ -544,6 +614,201 @@ namespace AW.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity ErrorLogEntity</summary>
+	public partial class ErrorLogFields
+	{
+		/// <summary>Creates a new ErrorLogEntity.ErrorLine field instance</summary>
+		public static EntityField ErrorLine
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.ErrorLine);}
+		}
+		/// <summary>Creates a new ErrorLogEntity.ErrorLogID field instance</summary>
+		public static EntityField ErrorLogID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.ErrorLogID);}
+		}
+		/// <summary>Creates a new ErrorLogEntity.ErrorMessage field instance</summary>
+		public static EntityField ErrorMessage
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.ErrorMessage);}
+		}
+		/// <summary>Creates a new ErrorLogEntity.ErrorNumber field instance</summary>
+		public static EntityField ErrorNumber
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.ErrorNumber);}
+		}
+		/// <summary>Creates a new ErrorLogEntity.ErrorProcedure field instance</summary>
+		public static EntityField ErrorProcedure
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.ErrorProcedure);}
+		}
+		/// <summary>Creates a new ErrorLogEntity.ErrorSeverity field instance</summary>
+		public static EntityField ErrorSeverity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.ErrorSeverity);}
+		}
+		/// <summary>Creates a new ErrorLogEntity.ErrorState field instance</summary>
+		public static EntityField ErrorState
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.ErrorState);}
+		}
+		/// <summary>Creates a new ErrorLogEntity.ErrorTime field instance</summary>
+		public static EntityField ErrorTime
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.ErrorTime);}
+		}
+		/// <summary>Creates a new ErrorLogEntity.UserName field instance</summary>
+		public static EntityField UserName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ErrorLogFieldIndex.UserName);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity DepartmentEntity</summary>
+	public partial class DepartmentFields
+	{
+		/// <summary>Creates a new DepartmentEntity.DepartmentID field instance</summary>
+		public static EntityField DepartmentID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DepartmentFieldIndex.DepartmentID);}
+		}
+		/// <summary>Creates a new DepartmentEntity.GroupName field instance</summary>
+		public static EntityField GroupName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DepartmentFieldIndex.GroupName);}
+		}
+		/// <summary>Creates a new DepartmentEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DepartmentFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new DepartmentEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DepartmentFieldIndex.Name);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity EmployeeDepartmentHistoryEntity</summary>
+	public partial class EmployeeDepartmentHistoryFields
+	{
+		/// <summary>Creates a new EmployeeDepartmentHistoryEntity.DepartmentID field instance</summary>
+		public static EntityField DepartmentID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeDepartmentHistoryFieldIndex.DepartmentID);}
+		}
+		/// <summary>Creates a new EmployeeDepartmentHistoryEntity.EmployeeID field instance</summary>
+		public static EntityField EmployeeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeDepartmentHistoryFieldIndex.EmployeeID);}
+		}
+		/// <summary>Creates a new EmployeeDepartmentHistoryEntity.EndDate field instance</summary>
+		public static EntityField EndDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeDepartmentHistoryFieldIndex.EndDate);}
+		}
+		/// <summary>Creates a new EmployeeDepartmentHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeDepartmentHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new EmployeeDepartmentHistoryEntity.ShiftID field instance</summary>
+		public static EntityField ShiftID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeDepartmentHistoryFieldIndex.ShiftID);}
+		}
+		/// <summary>Creates a new EmployeeDepartmentHistoryEntity.StartDate field instance</summary>
+		public static EntityField StartDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeDepartmentHistoryFieldIndex.StartDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity EmployeePayHistoryEntity</summary>
+	public partial class EmployeePayHistoryFields
+	{
+		/// <summary>Creates a new EmployeePayHistoryEntity.EmployeeID field instance</summary>
+		public static EntityField EmployeeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeePayHistoryFieldIndex.EmployeeID);}
+		}
+		/// <summary>Creates a new EmployeePayHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeePayHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new EmployeePayHistoryEntity.PayFrequency field instance</summary>
+		public static EntityField PayFrequency
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeePayHistoryFieldIndex.PayFrequency);}
+		}
+		/// <summary>Creates a new EmployeePayHistoryEntity.Rate field instance</summary>
+		public static EntityField Rate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeePayHistoryFieldIndex.Rate);}
+		}
+		/// <summary>Creates a new EmployeePayHistoryEntity.RateChangeDate field instance</summary>
+		public static EntityField RateChangeDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeePayHistoryFieldIndex.RateChangeDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity JobCandidateEntity</summary>
+	public partial class JobCandidateFields
+	{
+		/// <summary>Creates a new JobCandidateEntity.EmployeeID field instance</summary>
+		public static EntityField EmployeeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(JobCandidateFieldIndex.EmployeeID);}
+		}
+		/// <summary>Creates a new JobCandidateEntity.JobCandidateID field instance</summary>
+		public static EntityField JobCandidateID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(JobCandidateFieldIndex.JobCandidateID);}
+		}
+		/// <summary>Creates a new JobCandidateEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(JobCandidateFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new JobCandidateEntity.Resume field instance</summary>
+		public static EntityField Resume
+		{
+			get { return (EntityField)EntityFieldFactory.Create(JobCandidateFieldIndex.Resume);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ShiftEntity</summary>
+	public partial class ShiftFields
+	{
+		/// <summary>Creates a new ShiftEntity.EndTime field instance</summary>
+		public static EntityField EndTime
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShiftFieldIndex.EndTime);}
+		}
+		/// <summary>Creates a new ShiftEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShiftFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ShiftEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShiftFieldIndex.Name);}
+		}
+		/// <summary>Creates a new ShiftEntity.ShiftID field instance</summary>
+		public static EntityField ShiftID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShiftFieldIndex.ShiftID);}
+		}
+		/// <summary>Creates a new ShiftEntity.StartTime field instance</summary>
+		public static EntityField StartTime
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShiftFieldIndex.StartTime);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity IndividualEntity</summary>
 	public partial class IndividualFields
 	{
@@ -566,6 +831,26 @@ namespace AW.Data.HelperClasses
 		public static EntityField ModifiedDate
 		{
 			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.ModifiedDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ContactTypeEntity</summary>
+	public partial class ContactTypeFields
+	{
+		/// <summary>Creates a new ContactTypeEntity.ContactTypeID field instance</summary>
+		public static EntityField ContactTypeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ContactTypeFieldIndex.ContactTypeID);}
+		}
+		/// <summary>Creates a new ContactTypeEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ContactTypeFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ContactTypeEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ContactTypeFieldIndex.Name);}
 		}
 	}
 
@@ -696,6 +981,1451 @@ namespace AW.Data.HelperClasses
 		public static EntityField WeightUnitMeasureCode
 		{
 			get { return (EntityField)EntityFieldFactory.Create(ProductFieldIndex.WeightUnitMeasureCode);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity BillOfMaterialEntity</summary>
+	public partial class BillOfMaterialFields
+	{
+		/// <summary>Creates a new BillOfMaterialEntity.BillOfMaterialsID field instance</summary>
+		public static EntityField BillOfMaterialsID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.BillOfMaterialsID);}
+		}
+		/// <summary>Creates a new BillOfMaterialEntity.Bomlevel field instance</summary>
+		public static EntityField Bomlevel
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.Bomlevel);}
+		}
+		/// <summary>Creates a new BillOfMaterialEntity.ComponentID field instance</summary>
+		public static EntityField ComponentID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.ComponentID);}
+		}
+		/// <summary>Creates a new BillOfMaterialEntity.EndDate field instance</summary>
+		public static EntityField EndDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.EndDate);}
+		}
+		/// <summary>Creates a new BillOfMaterialEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new BillOfMaterialEntity.PerAssemblyQuantity field instance</summary>
+		public static EntityField PerAssemblyQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.PerAssemblyQuantity);}
+		}
+		/// <summary>Creates a new BillOfMaterialEntity.ProductAssemblyID field instance</summary>
+		public static EntityField ProductAssemblyID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.ProductAssemblyID);}
+		}
+		/// <summary>Creates a new BillOfMaterialEntity.StartDate field instance</summary>
+		public static EntityField StartDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.StartDate);}
+		}
+		/// <summary>Creates a new BillOfMaterialEntity.UnitMeasureCode field instance</summary>
+		public static EntityField UnitMeasureCode
+		{
+			get { return (EntityField)EntityFieldFactory.Create(BillOfMaterialFieldIndex.UnitMeasureCode);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity CultureEntity</summary>
+	public partial class CultureFields
+	{
+		/// <summary>Creates a new CultureEntity.CultureID field instance</summary>
+		public static EntityField CultureID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CultureFieldIndex.CultureID);}
+		}
+		/// <summary>Creates a new CultureEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CultureFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new CultureEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CultureFieldIndex.Name);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity DocumentEntity</summary>
+	public partial class DocumentFields
+	{
+		/// <summary>Creates a new DocumentEntity.ChangeNumber field instance</summary>
+		public static EntityField ChangeNumber
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.ChangeNumber);}
+		}
+		/// <summary>Creates a new DocumentEntity.Document field instance</summary>
+		public static EntityField Document
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.Document);}
+		}
+		/// <summary>Creates a new DocumentEntity.DocumentID field instance</summary>
+		public static EntityField DocumentID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.DocumentID);}
+		}
+		/// <summary>Creates a new DocumentEntity.DocumentSummary field instance</summary>
+		public static EntityField DocumentSummary
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.DocumentSummary);}
+		}
+		/// <summary>Creates a new DocumentEntity.FileExtension field instance</summary>
+		public static EntityField FileExtension
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.FileExtension);}
+		}
+		/// <summary>Creates a new DocumentEntity.FileName field instance</summary>
+		public static EntityField FileName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.FileName);}
+		}
+		/// <summary>Creates a new DocumentEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new DocumentEntity.Revision field instance</summary>
+		public static EntityField Revision
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.Revision);}
+		}
+		/// <summary>Creates a new DocumentEntity.Status field instance</summary>
+		public static EntityField Status
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.Status);}
+		}
+		/// <summary>Creates a new DocumentEntity.Title field instance</summary>
+		public static EntityField Title
+		{
+			get { return (EntityField)EntityFieldFactory.Create(DocumentFieldIndex.Title);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity IllustrationEntity</summary>
+	public partial class IllustrationFields
+	{
+		/// <summary>Creates a new IllustrationEntity.Diagram field instance</summary>
+		public static EntityField Diagram
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IllustrationFieldIndex.Diagram);}
+		}
+		/// <summary>Creates a new IllustrationEntity.IllustrationID field instance</summary>
+		public static EntityField IllustrationID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IllustrationFieldIndex.IllustrationID);}
+		}
+		/// <summary>Creates a new IllustrationEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IllustrationFieldIndex.ModifiedDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity LocationEntity</summary>
+	public partial class LocationFields
+	{
+		/// <summary>Creates a new LocationEntity.Availability field instance</summary>
+		public static EntityField Availability
+		{
+			get { return (EntityField)EntityFieldFactory.Create(LocationFieldIndex.Availability);}
+		}
+		/// <summary>Creates a new LocationEntity.CostRate field instance</summary>
+		public static EntityField CostRate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(LocationFieldIndex.CostRate);}
+		}
+		/// <summary>Creates a new LocationEntity.LocationID field instance</summary>
+		public static EntityField LocationID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(LocationFieldIndex.LocationID);}
+		}
+		/// <summary>Creates a new LocationEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(LocationFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new LocationEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(LocationFieldIndex.Name);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductCategoryEntity</summary>
+	public partial class ProductCategoryFields
+	{
+		/// <summary>Creates a new ProductCategoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCategoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductCategoryEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCategoryFieldIndex.Name);}
+		}
+		/// <summary>Creates a new ProductCategoryEntity.ProductCategoryID field instance</summary>
+		public static EntityField ProductCategoryID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCategoryFieldIndex.ProductCategoryID);}
+		}
+		/// <summary>Creates a new ProductCategoryEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCategoryFieldIndex.Rowguid);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductCostHistoryEntity</summary>
+	public partial class ProductCostHistoryFields
+	{
+		/// <summary>Creates a new ProductCostHistoryEntity.EndDate field instance</summary>
+		public static EntityField EndDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCostHistoryFieldIndex.EndDate);}
+		}
+		/// <summary>Creates a new ProductCostHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCostHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductCostHistoryEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCostHistoryFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new ProductCostHistoryEntity.StandardCost field instance</summary>
+		public static EntityField StandardCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCostHistoryFieldIndex.StandardCost);}
+		}
+		/// <summary>Creates a new ProductCostHistoryEntity.StartDate field instance</summary>
+		public static EntityField StartDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductCostHistoryFieldIndex.StartDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductDescriptionEntity</summary>
+	public partial class ProductDescriptionFields
+	{
+		/// <summary>Creates a new ProductDescriptionEntity.Description field instance</summary>
+		public static EntityField Description
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductDescriptionFieldIndex.Description);}
+		}
+		/// <summary>Creates a new ProductDescriptionEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductDescriptionFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductDescriptionEntity.ProductDescriptionID field instance</summary>
+		public static EntityField ProductDescriptionID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductDescriptionFieldIndex.ProductDescriptionID);}
+		}
+		/// <summary>Creates a new ProductDescriptionEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductDescriptionFieldIndex.Rowguid);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductDocumentEntity</summary>
+	public partial class ProductDocumentFields
+	{
+		/// <summary>Creates a new ProductDocumentEntity.DocumentID field instance</summary>
+		public static EntityField DocumentID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductDocumentFieldIndex.DocumentID);}
+		}
+		/// <summary>Creates a new ProductDocumentEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductDocumentFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductDocumentEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductDocumentFieldIndex.ProductID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductInventoryEntity</summary>
+	public partial class ProductInventoryFields
+	{
+		/// <summary>Creates a new ProductInventoryEntity.Bin field instance</summary>
+		public static EntityField Bin
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductInventoryFieldIndex.Bin);}
+		}
+		/// <summary>Creates a new ProductInventoryEntity.LocationID field instance</summary>
+		public static EntityField LocationID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductInventoryFieldIndex.LocationID);}
+		}
+		/// <summary>Creates a new ProductInventoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductInventoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductInventoryEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductInventoryFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new ProductInventoryEntity.Quantity field instance</summary>
+		public static EntityField Quantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductInventoryFieldIndex.Quantity);}
+		}
+		/// <summary>Creates a new ProductInventoryEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductInventoryFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new ProductInventoryEntity.Shelf field instance</summary>
+		public static EntityField Shelf
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductInventoryFieldIndex.Shelf);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductListPriceHistoryEntity</summary>
+	public partial class ProductListPriceHistoryFields
+	{
+		/// <summary>Creates a new ProductListPriceHistoryEntity.EndDate field instance</summary>
+		public static EntityField EndDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductListPriceHistoryFieldIndex.EndDate);}
+		}
+		/// <summary>Creates a new ProductListPriceHistoryEntity.ListPrice field instance</summary>
+		public static EntityField ListPrice
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductListPriceHistoryFieldIndex.ListPrice);}
+		}
+		/// <summary>Creates a new ProductListPriceHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductListPriceHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductListPriceHistoryEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductListPriceHistoryFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new ProductListPriceHistoryEntity.StartDate field instance</summary>
+		public static EntityField StartDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductListPriceHistoryFieldIndex.StartDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductModelEntity</summary>
+	public partial class ProductModelFields
+	{
+		/// <summary>Creates a new ProductModelEntity.CatalogDescription field instance</summary>
+		public static EntityField CatalogDescription
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelFieldIndex.CatalogDescription);}
+		}
+		/// <summary>Creates a new ProductModelEntity.Instructions field instance</summary>
+		public static EntityField Instructions
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelFieldIndex.Instructions);}
+		}
+		/// <summary>Creates a new ProductModelEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductModelEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelFieldIndex.Name);}
+		}
+		/// <summary>Creates a new ProductModelEntity.ProductModelID field instance</summary>
+		public static EntityField ProductModelID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelFieldIndex.ProductModelID);}
+		}
+		/// <summary>Creates a new ProductModelEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelFieldIndex.Rowguid);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductModelIllustrationEntity</summary>
+	public partial class ProductModelIllustrationFields
+	{
+		/// <summary>Creates a new ProductModelIllustrationEntity.IllustrationID field instance</summary>
+		public static EntityField IllustrationID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelIllustrationFieldIndex.IllustrationID);}
+		}
+		/// <summary>Creates a new ProductModelIllustrationEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelIllustrationFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductModelIllustrationEntity.ProductModelID field instance</summary>
+		public static EntityField ProductModelID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelIllustrationFieldIndex.ProductModelID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductModelProductDescriptionCultureEntity</summary>
+	public partial class ProductModelProductDescriptionCultureFields
+	{
+		/// <summary>Creates a new ProductModelProductDescriptionCultureEntity.CultureID field instance</summary>
+		public static EntityField CultureID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelProductDescriptionCultureFieldIndex.CultureID);}
+		}
+		/// <summary>Creates a new ProductModelProductDescriptionCultureEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelProductDescriptionCultureFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductModelProductDescriptionCultureEntity.ProductDescriptionID field instance</summary>
+		public static EntityField ProductDescriptionID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelProductDescriptionCultureFieldIndex.ProductDescriptionID);}
+		}
+		/// <summary>Creates a new ProductModelProductDescriptionCultureEntity.ProductModelID field instance</summary>
+		public static EntityField ProductModelID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductModelProductDescriptionCultureFieldIndex.ProductModelID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductPhotoEntity</summary>
+	public partial class ProductPhotoFields
+	{
+		/// <summary>Creates a new ProductPhotoEntity.LargePhoto field instance</summary>
+		public static EntityField LargePhoto
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductPhotoFieldIndex.LargePhoto);}
+		}
+		/// <summary>Creates a new ProductPhotoEntity.LargePhotoFileName field instance</summary>
+		public static EntityField LargePhotoFileName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductPhotoFieldIndex.LargePhotoFileName);}
+		}
+		/// <summary>Creates a new ProductPhotoEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductPhotoFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductPhotoEntity.ProductPhotoID field instance</summary>
+		public static EntityField ProductPhotoID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductPhotoFieldIndex.ProductPhotoID);}
+		}
+		/// <summary>Creates a new ProductPhotoEntity.ThumbNailPhoto field instance</summary>
+		public static EntityField ThumbNailPhoto
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductPhotoFieldIndex.ThumbNailPhoto);}
+		}
+		/// <summary>Creates a new ProductPhotoEntity.ThumbnailPhotoFileName field instance</summary>
+		public static EntityField ThumbnailPhotoFileName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductPhotoFieldIndex.ThumbnailPhotoFileName);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductProductPhotoEntity</summary>
+	public partial class ProductProductPhotoFields
+	{
+		/// <summary>Creates a new ProductProductPhotoEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductProductPhotoFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductProductPhotoEntity.Primary field instance</summary>
+		public static EntityField Primary
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductProductPhotoFieldIndex.Primary);}
+		}
+		/// <summary>Creates a new ProductProductPhotoEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductProductPhotoFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new ProductProductPhotoEntity.ProductPhotoID field instance</summary>
+		public static EntityField ProductPhotoID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductProductPhotoFieldIndex.ProductPhotoID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductReviewEntity</summary>
+	public partial class ProductReviewFields
+	{
+		/// <summary>Creates a new ProductReviewEntity.Comments field instance</summary>
+		public static EntityField Comments
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductReviewFieldIndex.Comments);}
+		}
+		/// <summary>Creates a new ProductReviewEntity.EmailAddress field instance</summary>
+		public static EntityField EmailAddress
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductReviewFieldIndex.EmailAddress);}
+		}
+		/// <summary>Creates a new ProductReviewEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductReviewFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductReviewEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductReviewFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new ProductReviewEntity.ProductReviewID field instance</summary>
+		public static EntityField ProductReviewID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductReviewFieldIndex.ProductReviewID);}
+		}
+		/// <summary>Creates a new ProductReviewEntity.Rating field instance</summary>
+		public static EntityField Rating
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductReviewFieldIndex.Rating);}
+		}
+		/// <summary>Creates a new ProductReviewEntity.ReviewDate field instance</summary>
+		public static EntityField ReviewDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductReviewFieldIndex.ReviewDate);}
+		}
+		/// <summary>Creates a new ProductReviewEntity.ReviewerName field instance</summary>
+		public static EntityField ReviewerName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductReviewFieldIndex.ReviewerName);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductSubcategoryEntity</summary>
+	public partial class ProductSubcategoryFields
+	{
+		/// <summary>Creates a new ProductSubcategoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductSubcategoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductSubcategoryEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductSubcategoryFieldIndex.Name);}
+		}
+		/// <summary>Creates a new ProductSubcategoryEntity.ProductCategoryID field instance</summary>
+		public static EntityField ProductCategoryID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductSubcategoryFieldIndex.ProductCategoryID);}
+		}
+		/// <summary>Creates a new ProductSubcategoryEntity.ProductSubcategoryID field instance</summary>
+		public static EntityField ProductSubcategoryID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductSubcategoryFieldIndex.ProductSubcategoryID);}
+		}
+		/// <summary>Creates a new ProductSubcategoryEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductSubcategoryFieldIndex.Rowguid);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ScrapReasonEntity</summary>
+	public partial class ScrapReasonFields
+	{
+		/// <summary>Creates a new ScrapReasonEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ScrapReasonFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ScrapReasonEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ScrapReasonFieldIndex.Name);}
+		}
+		/// <summary>Creates a new ScrapReasonEntity.ScrapReasonID field instance</summary>
+		public static EntityField ScrapReasonID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ScrapReasonFieldIndex.ScrapReasonID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity TransactionHistoryEntity</summary>
+	public partial class TransactionHistoryFields
+	{
+		/// <summary>Creates a new TransactionHistoryEntity.ActualCost field instance</summary>
+		public static EntityField ActualCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.ActualCost);}
+		}
+		/// <summary>Creates a new TransactionHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new TransactionHistoryEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new TransactionHistoryEntity.Quantity field instance</summary>
+		public static EntityField Quantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.Quantity);}
+		}
+		/// <summary>Creates a new TransactionHistoryEntity.ReferenceOrderID field instance</summary>
+		public static EntityField ReferenceOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.ReferenceOrderID);}
+		}
+		/// <summary>Creates a new TransactionHistoryEntity.ReferenceOrderLineID field instance</summary>
+		public static EntityField ReferenceOrderLineID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.ReferenceOrderLineID);}
+		}
+		/// <summary>Creates a new TransactionHistoryEntity.TransactionDate field instance</summary>
+		public static EntityField TransactionDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.TransactionDate);}
+		}
+		/// <summary>Creates a new TransactionHistoryEntity.TransactionID field instance</summary>
+		public static EntityField TransactionID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.TransactionID);}
+		}
+		/// <summary>Creates a new TransactionHistoryEntity.TransactionType field instance</summary>
+		public static EntityField TransactionType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryFieldIndex.TransactionType);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity TransactionHistoryArchiveEntity</summary>
+	public partial class TransactionHistoryArchiveFields
+	{
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.ActualCost field instance</summary>
+		public static EntityField ActualCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.ActualCost);}
+		}
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.Quantity field instance</summary>
+		public static EntityField Quantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.Quantity);}
+		}
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.ReferenceOrderID field instance</summary>
+		public static EntityField ReferenceOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.ReferenceOrderID);}
+		}
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.ReferenceOrderLineID field instance</summary>
+		public static EntityField ReferenceOrderLineID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.ReferenceOrderLineID);}
+		}
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.TransactionDate field instance</summary>
+		public static EntityField TransactionDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.TransactionDate);}
+		}
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.TransactionID field instance</summary>
+		public static EntityField TransactionID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.TransactionID);}
+		}
+		/// <summary>Creates a new TransactionHistoryArchiveEntity.TransactionType field instance</summary>
+		public static EntityField TransactionType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(TransactionHistoryArchiveFieldIndex.TransactionType);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity UnitMeasureEntity</summary>
+	public partial class UnitMeasureFields
+	{
+		/// <summary>Creates a new UnitMeasureEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(UnitMeasureFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new UnitMeasureEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(UnitMeasureFieldIndex.Name);}
+		}
+		/// <summary>Creates a new UnitMeasureEntity.UnitMeasureCode field instance</summary>
+		public static EntityField UnitMeasureCode
+		{
+			get { return (EntityField)EntityFieldFactory.Create(UnitMeasureFieldIndex.UnitMeasureCode);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity WorkOrderEntity</summary>
+	public partial class WorkOrderFields
+	{
+		/// <summary>Creates a new WorkOrderEntity.DueDate field instance</summary>
+		public static EntityField DueDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.DueDate);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.EndDate field instance</summary>
+		public static EntityField EndDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.EndDate);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.OrderQuantity field instance</summary>
+		public static EntityField OrderQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.OrderQuantity);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.ScrappedQuantity field instance</summary>
+		public static EntityField ScrappedQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.ScrappedQuantity);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.ScrapReasonID field instance</summary>
+		public static EntityField ScrapReasonID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.ScrapReasonID);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.StartDate field instance</summary>
+		public static EntityField StartDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.StartDate);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.StockedQuantity field instance</summary>
+		public static EntityField StockedQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.StockedQuantity);}
+		}
+		/// <summary>Creates a new WorkOrderEntity.WorkOrderID field instance</summary>
+		public static EntityField WorkOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.WorkOrderID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity WorkOrderRoutingEntity</summary>
+	public partial class WorkOrderRoutingFields
+	{
+		/// <summary>Creates a new WorkOrderRoutingEntity.ActualCost field instance</summary>
+		public static EntityField ActualCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.ActualCost);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.ActualEndDate field instance</summary>
+		public static EntityField ActualEndDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.ActualEndDate);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.ActualResourceHrs field instance</summary>
+		public static EntityField ActualResourceHrs
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.ActualResourceHrs);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.ActualStartDate field instance</summary>
+		public static EntityField ActualStartDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.ActualStartDate);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.LocationID field instance</summary>
+		public static EntityField LocationID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.LocationID);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.OperationSequence field instance</summary>
+		public static EntityField OperationSequence
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.OperationSequence);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.PlannedCost field instance</summary>
+		public static EntityField PlannedCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.PlannedCost);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.ScheduledEndDate field instance</summary>
+		public static EntityField ScheduledEndDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.ScheduledEndDate);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.ScheduledStartDate field instance</summary>
+		public static EntityField ScheduledStartDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.ScheduledStartDate);}
+		}
+		/// <summary>Creates a new WorkOrderRoutingEntity.WorkOrderID field instance</summary>
+		public static EntityField WorkOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderRoutingFieldIndex.WorkOrderID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ProductVendorEntity</summary>
+	public partial class ProductVendorFields
+	{
+		/// <summary>Creates a new ProductVendorEntity.AverageLeadTime field instance</summary>
+		public static EntityField AverageLeadTime
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.AverageLeadTime);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.LastReceiptCost field instance</summary>
+		public static EntityField LastReceiptCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.LastReceiptCost);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.LastReceiptDate field instance</summary>
+		public static EntityField LastReceiptDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.LastReceiptDate);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.MaxOrderQuantity field instance</summary>
+		public static EntityField MaxOrderQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.MaxOrderQuantity);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.MinOrderQuantity field instance</summary>
+		public static EntityField MinOrderQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.MinOrderQuantity);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.OnOrderQuantity field instance</summary>
+		public static EntityField OnOrderQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.OnOrderQuantity);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.StandardPrice field instance</summary>
+		public static EntityField StandardPrice
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.StandardPrice);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.UnitMeasureCode field instance</summary>
+		public static EntityField UnitMeasureCode
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.UnitMeasureCode);}
+		}
+		/// <summary>Creates a new ProductVendorEntity.VendorID field instance</summary>
+		public static EntityField VendorID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ProductVendorFieldIndex.VendorID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity PurchaseOrderDetailEntity</summary>
+	public partial class PurchaseOrderDetailFields
+	{
+		/// <summary>Creates a new PurchaseOrderDetailEntity.DueDate field instance</summary>
+		public static EntityField DueDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.DueDate);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.LineTotal field instance</summary>
+		public static EntityField LineTotal
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.LineTotal);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.OrderQuantity field instance</summary>
+		public static EntityField OrderQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.OrderQuantity);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.PurchaseOrderDetailID field instance</summary>
+		public static EntityField PurchaseOrderDetailID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.PurchaseOrderDetailID);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.PurchaseOrderID field instance</summary>
+		public static EntityField PurchaseOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.PurchaseOrderID);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.ReceivedQuantity field instance</summary>
+		public static EntityField ReceivedQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.ReceivedQuantity);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.RejectedQuantity field instance</summary>
+		public static EntityField RejectedQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.RejectedQuantity);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.StockedQuantity field instance</summary>
+		public static EntityField StockedQuantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.StockedQuantity);}
+		}
+		/// <summary>Creates a new PurchaseOrderDetailEntity.UnitPrice field instance</summary>
+		public static EntityField UnitPrice
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderDetailFieldIndex.UnitPrice);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity PurchaseOrderHeaderEntity</summary>
+	public partial class PurchaseOrderHeaderFields
+	{
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.EmployeeID field instance</summary>
+		public static EntityField EmployeeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.EmployeeID);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.Freight field instance</summary>
+		public static EntityField Freight
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.Freight);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.OrderDate field instance</summary>
+		public static EntityField OrderDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.OrderDate);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.PurchaseOrderID field instance</summary>
+		public static EntityField PurchaseOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.PurchaseOrderID);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.RevisionNumber field instance</summary>
+		public static EntityField RevisionNumber
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.RevisionNumber);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.ShipDate field instance</summary>
+		public static EntityField ShipDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.ShipDate);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.ShipMethodID field instance</summary>
+		public static EntityField ShipMethodID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.ShipMethodID);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.Status field instance</summary>
+		public static EntityField Status
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.Status);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.SubTotal field instance</summary>
+		public static EntityField SubTotal
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.SubTotal);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.TaxAmt field instance</summary>
+		public static EntityField TaxAmt
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.TaxAmt);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.TotalDue field instance</summary>
+		public static EntityField TotalDue
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.TotalDue);}
+		}
+		/// <summary>Creates a new PurchaseOrderHeaderEntity.VendorID field instance</summary>
+		public static EntityField VendorID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHeaderFieldIndex.VendorID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity VendorEntity</summary>
+	public partial class VendorFields
+	{
+		/// <summary>Creates a new VendorEntity.AccountNumber field instance</summary>
+		public static EntityField AccountNumber
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorFieldIndex.AccountNumber);}
+		}
+		/// <summary>Creates a new VendorEntity.ActiveFlag field instance</summary>
+		public static EntityField ActiveFlag
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorFieldIndex.ActiveFlag);}
+		}
+		/// <summary>Creates a new VendorEntity.CreditRating field instance</summary>
+		public static EntityField CreditRating
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorFieldIndex.CreditRating);}
+		}
+		/// <summary>Creates a new VendorEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new VendorEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorFieldIndex.Name);}
+		}
+		/// <summary>Creates a new VendorEntity.PreferredVendorStatus field instance</summary>
+		public static EntityField PreferredVendorStatus
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorFieldIndex.PreferredVendorStatus);}
+		}
+		/// <summary>Creates a new VendorEntity.PurchasingWebServiceUrl field instance</summary>
+		public static EntityField PurchasingWebServiceUrl
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorFieldIndex.PurchasingWebServiceUrl);}
+		}
+		/// <summary>Creates a new VendorEntity.VendorID field instance</summary>
+		public static EntityField VendorID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorFieldIndex.VendorID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity VendorAddressEntity</summary>
+	public partial class VendorAddressFields
+	{
+		/// <summary>Creates a new VendorAddressEntity.AddressID field instance</summary>
+		public static EntityField AddressID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorAddressFieldIndex.AddressID);}
+		}
+		/// <summary>Creates a new VendorAddressEntity.AddressTypeID field instance</summary>
+		public static EntityField AddressTypeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorAddressFieldIndex.AddressTypeID);}
+		}
+		/// <summary>Creates a new VendorAddressEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorAddressFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new VendorAddressEntity.VendorID field instance</summary>
+		public static EntityField VendorID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorAddressFieldIndex.VendorID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity VendorContactEntity</summary>
+	public partial class VendorContactFields
+	{
+		/// <summary>Creates a new VendorContactEntity.ContactID field instance</summary>
+		public static EntityField ContactID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorContactFieldIndex.ContactID);}
+		}
+		/// <summary>Creates a new VendorContactEntity.ContactTypeID field instance</summary>
+		public static EntityField ContactTypeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorContactFieldIndex.ContactTypeID);}
+		}
+		/// <summary>Creates a new VendorContactEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorContactFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new VendorContactEntity.VendorID field instance</summary>
+		public static EntityField VendorID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(VendorContactFieldIndex.VendorID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ContactCreditCardEntity</summary>
+	public partial class ContactCreditCardFields
+	{
+		/// <summary>Creates a new ContactCreditCardEntity.ContactID field instance</summary>
+		public static EntityField ContactID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ContactCreditCardFieldIndex.ContactID);}
+		}
+		/// <summary>Creates a new ContactCreditCardEntity.CreditCardID field instance</summary>
+		public static EntityField CreditCardID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ContactCreditCardFieldIndex.CreditCardID);}
+		}
+		/// <summary>Creates a new ContactCreditCardEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ContactCreditCardFieldIndex.ModifiedDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity CountryRegionCurrencyEntity</summary>
+	public partial class CountryRegionCurrencyFields
+	{
+		/// <summary>Creates a new CountryRegionCurrencyEntity.CountryRegionCode field instance</summary>
+		public static EntityField CountryRegionCode
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CountryRegionCurrencyFieldIndex.CountryRegionCode);}
+		}
+		/// <summary>Creates a new CountryRegionCurrencyEntity.CurrencyCode field instance</summary>
+		public static EntityField CurrencyCode
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CountryRegionCurrencyFieldIndex.CurrencyCode);}
+		}
+		/// <summary>Creates a new CountryRegionCurrencyEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CountryRegionCurrencyFieldIndex.ModifiedDate);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity SalesOrderHeaderSalesReasonEntity</summary>
+	public partial class SalesOrderHeaderSalesReasonFields
+	{
+		/// <summary>Creates a new SalesOrderHeaderSalesReasonEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderSalesReasonFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new SalesOrderHeaderSalesReasonEntity.SalesOrderID field instance</summary>
+		public static EntityField SalesOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderSalesReasonFieldIndex.SalesOrderID);}
+		}
+		/// <summary>Creates a new SalesOrderHeaderSalesReasonEntity.SalesReasonID field instance</summary>
+		public static EntityField SalesReasonID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHeaderSalesReasonFieldIndex.SalesReasonID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity SalesPersonEntity</summary>
+	public partial class SalesPersonFields
+	{
+		/// <summary>Creates a new SalesPersonEntity.Bonus field instance</summary>
+		public static EntityField Bonus
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.Bonus);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.CommissionPct field instance</summary>
+		public static EntityField CommissionPct
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.CommissionPct);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.SalesLastYear field instance</summary>
+		public static EntityField SalesLastYear
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SalesLastYear);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.SalesPersonID field instance</summary>
+		public static EntityField SalesPersonID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SalesPersonID);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.SalesQuota field instance</summary>
+		public static EntityField SalesQuota
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SalesQuota);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.SalesYtd field instance</summary>
+		public static EntityField SalesYtd
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SalesYtd);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.TerritoryID field instance</summary>
+		public static EntityField TerritoryID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.TerritoryID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity SalesPersonQuotaHistoryEntity</summary>
+	public partial class SalesPersonQuotaHistoryFields
+	{
+		/// <summary>Creates a new SalesPersonQuotaHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonQuotaHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new SalesPersonQuotaHistoryEntity.QuotaDate field instance</summary>
+		public static EntityField QuotaDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonQuotaHistoryFieldIndex.QuotaDate);}
+		}
+		/// <summary>Creates a new SalesPersonQuotaHistoryEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonQuotaHistoryFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new SalesPersonQuotaHistoryEntity.SalesPersonID field instance</summary>
+		public static EntityField SalesPersonID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonQuotaHistoryFieldIndex.SalesPersonID);}
+		}
+		/// <summary>Creates a new SalesPersonQuotaHistoryEntity.SalesQuota field instance</summary>
+		public static EntityField SalesQuota
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonQuotaHistoryFieldIndex.SalesQuota);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity SalesReasonEntity</summary>
+	public partial class SalesReasonFields
+	{
+		/// <summary>Creates a new SalesReasonEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesReasonFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new SalesReasonEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesReasonFieldIndex.Name);}
+		}
+		/// <summary>Creates a new SalesReasonEntity.ReasonType field instance</summary>
+		public static EntityField ReasonType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesReasonFieldIndex.ReasonType);}
+		}
+		/// <summary>Creates a new SalesReasonEntity.SalesReasonID field instance</summary>
+		public static EntityField SalesReasonID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesReasonFieldIndex.SalesReasonID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity SalesTaxRateEntity</summary>
+	public partial class SalesTaxRateFields
+	{
+		/// <summary>Creates a new SalesTaxRateEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTaxRateFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new SalesTaxRateEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTaxRateFieldIndex.Name);}
+		}
+		/// <summary>Creates a new SalesTaxRateEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTaxRateFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new SalesTaxRateEntity.SalesTaxRateID field instance</summary>
+		public static EntityField SalesTaxRateID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTaxRateFieldIndex.SalesTaxRateID);}
+		}
+		/// <summary>Creates a new SalesTaxRateEntity.StateProvinceID field instance</summary>
+		public static EntityField StateProvinceID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTaxRateFieldIndex.StateProvinceID);}
+		}
+		/// <summary>Creates a new SalesTaxRateEntity.TaxRate field instance</summary>
+		public static EntityField TaxRate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTaxRateFieldIndex.TaxRate);}
+		}
+		/// <summary>Creates a new SalesTaxRateEntity.TaxType field instance</summary>
+		public static EntityField TaxType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTaxRateFieldIndex.TaxType);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity SalesTerritoryHistoryEntity</summary>
+	public partial class SalesTerritoryHistoryFields
+	{
+		/// <summary>Creates a new SalesTerritoryHistoryEntity.EndDate field instance</summary>
+		public static EntityField EndDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTerritoryHistoryFieldIndex.EndDate);}
+		}
+		/// <summary>Creates a new SalesTerritoryHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTerritoryHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new SalesTerritoryHistoryEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTerritoryHistoryFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new SalesTerritoryHistoryEntity.SalesPersonID field instance</summary>
+		public static EntityField SalesPersonID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTerritoryHistoryFieldIndex.SalesPersonID);}
+		}
+		/// <summary>Creates a new SalesTerritoryHistoryEntity.StartDate field instance</summary>
+		public static EntityField StartDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTerritoryHistoryFieldIndex.StartDate);}
+		}
+		/// <summary>Creates a new SalesTerritoryHistoryEntity.TerritoryID field instance</summary>
+		public static EntityField TerritoryID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesTerritoryHistoryFieldIndex.TerritoryID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity ShoppingCartItemEntity</summary>
+	public partial class ShoppingCartItemFields
+	{
+		/// <summary>Creates a new ShoppingCartItemEntity.DateCreated field instance</summary>
+		public static EntityField DateCreated
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShoppingCartItemFieldIndex.DateCreated);}
+		}
+		/// <summary>Creates a new ShoppingCartItemEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShoppingCartItemFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new ShoppingCartItemEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShoppingCartItemFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new ShoppingCartItemEntity.Quantity field instance</summary>
+		public static EntityField Quantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShoppingCartItemFieldIndex.Quantity);}
+		}
+		/// <summary>Creates a new ShoppingCartItemEntity.ShoppingCartID field instance</summary>
+		public static EntityField ShoppingCartID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShoppingCartItemFieldIndex.ShoppingCartID);}
+		}
+		/// <summary>Creates a new ShoppingCartItemEntity.ShoppingCartItemID field instance</summary>
+		public static EntityField ShoppingCartItemID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(ShoppingCartItemFieldIndex.ShoppingCartItemID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity StoreEntity</summary>
+	public partial class StoreFields
+	{
+		/// <summary>Creates a new StoreEntity.CustomerID field instance</summary>
+		public static EntityField CustomerID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.CustomerID);}
+		}
+		/// <summary>Creates a new StoreEntity.Demographics field instance</summary>
+		public static EntityField Demographics
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.Demographics);}
+		}
+		/// <summary>Creates a new StoreEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new StoreEntity.Name field instance</summary>
+		public static EntityField Name
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.Name);}
+		}
+		/// <summary>Creates a new StoreEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new StoreEntity.SalesPersonID field instance</summary>
+		public static EntityField SalesPersonID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.SalesPersonID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity StoreContactEntity</summary>
+	public partial class StoreContactFields
+	{
+		/// <summary>Creates a new StoreContactEntity.ContactID field instance</summary>
+		public static EntityField ContactID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreContactFieldIndex.ContactID);}
+		}
+		/// <summary>Creates a new StoreContactEntity.ContactTypeID field instance</summary>
+		public static EntityField ContactTypeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreContactFieldIndex.ContactTypeID);}
+		}
+		/// <summary>Creates a new StoreContactEntity.CustomerID field instance</summary>
+		public static EntityField CustomerID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreContactFieldIndex.CustomerID);}
+		}
+		/// <summary>Creates a new StoreContactEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreContactFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new StoreContactEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreContactFieldIndex.Rowguid);}
 		}
 	}
 

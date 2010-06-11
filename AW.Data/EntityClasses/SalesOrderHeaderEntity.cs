@@ -41,6 +41,8 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
+		private AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection	_salesOrderHeaderSalesReasons;
+		private bool	_alwaysFetchSalesOrderHeaderSalesReasons, _alreadyFetchedSalesOrderHeaderSalesReasons;
 		private AW.Data.CollectionClasses.SalesOrderDetailCollection	_salesOrderDetails;
 		private bool	_alwaysFetchSalesOrderDetails, _alreadyFetchedSalesOrderDetails;
 		private AW.Data.CollectionClasses.SpecialOfferProductCollection _specialOfferProductCollectionViaSalesOrderDetail;
@@ -59,6 +61,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchCustomer, _alreadyFetchedCustomer, _customerReturnsNewIfNotFound;
 		private CustomerViewRelatedEntity _customerViewRelated;
 		private bool	_alwaysFetchCustomerViewRelated, _alreadyFetchedCustomerViewRelated, _customerViewRelatedReturnsNewIfNotFound;
+		private SalesPersonEntity _salesPerson;
+		private bool	_alwaysFetchSalesPerson, _alreadyFetchedSalesPerson, _salesPersonReturnsNewIfNotFound;
 		private SalesTerritoryEntity _salesTerritory;
 		private bool	_alwaysFetchSalesTerritory, _alreadyFetchedSalesTerritory, _salesTerritoryReturnsNewIfNotFound;
 		private ShipMethodEntity _shipMethod;
@@ -66,7 +70,6 @@ namespace AW.Data.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -90,10 +93,14 @@ namespace AW.Data.EntityClasses
 			public static readonly string Customer = "Customer";
 			/// <summary>Member name CustomerViewRelated</summary>
 			public static readonly string CustomerViewRelated = "CustomerViewRelated";
+			/// <summary>Member name SalesPerson</summary>
+			public static readonly string SalesPerson = "SalesPerson";
 			/// <summary>Member name SalesTerritory</summary>
 			public static readonly string SalesTerritory = "SalesTerritory";
 			/// <summary>Member name ShipMethod</summary>
 			public static readonly string ShipMethod = "ShipMethod";
+			/// <summary>Member name SalesOrderHeaderSalesReasons</summary>
+			public static readonly string SalesOrderHeaderSalesReasons = "SalesOrderHeaderSalesReasons";
 			/// <summary>Member name SalesOrderDetails</summary>
 			public static readonly string SalesOrderDetails = "SalesOrderDetails";
 			/// <summary>Member name SpecialOfferProductCollectionViaSalesOrderDetail</summary>
@@ -141,6 +148,10 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected SalesOrderHeaderEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
+			_salesOrderHeaderSalesReasons = (AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection)info.GetValue("_salesOrderHeaderSalesReasons", typeof(AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection));
+			_alwaysFetchSalesOrderHeaderSalesReasons = info.GetBoolean("_alwaysFetchSalesOrderHeaderSalesReasons");
+			_alreadyFetchedSalesOrderHeaderSalesReasons = info.GetBoolean("_alreadyFetchedSalesOrderHeaderSalesReasons");
+
 			_salesOrderDetails = (AW.Data.CollectionClasses.SalesOrderDetailCollection)info.GetValue("_salesOrderDetails", typeof(AW.Data.CollectionClasses.SalesOrderDetailCollection));
 			_alwaysFetchSalesOrderDetails = info.GetBoolean("_alwaysFetchSalesOrderDetails");
 			_alreadyFetchedSalesOrderDetails = info.GetBoolean("_alreadyFetchedSalesOrderDetails");
@@ -210,6 +221,15 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchCustomerViewRelated = info.GetBoolean("_alwaysFetchCustomerViewRelated");
 			_alreadyFetchedCustomerViewRelated = info.GetBoolean("_alreadyFetchedCustomerViewRelated");
 
+			_salesPerson = (SalesPersonEntity)info.GetValue("_salesPerson", typeof(SalesPersonEntity));
+			if(_salesPerson!=null)
+			{
+				_salesPerson.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_salesPersonReturnsNewIfNotFound = info.GetBoolean("_salesPersonReturnsNewIfNotFound");
+			_alwaysFetchSalesPerson = info.GetBoolean("_alwaysFetchSalesPerson");
+			_alreadyFetchedSalesPerson = info.GetBoolean("_alreadyFetchedSalesPerson");
+
 			_salesTerritory = (SalesTerritoryEntity)info.GetValue("_salesTerritory", typeof(SalesTerritoryEntity));
 			if(_salesTerritory!=null)
 			{
@@ -261,6 +281,10 @@ namespace AW.Data.EntityClasses
 					DesetupSyncCustomerViewRelated(true, false);
 					_alreadyFetchedCustomerViewRelated = false;
 					break;
+				case SalesOrderHeaderFieldIndex.SalesPersonID:
+					DesetupSyncSalesPerson(true, false);
+					_alreadyFetchedSalesPerson = false;
+					break;
 				case SalesOrderHeaderFieldIndex.ShipMethodID:
 					DesetupSyncShipMethod(true, false);
 					_alreadyFetchedShipMethod = false;
@@ -282,6 +306,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
+			_alreadyFetchedSalesOrderHeaderSalesReasons = (_salesOrderHeaderSalesReasons.Count > 0);
 			_alreadyFetchedSalesOrderDetails = (_salesOrderDetails.Count > 0);
 			_alreadyFetchedSpecialOfferProductCollectionViaSalesOrderDetail = (_specialOfferProductCollectionViaSalesOrderDetail.Count > 0);
 			_alreadyFetchedBillingAddress = (_billingAddress != null);
@@ -291,6 +316,7 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedCurrencyRate = (_currencyRate != null);
 			_alreadyFetchedCustomer = (_customer != null);
 			_alreadyFetchedCustomerViewRelated = (_customerViewRelated != null);
+			_alreadyFetchedSalesPerson = (_salesPerson != null);
 			_alreadyFetchedSalesTerritory = (_salesTerritory != null);
 			_alreadyFetchedShipMethod = (_shipMethod != null);
 		}
@@ -332,11 +358,17 @@ namespace AW.Data.EntityClasses
 				case "CustomerViewRelated":
 					toReturn.Add(Relations.CustomerViewRelatedEntityUsingCustomerID);
 					break;
+				case "SalesPerson":
+					toReturn.Add(Relations.SalesPersonEntityUsingSalesPersonID);
+					break;
 				case "SalesTerritory":
 					toReturn.Add(Relations.SalesTerritoryEntityUsingTerritoryID);
 					break;
 				case "ShipMethod":
 					toReturn.Add(Relations.ShipMethodEntityUsingShipMethodID);
+					break;
+				case "SalesOrderHeaderSalesReasons":
+					toReturn.Add(Relations.SalesOrderHeaderSalesReasonEntityUsingSalesOrderID);
 					break;
 				case "SalesOrderDetails":
 					toReturn.Add(Relations.SalesOrderDetailEntityUsingSalesOrderID);
@@ -359,6 +391,9 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		protected override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
+			info.AddValue("_salesOrderHeaderSalesReasons", (!this.MarkedForDeletion?_salesOrderHeaderSalesReasons:null));
+			info.AddValue("_alwaysFetchSalesOrderHeaderSalesReasons", _alwaysFetchSalesOrderHeaderSalesReasons);
+			info.AddValue("_alreadyFetchedSalesOrderHeaderSalesReasons", _alreadyFetchedSalesOrderHeaderSalesReasons);
 			info.AddValue("_salesOrderDetails", (!this.MarkedForDeletion?_salesOrderDetails:null));
 			info.AddValue("_alwaysFetchSalesOrderDetails", _alwaysFetchSalesOrderDetails);
 			info.AddValue("_alreadyFetchedSalesOrderDetails", _alreadyFetchedSalesOrderDetails);
@@ -393,6 +428,10 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_customerViewRelatedReturnsNewIfNotFound", _customerViewRelatedReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchCustomerViewRelated", _alwaysFetchCustomerViewRelated);
 			info.AddValue("_alreadyFetchedCustomerViewRelated", _alreadyFetchedCustomerViewRelated);
+			info.AddValue("_salesPerson", (!this.MarkedForDeletion?_salesPerson:null));
+			info.AddValue("_salesPersonReturnsNewIfNotFound", _salesPersonReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchSalesPerson", _alwaysFetchSalesPerson);
+			info.AddValue("_alreadyFetchedSalesPerson", _alreadyFetchedSalesPerson);
 			info.AddValue("_salesTerritory", (!this.MarkedForDeletion?_salesTerritory:null));
 			info.AddValue("_salesTerritoryReturnsNewIfNotFound", _salesTerritoryReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchSalesTerritory", _alwaysFetchSalesTerritory);
@@ -404,7 +443,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -445,6 +483,10 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedCustomerViewRelated = true;
 					this.CustomerViewRelated = (CustomerViewRelatedEntity)entity;
 					break;
+				case "SalesPerson":
+					_alreadyFetchedSalesPerson = true;
+					this.SalesPerson = (SalesPersonEntity)entity;
+					break;
 				case "SalesTerritory":
 					_alreadyFetchedSalesTerritory = true;
 					this.SalesTerritory = (SalesTerritoryEntity)entity;
@@ -452,6 +494,13 @@ namespace AW.Data.EntityClasses
 				case "ShipMethod":
 					_alreadyFetchedShipMethod = true;
 					this.ShipMethod = (ShipMethodEntity)entity;
+					break;
+				case "SalesOrderHeaderSalesReasons":
+					_alreadyFetchedSalesOrderHeaderSalesReasons = true;
+					if(entity!=null)
+					{
+						this.SalesOrderHeaderSalesReasons.Add((SalesOrderHeaderSalesReasonEntity)entity);
+					}
 					break;
 				case "SalesOrderDetails":
 					_alreadyFetchedSalesOrderDetails = true;
@@ -502,11 +551,17 @@ namespace AW.Data.EntityClasses
 				case "CustomerViewRelated":
 					SetupSyncCustomerViewRelated(relatedEntity);
 					break;
+				case "SalesPerson":
+					SetupSyncSalesPerson(relatedEntity);
+					break;
 				case "SalesTerritory":
 					SetupSyncSalesTerritory(relatedEntity);
 					break;
 				case "ShipMethod":
 					SetupSyncShipMethod(relatedEntity);
+					break;
+				case "SalesOrderHeaderSalesReasons":
+					_salesOrderHeaderSalesReasons.Add((SalesOrderHeaderSalesReasonEntity)relatedEntity);
 					break;
 				case "SalesOrderDetails":
 					_salesOrderDetails.Add((SalesOrderDetailEntity)relatedEntity);
@@ -546,11 +601,17 @@ namespace AW.Data.EntityClasses
 				case "CustomerViewRelated":
 					DesetupSyncCustomerViewRelated(false, true);
 					break;
+				case "SalesPerson":
+					DesetupSyncSalesPerson(false, true);
+					break;
 				case "SalesTerritory":
 					DesetupSyncSalesTerritory(false, true);
 					break;
 				case "ShipMethod":
 					DesetupSyncShipMethod(false, true);
+					break;
+				case "SalesOrderHeaderSalesReasons":
+					this.PerformRelatedEntityRemoval(_salesOrderHeaderSalesReasons, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "SalesOrderDetails":
 					this.PerformRelatedEntityRemoval(_salesOrderDetails, relatedEntity, signalRelatedEntityManyToOne);
@@ -601,6 +662,10 @@ namespace AW.Data.EntityClasses
 			{
 				toReturn.Add(_customerViewRelated);
 			}
+			if(_salesPerson!=null)
+			{
+				toReturn.Add(_salesPerson);
+			}
 			if(_salesTerritory!=null)
 			{
 				toReturn.Add(_salesTerritory);
@@ -617,6 +682,7 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
+			toReturn.Add(_salesOrderHeaderSalesReasons);
 			toReturn.Add(_salesOrderDetails);
 
 			return toReturn;
@@ -677,6 +743,61 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntityRelation> GetAllRelations()
 		{
 			return new SalesOrderHeaderRelations().GetAllRelations();
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderSalesReasonEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'SalesOrderHeaderSalesReasonEntity'</returns>
+		public AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection GetMultiSalesOrderHeaderSalesReasons(bool forceFetch)
+		{
+			return GetMultiSalesOrderHeaderSalesReasons(forceFetch, _salesOrderHeaderSalesReasons.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderSalesReasonEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'SalesOrderHeaderSalesReasonEntity'</returns>
+		public AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection GetMultiSalesOrderHeaderSalesReasons(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiSalesOrderHeaderSalesReasons(forceFetch, _salesOrderHeaderSalesReasons.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderSalesReasonEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection GetMultiSalesOrderHeaderSalesReasons(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiSalesOrderHeaderSalesReasons(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderSalesReasonEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection GetMultiSalesOrderHeaderSalesReasons(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedSalesOrderHeaderSalesReasons || forceFetch || _alwaysFetchSalesOrderHeaderSalesReasons) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_salesOrderHeaderSalesReasons);
+				_salesOrderHeaderSalesReasons.SuppressClearInGetMulti=!forceFetch;
+				_salesOrderHeaderSalesReasons.EntityFactoryToUse = entityFactoryToUse;
+				_salesOrderHeaderSalesReasons.GetMultiManyToOne(null, this, filter);
+				_salesOrderHeaderSalesReasons.SuppressClearInGetMulti=false;
+				_alreadyFetchedSalesOrderHeaderSalesReasons = true;
+			}
+			return _salesOrderHeaderSalesReasons;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'SalesOrderHeaderSalesReasons'. These settings will be taken into account
+		/// when the property SalesOrderHeaderSalesReasons is requested or GetMultiSalesOrderHeaderSalesReasons is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersSalesOrderHeaderSalesReasons(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_salesOrderHeaderSalesReasons.SortClauses=sortClauses;
+			_salesOrderHeaderSalesReasons.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.</summary>
@@ -1059,6 +1180,47 @@ namespace AW.Data.EntityClasses
 		}
 
 
+		/// <summary> Retrieves the related entity of type 'SalesPersonEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'SalesPersonEntity' which is related to this entity.</returns>
+		public SalesPersonEntity GetSingleSalesPerson()
+		{
+			return GetSingleSalesPerson(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'SalesPersonEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'SalesPersonEntity' which is related to this entity.</returns>
+		public virtual SalesPersonEntity GetSingleSalesPerson(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedSalesPerson || forceFetch || _alwaysFetchSalesPerson) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.SalesPersonEntityUsingSalesPersonID);
+				SalesPersonEntity newEntity = new SalesPersonEntity();
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					AddToTransactionIfNecessary(newEntity);
+					fetchResult = newEntity.FetchUsingPK(this.SalesPersonID.GetValueOrDefault());
+				}
+				if(fetchResult)
+				{
+					newEntity = (SalesPersonEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_salesPersonReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.SalesPerson = newEntity;
+				_alreadyFetchedSalesPerson = fetchResult;
+			}
+			return _salesPerson;
+		}
+
+
 		/// <summary> Retrieves the related entity of type 'SalesTerritoryEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'SalesTerritoryEntity' which is related to this entity.</returns>
 		public SalesTerritoryEntity GetSingleSalesTerritory()
@@ -1143,6 +1305,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
+			_salesOrderHeaderSalesReasons.ActiveContext = this.ActiveContext;
 			_salesOrderDetails.ActiveContext = this.ActiveContext;
 			_specialOfferProductCollectionViaSalesOrderDetail.ActiveContext = this.ActiveContext;
 			if(_billingAddress!=null)
@@ -1173,6 +1336,10 @@ namespace AW.Data.EntityClasses
 			{
 				_customerViewRelated.ActiveContext = this.ActiveContext;
 			}
+			if(_salesPerson!=null)
+			{
+				_salesPerson.ActiveContext = this.ActiveContext;
+			}
 			if(_salesTerritory!=null)
 			{
 				_salesTerritory.ActiveContext = this.ActiveContext;
@@ -1195,8 +1362,10 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("CurrencyRate", _currencyRate);
 			toReturn.Add("Customer", _customer);
 			toReturn.Add("CustomerViewRelated", _customerViewRelated);
+			toReturn.Add("SalesPerson", _salesPerson);
 			toReturn.Add("SalesTerritory", _salesTerritory);
 			toReturn.Add("ShipMethod", _shipMethod);
+			toReturn.Add("SalesOrderHeaderSalesReasons", _salesOrderHeaderSalesReasons);
 			toReturn.Add("SalesOrderDetails", _salesOrderDetails);
 			toReturn.Add("SpecialOfferProductCollectionViaSalesOrderDetail", _specialOfferProductCollectionViaSalesOrderDetail);
 			return toReturn;
@@ -1213,7 +1382,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}		
@@ -1232,7 +1400,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -1240,6 +1407,9 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
+			_salesOrderHeaderSalesReasons = new AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection();
+			_salesOrderHeaderSalesReasons.SetContainingEntityInfo(this, "SalesOrderHeader");
+
 			_salesOrderDetails = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
 			_salesOrderDetails.SetContainingEntityInfo(this, "SalesOrderHeader");
 			_specialOfferProductCollectionViaSalesOrderDetail = new AW.Data.CollectionClasses.SpecialOfferProductCollection();
@@ -1250,13 +1420,13 @@ namespace AW.Data.EntityClasses
 			_currencyRateReturnsNewIfNotFound = true;
 			_customerReturnsNewIfNotFound = true;
 			_customerViewRelatedReturnsNewIfNotFound = true;
+			_salesPersonReturnsNewIfNotFound = true;
 			_salesTerritoryReturnsNewIfNotFound = true;
 			_shipMethodReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -1555,6 +1725,39 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _salesPerson</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncSalesPerson(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _salesPerson, new PropertyChangedEventHandler( OnSalesPersonPropertyChanged ), "SalesPerson", SalesOrderHeaderEntity.Relations.SalesPersonEntityUsingSalesPersonID, true, signalRelatedEntity, "SalesOrderHeaders", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.SalesPersonID } );		
+			_salesPerson = null;
+		}
+		
+		/// <summary> setups the sync logic for member _salesPerson</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncSalesPerson(IEntity relatedEntity)
+		{
+			if(_salesPerson!=relatedEntity)
+			{		
+				DesetupSyncSalesPerson(true, true);
+				_salesPerson = (SalesPersonEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _salesPerson, new PropertyChangedEventHandler( OnSalesPersonPropertyChanged ), "SalesPerson", SalesOrderHeaderEntity.Relations.SalesPersonEntityUsingSalesPersonID, true, ref _alreadyFetchedSalesPerson, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnSalesPersonPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Removes the sync logic for member _salesTerritory</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -1672,6 +1875,13 @@ namespace AW.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHeaderSalesReason' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesOrderHeaderSalesReasons
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection(), (IEntityRelation)GetRelationsForField("SalesOrderHeaderSalesReasons")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.SalesOrderHeaderSalesReasonEntity, 0, null, null, null, "SalesOrderHeaderSalesReasons", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderDetail' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathSalesOrderDetails
@@ -1738,6 +1948,13 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathCustomerViewRelated
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerViewRelatedCollection(), (IEntityRelation)GetRelationsForField("CustomerViewRelated")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.CustomerViewRelatedEntity, 0, null, null, null, "CustomerViewRelated", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesPerson'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesPerson
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesPersonCollection(), (IEntityRelation)GetRelationsForField("SalesPerson")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.SalesPersonEntity, 0, null, null, null, "SalesPerson", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesTerritory'  for this entity.</summary>
@@ -2054,6 +2271,39 @@ namespace AW.Data.EntityClasses
 
 		}
 
+		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderSalesReasonEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrderHeaderSalesReasons()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection SalesOrderHeaderSalesReasons
+		{
+			get	{ return GetMultiSalesOrderHeaderSalesReasons(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesOrderHeaderSalesReasons. When set to true, SalesOrderHeaderSalesReasons is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesOrderHeaderSalesReasons is accessed. You can always execute/ a forced fetch by calling GetMultiSalesOrderHeaderSalesReasons(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesOrderHeaderSalesReasons
+		{
+			get	{ return _alwaysFetchSalesOrderHeaderSalesReasons; }
+			set	{ _alwaysFetchSalesOrderHeaderSalesReasons = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrderHeaderSalesReasons already has been fetched. Setting this property to false when SalesOrderHeaderSalesReasons has been fetched
+		/// will clear the SalesOrderHeaderSalesReasons collection well. Setting this property to true while SalesOrderHeaderSalesReasons hasn't been fetched disables lazy loading for SalesOrderHeaderSalesReasons</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesOrderHeaderSalesReasons
+		{
+			get { return _alreadyFetchedSalesOrderHeaderSalesReasons;}
+			set 
+			{
+				if(_alreadyFetchedSalesOrderHeaderSalesReasons && !value && (_salesOrderHeaderSalesReasons != null))
+				{
+					_salesOrderHeaderSalesReasons.Clear();
+				}
+				_alreadyFetchedSalesOrderHeaderSalesReasons = value;
+			}
+		}
 		/// <summary> Retrieves all related entities of type 'SalesOrderDetailEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrderDetails()', because 
@@ -2533,6 +2783,65 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _customerViewRelatedReturnsNewIfNotFound; }
 			set { _customerViewRelatedReturnsNewIfNotFound = value; }	
+		}
+
+		/// <summary> Gets / sets related entity of type 'SalesPersonEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesPerson()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(true)]
+		public virtual SalesPersonEntity SalesPerson
+		{
+			get	{ return GetSingleSalesPerson(false); }
+			set 
+			{ 
+				if(this.IsDeserializing)
+				{
+					SetupSyncSalesPerson(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "SalesOrderHeaders", "SalesPerson", _salesPerson, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesPerson. When set to true, SalesPerson is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesPerson is accessed. You can always execute a forced fetch by calling GetSingleSalesPerson(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesPerson
+		{
+			get	{ return _alwaysFetchSalesPerson; }
+			set	{ _alwaysFetchSalesPerson = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesPerson already has been fetched. Setting this property to false when SalesPerson has been fetched
+		/// will set SalesPerson to null as well. Setting this property to true while SalesPerson hasn't been fetched disables lazy loading for SalesPerson</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesPerson
+		{
+			get { return _alreadyFetchedSalesPerson;}
+			set 
+			{
+				if(_alreadyFetchedSalesPerson && !value)
+				{
+					this.SalesPerson = null;
+				}
+				_alreadyFetchedSalesPerson = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SalesPerson is not found
+		/// in the database. When set to true, SalesPerson will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool SalesPersonReturnsNewIfNotFound
+		{
+			get	{ return _salesPersonReturnsNewIfNotFound; }
+			set { _salesPersonReturnsNewIfNotFound = value; }	
 		}
 
 		/// <summary> Gets / sets related entity of type 'SalesTerritoryEntity'. This property is not visible in databound grids.
