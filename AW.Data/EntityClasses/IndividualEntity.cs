@@ -35,15 +35,13 @@ namespace AW.Data.EntityClasses
 	/// 
 	/// </summary>
 	[Serializable]
-	public partial class IndividualEntity : CommonEntityBase
+	public partial class IndividualEntity : CustomerEntity
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private ContactEntity _contact;
 		private bool	_alwaysFetchContact, _alreadyFetchedContact, _contactReturnsNewIfNotFound;
-		private CustomerEntity _customer;
-		private bool	_alwaysFetchCustomer, _alreadyFetchedCustomer, _customerReturnsNewIfNotFound;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -54,12 +52,36 @@ namespace AW.Data.EntityClasses
 		private static Dictionary<string, Dictionary<string, string>>	_fieldsCustomProperties;
 
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
-		public static partial class MemberNames
+		public static new partial class MemberNames
 		{
 			/// <summary>Member name Contact</summary>
 			public static readonly string Contact = "Contact";
-			/// <summary>Member name Customer</summary>
-			public static readonly string Customer = "Customer";
+			/// <summary>Member name SalesTerritory</summary>
+			public static readonly string SalesTerritory = "SalesTerritory";
+			/// <summary>Member name CustomerAddresses</summary>
+			public static readonly string CustomerAddresses = "CustomerAddresses";
+			/// <summary>Member name SalesOrderHeaders</summary>
+			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
+			/// <summary>Member name AddressCollectionViaCustomerAddress</summary>
+			public static readonly string AddressCollectionViaCustomerAddress = "AddressCollectionViaCustomerAddress";
+			/// <summary>Member name AddressCollectionViaSalesOrderHeader</summary>
+			public static readonly string AddressCollectionViaSalesOrderHeader = "AddressCollectionViaSalesOrderHeader";
+			/// <summary>Member name AddressCollectionViaSalesOrderHeader_</summary>
+			public static readonly string AddressCollectionViaSalesOrderHeader_ = "AddressCollectionViaSalesOrderHeader_";
+			/// <summary>Member name AddressTypeCollectionViaCustomerAddres</summary>
+			public static readonly string AddressTypeCollectionViaCustomerAddres = "AddressTypeCollectionViaCustomerAddres";
+			/// <summary>Member name ContactCollectionViaSalesOrderHeader</summary>
+			public static readonly string ContactCollectionViaSalesOrderHeader = "ContactCollectionViaSalesOrderHeader";
+			/// <summary>Member name ShipMethodCollectionViaSalesOrderHeader</summary>
+			public static readonly string ShipMethodCollectionViaSalesOrderHeader = "ShipMethodCollectionViaSalesOrderHeader";
+			/// <summary>Member name CreditCardCollectionViaSalesOrderHeader</summary>
+			public static readonly string CreditCardCollectionViaSalesOrderHeader = "CreditCardCollectionViaSalesOrderHeader";
+			/// <summary>Member name CurrencyRateCollectionViaSalesOrderHeader</summary>
+			public static readonly string CurrencyRateCollectionViaSalesOrderHeader = "CurrencyRateCollectionViaSalesOrderHeader";
+			/// <summary>Member name CustomerViewRelatedCollectionViaSalesOrderHeader_____</summary>
+			public static readonly string CustomerViewRelatedCollectionViaSalesOrderHeader_____ = "CustomerViewRelatedCollectionViaSalesOrderHeader_____";
+			/// <summary>Member name SalesTerritoryCollectionViaSalesOrderHeader</summary>
+			public static readonly string SalesTerritoryCollectionViaSalesOrderHeader = "SalesTerritoryCollectionViaSalesOrderHeader";
 		}
 		#endregion
 		
@@ -77,7 +99,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary>CTor</summary>
 		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
-		public IndividualEntity(System.Int32 customerID)
+		public IndividualEntity(System.Int32 customerID):base(customerID)
 		{
 			InitClassFetch(customerID, null, null);
 		}
@@ -85,7 +107,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public IndividualEntity(System.Int32 customerID, IPrefetchPath prefetchPathToUse)
+		public IndividualEntity(System.Int32 customerID, IPrefetchPath prefetchPathToUse):base(customerID, prefetchPathToUse)
 		{
 			InitClassFetch(customerID, null, prefetchPathToUse);
 		}
@@ -93,7 +115,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
 		/// <param name="validator">The custom validator object for this IndividualEntity</param>
-		public IndividualEntity(System.Int32 customerID, IValidator validator)
+		public IndividualEntity(System.Int32 customerID, IValidator validator):base(customerID, validator)
 		{
 			InitClassFetch(customerID, validator, null);
 		}
@@ -111,14 +133,6 @@ namespace AW.Data.EntityClasses
 			_contactReturnsNewIfNotFound = info.GetBoolean("_contactReturnsNewIfNotFound");
 			_alwaysFetchContact = info.GetBoolean("_alwaysFetchContact");
 			_alreadyFetchedContact = info.GetBoolean("_alreadyFetchedContact");
-			_customer = (CustomerEntity)info.GetValue("_customer", typeof(CustomerEntity));
-			if(_customer!=null)
-			{
-				_customer.AfterSave+=new EventHandler(OnEntityAfterSave);
-			}
-			_customerReturnsNewIfNotFound = info.GetBoolean("_customerReturnsNewIfNotFound");
-			_alwaysFetchCustomer = info.GetBoolean("_alwaysFetchCustomer");
-			_alreadyFetchedCustomer = info.GetBoolean("_alreadyFetchedCustomer");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -135,10 +149,6 @@ namespace AW.Data.EntityClasses
 					DesetupSyncContact(true, false);
 					_alreadyFetchedContact = false;
 					break;
-				case IndividualFieldIndex.CustomerID:
-					DesetupSyncCustomer(true, false);
-					_alreadyFetchedCustomer = false;
-					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
 					break;
@@ -149,7 +159,6 @@ namespace AW.Data.EntityClasses
 		protected override void PostReadXmlFixups()
 		{
 			_alreadyFetchedContact = (_contact != null);
-			_alreadyFetchedCustomer = (_customer != null);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -163,7 +172,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
 		/// <param name="fieldName">Name of the field mapped onto the relation of which the relation objects have to be obtained.</param>
 		/// <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
-		internal static RelationCollection GetRelationsForField(string fieldName)
+		internal static new RelationCollection GetRelationsForField(string fieldName)
 		{
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
@@ -171,16 +180,29 @@ namespace AW.Data.EntityClasses
 				case "Contact":
 					toReturn.Add(Relations.ContactEntityUsingContactID);
 					break;
-				case "Customer":
-					toReturn.Add(Relations.CustomerEntityUsingCustomerID);
-					break;
 				default:
+					toReturn = CustomerEntity.GetRelationsForField(fieldName);
 					break;				
 			}
 			return toReturn;
 		}
 
-
+		/// <summary>Gets a predicateexpression which filters on this entity</summary>
+		/// <returns>ready to use predicateexpression</returns>
+		/// <remarks>Only useful in entity fetches.</remarks>
+		public new static IPredicateExpression GetEntityTypeFilter()
+		{
+			return InheritanceInfoProviderSingleton.GetInstance().GetEntityTypeFilter("IndividualEntity", false);
+		}
+		
+		/// <summary>Gets a predicateexpression which filters on this entity</summary>
+		/// <param name="negate">Flag to produce a NOT filter, (true), or a normal filter (false). </param>
+		/// <returns>ready to use predicateexpression</returns>
+		/// <remarks>Only useful in entity fetches.</remarks>
+		public new static IPredicateExpression GetEntityTypeFilter(bool negate)
+		{
+			return InheritanceInfoProviderSingleton.GetInstance().GetEntityTypeFilter("IndividualEntity", negate);
+		}
 
 		/// <summary> ISerializable member. Does custom serialization so event handlers do not get serialized.</summary>
 		/// <param name="info"></param>
@@ -192,11 +214,6 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_contactReturnsNewIfNotFound", _contactReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchContact", _alwaysFetchContact);
 			info.AddValue("_alreadyFetchedContact", _alreadyFetchedContact);
-
-			info.AddValue("_customer", (!this.MarkedForDeletion?_customer:null));
-			info.AddValue("_customerReturnsNewIfNotFound", _customerReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchCustomer", _alwaysFetchCustomer);
-			info.AddValue("_alreadyFetchedCustomer", _alreadyFetchedCustomer);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -216,12 +233,8 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedContact = true;
 					this.Contact = (ContactEntity)entity;
 					break;
-				case "Customer":
-					_alreadyFetchedCustomer = true;
-					this.Customer = (CustomerEntity)entity;
-					break;
 				default:
-					this.OnSetRelatedEntityProperty(propertyName, entity);
+					base.SetRelatedEntityProperty(propertyName, entity);
 					break;
 			}
 		}
@@ -237,10 +250,8 @@ namespace AW.Data.EntityClasses
 				case "Contact":
 					SetupSyncContact(relatedEntity);
 					break;
-				case "Customer":
-					SetupSyncCustomer(relatedEntity);
-					break;
 				default:
+					base.SetRelatedEntity(relatedEntity, fieldName);
 					break;
 			}
 		}
@@ -257,10 +268,8 @@ namespace AW.Data.EntityClasses
 				case "Contact":
 					DesetupSyncContact(false, true);
 					break;
-				case "Customer":
-					DesetupSyncCustomer(false, true);
-					break;
 				default:
+					base.UnsetRelatedEntity(relatedEntity, fieldName, signalRelatedEntityManyToOne);
 					break;
 			}
 		}
@@ -270,6 +279,7 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntity> GetDependingRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
+			toReturn.AddRange(base.GetDependingRelatedEntities());
 			return toReturn;
 		}
 		
@@ -282,10 +292,7 @@ namespace AW.Data.EntityClasses
 			{
 				toReturn.Add(_contact);
 			}
-			if(_customer!=null)
-			{
-				toReturn.Add(_customer);
-			}
+			toReturn.AddRange(base.GetDependentRelatedEntities());
 			return toReturn;
 		}
 		
@@ -295,59 +302,46 @@ namespace AW.Data.EntityClasses
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 
-
+			toReturn.AddRange(base.GetMemberEntityCollections());
 			return toReturn;
 		}
 
-
-		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
+		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key specified in a polymorphic way, so the entity returned  could be of a subtype of the current entity or the current entity.</summary>
+		/// <param name="transactionToUse">transaction to use during fetch</param>
 		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
-		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 customerID)
+		/// <param name="contextToUse">Context to use for fetch</param>
+		/// <returns>Fetched entity of the type of this entity or a subtype, or an empty entity of that type if not found.</returns>
+		/// <remarks>Creates a new instance, doesn't fill <i>this</i> entity instance</remarks>
+		public static new IndividualEntity FetchPolymorphic(ITransaction transactionToUse, System.Int32 customerID, Context contextToUse)
 		{
-			return FetchUsingPK(customerID, null, null, null);
+			return FetchPolymorphic(transactionToUse, customerID, contextToUse, null);
 		}
-
-		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
+				
+		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key specified in a polymorphic way, so the entity returned  could be of a subtype of the current entity or the current entity.</summary>
+		/// <param name="transactionToUse">transaction to use during fetch</param>
 		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 customerID, IPrefetchPath prefetchPathToUse)
-		{
-			return FetchUsingPK(customerID, prefetchPathToUse, null, null);
-		}
-
-		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
-		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 customerID, IPrefetchPath prefetchPathToUse, Context contextToUse)
-		{
-			return FetchUsingPK(customerID, prefetchPathToUse, contextToUse, null);
-		}
-
-		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
-		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
+		/// <param name="contextToUse">Context to use for fetch</param>
 		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
-		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 customerID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		/// <returns>Fetched entity of the type of this entity or a subtype, or an empty entity of that type if not found.</returns>
+		/// <remarks>Creates a new instance, doesn't fill <i>this</i> entity instance</remarks>
+		public static new IndividualEntity FetchPolymorphic(ITransaction transactionToUse, System.Int32 customerID, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
-			return Fetch(customerID, prefetchPathToUse, contextToUse, excludedIncludedFields);
-		}
-
-		/// <summary> Refetches the Entity from the persistent storage. Refetch is used to re-load an Entity which is marked "Out-of-sync", due to a save action. Refetching an empty Entity has no effect. </summary>
-		/// <returns>true if Refetch succeeded, false otherwise</returns>
-		public override bool Refetch()
-		{
-			return Fetch(this.CustomerID, null, null, null);
+			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.IndividualEntity);
+			fields[(int)IndividualFieldIndex.CustomerID].ForcedCurrentValueWrite(customerID);
+			return (IndividualEntity)new IndividualDAO().FetchExistingPolymorphic(transactionToUse, fields, contextToUse, excludedIncludedFields);
 		}
 
 
+		/// <summary>Determines whether this entity is a subType of the entity represented by the passed in enum value, which represents a value in the AW.Data.EntityType enum</summary>
+		/// <param name="typeOfEntity">Type of entity.</param>
+		/// <returns>true if the passed in type is a supertype of this entity, otherwise false</returns>
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		protected override bool CheckIfIsSubTypeOf(int typeOfEntity)
+		{
+			return InheritanceInfoProviderSingleton.GetInstance().CheckIfIsSubTypeOf("IndividualEntity", ((AW.Data.EntityType)typeOfEntity).ToString());
+		}
 				
 		/// <summary>Gets a list of all the EntityRelation objects the type of this instance has.</summary>
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
@@ -396,46 +390,6 @@ namespace AW.Data.EntityClasses
 			return _contact;
 		}
 
-		/// <summary> Retrieves the related entity of type 'CustomerEntity', using a relation of type '1:1'</summary>
-		/// <returns>A fetched entity of type 'CustomerEntity' which is related to this entity.</returns>
-		public CustomerEntity GetSingleCustomer()
-		{
-			return GetSingleCustomer(false);
-		}
-		
-		/// <summary> Retrieves the related entity of type 'CustomerEntity', using a relation of type '1:1'</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
-		/// <returns>A fetched entity of type 'CustomerEntity' which is related to this entity.</returns>
-		public virtual CustomerEntity GetSingleCustomer(bool forceFetch)
-		{
-			if( ( !_alreadyFetchedCustomer || forceFetch || _alwaysFetchCustomer) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode )
-			{
-				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.CustomerEntityUsingCustomerID);
-				CustomerEntity newEntity = new CustomerEntity();
-				bool fetchResult = false;
-				if(performLazyLoading)
-				{
-					AddToTransactionIfNecessary(newEntity);
-					fetchResult = newEntity.FetchUsingPK(this.CustomerID);
-				}
-				if(fetchResult)
-				{
-					newEntity = (CustomerEntity)GetFromActiveContext(newEntity);
-				}
-				else
-				{
-					if(!_customerReturnsNewIfNotFound)
-					{
-						RemoveFromTransactionIfNecessary(newEntity);
-						newEntity = null;
-					}
-				}
-				this.Customer = newEntity;
-				_alreadyFetchedCustomer = fetchResult;
-			}
-			return _customer;
-		}
-
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
@@ -443,19 +397,15 @@ namespace AW.Data.EntityClasses
 			{
 				_contact.ActiveContext = this.ActiveContext;
 			}
-			if(_customer!=null)
-			{
-				_customer.ActiveContext = this.ActiveContext;
-			}
+			base.AddInternalsToContext();
 		}
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
 		protected override Dictionary<string, object> GetRelatedData()
 		{
-			Dictionary<string, object> toReturn = new Dictionary<string, object>();
+			Dictionary<string, object> toReturn = base.GetRelatedData();
 			toReturn.Add("Contact", _contact);
-			toReturn.Add("Customer", _customer);
 			return toReturn;
 		}
 	
@@ -463,15 +413,11 @@ namespace AW.Data.EntityClasses
 		/// <param name="validatorToUse">Validator to use.</param>
 		private void InitClassEmpty(IValidator validatorToUse)
 		{
-			OnInitializing();
-			this.Fields = CreateFields();
-			this.Validator = validatorToUse;
 			InitClassMembers();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
 
-			OnInitialized();
 		}		
 
 		/// <summary> Initializes the the entity and fetches the data related to the entity in this entity.</summary>
@@ -480,27 +426,21 @@ namespace AW.Data.EntityClasses
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		private void InitClassFetch(System.Int32 customerID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
-			OnInitializing();
-			this.Validator = validator;
-			this.Fields = CreateFields();
+
 			InitClassMembers();	
-			Fetch(customerID, prefetchPathToUse, null, null);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
 
-			OnInitialized();
 		}
 
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{			_contactReturnsNewIfNotFound = true;
-			_customerReturnsNewIfNotFound = true;
-			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			OnInitClassMembersComplete();
+
 		}
 
 		#region Custom Property Hashtable Setup
@@ -513,11 +453,7 @@ namespace AW.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("ContactID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("CustomerID", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Demographics", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
 
@@ -554,62 +490,6 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _customer</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncCustomer(bool signalRelatedEntity, bool resetFKFields)
-		{
-			this.PerformDesetupSyncRelatedEntity( _customer, new PropertyChangedEventHandler( OnCustomerPropertyChanged ), "Customer", Relations.CustomerEntityUsingCustomerID, true, signalRelatedEntity, "Individual", false, new int[] { (int)IndividualFieldIndex.CustomerID } );
-			_customer = null;
-		}
-	
-		/// <summary> setups the sync logic for member _customer</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCustomer(IEntity relatedEntity)
-		{
-			if(_customer!=relatedEntity)
-			{
-				DesetupSyncCustomer(true, true);
-				_customer = (CustomerEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _customer, new PropertyChangedEventHandler( OnCustomerPropertyChanged ), "Customer", Relations.CustomerEntityUsingCustomerID, true, ref _alreadyFetchedCustomer, new string[] {  } );
-			}
-		}
-		
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnCustomerPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
-		/// <summary> Fetches the entity from the persistent storage. Fetch simply reads the entity into an EntityFields object. </summary>
-		/// <param name="customerID">PK value for Individual which data should be fetched into this Individual object</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
-		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
-		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
-		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
-		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 customerID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
-		{
-			try
-			{
-				OnFetch();
-				this.Fields[(int)IndividualFieldIndex.CustomerID].ForcedCurrentValueWrite(customerID);
-				CreateDAOInstance().FetchExisting(this, this.Transaction, prefetchPathToUse, contextToUse, excludedIncludedFields);
-				return (this.Fields.State == EntityState.Fetched);
-			}
-			finally
-			{
-				OnFetchComplete();
-			}
-		}
-
 		/// <summary> Creates the DAO instance for this type</summary>
 		/// <returns></returns>
 		protected override IDao CreateDAOInstance()
@@ -626,14 +506,14 @@ namespace AW.Data.EntityClasses
 
 		#region Class Property Declarations
 		/// <summary> The relations object holding all relations of this entity with other entity classes.</summary>
-		public  static IndividualRelations Relations
+		public new static IndividualRelations Relations
 		{
 			get	{ return new IndividualRelations(); }
 		}
 		
 		/// <summary> The custom properties for this entity type.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
-		public  static Dictionary<string, string> CustomProperties
+		public new static Dictionary<string, string> CustomProperties
 		{
 			get { return _customProperties;}
 		}
@@ -643,13 +523,6 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathContact
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(), (IEntityRelation)GetRelationsForField("Contact")[0], (int)AW.Data.EntityType.IndividualEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, null, "Contact", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Customer'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathCustomer
-		{
-			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerCollection(), (IEntityRelation)GetRelationsForField("Customer")[0], (int)AW.Data.EntityType.IndividualEntity, (int)AW.Data.EntityType.CustomerEntity, 0, null, null, null, "Customer", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne);	}
 		}
 
 		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
@@ -669,7 +542,7 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> The custom properties for the fields of this entity type. The returned Hashtable contains per fieldname a hashtable of name-value pairs. </summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
-		public  static Dictionary<string, Dictionary<string, string>> FieldsCustomProperties
+		public new static Dictionary<string, Dictionary<string, string>> FieldsCustomProperties
 		{
 			get { return _fieldsCustomProperties;}
 		}
@@ -692,16 +565,6 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)IndividualFieldIndex.ContactID, value, true); }
 		}
 
-		/// <summary> The CustomerID property of the Entity Individual<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "Individual"."CustomerID"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
-		public virtual System.Int32 CustomerID
-		{
-			get { return (System.Int32)GetValue((int)IndividualFieldIndex.CustomerID, true); }
-			set	{ SetValue((int)IndividualFieldIndex.CustomerID, value, true); }
-		}
-
 		/// <summary> The Demographics property of the Entity Individual<br/><br/></summary>
 		/// <remarks>Mapped on  table field: "Individual"."Demographics"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
@@ -710,16 +573,6 @@ namespace AW.Data.EntityClasses
 		{
 			get { return (System.String)GetValue((int)IndividualFieldIndex.Demographics, true); }
 			set	{ SetValue((int)IndividualFieldIndex.Demographics, value, true); }
-		}
-
-		/// <summary> The ModifiedDate property of the Entity Individual<br/><br/></summary>
-		/// <remarks>Mapped on  table field: "Individual"."ModifiedDate"<br/>
-		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.DateTime ModifiedDate
-		{
-			get { return (System.DateTime)GetValue((int)IndividualFieldIndex.ModifiedDate, true); }
-			set	{ SetValue((int)IndividualFieldIndex.ModifiedDate, value, true); }
 		}
 
 
@@ -782,91 +635,18 @@ namespace AW.Data.EntityClasses
 			set { _contactReturnsNewIfNotFound = value; }	
 		}
 
-		/// <summary> Gets / sets related entity of type 'CustomerEntity'. This property is not visible in databound grids.
-		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
-		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/></summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCustomer()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
-		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
-		public virtual CustomerEntity Customer
-		{
-			get	{ return GetSingleCustomer(false); }
-			set
-			{
-				if(this.IsDeserializing)
-				{
-					SetupSyncCustomer(value);
-				}
-				else
-				{
-					if(value==null)
-					{
-						bool raisePropertyChanged = (_customer !=null);
-						DesetupSyncCustomer(true, true);
-						if(raisePropertyChanged)
-						{
-							OnPropertyChanged("Customer");
-						}
-					}
-					else
-					{
-						if(_customer!=value)
-						{
-							((IEntity)value).SetRelatedEntity(this, "Individual");
-							SetupSyncCustomer(value);
-						}
-					}
-				}
-			}
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for Customer. When set to true, Customer is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time Customer is accessed. You can always execute a forced fetch by calling GetSingleCustomer(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchCustomer
-		{
-			get	{ return _alwaysFetchCustomer; }
-			set	{ _alwaysFetchCustomer = value; }	
-		}
-		
-		/// <summary>Gets / Sets the lazy loading flag if the property Customer already has been fetched. Setting this property to false when Customer has been fetched
-		/// will set Customer to null as well. Setting this property to true while Customer hasn't been fetched disables lazy loading for Customer</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedCustomer
-		{
-			get { return _alreadyFetchedCustomer;}
-			set 
-			{
-				if(_alreadyFetchedCustomer && !value)
-				{
-					this.Customer = null;
-				}
-				_alreadyFetchedCustomer = value;
-			}
-		}
-		
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Customer is not found
-		/// in the database. When set to true, Customer will return a new entity instance if the related entity is not found, otherwise 
-		/// null be returned if the related entity is not found. Default: true.</summary>
-		[Browsable(false)]
-		public bool CustomerReturnsNewIfNotFound
-		{
-			get	{ return _customerReturnsNewIfNotFound; }
-			set	{ _customerReturnsNewIfNotFound = value; }	
-		}
 
 		/// <summary> Gets or sets a value indicating whether this entity is a subtype</summary>
 		protected override bool LLBLGenProIsSubType
 		{
-			get { return false;}
+			get { return true;}
 		}
 
 		/// <summary> Gets the type of the hierarchy this entity is in. </summary>
 		[System.ComponentModel.Browsable(false), XmlIgnore]
 		protected override InheritanceHierarchyType LLBLGenProIsInHierarchyOfType
 		{
-			get { return InheritanceHierarchyType.None;}
+			get { return InheritanceHierarchyType.TargetPerEntity;}
 		}
 		
 		/// <summary>Returns the AW.Data.EntityType enum value for this entity.</summary>

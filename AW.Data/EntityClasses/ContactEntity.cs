@@ -848,7 +848,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_individuals);
 				_individuals.SuppressClearInGetMulti=!forceFetch;
 				_individuals.EntityFactoryToUse = entityFactoryToUse;
-				_individuals.GetMultiManyToOne(this, filter);
+				_individuals.GetMultiManyToOne(this, null, filter);
 				_individuals.SuppressClearInGetMulti=false;
 				_alreadyFetchedIndividuals = true;
 			}

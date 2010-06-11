@@ -18,7 +18,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 namespace AW.Data.RelationClasses
 {
 	/// <summary>Implements the static Relations variant for the entity: Customer. </summary>
-	public partial class CustomerRelations
+	public partial class CustomerRelations : IRelationFactory
 	{
 		/// <summary>CTor</summary>
 		public CustomerRelations()
@@ -32,8 +32,6 @@ namespace AW.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.CustomerAddressEntityUsingCustomerID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingCustomerID);
-			toReturn.Add(this.IndividualEntityUsingCustomerID);
-			toReturn.Add(this.StoreEntityUsingCustomerID);
 			toReturn.Add(this.SalesTerritoryEntityUsingTerritoryID);
 			return toReturn;
 		}
@@ -70,43 +68,6 @@ namespace AW.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between CustomerEntity and IndividualEntity over the 1:1 relation they have, using the relation between the fields:
-		/// Customer.CustomerID - Individual.CustomerID
-		/// </summary>
-		public virtual IEntityRelation IndividualEntityUsingCustomerID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "Individual", true);
-
-				relation.AddEntityFieldPair(CustomerFields.CustomerID, IndividualFields.CustomerID);
-
-
-
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IndividualEntity", false);
-				return relation;
-			}
-		}
-
-		/// <summary>Returns a new IEntityRelation object, between CustomerEntity and StoreEntity over the 1:1 relation they have, using the relation between the fields:
-		/// Customer.CustomerID - Store.CustomerID
-		/// </summary>
-		public virtual IEntityRelation StoreEntityUsingCustomerID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "Store", true);
-
-				relation.AddEntityFieldPair(CustomerFields.CustomerID, StoreFields.CustomerID);
-
-
-
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("StoreEntity", false);
-				return relation;
-			}
-		}
 
 		/// <summary>Returns a new IEntityRelation object, between CustomerEntity and SalesTerritoryEntity over the m:1 relation they have, using the relation between the fields:
 		/// Customer.TerritoryID - SalesTerritory.TerritoryID
@@ -122,10 +83,55 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
-		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
-		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
-		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
+
+
+
+		/// <summary>Returns a new IEntityRelation object, between CustomerEntity and IndividualEntity over the 1:1 relation they have, which is used to build a target per entity hierarchy</summary>		
+		internal IEntityRelation RelationToSubTypeIndividualEntity
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, true);
+				relation.AddEntityFieldPair(CustomerFields.CustomerID, IndividualFields.CustomerID);
+				relation.IsHierarchyRelation=true;
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between CustomerEntity and StoreEntity over the 1:1 relation they have, which is used to build a target per entity hierarchy</summary>		
+		internal IEntityRelation RelationToSubTypeStoreEntity
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, true);
+				relation.AddEntityFieldPair(CustomerFields.CustomerID, StoreFields.CustomerID);
+				relation.IsHierarchyRelation=true;
+				return relation;
+			}
+		}
+		
+		/// <summary>Returns the relation object the entity, to which this relation factory belongs, has with the subtype with the specified name</summary>
+		/// <param name="subTypeEntityName">name of direct subtype which is a subtype of the current entity through the relation to return.</param>
+		/// <returns>relation which makes the current entity a supertype of the subtype entity with the name specified, or null if not applicable/found</returns>
+		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName)
+		{
+			switch(subTypeEntityName)
+			{
+				case "IndividualEntity":
+					return this.RelationToSubTypeIndividualEntity;
+				case "StoreEntity":
+					return this.RelationToSubTypeStoreEntity;
+				default:
+					return null;
+			}
+		}
+		
+		/// <summary>Returns the relation object the entity, to which this relation factory belongs, has with its supertype, if applicable.</summary>
+		/// <returns>relation which makes the current entity a subtype of its supertype entity or null if not applicable/found</returns>
+		public virtual IEntityRelation GetSuperTypeRelation()
+		{
+			return null;
+		}
+
 		#endregion
 
 		#region Included Code

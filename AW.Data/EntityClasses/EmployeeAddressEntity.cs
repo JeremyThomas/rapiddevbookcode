@@ -378,12 +378,12 @@ namespace AW.Data.EntityClasses
 			if( ( !_alreadyFetchedEmployee || forceFetch || _alwaysFetchEmployee) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
 			{
 				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.EmployeeEntityUsingEmployeeID);
-				EmployeeEntity newEntity = new EmployeeEntity();
+				EmployeeEntity newEntity = (EmployeeEntity)GeneralEntityFactory.Create(AW.Data.EntityType.EmployeeEntity);
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					AddToTransactionIfNecessary(newEntity);
-					fetchResult = newEntity.FetchUsingPK(this.EmployeeID);
+					newEntity = EmployeeEntity.FetchPolymorphic(this.Transaction, this.EmployeeID, this.ActiveContext);
+					fetchResult = (newEntity.Fields.State==EntityState.Fetched);
 				}
 				if(fetchResult)
 				{

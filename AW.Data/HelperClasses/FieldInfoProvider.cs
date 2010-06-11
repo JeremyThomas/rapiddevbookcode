@@ -787,10 +787,9 @@ namespace AW.Data.HelperClasses
 		private void InitIndividualEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(IndividualFieldIndex), "IndividualEntity");
+			this.AddElementFieldInfo("IndividualEntity", "CustomerID", typeof(System.Int32), true, false, true, false,  (int)IndividualFieldIndex.CustomerID, 0, 0, 10);
 			this.AddElementFieldInfo("IndividualEntity", "ContactID", typeof(System.Int32), false, true, false, false,  (int)IndividualFieldIndex.ContactID, 0, 0, 10);
-			this.AddElementFieldInfo("IndividualEntity", "CustomerID", typeof(System.Int32), true, true, false, false,  (int)IndividualFieldIndex.CustomerID, 0, 0, 10);
 			this.AddElementFieldInfo("IndividualEntity", "Demographics", typeof(System.String), false, false, false, true,  (int)IndividualFieldIndex.Demographics, 2147483647, 0, 0);
-			this.AddElementFieldInfo("IndividualEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)IndividualFieldIndex.ModifiedDate, 0, 0, 0);
 		}
 		/// <summary>Inits SalesOrderDetailEntity's FieldInfo objects</summary>
 		private void InitSalesOrderDetailEntityInfos()
@@ -852,12 +851,10 @@ namespace AW.Data.HelperClasses
 		private void InitSalesPersonEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(SalesPersonFieldIndex), "SalesPersonEntity");
+			this.AddElementFieldInfo("SalesPersonEntity", "EmployeeID", typeof(System.Int32), true, false, true, false,  (int)SalesPersonFieldIndex.EmployeeID, 0, 0, 10);
 			this.AddElementFieldInfo("SalesPersonEntity", "Bonus", typeof(System.Decimal), false, false, false, false,  (int)SalesPersonFieldIndex.Bonus, 0, 4, 19);
 			this.AddElementFieldInfo("SalesPersonEntity", "CommissionPct", typeof(System.Decimal), false, false, false, false,  (int)SalesPersonFieldIndex.CommissionPct, 0, 4, 10);
-			this.AddElementFieldInfo("SalesPersonEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)SalesPersonFieldIndex.ModifiedDate, 0, 0, 0);
-			this.AddElementFieldInfo("SalesPersonEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)SalesPersonFieldIndex.Rowguid, 0, 0, 0);
 			this.AddElementFieldInfo("SalesPersonEntity", "SalesLastYear", typeof(System.Decimal), false, false, false, false,  (int)SalesPersonFieldIndex.SalesLastYear, 0, 4, 19);
-			this.AddElementFieldInfo("SalesPersonEntity", "SalesPersonID", typeof(System.Int32), true, true, false, false,  (int)SalesPersonFieldIndex.SalesPersonID, 0, 0, 10);
 			this.AddElementFieldInfo("SalesPersonEntity", "SalesQuota", typeof(Nullable<System.Decimal>), false, false, false, true,  (int)SalesPersonFieldIndex.SalesQuota, 0, 4, 19);
 			this.AddElementFieldInfo("SalesPersonEntity", "SalesYtd", typeof(System.Decimal), false, false, false, false,  (int)SalesPersonFieldIndex.SalesYtd, 0, 4, 19);
 			this.AddElementFieldInfo("SalesPersonEntity", "TerritoryID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesPersonFieldIndex.TerritoryID, 0, 0, 10);
@@ -959,11 +956,9 @@ namespace AW.Data.HelperClasses
 		private void InitStoreEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(StoreFieldIndex), "StoreEntity");
-			this.AddElementFieldInfo("StoreEntity", "CustomerID", typeof(System.Int32), true, true, false, false,  (int)StoreFieldIndex.CustomerID, 0, 0, 10);
+			this.AddElementFieldInfo("StoreEntity", "CustomerID", typeof(System.Int32), true, false, true, false,  (int)StoreFieldIndex.CustomerID, 0, 0, 10);
 			this.AddElementFieldInfo("StoreEntity", "Demographics", typeof(System.String), false, false, false, true,  (int)StoreFieldIndex.Demographics, 2147483647, 0, 0);
-			this.AddElementFieldInfo("StoreEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)StoreFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("StoreEntity", "Name", typeof(System.String), false, false, false, false,  (int)StoreFieldIndex.Name, 50, 0, 0);
-			this.AddElementFieldInfo("StoreEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)StoreFieldIndex.Rowguid, 0, 0, 0);
 			this.AddElementFieldInfo("StoreEntity", "SalesPersonID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)StoreFieldIndex.SalesPersonID, 0, 0, 10);
 		}
 		/// <summary>Inits StoreContactEntity's FieldInfo objects</summary>

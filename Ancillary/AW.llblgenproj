@@ -145,7 +145,7 @@
           <Field Name="Name" Type="string" MaxLength="50" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Employee" GroupName="HumanResources">
+      <EntityDefinition Name="Employee" GroupName="HumanResources" InheritanceType="2">
         <Fields>
           <Field Name="BirthDate" Type="datetime" />
           <Field Name="ContactID" Type="int" IsAutoCreated="true" />
@@ -666,7 +666,7 @@
           <Field Name="ToCurrencyCode" Type="string" MaxLength="3" IsAutoCreated="true" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Customer" GroupName="Sales">
+      <EntityDefinition Name="Customer" GroupName="Sales" InheritanceType="2">
         <Fields>
           <Field Name="AccountNumber" Type="string" IsReadOnly="true" MaxLength="10" />
           <Field Name="CustomerID" Type="int" IsReadOnly="true" IsPrimaryKey="true" />
@@ -706,12 +706,10 @@
           <Field Name="Title" Type="string" MaxLength="8" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Individual" GroupName="Sales">
+      <EntityDefinition Name="Individual" GroupName="Sales" InheritanceType="2">
         <Fields>
           <Field Name="ContactID" Type="int" IsAutoCreated="true" />
-          <Field Name="CustomerID" Type="int" IsPrimaryKey="true" IsAutoCreated="true" />
           <Field Name="Demographics" Type="string" IsOptional="true" MaxLength="2147483647" />
-          <Field Name="ModifiedDate" Type="datetime" />
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="SalesOrderDetail" GroupName="Sales">
@@ -767,14 +765,11 @@
           <Field Name="SalesReasonID" Type="int" Precision="10" IsPrimaryKey="true" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="SalesPerson" GroupName="Sales">
+      <EntityDefinition Name="SalesPerson" GroupName="Sales" InheritanceType="2">
         <Fields>
           <Field Name="Bonus" Type="decimal" Precision="19" Scale="4" />
           <Field Name="CommissionPct" Type="decimal" Precision="10" Scale="4" />
-          <Field Name="ModifiedDate" Type="datetime" />
-          <Field Name="Rowguid" Type="guid" />
           <Field Name="SalesLastYear" Type="decimal" Precision="19" Scale="4" />
-          <Field Name="SalesPersonID" Type="int" IsPrimaryKey="true" />
           <Field Name="SalesQuota" Type="decimal" IsOptional="true" Precision="19" Scale="4" />
           <Field Name="SalesYtd" Type="decimal" Precision="19" Scale="4" />
           <Field Name="TerritoryID" Type="int" IsOptional="true" />
@@ -865,13 +860,10 @@
           <Field Name="SpecialOfferID" Type="int" IsPrimaryKey="true" IsAutoCreated="true" />
         </Fields>
       </EntityDefinition>
-      <EntityDefinition Name="Store" GroupName="Sales">
+      <EntityDefinition Name="Store" GroupName="Sales" InheritanceType="2">
         <Fields>
-          <Field Name="CustomerID" Type="int" IsPrimaryKey="true" />
           <Field Name="Demographics" Type="string" IsOptional="true" MaxLength="2147483647" />
-          <Field Name="ModifiedDate" Type="datetime" />
           <Field Name="Name" Type="string" MaxLength="50" />
-          <Field Name="Rowguid" Type="guid" />
           <Field Name="SalesPersonID" Type="int" IsOptional="true" />
         </Fields>
       </EntityDefinition>
@@ -1206,11 +1198,6 @@
           <FieldFieldRelationship FkField="ContactID" PkField="ContactID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.Individual.Customer-Sales.Customer.Individual" Start="Sales:Individual" End="Sales:Customer" StartNavigator="Customer" EndNavigator="Individual" Type="1">
-        <FieldRelationships>
-          <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
-        </FieldRelationships>
-      </NormalRelationship>
       <NormalRelationship Name="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" Start="Sales:SalesOrderDetail" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeader" EndNavigator="SalesOrderDetails" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="SalesOrderID" PkField="SalesOrderID" />
@@ -1254,7 +1241,7 @@
       </NormalRelationship>
       <NormalRelationship Name="Sales.SalesOrderHeader.SalesPerson-Sales.SalesPerson.SalesOrderHeaders" Start="Sales:SalesOrderHeader" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="SalesOrderHeaders" Type="4">
         <FieldRelationships>
-          <FieldFieldRelationship FkField="SalesPersonID" PkField="SalesPersonID" />
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="EmployeeID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Sales.SalesOrderHeader.SalesTerritory-Sales.SalesTerritory.SalesOrderHeaders" Start="Sales:SalesOrderHeader" End="Sales:SalesTerritory" StartNavigator="SalesTerritory" EndNavigator="SalesOrderHeaders" Type="4">
@@ -1282,11 +1269,6 @@
           <FieldFieldRelationship FkField="SalesReasonID" PkField="SalesReasonID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesPerson.Employee-HumanResources.Employee.SalesPerson" Start="Sales:SalesPerson" End="HumanResources:Employee" StartNavigator="Employee" EndNavigator="SalesPerson" Type="1">
-        <FieldRelationships>
-          <FieldFieldRelationship FkField="SalesPersonID" PkField="EmployeeID" />
-        </FieldRelationships>
-      </NormalRelationship>
       <NormalRelationship Name="Sales.SalesPerson.SalesTerritory-Sales.SalesTerritory.SalesPeople" Start="Sales:SalesPerson" End="Sales:SalesTerritory" StartNavigator="SalesTerritory" EndNavigator="SalesPeople" Type="4">
         <FieldRelationships>
           <FieldFieldRelationship FkField="TerritoryID" PkField="TerritoryID" />
@@ -1294,7 +1276,7 @@
       </NormalRelationship>
       <NormalRelationship Name="Sales.SalesPersonQuotaHistory.SalesPerson-Sales.SalesPerson.SalesPersonQuotaHistories" Start="Sales:SalesPersonQuotaHistory" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="SalesPersonQuotaHistories" Type="4">
         <FieldRelationships>
-          <FieldFieldRelationship FkField="SalesPersonID" PkField="SalesPersonID" />
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="EmployeeID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Sales.SalesTaxRate.StateProvince-Person.StateProvince.SalesTaxRates" Start="Sales:SalesTaxRate" End="Person:StateProvince" StartNavigator="StateProvince" EndNavigator="SalesTaxRates" Type="4">
@@ -1304,7 +1286,7 @@
       </NormalRelationship>
       <NormalRelationship Name="Sales.SalesTerritoryHistory.SalesPerson-Sales.SalesPerson.SalesTerritoryHistories" Start="Sales:SalesTerritoryHistory" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="SalesTerritoryHistories" Type="4">
         <FieldRelationships>
-          <FieldFieldRelationship FkField="SalesPersonID" PkField="SalesPersonID" />
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="EmployeeID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Sales.SalesTerritoryHistory.SalesTerritory-Sales.SalesTerritory.SalesTerritoryHistories" Start="Sales:SalesTerritoryHistory" End="Sales:SalesTerritory" StartNavigator="SalesTerritory" EndNavigator="SalesTerritoryHistories" Type="4">
@@ -1327,14 +1309,9 @@
           <FieldFieldRelationship FkField="SpecialOfferID" PkField="SpecialOfferID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.Store.Customer-Sales.Customer.Store" Start="Sales:Store" End="Sales:Customer" StartNavigator="Customer" EndNavigator="Store" Type="1">
-        <FieldRelationships>
-          <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
-        </FieldRelationships>
-      </NormalRelationship>
       <NormalRelationship Name="Sales.Store.SalesPerson-Sales.SalesPerson.Stores" Start="Sales:Store" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="Stores" Type="4">
         <FieldRelationships>
-          <FieldFieldRelationship FkField="SalesPersonID" PkField="SalesPersonID" />
+          <FieldFieldRelationship FkField="SalesPersonID" PkField="EmployeeID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Sales.StoreContact.Contact-Person.Contact.StoreContacts" Start="Sales:StoreContact" End="Person:Contact" StartNavigator="Contact" EndNavigator="StoreContacts" Type="4">
@@ -1396,7 +1373,11 @@
       <IndirectRelationship Start="Sales:SalesTerritory" End="Sales:CurrencyRate" StartNavigator="CurrencyRateCollectionViaSalesOrderHeader" EndNavigator="SalesTerritoryCollectionViaSalesOrderHeader" Relationship1="Sales.SalesOrderHeader.SalesTerritory-Sales.SalesTerritory.SalesOrderHeaders" Relationship2="Sales.SalesOrderHeader.CurrencyRate-Sales.CurrencyRate.SalesOrderHeaders" />
       <IndirectRelationship Start="Sales:SpecialOfferProduct" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeaderCollectionViaSalesOrderDetail" EndNavigator="SpecialOfferProductCollectionViaSalesOrderDetail" Relationship1="Sales.SalesOrderDetail.SpecialOfferProduct-Sales.SpecialOfferProduct.SalesOrderDetails" Relationship2="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" />
     </Relationships>
-    <InheritanceHierarchies />
+    <InheritanceHierarchies>
+      <InheritanceHierarchy SuperType="Sales:Customer" SubType="Sales:Individual" />
+      <InheritanceHierarchy SuperType="HumanResources:Employee" SubType="Sales:SalesPerson" />
+      <InheritanceHierarchy SuperType="Sales:Customer" SubType="Sales:Store" />
+    </InheritanceHierarchies>
   </EntityModel>
   <TypedListDefinitions>
     <TypedListDefinition Name="CustomerList" GroupName="Sales">
@@ -1429,11 +1410,11 @@
       <Relationships>
         <Relationship Name="Person.Address.StateProvince-Person.StateProvince.Addresses" StartAlias="Person.StateProvince" EndAlias="Person.Address" JoinHint="1" />
         <Relationship Name="Person.StateProvince.CountryRegion-Person.CountryRegion.StateProvinces" StartAlias="Person.CountryRegion" EndAlias="Person.StateProvince" JoinHint="1" />
+        <Relationship Name="Sales.Customer.SalesTerritory-Sales.SalesTerritory.Customers" StartAlias="Sales.Individual" EndAlias="Sales.Customer" JoinHint="1" />
         <Relationship Name="Sales.CustomerAddress.Address-Person.Address.CustomerAddresses" StartAlias="Sales.CustomerAddress" EndAlias="Person.Address" JoinHint="1" StartAliasIsStartVertex="true" />
         <Relationship Name="Sales.CustomerAddress.AddressType-Person.AddressType.CustomerAddresses" StartAlias="Person.AddressType" EndAlias="Sales.CustomerAddress" JoinHint="1" />
         <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Customer" EndAlias="Sales.CustomerAddress" JoinHint="1" />
         <Relationship Name="Sales.Individual.Contact-Person.Contact.Individuals" StartAlias="Person.Contact" EndAlias="Sales.Individual" JoinHint="1" />
-        <Relationship Name="Sales.Individual.Customer-Sales.Customer.Individual" StartAlias="Sales.Individual" EndAlias="Sales.Customer" JoinHint="1" StartAliasIsStartVertex="true" />
       </Relationships>
     </TypedListDefinition>
   </TypedListDefinitions>
@@ -3777,7 +3758,6 @@
             <FieldMapping FieldName="ContactID" TargetFieldName="ContactID" />
             <FieldMapping FieldName="CustomerID" TargetFieldName="CustomerID" />
             <FieldMapping FieldName="Demographics" TargetFieldName="Demographics" />
-            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName="Sales:SalesOrderDetail" TargetName="AdventureWorks:Sales:SalesOrderDetail">
@@ -3837,10 +3817,8 @@
           <FieldMappings>
             <FieldMapping FieldName="Bonus" TargetFieldName="Bonus" />
             <FieldMapping FieldName="CommissionPct" TargetFieldName="CommissionPct" />
-            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
-            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
+            <FieldMapping FieldName="EmployeeID" TargetFieldName="SalesPersonID" />
             <FieldMapping FieldName="SalesLastYear" TargetFieldName="SalesLastYear" />
-            <FieldMapping FieldName="SalesPersonID" TargetFieldName="SalesPersonID" />
             <FieldMapping FieldName="SalesQuota" TargetFieldName="SalesQuota" />
             <FieldMapping FieldName="SalesYtd" TargetFieldName="SalesYTD" />
             <FieldMapping FieldName="TerritoryID" TargetFieldName="TerritoryID" />
@@ -3935,9 +3913,7 @@
           <FieldMappings>
             <FieldMapping FieldName="CustomerID" TargetFieldName="CustomerID" />
             <FieldMapping FieldName="Demographics" TargetFieldName="Demographics" />
-            <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
             <FieldMapping FieldName="Name" TargetFieldName="Name" />
-            <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
             <FieldMapping FieldName="SalesPersonID" TargetFieldName="SalesPersonID" />
           </FieldMappings>
         </EntityMapping>

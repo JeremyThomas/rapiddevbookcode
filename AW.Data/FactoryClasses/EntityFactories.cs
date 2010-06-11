@@ -179,6 +179,12 @@ namespace AW.Data.FactoryClasses
 			return toReturn;
 		}
 
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("EmployeeEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
 
 		#region Included Code
 
@@ -1257,6 +1263,12 @@ namespace AW.Data.FactoryClasses
 			return toReturn;
 		}
 
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("CustomerEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
 
 		#region Included Code
 
@@ -1323,6 +1335,12 @@ namespace AW.Data.FactoryClasses
 			return toReturn;
 		}
 
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("IndividualEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
 
 		#region Included Code
 
@@ -1412,6 +1430,12 @@ namespace AW.Data.FactoryClasses
 			return toReturn;
 		}
 
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("SalesPersonEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
 
 		#region Included Code
 
@@ -1610,6 +1634,12 @@ namespace AW.Data.FactoryClasses
 			return toReturn;
 		}
 
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("StoreEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
 
 		#region Included Code
 

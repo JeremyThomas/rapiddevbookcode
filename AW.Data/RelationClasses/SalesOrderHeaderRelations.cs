@@ -191,14 +191,14 @@ namespace AW.Data.RelationClasses
 			}
 		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesPersonEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.SalesPersonID - SalesPerson.SalesPersonID
+		/// SalesOrderHeader.SalesPersonID - SalesPerson.EmployeeID
 		/// </summary>
 		public virtual IEntityRelation SalesPersonEntityUsingSalesPersonID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SalesPerson", false);
-				relation.AddEntityFieldPair(SalesPersonFields.SalesPersonID, SalesOrderHeaderFields.SalesPersonID);
+				relation.AddEntityFieldPair(SalesPersonFields.EmployeeID, SalesOrderHeaderFields.SalesPersonID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesPersonEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;

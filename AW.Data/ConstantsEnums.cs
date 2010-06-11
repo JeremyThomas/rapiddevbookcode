@@ -1106,14 +1106,24 @@ namespace AW.Data
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Individual.</summary>
 	public enum IndividualFieldIndex
 	{
-		///<summary>ContactID. </summary>
-		ContactID,
+		///<summary>AccountNumber. Inherited from Customer</summary>
+		AccountNumber,
+		///<summary>CustomerID. Inherited from Customer</summary>
+		CustomerID_Customer,
+		///<summary>CustomerType. Inherited from Customer</summary>
+		CustomerType,
+		///<summary>ModifiedDate. Inherited from Customer</summary>
+		ModifiedDate,
+		///<summary>Rowguid. Inherited from Customer</summary>
+		Rowguid,
+		///<summary>TerritoryID. Inherited from Customer</summary>
+		TerritoryID,
 		///<summary>CustomerID. </summary>
 		CustomerID,
+		///<summary>ContactID. </summary>
+		ContactID,
 		///<summary>Demographics. </summary>
 		Demographics,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1220,18 +1230,46 @@ namespace AW.Data
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesPerson.</summary>
 	public enum SalesPersonFieldIndex
 	{
+		///<summary>BirthDate. Inherited from Employee</summary>
+		BirthDate,
+		///<summary>ContactID. Inherited from Employee</summary>
+		ContactID,
+		///<summary>CurrentFlag. Inherited from Employee</summary>
+		CurrentFlag,
+		///<summary>EmployeeID. Inherited from Employee</summary>
+		EmployeeID_Employee,
+		///<summary>Gender. Inherited from Employee</summary>
+		Gender,
+		///<summary>HireDate. Inherited from Employee</summary>
+		HireDate,
+		///<summary>LoginID. Inherited from Employee</summary>
+		LoginID,
+		///<summary>ManagerID. Inherited from Employee</summary>
+		ManagerID,
+		///<summary>MaritalStatus. Inherited from Employee</summary>
+		MaritalStatus,
+		///<summary>ModifiedDate. Inherited from Employee</summary>
+		ModifiedDate,
+		///<summary>NationalIdnumber. Inherited from Employee</summary>
+		NationalIdnumber,
+		///<summary>Rowguid. Inherited from Employee</summary>
+		Rowguid,
+		///<summary>SalariedFlag. Inherited from Employee</summary>
+		SalariedFlag,
+		///<summary>SickLeaveHours. Inherited from Employee</summary>
+		SickLeaveHours,
+		///<summary>Title. Inherited from Employee</summary>
+		Title,
+		///<summary>VacationHours. Inherited from Employee</summary>
+		VacationHours,
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
 		///<summary>Bonus. </summary>
 		Bonus,
 		///<summary>CommissionPct. </summary>
 		CommissionPct,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
-		///<summary>Rowguid. </summary>
-		Rowguid,
 		///<summary>SalesLastYear. </summary>
 		SalesLastYear,
-		///<summary>SalesPersonID. </summary>
-		SalesPersonID,
 		///<summary>SalesQuota. </summary>
 		SalesQuota,
 		///<summary>SalesYtd. </summary>
@@ -1398,16 +1436,24 @@ namespace AW.Data
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Store.</summary>
 	public enum StoreFieldIndex
 	{
+		///<summary>AccountNumber. Inherited from Customer</summary>
+		AccountNumber,
+		///<summary>CustomerID. Inherited from Customer</summary>
+		CustomerID_Customer,
+		///<summary>CustomerType. Inherited from Customer</summary>
+		CustomerType,
+		///<summary>ModifiedDate. Inherited from Customer</summary>
+		ModifiedDate,
+		///<summary>Rowguid. Inherited from Customer</summary>
+		Rowguid,
+		///<summary>TerritoryID. Inherited from Customer</summary>
+		TerritoryID,
 		///<summary>CustomerID. </summary>
 		CustomerID,
 		///<summary>Demographics. </summary>
 		Demographics,
-		///<summary>ModifiedDate. </summary>
-		ModifiedDate,
 		///<summary>Name. </summary>
 		Name,
-		///<summary>Rowguid. </summary>
-		Rowguid,
 		///<summary>SalesPersonID. </summary>
 		SalesPersonID,
 		/// <summary></summary>
