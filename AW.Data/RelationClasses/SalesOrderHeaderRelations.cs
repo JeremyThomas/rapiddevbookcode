@@ -30,37 +30,22 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.SalesOrderHeaderSalesReasonEntityUsingSalesOrderID);
 			toReturn.Add(this.SalesOrderDetailEntityUsingSalesOrderID);
+			toReturn.Add(this.SalesOrderHeaderSalesReasonEntityUsingSalesOrderID);
 			toReturn.Add(this.AddressEntityUsingBillToAddressID);
 			toReturn.Add(this.AddressEntityUsingShipToAddressID);
 			toReturn.Add(this.ContactEntityUsingContactID);
+			toReturn.Add(this.ShipMethodEntityUsingShipMethodID);
 			toReturn.Add(this.CreditCardEntityUsingCreditCardID);
 			toReturn.Add(this.CurrencyRateEntityUsingCurrencyRateID);
 			toReturn.Add(this.CustomerEntityUsingCustomerID);
 			toReturn.Add(this.CustomerViewRelatedEntityUsingCustomerID);
 			toReturn.Add(this.SalesPersonEntityUsingSalesPersonID);
 			toReturn.Add(this.SalesTerritoryEntityUsingTerritoryID);
-			toReturn.Add(this.ShipMethodEntityUsingShipMethodID);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
-
-		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesOrderHeaderSalesReasonEntity over the 1:n relation they have, using the relation between the fields:
-		/// SalesOrderHeader.SalesOrderID - SalesOrderHeaderSalesReason.SalesOrderID
-		/// </summary>
-		public virtual IEntityRelation SalesOrderHeaderSalesReasonEntityUsingSalesOrderID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderHeaderSalesReasons" , true);
-				relation.AddEntityFieldPair(SalesOrderHeaderFields.SalesOrderID, SalesOrderHeaderSalesReasonFields.SalesOrderID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderSalesReasonEntity", false);
-				return relation;
-			}
-		}
 
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesOrderDetailEntity over the 1:n relation they have, using the relation between the fields:
 		/// SalesOrderHeader.SalesOrderID - SalesOrderDetail.SalesOrderID
@@ -73,6 +58,21 @@ namespace AW.Data.RelationClasses
 				relation.AddEntityFieldPair(SalesOrderHeaderFields.SalesOrderID, SalesOrderDetailFields.SalesOrderID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderDetailEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesOrderHeaderSalesReasonEntity over the 1:n relation they have, using the relation between the fields:
+		/// SalesOrderHeader.SalesOrderID - SalesOrderHeaderSalesReason.SalesOrderID
+		/// </summary>
+		public virtual IEntityRelation SalesOrderHeaderSalesReasonEntityUsingSalesOrderID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesOrderHeaderSalesReasons" , true);
+				relation.AddEntityFieldPair(SalesOrderHeaderFields.SalesOrderID, SalesOrderHeaderSalesReasonFields.SalesOrderID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderSalesReasonEntity", false);
 				return relation;
 			}
 		}
@@ -116,6 +116,20 @@ namespace AW.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Contact", false);
 				relation.AddEntityFieldPair(ContactFields.ContactID, SalesOrderHeaderFields.ContactID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and ShipMethodEntity over the m:1 relation they have, using the relation between the fields:
+		/// SalesOrderHeader.ShipMethodID - ShipMethod.ShipMethodID
+		/// </summary>
+		public virtual IEntityRelation ShipMethodEntityUsingShipMethodID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "ShipMethod", false);
+				relation.AddEntityFieldPair(ShipMethodFields.ShipMethodID, SalesOrderHeaderFields.ShipMethodID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ShipMethodEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}
@@ -200,20 +214,6 @@ namespace AW.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SalesTerritory", false);
 				relation.AddEntityFieldPair(SalesTerritoryFields.TerritoryID, SalesOrderHeaderFields.TerritoryID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesTerritoryEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
-				return relation;
-			}
-		}
-		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and ShipMethodEntity over the m:1 relation they have, using the relation between the fields:
-		/// SalesOrderHeader.ShipMethodID - ShipMethod.ShipMethodID
-		/// </summary>
-		public virtual IEntityRelation ShipMethodEntityUsingShipMethodID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "ShipMethod", false);
-				relation.AddEntityFieldPair(ShipMethodFields.ShipMethodID, SalesOrderHeaderFields.ShipMethodID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ShipMethodEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
 				return relation;
 			}

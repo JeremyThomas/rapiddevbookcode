@@ -30,13 +30,28 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.CountryRegionCurrencyEntityUsingCurrencyCode);
 			toReturn.Add(this.CurrencyRateEntityUsingFromCurrencyCode);
 			toReturn.Add(this.CurrencyRateEntityUsingToCurrencyCode);
-			toReturn.Add(this.CountryRegionCurrencyEntityUsingCurrencyCode);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between CurrencyEntity and CountryRegionCurrencyEntity over the 1:n relation they have, using the relation between the fields:
+		/// Currency.CurrencyCode - CountryRegionCurrency.CurrencyCode
+		/// </summary>
+		public virtual IEntityRelation CountryRegionCurrencyEntityUsingCurrencyCode
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CountryRegionCurrencies" , true);
+				relation.AddEntityFieldPair(CurrencyFields.CurrencyCode, CountryRegionCurrencyFields.CurrencyCode);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionCurrencyEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between CurrencyEntity and CurrencyRateEntity over the 1:n relation they have, using the relation between the fields:
 		/// Currency.CurrencyCode - CurrencyRate.FromCurrencyCode
@@ -64,21 +79,6 @@ namespace AW.Data.RelationClasses
 				relation.AddEntityFieldPair(CurrencyFields.CurrencyCode, CurrencyRateFields.ToCurrencyCode);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyRateEntity", false);
-				return relation;
-			}
-		}
-
-		/// <summary>Returns a new IEntityRelation object, between CurrencyEntity and CountryRegionCurrencyEntity over the 1:n relation they have, using the relation between the fields:
-		/// Currency.CurrencyCode - CountryRegionCurrency.CurrencyCode
-		/// </summary>
-		public virtual IEntityRelation CountryRegionCurrencyEntityUsingCurrencyCode
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CountryRegionCurrencies" , true);
-				relation.AddEntityFieldPair(CurrencyFields.CurrencyCode, CountryRegionCurrencyFields.CurrencyCode);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionCurrencyEntity", false);
 				return relation;
 			}
 		}

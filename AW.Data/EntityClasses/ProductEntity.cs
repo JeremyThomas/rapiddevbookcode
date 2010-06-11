@@ -1064,7 +1064,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_productDocuments);
 				_productDocuments.SuppressClearInGetMulti=!forceFetch;
 				_productDocuments.EntityFactoryToUse = entityFactoryToUse;
-				_productDocuments.GetMultiManyToOne(this, null, filter);
+				_productDocuments.GetMultiManyToOne(null, this, filter);
 				_productDocuments.SuppressClearInGetMulti=false;
 				_alreadyFetchedProductDocuments = true;
 			}
@@ -1119,7 +1119,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_productInventories);
 				_productInventories.SuppressClearInGetMulti=!forceFetch;
 				_productInventories.EntityFactoryToUse = entityFactoryToUse;
-				_productInventories.GetMultiManyToOne(this, null, filter);
+				_productInventories.GetMultiManyToOne(null, this, filter);
 				_productInventories.SuppressClearInGetMulti=false;
 				_alreadyFetchedProductInventories = true;
 			}

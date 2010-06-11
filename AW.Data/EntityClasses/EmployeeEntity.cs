@@ -57,10 +57,10 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchAddressCollectionViaEmployeeAddress, _alreadyFetchedAddressCollectionViaEmployeeAddress;
 		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaEmployee;
 		private bool	_alwaysFetchContactCollectionViaEmployee, _alreadyFetchedContactCollectionViaEmployee;
-		private ContactEntity _contact;
-		private bool	_alwaysFetchContact, _alreadyFetchedContact, _contactReturnsNewIfNotFound;
 		private EmployeeEntity _manager;
 		private bool	_alwaysFetchManager, _alreadyFetchedManager, _managerReturnsNewIfNotFound;
+		private ContactEntity _contact;
+		private bool	_alwaysFetchContact, _alreadyFetchedContact, _contactReturnsNewIfNotFound;
 		private SalesPersonEntity _salesPerson;
 		private bool	_alwaysFetchSalesPerson, _alreadyFetchedSalesPerson, _salesPersonReturnsNewIfNotFound;
 
@@ -75,10 +75,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Contact</summary>
-			public static readonly string Contact = "Contact";
 			/// <summary>Member name Manager</summary>
 			public static readonly string Manager = "Manager";
+			/// <summary>Member name Contact</summary>
+			public static readonly string Contact = "Contact";
 			/// <summary>Member name Manages</summary>
 			public static readonly string Manages = "Manages";
 			/// <summary>Member name EmployeeAddresses</summary>
@@ -170,15 +170,6 @@ namespace AW.Data.EntityClasses
 			_contactCollectionViaEmployee = (AW.Data.CollectionClasses.ContactCollection)info.GetValue("_contactCollectionViaEmployee", typeof(AW.Data.CollectionClasses.ContactCollection));
 			_alwaysFetchContactCollectionViaEmployee = info.GetBoolean("_alwaysFetchContactCollectionViaEmployee");
 			_alreadyFetchedContactCollectionViaEmployee = info.GetBoolean("_alreadyFetchedContactCollectionViaEmployee");
-			_contact = (ContactEntity)info.GetValue("_contact", typeof(ContactEntity));
-			if(_contact!=null)
-			{
-				_contact.AfterSave+=new EventHandler(OnEntityAfterSave);
-			}
-			_contactReturnsNewIfNotFound = info.GetBoolean("_contactReturnsNewIfNotFound");
-			_alwaysFetchContact = info.GetBoolean("_alwaysFetchContact");
-			_alreadyFetchedContact = info.GetBoolean("_alreadyFetchedContact");
-
 			_manager = (EmployeeEntity)info.GetValue("_manager", typeof(EmployeeEntity));
 			if(_manager!=null)
 			{
@@ -187,6 +178,15 @@ namespace AW.Data.EntityClasses
 			_managerReturnsNewIfNotFound = info.GetBoolean("_managerReturnsNewIfNotFound");
 			_alwaysFetchManager = info.GetBoolean("_alwaysFetchManager");
 			_alreadyFetchedManager = info.GetBoolean("_alreadyFetchedManager");
+
+			_contact = (ContactEntity)info.GetValue("_contact", typeof(ContactEntity));
+			if(_contact!=null)
+			{
+				_contact.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_contactReturnsNewIfNotFound = info.GetBoolean("_contactReturnsNewIfNotFound");
+			_alwaysFetchContact = info.GetBoolean("_alwaysFetchContact");
+			_alreadyFetchedContact = info.GetBoolean("_alreadyFetchedContact");
 			_salesPerson = (SalesPersonEntity)info.GetValue("_salesPerson", typeof(SalesPersonEntity));
 			if(_salesPerson!=null)
 			{
@@ -234,8 +234,8 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedPurchaseOrderHeaders = (_purchaseOrderHeaders.Count > 0);
 			_alreadyFetchedAddressCollectionViaEmployeeAddress = (_addressCollectionViaEmployeeAddress.Count > 0);
 			_alreadyFetchedContactCollectionViaEmployee = (_contactCollectionViaEmployee.Count > 0);
-			_alreadyFetchedContact = (_contact != null);
 			_alreadyFetchedManager = (_manager != null);
+			_alreadyFetchedContact = (_contact != null);
 			_alreadyFetchedSalesPerson = (_salesPerson != null);
 		}
 				
@@ -255,11 +255,11 @@ namespace AW.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Contact":
-					toReturn.Add(Relations.ContactEntityUsingContactID);
-					break;
 				case "Manager":
 					toReturn.Add(Relations.EmployeeEntityUsingEmployeeIDManagerID);
+					break;
+				case "Contact":
+					toReturn.Add(Relations.ContactEntityUsingContactID);
 					break;
 				case "Manages":
 					toReturn.Add(Relations.EmployeeEntityUsingManagerID);
@@ -328,14 +328,14 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_contactCollectionViaEmployee", (!this.MarkedForDeletion?_contactCollectionViaEmployee:null));
 			info.AddValue("_alwaysFetchContactCollectionViaEmployee", _alwaysFetchContactCollectionViaEmployee);
 			info.AddValue("_alreadyFetchedContactCollectionViaEmployee", _alreadyFetchedContactCollectionViaEmployee);
-			info.AddValue("_contact", (!this.MarkedForDeletion?_contact:null));
-			info.AddValue("_contactReturnsNewIfNotFound", _contactReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchContact", _alwaysFetchContact);
-			info.AddValue("_alreadyFetchedContact", _alreadyFetchedContact);
 			info.AddValue("_manager", (!this.MarkedForDeletion?_manager:null));
 			info.AddValue("_managerReturnsNewIfNotFound", _managerReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchManager", _alwaysFetchManager);
 			info.AddValue("_alreadyFetchedManager", _alreadyFetchedManager);
+			info.AddValue("_contact", (!this.MarkedForDeletion?_contact:null));
+			info.AddValue("_contactReturnsNewIfNotFound", _contactReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchContact", _alwaysFetchContact);
+			info.AddValue("_alreadyFetchedContact", _alreadyFetchedContact);
 
 			info.AddValue("_salesPerson", (!this.MarkedForDeletion?_salesPerson:null));
 			info.AddValue("_salesPersonReturnsNewIfNotFound", _salesPersonReturnsNewIfNotFound);
@@ -356,13 +356,13 @@ namespace AW.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Contact":
-					_alreadyFetchedContact = true;
-					this.Contact = (ContactEntity)entity;
-					break;
 				case "Manager":
 					_alreadyFetchedManager = true;
 					this.Manager = (EmployeeEntity)entity;
+					break;
+				case "Contact":
+					_alreadyFetchedContact = true;
+					this.Contact = (ContactEntity)entity;
 					break;
 				case "Manages":
 					_alreadyFetchedManages = true;
@@ -438,11 +438,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Contact":
-					SetupSyncContact(relatedEntity);
-					break;
 				case "Manager":
 					SetupSyncManager(relatedEntity);
+					break;
+				case "Contact":
+					SetupSyncContact(relatedEntity);
 					break;
 				case "Manages":
 					_manages.Add((EmployeeEntity)relatedEntity);
@@ -479,11 +479,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Contact":
-					DesetupSyncContact(false, true);
-					break;
 				case "Manager":
 					DesetupSyncManager(false, true);
+					break;
+				case "Contact":
+					DesetupSyncContact(false, true);
 					break;
 				case "Manages":
 					this.PerformRelatedEntityRemoval(_manages, relatedEntity, signalRelatedEntityManyToOne);
@@ -528,13 +528,13 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntity> GetDependentRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
-			if(_contact!=null)
-			{
-				toReturn.Add(_contact);
-			}
 			if(_manager!=null)
 			{
 				toReturn.Add(_manager);
+			}
+			if(_contact!=null)
+			{
+				toReturn.Add(_contact);
 			}
 			return toReturn;
 		}
@@ -649,7 +649,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_manages);
 				_manages.SuppressClearInGetMulti=!forceFetch;
 				_manages.EntityFactoryToUse = entityFactoryToUse;
-				_manages.GetMultiManyToOne(null, this, filter);
+				_manages.GetMultiManyToOne(this, null, filter);
 				_manages.SuppressClearInGetMulti=false;
 				_alreadyFetchedManages = true;
 			}
@@ -704,7 +704,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_employeeAddresses);
 				_employeeAddresses.SuppressClearInGetMulti=!forceFetch;
 				_employeeAddresses.EntityFactoryToUse = entityFactoryToUse;
-				_employeeAddresses.GetMultiManyToOne(null, this, filter);
+				_employeeAddresses.GetMultiManyToOne(this, null, filter);
 				_employeeAddresses.SuppressClearInGetMulti=false;
 				_alreadyFetchedEmployeeAddresses = true;
 			}
@@ -759,7 +759,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_employeeDepartmentHistories);
 				_employeeDepartmentHistories.SuppressClearInGetMulti=!forceFetch;
 				_employeeDepartmentHistories.EntityFactoryToUse = entityFactoryToUse;
-				_employeeDepartmentHistories.GetMultiManyToOne(this, null, null, filter);
+				_employeeDepartmentHistories.GetMultiManyToOne(null, this, null, filter);
 				_employeeDepartmentHistories.SuppressClearInGetMulti=false;
 				_alreadyFetchedEmployeeDepartmentHistories = true;
 			}
@@ -1017,47 +1017,6 @@ namespace AW.Data.EntityClasses
 			_contactCollectionViaEmployee.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves the related entity of type 'ContactEntity', using a relation of type 'n:1'</summary>
-		/// <returns>A fetched entity of type 'ContactEntity' which is related to this entity.</returns>
-		public ContactEntity GetSingleContact()
-		{
-			return GetSingleContact(false);
-		}
-
-		/// <summary> Retrieves the related entity of type 'ContactEntity', using a relation of type 'n:1'</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
-		/// <returns>A fetched entity of type 'ContactEntity' which is related to this entity.</returns>
-		public virtual ContactEntity GetSingleContact(bool forceFetch)
-		{
-			if( ( !_alreadyFetchedContact || forceFetch || _alwaysFetchContact) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
-			{
-				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.ContactEntityUsingContactID);
-				ContactEntity newEntity = new ContactEntity();
-				bool fetchResult = false;
-				if(performLazyLoading)
-				{
-					AddToTransactionIfNecessary(newEntity);
-					fetchResult = newEntity.FetchUsingPK(this.ContactID);
-				}
-				if(fetchResult)
-				{
-					newEntity = (ContactEntity)GetFromActiveContext(newEntity);
-				}
-				else
-				{
-					if(!_contactReturnsNewIfNotFound)
-					{
-						RemoveFromTransactionIfNecessary(newEntity);
-						newEntity = null;
-					}
-				}
-				this.Contact = newEntity;
-				_alreadyFetchedContact = fetchResult;
-			}
-			return _contact;
-		}
-
-
 		/// <summary> Retrieves the related entity of type 'EmployeeEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'EmployeeEntity' which is related to this entity.</returns>
 		public EmployeeEntity GetSingleManager()
@@ -1096,6 +1055,47 @@ namespace AW.Data.EntityClasses
 				_alreadyFetchedManager = fetchResult;
 			}
 			return _manager;
+		}
+
+
+		/// <summary> Retrieves the related entity of type 'ContactEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'ContactEntity' which is related to this entity.</returns>
+		public ContactEntity GetSingleContact()
+		{
+			return GetSingleContact(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'ContactEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'ContactEntity' which is related to this entity.</returns>
+		public virtual ContactEntity GetSingleContact(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedContact || forceFetch || _alwaysFetchContact) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.ContactEntityUsingContactID);
+				ContactEntity newEntity = new ContactEntity();
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					AddToTransactionIfNecessary(newEntity);
+					fetchResult = newEntity.FetchUsingPK(this.ContactID);
+				}
+				if(fetchResult)
+				{
+					newEntity = (ContactEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_contactReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.Contact = newEntity;
+				_alreadyFetchedContact = fetchResult;
+			}
+			return _contact;
 		}
 
 		/// <summary> Retrieves the related entity of type 'SalesPersonEntity', using a relation of type '1:1'</summary>
@@ -1149,13 +1149,13 @@ namespace AW.Data.EntityClasses
 			_purchaseOrderHeaders.ActiveContext = this.ActiveContext;
 			_addressCollectionViaEmployeeAddress.ActiveContext = this.ActiveContext;
 			_contactCollectionViaEmployee.ActiveContext = this.ActiveContext;
-			if(_contact!=null)
-			{
-				_contact.ActiveContext = this.ActiveContext;
-			}
 			if(_manager!=null)
 			{
 				_manager.ActiveContext = this.ActiveContext;
+			}
+			if(_contact!=null)
+			{
+				_contact.ActiveContext = this.ActiveContext;
 			}
 			if(_salesPerson!=null)
 			{
@@ -1168,8 +1168,8 @@ namespace AW.Data.EntityClasses
 		protected override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Contact", _contact);
 			toReturn.Add("Manager", _manager);
+			toReturn.Add("Contact", _contact);
 			toReturn.Add("Manages", _manages);
 			toReturn.Add("EmployeeAddresses", _employeeAddresses);
 			toReturn.Add("EmployeeDepartmentHistories", _employeeDepartmentHistories);
@@ -1237,8 +1237,8 @@ namespace AW.Data.EntityClasses
 			_purchaseOrderHeaders.SetContainingEntityInfo(this, "Employee");
 			_addressCollectionViaEmployeeAddress = new AW.Data.CollectionClasses.AddressCollection();
 			_contactCollectionViaEmployee = new AW.Data.CollectionClasses.ContactCollection();
-			_contactReturnsNewIfNotFound = true;
 			_managerReturnsNewIfNotFound = true;
+			_contactReturnsNewIfNotFound = true;
 			_salesPersonReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
@@ -1289,39 +1289,6 @@ namespace AW.Data.EntityClasses
 		}
 		#endregion
 
-		/// <summary> Removes the sync logic for member _contact</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncContact(bool signalRelatedEntity, bool resetFKFields)
-		{
-			this.PerformDesetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactID, true, signalRelatedEntity, "Employees", resetFKFields, new int[] { (int)EmployeeFieldIndex.ContactID } );		
-			_contact = null;
-		}
-		
-		/// <summary> setups the sync logic for member _contact</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncContact(IEntity relatedEntity)
-		{
-			if(_contact!=relatedEntity)
-			{		
-				DesetupSyncContact(true, true);
-				_contact = (ContactEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactID, true, ref _alreadyFetchedContact, new string[] {  } );
-			}
-		}
-
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnContactPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
 		/// <summary> Removes the sync logic for member _manager</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -1347,6 +1314,39 @@ namespace AW.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnManagerPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _contact</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncContact(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactID, true, signalRelatedEntity, "Employees", resetFKFields, new int[] { (int)EmployeeFieldIndex.ContactID } );		
+			_contact = null;
+		}
+		
+		/// <summary> setups the sync logic for member _contact</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncContact(IEntity relatedEntity)
+		{
+			if(_contact!=relatedEntity)
+			{		
+				DesetupSyncContact(true, true);
+				_contact = (ContactEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _contact, new PropertyChangedEventHandler( OnContactPropertyChanged ), "Contact", EmployeeEntity.Relations.ContactEntityUsingContactID, true, ref _alreadyFetchedContact, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnContactPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -1505,18 +1505,18 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Contact'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathContact
-		{
-			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(), (IEntityRelation)GetRelationsForField("Contact")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, null, "Contact", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
-		}
-
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Employee'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathManager
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(), (IEntityRelation)GetRelationsForField("Manager")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Manager", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Contact'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathContact
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(), (IEntityRelation)GetRelationsForField("Contact")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, null, "Contact", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesPerson'  for this entity.</summary>
@@ -1983,65 +1983,6 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Gets / sets related entity of type 'ContactEntity'. This property is not visible in databound grids.
-		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
-		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleContact()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
-		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
-		public virtual ContactEntity Contact
-		{
-			get	{ return GetSingleContact(false); }
-			set 
-			{ 
-				if(this.IsDeserializing)
-				{
-					SetupSyncContact(value);
-				}
-				else
-				{
-					SetSingleRelatedEntityNavigator(value, "Employees", "Contact", _contact, true); 
-				}
-			}
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for Contact. When set to true, Contact is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time Contact is accessed. You can always execute a forced fetch by calling GetSingleContact(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchContact
-		{
-			get	{ return _alwaysFetchContact; }
-			set	{ _alwaysFetchContact = value; }	
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property Contact already has been fetched. Setting this property to false when Contact has been fetched
-		/// will set Contact to null as well. Setting this property to true while Contact hasn't been fetched disables lazy loading for Contact</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedContact
-		{
-			get { return _alreadyFetchedContact;}
-			set 
-			{
-				if(_alreadyFetchedContact && !value)
-				{
-					this.Contact = null;
-				}
-				_alreadyFetchedContact = value;
-			}
-		}
-
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Contact is not found
-		/// in the database. When set to true, Contact will return a new entity instance if the related entity is not found, otherwise 
-		/// null be returned if the related entity is not found. Default: true.</summary>
-		[Browsable(false)]
-		public bool ContactReturnsNewIfNotFound
-		{
-			get	{ return _contactReturnsNewIfNotFound; }
-			set { _contactReturnsNewIfNotFound = value; }	
-		}
-
 		/// <summary> Gets / sets related entity of type 'EmployeeEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
 		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
@@ -2099,6 +2040,65 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _managerReturnsNewIfNotFound; }
 			set { _managerReturnsNewIfNotFound = value; }	
+		}
+
+		/// <summary> Gets / sets related entity of type 'ContactEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleContact()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(true)]
+		public virtual ContactEntity Contact
+		{
+			get	{ return GetSingleContact(false); }
+			set 
+			{ 
+				if(this.IsDeserializing)
+				{
+					SetupSyncContact(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "Employees", "Contact", _contact, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Contact. When set to true, Contact is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Contact is accessed. You can always execute a forced fetch by calling GetSingleContact(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchContact
+		{
+			get	{ return _alwaysFetchContact; }
+			set	{ _alwaysFetchContact = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Contact already has been fetched. Setting this property to false when Contact has been fetched
+		/// will set Contact to null as well. Setting this property to true while Contact hasn't been fetched disables lazy loading for Contact</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedContact
+		{
+			get { return _alreadyFetchedContact;}
+			set 
+			{
+				if(_alreadyFetchedContact && !value)
+				{
+					this.Contact = null;
+				}
+				_alreadyFetchedContact = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Contact is not found
+		/// in the database. When set to true, Contact will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool ContactReturnsNewIfNotFound
+		{
+			get	{ return _contactReturnsNewIfNotFound; }
+			set { _contactReturnsNewIfNotFound = value; }	
 		}
 
 		/// <summary> Gets / sets related entity of type 'SalesPersonEntity'. This property is not visible in databound grids.

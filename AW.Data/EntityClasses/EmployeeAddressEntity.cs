@@ -40,10 +40,10 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AddressEntity _address;
-		private bool	_alwaysFetchAddress, _alreadyFetchedAddress, _addressReturnsNewIfNotFound;
 		private EmployeeEntity _employee;
 		private bool	_alwaysFetchEmployee, _alreadyFetchedEmployee, _employeeReturnsNewIfNotFound;
+		private AddressEntity _address;
+		private bool	_alwaysFetchAddress, _alreadyFetchedAddress, _addressReturnsNewIfNotFound;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -56,10 +56,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Address</summary>
-			public static readonly string Address = "Address";
 			/// <summary>Member name Employee</summary>
 			public static readonly string Employee = "Employee";
+			/// <summary>Member name Address</summary>
+			public static readonly string Address = "Address";
 		}
 		#endregion
 		
@@ -106,15 +106,6 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected EmployeeAddressEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
-			if(_address!=null)
-			{
-				_address.AfterSave+=new EventHandler(OnEntityAfterSave);
-			}
-			_addressReturnsNewIfNotFound = info.GetBoolean("_addressReturnsNewIfNotFound");
-			_alwaysFetchAddress = info.GetBoolean("_alwaysFetchAddress");
-			_alreadyFetchedAddress = info.GetBoolean("_alreadyFetchedAddress");
-
 			_employee = (EmployeeEntity)info.GetValue("_employee", typeof(EmployeeEntity));
 			if(_employee!=null)
 			{
@@ -123,6 +114,15 @@ namespace AW.Data.EntityClasses
 			_employeeReturnsNewIfNotFound = info.GetBoolean("_employeeReturnsNewIfNotFound");
 			_alwaysFetchEmployee = info.GetBoolean("_alwaysFetchEmployee");
 			_alreadyFetchedEmployee = info.GetBoolean("_alreadyFetchedEmployee");
+
+			_address = (AddressEntity)info.GetValue("_address", typeof(AddressEntity));
+			if(_address!=null)
+			{
+				_address.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_addressReturnsNewIfNotFound = info.GetBoolean("_addressReturnsNewIfNotFound");
+			_alwaysFetchAddress = info.GetBoolean("_alwaysFetchAddress");
+			_alreadyFetchedAddress = info.GetBoolean("_alreadyFetchedAddress");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -152,8 +152,8 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
-			_alreadyFetchedAddress = (_address != null);
 			_alreadyFetchedEmployee = (_employee != null);
+			_alreadyFetchedAddress = (_address != null);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -172,11 +172,11 @@ namespace AW.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Address":
-					toReturn.Add(Relations.AddressEntityUsingAddressID);
-					break;
 				case "Employee":
 					toReturn.Add(Relations.EmployeeEntityUsingEmployeeID);
+					break;
+				case "Address":
+					toReturn.Add(Relations.AddressEntityUsingAddressID);
 					break;
 				default:
 					break;				
@@ -192,14 +192,14 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		protected override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
-			info.AddValue("_addressReturnsNewIfNotFound", _addressReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchAddress", _alwaysFetchAddress);
-			info.AddValue("_alreadyFetchedAddress", _alreadyFetchedAddress);
 			info.AddValue("_employee", (!this.MarkedForDeletion?_employee:null));
 			info.AddValue("_employeeReturnsNewIfNotFound", _employeeReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchEmployee", _alwaysFetchEmployee);
 			info.AddValue("_alreadyFetchedEmployee", _alreadyFetchedEmployee);
+			info.AddValue("_address", (!this.MarkedForDeletion?_address:null));
+			info.AddValue("_addressReturnsNewIfNotFound", _addressReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchAddress", _alwaysFetchAddress);
+			info.AddValue("_alreadyFetchedAddress", _alreadyFetchedAddress);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -215,13 +215,13 @@ namespace AW.Data.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Address":
-					_alreadyFetchedAddress = true;
-					this.Address = (AddressEntity)entity;
-					break;
 				case "Employee":
 					_alreadyFetchedEmployee = true;
 					this.Employee = (EmployeeEntity)entity;
+					break;
+				case "Address":
+					_alreadyFetchedAddress = true;
+					this.Address = (AddressEntity)entity;
 					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
@@ -237,11 +237,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Address":
-					SetupSyncAddress(relatedEntity);
-					break;
 				case "Employee":
 					SetupSyncEmployee(relatedEntity);
+					break;
+				case "Address":
+					SetupSyncAddress(relatedEntity);
 					break;
 				default:
 					break;
@@ -257,11 +257,11 @@ namespace AW.Data.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Address":
-					DesetupSyncAddress(false, true);
-					break;
 				case "Employee":
 					DesetupSyncEmployee(false, true);
+					break;
+				case "Address":
+					DesetupSyncAddress(false, true);
 					break;
 				default:
 					break;
@@ -281,13 +281,13 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntity> GetDependentRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
-			if(_address!=null)
-			{
-				toReturn.Add(_address);
-			}
 			if(_employee!=null)
 			{
 				toReturn.Add(_employee);
+			}
+			if(_address!=null)
+			{
+				toReturn.Add(_address);
 			}
 			return toReturn;
 		}
@@ -363,47 +363,6 @@ namespace AW.Data.EntityClasses
 			return new EmployeeAddressRelations().GetAllRelations();
 		}
 
-		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
-		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
-		public AddressEntity GetSingleAddress()
-		{
-			return GetSingleAddress(false);
-		}
-
-		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
-		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
-		public virtual AddressEntity GetSingleAddress(bool forceFetch)
-		{
-			if( ( !_alreadyFetchedAddress || forceFetch || _alwaysFetchAddress) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
-			{
-				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.AddressEntityUsingAddressID);
-				AddressEntity newEntity = new AddressEntity();
-				bool fetchResult = false;
-				if(performLazyLoading)
-				{
-					AddToTransactionIfNecessary(newEntity);
-					fetchResult = newEntity.FetchUsingPK(this.AddressID);
-				}
-				if(fetchResult)
-				{
-					newEntity = (AddressEntity)GetFromActiveContext(newEntity);
-				}
-				else
-				{
-					if(!_addressReturnsNewIfNotFound)
-					{
-						RemoveFromTransactionIfNecessary(newEntity);
-						newEntity = null;
-					}
-				}
-				this.Address = newEntity;
-				_alreadyFetchedAddress = fetchResult;
-			}
-			return _address;
-		}
-
-
 		/// <summary> Retrieves the related entity of type 'EmployeeEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'EmployeeEntity' which is related to this entity.</returns>
 		public EmployeeEntity GetSingleEmployee()
@@ -444,16 +403,57 @@ namespace AW.Data.EntityClasses
 			return _employee;
 		}
 
+
+		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
+		public AddressEntity GetSingleAddress()
+		{
+			return GetSingleAddress(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'AddressEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'AddressEntity' which is related to this entity.</returns>
+		public virtual AddressEntity GetSingleAddress(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedAddress || forceFetch || _alwaysFetchAddress) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.AddressEntityUsingAddressID);
+				AddressEntity newEntity = new AddressEntity();
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					AddToTransactionIfNecessary(newEntity);
+					fetchResult = newEntity.FetchUsingPK(this.AddressID);
+				}
+				if(fetchResult)
+				{
+					newEntity = (AddressEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_addressReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.Address = newEntity;
+				_alreadyFetchedAddress = fetchResult;
+			}
+			return _address;
+		}
+
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
-			if(_address!=null)
-			{
-				_address.ActiveContext = this.ActiveContext;
-			}
 			if(_employee!=null)
 			{
 				_employee.ActiveContext = this.ActiveContext;
+			}
+			if(_address!=null)
+			{
+				_address.ActiveContext = this.ActiveContext;
 			}
 		}
 
@@ -462,8 +462,8 @@ namespace AW.Data.EntityClasses
 		protected override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Address", _address);
 			toReturn.Add("Employee", _employee);
+			toReturn.Add("Address", _address);
 			return toReturn;
 		}
 	
@@ -503,8 +503,8 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
-		{			_addressReturnsNewIfNotFound = true;
-			_employeeReturnsNewIfNotFound = true;
+		{			_employeeReturnsNewIfNotFound = true;
+			_addressReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -529,39 +529,6 @@ namespace AW.Data.EntityClasses
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 		}
 		#endregion
-
-		/// <summary> Removes the sync logic for member _address</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
-		{
-			this.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, true, signalRelatedEntity, "EmployeeAddresses", resetFKFields, new int[] { (int)EmployeeAddressFieldIndex.AddressID } );		
-			_address = null;
-		}
-		
-		/// <summary> setups the sync logic for member _address</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncAddress(IEntity relatedEntity)
-		{
-			if(_address!=relatedEntity)
-			{		
-				DesetupSyncAddress(true, true);
-				_address = (AddressEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, true, ref _alreadyFetchedAddress, new string[] {  } );
-			}
-		}
-
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnAddressPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
 
 		/// <summary> Removes the sync logic for member _employee</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
@@ -588,6 +555,39 @@ namespace AW.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnEmployeePropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _address</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncAddress(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, true, signalRelatedEntity, "EmployeeAddresses", resetFKFields, new int[] { (int)EmployeeAddressFieldIndex.AddressID } );		
+			_address = null;
+		}
+		
+		/// <summary> setups the sync logic for member _address</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncAddress(IEntity relatedEntity)
+		{
+			if(_address!=relatedEntity)
+			{		
+				DesetupSyncAddress(true, true);
+				_address = (AddressEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _address, new PropertyChangedEventHandler( OnAddressPropertyChanged ), "Address", EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, true, ref _alreadyFetchedAddress, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnAddressPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -649,18 +649,18 @@ namespace AW.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathAddress
-		{
-			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), (IEntityRelation)GetRelationsForField("Address")[0], (int)AW.Data.EntityType.EmployeeAddressEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "Address", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
-		}
-
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Employee'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathEmployee
 		{
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(), (IEntityRelation)GetRelationsForField("Employee")[0], (int)AW.Data.EntityType.EmployeeAddressEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Employee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathAddress
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), (IEntityRelation)GetRelationsForField("Address")[0], (int)AW.Data.EntityType.EmployeeAddressEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, null, "Address", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
@@ -734,65 +734,6 @@ namespace AW.Data.EntityClasses
 		}
 
 
-		/// <summary> Gets / sets related entity of type 'AddressEntity'. This property is not visible in databound grids.
-		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
-		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleAddress()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
-		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
-		public virtual AddressEntity Address
-		{
-			get	{ return GetSingleAddress(false); }
-			set 
-			{ 
-				if(this.IsDeserializing)
-				{
-					SetupSyncAddress(value);
-				}
-				else
-				{
-					SetSingleRelatedEntityNavigator(value, "EmployeeAddresses", "Address", _address, true); 
-				}
-			}
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for Address. When set to true, Address is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time Address is accessed. You can always execute a forced fetch by calling GetSingleAddress(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchAddress
-		{
-			get	{ return _alwaysFetchAddress; }
-			set	{ _alwaysFetchAddress = value; }	
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property Address already has been fetched. Setting this property to false when Address has been fetched
-		/// will set Address to null as well. Setting this property to true while Address hasn't been fetched disables lazy loading for Address</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedAddress
-		{
-			get { return _alreadyFetchedAddress;}
-			set 
-			{
-				if(_alreadyFetchedAddress && !value)
-				{
-					this.Address = null;
-				}
-				_alreadyFetchedAddress = value;
-			}
-		}
-
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Address is not found
-		/// in the database. When set to true, Address will return a new entity instance if the related entity is not found, otherwise 
-		/// null be returned if the related entity is not found. Default: true.</summary>
-		[Browsable(false)]
-		public bool AddressReturnsNewIfNotFound
-		{
-			get	{ return _addressReturnsNewIfNotFound; }
-			set { _addressReturnsNewIfNotFound = value; }	
-		}
-
 		/// <summary> Gets / sets related entity of type 'EmployeeEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
 		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
@@ -850,6 +791,65 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _employeeReturnsNewIfNotFound; }
 			set { _employeeReturnsNewIfNotFound = value; }	
+		}
+
+		/// <summary> Gets / sets related entity of type 'AddressEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleAddress()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(true)]
+		public virtual AddressEntity Address
+		{
+			get	{ return GetSingleAddress(false); }
+			set 
+			{ 
+				if(this.IsDeserializing)
+				{
+					SetupSyncAddress(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "EmployeeAddresses", "Address", _address, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Address. When set to true, Address is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Address is accessed. You can always execute a forced fetch by calling GetSingleAddress(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchAddress
+		{
+			get	{ return _alwaysFetchAddress; }
+			set	{ _alwaysFetchAddress = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Address already has been fetched. Setting this property to false when Address has been fetched
+		/// will set Address to null as well. Setting this property to true while Address hasn't been fetched disables lazy loading for Address</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedAddress
+		{
+			get { return _alreadyFetchedAddress;}
+			set 
+			{
+				if(_alreadyFetchedAddress && !value)
+				{
+					this.Address = null;
+				}
+				_alreadyFetchedAddress = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Address is not found
+		/// in the database. When set to true, Address will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool AddressReturnsNewIfNotFound
+		{
+			get	{ return _addressReturnsNewIfNotFound; }
+			set { _addressReturnsNewIfNotFound = value; }	
 		}
 
 

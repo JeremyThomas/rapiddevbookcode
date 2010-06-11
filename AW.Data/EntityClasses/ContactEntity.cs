@@ -42,20 +42,24 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.EmployeeCollection	_employees;
 		private bool	_alwaysFetchEmployees, _alreadyFetchedEmployees;
-		private AW.Data.CollectionClasses.IndividualCollection	_individuals;
-		private bool	_alwaysFetchIndividuals, _alreadyFetchedIndividuals;
 		private AW.Data.CollectionClasses.VendorContactCollection	_vendorContacts;
 		private bool	_alwaysFetchVendorContacts, _alreadyFetchedVendorContacts;
 		private AW.Data.CollectionClasses.ContactCreditCardCollection	_contactCreditCards;
 		private bool	_alwaysFetchContactCreditCards, _alreadyFetchedContactCreditCards;
-		private AW.Data.CollectionClasses.StoreContactCollection	_storeContacts;
-		private bool	_alwaysFetchStoreContacts, _alreadyFetchedStoreContacts;
+		private AW.Data.CollectionClasses.IndividualCollection	_individuals;
+		private bool	_alwaysFetchIndividuals, _alreadyFetchedIndividuals;
 		private AW.Data.CollectionClasses.SalesOrderHeaderCollection	_salesOrderHeaders;
 		private bool	_alwaysFetchSalesOrderHeaders, _alreadyFetchedSalesOrderHeaders;
+		private AW.Data.CollectionClasses.StoreContactCollection	_storeContacts;
+		private bool	_alwaysFetchStoreContacts, _alreadyFetchedStoreContacts;
+		private AW.Data.CollectionClasses.EmployeeCollection _employeeCollectionViaEmployee;
+		private bool	_alwaysFetchEmployeeCollectionViaEmployee, _alreadyFetchedEmployeeCollectionViaEmployee;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaSalesOrderHeader;
 		private bool	_alwaysFetchAddressCollectionViaSalesOrderHeader, _alreadyFetchedAddressCollectionViaSalesOrderHeader;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaSalesOrderHeader_;
 		private bool	_alwaysFetchAddressCollectionViaSalesOrderHeader_, _alreadyFetchedAddressCollectionViaSalesOrderHeader_;
+		private AW.Data.CollectionClasses.ShipMethodCollection _shipMethodCollectionViaSalesOrderHeader;
+		private bool	_alwaysFetchShipMethodCollectionViaSalesOrderHeader, _alreadyFetchedShipMethodCollectionViaSalesOrderHeader;
 		private AW.Data.CollectionClasses.CreditCardCollection _creditCardCollectionViaSalesOrderHeader;
 		private bool	_alwaysFetchCreditCardCollectionViaSalesOrderHeader, _alreadyFetchedCreditCardCollectionViaSalesOrderHeader;
 		private AW.Data.CollectionClasses.CurrencyRateCollection _currencyRateCollectionViaSalesOrderHeader;
@@ -64,12 +68,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchCustomerCollectionViaSalesOrderHeader, _alreadyFetchedCustomerCollectionViaSalesOrderHeader;
 		private AW.Data.CollectionClasses.CustomerViewRelatedCollection _customerViewRelatedCollectionViaSalesOrderHeader__;
 		private bool	_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader__, _alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader__;
-		private AW.Data.CollectionClasses.EmployeeCollection _employeeCollectionViaEmployee;
-		private bool	_alwaysFetchEmployeeCollectionViaEmployee, _alreadyFetchedEmployeeCollectionViaEmployee;
 		private AW.Data.CollectionClasses.SalesTerritoryCollection _salesTerritoryCollectionViaSalesOrderHeader;
 		private bool	_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader, _alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader;
-		private AW.Data.CollectionClasses.ShipMethodCollection _shipMethodCollectionViaSalesOrderHeader;
-		private bool	_alwaysFetchShipMethodCollectionViaSalesOrderHeader, _alreadyFetchedShipMethodCollectionViaSalesOrderHeader;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -84,20 +84,24 @@ namespace AW.Data.EntityClasses
 		{
 			/// <summary>Member name Employees</summary>
 			public static readonly string Employees = "Employees";
-			/// <summary>Member name Individuals</summary>
-			public static readonly string Individuals = "Individuals";
 			/// <summary>Member name VendorContacts</summary>
 			public static readonly string VendorContacts = "VendorContacts";
 			/// <summary>Member name ContactCreditCards</summary>
 			public static readonly string ContactCreditCards = "ContactCreditCards";
-			/// <summary>Member name StoreContacts</summary>
-			public static readonly string StoreContacts = "StoreContacts";
+			/// <summary>Member name Individuals</summary>
+			public static readonly string Individuals = "Individuals";
 			/// <summary>Member name SalesOrderHeaders</summary>
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
+			/// <summary>Member name StoreContacts</summary>
+			public static readonly string StoreContacts = "StoreContacts";
+			/// <summary>Member name EmployeeCollectionViaEmployee</summary>
+			public static readonly string EmployeeCollectionViaEmployee = "EmployeeCollectionViaEmployee";
 			/// <summary>Member name AddressCollectionViaSalesOrderHeader</summary>
 			public static readonly string AddressCollectionViaSalesOrderHeader = "AddressCollectionViaSalesOrderHeader";
 			/// <summary>Member name AddressCollectionViaSalesOrderHeader_</summary>
 			public static readonly string AddressCollectionViaSalesOrderHeader_ = "AddressCollectionViaSalesOrderHeader_";
+			/// <summary>Member name ShipMethodCollectionViaSalesOrderHeader</summary>
+			public static readonly string ShipMethodCollectionViaSalesOrderHeader = "ShipMethodCollectionViaSalesOrderHeader";
 			/// <summary>Member name CreditCardCollectionViaSalesOrderHeader</summary>
 			public static readonly string CreditCardCollectionViaSalesOrderHeader = "CreditCardCollectionViaSalesOrderHeader";
 			/// <summary>Member name CurrencyRateCollectionViaSalesOrderHeader</summary>
@@ -106,12 +110,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string CustomerCollectionViaSalesOrderHeader = "CustomerCollectionViaSalesOrderHeader";
 			/// <summary>Member name CustomerViewRelatedCollectionViaSalesOrderHeader__</summary>
 			public static readonly string CustomerViewRelatedCollectionViaSalesOrderHeader__ = "CustomerViewRelatedCollectionViaSalesOrderHeader__";
-			/// <summary>Member name EmployeeCollectionViaEmployee</summary>
-			public static readonly string EmployeeCollectionViaEmployee = "EmployeeCollectionViaEmployee";
 			/// <summary>Member name SalesTerritoryCollectionViaSalesOrderHeader</summary>
 			public static readonly string SalesTerritoryCollectionViaSalesOrderHeader = "SalesTerritoryCollectionViaSalesOrderHeader";
-			/// <summary>Member name ShipMethodCollectionViaSalesOrderHeader</summary>
-			public static readonly string ShipMethodCollectionViaSalesOrderHeader = "ShipMethodCollectionViaSalesOrderHeader";
 		}
 		#endregion
 		
@@ -159,10 +159,6 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchEmployees = info.GetBoolean("_alwaysFetchEmployees");
 			_alreadyFetchedEmployees = info.GetBoolean("_alreadyFetchedEmployees");
 
-			_individuals = (AW.Data.CollectionClasses.IndividualCollection)info.GetValue("_individuals", typeof(AW.Data.CollectionClasses.IndividualCollection));
-			_alwaysFetchIndividuals = info.GetBoolean("_alwaysFetchIndividuals");
-			_alreadyFetchedIndividuals = info.GetBoolean("_alreadyFetchedIndividuals");
-
 			_vendorContacts = (AW.Data.CollectionClasses.VendorContactCollection)info.GetValue("_vendorContacts", typeof(AW.Data.CollectionClasses.VendorContactCollection));
 			_alwaysFetchVendorContacts = info.GetBoolean("_alwaysFetchVendorContacts");
 			_alreadyFetchedVendorContacts = info.GetBoolean("_alreadyFetchedVendorContacts");
@@ -171,13 +167,21 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchContactCreditCards = info.GetBoolean("_alwaysFetchContactCreditCards");
 			_alreadyFetchedContactCreditCards = info.GetBoolean("_alreadyFetchedContactCreditCards");
 
-			_storeContacts = (AW.Data.CollectionClasses.StoreContactCollection)info.GetValue("_storeContacts", typeof(AW.Data.CollectionClasses.StoreContactCollection));
-			_alwaysFetchStoreContacts = info.GetBoolean("_alwaysFetchStoreContacts");
-			_alreadyFetchedStoreContacts = info.GetBoolean("_alreadyFetchedStoreContacts");
+			_individuals = (AW.Data.CollectionClasses.IndividualCollection)info.GetValue("_individuals", typeof(AW.Data.CollectionClasses.IndividualCollection));
+			_alwaysFetchIndividuals = info.GetBoolean("_alwaysFetchIndividuals");
+			_alreadyFetchedIndividuals = info.GetBoolean("_alreadyFetchedIndividuals");
 
 			_salesOrderHeaders = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrderHeaders", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
 			_alwaysFetchSalesOrderHeaders = info.GetBoolean("_alwaysFetchSalesOrderHeaders");
 			_alreadyFetchedSalesOrderHeaders = info.GetBoolean("_alreadyFetchedSalesOrderHeaders");
+
+			_storeContacts = (AW.Data.CollectionClasses.StoreContactCollection)info.GetValue("_storeContacts", typeof(AW.Data.CollectionClasses.StoreContactCollection));
+			_alwaysFetchStoreContacts = info.GetBoolean("_alwaysFetchStoreContacts");
+			_alreadyFetchedStoreContacts = info.GetBoolean("_alreadyFetchedStoreContacts");
+			_employeeCollectionViaEmployee = (AW.Data.CollectionClasses.EmployeeCollection)info.GetValue("_employeeCollectionViaEmployee", typeof(AW.Data.CollectionClasses.EmployeeCollection));
+			_alwaysFetchEmployeeCollectionViaEmployee = info.GetBoolean("_alwaysFetchEmployeeCollectionViaEmployee");
+			_alreadyFetchedEmployeeCollectionViaEmployee = info.GetBoolean("_alreadyFetchedEmployeeCollectionViaEmployee");
+
 			_addressCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.AddressCollection));
 			_alwaysFetchAddressCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchAddressCollectionViaSalesOrderHeader");
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader = info.GetBoolean("_alreadyFetchedAddressCollectionViaSalesOrderHeader");
@@ -185,6 +189,10 @@ namespace AW.Data.EntityClasses
 			_addressCollectionViaSalesOrderHeader_ = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaSalesOrderHeader_", typeof(AW.Data.CollectionClasses.AddressCollection));
 			_alwaysFetchAddressCollectionViaSalesOrderHeader_ = info.GetBoolean("_alwaysFetchAddressCollectionViaSalesOrderHeader_");
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = info.GetBoolean("_alreadyFetchedAddressCollectionViaSalesOrderHeader_");
+
+			_shipMethodCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.ShipMethodCollection)info.GetValue("_shipMethodCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.ShipMethodCollection));
+			_alwaysFetchShipMethodCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchShipMethodCollectionViaSalesOrderHeader");
+			_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = info.GetBoolean("_alreadyFetchedShipMethodCollectionViaSalesOrderHeader");
 
 			_creditCardCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.CreditCardCollection)info.GetValue("_creditCardCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.CreditCardCollection));
 			_alwaysFetchCreditCardCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchCreditCardCollectionViaSalesOrderHeader");
@@ -202,17 +210,9 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader__ = info.GetBoolean("_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader__");
 			_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader__ = info.GetBoolean("_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader__");
 
-			_employeeCollectionViaEmployee = (AW.Data.CollectionClasses.EmployeeCollection)info.GetValue("_employeeCollectionViaEmployee", typeof(AW.Data.CollectionClasses.EmployeeCollection));
-			_alwaysFetchEmployeeCollectionViaEmployee = info.GetBoolean("_alwaysFetchEmployeeCollectionViaEmployee");
-			_alreadyFetchedEmployeeCollectionViaEmployee = info.GetBoolean("_alreadyFetchedEmployeeCollectionViaEmployee");
-
 			_salesTerritoryCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.SalesTerritoryCollection)info.GetValue("_salesTerritoryCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.SalesTerritoryCollection));
 			_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader");
 			_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader = info.GetBoolean("_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader");
-
-			_shipMethodCollectionViaSalesOrderHeader = (AW.Data.CollectionClasses.ShipMethodCollection)info.GetValue("_shipMethodCollectionViaSalesOrderHeader", typeof(AW.Data.CollectionClasses.ShipMethodCollection));
-			_alwaysFetchShipMethodCollectionViaSalesOrderHeader = info.GetBoolean("_alwaysFetchShipMethodCollectionViaSalesOrderHeader");
-			_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = info.GetBoolean("_alreadyFetchedShipMethodCollectionViaSalesOrderHeader");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -223,20 +223,20 @@ namespace AW.Data.EntityClasses
 		protected override void PostReadXmlFixups()
 		{
 			_alreadyFetchedEmployees = (_employees.Count > 0);
-			_alreadyFetchedIndividuals = (_individuals.Count > 0);
 			_alreadyFetchedVendorContacts = (_vendorContacts.Count > 0);
 			_alreadyFetchedContactCreditCards = (_contactCreditCards.Count > 0);
-			_alreadyFetchedStoreContacts = (_storeContacts.Count > 0);
+			_alreadyFetchedIndividuals = (_individuals.Count > 0);
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
+			_alreadyFetchedStoreContacts = (_storeContacts.Count > 0);
+			_alreadyFetchedEmployeeCollectionViaEmployee = (_employeeCollectionViaEmployee.Count > 0);
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader = (_addressCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = (_addressCollectionViaSalesOrderHeader_.Count > 0);
+			_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = (_shipMethodCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedCreditCardCollectionViaSalesOrderHeader = (_creditCardCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedCurrencyRateCollectionViaSalesOrderHeader = (_currencyRateCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedCustomerCollectionViaSalesOrderHeader = (_customerCollectionViaSalesOrderHeader.Count > 0);
 			_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader__ = (_customerViewRelatedCollectionViaSalesOrderHeader__.Count > 0);
-			_alreadyFetchedEmployeeCollectionViaEmployee = (_employeeCollectionViaEmployee.Count > 0);
 			_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader = (_salesTerritoryCollectionViaSalesOrderHeader.Count > 0);
-			_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = (_shipMethodCollectionViaSalesOrderHeader.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -258,20 +258,24 @@ namespace AW.Data.EntityClasses
 				case "Employees":
 					toReturn.Add(Relations.EmployeeEntityUsingContactID);
 					break;
-				case "Individuals":
-					toReturn.Add(Relations.IndividualEntityUsingContactID);
-					break;
 				case "VendorContacts":
 					toReturn.Add(Relations.VendorContactEntityUsingContactID);
 					break;
 				case "ContactCreditCards":
 					toReturn.Add(Relations.ContactCreditCardEntityUsingContactID);
 					break;
-				case "StoreContacts":
-					toReturn.Add(Relations.StoreContactEntityUsingContactID);
+				case "Individuals":
+					toReturn.Add(Relations.IndividualEntityUsingContactID);
 					break;
 				case "SalesOrderHeaders":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID);
+					break;
+				case "StoreContacts":
+					toReturn.Add(Relations.StoreContactEntityUsingContactID);
+					break;
+				case "EmployeeCollectionViaEmployee":
+					toReturn.Add(Relations.EmployeeEntityUsingContactID, "ContactEntity__", "Employee_", JoinHint.None);
+					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID, "Employee_", string.Empty, JoinHint.None);
 					break;
 				case "AddressCollectionViaSalesOrderHeader":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID, "ContactEntity__", "SalesOrderHeader_", JoinHint.None);
@@ -280,6 +284,10 @@ namespace AW.Data.EntityClasses
 				case "AddressCollectionViaSalesOrderHeader_":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID, "ContactEntity__", "SalesOrderHeader_", JoinHint.None);
 					toReturn.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
+					break;
+				case "ShipMethodCollectionViaSalesOrderHeader":
+					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID, "ContactEntity__", "SalesOrderHeader_", JoinHint.None);
+					toReturn.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				case "CreditCardCollectionViaSalesOrderHeader":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID, "ContactEntity__", "SalesOrderHeader_", JoinHint.None);
@@ -297,17 +305,9 @@ namespace AW.Data.EntityClasses
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID, "ContactEntity__", "SalesOrderHeader_", JoinHint.None);
 					toReturn.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
-				case "EmployeeCollectionViaEmployee":
-					toReturn.Add(Relations.EmployeeEntityUsingContactID, "ContactEntity__", "Employee_", JoinHint.None);
-					toReturn.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID, "Employee_", string.Empty, JoinHint.None);
-					break;
 				case "SalesTerritoryCollectionViaSalesOrderHeader":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID, "ContactEntity__", "SalesOrderHeader_", JoinHint.None);
 					toReturn.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-					break;
-				case "ShipMethodCollectionViaSalesOrderHeader":
-					toReturn.Add(Relations.SalesOrderHeaderEntityUsingContactID, "ContactEntity__", "SalesOrderHeader_", JoinHint.None);
-					toReturn.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodID, "SalesOrderHeader_", string.Empty, JoinHint.None);
 					break;
 				default:
 					break;				
@@ -326,27 +326,33 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_employees", (!this.MarkedForDeletion?_employees:null));
 			info.AddValue("_alwaysFetchEmployees", _alwaysFetchEmployees);
 			info.AddValue("_alreadyFetchedEmployees", _alreadyFetchedEmployees);
-			info.AddValue("_individuals", (!this.MarkedForDeletion?_individuals:null));
-			info.AddValue("_alwaysFetchIndividuals", _alwaysFetchIndividuals);
-			info.AddValue("_alreadyFetchedIndividuals", _alreadyFetchedIndividuals);
 			info.AddValue("_vendorContacts", (!this.MarkedForDeletion?_vendorContacts:null));
 			info.AddValue("_alwaysFetchVendorContacts", _alwaysFetchVendorContacts);
 			info.AddValue("_alreadyFetchedVendorContacts", _alreadyFetchedVendorContacts);
 			info.AddValue("_contactCreditCards", (!this.MarkedForDeletion?_contactCreditCards:null));
 			info.AddValue("_alwaysFetchContactCreditCards", _alwaysFetchContactCreditCards);
 			info.AddValue("_alreadyFetchedContactCreditCards", _alreadyFetchedContactCreditCards);
-			info.AddValue("_storeContacts", (!this.MarkedForDeletion?_storeContacts:null));
-			info.AddValue("_alwaysFetchStoreContacts", _alwaysFetchStoreContacts);
-			info.AddValue("_alreadyFetchedStoreContacts", _alreadyFetchedStoreContacts);
+			info.AddValue("_individuals", (!this.MarkedForDeletion?_individuals:null));
+			info.AddValue("_alwaysFetchIndividuals", _alwaysFetchIndividuals);
+			info.AddValue("_alreadyFetchedIndividuals", _alreadyFetchedIndividuals);
 			info.AddValue("_salesOrderHeaders", (!this.MarkedForDeletion?_salesOrderHeaders:null));
 			info.AddValue("_alwaysFetchSalesOrderHeaders", _alwaysFetchSalesOrderHeaders);
 			info.AddValue("_alreadyFetchedSalesOrderHeaders", _alreadyFetchedSalesOrderHeaders);
+			info.AddValue("_storeContacts", (!this.MarkedForDeletion?_storeContacts:null));
+			info.AddValue("_alwaysFetchStoreContacts", _alwaysFetchStoreContacts);
+			info.AddValue("_alreadyFetchedStoreContacts", _alreadyFetchedStoreContacts);
+			info.AddValue("_employeeCollectionViaEmployee", (!this.MarkedForDeletion?_employeeCollectionViaEmployee:null));
+			info.AddValue("_alwaysFetchEmployeeCollectionViaEmployee", _alwaysFetchEmployeeCollectionViaEmployee);
+			info.AddValue("_alreadyFetchedEmployeeCollectionViaEmployee", _alreadyFetchedEmployeeCollectionViaEmployee);
 			info.AddValue("_addressCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_addressCollectionViaSalesOrderHeader:null));
 			info.AddValue("_alwaysFetchAddressCollectionViaSalesOrderHeader", _alwaysFetchAddressCollectionViaSalesOrderHeader);
 			info.AddValue("_alreadyFetchedAddressCollectionViaSalesOrderHeader", _alreadyFetchedAddressCollectionViaSalesOrderHeader);
 			info.AddValue("_addressCollectionViaSalesOrderHeader_", (!this.MarkedForDeletion?_addressCollectionViaSalesOrderHeader_:null));
 			info.AddValue("_alwaysFetchAddressCollectionViaSalesOrderHeader_", _alwaysFetchAddressCollectionViaSalesOrderHeader_);
 			info.AddValue("_alreadyFetchedAddressCollectionViaSalesOrderHeader_", _alreadyFetchedAddressCollectionViaSalesOrderHeader_);
+			info.AddValue("_shipMethodCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_shipMethodCollectionViaSalesOrderHeader:null));
+			info.AddValue("_alwaysFetchShipMethodCollectionViaSalesOrderHeader", _alwaysFetchShipMethodCollectionViaSalesOrderHeader);
+			info.AddValue("_alreadyFetchedShipMethodCollectionViaSalesOrderHeader", _alreadyFetchedShipMethodCollectionViaSalesOrderHeader);
 			info.AddValue("_creditCardCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_creditCardCollectionViaSalesOrderHeader:null));
 			info.AddValue("_alwaysFetchCreditCardCollectionViaSalesOrderHeader", _alwaysFetchCreditCardCollectionViaSalesOrderHeader);
 			info.AddValue("_alreadyFetchedCreditCardCollectionViaSalesOrderHeader", _alreadyFetchedCreditCardCollectionViaSalesOrderHeader);
@@ -359,15 +365,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_customerViewRelatedCollectionViaSalesOrderHeader__", (!this.MarkedForDeletion?_customerViewRelatedCollectionViaSalesOrderHeader__:null));
 			info.AddValue("_alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader__", _alwaysFetchCustomerViewRelatedCollectionViaSalesOrderHeader__);
 			info.AddValue("_alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader__", _alreadyFetchedCustomerViewRelatedCollectionViaSalesOrderHeader__);
-			info.AddValue("_employeeCollectionViaEmployee", (!this.MarkedForDeletion?_employeeCollectionViaEmployee:null));
-			info.AddValue("_alwaysFetchEmployeeCollectionViaEmployee", _alwaysFetchEmployeeCollectionViaEmployee);
-			info.AddValue("_alreadyFetchedEmployeeCollectionViaEmployee", _alreadyFetchedEmployeeCollectionViaEmployee);
 			info.AddValue("_salesTerritoryCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_salesTerritoryCollectionViaSalesOrderHeader:null));
 			info.AddValue("_alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader", _alwaysFetchSalesTerritoryCollectionViaSalesOrderHeader);
 			info.AddValue("_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader", _alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader);
-			info.AddValue("_shipMethodCollectionViaSalesOrderHeader", (!this.MarkedForDeletion?_shipMethodCollectionViaSalesOrderHeader:null));
-			info.AddValue("_alwaysFetchShipMethodCollectionViaSalesOrderHeader", _alwaysFetchShipMethodCollectionViaSalesOrderHeader);
-			info.AddValue("_alreadyFetchedShipMethodCollectionViaSalesOrderHeader", _alreadyFetchedShipMethodCollectionViaSalesOrderHeader);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -390,13 +390,6 @@ namespace AW.Data.EntityClasses
 						this.Employees.Add((EmployeeEntity)entity);
 					}
 					break;
-				case "Individuals":
-					_alreadyFetchedIndividuals = true;
-					if(entity!=null)
-					{
-						this.Individuals.Add((IndividualEntity)entity);
-					}
-					break;
 				case "VendorContacts":
 					_alreadyFetchedVendorContacts = true;
 					if(entity!=null)
@@ -411,11 +404,11 @@ namespace AW.Data.EntityClasses
 						this.ContactCreditCards.Add((ContactCreditCardEntity)entity);
 					}
 					break;
-				case "StoreContacts":
-					_alreadyFetchedStoreContacts = true;
+				case "Individuals":
+					_alreadyFetchedIndividuals = true;
 					if(entity!=null)
 					{
-						this.StoreContacts.Add((StoreContactEntity)entity);
+						this.Individuals.Add((IndividualEntity)entity);
 					}
 					break;
 				case "SalesOrderHeaders":
@@ -423,6 +416,20 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.SalesOrderHeaders.Add((SalesOrderHeaderEntity)entity);
+					}
+					break;
+				case "StoreContacts":
+					_alreadyFetchedStoreContacts = true;
+					if(entity!=null)
+					{
+						this.StoreContacts.Add((StoreContactEntity)entity);
+					}
+					break;
+				case "EmployeeCollectionViaEmployee":
+					_alreadyFetchedEmployeeCollectionViaEmployee = true;
+					if(entity!=null)
+					{
+						this.EmployeeCollectionViaEmployee.Add((EmployeeEntity)entity);
 					}
 					break;
 				case "AddressCollectionViaSalesOrderHeader":
@@ -437,6 +444,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.AddressCollectionViaSalesOrderHeader_.Add((AddressEntity)entity);
+					}
+					break;
+				case "ShipMethodCollectionViaSalesOrderHeader":
+					_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = true;
+					if(entity!=null)
+					{
+						this.ShipMethodCollectionViaSalesOrderHeader.Add((ShipMethodEntity)entity);
 					}
 					break;
 				case "CreditCardCollectionViaSalesOrderHeader":
@@ -467,25 +481,11 @@ namespace AW.Data.EntityClasses
 						this.CustomerViewRelatedCollectionViaSalesOrderHeader__.Add((CustomerViewRelatedEntity)entity);
 					}
 					break;
-				case "EmployeeCollectionViaEmployee":
-					_alreadyFetchedEmployeeCollectionViaEmployee = true;
-					if(entity!=null)
-					{
-						this.EmployeeCollectionViaEmployee.Add((EmployeeEntity)entity);
-					}
-					break;
 				case "SalesTerritoryCollectionViaSalesOrderHeader":
 					_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader = true;
 					if(entity!=null)
 					{
 						this.SalesTerritoryCollectionViaSalesOrderHeader.Add((SalesTerritoryEntity)entity);
-					}
-					break;
-				case "ShipMethodCollectionViaSalesOrderHeader":
-					_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = true;
-					if(entity!=null)
-					{
-						this.ShipMethodCollectionViaSalesOrderHeader.Add((ShipMethodEntity)entity);
 					}
 					break;
 				default:
@@ -505,20 +505,20 @@ namespace AW.Data.EntityClasses
 				case "Employees":
 					_employees.Add((EmployeeEntity)relatedEntity);
 					break;
-				case "Individuals":
-					_individuals.Add((IndividualEntity)relatedEntity);
-					break;
 				case "VendorContacts":
 					_vendorContacts.Add((VendorContactEntity)relatedEntity);
 					break;
 				case "ContactCreditCards":
 					_contactCreditCards.Add((ContactCreditCardEntity)relatedEntity);
 					break;
-				case "StoreContacts":
-					_storeContacts.Add((StoreContactEntity)relatedEntity);
+				case "Individuals":
+					_individuals.Add((IndividualEntity)relatedEntity);
 					break;
 				case "SalesOrderHeaders":
 					_salesOrderHeaders.Add((SalesOrderHeaderEntity)relatedEntity);
+					break;
+				case "StoreContacts":
+					_storeContacts.Add((StoreContactEntity)relatedEntity);
 					break;
 				default:
 					break;
@@ -537,20 +537,20 @@ namespace AW.Data.EntityClasses
 				case "Employees":
 					this.PerformRelatedEntityRemoval(_employees, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "Individuals":
-					this.PerformRelatedEntityRemoval(_individuals, relatedEntity, signalRelatedEntityManyToOne);
-					break;
 				case "VendorContacts":
 					this.PerformRelatedEntityRemoval(_vendorContacts, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "ContactCreditCards":
 					this.PerformRelatedEntityRemoval(_contactCreditCards, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "StoreContacts":
-					this.PerformRelatedEntityRemoval(_storeContacts, relatedEntity, signalRelatedEntityManyToOne);
+				case "Individuals":
+					this.PerformRelatedEntityRemoval(_individuals, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "SalesOrderHeaders":
 					this.PerformRelatedEntityRemoval(_salesOrderHeaders, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "StoreContacts":
+					this.PerformRelatedEntityRemoval(_storeContacts, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				default:
 					break;
@@ -579,11 +579,11 @@ namespace AW.Data.EntityClasses
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_employees);
-			toReturn.Add(_individuals);
 			toReturn.Add(_vendorContacts);
 			toReturn.Add(_contactCreditCards);
-			toReturn.Add(_storeContacts);
+			toReturn.Add(_individuals);
 			toReturn.Add(_salesOrderHeaders);
+			toReturn.Add(_storeContacts);
 
 			return toReturn;
 		}
@@ -683,7 +683,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_employees);
 				_employees.SuppressClearInGetMulti=!forceFetch;
 				_employees.EntityFactoryToUse = entityFactoryToUse;
-				_employees.GetMultiManyToOne(this, null, filter);
+				_employees.GetMultiManyToOne(null, this, filter);
 				_employees.SuppressClearInGetMulti=false;
 				_alreadyFetchedEmployees = true;
 			}
@@ -698,61 +698,6 @@ namespace AW.Data.EntityClasses
 		{
 			_employees.SortClauses=sortClauses;
 			_employees.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
-		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'IndividualEntity'</returns>
-		public AW.Data.CollectionClasses.IndividualCollection GetMultiIndividuals(bool forceFetch)
-		{
-			return GetMultiIndividuals(forceFetch, _individuals.EntityFactoryToUse, null);
-		}
-
-		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="filter">Extra filter to limit the resultset.</param>
-		/// <returns>Filled collection with all related entities of type 'IndividualEntity'</returns>
-		public AW.Data.CollectionClasses.IndividualCollection GetMultiIndividuals(bool forceFetch, IPredicateExpression filter)
-		{
-			return GetMultiIndividuals(forceFetch, _individuals.EntityFactoryToUse, filter);
-		}
-
-		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.IndividualCollection GetMultiIndividuals(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
-			return GetMultiIndividuals(forceFetch, entityFactoryToUse, null);
-		}
-
-		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
-		/// <param name="filter">Extra filter to limit the resultset.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.IndividualCollection GetMultiIndividuals(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
-		{
- 			if( ( !_alreadyFetchedIndividuals || forceFetch || _alwaysFetchIndividuals) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_individuals);
-				_individuals.SuppressClearInGetMulti=!forceFetch;
-				_individuals.EntityFactoryToUse = entityFactoryToUse;
-				_individuals.GetMultiManyToOne(this, filter);
-				_individuals.SuppressClearInGetMulti=false;
-				_alreadyFetchedIndividuals = true;
-			}
-			return _individuals;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'Individuals'. These settings will be taken into account
-		/// when the property Individuals is requested or GetMultiIndividuals is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersIndividuals(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_individuals.SortClauses=sortClauses;
-			_individuals.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'VendorContactEntity' using a relation of type '1:n'.</summary>
@@ -865,59 +810,59 @@ namespace AW.Data.EntityClasses
 			_contactCreditCards.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'StoreContactEntity'</returns>
-		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch)
+		/// <returns>Filled collection with all related entities of type 'IndividualEntity'</returns>
+		public AW.Data.CollectionClasses.IndividualCollection GetMultiIndividuals(bool forceFetch)
 		{
-			return GetMultiStoreContacts(forceFetch, _storeContacts.EntityFactoryToUse, null);
+			return GetMultiIndividuals(forceFetch, _individuals.EntityFactoryToUse, null);
 		}
 
-		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
-		/// <returns>Filled collection with all related entities of type 'StoreContactEntity'</returns>
-		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IPredicateExpression filter)
+		/// <returns>Filled collection with all related entities of type 'IndividualEntity'</returns>
+		public AW.Data.CollectionClasses.IndividualCollection GetMultiIndividuals(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiStoreContacts(forceFetch, _storeContacts.EntityFactoryToUse, filter);
+			return GetMultiIndividuals(forceFetch, _individuals.EntityFactoryToUse, filter);
 		}
 
-		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.IndividualCollection GetMultiIndividuals(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiStoreContacts(forceFetch, entityFactoryToUse, null);
+			return GetMultiIndividuals(forceFetch, entityFactoryToUse, null);
 		}
 
-		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.IndividualCollection GetMultiIndividuals(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedStoreContacts || forceFetch || _alwaysFetchStoreContacts) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+ 			if( ( !_alreadyFetchedIndividuals || forceFetch || _alwaysFetchIndividuals) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
 			{
-				AddToTransactionIfNecessary(_storeContacts);
-				_storeContacts.SuppressClearInGetMulti=!forceFetch;
-				_storeContacts.EntityFactoryToUse = entityFactoryToUse;
-				_storeContacts.GetMultiManyToOne(this, null, null, filter);
-				_storeContacts.SuppressClearInGetMulti=false;
-				_alreadyFetchedStoreContacts = true;
+				AddToTransactionIfNecessary(_individuals);
+				_individuals.SuppressClearInGetMulti=!forceFetch;
+				_individuals.EntityFactoryToUse = entityFactoryToUse;
+				_individuals.GetMultiManyToOne(this, filter);
+				_individuals.SuppressClearInGetMulti=false;
+				_alreadyFetchedIndividuals = true;
 			}
-			return _storeContacts;
+			return _individuals;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'StoreContacts'. These settings will be taken into account
-		/// when the property StoreContacts is requested or GetMultiStoreContacts is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'Individuals'. These settings will be taken into account
+		/// when the property Individuals is requested or GetMultiIndividuals is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersStoreContacts(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersIndividuals(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_storeContacts.SortClauses=sortClauses;
-			_storeContacts.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_individuals.SortClauses=sortClauses;
+			_individuals.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
@@ -973,6 +918,99 @@ namespace AW.Data.EntityClasses
 		{
 			_salesOrderHeaders.SortClauses=sortClauses;
 			_salesOrderHeaders.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'StoreContactEntity'</returns>
+		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch)
+		{
+			return GetMultiStoreContacts(forceFetch, _storeContacts.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'StoreContactEntity'</returns>
+		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiStoreContacts(forceFetch, _storeContacts.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiStoreContacts(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.StoreContactCollection GetMultiStoreContacts(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedStoreContacts || forceFetch || _alwaysFetchStoreContacts) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_storeContacts);
+				_storeContacts.SuppressClearInGetMulti=!forceFetch;
+				_storeContacts.EntityFactoryToUse = entityFactoryToUse;
+				_storeContacts.GetMultiManyToOne(this, null, null, filter);
+				_storeContacts.SuppressClearInGetMulti=false;
+				_alreadyFetchedStoreContacts = true;
+			}
+			return _storeContacts;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'StoreContacts'. These settings will be taken into account
+		/// when the property StoreContacts is requested or GetMultiStoreContacts is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersStoreContacts(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_storeContacts.SortClauses=sortClauses;
+			_storeContacts.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeeEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'EmployeeEntity'</returns>
+		public AW.Data.CollectionClasses.EmployeeCollection GetMultiEmployeeCollectionViaEmployee(bool forceFetch)
+		{
+			return GetMultiEmployeeCollectionViaEmployee(forceFetch, _employeeCollectionViaEmployee.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeeEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.EmployeeCollection GetMultiEmployeeCollectionViaEmployee(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedEmployeeCollectionViaEmployee || forceFetch || _alwaysFetchEmployeeCollectionViaEmployee) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_employeeCollectionViaEmployee);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(ContactFields.ContactID, ComparisonOperator.Equal, this.ContactID, "ContactEntity__"));
+				_employeeCollectionViaEmployee.SuppressClearInGetMulti=!forceFetch;
+				_employeeCollectionViaEmployee.EntityFactoryToUse = entityFactoryToUse;
+				_employeeCollectionViaEmployee.GetMulti(filter, GetRelationsForField("EmployeeCollectionViaEmployee"));
+				_employeeCollectionViaEmployee.SuppressClearInGetMulti=false;
+				_alreadyFetchedEmployeeCollectionViaEmployee = true;
+			}
+			return _employeeCollectionViaEmployee;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'EmployeeCollectionViaEmployee'. These settings will be taken into account
+		/// when the property EmployeeCollectionViaEmployee is requested or GetMultiEmployeeCollectionViaEmployee is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersEmployeeCollectionViaEmployee(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_employeeCollectionViaEmployee.SortClauses=sortClauses;
+			_employeeCollectionViaEmployee.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
@@ -1049,6 +1087,44 @@ namespace AW.Data.EntityClasses
 		{
 			_addressCollectionViaSalesOrderHeader_.SortClauses=sortClauses;
 			_addressCollectionViaSalesOrderHeader_.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'ShipMethodEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ShipMethodEntity'</returns>
+		public AW.Data.CollectionClasses.ShipMethodCollection GetMultiShipMethodCollectionViaSalesOrderHeader(bool forceFetch)
+		{
+			return GetMultiShipMethodCollectionViaSalesOrderHeader(forceFetch, _shipMethodCollectionViaSalesOrderHeader.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ShipMethodEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ShipMethodCollection GetMultiShipMethodCollectionViaSalesOrderHeader(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedShipMethodCollectionViaSalesOrderHeader || forceFetch || _alwaysFetchShipMethodCollectionViaSalesOrderHeader) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_shipMethodCollectionViaSalesOrderHeader);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(ContactFields.ContactID, ComparisonOperator.Equal, this.ContactID, "ContactEntity__"));
+				_shipMethodCollectionViaSalesOrderHeader.SuppressClearInGetMulti=!forceFetch;
+				_shipMethodCollectionViaSalesOrderHeader.EntityFactoryToUse = entityFactoryToUse;
+				_shipMethodCollectionViaSalesOrderHeader.GetMulti(filter, GetRelationsForField("ShipMethodCollectionViaSalesOrderHeader"));
+				_shipMethodCollectionViaSalesOrderHeader.SuppressClearInGetMulti=false;
+				_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = true;
+			}
+			return _shipMethodCollectionViaSalesOrderHeader;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'ShipMethodCollectionViaSalesOrderHeader'. These settings will be taken into account
+		/// when the property ShipMethodCollectionViaSalesOrderHeader is requested or GetMultiShipMethodCollectionViaSalesOrderHeader is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersShipMethodCollectionViaSalesOrderHeader(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_shipMethodCollectionViaSalesOrderHeader.SortClauses=sortClauses;
+			_shipMethodCollectionViaSalesOrderHeader.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'CreditCardEntity' using a relation of type 'm:n'.</summary>
@@ -1203,44 +1279,6 @@ namespace AW.Data.EntityClasses
 			_customerViewRelatedCollectionViaSalesOrderHeader__.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves all related entities of type 'EmployeeEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'EmployeeEntity'</returns>
-		public AW.Data.CollectionClasses.EmployeeCollection GetMultiEmployeeCollectionViaEmployee(bool forceFetch)
-		{
-			return GetMultiEmployeeCollectionViaEmployee(forceFetch, _employeeCollectionViaEmployee.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'EmployeeEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.EmployeeCollection GetMultiEmployeeCollectionViaEmployee(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedEmployeeCollectionViaEmployee || forceFetch || _alwaysFetchEmployeeCollectionViaEmployee) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_employeeCollectionViaEmployee);
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(ContactFields.ContactID, ComparisonOperator.Equal, this.ContactID, "ContactEntity__"));
-				_employeeCollectionViaEmployee.SuppressClearInGetMulti=!forceFetch;
-				_employeeCollectionViaEmployee.EntityFactoryToUse = entityFactoryToUse;
-				_employeeCollectionViaEmployee.GetMulti(filter, GetRelationsForField("EmployeeCollectionViaEmployee"));
-				_employeeCollectionViaEmployee.SuppressClearInGetMulti=false;
-				_alreadyFetchedEmployeeCollectionViaEmployee = true;
-			}
-			return _employeeCollectionViaEmployee;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'EmployeeCollectionViaEmployee'. These settings will be taken into account
-		/// when the property EmployeeCollectionViaEmployee is requested or GetMultiEmployeeCollectionViaEmployee is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersEmployeeCollectionViaEmployee(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_employeeCollectionViaEmployee.SortClauses=sortClauses;
-			_employeeCollectionViaEmployee.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
 		/// <summary> Retrieves all related entities of type 'SalesTerritoryEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'SalesTerritoryEntity'</returns>
@@ -1279,62 +1317,24 @@ namespace AW.Data.EntityClasses
 			_salesTerritoryCollectionViaSalesOrderHeader.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves all related entities of type 'ShipMethodEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'ShipMethodEntity'</returns>
-		public AW.Data.CollectionClasses.ShipMethodCollection GetMultiShipMethodCollectionViaSalesOrderHeader(bool forceFetch)
-		{
-			return GetMultiShipMethodCollectionViaSalesOrderHeader(forceFetch, _shipMethodCollectionViaSalesOrderHeader.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'ShipMethodEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.ShipMethodCollection GetMultiShipMethodCollectionViaSalesOrderHeader(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedShipMethodCollectionViaSalesOrderHeader || forceFetch || _alwaysFetchShipMethodCollectionViaSalesOrderHeader) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_shipMethodCollectionViaSalesOrderHeader);
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(ContactFields.ContactID, ComparisonOperator.Equal, this.ContactID, "ContactEntity__"));
-				_shipMethodCollectionViaSalesOrderHeader.SuppressClearInGetMulti=!forceFetch;
-				_shipMethodCollectionViaSalesOrderHeader.EntityFactoryToUse = entityFactoryToUse;
-				_shipMethodCollectionViaSalesOrderHeader.GetMulti(filter, GetRelationsForField("ShipMethodCollectionViaSalesOrderHeader"));
-				_shipMethodCollectionViaSalesOrderHeader.SuppressClearInGetMulti=false;
-				_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = true;
-			}
-			return _shipMethodCollectionViaSalesOrderHeader;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'ShipMethodCollectionViaSalesOrderHeader'. These settings will be taken into account
-		/// when the property ShipMethodCollectionViaSalesOrderHeader is requested or GetMultiShipMethodCollectionViaSalesOrderHeader is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersShipMethodCollectionViaSalesOrderHeader(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_shipMethodCollectionViaSalesOrderHeader.SortClauses=sortClauses;
-			_shipMethodCollectionViaSalesOrderHeader.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
 		/// <summary> Adds the internals to the active context. </summary>
 		protected override void AddInternalsToContext()
 		{
 			_employees.ActiveContext = this.ActiveContext;
-			_individuals.ActiveContext = this.ActiveContext;
 			_vendorContacts.ActiveContext = this.ActiveContext;
 			_contactCreditCards.ActiveContext = this.ActiveContext;
-			_storeContacts.ActiveContext = this.ActiveContext;
+			_individuals.ActiveContext = this.ActiveContext;
 			_salesOrderHeaders.ActiveContext = this.ActiveContext;
+			_storeContacts.ActiveContext = this.ActiveContext;
+			_employeeCollectionViaEmployee.ActiveContext = this.ActiveContext;
 			_addressCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
 			_addressCollectionViaSalesOrderHeader_.ActiveContext = this.ActiveContext;
+			_shipMethodCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
 			_creditCardCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
 			_currencyRateCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
 			_customerCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
 			_customerViewRelatedCollectionViaSalesOrderHeader__.ActiveContext = this.ActiveContext;
-			_employeeCollectionViaEmployee.ActiveContext = this.ActiveContext;
 			_salesTerritoryCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
-			_shipMethodCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
 		}
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
@@ -1343,20 +1343,20 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Employees", _employees);
-			toReturn.Add("Individuals", _individuals);
 			toReturn.Add("VendorContacts", _vendorContacts);
 			toReturn.Add("ContactCreditCards", _contactCreditCards);
-			toReturn.Add("StoreContacts", _storeContacts);
+			toReturn.Add("Individuals", _individuals);
 			toReturn.Add("SalesOrderHeaders", _salesOrderHeaders);
+			toReturn.Add("StoreContacts", _storeContacts);
+			toReturn.Add("EmployeeCollectionViaEmployee", _employeeCollectionViaEmployee);
 			toReturn.Add("AddressCollectionViaSalesOrderHeader", _addressCollectionViaSalesOrderHeader);
 			toReturn.Add("AddressCollectionViaSalesOrderHeader_", _addressCollectionViaSalesOrderHeader_);
+			toReturn.Add("ShipMethodCollectionViaSalesOrderHeader", _shipMethodCollectionViaSalesOrderHeader);
 			toReturn.Add("CreditCardCollectionViaSalesOrderHeader", _creditCardCollectionViaSalesOrderHeader);
 			toReturn.Add("CurrencyRateCollectionViaSalesOrderHeader", _currencyRateCollectionViaSalesOrderHeader);
 			toReturn.Add("CustomerCollectionViaSalesOrderHeader", _customerCollectionViaSalesOrderHeader);
 			toReturn.Add("CustomerViewRelatedCollectionViaSalesOrderHeader__", _customerViewRelatedCollectionViaSalesOrderHeader__);
-			toReturn.Add("EmployeeCollectionViaEmployee", _employeeCollectionViaEmployee);
 			toReturn.Add("SalesTerritoryCollectionViaSalesOrderHeader", _salesTerritoryCollectionViaSalesOrderHeader);
-			toReturn.Add("ShipMethodCollectionViaSalesOrderHeader", _shipMethodCollectionViaSalesOrderHeader);
 			return toReturn;
 		}
 	
@@ -1399,29 +1399,29 @@ namespace AW.Data.EntityClasses
 			_employees = new AW.Data.CollectionClasses.EmployeeCollection();
 			_employees.SetContainingEntityInfo(this, "Contact");
 
-			_individuals = new AW.Data.CollectionClasses.IndividualCollection();
-			_individuals.SetContainingEntityInfo(this, "Contact");
-
 			_vendorContacts = new AW.Data.CollectionClasses.VendorContactCollection();
 			_vendorContacts.SetContainingEntityInfo(this, "Contact");
 
 			_contactCreditCards = new AW.Data.CollectionClasses.ContactCreditCardCollection();
 			_contactCreditCards.SetContainingEntityInfo(this, "Contact");
 
-			_storeContacts = new AW.Data.CollectionClasses.StoreContactCollection();
-			_storeContacts.SetContainingEntityInfo(this, "Contact");
+			_individuals = new AW.Data.CollectionClasses.IndividualCollection();
+			_individuals.SetContainingEntityInfo(this, "Contact");
 
 			_salesOrderHeaders = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
 			_salesOrderHeaders.SetContainingEntityInfo(this, "Contact");
+
+			_storeContacts = new AW.Data.CollectionClasses.StoreContactCollection();
+			_storeContacts.SetContainingEntityInfo(this, "Contact");
+			_employeeCollectionViaEmployee = new AW.Data.CollectionClasses.EmployeeCollection();
 			_addressCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.AddressCollection();
 			_addressCollectionViaSalesOrderHeader_ = new AW.Data.CollectionClasses.AddressCollection();
+			_shipMethodCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.ShipMethodCollection();
 			_creditCardCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.CreditCardCollection();
 			_currencyRateCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.CurrencyRateCollection();
 			_customerCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.CustomerCollection();
 			_customerViewRelatedCollectionViaSalesOrderHeader__ = new AW.Data.CollectionClasses.CustomerViewRelatedCollection();
-			_employeeCollectionViaEmployee = new AW.Data.CollectionClasses.EmployeeCollection();
 			_salesTerritoryCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.SalesTerritoryCollection();
-			_shipMethodCollectionViaSalesOrderHeader = new AW.Data.CollectionClasses.ShipMethodCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -1527,13 +1527,6 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(), (IEntityRelation)GetRelationsForField("Employees")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Employees", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Individual' for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathIndividuals
-		{
-			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.IndividualCollection(), (IEntityRelation)GetRelationsForField("Individuals")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.IndividualEntity, 0, null, null, null, "Individuals", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
-		}
-
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'VendorContact' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathVendorContacts
@@ -1548,11 +1541,11 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCreditCardCollection(), (IEntityRelation)GetRelationsForField("ContactCreditCards")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.ContactCreditCardEntity, 0, null, null, null, "ContactCreditCards", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'StoreContact' for this entity.</summary>
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Individual' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathStoreContacts
+		public static IPrefetchPathElement PrefetchPathIndividuals
 		{
-			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.StoreContactCollection(), (IEntityRelation)GetRelationsForField("StoreContacts")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.StoreContactEntity, 0, null, null, null, "StoreContacts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.IndividualCollection(), (IEntityRelation)GetRelationsForField("Individuals")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.IndividualEntity, 0, null, null, null, "Individuals", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHeader' for this entity.</summary>
@@ -1560,6 +1553,25 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathSalesOrderHeaders
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderCollection(), (IEntityRelation)GetRelationsForField("SalesOrderHeaders")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, null, "SalesOrderHeaders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'StoreContact' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathStoreContacts
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.StoreContactCollection(), (IEntityRelation)GetRelationsForField("StoreContacts")[0], (int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.StoreContactEntity, 0, null, null, null, "StoreContacts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Employee'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathEmployeeCollectionViaEmployee
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.EmployeeEntityUsingContactID;
+				intermediateRelation.SetAliases(string.Empty, "Employee_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(), intermediateRelation,	(int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, GetRelationsForField("EmployeeCollectionViaEmployee"), "EmployeeCollectionViaEmployee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address'  for this entity.</summary>
@@ -1583,6 +1595,18 @@ namespace AW.Data.EntityClasses
 				IEntityRelation intermediateRelation = Relations.SalesOrderHeaderEntityUsingContactID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,	(int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaSalesOrderHeader_"), "AddressCollectionViaSalesOrderHeader_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ShipMethod'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathShipMethodCollectionViaSalesOrderHeader
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.SalesOrderHeaderEntityUsingContactID;
+				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ShipMethodCollection(), intermediateRelation,	(int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.ShipMethodEntity, 0, null, null, GetRelationsForField("ShipMethodCollectionViaSalesOrderHeader"), "ShipMethodCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -1634,18 +1658,6 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Employee'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathEmployeeCollectionViaEmployee
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = Relations.EmployeeEntityUsingContactID;
-				intermediateRelation.SetAliases(string.Empty, "Employee_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(), intermediateRelation,	(int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, GetRelationsForField("EmployeeCollectionViaEmployee"), "EmployeeCollectionViaEmployee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
-
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesTerritory'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathSalesTerritoryCollectionViaSalesOrderHeader
@@ -1655,18 +1667,6 @@ namespace AW.Data.EntityClasses
 				IEntityRelation intermediateRelation = Relations.SalesOrderHeaderEntityUsingContactID;
 				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryCollection(), intermediateRelation,	(int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.SalesTerritoryEntity, 0, null, null, GetRelationsForField("SalesTerritoryCollectionViaSalesOrderHeader"), "SalesTerritoryCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ShipMethod'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathShipMethodCollectionViaSalesOrderHeader
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = Relations.SalesOrderHeaderEntityUsingContactID;
-				intermediateRelation.SetAliases(string.Empty, "SalesOrderHeader_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.ShipMethodCollection(), intermediateRelation,	(int)AW.Data.EntityType.ContactEntity, (int)AW.Data.EntityType.ShipMethodEntity, 0, null, null, GetRelationsForField("ShipMethodCollectionViaSalesOrderHeader"), "ShipMethodCollectionViaSalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -1883,39 +1883,6 @@ namespace AW.Data.EntityClasses
 				_alreadyFetchedEmployees = value;
 			}
 		}
-		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiIndividuals()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.IndividualCollection Individuals
-		{
-			get	{ return GetMultiIndividuals(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for Individuals. When set to true, Individuals is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time Individuals is accessed. You can always execute/ a forced fetch by calling GetMultiIndividuals(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchIndividuals
-		{
-			get	{ return _alwaysFetchIndividuals; }
-			set	{ _alwaysFetchIndividuals = value; }	
-		}		
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property Individuals already has been fetched. Setting this property to false when Individuals has been fetched
-		/// will clear the Individuals collection well. Setting this property to true while Individuals hasn't been fetched disables lazy loading for Individuals</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedIndividuals
-		{
-			get { return _alreadyFetchedIndividuals;}
-			set 
-			{
-				if(_alreadyFetchedIndividuals && !value && (_individuals != null))
-				{
-					_individuals.Clear();
-				}
-				_alreadyFetchedIndividuals = value;
-			}
-		}
 		/// <summary> Retrieves all related entities of type 'VendorContactEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiVendorContacts()', because 
@@ -1982,37 +1949,37 @@ namespace AW.Data.EntityClasses
 				_alreadyFetchedContactCreditCards = value;
 			}
 		}
-		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.<br/><br/>
+		/// <summary> Retrieves all related entities of type 'IndividualEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiStoreContacts()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiIndividuals()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.StoreContactCollection StoreContacts
+		public virtual AW.Data.CollectionClasses.IndividualCollection Individuals
 		{
-			get	{ return GetMultiStoreContacts(false); }
+			get	{ return GetMultiIndividuals(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for StoreContacts. When set to true, StoreContacts is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time StoreContacts is accessed. You can always execute/ a forced fetch by calling GetMultiStoreContacts(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for Individuals. When set to true, Individuals is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Individuals is accessed. You can always execute/ a forced fetch by calling GetMultiIndividuals(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchStoreContacts
+		public bool AlwaysFetchIndividuals
 		{
-			get	{ return _alwaysFetchStoreContacts; }
-			set	{ _alwaysFetchStoreContacts = value; }	
+			get	{ return _alwaysFetchIndividuals; }
+			set	{ _alwaysFetchIndividuals = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property StoreContacts already has been fetched. Setting this property to false when StoreContacts has been fetched
-		/// will clear the StoreContacts collection well. Setting this property to true while StoreContacts hasn't been fetched disables lazy loading for StoreContacts</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property Individuals already has been fetched. Setting this property to false when Individuals has been fetched
+		/// will clear the Individuals collection well. Setting this property to true while Individuals hasn't been fetched disables lazy loading for Individuals</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedStoreContacts
+		public bool AlreadyFetchedIndividuals
 		{
-			get { return _alreadyFetchedStoreContacts;}
+			get { return _alreadyFetchedIndividuals;}
 			set 
 			{
-				if(_alreadyFetchedStoreContacts && !value && (_storeContacts != null))
+				if(_alreadyFetchedIndividuals && !value && (_individuals != null))
 				{
-					_storeContacts.Clear();
+					_individuals.Clear();
 				}
-				_alreadyFetchedStoreContacts = value;
+				_alreadyFetchedIndividuals = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.<br/><br/>
@@ -2046,6 +2013,73 @@ namespace AW.Data.EntityClasses
 					_salesOrderHeaders.Clear();
 				}
 				_alreadyFetchedSalesOrderHeaders = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'StoreContactEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiStoreContacts()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.StoreContactCollection StoreContacts
+		{
+			get	{ return GetMultiStoreContacts(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for StoreContacts. When set to true, StoreContacts is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time StoreContacts is accessed. You can always execute/ a forced fetch by calling GetMultiStoreContacts(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchStoreContacts
+		{
+			get	{ return _alwaysFetchStoreContacts; }
+			set	{ _alwaysFetchStoreContacts = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property StoreContacts already has been fetched. Setting this property to false when StoreContacts has been fetched
+		/// will clear the StoreContacts collection well. Setting this property to true while StoreContacts hasn't been fetched disables lazy loading for StoreContacts</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedStoreContacts
+		{
+			get { return _alreadyFetchedStoreContacts;}
+			set 
+			{
+				if(_alreadyFetchedStoreContacts && !value && (_storeContacts != null))
+				{
+					_storeContacts.Clear();
+				}
+				_alreadyFetchedStoreContacts = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'EmployeeEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiEmployeeCollectionViaEmployee()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.EmployeeCollection EmployeeCollectionViaEmployee
+		{
+			get { return GetMultiEmployeeCollectionViaEmployee(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for EmployeeCollectionViaEmployee. When set to true, EmployeeCollectionViaEmployee is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time EmployeeCollectionViaEmployee is accessed. You can always execute a forced fetch by calling GetMultiEmployeeCollectionViaEmployee(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchEmployeeCollectionViaEmployee
+		{
+			get	{ return _alwaysFetchEmployeeCollectionViaEmployee; }
+			set	{ _alwaysFetchEmployeeCollectionViaEmployee = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property EmployeeCollectionViaEmployee already has been fetched. Setting this property to false when EmployeeCollectionViaEmployee has been fetched
+		/// will clear the EmployeeCollectionViaEmployee collection well. Setting this property to true while EmployeeCollectionViaEmployee hasn't been fetched disables lazy loading for EmployeeCollectionViaEmployee</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedEmployeeCollectionViaEmployee
+		{
+			get { return _alreadyFetchedEmployeeCollectionViaEmployee;}
+			set 
+			{
+				if(_alreadyFetchedEmployeeCollectionViaEmployee && !value && (_employeeCollectionViaEmployee != null))
+				{
+					_employeeCollectionViaEmployee.Clear();
+				}
+				_alreadyFetchedEmployeeCollectionViaEmployee = value;
 			}
 		}
 
@@ -2114,6 +2148,40 @@ namespace AW.Data.EntityClasses
 					_addressCollectionViaSalesOrderHeader_.Clear();
 				}
 				_alreadyFetchedAddressCollectionViaSalesOrderHeader_ = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'ShipMethodEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiShipMethodCollectionViaSalesOrderHeader()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ShipMethodCollection ShipMethodCollectionViaSalesOrderHeader
+		{
+			get { return GetMultiShipMethodCollectionViaSalesOrderHeader(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for ShipMethodCollectionViaSalesOrderHeader. When set to true, ShipMethodCollectionViaSalesOrderHeader is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ShipMethodCollectionViaSalesOrderHeader is accessed. You can always execute a forced fetch by calling GetMultiShipMethodCollectionViaSalesOrderHeader(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchShipMethodCollectionViaSalesOrderHeader
+		{
+			get	{ return _alwaysFetchShipMethodCollectionViaSalesOrderHeader; }
+			set	{ _alwaysFetchShipMethodCollectionViaSalesOrderHeader = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property ShipMethodCollectionViaSalesOrderHeader already has been fetched. Setting this property to false when ShipMethodCollectionViaSalesOrderHeader has been fetched
+		/// will clear the ShipMethodCollectionViaSalesOrderHeader collection well. Setting this property to true while ShipMethodCollectionViaSalesOrderHeader hasn't been fetched disables lazy loading for ShipMethodCollectionViaSalesOrderHeader</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedShipMethodCollectionViaSalesOrderHeader
+		{
+			get { return _alreadyFetchedShipMethodCollectionViaSalesOrderHeader;}
+			set 
+			{
+				if(_alreadyFetchedShipMethodCollectionViaSalesOrderHeader && !value && (_shipMethodCollectionViaSalesOrderHeader != null))
+				{
+					_shipMethodCollectionViaSalesOrderHeader.Clear();
+				}
+				_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = value;
 			}
 		}
 
@@ -2253,40 +2321,6 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Retrieves all related entities of type 'EmployeeEntity' using a relation of type 'm:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiEmployeeCollectionViaEmployee()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.EmployeeCollection EmployeeCollectionViaEmployee
-		{
-			get { return GetMultiEmployeeCollectionViaEmployee(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for EmployeeCollectionViaEmployee. When set to true, EmployeeCollectionViaEmployee is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time EmployeeCollectionViaEmployee is accessed. You can always execute a forced fetch by calling GetMultiEmployeeCollectionViaEmployee(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchEmployeeCollectionViaEmployee
-		{
-			get	{ return _alwaysFetchEmployeeCollectionViaEmployee; }
-			set	{ _alwaysFetchEmployeeCollectionViaEmployee = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property EmployeeCollectionViaEmployee already has been fetched. Setting this property to false when EmployeeCollectionViaEmployee has been fetched
-		/// will clear the EmployeeCollectionViaEmployee collection well. Setting this property to true while EmployeeCollectionViaEmployee hasn't been fetched disables lazy loading for EmployeeCollectionViaEmployee</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedEmployeeCollectionViaEmployee
-		{
-			get { return _alreadyFetchedEmployeeCollectionViaEmployee;}
-			set 
-			{
-				if(_alreadyFetchedEmployeeCollectionViaEmployee && !value && (_employeeCollectionViaEmployee != null))
-				{
-					_employeeCollectionViaEmployee.Clear();
-				}
-				_alreadyFetchedEmployeeCollectionViaEmployee = value;
-			}
-		}
-
 		/// <summary> Retrieves all related entities of type 'SalesTerritoryEntity' using a relation of type 'm:n'.<br/><br/>
 		/// </summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesTerritoryCollectionViaSalesOrderHeader()', because 
@@ -2318,40 +2352,6 @@ namespace AW.Data.EntityClasses
 					_salesTerritoryCollectionViaSalesOrderHeader.Clear();
 				}
 				_alreadyFetchedSalesTerritoryCollectionViaSalesOrderHeader = value;
-			}
-		}
-
-		/// <summary> Retrieves all related entities of type 'ShipMethodEntity' using a relation of type 'm:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiShipMethodCollectionViaSalesOrderHeader()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.ShipMethodCollection ShipMethodCollectionViaSalesOrderHeader
-		{
-			get { return GetMultiShipMethodCollectionViaSalesOrderHeader(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for ShipMethodCollectionViaSalesOrderHeader. When set to true, ShipMethodCollectionViaSalesOrderHeader is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time ShipMethodCollectionViaSalesOrderHeader is accessed. You can always execute a forced fetch by calling GetMultiShipMethodCollectionViaSalesOrderHeader(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchShipMethodCollectionViaSalesOrderHeader
-		{
-			get	{ return _alwaysFetchShipMethodCollectionViaSalesOrderHeader; }
-			set	{ _alwaysFetchShipMethodCollectionViaSalesOrderHeader = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property ShipMethodCollectionViaSalesOrderHeader already has been fetched. Setting this property to false when ShipMethodCollectionViaSalesOrderHeader has been fetched
-		/// will clear the ShipMethodCollectionViaSalesOrderHeader collection well. Setting this property to true while ShipMethodCollectionViaSalesOrderHeader hasn't been fetched disables lazy loading for ShipMethodCollectionViaSalesOrderHeader</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedShipMethodCollectionViaSalesOrderHeader
-		{
-			get { return _alreadyFetchedShipMethodCollectionViaSalesOrderHeader;}
-			set 
-			{
-				if(_alreadyFetchedShipMethodCollectionViaSalesOrderHeader && !value && (_shipMethodCollectionViaSalesOrderHeader != null))
-				{
-					_shipMethodCollectionViaSalesOrderHeader.Clear();
-				}
-				_alreadyFetchedShipMethodCollectionViaSalesOrderHeader = value;
 			}
 		}
 

@@ -30,8 +30,8 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.AddressEntityUsingAddressID);
 			toReturn.Add(this.EmployeeEntityUsingEmployeeID);
+			toReturn.Add(this.AddressEntityUsingAddressID);
 			return toReturn;
 		}
 
@@ -39,20 +39,6 @@ namespace AW.Data.RelationClasses
 
 
 
-		/// <summary>Returns a new IEntityRelation object, between EmployeeAddressEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
-		/// EmployeeAddress.AddressID - Address.AddressID
-		/// </summary>
-		public virtual IEntityRelation AddressEntityUsingAddressID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
-				relation.AddEntityFieldPair(AddressFields.AddressID, EmployeeAddressFields.AddressID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeAddressEntity", true);
-				return relation;
-			}
-		}
 		/// <summary>Returns a new IEntityRelation object, between EmployeeAddressEntity and EmployeeEntity over the m:1 relation they have, using the relation between the fields:
 		/// EmployeeAddress.EmployeeID - Employee.EmployeeID
 		/// </summary>
@@ -63,6 +49,20 @@ namespace AW.Data.RelationClasses
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Employee", false);
 				relation.AddEntityFieldPair(EmployeeFields.EmployeeID, EmployeeAddressFields.EmployeeID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeAddressEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between EmployeeAddressEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
+		/// EmployeeAddress.AddressID - Address.AddressID
+		/// </summary>
+		public virtual IEntityRelation AddressEntityUsingAddressID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
+				relation.AddEntityFieldPair(AddressFields.AddressID, EmployeeAddressFields.AddressID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeAddressEntity", true);
 				return relation;
 			}

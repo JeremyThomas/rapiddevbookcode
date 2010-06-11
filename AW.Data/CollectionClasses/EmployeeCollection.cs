@@ -60,53 +60,53 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="managerInstance">EmployeeEntity instance to use as a filter for the EmployeeEntity objects to return</param>
+		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity contactInstance, IEntity managerInstance)
+		public bool GetMultiManyToOne(IEntity managerInstance, IEntity contactInstance)
 		{
-			return GetMultiManyToOne(contactInstance, managerInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(managerInstance, contactInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="managerInstance">EmployeeEntity instance to use as a filter for the EmployeeEntity objects to return</param>
+		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity contactInstance, IEntity managerInstance, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity managerInstance, IEntity contactInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(contactInstance, managerInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(managerInstance, contactInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="managerInstance">EmployeeEntity instance to use as a filter for the EmployeeEntity objects to return</param>
+		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity contactInstance, IEntity managerInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity managerInstance, IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(contactInstance, managerInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
+			return GetMultiManyToOne(managerInstance, contactInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="managerInstance">EmployeeEntity instance to use as a filter for the EmployeeEntity objects to return</param>
+		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToOne(IEntity contactInstance, IEntity managerInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToOne(IEntity managerInstance, IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
 		{
 			bool validParameters = false;
-			validParameters |= (contactInstance!=null);
 			validParameters |= (managerInstance!=null);
+			validParameters |= (contactInstance!=null);
 			if(!validParameters)
 			{
 				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
@@ -115,28 +115,28 @@ namespace AW.Data.CollectionClasses
 			{
 				this.Clear();
 			}
-			return DAOFactory.CreateEmployeeDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, contactInstance, managerInstance, pageNumber, pageSize);
+			return DAOFactory.CreateEmployeeDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, managerInstance, contactInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all Employee entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
 		/// <remarks>Runs directly on the persistent storage. It will not delete entity objects from the current collection.</remarks>
-		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="managerInstance">EmployeeEntity instance to use as a filter for the EmployeeEntity objects to return</param>
+		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMultiManyToOne(IEntity contactInstance, IEntity managerInstance)
+		public int DeleteMultiManyToOne(IEntity managerInstance, IEntity contactInstance)
 		{
-			return DAOFactory.CreateEmployeeDAO().DeleteMulti(this.Transaction, contactInstance, managerInstance);
+			return DAOFactory.CreateEmployeeDAO().DeleteMulti(this.Transaction, managerInstance, contactInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all Employee entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
 		/// Which fields are updated in those matching entities depends on which fields are <i>changed</i> in the passed in entity entityWithNewValues. The new values of these fields are read from entityWithNewValues. </summary>
 		/// <param name="entityWithNewValues">EmployeeEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
-		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <param name="managerInstance">EmployeeEntity instance to use as a filter for the EmployeeEntity objects to return</param>
+		/// <param name="contactInstance">ContactEntity instance to use as a filter for the EmployeeEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMultiManyToOne(EmployeeEntity entityWithNewValues, IEntity contactInstance, IEntity managerInstance)
+		public int UpdateMultiManyToOne(EmployeeEntity entityWithNewValues, IEntity managerInstance, IEntity contactInstance)
 		{
-			return DAOFactory.CreateEmployeeDAO().UpdateMulti(entityWithNewValues, this.Transaction, contactInstance, managerInstance);
+			return DAOFactory.CreateEmployeeDAO().UpdateMulti(entityWithNewValues, this.Transaction, managerInstance, contactInstance);
 		}
 
 		/// <summary> Retrieves in this EmployeeCollection object all EmployeeEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
