@@ -30,10 +30,17 @@ namespace AW.Data.DaoClasses
 	public partial class EmployeeDAO : CommonDaoBase
 	{
 		/// <summary>CTor</summary>
-		public EmployeeDAO() : base(InheritanceHierarchyType.None, "EmployeeEntity", new EmployeeEntityFactory())
+		public EmployeeDAO() : base(InheritanceHierarchyType.TargetPerEntity, "EmployeeEntity", new EmployeeEntityFactory())
 		{
 		}
 
+		/// <summary>Inheritance ctor</summary>
+		/// <param name="typeOfInheritance">Type of inheritance the entity which owns this Dao is in.</param>
+		/// <param name="entityName">Name of the entity owning this Dao</param>
+		/// <param name="entityFactory">Entity factory for the entity owning this Dao.</param>
+		protected EmployeeDAO(InheritanceHierarchyType typeOfInheritance, string entityName, IEntityFactory entityFactory) : base(typeOfInheritance, entityName, entityFactory)
+		{
+		}
 
 
 		/// <summary>Retrieves in the calling EmployeeCollection object all EmployeeEntity objects which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter. </summary>

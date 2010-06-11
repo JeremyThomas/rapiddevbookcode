@@ -499,12 +499,12 @@ namespace AW.Data.EntityClasses
 			if( ( !_alreadyFetchedCustomer || forceFetch || _alwaysFetchCustomer) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
 			{
 				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.CustomerEntityUsingCustomerID);
-				CustomerEntity newEntity = new CustomerEntity();
+				CustomerEntity newEntity = (CustomerEntity)GeneralEntityFactory.Create(AW.Data.EntityType.CustomerEntity);
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					AddToTransactionIfNecessary(newEntity);
-					fetchResult = newEntity.FetchUsingPK(this.CustomerID);
+					newEntity = CustomerEntity.FetchPolymorphic(this.Transaction, this.CustomerID, this.ActiveContext);
+					fetchResult = (newEntity.Fields.State==EntityState.Fetched);
 				}
 				if(fetchResult)
 				{

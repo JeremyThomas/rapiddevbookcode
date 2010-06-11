@@ -241,9 +241,9 @@ namespace AW.Data.Queries
     ///WHERE  (((([lpa_l1].[customerid] > @CustomerID1))))</remarks>
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListLinqedTypedList(int maxNumberOfItemsToReturn)
     {
-      var customers = MetaSingletons.MetaData.Customer.AsQueryable();
-      customers = customers.Where(c => c.CustomerID > 10);
-      return CustomerListLinqedTypedList.GetCustomerListQuery(customers).Distinct().Take(maxNumberOfItemsToReturn);
+			var individuals = MetaSingletons.MetaData.Individual.AsQueryable();
+			individuals = individuals.Where(c => c.CustomerID > 10);
+			return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).Distinct().Take(maxNumberOfItemsToReturn);
     }
 
     /// <summary>
@@ -284,24 +284,24 @@ namespace AW.Data.Queries
     ///          ON [LPA_L8].[COUNTRYREGIONCODE] = [LPA_L7].[COUNTRYREGIONCODE])</remarks>
     public static IQueryable GetCustomerListAnonymousLinq(int maxNumberOfItemsToReturn)
     {
-      var customerlist = from customer in MetaSingletons.MetaData.Customer
-                         from customerAddress in customer.CustomerAddresses
+			var customerlist = from individual in MetaSingletons.MetaData.Individual
+												 from customerAddress in individual.CustomerAddresses
                          select new
                                   {
                                     customerAddress.Address.AddressLine1,
                                     customerAddress.Address.AddressLine2,
                                     customerAddress.Address.City,
                                     AddressType = customerAddress.AddressType.Name,
-                                    customer.Individual.Contact.Title,
-                                    customer.Individual.Contact.FirstName,
-                                    customer.Individual.Contact.MiddleName,
-                                    customer.Individual.Contact.LastName,
-                                    customer.Individual.Contact.Suffix,
-                                    customer.Individual.Contact.EmailAddress,
-                                    customer.Individual.Contact.EmailPromotion,
+                                    individual.Contact.Title,
+                                    individual.Contact.FirstName,
+                                    individual.Contact.MiddleName,
+                                    individual.Contact.LastName,
+                                    individual.Contact.Suffix,
+                                    individual.Contact.EmailAddress,
+                                    individual.Contact.EmailPromotion,
                                     CountryRegionName = customerAddress.Address.StateProvince.CountryRegion.Name,
                                     StateProvinceName = customerAddress.Address.StateProvince.Name,
-                                    customer.CustomerID
+																		individual.CustomerID
                                   };
       return customerlist.Distinct().Take(maxNumberOfItemsToReturn);
     }

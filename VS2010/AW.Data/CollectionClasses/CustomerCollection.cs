@@ -748,6 +748,22 @@ namespace AW.Data.CollectionClasses
 		}
 
 
+		/// <summary> Deletes from the persistent storage all Customer entities which match with the specified filter, formulated in the predicate or predicate expression definition.</summary>
+		/// <param name="deleteFilter">A predicate or predicate expression which should be used as filter for the entities to delete. Can be null, which will result in a query removing all Customer entities from the persistent storage</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public override int DeleteMulti(IPredicate deleteFilter)
+		{
+			throw new NotSupportedException("This method isn't supported for this entity");
+		}
+
+		/// <summary> Deletes from the persistent storage all Customer entities which match with the specified filter, formulated in the predicate or predicate expression definition.</summary>
+		/// <param name="deleteFilter">A predicate or predicate expression which should be used as filter for the entities to delete.</param>
+		/// <param name="relations">The set of relations to walk to construct the total query.</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public override int DeleteMulti(IPredicate deleteFilter, IRelationCollection relations)
+		{
+			throw new NotSupportedException("This method isn't supported for this entity");
+		}
 		
 		/// <summary> Gets a scalar value, calculated with the aggregate. the field index specified is the field the aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>

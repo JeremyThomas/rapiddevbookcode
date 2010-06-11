@@ -185,7 +185,7 @@ selectFilter.Add(new FieldCompareValuePredicate(specialOfferProductInstance.Fiel
 			}
 			if(salesPersonInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.SalesPersonID], ComparisonOperator.Equal, ((SalesPersonEntity)salesPersonInstance).SalesPersonID));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)SalesOrderHeaderFieldIndex.SalesPersonID], ComparisonOperator.Equal, ((SalesPersonEntity)salesPersonInstance).EmployeeID));
 			}
 			if(salesTerritoryInstance != null)
 			{

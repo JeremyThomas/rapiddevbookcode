@@ -2187,25 +2187,50 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity IndividualEntity</summary>
 	public partial class IndividualFields
 	{
-		/// <summary>Creates a new IndividualEntity.ContactID field instance</summary>
-		public static EntityField ContactID
+		/// <summary>Creates a new IndividualEntity.AccountNumber field instance</summary>
+		public static EntityField AccountNumber
 		{
-			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.ContactID);}
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.AccountNumber);}
+		}
+		/// <summary>Creates a new IndividualEntity.CustomerID field instance</summary>
+		public static EntityField CustomerID_Customer
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.CustomerID_Customer);}
+		}
+		/// <summary>Creates a new IndividualEntity.CustomerType field instance</summary>
+		public static EntityField CustomerType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.CustomerType);}
+		}
+		/// <summary>Creates a new IndividualEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new IndividualEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new IndividualEntity.TerritoryID field instance</summary>
+		public static EntityField TerritoryID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.TerritoryID);}
 		}
 		/// <summary>Creates a new IndividualEntity.CustomerID field instance</summary>
 		public static EntityField CustomerID
 		{
 			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.CustomerID);}
 		}
+		/// <summary>Creates a new IndividualEntity.ContactID field instance</summary>
+		public static EntityField ContactID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.ContactID);}
+		}
 		/// <summary>Creates a new IndividualEntity.Demographics field instance</summary>
 		public static EntityField Demographics
 		{
 			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.Demographics);}
-		}
-		/// <summary>Creates a new IndividualEntity.ModifiedDate field instance</summary>
-		public static EntityField ModifiedDate
-		{
-			get { return (EntityField)EntityFieldFactory.Create(IndividualFieldIndex.ModifiedDate);}
 		}
 	}
 
@@ -2432,6 +2457,91 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity SalesPersonEntity</summary>
 	public partial class SalesPersonFields
 	{
+		/// <summary>Creates a new SalesPersonEntity.BirthDate field instance</summary>
+		public static EntityField BirthDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.BirthDate);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.ContactID field instance</summary>
+		public static EntityField ContactID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.ContactID);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.CurrentFlag field instance</summary>
+		public static EntityField CurrentFlag
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.CurrentFlag);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.EmployeeID field instance</summary>
+		public static EntityField EmployeeID_Employee
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.EmployeeID_Employee);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.Gender field instance</summary>
+		public static EntityField Gender
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.Gender);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.HireDate field instance</summary>
+		public static EntityField HireDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.HireDate);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.LoginID field instance</summary>
+		public static EntityField LoginID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.LoginID);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.ManagerID field instance</summary>
+		public static EntityField ManagerID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.ManagerID);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.MaritalStatus field instance</summary>
+		public static EntityField MaritalStatus
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.MaritalStatus);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.NationalIdnumber field instance</summary>
+		public static EntityField NationalIdnumber
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.NationalIdnumber);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.SalariedFlag field instance</summary>
+		public static EntityField SalariedFlag
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SalariedFlag);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.SickLeaveHours field instance</summary>
+		public static EntityField SickLeaveHours
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SickLeaveHours);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.Title field instance</summary>
+		public static EntityField Title
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.Title);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.VacationHours field instance</summary>
+		public static EntityField VacationHours
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.VacationHours);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.EmployeeID field instance</summary>
+		public static EntityField EmployeeID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.EmployeeID);}
+		}
 		/// <summary>Creates a new SalesPersonEntity.Bonus field instance</summary>
 		public static EntityField Bonus
 		{
@@ -2442,25 +2552,10 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.CommissionPct);}
 		}
-		/// <summary>Creates a new SalesPersonEntity.ModifiedDate field instance</summary>
-		public static EntityField ModifiedDate
-		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.ModifiedDate);}
-		}
-		/// <summary>Creates a new SalesPersonEntity.Rowguid field instance</summary>
-		public static EntityField Rowguid
-		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.Rowguid);}
-		}
 		/// <summary>Creates a new SalesPersonEntity.SalesLastYear field instance</summary>
 		public static EntityField SalesLastYear
 		{
 			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SalesLastYear);}
-		}
-		/// <summary>Creates a new SalesPersonEntity.SalesPersonID field instance</summary>
-		public static EntityField SalesPersonID
-		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SalesPersonID);}
 		}
 		/// <summary>Creates a new SalesPersonEntity.SalesQuota field instance</summary>
 		public static EntityField SalesQuota
@@ -2787,6 +2882,36 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for entity StoreEntity</summary>
 	public partial class StoreFields
 	{
+		/// <summary>Creates a new StoreEntity.AccountNumber field instance</summary>
+		public static EntityField AccountNumber
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.AccountNumber);}
+		}
+		/// <summary>Creates a new StoreEntity.CustomerID field instance</summary>
+		public static EntityField CustomerID_Customer
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.CustomerID_Customer);}
+		}
+		/// <summary>Creates a new StoreEntity.CustomerType field instance</summary>
+		public static EntityField CustomerType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.CustomerType);}
+		}
+		/// <summary>Creates a new StoreEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new StoreEntity.Rowguid field instance</summary>
+		public static EntityField Rowguid
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.Rowguid);}
+		}
+		/// <summary>Creates a new StoreEntity.TerritoryID field instance</summary>
+		public static EntityField TerritoryID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.TerritoryID);}
+		}
 		/// <summary>Creates a new StoreEntity.CustomerID field instance</summary>
 		public static EntityField CustomerID
 		{
@@ -2797,20 +2922,10 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.Demographics);}
 		}
-		/// <summary>Creates a new StoreEntity.ModifiedDate field instance</summary>
-		public static EntityField ModifiedDate
-		{
-			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.ModifiedDate);}
-		}
 		/// <summary>Creates a new StoreEntity.Name field instance</summary>
 		public static EntityField Name
 		{
 			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.Name);}
-		}
-		/// <summary>Creates a new StoreEntity.Rowguid field instance</summary>
-		public static EntityField Rowguid
-		{
-			get { return (EntityField)EntityFieldFactory.Create(StoreFieldIndex.Rowguid);}
 		}
 		/// <summary>Creates a new StoreEntity.SalesPersonID field instance</summary>
 		public static EntityField SalesPersonID

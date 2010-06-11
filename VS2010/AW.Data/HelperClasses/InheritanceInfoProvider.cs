@@ -54,6 +54,11 @@ namespace AW.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
+			this.AddEntityInfo("EmployeeEntity", string.Empty, new EmployeeRelations(), new EmployeeEntityFactory());
+			this.AddEntityInfo("CustomerEntity", string.Empty, new CustomerRelations(), new CustomerEntityFactory());
+			this.AddEntityInfo("IndividualEntity", "CustomerEntity", new IndividualRelations(), new IndividualEntityFactory(), 1-1);
+			this.AddEntityInfo("SalesPersonEntity", "EmployeeEntity", new SalesPersonRelations(), new SalesPersonEntityFactory(), 1-1);
+			this.AddEntityInfo("StoreEntity", "CustomerEntity", new StoreRelations(), new StoreEntityFactory(), 1-1);
 			base.BuildHierarchyInfoStore();
 		}
 
