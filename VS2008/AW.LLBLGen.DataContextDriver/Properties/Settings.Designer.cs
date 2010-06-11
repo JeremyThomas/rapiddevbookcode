@@ -68,5 +68,65 @@ namespace AW.LLBLGen.DataContextDriver.Properties {
                 this["DefaultDataAccessAdapterFactoryType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultLinqMetaData {
+            get {
+                return ((string)(this["DefaultLinqMetaData"]));
+            }
+            set {
+                this["DefaultLinqMetaData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultLinqMetaDataAssembly {
+            get {
+                return ((string)(this["DefaultLinqMetaDataAssembly"]));
+            }
+            set {
+                this["DefaultLinqMetaDataAssembly"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultApplicationConfig {
+            get {
+                return ((string)(this["DefaultApplicationConfig"]));
+            }
+            set {
+                this["DefaultApplicationConfig"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultDataAccessAdapterFactoryAssembly {
+            get {
+                return ((string)(this["DefaultDataAccessAdapterFactoryAssembly"]));
+            }
+            set {
+                this["DefaultDataAccessAdapterFactoryAssembly"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultDatabaseConnection {
+            get {
+                return ((string)(this["DefaultDatabaseConnection"]));
+            }
+            set {
+                this["DefaultDatabaseConnection"] = value;
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@
   <Properties>
     <Abbreviations>
       <Abbreviation Name="id" Value="ID" />
+      <Abbreviation Name="Qty" Value="Quantity" />
     </Abbreviations>
     <Property Name="AdditionalTaskPerformerFolder" Value="" />
     <Property Name="AdditionalTasksFolder" Value="" />
@@ -39,7 +40,7 @@
     <Property Name="PreferNaturalCharacterTypes" Value="true" />
     <Property Name="PreferVariableLengthTypes" Value="true" />
     <Property Name="ProjectCreator" Value="Jeremy" />
-    <Property Name="ProjectName" Value="AW.Data.Plural" />
+    <Property Name="ProjectName" Value="AW.Data" />
     <Property Name="RelationalModelDataElementNameCasingCaseSensitiveDBs" Value="3" />
     <Property Name="RelationshipsFollowDBForeignKeyConstraints" Value="0" />
     <Property Name="RemoveUnderscoresFromElementName" Value="true" />
@@ -66,7 +67,7 @@
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
         <PlatformName Value=".NET 3.5" />
-        <PresetName Value="SD.Presets.SelfServicing.TwoClasses2008" />
+        <PresetName Value="SD.Presets.SelfServicing.General2008" />
         <RootNamespace Value="AW.Data" />
         <TemplateGroup Value="SelfServicing" />
         <TemplateBindings>
