@@ -118,32 +118,41 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					{
 						var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
 						DataAccessAdapterBase adapter;
-						if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
+
+						if (typeof(DataAccessAdapterBase).IsAssignableFrom(dataAccessAdapterType))
 						{
-							adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
-						}
-						else
-						{
-							if (cxInfo.DatabaseInfo.IsSqlServer)
-								adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-								                                                          	{
-								                                                          		cxInfo.DatabaseInfo.CustomCxString,
-								                                                          		true, CatalogNameUsage.Clear, null
-								                                                          	}) as DataAccessAdapterBase;
+							if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
+							{
+								adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
+							}
 							else
 							{
-								if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
+								if (cxInfo.DatabaseInfo.IsSqlServer)
 									adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
 									                                                          	{
 									                                                          		cxInfo.DatabaseInfo.CustomCxString,
-									                                                          		true, SchemaNameUsage.Default, null
+									                                                          		true, CatalogNameUsage.Clear, null
 									                                                          	}) as DataAccessAdapterBase;
 								else
-									adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-									                                                          	{
-									                                                          		cxInfo.DatabaseInfo.CustomCxString
-									                                                          	}) as DataAccessAdapterBase;
+								{
+									if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
+										adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+										                                                          	{
+										                                                          		cxInfo.DatabaseInfo.CustomCxString,
+										                                                          		true, SchemaNameUsage.Default, null
+										                                                          	}) as DataAccessAdapterBase;
+									else
+										adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+										                                                          	{
+										                                                          		cxInfo.DatabaseInfo.CustomCxString
+										                                                          	}) as DataAccessAdapterBase;
+								}
 							}
+						}
+						else
+						{
+							var fullListQueryMethod = dataAccessAdapterType.GetMethod(cxInfo.DatabaseInfo.Provider, new[] { typeof(string) });
+							adapter = fullListQueryMethod.Invoke(null, BindingFlags.InvokeMethod, null, new object[] { cxInfo.DatabaseInfo.CustomCxString }, null) as DataAccessAdapterBase;
 						}
 
 						if (adapter == null)

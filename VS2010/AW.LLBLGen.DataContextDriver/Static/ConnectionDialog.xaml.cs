@@ -22,18 +22,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	{
 		private readonly IConnectionInfo _cxInfo;
 
-		public ConnectionDialog(IConnectionInfo cxInfo)
+		public ConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
 		{
 			_cxInfo = cxInfo;
 			DataContext = cxInfo;
 			InitializeComponent();
-			var defaultDataAccessAdapterFactoryMethod = Settings.Default.DefaultDataAccessAdapterFactoryMethod;
-			if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryMethod))
-				comboBoxDatabaseProvider.Text = defaultDataAccessAdapterFactoryMethod;
+			if (isNewConnection)
+			{
+				var defaultDataAccessAdapterFactoryMethod = Settings.Default.DefaultDataAccessAdapterFactoryMethod;
+				if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryMethod))
+					comboBoxDatabaseProvider.Text = defaultDataAccessAdapterFactoryMethod;
 
-			var defaultDataAccessAdapterFactoryType = Settings.Default.DefaultDataAccessAdapterFactoryType;
-			if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryType) && string.IsNullOrEmpty(textBoxAdapterType.Text))
-			  textBoxAdapterType.Text = Settings.Default.DefaultDataAccessAdapterFactoryType;
+				var defaultDataAccessAdapterFactoryType = Settings.Default.DefaultDataAccessAdapterFactoryType;
+				if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryType) && string.IsNullOrEmpty(textBoxAdapterType.Text))
+					textBoxAdapterType.Text = Settings.Default.DefaultDataAccessAdapterFactoryType;
+
+				textBoxDatabaseConnectionString.Text = Settings.Default.DefaultApplicationConfig;
+				textBoxDataAccessAdapterAssemblyPath.Text = Settings.Default.DefaultDataAccessAdapterFactoryAssembly;
+				txtAssemblyPath.Text = Settings.Default.DefaultLinqMetaDataAssembly;
+				txtTypeName.Text = Settings.Default.DefaultLinqMetaData;
+			}
 //      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
 //.OfType<DataRow>()
 //.Select(r => r["InvariantName"])
@@ -47,6 +55,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void btnOK_Click(object sender, RoutedEventArgs e)
 		{
 			_cxInfo.DatabaseInfo.CustomCxString = textBoxDatabaseConnectionString.Text;
+			GetAdapterType(_cxInfo);
 			DialogResult = true;
 		}
 
