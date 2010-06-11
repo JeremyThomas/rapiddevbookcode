@@ -67,12 +67,13 @@ namespace AW.Data.CollectionClasses
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
+		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance)
+		public bool GetMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance)
 		{
-			return GetMultiManyToOne(billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesTerritoryInstance, shipMethodInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, shipMethodInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this SalesOrderHeaderCollection object all SalesOrderHeaderEntity objects which have data in common with the specified related Entities.
@@ -84,13 +85,14 @@ namespace AW.Data.CollectionClasses
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
+		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesTerritoryInstance, shipMethodInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, shipMethodInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this SalesOrderHeaderCollection object all SalesOrderHeaderEntity objects which have data in common with the specified related Entities.
@@ -102,15 +104,16 @@ namespace AW.Data.CollectionClasses
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
+		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesTerritoryInstance, shipMethodInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
+			return GetMultiManyToOne(billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, shipMethodInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this SalesOrderHeaderCollection object all SalesOrderHeaderEntity objects which have data in common with the specified related Entities.
@@ -122,6 +125,7 @@ namespace AW.Data.CollectionClasses
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
+		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
@@ -130,7 +134,7 @@ namespace AW.Data.CollectionClasses
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
 		{
 			bool validParameters = false;
 			validParameters |= (billingAddressInstance!=null);
@@ -140,6 +144,7 @@ namespace AW.Data.CollectionClasses
 			validParameters |= (currencyRateInstance!=null);
 			validParameters |= (customerInstance!=null);
 			validParameters |= (customerViewRelatedInstance!=null);
+			validParameters |= (salesPersonInstance!=null);
 			validParameters |= (salesTerritoryInstance!=null);
 			validParameters |= (shipMethodInstance!=null);
 			if(!validParameters)
@@ -150,7 +155,7 @@ namespace AW.Data.CollectionClasses
 			{
 				this.Clear();
 			}
-			return DAOFactory.CreateSalesOrderHeaderDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesTerritoryInstance, shipMethodInstance, pageNumber, pageSize);
+			return DAOFactory.CreateSalesOrderHeaderDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, shipMethodInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all SalesOrderHeader entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
@@ -162,12 +167,13 @@ namespace AW.Data.CollectionClasses
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
+		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance)
+		public int DeleteMultiManyToOne(IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance)
 		{
-			return DAOFactory.CreateSalesOrderHeaderDAO().DeleteMulti(this.Transaction, billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesTerritoryInstance, shipMethodInstance);
+			return DAOFactory.CreateSalesOrderHeaderDAO().DeleteMulti(this.Transaction, billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, shipMethodInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all SalesOrderHeader entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
@@ -180,12 +186,13 @@ namespace AW.Data.CollectionClasses
 		/// <param name="currencyRateInstance">CurrencyRateEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerInstance">CustomerEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
+		/// <param name="salesPersonInstance">SalesPersonEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <param name="shipMethodInstance">ShipMethodEntity instance to use as a filter for the SalesOrderHeaderEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMultiManyToOne(SalesOrderHeaderEntity entityWithNewValues, IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance)
+		public int UpdateMultiManyToOne(SalesOrderHeaderEntity entityWithNewValues, IEntity billingAddressInstance, IEntity shippingAddressInstance, IEntity contactInstance, IEntity creditCardInstance, IEntity currencyRateInstance, IEntity customerInstance, IEntity customerViewRelatedInstance, IEntity salesPersonInstance, IEntity salesTerritoryInstance, IEntity shipMethodInstance)
 		{
-			return DAOFactory.CreateSalesOrderHeaderDAO().UpdateMulti(entityWithNewValues, this.Transaction, billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesTerritoryInstance, shipMethodInstance);
+			return DAOFactory.CreateSalesOrderHeaderDAO().UpdateMulti(entityWithNewValues, this.Transaction, billingAddressInstance, shippingAddressInstance, contactInstance, creditCardInstance, currencyRateInstance, customerInstance, customerViewRelatedInstance, salesPersonInstance, salesTerritoryInstance, shipMethodInstance);
 		}
 
 		/// <summary> Retrieves in this SalesOrderHeaderCollection object all SalesOrderHeaderEntity objects which are related via a  Relation of type 'm:n' with the passed in SpecialOfferProductEntity. All current elements in the collection are removed from the collection.</summary>

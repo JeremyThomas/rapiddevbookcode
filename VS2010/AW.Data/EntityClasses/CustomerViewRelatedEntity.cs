@@ -61,7 +61,6 @@ namespace AW.Data.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -281,7 +280,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -517,7 +515,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeader);
 				_salesOrderHeader.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeader.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeader.GetMultiManyToOne(null, null, null, null, null, null, this, null, null, filter);
+				_salesOrderHeader.GetMultiManyToOne(null, null, null, null, null, null, this, null, null, null, filter);
 				_salesOrderHeader.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeader = true;
 			}
@@ -880,7 +878,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}		
@@ -899,7 +896,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -921,7 +917,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 

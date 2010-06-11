@@ -42,6 +42,10 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.CustomerCollection	_customers;
 		private bool	_alwaysFetchCustomers, _alreadyFetchedCustomers;
+		private AW.Data.CollectionClasses.SalesPersonCollection	_salesPeople;
+		private bool	_alwaysFetchSalesPeople, _alreadyFetchedSalesPeople;
+		private AW.Data.CollectionClasses.SalesTerritoryHistoryCollection	_salesTerritoryHistories;
+		private bool	_alwaysFetchSalesTerritoryHistories, _alreadyFetchedSalesTerritoryHistories;
 		private AW.Data.CollectionClasses.SalesOrderHeaderCollection	_salesOrderHeaders;
 		private bool	_alwaysFetchSalesOrderHeaders, _alreadyFetchedSalesOrderHeaders;
 		private AW.Data.CollectionClasses.StateProvinceCollection	_stateProvinces;
@@ -67,7 +71,6 @@ namespace AW.Data.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -79,6 +82,10 @@ namespace AW.Data.EntityClasses
 		{
 			/// <summary>Member name Customers</summary>
 			public static readonly string Customers = "Customers";
+			/// <summary>Member name SalesPeople</summary>
+			public static readonly string SalesPeople = "SalesPeople";
+			/// <summary>Member name SalesTerritoryHistories</summary>
+			public static readonly string SalesTerritoryHistories = "SalesTerritoryHistories";
 			/// <summary>Member name SalesOrderHeaders</summary>
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
 			/// <summary>Member name StateProvinces</summary>
@@ -148,6 +155,14 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchCustomers = info.GetBoolean("_alwaysFetchCustomers");
 			_alreadyFetchedCustomers = info.GetBoolean("_alreadyFetchedCustomers");
 
+			_salesPeople = (AW.Data.CollectionClasses.SalesPersonCollection)info.GetValue("_salesPeople", typeof(AW.Data.CollectionClasses.SalesPersonCollection));
+			_alwaysFetchSalesPeople = info.GetBoolean("_alwaysFetchSalesPeople");
+			_alreadyFetchedSalesPeople = info.GetBoolean("_alreadyFetchedSalesPeople");
+
+			_salesTerritoryHistories = (AW.Data.CollectionClasses.SalesTerritoryHistoryCollection)info.GetValue("_salesTerritoryHistories", typeof(AW.Data.CollectionClasses.SalesTerritoryHistoryCollection));
+			_alwaysFetchSalesTerritoryHistories = info.GetBoolean("_alwaysFetchSalesTerritoryHistories");
+			_alreadyFetchedSalesTerritoryHistories = info.GetBoolean("_alreadyFetchedSalesTerritoryHistories");
+
 			_salesOrderHeaders = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrderHeaders", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
 			_alwaysFetchSalesOrderHeaders = info.GetBoolean("_alwaysFetchSalesOrderHeaders");
 			_alreadyFetchedSalesOrderHeaders = info.GetBoolean("_alreadyFetchedSalesOrderHeaders");
@@ -200,6 +215,8 @@ namespace AW.Data.EntityClasses
 		protected override void PostReadXmlFixups()
 		{
 			_alreadyFetchedCustomers = (_customers.Count > 0);
+			_alreadyFetchedSalesPeople = (_salesPeople.Count > 0);
+			_alreadyFetchedSalesTerritoryHistories = (_salesTerritoryHistories.Count > 0);
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
 			_alreadyFetchedStateProvinces = (_stateProvinces.Count > 0);
 			_alreadyFetchedAddressCollectionViaSalesOrderHeader = (_addressCollectionViaSalesOrderHeader.Count > 0);
@@ -231,6 +248,12 @@ namespace AW.Data.EntityClasses
 			{
 				case "Customers":
 					toReturn.Add(Relations.CustomerEntityUsingTerritoryID);
+					break;
+				case "SalesPeople":
+					toReturn.Add(Relations.SalesPersonEntityUsingTerritoryID);
+					break;
+				case "SalesTerritoryHistories":
+					toReturn.Add(Relations.SalesTerritoryHistoryEntityUsingTerritoryID);
 					break;
 				case "SalesOrderHeaders":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingTerritoryID);
@@ -291,6 +314,12 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_customers", (!this.MarkedForDeletion?_customers:null));
 			info.AddValue("_alwaysFetchCustomers", _alwaysFetchCustomers);
 			info.AddValue("_alreadyFetchedCustomers", _alreadyFetchedCustomers);
+			info.AddValue("_salesPeople", (!this.MarkedForDeletion?_salesPeople:null));
+			info.AddValue("_alwaysFetchSalesPeople", _alwaysFetchSalesPeople);
+			info.AddValue("_alreadyFetchedSalesPeople", _alreadyFetchedSalesPeople);
+			info.AddValue("_salesTerritoryHistories", (!this.MarkedForDeletion?_salesTerritoryHistories:null));
+			info.AddValue("_alwaysFetchSalesTerritoryHistories", _alwaysFetchSalesTerritoryHistories);
+			info.AddValue("_alreadyFetchedSalesTerritoryHistories", _alreadyFetchedSalesTerritoryHistories);
 			info.AddValue("_salesOrderHeaders", (!this.MarkedForDeletion?_salesOrderHeaders:null));
 			info.AddValue("_alwaysFetchSalesOrderHeaders", _alwaysFetchSalesOrderHeaders);
 			info.AddValue("_alreadyFetchedSalesOrderHeaders", _alreadyFetchedSalesOrderHeaders);
@@ -327,7 +356,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 		
@@ -345,6 +373,20 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.Customers.Add((CustomerEntity)entity);
+					}
+					break;
+				case "SalesPeople":
+					_alreadyFetchedSalesPeople = true;
+					if(entity!=null)
+					{
+						this.SalesPeople.Add((SalesPersonEntity)entity);
+					}
+					break;
+				case "SalesTerritoryHistories":
+					_alreadyFetchedSalesTerritoryHistories = true;
+					if(entity!=null)
+					{
+						this.SalesTerritoryHistories.Add((SalesTerritoryHistoryEntity)entity);
 					}
 					break;
 				case "SalesOrderHeaders":
@@ -441,6 +483,12 @@ namespace AW.Data.EntityClasses
 				case "Customers":
 					_customers.Add((CustomerEntity)relatedEntity);
 					break;
+				case "SalesPeople":
+					_salesPeople.Add((SalesPersonEntity)relatedEntity);
+					break;
+				case "SalesTerritoryHistories":
+					_salesTerritoryHistories.Add((SalesTerritoryHistoryEntity)relatedEntity);
+					break;
 				case "SalesOrderHeaders":
 					_salesOrderHeaders.Add((SalesOrderHeaderEntity)relatedEntity);
 					break;
@@ -463,6 +511,12 @@ namespace AW.Data.EntityClasses
 			{
 				case "Customers":
 					this.PerformRelatedEntityRemoval(_customers, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "SalesPeople":
+					this.PerformRelatedEntityRemoval(_salesPeople, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "SalesTerritoryHistories":
+					this.PerformRelatedEntityRemoval(_salesTerritoryHistories, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "SalesOrderHeaders":
 					this.PerformRelatedEntityRemoval(_salesOrderHeaders, relatedEntity, signalRelatedEntityManyToOne);
@@ -497,6 +551,8 @@ namespace AW.Data.EntityClasses
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_customers);
+			toReturn.Add(_salesPeople);
+			toReturn.Add(_salesTerritoryHistories);
 			toReturn.Add(_salesOrderHeaders);
 			toReturn.Add(_stateProvinces);
 
@@ -615,6 +671,116 @@ namespace AW.Data.EntityClasses
 			_customers.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'SalesPersonEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'SalesPersonEntity'</returns>
+		public AW.Data.CollectionClasses.SalesPersonCollection GetMultiSalesPeople(bool forceFetch)
+		{
+			return GetMultiSalesPeople(forceFetch, _salesPeople.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesPersonEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'SalesPersonEntity'</returns>
+		public AW.Data.CollectionClasses.SalesPersonCollection GetMultiSalesPeople(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiSalesPeople(forceFetch, _salesPeople.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesPersonEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.SalesPersonCollection GetMultiSalesPeople(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiSalesPeople(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesPersonEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.SalesPersonCollection GetMultiSalesPeople(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedSalesPeople || forceFetch || _alwaysFetchSalesPeople) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_salesPeople);
+				_salesPeople.SuppressClearInGetMulti=!forceFetch;
+				_salesPeople.EntityFactoryToUse = entityFactoryToUse;
+				_salesPeople.GetMultiManyToOne(this, filter);
+				_salesPeople.SuppressClearInGetMulti=false;
+				_alreadyFetchedSalesPeople = true;
+			}
+			return _salesPeople;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'SalesPeople'. These settings will be taken into account
+		/// when the property SalesPeople is requested or GetMultiSalesPeople is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersSalesPeople(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_salesPeople.SortClauses=sortClauses;
+			_salesPeople.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesTerritoryHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'SalesTerritoryHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.SalesTerritoryHistoryCollection GetMultiSalesTerritoryHistories(bool forceFetch)
+		{
+			return GetMultiSalesTerritoryHistories(forceFetch, _salesTerritoryHistories.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesTerritoryHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'SalesTerritoryHistoryEntity'</returns>
+		public AW.Data.CollectionClasses.SalesTerritoryHistoryCollection GetMultiSalesTerritoryHistories(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiSalesTerritoryHistories(forceFetch, _salesTerritoryHistories.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesTerritoryHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.SalesTerritoryHistoryCollection GetMultiSalesTerritoryHistories(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiSalesTerritoryHistories(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesTerritoryHistoryEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.SalesTerritoryHistoryCollection GetMultiSalesTerritoryHistories(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedSalesTerritoryHistories || forceFetch || _alwaysFetchSalesTerritoryHistories) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_salesTerritoryHistories);
+				_salesTerritoryHistories.SuppressClearInGetMulti=!forceFetch;
+				_salesTerritoryHistories.EntityFactoryToUse = entityFactoryToUse;
+				_salesTerritoryHistories.GetMultiManyToOne(null, this, filter);
+				_salesTerritoryHistories.SuppressClearInGetMulti=false;
+				_alreadyFetchedSalesTerritoryHistories = true;
+			}
+			return _salesTerritoryHistories;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'SalesTerritoryHistories'. These settings will be taken into account
+		/// when the property SalesTerritoryHistories is requested or GetMultiSalesTerritoryHistories is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersSalesTerritoryHistories(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_salesTerritoryHistories.SortClauses=sortClauses;
+			_salesTerritoryHistories.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'SalesOrderHeaderEntity'</returns>
@@ -653,7 +819,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeaders);
 				_salesOrderHeaders.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeaders.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeaders.GetMultiManyToOne(null, null, null, null, null, null, null, this, null, filter);
+				_salesOrderHeaders.GetMultiManyToOne(null, null, null, null, null, null, null, null, this, null, filter);
 				_salesOrderHeaders.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeaders = true;
 			}
@@ -1071,6 +1237,8 @@ namespace AW.Data.EntityClasses
 		protected override void AddInternalsToContext()
 		{
 			_customers.ActiveContext = this.ActiveContext;
+			_salesPeople.ActiveContext = this.ActiveContext;
+			_salesTerritoryHistories.ActiveContext = this.ActiveContext;
 			_salesOrderHeaders.ActiveContext = this.ActiveContext;
 			_stateProvinces.ActiveContext = this.ActiveContext;
 			_addressCollectionViaSalesOrderHeader.ActiveContext = this.ActiveContext;
@@ -1090,6 +1258,8 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("Customers", _customers);
+			toReturn.Add("SalesPeople", _salesPeople);
+			toReturn.Add("SalesTerritoryHistories", _salesTerritoryHistories);
 			toReturn.Add("SalesOrderHeaders", _salesOrderHeaders);
 			toReturn.Add("StateProvinces", _stateProvinces);
 			toReturn.Add("AddressCollectionViaSalesOrderHeader", _addressCollectionViaSalesOrderHeader);
@@ -1115,7 +1285,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}		
@@ -1134,7 +1303,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 		}
@@ -1144,6 +1312,12 @@ namespace AW.Data.EntityClasses
 		{
 			_customers = new AW.Data.CollectionClasses.CustomerCollection();
 			_customers.SetContainingEntityInfo(this, "SalesTerritory");
+
+			_salesPeople = new AW.Data.CollectionClasses.SalesPersonCollection();
+			_salesPeople.SetContainingEntityInfo(this, "SalesTerritory");
+
+			_salesTerritoryHistories = new AW.Data.CollectionClasses.SalesTerritoryHistoryCollection();
+			_salesTerritoryHistories.SetContainingEntityInfo(this, "SalesTerritory");
 
 			_salesOrderHeaders = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
 			_salesOrderHeaders.SetContainingEntityInfo(this, "SalesTerritory");
@@ -1163,7 +1337,6 @@ namespace AW.Data.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -1253,6 +1426,20 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathCustomers
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerCollection(), (IEntityRelation)GetRelationsForField("Customers")[0], (int)AW.Data.EntityType.SalesTerritoryEntity, (int)AW.Data.EntityType.CustomerEntity, 0, null, null, null, "Customers", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesPerson' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesPeople
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesPersonCollection(), (IEntityRelation)GetRelationsForField("SalesPeople")[0], (int)AW.Data.EntityType.SalesTerritoryEntity, (int)AW.Data.EntityType.SalesPersonEntity, 0, null, null, null, "SalesPeople", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesTerritoryHistory' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesTerritoryHistories
+		{
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryHistoryCollection(), (IEntityRelation)GetRelationsForField("SalesTerritoryHistories")[0], (int)AW.Data.EntityType.SalesTerritoryEntity, (int)AW.Data.EntityType.SalesTerritoryHistoryEntity, 0, null, null, null, "SalesTerritoryHistories", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHeader' for this entity.</summary>
@@ -1538,6 +1725,72 @@ namespace AW.Data.EntityClasses
 					_customers.Clear();
 				}
 				_alreadyFetchedCustomers = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'SalesPersonEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesPeople()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.SalesPersonCollection SalesPeople
+		{
+			get	{ return GetMultiSalesPeople(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesPeople. When set to true, SalesPeople is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesPeople is accessed. You can always execute/ a forced fetch by calling GetMultiSalesPeople(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesPeople
+		{
+			get	{ return _alwaysFetchSalesPeople; }
+			set	{ _alwaysFetchSalesPeople = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesPeople already has been fetched. Setting this property to false when SalesPeople has been fetched
+		/// will clear the SalesPeople collection well. Setting this property to true while SalesPeople hasn't been fetched disables lazy loading for SalesPeople</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesPeople
+		{
+			get { return _alreadyFetchedSalesPeople;}
+			set 
+			{
+				if(_alreadyFetchedSalesPeople && !value && (_salesPeople != null))
+				{
+					_salesPeople.Clear();
+				}
+				_alreadyFetchedSalesPeople = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'SalesTerritoryHistoryEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesTerritoryHistories()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.SalesTerritoryHistoryCollection SalesTerritoryHistories
+		{
+			get	{ return GetMultiSalesTerritoryHistories(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesTerritoryHistories. When set to true, SalesTerritoryHistories is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesTerritoryHistories is accessed. You can always execute/ a forced fetch by calling GetMultiSalesTerritoryHistories(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesTerritoryHistories
+		{
+			get	{ return _alwaysFetchSalesTerritoryHistories; }
+			set	{ _alwaysFetchSalesTerritoryHistories = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesTerritoryHistories already has been fetched. Setting this property to false when SalesTerritoryHistories has been fetched
+		/// will clear the SalesTerritoryHistories collection well. Setting this property to true while SalesTerritoryHistories hasn't been fetched disables lazy loading for SalesTerritoryHistories</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesTerritoryHistories
+		{
+			get { return _alreadyFetchedSalesTerritoryHistories;}
+			set 
+			{
+				if(_alreadyFetchedSalesTerritoryHistories && !value && (_salesTerritoryHistories != null))
+				{
+					_salesTerritoryHistories.Clear();
+				}
+				_alreadyFetchedSalesTerritoryHistories = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type '1:n'.<br/><br/>

@@ -30,11 +30,27 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.ContactCreditCardEntityUsingCreditCardID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingCreditCardID);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between CreditCardEntity and ContactCreditCardEntity over the 1:n relation they have, using the relation between the fields:
+		/// CreditCard.CreditCardID - ContactCreditCard.CreditCardID
+		/// </summary>
+		public virtual IEntityRelation ContactCreditCardEntityUsingCreditCardID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ContactCreditCards" , true);
+				relation.AddEntityFieldPair(CreditCardFields.CreditCardID, ContactCreditCardFields.CreditCardID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CreditCardEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactCreditCardEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between CreditCardEntity and SalesOrderHeaderEntity over the 1:n relation they have, using the relation between the fields:
 		/// CreditCard.CreditCardID - SalesOrderHeader.CreditCardID

@@ -47,6 +47,20 @@ namespace AW.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: AwbuildVersion.</summary>
+	public enum AwbuildVersionFieldIndex
+	{
+		///<summary>DatabaseVersion. </summary>
+		DatabaseVersion,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>SystemInformationID. </summary>
+		SystemInformationID,
+		///<summary>VersionDate. </summary>
+		VersionDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Contact.</summary>
 	public enum ContactFieldIndex
 	{
@@ -219,6 +233,28 @@ namespace AW.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: DatabaseLog.</summary>
+	public enum DatabaseLogFieldIndex
+	{
+		///<summary>DatabaseLogID. </summary>
+		DatabaseLogID,
+		///<summary>DatabaseUser. </summary>
+		DatabaseUser,
+		///<summary>Event. </summary>
+		Event,
+		///<summary>Object. </summary>
+		Object,
+		///<summary>PostTime. </summary>
+		PostTime,
+		///<summary>Schema. </summary>
+		Schema,
+		///<summary>Tsql. </summary>
+		Tsql,
+		///<summary>XmlEvent. </summary>
+		XmlEvent,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Employee.</summary>
 	public enum EmployeeFieldIndex
 	{
@@ -271,6 +307,108 @@ namespace AW.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ErrorLog.</summary>
+	public enum ErrorLogFieldIndex
+	{
+		///<summary>ErrorLine. </summary>
+		ErrorLine,
+		///<summary>ErrorLogID. </summary>
+		ErrorLogID,
+		///<summary>ErrorMessage. </summary>
+		ErrorMessage,
+		///<summary>ErrorNumber. </summary>
+		ErrorNumber,
+		///<summary>ErrorProcedure. </summary>
+		ErrorProcedure,
+		///<summary>ErrorSeverity. </summary>
+		ErrorSeverity,
+		///<summary>ErrorState. </summary>
+		ErrorState,
+		///<summary>ErrorTime. </summary>
+		ErrorTime,
+		///<summary>UserName. </summary>
+		UserName,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Department.</summary>
+	public enum DepartmentFieldIndex
+	{
+		///<summary>DepartmentID. </summary>
+		DepartmentID,
+		///<summary>GroupName. </summary>
+		GroupName,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: EmployeeDepartmentHistory.</summary>
+	public enum EmployeeDepartmentHistoryFieldIndex
+	{
+		///<summary>DepartmentID. </summary>
+		DepartmentID,
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
+		///<summary>EndDate. </summary>
+		EndDate,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ShiftID. </summary>
+		ShiftID,
+		///<summary>StartDate. </summary>
+		StartDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: EmployeePayHistory.</summary>
+	public enum EmployeePayHistoryFieldIndex
+	{
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>PayFrequency. </summary>
+		PayFrequency,
+		///<summary>Rate. </summary>
+		Rate,
+		///<summary>RateChangeDate. </summary>
+		RateChangeDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: JobCandidate.</summary>
+	public enum JobCandidateFieldIndex
+	{
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
+		///<summary>JobCandidateID. </summary>
+		JobCandidateID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Resume. </summary>
+		Resume,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Shift.</summary>
+	public enum ShiftFieldIndex
+	{
+		///<summary>EndTime. </summary>
+		EndTime,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>ShiftID. </summary>
+		ShiftID,
+		///<summary>StartTime. </summary>
+		StartTime,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Individual.</summary>
 	public enum IndividualFieldIndex
 	{
@@ -282,6 +420,18 @@ namespace AW.Data
 		Demographics,
 		///<summary>ModifiedDate. </summary>
 		ModifiedDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ContactType.</summary>
+	public enum ContactTypeFieldIndex
+	{
+		///<summary>ContactTypeID. </summary>
+		ContactTypeID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -338,6 +488,748 @@ namespace AW.Data
 		Weight,
 		///<summary>WeightUnitMeasureCode. </summary>
 		WeightUnitMeasureCode,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: BillOfMaterial.</summary>
+	public enum BillOfMaterialFieldIndex
+	{
+		///<summary>BillOfMaterialsID. </summary>
+		BillOfMaterialsID,
+		///<summary>Bomlevel. </summary>
+		Bomlevel,
+		///<summary>ComponentID. </summary>
+		ComponentID,
+		///<summary>EndDate. </summary>
+		EndDate,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>PerAssemblyQuantity. </summary>
+		PerAssemblyQuantity,
+		///<summary>ProductAssemblyID. </summary>
+		ProductAssemblyID,
+		///<summary>StartDate. </summary>
+		StartDate,
+		///<summary>UnitMeasureCode. </summary>
+		UnitMeasureCode,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Culture.</summary>
+	public enum CultureFieldIndex
+	{
+		///<summary>CultureID. </summary>
+		CultureID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Document.</summary>
+	public enum DocumentFieldIndex
+	{
+		///<summary>ChangeNumber. </summary>
+		ChangeNumber,
+		///<summary>Document. </summary>
+		Document,
+		///<summary>DocumentID. </summary>
+		DocumentID,
+		///<summary>DocumentSummary. </summary>
+		DocumentSummary,
+		///<summary>FileExtension. </summary>
+		FileExtension,
+		///<summary>FileName. </summary>
+		FileName,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Revision. </summary>
+		Revision,
+		///<summary>Status. </summary>
+		Status,
+		///<summary>Title. </summary>
+		Title,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Illustration.</summary>
+	public enum IllustrationFieldIndex
+	{
+		///<summary>Diagram. </summary>
+		Diagram,
+		///<summary>IllustrationID. </summary>
+		IllustrationID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Location.</summary>
+	public enum LocationFieldIndex
+	{
+		///<summary>Availability. </summary>
+		Availability,
+		///<summary>CostRate. </summary>
+		CostRate,
+		///<summary>LocationID. </summary>
+		LocationID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductCategory.</summary>
+	public enum ProductCategoryFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>ProductCategoryID. </summary>
+		ProductCategoryID,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductCostHistory.</summary>
+	public enum ProductCostHistoryFieldIndex
+	{
+		///<summary>EndDate. </summary>
+		EndDate,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>StandardCost. </summary>
+		StandardCost,
+		///<summary>StartDate. </summary>
+		StartDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductDescription.</summary>
+	public enum ProductDescriptionFieldIndex
+	{
+		///<summary>Description. </summary>
+		Description,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductDescriptionID. </summary>
+		ProductDescriptionID,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductDocument.</summary>
+	public enum ProductDocumentFieldIndex
+	{
+		///<summary>DocumentID. </summary>
+		DocumentID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductID. </summary>
+		ProductID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductInventory.</summary>
+	public enum ProductInventoryFieldIndex
+	{
+		///<summary>Bin. </summary>
+		Bin,
+		///<summary>LocationID. </summary>
+		LocationID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>Quantity. </summary>
+		Quantity,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>Shelf. </summary>
+		Shelf,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductListPriceHistory.</summary>
+	public enum ProductListPriceHistoryFieldIndex
+	{
+		///<summary>EndDate. </summary>
+		EndDate,
+		///<summary>ListPrice. </summary>
+		ListPrice,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>StartDate. </summary>
+		StartDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductModel.</summary>
+	public enum ProductModelFieldIndex
+	{
+		///<summary>CatalogDescription. </summary>
+		CatalogDescription,
+		///<summary>Instructions. </summary>
+		Instructions,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>ProductModelID. </summary>
+		ProductModelID,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductModelIllustration.</summary>
+	public enum ProductModelIllustrationFieldIndex
+	{
+		///<summary>IllustrationID. </summary>
+		IllustrationID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductModelID. </summary>
+		ProductModelID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductModelProductDescriptionCulture.</summary>
+	public enum ProductModelProductDescriptionCultureFieldIndex
+	{
+		///<summary>CultureID. </summary>
+		CultureID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductDescriptionID. </summary>
+		ProductDescriptionID,
+		///<summary>ProductModelID. </summary>
+		ProductModelID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductPhoto.</summary>
+	public enum ProductPhotoFieldIndex
+	{
+		///<summary>LargePhoto. </summary>
+		LargePhoto,
+		///<summary>LargePhotoFileName. </summary>
+		LargePhotoFileName,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductPhotoID. </summary>
+		ProductPhotoID,
+		///<summary>ThumbNailPhoto. </summary>
+		ThumbNailPhoto,
+		///<summary>ThumbnailPhotoFileName. </summary>
+		ThumbnailPhotoFileName,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductProductPhoto.</summary>
+	public enum ProductProductPhotoFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Primary. </summary>
+		Primary,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>ProductPhotoID. </summary>
+		ProductPhotoID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductReview.</summary>
+	public enum ProductReviewFieldIndex
+	{
+		///<summary>Comments. </summary>
+		Comments,
+		///<summary>EmailAddress. </summary>
+		EmailAddress,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>ProductReviewID. </summary>
+		ProductReviewID,
+		///<summary>Rating. </summary>
+		Rating,
+		///<summary>ReviewDate. </summary>
+		ReviewDate,
+		///<summary>ReviewerName. </summary>
+		ReviewerName,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductSubcategory.</summary>
+	public enum ProductSubcategoryFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>ProductCategoryID. </summary>
+		ProductCategoryID,
+		///<summary>ProductSubcategoryID. </summary>
+		ProductSubcategoryID,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ScrapReason.</summary>
+	public enum ScrapReasonFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>ScrapReasonID. </summary>
+		ScrapReasonID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: TransactionHistory.</summary>
+	public enum TransactionHistoryFieldIndex
+	{
+		///<summary>ActualCost. </summary>
+		ActualCost,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>Quantity. </summary>
+		Quantity,
+		///<summary>ReferenceOrderID. </summary>
+		ReferenceOrderID,
+		///<summary>ReferenceOrderLineID. </summary>
+		ReferenceOrderLineID,
+		///<summary>TransactionDate. </summary>
+		TransactionDate,
+		///<summary>TransactionID. </summary>
+		TransactionID,
+		///<summary>TransactionType. </summary>
+		TransactionType,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: TransactionHistoryArchive.</summary>
+	public enum TransactionHistoryArchiveFieldIndex
+	{
+		///<summary>ActualCost. </summary>
+		ActualCost,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>Quantity. </summary>
+		Quantity,
+		///<summary>ReferenceOrderID. </summary>
+		ReferenceOrderID,
+		///<summary>ReferenceOrderLineID. </summary>
+		ReferenceOrderLineID,
+		///<summary>TransactionDate. </summary>
+		TransactionDate,
+		///<summary>TransactionID. </summary>
+		TransactionID,
+		///<summary>TransactionType. </summary>
+		TransactionType,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: UnitMeasure.</summary>
+	public enum UnitMeasureFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>UnitMeasureCode. </summary>
+		UnitMeasureCode,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: WorkOrder.</summary>
+	public enum WorkOrderFieldIndex
+	{
+		///<summary>DueDate. </summary>
+		DueDate,
+		///<summary>EndDate. </summary>
+		EndDate,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>OrderQuantity. </summary>
+		OrderQuantity,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>ScrappedQuantity. </summary>
+		ScrappedQuantity,
+		///<summary>ScrapReasonID. </summary>
+		ScrapReasonID,
+		///<summary>StartDate. </summary>
+		StartDate,
+		///<summary>StockedQuantity. </summary>
+		StockedQuantity,
+		///<summary>WorkOrderID. </summary>
+		WorkOrderID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: WorkOrderRouting.</summary>
+	public enum WorkOrderRoutingFieldIndex
+	{
+		///<summary>ActualCost. </summary>
+		ActualCost,
+		///<summary>ActualEndDate. </summary>
+		ActualEndDate,
+		///<summary>ActualResourceHrs. </summary>
+		ActualResourceHrs,
+		///<summary>ActualStartDate. </summary>
+		ActualStartDate,
+		///<summary>LocationID. </summary>
+		LocationID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>OperationSequence. </summary>
+		OperationSequence,
+		///<summary>PlannedCost. </summary>
+		PlannedCost,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>ScheduledEndDate. </summary>
+		ScheduledEndDate,
+		///<summary>ScheduledStartDate. </summary>
+		ScheduledStartDate,
+		///<summary>WorkOrderID. </summary>
+		WorkOrderID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ProductVendor.</summary>
+	public enum ProductVendorFieldIndex
+	{
+		///<summary>AverageLeadTime. </summary>
+		AverageLeadTime,
+		///<summary>LastReceiptCost. </summary>
+		LastReceiptCost,
+		///<summary>LastReceiptDate. </summary>
+		LastReceiptDate,
+		///<summary>MaxOrderQuantity. </summary>
+		MaxOrderQuantity,
+		///<summary>MinOrderQuantity. </summary>
+		MinOrderQuantity,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>OnOrderQuantity. </summary>
+		OnOrderQuantity,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>StandardPrice. </summary>
+		StandardPrice,
+		///<summary>UnitMeasureCode. </summary>
+		UnitMeasureCode,
+		///<summary>VendorID. </summary>
+		VendorID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: PurchaseOrderDetail.</summary>
+	public enum PurchaseOrderDetailFieldIndex
+	{
+		///<summary>DueDate. </summary>
+		DueDate,
+		///<summary>LineTotal. </summary>
+		LineTotal,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>OrderQuantity. </summary>
+		OrderQuantity,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>PurchaseOrderDetailID. </summary>
+		PurchaseOrderDetailID,
+		///<summary>PurchaseOrderID. </summary>
+		PurchaseOrderID,
+		///<summary>ReceivedQuantity. </summary>
+		ReceivedQuantity,
+		///<summary>RejectedQuantity. </summary>
+		RejectedQuantity,
+		///<summary>StockedQuantity. </summary>
+		StockedQuantity,
+		///<summary>UnitPrice. </summary>
+		UnitPrice,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: PurchaseOrderHeader.</summary>
+	public enum PurchaseOrderHeaderFieldIndex
+	{
+		///<summary>EmployeeID. </summary>
+		EmployeeID,
+		///<summary>Freight. </summary>
+		Freight,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>OrderDate. </summary>
+		OrderDate,
+		///<summary>PurchaseOrderID. </summary>
+		PurchaseOrderID,
+		///<summary>RevisionNumber. </summary>
+		RevisionNumber,
+		///<summary>ShipDate. </summary>
+		ShipDate,
+		///<summary>ShipMethodID. </summary>
+		ShipMethodID,
+		///<summary>Status. </summary>
+		Status,
+		///<summary>SubTotal. </summary>
+		SubTotal,
+		///<summary>TaxAmt. </summary>
+		TaxAmt,
+		///<summary>TotalDue. </summary>
+		TotalDue,
+		///<summary>VendorID. </summary>
+		VendorID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Vendor.</summary>
+	public enum VendorFieldIndex
+	{
+		///<summary>AccountNumber. </summary>
+		AccountNumber,
+		///<summary>ActiveFlag. </summary>
+		ActiveFlag,
+		///<summary>CreditRating. </summary>
+		CreditRating,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>PreferredVendorStatus. </summary>
+		PreferredVendorStatus,
+		///<summary>PurchasingWebServiceUrl. </summary>
+		PurchasingWebServiceUrl,
+		///<summary>VendorID. </summary>
+		VendorID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: VendorAddress.</summary>
+	public enum VendorAddressFieldIndex
+	{
+		///<summary>AddressID. </summary>
+		AddressID,
+		///<summary>AddressTypeID. </summary>
+		AddressTypeID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>VendorID. </summary>
+		VendorID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: VendorContact.</summary>
+	public enum VendorContactFieldIndex
+	{
+		///<summary>ContactID. </summary>
+		ContactID,
+		///<summary>ContactTypeID. </summary>
+		ContactTypeID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>VendorID. </summary>
+		VendorID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ContactCreditCard.</summary>
+	public enum ContactCreditCardFieldIndex
+	{
+		///<summary>ContactID. </summary>
+		ContactID,
+		///<summary>CreditCardID. </summary>
+		CreditCardID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: CountryRegionCurrency.</summary>
+	public enum CountryRegionCurrencyFieldIndex
+	{
+		///<summary>CountryRegionCode. </summary>
+		CountryRegionCode,
+		///<summary>CurrencyCode. </summary>
+		CurrencyCode,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesOrderHeaderSalesReason.</summary>
+	public enum SalesOrderHeaderSalesReasonFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>SalesOrderID. </summary>
+		SalesOrderID,
+		///<summary>SalesReasonID. </summary>
+		SalesReasonID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesPerson.</summary>
+	public enum SalesPersonFieldIndex
+	{
+		///<summary>Bonus. </summary>
+		Bonus,
+		///<summary>CommissionPct. </summary>
+		CommissionPct,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SalesLastYear. </summary>
+		SalesLastYear,
+		///<summary>SalesPersonID. </summary>
+		SalesPersonID,
+		///<summary>SalesQuota. </summary>
+		SalesQuota,
+		///<summary>SalesYtd. </summary>
+		SalesYtd,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesPersonQuotaHistory.</summary>
+	public enum SalesPersonQuotaHistoryFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>QuotaDate. </summary>
+		QuotaDate,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SalesPersonID. </summary>
+		SalesPersonID,
+		///<summary>SalesQuota. </summary>
+		SalesQuota,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesReason.</summary>
+	public enum SalesReasonFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>ReasonType. </summary>
+		ReasonType,
+		///<summary>SalesReasonID. </summary>
+		SalesReasonID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesTaxRate.</summary>
+	public enum SalesTaxRateFieldIndex
+	{
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SalesTaxRateID. </summary>
+		SalesTaxRateID,
+		///<summary>StateProvinceID. </summary>
+		StateProvinceID,
+		///<summary>TaxRate. </summary>
+		TaxRate,
+		///<summary>TaxType. </summary>
+		TaxType,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesTerritoryHistory.</summary>
+	public enum SalesTerritoryHistoryFieldIndex
+	{
+		///<summary>EndDate. </summary>
+		EndDate,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SalesPersonID. </summary>
+		SalesPersonID,
+		///<summary>StartDate. </summary>
+		StartDate,
+		///<summary>TerritoryID. </summary>
+		TerritoryID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ShoppingCartItem.</summary>
+	public enum ShoppingCartItemFieldIndex
+	{
+		///<summary>DateCreated. </summary>
+		DateCreated,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>ProductID. </summary>
+		ProductID,
+		///<summary>Quantity. </summary>
+		Quantity,
+		///<summary>ShoppingCartID. </summary>
+		ShoppingCartID,
+		///<summary>ShoppingCartItemID. </summary>
+		ShoppingCartItemID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: Store.</summary>
+	public enum StoreFieldIndex
+	{
+		///<summary>CustomerID. </summary>
+		CustomerID,
+		///<summary>Demographics. </summary>
+		Demographics,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Name. </summary>
+		Name,
+		///<summary>Rowguid. </summary>
+		Rowguid,
+		///<summary>SalesPersonID. </summary>
+		SalesPersonID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: StoreContact.</summary>
+	public enum StoreContactFieldIndex
+	{
+		///<summary>ContactID. </summary>
+		ContactID,
+		///<summary>ContactTypeID. </summary>
+		ContactTypeID,
+		///<summary>CustomerID. </summary>
+		CustomerID,
+		///<summary>ModifiedDate. </summary>
+		ModifiedDate,
+		///<summary>Rowguid. </summary>
+		Rowguid,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -621,6 +1513,8 @@ namespace AW.Data
 		AddressEntity,
 		///<summary>AddressType</summary>
 		AddressTypeEntity,
+		///<summary>AwbuildVersion</summary>
+		AwbuildVersionEntity,
 		///<summary>Contact</summary>
 		ContactEntity,
 		///<summary>CountryRegion</summary>
@@ -637,14 +1531,112 @@ namespace AW.Data
 		CustomerAddressEntity,
 		///<summary>CustomerViewRelated</summary>
 		CustomerViewRelatedEntity,
+		///<summary>DatabaseLog</summary>
+		DatabaseLogEntity,
 		///<summary>Employee</summary>
 		EmployeeEntity,
 		///<summary>EmployeeAddress</summary>
 		EmployeeAddressEntity,
+		///<summary>ErrorLog</summary>
+		ErrorLogEntity,
+		///<summary>Department</summary>
+		DepartmentEntity,
+		///<summary>EmployeeDepartmentHistory</summary>
+		EmployeeDepartmentHistoryEntity,
+		///<summary>EmployeePayHistory</summary>
+		EmployeePayHistoryEntity,
+		///<summary>JobCandidate</summary>
+		JobCandidateEntity,
+		///<summary>Shift</summary>
+		ShiftEntity,
 		///<summary>Individual</summary>
 		IndividualEntity,
+		///<summary>ContactType</summary>
+		ContactTypeEntity,
 		///<summary>Product</summary>
 		ProductEntity,
+		///<summary>BillOfMaterial</summary>
+		BillOfMaterialEntity,
+		///<summary>Culture</summary>
+		CultureEntity,
+		///<summary>Document</summary>
+		DocumentEntity,
+		///<summary>Illustration</summary>
+		IllustrationEntity,
+		///<summary>Location</summary>
+		LocationEntity,
+		///<summary>ProductCategory</summary>
+		ProductCategoryEntity,
+		///<summary>ProductCostHistory</summary>
+		ProductCostHistoryEntity,
+		///<summary>ProductDescription</summary>
+		ProductDescriptionEntity,
+		///<summary>ProductDocument</summary>
+		ProductDocumentEntity,
+		///<summary>ProductInventory</summary>
+		ProductInventoryEntity,
+		///<summary>ProductListPriceHistory</summary>
+		ProductListPriceHistoryEntity,
+		///<summary>ProductModel</summary>
+		ProductModelEntity,
+		///<summary>ProductModelIllustration</summary>
+		ProductModelIllustrationEntity,
+		///<summary>ProductModelProductDescriptionCulture</summary>
+		ProductModelProductDescriptionCultureEntity,
+		///<summary>ProductPhoto</summary>
+		ProductPhotoEntity,
+		///<summary>ProductProductPhoto</summary>
+		ProductProductPhotoEntity,
+		///<summary>ProductReview</summary>
+		ProductReviewEntity,
+		///<summary>ProductSubcategory</summary>
+		ProductSubcategoryEntity,
+		///<summary>ScrapReason</summary>
+		ScrapReasonEntity,
+		///<summary>TransactionHistory</summary>
+		TransactionHistoryEntity,
+		///<summary>TransactionHistoryArchive</summary>
+		TransactionHistoryArchiveEntity,
+		///<summary>UnitMeasure</summary>
+		UnitMeasureEntity,
+		///<summary>WorkOrder</summary>
+		WorkOrderEntity,
+		///<summary>WorkOrderRouting</summary>
+		WorkOrderRoutingEntity,
+		///<summary>ProductVendor</summary>
+		ProductVendorEntity,
+		///<summary>PurchaseOrderDetail</summary>
+		PurchaseOrderDetailEntity,
+		///<summary>PurchaseOrderHeader</summary>
+		PurchaseOrderHeaderEntity,
+		///<summary>Vendor</summary>
+		VendorEntity,
+		///<summary>VendorAddress</summary>
+		VendorAddressEntity,
+		///<summary>VendorContact</summary>
+		VendorContactEntity,
+		///<summary>ContactCreditCard</summary>
+		ContactCreditCardEntity,
+		///<summary>CountryRegionCurrency</summary>
+		CountryRegionCurrencyEntity,
+		///<summary>SalesOrderHeaderSalesReason</summary>
+		SalesOrderHeaderSalesReasonEntity,
+		///<summary>SalesPerson</summary>
+		SalesPersonEntity,
+		///<summary>SalesPersonQuotaHistory</summary>
+		SalesPersonQuotaHistoryEntity,
+		///<summary>SalesReason</summary>
+		SalesReasonEntity,
+		///<summary>SalesTaxRate</summary>
+		SalesTaxRateEntity,
+		///<summary>SalesTerritoryHistory</summary>
+		SalesTerritoryHistoryEntity,
+		///<summary>ShoppingCartItem</summary>
+		ShoppingCartItemEntity,
+		///<summary>Store</summary>
+		StoreEntity,
+		///<summary>StoreContact</summary>
+		StoreContactEntity,
 		///<summary>SalesOrderDetail</summary>
 		SalesOrderDetailEntity,
 		///<summary>SalesOrderHeader</summary>
