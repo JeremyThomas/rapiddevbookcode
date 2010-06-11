@@ -75,50 +75,6 @@ namespace AW.Data.FactoryClasses
 		}
 	}
 	
-	/// <summary>Factory to create new, empty AddressEntity objects.</summary>
-	[Serializable]
-	public partial class AddressEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public AddressEntityFactory() : base("AddressEntity", AW.Data.EntityType.AddressEntity) { }
-
-		/// <summary>Creates a new, empty AddressEntity object.</summary>
-		/// <returns>A new, empty AddressEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new AddressEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddress
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty AddressTypeEntity objects.</summary>
-	[Serializable]
-	public partial class AddressTypeEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public AddressTypeEntityFactory() : base("AddressTypeEntity", AW.Data.EntityType.AddressTypeEntity) { }
-
-		/// <summary>Creates a new, empty AddressTypeEntity object.</summary>
-		/// <returns>A new, empty AddressTypeEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new AddressTypeEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddressType
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
 	/// <summary>Factory to create new, empty AwbuildVersionEntity objects.</summary>
 	[Serializable]
 	public partial class AwbuildVersionEntityFactory : EntityFactoryBase {
@@ -131,183 +87,6 @@ namespace AW.Data.FactoryClasses
 			IEntity toReturn = new AwbuildVersionEntity();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAwbuildVersion
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty ContactEntity objects.</summary>
-	[Serializable]
-	public partial class ContactEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public ContactEntityFactory() : base("ContactEntity", AW.Data.EntityType.ContactEntity) { }
-
-		/// <summary>Creates a new, empty ContactEntity object.</summary>
-		/// <returns>A new, empty ContactEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new ContactEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewContact
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty CountryRegionEntity objects.</summary>
-	[Serializable]
-	public partial class CountryRegionEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public CountryRegionEntityFactory() : base("CountryRegionEntity", AW.Data.EntityType.CountryRegionEntity) { }
-
-		/// <summary>Creates a new, empty CountryRegionEntity object.</summary>
-		/// <returns>A new, empty CountryRegionEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new CountryRegionEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCountryRegion
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty CreditCardEntity objects.</summary>
-	[Serializable]
-	public partial class CreditCardEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public CreditCardEntityFactory() : base("CreditCardEntity", AW.Data.EntityType.CreditCardEntity) { }
-
-		/// <summary>Creates a new, empty CreditCardEntity object.</summary>
-		/// <returns>A new, empty CreditCardEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new CreditCardEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCreditCard
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty CurrencyEntity objects.</summary>
-	[Serializable]
-	public partial class CurrencyEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public CurrencyEntityFactory() : base("CurrencyEntity", AW.Data.EntityType.CurrencyEntity) { }
-
-		/// <summary>Creates a new, empty CurrencyEntity object.</summary>
-		/// <returns>A new, empty CurrencyEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new CurrencyEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCurrency
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty CurrencyRateEntity objects.</summary>
-	[Serializable]
-	public partial class CurrencyRateEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public CurrencyRateEntityFactory() : base("CurrencyRateEntity", AW.Data.EntityType.CurrencyRateEntity) { }
-
-		/// <summary>Creates a new, empty CurrencyRateEntity object.</summary>
-		/// <returns>A new, empty CurrencyRateEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new CurrencyRateEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCurrencyRate
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty CustomerEntity objects.</summary>
-	[Serializable]
-	public partial class CustomerEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public CustomerEntityFactory() : base("CustomerEntity", AW.Data.EntityType.CustomerEntity) { }
-
-		/// <summary>Creates a new, empty CustomerEntity object.</summary>
-		/// <returns>A new, empty CustomerEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new CustomerEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomer
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty CustomerAddressEntity objects.</summary>
-	[Serializable]
-	public partial class CustomerAddressEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public CustomerAddressEntityFactory() : base("CustomerAddressEntity", AW.Data.EntityType.CustomerAddressEntity) { }
-
-		/// <summary>Creates a new, empty CustomerAddressEntity object.</summary>
-		/// <returns>A new, empty CustomerAddressEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new CustomerAddressEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomerAddress
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty CustomerViewRelatedEntity objects.</summary>
-	[Serializable]
-	public partial class CustomerViewRelatedEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public CustomerViewRelatedEntityFactory() : base("CustomerViewRelatedEntity", AW.Data.EntityType.CustomerViewRelatedEntity) { }
-
-		/// <summary>Creates a new, empty CustomerViewRelatedEntity object.</summary>
-		/// <returns>A new, empty CustomerViewRelatedEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new CustomerViewRelatedEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomerViewRelated
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -331,7 +110,50 @@ namespace AW.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDatabaseLog
 			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty ErrorLogEntity objects.</summary>
+	[Serializable]
+	public partial class ErrorLogEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public ErrorLogEntityFactory() : base("ErrorLogEntity", AW.Data.EntityType.ErrorLogEntity) { }
+
+		/// <summary>Creates a new, empty ErrorLogEntity object.</summary>
+		/// <returns>A new, empty ErrorLogEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new ErrorLogEntity();
 			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewErrorLog
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty DepartmentEntity objects.</summary>
+	[Serializable]
+	public partial class DepartmentEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public DepartmentEntityFactory() : base("DepartmentEntity", AW.Data.EntityType.DepartmentEntity) { }
+
+		/// <summary>Creates a new, empty DepartmentEntity object.</summary>
+		/// <returns>A new, empty DepartmentEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new DepartmentEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDepartment
+			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
 
@@ -375,51 +197,6 @@ namespace AW.Data.FactoryClasses
 			IEntity toReturn = new EmployeeAddressEntity();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewEmployeeAddress
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty ErrorLogEntity objects.</summary>
-	[Serializable]
-	public partial class ErrorLogEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public ErrorLogEntityFactory() : base("ErrorLogEntity", AW.Data.EntityType.ErrorLogEntity) { }
-
-		/// <summary>Creates a new, empty ErrorLogEntity object.</summary>
-		/// <returns>A new, empty ErrorLogEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new ErrorLogEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewErrorLog
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty DepartmentEntity objects.</summary>
-	[Serializable]
-	public partial class DepartmentEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public DepartmentEntityFactory() : base("DepartmentEntity", AW.Data.EntityType.DepartmentEntity) { }
-
-		/// <summary>Creates a new, empty DepartmentEntity object.</summary>
-		/// <returns>A new, empty DepartmentEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new DepartmentEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewDepartment
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -518,18 +295,62 @@ namespace AW.Data.FactoryClasses
 		#endregion
 	}
 	
-	/// <summary>Factory to create new, empty IndividualEntity objects.</summary>
+	/// <summary>Factory to create new, empty AddressEntity objects.</summary>
 	[Serializable]
-	public partial class IndividualEntityFactory : EntityFactoryBase {
+	public partial class AddressEntityFactory : EntityFactoryBase {
 		/// <summary>CTor</summary>
-		public IndividualEntityFactory() : base("IndividualEntity", AW.Data.EntityType.IndividualEntity) { }
+		public AddressEntityFactory() : base("AddressEntity", AW.Data.EntityType.AddressEntity) { }
 
-		/// <summary>Creates a new, empty IndividualEntity object.</summary>
-		/// <returns>A new, empty IndividualEntity object.</returns>
+		/// <summary>Creates a new, empty AddressEntity object.</summary>
+		/// <returns>A new, empty AddressEntity object.</returns>
 		public override IEntity Create() {
-			IEntity toReturn = new IndividualEntity();
+			IEntity toReturn = new AddressEntity();
 			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewIndividual
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddress
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty AddressTypeEntity objects.</summary>
+	[Serializable]
+	public partial class AddressTypeEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public AddressTypeEntityFactory() : base("AddressTypeEntity", AW.Data.EntityType.AddressTypeEntity) { }
+
+		/// <summary>Creates a new, empty AddressTypeEntity object.</summary>
+		/// <returns>A new, empty AddressTypeEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new AddressTypeEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewAddressType
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty ContactEntity objects.</summary>
+	[Serializable]
+	public partial class ContactEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public ContactEntityFactory() : base("ContactEntity", AW.Data.EntityType.ContactEntity) { }
+
+		/// <summary>Creates a new, empty ContactEntity object.</summary>
+		/// <returns>A new, empty ContactEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new ContactEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewContact
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -562,18 +383,40 @@ namespace AW.Data.FactoryClasses
 		#endregion
 	}
 	
-	/// <summary>Factory to create new, empty ProductEntity objects.</summary>
+	/// <summary>Factory to create new, empty CountryRegionEntity objects.</summary>
 	[Serializable]
-	public partial class ProductEntityFactory : EntityFactoryBase {
+	public partial class CountryRegionEntityFactory : EntityFactoryBase {
 		/// <summary>CTor</summary>
-		public ProductEntityFactory() : base("ProductEntity", AW.Data.EntityType.ProductEntity) { }
+		public CountryRegionEntityFactory() : base("CountryRegionEntity", AW.Data.EntityType.CountryRegionEntity) { }
 
-		/// <summary>Creates a new, empty ProductEntity object.</summary>
-		/// <returns>A new, empty ProductEntity object.</returns>
+		/// <summary>Creates a new, empty CountryRegionEntity object.</summary>
+		/// <returns>A new, empty CountryRegionEntity object.</returns>
 		public override IEntity Create() {
-			IEntity toReturn = new ProductEntity();
+			IEntity toReturn = new CountryRegionEntity();
 			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewProduct
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCountryRegion
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty StateProvinceEntity objects.</summary>
+	[Serializable]
+	public partial class StateProvinceEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public StateProvinceEntityFactory() : base("StateProvinceEntity", AW.Data.EntityType.StateProvinceEntity) { }
+
+		/// <summary>Creates a new, empty StateProvinceEntity object.</summary>
+		/// <returns>A new, empty StateProvinceEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new StateProvinceEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewStateProvince
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -684,6 +527,28 @@ namespace AW.Data.FactoryClasses
 			IEntity toReturn = new LocationEntity();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewLocation
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty ProductEntity objects.</summary>
+	[Serializable]
+	public partial class ProductEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public ProductEntityFactory() : base("ProductEntity", AW.Data.EntityType.ProductEntity) { }
+
+		/// <summary>Creates a new, empty ProductEntity object.</summary>
+		/// <returns>A new, empty ProductEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new ProductEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewProduct
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -1178,6 +1043,28 @@ namespace AW.Data.FactoryClasses
 		#endregion
 	}
 	
+	/// <summary>Factory to create new, empty ShipMethodEntity objects.</summary>
+	[Serializable]
+	public partial class ShipMethodEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public ShipMethodEntityFactory() : base("ShipMethodEntity", AW.Data.EntityType.ShipMethodEntity) { }
+
+		/// <summary>Creates a new, empty ShipMethodEntity object.</summary>
+		/// <returns>A new, empty ShipMethodEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new ShipMethodEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewShipMethod
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
 	/// <summary>Factory to create new, empty VendorEntity objects.</summary>
 	[Serializable]
 	public partial class VendorEntityFactory : EntityFactoryBase {
@@ -1278,6 +1165,205 @@ namespace AW.Data.FactoryClasses
 			IEntity toReturn = new CountryRegionCurrencyEntity();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCountryRegionCurrency
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty CreditCardEntity objects.</summary>
+	[Serializable]
+	public partial class CreditCardEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CreditCardEntityFactory() : base("CreditCardEntity", AW.Data.EntityType.CreditCardEntity) { }
+
+		/// <summary>Creates a new, empty CreditCardEntity object.</summary>
+		/// <returns>A new, empty CreditCardEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CreditCardEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCreditCard
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty CurrencyEntity objects.</summary>
+	[Serializable]
+	public partial class CurrencyEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CurrencyEntityFactory() : base("CurrencyEntity", AW.Data.EntityType.CurrencyEntity) { }
+
+		/// <summary>Creates a new, empty CurrencyEntity object.</summary>
+		/// <returns>A new, empty CurrencyEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CurrencyEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCurrency
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty CurrencyRateEntity objects.</summary>
+	[Serializable]
+	public partial class CurrencyRateEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CurrencyRateEntityFactory() : base("CurrencyRateEntity", AW.Data.EntityType.CurrencyRateEntity) { }
+
+		/// <summary>Creates a new, empty CurrencyRateEntity object.</summary>
+		/// <returns>A new, empty CurrencyRateEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CurrencyRateEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCurrencyRate
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty CustomerEntity objects.</summary>
+	[Serializable]
+	public partial class CustomerEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CustomerEntityFactory() : base("CustomerEntity", AW.Data.EntityType.CustomerEntity) { }
+
+		/// <summary>Creates a new, empty CustomerEntity object.</summary>
+		/// <returns>A new, empty CustomerEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CustomerEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomer
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty CustomerAddressEntity objects.</summary>
+	[Serializable]
+	public partial class CustomerAddressEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CustomerAddressEntityFactory() : base("CustomerAddressEntity", AW.Data.EntityType.CustomerAddressEntity) { }
+
+		/// <summary>Creates a new, empty CustomerAddressEntity object.</summary>
+		/// <returns>A new, empty CustomerAddressEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CustomerAddressEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomerAddress
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty CustomerViewRelatedEntity objects.</summary>
+	[Serializable]
+	public partial class CustomerViewRelatedEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public CustomerViewRelatedEntityFactory() : base("CustomerViewRelatedEntity", AW.Data.EntityType.CustomerViewRelatedEntity) { }
+
+		/// <summary>Creates a new, empty CustomerViewRelatedEntity object.</summary>
+		/// <returns>A new, empty CustomerViewRelatedEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new CustomerViewRelatedEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomerViewRelated
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty IndividualEntity objects.</summary>
+	[Serializable]
+	public partial class IndividualEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public IndividualEntityFactory() : base("IndividualEntity", AW.Data.EntityType.IndividualEntity) { }
+
+		/// <summary>Creates a new, empty IndividualEntity object.</summary>
+		/// <returns>A new, empty IndividualEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new IndividualEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewIndividual
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty SalesOrderDetailEntity objects.</summary>
+	[Serializable]
+	public partial class SalesOrderDetailEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public SalesOrderDetailEntityFactory() : base("SalesOrderDetailEntity", AW.Data.EntityType.SalesOrderDetailEntity) { }
+
+		/// <summary>Creates a new, empty SalesOrderDetailEntity object.</summary>
+		/// <returns>A new, empty SalesOrderDetailEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new SalesOrderDetailEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesOrderDetail
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty SalesOrderHeaderEntity objects.</summary>
+	[Serializable]
+	public partial class SalesOrderHeaderEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public SalesOrderHeaderEntityFactory() : base("SalesOrderHeaderEntity", AW.Data.EntityType.SalesOrderHeaderEntity) { }
+
+		/// <summary>Creates a new, empty SalesOrderHeaderEntity object.</summary>
+		/// <returns>A new, empty SalesOrderHeaderEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new SalesOrderHeaderEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesOrderHeader
+      toReturn.ConcurrencyPredicateFactoryToUse = GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory;
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -1398,6 +1484,28 @@ namespace AW.Data.FactoryClasses
 		#endregion
 	}
 	
+	/// <summary>Factory to create new, empty SalesTerritoryEntity objects.</summary>
+	[Serializable]
+	public partial class SalesTerritoryEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public SalesTerritoryEntityFactory() : base("SalesTerritoryEntity", AW.Data.EntityType.SalesTerritoryEntity) { }
+
+		/// <summary>Creates a new, empty SalesTerritoryEntity object.</summary>
+		/// <returns>A new, empty SalesTerritoryEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new SalesTerritoryEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesTerritory
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
 	/// <summary>Factory to create new, empty SalesTerritoryHistoryEntity objects.</summary>
 	[Serializable]
 	public partial class SalesTerritoryHistoryEntityFactory : EntityFactoryBase {
@@ -1432,139 +1540,6 @@ namespace AW.Data.FactoryClasses
 			IEntity toReturn = new ShoppingCartItemEntity();
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewShoppingCartItem
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty StoreEntity objects.</summary>
-	[Serializable]
-	public partial class StoreEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public StoreEntityFactory() : base("StoreEntity", AW.Data.EntityType.StoreEntity) { }
-
-		/// <summary>Creates a new, empty StoreEntity object.</summary>
-		/// <returns>A new, empty StoreEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new StoreEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewStore
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty StoreContactEntity objects.</summary>
-	[Serializable]
-	public partial class StoreContactEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public StoreContactEntityFactory() : base("StoreContactEntity", AW.Data.EntityType.StoreContactEntity) { }
-
-		/// <summary>Creates a new, empty StoreContactEntity object.</summary>
-		/// <returns>A new, empty StoreContactEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new StoreContactEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewStoreContact
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty SalesOrderDetailEntity objects.</summary>
-	[Serializable]
-	public partial class SalesOrderDetailEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public SalesOrderDetailEntityFactory() : base("SalesOrderDetailEntity", AW.Data.EntityType.SalesOrderDetailEntity) { }
-
-		/// <summary>Creates a new, empty SalesOrderDetailEntity object.</summary>
-		/// <returns>A new, empty SalesOrderDetailEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new SalesOrderDetailEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesOrderDetail
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty SalesOrderHeaderEntity objects.</summary>
-	[Serializable]
-	public partial class SalesOrderHeaderEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public SalesOrderHeaderEntityFactory() : base("SalesOrderHeaderEntity", AW.Data.EntityType.SalesOrderHeaderEntity) { }
-
-		/// <summary>Creates a new, empty SalesOrderHeaderEntity object.</summary>
-		/// <returns>A new, empty SalesOrderHeaderEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new SalesOrderHeaderEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesOrderHeader
-      toReturn.ConcurrencyPredicateFactoryToUse = GeneralConcurrencyPredicateFactory.ConcurrencyPredicateFactory;
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty SalesTerritoryEntity objects.</summary>
-	[Serializable]
-	public partial class SalesTerritoryEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public SalesTerritoryEntityFactory() : base("SalesTerritoryEntity", AW.Data.EntityType.SalesTerritoryEntity) { }
-
-		/// <summary>Creates a new, empty SalesTerritoryEntity object.</summary>
-		/// <returns>A new, empty SalesTerritoryEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new SalesTerritoryEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesTerritory
-			// __LLBLGENPRO_USER_CODE_REGION_END
-			return toReturn;
-		}
-
-
-		#region Included Code
-
-		#endregion
-	}
-	
-	/// <summary>Factory to create new, empty ShipMethodEntity objects.</summary>
-	[Serializable]
-	public partial class ShipMethodEntityFactory : EntityFactoryBase {
-		/// <summary>CTor</summary>
-		public ShipMethodEntityFactory() : base("ShipMethodEntity", AW.Data.EntityType.ShipMethodEntity) { }
-
-		/// <summary>Creates a new, empty ShipMethodEntity object.</summary>
-		/// <returns>A new, empty ShipMethodEntity object.</returns>
-		public override IEntity Create() {
-			IEntity toReturn = new ShipMethodEntity();
-			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewShipMethod
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -1619,18 +1594,40 @@ namespace AW.Data.FactoryClasses
 		#endregion
 	}
 	
-	/// <summary>Factory to create new, empty StateProvinceEntity objects.</summary>
+	/// <summary>Factory to create new, empty StoreEntity objects.</summary>
 	[Serializable]
-	public partial class StateProvinceEntityFactory : EntityFactoryBase {
+	public partial class StoreEntityFactory : EntityFactoryBase {
 		/// <summary>CTor</summary>
-		public StateProvinceEntityFactory() : base("StateProvinceEntity", AW.Data.EntityType.StateProvinceEntity) { }
+		public StoreEntityFactory() : base("StoreEntity", AW.Data.EntityType.StoreEntity) { }
 
-		/// <summary>Creates a new, empty StateProvinceEntity object.</summary>
-		/// <returns>A new, empty StateProvinceEntity object.</returns>
+		/// <summary>Creates a new, empty StoreEntity object.</summary>
+		/// <returns>A new, empty StoreEntity object.</returns>
 		public override IEntity Create() {
-			IEntity toReturn = new StateProvinceEntity();
+			IEntity toReturn = new StoreEntity();
 			
-			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewStateProvince
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewStore
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			return toReturn;
+		}
+
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty StoreContactEntity objects.</summary>
+	[Serializable]
+	public partial class StoreContactEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public StoreContactEntityFactory() : base("StoreContactEntity", AW.Data.EntityType.StoreContactEntity) { }
+
+		/// <summary>Creates a new, empty StoreContactEntity object.</summary>
+		/// <returns>A new, empty StoreContactEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new StoreContactEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewStoreContact
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			return toReturn;
 		}
@@ -1652,38 +1649,18 @@ namespace AW.Data.FactoryClasses
 		{
 			switch(typeToUse)
 			{
-				case AW.Data.EntityType.AddressEntity:
-					return new AddressCollection();
-				case AW.Data.EntityType.AddressTypeEntity:
-					return new AddressTypeCollection();
 				case AW.Data.EntityType.AwbuildVersionEntity:
 					return new AwbuildVersionCollection();
-				case AW.Data.EntityType.ContactEntity:
-					return new ContactCollection();
-				case AW.Data.EntityType.CountryRegionEntity:
-					return new CountryRegionCollection();
-				case AW.Data.EntityType.CreditCardEntity:
-					return new CreditCardCollection();
-				case AW.Data.EntityType.CurrencyEntity:
-					return new CurrencyCollection();
-				case AW.Data.EntityType.CurrencyRateEntity:
-					return new CurrencyRateCollection();
-				case AW.Data.EntityType.CustomerEntity:
-					return new CustomerCollection();
-				case AW.Data.EntityType.CustomerAddressEntity:
-					return new CustomerAddressCollection();
-				case AW.Data.EntityType.CustomerViewRelatedEntity:
-					return new CustomerViewRelatedCollection();
 				case AW.Data.EntityType.DatabaseLogEntity:
 					return new DatabaseLogCollection();
-				case AW.Data.EntityType.EmployeeEntity:
-					return new EmployeeCollection();
-				case AW.Data.EntityType.EmployeeAddressEntity:
-					return new EmployeeAddressCollection();
 				case AW.Data.EntityType.ErrorLogEntity:
 					return new ErrorLogCollection();
 				case AW.Data.EntityType.DepartmentEntity:
 					return new DepartmentCollection();
+				case AW.Data.EntityType.EmployeeEntity:
+					return new EmployeeCollection();
+				case AW.Data.EntityType.EmployeeAddressEntity:
+					return new EmployeeAddressCollection();
 				case AW.Data.EntityType.EmployeeDepartmentHistoryEntity:
 					return new EmployeeDepartmentHistoryCollection();
 				case AW.Data.EntityType.EmployeePayHistoryEntity:
@@ -1692,12 +1669,18 @@ namespace AW.Data.FactoryClasses
 					return new JobCandidateCollection();
 				case AW.Data.EntityType.ShiftEntity:
 					return new ShiftCollection();
-				case AW.Data.EntityType.IndividualEntity:
-					return new IndividualCollection();
+				case AW.Data.EntityType.AddressEntity:
+					return new AddressCollection();
+				case AW.Data.EntityType.AddressTypeEntity:
+					return new AddressTypeCollection();
+				case AW.Data.EntityType.ContactEntity:
+					return new ContactCollection();
 				case AW.Data.EntityType.ContactTypeEntity:
 					return new ContactTypeCollection();
-				case AW.Data.EntityType.ProductEntity:
-					return new ProductCollection();
+				case AW.Data.EntityType.CountryRegionEntity:
+					return new CountryRegionCollection();
+				case AW.Data.EntityType.StateProvinceEntity:
+					return new StateProvinceCollection();
 				case AW.Data.EntityType.BillOfMaterialEntity:
 					return new BillOfMaterialCollection();
 				case AW.Data.EntityType.CultureEntity:
@@ -1708,6 +1691,8 @@ namespace AW.Data.FactoryClasses
 					return new IllustrationCollection();
 				case AW.Data.EntityType.LocationEntity:
 					return new LocationCollection();
+				case AW.Data.EntityType.ProductEntity:
+					return new ProductCollection();
 				case AW.Data.EntityType.ProductCategoryEntity:
 					return new ProductCategoryCollection();
 				case AW.Data.EntityType.ProductCostHistoryEntity:
@@ -1752,6 +1737,8 @@ namespace AW.Data.FactoryClasses
 					return new PurchaseOrderDetailCollection();
 				case AW.Data.EntityType.PurchaseOrderHeaderEntity:
 					return new PurchaseOrderHeaderCollection();
+				case AW.Data.EntityType.ShipMethodEntity:
+					return new ShipMethodCollection();
 				case AW.Data.EntityType.VendorEntity:
 					return new VendorCollection();
 				case AW.Data.EntityType.VendorAddressEntity:
@@ -1762,6 +1749,24 @@ namespace AW.Data.FactoryClasses
 					return new ContactCreditCardCollection();
 				case AW.Data.EntityType.CountryRegionCurrencyEntity:
 					return new CountryRegionCurrencyCollection();
+				case AW.Data.EntityType.CreditCardEntity:
+					return new CreditCardCollection();
+				case AW.Data.EntityType.CurrencyEntity:
+					return new CurrencyCollection();
+				case AW.Data.EntityType.CurrencyRateEntity:
+					return new CurrencyRateCollection();
+				case AW.Data.EntityType.CustomerEntity:
+					return new CustomerCollection();
+				case AW.Data.EntityType.CustomerAddressEntity:
+					return new CustomerAddressCollection();
+				case AW.Data.EntityType.CustomerViewRelatedEntity:
+					return new CustomerViewRelatedCollection();
+				case AW.Data.EntityType.IndividualEntity:
+					return new IndividualCollection();
+				case AW.Data.EntityType.SalesOrderDetailEntity:
+					return new SalesOrderDetailCollection();
+				case AW.Data.EntityType.SalesOrderHeaderEntity:
+					return new SalesOrderHeaderCollection();
 				case AW.Data.EntityType.SalesOrderHeaderSalesReasonEntity:
 					return new SalesOrderHeaderSalesReasonCollection();
 				case AW.Data.EntityType.SalesPersonEntity:
@@ -1772,28 +1777,20 @@ namespace AW.Data.FactoryClasses
 					return new SalesReasonCollection();
 				case AW.Data.EntityType.SalesTaxRateEntity:
 					return new SalesTaxRateCollection();
+				case AW.Data.EntityType.SalesTerritoryEntity:
+					return new SalesTerritoryCollection();
 				case AW.Data.EntityType.SalesTerritoryHistoryEntity:
 					return new SalesTerritoryHistoryCollection();
 				case AW.Data.EntityType.ShoppingCartItemEntity:
 					return new ShoppingCartItemCollection();
-				case AW.Data.EntityType.StoreEntity:
-					return new StoreCollection();
-				case AW.Data.EntityType.StoreContactEntity:
-					return new StoreContactCollection();
-				case AW.Data.EntityType.SalesOrderDetailEntity:
-					return new SalesOrderDetailCollection();
-				case AW.Data.EntityType.SalesOrderHeaderEntity:
-					return new SalesOrderHeaderCollection();
-				case AW.Data.EntityType.SalesTerritoryEntity:
-					return new SalesTerritoryCollection();
-				case AW.Data.EntityType.ShipMethodEntity:
-					return new ShipMethodCollection();
 				case AW.Data.EntityType.SpecialOfferEntity:
 					return new SpecialOfferCollection();
 				case AW.Data.EntityType.SpecialOfferProductEntity:
 					return new SpecialOfferProductCollection();
-				case AW.Data.EntityType.StateProvinceEntity:
-					return new StateProvinceCollection();
+				case AW.Data.EntityType.StoreEntity:
+					return new StoreCollection();
+				case AW.Data.EntityType.StoreContactEntity:
+					return new StoreContactCollection();
 				default:
 					return null;
 			}
@@ -1812,53 +1809,23 @@ namespace AW.Data.FactoryClasses
 			IEntityFactory factoryToUse = null;
 			switch(entityTypeToCreate)
 			{
-				case AW.Data.EntityType.AddressEntity:
-					factoryToUse = new AddressEntityFactory();
-					break;
-				case AW.Data.EntityType.AddressTypeEntity:
-					factoryToUse = new AddressTypeEntityFactory();
-					break;
 				case AW.Data.EntityType.AwbuildVersionEntity:
 					factoryToUse = new AwbuildVersionEntityFactory();
 					break;
-				case AW.Data.EntityType.ContactEntity:
-					factoryToUse = new ContactEntityFactory();
-					break;
-				case AW.Data.EntityType.CountryRegionEntity:
-					factoryToUse = new CountryRegionEntityFactory();
-					break;
-				case AW.Data.EntityType.CreditCardEntity:
-					factoryToUse = new CreditCardEntityFactory();
-					break;
-				case AW.Data.EntityType.CurrencyEntity:
-					factoryToUse = new CurrencyEntityFactory();
-					break;
-				case AW.Data.EntityType.CurrencyRateEntity:
-					factoryToUse = new CurrencyRateEntityFactory();
-					break;
-				case AW.Data.EntityType.CustomerEntity:
-					factoryToUse = new CustomerEntityFactory();
-					break;
-				case AW.Data.EntityType.CustomerAddressEntity:
-					factoryToUse = new CustomerAddressEntityFactory();
-					break;
-				case AW.Data.EntityType.CustomerViewRelatedEntity:
-					factoryToUse = new CustomerViewRelatedEntityFactory();
-					break;
 				case AW.Data.EntityType.DatabaseLogEntity:
 					factoryToUse = new DatabaseLogEntityFactory();
-					break;
-				case AW.Data.EntityType.EmployeeEntity:
-					factoryToUse = new EmployeeEntityFactory();
-					break;
-				case AW.Data.EntityType.EmployeeAddressEntity:
-					factoryToUse = new EmployeeAddressEntityFactory();
 					break;
 				case AW.Data.EntityType.ErrorLogEntity:
 					factoryToUse = new ErrorLogEntityFactory();
 					break;
 				case AW.Data.EntityType.DepartmentEntity:
 					factoryToUse = new DepartmentEntityFactory();
+					break;
+				case AW.Data.EntityType.EmployeeEntity:
+					factoryToUse = new EmployeeEntityFactory();
+					break;
+				case AW.Data.EntityType.EmployeeAddressEntity:
+					factoryToUse = new EmployeeAddressEntityFactory();
 					break;
 				case AW.Data.EntityType.EmployeeDepartmentHistoryEntity:
 					factoryToUse = new EmployeeDepartmentHistoryEntityFactory();
@@ -1872,14 +1839,23 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.ShiftEntity:
 					factoryToUse = new ShiftEntityFactory();
 					break;
-				case AW.Data.EntityType.IndividualEntity:
-					factoryToUse = new IndividualEntityFactory();
+				case AW.Data.EntityType.AddressEntity:
+					factoryToUse = new AddressEntityFactory();
+					break;
+				case AW.Data.EntityType.AddressTypeEntity:
+					factoryToUse = new AddressTypeEntityFactory();
+					break;
+				case AW.Data.EntityType.ContactEntity:
+					factoryToUse = new ContactEntityFactory();
 					break;
 				case AW.Data.EntityType.ContactTypeEntity:
 					factoryToUse = new ContactTypeEntityFactory();
 					break;
-				case AW.Data.EntityType.ProductEntity:
-					factoryToUse = new ProductEntityFactory();
+				case AW.Data.EntityType.CountryRegionEntity:
+					factoryToUse = new CountryRegionEntityFactory();
+					break;
+				case AW.Data.EntityType.StateProvinceEntity:
+					factoryToUse = new StateProvinceEntityFactory();
 					break;
 				case AW.Data.EntityType.BillOfMaterialEntity:
 					factoryToUse = new BillOfMaterialEntityFactory();
@@ -1895,6 +1871,9 @@ namespace AW.Data.FactoryClasses
 					break;
 				case AW.Data.EntityType.LocationEntity:
 					factoryToUse = new LocationEntityFactory();
+					break;
+				case AW.Data.EntityType.ProductEntity:
+					factoryToUse = new ProductEntityFactory();
 					break;
 				case AW.Data.EntityType.ProductCategoryEntity:
 					factoryToUse = new ProductCategoryEntityFactory();
@@ -1962,6 +1941,9 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.PurchaseOrderHeaderEntity:
 					factoryToUse = new PurchaseOrderHeaderEntityFactory();
 					break;
+				case AW.Data.EntityType.ShipMethodEntity:
+					factoryToUse = new ShipMethodEntityFactory();
+					break;
 				case AW.Data.EntityType.VendorEntity:
 					factoryToUse = new VendorEntityFactory();
 					break;
@@ -1976,6 +1958,33 @@ namespace AW.Data.FactoryClasses
 					break;
 				case AW.Data.EntityType.CountryRegionCurrencyEntity:
 					factoryToUse = new CountryRegionCurrencyEntityFactory();
+					break;
+				case AW.Data.EntityType.CreditCardEntity:
+					factoryToUse = new CreditCardEntityFactory();
+					break;
+				case AW.Data.EntityType.CurrencyEntity:
+					factoryToUse = new CurrencyEntityFactory();
+					break;
+				case AW.Data.EntityType.CurrencyRateEntity:
+					factoryToUse = new CurrencyRateEntityFactory();
+					break;
+				case AW.Data.EntityType.CustomerEntity:
+					factoryToUse = new CustomerEntityFactory();
+					break;
+				case AW.Data.EntityType.CustomerAddressEntity:
+					factoryToUse = new CustomerAddressEntityFactory();
+					break;
+				case AW.Data.EntityType.CustomerViewRelatedEntity:
+					factoryToUse = new CustomerViewRelatedEntityFactory();
+					break;
+				case AW.Data.EntityType.IndividualEntity:
+					factoryToUse = new IndividualEntityFactory();
+					break;
+				case AW.Data.EntityType.SalesOrderDetailEntity:
+					factoryToUse = new SalesOrderDetailEntityFactory();
+					break;
+				case AW.Data.EntityType.SalesOrderHeaderEntity:
+					factoryToUse = new SalesOrderHeaderEntityFactory();
 					break;
 				case AW.Data.EntityType.SalesOrderHeaderSalesReasonEntity:
 					factoryToUse = new SalesOrderHeaderSalesReasonEntityFactory();
@@ -1992,29 +2001,14 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.SalesTaxRateEntity:
 					factoryToUse = new SalesTaxRateEntityFactory();
 					break;
+				case AW.Data.EntityType.SalesTerritoryEntity:
+					factoryToUse = new SalesTerritoryEntityFactory();
+					break;
 				case AW.Data.EntityType.SalesTerritoryHistoryEntity:
 					factoryToUse = new SalesTerritoryHistoryEntityFactory();
 					break;
 				case AW.Data.EntityType.ShoppingCartItemEntity:
 					factoryToUse = new ShoppingCartItemEntityFactory();
-					break;
-				case AW.Data.EntityType.StoreEntity:
-					factoryToUse = new StoreEntityFactory();
-					break;
-				case AW.Data.EntityType.StoreContactEntity:
-					factoryToUse = new StoreContactEntityFactory();
-					break;
-				case AW.Data.EntityType.SalesOrderDetailEntity:
-					factoryToUse = new SalesOrderDetailEntityFactory();
-					break;
-				case AW.Data.EntityType.SalesOrderHeaderEntity:
-					factoryToUse = new SalesOrderHeaderEntityFactory();
-					break;
-				case AW.Data.EntityType.SalesTerritoryEntity:
-					factoryToUse = new SalesTerritoryEntityFactory();
-					break;
-				case AW.Data.EntityType.ShipMethodEntity:
-					factoryToUse = new ShipMethodEntityFactory();
 					break;
 				case AW.Data.EntityType.SpecialOfferEntity:
 					factoryToUse = new SpecialOfferEntityFactory();
@@ -2022,8 +2016,11 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.SpecialOfferProductEntity:
 					factoryToUse = new SpecialOfferProductEntityFactory();
 					break;
-				case AW.Data.EntityType.StateProvinceEntity:
-					factoryToUse = new StateProvinceEntityFactory();
+				case AW.Data.EntityType.StoreEntity:
+					factoryToUse = new StoreEntityFactory();
+					break;
+				case AW.Data.EntityType.StoreContactEntity:
+					factoryToUse = new StoreContactEntityFactory();
 					break;
 			}
 			IEntity toReturn = null;

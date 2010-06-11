@@ -43,15 +43,15 @@ namespace AW.Data.DaoClasses
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
-		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects to return</param>
 		/// <param name="employeeInstance">EmployeeEntity instance to use as a filter for the EmployeeAddressEntity objects to return</param>
+		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects to return</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity addressInstance, IEntity employeeInstance, int pageNumber, int pageSize)
+		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity employeeInstance, IEntity addressInstance, int pageNumber, int pageSize)
 		{
 			this.EntityFactoryToUse = entityFactoryToUse;
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeAddressEntity);
-			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(addressInstance, employeeInstance, fieldsToReturn);
+			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(employeeInstance, addressInstance, fieldsToReturn);
 			if(filter!=null)
 			{
 				selectFilter.AddWithAnd(filter);
@@ -64,13 +64,13 @@ namespace AW.Data.DaoClasses
 
 		/// <summary>Deletes from the persistent storage all 'EmployeeAddress' entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects to delete</param>
 		/// <param name="employeeInstance">EmployeeEntity instance to use as a filter for the EmployeeAddressEntity objects to delete</param>
+		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects to delete</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMulti(ITransaction containingTransaction, IEntity addressInstance, IEntity employeeInstance)
+		public int DeleteMulti(ITransaction containingTransaction, IEntity employeeInstance, IEntity addressInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeAddressEntity);
-			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(addressInstance, employeeInstance, fields);
+			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(employeeInstance, addressInstance, fields);
 			return this.DeleteMulti(containingTransaction, deleteFilter);
 		}
 
@@ -79,32 +79,32 @@ namespace AW.Data.DaoClasses
 		/// of <i>entityWithNewValues</i> which are affected by the filterBucket's filter will thus also be updated.</summary>
 		/// <param name="entityWithNewValues">IEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects to update</param>
 		/// <param name="employeeInstance">EmployeeEntity instance to use as a filter for the EmployeeAddressEntity objects to update</param>
+		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects to update</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity addressInstance, IEntity employeeInstance)
+		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity employeeInstance, IEntity addressInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeAddressEntity);
-			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(addressInstance, employeeInstance, fields);
+			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(employeeInstance, addressInstance, fields);
 			return this.UpdateMulti(entityWithNewValues, containingTransaction, updateFilter);
 		}
 
 		/// <summary>Creates a PredicateExpression which should be used as a filter when any combination of available foreign keys is specified.</summary>
-		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects</param>
 		/// <param name="employeeInstance">EmployeeEntity instance to use as a filter for the EmployeeAddressEntity objects</param>
+		/// <param name="addressInstance">AddressEntity instance to use as a filter for the EmployeeAddressEntity objects</param>
 		/// <param name="fieldsToReturn">IEntityFields implementation which forms the definition of the fieldset of the target entity.</param>
 		/// <returns>A ready to use PredicateExpression based on the passed in foreign key value holders.</returns>
-		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity addressInstance, IEntity employeeInstance, IEntityFields fieldsToReturn)
+		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity employeeInstance, IEntity addressInstance, IEntityFields fieldsToReturn)
 		{
 			IPredicateExpression selectFilter = new PredicateExpression();
 			
-			if(addressInstance != null)
-			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeAddressFieldIndex.AddressID], ComparisonOperator.Equal, ((AddressEntity)addressInstance).AddressID));
-			}
 			if(employeeInstance != null)
 			{
 				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeAddressFieldIndex.EmployeeID], ComparisonOperator.Equal, ((EmployeeEntity)employeeInstance).EmployeeID));
+			}
+			if(addressInstance != null)
+			{
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)EmployeeAddressFieldIndex.AddressID], ComparisonOperator.Equal, ((AddressEntity)addressInstance).AddressID));
 			}
 			return selectFilter;
 		}
