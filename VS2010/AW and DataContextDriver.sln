@@ -32,6 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 		SampleQueryFiles\GetCustomerViewRelatedCollection.cs = SampleQueryFiles\GetCustomerViewRelatedCollection.cs
 		SampleQueryFiles\GetCustomerViewTypedView.cs = SampleQueryFiles\GetCustomerViewTypedView.cs
 		SampleQueryFiles\GetEntitiesTypes.cs = SampleQueryFiles\GetEntitiesTypes.cs
+		SampleQueryFiles\LINQToSQL_ShowEmployeesInTree.linq = SampleQueryFiles\LINQToSQL_ShowEmployeesInTree.linq
 		SampleQueryFiles\LLBL Project Entity Table Mapping.cs = SampleQueryFiles\LLBL Project Entity Table Mapping.cs
 		SampleQueryFiles\LLBL Project Entity Table Mapping.linq = SampleQueryFiles\LLBL Project Entity Table Mapping.linq
 		SampleQueryFiles\LLBL Project Inspector.linq = SampleQueryFiles\LLBL Project Inspector.linq

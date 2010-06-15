@@ -6,11 +6,9 @@
     <AttachFile>true</AttachFile>
     <UserInstance>true</UserInstance>
   </Connection>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Helper.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Windows.Forms.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.LLBL.dll</Reference>
+  <Reference>&lt;Personal&gt;\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\AW.Test\bin\Debug\AW.Helper.dll</Reference>
+  <Reference>&lt;Personal&gt;\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\AW.Test\bin\Debug\AW.Winforms.Helpers.dll</Reference>
 </Query>
+
 AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(Customers).Dump ("All customers");

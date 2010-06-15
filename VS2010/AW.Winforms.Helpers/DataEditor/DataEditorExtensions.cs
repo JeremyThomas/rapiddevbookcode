@@ -164,6 +164,16 @@ namespace AW.Winforms.Helpers.DataEditor
 			}
 		}
 
+		public static IEnumerable<T> ShowHierarchyInTree<T>(this Table<T> table, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : class
+		{
+			return table.ShowHierarchyInTree(table.Context, iDPropertyName, parentIDPropertyName, nameColumn);
+		}
+
+		public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, DataContext dataContext, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : class
+		{
+			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new GridDataEditorLinqtoSQLPersister(dataContext));
+		}
+
 		#endregion
 
 		public static void CopyEntireDataGridViewToClipboard(this DataGridView dataGridView)
