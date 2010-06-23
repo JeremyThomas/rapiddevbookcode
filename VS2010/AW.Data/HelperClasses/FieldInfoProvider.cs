@@ -766,22 +766,22 @@ namespace AW.Data.HelperClasses
 		{
 			this.AddFieldIndexEnumForElementName(typeof(CustomerViewRelatedFieldIndex), "CustomerViewRelatedEntity");
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "AddressLine1", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.AddressLine1, 60, 0, 0);
-			this.AddElementFieldInfo("CustomerViewRelatedEntity", "AddressLine2", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.AddressLine2, 60, 0, 0);
+			this.AddElementFieldInfo("CustomerViewRelatedEntity", "AddressLine2", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.AddressLine2, 60, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "AddressType", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.AddressType, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "City", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.City, 30, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "CountryRegionName", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.CountryRegionName, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "CustomerId", typeof(System.Int32), true, false, true, false,  (int)CustomerViewRelatedFieldIndex.CustomerId, 0, 0, 10);
-			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Demographics", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.Demographics, 2147483647, 0, 0);
-			this.AddElementFieldInfo("CustomerViewRelatedEntity", "EmailAddress", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.EmailAddress, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Demographics", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.Demographics, 2147483647, 0, 0);
+			this.AddElementFieldInfo("CustomerViewRelatedEntity", "EmailAddress", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.EmailAddress, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "EmailPromotion", typeof(System.Int32), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.EmailPromotion, 0, 0, 10);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "FirstName", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.FirstName, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "LastName", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.LastName, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewRelatedEntity", "MiddleName", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.MiddleName, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Phone", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.Phone, 25, 0, 0);
+			this.AddElementFieldInfo("CustomerViewRelatedEntity", "MiddleName", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.MiddleName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Phone", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.Phone, 25, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "PostalCode", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.PostalCode, 15, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "StateProvinceName", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.StateProvinceName, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Suffix", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.Suffix, 10, 0, 0);
-			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Title", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.Title, 8, 0, 0);
+			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Suffix", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.Suffix, 10, 0, 0);
+			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Title", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.Title, 8, 0, 0);
 		}
 		/// <summary>Inits IndividualEntity's FieldInfo objects</summary>
 		private void InitIndividualEntityInfos()
