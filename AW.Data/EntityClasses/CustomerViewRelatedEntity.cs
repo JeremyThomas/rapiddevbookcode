@@ -1161,7 +1161,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The AddressLine2 property of the Entity CustomerViewRelated<br/><br/></summary>
 		/// <remarks>Mapped on  view field: "vIndividualCustomer"."AddressLine2"<br/>
 		/// View field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
-		/// View field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		/// View field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String AddressLine2
 		{
 			get { return (System.String)GetValue((int)CustomerViewRelatedFieldIndex.AddressLine2, true); }
@@ -1211,7 +1211,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The Demographics property of the Entity CustomerViewRelated<br/><br/></summary>
 		/// <remarks>Mapped on  view field: "vIndividualCustomer"."Demographics"<br/>
 		/// View field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
-		/// View field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		/// View field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String Demographics
 		{
 			get { return (System.String)GetValue((int)CustomerViewRelatedFieldIndex.Demographics, true); }
@@ -1221,7 +1221,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The EmailAddress property of the Entity CustomerViewRelated<br/><br/></summary>
 		/// <remarks>Mapped on  view field: "vIndividualCustomer"."EmailAddress"<br/>
 		/// View field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// View field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		/// View field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String EmailAddress
 		{
 			get { return (System.String)GetValue((int)CustomerViewRelatedFieldIndex.EmailAddress, true); }
@@ -1261,7 +1261,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The MiddleName property of the Entity CustomerViewRelated<br/><br/></summary>
 		/// <remarks>Mapped on  view field: "vIndividualCustomer"."MiddleName"<br/>
 		/// View field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
-		/// View field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		/// View field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String MiddleName
 		{
 			get { return (System.String)GetValue((int)CustomerViewRelatedFieldIndex.MiddleName, true); }
@@ -1271,7 +1271,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The Phone property of the Entity CustomerViewRelated<br/><br/></summary>
 		/// <remarks>Mapped on  view field: "vIndividualCustomer"."Phone"<br/>
 		/// View field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
-		/// View field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		/// View field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String Phone
 		{
 			get { return (System.String)GetValue((int)CustomerViewRelatedFieldIndex.Phone, true); }
@@ -1301,7 +1301,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The Suffix property of the Entity CustomerViewRelated<br/><br/></summary>
 		/// <remarks>Mapped on  view field: "vIndividualCustomer"."Suffix"<br/>
 		/// View field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 10<br/>
-		/// View field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		/// View field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String Suffix
 		{
 			get { return (System.String)GetValue((int)CustomerViewRelatedFieldIndex.Suffix, true); }
@@ -1311,7 +1311,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> The Title property of the Entity CustomerViewRelated<br/><br/></summary>
 		/// <remarks>Mapped on  view field: "vIndividualCustomer"."Title"<br/>
 		/// View field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 8<br/>
-		/// View field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		/// View field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
 		public virtual System.String Title
 		{
 			get { return (System.String)GetValue((int)CustomerViewRelatedFieldIndex.Title, true); }

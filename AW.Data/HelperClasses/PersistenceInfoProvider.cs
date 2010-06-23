@@ -764,22 +764,22 @@ namespace AW.Data.HelperClasses
 		{
 			this.AddElementMapping( "CustomerViewRelatedEntity", "AdventureWorks", @"Sales", "vIndividualCustomer", 17 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "AddressLine1", "AddressLine1", false, "NVarChar", 60, 0, 0, false, "", null, typeof(System.String), 0 );
-			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "AddressLine2", "AddressLine2", false, "NVarChar", 60, 0, 0, false, "", null, typeof(System.String), 1 );
+			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "AddressLine2", "AddressLine2", true, "NVarChar", 60, 0, 0, false, "", null, typeof(System.String), 1 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "AddressType", "AddressType", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 2 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "City", "City", false, "NVarChar", 30, 0, 0, false, "", null, typeof(System.String), 3 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "CountryRegionName", "CountryRegionName", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 4 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "CustomerId", "CustomerID", false, "Int", 0, 0, 10, false, "", null, typeof(System.Int32), 5 );
-			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "Demographics", "Demographics", false, "Xml", 2147483647, 0, 0, false, "", null, typeof(System.String), 6 );
-			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "EmailAddress", "EmailAddress", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 7 );
+			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "Demographics", "Demographics", true, "Xml", 2147483647, 0, 0, false, "", null, typeof(System.String), 6 );
+			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "EmailAddress", "EmailAddress", true, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 7 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "EmailPromotion", "EmailPromotion", false, "Int", 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "FirstName", "FirstName", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 9 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "LastName", "LastName", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 10 );
-			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "MiddleName", "MiddleName", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 11 );
-			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "Phone", "Phone", false, "NVarChar", 25, 0, 0, false, "", null, typeof(System.String), 12 );
+			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "MiddleName", "MiddleName", true, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 11 );
+			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "Phone", "Phone", true, "NVarChar", 25, 0, 0, false, "", null, typeof(System.String), 12 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "PostalCode", "PostalCode", false, "NVarChar", 15, 0, 0, false, "", null, typeof(System.String), 13 );
 			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "StateProvinceName", "StateProvinceName", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 14 );
-			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "Suffix", "Suffix", false, "NVarChar", 10, 0, 0, false, "", null, typeof(System.String), 15 );
-			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "Title", "Title", false, "NVarChar", 8, 0, 0, false, "", null, typeof(System.String), 16 );
+			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "Suffix", "Suffix", true, "NVarChar", 10, 0, 0, false, "", null, typeof(System.String), 15 );
+			this.AddElementFieldMapping( "CustomerViewRelatedEntity", "Title", "Title", true, "NVarChar", 8, 0, 0, false, "", null, typeof(System.String), 16 );
 		}
 		/// <summary>Inits IndividualEntity's mappings</summary>
 		private void InitIndividualEntityMappings()
