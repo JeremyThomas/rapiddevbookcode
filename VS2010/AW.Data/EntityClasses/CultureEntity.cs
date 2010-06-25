@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Culture'. <br/><br/>
 	/// 
+	/// MS_Description: Lookup table containing the languages in which some AdventureWorks data is stored.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class CultureEntity : CommonEntityBase
@@ -415,12 +416,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Lookup table containing the languages in which some AdventureWorks data is stored.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("CultureID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Culture description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 		}
 		#endregion
@@ -513,7 +518,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CultureID property of the Entity Culture<br/><br/></summary>
+		/// <summary> The CultureID property of the Entity Culture<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Culture"."CultureID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 6<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -523,7 +529,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CultureFieldIndex.CultureID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Culture<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Culture<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Culture"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -533,7 +540,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CultureFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity Culture<br/><br/></summary>
+		/// <summary> The Name property of the Entity Culture<br/><br/>
+		/// MS_Description: Culture description.<br/></summary>
 		/// <remarks>Mapped on  table field: "Culture"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

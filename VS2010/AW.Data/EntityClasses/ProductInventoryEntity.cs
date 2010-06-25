@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductInventory'. <br/><br/>
 	/// 
+	/// MS_Description: Product inventory information.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductInventoryEntity : CommonEntityBase
@@ -518,20 +519,28 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Product inventory information.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Storage container on a shelf in an inventory location.");
 			_fieldsCustomProperties.Add("Bin", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Inventory location identification number. Foreign key to Location.LocationID. ");
 			_fieldsCustomProperties.Add("LocationID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Quantity of products in the inventory location.");
 			_fieldsCustomProperties.Add("Quantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Storage compartment within an inventory location.");
 			_fieldsCustomProperties.Add("Shelf", fieldHashtable);
 		}
 		#endregion
@@ -699,7 +708,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Bin property of the Entity ProductInventory<br/><br/></summary>
+		/// <summary> The Bin property of the Entity ProductInventory<br/><br/>
+		/// MS_Description: Storage container on a shelf in an inventory location.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."Bin"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -709,7 +719,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductInventoryFieldIndex.Bin, value, true); }
 		}
 
-		/// <summary> The LocationID property of the Entity ProductInventory<br/><br/></summary>
+		/// <summary> The LocationID property of the Entity ProductInventory<br/><br/>
+		/// MS_Description: Inventory location identification number. Foreign key to Location.LocationID. <br/></summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."LocationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -719,7 +730,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductInventoryFieldIndex.LocationID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductInventory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductInventory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -729,7 +741,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductInventoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity ProductInventory<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity ProductInventory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -739,7 +752,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductInventoryFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The Quantity property of the Entity ProductInventory<br/><br/></summary>
+		/// <summary> The Quantity property of the Entity ProductInventory<br/><br/>
+		/// MS_Description: Quantity of products in the inventory location.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."Quantity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -749,7 +763,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductInventoryFieldIndex.Quantity, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity ProductInventory<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity ProductInventory<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -759,7 +774,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductInventoryFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The Shelf property of the Entity ProductInventory<br/><br/></summary>
+		/// <summary> The Shelf property of the Entity ProductInventory<br/><br/>
+		/// MS_Description: Storage compartment within an inventory location.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."Shelf"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 10<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

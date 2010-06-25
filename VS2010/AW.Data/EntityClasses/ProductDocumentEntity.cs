@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductDocument'. <br/><br/>
 	/// 
+	/// MS_Description: Cross-reference table mapping products to related product documents.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductDocumentEntity : CommonEntityBase
@@ -518,12 +519,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Cross-reference table mapping products to related product documents.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Document identification number. Foreign key to Document.DocumentID.");
 			_fieldsCustomProperties.Add("DocumentID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 		}
 		#endregion
@@ -691,7 +696,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The DocumentID property of the Entity ProductDocument<br/><br/></summary>
+		/// <summary> The DocumentID property of the Entity ProductDocument<br/><br/>
+		/// MS_Description: Document identification number. Foreign key to Document.DocumentID.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductDocument"."DocumentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -701,7 +707,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductDocumentFieldIndex.DocumentID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductDocument<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductDocument<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductDocument"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -711,7 +718,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductDocumentFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity ProductDocument<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity ProductDocument<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductDocument"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

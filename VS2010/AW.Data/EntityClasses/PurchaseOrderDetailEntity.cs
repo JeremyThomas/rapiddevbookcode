@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'PurchaseOrderDetail'. <br/><br/>
 	/// 
+	/// MS_Description: Individual products associated with a specific purchase order. See PurchaseOrderHeader.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class PurchaseOrderDetailEntity : CommonEntityBase
@@ -518,28 +519,40 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Individual products associated with a specific purchase order. See PurchaseOrderHeader.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the product is expected to be received.");
 			_fieldsCustomProperties.Add("DueDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Per product subtotal. Computed as OrderQty * UnitPrice.");
 			_fieldsCustomProperties.Add("LineTotal", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Quantity ordered.");
 			_fieldsCustomProperties.Add("OrderQuantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product identification number. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Primary key. One line number per purchased product.");
 			_fieldsCustomProperties.Add("PurchaseOrderDetailID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("PurchaseOrderID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Quantity actually received from the vendor.");
 			_fieldsCustomProperties.Add("ReceivedQuantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Quantity rejected during inspection.");
 			_fieldsCustomProperties.Add("RejectedQuantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Quantity accepted into inventory. Computed as ReceivedQty - RejectedQty.");
 			_fieldsCustomProperties.Add("StockedQuantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Vendor's selling price of a single product.");
 			_fieldsCustomProperties.Add("UnitPrice", fieldHashtable);
 		}
 		#endregion
@@ -707,7 +720,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The DueDate property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The DueDate property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Date the product is expected to be received.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."DueDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -717,7 +731,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderDetailFieldIndex.DueDate, value, true); }
 		}
 
-		/// <summary> The LineTotal property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The LineTotal property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Per product subtotal. Computed as OrderQty * UnitPrice.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."LineTotal"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -727,7 +742,8 @@ namespace AW.Data.EntityClasses
 
 		}
 
-		/// <summary> The ModifiedDate property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -737,7 +753,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderDetailFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The OrderQuantity property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The OrderQuantity property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Quantity ordered.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."OrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -747,7 +764,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderDetailFieldIndex.OrderQuantity, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -757,7 +775,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderDetailFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The PurchaseOrderDetailID property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The PurchaseOrderDetailID property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Primary key. One line number per purchased product.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."PurchaseOrderDetailID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -767,7 +786,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderDetailFieldIndex.PurchaseOrderDetailID, value, true); }
 		}
 
-		/// <summary> The PurchaseOrderID property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The PurchaseOrderID property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."PurchaseOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -777,7 +797,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderDetailFieldIndex.PurchaseOrderID, value, true); }
 		}
 
-		/// <summary> The ReceivedQuantity property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The ReceivedQuantity property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Quantity actually received from the vendor.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."ReceivedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -787,7 +808,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderDetailFieldIndex.ReceivedQuantity, value, true); }
 		}
 
-		/// <summary> The RejectedQuantity property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The RejectedQuantity property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Quantity rejected during inspection.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."RejectedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -797,7 +819,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)PurchaseOrderDetailFieldIndex.RejectedQuantity, value, true); }
 		}
 
-		/// <summary> The StockedQuantity property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The StockedQuantity property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Quantity accepted into inventory. Computed as ReceivedQty - RejectedQty.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."StockedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 9, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -807,7 +830,8 @@ namespace AW.Data.EntityClasses
 
 		}
 
-		/// <summary> The UnitPrice property of the Entity PurchaseOrderDetail<br/><br/></summary>
+		/// <summary> The UnitPrice property of the Entity PurchaseOrderDetail<br/><br/>
+		/// MS_Description: Vendor's selling price of a single product.<br/></summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."UnitPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

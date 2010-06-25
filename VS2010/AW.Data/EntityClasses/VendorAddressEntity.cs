@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'VendorAddress'. <br/><br/>
 	/// 
+	/// MS_Description: Cross-reference mapping vendors and addresses.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class VendorAddressEntity : CommonEntityBase
@@ -604,14 +605,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Cross-reference mapping vendors and addresses.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Primary key. Foreign key to Address.AddressID.");
 			_fieldsCustomProperties.Add("AddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Address type. Foreign key to AddressType.AddressTypeID.");
 			_fieldsCustomProperties.Add("AddressTypeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("VendorID", fieldHashtable);
 		}
 		#endregion
@@ -819,7 +825,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The AddressID property of the Entity VendorAddress<br/><br/></summary>
+		/// <summary> The AddressID property of the Entity VendorAddress<br/><br/>
+		/// MS_Description: Primary key. Foreign key to Address.AddressID.<br/></summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."AddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -829,7 +836,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorAddressFieldIndex.AddressID, value, true); }
 		}
 
-		/// <summary> The AddressTypeID property of the Entity VendorAddress<br/><br/></summary>
+		/// <summary> The AddressTypeID property of the Entity VendorAddress<br/><br/>
+		/// MS_Description: Address type. Foreign key to AddressType.AddressTypeID.<br/></summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."AddressTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -839,7 +847,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorAddressFieldIndex.AddressTypeID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity VendorAddress<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity VendorAddress<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -849,7 +858,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorAddressFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The VendorID property of the Entity VendorAddress<br/><br/></summary>
+		/// <summary> The VendorID property of the Entity VendorAddress<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

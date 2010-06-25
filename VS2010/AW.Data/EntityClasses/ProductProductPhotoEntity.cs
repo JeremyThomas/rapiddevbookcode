@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductProductPhoto'. <br/><br/>
 	/// 
+	/// MS_Description: Cross-reference table mapping products and product photos.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductProductPhotoEntity : CommonEntityBase
@@ -518,14 +519,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Cross-reference table mapping products and product photos.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"0 = Photo is not the principal image. 1 = Photo is the principal image.");
 			_fieldsCustomProperties.Add("Primary", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product identification number. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductPhotoID", fieldHashtable);
 		}
 		#endregion
@@ -693,7 +699,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductProductPhoto<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductProductPhoto<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductProductPhoto"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -703,7 +710,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductProductPhotoFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Primary property of the Entity ProductProductPhoto<br/><br/></summary>
+		/// <summary> The Primary property of the Entity ProductProductPhoto<br/><br/>
+		/// MS_Description: 0 = Photo is not the principal image. 1 = Photo is the principal image.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductProductPhoto"."Primary"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -713,7 +721,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductProductPhotoFieldIndex.Primary, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity ProductProductPhoto<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity ProductProductPhoto<br/><br/>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductProductPhoto"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -723,7 +732,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductProductPhotoFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The ProductPhotoID property of the Entity ProductProductPhoto<br/><br/></summary>
+		/// <summary> The ProductPhotoID property of the Entity ProductProductPhoto<br/><br/>
+		/// MS_Description: Nonclustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductProductPhoto"."ProductPhotoID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

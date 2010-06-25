@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'BillOfMaterial'. <br/><br/>
 	/// 
+	/// MS_Description: Items required to make bicycles and bicycle subassemblies. It identifies the heirarchical relationship between a parent product and its components.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class BillOfMaterialEntity : CommonEntityBase
@@ -596,24 +597,34 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Items required to make bicycles and bicycle subassemblies. It identifies the heirarchical relationship between a parent product and its components.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index.");
 			_fieldsCustomProperties.Add("BillOfMaterialsID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Indicates the depth the component is from its parent (AssemblyID).");
 			_fieldsCustomProperties.Add("Bomlevel", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("ComponentID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the component stopped being used in the assembly item.");
 			_fieldsCustomProperties.Add("EndDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Quantity of the component needed to create the assembly.");
 			_fieldsCustomProperties.Add("PerAssemblyQuantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Parent product identification number. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductAssemblyID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the component started being used in the assembly item.");
 			_fieldsCustomProperties.Add("StartDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Standard code identifying the unit of measure for the quantity.");
 			_fieldsCustomProperties.Add("UnitMeasureCode", fieldHashtable);
 		}
 		#endregion
@@ -819,7 +830,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The BillOfMaterialsID property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The BillOfMaterialsID property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Clustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."BillOfMaterialsID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -829,7 +841,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.BillOfMaterialsID, value, true); }
 		}
 
-		/// <summary> The Bomlevel property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The Bomlevel property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Indicates the depth the component is from its parent (AssemblyID).<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."BOMLevel"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -839,7 +852,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.Bomlevel, value, true); }
 		}
 
-		/// <summary> The ComponentID property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The ComponentID property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."ComponentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -849,7 +863,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.ComponentID, value, true); }
 		}
 
-		/// <summary> The EndDate property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The EndDate property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Date the component stopped being used in the assembly item.<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -859,7 +874,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.EndDate, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -869,7 +885,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The PerAssemblyQuantity property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The PerAssemblyQuantity property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Quantity of the component needed to create the assembly.<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."PerAssemblyQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -879,7 +896,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.PerAssemblyQuantity, value, true); }
 		}
 
-		/// <summary> The ProductAssemblyID property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The ProductAssemblyID property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Parent product identification number. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."ProductAssemblyID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -889,7 +907,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.ProductAssemblyID, value, true); }
 		}
 
-		/// <summary> The StartDate property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The StartDate property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Date the component started being used in the assembly item.<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -899,7 +918,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.StartDate, value, true); }
 		}
 
-		/// <summary> The UnitMeasureCode property of the Entity BillOfMaterial<br/><br/></summary>
+		/// <summary> The UnitMeasureCode property of the Entity BillOfMaterial<br/><br/>
+		/// MS_Description: Standard code identifying the unit of measure for the quantity.<br/></summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."UnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'JobCandidate'. <br/><br/>
 	/// 
+	/// MS_Description: Résumés submitted to Human Resources by job applicants.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class JobCandidateEntity : CommonEntityBase
@@ -424,14 +425,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Résumés submitted to Human Resources by job applicants.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Employee identification number if applicant was hired. Foreign key to Employee.EmployeeID.");
 			_fieldsCustomProperties.Add("EmployeeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("JobCandidateID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Résumé in XML format.");
 			_fieldsCustomProperties.Add("Resume", fieldHashtable);
 		}
 		#endregion
@@ -557,7 +563,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The EmployeeID property of the Entity JobCandidate<br/><br/></summary>
+		/// <summary> The EmployeeID property of the Entity JobCandidate<br/><br/>
+		/// MS_Description: Employee identification number if applicant was hired. Foreign key to Employee.EmployeeID.<br/></summary>
 		/// <remarks>Mapped on  table field: "JobCandidate"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -567,7 +574,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)JobCandidateFieldIndex.EmployeeID, value, true); }
 		}
 
-		/// <summary> The JobCandidateID property of the Entity JobCandidate<br/><br/></summary>
+		/// <summary> The JobCandidateID property of the Entity JobCandidate<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "JobCandidate"."JobCandidateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -577,7 +585,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)JobCandidateFieldIndex.JobCandidateID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity JobCandidate<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity JobCandidate<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "JobCandidate"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -587,7 +596,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)JobCandidateFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Resume property of the Entity JobCandidate<br/><br/></summary>
+		/// <summary> The Resume property of the Entity JobCandidate<br/><br/>
+		/// MS_Description: Résumé in XML format.<br/></summary>
 		/// <remarks>Mapped on  table field: "JobCandidate"."Resume"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'WorkOrder'. <br/><br/>
 	/// 
+	/// MS_Description: Manufacturing work orders.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class WorkOrderEntity : CommonEntityBase
@@ -597,26 +598,37 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Manufacturing work orders.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Work order due date.");
 			_fieldsCustomProperties.Add("DueDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Work order end date.");
 			_fieldsCustomProperties.Add("EndDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("OrderQuantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product identification number. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Quantity that failed inspection.");
 			_fieldsCustomProperties.Add("ScrappedQuantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Reason for inspection failure.");
 			_fieldsCustomProperties.Add("ScrapReasonID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Work order start date.");
 			_fieldsCustomProperties.Add("StartDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Quantity built and put in inventory.");
 			_fieldsCustomProperties.Add("StockedQuantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("WorkOrderID", fieldHashtable);
 		}
 		#endregion
@@ -789,7 +801,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The DueDate property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The DueDate property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Work order due date.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."DueDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -799,7 +812,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)WorkOrderFieldIndex.DueDate, value, true); }
 		}
 
-		/// <summary> The EndDate property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The EndDate property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Work order end date.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -809,7 +823,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)WorkOrderFieldIndex.EndDate, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -819,7 +834,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)WorkOrderFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The OrderQuantity property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The OrderQuantity property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."OrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -829,7 +845,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)WorkOrderFieldIndex.OrderQuantity, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -839,7 +856,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)WorkOrderFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The ScrappedQuantity property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The ScrappedQuantity property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Quantity that failed inspection.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."ScrappedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -849,7 +867,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)WorkOrderFieldIndex.ScrappedQuantity, value, true); }
 		}
 
-		/// <summary> The ScrapReasonID property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The ScrapReasonID property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Reason for inspection failure.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."ScrapReasonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -859,7 +878,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)WorkOrderFieldIndex.ScrapReasonID, value, true); }
 		}
 
-		/// <summary> The StartDate property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The StartDate property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Work order start date.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -869,7 +889,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)WorkOrderFieldIndex.StartDate, value, true); }
 		}
 
-		/// <summary> The StockedQuantity property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The StockedQuantity property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Quantity built and put in inventory.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."StockedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -879,7 +900,8 @@ namespace AW.Data.EntityClasses
 
 		}
 
-		/// <summary> The WorkOrderID property of the Entity WorkOrder<br/><br/></summary>
+		/// <summary> The WorkOrderID property of the Entity WorkOrder<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."WorkOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

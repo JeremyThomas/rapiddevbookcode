@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductModel'. <br/><br/>
 	/// 
+	/// MS_Description: Primary XML index.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductModelEntity : CommonEntityBase
@@ -593,18 +594,25 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Primary XML index.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Detailed product catalog information in xml format.");
 			_fieldsCustomProperties.Add("CatalogDescription", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Manufacturing instructions in xml format.");
 			_fieldsCustomProperties.Add("Instructions", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Primary key for ProductModel records.");
 			_fieldsCustomProperties.Add("ProductModelID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 		}
 		#endregion
@@ -711,7 +719,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CatalogDescription property of the Entity ProductModel<br/><br/></summary>
+		/// <summary> The CatalogDescription property of the Entity ProductModel<br/><br/>
+		/// MS_Description: Detailed product catalog information in xml format.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModel"."CatalogDescription"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -721,7 +730,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelFieldIndex.CatalogDescription, value, true); }
 		}
 
-		/// <summary> The Instructions property of the Entity ProductModel<br/><br/></summary>
+		/// <summary> The Instructions property of the Entity ProductModel<br/><br/>
+		/// MS_Description: Manufacturing instructions in xml format.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModel"."Instructions"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -731,7 +741,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelFieldIndex.Instructions, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductModel<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductModel<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModel"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -741,7 +752,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity ProductModel<br/><br/></summary>
+		/// <summary> The Name property of the Entity ProductModel<br/><br/>
+		/// MS_Description: Unique nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModel"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -751,7 +763,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The ProductModelID property of the Entity ProductModel<br/><br/></summary>
+		/// <summary> The ProductModelID property of the Entity ProductModel<br/><br/>
+		/// MS_Description: Primary key for ProductModel records.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModel"."ProductModelID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -761,7 +774,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelFieldIndex.ProductModelID, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity ProductModel<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity ProductModel<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModel"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

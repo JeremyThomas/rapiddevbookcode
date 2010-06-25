@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'UnitMeasure'. <br/><br/>
 	/// 
+	/// MS_Description: Unit of measure lookup table.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class UnitMeasureEntity : CommonEntityBase
@@ -682,12 +683,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Unit of measure lookup table.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unit of measure description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("UnitMeasureCode", fieldHashtable);
 		}
 		#endregion
@@ -801,7 +806,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity UnitMeasure<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity UnitMeasure<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "UnitMeasure"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -811,7 +817,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)UnitMeasureFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity UnitMeasure<br/><br/></summary>
+		/// <summary> The Name property of the Entity UnitMeasure<br/><br/>
+		/// MS_Description: Unit of measure description.<br/></summary>
 		/// <remarks>Mapped on  table field: "UnitMeasure"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -821,7 +828,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)UnitMeasureFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The UnitMeasureCode property of the Entity UnitMeasure<br/><br/></summary>
+		/// <summary> The UnitMeasureCode property of the Entity UnitMeasure<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "UnitMeasure"."UnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

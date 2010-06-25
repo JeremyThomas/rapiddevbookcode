@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'AwbuildVersion'. <br/><br/>
 	/// 
+	/// MS_Description: Current version number of the AdventureWorks sample database. <br/>
 	/// </summary>
 	[Serializable]
 	public partial class AwbuildVersionEntity : CommonEntityBase
@@ -328,14 +329,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Current version number of the AdventureWorks sample database. ");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Version number of the database in 9.yy.mm.dd.00 format.");
 			_fieldsCustomProperties.Add("DatabaseVersion", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SystemInformationID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("VersionDate", fieldHashtable);
 		}
 		#endregion
@@ -421,7 +427,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The DatabaseVersion property of the Entity AwbuildVersion<br/><br/></summary>
+		/// <summary> The DatabaseVersion property of the Entity AwbuildVersion<br/><br/>
+		/// MS_Description: Version number of the database in 9.yy.mm.dd.00 format.<br/></summary>
 		/// <remarks>Mapped on  table field: "AWBuildVersion"."Database Version"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -431,7 +438,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AwbuildVersionFieldIndex.DatabaseVersion, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity AwbuildVersion<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity AwbuildVersion<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "AWBuildVersion"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -441,7 +449,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AwbuildVersionFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The SystemInformationID property of the Entity AwbuildVersion<br/><br/></summary>
+		/// <summary> The SystemInformationID property of the Entity AwbuildVersion<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "AWBuildVersion"."SystemInformationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -451,7 +460,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AwbuildVersionFieldIndex.SystemInformationID, value, true); }
 		}
 
-		/// <summary> The VersionDate property of the Entity AwbuildVersion<br/><br/></summary>
+		/// <summary> The VersionDate property of the Entity AwbuildVersion<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "AWBuildVersion"."VersionDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

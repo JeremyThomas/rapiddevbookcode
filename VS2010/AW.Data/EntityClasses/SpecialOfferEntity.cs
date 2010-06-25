@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SpecialOffer'. <br/><br/>
 	/// 
+	/// MS_Description: Sale discounts lookup table.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SpecialOfferEntity : CommonEntityBase
@@ -478,28 +479,40 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Sale discounts lookup table.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Group the discount applies to such as Reseller or Customer.");
 			_fieldsCustomProperties.Add("Category", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Discount description.");
 			_fieldsCustomProperties.Add("Description", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Discount precentage.");
 			_fieldsCustomProperties.Add("DiscountPct", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Discount end date.");
 			_fieldsCustomProperties.Add("EndDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Maximum discount percent allowed.");
 			_fieldsCustomProperties.Add("MaxQty", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Minimum discount percent allowed.");
 			_fieldsCustomProperties.Add("MinQty", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SpecialOfferID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Discount start date.");
 			_fieldsCustomProperties.Add("StartDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Discount type category.");
 			_fieldsCustomProperties.Add("Type", fieldHashtable);
 		}
 		#endregion
@@ -604,7 +617,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Category property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The Category property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Group the discount applies to such as Reseller or Customer.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."Category"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -614,7 +628,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.Category, value, true); }
 		}
 
-		/// <summary> The Description property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The Description property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Discount description.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."Description"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 255<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -624,7 +639,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.Description, value, true); }
 		}
 
-		/// <summary> The DiscountPct property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The DiscountPct property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Discount precentage.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."DiscountPct"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -634,7 +650,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.DiscountPct, value, true); }
 		}
 
-		/// <summary> The EndDate property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The EndDate property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Discount end date.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -644,7 +661,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.EndDate, value, true); }
 		}
 
-		/// <summary> The MaxQty property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The MaxQty property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Maximum discount percent allowed.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."MaxQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -654,7 +672,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.MaxQty, value, true); }
 		}
 
-		/// <summary> The MinQty property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The MinQty property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Minimum discount percent allowed.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."MinQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -664,7 +683,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.MinQty, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -674,7 +694,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -684,7 +705,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The SpecialOfferID property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The SpecialOfferID property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."SpecialOfferID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -694,7 +716,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.SpecialOfferID, value, true); }
 		}
 
-		/// <summary> The StartDate property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The StartDate property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Discount start date.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -704,7 +727,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferFieldIndex.StartDate, value, true); }
 		}
 
-		/// <summary> The Type property of the Entity SpecialOffer<br/><br/></summary>
+		/// <summary> The Type property of the Entity SpecialOffer<br/><br/>
+		/// MS_Description: Discount type category.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."Type"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

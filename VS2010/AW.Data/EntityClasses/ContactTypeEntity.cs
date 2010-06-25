@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ContactType'. <br/><br/>
 	/// 
+	/// MS_Description: Lookup table containing the types of contacts stored in Contact.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ContactTypeEntity : CommonEntityBase
@@ -504,12 +505,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Lookup table containing the types of contacts stored in Contact.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ContactTypeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Contact type description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 		}
 		#endregion
@@ -609,7 +614,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ContactTypeID property of the Entity ContactType<br/><br/></summary>
+		/// <summary> The ContactTypeID property of the Entity ContactType<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ContactType"."ContactTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -619,7 +625,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactTypeFieldIndex.ContactTypeID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ContactType<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ContactType<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ContactType"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -629,7 +636,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactTypeFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity ContactType<br/><br/></summary>
+		/// <summary> The Name property of the Entity ContactType<br/><br/>
+		/// MS_Description: Contact type description.<br/></summary>
 		/// <remarks>Mapped on  table field: "ContactType"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

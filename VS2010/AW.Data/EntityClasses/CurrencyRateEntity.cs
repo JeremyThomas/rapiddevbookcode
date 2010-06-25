@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'CurrencyRate'. <br/><br/>
 	/// 
+	/// MS_Description: Currency exchange rates.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class CurrencyRateEntity : CommonEntityBase
@@ -1108,20 +1109,28 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Currency exchange rates.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Average exchange rate for the day.");
 			_fieldsCustomProperties.Add("AverageRate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the exchange rate was obtained.");
 			_fieldsCustomProperties.Add("CurrencyRateDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("CurrencyRateID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Final exchange rate for the day.");
 			_fieldsCustomProperties.Add("EndOfDayRate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Exchange rate was converted from this currency code.");
 			_fieldsCustomProperties.Add("FromCurrencyCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Exchange rate was converted to this currency code.");
 			_fieldsCustomProperties.Add("ToCurrencyCode", fieldHashtable);
 		}
 		#endregion
@@ -1390,7 +1399,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The AverageRate property of the Entity CurrencyRate<br/><br/></summary>
+		/// <summary> The AverageRate property of the Entity CurrencyRate<br/><br/>
+		/// MS_Description: Average exchange rate for the day.<br/></summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."AverageRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1400,7 +1410,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CurrencyRateFieldIndex.AverageRate, value, true); }
 		}
 
-		/// <summary> The CurrencyRateDate property of the Entity CurrencyRate<br/><br/></summary>
+		/// <summary> The CurrencyRateDate property of the Entity CurrencyRate<br/><br/>
+		/// MS_Description: Date and time the exchange rate was obtained.<br/></summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."CurrencyRateDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1410,7 +1421,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CurrencyRateFieldIndex.CurrencyRateDate, value, true); }
 		}
 
-		/// <summary> The CurrencyRateID property of the Entity CurrencyRate<br/><br/></summary>
+		/// <summary> The CurrencyRateID property of the Entity CurrencyRate<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."CurrencyRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1420,7 +1432,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CurrencyRateFieldIndex.CurrencyRateID, value, true); }
 		}
 
-		/// <summary> The EndOfDayRate property of the Entity CurrencyRate<br/><br/></summary>
+		/// <summary> The EndOfDayRate property of the Entity CurrencyRate<br/><br/>
+		/// MS_Description: Final exchange rate for the day.<br/></summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."EndOfDayRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1430,7 +1443,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CurrencyRateFieldIndex.EndOfDayRate, value, true); }
 		}
 
-		/// <summary> The FromCurrencyCode property of the Entity CurrencyRate<br/><br/></summary>
+		/// <summary> The FromCurrencyCode property of the Entity CurrencyRate<br/><br/>
+		/// MS_Description: Exchange rate was converted from this currency code.<br/></summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."FromCurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1440,7 +1454,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CurrencyRateFieldIndex.FromCurrencyCode, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity CurrencyRate<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity CurrencyRate<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1450,7 +1465,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CurrencyRateFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ToCurrencyCode property of the Entity CurrencyRate<br/><br/></summary>
+		/// <summary> The ToCurrencyCode property of the Entity CurrencyRate<br/><br/>
+		/// MS_Description: Exchange rate was converted to this currency code.<br/></summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."ToCurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

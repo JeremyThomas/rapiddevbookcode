@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductCategory'. <br/><br/>
 	/// 
+	/// MS_Description: High-level product categorization.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductCategoryEntity : CommonEntityBase
@@ -415,14 +416,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"High-level product categorization.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Category description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductCategoryID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index. Used to support replication samples.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 		}
 		#endregion
@@ -515,7 +521,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductCategory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductCategory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCategory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -525,7 +532,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductCategoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity ProductCategory<br/><br/></summary>
+		/// <summary> The Name property of the Entity ProductCategory<br/><br/>
+		/// MS_Description: Category description.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCategory"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -535,7 +543,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductCategoryFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The ProductCategoryID property of the Entity ProductCategory<br/><br/></summary>
+		/// <summary> The ProductCategoryID property of the Entity ProductCategory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCategory"."ProductCategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -545,7 +554,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductCategoryFieldIndex.ProductCategoryID, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity ProductCategory<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity ProductCategory<br/><br/>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCategory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

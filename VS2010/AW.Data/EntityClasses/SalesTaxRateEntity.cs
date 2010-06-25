@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SalesTaxRate'. <br/><br/>
 	/// 
+	/// MS_Description: Tax rate lookup table.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SalesTaxRateEntity : CommonEntityBase
@@ -424,20 +425,28 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Tax rate lookup table.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Tax rate description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SalesTaxRateID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"State, province, or country/region the sales tax applies to.");
 			_fieldsCustomProperties.Add("StateProvinceID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Tax rate amount.");
 			_fieldsCustomProperties.Add("TaxRate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index. Used to support replication samples.");
 			_fieldsCustomProperties.Add("TaxType", fieldHashtable);
 		}
 		#endregion
@@ -563,7 +572,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity SalesTaxRate<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity SalesTaxRate<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -573,7 +583,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTaxRateFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity SalesTaxRate<br/><br/></summary>
+		/// <summary> The Name property of the Entity SalesTaxRate<br/><br/>
+		/// MS_Description: Tax rate description.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -583,7 +594,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTaxRateFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity SalesTaxRate<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity SalesTaxRate<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -593,7 +605,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTaxRateFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The SalesTaxRateID property of the Entity SalesTaxRate<br/><br/></summary>
+		/// <summary> The SalesTaxRateID property of the Entity SalesTaxRate<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."SalesTaxRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -603,7 +616,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTaxRateFieldIndex.SalesTaxRateID, value, true); }
 		}
 
-		/// <summary> The StateProvinceID property of the Entity SalesTaxRate<br/><br/></summary>
+		/// <summary> The StateProvinceID property of the Entity SalesTaxRate<br/><br/>
+		/// MS_Description: State, province, or country/region the sales tax applies to.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."StateProvinceID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -613,7 +627,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTaxRateFieldIndex.StateProvinceID, value, true); }
 		}
 
-		/// <summary> The TaxRate property of the Entity SalesTaxRate<br/><br/></summary>
+		/// <summary> The TaxRate property of the Entity SalesTaxRate<br/><br/>
+		/// MS_Description: Tax rate amount.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."TaxRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -623,7 +638,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTaxRateFieldIndex.TaxRate, value, true); }
 		}
 
-		/// <summary> The TaxType property of the Entity SalesTaxRate<br/><br/></summary>
+		/// <summary> The TaxType property of the Entity SalesTaxRate<br/><br/>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."TaxType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

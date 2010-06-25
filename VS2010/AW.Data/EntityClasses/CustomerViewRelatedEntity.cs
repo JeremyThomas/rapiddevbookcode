@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'CustomerViewRelated'. <br/><br/>
 	/// 
+	/// MS_Description: Individual customers (names and addresses) that purchase Adventure Works Cycles products online.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class CustomerViewRelatedEntity : CommonEntityBase
@@ -926,6 +927,7 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Individual customers (names and addresses) that purchase Adventure Works Cycles products online.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("AddressLine1", fieldHashtable);

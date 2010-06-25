@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductDescription'. <br/><br/>
 	/// 
+	/// MS_Description: Product descriptions in several languages.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductDescriptionEntity : CommonEntityBase
@@ -415,14 +416,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Product descriptions in several languages.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Description of the product.");
 			_fieldsCustomProperties.Add("Description", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductDescriptionID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 		}
 		#endregion
@@ -515,7 +521,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Description property of the Entity ProductDescription<br/><br/></summary>
+		/// <summary> The Description property of the Entity ProductDescription<br/><br/>
+		/// MS_Description: Description of the product.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductDescription"."Description"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 400<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -525,7 +532,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductDescriptionFieldIndex.Description, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductDescription<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductDescription<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductDescription"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -535,7 +543,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductDescriptionFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductDescriptionID property of the Entity ProductDescription<br/><br/></summary>
+		/// <summary> The ProductDescriptionID property of the Entity ProductDescription<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductDescription"."ProductDescriptionID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -545,7 +554,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductDescriptionFieldIndex.ProductDescriptionID, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity ProductDescription<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity ProductDescription<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductDescription"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

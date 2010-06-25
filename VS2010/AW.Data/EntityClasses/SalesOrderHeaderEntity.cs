@@ -34,6 +34,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SalesOrderHeader'. <br/><br/>
 	/// 
+	/// MS_Description: General sales order information.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SalesOrderHeaderEntity : CommonEntityBase
@@ -1436,60 +1437,88 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"General sales order information.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Financial accounting number reference.");
 			_fieldsCustomProperties.Add("AccountNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Customer billing address. Foreign key to Address.AddressID.");
 			_fieldsCustomProperties.Add("BillToAddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales representative comments.");
 			_fieldsCustomProperties.Add("Comment", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Customer contact identification number. Foreign key to Contact.ContactID.");
 			_fieldsCustomProperties.Add("ContactID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Approval code provided by the credit card company.");
 			_fieldsCustomProperties.Add("CreditCardApprovalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Credit card identification number. Foreign key to CreditCard.CreditCardID.");
 			_fieldsCustomProperties.Add("CreditCardID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Currency exchange rate used. Foreign key to CurrencyRate.CurrencyRateID.");
 			_fieldsCustomProperties.Add("CurrencyRateID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Customer identification number. Foreign key to Customer.CustomerID.");
 			_fieldsCustomProperties.Add("CustomerID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the order is due to the customer.");
 			_fieldsCustomProperties.Add("DueDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Shipping cost.");
 			_fieldsCustomProperties.Add("Freight", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"0 = Order placed by sales person. 1 = Order placed online by customer.");
 			_fieldsCustomProperties.Add("OnlineOrderFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index.");
 			_fieldsCustomProperties.Add("OrderDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Customer purchase order number reference. ");
 			_fieldsCustomProperties.Add("PurchaseOrderNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Incremental number to track changes to the sales order over time.");
 			_fieldsCustomProperties.Add("RevisionNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SalesOrderID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique sales order identification number.");
 			_fieldsCustomProperties.Add("SalesOrderNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales person who created the sales order. Foreign key to SalesPerson.SalePersonID.");
 			_fieldsCustomProperties.Add("SalesPersonID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("ShipDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Shipping method. Foreign key to ShipMethod.ShipMethodID.");
 			_fieldsCustomProperties.Add("ShipMethodID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Customer shipping address. Foreign key to Address.AddressID.");
 			_fieldsCustomProperties.Add("ShipToAddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled");
 			_fieldsCustomProperties.Add("Status", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.");
 			_fieldsCustomProperties.Add("SubTotal", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Tax amount.");
 			_fieldsCustomProperties.Add("TaxAmt", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.");
 			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Total due from customer. Computed as Subtotal + TaxAmt + Freight.");
 			_fieldsCustomProperties.Add("TotalDue", fieldHashtable);
 		}
 		#endregion
@@ -2001,7 +2030,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The AccountNumber property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The AccountNumber property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Financial accounting number reference.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."AccountNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2011,7 +2041,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.AccountNumber, value, true); }
 		}
 
-		/// <summary> The BillToAddressID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The BillToAddressID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Customer billing address. Foreign key to Address.AddressID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."BillToAddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2021,7 +2052,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.BillToAddressID, value, true); }
 		}
 
-		/// <summary> The Comment property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The Comment property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Sales representative comments.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Comment"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2031,7 +2063,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.Comment, value, true); }
 		}
 
-		/// <summary> The ContactID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The ContactID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Customer contact identification number. Foreign key to Contact.ContactID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2041,7 +2074,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ContactID, value, true); }
 		}
 
-		/// <summary> The CreditCardApprovalCode property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The CreditCardApprovalCode property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Approval code provided by the credit card company.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CreditCardApprovalCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2051,7 +2085,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CreditCardApprovalCode, value, true); }
 		}
 
-		/// <summary> The CreditCardID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The CreditCardID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Credit card identification number. Foreign key to CreditCard.CreditCardID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CreditCardID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2061,7 +2096,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CreditCardID, value, true); }
 		}
 
-		/// <summary> The CurrencyRateID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The CurrencyRateID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Currency exchange rate used. Foreign key to CurrencyRate.CurrencyRateID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CurrencyRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2071,7 +2107,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CurrencyRateID, value, true); }
 		}
 
-		/// <summary> The CustomerID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The CustomerID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Customer identification number. Foreign key to Customer.CustomerID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2081,7 +2118,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CustomerID, value, true); }
 		}
 
-		/// <summary> The DueDate property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The DueDate property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Date the order is due to the customer.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."DueDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2091,7 +2129,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.DueDate, value, true); }
 		}
 
-		/// <summary> The Freight property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The Freight property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Shipping cost.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Freight"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2101,7 +2140,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.Freight, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2111,7 +2151,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The OnlineOrderFlag property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The OnlineOrderFlag property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: 0 = Order placed by sales person. 1 = Order placed online by customer.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."OnlineOrderFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2121,7 +2162,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.OnlineOrderFlag, value, true); }
 		}
 
-		/// <summary> The OrderDate property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The OrderDate property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Unique nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."OrderDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2131,7 +2173,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.OrderDate, value, true); }
 		}
 
-		/// <summary> The PurchaseOrderNumber property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The PurchaseOrderNumber property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Customer purchase order number reference. <br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."PurchaseOrderNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2141,7 +2184,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.PurchaseOrderNumber, value, true); }
 		}
 
-		/// <summary> The RevisionNumber property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The RevisionNumber property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Incremental number to track changes to the sales order over time.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."RevisionNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2151,7 +2195,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.RevisionNumber, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2161,7 +2206,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The SalesOrderID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The SalesOrderID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -2171,7 +2217,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.SalesOrderID, value, true); }
 		}
 
-		/// <summary> The SalesOrderNumber property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The SalesOrderNumber property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Unique sales order identification number.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesOrderNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2181,7 +2228,8 @@ namespace AW.Data.EntityClasses
 
 		}
 
-		/// <summary> The SalesPersonID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The SalesPersonID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Sales person who created the sales order. Foreign key to SalesPerson.SalePersonID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesPersonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2191,7 +2239,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.SalesPersonID, value, true); }
 		}
 
-		/// <summary> The ShipDate property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The ShipDate property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2201,7 +2250,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ShipDate, value, true); }
 		}
 
-		/// <summary> The ShipMethodID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The ShipMethodID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Shipping method. Foreign key to ShipMethod.ShipMethodID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipMethodID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2211,7 +2261,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ShipMethodID, value, true); }
 		}
 
-		/// <summary> The ShipToAddressID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The ShipToAddressID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Customer shipping address. Foreign key to Address.AddressID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipToAddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2221,7 +2272,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.ShipToAddressID, value, true); }
 		}
 
-		/// <summary> The Status property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The Status property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Status"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2231,7 +2283,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.Status, value, true); }
 		}
 
-		/// <summary> The SubTotal property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The SubTotal property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SubTotal"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2241,7 +2294,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.SubTotal, value, true); }
 		}
 
-		/// <summary> The TaxAmt property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The TaxAmt property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Tax amount.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TaxAmt"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2251,7 +2305,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.TaxAmt, value, true); }
 		}
 
-		/// <summary> The TerritoryID property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The TerritoryID property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2261,7 +2316,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.TerritoryID, value, true); }
 		}
 
-		/// <summary> The TotalDue property of the Entity SalesOrderHeader<br/><br/></summary>
+		/// <summary> The TotalDue property of the Entity SalesOrderHeader<br/><br/>
+		/// MS_Description: Total due from customer. Computed as Subtotal + TaxAmt + Freight.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TotalDue"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Document'. <br/><br/>
 	/// 
+	/// MS_Description: Product maintenance documents.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class DocumentEntity : CommonEntityBase
@@ -415,26 +416,37 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Product maintenance documents.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Engineering change approval number.");
 			_fieldsCustomProperties.Add("ChangeNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Complete document.");
 			_fieldsCustomProperties.Add("Document", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("DocumentID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Document abstract.");
 			_fieldsCustomProperties.Add("DocumentSummary", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"File extension indicating the document type. For example, .doc or .txt.");
 			_fieldsCustomProperties.Add("FileExtension", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Directory path and file name of the document");
 			_fieldsCustomProperties.Add("FileName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Revision number of the document. ");
 			_fieldsCustomProperties.Add("Revision", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"1 = Pending approval, 2 = Approved, 3 = Obsolete");
 			_fieldsCustomProperties.Add("Status", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Title of the document.");
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
 		}
 		#endregion
@@ -527,7 +539,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ChangeNumber property of the Entity Document<br/><br/></summary>
+		/// <summary> The ChangeNumber property of the Entity Document<br/><br/>
+		/// MS_Description: Engineering change approval number.<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."ChangeNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -537,7 +550,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.ChangeNumber, value, true); }
 		}
 
-		/// <summary> The Document property of the Entity Document<br/><br/></summary>
+		/// <summary> The Document property of the Entity Document<br/><br/>
+		/// MS_Description: Complete document.<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."Document"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -547,7 +561,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.Document, value, true); }
 		}
 
-		/// <summary> The DocumentID property of the Entity Document<br/><br/></summary>
+		/// <summary> The DocumentID property of the Entity Document<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."DocumentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -557,7 +572,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.DocumentID, value, true); }
 		}
 
-		/// <summary> The DocumentSummary property of the Entity Document<br/><br/></summary>
+		/// <summary> The DocumentSummary property of the Entity Document<br/><br/>
+		/// MS_Description: Document abstract.<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."DocumentSummary"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -567,7 +583,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.DocumentSummary, value, true); }
 		}
 
-		/// <summary> The FileExtension property of the Entity Document<br/><br/></summary>
+		/// <summary> The FileExtension property of the Entity Document<br/><br/>
+		/// MS_Description: File extension indicating the document type. For example, .doc or .txt.<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."FileExtension"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 8<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -577,7 +594,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.FileExtension, value, true); }
 		}
 
-		/// <summary> The FileName property of the Entity Document<br/><br/></summary>
+		/// <summary> The FileName property of the Entity Document<br/><br/>
+		/// MS_Description: Directory path and file name of the document<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."FileName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 400<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -587,7 +605,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.FileName, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Document<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Document<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -597,7 +616,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Revision property of the Entity Document<br/><br/></summary>
+		/// <summary> The Revision property of the Entity Document<br/><br/>
+		/// MS_Description: Revision number of the document. <br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."Revision"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 5<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -607,7 +627,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.Revision, value, true); }
 		}
 
-		/// <summary> The Status property of the Entity Document<br/><br/></summary>
+		/// <summary> The Status property of the Entity Document<br/><br/>
+		/// MS_Description: 1 = Pending approval, 2 = Approved, 3 = Obsolete<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."Status"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -617,7 +638,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DocumentFieldIndex.Status, value, true); }
 		}
 
-		/// <summary> The Title property of the Entity Document<br/><br/></summary>
+		/// <summary> The Title property of the Entity Document<br/><br/>
+		/// MS_Description: Title of the document.<br/></summary>
 		/// <remarks>Mapped on  table field: "Document"."Title"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

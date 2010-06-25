@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductModelProductDescriptionCulture'. <br/><br/>
 	/// 
+	/// MS_Description: Cross-reference table mapping product descriptions and the language the description is written in.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductModelProductDescriptionCultureEntity : CommonEntityBase
@@ -612,14 +613,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Cross-reference table mapping product descriptions and the language the description is written in.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Culture identification number. Foreign key to Culture.CultureID.");
 			_fieldsCustomProperties.Add("CultureID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Primary key. Foreign key to ProductDescription.ProductDescriptionID.");
 			_fieldsCustomProperties.Add("ProductDescriptionID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductModelID", fieldHashtable);
 		}
 		#endregion
@@ -829,7 +835,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CultureID property of the Entity ProductModelProductDescriptionCulture<br/><br/></summary>
+		/// <summary> The CultureID property of the Entity ProductModelProductDescriptionCulture<br/><br/>
+		/// MS_Description: Culture identification number. Foreign key to Culture.CultureID.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModelProductDescriptionCulture"."CultureID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 6<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -839,7 +846,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelProductDescriptionCultureFieldIndex.CultureID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductModelProductDescriptionCulture<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductModelProductDescriptionCulture<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModelProductDescriptionCulture"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -849,7 +857,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelProductDescriptionCultureFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductDescriptionID property of the Entity ProductModelProductDescriptionCulture<br/><br/></summary>
+		/// <summary> The ProductDescriptionID property of the Entity ProductModelProductDescriptionCulture<br/><br/>
+		/// MS_Description: Primary key. Foreign key to ProductDescription.ProductDescriptionID.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModelProductDescriptionCulture"."ProductDescriptionID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -859,7 +868,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelProductDescriptionCultureFieldIndex.ProductDescriptionID, value, true); }
 		}
 
-		/// <summary> The ProductModelID property of the Entity ProductModelProductDescriptionCulture<br/><br/></summary>
+		/// <summary> The ProductModelID property of the Entity ProductModelProductDescriptionCulture<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModelProductDescriptionCulture"."ProductModelID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

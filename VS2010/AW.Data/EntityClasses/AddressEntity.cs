@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Address'. <br/><br/>
 	/// 
+	/// MS_Description: Street address information for customers, employees, and vendors.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class AddressEntity : CommonEntityBase
@@ -1954,22 +1955,31 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Street address information for customers, employees, and vendors.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("AddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"First street address line.");
 			_fieldsCustomProperties.Add("AddressLine1", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("AddressLine2", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of the city.");
 			_fieldsCustomProperties.Add("City", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Postal code for the street address.");
 			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique identification number for the state or province. Foreign key to StateProvince table.");
 			_fieldsCustomProperties.Add("StateProvinceID", fieldHashtable);
 		}
 		#endregion
@@ -2334,7 +2344,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The AddressID property of the Entity Address<br/><br/></summary>
+		/// <summary> The AddressID property of the Entity Address<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Address"."AddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -2344,7 +2355,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.AddressID, value, true); }
 		}
 
-		/// <summary> The AddressLine1 property of the Entity Address<br/><br/></summary>
+		/// <summary> The AddressLine1 property of the Entity Address<br/><br/>
+		/// MS_Description: First street address line.<br/></summary>
 		/// <remarks>Mapped on  table field: "Address"."AddressLine1"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2354,7 +2366,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.AddressLine1, value, true); }
 		}
 
-		/// <summary> The AddressLine2 property of the Entity Address<br/><br/></summary>
+		/// <summary> The AddressLine2 property of the Entity Address<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "Address"."AddressLine2"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2364,7 +2377,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.AddressLine2, value, true); }
 		}
 
-		/// <summary> The City property of the Entity Address<br/><br/></summary>
+		/// <summary> The City property of the Entity Address<br/><br/>
+		/// MS_Description: Name of the city.<br/></summary>
 		/// <remarks>Mapped on  table field: "Address"."City"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 30<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2374,7 +2388,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.City, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Address<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Address<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Address"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2384,7 +2399,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The PostalCode property of the Entity Address<br/><br/></summary>
+		/// <summary> The PostalCode property of the Entity Address<br/><br/>
+		/// MS_Description: Postal code for the street address.<br/></summary>
 		/// <remarks>Mapped on  table field: "Address"."PostalCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2394,7 +2410,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.PostalCode, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity Address<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity Address<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "Address"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2404,7 +2421,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)AddressFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The StateProvinceID property of the Entity Address<br/><br/></summary>
+		/// <summary> The StateProvinceID property of the Entity Address<br/><br/>
+		/// MS_Description: Unique identification number for the state or province. Foreign key to StateProvince table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Address"."StateProvinceID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Currency'. <br/><br/>
 	/// 
+	/// MS_Description: Lookup table containing standard ISO currencies.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class CurrencyEntity : CommonEntityBase
@@ -593,12 +594,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Lookup table containing standard ISO currencies.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("CurrencyCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Currency name.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 		}
 		#endregion
@@ -705,7 +710,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CurrencyCode property of the Entity Currency<br/><br/></summary>
+		/// <summary> The CurrencyCode property of the Entity Currency<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Currency"."CurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -715,7 +721,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CurrencyFieldIndex.CurrencyCode, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Currency<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Currency<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Currency"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -725,7 +732,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CurrencyFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity Currency<br/><br/></summary>
+		/// <summary> The Name property of the Entity Currency<br/><br/>
+		/// MS_Description: Currency name.<br/></summary>
 		/// <remarks>Mapped on  table field: "Currency"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

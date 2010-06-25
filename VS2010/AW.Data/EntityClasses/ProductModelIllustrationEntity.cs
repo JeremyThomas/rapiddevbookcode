@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductModelIllustration'. <br/><br/>
 	/// 
+	/// MS_Description: Cross-reference table mapping product models and illustrations.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductModelIllustrationEntity : CommonEntityBase
@@ -518,12 +519,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Cross-reference table mapping product models and illustrations.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Primary key. Foreign key to Illustration.IllustrationID.");
 			_fieldsCustomProperties.Add("IllustrationID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductModelID", fieldHashtable);
 		}
 		#endregion
@@ -691,7 +696,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The IllustrationID property of the Entity ProductModelIllustration<br/><br/></summary>
+		/// <summary> The IllustrationID property of the Entity ProductModelIllustration<br/><br/>
+		/// MS_Description: Primary key. Foreign key to Illustration.IllustrationID.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModelIllustration"."IllustrationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -701,7 +707,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelIllustrationFieldIndex.IllustrationID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductModelIllustration<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductModelIllustration<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModelIllustration"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -711,7 +718,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductModelIllustrationFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductModelID property of the Entity ProductModelIllustration<br/><br/></summary>
+		/// <summary> The ProductModelID property of the Entity ProductModelIllustration<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductModelIllustration"."ProductModelID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

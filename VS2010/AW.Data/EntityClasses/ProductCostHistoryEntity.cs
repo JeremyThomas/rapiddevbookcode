@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductCostHistory'. <br/><br/>
 	/// 
+	/// MS_Description: Changes in the cost of a product over time.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductCostHistoryEntity : CommonEntityBase
@@ -432,16 +433,22 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Changes in the cost of a product over time.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product cost end date.");
 			_fieldsCustomProperties.Add("EndDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Standard cost of the product.");
 			_fieldsCustomProperties.Add("StandardCost", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product cost start date.");
 			_fieldsCustomProperties.Add("StartDate", fieldHashtable);
 		}
 		#endregion
@@ -569,7 +576,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The EndDate property of the Entity ProductCostHistory<br/><br/></summary>
+		/// <summary> The EndDate property of the Entity ProductCostHistory<br/><br/>
+		/// MS_Description: Product cost end date.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -579,7 +587,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductCostHistoryFieldIndex.EndDate, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductCostHistory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductCostHistory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -589,7 +598,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductCostHistoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity ProductCostHistory<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity ProductCostHistory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -599,7 +609,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductCostHistoryFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The StandardCost property of the Entity ProductCostHistory<br/><br/></summary>
+		/// <summary> The StandardCost property of the Entity ProductCostHistory<br/><br/>
+		/// MS_Description: Standard cost of the product.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."StandardCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -609,7 +620,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductCostHistoryFieldIndex.StandardCost, value, true); }
 		}
 
-		/// <summary> The StartDate property of the Entity ProductCostHistory<br/><br/></summary>
+		/// <summary> The StartDate property of the Entity ProductCostHistory<br/><br/>
+		/// MS_Description: Product cost start date.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
