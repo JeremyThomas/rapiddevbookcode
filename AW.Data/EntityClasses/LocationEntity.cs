@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Location'. <br/><br/>
 	/// 
+	/// MS_Description: Product inventory and manufacturing locations.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class LocationEntity : CommonEntityBase
@@ -504,16 +505,22 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Product inventory and manufacturing locations.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Work capacity (in hours) of the manufacturing location.");
 			_fieldsCustomProperties.Add("Availability", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Standard hourly cost of the manufacturing location.");
 			_fieldsCustomProperties.Add("CostRate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("LocationID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Location description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 		}
 		#endregion
@@ -613,7 +620,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Availability property of the Entity Location<br/><br/></summary>
+		/// <summary> The Availability property of the Entity Location<br/><br/>
+		/// MS_Description: Work capacity (in hours) of the manufacturing location.<br/></summary>
 		/// <remarks>Mapped on  table field: "Location"."Availability"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -623,7 +631,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)LocationFieldIndex.Availability, value, true); }
 		}
 
-		/// <summary> The CostRate property of the Entity Location<br/><br/></summary>
+		/// <summary> The CostRate property of the Entity Location<br/><br/>
+		/// MS_Description: Standard hourly cost of the manufacturing location.<br/></summary>
 		/// <remarks>Mapped on  table field: "Location"."CostRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -633,7 +642,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)LocationFieldIndex.CostRate, value, true); }
 		}
 
-		/// <summary> The LocationID property of the Entity Location<br/><br/></summary>
+		/// <summary> The LocationID property of the Entity Location<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Location"."LocationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -643,7 +653,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)LocationFieldIndex.LocationID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Location<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Location<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Location"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -653,7 +664,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)LocationFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity Location<br/><br/></summary>
+		/// <summary> The Name property of the Entity Location<br/><br/>
+		/// MS_Description: Location description.<br/></summary>
 		/// <remarks>Mapped on  table field: "Location"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

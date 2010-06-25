@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Illustration'. <br/><br/>
 	/// 
+	/// MS_Description: Bicycle assembly diagrams.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class IllustrationEntity : CommonEntityBase
@@ -415,12 +416,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Bicycle assembly diagrams.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Illustrations used in manufacturing instructions. Stored as XML.");
 			_fieldsCustomProperties.Add("Diagram", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("IllustrationID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
@@ -513,7 +518,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Diagram property of the Entity Illustration<br/><br/></summary>
+		/// <summary> The Diagram property of the Entity Illustration<br/><br/>
+		/// MS_Description: Illustrations used in manufacturing instructions. Stored as XML.<br/></summary>
 		/// <remarks>Mapped on  table field: "Illustration"."Diagram"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -523,7 +529,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)IllustrationFieldIndex.Diagram, value, true); }
 		}
 
-		/// <summary> The IllustrationID property of the Entity Illustration<br/><br/></summary>
+		/// <summary> The IllustrationID property of the Entity Illustration<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Illustration"."IllustrationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -533,7 +540,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)IllustrationFieldIndex.IllustrationID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Illustration<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Illustration<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Illustration"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'EmployeePayHistory'. <br/><br/>
 	/// 
+	/// MS_Description: Employee pay history.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class EmployeePayHistoryEntity : CommonEntityBase
@@ -432,16 +433,22 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Employee pay history.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("EmployeeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"1 = Salary received monthly, 2 = Salary received biweekly");
 			_fieldsCustomProperties.Add("PayFrequency", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Salary hourly rate.");
 			_fieldsCustomProperties.Add("Rate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the change in pay is effective");
 			_fieldsCustomProperties.Add("RateChangeDate", fieldHashtable);
 		}
 		#endregion
@@ -569,7 +576,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The EmployeeID property of the Entity EmployeePayHistory<br/><br/></summary>
+		/// <summary> The EmployeeID property of the Entity EmployeePayHistory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -579,7 +587,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeePayHistoryFieldIndex.EmployeeID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity EmployeePayHistory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity EmployeePayHistory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -589,7 +598,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeePayHistoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The PayFrequency property of the Entity EmployeePayHistory<br/><br/></summary>
+		/// <summary> The PayFrequency property of the Entity EmployeePayHistory<br/><br/>
+		/// MS_Description: 1 = Salary received monthly, 2 = Salary received biweekly<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."PayFrequency"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -599,7 +609,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeePayHistoryFieldIndex.PayFrequency, value, true); }
 		}
 
-		/// <summary> The Rate property of the Entity EmployeePayHistory<br/><br/></summary>
+		/// <summary> The Rate property of the Entity EmployeePayHistory<br/><br/>
+		/// MS_Description: Salary hourly rate.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."Rate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -609,7 +620,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeePayHistoryFieldIndex.Rate, value, true); }
 		}
 
-		/// <summary> The RateChangeDate property of the Entity EmployeePayHistory<br/><br/></summary>
+		/// <summary> The RateChangeDate property of the Entity EmployeePayHistory<br/><br/>
+		/// MS_Description: Date the change in pay is effective<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."RateChangeDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

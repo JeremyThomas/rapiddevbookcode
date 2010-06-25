@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'CountryRegionCurrency'. <br/><br/>
 	/// 
+	/// MS_Description: Cross-reference table mapping ISO currency codes to a country or region.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class CountryRegionCurrencyEntity : CommonEntityBase
@@ -518,12 +519,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Cross-reference table mapping ISO currency codes to a country or region.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("CountryRegionCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ISO standard currency code. Foreign key to Currency.CurrencyCode.");
 			_fieldsCustomProperties.Add("CurrencyCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 		}
 		#endregion
@@ -691,7 +696,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CountryRegionCode property of the Entity CountryRegionCurrency<br/><br/></summary>
+		/// <summary> The CountryRegionCode property of the Entity CountryRegionCurrency<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "CountryRegionCurrency"."CountryRegionCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -701,7 +707,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CountryRegionCurrencyFieldIndex.CountryRegionCode, value, true); }
 		}
 
-		/// <summary> The CurrencyCode property of the Entity CountryRegionCurrency<br/><br/></summary>
+		/// <summary> The CurrencyCode property of the Entity CountryRegionCurrency<br/><br/>
+		/// MS_Description: ISO standard currency code. Foreign key to Currency.CurrencyCode.<br/></summary>
 		/// <remarks>Mapped on  table field: "CountryRegionCurrency"."CurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -711,7 +718,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CountryRegionCurrencyFieldIndex.CurrencyCode, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity CountryRegionCurrency<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity CountryRegionCurrency<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "CountryRegionCurrency"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

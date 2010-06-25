@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Individual'. <br/><br/>
 	/// 
+	/// MS_Description: Secondary XML index for value.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class IndividualEntity : CustomerEntity
@@ -449,10 +450,13 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Secondary XML index for value.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Identifies the customer in the Contact table. Foreign key to Contact.ContactID.");
 			_fieldsCustomProperties.Add("ContactID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis.");
 			_fieldsCustomProperties.Add("Demographics", fieldHashtable);
 		}
 		#endregion
@@ -555,7 +559,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ContactID property of the Entity Individual<br/><br/></summary>
+		/// <summary> The ContactID property of the Entity Individual<br/><br/>
+		/// MS_Description: Identifies the customer in the Contact table. Foreign key to Contact.ContactID.<br/></summary>
 		/// <remarks>Mapped on  table field: "Individual"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -565,7 +570,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)IndividualFieldIndex.ContactID, value, true); }
 		}
 
-		/// <summary> The Demographics property of the Entity Individual<br/><br/></summary>
+		/// <summary> The Demographics property of the Entity Individual<br/><br/>
+		/// MS_Description: Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis.<br/></summary>
 		/// <remarks>Mapped on  table field: "Individual"."Demographics"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

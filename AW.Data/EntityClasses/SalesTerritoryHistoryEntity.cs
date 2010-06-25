@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SalesTerritoryHistory'. <br/><br/>
 	/// 
+	/// MS_Description: Sales representative transfers to other sales territories.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SalesTerritoryHistoryEntity : CommonEntityBase
@@ -526,18 +527,25 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Sales representative transfers to other sales territories.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the sales representative left work in the territory.");
 			_fieldsCustomProperties.Add("EndDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SalesPersonID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the sales representive started work in the territory.");
 			_fieldsCustomProperties.Add("StartDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Territory identification number. Foreign key to SalesTerritory.SalesTerritoryID.");
 			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 		}
 		#endregion
@@ -707,7 +715,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The EndDate property of the Entity SalesTerritoryHistory<br/><br/></summary>
+		/// <summary> The EndDate property of the Entity SalesTerritoryHistory<br/><br/>
+		/// MS_Description: Date the sales representative left work in the territory.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -717,7 +726,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryHistoryFieldIndex.EndDate, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity SalesTerritoryHistory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity SalesTerritoryHistory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -727,7 +737,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryHistoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity SalesTerritoryHistory<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity SalesTerritoryHistory<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -737,7 +748,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryHistoryFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The SalesPersonID property of the Entity SalesTerritoryHistory<br/><br/></summary>
+		/// <summary> The SalesPersonID property of the Entity SalesTerritoryHistory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."SalesPersonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -747,7 +759,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryHistoryFieldIndex.SalesPersonID, value, true); }
 		}
 
-		/// <summary> The StartDate property of the Entity SalesTerritoryHistory<br/><br/></summary>
+		/// <summary> The StartDate property of the Entity SalesTerritoryHistory<br/><br/>
+		/// MS_Description: Date the sales representive started work in the territory.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -757,7 +770,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryHistoryFieldIndex.StartDate, value, true); }
 		}
 
-		/// <summary> The TerritoryID property of the Entity SalesTerritoryHistory<br/><br/></summary>
+		/// <summary> The TerritoryID property of the Entity SalesTerritoryHistory<br/><br/>
+		/// MS_Description: Territory identification number. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

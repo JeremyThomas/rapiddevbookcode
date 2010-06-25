@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ScrapReason'. <br/><br/>
 	/// 
+	/// MS_Description: Manufacturing failure reasons lookup table.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ScrapReasonEntity : CommonEntityBase
@@ -415,12 +416,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Manufacturing failure reasons lookup table.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Failure description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ScrapReasonID", fieldHashtable);
 		}
 		#endregion
@@ -513,7 +518,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ScrapReason<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ScrapReason<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ScrapReason"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -523,7 +529,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ScrapReasonFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity ScrapReason<br/><br/></summary>
+		/// <summary> The Name property of the Entity ScrapReason<br/><br/>
+		/// MS_Description: Failure description.<br/></summary>
 		/// <remarks>Mapped on  table field: "ScrapReason"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -533,7 +540,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ScrapReasonFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The ScrapReasonID property of the Entity ScrapReason<br/><br/></summary>
+		/// <summary> The ScrapReasonID property of the Entity ScrapReason<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ScrapReason"."ScrapReasonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

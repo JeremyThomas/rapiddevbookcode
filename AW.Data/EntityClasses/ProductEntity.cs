@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Product'. <br/><br/>
 	/// 
+	/// MS_Description: Products sold or used in the manfacturing of sold products.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductEntity : CommonEntityBase
@@ -1990,56 +1991,82 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Products sold or used in the manfacturing of sold products.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"H = High, M = Medium, L = Low");
 			_fieldsCustomProperties.Add("Class", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product color.");
 			_fieldsCustomProperties.Add("Color", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Number of days required to manufacture the product.");
 			_fieldsCustomProperties.Add("DaysToManufacture", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the product was discontinued.");
 			_fieldsCustomProperties.Add("DiscontinuedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"0 = Product is not a salable item. 1 = Product is salable.");
 			_fieldsCustomProperties.Add("FinishedGoodsFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Selling price.");
 			_fieldsCustomProperties.Add("ListPrice", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"0 = Product is purchased, 1 = Product is manufactured in-house.");
 			_fieldsCustomProperties.Add("MakeFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of the product.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"R = Road, M = Mountain, T = Touring, S = Standard");
 			_fieldsCustomProperties.Add("ProductLine", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product is a member of this product model. Foreign key to ProductModel.ProductModelID.");
 			_fieldsCustomProperties.Add("ProductModelID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index.");
 			_fieldsCustomProperties.Add("ProductNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID. ");
 			_fieldsCustomProperties.Add("ProductSubcategoryID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Inventory level that triggers a purchase order or work order. ");
 			_fieldsCustomProperties.Add("ReorderPoint", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Minimum inventory quantity. ");
 			_fieldsCustomProperties.Add("SafetyStockLevel", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the product was no longer available for sale.");
 			_fieldsCustomProperties.Add("SellEndDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the product was available for sale.");
 			_fieldsCustomProperties.Add("SellStartDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product size.");
 			_fieldsCustomProperties.Add("Size", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unit of measure for Size column.");
 			_fieldsCustomProperties.Add("SizeUnitMeasureCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Standard cost of the product.");
 			_fieldsCustomProperties.Add("StandardCost", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"W = Womens, M = Mens, U = Universal");
 			_fieldsCustomProperties.Add("Style", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product weight.");
 			_fieldsCustomProperties.Add("Weight", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unit of measure for Weight column.");
 			_fieldsCustomProperties.Add("WeightUnitMeasureCode", fieldHashtable);
 		}
 		#endregion
@@ -2395,7 +2422,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Class property of the Entity Product<br/><br/></summary>
+		/// <summary> The Class property of the Entity Product<br/><br/>
+		/// MS_Description: H = High, M = Medium, L = Low<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."Class"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2405,7 +2433,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.Class, value, true); }
 		}
 
-		/// <summary> The Color property of the Entity Product<br/><br/></summary>
+		/// <summary> The Color property of the Entity Product<br/><br/>
+		/// MS_Description: Product color.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."Color"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2415,7 +2444,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.Color, value, true); }
 		}
 
-		/// <summary> The DaysToManufacture property of the Entity Product<br/><br/></summary>
+		/// <summary> The DaysToManufacture property of the Entity Product<br/><br/>
+		/// MS_Description: Number of days required to manufacture the product.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."DaysToManufacture"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2425,7 +2455,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.DaysToManufacture, value, true); }
 		}
 
-		/// <summary> The DiscontinuedDate property of the Entity Product<br/><br/></summary>
+		/// <summary> The DiscontinuedDate property of the Entity Product<br/><br/>
+		/// MS_Description: Date the product was discontinued.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."DiscontinuedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2435,7 +2466,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.DiscontinuedDate, value, true); }
 		}
 
-		/// <summary> The FinishedGoodsFlag property of the Entity Product<br/><br/></summary>
+		/// <summary> The FinishedGoodsFlag property of the Entity Product<br/><br/>
+		/// MS_Description: 0 = Product is not a salable item. 1 = Product is salable.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."FinishedGoodsFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2445,7 +2477,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.FinishedGoodsFlag, value, true); }
 		}
 
-		/// <summary> The ListPrice property of the Entity Product<br/><br/></summary>
+		/// <summary> The ListPrice property of the Entity Product<br/><br/>
+		/// MS_Description: Selling price.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."ListPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2455,7 +2488,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ListPrice, value, true); }
 		}
 
-		/// <summary> The MakeFlag property of the Entity Product<br/><br/></summary>
+		/// <summary> The MakeFlag property of the Entity Product<br/><br/>
+		/// MS_Description: 0 = Product is purchased, 1 = Product is manufactured in-house.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."MakeFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2465,7 +2499,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.MakeFlag, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Product<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Product<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2475,7 +2510,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity Product<br/><br/></summary>
+		/// <summary> The Name property of the Entity Product<br/><br/>
+		/// MS_Description: Name of the product.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2485,7 +2521,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity Product<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity Product<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -2495,7 +2532,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The ProductLine property of the Entity Product<br/><br/></summary>
+		/// <summary> The ProductLine property of the Entity Product<br/><br/>
+		/// MS_Description: R = Road, M = Mountain, T = Touring, S = Standard<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductLine"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2505,7 +2543,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ProductLine, value, true); }
 		}
 
-		/// <summary> The ProductModelID property of the Entity Product<br/><br/></summary>
+		/// <summary> The ProductModelID property of the Entity Product<br/><br/>
+		/// MS_Description: Product is a member of this product model. Foreign key to ProductModel.ProductModelID.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductModelID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2515,7 +2554,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ProductModelID, value, true); }
 		}
 
-		/// <summary> The ProductNumber property of the Entity Product<br/><br/></summary>
+		/// <summary> The ProductNumber property of the Entity Product<br/><br/>
+		/// MS_Description: Unique nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2525,7 +2565,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ProductNumber, value, true); }
 		}
 
-		/// <summary> The ProductSubcategoryID property of the Entity Product<br/><br/></summary>
+		/// <summary> The ProductSubcategoryID property of the Entity Product<br/><br/>
+		/// MS_Description: Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID. <br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductSubcategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2535,7 +2576,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ProductSubcategoryID, value, true); }
 		}
 
-		/// <summary> The ReorderPoint property of the Entity Product<br/><br/></summary>
+		/// <summary> The ReorderPoint property of the Entity Product<br/><br/>
+		/// MS_Description: Inventory level that triggers a purchase order or work order. <br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."ReorderPoint"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2545,7 +2587,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ReorderPoint, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity Product<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity Product<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2555,7 +2598,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The SafetyStockLevel property of the Entity Product<br/><br/></summary>
+		/// <summary> The SafetyStockLevel property of the Entity Product<br/><br/>
+		/// MS_Description: Minimum inventory quantity. <br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."SafetyStockLevel"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2565,7 +2609,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.SafetyStockLevel, value, true); }
 		}
 
-		/// <summary> The SellEndDate property of the Entity Product<br/><br/></summary>
+		/// <summary> The SellEndDate property of the Entity Product<br/><br/>
+		/// MS_Description: Date the product was no longer available for sale.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."SellEndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2575,7 +2620,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.SellEndDate, value, true); }
 		}
 
-		/// <summary> The SellStartDate property of the Entity Product<br/><br/></summary>
+		/// <summary> The SellStartDate property of the Entity Product<br/><br/>
+		/// MS_Description: Date the product was available for sale.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."SellStartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2585,7 +2631,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.SellStartDate, value, true); }
 		}
 
-		/// <summary> The Size property of the Entity Product<br/><br/></summary>
+		/// <summary> The Size property of the Entity Product<br/><br/>
+		/// MS_Description: Product size.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."Size"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 5<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2595,7 +2642,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.Size, value, true); }
 		}
 
-		/// <summary> The SizeUnitMeasureCode property of the Entity Product<br/><br/></summary>
+		/// <summary> The SizeUnitMeasureCode property of the Entity Product<br/><br/>
+		/// MS_Description: Unit of measure for Size column.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."SizeUnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2605,7 +2653,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.SizeUnitMeasureCode, value, true); }
 		}
 
-		/// <summary> The StandardCost property of the Entity Product<br/><br/></summary>
+		/// <summary> The StandardCost property of the Entity Product<br/><br/>
+		/// MS_Description: Standard cost of the product.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."StandardCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2615,7 +2664,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.StandardCost, value, true); }
 		}
 
-		/// <summary> The Style property of the Entity Product<br/><br/></summary>
+		/// <summary> The Style property of the Entity Product<br/><br/>
+		/// MS_Description: W = Womens, M = Mens, U = Universal<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."Style"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2625,7 +2675,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.Style, value, true); }
 		}
 
-		/// <summary> The Weight property of the Entity Product<br/><br/></summary>
+		/// <summary> The Weight property of the Entity Product<br/><br/>
+		/// MS_Description: Product weight.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."Weight"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2635,7 +2686,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.Weight, value, true); }
 		}
 
-		/// <summary> The WeightUnitMeasureCode property of the Entity Product<br/><br/></summary>
+		/// <summary> The WeightUnitMeasureCode property of the Entity Product<br/><br/>
+		/// MS_Description: Unit of measure for Weight column.<br/></summary>
 		/// <remarks>Mapped on  table field: "Product"."WeightUnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

@@ -34,6 +34,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ShipMethod'. <br/><br/>
 	/// 
+	/// MS_Description: Shipping company lookup table.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ShipMethodEntity : CommonEntityBase
@@ -1016,18 +1017,25 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Shipping company lookup table.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Shipping company name.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index. Used to support replication samples.");
 			_fieldsCustomProperties.Add("ShipBase", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ShipMethodID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Shipping charge per pound.");
 			_fieldsCustomProperties.Add("ShipRate", fieldHashtable);
 		}
 		#endregion
@@ -1223,7 +1231,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ShipMethod<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ShipMethod<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1233,7 +1242,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShipMethodFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity ShipMethod<br/><br/></summary>
+		/// <summary> The Name property of the Entity ShipMethod<br/><br/>
+		/// MS_Description: Shipping company name.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1243,7 +1253,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShipMethodFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity ShipMethod<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity ShipMethod<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1253,7 +1264,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShipMethodFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The ShipBase property of the Entity ShipMethod<br/><br/></summary>
+		/// <summary> The ShipBase property of the Entity ShipMethod<br/><br/>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."ShipBase"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1263,7 +1275,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShipMethodFieldIndex.ShipBase, value, true); }
 		}
 
-		/// <summary> The ShipMethodID property of the Entity ShipMethod<br/><br/></summary>
+		/// <summary> The ShipMethodID property of the Entity ShipMethod<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."ShipMethodID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1273,7 +1286,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShipMethodFieldIndex.ShipMethodID, value, true); }
 		}
 
-		/// <summary> The ShipRate property of the Entity ShipMethod<br/><br/></summary>
+		/// <summary> The ShipRate property of the Entity ShipMethod<br/><br/>
+		/// MS_Description: Shipping charge per pound.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."ShipRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'EmployeeDepartmentHistory'. <br/><br/>
 	/// 
+	/// MS_Description: Employee department transfers.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class EmployeeDepartmentHistoryEntity : CommonEntityBase
@@ -620,18 +621,25 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Employee department transfers.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Department in which the employee worked including currently. Foreign key to Department.DepartmentID.");
 			_fieldsCustomProperties.Add("DepartmentID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("EmployeeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the employee left the department. NULL = Current department.");
 			_fieldsCustomProperties.Add("EndDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("ShiftID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the employee started work in the department.");
 			_fieldsCustomProperties.Add("StartDate", fieldHashtable);
 		}
 		#endregion
@@ -843,7 +851,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The DepartmentID property of the Entity EmployeeDepartmentHistory<br/><br/></summary>
+		/// <summary> The DepartmentID property of the Entity EmployeeDepartmentHistory<br/><br/>
+		/// MS_Description: Department in which the employee worked including currently. Foreign key to Department.DepartmentID.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."DepartmentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -853,7 +862,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeDepartmentHistoryFieldIndex.DepartmentID, value, true); }
 		}
 
-		/// <summary> The EmployeeID property of the Entity EmployeeDepartmentHistory<br/><br/></summary>
+		/// <summary> The EmployeeID property of the Entity EmployeeDepartmentHistory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -863,7 +873,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeDepartmentHistoryFieldIndex.EmployeeID, value, true); }
 		}
 
-		/// <summary> The EndDate property of the Entity EmployeeDepartmentHistory<br/><br/></summary>
+		/// <summary> The EndDate property of the Entity EmployeeDepartmentHistory<br/><br/>
+		/// MS_Description: Date the employee left the department. NULL = Current department.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -873,7 +884,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeDepartmentHistoryFieldIndex.EndDate, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity EmployeeDepartmentHistory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity EmployeeDepartmentHistory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -883,7 +895,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeDepartmentHistoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ShiftID property of the Entity EmployeeDepartmentHistory<br/><br/></summary>
+		/// <summary> The ShiftID property of the Entity EmployeeDepartmentHistory<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."ShiftID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -893,7 +906,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeDepartmentHistoryFieldIndex.ShiftID, value, true); }
 		}
 
-		/// <summary> The StartDate property of the Entity EmployeeDepartmentHistory<br/><br/></summary>
+		/// <summary> The StartDate property of the Entity EmployeeDepartmentHistory<br/><br/>
+		/// MS_Description: Date the employee started work in the department.<br/></summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductReview'. <br/><br/>
 	/// 
+	/// MS_Description: Customer reviews of products they have purchased.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductReviewEntity : CommonEntityBase
@@ -424,22 +425,31 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Customer reviews of products they have purchased.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Reviewer's comments");
 			_fieldsCustomProperties.Add("Comments", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Reviewer's e-mail address.");
 			_fieldsCustomProperties.Add("EmailAddress", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product identification number. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductReviewID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product rating given by the reviewer. Scale is 1 to 5 with 5 as the highest rating.");
 			_fieldsCustomProperties.Add("Rating", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date review was submitted.");
 			_fieldsCustomProperties.Add("ReviewDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of the reviewer.");
 			_fieldsCustomProperties.Add("ReviewerName", fieldHashtable);
 		}
 		#endregion
@@ -565,7 +575,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Comments property of the Entity ProductReview<br/><br/></summary>
+		/// <summary> The Comments property of the Entity ProductReview<br/><br/>
+		/// MS_Description: Reviewer's comments<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."Comments"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3850<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -575,7 +586,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductReviewFieldIndex.Comments, value, true); }
 		}
 
-		/// <summary> The EmailAddress property of the Entity ProductReview<br/><br/></summary>
+		/// <summary> The EmailAddress property of the Entity ProductReview<br/><br/>
+		/// MS_Description: Reviewer's e-mail address.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."EmailAddress"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -585,7 +597,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductReviewFieldIndex.EmailAddress, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductReview<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductReview<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -595,7 +608,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductReviewFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity ProductReview<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity ProductReview<br/><br/>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -605,7 +619,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductReviewFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The ProductReviewID property of the Entity ProductReview<br/><br/></summary>
+		/// <summary> The ProductReviewID property of the Entity ProductReview<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ProductReviewID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -615,7 +630,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductReviewFieldIndex.ProductReviewID, value, true); }
 		}
 
-		/// <summary> The Rating property of the Entity ProductReview<br/><br/></summary>
+		/// <summary> The Rating property of the Entity ProductReview<br/><br/>
+		/// MS_Description: Product rating given by the reviewer. Scale is 1 to 5 with 5 as the highest rating.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."Rating"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -625,7 +641,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductReviewFieldIndex.Rating, value, true); }
 		}
 
-		/// <summary> The ReviewDate property of the Entity ProductReview<br/><br/></summary>
+		/// <summary> The ReviewDate property of the Entity ProductReview<br/><br/>
+		/// MS_Description: Date review was submitted.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ReviewDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -635,7 +652,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductReviewFieldIndex.ReviewDate, value, true); }
 		}
 
-		/// <summary> The ReviewerName property of the Entity ProductReview<br/><br/></summary>
+		/// <summary> The ReviewerName property of the Entity ProductReview<br/><br/>
+		/// MS_Description: Name of the reviewer.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ReviewerName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

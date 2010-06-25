@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Department'. <br/><br/>
 	/// 
+	/// MS_Description: Lookup table containing the departments within the Adventure Works Cycles company.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class DepartmentEntity : CommonEntityBase
@@ -415,14 +416,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Lookup table containing the departments within the Adventure Works Cycles company.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("DepartmentID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of the group to which the department belongs.");
 			_fieldsCustomProperties.Add("GroupName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of the department.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 		}
 		#endregion
@@ -515,7 +521,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The DepartmentID property of the Entity Department<br/><br/></summary>
+		/// <summary> The DepartmentID property of the Entity Department<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Department"."DepartmentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -525,7 +532,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DepartmentFieldIndex.DepartmentID, value, true); }
 		}
 
-		/// <summary> The GroupName property of the Entity Department<br/><br/></summary>
+		/// <summary> The GroupName property of the Entity Department<br/><br/>
+		/// MS_Description: Name of the group to which the department belongs.<br/></summary>
 		/// <remarks>Mapped on  table field: "Department"."GroupName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -535,7 +543,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DepartmentFieldIndex.GroupName, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Department<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Department<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Department"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -545,7 +554,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)DepartmentFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity Department<br/><br/></summary>
+		/// <summary> The Name property of the Entity Department<br/><br/>
+		/// MS_Description: Name of the department.<br/></summary>
 		/// <remarks>Mapped on  table field: "Department"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

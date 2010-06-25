@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Customer'. <br/><br/>
 	/// 
+	/// MS_Description: Current customer information. Also see the Individual and Store tables.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class CustomerEntity : CommonEntityBase
@@ -1287,18 +1288,25 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Current customer information. Also see the Individual and Store tables.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index.");
 			_fieldsCustomProperties.Add("AccountNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("CustomerID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Customer type: I = Individual, S = Store");
 			_fieldsCustomProperties.Add("CustomerType", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ID of the territory in which the customer is located. Foreign key to SalesTerritory.SalesTerritoryID.");
 			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 		}
 		#endregion
@@ -1558,7 +1566,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The AccountNumber property of the Entity Customer<br/><br/></summary>
+		/// <summary> The AccountNumber property of the Entity Customer<br/><br/>
+		/// MS_Description: Unique nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customer"."AccountNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 10<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1568,7 +1577,8 @@ namespace AW.Data.EntityClasses
 
 		}
 
-		/// <summary> The CustomerID property of the Entity Customer<br/><br/></summary>
+		/// <summary> The CustomerID property of the Entity Customer<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customer"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1578,7 +1588,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CustomerFieldIndex.CustomerID, value, true); }
 		}
 
-		/// <summary> The CustomerType property of the Entity Customer<br/><br/></summary>
+		/// <summary> The CustomerType property of the Entity Customer<br/><br/>
+		/// MS_Description: Customer type: I = Individual, S = Store<br/></summary>
 		/// <remarks>Mapped on  table field: "Customer"."CustomerType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1588,7 +1599,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CustomerFieldIndex.CustomerType, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Customer<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Customer<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customer"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1598,7 +1610,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CustomerFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity Customer<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity Customer<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customer"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1608,7 +1621,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CustomerFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The TerritoryID property of the Entity Customer<br/><br/></summary>
+		/// <summary> The TerritoryID property of the Entity Customer<br/><br/>
+		/// MS_Description: ID of the territory in which the customer is located. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customer"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SalesTerritory'. <br/><br/>
 	/// 
+	/// MS_Description: Sales territory lookup table.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SalesTerritoryEntity : CommonEntityBase
@@ -1346,26 +1347,37 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Sales territory lookup table.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Business costs in the territory the previous year.");
 			_fieldsCustomProperties.Add("CostLastYear", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Business costs in the territory year to date.");
 			_fieldsCustomProperties.Add("CostYtd", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index. Used to support replication samples.");
 			_fieldsCustomProperties.Add("CountryRegionCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Geographic area to which the sales territory belong.");
 			_fieldsCustomProperties.Add("Group", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales territory description");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales in the territory the previous year.");
 			_fieldsCustomProperties.Add("SalesLastYear", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales in the territory year to date.");
 			_fieldsCustomProperties.Add("SalesYtd", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 		}
 		#endregion
@@ -1594,7 +1606,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CostLastYear property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The CostLastYear property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Business costs in the territory the previous year.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CostLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1604,7 +1617,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.CostLastYear, value, true); }
 		}
 
-		/// <summary> The CostYtd property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The CostYtd property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Business costs in the territory year to date.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CostYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1614,7 +1628,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.CostYtd, value, true); }
 		}
 
-		/// <summary> The CountryRegionCode property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The CountryRegionCode property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CountryRegionCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1624,7 +1639,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.CountryRegionCode, value, true); }
 		}
 
-		/// <summary> The Group property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The Group property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Geographic area to which the sales territory belong.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."Group"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1634,7 +1650,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.Group, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1644,7 +1661,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The Name property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Sales territory description<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1654,7 +1672,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1664,7 +1683,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The SalesLastYear property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The SalesLastYear property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Sales in the territory the previous year.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."SalesLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1674,7 +1694,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.SalesLastYear, value, true); }
 		}
 
-		/// <summary> The SalesYtd property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The SalesYtd property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Sales in the territory year to date.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."SalesYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1684,7 +1705,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesTerritoryFieldIndex.SalesYtd, value, true); }
 		}
 
-		/// <summary> The TerritoryID property of the Entity SalesTerritory<br/><br/></summary>
+		/// <summary> The TerritoryID property of the Entity SalesTerritory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

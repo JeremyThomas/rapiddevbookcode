@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Vendor'. <br/><br/>
 	/// 
+	/// MS_Description: Companies from whom Adventure Works Cycles purchases parts or other goods.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class VendorEntity : CommonEntityBase
@@ -682,22 +683,31 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Companies from whom Adventure Works Cycles purchases parts or other goods.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Vendor account (identification) number.");
 			_fieldsCustomProperties.Add("AccountNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"0 = Vendor no longer used. 1 = Vendor is actively used.");
 			_fieldsCustomProperties.Add("ActiveFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average");
 			_fieldsCustomProperties.Add("CreditRating", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Company name.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.");
 			_fieldsCustomProperties.Add("PreferredVendorStatus", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Vendor URL.");
 			_fieldsCustomProperties.Add("PurchasingWebServiceUrl", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("VendorID", fieldHashtable);
 		}
 		#endregion
@@ -811,7 +821,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The AccountNumber property of the Entity Vendor<br/><br/></summary>
+		/// <summary> The AccountNumber property of the Entity Vendor<br/><br/>
+		/// MS_Description: Vendor account (identification) number.<br/></summary>
 		/// <remarks>Mapped on  table field: "Vendor"."AccountNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -821,7 +832,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorFieldIndex.AccountNumber, value, true); }
 		}
 
-		/// <summary> The ActiveFlag property of the Entity Vendor<br/><br/></summary>
+		/// <summary> The ActiveFlag property of the Entity Vendor<br/><br/>
+		/// MS_Description: 0 = Vendor no longer used. 1 = Vendor is actively used.<br/></summary>
 		/// <remarks>Mapped on  table field: "Vendor"."ActiveFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -831,7 +843,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorFieldIndex.ActiveFlag, value, true); }
 		}
 
-		/// <summary> The CreditRating property of the Entity Vendor<br/><br/></summary>
+		/// <summary> The CreditRating property of the Entity Vendor<br/><br/>
+		/// MS_Description: 1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average<br/></summary>
 		/// <remarks>Mapped on  table field: "Vendor"."CreditRating"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -841,7 +854,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorFieldIndex.CreditRating, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Vendor<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Vendor<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Vendor"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -851,7 +865,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity Vendor<br/><br/></summary>
+		/// <summary> The Name property of the Entity Vendor<br/><br/>
+		/// MS_Description: Company name.<br/></summary>
 		/// <remarks>Mapped on  table field: "Vendor"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -861,7 +876,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The PreferredVendorStatus property of the Entity Vendor<br/><br/></summary>
+		/// <summary> The PreferredVendorStatus property of the Entity Vendor<br/><br/>
+		/// MS_Description: 0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.<br/></summary>
 		/// <remarks>Mapped on  table field: "Vendor"."PreferredVendorStatus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -871,7 +887,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorFieldIndex.PreferredVendorStatus, value, true); }
 		}
 
-		/// <summary> The PurchasingWebServiceUrl property of the Entity Vendor<br/><br/></summary>
+		/// <summary> The PurchasingWebServiceUrl property of the Entity Vendor<br/><br/>
+		/// MS_Description: Vendor URL.<br/></summary>
 		/// <remarks>Mapped on  table field: "Vendor"."PurchasingWebServiceURL"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 1024<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -881,7 +898,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)VendorFieldIndex.PurchasingWebServiceUrl, value, true); }
 		}
 
-		/// <summary> The VendorID property of the Entity Vendor<br/><br/></summary>
+		/// <summary> The VendorID property of the Entity Vendor<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "Vendor"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

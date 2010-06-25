@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ProductPhoto'. <br/><br/>
 	/// 
+	/// MS_Description: Product images.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ProductPhotoEntity : CommonEntityBase
@@ -415,18 +416,25 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Product images.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Large image of the product.");
 			_fieldsCustomProperties.Add("LargePhoto", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Large image file name.");
 			_fieldsCustomProperties.Add("LargePhotoFileName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ProductPhotoID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Small image of the product.");
 			_fieldsCustomProperties.Add("ThumbNailPhoto", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Small image file name.");
 			_fieldsCustomProperties.Add("ThumbnailPhotoFileName", fieldHashtable);
 		}
 		#endregion
@@ -519,7 +527,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The LargePhoto property of the Entity ProductPhoto<br/><br/></summary>
+		/// <summary> The LargePhoto property of the Entity ProductPhoto<br/><br/>
+		/// MS_Description: Large image of the product.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."LargePhoto"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -529,7 +538,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductPhotoFieldIndex.LargePhoto, value, true); }
 		}
 
-		/// <summary> The LargePhotoFileName property of the Entity ProductPhoto<br/><br/></summary>
+		/// <summary> The LargePhotoFileName property of the Entity ProductPhoto<br/><br/>
+		/// MS_Description: Large image file name.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."LargePhotoFileName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -539,7 +549,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductPhotoFieldIndex.LargePhotoFileName, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ProductPhoto<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ProductPhoto<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -549,7 +560,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductPhotoFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductPhotoID property of the Entity ProductPhoto<br/><br/></summary>
+		/// <summary> The ProductPhotoID property of the Entity ProductPhoto<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."ProductPhotoID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -559,7 +571,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductPhotoFieldIndex.ProductPhotoID, value, true); }
 		}
 
-		/// <summary> The ThumbNailPhoto property of the Entity ProductPhoto<br/><br/></summary>
+		/// <summary> The ThumbNailPhoto property of the Entity ProductPhoto<br/><br/>
+		/// MS_Description: Small image of the product.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."ThumbNailPhoto"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -569,7 +582,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductPhotoFieldIndex.ThumbNailPhoto, value, true); }
 		}
 
-		/// <summary> The ThumbnailPhotoFileName property of the Entity ProductPhoto<br/><br/></summary>
+		/// <summary> The ThumbnailPhotoFileName property of the Entity ProductPhoto<br/><br/>
+		/// MS_Description: Small image file name.<br/></summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."ThumbnailPhotoFileName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

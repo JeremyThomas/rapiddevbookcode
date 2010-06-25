@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ErrorLog'. <br/><br/>
 	/// 
+	/// MS_Description: Audit table tracking errors in the the AdventureWorks database that are caught by the CATCH block of a TRY...CATCH construct. Data is inserted by stored procedure dbo.uspLogError when it is executed from inside the CATCH block of a TRY...CATCH construct.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ErrorLogEntity : CommonEntityBase
@@ -328,24 +329,34 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Audit table tracking errors in the the AdventureWorks database that are caught by the CATCH block of a TRY...CATCH construct. Data is inserted by stored procedure dbo.uspLogError when it is executed from inside the CATCH block of a TRY...CATCH construct.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"The line number at which the error occurred.");
 			_fieldsCustomProperties.Add("ErrorLine", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ErrorLogID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"The message text of the error that occurred.");
 			_fieldsCustomProperties.Add("ErrorMessage", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"The error number of the error that occurred.");
 			_fieldsCustomProperties.Add("ErrorNumber", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"The name of the stored procedure or trigger where the error occurred.");
 			_fieldsCustomProperties.Add("ErrorProcedure", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"The severity of the error that occurred.");
 			_fieldsCustomProperties.Add("ErrorSeverity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"The state number of the error that occurred.");
 			_fieldsCustomProperties.Add("ErrorState", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"The date and time at which the error occurred.");
 			_fieldsCustomProperties.Add("ErrorTime", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"The user who executed the batch in which the error occurred.");
 			_fieldsCustomProperties.Add("UserName", fieldHashtable);
 		}
 		#endregion
@@ -431,7 +442,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ErrorLine property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The ErrorLine property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: The line number at which the error occurred.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorLine"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -441,7 +453,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ErrorLogFieldIndex.ErrorLine, value, true); }
 		}
 
-		/// <summary> The ErrorLogID property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The ErrorLogID property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorLogID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -451,7 +464,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ErrorLogFieldIndex.ErrorLogID, value, true); }
 		}
 
-		/// <summary> The ErrorMessage property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The ErrorMessage property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: The message text of the error that occurred.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorMessage"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 4000<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -461,7 +475,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ErrorLogFieldIndex.ErrorMessage, value, true); }
 		}
 
-		/// <summary> The ErrorNumber property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The ErrorNumber property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: The error number of the error that occurred.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -471,7 +486,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ErrorLogFieldIndex.ErrorNumber, value, true); }
 		}
 
-		/// <summary> The ErrorProcedure property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The ErrorProcedure property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: The name of the stored procedure or trigger where the error occurred.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorProcedure"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 126<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -481,7 +497,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ErrorLogFieldIndex.ErrorProcedure, value, true); }
 		}
 
-		/// <summary> The ErrorSeverity property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The ErrorSeverity property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: The severity of the error that occurred.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorSeverity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -491,7 +508,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ErrorLogFieldIndex.ErrorSeverity, value, true); }
 		}
 
-		/// <summary> The ErrorState property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The ErrorState property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: The state number of the error that occurred.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorState"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -501,7 +519,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ErrorLogFieldIndex.ErrorState, value, true); }
 		}
 
-		/// <summary> The ErrorTime property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The ErrorTime property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: The date and time at which the error occurred.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -511,7 +530,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ErrorLogFieldIndex.ErrorTime, value, true); }
 		}
 
-		/// <summary> The UserName property of the Entity ErrorLog<br/><br/></summary>
+		/// <summary> The UserName property of the Entity ErrorLog<br/><br/>
+		/// MS_Description: The user who executed the batch in which the error occurred.<br/></summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."UserName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

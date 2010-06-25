@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'ShoppingCartItem'. <br/><br/>
 	/// 
+	/// MS_Description: Contains online customer orders until the order is submitted or cancelled.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ShoppingCartItemEntity : CommonEntityBase
@@ -424,18 +425,25 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Contains online customer orders until the order is submitted or cancelled.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date the time the record was created.");
 			_fieldsCustomProperties.Add("DateCreated", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product ordered. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product quantity ordered.");
 			_fieldsCustomProperties.Add("Quantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Shopping cart identification number.");
 			_fieldsCustomProperties.Add("ShoppingCartID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("ShoppingCartItemID", fieldHashtable);
 		}
 		#endregion
@@ -561,7 +569,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The DateCreated property of the Entity ShoppingCartItem<br/><br/></summary>
+		/// <summary> The DateCreated property of the Entity ShoppingCartItem<br/><br/>
+		/// MS_Description: Date the time the record was created.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."DateCreated"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -571,7 +580,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShoppingCartItemFieldIndex.DateCreated, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity ShoppingCartItem<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity ShoppingCartItem<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -581,7 +591,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShoppingCartItemFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity ShoppingCartItem<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity ShoppingCartItem<br/><br/>
+		/// MS_Description: Product ordered. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -591,7 +602,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShoppingCartItemFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The Quantity property of the Entity ShoppingCartItem<br/><br/></summary>
+		/// <summary> The Quantity property of the Entity ShoppingCartItem<br/><br/>
+		/// MS_Description: Product quantity ordered.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."Quantity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -601,7 +613,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShoppingCartItemFieldIndex.Quantity, value, true); }
 		}
 
-		/// <summary> The ShoppingCartID property of the Entity ShoppingCartItem<br/><br/></summary>
+		/// <summary> The ShoppingCartID property of the Entity ShoppingCartItem<br/><br/>
+		/// MS_Description: Shopping cart identification number.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."ShoppingCartID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -611,7 +624,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ShoppingCartItemFieldIndex.ShoppingCartID, value, true); }
 		}
 
-		/// <summary> The ShoppingCartItemID property of the Entity ShoppingCartItem<br/><br/></summary>
+		/// <summary> The ShoppingCartItemID property of the Entity ShoppingCartItem<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."ShoppingCartItemID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

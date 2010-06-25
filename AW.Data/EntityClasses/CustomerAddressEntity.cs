@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'CustomerAddress'. <br/><br/>
 	/// 
+	/// MS_Description: Cross-reference table mapping customers to their address(es).<br/>
 	/// </summary>
 	[Serializable]
 	public partial class CustomerAddressEntity : CommonEntityBase
@@ -604,16 +605,22 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Cross-reference table mapping customers to their address(es).");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Primary key. Foreign key to Address.AddressID.");
 			_fieldsCustomProperties.Add("AddressID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Address type. Foreign key to AddressType.AddressTypeID.");
 			_fieldsCustomProperties.Add("AddressTypeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("CustomerID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 		}
 		#endregion
@@ -821,7 +828,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The AddressID property of the Entity CustomerAddress<br/><br/></summary>
+		/// <summary> The AddressID property of the Entity CustomerAddress<br/><br/>
+		/// MS_Description: Primary key. Foreign key to Address.AddressID.<br/></summary>
 		/// <remarks>Mapped on  table field: "CustomerAddress"."AddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -831,7 +839,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CustomerAddressFieldIndex.AddressID, value, true); }
 		}
 
-		/// <summary> The AddressTypeID property of the Entity CustomerAddress<br/><br/></summary>
+		/// <summary> The AddressTypeID property of the Entity CustomerAddress<br/><br/>
+		/// MS_Description: Address type. Foreign key to AddressType.AddressTypeID.<br/></summary>
 		/// <remarks>Mapped on  table field: "CustomerAddress"."AddressTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -841,7 +850,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CustomerAddressFieldIndex.AddressTypeID, value, true); }
 		}
 
-		/// <summary> The CustomerID property of the Entity CustomerAddress<br/><br/></summary>
+		/// <summary> The CustomerID property of the Entity CustomerAddress<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "CustomerAddress"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -851,7 +861,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CustomerAddressFieldIndex.CustomerID, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity CustomerAddress<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity CustomerAddress<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "CustomerAddress"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -861,7 +872,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)CustomerAddressFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity CustomerAddress<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity CustomerAddress<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "CustomerAddress"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

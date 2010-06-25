@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Contact'. <br/><br/>
 	/// 
+	/// MS_Description: Primary XML index.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class ContactEntity : CommonEntityBase
@@ -1435,36 +1436,52 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Primary XML index.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Additional contact information about the person stored in xml format. ");
 			_fieldsCustomProperties.Add("AdditionalContactInfo", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Primary key for Contact records.");
 			_fieldsCustomProperties.Add("ContactID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"E-mail address for the person.");
 			_fieldsCustomProperties.Add("EmailAddress", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. ");
 			_fieldsCustomProperties.Add("EmailPromotion", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"First name of the person.");
 			_fieldsCustomProperties.Add("FirstName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Last name of the person.");
 			_fieldsCustomProperties.Add("LastName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Middle name or middle initial of the person.");
 			_fieldsCustomProperties.Add("MiddleName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique nonclustered index. Used to support replication samples.");
 			_fieldsCustomProperties.Add("NameStyle", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Password for the e-mail account.");
 			_fieldsCustomProperties.Add("PasswordHash", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Random value concatenated with the password string before the password is hashed.");
 			_fieldsCustomProperties.Add("PasswordSalt", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Phone number associated with the person.");
 			_fieldsCustomProperties.Add("Phone", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Surname suffix. For example, Sr. or Jr.");
 			_fieldsCustomProperties.Add("Suffix", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"A courtesy title. For example, Mr. or Ms.");
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
 		}
 		#endregion
@@ -1700,7 +1717,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The AdditionalContactInfo property of the Entity Contact<br/><br/></summary>
+		/// <summary> The AdditionalContactInfo property of the Entity Contact<br/><br/>
+		/// MS_Description: Additional contact information about the person stored in xml format. <br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."AdditionalContactInfo"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1710,7 +1728,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.AdditionalContactInfo, value, true); }
 		}
 
-		/// <summary> The ContactID property of the Entity Contact<br/><br/></summary>
+		/// <summary> The ContactID property of the Entity Contact<br/><br/>
+		/// MS_Description: Primary key for Contact records.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1720,7 +1739,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.ContactID, value, true); }
 		}
 
-		/// <summary> The EmailAddress property of the Entity Contact<br/><br/></summary>
+		/// <summary> The EmailAddress property of the Entity Contact<br/><br/>
+		/// MS_Description: E-mail address for the person.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."EmailAddress"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1730,7 +1750,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.EmailAddress, value, true); }
 		}
 
-		/// <summary> The EmailPromotion property of the Entity Contact<br/><br/></summary>
+		/// <summary> The EmailPromotion property of the Entity Contact<br/><br/>
+		/// MS_Description: 0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. <br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."EmailPromotion"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1740,7 +1761,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.EmailPromotion, value, true); }
 		}
 
-		/// <summary> The FirstName property of the Entity Contact<br/><br/></summary>
+		/// <summary> The FirstName property of the Entity Contact<br/><br/>
+		/// MS_Description: First name of the person.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."FirstName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1750,7 +1772,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.FirstName, value, true); }
 		}
 
-		/// <summary> The LastName property of the Entity Contact<br/><br/></summary>
+		/// <summary> The LastName property of the Entity Contact<br/><br/>
+		/// MS_Description: Last name of the person.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."LastName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1760,7 +1783,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.LastName, value, true); }
 		}
 
-		/// <summary> The MiddleName property of the Entity Contact<br/><br/></summary>
+		/// <summary> The MiddleName property of the Entity Contact<br/><br/>
+		/// MS_Description: Middle name or middle initial of the person.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."MiddleName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1770,7 +1794,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.MiddleName, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity Contact<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity Contact<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1780,7 +1805,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The NameStyle property of the Entity Contact<br/><br/></summary>
+		/// <summary> The NameStyle property of the Entity Contact<br/><br/>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."NameStyle"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1790,7 +1816,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.NameStyle, value, true); }
 		}
 
-		/// <summary> The PasswordHash property of the Entity Contact<br/><br/></summary>
+		/// <summary> The PasswordHash property of the Entity Contact<br/><br/>
+		/// MS_Description: Password for the e-mail account.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."PasswordHash"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1800,7 +1827,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.PasswordHash, value, true); }
 		}
 
-		/// <summary> The PasswordSalt property of the Entity Contact<br/><br/></summary>
+		/// <summary> The PasswordSalt property of the Entity Contact<br/><br/>
+		/// MS_Description: Random value concatenated with the password string before the password is hashed.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."PasswordSalt"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 10<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1810,7 +1838,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.PasswordSalt, value, true); }
 		}
 
-		/// <summary> The Phone property of the Entity Contact<br/><br/></summary>
+		/// <summary> The Phone property of the Entity Contact<br/><br/>
+		/// MS_Description: Phone number associated with the person.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."Phone"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1820,7 +1849,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.Phone, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity Contact<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity Contact<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1830,7 +1860,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The Suffix property of the Entity Contact<br/><br/></summary>
+		/// <summary> The Suffix property of the Entity Contact<br/><br/>
+		/// MS_Description: Surname suffix. For example, Sr. or Jr.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."Suffix"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 10<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1840,7 +1871,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ContactFieldIndex.Suffix, value, true); }
 		}
 
-		/// <summary> The Title property of the Entity Contact<br/><br/></summary>
+		/// <summary> The Title property of the Entity Contact<br/><br/>
+		/// MS_Description: A courtesy title. For example, Mr. or Ms.<br/></summary>
 		/// <remarks>Mapped on  table field: "Contact"."Title"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 8<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

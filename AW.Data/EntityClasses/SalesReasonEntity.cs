@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SalesReason'. <br/><br/>
 	/// 
+	/// MS_Description: Lookup table of customer purchase reasons.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SalesReasonEntity : CommonEntityBase
@@ -415,14 +416,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Lookup table of customer purchase reasons.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales reason description.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Category the sales reason belongs to.");
 			_fieldsCustomProperties.Add("ReasonType", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SalesReasonID", fieldHashtable);
 		}
 		#endregion
@@ -515,7 +521,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity SalesReason<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity SalesReason<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -525,7 +532,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesReasonFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity SalesReason<br/><br/></summary>
+		/// <summary> The Name property of the Entity SalesReason<br/><br/>
+		/// MS_Description: Sales reason description.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -535,7 +543,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesReasonFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The ReasonType property of the Entity SalesReason<br/><br/></summary>
+		/// <summary> The ReasonType property of the Entity SalesReason<br/><br/>
+		/// MS_Description: Category the sales reason belongs to.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."ReasonType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -545,7 +554,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesReasonFieldIndex.ReasonType, value, true); }
 		}
 
-		/// <summary> The SalesReasonID property of the Entity SalesReason<br/><br/></summary>
+		/// <summary> The SalesReasonID property of the Entity SalesReason<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."SalesReasonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

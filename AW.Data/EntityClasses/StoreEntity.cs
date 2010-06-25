@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'Store'. <br/><br/>
 	/// 
+	/// MS_Description: Primary XML index.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class StoreEntity : CustomerEntity
@@ -536,12 +537,16 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Primary XML index.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Demographic informationg about the store such as the number of employees, annual sales and store type.");
 			_fieldsCustomProperties.Add("Demographics", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of the store.");
 			_fieldsCustomProperties.Add("Name", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("SalesPersonID", fieldHashtable);
 		}
 		#endregion
@@ -651,7 +656,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Demographics property of the Entity Store<br/><br/></summary>
+		/// <summary> The Demographics property of the Entity Store<br/><br/>
+		/// MS_Description: Demographic informationg about the store such as the number of employees, annual sales and store type.<br/></summary>
 		/// <remarks>Mapped on  table field: "Store"."Demographics"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -661,7 +667,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StoreFieldIndex.Demographics, value, true); }
 		}
 
-		/// <summary> The Name property of the Entity Store<br/><br/></summary>
+		/// <summary> The Name property of the Entity Store<br/><br/>
+		/// MS_Description: Name of the store.<br/></summary>
 		/// <remarks>Mapped on  table field: "Store"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -671,7 +678,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)StoreFieldIndex.Name, value, true); }
 		}
 
-		/// <summary> The SalesPersonID property of the Entity Store<br/><br/></summary>
+		/// <summary> The SalesPersonID property of the Entity Store<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "Store"."SalesPersonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

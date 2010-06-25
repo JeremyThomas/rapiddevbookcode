@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SalesPerson'. <br/><br/>
 	/// 
+	/// MS_Description: Sales representative current information.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SalesPersonEntity : EmployeeEntity
@@ -797,18 +798,25 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Sales representative current information.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Bonus due if quota is met.");
 			_fieldsCustomProperties.Add("Bonus", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Commision percent received per sale.");
 			_fieldsCustomProperties.Add("CommissionPct", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales total of previous year.");
 			_fieldsCustomProperties.Add("SalesLastYear", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Projected yearly sales.");
 			_fieldsCustomProperties.Add("SalesQuota", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales total year to date.");
 			_fieldsCustomProperties.Add("SalesYtd", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.");
 			_fieldsCustomProperties.Add("TerritoryID", fieldHashtable);
 		}
 		#endregion
@@ -939,7 +947,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Bonus property of the Entity SalesPerson<br/><br/></summary>
+		/// <summary> The Bonus property of the Entity SalesPerson<br/><br/>
+		/// MS_Description: Bonus due if quota is met.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."Bonus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -949,7 +958,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonFieldIndex.Bonus, value, true); }
 		}
 
-		/// <summary> The CommissionPct property of the Entity SalesPerson<br/><br/></summary>
+		/// <summary> The CommissionPct property of the Entity SalesPerson<br/><br/>
+		/// MS_Description: Commision percent received per sale.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."CommissionPct"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -959,7 +969,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonFieldIndex.CommissionPct, value, true); }
 		}
 
-		/// <summary> The SalesLastYear property of the Entity SalesPerson<br/><br/></summary>
+		/// <summary> The SalesLastYear property of the Entity SalesPerson<br/><br/>
+		/// MS_Description: Sales total of previous year.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -969,7 +980,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonFieldIndex.SalesLastYear, value, true); }
 		}
 
-		/// <summary> The SalesQuota property of the Entity SalesPerson<br/><br/></summary>
+		/// <summary> The SalesQuota property of the Entity SalesPerson<br/><br/>
+		/// MS_Description: Projected yearly sales.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesQuota"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -979,7 +991,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonFieldIndex.SalesQuota, value, true); }
 		}
 
-		/// <summary> The SalesYtd property of the Entity SalesPerson<br/><br/></summary>
+		/// <summary> The SalesYtd property of the Entity SalesPerson<br/><br/>
+		/// MS_Description: Sales total year to date.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -989,7 +1002,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonFieldIndex.SalesYtd, value, true); }
 		}
 
-		/// <summary> The TerritoryID property of the Entity SalesPerson<br/><br/></summary>
+		/// <summary> The TerritoryID property of the Entity SalesPerson<br/><br/>
+		/// MS_Description: Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SalesPersonQuotaHistory'. <br/><br/>
 	/// 
+	/// MS_Description: Sales performance tracking.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SalesPersonQuotaHistoryEntity : CommonEntityBase
@@ -432,16 +433,22 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Sales performance tracking.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales quota date.");
 			_fieldsCustomProperties.Add("QuotaDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SalesPersonID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Sales quota amount.");
 			_fieldsCustomProperties.Add("SalesQuota", fieldHashtable);
 		}
 		#endregion
@@ -569,7 +576,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity SalesPersonQuotaHistory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity SalesPersonQuotaHistory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPersonQuotaHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -579,7 +587,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonQuotaHistoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The QuotaDate property of the Entity SalesPersonQuotaHistory<br/><br/></summary>
+		/// <summary> The QuotaDate property of the Entity SalesPersonQuotaHistory<br/><br/>
+		/// MS_Description: Sales quota date.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPersonQuotaHistory"."QuotaDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -589,7 +598,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonQuotaHistoryFieldIndex.QuotaDate, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity SalesPersonQuotaHistory<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity SalesPersonQuotaHistory<br/><br/>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPersonQuotaHistory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -599,7 +609,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonQuotaHistoryFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The SalesPersonID property of the Entity SalesPersonQuotaHistory<br/><br/></summary>
+		/// <summary> The SalesPersonID property of the Entity SalesPersonQuotaHistory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPersonQuotaHistory"."SalesPersonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -609,7 +620,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SalesPersonQuotaHistoryFieldIndex.SalesPersonID, value, true); }
 		}
 
-		/// <summary> The SalesQuota property of the Entity SalesPersonQuotaHistory<br/><br/></summary>
+		/// <summary> The SalesQuota property of the Entity SalesPersonQuotaHistory<br/><br/>
+		/// MS_Description: Sales quota amount.<br/></summary>
 		/// <remarks>Mapped on  table field: "SalesPersonQuotaHistory"."SalesQuota"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'SpecialOfferProduct'. <br/><br/>
 	/// 
+	/// MS_Description: Cross-reference table mapping products to special offer discounts.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class SpecialOfferProductEntity : CommonEntityBase
@@ -669,14 +670,19 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Cross-reference table mapping products to special offer discounts.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product identification number. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("SpecialOfferID", fieldHashtable);
 		}
 		#endregion
@@ -863,7 +869,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ModifiedDate property of the Entity SpecialOfferProduct<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity SpecialOfferProduct<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOfferProduct"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -873,7 +880,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferProductFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity SpecialOfferProduct<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity SpecialOfferProduct<br/><br/>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOfferProduct"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -883,7 +891,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferProductFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The Rowguid property of the Entity SpecialOfferProduct<br/><br/></summary>
+		/// <summary> The Rowguid property of the Entity SpecialOfferProduct<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOfferProduct"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -893,7 +902,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)SpecialOfferProductFieldIndex.Rowguid, value, true); }
 		}
 
-		/// <summary> The SpecialOfferID property of the Entity SpecialOfferProduct<br/><br/></summary>
+		/// <summary> The SpecialOfferID property of the Entity SpecialOfferProduct<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "SpecialOfferProduct"."SpecialOfferID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

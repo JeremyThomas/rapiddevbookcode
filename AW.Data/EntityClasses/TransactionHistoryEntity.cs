@@ -33,6 +33,7 @@ namespace AW.Data.EntityClasses
 
 	/// <summary>Entity class which represents the entity 'TransactionHistory'. <br/><br/>
 	/// 
+	/// MS_Description: Record of each purchase order, sales order, or work order transaction year to date.<br/>
 	/// </summary>
 	[Serializable]
 	public partial class TransactionHistoryEntity : CommonEntityBase
@@ -424,24 +425,34 @@ namespace AW.Data.EntityClasses
 		{
 			_customProperties = new Dictionary<string, string>();
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
+			_customProperties.Add("MS_Description", @"Record of each purchase order, sales order, or work order transaction year to date.");
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product cost.");
 			_fieldsCustomProperties.Add("ActualCost", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time the record was last updated.");
 			_fieldsCustomProperties.Add("ModifiedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product identification number. Foreign key to Product.ProductID.");
 			_fieldsCustomProperties.Add("ProductID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Product quantity.");
 			_fieldsCustomProperties.Add("Quantity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Nonclustered index.");
 			_fieldsCustomProperties.Add("ReferenceOrderID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Line number associated with the purchase order, sales order, or work order.");
 			_fieldsCustomProperties.Add("ReferenceOrderLineID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Date and time of the transaction.");
 			_fieldsCustomProperties.Add("TransactionDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("TransactionID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"W = WorkOrder, S = SalesOrder, P = PurchaseOrder");
 			_fieldsCustomProperties.Add("TransactionType", fieldHashtable);
 		}
 		#endregion
@@ -567,7 +578,8 @@ namespace AW.Data.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The ActualCost property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The ActualCost property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: Product cost.<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ActualCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -577,7 +589,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)TransactionHistoryFieldIndex.ActualCost, value, true); }
 		}
 
-		/// <summary> The ModifiedDate property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The ModifiedDate property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: Date and time the record was last updated.<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -587,7 +600,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)TransactionHistoryFieldIndex.ModifiedDate, value, true); }
 		}
 
-		/// <summary> The ProductID property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The ProductID property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -597,7 +611,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)TransactionHistoryFieldIndex.ProductID, value, true); }
 		}
 
-		/// <summary> The Quantity property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The Quantity property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: Product quantity.<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."Quantity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -607,7 +622,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)TransactionHistoryFieldIndex.Quantity, value, true); }
 		}
 
-		/// <summary> The ReferenceOrderID property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The ReferenceOrderID property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: Nonclustered index.<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ReferenceOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -617,7 +633,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)TransactionHistoryFieldIndex.ReferenceOrderID, value, true); }
 		}
 
-		/// <summary> The ReferenceOrderLineID property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The ReferenceOrderLineID property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: Line number associated with the purchase order, sales order, or work order.<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ReferenceOrderLineID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -627,7 +644,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)TransactionHistoryFieldIndex.ReferenceOrderLineID, value, true); }
 		}
 
-		/// <summary> The TransactionDate property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The TransactionDate property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: Date and time of the transaction.<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."TransactionDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -637,7 +655,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)TransactionHistoryFieldIndex.TransactionDate, value, true); }
 		}
 
-		/// <summary> The TransactionID property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The TransactionID property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."TransactionID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -647,7 +666,8 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)TransactionHistoryFieldIndex.TransactionID, value, true); }
 		}
 
-		/// <summary> The TransactionType property of the Entity TransactionHistory<br/><br/></summary>
+		/// <summary> The TransactionType property of the Entity TransactionHistory<br/><br/>
+		/// MS_Description: W = WorkOrder, S = SalesOrder, P = PurchaseOrder<br/></summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."TransactionType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
