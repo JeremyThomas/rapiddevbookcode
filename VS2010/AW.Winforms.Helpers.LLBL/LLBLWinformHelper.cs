@@ -67,7 +67,7 @@ namespace AW.Winforms.Helpers.LLBL
 
 		#region Self Servicing
 
-		public class GridDataEditorLLBLSelfServicingPersister : IGridDataEditorPersister
+		public class DataEditorLLBLSelfServicingPersister : IDataEditorPersister
 		{
 
 			public int Save(object dataToSave)
@@ -89,7 +89,7 @@ namespace AW.Winforms.Helpers.LLBL
 
 		public static IEnumerable<T> EditSelfServicingInDataGridView<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
 		{
-			return enumerable.EditInDataGridView(new GridDataEditorLLBLSelfServicingPersister(), pageSize);
+			return enumerable.EditInDataGridView(new DataEditorLLBLSelfServicingPersister(), pageSize);
 		}
 
 		public static IEnumerable<T> EditSelfServicingInDataGridView<T>(this IEnumerable<T> enumerable) where T : EntityBase
@@ -99,12 +99,12 @@ namespace AW.Winforms.Helpers.LLBL
 
 		public static IEnumerable EditSelfServicingInDataGridView(this IEnumerable enumerable, ushort pageSize)
 		{
-			return enumerable.EditInDataGridView(new GridDataEditorLLBLSelfServicingPersister(), pageSize);
+			return enumerable.EditInDataGridView(new DataEditorLLBLSelfServicingPersister(), pageSize);
 		}
 
 		public static IEnumerable<T> ShowSelfServicingHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase
 		{
-			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new GridDataEditorLLBLSelfServicingPersister());
+			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLSelfServicingPersister());
 		}
 
 		#endregion
@@ -113,12 +113,12 @@ namespace AW.Winforms.Helpers.LLBL
 
 		public static IEnumerable EditInDataGridView(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
 		{
-			return enumerable.EditInDataGridView(new GridDataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
+			return enumerable.EditInDataGridView(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
 		}
 		
 		public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
 		{
-			return enumerable.EditInDataGridView(new GridDataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
+			return enumerable.EditInDataGridView(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
 		}
 
 		public static IEnumerable<T> EditAdapterInDataGridView<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
@@ -133,7 +133,7 @@ namespace AW.Winforms.Helpers.LLBL
 
 		public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
 		{
-			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new GridDataEditorLLBLAdapterPersister(dataAccessAdapter));
+			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLAdapterPersister(dataAccessAdapter));
 		}
 
 		public static IEnumerable<T> ShowAdapterHierarchyInTree<T>(this IQueryable<T> query, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
@@ -141,11 +141,11 @@ namespace AW.Winforms.Helpers.LLBL
 			return query.ShowHierarchyInTree(EntityHelper.GetDataAccessAdapter(query), iDPropertyName, parentIDPropertyName, nameColumn);
 		}
 
-		public class GridDataEditorLLBLAdapterPersister : IGridDataEditorPersister
+		public class DataEditorLLBLAdapterPersister : IDataEditorPersister
 		{
 			private readonly IDataAccessAdapter _dataAccessAdapter;
 
-			public GridDataEditorLLBLAdapterPersister(IDataAccessAdapter dataAccessAdapter)
+			public DataEditorLLBLAdapterPersister(IDataAccessAdapter dataAccessAdapter)
 			{
 				_dataAccessAdapter = dataAccessAdapter;
 			}

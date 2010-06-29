@@ -4591,10 +4591,10 @@
       <Relationships>
         <Relationship Name="Person.Address.StateProvince-Person.StateProvince.Addresses" StartAlias="Person.StateProvince" EndAlias="Person.Address" JoinHint="1" />
         <Relationship Name="Person.StateProvince.CountryRegion-Person.CountryRegion.StateProvinces" StartAlias="Person.CountryRegion" EndAlias="Person.StateProvince" JoinHint="1" />
-        <Relationship Name="Sales.Customer.SalesTerritory-Sales.SalesTerritory.Customers" StartAlias="Sales.Individual" EndAlias="Sales.Customer" JoinHint="1" />
         <Relationship Name="Sales.CustomerAddress.Address-Person.Address.CustomerAddresses" StartAlias="Sales.CustomerAddress" EndAlias="Person.Address" JoinHint="1" StartAliasIsStartVertex="true" />
         <Relationship Name="Sales.CustomerAddress.AddressType-Person.AddressType.CustomerAddresses" StartAlias="Person.AddressType" EndAlias="Sales.CustomerAddress" JoinHint="1" />
         <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Customer" EndAlias="Sales.CustomerAddress" JoinHint="1" />
+        <Relationship Name="Sales.CustomerAddress.Customer-Sales.Customer.CustomerAddresses" StartAlias="Sales.Individual" EndAlias="Sales.CustomerAddress" JoinHint="1" />
         <Relationship Name="Sales.Individual.Contact-Person.Contact.Individuals" StartAlias="Person.Contact" EndAlias="Sales.Individual" JoinHint="1" />
       </Relationships>
     </TypedListDefinition>

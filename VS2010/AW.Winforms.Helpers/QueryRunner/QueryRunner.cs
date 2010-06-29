@@ -25,7 +25,7 @@ namespace AW.Winforms.Helpers.QueryRunner
     {
       SaveFunction = saveFunction;
       DeleteFunction = deleteFunction;
-      gridDataEditorScript.GridDataEditorPersister = new GridDataEditorPersister(saveFunction, deleteFunction, saveableTypes);
+      gridDataEditorScript.DataEditorPersister = new DataEditorPersister(saveFunction, deleteFunction, saveableTypes);
     }
 
     private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
@@ -78,13 +78,13 @@ namespace AW.Winforms.Helpers.QueryRunner
 
     private void toolStripButtonBrowse_Click(object sender, EventArgs e)
     {
-      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)gridDataEditorScript.BindingSource.DataSource).List, gridDataEditorScript.GridDataEditorPersister);
+      FrmEntityViewer.LaunchAsChildForm(((ObjectListView)gridDataEditorScript.BindingSource.DataSource).List, gridDataEditorScript.DataEditorPersister);
     }
 
     private void browseObjectToolStripMenuItem_Click(object sender, EventArgs e)
     {
       if (gridDataEditorScript.BindingSource.Current != null)
-        FrmEntityViewer.LaunchAsChildForm(gridDataEditorScript.BindingSource.Current, gridDataEditorScript.GridDataEditorPersister);
+        FrmEntityViewer.LaunchAsChildForm(gridDataEditorScript.BindingSource.Current, gridDataEditorScript.DataEditorPersister);
     }
 
     private void textBoxScript_DragDrop(object sender, DragEventArgs e)

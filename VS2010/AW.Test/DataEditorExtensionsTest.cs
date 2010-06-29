@@ -64,8 +64,8 @@ namespace AW.Tests
 		[TestMethod]
 		public void EditInDataGridViewTest()
 		{
-			TestEditInDataGridView(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
 			TestEditInDataGridView(((IEntity)MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
+			TestEditInDataGridView(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
 			TestEditInDataGridView(NonSerializableClass.GenerateList());
 			TestEditInDataGridView(SerializableClass.GenerateList());
 			TestEditInDataGridView(SerializableClass.GenerateListWithBoth());
@@ -85,6 +85,12 @@ namespace AW.Tests
 			TestEditInDataGridView(arrayList);
 		}
 
+		[TestMethod]
+		public void EditEmptyInDataGridViewTest()
+		{
+			TestEditInDataGridView(new string[0]);
+			TestEditInDataGridView(new SerializableClass[0]);
+		}
 
 		[TestMethod]
 		public void EditPagedQueryInDataGridViewTest()
@@ -101,8 +107,8 @@ namespace AW.Tests
 			//		awDataClassesDataContext. = DbUtils.ActualConnectionString;
 			//awDataClassesDataContext.Connection.ConnectionString
 			TestEditInDataGridView(awDataClassesDataContext.AddressTypes);
-		  var addressTypesQuery = awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID);
-      addressTypesQuery.EditInDataGridView(awDataClassesDataContext);
+			var addressTypesQuery = awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID);
+			addressTypesQuery.EditInDataGridView(awDataClassesDataContext);
 			//TestEditInDataGridView(awDataClassesDataContext.);
 			var actual = awDataClassesDataContext.AddressTypes.EditInDataGridView();
 			Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);

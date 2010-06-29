@@ -71,7 +71,11 @@ namespace AW.Tests
 			Assert.AreEqual(typeof (AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
 			Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
 			Assert.AreEqual(typeof (object), MetaDataHelper.GetEnumerableItemType(new ArrayList()));
-			//Assert.IsNull(BindingListHelper.GetEnumerableItemType(new ArrayList()));
+
+			Assert.AreEqual(typeof(string), MetaDataHelper.GetEnumerableItemType(new string[0]));
+			var emptySerializableClasses = new SerializableClass[0];
+			Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses));
+			Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses.Take(30)));
 		}
 
 		public void CopyToDataTableAndAssert<T>(IEnumerable<T> source)

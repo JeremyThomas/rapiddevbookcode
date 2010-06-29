@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AW.Helper;
@@ -15,15 +16,14 @@ namespace AW.Winforms.Helpers.Controls
 			get { return typeof(T); }
 		}
 
-		public bool BindEnumerable(IEnumerable<T> enumerable)
+		protected override bool GetFirstPage()
 		{
-			return BindEnumerable(enumerable, PageSize);
+			return GetFirstPage(_supersetG);
 		}
 
-		public bool BindEnumerable(IEnumerable<T> enumerable, ushort pageSize)
+		protected override bool GetFirstPage(IEnumerable enumerable)
 		{
-			bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
-			return GetFirstPage(enumerable);
+			return GetFirstPage((IEnumerable<T>)enumerable);
 		}
 
 		private bool GetFirstPage(IEnumerable<T> enumerable)
@@ -34,10 +34,15 @@ namespace AW.Winforms.Helpers.Controls
 			return isEnumerable;
 		}
 
+		protected override IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
+		{
+			return CreatePageDataSource(pageSize, (IEnumerable<T>)enumerable);
+		}
+
 		protected IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable<T> enumerable)
 		{
 			PageSize = pageSize;
-			if (pageSize == 0)
+			if (pageSize == 0 || !enumerable.Any())
 				return Enumerable.Empty<int>();
 			_supersetG = enumerable;
 			return Enumerable.Range(1, GetPageCount());
@@ -48,16 +53,17 @@ namespace AW.Winforms.Helpers.Controls
 			return _supersetG != null ? _supersetG.Count() : 0;
 		}
 
-		protected override void BindPage()
-		{
-			if (GetPageIndex() > 0)
-				bindingSourceEnumerable.BindEnumerable(SkipTake(), false);
-			else
-				GetFirstPage(_supersetG);
+		protected override void SetRemovingItem()
+		{			
 			if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
 				((ObjectListView<T>)bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
 			else
-				SetRemovingItem();
+				base.SetRemovingItem();
+		}
+
+		protected override void BindEnumerable()
+		{
+			bindingSourceEnumerable.BindEnumerable(SkipTake(), false);
 		}
 
 		private IEnumerable<T> SkipTake()
