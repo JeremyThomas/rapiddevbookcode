@@ -20,7 +20,7 @@ namespace AW.Winforms.Helpers.Controls
 		private readonly ArrayList _deleteItems = new ArrayList();
 		private bool _canSave;
 		private IQueryable _superset;
-		public IGridDataEditorPersister GridDataEditorPersister;
+		public IDataEditorPersister DataEditorPersister;
 		private static FieldsToPropertiesTypeDescriptionProvider FieldsToPropertiesTypeDescriptionProvider;
 
 		public GridDataEditor()
@@ -108,11 +108,11 @@ namespace AW.Winforms.Helpers.Controls
 
 		private void saveToolStripButton_Click(object sender, EventArgs e)
 		{
-			var numSaved = GridDataEditorPersister.Save(bindingSourceEnumerable.List);
+			var numSaved = DataEditorPersister.Save(bindingSourceEnumerable.List);
 			toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
 			if ( _deleteItems != null)
 			{
-				var numDeleted = GridDataEditorPersister.Delete(_deleteItems);
+				var numDeleted = DataEditorPersister.Delete(_deleteItems);
 				toolStripLabelSaveResult.Text += @" numDeleted: " + numDeleted;
 				if (_deleteItems.Count == numDeleted)
 				{
@@ -146,17 +146,6 @@ namespace AW.Winforms.Helpers.Controls
 			toolStripLabelSaveResult.Text = "";
 		}
 
-		public bool BindEnumerable(IEnumerable enumerable)
-		{
-			return BindEnumerable(enumerable, PageSize);
-		}
-
-		public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
-		{
-			bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
-			return GetFirstPage(enumerable);
-		}
-
 		protected bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
 		{
 			if (Readonly)
@@ -172,7 +161,12 @@ namespace AW.Winforms.Helpers.Controls
 			return shouldBeReadonly;
 		}
 
-		private bool GetFirstPage(IEnumerable enumerable)
+		protected virtual bool GetFirstPage()
+		{
+			return GetFirstPage(_superset);
+		}
+
+		protected virtual bool GetFirstPage(IEnumerable enumerable)
 		{
 			if (Paging())
 				enumerable = enumerable.AsQueryable().Take(PageSize);
@@ -219,13 +213,29 @@ namespace AW.Winforms.Helpers.Controls
 			BindPage();
 		}
 
-		protected virtual void BindPage()
+		protected void BindPage()
 		{
 			if (GetPageIndex() > 0)
-				bindingSourceEnumerable.BindEnumerable(SkipTake(), false);
+				BindEnumerable();
 			else
-				GetFirstPage(_superset);
+				GetFirstPage();
 			SetRemovingItem();
+		}
+
+		protected virtual void BindEnumerable()
+		{
+			bindingSourceEnumerable.BindEnumerable(SkipTake(), false);
+		}
+
+		public bool BindEnumerable(IEnumerable enumerable)
+		{
+			return BindEnumerable(enumerable, PageSize);
+		}
+
+		public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
+		{
+			bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
+			return GetFirstPage(enumerable);
 		}
 
 		private IEnumerable SkipTake()
@@ -235,12 +245,12 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected int GetPageIndex()
 		{
-			if (bindingSourcePaging.Current == null)
+			if (bindingSourcePaging.Current == null || bindingSourcePaging.Current == bindingSourcePaging.DataSource)
 				return 0;
 			return (int) bindingSourcePaging.Current - 1;
 		}
 
-		protected void SetRemovingItem()
+		protected virtual void SetRemovingItem()
 		{
 			if (bindingSourceEnumerable.DataSource is ObjectListView)
 				((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
@@ -282,7 +292,7 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			ItemType = typeToEdit;
 			AddFieldsToPropertiesTypeDescriptionProvider(typeToEdit);
-			return GridDataEditorPersister != null && GridDataEditorPersister.CanSave(typeToEdit);
+			return DataEditorPersister != null && DataEditorPersister.CanSave(typeToEdit);
 		}
 
 		private bool CanSaveEnumerable()
@@ -328,40 +338,4 @@ namespace AW.Winforms.Helpers.Controls
 		}
 	}
 
-	public interface IGridDataEditorPersister
-	{
-		int Save(object dataToSave);
-		int Delete(object dataToSave);
-		bool CanSave(Type typeToSave);
-	}
-
-	public class GridDataEditorPersister : IGridDataEditorPersister
-	{
-		public Type[] SaveableTypes;
-		public Func<object, int> SaveFunction;
-		public Func<object, int> DeleteFunction;
-
-		public GridDataEditorPersister(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
-		{
-			SaveableTypes = saveableTypes;
-			SaveFunction = saveFunction;
-			DeleteFunction = deleteFunction;
-		}
-
-		public int Save(object dataToSave)
-		{
-			return SaveFunction != null ? SaveFunction(dataToSave) : 0;
-		}
-
-		public int Delete(object dataToSave)
-		{
-			return DeleteFunction != null ? DeleteFunction(dataToSave) : 0;
-		}
-
-		public bool CanSave(Type typeToSave)
-		{
-			return SaveFunction != null && (SaveableTypes == null || typeToSave.IsAssignableTo(SaveableTypes));
-		}
-
-	}
 }

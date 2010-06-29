@@ -97,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AWHelper.cs" />
+    <Compile Include="Controls\DataEditorPersister.cs" />
     <Compile Include="Controls\GridDataEditorT.cs">
       <SubType>UserControl</SubType>
     </Compile>

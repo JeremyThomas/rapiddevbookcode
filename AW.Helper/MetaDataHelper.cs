@@ -82,6 +82,34 @@ namespace AW.Helper
 			return t;
 		}
 
+		internal static Type GetElementType(Type enumerableType)
+		{
+			Type ienumType = FindGenericType(typeof(IEnumerable<>), enumerableType);
+			if (ienumType != null)
+				return ienumType.GetGenericArguments()[0];
+			return enumerableType;
+		}
+
+		internal static Type FindGenericType(Type definition, Type type)
+		{
+			while (type != null && type != typeof(object))
+			{
+				if (type.IsGenericType && type.GetGenericTypeDefinition() == definition)
+					return type;
+				if (definition.IsInterface)
+				{
+					foreach (Type itype in type.GetInterfaces())
+					{
+						Type found = FindGenericType(definition, itype);
+						if (found != null)
+							return found;
+					}
+				}
+				type = type.BaseType;
+			}
+			return null;
+		}
+
 		/// <summary>
 		/// Returns the data type of the items in the specified list.
 		/// </summary>
@@ -101,10 +129,14 @@ namespace AW.Helper
 			{
 				itemType = null;
 			}
-			if (itemType == null)
+			if (itemType == null || itemType == typeof(object))
 			{
-				queryable = enumerable.AsQueryable();
-				return queryable.ElementType;
+				var enumerableType = enumerable.GetType();
+				var elementType = GetElementType(enumerableType);
+				if (elementType != enumerableType)
+					return elementType;
+				//queryable = enumerable.AsQueryable();
+				//return queryable.ElementType;
 			}
 			return itemType;
 		}

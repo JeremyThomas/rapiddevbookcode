@@ -144,7 +144,7 @@ namespace AW.Win
 
     private void toolStripButtonViewEntity_Click(object sender, EventArgs e)
     {
-      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, new LLBLWinformHelper.GridDataEditorLLBLSelfServicingPersister());
+      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
     }
 
     private void toolStripButtonRefetch_Click(object sender, EventArgs e)
