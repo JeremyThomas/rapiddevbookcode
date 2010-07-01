@@ -57,13 +57,13 @@ namespace AW.Tests
     #endregion
 
     /// <summary>
-    ///A test for EditInDataGridView
+    ///A test for ShowInGrid
     ///</summary>
     public void EditInDataGridViewTestHelper<T>(ushort pageSize)where T : EntityBase
     {
       var enumerable = EntityHelper.GetQueryableForEntity<T>(MetaSingletons.MetaData).AsEnumerable();
       var expected = enumerable;
-      var actual = enumerable.EditSelfServicingInDataGridView(pageSize);
+      var actual = enumerable.ShowSelfServicingInGrid(pageSize);
       Assert.AreEqual(expected, actual);
     }
 
@@ -76,12 +76,12 @@ namespace AW.Tests
                          orderby at.AddressTypeID
                          select at;
       var addressTypeEntities = addressTypes.ToEntityCollection();
-      addressTypeEntities.EditSelfServicingInDataGridView(2);
-      addressTypeEntities.DefaultView.EditSelfServicingInDataGridView(3);
+      addressTypeEntities.ShowSelfServicingInGrid(2);
+      addressTypeEntities.DefaultView.ShowSelfServicingInGrid(3);
 
-      addressTypes.AsEnumerable().EditSelfServicingInDataGridView(3);
+      addressTypes.AsEnumerable().ShowSelfServicingInGrid(3);
 
-      addressTypeEntities.AsQueryable().ViewInDataGridView();
+      addressTypeEntities.AsQueryable().ShowInGrid();
     }
   }
 }

@@ -176,14 +176,14 @@ namespace AW.Winforms.Helpers.LLBL
     private static void ViewEntities(IQueryable entityQueryable, ushort pageSize)
     {
       if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
-        entityQueryable.EditSelfServicingInDataGridView(pageSize);
+        entityQueryable.ShowSelfServicingInGrid(pageSize);
       else
       {
         var provider = entityQueryable.Provider as LLBLGenProProvider2;
         if (provider == null)
-          entityQueryable.ViewInDataGridView(pageSize);
+          entityQueryable.ShowInGrid(pageSize);
         else
-          entityQueryable.EditInDataGridView(provider.AdapterToUse, pageSize);
+          entityQueryable.ShowInGrid(provider.AdapterToUse, pageSize);
       }
     }
 
