@@ -8,6 +8,11 @@ using System.Reflection;
 
 namespace AW.Helper
 {
+	public class StringWrapper
+	{
+		public string Value { get; set; }
+	}
+
 	public static class GeneralHelper
 	{
 		/// <summary>
@@ -156,12 +161,9 @@ namespace AW.Helper
 			return tb;
 		}
 
-		public static IEnumerable CreateStringWrapperForBinding(this IEnumerable<string> strings)
+		public static IEnumerable<StringWrapper> CreateStringWrapperForBinding(this IEnumerable<string> strings)
 		{
-			var values = from data in strings
-									 select new { Value = data };
-
-			return values.ToList();
+			return strings.Select(data => new StringWrapper { Value = data }).ToList();
 		}
 	}
 }

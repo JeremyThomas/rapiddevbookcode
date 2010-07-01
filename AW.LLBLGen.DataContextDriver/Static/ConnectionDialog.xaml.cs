@@ -34,13 +34,22 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					comboBoxDatabaseProvider.Text = defaultDataAccessAdapterFactoryMethod;
 
 				var defaultDataAccessAdapterFactoryType = Settings.Default.DefaultDataAccessAdapterFactoryType;
-				if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryType) && string.IsNullOrEmpty(textBoxAdapterType.Text))
-					textBoxAdapterType.Text = Settings.Default.DefaultDataAccessAdapterFactoryType;
+				if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryType) && string.IsNullOrEmpty(_cxInfo.DatabaseInfo.DbVersion))
+					_cxInfo.DatabaseInfo.DbVersion = Settings.Default.DefaultDataAccessAdapterFactoryType;
 
-				textBoxDatabaseConnectionString.Text = Settings.Default.DefaultApplicationConfig;
-				textBoxDataAccessAdapterAssemblyPath.Text = Settings.Default.DefaultDataAccessAdapterFactoryAssembly;
-				txtAssemblyPath.Text = Settings.Default.DefaultLinqMetaDataAssembly;
-				txtTypeName.Text = Settings.Default.DefaultLinqMetaData;
+
+				_cxInfo.AppConfigPath = Settings.Default.DefaultApplicationConfig;
+				_cxInfo.DatabaseInfo.CustomCxString = Settings.Default.DefaultDatabaseConnection;
+				_cxInfo.CustomTypeInfo.CustomAssemblyPath = Settings.Default.DefaultLinqMetaDataAssembly;
+				_cxInfo.CustomTypeInfo.CustomTypeName = Settings.Default.DefaultLinqMetaData;
+				_cxInfo.CustomTypeInfo.CustomMetadataPath = Settings.Default.DefaultDataAccessAdapterFactoryAssembly;
+				GetAdapterType(_cxInfo);
+
+				//textBoxDataAccessAdapterAssemblyPath.Text = Settings.Default.DefaultDataAccessAdapterFactoryAssembly;
+				//txtAppConfigPath.Text = Settings.Default.DefaultApplicationConfig;
+				//textBoxDatabaseConnectionString.Text = Settings.Default.DefaultDatabaseConnection
+				//txtAssemblyPath.Text = Settings.Default.DefaultLinqMetaDataAssembly;
+				//txtTypeName.Text = Settings.Default.DefaultLinqMetaData;
 			}
 //      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
 //.OfType<DataRow>()

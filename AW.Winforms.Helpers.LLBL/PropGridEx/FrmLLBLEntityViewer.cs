@@ -21,8 +21,8 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
     {
     }
 
-    public FrmLLBLEntityViewer(object entity, IGridDataEditorPersister gridDataEditorPersister)
-      : base(entity, gridDataEditorPersister)
+    public FrmLLBLEntityViewer(object entity, IDataEditorPersister dataEditorPersister)
+      : base(entity, dataEditorPersister)
     {
     }
 
@@ -43,14 +43,14 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
 
     public static Form LaunchAsChildForm(object entity, Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
     {
-      var frm = new FrmLLBLEntityViewer(entity, new GridDataEditorPersister(saveFunction, deleteFunction, saveableTypes));
+      var frm = new FrmLLBLEntityViewer(entity, new DataEditorPersister(saveFunction, deleteFunction, saveableTypes));
       AWHelper.ShowFormModalIfParentLess(frm);
       return frm;
     }
 
-    public new static Form LaunchAsChildForm(object entity, IGridDataEditorPersister gridDataEditorPersister)
+    public new static Form LaunchAsChildForm(object entity, IDataEditorPersister dataEditorPersister)
     {
-      var frm = new FrmEntityViewer(entity, gridDataEditorPersister);
+      var frm = new FrmEntityViewer(entity, dataEditorPersister);
       AWHelper.ShowChildForm(frm);
       return frm;
     }
