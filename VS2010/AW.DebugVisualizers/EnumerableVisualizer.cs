@@ -46,7 +46,7 @@ namespace AW.DebugVisualizers
 
 			if (enumerable != null)
 			{
-				_modalService.ShowDialog(DataEditorExtensions.CreateDataViewForm(enumerable));
+				_modalService.ShowDialog(FrmDataEditor.CreateDataViewForm(enumerable));
 			}
 		}
 	}

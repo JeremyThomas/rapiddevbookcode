@@ -25,16 +25,16 @@ namespace AW.Winforms.Helpers.DataEditor
 			dataTreeView.NameColumn = nameColumn;
 		}
 
-		public FrmHierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IGridDataEditorPersister gridDataEditorPersister)
+		public FrmHierarchyEditor(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister)
 			: this(hierarchicalData, iDPropertyName, parentIDPropertyName, nameColumn)
 		{
-			gridDataEditor.GridDataEditorPersister = gridDataEditorPersister;
-			saveToolStripButton.Enabled = gridDataEditor.GridDataEditorPersister != null;
+			gridDataEditor.DataEditorPersister = dataEditorPersister;
+			saveToolStripButton.Enabled = gridDataEditor.DataEditorPersister != null;
 		}
 
-		public static Form LaunchForm(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IGridDataEditorPersister gridDataEditorPersister)
+		public static Form LaunchForm(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister)
 		{
-			var frm = new FrmHierarchyEditor(hierarchicalData, iDPropertyName, parentIDPropertyName, nameColumn, gridDataEditorPersister) {Text = hierarchicalData.ToString()};
+			var frm = new FrmHierarchyEditor(hierarchicalData, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister) {Text = hierarchicalData.ToString()};
 			AWHelper.ShowForm(frm);
 			return frm;
 		}
@@ -68,8 +68,8 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		private void saveToolStripButton_Click(object sender, EventArgs e)
 		{
-			if (gridDataEditor.GridDataEditorPersister != null)
-				gridDataEditor.GridDataEditorPersister.Save(bindingSourceHierarchicalData.DataSource);
+			if (gridDataEditor.DataEditorPersister != null)
+				gridDataEditor.DataEditorPersister.Save(bindingSourceHierarchicalData.DataSource);
 		}
 	}
 }

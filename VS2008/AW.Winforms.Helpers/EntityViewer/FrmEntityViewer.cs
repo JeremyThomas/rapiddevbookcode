@@ -31,10 +31,10 @@ namespace AW.Winforms.Helpers.EntityViewer
       ObjectBrowser.ObjectToBrowse = entity;
     }
 
-    public FrmEntityViewer(object entity, IGridDataEditorPersister gridDataEditorPersister)
+    public FrmEntityViewer(object entity, IDataEditorPersister dataEditorPersister)
       : this(entity)
     {
-      gridDataEditor.GridDataEditorPersister = gridDataEditorPersister;
+      gridDataEditor.DataEditorPersister = dataEditorPersister;
     }
 
     public static Form LaunchAsChildForm(object entity)
@@ -44,9 +44,9 @@ namespace AW.Winforms.Helpers.EntityViewer
       return frm;
     }
 
-    public static Form LaunchAsChildForm(object entity, IGridDataEditorPersister gridDataEditorPersister)
+    public static Form LaunchAsChildForm(object entity, IDataEditorPersister dataEditorPersister)
     {
-      var frm = new FrmEntityViewer(entity, gridDataEditorPersister);
+      var frm = new FrmEntityViewer(entity, dataEditorPersister);
       AWHelper.ShowChildForm(frm);
       return frm;
     }

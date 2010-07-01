@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Linq;
 using AW.Helper;
 
 namespace AW.Winforms.Helpers.Controls
@@ -39,33 +38,5 @@ namespace AW.Winforms.Helpers.Controls
 			return SaveFunction != null && (SaveableTypes == null || typeToSave.IsAssignableTo(SaveableTypes));
 		}
 
-	}
-
-	public class DataEditorLinqtoSQLPersister : IDataEditorPersister
-	{
-		private readonly DataContext _dataContext;
-
-		public DataEditorLinqtoSQLPersister(DataContext dataContext)
-		{
-			_dataContext = dataContext;
-		}
-
-		public int Save(object dataToSave)
-		{
-			var changeSet = _dataContext.GetChangeSet();
-			_dataContext.SubmitChanges();
-			return changeSet.Inserts.Count + changeSet.Updates.Count;
-		}
-
-		public int Delete(object dataToSave)
-		{
-			_dataContext.SubmitChanges();
-			return _dataContext.GetChangeSet().Deletes.Count;
-		}
-
-		public bool CanSave(Type typeToSave)
-		{
-			return true;
-		}
 	}
 }

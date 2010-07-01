@@ -87,19 +87,19 @@ namespace AW.Winforms.Helpers.LLBL
 
 		}
 
-		public static IEnumerable<T> EditSelfServicingInDataGridView<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
+		public static IEnumerable<T> ShowSelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
 		{
-			return enumerable.EditInDataGridView(new DataEditorLLBLSelfServicingPersister(), pageSize);
+			return enumerable.ShowInGrid(new DataEditorLLBLSelfServicingPersister(), pageSize);
 		}
 
-		public static IEnumerable<T> EditSelfServicingInDataGridView<T>(this IEnumerable<T> enumerable) where T : EntityBase
+		public static IEnumerable<T> ShowSelfServicingInGrid<T>(this IEnumerable<T> enumerable) where T : EntityBase
 		{
-			return enumerable.EditSelfServicingInDataGridView(DataEditorExtensions.DefaultPageSize);
+			return enumerable.ShowSelfServicingInGrid(DataEditorExtensions.DefaultPageSize);
 		}
 
-		public static IEnumerable EditSelfServicingInDataGridView(this IEnumerable enumerable, ushort pageSize)
+		public static IEnumerable ShowSelfServicingInGrid(this IEnumerable enumerable, ushort pageSize)
 		{
-			return enumerable.EditInDataGridView(new DataEditorLLBLSelfServicingPersister(), pageSize);
+			return enumerable.ShowInGrid(new DataEditorLLBLSelfServicingPersister(), pageSize);
 		}
 
 		public static IEnumerable<T> ShowSelfServicingHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase
@@ -111,24 +111,24 @@ namespace AW.Winforms.Helpers.LLBL
 
 		#region Adapter
 
-		public static IEnumerable EditInDataGridView(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
+		public static IEnumerable ShowInGrid(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
 		{
-			return enumerable.EditInDataGridView(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
+			return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
 		}
 		
-		public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
+		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
 		{
-			return enumerable.EditInDataGridView(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
+			return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
 		}
 
-		public static IEnumerable<T> EditAdapterInDataGridView<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
+		public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
 		{
-			return EditInDataGridView(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
+			return ShowInGrid(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
 		}
 
-		public static IEnumerable<T> EditAdapterInDataGridView<T>(this IQueryable<T> query) where T : EntityBase2
+		public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query) where T : EntityBase2
 		{
-			return EditAdapterInDataGridView(query, DataEditorExtensions.DefaultPageSize);
+			return ShowAdapterInGrid(query, DataEditorExtensions.DefaultPageSize);
 		}
 
 		public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
