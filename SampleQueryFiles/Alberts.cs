@@ -11,11 +11,11 @@ using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, IQueryScript
 {
-  public IEnumerable Query()
-  {
-  return from contact in MetaSingletons.MetaData.Contact
-         where contact.FirstName.Contains("Albert") 
-         select contact;
-  }
+	public IEnumerable Query()
+	{
+		return from contact in MetaSingletons.MetaData.Contact
+					 where contact.FirstName.Contains("Albert")
+					 select contact;
+	}
 
 }

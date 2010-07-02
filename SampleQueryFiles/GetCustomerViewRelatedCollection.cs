@@ -11,9 +11,9 @@ using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, IQueryScript
 {
-  public IEnumerable Query()
-  {
-return CustomerQueries.GetCustomerViewRelatedCollection();
-  }
+	public IEnumerable Query()
+	{
+		return CustomerQueries.GetCustomerViewRelatedCollection();
+	}
 
 }

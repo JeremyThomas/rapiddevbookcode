@@ -11,4 +11,4 @@
   <Reference>&lt;Personal&gt;\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\AW.Test\bin\Debug\AW.Winforms.Helpers.dll</Reference>
 </Query>
 
-AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(Customers).Dump ("All customers");
+AW.Winforms.Helpers.DataEditor.DataEditorExtensions.ShowInGrid(Customers).Dump ("All customers");
