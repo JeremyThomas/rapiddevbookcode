@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Linq;
 using System.Linq;
 using System.Windows.Forms;
@@ -16,79 +14,40 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		#region DataGridView
 
-		public static IQueryable ViewInDataGridView(this IQueryable enumerable)
+		public static IQueryable ShowInGrid(this IQueryable enumerable)
 		{
-			return ViewInDataGridView(enumerable, DefaultPageSize) as IQueryable;
+			return ShowInGrid(enumerable, DefaultPageSize) as IQueryable;
 		}
 
-		public static IEnumerable ViewInDataGridView(this IQueryable enumerable, ushort pageSize)
+		public static IEnumerable ShowInGrid(this IQueryable enumerable, ushort pageSize)
 		{
-			return EditInDataGridView(enumerable, null, pageSize);
+			return ShowInGrid(enumerable, null, pageSize);
 		}
 
-		public static IEnumerable EditInDataGridView(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister)
+		public static IEnumerable ShowInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister)
 		{
-			return EditInDataGridView(enumerable, dataEditorPersister, DefaultPageSize);
+			return ShowInGrid(enumerable, dataEditorPersister, DefaultPageSize);
 		}
 
-		public static IEnumerable EditInDataGridView(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
+		public static IEnumerable ShowInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
-				CreateDataEditorForm(enumerable, dataEditorPersister, pageSize, false).ShowDialog();
+				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditor {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, false).ShowDialog();
 			return enumerable;
-		}
-
-		public static Form CreateDataEditorForm(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
-		{
-			string text = GetEnumerableDescription(enumerable);
-			return InitialiseDataEditorForm(new FrmDataEditor(), enumerable, text, dataEditorPersister, readOnly, pageSize);
-		}
-
-		private static string GetEnumerableDescription(IEnumerable enumerable)
-		{
-			string text;
-			if (enumerable is DataView)
-			{
-				var dataView = ((DataView) enumerable);
-				text = dataView.Table.TableName + " via a DataView";
-			}
-			else
-				text = enumerable.ToString();
-			return text;
-		}
-
-		private static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, string formTitle, IDataEditorPersister dataEditorPersister, bool readOnly, ushort pageSize)
-		{
-			return InitialiseDataEditorForm(frmDataEditor, enumerable, new GridDataEditor { Dock = DockStyle.Fill }, formTitle, dataEditorPersister, readOnly, pageSize);
-		}
-
-		private static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, GridDataEditor gridDataEditor, string formTitle, IDataEditorPersister dataEditorPersister, bool readOnly, ushort pageSize)
-		{
-			frmDataEditor.Text = formTitle;
-			frmDataEditor.Controls.Add(gridDataEditor);
-			gridDataEditor.DataEditorPersister = dataEditorPersister;
-			gridDataEditor.Readonly = readOnly;
-			gridDataEditor.BindEnumerable(enumerable, pageSize);
-			return frmDataEditor;
-		}
-
-		public static Form CreateDataViewForm(IEnumerable enumerable)
-		{
-			return CreateDataEditorForm(enumerable, null, DefaultPageSize, true);
 		}
 
 		#endregion
 
 		#region DataGridViewGeneric
 
-		public static IQueryable<T> ViewInDataGridView<T>(this IQueryable<T> enumerable)
+		public static IQueryable<T> ShowInGrid<T>(this IQueryable<T> enumerable)
 		{
-			return EditInDataGridView((IEnumerable<T>) enumerable, null).AsQueryable();
+			return ShowInGrid((IEnumerable<T>) enumerable, null).AsQueryable();
 		}
 
-		public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister)
+		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister)
 		{
-			return EditInDataGridView(enumerable, dataEditorPersister, DefaultPageSize);
+			return ShowInGrid(enumerable, dataEditorPersister, DefaultPageSize);
 		}
 
 		/// <summary>
@@ -99,15 +58,21 @@ namespace AW.Winforms.Helpers.DataEditor
 		/// <param name="dataEditorPersister">The grid data editor persister.</param>
 		/// <param name="pageSize">Size of the page.</param>
 		/// <returns></returns>
-		public static IEnumerable<T> EditInDataGridView<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
+		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
-				if (typeof (T) == typeof (string))
-					((IEnumerable<string>) enumerable).CreateStringWrapperForBinding().EditInDataGridView(dataEditorPersister, pageSize);
-				else
+			{
+				var stringEnumerable = enumerable as IEnumerable<string>;
+				const bool readOnly = false;
+				if (stringEnumerable != null)
 				{
-					InitialiseDataEditorForm(new FrmDataEditor(), enumerable, new GridDataEditorT<T> {Dock = DockStyle.Fill}, enumerable.ToString(), dataEditorPersister, false, pageSize).ShowDialog();
+					stringEnumerable.CreateStringWrapperForBinding().ShowInGrid(dataEditorPersister, pageSize);
+					//enumerable = stringEnumerable.CreateStringWrapperForBinding();
+					//readOnly = true;
+					return enumerable;
 				}
+				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditorT<T> { Dock = DockStyle.Fill }, dataEditorPersister, pageSize, readOnly).ShowDialog();
+			}
 			return enumerable;
 		}
 
@@ -115,19 +80,19 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		#region LinqtoSQL
 
-		public static IEnumerable<T> EditInDataGridView<T>(this Table<T> table) where T : class
+		public static IEnumerable<T> ShowInGrid<T>(this Table<T> table) where T : class
 		{
-			return EditInDataGridView(table, DefaultPageSize);
+			return ShowInGrid(table, DefaultPageSize);
 		}
 
-		public static IEnumerable<T> EditInDataGridView<T>(this Table<T> table, ushort pageSize) where T : class
+		public static IEnumerable<T> ShowInGrid<T>(this Table<T> table, ushort pageSize) where T : class
 		{
-			return EditInDataGridView(table, table.Context, pageSize);
+			return ShowInGrid(table, table.Context, pageSize);
 		}
 
-		public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> dataQuery, DataContext dataContext) where T : class
+		public static IEnumerable<T> ShowInGrid<T>(this IQueryable<T> dataQuery, DataContext dataContext) where T : class
 		{
-			return EditInDataGridView(dataQuery, dataContext, DefaultPageSize);
+			return ShowInGrid(dataQuery, dataContext, DefaultPageSize);
 		}
 
 		/// <summary>
@@ -138,37 +103,9 @@ namespace AW.Winforms.Helpers.DataEditor
 		/// <param name="dataContext">The data context.</param>
 		/// <param name="pageSize">Size of the page.</param>
 		/// <returns></returns>
-		public static IEnumerable<T> EditInDataGridView<T>(this IQueryable<T> dataQuery, DataContext dataContext, ushort pageSize) where T : class
+		public static IEnumerable<T> ShowInGrid<T>(this IQueryable<T> dataQuery, DataContext dataContext, ushort pageSize) where T : class
 		{
-			return EditInDataGridView(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
-		}
-
-		public class DataEditorLinqtoSQLPersister : IDataEditorPersister
-		{
-			private readonly DataContext _dataContext;
-
-			public DataEditorLinqtoSQLPersister(DataContext dataContext)
-			{
-				_dataContext = dataContext;
-			}
-
-			public int Save(object dataToSave)
-			{
-				var changeSet = _dataContext.GetChangeSet();
-				_dataContext.SubmitChanges();
-				return changeSet.Inserts.Count + changeSet.Updates.Count;
-			}
-
-			public int Delete(object dataToSave)
-			{
-				_dataContext.SubmitChanges();
-				return _dataContext.GetChangeSet().Deletes.Count;
-			}
-
-			public bool CanSave(Type typeToSave)
-			{
-				return true;
-			}
+			return ShowInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
 		}
 
 		public static IEnumerable<T> ShowHierarchyInTree<T>(this Table<T> table, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : class

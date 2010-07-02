@@ -32,6 +32,8 @@ namespace AW.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.CustomerEntityUsingTerritoryID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingTerritoryID);
+			toReturn.Add(this.SalesPersonEntityUsingTerritoryID);
+			toReturn.Add(this.SalesTerritoryHistoryEntityUsingTerritoryID);
 			toReturn.Add(this.StateProvinceEntityUsingTerritoryID);
 
 
@@ -66,6 +68,36 @@ namespace AW.Data.RelationClasses
 				relation.AddEntityFieldPair(SalesTerritoryFields.TerritoryID, SalesOrderHeaderFields.TerritoryID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesTerritoryEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between SalesTerritoryEntity and SalesPersonEntity over the 1:n relation they have, using the relation between the fields:
+		/// SalesTerritory.TerritoryID - SalesPerson.TerritoryID
+		/// </summary>
+		public virtual IEntityRelation SalesPersonEntityUsingTerritoryID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesPerson" , true);
+				relation.AddEntityFieldPair(SalesTerritoryFields.TerritoryID, SalesPersonFields.TerritoryID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesTerritoryEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesPersonEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between SalesTerritoryEntity and SalesTerritoryHistoryEntity over the 1:n relation they have, using the relation between the fields:
+		/// SalesTerritory.TerritoryID - SalesTerritoryHistory.TerritoryID
+		/// </summary>
+		public virtual IEntityRelation SalesTerritoryHistoryEntityUsingTerritoryID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "SalesTerritoryHistory" , true);
+				relation.AddEntityFieldPair(SalesTerritoryFields.TerritoryID, SalesTerritoryHistoryFields.TerritoryID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesTerritoryEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesTerritoryHistoryEntity", false);
 				return relation;
 			}
 		}

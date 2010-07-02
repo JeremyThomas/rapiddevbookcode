@@ -64,6 +64,71 @@ namespace AW.Data.CollectionClasses
 		/// All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaVendorAddress(IEntity addressInstance)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaVendorAddress(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaVendorAddress(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaVendorAddress(addressInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingAddressCollectionViaVendorAddress(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			AddressTypeDAO dao = DAOFactory.CreateAddressTypeDAO();
+			return dao.GetMultiUsingAddressCollectionViaVendorAddress(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaVendorAddress(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaVendorAddress(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaVendorAddress(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			AddressTypeDAO dao = DAOFactory.CreateAddressTypeDAO();
+			return dao.GetMultiUsingAddressCollectionViaVendorAddress(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaCustomerAddres(IEntity addressInstance)
 		{
 			return GetMultiManyToManyUsingAddressCollectionViaCustomerAddres(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
@@ -188,6 +253,71 @@ namespace AW.Data.CollectionClasses
 			}
 			AddressTypeDAO dao = DAOFactory.CreateAddressTypeDAO();
 			return dao.GetMultiUsingCustomerCollectionViaCustomerAddres(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, customerInstance, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a  Relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingVendorCollectionViaVendorAddress(IEntity vendorInstance)
+		{
+			return GetMultiManyToManyUsingVendorCollectionViaVendorAddress(vendorInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingVendorCollectionViaVendorAddress(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingVendorCollectionViaVendorAddress(vendorInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingVendorCollectionViaVendorAddress(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			AddressTypeDAO dao = DAOFactory.CreateAddressTypeDAO();
+			return dao.GetMultiUsingVendorCollectionViaVendorAddress(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, vendorInstance, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a Relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingVendorCollectionViaVendorAddress(IEntity vendorInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingVendorCollectionViaVendorAddress(vendorInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this AddressTypeCollection object all AddressTypeEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingVendorCollectionViaVendorAddress(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			AddressTypeDAO dao = DAOFactory.CreateAddressTypeDAO();
+			return dao.GetMultiUsingVendorCollectionViaVendorAddress(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, vendorInstance, prefetchPathToUse);
 		}
 
 

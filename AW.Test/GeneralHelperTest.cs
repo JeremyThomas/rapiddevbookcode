@@ -123,14 +123,14 @@ namespace AW.Tests
 			var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
 			Assert.AreEqual(1, stringWrapperProperties.Count);
 			Assert.AreEqual(typeof(string), stringWrapperProperties[0].PropertyType);
-			//stringWrapperForBinding.EditInDataGridView(null);
-			//strings.EditInDataGridView(null);
+			//stringWrapperForBinding.ShowInGrid(null);
+			//strings.ShowInGrid(null);
 
 			//TypeDescriptor.AddProvider(new StringTypeDescriptorProvider(typeof(string)), typeof(string));
 			//var stringProperties = ListBindingHelper.GetListItemProperties(strings);
 			//Assert.AreEqual(1, stringProperties.Count);
 			//Assert.AreEqual(typeof(string), stringProperties[0].PropertyType);
-			//strings.EditInDataGridView(null);
+			//strings.ShowInGrid(null);
 		}
 	}
 

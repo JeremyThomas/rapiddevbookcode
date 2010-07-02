@@ -42,10 +42,16 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.CustomerAddressCollection	_customerAddresses;
 		private bool	_alwaysFetchCustomerAddresses, _alreadyFetchedCustomerAddresses;
+		private AW.Data.CollectionClasses.VendorAddressCollection	_vendorAddress;
+		private bool	_alwaysFetchVendorAddress, _alreadyFetchedVendorAddress;
+		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaVendorAddress;
+		private bool	_alwaysFetchAddressCollectionViaVendorAddress, _alreadyFetchedAddressCollectionViaVendorAddress;
 		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaCustomerAddres;
 		private bool	_alwaysFetchAddressCollectionViaCustomerAddres, _alreadyFetchedAddressCollectionViaCustomerAddres;
 		private AW.Data.CollectionClasses.CustomerCollection _customerCollectionViaCustomerAddres;
 		private bool	_alwaysFetchCustomerCollectionViaCustomerAddres, _alreadyFetchedCustomerCollectionViaCustomerAddres;
+		private AW.Data.CollectionClasses.VendorCollection _vendorCollectionViaVendorAddress;
+		private bool	_alwaysFetchVendorCollectionViaVendorAddress, _alreadyFetchedVendorCollectionViaVendorAddress;
 
 
 		
@@ -63,10 +69,16 @@ namespace AW.Data.EntityClasses
 
 			/// <summary>Member name CustomerAddresses</summary>
 			public static readonly string CustomerAddresses = "CustomerAddresses";
+			/// <summary>Member name VendorAddress</summary>
+			public static readonly string VendorAddress = "VendorAddress";
+			/// <summary>Member name AddressCollectionViaVendorAddress</summary>
+			public static readonly string AddressCollectionViaVendorAddress = "AddressCollectionViaVendorAddress";
 			/// <summary>Member name AddressCollectionViaCustomerAddres</summary>
 			public static readonly string AddressCollectionViaCustomerAddres = "AddressCollectionViaCustomerAddres";
 			/// <summary>Member name CustomerCollectionViaCustomerAddres</summary>
 			public static readonly string CustomerCollectionViaCustomerAddres = "CustomerCollectionViaCustomerAddres";
+			/// <summary>Member name VendorCollectionViaVendorAddress</summary>
+			public static readonly string VendorCollectionViaVendorAddress = "VendorCollectionViaVendorAddress";
 
 		}
 		#endregion
@@ -116,12 +128,21 @@ namespace AW.Data.EntityClasses
 			_customerAddresses = (AW.Data.CollectionClasses.CustomerAddressCollection)info.GetValue("_customerAddresses", typeof(AW.Data.CollectionClasses.CustomerAddressCollection));
 			_alwaysFetchCustomerAddresses = info.GetBoolean("_alwaysFetchCustomerAddresses");
 			_alreadyFetchedCustomerAddresses = info.GetBoolean("_alreadyFetchedCustomerAddresses");
+			_vendorAddress = (AW.Data.CollectionClasses.VendorAddressCollection)info.GetValue("_vendorAddress", typeof(AW.Data.CollectionClasses.VendorAddressCollection));
+			_alwaysFetchVendorAddress = info.GetBoolean("_alwaysFetchVendorAddress");
+			_alreadyFetchedVendorAddress = info.GetBoolean("_alreadyFetchedVendorAddress");
+			_addressCollectionViaVendorAddress = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaVendorAddress", typeof(AW.Data.CollectionClasses.AddressCollection));
+			_alwaysFetchAddressCollectionViaVendorAddress = info.GetBoolean("_alwaysFetchAddressCollectionViaVendorAddress");
+			_alreadyFetchedAddressCollectionViaVendorAddress = info.GetBoolean("_alreadyFetchedAddressCollectionViaVendorAddress");
 			_addressCollectionViaCustomerAddres = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaCustomerAddres", typeof(AW.Data.CollectionClasses.AddressCollection));
 			_alwaysFetchAddressCollectionViaCustomerAddres = info.GetBoolean("_alwaysFetchAddressCollectionViaCustomerAddres");
 			_alreadyFetchedAddressCollectionViaCustomerAddres = info.GetBoolean("_alreadyFetchedAddressCollectionViaCustomerAddres");
 			_customerCollectionViaCustomerAddres = (AW.Data.CollectionClasses.CustomerCollection)info.GetValue("_customerCollectionViaCustomerAddres", typeof(AW.Data.CollectionClasses.CustomerCollection));
 			_alwaysFetchCustomerCollectionViaCustomerAddres = info.GetBoolean("_alwaysFetchCustomerCollectionViaCustomerAddres");
 			_alreadyFetchedCustomerCollectionViaCustomerAddres = info.GetBoolean("_alreadyFetchedCustomerCollectionViaCustomerAddres");
+			_vendorCollectionViaVendorAddress = (AW.Data.CollectionClasses.VendorCollection)info.GetValue("_vendorCollectionViaVendorAddress", typeof(AW.Data.CollectionClasses.VendorCollection));
+			_alwaysFetchVendorCollectionViaVendorAddress = info.GetBoolean("_alwaysFetchVendorCollectionViaVendorAddress");
+			_alreadyFetchedVendorCollectionViaVendorAddress = info.GetBoolean("_alreadyFetchedVendorCollectionViaVendorAddress");
 
 
 			base.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
@@ -154,8 +175,11 @@ namespace AW.Data.EntityClasses
 		protected override void PostReadXmlFixups()
 		{
 			_alreadyFetchedCustomerAddresses = (_customerAddresses.Count > 0);
+			_alreadyFetchedVendorAddress = (_vendorAddress.Count > 0);
+			_alreadyFetchedAddressCollectionViaVendorAddress = (_addressCollectionViaVendorAddress.Count > 0);
 			_alreadyFetchedAddressCollectionViaCustomerAddres = (_addressCollectionViaCustomerAddres.Count > 0);
 			_alreadyFetchedCustomerCollectionViaCustomerAddres = (_customerCollectionViaCustomerAddres.Count > 0);
+			_alreadyFetchedVendorCollectionViaVendorAddress = (_vendorCollectionViaVendorAddress.Count > 0);
 
 
 		}
@@ -180,6 +204,13 @@ namespace AW.Data.EntityClasses
 				case "CustomerAddresses":
 					toReturn.Add(AddressTypeEntity.Relations.CustomerAddressEntityUsingAddressTypeID);
 					break;
+				case "VendorAddress":
+					toReturn.Add(AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID);
+					break;
+				case "AddressCollectionViaVendorAddress":
+					toReturn.Add(AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID, "AddressTypeEntity__", "VendorAddress_", JoinHint.None);
+					toReturn.Add(VendorAddressEntity.Relations.AddressEntityUsingAddressID, "VendorAddress_", string.Empty, JoinHint.None);
+					break;
 				case "AddressCollectionViaCustomerAddres":
 					toReturn.Add(AddressTypeEntity.Relations.CustomerAddressEntityUsingAddressTypeID, "AddressTypeEntity__", "CustomerAddress_", JoinHint.None);
 					toReturn.Add(CustomerAddressEntity.Relations.AddressEntityUsingAddressID, "CustomerAddress_", string.Empty, JoinHint.None);
@@ -187,6 +218,10 @@ namespace AW.Data.EntityClasses
 				case "CustomerCollectionViaCustomerAddres":
 					toReturn.Add(AddressTypeEntity.Relations.CustomerAddressEntityUsingAddressTypeID, "AddressTypeEntity__", "CustomerAddress_", JoinHint.None);
 					toReturn.Add(CustomerAddressEntity.Relations.CustomerEntityUsingCustomerID, "CustomerAddress_", string.Empty, JoinHint.None);
+					break;
+				case "VendorCollectionViaVendorAddress":
+					toReturn.Add(AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID, "AddressTypeEntity__", "VendorAddress_", JoinHint.None);
+					toReturn.Add(VendorAddressEntity.Relations.VendorEntityUsingVendorID, "VendorAddress_", string.Empty, JoinHint.None);
 					break;
 
 				default:
@@ -208,12 +243,21 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_customerAddresses", (!this.MarkedForDeletion?_customerAddresses:null));
 			info.AddValue("_alwaysFetchCustomerAddresses", _alwaysFetchCustomerAddresses);
 			info.AddValue("_alreadyFetchedCustomerAddresses", _alreadyFetchedCustomerAddresses);
+			info.AddValue("_vendorAddress", (!this.MarkedForDeletion?_vendorAddress:null));
+			info.AddValue("_alwaysFetchVendorAddress", _alwaysFetchVendorAddress);
+			info.AddValue("_alreadyFetchedVendorAddress", _alreadyFetchedVendorAddress);
+			info.AddValue("_addressCollectionViaVendorAddress", (!this.MarkedForDeletion?_addressCollectionViaVendorAddress:null));
+			info.AddValue("_alwaysFetchAddressCollectionViaVendorAddress", _alwaysFetchAddressCollectionViaVendorAddress);
+			info.AddValue("_alreadyFetchedAddressCollectionViaVendorAddress", _alreadyFetchedAddressCollectionViaVendorAddress);
 			info.AddValue("_addressCollectionViaCustomerAddres", (!this.MarkedForDeletion?_addressCollectionViaCustomerAddres:null));
 			info.AddValue("_alwaysFetchAddressCollectionViaCustomerAddres", _alwaysFetchAddressCollectionViaCustomerAddres);
 			info.AddValue("_alreadyFetchedAddressCollectionViaCustomerAddres", _alreadyFetchedAddressCollectionViaCustomerAddres);
 			info.AddValue("_customerCollectionViaCustomerAddres", (!this.MarkedForDeletion?_customerCollectionViaCustomerAddres:null));
 			info.AddValue("_alwaysFetchCustomerCollectionViaCustomerAddres", _alwaysFetchCustomerCollectionViaCustomerAddres);
 			info.AddValue("_alreadyFetchedCustomerCollectionViaCustomerAddres", _alreadyFetchedCustomerCollectionViaCustomerAddres);
+			info.AddValue("_vendorCollectionViaVendorAddress", (!this.MarkedForDeletion?_vendorCollectionViaVendorAddress:null));
+			info.AddValue("_alwaysFetchVendorCollectionViaVendorAddress", _alwaysFetchVendorCollectionViaVendorAddress);
+			info.AddValue("_alreadyFetchedVendorCollectionViaVendorAddress", _alreadyFetchedVendorCollectionViaVendorAddress);
 
 
 			
@@ -239,6 +283,20 @@ namespace AW.Data.EntityClasses
 						this.CustomerAddresses.Add((CustomerAddressEntity)entity);
 					}
 					break;
+				case "VendorAddress":
+					_alreadyFetchedVendorAddress = true;
+					if(entity!=null)
+					{
+						this.VendorAddress.Add((VendorAddressEntity)entity);
+					}
+					break;
+				case "AddressCollectionViaVendorAddress":
+					_alreadyFetchedAddressCollectionViaVendorAddress = true;
+					if(entity!=null)
+					{
+						this.AddressCollectionViaVendorAddress.Add((AddressEntity)entity);
+					}
+					break;
 				case "AddressCollectionViaCustomerAddres":
 					_alreadyFetchedAddressCollectionViaCustomerAddres = true;
 					if(entity!=null)
@@ -251,6 +309,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.CustomerCollectionViaCustomerAddres.Add((CustomerEntity)entity);
+					}
+					break;
+				case "VendorCollectionViaVendorAddress":
+					_alreadyFetchedVendorCollectionViaVendorAddress = true;
+					if(entity!=null)
+					{
+						this.VendorCollectionViaVendorAddress.Add((VendorEntity)entity);
 					}
 					break;
 
@@ -272,6 +337,9 @@ namespace AW.Data.EntityClasses
 				case "CustomerAddresses":
 					_customerAddresses.Add((CustomerAddressEntity)relatedEntity);
 					break;
+				case "VendorAddress":
+					_vendorAddress.Add((VendorAddressEntity)relatedEntity);
+					break;
 
 				default:
 
@@ -291,6 +359,9 @@ namespace AW.Data.EntityClasses
 
 				case "CustomerAddresses":
 					base.PerformRelatedEntityRemoval(_customerAddresses, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "VendorAddress":
+					base.PerformRelatedEntityRemoval(_vendorAddress, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 
 				default:
@@ -329,6 +400,7 @@ namespace AW.Data.EntityClasses
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_customerAddresses);
+			toReturn.Add(_vendorAddress);
 
 			return toReturn;
 		}
@@ -476,6 +548,117 @@ namespace AW.Data.EntityClasses
 			_customerAddresses.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'VendorAddressEntity'</returns>
+		public AW.Data.CollectionClasses.VendorAddressCollection GetMultiVendorAddress(bool forceFetch)
+		{
+			return GetMultiVendorAddress(forceFetch, _vendorAddress.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'VendorAddressEntity'</returns>
+		public AW.Data.CollectionClasses.VendorAddressCollection GetMultiVendorAddress(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiVendorAddress(forceFetch, _vendorAddress.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.VendorAddressCollection GetMultiVendorAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiVendorAddress(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.VendorAddressCollection GetMultiVendorAddress(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedVendorAddress || forceFetch || _alwaysFetchVendorAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+			{
+				if(base.ParticipatesInTransaction)
+				{
+					if(!_vendorAddress.ParticipatesInTransaction)
+					{
+						base.Transaction.Add(_vendorAddress);
+					}
+				}
+				_vendorAddress.SuppressClearInGetMulti=!forceFetch;
+				if(entityFactoryToUse!=null)
+				{
+					_vendorAddress.EntityFactoryToUse = entityFactoryToUse;
+				}
+				_vendorAddress.GetMultiManyToOne(null, this, null, filter);
+				_vendorAddress.SuppressClearInGetMulti=false;
+				_alreadyFetchedVendorAddress = true;
+			}
+			return _vendorAddress;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'VendorAddress'. These settings will be taken into account
+		/// when the property VendorAddress is requested or GetMultiVendorAddress is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersVendorAddress(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_vendorAddress.SortClauses=sortClauses;
+			_vendorAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaVendorAddress(bool forceFetch)
+		{
+			return GetMultiAddressCollectionViaVendorAddress(forceFetch, _addressCollectionViaVendorAddress.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaVendorAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedAddressCollectionViaVendorAddress || forceFetch || _alwaysFetchAddressCollectionViaVendorAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+			{
+				if(base.ParticipatesInTransaction)
+				{
+					if(!_addressCollectionViaVendorAddress.ParticipatesInTransaction)
+					{
+						base.Transaction.Add(_addressCollectionViaVendorAddress);
+					}
+				}
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(AddressTypeFields.AddressTypeID, ComparisonOperator.Equal, this.AddressTypeID, "AddressTypeEntity__"));
+				_addressCollectionViaVendorAddress.SuppressClearInGetMulti=!forceFetch;
+				if(entityFactoryToUse!=null)
+				{
+					_addressCollectionViaVendorAddress.EntityFactoryToUse = entityFactoryToUse;
+				}
+				_addressCollectionViaVendorAddress.GetMulti(filter, GetRelationsForField("AddressCollectionViaVendorAddress"));
+				_addressCollectionViaVendorAddress.SuppressClearInGetMulti=false;
+				_alreadyFetchedAddressCollectionViaVendorAddress = true;
+			}
+			return _addressCollectionViaVendorAddress;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaVendorAddress'. These settings will be taken into account
+		/// when the property AddressCollectionViaVendorAddress is requested or GetMultiAddressCollectionViaVendorAddress is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersAddressCollectionViaVendorAddress(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_addressCollectionViaVendorAddress.SortClauses=sortClauses;
+			_addressCollectionViaVendorAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
@@ -570,6 +753,53 @@ namespace AW.Data.EntityClasses
 			_customerCollectionViaCustomerAddres.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'VendorEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'VendorEntity'</returns>
+		public AW.Data.CollectionClasses.VendorCollection GetMultiVendorCollectionViaVendorAddress(bool forceFetch)
+		{
+			return GetMultiVendorCollectionViaVendorAddress(forceFetch, _vendorCollectionViaVendorAddress.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'VendorEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.VendorCollection GetMultiVendorCollectionViaVendorAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedVendorCollectionViaVendorAddress || forceFetch || _alwaysFetchVendorCollectionViaVendorAddress) && !base.IsSerializing && !base.IsDeserializing && !base.InDesignMode)
+			{
+				if(base.ParticipatesInTransaction)
+				{
+					if(!_vendorCollectionViaVendorAddress.ParticipatesInTransaction)
+					{
+						base.Transaction.Add(_vendorCollectionViaVendorAddress);
+					}
+				}
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(AddressTypeFields.AddressTypeID, ComparisonOperator.Equal, this.AddressTypeID, "AddressTypeEntity__"));
+				_vendorCollectionViaVendorAddress.SuppressClearInGetMulti=!forceFetch;
+				if(entityFactoryToUse!=null)
+				{
+					_vendorCollectionViaVendorAddress.EntityFactoryToUse = entityFactoryToUse;
+				}
+				_vendorCollectionViaVendorAddress.GetMulti(filter, GetRelationsForField("VendorCollectionViaVendorAddress"));
+				_vendorCollectionViaVendorAddress.SuppressClearInGetMulti=false;
+				_alreadyFetchedVendorCollectionViaVendorAddress = true;
+			}
+			return _vendorCollectionViaVendorAddress;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'VendorCollectionViaVendorAddress'. These settings will be taken into account
+		/// when the property VendorCollectionViaVendorAddress is requested or GetMultiVendorCollectionViaVendorAddress is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersVendorCollectionViaVendorAddress(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_vendorCollectionViaVendorAddress.SortClauses=sortClauses;
+			_vendorCollectionViaVendorAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 
 
 		/// <summary> Performs the insert action of a new Entity to the persistent storage.</summary>
@@ -584,8 +814,11 @@ namespace AW.Data.EntityClasses
 		protected override void AddInternalsToContext()
 		{
 			_customerAddresses.ActiveContext = base.ActiveContext;
+			_vendorAddress.ActiveContext = base.ActiveContext;
+			_addressCollectionViaVendorAddress.ActiveContext = base.ActiveContext;
 			_addressCollectionViaCustomerAddres.ActiveContext = base.ActiveContext;
 			_customerCollectionViaCustomerAddres.ActiveContext = base.ActiveContext;
+			_vendorCollectionViaVendorAddress.ActiveContext = base.ActiveContext;
 
 
 
@@ -658,8 +891,11 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 
 			toReturn.Add("CustomerAddresses", _customerAddresses);
+			toReturn.Add("VendorAddress", _vendorAddress);
+			toReturn.Add("AddressCollectionViaVendorAddress", _addressCollectionViaVendorAddress);
 			toReturn.Add("AddressCollectionViaCustomerAddres", _addressCollectionViaCustomerAddres);
 			toReturn.Add("CustomerCollectionViaCustomerAddres", _customerCollectionViaCustomerAddres);
+			toReturn.Add("VendorCollectionViaVendorAddress", _vendorCollectionViaVendorAddress);
 
 			return toReturn;
 		}
@@ -692,12 +928,22 @@ namespace AW.Data.EntityClasses
 			_customerAddresses.SetContainingEntityInfo(this, "AddressType");
 			_alwaysFetchCustomerAddresses = false;
 			_alreadyFetchedCustomerAddresses = false;
+			_vendorAddress = new AW.Data.CollectionClasses.VendorAddressCollection(new VendorAddressEntityFactory());
+			_vendorAddress.SetContainingEntityInfo(this, "AddressType");
+			_alwaysFetchVendorAddress = false;
+			_alreadyFetchedVendorAddress = false;
+			_addressCollectionViaVendorAddress = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
+			_alwaysFetchAddressCollectionViaVendorAddress = false;
+			_alreadyFetchedAddressCollectionViaVendorAddress = false;
 			_addressCollectionViaCustomerAddres = new AW.Data.CollectionClasses.AddressCollection(new AddressEntityFactory());
 			_alwaysFetchAddressCollectionViaCustomerAddres = false;
 			_alreadyFetchedAddressCollectionViaCustomerAddres = false;
 			_customerCollectionViaCustomerAddres = new AW.Data.CollectionClasses.CustomerCollection(new CustomerEntityFactory());
 			_alwaysFetchCustomerCollectionViaCustomerAddres = false;
 			_alreadyFetchedCustomerCollectionViaCustomerAddres = false;
+			_vendorCollectionViaVendorAddress = new AW.Data.CollectionClasses.VendorCollection(new VendorEntityFactory());
+			_alwaysFetchVendorCollectionViaVendorAddress = false;
+			_alreadyFetchedVendorCollectionViaVendorAddress = false;
 
 
 
@@ -800,6 +1046,32 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'VendorAddress' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathVendorAddress
+		{
+			get
+			{
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.VendorAddressCollection(),
+					(IEntityRelation)GetRelationsForField("VendorAddress")[0], (int)AW.Data.EntityType.AddressTypeEntity, (int)AW.Data.EntityType.VendorAddressEntity, 0, null, null, null, "VendorAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathAddressCollectionViaVendorAddress
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID;
+				intermediateRelation.SetAliases(string.Empty, "VendorAddress_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,
+					(int)AW.Data.EntityType.AddressTypeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaVendorAddress"), "AddressCollectionViaVendorAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address' 
 		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
@@ -825,6 +1097,20 @@ namespace AW.Data.EntityClasses
 				intermediateRelation.SetAliases(string.Empty, "CustomerAddress_");
 				return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerCollection(), intermediateRelation,
 					(int)AW.Data.EntityType.AddressTypeEntity, (int)AW.Data.EntityType.CustomerEntity, 0, null, null, GetRelationsForField("CustomerCollectionViaCustomerAddres"), "CustomerCollectionViaCustomerAddres", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Vendor' 
+		/// for this entity. Add the object returned by this property to an existing PrefetchPath instance.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathVendorCollectionViaVendorAddress
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID;
+				intermediateRelation.SetAliases(string.Empty, "VendorAddress_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.VendorCollection(), intermediateRelation,
+					(int)AW.Data.EntityType.AddressTypeEntity, (int)AW.Data.EntityType.VendorEntity, 0, null, null, GetRelationsForField("VendorCollectionViaVendorAddress"), "VendorCollectionViaVendorAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -938,7 +1224,73 @@ namespace AW.Data.EntityClasses
 				_alreadyFetchedCustomerAddresses = value;
 			}
 		}
+		/// <summary> Retrieves all related entities of type 'VendorAddressEntity' using a relation of type '1:n'.</summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiVendorAddress()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.VendorAddressCollection VendorAddress
+		{
+			get	{ return GetMultiVendorAddress(false); }
+		}
 
+		/// <summary> Gets / sets the lazy loading flag for VendorAddress. When set to true, VendorAddress is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time VendorAddress is accessed. You can always execute
+		/// a forced fetch by calling GetMultiVendorAddress(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchVendorAddress
+		{
+			get	{ return _alwaysFetchVendorAddress; }
+			set	{ _alwaysFetchVendorAddress = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property VendorAddress already has been fetched. Setting this property to false when VendorAddress has been fetched
+		/// will clear the VendorAddress collection well. Setting this property to true while VendorAddress hasn't been fetched disables lazy loading for VendorAddress</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedVendorAddress
+		{
+			get { return _alreadyFetchedVendorAddress;}
+			set 
+			{
+				if(_alreadyFetchedVendorAddress && !value && (_vendorAddress != null))
+				{
+					_vendorAddress.Clear();
+				}
+				_alreadyFetchedVendorAddress = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaVendorAddress()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaVendorAddress
+		{
+			get { return GetMultiAddressCollectionViaVendorAddress(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaVendorAddress. When set to true, AddressCollectionViaVendorAddress is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaVendorAddress is accessed. You can always execute
+		/// a forced fetch by calling GetMultiAddressCollectionViaVendorAddress(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchAddressCollectionViaVendorAddress
+		{
+			get	{ return _alwaysFetchAddressCollectionViaVendorAddress; }
+			set	{ _alwaysFetchAddressCollectionViaVendorAddress = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaVendorAddress already has been fetched. Setting this property to false when AddressCollectionViaVendorAddress has been fetched
+		/// will clear the AddressCollectionViaVendorAddress collection well. Setting this property to true while AddressCollectionViaVendorAddress hasn't been fetched disables lazy loading for AddressCollectionViaVendorAddress</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedAddressCollectionViaVendorAddress
+		{
+			get { return _alreadyFetchedAddressCollectionViaVendorAddress;}
+			set 
+			{
+				if(_alreadyFetchedAddressCollectionViaVendorAddress && !value && (_addressCollectionViaVendorAddress != null))
+				{
+					_addressCollectionViaVendorAddress.Clear();
+				}
+				_alreadyFetchedAddressCollectionViaVendorAddress = value;
+			}
+		}
 		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaCustomerAddres()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
@@ -1003,6 +1355,39 @@ namespace AW.Data.EntityClasses
 					_customerCollectionViaCustomerAddres.Clear();
 				}
 				_alreadyFetchedCustomerCollectionViaCustomerAddres = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'VendorEntity' using a relation of type 'm:n'.</summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiVendorCollectionViaVendorAddress()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.VendorCollection VendorCollectionViaVendorAddress
+		{
+			get { return GetMultiVendorCollectionViaVendorAddress(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for VendorCollectionViaVendorAddress. When set to true, VendorCollectionViaVendorAddress is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time VendorCollectionViaVendorAddress is accessed. You can always execute
+		/// a forced fetch by calling GetMultiVendorCollectionViaVendorAddress(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchVendorCollectionViaVendorAddress
+		{
+			get	{ return _alwaysFetchVendorCollectionViaVendorAddress; }
+			set	{ _alwaysFetchVendorCollectionViaVendorAddress = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property VendorCollectionViaVendorAddress already has been fetched. Setting this property to false when VendorCollectionViaVendorAddress has been fetched
+		/// will clear the VendorCollectionViaVendorAddress collection well. Setting this property to true while VendorCollectionViaVendorAddress hasn't been fetched disables lazy loading for VendorCollectionViaVendorAddress</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedVendorCollectionViaVendorAddress
+		{
+			get { return _alreadyFetchedVendorCollectionViaVendorAddress;}
+			set 
+			{
+				if(_alreadyFetchedVendorCollectionViaVendorAddress && !value && (_vendorCollectionViaVendorAddress != null))
+				{
+					_vendorCollectionViaVendorAddress.Clear();
+				}
+				_alreadyFetchedVendorCollectionViaVendorAddress = value;
 			}
 		}
 

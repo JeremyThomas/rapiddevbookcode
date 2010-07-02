@@ -83,6 +83,55 @@ namespace AW.Data.DaoClasses
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingAddressCollectionViaVendorAddress(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.AddressTypeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID, "VendorAddress_");
+			relations.Add(VendorAddressEntity.Relations.AddressEntityUsingAddressID, "VendorAddress_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling AddressTypeCollection object all AddressTypeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in AddressEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingAddressCollectionViaVendorAddress(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.AddressTypeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID, "VendorAddress_");
+			relations.Add(VendorAddressEntity.Relations.AddressEntityUsingAddressID, "VendorAddress_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling AddressTypeCollection object all AddressTypeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in AddressEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiUsingAddressCollectionViaCustomerAddres(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, int pageNumber, int pageSize)
 		{
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.AddressTypeEntity);
@@ -164,6 +213,55 @@ namespace AW.Data.DaoClasses
 			relations.Add(CustomerAddressEntity.Relations.CustomerEntityUsingCustomerID, "CustomerAddress_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
 			selectFilter.Add(new FieldCompareValuePredicate(customerInstance.Fields[(int)CustomerFieldIndex.CustomerID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling AddressTypeCollection object all AddressTypeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in VendorEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingVendorCollectionViaVendorAddress(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity vendorInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.AddressTypeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID, "VendorAddress_");
+			relations.Add(VendorAddressEntity.Relations.VendorEntityUsingVendorID, "VendorAddress_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(vendorInstance.Fields[(int)VendorFieldIndex.VendorID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling AddressTypeCollection object all AddressTypeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in VendorEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingVendorCollectionViaVendorAddress(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity vendorInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.AddressTypeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(AddressTypeEntity.Relations.VendorAddressEntityUsingAddressTypeID, "VendorAddress_");
+			relations.Add(VendorAddressEntity.Relations.VendorEntityUsingVendorID, "VendorAddress_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(vendorInstance.Fields[(int)VendorFieldIndex.VendorID], ComparisonOperator.Equal));
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 

@@ -69,6 +69,56 @@ namespace AW.Data.DaoClasses
 		}
 
 	
+		/// <summary>
+		/// Retrieves in the calling CurrencyCollection object all CurrencyEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in CountryRegionEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="countryRegionInstance">CountryRegionEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingCountryRegionCollectionViaCountryRegionCurrency(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity countryRegionInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.CurrencyEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(CurrencyEntity.Relations.CountryRegionCurrencyEntityUsingCurrencyCode, "CountryRegionCurrency_");
+			relations.Add(CountryRegionCurrencyEntity.Relations.CountryRegionEntityUsingCountryRegionCode, "CountryRegionCurrency_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(countryRegionInstance.Fields[(int)CountryRegionFieldIndex.CountryRegionCode], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling CurrencyCollection object all CurrencyEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in CountryRegionEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="countryRegionInstance">CountryRegionEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingCountryRegionCollectionViaCountryRegionCurrency(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity countryRegionInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.CurrencyEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(CurrencyEntity.Relations.CountryRegionCurrencyEntityUsingCurrencyCode, "CountryRegionCurrency_");
+			relations.Add(CountryRegionCurrencyEntity.Relations.CountryRegionEntityUsingCountryRegionCode, "CountryRegionCurrency_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(countryRegionInstance.Fields[(int)CountryRegionFieldIndex.CountryRegionCode], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+	
 
 		/// <summary>
 		/// Determines the connection to use. If transaction to use is null, a new connection is created, otherwise the connection of the transaction is used.

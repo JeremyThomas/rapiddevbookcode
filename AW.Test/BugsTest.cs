@@ -113,10 +113,64 @@ namespace AW.Tests
 			queryableWithLeftJoin.ToList();
 
 			var queryableWithAliasException = from e in MetaSingletons.MetaData.Employee
-																				join i in MetaSingletons.MetaData.Individual on e.Contact.ContactID equals i.ContactID into individuals
-																				from i in individuals
-																				select new { e.EmployeeID, i.CustomerID };
+			                                  join i in MetaSingletons.MetaData.Individual on e.Contact.ContactID equals i.ContactID into individuals
+			                                  from i in individuals
+			                                  select new {e.EmployeeID, i.CustomerID};
 			queryableWithAliasException.ToList();
+		}
+
+		[TestMethod, Description("SQL exception on last line")]
+		public void NestedQueryOnTotheSameEntityTwiceTest()
+		{
+			var q = (from soh in MetaSingletons.MetaData.SalesOrderHeader
+			         //	where  soh.SalesOrderID < 43690
+			         from sod in soh.SalesOrderDetails
+			         select new
+			                	{
+			                		soh.SalesOrderID,
+			                		sod.SalesOrderDetailID,
+													MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.Name
+			                	});
+			var result = q.Where(x => x.SalesOrderID < 43690).ToList();
+
+			var q1 = (from soh in MetaSingletons.MetaData.SalesOrderHeader
+			          from sod in soh.SalesOrderDetails
+			          select new
+			                 	{
+			                 		soh.SalesOrderID,
+			                 		sod.SalesOrderDetailID,
+													MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.CatalogDescription
+			                 	});
+			var result1 = q1.Where(x => x.SalesOrderID < 43690).ToList();
+
+			var qfail = (from soh in MetaSingletons.MetaData.SalesOrderHeader
+			             from sod in soh.SalesOrderDetails
+			             select new
+			                    	{
+			                    		soh.SalesOrderID,
+			                    		sod.SalesOrderDetailID,
+			                    		MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.CatalogDescription,
+			                    		MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.Name
+			                    	});
+			qfail.Where(x => x.SalesOrderID < 43690).ToList();
+				//SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryExecutionException: An exception was caught during the execution of a retrieval query: The multi-part identifier "LPLA_6.CatalogDescription" could not be bound.
+		}
+
+		[TestMethod, Description("Remove the 'where' or the '.Name' and there will be no exception")]
+		public void NullExceptionTest()
+		{
+			var q = (from soh in MetaSingletons.MetaData.SalesOrderHeader
+			         where soh.SalesOrderID < 43690
+			         from sod in soh.SalesOrderDetails
+			         select new
+			                	{
+			                		soh.SalesOrderID,
+			                		sod.SalesOrderDetailID,
+			                		(from p in MetaSingletons.MetaData.Product
+			                		 where p.ProductID == sod.ProductID
+			                		 select p).First().Name,
+			                	});
+			q.ToList(); //System.NullReferenceException: Object reference not set to an instance of an object.
 		}
 	}
 }

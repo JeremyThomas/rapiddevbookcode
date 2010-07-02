@@ -13,7 +13,7 @@ using System.Collections;
 #if !CF
 using System.Runtime.Serialization;
 #endif
-using AW.Data.EntityValidators;
+
 using AW.Data.FactoryClasses;
 using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
@@ -25,6 +25,7 @@ namespace AW.Data.EntityClasses
 {
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+	using AW.Data.EntityValidators;
 	// __LLBLGENPRO_USER_CODE_REGION_END
 
 	/// <summary>
