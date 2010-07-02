@@ -59,7 +59,7 @@ namespace AW.Tests
 		#endregion
 
 		///<summary>
-		///	A test for EditInDataGridView
+		///	A test for ShowInGrid
 		///</summary>
 		[TestMethod]
 		public void EditInDataGridViewTest()
@@ -69,26 +69,37 @@ namespace AW.Tests
 			TestEditInDataGridView(NonSerializableClass.GenerateList());
 			TestEditInDataGridView(SerializableClass.GenerateList());
 			TestEditInDataGridView(SerializableClass.GenerateListWithBoth());
-			var enumerable = new[] {"s1", "s2", "s3"};
-			TestEditInDataGridView(enumerable);
 			TestEditInDataGridView(null);
-			enumerable = null;
-			TestEditInDataGridView(enumerable);
+
+			var arrayList = new ArrayList {1, 2, "3"};
+			TestEditInDataGridView(arrayList);
+		}
+
+		[TestMethod]
+		public void GridDataEditorBindEnumerableTest()
+		{
 			var gridDataEditor = new GridDataEditor();
 			gridDataEditor.BindEnumerable(null, 1);
 
-			var arrayList = new ArrayList {1, 2, "3"};
+			var arrayList = new ArrayList { 1, 2, "3" };
 			gridDataEditor.BindEnumerable(arrayList);
 
 			gridDataEditor.BindEnumerable(arrayList, 1);
+		}
 
-			TestEditInDataGridView(arrayList);
+		[TestMethod]
+		public void ShowStringEnumerationInGridTest()
+		{
+			var enumerable = new[] { "s1", "s2", "s3" };
+			TestEditInDataGridView(enumerable);
+			enumerable = null;
+			TestEditInDataGridView(enumerable);
+			TestEditInDataGridView(new string[0]);
 		}
 
 		[TestMethod]
 		public void EditEmptyInDataGridViewTest()
 		{
-			TestEditInDataGridView(new string[0]);
 			TestEditInDataGridView(new SerializableClass[0]);
 		}
 
@@ -96,8 +107,8 @@ namespace AW.Tests
 		public void EditPagedQueryInDataGridViewTest()
 		{
 			var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 15);
-			addressEntities.EditSelfServicingInDataGridView(0);
-			addressEntities.EditSelfServicingInDataGridView(20);
+			addressEntities.ShowSelfServicingInGrid(0);
+			addressEntities.ShowSelfServicingInGrid(20);
 		}
 
 		[TestMethod]
@@ -108,21 +119,21 @@ namespace AW.Tests
 			//awDataClassesDataContext.Connection.ConnectionString
 			TestEditInDataGridView(awDataClassesDataContext.AddressTypes);
 			var addressTypesQuery = awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID);
-			addressTypesQuery.EditInDataGridView(awDataClassesDataContext);
+			addressTypesQuery.ShowInGrid(awDataClassesDataContext);
 			//TestEditInDataGridView(awDataClassesDataContext.);
-			var actual = awDataClassesDataContext.AddressTypes.EditInDataGridView();
+			var actual = awDataClassesDataContext.AddressTypes.ShowInGrid();
 			Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
 		}
 
 		private static void TestEditInDataGridView<T>(IEnumerable<T> enumerable)
 		{
-			var actual = enumerable.EditInDataGridView(null);
+			var actual = enumerable.ShowInGrid(null);
 			Assert.AreEqual(enumerable, actual);
 		}
 
 		private static void TestEditInDataGridView(IEnumerable enumerable)
 		{
-			var actual = enumerable.EditInDataGridView(null);
+			var actual = enumerable.ShowInGrid(null);
 			Assert.AreEqual(enumerable, actual);
 		}
 	}

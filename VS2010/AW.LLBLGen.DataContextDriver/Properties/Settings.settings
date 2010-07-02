@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AW.LLBLGen.DataContextDriver.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="AdditionalAssemblies" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="AdditionalAssemblies" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="AdditionalNamespaces" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="AdditionalNamespaces" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DefaultDataAccessAdapterFactoryMethod" Type="System.String" Scope="User">
@@ -27,6 +27,9 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DefaultDatabaseConnection" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DefaultDisplayName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

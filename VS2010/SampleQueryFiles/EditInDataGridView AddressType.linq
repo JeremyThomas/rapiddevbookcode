@@ -6,6 +6,8 @@
     <CustomAssemblyPath>C:\Users\jeremy.thomas\Documents\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\AW.Test\bin\Debug\AW.LinqToSQL.dll</CustomAssemblyPath>
     <CustomTypeName>AW.LinqToSQL.AWDataClassesDataContext</CustomTypeName>
     <Database>AdventureWorks</Database>
+    <Persist>true</Persist>
+    <DisplayName>AW LINQToSQL</DisplayName>
   </Connection>
   <Reference>&lt;RuntimeDirectory&gt;\System.Windows.Forms.dll</Reference>
   <Reference>&lt;Personal&gt;\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\AW.Test\bin\Debug\AW.Helper.dll</Reference>
@@ -13,4 +15,4 @@
   <Reference>&lt;Personal&gt;\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\AW.Test\bin\Debug\AW.LinqToSQL.dll</Reference>
 </Query>
 
-AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(AddressTypes)
+AW.Winforms.Helpers.DataEditor.DataEditorExtensions.ShowInGrid(AddressTypes)

@@ -1,11 +1,15 @@
-﻿namespace AW.Winforms.Helpers.DataEditor
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace AW.Winforms.Helpers.DataEditor
 {
   partial class FrmDataEditor
   {
     /// <summary>
     /// Required designer variable.
     /// </summary>
-    private System.ComponentModel.IContainer components = null;
+    private IContainer components = null;
 
     /// <summary>
     /// Clean up any resources being used.
@@ -32,12 +36,12 @@
       // 
       // FrmDataEditor
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(529, 459);
+      this.AutoScaleDimensions = new SizeF(6F, 13F);
+      this.AutoScaleMode = AutoScaleMode.Font;
+      this.ClientSize = new Size(529, 459);
       this.Name = "FrmDataEditor";
       this.Text = "FrmDataEditor";
-      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmDataEditor_FormClosing);
+      this.FormClosing += new FormClosingEventHandler(this.FrmDataEditor_FormClosing);
       this.ResumeLayout(false);
 
     }

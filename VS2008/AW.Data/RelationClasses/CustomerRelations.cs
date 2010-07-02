@@ -33,6 +33,7 @@ namespace AW.Data.RelationClasses
 			toReturn.Add(this.CustomerAddressEntityUsingCustomerID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingCustomerID);
 			toReturn.Add(this.IndividualEntityUsingCustomerID);
+			toReturn.Add(this.StoreEntityUsingCustomerID);
 			toReturn.Add(this.SalesTerritoryEntityUsingTerritoryID);
 			return toReturn;
 		}
@@ -84,6 +85,25 @@ namespace AW.Data.RelationClasses
 
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IndividualEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between CustomerEntity and StoreEntity over the 1:1 relation they have, using the relation between the fields:
+		/// Customer.CustomerID - Store.CustomerID
+		/// </summary>
+		public virtual IEntityRelation StoreEntityUsingCustomerID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "Store", true);
+
+				relation.AddEntityFieldPair(CustomerFields.CustomerID, StoreFields.CustomerID);
+
+
+
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("StoreEntity", false);
 				return relation;
 			}
 		}

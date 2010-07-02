@@ -997,7 +997,12 @@ namespace AW.Data.EntityClasses
 				{
 					if(value==null)
 					{
+						bool raisePropertyChanged = (_customer !=null);
 						DesetupSyncCustomer(true, true);
+						if(raisePropertyChanged)
+						{
+							OnPropertyChanged("Customer");
+						}
 					}
 					else
 					{

@@ -515,6 +515,136 @@ namespace AW.Data.CollectionClasses
 			return dao.GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader_______(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, customerViewRelatedInstance, prefetchPathToUse);
 		}
 
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  Relation of type 'm:n' with the passed in EmployeeEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="employeeInstance">EmployeeEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingEmployeeCollectionViaPurchaseOrderHeader(IEntity employeeInstance)
+		{
+			return GetMultiManyToManyUsingEmployeeCollectionViaPurchaseOrderHeader(employeeInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in EmployeeEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="employeeInstance">EmployeeEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingEmployeeCollectionViaPurchaseOrderHeader(IEntity employeeInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingEmployeeCollectionViaPurchaseOrderHeader(employeeInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in EmployeeEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="employeeInstance">EmployeeEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingEmployeeCollectionViaPurchaseOrderHeader(IEntity employeeInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			ShipMethodDAO dao = DAOFactory.CreateShipMethodDAO();
+			return dao.GetMultiUsingEmployeeCollectionViaPurchaseOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, employeeInstance, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a Relation of type 'm:n' with the passed in EmployeeEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="employeeInstance">EmployeeEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingEmployeeCollectionViaPurchaseOrderHeader(IEntity employeeInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingEmployeeCollectionViaPurchaseOrderHeader(employeeInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in EmployeeEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="employeeInstance">EmployeeEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingEmployeeCollectionViaPurchaseOrderHeader(IEntity employeeInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			ShipMethodDAO dao = DAOFactory.CreateShipMethodDAO();
+			return dao.GetMultiUsingEmployeeCollectionViaPurchaseOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, employeeInstance, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  Relation of type 'm:n' with the passed in SalesPersonEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance)
+		{
+			return GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(salesPersonInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in SalesPersonEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(salesPersonInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in SalesPersonEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			ShipMethodDAO dao = DAOFactory.CreateShipMethodDAO();
+			return dao.GetMultiUsingSalesPersonCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesPersonInstance, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a Relation of type 'm:n' with the passed in SalesPersonEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(salesPersonInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in SalesPersonEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			ShipMethodDAO dao = DAOFactory.CreateShipMethodDAO();
+			return dao.GetMultiUsingSalesPersonCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesPersonInstance, prefetchPathToUse);
+		}
+
 		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  Relation of type 'm:n' with the passed in SalesTerritoryEntity. 
 		/// All current elements in the collection are removed from the collection.</summary>
 		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
@@ -578,6 +708,71 @@ namespace AW.Data.CollectionClasses
 			}
 			ShipMethodDAO dao = DAOFactory.CreateShipMethodDAO();
 			return dao.GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesTerritoryInstance, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  Relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingVendorCollectionViaPurchaseOrderHeader(IEntity vendorInstance)
+		{
+			return GetMultiManyToManyUsingVendorCollectionViaPurchaseOrderHeader(vendorInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingVendorCollectionViaPurchaseOrderHeader(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingVendorCollectionViaPurchaseOrderHeader(vendorInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingVendorCollectionViaPurchaseOrderHeader(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			ShipMethodDAO dao = DAOFactory.CreateShipMethodDAO();
+			return dao.GetMultiUsingVendorCollectionViaPurchaseOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, vendorInstance, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a Relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingVendorCollectionViaPurchaseOrderHeader(IEntity vendorInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingVendorCollectionViaPurchaseOrderHeader(vendorInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
+		}
+
+		/// <summary> Retrieves in this ShipMethodCollection object all ShipMethodEntity objects which are related via a  relation of type 'm:n' with the passed in VendorEntity. 
+		/// All current elements in the collection are removed from the collection.</summary>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingVendorCollectionViaPurchaseOrderHeader(IEntity vendorInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!base.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			ShipMethodDAO dao = DAOFactory.CreateShipMethodDAO();
+			return dao.GetMultiUsingVendorCollectionViaPurchaseOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, vendorInstance, prefetchPathToUse);
 		}
 
 

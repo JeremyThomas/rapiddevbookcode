@@ -30,6 +30,7 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.PurchaseOrderHeaderEntityUsingShipMethodID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingShipMethodID);
 
 
@@ -37,6 +38,21 @@ namespace AW.Data.RelationClasses
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between ShipMethodEntity and PurchaseOrderHeaderEntity over the 1:n relation they have, using the relation between the fields:
+		/// ShipMethod.ShipMethodID - PurchaseOrderHeader.ShipMethodID
+		/// </summary>
+		public virtual IEntityRelation PurchaseOrderHeaderEntityUsingShipMethodID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderHeader" , true);
+				relation.AddEntityFieldPair(ShipMethodFields.ShipMethodID, PurchaseOrderHeaderFields.ShipMethodID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ShipMethodEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHeaderEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between ShipMethodEntity and SalesOrderHeaderEntity over the 1:n relation they have, using the relation between the fields:
 		/// ShipMethod.ShipMethodID - SalesOrderHeader.ShipMethodID

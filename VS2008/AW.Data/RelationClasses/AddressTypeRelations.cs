@@ -31,6 +31,7 @@ namespace AW.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.CustomerAddressEntityUsingAddressTypeID);
+			toReturn.Add(this.VendorAddressEntityUsingAddressTypeID);
 
 
 			return toReturn;
@@ -49,6 +50,21 @@ namespace AW.Data.RelationClasses
 				relation.AddEntityFieldPair(AddressTypeFields.AddressTypeID, CustomerAddressFields.AddressTypeID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressTypeEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CustomerAddressEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between AddressTypeEntity and VendorAddressEntity over the 1:n relation they have, using the relation between the fields:
+		/// AddressType.AddressTypeID - VendorAddress.AddressTypeID
+		/// </summary>
+		public virtual IEntityRelation VendorAddressEntityUsingAddressTypeID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "VendorAddress" , true);
+				relation.AddEntityFieldPair(AddressTypeFields.AddressTypeID, VendorAddressFields.AddressTypeID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressTypeEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("VendorAddressEntity", false);
 				return relation;
 			}
 		}

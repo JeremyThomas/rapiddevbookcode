@@ -47,6 +47,13 @@
             <param name="dataSetToFill">DataSet to fill by the stored procedure</param>
             <returns>true if succeeded, false otherwise</returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.IDataAccessCore.ProduceCorrectStoredProcedureName(System.String)">
+            <summary>
+            Creates the correct stored procedure name, i.e. with catalog / schema name replaced properly.
+            </summary>
+            <param name="storedProcedureToCall">The stored procedure to call.</param>
+            <returns>the stored procedure name to use in a procedure call with schemas etc. properly replaced.</returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.IDataAccessCore.GetDbProviderFactoryInstance">
             <summary>
             Gets the DB provider factory instance. 
@@ -3633,6 +3640,13 @@
             </summary>
             <param name="comPlusContextHost">Com plus context host.</param>
             <param name="persistenceInfoProvider">The persistence info provider.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DataAccessAdapterBase.SD#LLBLGen#Pro#ORMSupportClasses#IDataAccessCore#ProduceCorrectStoredProcedureName(System.String)">
+            <summary>
+            Creates the correct stored procedure name, i.e. with catalog / schema name replaced properly.
+            </summary>
+            <param name="storedProcedureToCall">The stored procedure to call.</param>
+            <returns>the stored procedure name to use in a procedure call with schemas etc. properly replaced.</returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DataAccessAdapterBase.SD#LLBLGen#Pro#ORMSupportClasses#ITransactionNotification#NotifyCommit">
             <summary>
@@ -17779,6 +17793,13 @@
             <remarks>Use this method to pass a different command behavior to queryToExecute.Execute(), which is necessary for ASE sybase for example, as the 
             Sybase ASE provider has a critical bug in some versions where SingleRow doesn't work but SingleResult will.</remarks>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DaoBase.CreateCorrectStoredProcedureName(System.String)">
+            <summary>
+            Creates the name of the correct stored procedure.
+            </summary>
+            <param name="storedProcedureToCall">The stored procedure to call.</param>
+            <returns></returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DaoBase.CreateStoredProcedureCallCommand(System.String,System.Data.Common.DbParameter[],SD.LLBLGen.Pro.ORMSupportClasses.ITransaction)">
             <summary>
             Creates the stored procedure call command for the stored proc specified.
@@ -18001,6 +18022,13 @@
             Gets the db specific creator instance for the database this object targets.
             </summary>
             <returns>ready to use creator</returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.SelfServicingSpecific.DataAccessCoreImpl.SD#LLBLGen#Pro#ORMSupportClasses#IDataAccessCore#ProduceCorrectStoredProcedureName(System.String)">
+            <summary>
+            Creates the correct stored procedure name, i.e. with catalog / schema name replaced properly.
+            </summary>
+            <param name="storedProcedureToCall">The stored procedure to call.</param>
+            <returns>the stored procedure name to use in a procedure call with schemas etc. properly replaced.</returns>
         </member>
         <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase">
             <summary>

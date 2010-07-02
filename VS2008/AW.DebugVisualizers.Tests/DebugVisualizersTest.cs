@@ -131,6 +131,13 @@ namespace AW.DebugVisualizers.Tests
 		}
 
 		[TestMethod]
+		public void StringArrayTest()
+		{
+			var enumerable = new[] { "s1", "s2", "s3" };
+			TestShow(enumerable);
+		}
+
+		[TestMethod]
 		public void LinqtoSQLTest()
 		{
 			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();

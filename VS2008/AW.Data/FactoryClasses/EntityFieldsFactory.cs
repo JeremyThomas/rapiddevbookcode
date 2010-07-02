@@ -46,14 +46,29 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.AddressTypeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "AddressTypeEntity");
 					break;
+				case AW.Data.EntityType.BillOfMaterialsEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "BillOfMaterialsEntity");
+					break;
 				case AW.Data.EntityType.ContactEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ContactEntity");
+					break;
+				case AW.Data.EntityType.ContactCreditCardEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ContactCreditCardEntity");
+					break;
+				case AW.Data.EntityType.ContactTypeEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ContactTypeEntity");
 					break;
 				case AW.Data.EntityType.CountryRegionEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CountryRegionEntity");
 					break;
+				case AW.Data.EntityType.CountryRegionCurrencyEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CountryRegionCurrencyEntity");
+					break;
 				case AW.Data.EntityType.CreditCardEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CreditCardEntity");
+					break;
+				case AW.Data.EntityType.CultureEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CultureEntity");
 					break;
 				case AW.Data.EntityType.CurrencyEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CurrencyEntity");
@@ -70,17 +85,86 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.CustomerViewRelatedEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "CustomerViewRelatedEntity");
 					break;
+				case AW.Data.EntityType.DepartmentEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "DepartmentEntity");
+					break;
+				case AW.Data.EntityType.DocumentEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "DocumentEntity");
+					break;
 				case AW.Data.EntityType.EmployeeEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "EmployeeEntity");
 					break;
 				case AW.Data.EntityType.EmployeeAddressEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "EmployeeAddressEntity");
 					break;
+				case AW.Data.EntityType.EmployeeDepartmentHistoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "EmployeeDepartmentHistoryEntity");
+					break;
+				case AW.Data.EntityType.EmployeePayHistoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "EmployeePayHistoryEntity");
+					break;
+				case AW.Data.EntityType.IllustrationEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "IllustrationEntity");
+					break;
 				case AW.Data.EntityType.IndividualEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "IndividualEntity");
 					break;
+				case AW.Data.EntityType.JobCandidateEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "JobCandidateEntity");
+					break;
+				case AW.Data.EntityType.LocationEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "LocationEntity");
+					break;
 				case AW.Data.EntityType.ProductEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductEntity");
+					break;
+				case AW.Data.EntityType.ProductCategoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductCategoryEntity");
+					break;
+				case AW.Data.EntityType.ProductCostHistoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductCostHistoryEntity");
+					break;
+				case AW.Data.EntityType.ProductDescriptionEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductDescriptionEntity");
+					break;
+				case AW.Data.EntityType.ProductDocumentEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductDocumentEntity");
+					break;
+				case AW.Data.EntityType.ProductInventoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductInventoryEntity");
+					break;
+				case AW.Data.EntityType.ProductListPriceHistoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductListPriceHistoryEntity");
+					break;
+				case AW.Data.EntityType.ProductModelEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductModelEntity");
+					break;
+				case AW.Data.EntityType.ProductModelIllustrationEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductModelIllustrationEntity");
+					break;
+				case AW.Data.EntityType.ProductModelProductDescriptionCultureEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductModelProductDescriptionCultureEntity");
+					break;
+				case AW.Data.EntityType.ProductPhotoEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductPhotoEntity");
+					break;
+				case AW.Data.EntityType.ProductProductPhotoEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductProductPhotoEntity");
+					break;
+				case AW.Data.EntityType.ProductReviewEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductReviewEntity");
+					break;
+				case AW.Data.EntityType.ProductSubcategoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductSubcategoryEntity");
+					break;
+				case AW.Data.EntityType.ProductVendorEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ProductVendorEntity");
+					break;
+				case AW.Data.EntityType.PurchaseOrderDetailEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "PurchaseOrderDetailEntity");
+					break;
+				case AW.Data.EntityType.PurchaseOrderHeaderEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "PurchaseOrderHeaderEntity");
 					break;
 				case AW.Data.EntityType.SalesOrderDetailEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesOrderDetailEntity");
@@ -88,11 +172,38 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.SalesOrderHeaderEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesOrderHeaderEntity");
 					break;
+				case AW.Data.EntityType.SalesOrderHeaderSalesReasonEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesOrderHeaderSalesReasonEntity");
+					break;
+				case AW.Data.EntityType.SalesPersonEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesPersonEntity");
+					break;
+				case AW.Data.EntityType.SalesPersonQuotaHistoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesPersonQuotaHistoryEntity");
+					break;
+				case AW.Data.EntityType.SalesReasonEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesReasonEntity");
+					break;
+				case AW.Data.EntityType.SalesTaxRateEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesTaxRateEntity");
+					break;
 				case AW.Data.EntityType.SalesTerritoryEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesTerritoryEntity");
 					break;
+				case AW.Data.EntityType.SalesTerritoryHistoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SalesTerritoryHistoryEntity");
+					break;
+				case AW.Data.EntityType.ScrapReasonEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ScrapReasonEntity");
+					break;
+				case AW.Data.EntityType.ShiftEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ShiftEntity");
+					break;
 				case AW.Data.EntityType.ShipMethodEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ShipMethodEntity");
+					break;
+				case AW.Data.EntityType.ShoppingCartItemEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "ShoppingCartItemEntity");
 					break;
 				case AW.Data.EntityType.SpecialOfferEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "SpecialOfferEntity");
@@ -102,6 +213,36 @@ namespace AW.Data.FactoryClasses
 					break;
 				case AW.Data.EntityType.StateProvinceEntity:
 					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "StateProvinceEntity");
+					break;
+				case AW.Data.EntityType.StoreEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "StoreEntity");
+					break;
+				case AW.Data.EntityType.StoreContactEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "StoreContactEntity");
+					break;
+				case AW.Data.EntityType.TransactionHistoryEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "TransactionHistoryEntity");
+					break;
+				case AW.Data.EntityType.TransactionHistoryArchiveEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "TransactionHistoryArchiveEntity");
+					break;
+				case AW.Data.EntityType.UnitMeasureEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "UnitMeasureEntity");
+					break;
+				case AW.Data.EntityType.VendorEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "VendorEntity");
+					break;
+				case AW.Data.EntityType.VendorAddressEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "VendorAddressEntity");
+					break;
+				case AW.Data.EntityType.VendorContactEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "VendorContactEntity");
+					break;
+				case AW.Data.EntityType.WorkOrderEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "WorkOrderEntity");
+					break;
+				case AW.Data.EntityType.WorkOrderRoutingEntity:
+					fieldsToReturn = fieldProvider.GetEntityFields(inheritanceProvider, persistenceProvider, "WorkOrderRoutingEntity");
 					break;
 			}
 			return fieldsToReturn;

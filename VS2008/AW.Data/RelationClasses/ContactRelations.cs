@@ -30,15 +30,33 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
+			toReturn.Add(this.ContactCreditCardEntityUsingContactID);
 			toReturn.Add(this.EmployeeEntityUsingContactID);
 			toReturn.Add(this.IndividualEntityUsingContactID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingContactID);
+			toReturn.Add(this.StoreContactEntityUsingContactID);
+			toReturn.Add(this.VendorContactEntityUsingContactID);
 
 
 			return toReturn;
 		}
 
 		#region Class Property Declarations
+
+		/// <summary>Returns a new IEntityRelation object, between ContactEntity and ContactCreditCardEntity over the 1:n relation they have, using the relation between the fields:
+		/// Contact.ContactID - ContactCreditCard.ContactID
+		/// </summary>
+		public virtual IEntityRelation ContactCreditCardEntityUsingContactID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ContactCreditCard" , true);
+				relation.AddEntityFieldPair(ContactFields.ContactID, ContactCreditCardFields.ContactID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactCreditCardEntity", false);
+				return relation;
+			}
+		}
 
 		/// <summary>Returns a new IEntityRelation object, between ContactEntity and EmployeeEntity over the 1:n relation they have, using the relation between the fields:
 		/// Contact.ContactID - Employee.ContactID
@@ -81,6 +99,36 @@ namespace AW.Data.RelationClasses
 				relation.AddEntityFieldPair(ContactFields.ContactID, SalesOrderHeaderFields.ContactID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ContactEntity and StoreContactEntity over the 1:n relation they have, using the relation between the fields:
+		/// Contact.ContactID - StoreContact.ContactID
+		/// </summary>
+		public virtual IEntityRelation StoreContactEntityUsingContactID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "StoreContact" , true);
+				relation.AddEntityFieldPair(ContactFields.ContactID, StoreContactFields.ContactID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("StoreContactEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ContactEntity and VendorContactEntity over the 1:n relation they have, using the relation between the fields:
+		/// Contact.ContactID - VendorContact.ContactID
+		/// </summary>
+		public virtual IEntityRelation VendorContactEntityUsingContactID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "VendorContact" , true);
+				relation.AddEntityFieldPair(ContactFields.ContactID, VendorContactFields.ContactID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("VendorContactEntity", false);
 				return relation;
 			}
 		}

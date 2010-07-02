@@ -195,6 +195,202 @@ namespace AW.Data.DaoClasses
 			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
 		}
 
+		/// <summary>
+		/// Retrieves in the calling EmployeeCollection object all EmployeeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in DepartmentEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="departmentInstance">DepartmentEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingDepartmentCollectionViaEmployeeDepartmentHistory(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity departmentInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(EmployeeEntity.Relations.EmployeeDepartmentHistoryEntityUsingEmployeeID, "EmployeeDepartmentHistory_");
+			relations.Add(EmployeeDepartmentHistoryEntity.Relations.DepartmentEntityUsingDepartmentID, "EmployeeDepartmentHistory_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(departmentInstance.Fields[(int)DepartmentFieldIndex.DepartmentID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling EmployeeCollection object all EmployeeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in DepartmentEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="departmentInstance">DepartmentEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingDepartmentCollectionViaEmployeeDepartmentHistory(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity departmentInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(EmployeeEntity.Relations.EmployeeDepartmentHistoryEntityUsingEmployeeID, "EmployeeDepartmentHistory_");
+			relations.Add(EmployeeDepartmentHistoryEntity.Relations.DepartmentEntityUsingDepartmentID, "EmployeeDepartmentHistory_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(departmentInstance.Fields[(int)DepartmentFieldIndex.DepartmentID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling EmployeeCollection object all EmployeeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in ShiftEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="shiftInstance">ShiftEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingShiftCollectionViaEmployeeDepartmentHistory(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity shiftInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(EmployeeEntity.Relations.EmployeeDepartmentHistoryEntityUsingEmployeeID, "EmployeeDepartmentHistory_");
+			relations.Add(EmployeeDepartmentHistoryEntity.Relations.ShiftEntityUsingShiftID, "EmployeeDepartmentHistory_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(shiftInstance.Fields[(int)ShiftFieldIndex.ShiftID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling EmployeeCollection object all EmployeeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in ShiftEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="shiftInstance">ShiftEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingShiftCollectionViaEmployeeDepartmentHistory(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity shiftInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(EmployeeEntity.Relations.EmployeeDepartmentHistoryEntityUsingEmployeeID, "EmployeeDepartmentHistory_");
+			relations.Add(EmployeeDepartmentHistoryEntity.Relations.ShiftEntityUsingShiftID, "EmployeeDepartmentHistory_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(shiftInstance.Fields[(int)ShiftFieldIndex.ShiftID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling EmployeeCollection object all EmployeeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in ShipMethodEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingShipMethodCollectionViaPurchaseOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity shipMethodInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(EmployeeEntity.Relations.PurchaseOrderHeaderEntityUsingEmployeeID, "PurchaseOrderHeader_");
+			relations.Add(PurchaseOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodID, "PurchaseOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(shipMethodInstance.Fields[(int)ShipMethodFieldIndex.ShipMethodID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling EmployeeCollection object all EmployeeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in ShipMethodEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingShipMethodCollectionViaPurchaseOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity shipMethodInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(EmployeeEntity.Relations.PurchaseOrderHeaderEntityUsingEmployeeID, "PurchaseOrderHeader_");
+			relations.Add(PurchaseOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodID, "PurchaseOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(shipMethodInstance.Fields[(int)ShipMethodFieldIndex.ShipMethodID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling EmployeeCollection object all EmployeeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in VendorEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingVendorCollectionViaPurchaseOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity vendorInstance, int pageNumber, int pageSize)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(EmployeeEntity.Relations.PurchaseOrderHeaderEntityUsingEmployeeID, "PurchaseOrderHeader_");
+			relations.Add(PurchaseOrderHeaderEntity.Relations.VendorEntityUsingVendorID, "PurchaseOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(vendorInstance.Fields[(int)VendorFieldIndex.VendorID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, pageNumber, pageSize);
+		}
+
+		/// <summary>
+		/// Retrieves in the calling EmployeeCollection object all EmployeeEntity objects
+		/// which are related via a relation of type 'm:n' with the passed in VendorEntity. 
+		/// </summary>
+		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
+		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. 
+		/// If the used Dynamic Query Engine supports it, 'TOP' is used to limit the amount of rows to return. When set to 0, no limitations are specified.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
+		/// <param name="vendorInstance">VendorEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if succeeded, false otherwise</returns>
+		public bool GetMultiUsingVendorCollectionViaPurchaseOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity vendorInstance, IPrefetchPath prefetchPathToUse)
+		{
+			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.EmployeeEntity);
+			RelationCollection relations = new RelationCollection();
+			relations.Add(EmployeeEntity.Relations.PurchaseOrderHeaderEntityUsingEmployeeID, "PurchaseOrderHeader_");
+			relations.Add(PurchaseOrderHeaderEntity.Relations.VendorEntityUsingVendorID, "PurchaseOrderHeader_", string.Empty, JoinHint.None);
+			IPredicateExpression selectFilter = new PredicateExpression();
+			selectFilter.Add(new FieldCompareValuePredicate(vendorInstance.Fields[(int)VendorFieldIndex.VendorID], ComparisonOperator.Equal));
+			return GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse);
+		}
+
 	
 		/// <summary>
 		/// Deletes from the persistent storage all 'Employee' entities which have data in common
