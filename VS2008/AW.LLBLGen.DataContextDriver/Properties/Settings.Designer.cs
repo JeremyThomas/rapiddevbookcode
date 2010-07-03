@@ -23,25 +23,19 @@ namespace AW.LLBLGen.DataContextDriver.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::System.Collections.Specialized.StringCollection AdditionalAssemblies {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["AdditionalAssemblies"]));
             }
-            set {
-                this["AdditionalAssemblies"] = value;
-            }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::System.Collections.Specialized.StringCollection AdditionalNamespaces {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["AdditionalNamespaces"]));
-            }
-            set {
-                this["AdditionalNamespaces"] = value;
             }
         }
         
@@ -126,6 +120,18 @@ namespace AW.LLBLGen.DataContextDriver.Properties {
             }
             set {
                 this["DefaultDatabaseConnection"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultDisplayName {
+            get {
+                return ((string)(this["DefaultDisplayName"]));
+            }
+            set {
+                this["DefaultDisplayName"] = value;
             }
         }
     }

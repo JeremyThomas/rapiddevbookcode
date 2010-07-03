@@ -14,7 +14,7 @@
 </Query>
 
 var contacts =  from contact in MetaSingletons.MetaData.Contact
-		 		where contact.FirstName.Contains("Albert") 
-		 		select contact;
-				  
-AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(contacts, EntityHelper.Save).Dump();
+where contact.FirstName.Contains("Albert")
+select contact;
+
+AW.Winforms.Helpers.DataEditor.DataEditorExtensions.ShowInGrid(contacts, EntityHelper.Save).Dump();

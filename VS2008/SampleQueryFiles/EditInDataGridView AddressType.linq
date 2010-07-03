@@ -4,7 +4,7 @@
     <Persist>true</Persist>
     <Driver>LinqToSql</Driver>
     <Server>(local)\sqlexpress</Server>
-    <CustomAssemblyPath>C:\Documents and Settings\jeremy.thomas\My Documents\Visual Studio 2008\Projects\CodePlex\RapidDevBookCode\AW.LinqToSQL\bin\Debug\AW.LinqToSQL.dll</CustomAssemblyPath>
+    <CustomAssemblyPath>D:\Documents and Settings\jeremy.thomas\My Documents\Visual Studio 2008\Projects\CodePlex\RapidDevBookCode\AW.LinqToSQL\bin\Debug\AW.LinqToSQL.dll</CustomAssemblyPath>
     <CustomTypeName>AW.LinqToSQL.AWDataClassesDataContext</CustomTypeName>
     <Database>AdventureWorks</Database>
   </Connection>
@@ -15,4 +15,4 @@
   <Reference>&lt;Personal&gt;\Visual Studio 2008\Projects\CodePlex\RapidDevBookCode\AW.Win\bin\Debug\AW.Winforms.Helpers.LLBL.dll</Reference>
 </Query>
 
-AW.Winforms.Helpers.DataEditor.DataEditorExtensions.EditInDataGridView(AddressTypes)
+AW.Winforms.Helpers.DataEditor.DataEditorExtensions.ShowInGrid(AddressTypes)

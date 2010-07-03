@@ -11,14 +11,14 @@ using AW.Winforms.Helpers.QueryRunner;
 
 public class Script : MarshalByRefObject, IQueryScript
 {
-  public IEnumerable Query()
-  {
-  var x = from soh in MetaSingletons.MetaData.SalesOrderHeader
-         where soh.Customer.Individual.Contact.FirstName.Contains("Albert") && soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == "Perth")
-         select soh;
+	public IEnumerable Query()
+	{
+		var x = from soh in MetaSingletons.MetaData.SalesOrderHeader
+						where soh.Customer.Individual.Contact.FirstName.Contains("Albert") && soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == "Perth")
+						select soh;
 
-return  AW.Winforms.Helpers.AWHelper.ViewInDataGridView(x);
+		return AW.Winforms.Helpers.AWHelper.ShowInGrid(x);
 
-  }
+	}
 
 }

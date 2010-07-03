@@ -31,25 +31,19 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				var defaultDataAccessAdapterFactoryMethod = Settings.Default.DefaultDataAccessAdapterFactoryMethod;
 				if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryMethod))
-					comboBoxDatabaseProvider.Text = defaultDataAccessAdapterFactoryMethod;
+					_cxInfo.DatabaseInfo.Provider = defaultDataAccessAdapterFactoryMethod;
 
 				var defaultDataAccessAdapterFactoryType = Settings.Default.DefaultDataAccessAdapterFactoryType;
 				if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryType) && string.IsNullOrEmpty(_cxInfo.DatabaseInfo.DbVersion))
 					_cxInfo.DatabaseInfo.DbVersion = Settings.Default.DefaultDataAccessAdapterFactoryType;
-
 
 				_cxInfo.AppConfigPath = Settings.Default.DefaultApplicationConfig;
 				_cxInfo.DatabaseInfo.CustomCxString = Settings.Default.DefaultDatabaseConnection;
 				_cxInfo.CustomTypeInfo.CustomAssemblyPath = Settings.Default.DefaultLinqMetaDataAssembly;
 				_cxInfo.CustomTypeInfo.CustomTypeName = Settings.Default.DefaultLinqMetaData;
 				_cxInfo.CustomTypeInfo.CustomMetadataPath = Settings.Default.DefaultDataAccessAdapterFactoryAssembly;
+				_cxInfo.DisplayName = Settings.Default.DefaultDisplayName;
 				GetAdapterType(_cxInfo);
-
-				//textBoxDataAccessAdapterAssemblyPath.Text = Settings.Default.DefaultDataAccessAdapterFactoryAssembly;
-				//txtAppConfigPath.Text = Settings.Default.DefaultApplicationConfig;
-				//textBoxDatabaseConnectionString.Text = Settings.Default.DefaultDatabaseConnection
-				//txtAssemblyPath.Text = Settings.Default.DefaultLinqMetaDataAssembly;
-				//txtTypeName.Text = Settings.Default.DefaultLinqMetaData;
 			}
 //      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
 //.OfType<DataRow>()
@@ -59,6 +53,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 //      {
 //        comboBoxDatabaseProvider.Items.Add(item);
 //      }
+		}
+
+		private void btnSaveDefault_Click(object sender, RoutedEventArgs e)
+		{
+			Settings.Default.DefaultDataAccessAdapterFactoryMethod = _cxInfo.DatabaseInfo.Provider;
+			Settings.Default.DefaultDataAccessAdapterFactoryType = _cxInfo.DatabaseInfo.DbVersion;
+
+			Settings.Default.DefaultApplicationConfig = _cxInfo.AppConfigPath;
+			Settings.Default.DefaultDatabaseConnection = _cxInfo.DatabaseInfo.CustomCxString;
+			Settings.Default.DefaultLinqMetaDataAssembly = _cxInfo.CustomTypeInfo.CustomAssemblyPath;
+			Settings.Default.DefaultLinqMetaData = _cxInfo.CustomTypeInfo.CustomTypeName;
+			Settings.Default.DefaultDataAccessAdapterFactoryAssembly = _cxInfo.CustomTypeInfo.CustomMetadataPath;
+			Settings.Default.DefaultDisplayName = _cxInfo.DisplayName;
+			Settings.Default.Save();
 		}
 
 		private void btnOK_Click(object sender, RoutedEventArgs e)
