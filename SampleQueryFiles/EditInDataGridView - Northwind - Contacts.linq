@@ -5,8 +5,6 @@
     <ShowServer>true</ShowServer>
     <Database>Northwind</Database>
   </Connection>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Helper.dll</Reference>
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.dll</Reference>
   <Reference>&lt;RuntimeDirectory&gt;\System.Windows.Forms.dll</Reference>
@@ -14,6 +12,6 @@
   <Namespace>AW.Winforms.Helpers.DataEditor</Namespace>
 </Query>
 var contacts = from c in Customers
-	where c.ContactName.StartsWith("A") 
-	select c;
-contacts.EditInDataGridView(Customers.Context).Dump();
+where c.ContactName.StartsWith("A")
+select c;
+contacts.ShowInGrid(Customers.Context).Dump();
