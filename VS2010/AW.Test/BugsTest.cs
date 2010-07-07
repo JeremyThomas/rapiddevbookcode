@@ -130,7 +130,7 @@ namespace AW.Tests
 			                	{
 			                		soh.SalesOrderID,
 			                		sod.SalesOrderDetailID,
-			                		MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.Name
+													MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.Name
 			                	});
 			var result = q.Where(x => x.SalesOrderID < 43690).ToList();
 
@@ -140,7 +140,7 @@ namespace AW.Tests
 			                 	{
 			                 		soh.SalesOrderID,
 			                 		sod.SalesOrderDetailID,
-			                 		MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.CatalogDescription
+													MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.CatalogDescription
 			                 	});
 
 			var result1 = q1.Where(x => x.SalesOrderID < 43690).ToList();
@@ -151,7 +151,7 @@ namespace AW.Tests
 			                                    	{
 			                                    		soh.SalesOrderID,
 			                                    		sod.SalesOrderDetailID,
-			                                    		MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.Name,
+			                                    		MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.Name,
 																							(
 																							  from p in MetaSingletons.MetaData.Product
 																							  where p.ProductID == sod.ProductID
@@ -169,8 +169,8 @@ namespace AW.Tests
 			                    	{
 			                    		soh.SalesOrderID,
 			                    		sod.SalesOrderDetailID,
-			                    		MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.CatalogDescription,
-			                    		MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID).First().ProductModel.Name
+			                    		MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.CatalogDescription,
+			                    		MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.Name
 			                    	});
 			qfail.Where(x => x.SalesOrderID < 43690).ToList();
 			//SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryExecutionException: An exception was caught during the execution of a retrieval query: The multi-part identifier "LPLA_6.CatalogDescription" could not be bound.
@@ -190,6 +190,22 @@ namespace AW.Tests
 			                		MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).Name,
 			                	});
 			q.ToList(); //System.NullReferenceException: Object reference not set to an instance of an object.
+		}
+
+		[TestMethod, Description("The multi-part identifier LPLA_4.ContactID could not be bound when doing a nested query with a predicate involving an entity hop")]
+		public void NestedQueryUsingFirst()
+		{
+			var k = from employeeAddress in MetaSingletons.MetaData.EmployeeAddress
+							//let employee = employeeAddress.Employee
+			        select new
+			               	{
+			               		employeeAddress.Employee.Contact.FirstName, //this is fine
+												//MetaSingletons.MetaData.Employee.First(e => e.EmployeeID == employeeAddress.EmployeeID).Contact.MiddleName,
+												//MetaSingletons.MetaData.Contact.First(c => c.ContactID == employee.ContactID).LastName,
+												MetaSingletons.MetaData.Contact.First(c => c.ContactID == employeeAddress.Employee.ContactID).LastName //getting similar field using a nested query
+			               	};
+
+			k.ToList(); //The multi-part identifier "LPLA_4.ContactID" could not be bound.
 		}
 	}
 }
