@@ -137,8 +137,8 @@ namespace AW.Winforms.Helpers.Controls
 				_canSave = CanSaveEnumerable();
 				copyToolStripButton.Enabled = true;
 				printToolStripButton.Enabled = true;
-				toolStripButtonObjectListViewVisualizer.Visible = bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof (ObjectListView<>);
-				toolStripButtonObjectListViewVisualizer.Enabled = toolStripButtonObjectListViewVisualizer.Visible;
+        toolStripButtonObjectListViewVisualizer.Enabled = bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof(ObjectListView<>);
+        toolStripButtonObjectListViewVisualizer.Visible = toolStripButtonObjectListViewVisualizer.Enabled;
 			}
 
 			else
