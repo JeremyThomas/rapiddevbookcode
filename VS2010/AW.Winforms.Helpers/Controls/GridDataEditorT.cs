@@ -30,7 +30,7 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			if (Paging())
 				enumerable = enumerable.Take(PageSize);
-			var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, typeof (T)));
+			var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(_supersetG, typeof(T)));
 			return isEnumerable;
 		}
 
@@ -42,9 +42,9 @@ namespace AW.Winforms.Helpers.Controls
 		protected IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable<T> enumerable)
 		{
 			PageSize = pageSize;
+			_supersetG = enumerable;
 			if (pageSize == 0 || !enumerable.Any())
 				return Enumerable.Empty<int>();
-			_supersetG = enumerable;
 			return Enumerable.Range(1, GetPageCount());
 		}
 
@@ -69,6 +69,11 @@ namespace AW.Winforms.Helpers.Controls
 		private IEnumerable<T> SkipTake()
 		{
 			return _supersetG.SkipTake(GetPageIndex(), PageSize);
+		}
+
+		protected override bool IsObjectListView()
+		{
+			return bindingSourceEnumerable.List is ObjectListView<T>;
 		}
 	}
 }

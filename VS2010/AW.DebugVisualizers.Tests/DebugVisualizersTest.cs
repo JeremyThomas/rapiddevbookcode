@@ -12,6 +12,7 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LinqToSQL;
 using AW.Tests;
+using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -133,6 +134,7 @@ namespace AW.DebugVisualizers.Tests
 			var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
 			TestSerialize(listofNonSerializableClasses);
 			TestSerialize(listofNonSerializableClasses.Distinct());
+			TestSerialize(listofNonSerializableClasses.ToBindingListView());
 		}
 
 		[TestMethod]
