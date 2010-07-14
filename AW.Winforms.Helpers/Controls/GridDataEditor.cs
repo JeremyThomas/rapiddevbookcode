@@ -137,13 +137,18 @@ namespace AW.Winforms.Helpers.Controls
 				_canSave = CanSaveEnumerable();
 				copyToolStripButton.Enabled = true;
 				printToolStripButton.Enabled = true;
-        toolStripButtonObjectListViewVisualizer.Enabled = bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof(ObjectListView<>);
-        toolStripButtonObjectListViewVisualizer.Visible = toolStripButtonObjectListViewVisualizer.Enabled;
+				toolStripButtonObjectListViewVisualizer.Enabled = IsObjectListView();
+				toolStripButtonObjectListViewVisualizer.Visible = toolStripButtonObjectListViewVisualizer.Enabled;
 			}
 
 			else
 				saveToolStripButton.Enabled = false;
 			toolStripLabelSaveResult.Text = "";
+		}
+
+		protected virtual bool IsObjectListView()
+		{
+			return bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof(ObjectListView<>);
 		}
 
 		protected bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
@@ -170,7 +175,7 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			if (Paging())
 				enumerable = enumerable.AsQueryable().Take(PageSize);
-			var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(enumerable, null));
+			var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(_superset, null));
 			return isEnumerable;
 		}
 
@@ -235,7 +240,9 @@ namespace AW.Winforms.Helpers.Controls
 		public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
 		{
 			bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
-			return GetFirstPage(enumerable);
+			if (bindingSourcePaging.Count == 0)
+				return GetFirstPage(enumerable);
+			return bindingSourceEnumerable.List != null;
 		}
 
 		private IEnumerable SkipTake()

@@ -133,13 +133,11 @@ namespace JesseJohnston
       // is used.  The mapping name of our table style is "", the default.  This matches the list name returned by ObjectListView's
       // implementation of ITypedList.GetListName().
 
-      foreach (var column in props.Distinct().Select(prop => new DataGridTextBoxColumn {HeaderText = prop.Name, MappingName = prop.Name, NullText = "", ReadOnly = true})
-        .Where(column => !dataGridViewTableStyle.GridColumnStyles.Contains(column.HeaderText)))
-      {
-        dataGridViewTableStyle.GridColumnStyles.Add(column);
-      }
+    	foreach (var column in props.Distinct().Select(prop => new DataGridTextBoxColumn {HeaderText = prop.Name, MappingName = prop.Name, NullText = "", ReadOnly = true})
+    		.Where(column => !dataGridViewTableStyle.GridColumnStyles.Contains(column.HeaderText)))
+    		dataGridViewTableStyle.GridColumnStyles.Add(column);
 
-      dataGridView.DataSource = view;
+    	dataGridView.DataSource = view;
     }
 
     private void ShowList()
@@ -155,13 +153,11 @@ namespace JesseJohnston
       else
         dataGridListTableStyle.MappingName = view.List.GetType().Name;
 
-      foreach (var column in props.Distinct().Select(prop => new DataGridTextBoxColumn {HeaderText = prop.Name, MappingName = prop.Name, NullText = "", ReadOnly = true})
-        .Where(column => !dataGridViewTableStyle.GridColumnStyles.Contains(column.HeaderText)))
-      {
-        dataGridListTableStyle.GridColumnStyles.Add(column);
-      }
+    	foreach (var column in props.Distinct().Select(prop => new DataGridTextBoxColumn {HeaderText = prop.Name, MappingName = prop.Name, NullText = "", ReadOnly = true})
+    		.Where(column => !dataGridViewTableStyle.GridColumnStyles.Contains(column.HeaderText)))
+    		dataGridListTableStyle.GridColumnStyles.Add(column);
 
-      dataGridList.DataSource = view.List;
+    	dataGridList.DataSource = view.List;
     }
 
     private void GetTypeNames()

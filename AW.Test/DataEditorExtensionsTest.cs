@@ -4,6 +4,7 @@ using System.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.LinqToSQL;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
@@ -107,8 +108,28 @@ namespace AW.Tests
 		public void EditPagedQueryInDataGridViewTest()
 		{
 			var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 15);
-			addressEntities.ShowSelfServicingInGrid(0);
 			addressEntities.ShowSelfServicingInGrid(20);
+			addressEntities.ShowSelfServicingInGrid(0);
+		}
+
+		[TestMethod]
+		public void QueryInGridIsReadonlyTest()
+		{
+			TestEditInDataGridView(MetaSingletons.MetaData.Address);
+		}
+
+		[TestMethod]
+		public void ShowSelfServicingInGridTest()
+		{
+			MetaSingletons.MetaData.Address.ShowSelfServicingInGrid();
+			MetaSingletons.MetaData.AddressType.ShowSelfServicingInGrid();
+		}
+
+		[TestMethod]
+		public void ShowEntityCollectionInGridTest()
+		{
+			TestEditInDataGridView(MetaSingletons.MetaData.Address.ToEntityCollection());
+			TestEditInDataGridView(MetaSingletons.MetaData.AddressType.ToEntityCollection());
 		}
 
 		[TestMethod]
