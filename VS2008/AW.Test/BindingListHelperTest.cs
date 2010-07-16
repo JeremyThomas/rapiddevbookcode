@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,8 +9,8 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
-using AW.Tests;
 using AW.Winforms.Helpers;
+using JesseJohnston;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -60,36 +61,16 @@ namespace AW.Tests
 
 		#endregion
 
-		/// <summary>
-		///A test for Bind
-		///</summary>
-		[TestMethod]
-		public void BindTest()
-		{
-			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-			var list = TestBindEnumerable(addressTypeEntityCollection.DefaultView, false);
-			Assert.AreEqual(addressTypeEntityCollection.DefaultView, list);
-
-			TestBindEnumerable(MetaSingletons.MetaData.AddressType, false);
-
-			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection, false));
-		}
-
 		[TestMethod]
 		public void DifferentItemTypesTest()
 		{
 			var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
 			var bindingSource = new BindingSource();
-			Assert.IsTrue(bindingSource.BindEnumerable(listofNonSerializableClasses, false));
+			Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable)listofNonSerializableClasses, false));
 			Assert.AreEqual(listofNonSerializableClasses, bindingSource.List);
-		}
 
-		private static IList TestBindEnumerable<T>(IEnumerable<T> enumerable, bool setReadonly)
-		{
-			var bindingSource = new BindingSource();
-			Assert.IsTrue(bindingSource.BindEnumerable(enumerable, setReadonly));
-			Assert.IsInstanceOfType(bindingSource.List, typeof (IBindingListView));
-			return bindingSource.List;
+			TestBindEnumerable(listofNonSerializableClasses);
+			TestBindEnumerable(SerializableClass.GenerateListWithBoth());
 		}
 
 		/// <summary>
@@ -100,26 +81,43 @@ namespace AW.Tests
 		{
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 
-			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection.DefaultView));
-			TestBindEnumerable(MetaSingletons.MetaData.AddressType);
 			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection));
+			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection.DefaultView));
+
+			TestBindEnumerable((IEnumerable)MetaSingletons.MetaData.AddressType);
+			TestBindEnumerable(MetaSingletons.MetaData.AddressType);
 
 			var dt = new DataSet();
 			addressTypeEntityCollection.CreateHierarchicalProjection(dt);
 			TestBindEnumerable(dt.Tables[0].DefaultView);
-			var bindingSource = new BindingSource();
-			Assert.IsTrue(bindingSource.BindEnumerable(SerializableClass.GenerateListWithBoth(), false));
 
+			TestBindEnumerable((IEnumerable)SerializableClass.GenerateList());
+			TestBindEnumerable(SerializableClass.GenerateList());
+		}
+
+		private static IEnumerable<T> TestBindEnumerable<T>(IEnumerable<T> enumerable)
+		{
+			TestBindEnumerableReadonly(enumerable, true);
+			var bindingSource = TestBindEnumerableReadonly(enumerable, false);
+			return (IEnumerable<T>)bindingSource.List;
+		}
+
+		private static BindingSource TestBindEnumerableReadonly<T>(IEnumerable<T> enumerable, bool setReadonly)
+		{
+			var bindingSource = new BindingSource();
+			Assert.IsTrue(bindingSource.BindEnumerable(enumerable, setReadonly));
+			Assert.IsInstanceOfType(bindingSource.List, typeof (IBindingListView));
+			return bindingSource;
 		}
 
 		private static IList TestBindEnumerable(IEnumerable enumerable)
 		{
-			TestBindEnumerable(enumerable, true);
-			var bindingSource = TestBindEnumerable(enumerable, false);
+			TestBindEnumerableReadonly(enumerable, true);
+			var bindingSource = TestBindEnumerableReadonly(enumerable, false);
 			return bindingSource.List;
 		}
 
-		private static BindingSource TestBindEnumerable(IEnumerable enumerable, bool setReadonly)
+		private static BindingSource TestBindEnumerableReadonly(IEnumerable enumerable, bool setReadonly)
 		{
 			var bindingSource = new BindingSource();
 			Assert.IsTrue(bindingSource.BindEnumerable(enumerable, setReadonly));
@@ -131,8 +129,8 @@ namespace AW.Tests
 		[TestMethod]
 		public void ToBindingListViewTest()
 		{
-			TestToBindingListView(MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity)));
-			TestToBindingListView(((IEntity)MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
+			TestToBindingListView(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
+			TestToBindingListView(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			var list = TestToBindingListView(addressTypeEntityCollection.DefaultView);
 			Assert.AreEqual(addressTypeEntityCollection.DefaultView, list);
@@ -185,6 +183,5 @@ namespace AW.Tests
 			Assert.IsTrue(bindingListView.Count > 0);
 			return bindingListView;
 		}
-
 	}
 }

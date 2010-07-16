@@ -91,7 +91,7 @@ namespace AW.DebugVisualizers.Tests
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			var addressTypeEntityCollectionQueryable = addressTypeEntityCollection.AsQueryable();
 			TestSerialize(addressTypeEntityCollectionQueryable);
-			//TestShow(MetaSingletons.MetaData.AddressType);
+			TestShow(MetaSingletons.MetaData.AddressType);
 		}
 
 		[TestMethod]

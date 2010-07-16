@@ -32,6 +32,24 @@ namespace AW.Winforms.Helpers
 			return null;
 		}
 
+		public static IBindingListView ToBindingListView<T>(this IEnumerable<T> enumerable)
+		{
+			var showenEnumerable = enumerable != null && !(enumerable is string);
+			if (showenEnumerable)
+			{
+				if (enumerable is IBindingListView)
+					return (IBindingListView)enumerable;
+				if (enumerable is IListSource)
+				{
+					var bindingListView = ListSourceToBindingListView((IListSource)enumerable);
+					if (bindingListView != null)
+						return bindingListView;
+				}
+				return ToObjectListView(enumerable);
+			}
+			return null;
+		}
+
 		public static IBindingListView ListSourceToBindingListView(IListSource listSource)
 		{
 			if (listSource != null)
@@ -56,6 +74,18 @@ namespace AW.Winforms.Helpers
 			return null;
 		}
 
+		private static IBindingListView ToObjectListView<T>(this IList<T> list)
+		{
+			if (list != null)
+			{
+				if (list is IBindingListView)
+					return (IBindingListView)list;
+				var objectListView = new ObjectListView<T>(list);
+				return objectListView;
+			}
+			return null;
+		}
+
 		private static IBindingListView ToObjectListView(this IEnumerable enumerable)
 		{
 			var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
@@ -64,11 +94,19 @@ namespace AW.Winforms.Helpers
 			enumerable = (IEnumerable)ListBindingHelper.GetList(enumerable);
 			if (enumerable is IList)
 			{
-				var objectListView = ((IList) enumerable).ToObjectListView();
+				var objectListView = ((IList)enumerable).ToObjectListView();
 				if (objectListView != null)
 					return objectListView;
 			}
 			return CreateObjectListViewViaBindingSource(enumerable);
+		}
+
+		private static IBindingListView ToObjectListView<T>(this IEnumerable<T> enumerable)
+		{
+			if (typeof(T) == typeof(string))
+				return null;
+			enumerable = (IEnumerable<T>)ListBindingHelper.GetList(enumerable);
+			return ToObjectListView((IList<T>)enumerable.ToList());
 		}
 
 		private static IBindingListView CreateObjectListViewViaBindingSource(IEnumerable enumerable)
@@ -99,6 +137,29 @@ namespace AW.Winforms.Helpers
 					SetReadonly(((IBindingList) bindingSource.DataSource));
 				else
 					bindingSource.AllowNew = !setReadonly;
+			return showenEnumerable;
+		}
+
+		private static bool BindEnumerable<T>(BindingSource bindingSource, IEnumerable<T> enumerable)
+		{
+			bool showenEnumerable;
+			try
+			{
+				bindingSource.DataSource = enumerable.ToBindingListView();
+				showenEnumerable = bindingSource.Count > 0;
+			}
+			catch (Exception)
+			{
+				try
+				{
+					bindingSource.DataSource = enumerable;
+				}
+				catch (Exception)
+				{
+					bindingSource.DataSource = null;
+				}
+				showenEnumerable = bindingSource.Count > 0;
+			}
 			return showenEnumerable;
 		}
 

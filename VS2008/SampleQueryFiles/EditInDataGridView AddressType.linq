@@ -7,6 +7,8 @@
     <CustomAssemblyPath>D:\Documents and Settings\jeremy.thomas\My Documents\Visual Studio 2008\Projects\CodePlex\RapidDevBookCode\AW.LinqToSQL\bin\Debug\AW.LinqToSQL.dll</CustomAssemblyPath>
     <CustomTypeName>AW.LinqToSQL.AWDataClassesDataContext</CustomTypeName>
     <Database>AdventureWorks</Database>
+    <Persist>true</Persist>
+    <DisplayName>AW LINQToSQL</DisplayName>
   </Connection>
   <Reference>&lt;Personal&gt;\Visual Studio 2008\Projects\CodePlex\RapidDevBookCode\AW.Win\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</Reference>
   <Reference>&lt;Personal&gt;\Visual Studio 2008\Projects\CodePlex\RapidDevBookCode\AW.Win\bin\Debug\AW.Helper.dll</Reference>

@@ -11,7 +11,8 @@
   <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.LLBL.dll</Reference>
   <Namespace>AW.Winforms.Helpers.DataEditor</Namespace>
 </Query>
+
 var contacts = from c in Customers
-where c.ContactName.StartsWith("A")
-select c;
+	where c.ContactName.StartsWith("A") 
+	select c;
 contacts.ShowInGrid(Customers.Context).Dump();
