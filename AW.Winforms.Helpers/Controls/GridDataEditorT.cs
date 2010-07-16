@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using AW.Helper;
 using JesseJohnston;
@@ -10,6 +11,11 @@ namespace AW.Winforms.Helpers.Controls
 	public partial class GridDataEditorT<T> : GridDataEditor
 	{
 		private IEnumerable<T> _supersetG;
+
+		public GridDataEditorT()
+		{
+			SupportsNotifyPropertyChanged = typeof(INotifyPropertyChanged).IsAssignableFrom(ItemType);
+		}
 
 		protected override Type ItemType
 		{
@@ -28,9 +34,10 @@ namespace AW.Winforms.Helpers.Controls
 
 		private bool GetFirstPage(IEnumerable<T> enumerable)
 		{
+			var firstPageEnumerable = enumerable;
 			if (Paging())
-				enumerable = enumerable.Take(PageSize);
-			var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(_supersetG, typeof(T)));
+				firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
+			var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, typeof(T)));
 			return isEnumerable;
 		}
 
@@ -54,7 +61,9 @@ namespace AW.Winforms.Helpers.Controls
 		}
 
 		protected override void SetRemovingItem()
-		{			
+		{
+			if (_supersetG is IQueryable && SupportsNotifyPropertyChanged)
+				saveToolStripButton.Enabled = false;
 			if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
 				((ObjectListView<T>)bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
 			else
