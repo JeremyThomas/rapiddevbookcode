@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
@@ -1950,15 +1951,12 @@ namespace JesseJohnston
       if (proposedSorts == null || sortProps == null)
         different = (proposedSorts != sortProps);
       else if (proposedSorts.Count == sortProps.Count)
-        for (var i = 0; i < proposedSorts.Count; i++)
-        {
-          if (proposedSorts[i].PropertyName != sortProps[i].PropertyName ||
-              proposedSorts[i].Direction != sortProps[i].Direction)
-          {
-            different = true;
-            break;
-          }
-        }
+      {
+      	if (proposedSorts.Where((t, i) => t.PropertyName != sortProps[i].PropertyName || t.Direction != sortProps[i].Direction).Any())
+      	{
+      		different = true;
+      	}
+      }
       else
         different = true;
 
@@ -1976,11 +1974,7 @@ namespace JesseJohnston
       {
         var desc = sortProps[i];
 
-        PropertyDescriptor prop;
-        if (desc.PropertyDescriptor != null)
-          prop = desc.PropertyDescriptor;
-        else
-          prop = itemProperties.Find(desc.PropertyName, true);
+      	PropertyDescriptor prop = desc.PropertyDescriptor ?? itemProperties.Find(desc.PropertyName, true);
 
         object firstValue = null;
         try
@@ -2048,21 +2042,15 @@ namespace JesseJohnston
 
     private int GetSortedPositionOfListIndex(int listIndex, bool forDelete)
     {
-      if (IsSorted || IsFiltered)
-        return GetSortIndexes(!forDelete).IndexOf(listIndex);
-      else
-        return listIndex;
+    	return IsSorted || IsFiltered ? GetSortIndexes(!forDelete).IndexOf(listIndex) : listIndex;
     }
 
-    private int GetListPositionOfViewIndex(int viewIndex)
-    {
-      if (IsSorted || IsFiltered)
-        return GetSortIndexes()[viewIndex];
-      else
-        return viewIndex;
-    }
+  	private int GetListPositionOfViewIndex(int viewIndex)
+  	{
+  		return IsSorted || IsFiltered ? GetSortIndexes()[viewIndex] : viewIndex;
+  	}
 
-    private List<int> GetSortIndexes()
+  	private List<int> GetSortIndexes()
     {
       return GetSortIndexes(true);
     }

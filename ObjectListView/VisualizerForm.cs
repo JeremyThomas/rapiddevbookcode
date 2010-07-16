@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -71,7 +72,7 @@ namespace JesseJohnston
       if (!view.List.IsFixedSize)
         labelFixedSize.Visible = false;
 
-      if (!view.List.IsSynchronized || view.List.SyncRoot == null)
+      if (!view.List.IsSynchronized)
         labelSynced.Visible = false;
       else
         synced = true;
@@ -82,10 +83,7 @@ namespace JesseJohnston
       foreach (ListSortDescription sort in view.SortDescriptions)
         listViewSort.Items.Add(new ListViewItem(new[] {sort.PropertyDescriptor.Name, sort.SortDirection.ToString()}));
 
-      if (view.FilterPredicate == null)
-        textBoxFilter.Text = view.Filter;
-      else
-        textBoxFilter.Text = "(FilterPredicate is in effect)";
+      textBoxFilter.Text = view.FilterPredicate == null ? view.Filter : "(FilterPredicate is in effect)";
     }
 
     private void ShowListItemProperties()
@@ -127,35 +125,25 @@ namespace JesseJohnston
 
     private void ShowView()
     {
-      var props = new List<PropertyDescriptor>();
-      foreach (PropertyDescriptor prop in ((ITypedList) view).GetItemProperties(null))
-        props.Add(prop);
-      props.Sort(delegate(PropertyDescriptor desc1, PropertyDescriptor desc2) { return string.Compare(desc1.Name, desc2.Name, true); });
+      var props = ((ITypedList) view).GetItemProperties(null).Cast<PropertyDescriptor>().ToList();
+      props.Sort((desc1, desc2) => string.Compare(desc1.Name, desc2.Name, true));
 
       // When deciding whether to use a DataGridTableStyle that we have provided, or to use the default table style, DataGrid
       // tries to match the MappingName of our table style against the list name.  If it doesn't match, the default table style
       // is used.  The mapping name of our table style is "", the default.  This matches the list name returned by ObjectListView's
       // implementation of ITypedList.GetListName().
 
-      foreach (var prop in props)
-      {
-        var column = new DataGridTextBoxColumn();
-        column.HeaderText = prop.Name;
-        column.MappingName = prop.Name;
-        column.NullText = "";
-        column.ReadOnly = true;
-        dataGridViewTableStyle.GridColumnStyles.Add(column);
-      }
+    	foreach (var column in props.Distinct().Select(prop => new DataGridTextBoxColumn {HeaderText = prop.Name, MappingName = prop.Name, NullText = "", ReadOnly = true})
+    		.Where(column => !dataGridViewTableStyle.GridColumnStyles.Contains(column.HeaderText)))
+    		dataGridViewTableStyle.GridColumnStyles.Add(column);
 
-      dataGridView.DataSource = view;
+    	dataGridView.DataSource = view;
     }
 
     private void ShowList()
     {
-      var props = new List<PropertyDescriptor>();
-      foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(view.ItemType))
-        props.Add(prop);
-      props.Sort(delegate(PropertyDescriptor desc1, PropertyDescriptor desc2) { return string.Compare(desc1.Name, desc2.Name, true); });
+      var props = TypeDescriptor.GetProperties(view.ItemType).Cast<PropertyDescriptor>().ToList();
+      props.Sort((desc1, desc2) => string.Compare(desc1.Name, desc2.Name, true));
 
       // When deciding whether to use a DataGridTableStyle that we have provided, or to use the default table style, DataGrid
       // tries to match the MappingName of our table style against the list name.  If it doesn't match, the default table style
@@ -165,17 +153,11 @@ namespace JesseJohnston
       else
         dataGridListTableStyle.MappingName = view.List.GetType().Name;
 
-      foreach (var prop in props)
-      {
-        var column = new DataGridTextBoxColumn();
-        column.HeaderText = prop.Name;
-        column.MappingName = prop.Name;
-        column.NullText = "";
-        column.ReadOnly = true;
-        dataGridListTableStyle.GridColumnStyles.Add(column);
-      }
+    	foreach (var column in props.Distinct().Select(prop => new DataGridTextBoxColumn {HeaderText = prop.Name, MappingName = prop.Name, NullText = "", ReadOnly = true})
+    		.Where(column => !dataGridViewTableStyle.GridColumnStyles.Contains(column.HeaderText)))
+    		dataGridListTableStyle.GridColumnStyles.Add(column);
 
-      dataGridList.DataSource = view.List;
+    	dataGridList.DataSource = view.List;
     }
 
     private void GetTypeNames()
@@ -188,59 +170,49 @@ namespace JesseJohnston
       if (listType.IsGenericType)
       {
         var args = listType.GetGenericArguments();
-        if (args != null && args.Length > 0)
-          if (listTypeName.Contains("`1"))
+        if (args.Length > 0 && listTypeName.Contains("`1"))
             listTypeName = listTypeName.Replace("`1", "<" + args[0].Name + ">");
       }
     }
 
-    private bool ListSupportsListChanged(IList list)
+    private static bool ListSupportsListChanged(IEnumerable list)
     {
       if (list == null)
         throw new ArgumentNullException("list");
 
       if (list is IBindingList)
         return true;
-      else
-      {
-        var listChanged = list.GetType().GetEvent("ListChanged");
-        return (listChanged != null && listChanged.EventHandlerType == typeof (ListChangedEventHandler));
-      }
+      var listChanged = list.GetType().GetEvent("ListChanged");
+      return (listChanged != null && listChanged.EventHandlerType == typeof (ListChangedEventHandler));
     }
 
-    private string MakeTooltip(List<string> properties)
+    private static string MakeTooltip(IEnumerable<string> properties)
     {
       var sb = new StringBuilder();
       var first = true;
-      for (var i = 0; i < properties.Count; i++)
+      foreach (var t in properties)
       {
         if (first)
         {
-          sb.Append(properties[i]);
+          sb.Append(t);
           first = false;
         }
         else
-          sb.AppendFormat(", {0}", properties[i]);
+          sb.AppendFormat(", {0}", t);
       }
 
       return sb.ToString();
     }
 
-    private List<string> GetPropertyChangedEvents(Type itemType)
+    private static List<string> GetPropertyChangedEvents(Type itemType)
     {
       if (itemType == null)
         throw new ArgumentNullException("itemType");
 
-      var events = new List<string>();
-
-      foreach (var prop in itemType.GetProperties())
-      {
-        var propChangedEvent = itemType.GetEvent(prop.Name + "Changed");
-        if (propChangedEvent != null && propChangedEvent.EventHandlerType == typeof (EventHandler))
-          events.Add(prop.Name);
-      }
-
-      return events;
+      return (from prop in itemType.GetProperties()
+              let propChangedEvent = itemType.GetEvent(prop.Name + "Changed")
+              where propChangedEvent != null && propChangedEvent.EventHandlerType == typeof (EventHandler)
+              select prop.Name).ToList();
     }
 
     private void buttonAnalysis_Click(object sender, EventArgs e)

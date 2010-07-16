@@ -85,10 +85,7 @@ namespace JesseJohnston
         else
           sb.Append(Resources.analysisListItemNoINotifyPropertyChangedNoPropertyChangedEvents);
 
-        if (iEditableObject)
-          sb.Append(Resources.analysisListItemSupportsIEditableObject);
-        else
-          sb.Append(Resources.analysisListItemNoIEditableObject);
+      	sb.Append(iEditableObject ? Resources.analysisListItemSupportsIEditableObject : Resources.analysisListItemNoIEditableObject);
       }
 
       if (listChanged && iRaiseItemChangedEvents)
@@ -101,15 +98,9 @@ namespace JesseJohnston
       {
         sb.AppendFormat(Resources.analysisListSubOptimal, listType);
 
-        if (listChanged)
-          sb.Append(Resources.analysisListSupportsListChanged);
-        else
-          sb.Append(Resources.analysisListNoListChanged);
+      	sb.Append(listChanged ? Resources.analysisListSupportsListChanged : Resources.analysisListNoListChanged);
 
-        if (iRaiseItemChangedEvents)
-          sb.Append(Resources.analysisListSupportsIRaiseItemChangedEvents);
-        else
-          sb.Append(Resources.analysisListNoIRaiseItemChangedEvents);
+      	sb.Append(iRaiseItemChangedEvents ? Resources.analysisListSupportsIRaiseItemChangedEvents : Resources.analysisListNoIRaiseItemChangedEvents);
       }
 
       sb.Append(Resources.analysisListModifications);
@@ -121,12 +112,9 @@ namespace JesseJohnston
         sb.Append(Resources.analysisListWritableFixedSize);
 
       sb.Append(Resources.analysisListThreadSafety);
-      if (synced)
-        sb.Append(Resources.analysisListSynced);
-      else
-        sb.Append(Resources.analysisListNotSynced);
+    	sb.Append(synced ? Resources.analysisListSynced : Resources.analysisListNotSynced);
 
-      if (!iEditableObject || !iNotifyPropertyChanged || !listChanged || !iRaiseItemChangedEvents)
+    	if (!iEditableObject || !iNotifyPropertyChanged || !listChanged || !iRaiseItemChangedEvents)
       {
         sb.Append(Resources.analysisRecommendations);
 

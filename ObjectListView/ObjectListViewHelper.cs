@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 namespace JesseJohnston
@@ -16,21 +14,21 @@ namespace JesseJohnston
     {
       Form visualizerForm = null;
       if (data is ObjectListView)
-        visualizerForm = new VisualizerForm { View = (ObjectListView)data };
+        visualizerForm = new VisualizerForm {View = (ObjectListView) data};
       else
       {
         // If ObjectListView<T>
         var dataType = data.GetType();
 
-        if (dataType.IsGenericType && dataType.GetGenericTypeDefinition() == typeof(ObjectListView<>))
+        if (dataType.IsGenericType && dataType.GetGenericTypeDefinition() == typeof (ObjectListView<>))
         {
           // Construct a VisualizerForm<T>
-          var visType = typeof(VisualizerTForm<>);
+          var visType = typeof (VisualizerTForm<>);
           var visConstructed = visType.MakeGenericType(data.GetType().GetGenericArguments());
           var v = Activator.CreateInstance(visConstructed);
           var view = visConstructed.GetProperty("View");
           view.SetValue(v, data, null);
-          visualizerForm = (Form)v;
+          visualizerForm = (Form) v;
         }
       }
       return visualizerForm;
