@@ -146,7 +146,7 @@ namespace AW.Tests
 			TestShowInGrid(awDataClassesDataContext.AddressTypes);
 			var addressTypesQuery = awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID);
 			addressTypesQuery.ShowInGrid(awDataClassesDataContext);
-			//TestShowInGrid(awDataClassesDataContext.);
+			addressTypesQuery.ShowInGrid();
 			var actual = awDataClassesDataContext.AddressTypes.ShowInGrid();
 			Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
 		}
