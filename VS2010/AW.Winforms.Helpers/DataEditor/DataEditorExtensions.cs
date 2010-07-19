@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.Controls;
@@ -14,12 +15,12 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		#region DataGridView
 
-		public static IQueryable ShowInGrid(this IQueryable enumerable)
+		public static IQueryable ShowInGrid(this IEnumerable enumerable)
 		{
 			return ShowInGrid(enumerable, DefaultPageSize) as IQueryable;
 		}
 
-		public static IEnumerable ShowInGrid(this IQueryable enumerable, ushort pageSize)
+		public static IEnumerable ShowInGrid(this IEnumerable enumerable, ushort pageSize)
 		{
 			return ShowInGrid(enumerable, null, pageSize);
 		}
@@ -40,9 +41,16 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		#region DataGridViewGeneric
 
-		public static IQueryable<T> ShowInGrid<T>(this IQueryable<T> enumerable)
+		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable) 
 		{
-			return ShowInGrid((IEnumerable<T>) enumerable, null).AsQueryable();
+			var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
+			if (contextField != null)
+			{
+				var queryContext = contextField.GetValue(enumerable) as DataContext;
+				if (queryContext != null)
+					return ShowInGrid(enumerable, queryContext);
+			}
+			return ShowInGrid(enumerable, (IDataEditorPersister) null);
 		}
 
 		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister)
@@ -71,7 +79,7 @@ namespace AW.Winforms.Helpers.DataEditor
 					//readOnly = true;
 					return enumerable;
 				}
-				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditorT<T> { Dock = DockStyle.Fill }, dataEditorPersister, pageSize, readOnly).ShowDialog();
+				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditorT<T> {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, readOnly).ShowDialog();
 			}
 			return enumerable;
 		}
@@ -90,7 +98,7 @@ namespace AW.Winforms.Helpers.DataEditor
 			return ShowInGrid(table, table.Context, pageSize);
 		}
 
-		public static IEnumerable<T> ShowInGrid<T>(this IQueryable<T> dataQuery, DataContext dataContext) where T : class
+		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> dataQuery, DataContext dataContext)
 		{
 			return ShowInGrid(dataQuery, dataContext, DefaultPageSize);
 		}
@@ -103,7 +111,7 @@ namespace AW.Winforms.Helpers.DataEditor
 		/// <param name="dataContext">The data context.</param>
 		/// <param name="pageSize">Size of the page.</param>
 		/// <returns></returns>
-		public static IEnumerable<T> ShowInGrid<T>(this IQueryable<T> dataQuery, DataContext dataContext, ushort pageSize) where T : class
+		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize)
 		{
 			return ShowInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
 		}
@@ -113,7 +121,7 @@ namespace AW.Winforms.Helpers.DataEditor
 			return table.ShowHierarchyInTree(table.Context, iDPropertyName, parentIDPropertyName, nameColumn);
 		}
 
-		public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, DataContext dataContext, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : class
+		public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, DataContext dataContext, string iDPropertyName, string parentIDPropertyName, string nameColumn)
 		{
 			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLinqtoSQLPersister(dataContext));
 		}
