@@ -52,6 +52,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnumerableVisualizer.cs" />
@@ -66,6 +67,10 @@
     <ProjectReference Include="..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
       <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
       <Name>AW.Winforms.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
+      <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>
+      <Name>DynamicQuery</Name>
     </ProjectReference>
     <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
       <Project>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</Project>
