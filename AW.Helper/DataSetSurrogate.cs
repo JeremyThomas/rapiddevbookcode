@@ -44,7 +44,7 @@ namespace AW.Helper
 		private readonly DataTableSurrogate[] _dataTableSurrogates;
 
 /*
-    Constructs a DataSetSurrogate object from a DataSet.
+		Constructs a DataSetSurrogate object from a DataSet.
 */
 
 		public DataSetSurrogate(DataSet ds)
@@ -87,7 +87,7 @@ namespace AW.Helper
 		}
 
 /*
-    Constructs a DataSet from the DataSetSurrogate object. This can be used after the user recieves a Surrogate object over the wire and wished to construct a DataSet from it.
+		Constructs a DataSet from the DataSetSurrogate object. This can be used after the user recieves a Surrogate object over the wire and wished to construct a DataSet from it.
 */
 
 		public DataSet ConvertToDataSet()
@@ -99,7 +99,7 @@ namespace AW.Helper
 		}
 
 /*
-    Reads the schema into the dataset from the DataSetSurrogate object.
+		Reads the schema into the dataset from the DataSetSurrogate object.
 */
 
 		public void ReadSchemaIntoDataSet(DataSet ds)
@@ -154,7 +154,7 @@ namespace AW.Helper
 		}
 
 /*
-    Reads the data into the dataset from the DataSetSurrogate object.
+		Reads the data into the dataset from the DataSetSurrogate object.
 */
 
 		public void ReadDataIntoDataSet(DataSet ds)
@@ -187,8 +187,8 @@ namespace AW.Helper
 		}
 
 /*
-    Gets foreignkey constraints availabe on the tables in the dataset.
-    ***Serialized foreign key constraints format : [constraintName]->[parentTableIndex, parentcolumnIndexes]->[childTableIndex, childColumnIndexes]->[AcceptRejectRule, UpdateRule, Delete]->[extendedProperties]***
+		Gets foreignkey constraints availabe on the tables in the dataset.
+		***Serialized foreign key constraints format : [constraintName]->[parentTableIndex, parentcolumnIndexes]->[childTableIndex, childColumnIndexes]->[AcceptRejectRule, UpdateRule, Delete]->[extendedProperties]***
 */
 
 		private static ArrayList GetForeignKeyConstraints(DataSet ds)
@@ -239,8 +239,8 @@ namespace AW.Helper
 		}
 
 /*
-    Adds foreignkey constraints to the tables in the dataset. The arraylist contains the serialized format of the foreignkey constraints.
-    ***Deserialize the foreign key constraints format : [constraintName]->[parentTableIndex, parentcolumnIndexes]->[childTableIndex, childColumnIndexes]->[AcceptRejectRule, UpdateRule, Delete]->[extendedProperties]***
+		Adds foreignkey constraints to the tables in the dataset. The arraylist contains the serialized format of the foreignkey constraints.
+		***Deserialize the foreign key constraints format : [constraintName]->[parentTableIndex, parentcolumnIndexes]->[childTableIndex, childColumnIndexes]->[AcceptRejectRule, UpdateRule, Delete]->[extendedProperties]***
 */
 
 		private static void SetForeignKeyConstraints(DataSet ds, ArrayList constraintList)
@@ -301,8 +301,8 @@ namespace AW.Helper
 		}
 
 /*
-    Gets relations from the dataset.
-    ***Serialized relations format : [relationName]->[parentTableIndex, parentcolumnIndexes]->[childTableIndex, childColumnIndexes]->[Nested]->[extendedProperties]***
+		Gets relations from the dataset.
+		***Serialized relations format : [relationName]->[parentTableIndex, parentcolumnIndexes]->[childTableIndex, childColumnIndexes]->[Nested]->[extendedProperties]***
 */
 
 		private static ArrayList GetRelations(DataSet ds)
@@ -344,8 +344,8 @@ namespace AW.Helper
 		}
 
 /*
-    Adds relations to the dataset. The arraylist contains the serialized format of the relations.
-    ***Deserialize the relations format : [relationName]->[parentTableIndex, parentcolumnIndexes]->[childTableIndex, childColumnIndexes]->[Nested]->[extendedProperties]***
+		Adds relations to the dataset. The arraylist contains the serialized format of the relations.
+		***Deserialize the relations format : [relationName]->[parentTableIndex, parentcolumnIndexes]->[childTableIndex, childColumnIndexes]->[Nested]->[extendedProperties]***
 */
 
 		private static void SetRelations(DataSet ds, ArrayList relationList)
@@ -401,7 +401,7 @@ namespace AW.Helper
 		}
 
 /*
-    Suppress the read-only property and returns an arraylist of read-only columns.
+		Suppress the read-only property and returns an arraylist of read-only columns.
 */
 
 		private static ArrayList SuppressReadOnly(DataSet ds)
@@ -425,7 +425,7 @@ namespace AW.Helper
 		}
 
 /*
-    Suppress the foreign key constraint rules and returns an arraylist of the existing foreignkey constraint rules.
+		Suppress the foreign key constraint rules and returns an arraylist of the existing foreignkey constraint rules.
 */
 
 		private static ArrayList SuppressConstraintRules(DataSet ds)
@@ -455,7 +455,7 @@ namespace AW.Helper
 		}
 
 /*
-    Resets the read-only columns on the datatable based on the input readOnly list.
+		Resets the read-only columns on the datatable based on the input readOnly list.
 */
 
 		private static void ResetReadOnly(DataSet ds, IEnumerable readOnlyList)
@@ -480,7 +480,7 @@ namespace AW.Helper
 		}
 
 /*
-    Resets the foreignkey constraint rules on the dataset based on the input constraint rules list.
+		Resets the foreignkey constraint rules on the dataset based on the input constraint rules list.
 */
 
 		private static void ResetConstraintRules(DataSet ds, ArrayList constraintRulesList)
@@ -512,7 +512,7 @@ namespace AW.Helper
 		}
 
 /*
-    Checks whether the dataset name and namespaces are as expected and the tables count is right.
+		Checks whether the dataset name and namespaces are as expected and the tables count is right.
 */
 
 		private bool IsSchemaIdentical(DataSet ds)
@@ -559,7 +559,7 @@ namespace AW.Helper
 		private readonly Hashtable _colErrors = new Hashtable(); //Keep a map between the row index and the Arraylist of columns that are in error and the error strings.
 
 /*
-    Constructs a DataTableSurrogate from a DataTable.
+		Constructs a DataTableSurrogate from a DataTable.
 */
 
 		public DataTableSurrogate(DataTable dt)
@@ -614,7 +614,7 @@ namespace AW.Helper
 		}
 
 /*
-    Constructs a DataTable from DataTableSurrogate. 
+		Constructs a DataTable from DataTableSurrogate. 
 */
 
 		public DataTable ConvertToDataTable()
@@ -626,7 +626,7 @@ namespace AW.Helper
 		}
 
 /*
-    Reads the schema into the datatable from DataTableSurrogate. 
+		Reads the schema into the datatable from DataTableSurrogate. 
 */
 
 		public void ReadSchemaIntoDataTable(DataTable dt)
@@ -665,7 +665,7 @@ namespace AW.Helper
 		}
 
 /*
-    Reads the data into a DataTable from DataTableSurrogate. 
+		Reads the data into a DataTable from DataTableSurrogate. 
 */
 
 		public void ReadDataIntoDataTable(DataTable dt)
@@ -674,7 +674,7 @@ namespace AW.Helper
 		}
 
 /*
-    Copies the rows into a DataTable from DataTableSurrogate. 
+		Copies the rows into a DataTable from DataTableSurrogate. 
 */
 
 		internal void ReadDataIntoDataTable(DataTable dt, bool suppressSchema)
@@ -714,8 +714,8 @@ namespace AW.Helper
 		}
 
 /*
-    Gets unique constraints availabe on the datatable.
-    ***Serialized unique constraints format : [constraintName]->[columnIndexes]->[IsPrimaryKey]->[extendedProperties]***
+		Gets unique constraints availabe on the datatable.
+		***Serialized unique constraints format : [constraintName]->[columnIndexes]->[IsPrimaryKey]->[extendedProperties]***
 */
 
 		private static ArrayList GetUniqueConstraints(DataTable dt)
@@ -754,8 +754,8 @@ namespace AW.Helper
 		}
 
 /*
-    Adds unique constraints to the table. The arraylist contains the serialized format of the unique constraints.
-    ***Deserialize the unique constraints format : [constraintName]->[columnIndexes]->[IsPrimaryKey]->[extendedProperties]***
+		Adds unique constraints to the table. The arraylist contains the serialized format of the unique constraints.
+		***Deserialize the unique constraints format : [constraintName]->[columnIndexes]->[IsPrimaryKey]->[extendedProperties]***
 */
 
 		private static void SetUniqueConstraints(DataTable dt, ArrayList constraintList)
@@ -793,7 +793,7 @@ namespace AW.Helper
 		}
 
 /*
-    Sets  expression on the columns.
+		Sets  expression on the columns.
 */
 
 		internal void SetColumnExpressions(DataTable dt)
@@ -811,7 +811,7 @@ namespace AW.Helper
 		}
 
 /*
-    Gets the records from the rows.
+		Gets the records from the rows.
 */
 
 		private void GetRecords(DataRow row, int bitIndex)
@@ -824,7 +824,7 @@ namespace AW.Helper
 		}
 
 /*
-    Constructs the row, rowError and columnErrors.
+		Constructs the row, rowError and columnErrors.
 */
 
 		public DataRow ConvertToDataRow(DataTable dt, int bitIndex)
@@ -836,9 +836,9 @@ namespace AW.Helper
 		}
 
 /*
-    Sets the two bits in the bitArray to represent the DataRowState.
-    The 4 rowstates[Unchanged, Added, Modified, Deleted] are represented with 2 bits. The length of the BitArray will be twice the size of the number of rows.
-    Serialozed rowstate format : [00]->UnChanged, [01]->Added, [10]->Modified, [11]->Deleted.
+		Sets the two bits in the bitArray to represent the DataRowState.
+		The 4 rowstates[Unchanged, Added, Modified, Deleted] are represented with 2 bits. The length of the BitArray will be twice the size of the number of rows.
+		Serialozed rowstate format : [00]->UnChanged, [01]->Added, [10]->Modified, [11]->Deleted.
 */
 
 		private void ConvertToSurrogateRowState(DataRowState rowState, int bitIndex)
@@ -870,8 +870,8 @@ namespace AW.Helper
 		}
 
 /*
-    Constructs the RowState from the two bits in the bitarray.
-    Deserialize rowstate format : [00]->UnChanged, [01]->Added, [10]->Modified, [11]->Deleted.
+		Constructs the RowState from the two bits in the bitarray.
+		Deserialize rowstate format : [00]->UnChanged, [01]->Added, [10]->Modified, [11]->Deleted.
 */
 
 		private DataRowState ConvertToRowState(int bitIndex)
@@ -905,7 +905,7 @@ namespace AW.Helper
 		}
 
 /*
-    Constructs surrogate records from the DataRow.
+		Constructs surrogate records from the DataRow.
 */
 
 		private void ConvertToSurrogateRecords(DataRow row, int bitIndex)
@@ -939,7 +939,7 @@ namespace AW.Helper
 		}
 
 /*
-    Constructs a DataRow from records[original and current] and adds the row to the DataTable rows collection.
+		Constructs a DataRow from records[original and current] and adds the row to the DataTable rows collection.
 */
 
 		private DataRow ConstructRow(DataTable dt, DataRowState rowState, int bitIndex)
@@ -1003,7 +1003,7 @@ namespace AW.Helper
 		}
 
 /*
-    Constructs the surrogate rowerror, columnsInError and columnErrors.
+		Constructs the surrogate rowerror, columnsInError and columnErrors.
 */
 
 		private void ConvertToSurrogateRowError(DataRow row, int rowIndex)
@@ -1032,7 +1032,7 @@ namespace AW.Helper
 		}
 
 /*
-    Set the row and columns in error.
+		Set the row and columns in error.
 */
 
 		private void ConvertToRowError(DataRow row, int rowIndex)
@@ -1059,7 +1059,7 @@ namespace AW.Helper
 		}
 
 /*
-    Suppress the read-only property and returns an arraylist of read-only columns.
+		Suppress the read-only property and returns an arraylist of read-only columns.
 */
 
 		private static ArrayList SuppressReadOnly(DataTable dt)
@@ -1077,7 +1077,7 @@ namespace AW.Helper
 		}
 
 /*
-    Suppress the foreign key constraint rules and returns an arraylist of the existing foreignkey constraint rules.
+		Suppress the foreign key constraint rules and returns an arraylist of the existing foreignkey constraint rules.
 */
 
 		private static ArrayList SuppressConstraintRules(DataTable dt)
@@ -1113,7 +1113,7 @@ namespace AW.Helper
 		}
 
 /*
-    Resets the read-only columns on the datatable based on the input readOnly list.
+		Resets the read-only columns on the datatable based on the input readOnly list.
 */
 
 		private static void ResetReadOnly(DataTable dt, ArrayList readOnlyList)
@@ -1129,7 +1129,7 @@ namespace AW.Helper
 		}
 
 /*
-    Reset the foreignkey constraint rules on the datatable based on the input constraintRules list.
+		Reset the foreignkey constraint rules on the datatable based on the input constraintRules list.
 */
 
 		private static void ResetConstraintRules(DataTable dt, ArrayList constraintRulesList)
@@ -1162,7 +1162,7 @@ namespace AW.Helper
 		}
 
 /*
-    Checks whether the datatable schema matches with the surrogate schema.
+		Checks whether the datatable schema matches with the surrogate schema.
 */
 
 		private bool IsSchemaIdentical(DataTable dt)
@@ -1214,7 +1214,7 @@ namespace AW.Helper
 		private readonly Hashtable _extendedProperties;
 
 /*
-    Constructs a DataColumnSurrogate from a DataColumn.
+		Constructs a DataColumnSurrogate from a DataColumn.
 */
 
 		public DataColumnSurrogate(DataColumn dc)
@@ -1250,17 +1250,17 @@ namespace AW.Helper
 		}
 
 /*
-    Constructs a DataColumn from DataColumnSurrogate.
+		Constructs a DataColumn from DataColumnSurrogate.
 */
 
 		public DataColumn ConvertToDataColumn()
 		{
 			var dc = new DataColumn
-			         	{
-			         		ColumnName = _columnName, Namespace = _namespace, DataType = _dataType, Prefix = _prefix,
-			         		ColumnMapping = _columnMapping, AllowDBNull = _allowNull, AutoIncrement = _autoIncrement, AutoIncrementStep = _autoIncrementStep,
-			         		AutoIncrementSeed = _autoIncrementSeed, Caption = _caption, DefaultValue = _defaultValue, ReadOnly = _readOnly, MaxLength = _maxLength
-			         	};
+								{
+									ColumnName = _columnName, Namespace = _namespace, DataType = _dataType, Prefix = _prefix,
+									ColumnMapping = _columnMapping, AllowDBNull = _allowNull, AutoIncrement = _autoIncrement, AutoIncrementStep = _autoIncrementStep,
+									AutoIncrementSeed = _autoIncrementSeed, Caption = _caption, DefaultValue = _defaultValue, ReadOnly = _readOnly, MaxLength = _maxLength
+								};
 			//dc.Expression = _expression;
 
 			//Extended properties
@@ -1276,7 +1276,7 @@ namespace AW.Helper
 		}
 
 /*
-    Set expression on the DataColumn.
+		Set expression on the DataColumn.
 */
 
 		internal void SetColumnExpression(DataColumn dc)
@@ -1290,20 +1290,20 @@ namespace AW.Helper
 		}
 
 /*
-    Checks whether the column schema is identical. Marked internal as the DataTableSurrogate objects needs to have access to this object.
-    Note: ReadOnly is not checked here as we suppress readonly when reading data.
+		Checks whether the column schema is identical. Marked internal as the DataTableSurrogate objects needs to have access to this object.
+		Note: ReadOnly is not checked here as we suppress readonly when reading data.
 */
 
 		internal bool IsSchemaIdentical(DataColumn dc)
 		{
 			Debug.Assert(dc != null);
 			if ((dc.ColumnName != _columnName) || (dc.Namespace != _namespace) || (dc.DataType != _dataType) ||
-			    (dc.Prefix != _prefix) || (dc.ColumnMapping != _columnMapping) ||
-			    (dc.ColumnMapping != _columnMapping) || (dc.AllowDBNull != _allowNull) ||
-			    (dc.AutoIncrement != _autoIncrement) || (dc.AutoIncrementStep != _autoIncrementStep) ||
-			    (dc.AutoIncrementSeed != _autoIncrementSeed) || (dc.Caption != _caption) ||
-			    (!(AreDefaultValuesEqual(dc.DefaultValue, _defaultValue))) || (dc.MaxLength != _maxLength) ||
-			    (dc.Expression != _expression))
+					(dc.Prefix != _prefix) || (dc.ColumnMapping != _columnMapping) ||
+					(dc.ColumnMapping != _columnMapping) || (dc.AllowDBNull != _allowNull) ||
+					(dc.AutoIncrement != _autoIncrement) || (dc.AutoIncrementStep != _autoIncrementStep) ||
+					(dc.AutoIncrementSeed != _autoIncrementSeed) || (dc.Caption != _caption) ||
+					(!(AreDefaultValuesEqual(dc.DefaultValue, _defaultValue))) || (dc.MaxLength != _maxLength) ||
+					(dc.Expression != _expression))
 			{
 				return false;
 			}
@@ -1311,7 +1311,7 @@ namespace AW.Helper
 		}
 
 /*
-    Checks whether the default boxed objects are equal.
+		Checks whether the default boxed objects are equal.
 */
 
 		internal static bool AreDefaultValuesEqual(object o1, object o2)

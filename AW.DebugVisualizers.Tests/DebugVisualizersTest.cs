@@ -98,6 +98,13 @@ namespace AW.DebugVisualizers.Tests
 			TestShow(MetaSingletons.MetaData.AddressType);
 		}
 
+		[TestMethod]
+		public void EntityFieldsTest()
+		{
+			var addressType = MetaSingletons.MetaData.AddressType.First();
+			TestShow(addressType.Fields);
+		}
+
 		[TestMethod, Timeout(10000)]
 		public void LargeSerializableQueryTest()
 		{
@@ -191,21 +198,7 @@ namespace AW.DebugVisualizers.Tests
 		[TestMethod]
 		public void Xml_test()
 		{
-			var x = new XmlSerializer(typeof (List<SerializableClass>));
-			var s = new MemoryStream();
-			x.Serialize(s, SerializableClass.GenerateList());
-
-			//	var serializableClassDataTable = GeneralHelper.CopyToDataTable(SerializableClass.GenerateList());
-			//var sw = new StringWriter();
-			//var xmltw = new XmlTextWriter(sw);
-			//
-			//		serializableClassDataTable.WriteXml( s, XmlWriteMode.IgnoreSchema);
-
-			var ds = new DataSet();
-			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-			addressTypeEntityCollection.CreateHierarchicalProjection(ds);
-
-			var xml = ds.GetXml();
+			var xml = TestData.GetTestxmlString();
 
 			var xElement = XElement.Parse(xml);
 			TestShow(xElement.Elements());
@@ -215,7 +208,6 @@ namespace AW.DebugVisualizers.Tests
 			xmlDoc.LoadXml(xml);
 			TestShow(xmlDoc.FirstChild.ChildNodes);
 		}
-
 
 		public static void TestSerialize(object enumerableToVisualize)
 		{

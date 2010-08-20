@@ -14,7 +14,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		public GridDataEditorT()
 		{
-			SupportsNotifyPropertyChanged = typeof(INotifyPropertyChanged).IsAssignableFrom(ItemType);
+			OnSetItemType();
 		}
 
 		protected override Type ItemType

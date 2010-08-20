@@ -47,7 +47,7 @@ namespace AW.Winforms.Helpers.DataEditor
 			if (splitContainerNode.Panel2Collapsed)
 				gridDataEditor.DataSource = null;
 			else
-				gridDataEditor.BindEnumerable(e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag));
+				gridDataEditor.BindEnumerable(e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToList());
 		}
 
 		private void FrmHierarchyEditor_FormClosing(object sender, FormClosingEventArgs e)
