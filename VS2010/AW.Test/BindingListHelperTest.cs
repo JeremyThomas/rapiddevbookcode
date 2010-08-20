@@ -69,8 +69,8 @@ namespace AW.Tests
 			Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable)listofNonSerializableClasses, false));
 			Assert.AreEqual(listofNonSerializableClasses, bindingSource.List);
 
-			TestBindEnumerable(listofNonSerializableClasses, true);
-			TestBindEnumerable(SerializableClass.GenerateListWithBoth(), true);
+			TestBindEnumerable(listofNonSerializableClasses, true, 1, false);
+			TestBindEnumerable(SerializableClass.GenerateListWithBoth(), true, 3, false);
 		}
 
 		/// <summary>
@@ -84,18 +84,20 @@ namespace AW.Tests
 			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection));
 			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection.DefaultView));
 
-			TestBindEnumerable((IEnumerable)MetaSingletons.MetaData.AddressType, true);
 			TestBindEnumerable(MetaSingletons.MetaData.AddressType, true);
 
-			var dt = new DataSet();
-			addressTypeEntityCollection.CreateHierarchicalProjection(dt);
-			TestBindEnumerable(dt.Tables[0].DefaultView);
+			TestBindEnumerable(TestData.GetAddressTypeDataTable().DefaultView);
 
-			TestBindEnumerable((IEnumerable)SerializableClass.GenerateList(), true);
-			TestBindEnumerable(SerializableClass.GenerateList(), true);
+			TestBindEnumerable(((IEntity)MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, true, 2);
+			TestBindEnumerable(MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity)), true, 14);
+			TestBindEnumerable(NonSerializableClass.GenerateList(), true, 3);
+			TestBindEnumerable(SerializableClass.GenerateList(), true, 4);
+			TestBindEnumerable(SerializableClass.GenerateListWithBoth(), true, 3, false);
+			TestBindEnumerable(SerializableBaseClass.GenerateList(), true, 1);
+			TestBindEnumerable(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), true, 1, false);
 		}
 
-		private static IEnumerable<T> TestBindEnumerable<T>(IEnumerable<T> enumerable, bool isObjectListView = false)
+		private static IEnumerable<T> TestBindEnumerable<T>(IEnumerable<T> enumerable, bool isObjectListView = false, int numProperties = 0, bool testNonGeneric = true )
 		{
 			TestBindEnumerableReadonly(enumerable, true);
 			var bindingSource = TestBindEnumerableReadonly(enumerable, false);
@@ -106,6 +108,13 @@ namespace AW.Tests
 				var objectListView = (ObjectListView<T>) list;
 				Assert.IsInstanceOfType(objectListView.List, typeof(List<T>));
 			}
+			if (numProperties > 0)
+			{
+				var properties = MetaDataHelper.GetPropertiesToDisplay(enumerable);
+				Assert.AreEqual(numProperties, properties.Count());
+			}
+			if (testNonGeneric)
+			  TestBindEnumerable((IEnumerable)enumerable, isObjectListView, numProperties);
 			return (IEnumerable<T>) list;
 		}
 
@@ -117,12 +126,17 @@ namespace AW.Tests
 			return bindingSource;
 		}
 
-		private static IList TestBindEnumerable(IEnumerable enumerable, bool isObjectListView = false)
+		private static IList TestBindEnumerable(IEnumerable enumerable, bool isObjectListView = false, int numProperties = 0)
 		{
 			TestBindEnumerableReadonly(enumerable, true);
 			var bindingSource = TestBindEnumerableReadonly(enumerable, false);
 			var list = bindingSource.List;
 			if (isObjectListView) Assert.IsInstanceOfType(bindingSource.List, typeof(ObjectListView));
+			if (numProperties > 0)
+			{
+				var properties = MetaDataHelper.GetPropertiesToDisplay(enumerable);
+				Assert.AreEqual(numProperties, properties.Count());
+			}
 			return list;
 		}
 
@@ -150,9 +164,7 @@ namespace AW.Tests
 
 			TestToBindingListView(MetaSingletons.MetaData.AddressType);
 
-			var dt = new DataSet();
-			addressTypeEntityCollection.CreateHierarchicalProjection(dt);
-			var dataTable = dt.Tables[0];
+			var dataTable = TestData.GetAddressTypeDataTable();
 			Assert.AreEqual(dataTable.DefaultView, TestListSourceToBindingListView(dataTable));
 
 			var enumerable = Enumerable.Range(1, 100);
@@ -177,11 +189,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void ListSourceToBindingListViewTest()
 		{
-			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-
-			var dt = new DataSet();
-			addressTypeEntityCollection.CreateHierarchicalProjection(dt);
-			var dataTable = dt.Tables[0];
+			var dataTable = TestData.GetAddressTypeDataTable();
 			Assert.AreEqual(dataTable.DefaultView, TestListSourceToBindingListView(dataTable));
 		}
 

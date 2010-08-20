@@ -1,6 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
+using System.Xml;
+using System.Xml.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
@@ -63,15 +68,67 @@ namespace AW.Tests
 		///	A test for ShowInGrid
 		///</summary>
 		[TestMethod]
+		public void EditPropertiesInDataGridViewTest()
+		{
+			TestShowInGrid(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, 2);
+			TestShowInGrid(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), 14);
+		}
+
+		///<summary>
+		///	A test for ShowInGrid
+		///</summary>
+		[TestMethod]
 		public void EditInDataGridViewTest()
 		{
-			TestShowInGrid(((IEntity)MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
-			TestShowInGrid(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
-			TestShowInGrid(NonSerializableClass.GenerateList());
-			TestShowInGrid(SerializableClass.GenerateList());
-			TestShowInGrid(SerializableClass.GenerateListWithBoth());
+			TestShowInGrid(NonSerializableClass.GenerateList(), 3);
+			TestShowInGrid(SerializableClass.GenerateList(), 4);
+			TestShowInGrid(SerializableClass.GenerateListWithBoth(), 3);
+			TestShowInGrid(SerializableBaseClass.GenerateList(), 1);
+			TestShowInGrid(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), 1);
 			TestEditInDataGridView(null);
+			TestShowInGrid(Enumerable.Range(1, 100));
+		}
 
+		private static FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
+
+		private static void AddFieldsToPropertiesTypeDescriptionProvider(Type typeToEdit)
+		{
+			if (_fieldsToPropertiesTypeDescriptionProvider == null && typeToEdit != null)
+			{
+				_fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
+				TypeDescriptor.AddProvider(_fieldsToPropertiesTypeDescriptionProvider, typeToEdit);
+			}
+		}
+
+		protected void TidyUp(Type itemType)
+		{
+			if (_fieldsToPropertiesTypeDescriptionProvider != null && itemType != null)
+			{
+				TypeDescriptor.RemoveProvider(_fieldsToPropertiesTypeDescriptionProvider, itemType);
+				_fieldsToPropertiesTypeDescriptionProvider = null;
+			}
+		}
+
+		[TestMethod]
+		public void FieldsToPropertiesTypeDescriptionProviderTest()
+		{
+			var properties = MetaDataHelper.GetPropertiesToDisplay(typeof (NonSerializableClass));
+			Assert.AreEqual(3, properties.Count());
+			AddFieldsToPropertiesTypeDescriptionProvider(typeof (NonSerializableClass));
+			try
+			{
+				properties = MetaDataHelper.GetPropertiesToDisplay(typeof (NonSerializableClass));
+				Assert.AreEqual(6, properties.Count());
+			}
+			finally
+			{
+				TidyUp(typeof (NonSerializableClass));
+			}
+		}
+
+		[TestMethod]
+		public void ShowArrayListInGrid()
+		{
 			var arrayList = new ArrayList {1, 2, "3"};
 			TestEditInDataGridView(arrayList);
 		}
@@ -82,7 +139,7 @@ namespace AW.Tests
 			var gridDataEditor = new GridDataEditor();
 			gridDataEditor.BindEnumerable(null, 1);
 
-			var arrayList = new ArrayList { 1, 2, "3" };
+			var arrayList = new ArrayList {1, 2, "3"};
 			gridDataEditor.BindEnumerable(arrayList);
 
 			gridDataEditor.BindEnumerable(arrayList, 1);
@@ -91,7 +148,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void ShowStringEnumerationInGridTest()
 		{
-			var enumerable = new[] { "s1", "s2", "s3" };
+			var enumerable = new[] {"s1", "s2", "s3"};
 			TestShowInGrid(enumerable);
 			enumerable = null;
 			TestShowInGrid(enumerable);
@@ -116,8 +173,7 @@ namespace AW.Tests
 		public void QueryInGridIsReadonlyTest()
 		{
 			TestShowInGrid(MetaSingletons.MetaData.Address);
-			TestEditInDataGridView(MetaSingletons.MetaData.Address);
-			TestEditInDataGridView(MetaSingletons.MetaData.AddressType);
+			TestShowInGrid(MetaSingletons.MetaData.AddressType);
 		}
 
 		[TestMethod]
@@ -125,7 +181,7 @@ namespace AW.Tests
 		{
 			MetaSingletons.MetaData.Address.ShowSelfServicingInGrid();
 			MetaSingletons.MetaData.AddressType.ShowSelfServicingInGrid();
-			TestEditInDataGridView(MetaSingletons.MetaData.Address, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
+			TestShowInGrid(MetaSingletons.MetaData.Address, 9, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
 		}
 
 		[TestMethod]
@@ -134,7 +190,6 @@ namespace AW.Tests
 			TestShowInGrid(MetaSingletons.MetaData.Address.ToEntityCollection());
 			var addressTypeEntities = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			TestShowInGrid(addressTypeEntities);
-			TestEditInDataGridView(addressTypeEntities);
 		}
 
 		[TestMethod]
@@ -151,16 +206,35 @@ namespace AW.Tests
 			Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
 		}
 
-		private static void TestShowInGrid<T>(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister = null)
+		[TestMethod]
+		public void Xml_test()
 		{
-			var actual = enumerable.ShowInGrid(dataEditorPersister);
-			Assert.AreEqual(enumerable, actual);
+			var xml = TestData.GetTestxmlString();
+
+			var xElement = XElement.Parse(xml);
+			TestShowInGrid(xElement.Elements());
+
+			var xmlDoc = new XmlDocument();
+			xmlDoc.LoadXml(xml);
+			TestEditInDataGridView(xmlDoc.FirstChild.ChildNodes);
 		}
 
-		private static void TestEditInDataGridView(IEnumerable enumerable, IDataEditorPersister dataEditorPersister =null)
+		private static void TestShowInGrid<T>(IEnumerable<T> enumerable, int numProperties = 0, IDataEditorPersister dataEditorPersister = null)
 		{
 			var actual = enumerable.ShowInGrid(dataEditorPersister);
 			Assert.AreEqual(enumerable, actual);
+			TestEditInDataGridView(enumerable, numProperties, dataEditorPersister);
+		}
+
+		private static void TestEditInDataGridView(IEnumerable enumerable, int numProperties = 0, IDataEditorPersister dataEditorPersister = null)
+		{
+			var actual = enumerable.ShowInGrid(dataEditorPersister);
+			Assert.AreEqual(enumerable, actual);
+			if (numProperties > 0)
+			{
+				var properties = MetaDataHelper.GetPropertiesToDisplay(enumerable);
+				Assert.AreEqual(numProperties, properties.Count());
+			}
 		}
 	}
 }
