@@ -65,11 +65,11 @@ namespace AW.Tests
 		[TestMethod]
 		public void EditInDataGridViewTest()
 		{
-			TestEditInDataGridView(((IEntity)MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
-			TestEditInDataGridView(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
-			TestEditInDataGridView(NonSerializableClass.GenerateList());
-			TestEditInDataGridView(SerializableClass.GenerateList());
-			TestEditInDataGridView(SerializableClass.GenerateListWithBoth());
+			TestShowInGrid(((IEntity)MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
+			TestShowInGrid(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
+			TestShowInGrid(NonSerializableClass.GenerateList());
+			TestShowInGrid(SerializableClass.GenerateList());
+			TestShowInGrid(SerializableClass.GenerateListWithBoth());
 			TestEditInDataGridView(null);
 
 			var arrayList = new ArrayList {1, 2, "3"};
@@ -92,16 +92,16 @@ namespace AW.Tests
 		public void ShowStringEnumerationInGridTest()
 		{
 			var enumerable = new[] { "s1", "s2", "s3" };
-			TestEditInDataGridView(enumerable);
+			TestShowInGrid(enumerable);
 			enumerable = null;
-			TestEditInDataGridView(enumerable);
-			TestEditInDataGridView(new string[0]);
+			TestShowInGrid(enumerable);
+			TestShowInGrid(new string[0]);
 		}
 
 		[TestMethod]
 		public void EditEmptyInDataGridViewTest()
 		{
-			TestEditInDataGridView(new SerializableClass[0]);
+			TestShowInGrid(new SerializableClass[0]);
 		}
 
 		[TestMethod]
@@ -115,7 +115,9 @@ namespace AW.Tests
 		[TestMethod]
 		public void QueryInGridIsReadonlyTest()
 		{
+			TestShowInGrid(MetaSingletons.MetaData.Address);
 			TestEditInDataGridView(MetaSingletons.MetaData.Address);
+			TestEditInDataGridView(MetaSingletons.MetaData.AddressType);
 		}
 
 		[TestMethod]
@@ -123,13 +125,16 @@ namespace AW.Tests
 		{
 			MetaSingletons.MetaData.Address.ShowSelfServicingInGrid();
 			MetaSingletons.MetaData.AddressType.ShowSelfServicingInGrid();
+			TestEditInDataGridView(MetaSingletons.MetaData.Address, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
 		}
 
 		[TestMethod]
 		public void ShowEntityCollectionInGridTest()
 		{
-			TestEditInDataGridView(MetaSingletons.MetaData.Address.ToEntityCollection());
-			TestEditInDataGridView(MetaSingletons.MetaData.AddressType.ToEntityCollection());
+			TestShowInGrid(MetaSingletons.MetaData.Address.ToEntityCollection());
+			var addressTypeEntities = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+			TestShowInGrid(addressTypeEntities);
+			TestEditInDataGridView(addressTypeEntities);
 		}
 
 		[TestMethod]
@@ -146,9 +151,15 @@ namespace AW.Tests
 			Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
 		}
 
-		private static void TestEditInDataGridView<T>(IEnumerable<T> enumerable)
+		private static void TestShowInGrid<T>(IEnumerable<T> enumerable)
 		{
-			var actual = enumerable.ShowInGrid(null);
+			var actual = enumerable.ShowInGrid((IDataEditorPersister)null);
+			Assert.AreEqual(enumerable, actual);
+		}
+	
+		private static void TestEditInDataGridView<T>(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister)
+		{
+			var actual = enumerable.ShowInGrid(dataEditorPersister);
 			Assert.AreEqual(enumerable, actual);
 		}
 
