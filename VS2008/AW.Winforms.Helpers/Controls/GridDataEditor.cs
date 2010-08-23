@@ -14,10 +14,11 @@ using JesseJohnston;
 
 namespace AW.Winforms.Helpers.Controls
 {
-
 	public partial class GridDataEditor : UserControl
 	{
 		private readonly ArrayList _deleteItems = new ArrayList();
+		private bool _binding = true;
+		private bool _loaded;
 		private bool _canSave;
 		private IQueryable _superset;
 		public IDataEditorPersister DataEditorPersister;
@@ -104,13 +105,18 @@ namespace AW.Winforms.Helpers.Controls
 			var dataGridViewScriptClipboardCopyMode = dataGridViewEnumerable.ClipboardCopyMode;
 			if (toolStripComboBoxClipboardCopyMode.ComboBox != null) toolStripComboBoxClipboardCopyMode.ComboBox.DataSource = Enum.GetValues(typeof (DataGridViewClipboardCopyMode));
 			toolStripComboBoxClipboardCopyMode.SelectedItem = dataGridViewScriptClipboardCopyMode;
+			_loaded = true;
 		}
 
 		private void saveToolStripButton_Click(object sender, EventArgs e)
 		{
+			dataGridViewEnumerable.EndEdit();
+			//if (!SupportsNotifyPropertyChanged)
+			//bindingNavigatorPositionItem1.Focus();
+			//bindingSourceEnumerable.EndEdit();
 			var numSaved = DataEditorPersister.Save(bindingSourceEnumerable.List);
 			toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
-			if ( _deleteItems != null)
+			if (_deleteItems != null && _deleteItems.Count > 0)
 			{
 				var numDeleted = DataEditorPersister.Delete(_deleteItems);
 				toolStripLabelSaveResult.Text += @" numDeleted: " + numDeleted;
@@ -118,11 +124,11 @@ namespace AW.Winforms.Helpers.Controls
 				{
 					_deleteItems.Clear();
 					toolStripLabelDeleteCount.Text = "";
-					saveToolStripButton.Enabled = false;
+					saveToolStripButton.Enabled = !SupportsNotifyPropertyChanged;
 				}
 			}
 			else
-				saveToolStripButton.Enabled = numSaved == 0;
+				saveToolStripButton.Enabled = numSaved == 0 || !SupportsNotifyPropertyChanged;
 			toolStripButtonCancelEdit.Enabled = false;
 		}
 
@@ -135,6 +141,7 @@ namespace AW.Winforms.Helpers.Controls
 			if (bindingSourceEnumerable.Count > 0)
 			{
 				_canSave = CanSaveEnumerable();
+				saveToolStripButton.Enabled = _canSave && !SupportsNotifyPropertyChanged;
 				copyToolStripButton.Enabled = true;
 				printToolStripButton.Enabled = true;
 				toolStripButtonObjectListViewVisualizer.Enabled = IsObjectListView();
@@ -148,7 +155,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected virtual bool IsObjectListView()
 		{
-			return bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof(ObjectListView<>);
+			return bindingSourceEnumerable.List is ObjectListView || bindingSourceEnumerable.List.GetType() == typeof (ObjectListView<>);
 		}
 
 		protected bool EnumerableShouldBeReadonly(IEnumerable enumerable, Type typeToEdit)
@@ -173,9 +180,11 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected virtual bool GetFirstPage(IEnumerable enumerable)
 		{
+			var firstPageEnumerable = enumerable;
 			if (Paging())
-				enumerable = enumerable.AsQueryable().Take(PageSize);
-			var isEnumerable = bindingSourceEnumerable.BindEnumerable(enumerable, EnumerableShouldBeReadonly(_superset, null));
+				firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
+
+			var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null));
 			return isEnumerable;
 		}
 
@@ -191,7 +200,7 @@ namespace AW.Winforms.Helpers.Controls
 			try
 			{
 				_superset = enumerable.AsQueryable();
-				if (_superset.ElementType == typeof(string))
+				if (_superset.ElementType == typeof (string))
 					_superset = ((IEnumerable<string>) enumerable).CreateStringWrapperForBinding().AsQueryable();
 			}
 			catch (ArgumentException)
@@ -220,11 +229,19 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected void BindPage()
 		{
-			if (GetPageIndex() > 0)
-				BindEnumerable();
-			else
-				GetFirstPage();
-			SetRemovingItem();
+			try
+			{
+				_binding = true;
+				if (GetPageIndex() > 0)
+					BindEnumerable();
+				else
+					GetFirstPage();
+				SetRemovingItem();
+			}
+			finally
+			{
+				_binding = false;
+			}
 		}
 
 		protected virtual void BindEnumerable()
@@ -239,6 +256,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
 		{
+			_binding = true;
 			bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
 			if (bindingSourcePaging.Count == 0)
 				return GetFirstPage(enumerable);
@@ -259,6 +277,8 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected virtual void SetRemovingItem()
 		{
+			if (_superset is IQueryable && SupportsNotifyPropertyChanged)
+				saveToolStripButton.Enabled = false;
 			if (bindingSourceEnumerable.DataSource is ObjectListView)
 				((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
 		}
@@ -293,7 +313,16 @@ namespace AW.Winforms.Helpers.Controls
 			TidyUp();
 		}
 
-		protected virtual Type ItemType { get; set; }
+		private Type _itemType;
+		protected bool SupportsNotifyPropertyChanged;
+
+		protected virtual Type ItemType
+		{
+			get { return _itemType; }
+			set { _itemType = value;
+			SupportsNotifyPropertyChanged = typeof(INotifyPropertyChanged).IsAssignableFrom(_itemType);
+			}
+		}
 
 		private bool CanSave(Type typeToEdit)
 		{
@@ -315,15 +344,16 @@ namespace AW.Winforms.Helpers.Controls
 		private void bindingSourceEnumerable_ListChanged(object sender, ListChangedEventArgs e)
 		{
 			toolStripLabelSaveResult.Text = "";
-			switch (e.ListChangedType)
-			{
-				case ListChangedType.ItemDeleted:
-				case ListChangedType.ItemChanged:
-				case ListChangedType.ItemAdded:
-					saveToolStripButton.Enabled = _canSave;
-					toolStripButtonCancelEdit.Enabled = true;
-					break;
-			}
+			if (!_binding && _loaded)
+				switch (e.ListChangedType)
+				{
+					case ListChangedType.ItemDeleted:
+					case ListChangedType.ItemChanged:
+					case ListChangedType.ItemAdded:
+						saveToolStripButton.Enabled = _canSave;
+						toolStripButtonCancelEdit.Enabled = true;
+						break;
+				}
 		}
 
 		private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
@@ -344,5 +374,4 @@ namespace AW.Winforms.Helpers.Controls
 				visualizerForm.ShowDialog();
 		}
 	}
-
 }

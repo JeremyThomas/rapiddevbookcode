@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Linq.Dynamic;
 using System.Runtime.Serialization;
 using AW.Helper;
 using AW.Winforms.Helpers;
@@ -17,6 +19,11 @@ namespace AW.DebugVisualizers
 	public class EnumerableVisualizer : DialogDebuggerVisualizer
 	{
 		private IDialogVisualizerService _modalService;
+
+		/// <summary>
+		/// Enumerable Visualizer
+		/// </summary>
+		public const string Description = "Enumerable Visualizer";
 
 		/// <summary>
 		/// 	Shows the user interface for the visualizer
@@ -74,8 +81,11 @@ namespace AW.DebugVisualizers
 			var enumerable = target as IEnumerable;
 			if (enumerable != null)
 			{
-				var enumerableType = enumerable.GetType();
 				var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
+				var queryable = enumerable as IQueryable;
+				if (queryable != null)
+					enumerable = queryable.Take(100);
+				var enumerableType = enumerable.GetType();
 				if (itemType.IsSerializable)
 				{
 					if (enumerableType.IsSerializable)

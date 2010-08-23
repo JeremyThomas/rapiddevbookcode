@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
@@ -91,7 +95,23 @@ namespace AW.DebugVisualizers.Tests
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			var addressTypeEntityCollectionQueryable = addressTypeEntityCollection.AsQueryable();
 			TestSerialize(addressTypeEntityCollectionQueryable);
-			//TestShow(MetaSingletons.MetaData.AddressType);
+			TestShow(MetaSingletons.MetaData.AddressType);
+		}
+
+		[TestMethod, Timeout(10000)]
+		public void LargeSerializableQueryTest()
+		{
+			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
+			TestShow(awDataClassesDataContext.Addresses);
+			//	TestSerialize(MetaSingletons.MetaData.PurchaseOrderHeader);
+			//	TestShow(MetaSingletons.MetaData.PurchaseOrderHeader);
+		}
+
+		[TestMethod]
+		public void QueryWithRelatedFieldsTest()
+		{
+			TestSerialize(MetaSingletons.MetaData.Address.Take(5));
+			TestShow(MetaSingletons.MetaData.Address.Take(5));
 		}
 
 		[TestMethod]
@@ -100,7 +120,7 @@ namespace AW.DebugVisualizers.Tests
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			TestSerialize(addressTypeEntityCollection);
 			TestShow(SerializableBaseClass.GenerateList());
-			TestSerialize(((IEntity)addressTypeEntityCollection.First()).CustomPropertiesOfType);
+			TestSerialize(((IEntity) addressTypeEntityCollection.First()).CustomPropertiesOfType);
 			TestShow(SerializableBaseClass2.GenerateListWithBothSerializableClasses());
 			TestShow(SerializableClass.GenerateList());
 		}
@@ -140,7 +160,7 @@ namespace AW.DebugVisualizers.Tests
 		[TestMethod]
 		public void StringArrayTest()
 		{
-			var enumerable = new[] { "s1", "s2", "s3" };
+			var enumerable = new[] {"s1", "s2", "s3"};
 			TestShow(enumerable);
 		}
 
@@ -163,17 +183,38 @@ namespace AW.DebugVisualizers.Tests
 		[TestMethod]
 		public void StringDictionaryTest()
 		{
-			var sd = new StringDictionary { { "key1", "value1" }, { "key2", "value2" } };
+			var sd = new StringDictionary {{"key1", "value1"}, {"key2", "value2"}};
 			TestSerialize(sd);
 			TestSerialize(sd.Keys);
 		}
 
+		[TestMethod]
+		public void Xml_test()
+		{
+			var x = new XmlSerializer(typeof (List<SerializableClass>));
+			var s = new MemoryStream();
+			x.Serialize(s, SerializableClass.GenerateList());
+
+			var ds = new DataSet();
+			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+			addressTypeEntityCollection.CreateHierarchicalProjection(ds);
+
+			var xml = ds.GetXml();
+
+			var xmlDoc = new XmlDocument();
+			xmlDoc.LoadXml(xml);
+			TestSerialize(xmlDoc.FirstChild.ChildNodes);
+			TestShow(xmlDoc.FirstChild.ChildNodes);
+		}
+
 		public static void TestSerialize(object enumerableToVisualize)
 		{
+			//Assert.IsInstanceOfType(enumerableToVisualize, typeof(IEnumerable));
 			var enumerableVisualizerObjectSource = new EnumerableVisualizerObjectSource();
 			var memoryStream = new MemoryStream();
 			enumerableVisualizerObjectSource.GetData(enumerableToVisualize, memoryStream);
 			memoryStream.Position = 0;
+			Assert.AreNotEqual(0, memoryStream.Length);
 			var value = VisualizerObjectSource.Deserialize(memoryStream);
 			if (!(value is DataTableSurrogate) && !(value is IListSource) && value.GetType() != enumerableToVisualize.GetType())
 				Assert.IsInstanceOfType(value, typeof (IBindingListView));

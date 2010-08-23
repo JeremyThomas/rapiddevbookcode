@@ -38,7 +38,6 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			return SaveFunction != null && (SaveableTypes == null || typeToSave.IsAssignableTo(SaveableTypes));
 		}
-
 	}
 
 	public class DataEditorLinqtoSQLPersister : IDataEditorPersister
@@ -65,7 +64,16 @@ namespace AW.Winforms.Helpers.Controls
 
 		public bool CanSave(Type typeToSave)
 		{
-			return true;
+			try
+			{
+				var metaType = _dataContext.Mapping.GetMetaType(typeToSave);
+				//_dataContext.GetTable(typeToSave);
+				return metaType.Table != null;
+			}
+			catch (InvalidOperationException)
+			{
+				return false;
+			}
 		}
 	}
 }

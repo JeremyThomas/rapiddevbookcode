@@ -112,9 +112,6 @@ namespace AW.Winforms.Helpers.Controls
 		private void saveToolStripButton_Click(object sender, EventArgs e)
 		{
 			dataGridViewEnumerable.EndEdit();
-			//if (!SupportsNotifyPropertyChanged)
-			//bindingNavigatorPositionItem1.Focus();
-			//bindingSourceEnumerable.EndEdit();
 			var numSaved = DataEditorPersister.Save(bindingSourceEnumerable.List);
 			toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
 			if (_deleteItems != null && _deleteItems.Count > 0)
