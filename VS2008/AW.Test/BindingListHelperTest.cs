@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
@@ -10,7 +8,6 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
-using JesseJohnston;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -66,7 +63,7 @@ namespace AW.Tests
 		{
 			var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
 			var bindingSource = new BindingSource();
-			Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable)listofNonSerializableClasses, false));
+			Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable) listofNonSerializableClasses, false));
 			Assert.AreEqual(listofNonSerializableClasses, bindingSource.List);
 
 			TestBindEnumerable(listofNonSerializableClasses);
@@ -84,14 +81,11 @@ namespace AW.Tests
 			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection));
 			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection.DefaultView));
 
-			TestBindEnumerable((IEnumerable)MetaSingletons.MetaData.AddressType);
 			TestBindEnumerable(MetaSingletons.MetaData.AddressType);
 
-			var dt = new DataSet();
-			addressTypeEntityCollection.CreateHierarchicalProjection(dt);
-			TestBindEnumerable(dt.Tables[0].DefaultView);
+			TestBindEnumerable(TestData.GetAddressTypeDataTable().DefaultView);
 
-			TestBindEnumerable((IEnumerable)SerializableClass.GenerateList());
+			TestBindEnumerable((IEnumerable) SerializableClass.GenerateList());
 			TestBindEnumerable(SerializableClass.GenerateList());
 		}
 
@@ -99,7 +93,7 @@ namespace AW.Tests
 		{
 			TestBindEnumerableReadonly(enumerable, true);
 			var bindingSource = TestBindEnumerableReadonly(enumerable, false);
-			return (IEnumerable<T>)bindingSource.List;
+			return (IEnumerable<T>) bindingSource.List;
 		}
 
 		private static BindingSource TestBindEnumerableReadonly<T>(IEnumerable<T> enumerable, bool setReadonly)
@@ -141,9 +135,7 @@ namespace AW.Tests
 
 			TestToBindingListView(MetaSingletons.MetaData.AddressType);
 
-			var dt = new DataSet();
-			addressTypeEntityCollection.CreateHierarchicalProjection(dt);
-			var dataTable = dt.Tables[0];
+			var dataTable = TestData.GetAddressTypeDataTable();
 			Assert.AreEqual(dataTable.DefaultView, TestListSourceToBindingListView(dataTable));
 
 			var enumerable = Enumerable.Range(1, 100);
@@ -168,11 +160,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void ListSourceToBindingListViewTest()
 		{
-			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-
-			var dt = new DataSet();
-			addressTypeEntityCollection.CreateHierarchicalProjection(dt);
-			var dataTable = dt.Tables[0];
+			var dataTable = TestData.GetAddressTypeDataTable();
 			Assert.AreEqual(dataTable.DefaultView, TestListSourceToBindingListView(dataTable));
 		}
 

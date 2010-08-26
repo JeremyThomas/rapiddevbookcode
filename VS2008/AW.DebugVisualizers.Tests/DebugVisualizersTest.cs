@@ -98,6 +98,13 @@ namespace AW.DebugVisualizers.Tests
 			TestShow(MetaSingletons.MetaData.AddressType);
 		}
 
+		[TestMethod]
+		public void EntityFieldsTest()
+		{
+			var addressType = MetaSingletons.MetaData.AddressType.First();
+			TestShow(addressType.Fields);
+		}
+
 		[TestMethod, Timeout(10000)]
 		public void LargeSerializableQueryTest()
 		{

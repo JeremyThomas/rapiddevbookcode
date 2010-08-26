@@ -33,8 +33,8 @@ namespace AW.Helper
 		private static IEnumerable<Type> GetAllExportedTypes()
 		{
 			return from assemby in AppDomain.CurrentDomain.GetAssemblies()
-						 from exportedType in assemby.GetExportedTypes()
-						 select exportedType;
+			       from exportedType in assemby.GetExportedTypes()
+			       select exportedType;
 		}
 
 		/// <summary>
@@ -46,15 +46,15 @@ namespace AW.Helper
 		public static IEnumerable<Type> GetAssignable(this Type ancestorType, IEnumerable<Type> descendantTypes)
 		{
 			return from type in descendantTypes
-						 where type.IsPublic && !type.IsAbstract && ancestorType.IsAssignableFrom(type)
-						 select type;
+			       where type.IsPublic && !type.IsAbstract && ancestorType.IsAssignableFrom(type)
+			       select type;
 		}
 
 		public static bool IsAssignableTo(this Type type, params Type[] ancestorTypes)
 		{
 			return (from ancestorType in ancestorTypes
-							where ancestorType.IsAssignableFrom(type)
-							select type).Count() > 0;
+			        where ancestorType.IsAssignableFrom(type)
+			        select type).Count() > 0;
 		}
 
 		public static Type GetTypeParameterOfGenericType(Type type)
@@ -84,7 +84,7 @@ namespace AW.Helper
 
 		internal static Type GetElementType(Type enumerableType)
 		{
-			Type ienumType = FindGenericType(typeof(IEnumerable<>), enumerableType);
+			var ienumType = FindGenericType(typeof (IEnumerable<>), enumerableType);
 			if (ienumType != null)
 				return ienumType.GetGenericArguments()[0];
 			return enumerableType;
@@ -92,15 +92,15 @@ namespace AW.Helper
 
 		internal static Type FindGenericType(Type definition, Type type)
 		{
-			while (type != null && type != typeof(object))
+			while (type != null && type != typeof (object))
 			{
 				if (type.IsGenericType && type.GetGenericTypeDefinition() == definition)
 					return type;
 				if (definition.IsInterface)
 				{
-					foreach (Type itype in type.GetInterfaces())
+					foreach (var itype in type.GetInterfaces())
 					{
-						Type found = FindGenericType(definition, itype);
+						var found = FindGenericType(definition, itype);
 						if (found != null)
 							return found;
 					}
@@ -129,7 +129,7 @@ namespace AW.Helper
 			{
 				itemType = null;
 			}
-			if (itemType == null || itemType == typeof(object))
+			if (itemType == null || itemType == typeof (object))
 			{
 				var enumerableType = enumerable.GetType();
 				var elementType = GetElementType(enumerableType);
@@ -162,8 +162,18 @@ namespace AW.Helper
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(Type type)
 		{
 			return from propertyDescriptor in ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>()
-						 where (!typeof (IList).IsAssignableFrom(propertyDescriptor.PropertyType) || TypeDescriptor.GetConverter(typeof (Image)).CanConvertFrom(propertyDescriptor.PropertyType))
-						 select propertyDescriptor;
+			       where (!typeof (IList).IsAssignableFrom(propertyDescriptor.PropertyType) || TypeDescriptor.GetConverter(typeof (Image)).CanConvertFrom(propertyDescriptor.PropertyType))
+			       select propertyDescriptor;
+		}
+
+		public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(IEnumerable enumerable)
+		{
+			return GetPropertiesToDisplay(GetEnumerableItemType(enumerable));
+		}
+
+		public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay<T>(IEnumerable<T> enumerable)
+		{
+			return GetPropertiesToDisplay(typeof (T));
 		}
 
 		/// <summary>
@@ -184,8 +194,8 @@ namespace AW.Helper
 		public static IEnumerable<PropertyDescriptor> FilterBySerializable(this IEnumerable<PropertyDescriptor> propertyDescriptors)
 		{
 			return from propertyDescriptor in propertyDescriptors
-						 where propertyDescriptor.PropertyType.IsSerializable
-						 select propertyDescriptor;
+			       where propertyDescriptor.PropertyType.IsSerializable
+			       select propertyDescriptor;
 		}
 
 		/// <summary>
@@ -257,6 +267,5 @@ namespace AW.Helper
 		{
 			return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);
 		}
-
 	}
 }

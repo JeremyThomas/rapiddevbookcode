@@ -282,13 +282,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			if (connectionInfo.DriverData == null)
 				return null;
-			var adapterType = connectionInfo.DriverData.Element("AdapterType");
-			if (adapterType == null && !string.IsNullOrEmpty(connectionInfo.DatabaseInfo.DbVersion))
-			{
-				connectionInfo.DriverData.Add(new XElement("AdapterType") {Value = connectionInfo.DatabaseInfo.DbVersion});
-				adapterType = connectionInfo.DriverData.Element("AdapterType");
-			}
+			var adapterType = GetAdapterTypeElement(connectionInfo);
+			if (!string.IsNullOrEmpty(connectionInfo.DatabaseInfo.DbVersion))
+				if (adapterType == null)
+				{
+					connectionInfo.DriverData.Add(new XElement("AdapterType") {Value = connectionInfo.DatabaseInfo.DbVersion});
+					adapterType = GetAdapterTypeElement(connectionInfo);
+				}
+				else
+				{
+					adapterType.Value = connectionInfo.DatabaseInfo.DbVersion;
+				}
 			return adapterType == null ? null : adapterType.Value;
+		}
+
+		private static XElement GetAdapterTypeElement(IConnectionInfo connectionInfo)
+		{
+			return connectionInfo.DriverData.Element("AdapterType");
 		}
 
 		public static void SetAdapterType(IConnectionInfo connectionInfo, string adapterType)
@@ -298,7 +308,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			GeneralHelper.TraceOut(adapterType);
 			if (connectionInfo.DriverData == null)
 				return;
-			var adapterTypeElement = connectionInfo.DriverData.Element("AdapterType");
+			var adapterTypeElement = GetAdapterTypeElement(connectionInfo);
 			if (adapterTypeElement == null)
 				connectionInfo.DriverData.Add(new XElement("AdapterType") {Value = adapterType});
 			else

@@ -289,7 +289,7 @@
 			this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
 			this.dataGridViewEnumerable.Size = new System.Drawing.Size(717, 548);
 			this.dataGridViewEnumerable.TabIndex = 4;
-			this.dataGridViewEnumerable.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEnumerable_DataError);
+			this.dataGridViewEnumerable.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(dataGridViewEnumerable_DataError);
 			// 
 			// bindingNavigatorPaging
 			// 
