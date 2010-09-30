@@ -235,6 +235,13 @@ namespace Chaliy.Windows.Forms
 			set { SetProperty(ref _parentIdProperty, ref _parentIdPropertyName, value); }
 		}
 
+		[
+			//DefaultValue(true),
+		  Category("Behavior"),
+			Description("Still try and display even if there are errors in the data")
+		]
+		public bool IgnoreErrors { get; set; }
+
 		#endregion
 
 		#region Events
@@ -474,29 +481,26 @@ namespace Chaliy.Windows.Forms
 						var unsortedNodes = new ArrayList();
 
 						for (var i = 0; i < _listManager.Count; i++)
-						{
 							unsortedNodes.Add(CreateNode(i));
-						}
 
 						while (unsortedNodes.Count > 0)
 						{
 							var startCount = unsortedNodes.Count;
 
 							for (var i = unsortedNodes.Count - 1; i >= 0; i--)
-							{
 								if (TryAddNode((TreeNode) unsortedNodes[i]))
 									unsortedNodes.RemoveAt(i);
-							}
 
 							if (startCount == unsortedNodes.Count)
-							{
-								var ae = new ApplicationException("Tree view confused when try to make your data hierarchical.");
-								foreach (var node in unsortedNodes)
+								if (IgnoreErrors)
+									break;
+								else
 								{
-									ae.Data.Add(node.ToString(), node);
+									var ae = new ApplicationException("Tree view confused when try to make your data hierarchical.");
+									foreach (var node in unsortedNodes)
+										ae.Data.Add(node.ToString(), node);
+									throw ae;
 								}
-								throw ae;
-							}
 						}
 					}
 				}

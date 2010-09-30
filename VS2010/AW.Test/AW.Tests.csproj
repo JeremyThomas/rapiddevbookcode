@@ -100,6 +100,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComboBoxTest.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CustomerQueriesTest.cs" />
     <Compile Include="BindingListHelperTest.cs" />
     <Compile Include="DataEditorExtensionsTest.cs" />
@@ -148,6 +151,14 @@
     <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
       <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>
       <Name>DynamicQuery</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\nunitforms\source\NUnitForms.Test\NUnitForms.Test.csproj">
+      <Project>{E779CBD7-1CCE-4796-AE12-00AB56A8A815}</Project>
+      <Name>NUnitForms.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\nunitforms\source\NUnitForms\NUnitForms.csproj">
+      <Project>{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}</Project>
+      <Name>NUnitForms</Name>
     </ProjectReference>
     <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
       <Project>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</Project>

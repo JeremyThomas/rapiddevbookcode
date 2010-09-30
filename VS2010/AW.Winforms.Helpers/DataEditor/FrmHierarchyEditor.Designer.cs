@@ -31,7 +31,6 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmHierarchyEditor));
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.dataTreeView = new Chaliy.Windows.Forms.DataTreeView();
 			this.bindingSourceHierarchicalData = new System.Windows.Forms.BindingSource(this.components);
 			this.bindingNavigatorHierarchicalData = new System.Windows.Forms.BindingNavigator(this.components);
 			this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
@@ -53,9 +52,10 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.splitContainerNode = new System.Windows.Forms.SplitContainer();
 			this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-			this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
+			this.dataTreeView = new Chaliy.Windows.Forms.DataTreeView();
+			this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
@@ -85,21 +85,6 @@
 			this.splitContainer1.Size = new System.Drawing.Size(895, 584);
 			this.splitContainer1.SplitterDistance = 482;
 			this.splitContainer1.TabIndex = 0;
-			// 
-			// dataTreeView
-			// 
-			this.dataTreeView.AllowDrop = true;
-			this.dataTreeView.DataMember = "";
-			this.dataTreeView.DataSource = this.bindingSourceHierarchicalData;
-			this.dataTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.dataTreeView.FullRowSelect = true;
-			this.dataTreeView.HideSelection = false;
-			this.dataTreeView.HotTracking = true;
-			this.dataTreeView.Location = new System.Drawing.Point(0, 0);
-			this.dataTreeView.Name = "dataTreeView";
-			this.dataTreeView.Size = new System.Drawing.Size(482, 559);
-			this.dataTreeView.TabIndex = 0;
-			this.dataTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.dataTreeView1_AfterSelect);
 			// 
 			// bindingSourceHierarchicalData
 			// 
@@ -299,18 +284,6 @@
 			this.propertyGrid1.Size = new System.Drawing.Size(409, 292);
 			this.propertyGrid1.TabIndex = 0;
 			// 
-			// gridDataEditor
-			// 
-			this.gridDataEditor.DataMember = "";
-			this.gridDataEditor.DataSource = null;
-			this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
-			this.gridDataEditor.Name = "gridDataEditor";
-			this.gridDataEditor.PageSize = ((ushort)(0));
-			this.gridDataEditor.Readonly = false;
-			this.gridDataEditor.Size = new System.Drawing.Size(409, 288);
-			this.gridDataEditor.TabIndex = 0;
-			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -326,6 +299,34 @@
 			this.toolStripStatusLabelSelectePath.Name = "toolStripStatusLabelSelectePath";
 			this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(173, 17);
 			this.toolStripStatusLabelSelectePath.Text = "toolStripStatusLabelSelectePath";
+			// 
+			// dataTreeView
+			// 
+			this.dataTreeView.AllowDrop = true;
+			this.dataTreeView.DataMember = "";
+			this.dataTreeView.DataSource = this.bindingSourceHierarchicalData;
+			this.dataTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataTreeView.FullRowSelect = true;
+			this.dataTreeView.HideSelection = false;
+			this.dataTreeView.HotTracking = true;
+			this.dataTreeView.IgnoreErrors = true;
+			this.dataTreeView.Location = new System.Drawing.Point(0, 0);
+			this.dataTreeView.Name = "dataTreeView";
+			this.dataTreeView.Size = new System.Drawing.Size(482, 559);
+			this.dataTreeView.TabIndex = 0;
+			this.dataTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.dataTreeView1_AfterSelect);
+			// 
+			// gridDataEditor
+			// 
+			this.gridDataEditor.DataMember = "";
+			this.gridDataEditor.DataSource = null;
+			this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+			this.gridDataEditor.Name = "gridDataEditor";
+			this.gridDataEditor.PageSize = ((ushort)(0));
+			this.gridDataEditor.Readonly = false;
+			this.gridDataEditor.Size = new System.Drawing.Size(409, 288);
+			this.gridDataEditor.TabIndex = 0;
 			// 
 			// FrmHierarchyEditor
 			// 

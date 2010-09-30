@@ -61,6 +61,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{F1
 	ProjectSection(SolutionItems) = preProject
 		Documentation\DynamicQueryable-CSharpSamples MPL License.txt = Documentation\DynamicQueryable-CSharpSamples MPL License.txt
 		Documentation\Hawkeye MPL License.txt = Documentation\Hawkeye MPL License.txt
+		nunitforms\NUnitForm license.txt = nunitforms\NUnitForm license.txt
 		Documentation\PropertyGridEx CPOL License.html = Documentation\PropertyGridEx CPOL License.html
 		Documentation\TextBox TraceListener MIT License.txt = Documentation\TextBox TraceListener MIT License.txt
 	EndProjectSection
@@ -104,9 +105,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView", "ObjectLis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LinqToSQL", "AW.LinqToSQL\AW.LinqToSQL.csproj", "{3A769AFA-83F9-4CB0-8F69-60B8487055E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitForms", "nunitforms\source\NUnitForms\NUnitForms.csproj", "{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitForms.Test", "nunitforms\source\NUnitForms.Test\NUnitForms.Test.csproj", "{E779CBD7-1CCE-4796-AE12-00AB56A8A815}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 15
+		SccNumberOfProjects = 17
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -152,6 +157,12 @@ Global
 		SccProjectUniqueName14 = AW.LinqToSQL\\AW.LinqToSQL.csproj
 		SccProjectName14 = AW.LinqToSQL
 		SccLocalPath14 = AW.LinqToSQL
+		SccProjectUniqueName15 = nunitforms\\source\\NUnitForms\\NUnitForms.csproj
+		SccProjectName15 = nunitforms/source/NUnitForms
+		SccLocalPath15 = nunitforms\\source\\NUnitForms
+		SccProjectUniqueName16 = nunitforms\\source\\NUnitForms.Test\\NUnitForms.Test.csproj
+		SccProjectName16 = nunitforms/source/NUnitForms.Test
+		SccLocalPath16 = nunitforms\\source\\NUnitForms.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -275,6 +286,22 @@ Global
 		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Release - Test|Any CPU.Build.0 = Release|Any CPU
 		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A769AFA-83F9-4CB0-8F69-60B8487055E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
