@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataGridViewTest.cs" />
     <Compile Include="GetMessageHookTest.cs" />
     <Compile Include="KeyboardControllerTest.cs" />
     <Compile Include="MockingTestFixture.cs" />
@@ -83,6 +84,12 @@
     <Compile Include="OuterTestTest.cs" />
     <Compile Include="SendKeysParserTest.cs" />
     <Compile Include="SendKeysTests.cs" />
+    <Compile Include="TestForms\DataGridViewTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\DataGridViewTestForm.Designer.cs">
+      <DependentUpon>DataGridViewTestForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestForms\UnderscoreNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -320,6 +327,9 @@
     <EmbeddedResource Include="TestForms\ContextMenuTestForm.resx">
       <DependentUpon>ContextMenuTestForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\DataGridViewTestForm.resx">
+      <DependentUpon>DataGridViewTestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TestForms\DialogWithNoHandlersForm.resx">
       <SubType>Designer</SubType>
