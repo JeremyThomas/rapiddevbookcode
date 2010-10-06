@@ -294,7 +294,7 @@ namespace AW.Tests
 			//var dataGridView = new DataGridViewTester("dataGridView", name);
 			//	if (_expectedColumnCount > 0)
 			{
-				var dataGridView = ((DataGridView) ((GridDataEditor) form.Controls[0]).Controls[0]);
+				var dataGridView = GetDataGridViewFromGridDataEditor(form);
 				_actualColumnCount = dataGridView.ColumnCount;
 				if (_expectedColumnCount == _actualColumnCount)
 					form.Close();
@@ -303,6 +303,11 @@ namespace AW.Tests
 					Debugger.Break();
 				}
 			}
+		}
+
+		public static DataGridView GetDataGridViewFromGridDataEditor(Form form)
+		{
+			return ((DataGridView) ((GridDataEditor) form.Controls[0]).Controls[0]);
 		}
 	}
 }

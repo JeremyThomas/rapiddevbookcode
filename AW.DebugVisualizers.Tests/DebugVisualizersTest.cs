@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
+using AQDPortal.UnitTestUtilities;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
@@ -19,6 +18,7 @@ using AW.Tests;
 using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Extensions.Forms;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.DebugVisualizers.Tests
@@ -27,7 +27,7 @@ namespace AW.DebugVisualizers.Tests
 	/// 	Summary description for DebugVisualizersTest
 	/// </summary>
 	[TestClass]
-	public class DebugVisualizersTest
+	public class DebugVisualizersTest : NUnitFormMSTest
 	{
 		///<summary>
 		///	Gets or sets the test context which provides
@@ -95,21 +95,21 @@ namespace AW.DebugVisualizers.Tests
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			var addressTypeEntityCollectionQueryable = addressTypeEntityCollection.AsQueryable();
 			TestSerialize(addressTypeEntityCollectionQueryable);
-			TestShow(MetaSingletons.MetaData.AddressType);
+			TestShow(MetaSingletons.MetaData.AddressType, 4);
 		}
 
 		[TestMethod]
 		public void EntityFieldsTest()
 		{
 			var addressType = MetaSingletons.MetaData.AddressType.First();
-			TestShow(addressType.Fields);
+			TestShow(addressType.Fields, 36);
 		}
 
 		[TestMethod, Timeout(10000)]
 		public void LargeSerializableQueryTest()
 		{
 			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
-			TestShow(awDataClassesDataContext.Addresses);
+			TestShow(awDataClassesDataContext.Addresses, 9);
 			//	TestSerialize(MetaSingletons.MetaData.PurchaseOrderHeader);
 			//	TestShow(MetaSingletons.MetaData.PurchaseOrderHeader);
 		}
@@ -118,7 +118,7 @@ namespace AW.DebugVisualizers.Tests
 		public void QueryWithRelatedFieldsTest()
 		{
 			TestSerialize(MetaSingletons.MetaData.Address.Take(5));
-			TestShow(MetaSingletons.MetaData.Address.Take(5));
+			TestShow(MetaSingletons.MetaData.Address.Take(5), 9);
 		}
 
 		[TestMethod]
@@ -126,10 +126,10 @@ namespace AW.DebugVisualizers.Tests
 		{
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			TestSerialize(addressTypeEntityCollection);
-			TestShow(SerializableBaseClass.GenerateList());
+			TestShow(SerializableBaseClass.GenerateList(), 2);
 			TestSerialize(((IEntity) addressTypeEntityCollection.First()).CustomPropertiesOfType);
-			TestShow(SerializableBaseClass2.GenerateListWithBothSerializableClasses());
-			TestShow(SerializableClass.GenerateList());
+			TestShow(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), 2);
+			TestShow(SerializableClass.GenerateList(), 2);
 		}
 
 		[TestMethod]
@@ -152,7 +152,7 @@ namespace AW.DebugVisualizers.Tests
 			listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString()});
 			TestSerialize(listofNonSerializableClasses);
 			TestSerialize(new ArrayList(listofNonSerializableClasses));
-			TestShow(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
+			TestShow(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), 14);
 		}
 
 		[TestMethod]
@@ -168,14 +168,14 @@ namespace AW.DebugVisualizers.Tests
 		public void StringArrayTest()
 		{
 			var enumerable = new[] {"s1", "s2", "s3"};
-			TestShow(enumerable);
+			TestShow(enumerable, 1);
 		}
 
 		[TestMethod]
 		public void LinqtoSQLTest()
 		{
 			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
-			TestShow(awDataClassesDataContext.AddressTypes);
+			TestShow(awDataClassesDataContext.AddressTypes, 4);
 			TestSerialize(awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID));
 		}
 
@@ -201,12 +201,12 @@ namespace AW.DebugVisualizers.Tests
 			var xml = TestData.GetTestxmlString();
 
 			var xElement = XElement.Parse(xml);
-			TestShow(xElement.Elements());
+			TestShow(xElement.Elements(), 21);
 			//TestSerialize(xElement);
 
 			var xmlDoc = new XmlDocument();
 			xmlDoc.LoadXml(xml);
-			TestShow(xmlDoc.FirstChild.ChildNodes);
+			TestShow(xmlDoc.FirstChild.ChildNodes, 23);
 		}
 
 		public static void TestSerialize(object enumerableToVisualize)
@@ -227,5 +227,113 @@ namespace AW.DebugVisualizers.Tests
 			var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource));
 			visualizerHost.ShowVisualizer();
 		}
+
+		public static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
+		{
+			dynamic enumerableVisualizer = new AccessPrivateWrapper(new EnumerableVisualizer());
+			var dialogVisualizerServiceFake = new DialogVisualizerServiceFake();
+			var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
+			enumerableVisualizer.Show(dialogVisualizerServiceFake, visualizerObjectProviderFake);
+			var dataGridView = DataEditorExtensionsTest.GetDataGridViewFromGridDataEditor(dialogVisualizerServiceFake.VisualizerForm);
+			Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
+		}
+	}
+
+	internal class DialogVisualizerServiceFake : IDialogVisualizerService
+	{
+		public Form VisualizerForm { get; set; }
+
+		#region Implementation of IDialogVisualizerService
+
+		/// <returns>
+		/// Displays a Windows Form.
+		/// </returns>
+		/// <param name="form">Any Windows Form object derived from System.Windows.Forms.Form.</param>
+		public DialogResult ShowDialog(Form form)
+		{
+			VisualizerForm = form;
+			form.Show();
+			return DialogResult.None;
+		}
+
+		/// <param name="dialog">Any dialog derived from System.Windows.Forms.CommonDialog.</param>
+		public DialogResult ShowDialog(CommonDialog dialog)
+		{
+			return DialogResult.None;
+		}
+
+		/// <param name="control">Any control derived from System.Windows.Forms.Control.</param>
+		public DialogResult ShowDialog(Control control)
+		{
+			return DialogResult.None;
+		}
+
+		#endregion
+	}
+
+	internal class VisualizerObjectProviderFake : IVisualizerObjectProvider
+	{
+		private readonly object _enumerableOrDataTableToVisualize;
+
+		public VisualizerObjectProviderFake(object enumerableOrDataTableToVisualize)
+		{
+			_enumerableOrDataTableToVisualize = enumerableOrDataTableToVisualize;
+		}
+
+		#region Implementation of IVisualizerObjectProvider
+
+		/// <returns>
+		/// A stream of data containing the contents of the object being visualized. Calling this method results in <see cref="M:Microsoft.VisualStudio.DebuggerVisualizers.VisualizerObjectSource.GetData(System.Object,System.IO.Stream)"/> being called on the VisualizerObjectSource. The return value of that GetData call is then returned to the caller of this method.
+		/// </returns>
+		public Stream GetData()
+		{
+			return null;
+		}
+
+		/// <returns>
+		/// The data object being visualized. This is actually a debugger-side copy of the object you are visualizing in the debuggee. If you modify the contents of this object, the changes will not be reflected back in the debuggee unless you use the <see cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.ReplaceData(System.IO.Stream)"/>/<see cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.ReplaceObject(System.Object)"/> or <see cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferData(System.IO.Stream)"/>/<see cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferObject(System.Object)"/>. 
+		/// </returns>
+		public object GetObject()
+		{
+			return _enumerableOrDataTableToVisualize;
+		}
+
+		/// <param name="newObjectData">A stream containing data to be used to create a new object, replacing the object currently being visualized.</param>
+		public void ReplaceData(Stream newObjectData)
+		{
+		}
+
+		/// <param name="newObject">The new object to replace the object currently being visualized.</param>
+		public void ReplaceObject(object newObject)
+		{
+		}
+
+		/// <returns>
+		/// Returns the data stream filled in by VisualizerObjectSource's TransferData method. There is no two-way stream-based communication between the debugger side and debuggee side (object source.)
+		/// </returns>
+		/// <param name="outgoingData">A stream of data that is to be transferred back to the debuggee side.</param>
+		public Stream TransferData(Stream outgoingData)
+		{
+			return null;
+		}
+
+		/// <returns>
+		/// The result of deserializing the return value of <see cref="M:Microsoft.VisualStudio.DebuggerVisualizers.IVisualizerObjectProvider.TransferData(System.IO.Stream)"/>.
+		/// </returns>
+		/// <param name="outgoingObject">An object that is to be transferred back to the debuggee side.</param>
+		public object TransferObject(object outgoingObject)
+		{
+			return null;
+		}
+
+		/// <returns>
+		/// Determines whether the data object being visualized is replaceable (read/write) or nonreplaceable (read only).
+		/// </returns>
+		public bool IsObjectReplaceable
+		{
+			get { return false; }
+		}
+
+		#endregion
 	}
 }
