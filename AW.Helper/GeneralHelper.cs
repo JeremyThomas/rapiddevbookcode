@@ -165,5 +165,32 @@ namespace AW.Helper
 		{
 			return strings.Select(data => new StringWrapper { Value = data }).ToList();
 		}
+
+		/// <summary>
+		/// returns null if empty.
+		/// </summary>
+		/// <see cref="http://haacked.com/archive/2010/06/16/null-or-empty-coalescing.aspx"/>
+		/// <param name="items">The items.</param>
+		/// <returns></returns>
+		public static IEnumerable<T> AsNullIfEmpty<T>(this IEnumerable<T> items)
+		{
+			return items == null || !items.Any() ? null : items;
+		}
+
+		/// <summary>
+		/// Determines whether the specified IEnumerable is null or empty.
+		/// </summary>
+		/// <see cref="http://haacked.com/archive/2010/06/10/checking-for-empty-enumerations.aspx"/>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="items">The items.</param>
+		/// <returns>
+		/// 	<c>true</c> if specified IEnumerable is null or empty; otherwise, <c>false</c>.
+		/// </returns>
+		public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
+		{
+			if (items is ICollection)
+				return ((ICollection)items).Count == 0;
+			return items.AsNullIfEmpty() == null;
+		}
 	}
 }

@@ -228,7 +228,8 @@ namespace AW.Winforms.Helpers.Controls
 
 		private void bindingSourcePaging_PositionChanged(object sender, EventArgs e)
 		{
-			BindPage();
+			if (bindingSourcePaging.Count != 0)
+			  BindPage();
 		}
 
 		protected void BindPage()
@@ -262,6 +263,7 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			_binding = true;
 			SetItemType(enumerable);
+			bindingSourcePaging.DataSource = null;
 			bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
 			if (bindingSourcePaging.Count == 0)
 				return GetFirstPage(enumerable);
