@@ -188,7 +188,7 @@ namespace AW.Win
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
+      FrmLLBLEntityViewer.Show(MetaSingletons.MetaData);
     }
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)

@@ -139,9 +139,7 @@ namespace AW.Winforms.Helpers
 
 		public static Form GetMdiParent()
 		{
-			return (from form in Application.OpenForms.Cast<Form>()
-							where form.IsMdiContainer
-							select form).FirstOrDefault();
+			return Application.OpenForms.Cast<Form>().FirstOrDefault(form => form.IsMdiContainer);
 		}
 
 		public static int GetIndexOfForm(Form form)
@@ -152,18 +150,15 @@ namespace AW.Winforms.Helpers
 			return -1;
 		}
 
-		public static Form ShowChildForm(Form childForm, Form mdiParent)
+		private static void ShowChildForm(Form childForm, Control parent)
 		{
-			if (mdiParent != null)
+			var mdiParent = parent as Form;
+			if (mdiParent != null && mdiParent.IsMdiContainer)
 				childForm.MdiParent = mdiParent;
+			else
+				childForm.Parent = parent;
 			childForm.WindowState = FormWindowState.Normal;
 			childForm.Show();
-			return childForm;
-		}
-
-		public static Form ShowChildForm(Form childForm)
-		{
-			return ShowChildForm(childForm, GetMdiParent());
 		}
 
 		public static Form ShowForm(Form form)
@@ -171,34 +166,12 @@ namespace AW.Winforms.Helpers
 			return ShowForm(form, GetMdiParent());
 		}
 
-		public static Form ShowForm(Form form, Form mdiParent)
+		public static Form ShowForm(Form form, Control parent)
 		{
 			if (Application.MessageLoop)
-				ShowChildForm(form, mdiParent);
+				ShowChildForm(form, parent);
 			else
 				form.ShowDialog();
-			return form;
-		}
-
-		public static Form ShowFormModalIfParentLess(Form form)
-		{
-			return ShowFormModalIfParentLess(form, GetMdiParent());
-		}
-
-		public static Form ShowFormModalIfParentLess(Form form, Control parent)
-		{
-			form.WindowState = FormWindowState.Normal;
-			if (parent == null)
-				form.ShowDialog();
-			else
-			{
-				var mdiParent = parent as Form;
-				if (mdiParent != null && mdiParent.IsMdiContainer)
-					form.MdiParent = mdiParent;
-				else
-					form.Parent = parent;
-				form.Show();
-			}
 			return form;
 		}
 

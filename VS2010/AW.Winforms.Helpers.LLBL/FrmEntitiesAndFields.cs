@@ -57,7 +57,7 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (_formSingleton == null)
         _formSingleton = new FrmEntitiesAndFields(baseType, linqMetaData);
-      AWHelper.ShowFormModalIfParentLess(_formSingleton, parent);
+      AWHelper.ShowForm(_formSingleton, parent);
     }
 
     private void FrmEntitiesAndFields_FormClosed(object sender, FormClosedEventArgs e)

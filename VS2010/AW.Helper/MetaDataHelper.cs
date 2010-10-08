@@ -210,6 +210,17 @@ namespace AW.Helper
 		}
 
 		/// <summary>
+		/// Adds the associated metadata providers for each type.
+		/// </summary>
+		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
+		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
+		public static void AddAssociatedMetadataProviders(params Type[] typesWhichMayHaveBuddyClasses)
+		{
+			if (!typesWhichMayHaveBuddyClasses.IsNullOrEmpty())
+				AddAssociatedMetadataProviders((IEnumerable<Type>)typesWhichMayHaveBuddyClasses);
+		}
+
+		/// <summary>
 		/// Creates an instance of type if type is an ancestorType or a descendant
 		/// </summary>
 		/// <param name="ancestorType">Type of the ancestor.</param>
