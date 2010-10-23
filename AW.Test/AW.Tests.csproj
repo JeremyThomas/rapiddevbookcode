@@ -110,6 +110,7 @@
     <Compile Include="DataGridViewTest.cs" />
     <Compile Include="DataTableSurrogateTest.cs" />
     <Compile Include="EntityHelperTest.cs" />
+    <Compile Include="FrmEntitiesAndFieldsTest.cs" />
     <Compile Include="GeneralHelperTest.cs" />
     <Compile Include="HierarchyEditorTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />

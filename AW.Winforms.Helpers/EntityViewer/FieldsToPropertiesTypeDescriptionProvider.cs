@@ -448,7 +448,15 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 				addedMemberNames.Add(field.Name);
 				var fieldDesc = new FieldPropertyDescriptor(field);
 				if (!filtering || fieldDesc.Attributes.Contains(attributes))
-					fields.Add(fieldDesc);
+				{
+					var existing = fields.Find(fieldDesc.Name, false);
+					if (existing == null || !existing.IsBrowsable)
+					{
+						fields.Add(fieldDesc);
+						if (existing != null)
+							fields.Remove(existing);
+					}
+				}
 			}
 		}
 
