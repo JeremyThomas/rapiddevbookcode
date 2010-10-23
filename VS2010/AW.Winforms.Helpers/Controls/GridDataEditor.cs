@@ -23,7 +23,7 @@ namespace AW.Winforms.Helpers.Controls
 		private bool _canSave;
 		private IQueryable _superset;
 		public IDataEditorPersister DataEditorPersister;
-		private static FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
+		private static Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> _fieldsToPropertiesTypeDescriptionProviders= new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
 
 		public GridDataEditor()
 		{
@@ -298,19 +298,20 @@ namespace AW.Winforms.Helpers.Controls
 
 		private static void AddFieldsToPropertiesTypeDescriptionProvider(Type typeToEdit)
 		{
-			if (_fieldsToPropertiesTypeDescriptionProvider == null && typeToEdit != null)
+			if (typeToEdit != null && !_fieldsToPropertiesTypeDescriptionProviders.ContainsKey(typeToEdit))
 			{
-				_fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
-				TypeDescriptor.AddProvider(_fieldsToPropertiesTypeDescriptionProvider, typeToEdit);
+				var fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
+				_fieldsToPropertiesTypeDescriptionProviders.Add(typeToEdit, fieldsToPropertiesTypeDescriptionProvider);
+				TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, typeToEdit);
 			}
 		}
 
 		protected void TidyUp()
 		{
-			if (_fieldsToPropertiesTypeDescriptionProvider != null && ItemType != null)
+			if (ItemType != null && _fieldsToPropertiesTypeDescriptionProviders.ContainsKey(ItemType))
 			{
-				TypeDescriptor.RemoveProvider(_fieldsToPropertiesTypeDescriptionProvider, ItemType);
-				_fieldsToPropertiesTypeDescriptionProvider = null;
+				TypeDescriptor.RemoveProvider(_fieldsToPropertiesTypeDescriptionProviders[ItemType], ItemType);
+				_fieldsToPropertiesTypeDescriptionProviders.Remove(ItemType);
 			}
 		}
 

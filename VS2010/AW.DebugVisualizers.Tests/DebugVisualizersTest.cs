@@ -29,6 +29,20 @@ namespace AW.DebugVisualizers.Tests
 	[TestClass]
 	public class DebugVisualizersTest : NUnitFormMSTest
 	{
+		private static dynamic _enumerableVisualizer;
+
+		private static dynamic EnumerableVisualizer
+		{
+			get { return _enumerableVisualizer ?? (_enumerableVisualizer = new AccessPrivateWrapper(new EnumerableVisualizer())); }
+		}
+
+		private static DialogVisualizerServiceFake _dialogVisualizerServiceFake;
+
+		private static DialogVisualizerServiceFake DialogVisualizerServiceFake
+		{
+			get { return _dialogVisualizerServiceFake ?? (_dialogVisualizerServiceFake = _dialogVisualizerServiceFake = new DialogVisualizerServiceFake()); }
+		}
+
 		///<summary>
 		///	Gets or sets the test context which provides
 		///	information about and functionality for the current test run.
@@ -91,11 +105,11 @@ namespace AW.DebugVisualizers.Tests
 		{
 			TestSerialize(MetaSingletons.MetaData.AddressType);
 			var addressTypeQueryable = MetaSingletons.MetaData.AddressType.Distinct();
-			TestSerialize(addressTypeQueryable);
+			TestShowTransported(addressTypeQueryable, 4);
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			var addressTypeEntityCollectionQueryable = addressTypeEntityCollection.AsQueryable();
 			TestSerialize(addressTypeEntityCollectionQueryable);
-			TestShow(MetaSingletons.MetaData.AddressType, 4);
+			TestShowTransported(MetaSingletons.MetaData.AddressType, 4);
 		}
 
 		[TestMethod]
@@ -117,31 +131,30 @@ namespace AW.DebugVisualizers.Tests
 		[TestMethod]
 		public void QueryWithRelatedFieldsTest()
 		{
-			TestSerialize(MetaSingletons.MetaData.Address.Take(5));
-			TestShow(MetaSingletons.MetaData.Address.Take(5), 9);
+			TestShowTransported(MetaSingletons.MetaData.Address.Take(5), 9);
 		}
 
 		[TestMethod]
 		public void SerializableEnumerableTest()
 		{
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-			TestSerialize(addressTypeEntityCollection);
-			TestShow(SerializableBaseClass.GenerateList(), 2);
-			TestSerialize(((IEntity) addressTypeEntityCollection.First()).CustomPropertiesOfType);
-			TestShow(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), 2);
-			TestShow(SerializableClass.GenerateList(), 2);
+			TestShowTransported(addressTypeEntityCollection, 4);
+			TestShowTransported(SerializableBaseClass.GenerateList(), 2);
+			TestShowTransported(((IEntity) addressTypeEntityCollection.First()).CustomPropertiesOfType, 2);
+			TestShowTransported(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), 2);
+			TestShowTransported(SerializableClass.GenerateList(), 8);
 		}
 
 		[TestMethod]
 		public void NonSerializableEnumerationTest()
 		{
-			TestSerialize(MetaSingletons.MetaData.AddressType);
-			TestSerialize(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > 2));
+			TestShowTransported(MetaSingletons.MetaData.AddressType, 4);
+			TestShowTransported(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > 2), 4);
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-			TestSerialize(addressTypeEntityCollection.DefaultView);
-			TestSerialize(new BindingSource(addressTypeEntityCollection, null));
-			TestSerialize(addressTypeEntityCollection.Where(at => at.AddressTypeID > 2));
-			TestSerialize(addressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID));
+			TestShowTransported(addressTypeEntityCollection.DefaultView, 4);
+			TestShowTransported(new BindingSource(addressTypeEntityCollection, null), 4);
+			TestShowTransported(addressTypeEntityCollection.Where(at => at.AddressTypeID > 2), 4);
+			TestShowTransported(addressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID), 4);
 		}
 
 		[TestMethod]
@@ -175,8 +188,8 @@ namespace AW.DebugVisualizers.Tests
 		public void LinqtoSQLTest()
 		{
 			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
-			TestShow(awDataClassesDataContext.AddressTypes, 4);
-			TestSerialize(awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID));
+			TestShowTransported(awDataClassesDataContext.AddressTypes, 4);
+			TestShowTransported(awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID), 4);
 		}
 
 		[TestMethod]
@@ -191,7 +204,7 @@ namespace AW.DebugVisualizers.Tests
 		public void StringDictionaryTest()
 		{
 			var sd = new StringDictionary {{"key1", "value1"}, {"key2", "value2"}};
-			TestSerialize(sd);
+			TestShowTransported(sd, 2);
 			TestSerialize(sd.Keys);
 		}
 
@@ -206,20 +219,25 @@ namespace AW.DebugVisualizers.Tests
 
 			var xmlDoc = new XmlDocument();
 			xmlDoc.LoadXml(xml);
-			TestShow(xmlDoc.FirstChild.ChildNodes, 23);
+			TestShow(xmlDoc.FirstChild.ChildNodes, 24);
 		}
 
-		public static void TestSerialize(object enumerableToVisualize)
+		public static void TestSerialize(object enumerableOrDataTableToVisualize)
 		{
 			//Assert.IsInstanceOfType(enumerableToVisualize, typeof(IEnumerable));
-			var enumerableVisualizerObjectSource = new EnumerableVisualizerObjectSource();
-			var memoryStream = new MemoryStream();
-			enumerableVisualizerObjectSource.GetData(enumerableToVisualize, memoryStream);
-			memoryStream.Position = 0;
-			Assert.AreNotEqual(0, memoryStream.Length);
-			var value = VisualizerObjectSource.Deserialize(memoryStream);
-			if (!(value is DataTableSurrogate) && !(value is IListSource) && value.GetType() != enumerableToVisualize.GetType())
-				Assert.IsInstanceOfType(value, typeof (IBindingListView));
+			AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize));
+		}
+
+		/// <summary>
+		/// Assert that if the Serialized and Deserialized enumeration is not the same type as the source then it is a IBindingListView
+		/// </summary>
+		/// <param name="enumerableOrDataTableToVisualize">The enumerable or data table to visualize.</param>
+		/// <param name="transportedEnumerableOrDataTable">The transported enumerable or data table.</param>
+		private static void AssertNewContanerIsBindingListView(object enumerableOrDataTableToVisualize, object transportedEnumerableOrDataTable)
+		{
+			if (!(transportedEnumerableOrDataTable is DataTableSurrogate) && !(transportedEnumerableOrDataTable is IListSource)
+			    && transportedEnumerableOrDataTable.GetType() != enumerableOrDataTableToVisualize.GetType())
+				Assert.IsInstanceOfType(transportedEnumerableOrDataTable, typeof (IBindingListView));
 		}
 
 		public static void TestShow(object enumerableOrDataTableToVisualize)
@@ -228,14 +246,32 @@ namespace AW.DebugVisualizers.Tests
 			visualizerHost.ShowVisualizer();
 		}
 
+		/// <summary>
+		/// Shows the enumerable or data table to visualize and asserts the number of columns displayed.
+		/// </summary>
+		/// <param name="enumerableOrDataTableToVisualize">The enumerable or data table to visualize.</param>
+		/// <param name="expectedColumnCount">The expected column count.</param>
 		public static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
 		{
-			dynamic enumerableVisualizer = new AccessPrivateWrapper(new EnumerableVisualizer());
-			var dialogVisualizerServiceFake = new DialogVisualizerServiceFake();
 			var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
-			enumerableVisualizer.Show(dialogVisualizerServiceFake, visualizerObjectProviderFake);
-			var dataGridView = DataEditorExtensionsTest.GetDataGridViewFromGridDataEditor(dialogVisualizerServiceFake.VisualizerForm);
+			//AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
+			EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
+			var dataGridView = DataEditorExtensionsTest.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
 			Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
+			Application.DoEvents();
+		}
+
+		/// <summary>
+		/// Shows the enumerable or data table to visualize and asserts the number of columns displayed are that same before and after transportation.
+		/// </summary>
+		/// <param name="enumerableOrDataTableToVisualize">The enumerable or data table to visualize.</param>
+		/// <param name="expectedColumnCount">The expected column count.</param>
+		public static void TestShowTransported(object enumerableOrDataTableToVisualize, int expectedColumnCount)
+		{
+			TestShow(enumerableOrDataTableToVisualize, expectedColumnCount);
+			var transportedEnumerableOrDataTable = VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize);
+			AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, transportedEnumerableOrDataTable);
+			TestShow(transportedEnumerableOrDataTable, expectedColumnCount);
 		}
 	}
 
@@ -278,6 +314,16 @@ namespace AW.DebugVisualizers.Tests
 		public VisualizerObjectProviderFake(object enumerableOrDataTableToVisualize)
 		{
 			_enumerableOrDataTableToVisualize = enumerableOrDataTableToVisualize;
+		}
+
+		public static object SerializeDeserialize(object enumerableToVisualize)
+		{
+			var enumerableVisualizerObjectSource = new EnumerableVisualizerObjectSource();
+			var memoryStream = new MemoryStream();
+			enumerableVisualizerObjectSource.GetData(enumerableToVisualize, memoryStream);
+			memoryStream.Position = 0;
+			Assert.AreNotEqual(0, memoryStream.Length);
+			return VisualizerObjectSource.Deserialize(memoryStream);
 		}
 
 		#region Implementation of IVisualizerObjectProvider

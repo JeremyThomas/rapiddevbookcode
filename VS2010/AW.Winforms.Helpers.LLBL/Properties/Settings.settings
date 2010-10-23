@@ -5,5 +5,14 @@
     <Setting Name="EntitiesAndFieldsSizeLocation" Type="System.Drawing.Rectangle" Scope="User">
       <Value Profile="(Default)">0, 0, 0, 0</Value>
     </Setting>
+    <Setting Name="xxxx" Type="AW.Winforms.Helpers.WindowSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ws" Type="AW.Winforms.Helpers.WindowSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="sswww" Type="AW.Winforms.Helpers.WindowSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

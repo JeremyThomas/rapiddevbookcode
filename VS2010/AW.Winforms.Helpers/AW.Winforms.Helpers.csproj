@@ -59,18 +59,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ACorns.Hawkeye.Core, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\ACorns.Hawkeye.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="ACorns.Hawkeye.CoreUI, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\ACorns.Hawkeye.CoreUI.dll</HintPath>
-    </Reference>
-    <Reference Include="ACorns.Hawkeye.Injector, Version=1.1.10.0, Culture=neutral, PublicKeyToken=7026c9d4d4143548, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\ACorns.Hawkeye.Injector.dll</HintPath>
-    </Reference>
     <Reference Include="CSScriptLibrary, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\CSScriptLibrary.dll</HintPath>
@@ -126,6 +114,12 @@
     </Compile>
     <Compile Include="DataEditor\FrmHierarchyEditor.Designer.cs">
       <DependentUpon>FrmHierarchyEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmThreePanelBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmThreePanelBase.Designer.cs">
+      <DependentUpon>FrmThreePanelBase.cs</DependentUpon>
     </Compile>
     <Compile Include="QueryRunner\FrmQueryRunner.cs">
       <SubType>Form</SubType>
@@ -190,6 +184,7 @@
     </Compile>
     <Compile Include="Reporting\TableRdlGenerator.cs" />
     <Compile Include="TextBoxTraceListener.cs" />
+    <Compile Include="WindowSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\GridDataEditorT.resx">
@@ -206,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataEditor\FrmHierarchyEditor.resx">
       <DependentUpon>FrmHierarchyEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmThreePanelBase.resx">
+      <DependentUpon>FrmThreePanelBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="QueryRunner\FrmQueryRunner.resx">
       <DependentUpon>FrmQueryRunner.cs</DependentUpon>
