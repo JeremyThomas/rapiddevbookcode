@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
+using AW.Helper;
 
 namespace AW.Winforms.Helpers
 {
@@ -9,6 +10,7 @@ namespace AW.Winforms.Helpers
 	{
 		protected ApplicationSettingsBase Settings;
 		protected string WindowSettingsName;
+		private SettingsPropertyValue _windowSettingsSettingsProperty;
 
 		public FrmThreePanelBase()
 		{
@@ -19,60 +21,36 @@ namespace AW.Winforms.Helpers
 		{
 			get
 			{
-				if (HasSetting(WindowSettingsName))
-					if (WindowSettingsSettingsProperty != null)
-						return WindowSettingsSettingsProperty.PropertyValue as WindowSettings;
+				if (WindowSettingsSettingsProperty != null)
+					return WindowSettingsSettingsProperty.PropertyValue as WindowSettings;
 				return null;
 			}
 			set
 			{
-				if (HasSetting(WindowSettingsName))
-					if (WindowSettingsSettingsProperty != null) 
+				if (WindowSettingsSettingsProperty != null)
 					WindowSettingsSettingsProperty.PropertyValue = value;
 			}
 		}
 
 		protected SettingsPropertyValue WindowSettingsSettingsProperty
 		{
-			get { return HasSetting(WindowSettingsName) ? GetSetting(WindowSettingsName) : null; }
-		}
-
-		private SettingsPropertyValue GetSetting(string settingsName)
-		{
-			if (string.IsNullOrEmpty(settingsName) || Settings == null || Settings.PropertyValues == null)
-				return null;
-			return Settings.PropertyValues[settingsName];
-		}
-
-		private bool HasSetting(string settingsName)
-		{
-			return !string.IsNullOrEmpty(settingsName) && Settings != null && Settings.Properties.OfType<SettingsProperty>().Any(sp => sp.Name == settingsName);
+			get { return _windowSettingsSettingsProperty ?? (_windowSettingsSettingsProperty = GeneralHelper.GetSetting(Settings, WindowSettingsName)); }
 		}
 
 		private void FrmThreePanelBase_Load(object sender, EventArgs e)
 		{
 			if (WindowSettings != null)
-			{
 				WindowSettings.Restore(this, splitContainerVertical, splitContainerHorizontal);
-			}
 		}
 
 		private void FrmThreePanelBase_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (WindowSettings == null)
-			{
 				WindowSettings = new WindowSettings();
-			}
+// ReSharper disable ConditionIsAlwaysTrueOrFalse
+			if (WindowSettings != null)
+// ReSharper restore ConditionIsAlwaysTrueOrFalse
 			WindowSettings.Record(this, splitContainerVertical, splitContainerHorizontal);
-			//var dataBinding = this.DataBindings["WindowSettings"];
-			//if (dataBinding != null)
-			//{
-			//  Settings = dataBinding.DataSource as System.Configuration.ApplicationSettingsBase;
-			//  //settings.
-			//  if (Settings != null)
-			//  {
-			//    Settings[dataBinding.BindingMemberInfo.BindingField] = WindowSettings;
-			//  }
 		}
 
 		private void FrmThreePanelBase_FormClosed(object sender, FormClosedEventArgs e)

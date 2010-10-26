@@ -37,34 +37,12 @@ namespace AW.Winforms.Helpers.LLBL.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::AW.Winforms.Helpers.WindowSettings xxxx {
+        public global::AW.Winforms.Helpers.WindowSettings EntitiesAndFieldsWindowSettings {
             get {
-                return ((global::AW.Winforms.Helpers.WindowSettings)(this["xxxx"]));
+                return ((global::AW.Winforms.Helpers.WindowSettings)(this["EntitiesAndFieldsWindowSettings"]));
             }
             set {
-                this["xxxx"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::AW.Winforms.Helpers.WindowSettings ws {
-            get {
-                return ((global::AW.Winforms.Helpers.WindowSettings)(this["ws"]));
-            }
-            set {
-                this["ws"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::AW.Winforms.Helpers.WindowSettings sswww {
-            get {
-                return ((global::AW.Winforms.Helpers.WindowSettings)(this["sswww"]));
-            }
-            set {
-                this["sswww"] = value;
+                this["EntitiesAndFieldsWindowSettings"] = value;
             }
         }
     }
