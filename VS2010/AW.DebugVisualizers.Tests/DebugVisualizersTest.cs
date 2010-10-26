@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Xml.Linq;
 using AQDPortal.UnitTestUtilities;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.DebugVisualizers.Tests.Properties;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LinqToSQL;
@@ -222,6 +224,18 @@ namespace AW.DebugVisualizers.Tests
 			TestShow(xmlDoc.FirstChild.ChildNodes, 24);
 		}
 
+		[TestMethod]
+		public void SettingsPropertyTest()
+		{
+			TestShowTransported(Settings.Default.Properties, 9, 7);
+			if (Settings.Default.PropertyValues.Count == 0)
+			{
+				var x = Settings.Default.StringSetting;
+			}
+			Assert.AreNotEqual(0, Settings.Default.PropertyValues.Count);
+			TestShowTransported(Settings.Default.PropertyValues, 7, 6);
+		}
+
 		public static void TestSerialize(object enumerableOrDataTableToVisualize)
 		{
 			//Assert.IsInstanceOfType(enumerableToVisualize, typeof(IEnumerable));
@@ -266,12 +280,15 @@ namespace AW.DebugVisualizers.Tests
 		/// </summary>
 		/// <param name="enumerableOrDataTableToVisualize">The enumerable or data table to visualize.</param>
 		/// <param name="expectedColumnCount">The expected column count.</param>
-		public static void TestShowTransported(object enumerableOrDataTableToVisualize, int expectedColumnCount)
+		/// <param name="expectedTransportedColumnCount">The expected transported column count.</param>
+		public static void TestShowTransported(object enumerableOrDataTableToVisualize, int expectedColumnCount, int expectedTransportedColumnCount = -1)
 		{
 			TestShow(enumerableOrDataTableToVisualize, expectedColumnCount);
 			var transportedEnumerableOrDataTable = VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize);
 			AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, transportedEnumerableOrDataTable);
-			TestShow(transportedEnumerableOrDataTable, expectedColumnCount);
+			if (expectedTransportedColumnCount == -1)
+				expectedTransportedColumnCount = expectedColumnCount;
+			TestShow(transportedEnumerableOrDataTable, expectedTransportedColumnCount);
 		}
 	}
 

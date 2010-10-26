@@ -33,5 +33,40 @@ namespace AW.DebugVisualizers.Tests.Properties {
                 return ((string)(this["MainConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string StringSetting {
+            get {
+                return ((string)(this["StringSetting"]));
+            }
+            set {
+                this["StringSetting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int IntSetting {
+            get {
+                return ((int)(this["IntSetting"]));
+            }
+            set {
+                this["IntSetting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime DateSetting {
+            get {
+                return ((global::System.DateTime)(this["DateSetting"]));
+            }
+            set {
+                this["DateSetting"] = value;
+            }
+        }
     }
 }

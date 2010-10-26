@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Tests.Properties;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;
@@ -62,6 +63,7 @@ namespace AW.Tests
 		{
 			//typeof (CommonEntityBase), MetaSingletons.MetaData
 			//AW.Winforms.Helpers.LLBL.FrmEntitiesAndFields.ShowEntitiesAndFields(typeof(AQD.Model.EntityClasses.CommonEntityBase),this);
+			var intSetting = Settings.Default.IntSetting;
 			var baseType = typeof (CommonEntityBase);
 			ILinqMetaData linqMetaData = MetaSingletons.MetaData;
 			ModalFormHandler = Handler;
