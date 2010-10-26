@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
-using AW.Winforms.Helpers.LLBL.Properties;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -25,8 +24,8 @@ namespace AW.Winforms.Helpers.LLBL
 		{
 			InitializeComponent();
 			splitContainerVertical.Panel2Collapsed = true;
-			this.Settings = Properties.Settings.Default;
-			WindowSettingsName = "ws";
+			Settings = Properties.Settings.Default;
+			WindowSettingsName = "EntitiesAndFieldsWindowSettings";
 		}
 
 		public FrmEntitiesAndFields(Assembly entityAssembly) : this()
@@ -64,25 +63,13 @@ namespace AW.Winforms.Helpers.LLBL
 
 		private void FrmEntitiesAndFields_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			//if (Properties.Settings.Default.ws == null)
-			//{
-			//  Properties.Settings.Default.ws = new WindowSettings();
-			//}
-			//Properties.Settings.Default.ws.Record(this, splitContainerVertical, splitContainerHorizontal);
-
 			//splitContainerVertical.Panel2Collapsed = true;
-		//	Properties.Settings.Default.EntitiesAndFieldsSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
+			//	Properties.Settings.Default.EntitiesAndFieldsSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
 			//Properties.Settings.Default.Save();
 		}
 
 		private void EntitiesAndFields_Load(object sender, EventArgs e)
 		{
-			//if (Properties.Settings.Default.ws != null)
-			//{
-			//  Properties.Settings.Default.ws.Restore(this, splitContainerVertical, splitContainerHorizontal);
-			//}
-
-			//AWHelper.SetWindowSizeAndLocation(this, Properties.Settings.Default.EntitiesAndFieldsSizeLocation);
 			treeViewEntities.Nodes.Clear();
 			foreach (var entityType in GetEntitiesTypes().OrderBy(t => t.Name))
 			{
@@ -234,8 +221,5 @@ namespace AW.Winforms.Helpers.LLBL
 			}
 		}
 
-		private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-		{
-		}
 	}
 }

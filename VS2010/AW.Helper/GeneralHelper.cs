@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
@@ -191,6 +192,24 @@ namespace AW.Helper
 			if (items is ICollection)
 				return ((ICollection)items).Count == 0;
 			return items.AsNullIfEmpty() == null;
+		}
+
+		public static bool HasSetting(ApplicationSettingsBase applicationSettingsBase, string settingsName)
+		{
+			return !String.IsNullOrEmpty(settingsName) && applicationSettingsBase != null && applicationSettingsBase.Properties.OfType<SettingsProperty>().Any(sp => sp.Name == settingsName);
+		}
+
+		public static SettingsPropertyValue GetSetting(ApplicationSettingsBase applicationSettingsBase, string settingsName)
+		{
+			if (HasSetting(applicationSettingsBase, settingsName))
+			{
+				if (applicationSettingsBase.PropertyValues.Count == 0)
+				{
+					var dummy = applicationSettingsBase[settingsName];
+				}
+				return applicationSettingsBase.PropertyValues[settingsName];
+			}
+			return null;
 		}
 	}
 }

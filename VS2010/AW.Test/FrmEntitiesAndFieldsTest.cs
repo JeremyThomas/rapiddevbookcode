@@ -63,7 +63,6 @@ namespace AW.Tests
 		{
 			//typeof (CommonEntityBase), MetaSingletons.MetaData
 			//AW.Winforms.Helpers.LLBL.FrmEntitiesAndFields.ShowEntitiesAndFields(typeof(AQD.Model.EntityClasses.CommonEntityBase),this);
-			var intSetting = Settings.Default.IntSetting;
 			var baseType = typeof (CommonEntityBase);
 			ILinqMetaData linqMetaData = MetaSingletons.MetaData;
 			ModalFormHandler = Handler;
