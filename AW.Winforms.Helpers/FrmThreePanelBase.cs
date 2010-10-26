@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Data;
-using System.Drawing;
-using System.Drawing.Design;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers
 {
@@ -27,14 +20,28 @@ namespace AW.Winforms.Helpers
 			get
 			{
 				if (HasSetting(WindowSettingsName))
-					return Settings[WindowSettingsName] as WindowSettings;
+					if (WindowSettingsSettingsProperty != null)
+						return WindowSettingsSettingsProperty.PropertyValue as WindowSettings;
 				return null;
 			}
 			set
 			{
 				if (HasSetting(WindowSettingsName))
-					Settings[WindowSettingsName] = value;
+					if (WindowSettingsSettingsProperty != null) 
+					WindowSettingsSettingsProperty.PropertyValue = value;
 			}
+		}
+
+		protected SettingsPropertyValue WindowSettingsSettingsProperty
+		{
+			get { return HasSetting(WindowSettingsName) ? GetSetting(WindowSettingsName) : null; }
+		}
+
+		private SettingsPropertyValue GetSetting(string settingsName)
+		{
+			if (string.IsNullOrEmpty(settingsName) || Settings == null || Settings.PropertyValues == null)
+				return null;
+			return Settings.PropertyValues[settingsName];
 		}
 
 		private bool HasSetting(string settingsName)
@@ -66,7 +73,6 @@ namespace AW.Winforms.Helpers
 			//  {
 			//    Settings[dataBinding.BindingMemberInfo.BindingField] = WindowSettings;
 			//  }
-			
 		}
 
 		private void FrmThreePanelBase_FormClosed(object sender, FormClosedEventArgs e)
@@ -75,6 +81,5 @@ namespace AW.Winforms.Helpers
 			if (Settings != null)
 				Settings.Save();
 		}
-
 	}
 }

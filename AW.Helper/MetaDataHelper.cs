@@ -168,7 +168,8 @@ namespace AW.Helper
 
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(IEnumerable enumerable)
 		{
-			return GetPropertiesToDisplay(GetEnumerableItemType(enumerable));
+			var enumerableItemType = GetEnumerableItemType(enumerable);
+			return GetPropertiesToDisplay(enumerableItemType == typeof (object) ? enumerable.GetType() : enumerableItemType);
 		}
 
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay<T>(IEnumerable<T> enumerable)
@@ -183,7 +184,7 @@ namespace AW.Helper
 		/// <returns></returns>
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
 		{
-			return GetPropertiesToDisplay(type).FilterBySerializable();
+			return GetPropertiesToDisplay(type).FilterBySerializable().FilterByIsNotAssignableFrom(typeof (IDictionary));
 		}
 
 		/// <summary>
@@ -195,6 +196,13 @@ namespace AW.Helper
 		{
 			return from propertyDescriptor in propertyDescriptors
 			       where propertyDescriptor.PropertyType.IsSerializable
+			       select propertyDescriptor;
+		}
+
+		public static IEnumerable<PropertyDescriptor> FilterByIsNotAssignableFrom(this IEnumerable<PropertyDescriptor> propertyDescriptors, Type typeToFilterOut)
+		{
+			return from propertyDescriptor in propertyDescriptors
+			       where !typeToFilterOut.IsAssignableFrom(propertyDescriptor.PropertyType)
 			       select propertyDescriptor;
 		}
 
@@ -217,7 +225,7 @@ namespace AW.Helper
 		public static void AddAssociatedMetadataProviders(params Type[] typesWhichMayHaveBuddyClasses)
 		{
 			if (!typesWhichMayHaveBuddyClasses.IsNullOrEmpty())
-				AddAssociatedMetadataProviders((IEnumerable<Type>)typesWhichMayHaveBuddyClasses);
+				AddAssociatedMetadataProviders((IEnumerable<Type>) typesWhichMayHaveBuddyClasses);
 		}
 
 		/// <summary>

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -13,6 +14,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LinqToSQL;
+using AW.Tests.Properties;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
@@ -139,6 +141,19 @@ namespace AW.Tests
 		{
 			var arrayList = new ArrayList {1, 2, "3"};
 			TestEditInDataGridView(arrayList, 0);
+		}
+
+		[TestMethod]
+		public void SettingsPropertyTest()
+		{
+			TestEditInDataGridView(Settings.Default.Properties, 9);
+			if (Settings.Default.PropertyValues.Count == 0)
+			{
+				var x = Settings.Default.StringSetting;
+			}
+			Assert.AreNotEqual(0, Settings.Default.PropertyValues.Count);
+			TestShowInGrid(Settings.Default.PropertyValues.Cast<SettingsPropertyValue>());
+			TestEditInDataGridView(Settings.Default.PropertyValues, 7);
 		}
 
 		[TestMethod]
