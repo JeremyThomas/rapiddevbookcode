@@ -24,8 +24,6 @@ namespace AW.Winforms.Helpers.LLBL
 		{
 			InitializeComponent();
 			splitContainerVertical.Panel2Collapsed = true;
-			Settings = Properties.Settings.Default;
-			WindowSettingsName = "EntitiesAndFieldsWindowSettings";
 		}
 
 		public FrmEntitiesAndFields(Assembly entityAssembly) : this()
