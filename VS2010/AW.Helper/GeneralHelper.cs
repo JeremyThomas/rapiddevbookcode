@@ -138,7 +138,6 @@ namespace AW.Helper
 		public static DataTable ToDataTable<T>(List<T> items)
 		{
 			var tb = new DataTable(typeof (T).Name);
-
 			var props = typeof (T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
 			foreach (var prop in props)
@@ -150,21 +149,18 @@ namespace AW.Helper
 			foreach (var item in items)
 			{
 				var values = new object[props.Length];
-
 				for (var i = 0; i < props.Length; i++)
 				{
 					values[i] = props[i].GetValue(item, null);
 				}
-
 				tb.Rows.Add(values);
 			}
-
 			return tb;
 		}
 
 		public static IEnumerable<StringWrapper> CreateStringWrapperForBinding(this IEnumerable<string> strings)
 		{
-			return strings.Select(data => new StringWrapper { Value = data }).ToList();
+			return strings.Select(data => new StringWrapper {Value = data}).ToList();
 		}
 
 		/// <summary>
@@ -190,26 +186,58 @@ namespace AW.Helper
 		public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
 		{
 			if (items is ICollection)
-				return ((ICollection)items).Count == 0;
+				return ((ICollection) items).Count == 0;
 			return items.AsNullIfEmpty() == null;
 		}
 
-		public static bool HasSetting(ApplicationSettingsBase applicationSettingsBase, string settingsName)
+		#region Settings
+
+		public static bool HasSetting(ApplicationSettingsBase applicationSettingsBase, string settingName)
 		{
-			return !String.IsNullOrEmpty(settingsName) && applicationSettingsBase != null && applicationSettingsBase.Properties.OfType<SettingsProperty>().Any(sp => sp.Name == settingsName);
+			return HasSettingsAndName(applicationSettingsBase, settingName)
+			       && (applicationSettingsBase.Properties.OfType<SettingsProperty>().Any(sp => sp.Name == settingName)
+			           || applicationSettingsBase.PropertyValues.OfType<SettingsPropertyValue>().Any(pv => pv.Name == settingName));
 		}
 
-		public static SettingsPropertyValue GetSetting(ApplicationSettingsBase applicationSettingsBase, string settingsName)
+		private static bool HasSettingsAndName(ApplicationSettingsBase applicationSettingsBase, string settingName)
 		{
-			if (HasSetting(applicationSettingsBase, settingsName))
+			return !String.IsNullOrEmpty(settingName) && applicationSettingsBase != null;
+		}
+
+		public static SettingsPropertyValue GetSetting(ApplicationSettingsBase applicationSettingsBase, string settingName)
+		{
+			if (HasSetting(applicationSettingsBase, settingName))
 			{
 				if (applicationSettingsBase.PropertyValues.Count == 0)
-				{
-					var dummy = applicationSettingsBase[settingsName];
-				}
-				return applicationSettingsBase.PropertyValues[settingsName];
+					applicationSettingsBase[settingName] = applicationSettingsBase[settingName]; //To force load
+				return applicationSettingsBase.PropertyValues[settingName];
 			}
 			return null;
 		}
+
+		public static SettingsPropertyValue GetSetting(ApplicationSettingsBase applicationSettingsBase, string settingName, Type settingType)
+		{
+			var settingsPropertyValue = GetSetting(applicationSettingsBase, settingName);
+			if (settingsPropertyValue == null && HasSettingsAndName(applicationSettingsBase, settingName))
+			{
+				AddSettingsProperty(applicationSettingsBase, settingName, settingType);
+				settingsPropertyValue = GetSetting(applicationSettingsBase, settingName);
+			}
+			return settingsPropertyValue;
+		}
+
+		public static void AddSettingsProperty(ApplicationSettingsBase applicationSettingsBase, string settingName, Type settingType)
+		{
+			var settingsProperty = new SettingsProperty(settingName)
+			                       	{
+			                       		PropertyType = settingType,
+			                       		Provider = applicationSettingsBase.Providers.Cast<SettingsProvider>().FirstOrDefault(),
+			                       		SerializeAs = SettingsSerializeAs.Xml
+			                       	};
+			settingsProperty.Attributes.Add(typeof (UserScopedSettingAttribute), new UserScopedSettingAttribute());
+			applicationSettingsBase.Properties.Add(settingsProperty);
+		}
+
+		#endregion
 	}
 }

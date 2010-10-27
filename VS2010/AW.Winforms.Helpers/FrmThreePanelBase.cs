@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Configuration;
-using System.Linq;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers
 {
 	public partial class FrmThreePanelBase : Form
 	{
-		protected ApplicationSettingsBase Settings;
-		protected string WindowSettingsName;
+		public string WindowSettingsName { get; set; }
 		private SettingsPropertyValue _windowSettingsSettingsProperty;
 
 		public FrmThreePanelBase()
@@ -34,7 +33,7 @@ namespace AW.Winforms.Helpers
 
 		protected SettingsPropertyValue WindowSettingsSettingsProperty
 		{
-			get { return _windowSettingsSettingsProperty ?? (_windowSettingsSettingsProperty = GeneralHelper.GetSetting(Settings, WindowSettingsName)); }
+			get { return _windowSettingsSettingsProperty ?? (_windowSettingsSettingsProperty = GeneralHelper.GetSetting(Settings.Default, WindowSettingsName, typeof (WindowSettings))); }
 		}
 
 		private void FrmThreePanelBase_Load(object sender, EventArgs e)
@@ -50,14 +49,12 @@ namespace AW.Winforms.Helpers
 // ReSharper disable ConditionIsAlwaysTrueOrFalse
 			if (WindowSettings != null)
 // ReSharper restore ConditionIsAlwaysTrueOrFalse
-			WindowSettings.Record(this, splitContainerVertical, splitContainerHorizontal);
+				WindowSettings.Record(this, splitContainerVertical, splitContainerHorizontal);
 		}
 
 		private void FrmThreePanelBase_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			Properties.Settings.Default.Save();
-			if (Settings != null)
-				Settings.Save();
+			Settings.Default.Save();
 		}
 	}
 }

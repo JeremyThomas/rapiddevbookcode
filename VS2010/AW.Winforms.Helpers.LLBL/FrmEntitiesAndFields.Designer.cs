@@ -33,8 +33,8 @@ namespace AW.Winforms.Helpers.LLBL
 			this.treeViewEntities = new System.Windows.Forms.TreeView();
 			this.imageList1 = new System.Windows.Forms.ImageList(this.components);
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.toolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
 			this.openPaged30ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
 			this.getCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelSelected = new System.Windows.Forms.ToolStripStatusLabel();
@@ -106,19 +106,19 @@ namespace AW.Winforms.Helpers.LLBL
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			this.contextMenuStrip1.Size = new System.Drawing.Size(185, 92);
 			// 
-			// toolStripMenuItemOpen
-			// 
-			this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
-			this.toolStripMenuItemOpen.Size = new System.Drawing.Size(184, 22);
-			this.toolStripMenuItemOpen.Text = "Open wthout paging";
-			this.toolStripMenuItemOpen.Click += new System.EventHandler(this.toolStripMenuItemOpen_Click);
-			// 
 			// openPaged30ToolStripMenuItem
 			// 
 			this.openPaged30ToolStripMenuItem.Name = "openPaged30ToolStripMenuItem";
 			this.openPaged30ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
 			this.openPaged30ToolStripMenuItem.Text = "Open 30 per Page";
 			this.openPaged30ToolStripMenuItem.Click += new System.EventHandler(this.openPaged20ToolStripMenuItem_Click);
+			// 
+			// toolStripMenuItemOpen
+			// 
+			this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
+			this.toolStripMenuItemOpen.Size = new System.Drawing.Size(184, 22);
+			this.toolStripMenuItemOpen.Text = "Open wthout paging";
+			this.toolStripMenuItemOpen.Click += new System.EventHandler(this.toolStripMenuItemOpen_Click);
 			// 
 			// getCountToolStripMenuItem
 			// 
@@ -175,6 +175,7 @@ namespace AW.Winforms.Helpers.LLBL
 			this.Controls.Add(this.statusStrip1);
 			this.Name = "FrmEntitiesAndFields";
 			this.Text = "Entities And Fields";
+			this.WindowSettingsName = "EntitiesAndFieldsWindowSettings";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEntitiesAndFields_FormClosed);
 			this.Load += new System.EventHandler(this.EntitiesAndFields_Load);
 			this.Controls.SetChildIndex(this.statusStrip1, 0);
