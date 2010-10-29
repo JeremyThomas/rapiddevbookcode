@@ -37,11 +37,9 @@ namespace AW.Winforms.Helpers.DataEditor
       // FrmDataEditor
       // 
       this.AutoScaleDimensions = new SizeF(6F, 13F);
-      this.AutoScaleMode = AutoScaleMode.Font;
       this.ClientSize = new Size(529, 459);
       this.Name = "FrmDataEditor";
       this.Text = "FrmDataEditor";
-      this.FormClosing += new FormClosingEventHandler(this.FrmDataEditor_FormClosing);
       this.ResumeLayout(false);
 
     }

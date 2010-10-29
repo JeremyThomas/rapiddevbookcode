@@ -13,7 +13,7 @@ namespace AW.Tests
 	{
 		public static string GetTestxmlString()
 		{
-			var x = new XmlSerializer(typeof(List<SerializableClass>));
+			var x = new XmlSerializer(typeof (List<SerializableClass>));
 			var s = new MemoryStream();
 			x.Serialize(s, SerializableClass.GenerateList());
 
@@ -23,7 +23,7 @@ namespace AW.Tests
 			//
 			//		serializableClassDataTable.WriteXml( s, XmlWriteMode.IgnoreSchema);
 
-			DataSet ds = GetAddressTypeDataSet();
+			var ds = GetAddressTypeDataSet();
 
 			return ds.GetXml();
 		}
@@ -60,10 +60,9 @@ namespace AW.Tests
 		{
 			var list = new List<SerializableBaseClass>();
 			for (var i = 0; i < 10; i++)
-				list.Add(new SerializableBaseClass { IntField = list.Count });
+				list.Add(new SerializableBaseClass {IntField = list.Count});
 			return list;
 		}
-
 	}
 
 	[Serializable]
@@ -81,7 +80,7 @@ namespace AW.Tests
 		{
 			var list = new List<SerializableBaseClass2>();
 			for (var i = 0; i < 10; i++)
-				list.Add(new SerializableBaseClass2 { IntField = list.Count });
+				list.Add(new SerializableBaseClass2 {IntField = list.Count});
 			return list;
 		}
 
@@ -107,7 +106,7 @@ namespace AW.Tests
 		{
 			var list = new List<NonSerializableClass>();
 			for (var i = 0; i < 10; i++)
-				list.Add(new NonSerializableClass { DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString() });
+				list.Add(new NonSerializableClass {DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString()});
 			return list;
 		}
 	}
@@ -127,7 +126,7 @@ namespace AW.Tests
 		{
 			var list = new List<SerializableClass>();
 			for (var i = 0; i < 10; i++)
-				list.Add(new SerializableClass { DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString() });
+				list.Add(new SerializableClass {DateTimeField = DateTime.Now, IntField = list.Count, StringField = list.Count.ToString()});
 			return list;
 		}
 

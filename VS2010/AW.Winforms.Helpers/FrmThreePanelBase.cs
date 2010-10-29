@@ -1,60 +1,24 @@
-﻿using System;
-using System.Configuration;
-using System.Windows.Forms;
-using AW.Helper;
-using AW.Winforms.Helpers.Properties;
+﻿using System.Windows.Forms;
 
 namespace AW.Winforms.Helpers
 {
-	public partial class FrmThreePanelBase : Form
+	public partial class FrmThreePanelBase : FrmPersistantLocation
 	{
-		public string WindowSettingsName { get; set; }
-		private SettingsPropertyValue _windowSettingsSettingsProperty;
+		private readonly SplitContainer[] _splitContainers;
 
 		public FrmThreePanelBase()
 		{
 			InitializeComponent();
+			_splitContainers = new[] {splitContainerVertical, splitContainerHorizontal};
 		}
 
-		protected WindowSettings WindowSettings
+		#region Overrides of FrmPersistantLocation
+
+		protected override SplitContainer[] Splitters
 		{
-			get
-			{
-				if (WindowSettingsSettingsProperty != null)
-					return WindowSettingsSettingsProperty.PropertyValue as WindowSettings;
-				return null;
-			}
-			set
-			{
-				if (WindowSettingsSettingsProperty != null)
-					WindowSettingsSettingsProperty.PropertyValue = value;
-			}
+			get { return _splitContainers; }
 		}
 
-		protected SettingsPropertyValue WindowSettingsSettingsProperty
-		{
-			get { return _windowSettingsSettingsProperty ?? (_windowSettingsSettingsProperty = GeneralHelper.GetSetting(Settings.Default, WindowSettingsName, typeof (WindowSettings))); }
-		}
-
-		private void FrmThreePanelBase_Load(object sender, EventArgs e)
-		{
-			if (WindowSettings != null)
-				WindowSettings.Restore(this, splitContainerVertical, splitContainerHorizontal);
-		}
-
-		private void FrmThreePanelBase_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (WindowSettings == null)
-				WindowSettings = new WindowSettings();
-// ReSharper disable ConditionIsAlwaysTrueOrFalse
-			if (WindowSettings != null)
-// ReSharper restore ConditionIsAlwaysTrueOrFalse
-				WindowSettings.Record(this, splitContainerVertical, splitContainerHorizontal);
-		}
-
-		private void FrmThreePanelBase_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			Settings.Default.Save();
-		}
+		#endregion
 	}
 }

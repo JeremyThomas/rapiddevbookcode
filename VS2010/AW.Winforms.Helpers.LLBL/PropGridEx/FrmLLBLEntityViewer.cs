@@ -55,7 +55,7 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
 		public static Form Show(ILinqMetaData linqMetaData)
 		{
 			var adapter = EntityHelper.GetDataAccessAdapter(linqMetaData.GetQueryableForEntity(0).Provider);
-			return adapter == null ? Show((object)linqMetaData) : Show(linqMetaData, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(adapter));
+			return adapter == null ? Show((object) linqMetaData) : Show(linqMetaData, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(adapter));
 		}
 
 		public static Form Show(object entity, IDataEditorPersister dataEditorPersister)
@@ -63,6 +63,54 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
 			var frm = new FrmLLBLEntityViewer(entity, dataEditorPersister);
 			AWHelper.ShowForm(frm);
 			return frm;
+		}
+
+		private void InitializeComponent()
+		{
+			this.splitContainerVertical.Panel1.SuspendLayout();
+			this.splitContainerVertical.Panel2.SuspendLayout();
+			this.splitContainerVertical.SuspendLayout();
+			this.splitContainerHorizontal.Panel1.SuspendLayout();
+			this.splitContainerHorizontal.Panel2.SuspendLayout();
+			this.splitContainerHorizontal.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// propertyGrid1
+			// 
+			this.propertyGrid1.Size = new System.Drawing.Size(684, 280);
+			// 
+			// ObjectBrowser
+			// 
+			this.ObjectBrowser.ShowDataTypes = false;
+			this.ObjectBrowser.Size = new System.Drawing.Size(343, 619);
+			// 
+			// gridDataEditor
+			// 
+			this.gridDataEditor.Size = new System.Drawing.Size(684, 272);
+			// 
+			// splitContainerVertical
+			// 
+			this.splitContainerVertical.Size = new System.Drawing.Size(1031, 619);
+			// 
+			// splitContainerHorizontal
+			// 
+			this.splitContainerHorizontal.Size = new System.Drawing.Size(684, 619);
+			this.splitContainerHorizontal.SplitterDistance = 343;
+			// 
+			// FrmLLBLEntityViewer
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.ClientSize = new System.Drawing.Size(1031, 641);
+			this.Name = "FrmLLBLEntityViewer";
+			this.splitContainerVertical.Panel1.ResumeLayout(false);
+			this.splitContainerVertical.Panel2.ResumeLayout(false);
+			this.splitContainerVertical.ResumeLayout(false);
+			this.splitContainerHorizontal.Panel1.ResumeLayout(false);
+			this.splitContainerHorizontal.Panel2.ResumeLayout(false);
+			this.splitContainerHorizontal.ResumeLayout(false);
+			this.ResumeLayout(false);
+			this.PerformLayout();
+
 		}
 	}
 }

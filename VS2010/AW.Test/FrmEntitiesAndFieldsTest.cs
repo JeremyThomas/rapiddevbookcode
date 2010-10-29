@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Tests.Properties;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;

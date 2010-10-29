@@ -35,10 +35,10 @@ namespace AW.Winforms.Helpers
 			foreach (DataGridViewColumn column in dataGridView.Columns)
 			{
 				stringCollection.Add(String.Format(
-															 "{0},{1},{2}",
-															 column.DisplayIndex,
-															 column.Width,
-															 column.Visible));
+					"{0},{1},{2}",
+					column.DisplayIndex,
+					column.Width,
+					column.Visible));
 			}
 			return stringCollection;
 		}

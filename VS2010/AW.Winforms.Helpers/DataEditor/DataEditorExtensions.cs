@@ -41,7 +41,7 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		#region DataGridViewGeneric
 
-		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable) 
+		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable)
 		{
 			var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
 			if (contextField != null)

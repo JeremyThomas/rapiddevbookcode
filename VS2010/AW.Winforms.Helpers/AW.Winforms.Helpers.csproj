@@ -84,6 +84,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Ancillary\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
+      <Link>GlobalAssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="AWHelper.cs" />
     <Compile Include="Controls\DataEditorPersister.cs" />
     <Compile Include="Controls\GridDataEditorT.cs">
@@ -114,6 +120,12 @@
     </Compile>
     <Compile Include="DataEditor\FrmHierarchyEditor.Designer.cs">
       <DependentUpon>FrmHierarchyEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmPersistantLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmPersistantLocation.Designer.cs">
+      <DependentUpon>FrmPersistantLocation.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmThreePanelBase.cs">
       <SubType>Form</SubType>
@@ -201,6 +213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataEditor\FrmHierarchyEditor.resx">
       <DependentUpon>FrmHierarchyEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmPersistantLocation.resx">
+      <DependentUpon>FrmPersistantLocation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmThreePanelBase.resx">
       <DependentUpon>FrmThreePanelBase.cs</DependentUpon>

@@ -12,7 +12,6 @@ namespace AW.Winforms.Helpers
 {
 	public static class BindingListHelper
 	{
-		
 		//&& enumerable.ToString() != "System.Collections.Hashtable+KeyCollection"
 		public static IBindingListView ToBindingListView(this IEnumerable enumerable)
 		{
@@ -38,10 +37,10 @@ namespace AW.Winforms.Helpers
 			if (showenEnumerable)
 			{
 				if (enumerable is IBindingListView)
-					return (IBindingListView)enumerable;
+					return (IBindingListView) enumerable;
 				if (enumerable is IListSource)
 				{
-					var bindingListView = ListSourceToBindingListView((IListSource)enumerable);
+					var bindingListView = ListSourceToBindingListView((IListSource) enumerable);
 					if (bindingListView != null)
 						return bindingListView;
 				}
@@ -66,7 +65,7 @@ namespace AW.Winforms.Helpers
 			if (list != null)
 			{
 				if (list is IBindingListView)
-					return (IBindingListView)list;
+					return (IBindingListView) list;
 				var objectListView = new ObjectListView(list);
 				if (objectListView.ItemType != null)
 					return objectListView;
@@ -79,7 +78,7 @@ namespace AW.Winforms.Helpers
 			if (list != null)
 			{
 				if (list is IBindingListView)
-					return (IBindingListView)list;
+					return (IBindingListView) list;
 				var objectListView = new ObjectListView<T>(list);
 				return objectListView;
 			}
@@ -89,12 +88,12 @@ namespace AW.Winforms.Helpers
 		private static IBindingListView ToObjectListView(this IEnumerable enumerable)
 		{
 			var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
-			if (itemType == typeof(string))
+			if (itemType == typeof (string))
 				return null;
-			enumerable = (IEnumerable)ListBindingHelper.GetList(enumerable);
+			enumerable = (IEnumerable) ListBindingHelper.GetList(enumerable);
 			if (enumerable is IList)
 			{
-				var objectListView = ((IList)enumerable).ToObjectListView();
+				var objectListView = ((IList) enumerable).ToObjectListView();
 				if (objectListView != null)
 					return objectListView;
 			}
@@ -103,10 +102,10 @@ namespace AW.Winforms.Helpers
 
 		private static IBindingListView ToObjectListView<T>(this IEnumerable<T> enumerable)
 		{
-			if (typeof(T) == typeof(string))
+			if (typeof (T) == typeof (string))
 				return null;
-			enumerable = (IEnumerable<T>)ListBindingHelper.GetList(enumerable);
-			return ToObjectListView((IList<T>)enumerable.ToList());
+			enumerable = (IEnumerable<T>) ListBindingHelper.GetList(enumerable);
+			return ToObjectListView((IList<T>) enumerable.ToList());
 		}
 
 		private static IBindingListView CreateObjectListViewViaBindingSource(IEnumerable enumerable)

@@ -11,7 +11,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
-	public partial class FrmTrace : Form
+	public partial class FrmTrace : FrmPersistantLocation
 	{
 		private int _textBoxTraceListenerIndex;
 		private TextBoxTraceListener _textBoxTraceListener;
@@ -30,7 +30,6 @@ namespace AW.Win
 		{
 			DQETraceLevel = Settings.Default.TraceLevel;
 			LinqTraceLevel = Settings.Default.LinqTraceLevel;
-			AWHelper.SetWindowSizeAndLocation(this, Settings.Default.TraceWindowSizeLocation);
 			checkBoxSQLTrace_CheckedChanged(checkBoxSQLTrace, e);
 		}
 
@@ -42,7 +41,6 @@ namespace AW.Win
 
 		private void frmTrace_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			Settings.Default.TraceWindowSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
 		}
 
 		private void frmTrace_FormClosed(object sender, FormClosedEventArgs e)

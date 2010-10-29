@@ -237,7 +237,7 @@ namespace Chaliy.Windows.Forms
 
 		[
 			//DefaultValue(true),
-		  Category("Behavior"),
+			Category("Behavior"),
 			Description("Still try and display even if there are errors in the data")
 		]
 		public bool IgnoreErrors { get; set; }

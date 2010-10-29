@@ -60,7 +60,7 @@ namespace AW.Helper.LLBL
 			var entity = CreateEntity(typeOfEntity);
 			return entity == null ? 0 : entity.LLBLGenProEntityTypeValue;
 		}
-	 
+
 		public static int GetEntityTypeValueForType<T>() where T : class, IEntityCore
 		{
 			return GetEntityTypeValueForType(typeof (T));
@@ -77,7 +77,7 @@ namespace AW.Helper.LLBL
 		public static EntityCollectionBase<T> ToEntityCollection<T>(this IQueryable<T> query) where T : EntityBase
 		{
 			var llblQuery = query as ILLBLGenProQuery;
-			return llblQuery == null ? ((IEnumerable<T>)query).ToEntityCollection() : llblQuery.Execute<EntityCollectionBase<T>>();
+			return llblQuery == null ? ((IEnumerable<T>) query).ToEntityCollection() : llblQuery.Execute<EntityCollectionBase<T>>();
 		}
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace AW.Helper.LLBL
 		{
 			if (enumerable.Count() == 0)
 				return GetFactory<T>().CreateEntityCollection() as EntityCollectionBase<T>;
-			var entities = ((IEntity)enumerable.First()).GetEntityFactory().CreateEntityCollection() as EntityCollectionBase<T>;
+			var entities = ((IEntity) enumerable.First()).GetEntityFactory().CreateEntityCollection() as EntityCollectionBase<T>;
 			if (entities != null)
 				entities.AddRange(enumerable);
 			return entities;
@@ -147,7 +147,7 @@ namespace AW.Helper.LLBL
 		/// <returns>factory to use or null if not found</returns>
 		public static IEntityFactory GetFactory<T>() where T : EntityBase
 		{
-			return ((IEntity)CreateEntity<T>()).GetEntityFactory();
+			return ((IEntity) CreateEntity<T>()).GetEntityFactory();
 		}
 
 		/// <summary>
@@ -158,7 +158,7 @@ namespace AW.Helper.LLBL
 		public static int DeleteEntities(IEnumerable entitiesToDelete)
 		{
 			if (entitiesToDelete is EntityCollectionBase<EntityBase>)
-				return ((EntityCollectionBase<EntityBase>)entitiesToDelete).DeleteMulti();
+				return ((EntityCollectionBase<EntityBase>) entitiesToDelete).DeleteMulti();
 			return entitiesToDelete.Cast<EntityBase>().Count(entity => entity.Delete() || entity.IsNew);
 		}
 
@@ -170,10 +170,10 @@ namespace AW.Helper.LLBL
 		public static int Delete(object dataToDelete)
 		{
 			var listItemType = ListBindingHelper.GetListItemType(dataToDelete);
-			if (typeof(IEntity).IsAssignableFrom(listItemType))
+			if (typeof (IEntity).IsAssignableFrom(listItemType))
 			{
 				var enumerable = dataToDelete as IEnumerable;
-				return enumerable == null ? Convert.ToInt32(((IEntity)dataToDelete).Delete()) : DeleteEntities(enumerable);
+				return enumerable == null ? Convert.ToInt32(((IEntity) dataToDelete).Delete()) : DeleteEntities(enumerable);
 			}
 			return 0;
 		}
@@ -246,7 +246,7 @@ namespace AW.Helper.LLBL
 			if (typeof (IEntity2).IsAssignableFrom(listItemType))
 			{
 				var enumerable = dataToSave as IEnumerable;
-				return enumerable == null ? Convert.ToInt32(dataAccessAdapter.SaveEntity((IEntity2)dataToSave)) : SaveEntities(enumerable, dataAccessAdapter);
+				return enumerable == null ? Convert.ToInt32(dataAccessAdapter.SaveEntity((IEntity2) dataToSave)) : SaveEntities(enumerable, dataAccessAdapter);
 			}
 			return 0;
 		}
@@ -271,17 +271,17 @@ namespace AW.Helper.LLBL
 		public static int DeleteEntities(IEnumerable entitiesToDelete, IDataAccessAdapter dataAccessAdapter)
 		{
 			if (entitiesToDelete is IEntityCollection2)
-				return dataAccessAdapter.DeleteEntityCollection((IEntityCollection2) entitiesToDelete);  
+				return dataAccessAdapter.DeleteEntityCollection((IEntityCollection2) entitiesToDelete);
 			return DeleteEntities(entitiesToDelete.Cast<IEntity2>(), dataAccessAdapter);
 		}
 
 		public static int Delete(object dataToDelete, IDataAccessAdapter dataAccessAdapter)
 		{
 			var listItemType = ListBindingHelper.GetListItemType(dataToDelete);
-			if (typeof(IEntity2).IsAssignableFrom(listItemType))
+			if (typeof (IEntity2).IsAssignableFrom(listItemType))
 			{
 				var enumerable = dataToDelete as IEnumerable;
-				return enumerable == null ? Convert.ToInt32(dataAccessAdapter.DeleteEntity((IEntity2)dataToDelete)) : DeleteEntities(enumerable, dataAccessAdapter);
+				return enumerable == null ? Convert.ToInt32(dataAccessAdapter.DeleteEntity((IEntity2) dataToDelete)) : DeleteEntities(enumerable, dataAccessAdapter);
 			}
 			return 0;
 		}

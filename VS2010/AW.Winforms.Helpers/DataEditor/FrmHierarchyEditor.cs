@@ -7,7 +7,7 @@ using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers.DataEditor
 {
-	public partial class FrmHierarchyEditor : Form
+	public partial class FrmHierarchyEditor : FrmThreePanelBase
 	{
 		public FrmHierarchyEditor()
 		{
@@ -43,8 +43,8 @@ namespace AW.Winforms.Helpers.DataEditor
 		{
 			toolStripStatusLabelSelectePath.Text = ((dataTreeView).SelectedNode).FullPath;
 			propertyGrid1.SelectedObject = e.Node.Tag;
-			splitContainerNode.Panel2Collapsed = e.Node.Nodes.Count == 0;
-			if (splitContainerNode.Panel2Collapsed)
+			splitContainerHorizontal.Panel2Collapsed = e.Node.Nodes.Count == 0;
+			if (splitContainerHorizontal.Panel2Collapsed)
 				gridDataEditor.DataSource = null;
 			else
 				gridDataEditor.BindEnumerable(e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToList());

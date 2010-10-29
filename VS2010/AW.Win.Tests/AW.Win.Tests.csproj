@@ -67,6 +67,12 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Ancillary\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
+      <Link>GlobalAssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="FormTest.cs" />
     <Compile Include="OrganizationHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

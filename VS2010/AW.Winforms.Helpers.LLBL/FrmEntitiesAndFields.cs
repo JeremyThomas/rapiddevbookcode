@@ -218,6 +218,5 @@ namespace AW.Winforms.Helpers.LLBL
 				contextMenuStrip1.Show(treeViewEntities, e.Location);
 			}
 		}
-
 	}
 }

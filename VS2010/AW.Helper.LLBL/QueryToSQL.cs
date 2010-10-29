@@ -245,6 +245,5 @@ namespace AW.Helper.LLBL
 				sb.Append("\r\n Sequence Retrieval Query #" + part++ + ":\r\n" + sequenceRetrievalQuery.SequenceRetrievalCommand.CommandText);
 			}
 		}
-
 	}
 }

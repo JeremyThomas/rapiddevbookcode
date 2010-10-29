@@ -208,9 +208,13 @@ namespace AW.Helper
 		{
 			if (HasSetting(applicationSettingsBase, settingName))
 			{
-				if (applicationSettingsBase.PropertyValues.Count == 0)
+				var settingsPropertyValue = applicationSettingsBase.PropertyValues[settingName];
+				if (settingsPropertyValue == null)
+				{
 					applicationSettingsBase[settingName] = applicationSettingsBase[settingName]; //To force load
-				return applicationSettingsBase.PropertyValues[settingName];
+					settingsPropertyValue = applicationSettingsBase.PropertyValues[settingName];
+				}
+				return settingsPropertyValue;
 			}
 			return null;
 		}
