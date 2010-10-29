@@ -75,7 +75,6 @@
       this.contextMenuStripTab.Name = "contextMenuStripTab";
       this.contextMenuStripTab.Size = new System.Drawing.Size(167, 136);
       this.contextMenuStripTab.Text = "Save As...";
-      this.contextMenuStripTab.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripTab_Opening);
       // 
       // toolStripMenuItemSave
       // 
@@ -175,8 +174,6 @@
       this.Name = "FrmQueryRunner";
       this.Tag = "true";
       this.Text = "Query Runner";
-      this.Load += new System.EventHandler(this.FrmQueryRunner_Load);
-      this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmQueryRunner_FormClosing);
       this.tabControl.ResumeLayout(false);
       this.contextMenuStripTab.ResumeLayout(false);
       this.tabPageSample.ResumeLayout(false);

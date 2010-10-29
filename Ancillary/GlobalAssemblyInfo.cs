@@ -1,4 +1,5 @@
-ï»¿using System.Reflection;
+using System.Reflection;
+using System.Security;
 
 //
 // General Information about an assembly is controlled through the following 
@@ -6,8 +7,33 @@
 // associated with an assembly.
 //
 
-[assembly: AssemblyTitle("")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration(AssemblyInfoConstants.AssemblyConfiguration)]
+[assembly: AssemblyCompany(AssemblyInfoConstants.AssemblyCompany)]
+[assembly: AssemblyCopyright(AssemblyInfoConstants.AssemblyCopyright)]
+[assembly: AssemblyProduct(AssemblyInfoConstants.AssemblyProduct)]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+[assembly: AssemblyInformationalVersion(AssemblyInfoConstants.AssemblyInformationalVersion)]
+//[assembly: AllowPartiallyTrustedCallers]
+
+internal static class AssemblyInfoConstants
+{
+	public const string AssemblyCompany = "Adventure Works Cycles";
+	public const string AssemblyCopyright = "Copyright © 2010 Adventure Works Cycles";
+	public const string AssemblyProduct = "Adventure Works Cycles LLBL Sample";
+	public const string AssemblyInformationalVersion = "1.0.0";
+	public const string AssemblyRevision = "0";
+	public const string AssemblyVersion = AssemblyInformationalVersion + "." + AssemblyRevision;
+	public const string ExecutableRevision = "0";
+	public const string ExecutableVersion = AssemblyInformationalVersion + "." + ExecutableRevision;
+	// Compile a Debug or Release flag into the assembly.
+#if DEBUG
+	public const string AssemblyConfiguration = "Debug";
+#else
+	public const string AssemblyConfiguration = "Release";
+#endif
+	public const string ConfigurationSuffix = "\r\nBuild: " + AssemblyConfiguration;
+}
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -34,7 +60,6 @@
 //   (*) Delay Signing is an advanced option - see the Microsoft .NET Framework
 //       documentation for more information on this.
 //
-
-[assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("")]
-[assembly: AssemblyKeyName("")]
+//[assembly: AssemblyDelaySign(false)]
+//[assembly: AssemblyKeyFile("")]
+//[assembly: AssemblyKeyName("")]

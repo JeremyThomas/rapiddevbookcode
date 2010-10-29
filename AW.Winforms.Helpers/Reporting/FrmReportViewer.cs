@@ -1,104 +1,93 @@
 using System;
 using System.Collections;
-using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
+using System.IO;
 using System.Windows.Forms;
-using System.Xml.Serialization;
+using AW.Winforms.Helpers;
 using Microsoft.Reporting.WinForms;
 
 namespace DynamicTable
 {
-  /// <summary>
-  /// Based on http://www.gotreportviewer.com/DynamicTable.zip
-  /// </summary>
-    public partial class FrmReportViewer : Form
-    {
-      private IEnumerable m_dataSet;
-        private MemoryStream m_rdl;
+	/// <summary>
+	/// Based on http://www.gotreportviewer.com/DynamicTable.zip
+	/// </summary>
+	public partial class FrmReportViewer : FrmPersistantLocation
+	{
+		private IEnumerable _dataSet;
+		private MemoryStream _rdl;
 
-        public FrmReportViewer()
-        {
-            InitializeComponent();
-        }
+		public FrmReportViewer()
+		{
+			InitializeComponent();
+		}
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+		private void ShowReport()
+		{
+			reportViewer1.Reset();
+			reportViewer1.LocalReport.LoadReportDefinition(_rdl);
+			reportViewer1.LocalReport.DataSources.Add(new ReportDataSource("MyData", _dataSet));
+			reportViewer1.RefreshReport();
+		}
 
-        }
+		private static MemoryStream GenerateRdl(List<string> allFields, List<string> selectedFields)
+		{
+			var ms = new MemoryStream();
+			var gen = new RdlGenerator {AllFields = allFields, SelectedFields = selectedFields};
+			gen.WriteXml(ms);
+			ms.Position = 0;
+			return ms;
+		}
 
-        private void ShowReport()
-        {
-            this.reportViewer1.Reset();
-            this.reportViewer1.LocalReport.LoadReportDefinition(m_rdl);
-            this.reportViewer1.LocalReport.DataSources.Add(new ReportDataSource("MyData", m_dataSet));
-            this.reportViewer1.RefreshReport();
-        }
-
-        private MemoryStream GenerateRdl(List<string> allFields, List<string> selectedFields)
-        {
-            MemoryStream ms = new MemoryStream();
-            RdlGenerator gen = new RdlGenerator();
-            gen.AllFields = allFields;
-            gen.SelectedFields = selectedFields;
-            gen.WriteXml(ms);
-            ms.Position = 0;
-            return ms;
-        }
-
-        private void DumpRdl(MemoryStream rdl)
-        {
+		private void DumpRdl(MemoryStream rdl)
+		{
 #if DEBUG_RDLC
-            using (FileStream fs = new FileStream(@"c:\test.rdlc", FileMode.Create))
-            {
-                rdl.WriteTo(fs);
-            }
+						using (FileStream fs = new FileStream(@"c:\test.rdlc", FileMode.Create))
+						{
+								rdl.WriteTo(fs);
+						}
 #endif
-        }
+		}
 
-        private List<string> GetAvailableFields()
-        {
-          var properties = TypeDescriptor.GetProperties((new BindingSource(m_dataSet, "")).Current);
-            List<string> availableFields = new List<string>();
-            for (int i = 0; i < properties.Count; i++)
-            {
-              var t = properties[i];
-              if ((t.PropertyType.IsValueType||t.PropertyType==typeof(string)) && t.Name[0]!='<')
-                availableFields.Add(t.Name);
-            }
-            return availableFields;
-        }
+		private List<string> GetAvailableFields()
+		{
+			var properties = TypeDescriptor.GetProperties((new BindingSource(_dataSet, "")).Current);
+			var availableFields = new List<string>();
+			for (var i = 0; i < properties.Count; i++)
+			{
+				var t = properties[i];
+				if ((t.PropertyType.IsValueType || t.PropertyType == typeof (string)) && t.Name[0] != '<')
+					availableFields.Add(t.Name);
+			}
+			return availableFields;
+		}
 
-        public void OpenDataSet(IEnumerable dataSet, bool showOptionsDialog)
-        {
-            try
-            {
-                m_dataSet = dataSet;
+		public void OpenDataSet(IEnumerable dataSet, bool showOptionsDialog)
+		{
+			try
+			{
+				_dataSet = dataSet;
 
-                List<string> allFields = GetAvailableFields();
-                ReportOptionsDialog dlg = new ReportOptionsDialog(allFields);
-                if (showOptionsDialog)
-                {
-                    if (dlg.ShowDialog() != DialogResult.OK)
-                        return;
-                }
-                List<string> selectedFields = dlg.GetSelectedFields();
+				var allFields = GetAvailableFields();
+				var dlg = new ReportOptionsDialog(allFields);
+				if (showOptionsDialog)
+				{
+					if (dlg.ShowDialog() != DialogResult.OK)
+						return;
+				}
+				var selectedFields = dlg.GetSelectedFields();
 
-                if (m_rdl != null)
-                    m_rdl.Dispose();
-                m_rdl = GenerateRdl(allFields, selectedFields);
-                DumpRdl(m_rdl);
+				if (_rdl != null)
+					_rdl.Dispose();
+				_rdl = GenerateRdl(allFields, selectedFields);
+				DumpRdl(_rdl);
 
-                ShowReport();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-    }
+				ShowReport();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
+	}
 }

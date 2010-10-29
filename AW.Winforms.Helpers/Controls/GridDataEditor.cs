@@ -23,7 +23,7 @@ namespace AW.Winforms.Helpers.Controls
 		private bool _canSave;
 		private IQueryable _superset;
 		public IDataEditorPersister DataEditorPersister;
-		private static Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> _fieldsToPropertiesTypeDescriptionProviders= new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
+		private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> _fieldsToPropertiesTypeDescriptionProviders = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
 
 		public GridDataEditor()
 		{
@@ -229,7 +229,7 @@ namespace AW.Winforms.Helpers.Controls
 		private void bindingSourcePaging_PositionChanged(object sender, EventArgs e)
 		{
 			if (bindingSourcePaging.Count != 0)
-			  BindPage();
+				BindPage();
 		}
 
 		protected void BindPage()

@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Windows.Forms;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;
 using NUnit.Extensions.Forms.TestApplications.TestForms;
 using NUnit.Extensions.Forms.Testers;
@@ -26,8 +28,8 @@ namespace AW.Tests
 
 		[TestMethod]
 		public void TestColumnsNonModal()
-		{			
-			_dataGridViewTestForm.Show();			
+		{
+			_dataGridViewTestForm.Show();
 			_dataGridView = new DataGridViewTester("dataGridView");
 			Assert.AreEqual(1, _dataGridView.Properties.ColumnCount);
 		}
@@ -39,9 +41,9 @@ namespace AW.Tests
 			_dataGridViewTestForm.ShowDialog();
 		}
 
-		public void Handler(string name, System.IntPtr hWnd, System.Windows.Forms.Form form)
+		public void Handler(string name, IntPtr hWnd, Form form)
 		{
-			Assert.AreEqual(1, ((DataGridViewTestForm)form).dataGridView.ColumnCount);
+			Assert.AreEqual(1, ((DataGridViewTestForm) form).dataGridView.ColumnCount);
 			form.Close();
 		}
 	}

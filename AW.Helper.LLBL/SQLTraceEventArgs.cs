@@ -17,6 +17,7 @@ namespace AW.Helper.LLBL
 	public class SQLTraceEventArgs : EventArgs
 	{
 		private string _sqlTrace;
+
 		public string SQLTrace
 		{
 			get

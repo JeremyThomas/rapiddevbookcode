@@ -26,7 +26,7 @@ namespace AW.Winforms.Helpers.LLBL
 			{
 				var validator = entity.Validator;
 				if (value.Equals(entity.GetCurrentFieldValue(fieldToValidate)) == false
-						&& validator.ValidateFieldValue(entity, fieldToValidate, value) == false
+				    && validator.ValidateFieldValue(entity, fieldToValidate, value) == false
 					)
 				{
 					myError.SetError(controltoValidate, errorMessage);
@@ -69,7 +69,6 @@ namespace AW.Winforms.Helpers.LLBL
 
 		public class DataEditorLLBLSelfServicingPersister : IDataEditorPersister
 		{
-
 			public int Save(object dataToSave)
 			{
 				return EntityHelper.Save(dataToSave);
@@ -82,9 +81,8 @@ namespace AW.Winforms.Helpers.LLBL
 
 			public bool CanSave(Type typeToSave)
 			{
-				return typeof(EntityBase).IsAssignableFrom(typeToSave);
+				return typeof (EntityBase).IsAssignableFrom(typeToSave);
 			}
-
 		}
 
 		public static IEnumerable<T> ShowSelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
@@ -115,7 +113,7 @@ namespace AW.Winforms.Helpers.LLBL
 		{
 			return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
 		}
-		
+
 		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
 		{
 			return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
@@ -162,11 +160,9 @@ namespace AW.Winforms.Helpers.LLBL
 
 			public bool CanSave(Type typeToSave)
 			{
-				return typeof(EntityBase2).IsAssignableFrom(typeToSave);
+				return typeof (EntityBase2).IsAssignableFrom(typeToSave);
 			}
-
 		}
-
 
 		#endregion
 	}

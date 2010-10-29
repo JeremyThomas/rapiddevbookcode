@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using AW.Helper;
 
 namespace AW.Winforms.Helpers
 {
@@ -53,11 +54,12 @@ namespace AW.Winforms.Helpers
 
 		public void Record(Form form, params SplitContainer[] splitters)
 		{
+			var hasSplitters = !splitters.IsNullOrEmpty();
 			bool shouldRecordSplitters;
 			if (form == null)
 			{
 				shouldRecordSplitters =
-					splitters.Length > 0 &&
+					hasSplitters &&
 					splitters[0].FindForm().WindowState != FormWindowState.Minimized;
 			}
 			else
@@ -66,11 +68,10 @@ namespace AW.Winforms.Helpers
 				{
 					case FormWindowState.Maximized:
 						RecordWindowPosition(form.RestoreBounds);
-						shouldRecordSplitters = true;
+						shouldRecordSplitters = hasSplitters;
 						break;
 					case FormWindowState.Normal:
-						shouldRecordSplitters =
-							RecordWindowPosition(form.Bounds);
+						shouldRecordSplitters = RecordWindowPosition(form.Bounds) && hasSplitters;
 						break;
 					default:
 						// Don't record anything when closing while minimized.
@@ -112,33 +113,34 @@ namespace AW.Winforms.Helpers
 
 		private void RestoreSplitters(IList<SplitContainer> splitters)
 		{
-			for (
-				var i = 0;
-				i < splitters.Count &&
-				SplitterDistances != null &&
-				i < SplitterDistances.Length;
-				i++)
-			{
-				var splitter = splitters[i];
-				if (splitter == null)
+			if (!splitters.IsNullOrEmpty())
+				for (
+					var i = 0;
+					i < splitters.Count &&
+					SplitterDistances != null &&
+					i < SplitterDistances.Length;
+					i++)
 				{
-					continue;
+					var splitter = splitters[i];
+					if (splitter == null)
+					{
+						continue;
+					}
+					var splitterDistance = SplitterDistances[i];
+					if (SplitterSizes != null)
+					{
+						splitterDistance =
+							splitterDistance*GetSplitterSize(splitter)/SplitterSizes[i];
+					}
+					var splitterSize = GetSplitterSize(splitter);
+					var isDistanceLegal =
+						splitter.Panel1MinSize <= splitterDistance
+						&& splitterDistance <= splitterSize - splitter.Panel2MinSize;
+					if (isDistanceLegal)
+					{
+						splitter.SplitterDistance = splitterDistance;
+					}
 				}
-				var splitterDistance = SplitterDistances[i];
-				if (SplitterSizes != null)
-				{
-					splitterDistance =
-						splitterDistance*GetSplitterSize(splitter)/SplitterSizes[i];
-				}
-				var splitterSize = GetSplitterSize(splitter);
-				var isDistanceLegal =
-					splitter.Panel1MinSize <= splitterDistance
-					&& splitterDistance <= splitterSize - splitter.Panel2MinSize;
-				if (isDistanceLegal)
-				{
-					splitter.SplitterDistance = splitterDistance;
-				}
-			}
 		}
 
 		private static int GetSplitterSize(SplitContainer splitter)

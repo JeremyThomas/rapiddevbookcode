@@ -552,7 +552,6 @@ namespace AW.Win
           this.Tag = "True";
           this.Text = "Order Search";
           this.Load += new System.EventHandler(this.frmOrderSearch_Load);
-          this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderSearch_FormClosed);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmOrderSearch_FormClosing);
           this.tableLayoutPanel1.ResumeLayout(false);
           this.tableLayoutPanel2.ResumeLayout(false);

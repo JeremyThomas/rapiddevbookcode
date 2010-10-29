@@ -152,7 +152,8 @@ namespace AW.Helper
 				{
 					// Add the property as a column in the table if it doesn't exist
 					// already.
-					var dc = table.Columns.Contains(p.Name) ? table.Columns[p.Name]
+					var dc = table.Columns.Contains(p.Name)
+					         	? table.Columns[p.Name]
 					         	: table.Columns.Add(p.Name, MetaDataHelper.GetCoreType(p.PropertyType));
 
 					// Add the property to the ordinal map.

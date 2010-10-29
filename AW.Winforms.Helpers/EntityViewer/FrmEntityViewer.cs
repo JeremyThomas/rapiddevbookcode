@@ -3,11 +3,10 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Controls;
-using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers.EntityViewer
 {
-	public partial class FrmEntityViewer : Form
+	public partial class FrmEntityViewer : FrmThreePanelBase
 	{
 		private static TypeDescriptionProvider _commonEntityBaseTypeDescriptionProvider;
 		private bool _doingObjectBrowserNodeSelection;
@@ -15,7 +14,6 @@ namespace AW.Winforms.Helpers.EntityViewer
 		public FrmEntityViewer()
 		{
 			InitializeComponent();
-			AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
 			Initialize();
 		}
 
@@ -51,18 +49,14 @@ namespace AW.Winforms.Helpers.EntityViewer
 			return frm;
 		}
 
-		private void FrmEntityViewer_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			Settings.Default.EntityViewerSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-			Settings.Default.Save();
-		}
-
 		private void FrmEntityViewer_Load(object sender, EventArgs e)
 		{
 			//((TreeView) (ObjectBrowser.ActiveControl)).SelectedNode = ((TreeView) (ObjectBrowser.ActiveControl)).TopNode;
 			//    propertyGrid1.SelectedObject = ObjectBeingBrowsed;
 			//  propertyGrid1.RefreshSelectedObject();
-			splitContainerValues.Panel2Collapsed = true;
+			if (DesignMode)
+				return;
+			splitContainerHorizontal.Panel2Collapsed = true;
 			_doingObjectBrowserNodeSelection = true;
 			try
 			{
@@ -112,7 +106,7 @@ namespace AW.Winforms.Helpers.EntityViewer
 		private bool ShowEnumerable(IEnumerable enumerable)
 		{
 			var iSEnumerable = gridDataEditor.BindEnumerable(enumerable);
-			splitContainerValues.Panel2Collapsed = !iSEnumerable;
+			splitContainerHorizontal.Panel2Collapsed = !iSEnumerable;
 			return iSEnumerable;
 		}
 

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
@@ -66,7 +64,7 @@ namespace AW.Tests
 		{
 			var listofNonSerializableClasses = SerializableClass.GenerateListWithBothSerializableClasses();
 			var bindingSource = new BindingSource();
-			Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable)listofNonSerializableClasses, false));
+			Assert.IsTrue(bindingSource.BindEnumerable((IEnumerable) listofNonSerializableClasses, false));
 			Assert.AreEqual(listofNonSerializableClasses, bindingSource.List);
 
 			TestBindEnumerable(listofNonSerializableClasses, true, 1, false);
@@ -88,8 +86,8 @@ namespace AW.Tests
 
 			TestBindEnumerable(TestData.GetAddressTypeDataTable().DefaultView);
 
-			TestBindEnumerable(((IEntity)MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, true, 2);
-			TestBindEnumerable(MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity)), true, 14);
+			TestBindEnumerable(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, true, 2);
+			TestBindEnumerable(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), true, 14);
 			TestBindEnumerable(NonSerializableClass.GenerateList(), true, 3);
 			TestBindEnumerable(SerializableClass.GenerateList(), true, 4);
 			TestBindEnumerable(SerializableClass.GenerateListWithBoth(), true, 3, false);
@@ -97,16 +95,16 @@ namespace AW.Tests
 			TestBindEnumerable(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), true, 1, false);
 		}
 
-		private static IEnumerable<T> TestBindEnumerable<T>(IEnumerable<T> enumerable, bool isObjectListView = false, int numProperties = 0, bool testNonGeneric = true )
+		private static IEnumerable<T> TestBindEnumerable<T>(IEnumerable<T> enumerable, bool isObjectListView = false, int numProperties = 0, bool testNonGeneric = true)
 		{
 			TestBindEnumerableReadonly(enumerable, true);
 			var bindingSource = TestBindEnumerableReadonly(enumerable, false);
 			var list = bindingSource.List;
-			if (isObjectListView) 
+			if (isObjectListView)
 			{
-				Assert.IsInstanceOfType(bindingSource.List, typeof(ObjectListView<T>));
+				Assert.IsInstanceOfType(bindingSource.List, typeof (ObjectListView<T>));
 				var objectListView = (ObjectListView<T>) list;
-				Assert.IsInstanceOfType(objectListView.List, typeof(List<T>));
+				Assert.IsInstanceOfType(objectListView.List, typeof (List<T>));
 			}
 			if (numProperties > 0)
 			{
@@ -114,7 +112,7 @@ namespace AW.Tests
 				Assert.AreEqual(numProperties, properties.Count());
 			}
 			if (testNonGeneric)
-			  TestBindEnumerable((IEnumerable)enumerable, isObjectListView, numProperties);
+				TestBindEnumerable((IEnumerable) enumerable, isObjectListView, numProperties);
 			return (IEnumerable<T>) list;
 		}
 
@@ -131,7 +129,7 @@ namespace AW.Tests
 			TestBindEnumerableReadonly(enumerable, true);
 			var bindingSource = TestBindEnumerableReadonly(enumerable, false);
 			var list = bindingSource.List;
-			if (isObjectListView) Assert.IsInstanceOfType(bindingSource.List, typeof(ObjectListView));
+			if (isObjectListView) Assert.IsInstanceOfType(bindingSource.List, typeof (ObjectListView));
 			if (numProperties > 0)
 			{
 				var properties = MetaDataHelper.GetPropertiesToDisplay(enumerable);

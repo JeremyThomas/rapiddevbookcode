@@ -9,7 +9,6 @@ using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Helper;
-using AW.Winforms.Helpers.DataEditor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
@@ -72,10 +71,10 @@ namespace AW.Tests
 			Assert.AreEqual(typeof (int), MetaDataHelper.GetEnumerableItemType(new ArrayList {1, 2, 3}));
 			Assert.AreEqual(typeof (object), MetaDataHelper.GetEnumerableItemType(new ArrayList()));
 
-			Assert.AreEqual(typeof(string), MetaDataHelper.GetEnumerableItemType(new string[0]));
+			Assert.AreEqual(typeof (string), MetaDataHelper.GetEnumerableItemType(new string[0]));
 			var emptySerializableClasses = new SerializableClass[0];
-			Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses));
-			Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses.Take(30)));
+			Assert.AreEqual(typeof (SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses));
+			Assert.AreEqual(typeof (SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses.Take(30)));
 		}
 
 		public void CopyToDataTableAndAssert<T>(IEnumerable<T> source)
@@ -122,7 +121,7 @@ namespace AW.Tests
 			var stringWrapperForBinding = strings.CreateStringWrapperForBinding();
 			var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
 			Assert.AreEqual(1, stringWrapperProperties.Count);
-			Assert.AreEqual(typeof(string), stringWrapperProperties[0].PropertyType);
+			Assert.AreEqual(typeof (string), stringWrapperProperties[0].PropertyType);
 			//stringWrapperForBinding.ShowInGrid(null);
 			//strings.ShowInGrid(null);
 
@@ -158,12 +157,10 @@ namespace AW.Tests
 
 		public override void ResetValue(object component)
 		{
-			
 		}
 
 		public override void SetValue(object component, object value)
 		{
-
 		}
 
 		public override bool ShouldSerializeValue(object component)
@@ -173,7 +170,7 @@ namespace AW.Tests
 
 		public override Type ComponentType
 		{
-			get { return typeof(string); }
+			get { return typeof (string); }
 		}
 
 		public override bool IsReadOnly
@@ -183,7 +180,7 @@ namespace AW.Tests
 
 		public override Type PropertyType
 		{
-			get { return typeof(string); }
+			get { return typeof (string); }
 		}
 	}
 
@@ -199,31 +196,28 @@ namespace AW.Tests
 
 		public override PropertyDescriptorCollection GetProperties(Attribute[] attributes)
 		{
-			return new PropertyDescriptorCollection(null) { new StringPropertyDescriptor("StringPropertyDescriptor", attributes) };
+			return new PropertyDescriptorCollection(null) {new StringPropertyDescriptor("StringPropertyDescriptor", attributes)};
 			//return _baseProvider.GetTypeDescriptor(typeof(string)).GetProperties(attributes);
 		}
 
 		public override PropertyDescriptorCollection GetProperties()
 		{
-			return _baseProvider.GetTypeDescriptor(typeof(string)).GetProperties();
+			return _baseProvider.GetTypeDescriptor(typeof (string)).GetProperties();
 		}
 	}
 
 	public class StringTypeDescriptorProvider : TypeDescriptionProvider
 	{
+		private readonly TypeDescriptionProvider _baseProvider;
 
-		  private readonly TypeDescriptionProvider _baseProvider;
-
-			public StringTypeDescriptorProvider(Type t) 
-	{
-		_baseProvider = TypeDescriptor.GetProvider(t);
-	}
+		public StringTypeDescriptorProvider(Type t)
+		{
+			_baseProvider = TypeDescriptor.GetProvider(t);
+		}
 
 		public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
 		{
-			return objectType == typeof(string) ? new StringTypeDescriptor(_baseProvider) : _baseProvider.GetTypeDescriptor(objectType, instance);
+			return objectType == typeof (string) ? new StringTypeDescriptor(_baseProvider) : _baseProvider.GetTypeDescriptor(objectType, instance);
 		}
 	}
-
-	
 }

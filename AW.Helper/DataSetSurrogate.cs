@@ -1256,11 +1256,21 @@ namespace AW.Helper
 		public DataColumn ConvertToDataColumn()
 		{
 			var dc = new DataColumn
-								{
-									ColumnName = _columnName, Namespace = _namespace, DataType = _dataType, Prefix = _prefix,
-									ColumnMapping = _columnMapping, AllowDBNull = _allowNull, AutoIncrement = _autoIncrement, AutoIncrementStep = _autoIncrementStep,
-									AutoIncrementSeed = _autoIncrementSeed, Caption = _caption, DefaultValue = _defaultValue, ReadOnly = _readOnly, MaxLength = _maxLength
-								};
+			         	{
+			         		ColumnName = _columnName,
+			         		Namespace = _namespace,
+			         		DataType = _dataType,
+			         		Prefix = _prefix,
+			         		ColumnMapping = _columnMapping,
+			         		AllowDBNull = _allowNull,
+			         		AutoIncrement = _autoIncrement,
+			         		AutoIncrementStep = _autoIncrementStep,
+			         		AutoIncrementSeed = _autoIncrementSeed,
+			         		Caption = _caption,
+			         		DefaultValue = _defaultValue,
+			         		ReadOnly = _readOnly,
+			         		MaxLength = _maxLength
+			         	};
 			//dc.Expression = _expression;
 
 			//Extended properties
@@ -1298,12 +1308,12 @@ namespace AW.Helper
 		{
 			Debug.Assert(dc != null);
 			if ((dc.ColumnName != _columnName) || (dc.Namespace != _namespace) || (dc.DataType != _dataType) ||
-					(dc.Prefix != _prefix) || (dc.ColumnMapping != _columnMapping) ||
-					(dc.ColumnMapping != _columnMapping) || (dc.AllowDBNull != _allowNull) ||
-					(dc.AutoIncrement != _autoIncrement) || (dc.AutoIncrementStep != _autoIncrementStep) ||
-					(dc.AutoIncrementSeed != _autoIncrementSeed) || (dc.Caption != _caption) ||
-					(!(AreDefaultValuesEqual(dc.DefaultValue, _defaultValue))) || (dc.MaxLength != _maxLength) ||
-					(dc.Expression != _expression))
+			    (dc.Prefix != _prefix) || (dc.ColumnMapping != _columnMapping) ||
+			    (dc.ColumnMapping != _columnMapping) || (dc.AllowDBNull != _allowNull) ||
+			    (dc.AutoIncrement != _autoIncrement) || (dc.AutoIncrementStep != _autoIncrementStep) ||
+			    (dc.AutoIncrementSeed != _autoIncrementSeed) || (dc.Caption != _caption) ||
+			    (!(AreDefaultValuesEqual(dc.DefaultValue, _defaultValue))) || (dc.MaxLength != _maxLength) ||
+			    (dc.Expression != _expression))
 			{
 				return false;
 			}

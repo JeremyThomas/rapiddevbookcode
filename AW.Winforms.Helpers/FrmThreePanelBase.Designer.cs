@@ -55,7 +55,7 @@
 			this.splitContainerHorizontal.Name = "splitContainerHorizontal";
 			this.splitContainerHorizontal.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			this.splitContainerHorizontal.Size = new System.Drawing.Size(446, 597);
-			this.splitContainerHorizontal.SplitterDistance = 200;
+			this.splitContainerHorizontal.SplitterDistance = 400;
 			this.splitContainerHorizontal.TabIndex = 0;
 			// 
 			// FrmThreePanelBase
@@ -66,9 +66,6 @@
 			this.Controls.Add(this.splitContainerVertical);
 			this.Name = "FrmThreePanelBase";
 			this.Text = "FrmThreePanelBase";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmThreePanelBase_FormClosing);
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmThreePanelBase_FormClosed);
-			this.Load += new System.EventHandler(this.FrmThreePanelBase_Load);
 			this.splitContainerVertical.Panel2.ResumeLayout(false);
 			this.splitContainerVertical.ResumeLayout(false);
 			this.splitContainerHorizontal.ResumeLayout(false);
