@@ -23,7 +23,8 @@ namespace AW.Winforms.Helpers.LLBL
 		public FrmEntitiesAndFields()
 		{
 			InitializeComponent();
-			splitContainerVertical.Panel2Collapsed = true;
+			if (!DesignMode)
+			  splitContainerVertical.Panel2Collapsed = true;
 		}
 
 		public FrmEntitiesAndFields(Assembly entityAssembly) : this()
@@ -59,12 +60,20 @@ namespace AW.Winforms.Helpers.LLBL
 			AWHelper.ShowForm(_formSingleton, parent);
 		}
 
-		private void FrmEntitiesAndFields_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			//splitContainerVertical.Panel2Collapsed = true;
-			//	Properties.Settings.Default.EntitiesAndFieldsSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-			//Properties.Settings.Default.Save();
+		#region Overrides of FrmPersistantLocation
+
+		protected override void RecordWindowSettings()
+		{			
+			if (!splitContainerVertical.Panel2Collapsed)
+			{
+				var panel2Width = splitContainerVertical.Panel2.Width;
+				splitContainerVertical.Panel2Collapsed = true;
+				Width -= panel2Width;
+			}
+			base.RecordWindowSettings();
 		}
+
+		#endregion
 
 		private void EntitiesAndFields_Load(object sender, EventArgs e)
 		{
@@ -179,7 +188,11 @@ namespace AW.Winforms.Helpers.LLBL
 		private void ViewEntities(IQueryable entityQueryable, ushort pageSize)
 		{
 			propertyGrid.SelectedObject = entityQueryable;
-			splitContainerVertical.Panel2Collapsed = false;
+			if (splitContainerVertical.Panel2Collapsed)
+			{
+				splitContainerVertical.Panel2Collapsed = false;
+				Width += splitContainerVertical.Panel2.Width;
+			}
 			gridDataEditor.BindEnumerable(entityQueryable, pageSize);
 			if (gridDataEditor.DataEditorPersister == null)
 				if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))

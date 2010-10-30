@@ -176,7 +176,6 @@ namespace AW.Winforms.Helpers.LLBL
 			this.Name = "FrmEntitiesAndFields";
 			this.Text = "Entities And Fields";
 			this.WindowSettingsName = "EntitiesAndFieldsWindowSettings";
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEntitiesAndFields_FormClosed);
 			this.Load += new System.EventHandler(this.EntitiesAndFields_Load);
 			this.Controls.SetChildIndex(this.statusStrip1, 0);
 			this.Controls.SetChildIndex(this.splitContainerVertical, 0);
