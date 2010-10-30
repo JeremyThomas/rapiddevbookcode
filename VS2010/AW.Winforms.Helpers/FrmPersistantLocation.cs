@@ -16,7 +16,7 @@ namespace AW.Winforms.Helpers
 			get
 			{
 				if (string.IsNullOrEmpty(_windowSettingsName))
-					_windowSettingsName = Name + "WindowSettings";
+					_windowSettingsName = GetType().Name + "WindowSettings";
 				return _windowSettingsName;
 			}
 			set { _windowSettingsName = value; }
@@ -24,7 +24,9 @@ namespace AW.Winforms.Helpers
 
 		public FrmPersistantLocation()
 		{
-			InitializeComponent();
+			InitializeComponent();			
+			if (WindowSettings != null)
+				WindowSettings.Restore(this);
 		}
 
 		protected WindowSettings WindowSettings
@@ -59,6 +61,11 @@ namespace AW.Winforms.Helpers
 		}
 
 		private void FrmPersistantLocation_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			RecordWindowSettings();
+		}
+
+		protected virtual void RecordWindowSettings()
 		{
 			if (WindowSettings == null)
 				WindowSettings = new WindowSettings();
