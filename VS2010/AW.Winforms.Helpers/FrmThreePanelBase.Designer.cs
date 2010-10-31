@@ -47,6 +47,7 @@
 			this.splitContainerVertical.Size = new System.Drawing.Size(675, 597);
 			this.splitContainerVertical.SplitterDistance = 225;
 			this.splitContainerVertical.TabIndex = 0;
+			this.splitContainerVertical.DoubleClick += new System.EventHandler(this.splitContainerVertical_DoubleClick);
 			// 
 			// splitContainerHorizontal
 			// 
