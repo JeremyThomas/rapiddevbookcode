@@ -56,6 +56,11 @@ namespace AW.Winforms.Helpers
 
 		private void FrmPersistantLocation_Load(object sender, EventArgs e)
 		{
+			RestoreWindowSettings();
+		}
+
+		protected virtual void RestoreWindowSettings()
+		{
 			if (WindowSettings != null)
 				WindowSettings.Restore(this, Splitters);
 		}

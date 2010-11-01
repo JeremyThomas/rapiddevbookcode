@@ -31,7 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridDataEditor));
 			this.bindingSourceEnumerable = new System.Windows.Forms.BindingSource(this.components);
-			this.bindingNavigator1 = new System.Windows.Forms.BindingNavigator(this.components);
+			this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
 			this.bindingNavigatorAddNewItem1 = new System.Windows.Forms.ToolStripButton();
 			this.bindingNavigatorCountItem1 = new System.Windows.Forms.ToolStripLabel();
 			this.bindingNavigatorDeleteItem1 = new System.Windows.Forms.ToolStripButton();
@@ -65,8 +65,8 @@
 			this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
 			this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).BeginInit();
-			this.bindingNavigator1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
+			this.bindingNavigatorData.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).BeginInit();
 			this.bindingNavigatorPaging.SuspendLayout();
@@ -81,13 +81,13 @@
 			this.bindingSourceEnumerable.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.bindingSourceEnumerable_ListChanged);
 			this.bindingSourceEnumerable.PositionChanged += new System.EventHandler(this.bindingSourceEnumerable_PositionChanged);
 			// 
-			// bindingNavigator1
+			// bindingNavigatorData
 			// 
-			this.bindingNavigator1.AddNewItem = this.bindingNavigatorAddNewItem1;
-			this.bindingNavigator1.BindingSource = this.bindingSourceEnumerable;
-			this.bindingNavigator1.CountItem = this.bindingNavigatorCountItem1;
-			this.bindingNavigator1.DeleteItem = this.bindingNavigatorDeleteItem1;
-			this.bindingNavigator1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.bindingNavigatorData.AddNewItem = this.bindingNavigatorAddNewItem1;
+			this.bindingNavigatorData.BindingSource = this.bindingSourceEnumerable;
+			this.bindingNavigatorData.CountItem = this.bindingNavigatorCountItem1;
+			this.bindingNavigatorData.DeleteItem = this.bindingNavigatorDeleteItem1;
+			this.bindingNavigatorData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem1,
             this.bindingNavigatorMovePreviousItem1,
             this.bindingNavigatorSeparator3,
@@ -108,16 +108,16 @@
             this.toolStripLabelSaveResult,
             this.toolStripButtonCancelEdit,
             this.toolStripButtonObjectListViewVisualizer});
-			this.bindingNavigator1.Location = new System.Drawing.Point(0, 0);
-			this.bindingNavigator1.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
-			this.bindingNavigator1.MoveLastItem = this.bindingNavigatorMoveLastItem1;
-			this.bindingNavigator1.MoveNextItem = this.bindingNavigatorMoveNextItem1;
-			this.bindingNavigator1.MovePreviousItem = this.bindingNavigatorMovePreviousItem1;
-			this.bindingNavigator1.Name = "bindingNavigator1";
-			this.bindingNavigator1.PositionItem = this.bindingNavigatorPositionItem1;
-			this.bindingNavigator1.Size = new System.Drawing.Size(717, 25);
-			this.bindingNavigator1.TabIndex = 2;
-			this.bindingNavigator1.Text = "bindingNavigator1";
+			this.bindingNavigatorData.Location = new System.Drawing.Point(0, 0);
+			this.bindingNavigatorData.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
+			this.bindingNavigatorData.MoveLastItem = this.bindingNavigatorMoveLastItem1;
+			this.bindingNavigatorData.MoveNextItem = this.bindingNavigatorMoveNextItem1;
+			this.bindingNavigatorData.MovePreviousItem = this.bindingNavigatorMovePreviousItem1;
+			this.bindingNavigatorData.Name = "bindingNavigatorData";
+			this.bindingNavigatorData.PositionItem = this.bindingNavigatorPositionItem1;
+			this.bindingNavigatorData.Size = new System.Drawing.Size(717, 25);
+			this.bindingNavigatorData.TabIndex = 2;
+			this.bindingNavigatorData.Text = "bindingNavigator1";
 			// 
 			// bindingNavigatorAddNewItem1
 			// 
@@ -396,14 +396,14 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.dataGridViewEnumerable);
 			this.Controls.Add(this.bindingNavigatorPaging);
-			this.Controls.Add(this.bindingNavigator1);
+			this.Controls.Add(this.bindingNavigatorData);
 			this.Name = "GridDataEditor";
 			this.Size = new System.Drawing.Size(717, 598);
 			this.Load += new System.EventHandler(this.GridDataEditor_Load);
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.bindingNavigator1)).EndInit();
-			this.bindingNavigator1.ResumeLayout(false);
-			this.bindingNavigator1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).EndInit();
+			this.bindingNavigatorData.ResumeLayout(false);
+			this.bindingNavigatorData.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewEnumerable)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorPaging)).EndInit();
 			this.bindingNavigatorPaging.ResumeLayout(false);
@@ -416,9 +416,7 @@
 
     #endregion
 
-    private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem1;
-    private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem1;
-    private System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem1;
+		private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem1;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem1;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem1;
     private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator3;
@@ -427,17 +425,12 @@
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem1;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem1;
 		private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator5;
-    private System.Windows.Forms.ToolStripButton printToolStripButton;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
     private System.Windows.Forms.ToolStripComboBox toolStripComboBoxClipboardCopyMode;
     private System.Windows.Forms.ToolStripButton copyToolStripButton;
-    protected System.Windows.Forms.BindingSource bindingSourceEnumerable;
-    private System.Windows.Forms.BindingNavigator bindingNavigator1;
-    private System.Windows.Forms.DataGridView dataGridViewEnumerable;
+		protected System.Windows.Forms.BindingSource bindingSourceEnumerable;
     private System.Windows.Forms.ToolStripLabel toolStripLabelDeleteCount;
-    private System.Windows.Forms.ToolStripLabel toolStripLabelSaveResult;
-    private System.Windows.Forms.ToolStripButton toolStripButtonCancelEdit;
-    private System.Windows.Forms.BindingNavigator bindingNavigatorPaging;
+		private System.Windows.Forms.ToolStripLabel toolStripLabelSaveResult;
     protected System.Windows.Forms.BindingSource bindingSourcePaging;
     private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
@@ -447,8 +440,15 @@
     private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
-    private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
-    private System.Windows.Forms.ToolStripButton toolStripButtonObjectListViewVisualizer;
-		protected System.Windows.Forms.ToolStripButton saveToolStripButton;
+		private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+		public System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem1;
+		public System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem1;
+		public System.Windows.Forms.ToolStripButton printToolStripButton;
+		public System.Windows.Forms.BindingNavigator bindingNavigatorData;
+		public System.Windows.Forms.DataGridView dataGridViewEnumerable;
+		public System.Windows.Forms.ToolStripButton toolStripButtonCancelEdit;
+		public System.Windows.Forms.BindingNavigator bindingNavigatorPaging;
+		public System.Windows.Forms.ToolStripButton toolStripButtonObjectListViewVisualizer;
+		public System.Windows.Forms.ToolStripButton saveToolStripButton;
   }
 }

@@ -72,7 +72,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		public BindingNavigator BindingNavigator
 		{
-			get { return bindingNavigator1; }
+			get { return bindingNavigatorData; }
 		}
 
 		public BindingSource BindingSource

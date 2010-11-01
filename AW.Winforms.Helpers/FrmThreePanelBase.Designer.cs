@@ -41,12 +41,17 @@
 			this.splitContainerVertical.Location = new System.Drawing.Point(0, 0);
 			this.splitContainerVertical.Name = "splitContainerVertical";
 			// 
+			// splitContainerVertical.Panel1
+			// 
+			this.splitContainerVertical.Panel1.SizeChanged += new System.EventHandler(this.splitContainerVertical_SizeChanged);
+			// 
 			// splitContainerVertical.Panel2
 			// 
 			this.splitContainerVertical.Panel2.Controls.Add(this.splitContainerHorizontal);
 			this.splitContainerVertical.Size = new System.Drawing.Size(675, 597);
 			this.splitContainerVertical.SplitterDistance = 225;
 			this.splitContainerVertical.TabIndex = 0;
+			this.splitContainerVertical.SizeChanged += new System.EventHandler(this.splitContainerVertical_SizeChanged);
 			this.splitContainerVertical.DoubleClick += new System.EventHandler(this.splitContainerVertical_DoubleClick);
 			// 
 			// splitContainerHorizontal
