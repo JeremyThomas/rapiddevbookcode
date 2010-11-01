@@ -32,35 +32,35 @@ namespace AW.Winforms.Helpers
 
 		protected void CollapseRightPanel()
 		{
-			if (!splitContainerVertical.Panel2Collapsed)
+			var panel2Width = splitContainerVertical.Panel2.Width;
+			var oldsp = splitContainerVertical.SplitterDistance;
+			splitContainerVertical.Panel2Collapsed = true;
+			var oldSplitContainerVerticalWidth = splitContainerVertical.Width;
+			splitContainerVertical.Width -= panel2Width;
+			if (Width > oldSplitContainerVerticalWidth)
+				Width -= (panel2Width + splitContainerVertical.SplitterWidth);
+			else
 			{
-				var panel2Width = splitContainerVertical.Panel2.Width;
-				splitContainerVertical.Panel2Collapsed = true;
-				var oldSplitContainerVerticalWidth = splitContainerVertical.Width;
-				splitContainerVertical.Width -= panel2Width;
-				if (Width > oldSplitContainerVerticalWidth)
-					Width -= panel2Width;
-				else
-				{
-					if (splitContainerVertical.Width>Width)
+				if (splitContainerVertical.Width > Width)
 					Width = splitContainerVertical.Width;
-				}
 			}
 		}
 
 		protected void ExpandRightPanel()
 		{
-			if (splitContainerVertical.Panel2Collapsed)
-			{
-				var panel1Width = splitContainerVertical.Panel1.Width;
-				var expandedWidth = ((Panel) splitContainerVertical.Panel2).Width;
-				var oldsp = splitContainerVertical.SplitterDistance;
-				var oldSplitContainerVerticalWidth = splitContainerVertical.Width;
-				Width += expandedWidth;
-				splitContainerVertical.Panel2Collapsed = false;
-				splitContainerVertical.SplitterDistance = Math.Max(panel1Width,oldsp);
-				//Width += splitContainerVertical.Panel2.Width;
-			}
+			var panel1Width = splitContainerVertical.Panel1.Width;
+			var expandedWidth = ((Panel) splitContainerVertical.Panel2).Width + splitContainerVertical.SplitterWidth;
+			var oldsp = splitContainerVertical.SplitterDistance;
+			var oldSplitContainerVerticalWidth = splitContainerVertical.Width;
+			Width += expandedWidth;
+			splitContainerVertical.Panel2Collapsed = false;
+			splitContainerVertical.SplitterDistance = Math.Max(panel1Width, oldsp);
+			//Width += splitContainerVertical.Panel2.Width;
+		}
+
+		private void splitContainerVertical_SizeChanged(object sender, EventArgs e)
+		{
+			Text = splitContainerVertical.Panel1.Width + "-" + splitContainerVertical.SplitterDistance + "-" + this.ClientSize.Width;
 		}
 	}
 }

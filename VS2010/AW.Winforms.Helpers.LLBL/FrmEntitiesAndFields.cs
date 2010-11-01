@@ -58,10 +58,21 @@ namespace AW.Winforms.Helpers.LLBL
 			AWHelper.ShowForm(_formSingleton, parent);
 		}
 
+		#region Overrides of FrmPersistantLocation
+
+		protected override void RestoreWindowSettings()
+		{			
+			if (!DesignMode)
+				if (!splitContainerVertical.Panel2Collapsed)
+					splitContainerVertical.Panel2Collapsed = true;
+			base.RestoreWindowSettings();
+			splitContainerVertical.Width = splitContainerVertical.SplitterDistance;
+		}
+
+		#endregion
+
 		private void EntitiesAndFields_Load(object sender, EventArgs e)
 		{
-			if (!DesignMode)
-				CollapseRightPanel();
 			treeViewEntities.Nodes.Clear();
 			foreach (var entityType in GetEntitiesTypes().OrderBy(t => t.Name))
 			{
@@ -173,6 +184,7 @@ namespace AW.Winforms.Helpers.LLBL
 		private void ViewEntities(IQueryable entityQueryable, ushort pageSize)
 		{
 			propertyGrid.SelectedObject = entityQueryable;
+			if (splitContainerVertical.Panel2Collapsed)
 			ExpandRightPanel();
 			gridDataEditor.BindEnumerable(entityQueryable, pageSize);
 			if (gridDataEditor.DataEditorPersister == null)

@@ -127,12 +127,14 @@ namespace AW.Winforms.Helpers
 						continue;
 					}
 					var splitterDistance = SplitterDistances[i];
-					if (SplitterSizes != null)
-					{
-						splitterDistance =
-							splitterDistance*GetSplitterSize(splitter)/SplitterSizes[i];
-					}
 					var splitterSize = GetSplitterSize(splitter);
+					if (SplitterSizes != null && SplitterSizes[i] > 0)
+					{
+						if (SplitterSizes[i] == splitterDistance)
+							splitter.Panel2Collapsed = true;
+						else if (!splitter.Panel2Collapsed)
+						  splitterDistance = splitterDistance * splitterSize / SplitterSizes[i] + 1;
+					}
 					var isDistanceLegal =
 						splitter.Panel1MinSize <= splitterDistance
 						&& splitterDistance <= splitterSize - splitter.Panel2MinSize;
@@ -169,10 +171,11 @@ namespace AW.Winforms.Helpers
 			SplitterSizes = new int[splitters.Count];
 			for (var i = 0; i < splitters.Count; i++)
 			{
-				if (splitters[i] != null)
+				var splitContainer = splitters[i];
+				if (splitContainer != null)
 				{
-					SplitterDistances[i] = splitters[i].SplitterDistance;
-					SplitterSizes[i] = GetSplitterSize(splitters[i]);
+					SplitterDistances[i] = splitContainer.Panel1.Width;
+					SplitterSizes[i] = GetSplitterSize(splitContainer);
 				}
 			}
 		}
