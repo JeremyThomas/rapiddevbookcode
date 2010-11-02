@@ -8,6 +8,7 @@ using AW.Helper;
 namespace AW.Winforms.Helpers
 {
 	/* Author: Don Kirkby http://donkirkby.googlecode.com/
+	 * http://stackoverflow.com/questions/105932/how-to-record-window-position-in-winforms-application-settings
 		 * Released under the MIT licence http://www.opensource.org/licenses/mit-license.php
 		 * Installation:
 		 * - Copy this file into your project.
@@ -45,6 +46,7 @@ namespace AW.Winforms.Helpers
 		public FormWindowState WindowState { get; set; }
 		public int[] SplitterDistances { get; set; }
 		public int[] SplitterSizes { get; set; }
+		public int[] SplitterPanel2Sizes { get; set; }
 
 		public WindowSettings()
 		{
@@ -134,6 +136,10 @@ namespace AW.Winforms.Helpers
 							splitter.Panel2Collapsed = true;
 						else if (!splitter.Panel2Collapsed)
 						  splitterDistance = splitterDistance * splitterSize / SplitterSizes[i] + 1;
+					}					
+					if (SplitterPanel2Sizes != null && SplitterPanel2Sizes[i] > 0)
+					{
+						SetSplitterPanel2Size(splitter, SplitterPanel2Sizes[i] );
 					}
 					var isDistanceLegal =
 						splitter.Panel1MinSize <= splitterDistance
@@ -154,6 +160,23 @@ namespace AW.Winforms.Helpers
 			return splitterSize;
 		}
 
+		private static int GetSplitterPanel2Size(SplitContainer splitter)
+		{
+			var splitterSize =
+				splitter.Orientation == Orientation.Vertical
+					? splitter.Panel2.Width
+					: splitter.Panel2.Height;
+			return splitterSize;
+		}
+
+		private static void SetSplitterPanel2Size(SplitContainer splitter, int splitterPanel2Size)
+		{
+				if (splitter.Orientation == Orientation.Vertical)
+					((Panel)splitter.Panel2).Width = splitterPanel2Size;
+			else
+					((Panel)splitter.Panel2).Height = splitterPanel2Size;
+		}
+
 		private bool RecordWindowPosition(Rectangle bounds)
 		{
 			var isOnScreen = IsOnScreen(bounds.Location, bounds.Size);
@@ -169,6 +192,7 @@ namespace AW.Winforms.Helpers
 		{
 			SplitterDistances = new int[splitters.Count];
 			SplitterSizes = new int[splitters.Count];
+			SplitterPanel2Sizes = new int[splitters.Count];
 			for (var i = 0; i < splitters.Count; i++)
 			{
 				var splitContainer = splitters[i];
@@ -176,6 +200,7 @@ namespace AW.Winforms.Helpers
 				{
 					SplitterDistances[i] = splitContainer.Panel1.Width;
 					SplitterSizes[i] = GetSplitterSize(splitContainer);
+					SplitterPanel2Sizes[i] = GetSplitterPanel2Size(splitContainer);
 				}
 			}
 		}
