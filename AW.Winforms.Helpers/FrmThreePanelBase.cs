@@ -33,7 +33,6 @@ namespace AW.Winforms.Helpers
 		protected void CollapseRightPanel()
 		{
 			var panel2Width = splitContainerVertical.Panel2.Width;
-			var oldsp = splitContainerVertical.SplitterDistance;
 			splitContainerVertical.Panel2Collapsed = true;
 			var oldSplitContainerVerticalWidth = splitContainerVertical.Width;
 			splitContainerVertical.Width -= panel2Width;
@@ -51,11 +50,9 @@ namespace AW.Winforms.Helpers
 			var panel1Width = splitContainerVertical.Panel1.Width;
 			var expandedWidth = ((Panel) splitContainerVertical.Panel2).Width + splitContainerVertical.SplitterWidth;
 			var oldsp = splitContainerVertical.SplitterDistance;
-			var oldSplitContainerVerticalWidth = splitContainerVertical.Width;
 			Width += expandedWidth;
 			splitContainerVertical.Panel2Collapsed = false;
 			splitContainerVertical.SplitterDistance = Math.Max(panel1Width, oldsp);
-			//Width += splitContainerVertical.Panel2.Width;
 		}
 
 		private void splitContainerVertical_SizeChanged(object sender, EventArgs e)

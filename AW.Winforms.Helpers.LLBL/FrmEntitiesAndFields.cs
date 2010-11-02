@@ -61,12 +61,18 @@ namespace AW.Winforms.Helpers.LLBL
 		#region Overrides of FrmPersistantLocation
 
 		protected override void RestoreWindowSettings()
-		{			
+		{
 			if (!DesignMode)
 				if (!splitContainerVertical.Panel2Collapsed)
+				{
 					splitContainerVertical.Panel2Collapsed = true;
-			base.RestoreWindowSettings();
-			splitContainerVertical.Width = splitContainerVertical.SplitterDistance;
+					base.RestoreWindowSettings();					
+					splitContainerVertical.Width = ClientSize.Width;
+					//splitContainerVertical.Width = splitContainerVertical.SplitterDistance;
+					SetClientSizeCore(splitContainerVertical.SplitterDistance, ClientSize.Height);
+					if (splitContainerVertical.Width>splitContainerVertical.SplitterDistance)
+					((Panel) splitContainerVertical.Panel2).Width = splitContainerVertical.Width - splitContainerVertical.SplitterDistance - splitContainerVertical.SplitterWidth;
+				}
 		}
 
 		#endregion
@@ -185,7 +191,7 @@ namespace AW.Winforms.Helpers.LLBL
 		{
 			propertyGrid.SelectedObject = entityQueryable;
 			if (splitContainerVertical.Panel2Collapsed)
-			ExpandRightPanel();
+				ExpandRightPanel();
 			gridDataEditor.BindEnumerable(entityQueryable, pageSize);
 			if (gridDataEditor.DataEditorPersister == null)
 				if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
@@ -224,6 +230,5 @@ namespace AW.Winforms.Helpers.LLBL
 				contextMenuStrip1.Show(treeViewEntities, e.Location);
 			}
 		}
-
 	}
 }
