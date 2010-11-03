@@ -95,6 +95,15 @@ namespace AW.Tests
 			TestBindEnumerable(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), true, 1, false);
 		}
 
+		[TestMethod]
+		public void BindInheritanceEnumerableTest()
+		{
+			var customerEntityCollection = MetaSingletons.MetaData.Customer.Take(5).ToEntityCollection();
+			TestToBindingListView(customerEntityCollection);
+
+			TestToBindingListView(MetaSingletons.MetaData.Customer.Where(c => c is StoreEntity || c is IndividualEntity).Take(10));
+		}
+
 		private static IEnumerable<T> TestBindEnumerable<T>(IEnumerable<T> enumerable, bool isObjectListView = false, int numProperties = 0, bool testNonGeneric = true)
 		{
 			TestBindEnumerableReadonly(enumerable, true);
