@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LayoutInfo>
+  <ModelViews>
+    <ModelView Name="Employee">
+      <EntityDefinitions>
+        <Entity Name="Sales:SalesPerson" X="-28.499939" Y="376.5001" />
+        <Entity Name="HumanResources:Employee" X="-35.4998779" Y="-116.623566" />
+      </EntityDefinitions>
+    </ModelView>
+    <ModelView Name="Customer">
+      <EntityDefinitions>
+        <Entity Name="Sales:Customer" X="0.444763184" Y="-21.3755169" />
+        <Entity Name="Sales:Store" X="-168.472168" Y="333.562836" />
+        <Entity Name="Sales:Individual" X="192.486145" Y="341.603" />
+      </EntityDefinitions>
+    </ModelView>
+  </ModelViews>
+</LayoutInfo>

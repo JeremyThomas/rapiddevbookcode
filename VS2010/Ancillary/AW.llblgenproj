@@ -9471,5 +9471,21 @@
       <TypeConversionDefinitions />
     </MappingStore>
   </MappingStores>
-  <ModelViews />
+  <ModelViews>
+    <ModelView Name="Customer">
+      <EntityDefinitions>
+        <Entity Name="Sales:Customer" />
+        <Entity Name="Sales:Individual" />
+        <Entity Name="Sales:Store" />
+      </EntityDefinitions>
+      <Documentation><![CDATA[]]></Documentation>
+    </ModelView>
+    <ModelView Name="Employee">
+      <EntityDefinitions>
+        <Entity Name="HumanResources:Employee" />
+        <Entity Name="Sales:SalesPerson" />
+      </EntityDefinitions>
+      <Documentation><![CDATA[]]></Documentation>
+    </ModelView>
+  </ModelViews>
 </Project>

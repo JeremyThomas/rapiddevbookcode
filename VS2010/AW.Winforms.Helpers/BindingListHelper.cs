@@ -26,7 +26,7 @@ namespace AW.Winforms.Helpers
 					if (bindingListView != null)
 						return bindingListView;
 				}
-				return ToObjectListView(enumerable);
+				return CreateBindingListView(enumerable);
 			}
 			return null;
 		}
@@ -73,6 +73,19 @@ namespace AW.Winforms.Helpers
 			return null;
 		}
 
+		private static IBindingListView ToObjectListView(this ICollection collection)
+		{
+			if (collection != null)
+			{
+				if (collection is IList)
+					return ToObjectListView((IList)collection);
+				var objectListView = new ObjectListView(new ArrayList(collection));
+				if (objectListView.ItemType != null)
+					return objectListView;
+			}
+			return null;
+		}
+
 		private static IBindingListView ToObjectListView<T>(this IList<T> list)
 		{
 			if (list != null)
@@ -85,19 +98,46 @@ namespace AW.Winforms.Helpers
 			return null;
 		}
 
-		private static IBindingListView ToObjectListView(this IEnumerable enumerable)
+		private static IBindingListView CreateBindingListView(IEnumerable enumerable)
 		{
 			var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
-			if (itemType == typeof (string))
-				return null;
+			return itemType == typeof (string) ? null : CreateBindingListView(enumerable, itemType);
+		}
+
+		private static IBindingListView CreateBindingListView(IEnumerable enumerable, Type itemType)
+		{
 			enumerable = (IEnumerable) ListBindingHelper.GetList(enumerable);
-			if (enumerable is IList)
+			if (enumerable is ICollection)
 			{
-				var objectListView = ((IList) enumerable).ToObjectListView();
+				var objectListView = ((ICollection)enumerable).ToObjectListView();
 				if (objectListView != null)
 					return objectListView;
 			}
-			return CreateObjectListViewViaBindingSource(enumerable);
+			var bindingListView = CreateObjectListView();
+			foreach (var item in enumerable)
+			{
+				bindingListView.Add(item);
+			}
+			return bindingListView;
+		}
+
+		public static IList CreateList(Type type)
+		{
+			var genericType = typeof (List<>);
+			var bindingType = genericType.MakeGenericType(new[] {type});
+			return (IList) Activator.CreateInstance(bindingType);
+		}
+
+		public static IBindingListView CreateObjectListView(Type type)
+		{
+			var genericType = typeof (ObjectListView<>);
+			var bindingType = genericType.MakeGenericType(new[] {type});
+			return (IBindingListView)Activator.CreateInstance(bindingType, CreateList(type));
+		}
+
+		public static IBindingListView CreateObjectListView()
+		{
+			return new ObjectListView(new ArrayList());
 		}
 
 		private static IBindingListView ToObjectListView<T>(this IEnumerable<T> enumerable)
