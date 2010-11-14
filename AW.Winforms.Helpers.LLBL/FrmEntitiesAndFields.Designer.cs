@@ -56,7 +56,7 @@ namespace AW.Winforms.Helpers.LLBL
 			// splitContainerVertical.Panel1
 			// 
 			this.splitContainerVertical.Panel1.Controls.Add(this.treeViewEntities);
-			this.splitContainerVertical.Size = new System.Drawing.Size(502, 541);
+			this.splitContainerVertical.Size = new System.Drawing.Size(502, 563);
 			this.splitContainerVertical.SplitterDistance = 166;
 			// 
 			// splitContainerHorizontal
@@ -69,8 +69,8 @@ namespace AW.Winforms.Helpers.LLBL
 			// splitContainerHorizontal.Panel2
 			// 
 			this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
-			this.splitContainerHorizontal.Size = new System.Drawing.Size(332, 541);
-			this.splitContainerHorizontal.SplitterDistance = 180;
+			this.splitContainerHorizontal.Size = new System.Drawing.Size(332, 563);
+			this.splitContainerHorizontal.SplitterDistance = 187;
 			// 
 			// treeViewEntities
 			// 
@@ -80,7 +80,7 @@ namespace AW.Winforms.Helpers.LLBL
 			this.treeViewEntities.Location = new System.Drawing.Point(0, 0);
 			this.treeViewEntities.Name = "treeViewEntities";
 			this.treeViewEntities.SelectedImageIndex = 4;
-			this.treeViewEntities.Size = new System.Drawing.Size(166, 541);
+			this.treeViewEntities.Size = new System.Drawing.Size(166, 563);
 			this.treeViewEntities.TabIndex = 1;
 			this.treeViewEntities.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewEntities_ItemDrag);
 			this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterSelect);
@@ -131,7 +131,7 @@ namespace AW.Winforms.Helpers.LLBL
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelSelected});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 541);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 563);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(502, 22);
 			this.statusStrip1.TabIndex = 2;
@@ -152,7 +152,7 @@ namespace AW.Winforms.Helpers.LLBL
 			this.gridDataEditor.Name = "gridDataEditor";
 			this.gridDataEditor.PageSize = ((ushort)(0));
 			this.gridDataEditor.Readonly = false;
-			this.gridDataEditor.Size = new System.Drawing.Size(332, 357);
+			this.gridDataEditor.Size = new System.Drawing.Size(332, 372);
 			this.gridDataEditor.TabIndex = 0;
 			// 
 			// propertyGrid
@@ -164,7 +164,7 @@ namespace AW.Winforms.Helpers.LLBL
 			this.propertyGrid.DrawFlat = true;
 			this.propertyGrid.Location = new System.Drawing.Point(0, 0);
 			this.propertyGrid.Name = "propertyGrid";
-			this.propertyGrid.Size = new System.Drawing.Size(332, 180);
+			this.propertyGrid.Size = new System.Drawing.Size(332, 187);
 			this.propertyGrid.TabIndex = 0;
 			// 
 			// FrmEntitiesAndFields
@@ -195,8 +195,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     #endregion
 
-    private System.Windows.Forms.TreeView treeViewEntities;
-    private System.Windows.Forms.ImageList imageList1;
+		private System.Windows.Forms.ImageList imageList1;
     private System.Windows.Forms.StatusStrip statusStrip1;
     private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelSelected;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -205,5 +204,6 @@ namespace AW.Winforms.Helpers.LLBL
 		private System.Windows.Forms.ToolStripMenuItem getCountToolStripMenuItem;
 		private Controls.GridDataEditor gridDataEditor;
 		private Helpers.PropGridEx.PropertyGridEx propertyGrid;
+		internal System.Windows.Forms.TreeView treeViewEntities;
   }
 }

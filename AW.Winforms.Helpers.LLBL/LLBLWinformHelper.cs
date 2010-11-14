@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
@@ -12,6 +13,22 @@ namespace AW.Winforms.Helpers.LLBL
 {
 	public static class LLBLWinformHelper
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
+		/// </summary>
+		static LLBLWinformHelper()
+		{
+			BindingListHelper.RegisterbindingListViewCreater(typeof(IEntity), EntityHelper.CreateEntityView2);
+			BindingListHelper.RegisterbindingListViewCreater(typeof(IEntity2), EntityHelper.CreateBindingListView2);
+		}
+
+		/// <summary>
+		/// Dummy method which forces the initialization of LLBLWinformHelper via it's static constructor.
+		/// </summary>
+		public static void ForceInitialization()
+		{
+		}
+
 		#region Validatation
 
 		public static bool ValidatePropertyAssignment<T>(

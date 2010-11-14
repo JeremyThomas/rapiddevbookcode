@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Winforms.Helpers.LLBL;
 
 namespace AW.Win
 {
@@ -31,6 +32,7 @@ namespace AW.Win
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.ThreadException += Application_ThreadException;
+			LLBLWinformHelper.ForceInitialization();
 			Application.Run(new FrmMain());
 		}
 	}

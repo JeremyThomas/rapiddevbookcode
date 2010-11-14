@@ -181,7 +181,7 @@ namespace AW.Winforms.Helpers.LLBL
 			IQueryable entityQueryable = null;
 			if (typeOfEntity != null && _linqMetaData != null)
 			{
-				var dataSource = _linqMetaData.GetQueryableForEntity(EntityHelper.GetEntityTypeValueForType(typeOfEntity));
+				var dataSource = _linqMetaData.GetQueryableForEntity(typeOfEntity);
 				entityQueryable = dataSource as IQueryable;
 			}
 			return entityQueryable;

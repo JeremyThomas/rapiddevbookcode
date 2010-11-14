@@ -1,10 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Extensions.Forms;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
@@ -14,7 +18,7 @@ namespace AW.Tests
 	///to contain all LLBLWinformHelperTest Unit Tests
 	///</summary>
 	[TestClass]
-	public class LLBLWinformHelperTest
+	public class LLBLWinformHelperTest : GridDataEditorTestBase
 	{
 		/// <summary>
 		///Gets or sets the test context which provides
@@ -57,16 +61,28 @@ namespace AW.Tests
 		/// <summary>
 		///A test for ShowInGrid
 		///</summary>
-		public void EditInDataGridViewTestHelper<T>(ushort pageSize) where T : EntityBase
-		{
-			var enumerable = EntityHelper.GetQueryableForEntity<T>(MetaSingletons.MetaData).AsEnumerable();
+		public void EditInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase
+		{			
+			ModalFormHandler = Handler;
+			var enumerable = MetaSingletons.MetaData.GetQueryableForEntity<T>().AsEnumerable();
 			var expected = enumerable;
+			numProperties = GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
 			var actual = enumerable.ShowSelfServicingInGrid(pageSize);
 			Assert.AreEqual(expected, actual);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+		}
+
+		protected void TestShowSelfServicingInGrid<T>(IEnumerable<T> enumerable, ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase
+		{
+			ModalFormHandler = Handler;
+			GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
+			var actual = enumerable.ShowSelfServicingInGrid(pageSize);
+			Assert.AreEqual(enumerable, actual);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 		}
 
 		[TestMethod]
-		public void EditInDataGridViewTest()
+		public void ShowSelfServicingInGridTest()
 		{
 			EditInDataGridViewTestHelper<AddressEntity>(20);
 
@@ -74,12 +90,11 @@ namespace AW.Tests
 			                   orderby at.AddressTypeID
 			                   select at;
 			var addressTypeEntities = addressTypes.ToEntityCollection();
-			addressTypeEntities.ShowSelfServicingInGrid(2);
-			addressTypeEntities.DefaultView.ShowSelfServicingInGrid(3);
-
-			addressTypes.AsEnumerable().ShowSelfServicingInGrid(3);
-
-			addressTypeEntities.AsQueryable().ShowInGrid();
+			TestShowSelfServicingInGrid(addressTypeEntities,2);
+			TestShowSelfServicingInGrid(addressTypeEntities.DefaultView, 3);
+			TestShowSelfServicingInGrid(addressTypes.AsEnumerable(), 3);
+			TestShowInGrid(addressTypeEntities.AsQueryable());
 		}
+
 	}
 }

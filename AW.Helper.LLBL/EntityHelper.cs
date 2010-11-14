@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -10,6 +11,7 @@ namespace AW.Helper.LLBL
 {
 	public static class EntityHelper
 	{
+
 		/// <summary>
 		/// returns the datasource to use in a Linq query for the entity type specified
 		/// </summary>
@@ -25,9 +27,35 @@ namespace AW.Helper.LLBL
 		/// <summary>returns the datasource to use in a Linq query for the entity type specified</summary>
 		/// <typeparam name="T">the type of the entity to get the datasource for</typeparam>
 		/// <returns>the requested datasource</returns>
-		public static DataSourceBase<T> GetQueryableForEntity<T>(ILinqMetaData linqMetaData) where T : class, IEntityCore
+		public static DataSourceBase<T> GetQueryableForEntity<T>(this ILinqMetaData linqMetaData) where T : class, IEntityCore
 		{
 			return linqMetaData.GetQueryableForEntity(CreateEntity<T>());
+		}
+
+		public static IDataSource GetQueryableForEntity(this ILinqMetaData linqMetaData, Type typeOfEntity)
+		{
+			try
+			{
+				var entityTypeValueForType = GetEntityTypeValueForType(typeOfEntity);
+				return linqMetaData.GetQueryableForEntity(entityTypeValueForType);
+			}
+			catch (Exception)
+			{
+				try
+				{
+					for (var entityTypeValueForType = 0; entityTypeValueForType < Int32.MaxValue; entityTypeValueForType++)
+					{
+						var queryableForEntity = linqMetaData.GetQueryableForEntity(entityTypeValueForType);
+						if (queryableForEntity.ElementType == typeOfEntity)
+							return queryableForEntity;
+					}
+				}
+				catch (Exception)
+				{
+					return null;
+				}
+			}
+			return null;
 		}
 
 		/// <summary>
@@ -59,6 +87,23 @@ namespace AW.Helper.LLBL
 		{
 			var entity = CreateEntity(typeOfEntity);
 			return entity == null ? 0 : entity.LLBLGenProEntityTypeValue;
+		}
+
+		public static Type GetEntityTypeFromEntityTypeValue(IEntityFactoryCore entityFactoryCore, int entityTypeValue)
+		{
+			var entityFactory = entityFactoryCore as EntityFactoryCore;
+			if (entityFactory != null)
+			{
+				var entity = entityFactory.CreateEntityFromEntityTypeValue(entityTypeValue);
+				return entity == null ? null : entity.GetType();
+			}
+			var entityFactory2 = entityFactoryCore as EntityFactoryCore2;
+			if (entityFactory2 != null)
+			{
+				var entity = entityFactory2.CreateEntityFromEntityTypeValue(entityTypeValue);
+				return entity == null ? null : entity.GetType();
+			}
+			return null;
 		}
 
 		public static int GetEntityTypeValueForType<T>() where T : class, IEntityCore
@@ -330,5 +375,43 @@ namespace AW.Helper.LLBL
 		}
 
 		#endregion
+
+		public static IBindingListView CreateEntityView(IEnumerable enumerable, Type itemType)
+		{
+			var enumerator = enumerable.GetEnumerator();
+			if (!enumerator.MoveNext())
+				return ((IEntity) CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection().DefaultView as IBindingListView;
+			var firstEntity = ((IEntity) enumerator.Current);
+			if (firstEntity != null)
+			{
+				var entities = firstEntity.GetEntityFactory().CreateEntityCollection();
+				if (entities != null)
+					foreach (IEntity item in enumerable)
+						entities.Add(item);
+				if (entities == null)
+					return null; 
+				return entities.DefaultView as IBindingListView;
+			}
+			return ((IEntity)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection().DefaultView as IBindingListView;
+		}
+
+		public static IBindingListView CreateEntityView2(IEnumerable enumerable, Type itemType)
+		{
+			var enumerator = enumerable.GetEnumerator();
+			if (!enumerator.MoveNext())
+				return ((IEntity2)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection().DefaultView as IBindingListView;
+			var firstEntity = ((IEntity2)enumerator.Current);
+			if (firstEntity != null)
+			{
+				var entities = firstEntity.GetEntityFactory().CreateEntityCollection();
+				if (entities != null)
+					foreach (IEntity2 item in enumerable)
+						entities.Add(item);
+				if (entities == null)
+					return null;
+				return entities.DefaultView as IBindingListView;
+			}
+			return ((IEntity2)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection().DefaultView as IBindingListView;
+		}
 	}
 }

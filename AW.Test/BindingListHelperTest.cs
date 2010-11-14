@@ -8,6 +8,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
+using AW.Winforms.Helpers.LLBL;
 using JesseJohnston;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -59,6 +60,12 @@ namespace AW.Tests
 
 		#endregion
 
+		[AssemblyInitialize]
+		public static void TestsInitialize(TestContext testContext)
+		{
+			LLBLWinformHelper.ForceInitialization();
+		}
+
 		[TestMethod]
 		public void DifferentItemTypesTest()
 		{
@@ -77,13 +84,6 @@ namespace AW.Tests
 		[TestMethod]
 		public void BindEnumerableTest()
 		{
-			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-
-			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection));
-			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection.DefaultView));
-
-			TestBindEnumerable(MetaSingletons.MetaData.AddressType, true);
-
 			TestBindEnumerable(TestData.GetAddressTypeDataTable().DefaultView);
 
 			TestBindEnumerable(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, true, 2);
@@ -93,6 +93,23 @@ namespace AW.Tests
 			TestBindEnumerable(SerializableClass.GenerateListWithBoth(), true, 3, false);
 			TestBindEnumerable(SerializableBaseClass.GenerateList(), true, 1);
 			TestBindEnumerable(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), true, 1, false);
+		}
+
+		[TestMethod]
+		public void BindLLBLEnumerableTest()
+		{
+			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+
+			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection));
+			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestBindEnumerable(addressTypeEntityCollection.DefaultView));
+
+			Assert.IsInstanceOfType(TestBindEnumerable(MetaSingletons.MetaData.AddressType), addressTypeEntityCollection.DefaultView.GetType());
+		}
+
+		[TestMethod]
+		public void BindEmptyQueryTest()
+		{
+			TestBindEnumerable((IEnumerable) MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID == -1), false, 4);
 		}
 
 		[TestMethod]
@@ -161,14 +178,6 @@ namespace AW.Tests
 		{
 			TestToBindingListView(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
 			TestToBindingListView(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
-			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-			var list = TestToBindingListView(addressTypeEntityCollection.DefaultView);
-			Assert.AreEqual(addressTypeEntityCollection.DefaultView, list);
-
-			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestToBindingListView(addressTypeEntityCollection));
-			CollectionAssert.AreEqual(addressTypeEntityCollection, TestToBindingListView(addressTypeEntityCollection.AsQueryable()));
-			CollectionAssert.AreEqual(addressTypeEntityCollection, TestToBindingListView(addressTypeEntityCollection.Cast<CommonEntityBase>()));
-
 			TestToBindingListView(MetaSingletons.MetaData.AddressType);
 
 			var dataTable = TestData.GetAddressTypeDataTable();
@@ -183,6 +192,19 @@ namespace AW.Tests
 			Assert.IsNull((new[] {"s1", "s2", "s3"}).ToBindingListView());
 
 			TestToBindingListView(SerializableClass.GenerateList().ToBindingListView());
+		}
+
+		[TestMethod]
+		public void LLBLToBindingListViewTest()
+		{
+			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+			var list = TestToBindingListView(addressTypeEntityCollection.DefaultView);
+			Assert.AreEqual(addressTypeEntityCollection.DefaultView, list);
+
+			Assert.AreEqual(addressTypeEntityCollection.DefaultView, TestToBindingListView(addressTypeEntityCollection));
+			var addressTypeEntityCollectionQueryableAsBindingListView = TestToBindingListView(addressTypeEntityCollection.AsQueryable());
+			CollectionAssert.AreEqual(addressTypeEntityCollection, addressTypeEntityCollectionQueryableAsBindingListView);
+			Assert.IsInstanceOfType(addressTypeEntityCollectionQueryableAsBindingListView, addressTypeEntityCollection.DefaultView.GetType());
 		}
 
 		private static IBindingListView TestToBindingListView(IEnumerable enumerable)

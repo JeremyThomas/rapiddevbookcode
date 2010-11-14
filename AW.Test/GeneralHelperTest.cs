@@ -77,6 +77,20 @@ namespace AW.Tests
 			Assert.AreEqual(typeof (SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses.Take(30)));
 		}
 
+		[TestMethod]
+		public void AsNullIfEmptyTest()
+		{
+			Assert.IsNotNull(SerializableClass.GenerateList().AsNullIfEmpty());
+			Assert.IsNull((new List<SerializableClass>()).AsNullIfEmpty());
+		}
+
+		[TestMethod]
+		public void IsNullOrEmptyTest()
+		{
+			Assert.IsFalse(SerializableClass.GenerateList().Where(mc => !mc.NulllableIntField.Equals(1)).IsNullOrEmpty());
+			Assert.IsTrue((new List<SerializableClass>()).IsNullOrEmpty());
+		}
+
 		public void CopyToDataTableAndAssert<T>(IEnumerable<T> source)
 		{
 			var actual = GeneralHelper.CopyToDataTable(source);
