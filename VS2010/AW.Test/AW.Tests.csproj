@@ -41,6 +41,12 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ACorns.Hawkeye.Core, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f313c25d9126345f, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -118,6 +124,7 @@
     <Compile Include="EntityHelperTest.cs" />
     <Compile Include="FrmEntitiesAndFieldsTest.cs" />
     <Compile Include="GeneralHelperTest.cs" />
+    <Compile Include="GridDataEditorTestBase.cs" />
     <Compile Include="HierarchyEditorTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />
     <Compile Include="LookUpQueriesTest.cs" />
@@ -174,6 +181,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Ancillary\AdventureWorks.snk">
+      <Link>AdventureWorks.snk</Link>
+    </None>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

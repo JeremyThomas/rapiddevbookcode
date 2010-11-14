@@ -12,6 +12,16 @@ namespace AW.Winforms.Helpers
 {
 	public static class BindingListHelper
 	{
+		private static readonly Dictionary<Type, Func<IEnumerable, Type, IBindingListView>> BindingListViewCreaters = new Dictionary<Type, Func<IEnumerable, Type, IBindingListView>>();
+
+		public static void RegisterbindingListViewCreater(Type itemType, Func<IEnumerable, Type, IBindingListView> bindingListViewCreater)
+		{
+			if (BindingListViewCreaters.ContainsKey(itemType))
+				BindingListViewCreaters[itemType] = bindingListViewCreater;
+			else
+				BindingListViewCreaters.Add(itemType, bindingListViewCreater);
+		}
+
 		//&& enumerable.ToString() != "System.Collections.Hashtable+KeyCollection"
 		public static IBindingListView ToBindingListView(this IEnumerable enumerable)
 		{
@@ -44,7 +54,7 @@ namespace AW.Winforms.Helpers
 					if (bindingListView != null)
 						return bindingListView;
 				}
-				return ToObjectListView(enumerable);
+				return CreateBindingListView(enumerable);
 			}
 			return null;
 		}
@@ -78,7 +88,7 @@ namespace AW.Winforms.Helpers
 			if (collection != null)
 			{
 				if (collection is IList)
-					return ToObjectListView((IList)collection);
+					return ToObjectListView((IList) collection);
 				var objectListView = new ObjectListView(new ArrayList(collection));
 				if (objectListView.ItemType != null)
 					return objectListView;
@@ -98,6 +108,21 @@ namespace AW.Winforms.Helpers
 			return null;
 		}
 
+		private static IBindingListView CreateBindingListView<T>(IEnumerable<T> enumerable)
+		{
+			foreach (var iBindingListView in
+				from bindingListViewCreater in BindingListViewCreaters
+				where bindingListViewCreater.Key.IsAssignableFrom(typeof (T))
+				select bindingListViewCreater.Value(enumerable, typeof (T))
+				into iBindingListView
+				where iBindingListView != null
+				select iBindingListView)
+			{
+				return iBindingListView;
+			}
+			return ToObjectListView(enumerable);
+		}
+
 		private static IBindingListView CreateBindingListView(IEnumerable enumerable)
 		{
 			var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
@@ -106,10 +131,20 @@ namespace AW.Winforms.Helpers
 
 		private static IBindingListView CreateBindingListView(IEnumerable enumerable, Type itemType)
 		{
+			foreach (var iBindingListView in
+				from bindingListViewCreater in BindingListViewCreaters
+				where bindingListViewCreater.Key.IsAssignableFrom(itemType)
+				select bindingListViewCreater.Value(enumerable, itemType)
+				into iBindingListView 
+				where iBindingListView != null 
+				select iBindingListView)
+			{
+				return iBindingListView;
+			}
 			enumerable = (IEnumerable) ListBindingHelper.GetList(enumerable);
 			if (enumerable is ICollection)
 			{
-				var objectListView = ((ICollection)enumerable).ToObjectListView();
+				var objectListView = ((ICollection) enumerable).ToObjectListView();
 				if (objectListView != null)
 					return objectListView;
 			}
@@ -118,6 +153,8 @@ namespace AW.Winforms.Helpers
 			{
 				bindingListView.Add(item);
 			}
+			if (bindingListView.ItemType == null)
+				bindingListView.ItemType = itemType;
 			return bindingListView;
 		}
 
@@ -128,14 +165,21 @@ namespace AW.Winforms.Helpers
 			return (IList) Activator.CreateInstance(bindingType);
 		}
 
-		public static IBindingListView CreateObjectListView(Type type)
+		public static IBindingListView CreateObjectListViewGeneric(Type type)
 		{
 			var genericType = typeof (ObjectListView<>);
 			var bindingType = genericType.MakeGenericType(new[] {type});
-			return (IBindingListView)Activator.CreateInstance(bindingType, CreateList(type));
+			return (IBindingListView) Activator.CreateInstance(bindingType, CreateList(type));
 		}
 
-		public static IBindingListView CreateObjectListView()
+		public static IBindingListView CreateObjectListView(Type type)
+		{
+			var objectListView = CreateObjectListView();
+			objectListView.ItemType = type;
+			return objectListView;
+		}
+
+		public static ObjectListView CreateObjectListView()
 		{
 			return new ObjectListView(new ArrayList());
 		}
@@ -146,12 +190,6 @@ namespace AW.Winforms.Helpers
 				return null;
 			enumerable = (IEnumerable<T>) ListBindingHelper.GetList(enumerable);
 			return ToObjectListView((IList<T>) enumerable.ToList());
-		}
-
-		private static IBindingListView CreateObjectListViewViaBindingSource(IEnumerable enumerable)
-		{
-			var bindingSource = new BindingSource(enumerable, null);
-			return bindingSource.Count > 0 ? bindingSource.List.ToObjectListView() : null;
 		}
 
 		public static bool BindEnumerable<T>(this BindingSource bindingSource, IEnumerable<T> enumerable, bool setReadonly)
@@ -185,7 +223,7 @@ namespace AW.Winforms.Helpers
 			try
 			{
 				bindingSource.DataSource = enumerable.ToBindingListView();
-				showenEnumerable = bindingSource.Count > 0;
+				showenEnumerable = bindingSource.List != null;
 			}
 			catch (Exception)
 			{
@@ -197,7 +235,7 @@ namespace AW.Winforms.Helpers
 				{
 					bindingSource.DataSource = null;
 				}
-				showenEnumerable = bindingSource.Count > 0;
+				showenEnumerable = bindingSource.List != null;
 			}
 			return showenEnumerable;
 		}
@@ -208,7 +246,7 @@ namespace AW.Winforms.Helpers
 			try
 			{
 				bindingSource.DataSource = enumerable.ToBindingListView();
-				showenEnumerable = bindingSource.Count > 0;
+				showenEnumerable = bindingSource.List != null;
 			}
 			catch (Exception)
 			{
@@ -220,7 +258,7 @@ namespace AW.Winforms.Helpers
 				{
 					bindingSource.DataSource = null;
 				}
-				showenEnumerable = bindingSource.Count > 0;
+				showenEnumerable = bindingSource.List != null;
 			}
 			return showenEnumerable;
 		}

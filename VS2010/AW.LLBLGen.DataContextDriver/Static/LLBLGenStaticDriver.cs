@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LLBLGen.DataContextDriver.Properties;
+using AW.Winforms.Helpers.LLBL;
 using LINQPad;
 using LINQPad.Extensibility.DataContext;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -68,6 +69,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			try
 			{
+				LLBLWinformHelper.ForceInitialization();
 				var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
 				var type = assembly.GetTypes().Where(t => t.Name.Contains("CommonDaoBase") && t.IsClass).SingleOrDefault();
 				if (type == null)
@@ -190,7 +192,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static void ThrowInnerException(Exception invocationException)
 		{
 			if (invocationException.InnerException != null)
-					ThrowInnerException(invocationException.InnerException);
+				ThrowInnerException(invocationException.InnerException);
 			throw invocationException;
 		}
 

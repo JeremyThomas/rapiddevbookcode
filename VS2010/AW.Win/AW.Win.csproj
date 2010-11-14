@@ -11,8 +11,7 @@
     <RootNamespace>AW.Win</RootNamespace>
     <AssemblyName>AW.Win</AssemblyName>
     <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
     <SignManifests>false</SignManifests>
     <ManifestCertificateThumbprint>A52A1B242DFC58D05C553BFD37E77E9D4D89711F</ManifestCertificateThumbprint>
     <ManifestKeyFile>AW.Win_TemporaryKey.pfx</ManifestKeyFile>
@@ -214,6 +213,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="..\Ancillary\AdventureWorks.snk">
+      <Link>AdventureWorks.snk</Link>
+    </None>
     <None Include="App.config" />
     <None Include="Properties\DataSources\AW.Data.CollectionClasses.SalesOrderHeaderCollection.datasource" />
     <None Include="Properties\DataSources\AW.Data.EntityClasses.EmployeeEntity.datasource" />

@@ -19,7 +19,7 @@
     <SccProvider>SAK</SccProvider>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <PublishUrl>http://localhost/href.Controls/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>

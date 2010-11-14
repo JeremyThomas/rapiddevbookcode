@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;
@@ -70,6 +71,13 @@ namespace AW.Tests
 
 		public void Handler(string name, IntPtr hWnd, Form form)
 		{
+			//Assert.AreEqual(100, GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes.Count);
+			form.Close();
+		}
+
+		public static TreeView GetTreeViewEntitiesFromFrmEntitiesAndFields(Form form)
+		{
+			return ((TreeView)((FrmEntitiesAndFields)form.Controls[0]).Controls[0]);
 		}
 	}
 }

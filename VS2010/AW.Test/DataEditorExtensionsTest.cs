@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using AW.Data;
@@ -19,7 +16,6 @@ using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Extensions.Forms;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
@@ -29,7 +25,7 @@ namespace AW.Tests
 	///	to contain all DataEditorExtensionsTest Unit Tests
 	///</summary>
 	[TestClass]
-	public class DataEditorExtensionsTest : NUnitFormMSTest
+	public class DataEditorExtensionsTest : GridDataEditorTestBase
 	{
 		///<summary>
 		///	Gets or sets the test context which provides
@@ -175,7 +171,7 @@ namespace AW.Tests
 			TestShowInGrid(enumerable, 1);
 			enumerable = null;
 			TestShowInGrid(enumerable, 1);
-			TestEditInDataGridView(new string[0], 0);
+			TestEditInDataGridView(new string[0], 1);
 			//TestShowInGrid(new string[0], 0);
 		}
 
@@ -190,12 +186,12 @@ namespace AW.Tests
 		{
 			var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 15);
 			ModalFormHandler = Handler;
-			_expectedColumnCount = 9;
+			ExpectedColumnCount = 9;
 			addressEntities.ShowSelfServicingInGrid(20);
-			Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 			ModalFormHandler = Handler;
 			addressEntities.ShowSelfServicingInGrid(0);
-			Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 		}
 
 		[TestMethod]
@@ -209,13 +205,13 @@ namespace AW.Tests
 		public void ShowSelfServicingInGridTest()
 		{
 			ModalFormHandler = Handler;
-			_expectedColumnCount = 9;
+			ExpectedColumnCount = 9;
 			MetaSingletons.MetaData.Address.ShowSelfServicingInGrid();
-			Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 			ModalFormHandler = Handler;
-			_expectedColumnCount = 4;
+			ExpectedColumnCount = 4;
 			MetaSingletons.MetaData.AddressType.ShowSelfServicingInGrid();
-			Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 			TestShowInGrid(MetaSingletons.MetaData.Address, 9, 0, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
 		}
 
@@ -237,13 +233,13 @@ namespace AW.Tests
 			var addressTypesQuery = awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID);
 			ModalFormHandler = Handler;
 			addressTypesQuery.ShowInGrid(awDataClassesDataContext);
-			Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 			ModalFormHandler = Handler;
 			addressTypesQuery.ShowInGrid();
-			Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 			ModalFormHandler = Handler;
 			var actual = awDataClassesDataContext.AddressTypes.ShowInGrid();
-			Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 			Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
 		}
 
@@ -258,71 +254,6 @@ namespace AW.Tests
 			var xmlDoc = new XmlDocument();
 			xmlDoc.LoadXml(xml);
 			TestEditInDataGridView(xmlDoc.FirstChild.ChildNodes, 23, 1);
-		}
-
-		private const BindingFlags FieldBindingFlags = BindingFlags.Instance | BindingFlags.Public;
-
-		private void TestShowInGrid<T>(IEnumerable<T> enumerable, int numProperties = -1, int numFieldsToShow = 0, IDataEditorPersister dataEditorPersister = null)
-		{
-			ModalFormHandler = Handler;
-			_expectedColumnCount = numProperties + numFieldsToShow;
-			if (_expectedColumnCount < 0)
-			{
-				numProperties = MetaDataHelper.GetPropertiesToDisplay(typeof (T)).Count();
-				numFieldsToShow = typeof (T).GetFields(FieldBindingFlags).Count();
-				_expectedColumnCount = numProperties + numFieldsToShow;
-			}
-			var actual = enumerable.ShowInGrid(dataEditorPersister);
-			Assert.AreEqual(enumerable, actual);
-			Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
-			TestEditInDataGridView(enumerable, numProperties, numFieldsToShow, dataEditorPersister);
-		}
-
-		private void TestEditInDataGridView(IEnumerable enumerable, int numProperties = -1, int numFieldsToShow = 0, IDataEditorPersister dataEditorPersister = null)
-		{
-			if (enumerable != null)
-				ModalFormHandler = Handler;
-			_expectedColumnCount = numProperties + numFieldsToShow;
-			var actual = enumerable.ShowInGrid(dataEditorPersister);
-			Assert.AreEqual(enumerable, actual);
-			if (enumerable != null)
-			{
-				var displayPropertyCount = MetaDataHelper.GetPropertiesToDisplay(enumerable).Count();
-				if (numProperties > 0)
-				{
-					Assert.AreEqual(numProperties, displayPropertyCount);
-				}
-				else if (numProperties < 0)
-				{
-					_expectedColumnCount = displayPropertyCount;
-				}
-				Assert.AreEqual(_expectedColumnCount, _actualColumnCount);
-			}
-		}
-
-		private int _expectedColumnCount;
-		private int _actualColumnCount;
-
-		public void Handler(string name, IntPtr hWnd, Form form)
-		{
-			//Assert.AreEqual(1, ((FrmDataEditor)form). .ColumnCount);
-			//var dataGridView = new DataGridViewTester("dataGridView", name);
-			//	if (_expectedColumnCount > 0)
-			{
-				var dataGridView = GetDataGridViewFromGridDataEditor(form);
-				_actualColumnCount = dataGridView.ColumnCount;
-				if (_expectedColumnCount == _actualColumnCount)
-					form.Close();
-				else
-				{
-					Debugger.Break();
-				}
-			}
-		}
-
-		public static DataGridView GetDataGridViewFromGridDataEditor(Form form)
-		{
-			return ((DataGridView) ((GridDataEditor) form.Controls[0]).Controls[0]);
 		}
 	}
 }
