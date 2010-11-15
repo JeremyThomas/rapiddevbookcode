@@ -11,7 +11,6 @@ namespace AW.Helper.LLBL
 {
 	public static class EntityHelper
 	{
-
 		/// <summary>
 		/// returns the datasource to use in a Linq query for the entity type specified
 		/// </summary>
@@ -141,6 +140,41 @@ namespace AW.Helper.LLBL
 			return entities;
 		}
 
+		public static IEntityCollection ToEntityCollection(IEnumerable enumerable, Type itemType)
+		{
+			IEntityCollection entities = null;
+			var llblQuery = enumerable as ILLBLGenProQuery;
+			if (llblQuery != null)
+				entities = llblQuery.Execute() as IEntityCollection;
+			if (entities == null)
+			{
+				var enumerator = enumerable.GetEnumerator();
+				if (enumerator.MoveNext())
+				{
+					var firstEntity = ((IEntity) enumerator.Current);
+					if (firstEntity != null)
+					{
+						entities = firstEntity.GetEntityFactory().CreateEntityCollection();
+						if (entities == null)
+							return null;
+						foreach (IEntity item in enumerable)
+							entities.Add(item);
+					}
+				}
+			}
+			if (entities == null)
+				entities = ((IEntity) CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection();
+			if (entities.Count > 0)
+				entities.RemovedEntitiesTracker = entities.EntityFactoryToUse.CreateEntityCollection();
+			return entities;
+		}
+
+		public static IBindingListView CreateEntityView(IEnumerable enumerable, Type itemType)
+		{
+			var entityCollection = ToEntityCollection(enumerable, itemType);
+			return entityCollection == null ? null : entityCollection.DefaultView as IBindingListView;
+		}
+
 		/// <summary>
 		/// Gets the entity field from the name of the field.
 		/// </summary>
@@ -230,8 +264,16 @@ namespace AW.Helper.LLBL
 		/// <returns>the amount of persisted entities</returns>
 		public static int SaveEntities(IEnumerable entitiesToSave)
 		{
-			if (entitiesToSave is EntityCollectionBase<EntityBase>)
-				return ((EntityCollectionBase<EntityBase>) entitiesToSave).SaveMulti();
+			if (entitiesToSave is IEntityView)
+				entitiesToSave = ((IEntityView)entitiesToSave).RelatedCollection;
+			if (entitiesToSave is IEntityCollection)
+			{
+				var entityCollection = (IEntityCollection)entitiesToSave;
+				var modifyCount = 0;
+				if (entityCollection.RemovedEntitiesTracker != null)
+					modifyCount = entityCollection.RemovedEntitiesTracker.DeleteMulti();
+				return modifyCount + entityCollection.SaveMulti();
+			}
 			return entitiesToSave.Cast<EntityBase>().Count(entity => entity.IsDirty && entity.Save());
 		}
 
@@ -263,8 +305,16 @@ namespace AW.Helper.LLBL
 		/// <returns>the amount of persisted entities</returns>
 		public static int SaveEntities(IEnumerable entitiesToSave, IDataAccessAdapter dataAccessAdapter)
 		{
+			if (entitiesToSave is IEntityView2)
+				entitiesToSave = ((IEntityView2)entitiesToSave).RelatedCollection;
 			if (entitiesToSave is IEntityCollection2)
-				return dataAccessAdapter.SaveEntityCollection((IEntityCollection2) entitiesToSave);
+			{
+				var entityCollection = (IEntityCollection2)entitiesToSave;
+				var modifyCount = 0;
+				if (entityCollection.RemovedEntitiesTracker != null)
+					modifyCount = dataAccessAdapter.DeleteEntityCollection(entityCollection.RemovedEntitiesTracker);
+				return modifyCount + dataAccessAdapter.SaveEntityCollection((IEntityCollection2)entitiesToSave);
+			}
 			return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
 		}
 
@@ -374,44 +424,42 @@ namespace AW.Helper.LLBL
 			return llblGenProProvider2 == null ? null : llblGenProProvider2.AdapterToUse;
 		}
 
-		#endregion
-
-		public static IBindingListView CreateEntityView(IEnumerable enumerable, Type itemType)
+		public static IEntityCollection2 ToEntityCollection2(IEnumerable enumerable, Type itemType)
 		{
-			var enumerator = enumerable.GetEnumerator();
-			if (!enumerator.MoveNext())
-				return ((IEntity) CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection().DefaultView as IBindingListView;
-			var firstEntity = ((IEntity) enumerator.Current);
-			if (firstEntity != null)
+			IEntityCollection2 entities = null;
+			var llblQuery = enumerable as ILLBLGenProQuery;
+			if (llblQuery != null)
+				entities = llblQuery.Execute() as IEntityCollection2;
+			if (entities == null)
 			{
-				var entities = firstEntity.GetEntityFactory().CreateEntityCollection();
-				if (entities != null)
-					foreach (IEntity item in enumerable)
-						entities.Add(item);
-				if (entities == null)
-					return null; 
-				return entities.DefaultView as IBindingListView;
+				var enumerator = enumerable.GetEnumerator();
+				if (enumerator.MoveNext())
+				{
+					var firstEntity = ((IEntity2)enumerator.Current);
+					if (firstEntity != null)
+					{
+						entities = firstEntity.GetEntityFactory().CreateEntityCollection();
+						if (entities == null)
+							return null;
+						foreach (IEntity2 item in enumerable)
+							entities.Add(item);
+					}
+				}
 			}
-			return ((IEntity)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection().DefaultView as IBindingListView;
+			if (entities == null)
+				entities = ((IEntity2)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection();
+			if (entities.Count > 0)
+				entities.RemovedEntitiesTracker = entities.EntityFactoryToUse.CreateEntityCollection();
+			return entities;
 		}
 
 		public static IBindingListView CreateEntityView2(IEnumerable enumerable, Type itemType)
 		{
-			var enumerator = enumerable.GetEnumerator();
-			if (!enumerator.MoveNext())
-				return ((IEntity2)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection().DefaultView as IBindingListView;
-			var firstEntity = ((IEntity2)enumerator.Current);
-			if (firstEntity != null)
-			{
-				var entities = firstEntity.GetEntityFactory().CreateEntityCollection();
-				if (entities != null)
-					foreach (IEntity2 item in enumerable)
-						entities.Add(item);
-				if (entities == null)
-					return null;
-				return entities.DefaultView as IBindingListView;
-			}
-			return ((IEntity2)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection().DefaultView as IBindingListView;
+			var entityCollection = ToEntityCollection2(enumerable, itemType);
+			return entityCollection == null ? null : entityCollection.DefaultView as IBindingListView;
 		}
+
+		#endregion
+
 	}
 }

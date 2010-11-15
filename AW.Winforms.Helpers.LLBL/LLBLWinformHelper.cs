@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
@@ -18,8 +17,8 @@ namespace AW.Winforms.Helpers.LLBL
 		/// </summary>
 		static LLBLWinformHelper()
 		{
-			BindingListHelper.RegisterbindingListViewCreater(typeof(IEntity), EntityHelper.CreateEntityView2);
-			BindingListHelper.RegisterbindingListViewCreater(typeof(IEntity2), EntityHelper.CreateBindingListView2);
+			BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity), EntityHelper.CreateEntityView);
+			BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity2), EntityHelper.CreateEntityView2);
 		}
 
 		/// <summary>
@@ -91,9 +90,9 @@ namespace AW.Winforms.Helpers.LLBL
 				return EntityHelper.Save(dataToSave);
 			}
 
-			public int Delete(object dataToSave)
+			public int Delete(object dataToDelete)
 			{
-				return EntityHelper.Delete(dataToSave);
+				return EntityHelper.Delete(dataToDelete);
 			}
 
 			public bool CanSave(Type typeToSave)
@@ -170,9 +169,9 @@ namespace AW.Winforms.Helpers.LLBL
 				return EntityHelper.Save(dataToSave, _dataAccessAdapter);
 			}
 
-			public int Delete(object dataToSave)
+			public int Delete(object dataToDelete)
 			{
-				return EntityHelper.Delete(dataToSave, _dataAccessAdapter);
+				return EntityHelper.Delete(dataToDelete, _dataAccessAdapter);
 			}
 
 			public bool CanSave(Type typeToSave)
