@@ -7,7 +7,7 @@ namespace AW.Winforms.Helpers.Controls
 	public interface IDataEditorPersister
 	{
 		int Save(object dataToSave);
-		int Delete(object dataToSave);
+		int Delete(object dataToDelete);
 		bool CanSave(Type typeToSave);
 	}
 
@@ -29,9 +29,9 @@ namespace AW.Winforms.Helpers.Controls
 			return SaveFunction != null ? SaveFunction(dataToSave) : 0;
 		}
 
-		public int Delete(object dataToSave)
+		public int Delete(object dataToDelete)
 		{
-			return DeleteFunction != null ? DeleteFunction(dataToSave) : 0;
+			return DeleteFunction != null ? DeleteFunction(dataToDelete) : 0;
 		}
 
 		public bool CanSave(Type typeToSave)
@@ -56,7 +56,7 @@ namespace AW.Winforms.Helpers.Controls
 			return changeSet.Inserts.Count + changeSet.Updates.Count;
 		}
 
-		public int Delete(object dataToSave)
+		public int Delete(object dataToDelete)
 		{
 			_dataContext.SubmitChanges();
 			return _dataContext.GetChangeSet().Deletes.Count;
