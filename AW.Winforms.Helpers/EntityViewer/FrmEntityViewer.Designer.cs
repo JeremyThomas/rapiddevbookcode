@@ -72,7 +72,7 @@
 			// splitContainerVertical.Panel1
 			// 
 			this.splitContainerVertical.Panel1.Controls.Add(this.ObjectBrowser);
-			this.splitContainerVertical.Size = new System.Drawing.Size(1031, 518);
+			this.splitContainerVertical.Size = new System.Drawing.Size(1031, 540);
 			this.splitContainerVertical.SplitterDistance = 343;
 			// 
 			// splitContainerHorizontal
@@ -86,8 +86,8 @@
 			// splitContainerHorizontal.Panel2
 			// 
 			this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
-			this.splitContainerHorizontal.Size = new System.Drawing.Size(684, 518);
-			this.splitContainerHorizontal.SplitterDistance = 287;
+			this.splitContainerHorizontal.Size = new System.Drawing.Size(684, 540);
+			this.splitContainerHorizontal.SplitterDistance = 299;
 			// 
 			// contextMenuStrip1
 			// 
@@ -95,19 +95,19 @@
             this.selectObjectToolStripMenuItem,
             this.copyObjectRefToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(166, 48);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(161, 70);
 			// 
 			// selectObjectToolStripMenuItem
 			// 
 			this.selectObjectToolStripMenuItem.Name = "selectObjectToolStripMenuItem";
-			this.selectObjectToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+			this.selectObjectToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
 			this.selectObjectToolStripMenuItem.Text = "SelectObject";
 			this.selectObjectToolStripMenuItem.Click += new System.EventHandler(this.selectObjectToolStripMenuItem_Click);
 			// 
 			// copyObjectRefToolStripMenuItem
 			// 
 			this.copyObjectRefToolStripMenuItem.Name = "copyObjectRefToolStripMenuItem";
-			this.copyObjectRefToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+			this.copyObjectRefToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
 			this.copyObjectRefToolStripMenuItem.Text = "Copy Object Ref";
 			this.copyObjectRefToolStripMenuItem.Click += new System.EventHandler(this.copyObjectRefToolStripMenuItem_Click);
 			// 
@@ -192,7 +192,7 @@
 			this.ObjectBrowser.Location = new System.Drawing.Point(0, 0);
 			this.ObjectBrowser.Name = "ObjectBrowser";
 			this.ObjectBrowser.ObjectToBrowse = null;
-			this.ObjectBrowser.Size = new System.Drawing.Size(343, 518);
+			this.ObjectBrowser.Size = new System.Drawing.Size(343, 540);
 			this.ObjectBrowser.TabIndex = 0;
 			this.ObjectBrowser.NodeSelected += new System.EventHandler(this.ObjectBrowser_NodeSelected);
 			// 
@@ -206,7 +206,7 @@
 			this.propertyGrid1.DrawFlat = true;
 			this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
 			this.propertyGrid1.Name = "propertyGrid1";
-			this.propertyGrid1.Size = new System.Drawing.Size(684, 224);
+			this.propertyGrid1.Size = new System.Drawing.Size(684, 236);
 			this.propertyGrid1.TabIndex = 0;
 			this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
 			// 
@@ -278,7 +278,7 @@
 			this.gridDataEditor.Name = "gridDataEditor";
 			this.gridDataEditor.PageSize = ((ushort)(20));
 			this.gridDataEditor.Readonly = false;
-			this.gridDataEditor.Size = new System.Drawing.Size(684, 227);
+			this.gridDataEditor.Size = new System.Drawing.Size(684, 237);
 			this.gridDataEditor.TabIndex = 3;
 			// 
 			// dataGridViewTextBoxColumn11
@@ -301,7 +301,7 @@
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelInstance,
             this.toolStripStatusLabelSelectePath});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 518);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 540);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(1031, 22);
 			this.statusStrip1.TabIndex = 2;

@@ -66,12 +66,12 @@ namespace AW.Winforms.Helpers.LLBL
 				if (!splitContainerVertical.Panel2Collapsed)
 				{
 					splitContainerVertical.Panel2Collapsed = true;
-					base.RestoreWindowSettings();					
+					base.RestoreWindowSettings();
 					splitContainerVertical.Width = ClientSize.Width;
 					//splitContainerVertical.Width = splitContainerVertical.SplitterDistance;
 					SetClientSizeCore(splitContainerVertical.SplitterDistance, ClientSize.Height);
-					if (splitContainerVertical.Width>splitContainerVertical.SplitterDistance)
-					((Panel) splitContainerVertical.Panel2).Width = splitContainerVertical.Width - splitContainerVertical.SplitterDistance - splitContainerVertical.SplitterWidth;
+					if (splitContainerVertical.Width > splitContainerVertical.SplitterDistance)
+						((Panel) splitContainerVertical.Panel2).Width = splitContainerVertical.Width - splitContainerVertical.SplitterDistance - splitContainerVertical.SplitterWidth;
 				}
 		}
 
@@ -79,6 +79,7 @@ namespace AW.Winforms.Helpers.LLBL
 
 		private void EntitiesAndFields_Load(object sender, EventArgs e)
 		{
+			gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;
 			treeViewEntities.Nodes.Clear();
 			foreach (var entityType in GetEntitiesTypes().OrderBy(t => t.Name))
 			{
@@ -139,8 +140,14 @@ namespace AW.Winforms.Helpers.LLBL
 			DoDragDrop(((TreeNode) e.Item).Text, DragDropEffects.All);
 		}
 
+		private void bindingSourceEnumerable_CurrentChanged(object sender, EventArgs e)
+		{
+			propertyGrid.SelectedObject = gridDataEditor.bindingSourceEnumerable.Current;
+		}
+
 		private void treeViewEntities_AfterSelect(object sender, TreeViewEventArgs e)
 		{
+			propertyGrid.SelectedObject = treeViewEntities.SelectedNode.Tag;
 			var prop = treeViewEntities.SelectedNode.Tag as PropertyDescriptor;
 			if (prop != null)
 			{
@@ -189,7 +196,6 @@ namespace AW.Winforms.Helpers.LLBL
 
 		private void ViewEntities(IQueryable entityQueryable, ushort pageSize)
 		{
-			propertyGrid.SelectedObject = entityQueryable;
 			if (splitContainerVertical.Panel2Collapsed)
 				ExpandRightPanel();
 			gridDataEditor.BindEnumerable(entityQueryable, pageSize);
@@ -229,6 +235,74 @@ namespace AW.Winforms.Helpers.LLBL
 				treeViewEntities.SelectedNode = e.Node;
 				contextMenuStrip1.Show(treeViewEntities, e.Location);
 			}
+		}
+
+		private void viewInPropertyGridToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			propertyGrid.SelectedObject = treeViewEntities.SelectedNode.Tag;
+			if (splitContainerVertical.Panel2Collapsed)
+				ExpandRightPanel();
+		}
+
+		private void viewToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var entityQueryable = GetEntityQueryable();
+			if (entityQueryable != null)
+			{
+				propertyGrid.SelectedObject = entityQueryable;
+				if (splitContainerVertical.Panel2Collapsed)
+					ExpandRightPanel();
+			}
+		}
+
+		private void viewFieldsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
+			var fields = EntityHelper.CreateEntity(typeOfEntity).Fields;
+			propertyGrid.SelectedObject = fields;
+			gridDataEditor.BindEnumerable(fields);
+			if (splitContainerVertical.Panel2Collapsed)
+				ExpandRightPanel();
+		}
+
+		private void viewPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
+			if (typeOfEntity != null)
+			{
+				var properties = typeOfEntity.GetProperties();
+				propertyGrid.SelectedObject = properties;
+				gridDataEditor.BindEnumerable(properties);
+			}
+			if (splitContainerVertical.Panel2Collapsed)
+				ExpandRightPanel();
+		}
+
+		private void viewPropertyDescriptorsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
+			if (typeOfEntity != null)
+			{
+				var properties = MetaDataHelper.GetPropertyDescriptors(typeOfEntity);
+				propertyGrid.SelectedObject = properties;
+				gridDataEditor.BindEnumerable(properties);
+			}
+			if (splitContainerVertical.Panel2Collapsed)
+				ExpandRightPanel();
+		}
+
+		private void viewAttributesToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
+			if (typeOfEntity != null)
+			{
+				var properties = MetaDataHelper.GetPropertyDescriptors(typeOfEntity);
+				var attributes = properties.SelectMany(prop => prop.Attributes.Cast<Attribute>());
+				propertyGrid.SelectedObject = attributes;
+				gridDataEditor.BindEnumerable(attributes);
+			}
+			if (splitContainerVertical.Panel2Collapsed)
+				ExpandRightPanel();
 		}
 	}
 }

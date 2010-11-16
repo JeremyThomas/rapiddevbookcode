@@ -36,10 +36,16 @@ namespace AW.Winforms.Helpers.LLBL
 			this.openPaged30ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItemOpen = new System.Windows.Forms.ToolStripMenuItem();
 			this.getCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewInPropertyGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelSelected = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
 			this.propertyGrid = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
+			this.viewPropertyDescriptorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewAttributesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainerVertical.Panel1.SuspendLayout();
 			this.splitContainerVertical.Panel2.SuspendLayout();
 			this.splitContainerVertical.SuspendLayout();
@@ -102,30 +108,64 @@ namespace AW.Winforms.Helpers.LLBL
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openPaged30ToolStripMenuItem,
             this.toolStripMenuItemOpen,
-            this.getCountToolStripMenuItem});
+            this.getCountToolStripMenuItem,
+            this.viewInPropertyGridToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.viewFieldsToolStripMenuItem,
+            this.viewPropertiesToolStripMenuItem,
+            this.viewPropertyDescriptorsToolStripMenuItem,
+            this.viewAttributesToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(185, 92);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(240, 224);
 			// 
 			// openPaged30ToolStripMenuItem
 			// 
 			this.openPaged30ToolStripMenuItem.Name = "openPaged30ToolStripMenuItem";
-			this.openPaged30ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.openPaged30ToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
 			this.openPaged30ToolStripMenuItem.Text = "Open 30 per Page";
 			this.openPaged30ToolStripMenuItem.Click += new System.EventHandler(this.openPaged20ToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItemOpen
 			// 
 			this.toolStripMenuItemOpen.Name = "toolStripMenuItemOpen";
-			this.toolStripMenuItemOpen.Size = new System.Drawing.Size(184, 22);
+			this.toolStripMenuItemOpen.Size = new System.Drawing.Size(239, 22);
 			this.toolStripMenuItemOpen.Text = "Open wthout paging";
 			this.toolStripMenuItemOpen.Click += new System.EventHandler(this.toolStripMenuItemOpen_Click);
 			// 
 			// getCountToolStripMenuItem
 			// 
 			this.getCountToolStripMenuItem.Name = "getCountToolStripMenuItem";
-			this.getCountToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.getCountToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
 			this.getCountToolStripMenuItem.Text = "Get Count";
 			this.getCountToolStripMenuItem.Click += new System.EventHandler(this.getCountToolStripMenuItem_Click);
+			// 
+			// viewInPropertyGridToolStripMenuItem
+			// 
+			this.viewInPropertyGridToolStripMenuItem.Name = "viewInPropertyGridToolStripMenuItem";
+			this.viewInPropertyGridToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewInPropertyGridToolStripMenuItem.Text = "View in PropertyGrid";
+			this.viewInPropertyGridToolStripMenuItem.Click += new System.EventHandler(this.viewInPropertyGridToolStripMenuItem_Click);
+			// 
+			// viewToolStripMenuItem
+			// 
+			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+			this.viewToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewToolStripMenuItem.Text = "View Queryable in PropertyGrid";
+			this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
+			// 
+			// viewFieldsToolStripMenuItem
+			// 
+			this.viewFieldsToolStripMenuItem.Name = "viewFieldsToolStripMenuItem";
+			this.viewFieldsToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewFieldsToolStripMenuItem.Text = "View Fields";
+			this.viewFieldsToolStripMenuItem.Click += new System.EventHandler(this.viewFieldsToolStripMenuItem_Click);
+			// 
+			// viewPropertiesToolStripMenuItem
+			// 
+			this.viewPropertiesToolStripMenuItem.Name = "viewPropertiesToolStripMenuItem";
+			this.viewPropertiesToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewPropertiesToolStripMenuItem.Text = "View Properties";
+			this.viewPropertiesToolStripMenuItem.Click += new System.EventHandler(this.viewPropertiesToolStripMenuItem_Click);
 			// 
 			// statusStrip1
 			// 
@@ -167,6 +207,20 @@ namespace AW.Winforms.Helpers.LLBL
 			this.propertyGrid.Size = new System.Drawing.Size(332, 187);
 			this.propertyGrid.TabIndex = 0;
 			// 
+			// viewPropertyDescriptorsToolStripMenuItem
+			// 
+			this.viewPropertyDescriptorsToolStripMenuItem.Name = "viewPropertyDescriptorsToolStripMenuItem";
+			this.viewPropertyDescriptorsToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewPropertyDescriptorsToolStripMenuItem.Text = "View Property Descriptors";
+			this.viewPropertyDescriptorsToolStripMenuItem.Click += new System.EventHandler(this.viewPropertyDescriptorsToolStripMenuItem_Click);
+			// 
+			// viewAttributesToolStripMenuItem
+			// 
+			this.viewAttributesToolStripMenuItem.Name = "viewAttributesToolStripMenuItem";
+			this.viewAttributesToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewAttributesToolStripMenuItem.Text = "View Attributes";
+			this.viewAttributesToolStripMenuItem.Click += new System.EventHandler(this.viewAttributesToolStripMenuItem_Click);
+			// 
 			// FrmEntitiesAndFields
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -205,5 +259,11 @@ namespace AW.Winforms.Helpers.LLBL
 		private Controls.GridDataEditor gridDataEditor;
 		private Helpers.PropGridEx.PropertyGridEx propertyGrid;
 		internal System.Windows.Forms.TreeView treeViewEntities;
+		private System.Windows.Forms.ToolStripMenuItem viewInPropertyGridToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewFieldsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewPropertiesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewPropertyDescriptorsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewAttributesToolStripMenuItem;
   }
 }
