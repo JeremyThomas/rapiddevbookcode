@@ -84,7 +84,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (Exception e)
 			{
 				GeneralHelper.TraceOut(e.Message);
-				Debugger.Break();
 			}
 		}
 
@@ -171,9 +170,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 						}
 				}
 
-				if (adapter == null)
-					Debugger.Break();
-				else
+				if (adapter != null)
 				{
 					adapterToUseProperty.SetValue(linqMetaData, adapter, null);
 					if (string.IsNullOrEmpty(adapter.ConnectionString))

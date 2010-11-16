@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.DataEditor;
+using AW.Winforms.Helpers.EntityViewer;
 using DynamicTable;
 using JesseJohnston;
 
@@ -130,7 +131,7 @@ namespace AW.Winforms.Helpers.Controls
 			toolStripButtonCancelEdit.Enabled = false;
 		}
 
-		private static void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
 		{
 		}
 
@@ -142,12 +143,15 @@ namespace AW.Winforms.Helpers.Controls
 				saveToolStripButton.Enabled = _canSave && !SupportsNotifyPropertyChanged;
 				copyToolStripButton.Enabled = true;
 				printToolStripButton.Enabled = true;
+				toolStripButtonObjectBrowser.Enabled = true;
 				toolStripButtonObjectListViewVisualizer.Enabled = IsObjectListView();
 				toolStripButtonObjectListViewVisualizer.Visible = toolStripButtonObjectListViewVisualizer.Enabled;
 			}
-
 			else
+			{
+				toolStripButtonObjectBrowser.Enabled = false;
 				saveToolStripButton.Enabled = false;
+			}
 			toolStripLabelSaveResult.Text = "";
 		}
 
@@ -398,6 +402,11 @@ namespace AW.Winforms.Helpers.Controls
 			var visualizerForm = ObjectListViewHelper.CreateVisualizerForm(bindingSourceEnumerable.List);
 			if (visualizerForm != null)
 				visualizerForm.ShowDialog();
+		}
+
+		private void toolStripButtonObjectBrowser_Click(object sender, EventArgs e)
+		{
+			FrmEntityViewer.LaunchAsChildForm(bindingSourceEnumerable.List, DataEditorPersister);
 		}
 	}
 }
