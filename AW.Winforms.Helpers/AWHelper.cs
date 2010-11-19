@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
@@ -173,6 +174,76 @@ namespace AW.Winforms.Helpers
 			else
 				form.ShowDialog();
 			return form;
+		}
+
+		#endregion
+
+		#region Controls
+
+		public static Control GetFocusedControl(Control.ControlCollection controls)
+		{
+			// store focused control...
+			foreach (Control clsControl in controls)
+			{
+				if (clsControl.Focused)
+				{
+					return clsControl;
+				}
+				if (clsControl.ContainsFocus)
+				{
+					return clsControl.Controls.Count == 0 ? clsControl : GetFocusedControl(clsControl.Controls);
+				}
+			}
+			// no focus...
+			return null;
+		}
+
+		/// <summary>
+		/// Recursively gets the focused control.
+		/// </summary>
+		/// <param name="control">A parent control.</param>
+		/// <returns>The child control(if any) that has focus</returns>
+		public static Control GetFocusedControl(Control control)
+		{
+			if (control == null || control.Focused)
+			{
+				return control;
+			}
+			if (control.ContainsFocus)
+			{
+				if (control is ContainerControl && ((ContainerControl) control).ActiveControl.ContainsFocus)
+					return GetFocusedControl(((ContainerControl) control).ActiveControl);
+				return GetFocusedControl(control.Controls);
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Recursivly gets all the contained controls.
+		/// </summary>
+		/// <param name="controls">The controls.</param>
+		/// <see cref="http://weblogs.asp.net/dfindley/archive/2007/06/29/linq-the-uber-findcontrol.aspx"/>
+		/// /// <see cref="http://stackoverflow.com/questions/253937/recursive-control-search-with-linq"/>
+		/// <returns>All the contained controls.</returns>
+		public static IEnumerable<Control> All(this Control.ControlCollection controls)
+		{
+			foreach (Control control in controls)
+			{
+				foreach (var grandChild in control.Controls.All())
+					yield return grandChild;
+
+				yield return control;
+			}
+		}
+
+		/// <summary>
+		/// Recursivly gets all the contained controls.
+		/// </summary>
+		/// <param name="control">The control.</param>
+		/// <returns>All the contained controls.</returns>
+		public static IEnumerable<Control> GetAllContainedControls(this Control control)
+		{
+			return control.Controls.All();
 		}
 
 		#endregion

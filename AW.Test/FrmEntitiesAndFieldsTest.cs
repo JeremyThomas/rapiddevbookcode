@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
-using AW.Winforms.Helpers.Controls;
+using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;
@@ -61,23 +62,41 @@ namespace AW.Tests
 		[TestMethod]
 		public void ShowEntitiesAndFieldsTest()
 		{
-			//typeof (CommonEntityBase), MetaSingletons.MetaData
-			//AW.Winforms.Helpers.LLBL.FrmEntitiesAndFields.ShowEntitiesAndFields(typeof(AQD.Model.EntityClasses.CommonEntityBase),this);
-			var baseType = typeof (CommonEntityBase);
-			ILinqMetaData linqMetaData = MetaSingletons.MetaData;
-			ModalFormHandler = Handler;
-			FrmEntitiesAndFields.ShowEntitiesAndFields(baseType, linqMetaData);
+			TestShowEntitiesAndFields(null, null);
 		}
+
+		[TestMethod]
+		public void ShowEntitiesAndFieldsILinqMetaDataTest()
+		{
+			TestShowEntitiesAndFields(null, MetaSingletons.MetaData);
+		}
+
+		[TestMethod]
+		public void ShowEntitiesAndFieldsCommonEntityBaseTest()
+		{
+			TestShowEntitiesAndFields(typeof(CommonEntityBase), null);
+		}
+
+		private void TestShowEntitiesAndFields(Type baseType, ILinqMetaData linqMetaData)
+		{
+			ModalFormHandler = Handler;
+			var form = baseType == null ? (linqMetaData == null ? new FrmEntitiesAndFields() : new FrmEntitiesAndFields(linqMetaData)) : new FrmEntitiesAndFields(baseType);
+			AWHelper.ShowForm(form);
+			Assert.AreEqual(71, _nodesCount);
+			_nodesCount = null;
+		}
+
+		private int? _nodesCount;
 
 		public void Handler(string name, IntPtr hWnd, Form form)
 		{
-			//Assert.AreEqual(100, GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes.Count);
+			_nodesCount = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes.Count;
 			form.Close();
 		}
 
 		public static TreeView GetTreeViewEntitiesFromFrmEntitiesAndFields(Form form)
 		{
-			return ((TreeView)((FrmEntitiesAndFields)form.Controls[0]).Controls[0]);
+			return form.GetAllContainedControls().First(c => c is TreeView) as TreeView;
 		}
 	}
 }

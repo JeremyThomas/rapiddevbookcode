@@ -85,5 +85,15 @@ namespace AW.Tests
 		{
 			ToEntityCollectionTestHelper<AddressTypeEntity>();
 		}
+
+		[TestMethod, Description("A test for GetEntitiesTypes")]
+		public void GetEntitiesTypesTest()
+		{
+			var allLoadedDescendanceEntitiesType = EntityHelper.GetEntitiesTypes().ToList();
+			var commonEntityBaseEntitiesType = EntityHelper.GetEntitiesTypes(typeof(CommonEntityBase)).ToList();
+			var assemblyEntitiesType = EntityHelper.GetEntitiesTypes(MetaSingletons.MetaData.GetType().Assembly).ToList();
+			CollectionAssert.AreEqual(allLoadedDescendanceEntitiesType, commonEntityBaseEntitiesType);
+			CollectionAssert.AreEqual(commonEntityBaseEntitiesType, assemblyEntitiesType);
+		}
 	}
 }
