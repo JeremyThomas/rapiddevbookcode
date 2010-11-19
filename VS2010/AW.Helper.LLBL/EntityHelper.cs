@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -108,6 +109,27 @@ namespace AW.Helper.LLBL
 		public static int GetEntityTypeValueForType<T>() where T : class, IEntityCore
 		{
 			return GetEntityTypeValueForType(typeof (T));
+		}
+
+		public static IEnumerable<Type> GetEntitiesTypes(Type baseType)
+		{
+			return MetaDataHelper.GetDescendance(baseType);
+		}
+
+		public static IEnumerable<Type> GetEntitiesTypes()
+		{
+			return MetaDataHelper.GetAllLoadedDescendance(typeof (IEntityCore));
+		}
+
+		public static IEnumerable<Type> GetEntitiesTypes(Assembly entityAssembly)
+		{
+			var entitiesTypes = typeof (IEntityCore).GetAssignable(entityAssembly.GetExportedTypes());
+			return entitiesTypes.Any() ? entitiesTypes : GetEntitiesTypes();
+		}
+
+		public static IEnumerable<Type> GetEntitiesTypes(ILinqMetaData linqMetaData)
+		{
+			return GetEntitiesTypes(linqMetaData.GetType().Assembly);
 		}
 
 		#region Self Servicing
@@ -265,10 +287,10 @@ namespace AW.Helper.LLBL
 		public static int SaveEntities(IEnumerable entitiesToSave)
 		{
 			if (entitiesToSave is IEntityView)
-				entitiesToSave = ((IEntityView)entitiesToSave).RelatedCollection;
+				entitiesToSave = ((IEntityView) entitiesToSave).RelatedCollection;
 			if (entitiesToSave is IEntityCollection)
 			{
-				var entityCollection = (IEntityCollection)entitiesToSave;
+				var entityCollection = (IEntityCollection) entitiesToSave;
 				var modifyCount = 0;
 				if (entityCollection.RemovedEntitiesTracker != null)
 					modifyCount = entityCollection.RemovedEntitiesTracker.DeleteMulti();
@@ -306,14 +328,14 @@ namespace AW.Helper.LLBL
 		public static int SaveEntities(IEnumerable entitiesToSave, IDataAccessAdapter dataAccessAdapter)
 		{
 			if (entitiesToSave is IEntityView2)
-				entitiesToSave = ((IEntityView2)entitiesToSave).RelatedCollection;
+				entitiesToSave = ((IEntityView2) entitiesToSave).RelatedCollection;
 			if (entitiesToSave is IEntityCollection2)
 			{
-				var entityCollection = (IEntityCollection2)entitiesToSave;
+				var entityCollection = (IEntityCollection2) entitiesToSave;
 				var modifyCount = 0;
 				if (entityCollection.RemovedEntitiesTracker != null)
 					modifyCount = dataAccessAdapter.DeleteEntityCollection(entityCollection.RemovedEntitiesTracker);
-				return modifyCount + dataAccessAdapter.SaveEntityCollection((IEntityCollection2)entitiesToSave);
+				return modifyCount + dataAccessAdapter.SaveEntityCollection((IEntityCollection2) entitiesToSave);
 			}
 			return SaveEntities(entitiesToSave.Cast<IEntity2>(), dataAccessAdapter);
 		}
@@ -435,7 +457,7 @@ namespace AW.Helper.LLBL
 				var enumerator = enumerable.GetEnumerator();
 				if (enumerator.MoveNext())
 				{
-					var firstEntity = ((IEntity2)enumerator.Current);
+					var firstEntity = ((IEntity2) enumerator.Current);
 					if (firstEntity != null)
 					{
 						entities = firstEntity.GetEntityFactory().CreateEntityCollection();
@@ -447,7 +469,7 @@ namespace AW.Helper.LLBL
 				}
 			}
 			if (entities == null)
-				entities = ((IEntity2)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection();
+				entities = ((IEntity2) CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection();
 			if (entities.Count > 0)
 				entities.RemovedEntitiesTracker = entities.EntityFactoryToUse.CreateEntityCollection();
 			return entities;
@@ -460,6 +482,5 @@ namespace AW.Helper.LLBL
 		}
 
 		#endregion
-
 	}
 }

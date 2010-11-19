@@ -17,7 +17,6 @@ namespace AW.Winforms.Helpers.LLBL
 	{
 		private static FrmEntitiesAndFields _formSingleton;
 		private readonly Type _baseType;
-		private readonly Assembly _entityAssembly;
 		private readonly ILinqMetaData _linqMetaData;
 
 		public FrmEntitiesAndFields()
@@ -25,36 +24,27 @@ namespace AW.Winforms.Helpers.LLBL
 			InitializeComponent();
 		}
 
-		public FrmEntitiesAndFields(Assembly entityAssembly) : this()
-		{
-			_entityAssembly = entityAssembly;
-		}
-
-		public FrmEntitiesAndFields(Type baseType) : this(baseType.Assembly)
+		public FrmEntitiesAndFields(Type baseType) : this()
 		{
 			_baseType = baseType;
 		}
 
-		public FrmEntitiesAndFields(Type baseType, ILinqMetaData linqMetaData) : this(baseType)
+		public FrmEntitiesAndFields(ILinqMetaData linqMetaData): this()
 		{
-			_baseType = baseType;
 			_linqMetaData = linqMetaData;
 		}
 
-		public static void ShowEntitiesAndFields(Type baseType, ILinqMetaData linqMetaData)
-		{
-			ShowEntitiesAndFields(baseType, linqMetaData, null);
-		}
-
-		public static void ShowEntitiesAndFields(Type baseType)
-		{
-			ShowEntitiesAndFields(baseType, null, null);
-		}
-
-		public static void ShowEntitiesAndFields(Type baseType, ILinqMetaData linqMetaData, Form parent)
+		public static void ShowEntitiesAndFields(Type baseType, Form parent)
 		{
 			if (_formSingleton == null)
-				_formSingleton = new FrmEntitiesAndFields(baseType, linqMetaData);
+				_formSingleton = new FrmEntitiesAndFields(baseType);
+			AWHelper.ShowForm(_formSingleton, parent);
+		}
+
+		public static void ShowEntitiesAndFields(ILinqMetaData linqMetaData, Form parent)
+		{
+			if (_formSingleton == null)
+				_formSingleton = new FrmEntitiesAndFields(linqMetaData);
 			AWHelper.ShowForm(_formSingleton, parent);
 		}
 
@@ -81,7 +71,7 @@ namespace AW.Winforms.Helpers.LLBL
 		{
 			gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;
 			treeViewEntities.Nodes.Clear();
-			foreach (var entityType in GetEntitiesTypes().OrderBy(t => t.Name))
+			foreach (var entityType in GetEntitiesTypes().OrderBy(t => t.Name).ToList())
 			{
 				var entityNode = treeViewEntities.Nodes.Add(entityType.Name, entityType.Name.Replace("Entity", ""));
 				entityNode.Tag = entityType;
@@ -131,8 +121,8 @@ namespace AW.Winforms.Helpers.LLBL
 		public IEnumerable<Type> GetEntitiesTypes()
 		{
 			if (_baseType != null)
-				return MetaDataHelper.GetDescendance(_baseType);
-			return _entityAssembly == null ? MetaDataHelper.GetAllLoadedDescendance(typeof (IEntityCore)) : typeof (IEntityCore).GetAssignable(_entityAssembly.GetExportedTypes());
+				return EntityHelper.GetEntitiesTypes(_baseType);
+			return _linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(_linqMetaData);
 		}
 
 		private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)
