@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
@@ -181,5 +183,56 @@ namespace AW.Winforms.Helpers.LLBL
 		}
 
 		#endregion
+
+		public static void PopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes)
+		{
+			entityTreeView.Nodes.Clear();
+			PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes);
+		}
+
+		public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes)
+		{
+			foreach (var entityType in entitiesTypes.OrderBy(t => t.Name).ToList())
+			{
+				var entityNode = schemaTreeNodeCollection.Add(entityType.Name, entityType.Name.Replace("Entity", ""));
+				entityNode.Tag = entityType;
+				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
+					Where(p => !typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
+					// All browseable properties that aren't a list
+				{
+					var fieldNode = entityNode.Nodes.Add(browsableProperty.Name);
+					if (typeof (IEntityCore).IsAssignableFrom(browsableProperty.PropertyType))
+					{
+						fieldNode.ImageIndex = 3;
+						fieldNode.Tag = browsableProperty;
+					}
+					else
+						fieldNode.ImageIndex = 1;
+				}
+
+				foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType))
+					//All selfservicing entity types
+				{
+					var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
+
+					fieldNode.ImageIndex = 3;
+					fieldNode.Tag = entityTypeProperty;
+				}
+
+				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
+					Where(p => typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
+					// All browseable list properties
+				{
+					var fieldNode = entityNode.Nodes.Add(browsableProperty.Name);
+					fieldNode.Tag = browsableProperty;
+					fieldNode.ImageIndex = 2;
+				}
+			}
+		}
+
+		public static void BrowseData(this ILinqMetaData linqMetaData)
+		{
+			FrmEntitiesAndFields.ShowEntitiesAndFields(linqMetaData, null);
+		}
 	}
 }

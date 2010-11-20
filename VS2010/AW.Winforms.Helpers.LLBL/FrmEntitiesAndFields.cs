@@ -22,6 +22,7 @@ namespace AW.Winforms.Helpers.LLBL
 		public FrmEntitiesAndFields()
 		{
 			InitializeComponent();
+			LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
 		}
 
 		public FrmEntitiesAndFields(Type baseType) : this()
@@ -36,14 +37,14 @@ namespace AW.Winforms.Helpers.LLBL
 
 		public static void ShowEntitiesAndFields(Type baseType, Form parent)
 		{
-			if (_formSingleton == null)
+			if (_formSingleton == null || _formSingleton.contextMenuStrip1.InvokeRequired)
 				_formSingleton = new FrmEntitiesAndFields(baseType);
 			AWHelper.ShowForm(_formSingleton, parent);
 		}
 
 		public static void ShowEntitiesAndFields(ILinqMetaData linqMetaData, Form parent)
 		{
-			if (_formSingleton == null)
+			if (_formSingleton == null || _formSingleton.contextMenuStrip1.InvokeRequired)
 				_formSingleton = new FrmEntitiesAndFields(linqMetaData);
 			AWHelper.ShowForm(_formSingleton, parent);
 		}
@@ -69,53 +70,7 @@ namespace AW.Winforms.Helpers.LLBL
 
 		private void EntitiesAndFields_Load(object sender, EventArgs e)
 		{
-			gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;
-			treeViewEntities.Nodes.Clear();
-			foreach (var entityType in GetEntitiesTypes().OrderBy(t => t.Name).ToList())
-			{
-				var entityNode = treeViewEntities.Nodes.Add(entityType.Name, entityType.Name.Replace("Entity", ""));
-				entityNode.Tag = entityType;
-				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
-					Where(p => !typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
-				{
-					var fieldNode = entityNode.Nodes.Add(browsableProperty.Name);
-					if (typeof (IEntityCore).IsAssignableFrom(browsableProperty.PropertyType))
-					{
-						fieldNode.ImageIndex = 3;
-						fieldNode.Tag = browsableProperty;
-					}
-					else
-						fieldNode.ImageIndex = 1;
-				}
-
-				foreach (var entityTypeProperty in GetPropertiesOfTypeEntity(entityType))
-				{
-					var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
-
-					fieldNode.ImageIndex = 3;
-					fieldNode.Tag = entityTypeProperty;
-				}
-
-				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
-					Where(p => typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
-				{
-					var fieldNode = entityNode.Nodes.Add(browsableProperty.Name);
-					fieldNode.Tag = browsableProperty;
-					fieldNode.ImageIndex = 2;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets the properties of type entity since for selfservicing these properties are not browsable so they need to be handled as a special case.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <returns></returns>
-		public static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
-		{
-			return from propertyDescriptor in TypeDescriptor.GetProperties(type, null).Cast<PropertyDescriptor>()
-			       where typeof (IEntity).IsAssignableFrom(propertyDescriptor.PropertyType)
-			       select propertyDescriptor;
+			gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;	
 		}
 
 		public IEnumerable<Type> GetEntitiesTypes()

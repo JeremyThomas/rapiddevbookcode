@@ -360,19 +360,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		/// <returns></returns>
 		private static IEnumerable<PropertyDescriptor> GetPropertiesToShowInSchema(Type type)
 		{
-			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(GetPropertiesOfTypeEntity(type));
-		}
-
-		/// <summary>
-		/// 	Gets the properties of type entity since these properties are not browsable so they need to be handled as a special case.
-		/// </summary>
-		/// <param name = "type">The type.</param>
-		/// <returns></returns>
-		private static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
-		{
-			return from propertyDescriptor in TypeDescriptor.GetProperties(type, null).Cast<PropertyDescriptor>()
-			       where typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
-			       select propertyDescriptor;
+			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
 		}
 
 		private static ExplorerItem GetChildItem(ILookup<Type, ExplorerItem> elementTypeLookup, PropertyDescriptor childProp)

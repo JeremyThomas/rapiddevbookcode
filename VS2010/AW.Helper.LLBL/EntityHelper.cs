@@ -482,5 +482,17 @@ namespace AW.Helper.LLBL
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Gets the properties of type entity since for selfservicing these properties are not browsable so they need to be handled as a special case.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns></returns>
+		public static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
+		{
+			return from propertyDescriptor in TypeDescriptor.GetProperties(type, null).Cast<PropertyDescriptor>()
+			       where typeof (IEntity).IsAssignableFrom(propertyDescriptor.PropertyType)
+			       select propertyDescriptor;
+		}
 	}
 }
