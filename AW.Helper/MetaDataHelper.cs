@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace AW.Helper
@@ -32,9 +33,21 @@ namespace AW.Helper
 		/// <returns>All exported types in the Current Domain.</returns>
 		private static IEnumerable<Type> GetAllExportedTypes()
 		{
-			return from assemby in AppDomain.CurrentDomain.GetAssemblies()
-			       from exportedType in assemby.GetExportedTypes()
+			return from assembly in AppDomain.CurrentDomain.GetAssemblies()
+			       from exportedType in GetPublicTypes(assembly)
 			       select exportedType;
+		}
+
+		private static IEnumerable<Type> GetPublicTypes(Assembly assembly)
+		{
+			try
+			{
+				return assembly.GetExportedTypes();
+			}
+			catch (Exception)
+			{
+				return new Type[] {};
+			}
 		}
 
 		/// <summary>

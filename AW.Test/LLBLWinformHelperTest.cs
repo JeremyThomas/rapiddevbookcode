@@ -5,10 +5,9 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper.LLBL;
-using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NUnit.Extensions.Forms;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
@@ -20,6 +19,8 @@ namespace AW.Tests
 	[TestClass]
 	public class LLBLWinformHelperTest : GridDataEditorTestBase
 	{
+		private static readonly TreeView EntityTreeView = new TreeView();
+
 		/// <summary>
 		///Gets or sets the test context which provides
 		///information about and functionality for the current test run.
@@ -62,7 +63,7 @@ namespace AW.Tests
 		///A test for ShowInGrid
 		///</summary>
 		public void EditInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase
-		{			
+		{
 			ModalFormHandler = Handler;
 			var enumerable = MetaSingletons.MetaData.GetQueryableForEntity<T>().AsEnumerable();
 			var expected = enumerable;
@@ -90,11 +91,65 @@ namespace AW.Tests
 			                   orderby at.AddressTypeID
 			                   select at;
 			var addressTypeEntities = addressTypes.ToEntityCollection();
-			TestShowSelfServicingInGrid(addressTypeEntities,2);
+			TestShowSelfServicingInGrid(addressTypeEntities, 2);
 			TestShowSelfServicingInGrid(addressTypeEntities.DefaultView, 3);
 			TestShowSelfServicingInGrid(addressTypes.AsEnumerable(), 3);
 			TestShowInGrid(addressTypeEntities.AsQueryable());
 		}
 
+		/// <summary>
+		///A test for PopulateTreeViewWithSchema
+		///</summary>
+		[TestMethod]
+		public void PopulateTreeViewWithSchemaTest()
+		{
+			TestPopulateTreeViewWithSchema(EntityHelperTest.NumberOfEntities, EntityTreeView, null, null);
+		}
+
+		/// <summary>
+		///A test for PopulateTreeViewWithSchema
+		///</summary>
+		[TestMethod]
+		public void PopulateTreeViewWithSchemaCommonEntityBaseTest()
+		{
+			TestPopulateTreeViewWithSchema(EntityHelperTest.NumberOfEntities, EntityTreeView, typeof(CommonEntityBase), null);
+		}
+
+		/// <summary>
+		///A test for PopulateTreeViewWithSchema
+		///</summary>
+		[TestMethod]
+		public void PopulateTreeViewWithSchemaILinqMetaDataTest()
+		{
+			TestPopulateTreeViewWithSchema(EntityHelperTest.NumberOfEntities, EntityTreeView, null, MetaSingletons.MetaData);
+		}
+
+		private static IEnumerable<Type> GetEntitiesTypes(Type baseType, ILinqMetaData linqMetaData)
+		{
+			return baseType == null ? (linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(linqMetaData.GetType().Assembly)) : EntityHelper.GetEntitiesTypes(baseType);
+		}
+
+		private static void TestPopulateTreeViewWithSchema(int expectedNodeCount, TreeView entityTreeView, Type baseType, ILinqMetaData linqMetaData)
+		{
+			TestPopulateTreeViewWithSchema(expectedNodeCount, entityTreeView, GetEntitiesTypes(baseType, linqMetaData));
+		}
+
+		private static void TestPopulateTreeViewWithSchema(int expectedNodeCount, TreeView entityTreeView, IEnumerable<Type> entitiesTypes)
+		{
+			LLBLWinformHelper.PopulateTreeViewWithSchema(entityTreeView, entitiesTypes);
+			Assert.AreEqual(expectedNodeCount, entityTreeView.Nodes.Count);
+		}
+
+		/// <summary>
+		///A test for PopulateTreeViewWithSchema
+		///</summary>
+		//[TestMethod()]
+		//public void PopulateTreeViewWithSchemaTest1()
+		//{
+		//  TreeNodeCollection schemaTreeNodeCollection = null; // TODO: Initialize to an appropriate value
+		//  IEnumerable<Type> entitiesTypes = null; // TODO: Initialize to an appropriate value
+		//  LLBLWinformHelper.PopulateTreeViewWithSchema(schemaTreeNodeCollection, entitiesTypes);
+		//  Assert.Inconclusive("A method that does not return a value cannot be verified.");
+		//}
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -15,6 +16,8 @@ namespace AW.Tests
 	[TestClass]
 	public class EntityHelperTest
 	{
+		public static readonly int NumberOfEntities = Enum.GetValues(typeof(EntityType)).GetLength(0);
+
 		/// <summary>
 		///Gets or sets the test context which provides
 		///information about and functionality for the current test run.
@@ -95,5 +98,6 @@ namespace AW.Tests
 			CollectionAssert.AreEqual(allLoadedDescendanceEntitiesType, commonEntityBaseEntitiesType);
 			CollectionAssert.AreEqual(commonEntityBaseEntitiesType, assemblyEntitiesType);
 		}
+
 	}
 }
