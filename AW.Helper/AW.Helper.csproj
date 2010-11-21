@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="DataSetSurrogate.cs" />
     <Compile Include="GeneralHelper.cs" />
+    <Compile Include="HiearchicalQueryableExtensions.cs" />
     <Compile Include="MetaDataHelper.cs" />
     <Compile Include="ObjectShredder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -194,7 +194,7 @@ namespace AW.Winforms.Helpers.LLBL
 		{
 			foreach (var entityType in entitiesTypes.OrderBy(t => t.Name).ToList())
 			{
-				var entityNode = schemaTreeNodeCollection.Add(entityType.Name, entityType.Name.Replace("Entity", ""));
+				var entityNode = schemaTreeNodeCollection.Add(entityType.Name, GetEntityTypeName(entityType));
 				entityNode.Tag = entityType;
 				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
 					Where(p => !typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
@@ -212,6 +212,8 @@ namespace AW.Winforms.Helpers.LLBL
 
 				foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType))
 					//All selfservicing entity types
+					//if (!entityNode.Nodes.ContainsKey(entityTypeProperty.Name))
+					if (!entityNode.Nodes.Cast<TreeNode>().Any(tn=>tn.Text==entityTypeProperty.Name))
 				{
 					var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
 
@@ -228,6 +230,109 @@ namespace AW.Winforms.Helpers.LLBL
 					fieldNode.ImageIndex = 2;
 				}
 			}
+		}
+
+		private static string GetEntityTypeName(Type entityType)
+		{
+			return entityType.Name.Replace("Entity", "");
+		}
+
+		public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, Type dataContextType)
+		{
+			// Return the objects with which to populate the Schema Explorer by reflecting over customType.
+
+			// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
+			var topLevelProps =
+				(
+					from prop in dataContextType.GetProperties()
+					where prop.PropertyType != typeof (string)
+					// Display all properties of type IEnumerable<T> (except for string!)
+					let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
+					where ienumerableOfT != null
+					let typeArgument =ienumerableOfT.GetGenericArguments()[0]
+					orderby prop.Name
+					select new TreeNode(prop.Name)
+					       	{
+					       		ToolTipText = FormatTypeName(prop.PropertyType, false),
+					       		// Store the entity type to the Tag property. We'll use it later.
+										Tag = typeArgument,
+										Name = typeArgument.Name
+					       	}
+				).ToList();
+
+			// Create a lookup keying each element type to the properties of that type. This will allow
+			// us to build hyperlink targets allowing the user to click between associations:
+			var elementTypeLookup = topLevelProps.ToLookup(tp => (Type) tp.Tag);
+
+			// Populate the columns (properties) of each entity:
+			foreach (var table in topLevelProps)
+				table.Nodes.AddRange(GetPropertiesToShowInSchema((Type) table.Tag)
+				                     	.Select(childProp => GetChildItem(elementTypeLookup, childProp))
+				                     	.ToArray());
+
+			schemaTreeNodeCollection.AddRange(topLevelProps.ToArray());
+		}
+
+		/// <summary>
+		/// 	Gets the properties to show in schema. 
+		/// 	They should be all the browsable properties with the addition of selfservicing entity properties.
+		/// </summary>
+		/// <remarks>
+		/// 	See MetaDataHelper.GetPropertiesToDisplay
+		/// </remarks>
+		/// <param name = "type">The type.</param>
+		/// <returns></returns>
+		private static IEnumerable<PropertyDescriptor> GetPropertiesToShowInSchema(Type type)
+		{
+			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
+		}
+
+		private static TreeNode GetChildItem(ILookup<Type, TreeNode> elementTypeLookup, PropertyDescriptor childProp)
+		{
+			// If the property's type is in our list of entities, then it's a Many:1 (or 1:1) reference.
+			// We'll assume it's a Many:1 (we can't reliably identify 1:1s purely from reflection).
+			if (elementTypeLookup.Contains(childProp.PropertyType))
+			{
+				var n = new TreeNode(childProp.Name)
+				        	{
+				        		//HyperlinkTarget = elementTypeLookup[childProp.PropertyType].First(),
+				        		// FormatTypeName is a helper method that returns a nicely formatted type name.
+				        		ToolTipText = FormatTypeName(childProp.PropertyType, true),
+										Name = childProp.Name
+				        	};
+				if (typeof (IEntityCore).IsAssignableFrom(childProp.PropertyType))
+				{
+					n.ImageIndex = 3;
+					n.Tag = childProp;
+				}
+				else
+					n.ImageIndex = 1;
+				return n;
+			}
+
+			// Is the property's type a collection of entities?
+			var ienumerableOfT = childProp.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1");
+			if (ienumerableOfT != null)
+			{
+				var elementType = ienumerableOfT.GetGenericArguments()[0];
+				if (elementTypeLookup.Contains(elementType))
+					return new TreeNode(childProp.Name)
+					       	{
+					       		//HyperlinkTarget = elementTypeLookup[elementType].First(),
+					       		ImageIndex = 2,
+					       		Tag = childProp,
+					       		ToolTipText = elementType.ToString(),
+										Name = childProp.Name
+					       	};
+			}
+
+			// Ordinary property:
+			return new TreeNode(childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")") { ImageIndex = 1, Name = childProp.Name };
+		}
+
+		private static string FormatTypeName(Type propertyType, bool b)
+		{
+			return propertyType.ToString();
 		}
 
 		public static void BrowseData(this ILinqMetaData linqMetaData)

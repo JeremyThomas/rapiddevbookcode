@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,6 +21,7 @@ namespace AW.Tests
 	public class LLBLWinformHelperTest : GridDataEditorTestBase
 	{
 		private static readonly TreeView EntityTreeView = new TreeView();
+		public static readonly int NumSchemaObjects = 900;
 
 		/// <summary>
 		///Gets or sets the test context which provides
@@ -124,6 +126,19 @@ namespace AW.Tests
 			TestPopulateTreeViewWithSchema(EntityHelperTest.NumberOfEntities, EntityTreeView, null, MetaSingletons.MetaData);
 		}
 
+		/// <summary>
+		///A test for PopulateTreeViewWithSchema
+		///</summary>
+		[TestMethod]
+		public void PopulateTreeViewWithSchemaDataContextTypeTest()
+		{
+			EntityTreeView.Nodes.Clear();
+			LLBLWinformHelper.PopulateTreeViewWithSchema(EntityTreeView.Nodes, MetaSingletons.MetaData.GetType());
+			Assert.AreEqual(EntityHelperTest.NumberOfEntities, EntityTreeView.Nodes.Count);
+			var treeNodes = EntityTreeView.Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).ToList();
+			Assert.AreEqual(NumSchemaObjects, treeNodes.Count());
+		}
+
 		private static IEnumerable<Type> GetEntitiesTypes(Type baseType, ILinqMetaData linqMetaData)
 		{
 			return baseType == null ? (linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(linqMetaData.GetType().Assembly)) : EntityHelper.GetEntitiesTypes(baseType);
@@ -138,6 +153,7 @@ namespace AW.Tests
 		{
 			LLBLWinformHelper.PopulateTreeViewWithSchema(entityTreeView, entitiesTypes);
 			Assert.AreEqual(expectedNodeCount, entityTreeView.Nodes.Count);
+			Assert.AreEqual(NumSchemaObjects, entityTreeView.Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count());
 		}
 
 		/// <summary>
