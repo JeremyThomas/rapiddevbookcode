@@ -97,6 +97,7 @@ namespace AW.Tests
 			var assemblyEntitiesType = EntityHelper.GetEntitiesTypes(MetaSingletons.MetaData.GetType().Assembly).ToList();
 			CollectionAssert.AreEqual(allLoadedDescendanceEntitiesType, commonEntityBaseEntitiesType);
 			CollectionAssert.AreEqual(commonEntityBaseEntitiesType, assemblyEntitiesType);
+			Assert.AreEqual(NumberOfEntities, allLoadedDescendanceEntitiesType.Count);
 		}
 
 	}

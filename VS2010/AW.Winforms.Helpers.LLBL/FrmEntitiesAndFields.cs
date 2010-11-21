@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -22,17 +20,18 @@ namespace AW.Winforms.Helpers.LLBL
 		public FrmEntitiesAndFields()
 		{
 			InitializeComponent();
-			LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
 		}
 
 		public FrmEntitiesAndFields(Type baseType) : this()
 		{
 			_baseType = baseType;
+			LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
 		}
 
-		public FrmEntitiesAndFields(ILinqMetaData linqMetaData): this()
+		public FrmEntitiesAndFields(ILinqMetaData linqMetaData) : this()
 		{
 			_linqMetaData = linqMetaData;
+			LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData.GetType());
 		}
 
 		public static void ShowEntitiesAndFields(Type baseType, Form parent)
@@ -70,7 +69,9 @@ namespace AW.Winforms.Helpers.LLBL
 
 		private void EntitiesAndFields_Load(object sender, EventArgs e)
 		{
-			gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;	
+			gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;
+			if (treeViewEntities.Nodes.Count == 0)
+				LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
 		}
 
 		public IEnumerable<Type> GetEntitiesTypes()

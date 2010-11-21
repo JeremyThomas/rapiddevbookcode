@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Helper;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -82,15 +83,18 @@ namespace AW.Tests
 			ModalFormHandler = Handler;
 			var form = baseType == null ? (linqMetaData == null ? new FrmEntitiesAndFields() : new FrmEntitiesAndFields(linqMetaData)) : new FrmEntitiesAndFields(baseType);
 			AWHelper.ShowForm(form);
-			Assert.AreEqual(EntityHelperTest.NumberOfEntities, _nodesCount);
+			Assert.AreEqual(EntityHelperTest.NumberOfEntities, _rootNodesCount);
+			Assert.AreEqual(LLBLWinformHelperTest.NumSchemaObjects, _nodesCount);
 			_nodesCount = null;
 		}
 
+		private int? _rootNodesCount;
 		private int? _nodesCount;
 
 		public void Handler(string name, IntPtr hWnd, Form form)
 		{
-			_nodesCount = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes.Count;
+			_rootNodesCount = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes.Count;
+			_nodesCount = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count();
 			form.Close();
 		}
 
