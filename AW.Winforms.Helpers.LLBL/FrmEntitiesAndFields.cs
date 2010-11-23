@@ -6,6 +6,8 @@ using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.Winforms.Helpers.Controls;
+using AW.Winforms.Helpers.EntityViewer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -31,7 +33,9 @@ namespace AW.Winforms.Helpers.LLBL
 		public FrmEntitiesAndFields(ILinqMetaData linqMetaData) : this()
 		{
 			_linqMetaData = linqMetaData;
-			LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData.GetType());
+			LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, GetEntitiesTypes());
+			if (treeViewEntities.Nodes.Count == 0)
+			  LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData.GetType());
 		}
 
 		public static void ShowEntitiesAndFields(Type baseType, Form parent)
@@ -53,7 +57,9 @@ namespace AW.Winforms.Helpers.LLBL
 		protected override void RestoreWindowSettings()
 		{
 			if (!DesignMode)
-				if (!splitContainerVertical.Panel2Collapsed)
+				if (splitContainerVertical.Panel2Collapsed)
+					base.RestoreWindowSettings();
+				else
 				{
 					splitContainerVertical.Panel2Collapsed = true;
 					base.RestoreWindowSettings();
@@ -144,7 +150,6 @@ namespace AW.Winforms.Helpers.LLBL
 		{
 			if (splitContainerVertical.Panel2Collapsed)
 				ExpandRightPanel();
-			gridDataEditor.BindEnumerable(entityQueryable, pageSize);
 			if (gridDataEditor.DataEditorPersister == null)
 				if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
 					gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
@@ -154,6 +159,7 @@ namespace AW.Winforms.Helpers.LLBL
 					if (provider != null)
 						gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(provider.AdapterToUse);
 				}
+			gridDataEditor.BindEnumerable(entityQueryable, pageSize);
 		}
 
 		private void openPaged20ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -249,6 +255,15 @@ namespace AW.Winforms.Helpers.LLBL
 			}
 			if (splitContainerVertical.Panel2Collapsed)
 				ExpandRightPanel();
+		}
+
+		private void viewInObjectBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var entityQueryable = GetEntityQueryable();
+			if (entityQueryable != null)
+			{
+				FrmEntityViewer.LaunchAsChildForm(entityQueryable, gridDataEditor.DataEditorPersister);
+			}
 		}
 	}
 }

@@ -389,11 +389,11 @@ namespace AW.Winforms.Helpers.Controls
 		private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
 		{
 			bindingSourceEnumerable.CancelEdit();
-			toolStripButtonCancelEdit.Enabled = false;
-		}
-
-		private void bindingSourceEnumerable_PositionChanged(object sender, EventArgs e)
-		{
+			if (DataEditorPersister != null  && DataEditorPersister.Undo(bindingSourceEnumerable.List))
+			{
+				bindingSourceEnumerable.ResetBindings(false);
+				saveToolStripButton.Enabled = false;
+			}
 			toolStripButtonCancelEdit.Enabled = false;
 		}
 

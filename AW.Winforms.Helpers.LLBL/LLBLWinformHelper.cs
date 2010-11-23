@@ -101,6 +101,12 @@ namespace AW.Winforms.Helpers.LLBL
 			{
 				return typeof (EntityBase).IsAssignableFrom(typeToSave);
 			}
+
+			public bool Undo(object modifiedData)
+			{
+				EntityHelper.Undo(modifiedData);
+				return true;
+			}
 		}
 
 		public static IEnumerable<T> ShowSelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
@@ -179,6 +185,12 @@ namespace AW.Winforms.Helpers.LLBL
 			public bool CanSave(Type typeToSave)
 			{
 				return typeof (EntityBase2).IsAssignableFrom(typeToSave);
+			}
+
+			public bool Undo(object modifiedData)
+			{
+				EntityHelper.Undo(modifiedData);
+				return true;
 			}
 		}
 
