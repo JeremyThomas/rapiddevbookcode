@@ -113,6 +113,13 @@ namespace AW.Tests
 		}
 
 		[TestMethod]
+		public void BindNullTest()
+		{
+			var bindingSource = new BindingSource();
+			Assert.IsFalse(bindingSource.BindEnumerable(null, false));
+		}
+
+		[TestMethod]
 		public void BindInheritanceEnumerableTest()
 		{
 			var customerEntityCollection = MetaSingletons.MetaData.Customer.Take(5).ToEntityCollection();

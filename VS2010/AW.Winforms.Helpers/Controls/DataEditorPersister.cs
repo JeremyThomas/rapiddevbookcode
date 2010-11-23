@@ -9,6 +9,7 @@ namespace AW.Winforms.Helpers.Controls
 		int Save(object dataToSave);
 		int Delete(object dataToDelete);
 		bool CanSave(Type typeToSave);
+		bool Undo(object modifiedData);
 	}
 
 	public class DataEditorPersister : IDataEditorPersister
@@ -16,12 +17,14 @@ namespace AW.Winforms.Helpers.Controls
 		public Type[] SaveableTypes;
 		public Func<object, int> SaveFunction;
 		public Func<object, int> DeleteFunction;
+		public Func<object, bool> UndoMethod;
 
-		public DataEditorPersister(Func<object, int> saveFunction, Func<object, int> deleteFunction, params Type[] saveableTypes)
+		public DataEditorPersister(Func<object, int> saveFunction, Func<object, int> deleteFunction, Func<object, bool> undoMethod, params Type[] saveableTypes)
 		{
 			SaveableTypes = saveableTypes;
 			SaveFunction = saveFunction;
 			DeleteFunction = deleteFunction;
+			UndoMethod = undoMethod;
 		}
 
 		public int Save(object dataToSave)
@@ -37,6 +40,11 @@ namespace AW.Winforms.Helpers.Controls
 		public bool CanSave(Type typeToSave)
 		{
 			return SaveFunction != null && (SaveableTypes == null || typeToSave.IsAssignableTo(SaveableTypes));
+		}
+
+		public bool Undo(object modifiedData)
+		{
+			return UndoMethod != null && UndoMethod(modifiedData);
 		}
 	}
 
@@ -74,6 +82,11 @@ namespace AW.Winforms.Helpers.Controls
 			{
 				return false;
 			}
+		}
+
+		public bool Undo(object modifiedData)
+		{
+			return false;
 		}
 	}
 }

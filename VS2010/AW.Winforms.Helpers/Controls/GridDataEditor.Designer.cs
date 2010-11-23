@@ -52,6 +52,7 @@
 			this.toolStripLabelSaveResult = new System.Windows.Forms.ToolStripLabel();
 			this.toolStripButtonCancelEdit = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonObjectListViewVisualizer = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButtonObjectBrowser = new System.Windows.Forms.ToolStripButton();
 			this.dataGridViewEnumerable = new System.Windows.Forms.DataGridView();
 			this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
 			this.bindingSourcePaging = new System.Windows.Forms.BindingSource(this.components);
@@ -64,7 +65,6 @@
 			this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
 			this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
 			this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripButtonObjectBrowser = new System.Windows.Forms.ToolStripButton();
 			((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
 			this.bindingNavigatorData.SuspendLayout();
@@ -80,7 +80,6 @@
 			this.bindingSourceEnumerable.BindingComplete += new System.Windows.Forms.BindingCompleteEventHandler(this.bindingSourceEnumerable_BindingComplete);
 			this.bindingSourceEnumerable.DataSourceChanged += new System.EventHandler(this.bindingSourceEnumerable_DataSourceChanged);
 			this.bindingSourceEnumerable.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.bindingSourceEnumerable_ListChanged);
-			this.bindingSourceEnumerable.PositionChanged += new System.EventHandler(this.bindingSourceEnumerable_PositionChanged);
 			// 
 			// bindingNavigatorData
 			// 
@@ -279,6 +278,16 @@
 			this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListViewVisualizer";
 			this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
 			// 
+			// toolStripButtonObjectBrowser
+			// 
+			this.toolStripButtonObjectBrowser.Enabled = false;
+			this.toolStripButtonObjectBrowser.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectBrowser.Image")));
+			this.toolStripButtonObjectBrowser.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButtonObjectBrowser.Name = "toolStripButtonObjectBrowser";
+			this.toolStripButtonObjectBrowser.Size = new System.Drawing.Size(148, 22);
+			this.toolStripButtonObjectBrowser.Text = "View in Object Browser";
+			this.toolStripButtonObjectBrowser.Click += new System.EventHandler(this.toolStripButtonObjectBrowser_Click);
+			// 
 			// dataGridViewEnumerable
 			// 
 			this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
@@ -391,16 +400,6 @@
 			// 
 			this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
 			this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolStripButtonObjectBrowser
-			// 
-			this.toolStripButtonObjectBrowser.Enabled = false;
-			this.toolStripButtonObjectBrowser.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectBrowser.Image")));
-			this.toolStripButtonObjectBrowser.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButtonObjectBrowser.Name = "toolStripButtonObjectBrowser";
-			this.toolStripButtonObjectBrowser.Size = new System.Drawing.Size(148, 22);
-			this.toolStripButtonObjectBrowser.Text = "View in Object Browser";
-			this.toolStripButtonObjectBrowser.Click += new System.EventHandler(this.toolStripButtonObjectBrowser_Click);
 			// 
 			// GridDataEditor
 			// 

@@ -40,12 +40,13 @@ namespace AW.Winforms.Helpers.LLBL
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewPropertyDescriptorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewAttributesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelSelected = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
 			this.propertyGrid = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
-			this.viewPropertyDescriptorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.viewAttributesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewInObjectBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainerVertical.Panel1.SuspendLayout();
 			this.splitContainerVertical.Panel2.SuspendLayout();
 			this.splitContainerVertical.SuspendLayout();
@@ -114,9 +115,10 @@ namespace AW.Winforms.Helpers.LLBL
             this.viewFieldsToolStripMenuItem,
             this.viewPropertiesToolStripMenuItem,
             this.viewPropertyDescriptorsToolStripMenuItem,
-            this.viewAttributesToolStripMenuItem});
+            this.viewAttributesToolStripMenuItem,
+            this.viewInObjectBrowserToolStripMenuItem});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
-			this.contextMenuStrip1.Size = new System.Drawing.Size(240, 224);
+			this.contextMenuStrip1.Size = new System.Drawing.Size(240, 246);
 			// 
 			// openPaged30ToolStripMenuItem
 			// 
@@ -167,6 +169,20 @@ namespace AW.Winforms.Helpers.LLBL
 			this.viewPropertiesToolStripMenuItem.Text = "View Properties";
 			this.viewPropertiesToolStripMenuItem.Click += new System.EventHandler(this.viewPropertiesToolStripMenuItem_Click);
 			// 
+			// viewPropertyDescriptorsToolStripMenuItem
+			// 
+			this.viewPropertyDescriptorsToolStripMenuItem.Name = "viewPropertyDescriptorsToolStripMenuItem";
+			this.viewPropertyDescriptorsToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewPropertyDescriptorsToolStripMenuItem.Text = "View Property Descriptors";
+			this.viewPropertyDescriptorsToolStripMenuItem.Click += new System.EventHandler(this.viewPropertyDescriptorsToolStripMenuItem_Click);
+			// 
+			// viewAttributesToolStripMenuItem
+			// 
+			this.viewAttributesToolStripMenuItem.Name = "viewAttributesToolStripMenuItem";
+			this.viewAttributesToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewAttributesToolStripMenuItem.Text = "View Attributes";
+			this.viewAttributesToolStripMenuItem.Click += new System.EventHandler(this.viewAttributesToolStripMenuItem_Click);
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -207,19 +223,12 @@ namespace AW.Winforms.Helpers.LLBL
 			this.propertyGrid.Size = new System.Drawing.Size(332, 187);
 			this.propertyGrid.TabIndex = 0;
 			// 
-			// viewPropertyDescriptorsToolStripMenuItem
+			// viewInObjectBrowserToolStripMenuItem
 			// 
-			this.viewPropertyDescriptorsToolStripMenuItem.Name = "viewPropertyDescriptorsToolStripMenuItem";
-			this.viewPropertyDescriptorsToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-			this.viewPropertyDescriptorsToolStripMenuItem.Text = "View Property Descriptors";
-			this.viewPropertyDescriptorsToolStripMenuItem.Click += new System.EventHandler(this.viewPropertyDescriptorsToolStripMenuItem_Click);
-			// 
-			// viewAttributesToolStripMenuItem
-			// 
-			this.viewAttributesToolStripMenuItem.Name = "viewAttributesToolStripMenuItem";
-			this.viewAttributesToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-			this.viewAttributesToolStripMenuItem.Text = "View Attributes";
-			this.viewAttributesToolStripMenuItem.Click += new System.EventHandler(this.viewAttributesToolStripMenuItem_Click);
+			this.viewInObjectBrowserToolStripMenuItem.Name = "viewInObjectBrowserToolStripMenuItem";
+			this.viewInObjectBrowserToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewInObjectBrowserToolStripMenuItem.Text = "View in Object Browser";
+			this.viewInObjectBrowserToolStripMenuItem.Click += new System.EventHandler(this.viewInObjectBrowserToolStripMenuItem_Click);
 			// 
 			// FrmEntitiesAndFields
 			// 
@@ -265,5 +274,6 @@ namespace AW.Winforms.Helpers.LLBL
 		private System.Windows.Forms.ToolStripMenuItem viewPropertiesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem viewPropertyDescriptorsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem viewAttributesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem viewInObjectBrowserToolStripMenuItem;
   }
 }

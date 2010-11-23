@@ -123,8 +123,7 @@ namespace AW.Helper.LLBL
 
 		public static IEnumerable<Type> GetEntitiesTypes(Assembly entityAssembly)
 		{
-			var entitiesTypes = typeof (IEntityCore).GetAssignable(entityAssembly.GetExportedTypes());
-			return entitiesTypes.Any() ? entitiesTypes : GetEntitiesTypes();
+			return typeof(IEntityCore).GetAssignable(entityAssembly.GetExportedTypes());
 		}
 
 		public static IEnumerable<Type> GetEntitiesTypes(ILinqMetaData linqMetaData)
@@ -218,27 +217,121 @@ namespace AW.Helper.LLBL
 			return entityFields.Cast<IEntityField>();
 		}
 
+		/// <summary>
+		/// Gets a entity field enumeration from entity fields.
+		/// </summary>
+		/// <param name="entityFields">The entity fields.</param>
+		/// <returns>entity field enumeration</returns>
+		public static IEnumerable<IEntityField2> GetFieldsFromEntityFields(this IEntityFields2 entityFields)
+		{
+			return entityFields.Cast<IEntityField2>();
+		}
+
 		public static IEnumerable<IEntityField> GetChangedFields(this IEntity entity)
 		{
 			return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Where(f => f.IsChanged) : new EntityFields(0);
 		}
+
+		public static IEnumerable<IEntityField2> GetChangedFields(this IEntity2 entity)
+		{
+			return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Where(f => f.IsChanged) : new EntityFields2(0);
+		}
+
+		//public static IEnumerable<T> GetChangedFields<T> (this IEntityCore entity) where T : IEntityFieldCore
+		//{
+		//  return entity is IEntity ? (IEnumerable<T>)GetChangedFields((IEntity)entity) : (IEnumerable<T>)GetChangedFields((IEntity2)entity);
+		//}
 
 		public static int GetNumberOfChangedFields(this IEntity entity)
 		{
 			return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Count(f => f.IsChanged) : 0;
 		}
 
-		public static void RevertChangesToDBValue(this IEntity entity)
+		private static void RevertChangesToDBValue(this IEntity entity)
 		{
 			foreach (var changedField in entity.GetChangedFields())
 				changedField.ForcedCurrentValueWrite(changedField.DbValue, changedField.DbValue);
 			entity.IsDirty = false;
 		}
 
-		public static void RevertChangesToDBValue<T>(this CollectionCore<T> entityCollection) where T : class, IEntity
+		private static void RevertChangesToDBValue(this IEntity2 entity)
+		{
+			foreach (var changedField in entity.GetChangedFields())
+				changedField.ForcedCurrentValueWrite(changedField.DbValue, changedField.DbValue);
+			entity.IsDirty = false;
+		}
+
+		public static void RevertChangesToDBValue(this IEntityCore entity)
+		{
+			if (entity is IEntity)
+				RevertChangesToDBValue((IEntity) entity);
+			else
+				RevertChangesToDBValue((IEntity2) entity);
+		}
+
+		public static void RevertChangesToDBValue(this IEntityCollection entityCollection)
 		{
 			foreach (var dirtyEntity in entityCollection.DirtyEntities)
 				dirtyEntity.RevertChangesToDBValue();
+		}
+
+		public static void RevertChangesToDBValue(this IEntityCollection2 entityCollection)
+		{
+			foreach (var dirtyEntity in entityCollection.DirtyEntities)
+				dirtyEntity.RevertChangesToDBValue();
+		}
+
+		public static void RevertChangesToDBValue<T>(IEnumerable<T> entities) where T : class, IEntityCore
+		{
+			foreach (var dirtyEntity in entities.Where(e => e.IsDirty))
+				dirtyEntity.RevertChangesToDBValue();
+		}
+
+		public static void RevertChangesToDBValue(IEnumerable modifiedEntities)
+		{
+			if (modifiedEntities is IEntityView)
+				modifiedEntities = ((IEntityView) modifiedEntities).RelatedCollection;
+			if (modifiedEntities is IEntityView2)
+				modifiedEntities = ((IEntityView2)modifiedEntities).RelatedCollection;
+			if (modifiedEntities is IEntityCollection)
+			{
+				var entityCollection = (IEntityCollection) modifiedEntities;
+				if (entityCollection.RemovedEntitiesTracker != null)
+				{
+					entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
+					entityCollection.RemovedEntitiesTracker.Clear();
+				}
+				RevertChangesToDBValue(entityCollection);
+			}
+			if (modifiedEntities is IEntityCollection2)
+			{
+				var entityCollection = (IEntityCollection2)modifiedEntities;
+				if (entityCollection.RemovedEntitiesTracker != null)
+				{
+					entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
+					entityCollection.RemovedEntitiesTracker.Clear();
+				}
+				RevertChangesToDBValue(entityCollection);
+			}
+			RevertChangesToDBValue(modifiedEntities.Cast<IEntityCore>());
+		}
+
+		public static void Undo(object modifiedData)
+		{
+			var listItemType = ListBindingHelper.GetListItemType(modifiedData);
+			if (typeof (IEntityCore).IsAssignableFrom(listItemType))
+			{
+				var enumerable = modifiedData as IEnumerable;
+				if (enumerable == null)
+				{
+					if (modifiedData is IEntity)
+						RevertChangesToDBValue((IEntity)modifiedData);
+					else
+						RevertChangesToDBValue((IEntity2)modifiedData);
+				}
+				else
+					RevertChangesToDBValue(enumerable);
+			}
 		}
 
 		/// <summary>

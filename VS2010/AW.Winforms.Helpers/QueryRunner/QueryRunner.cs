@@ -24,7 +24,7 @@ namespace AW.Winforms.Helpers.QueryRunner
 		{
 			SaveFunction = saveFunction;
 			DeleteFunction = deleteFunction;
-			gridDataEditorScript.DataEditorPersister = new DataEditorPersister(saveFunction, deleteFunction, saveableTypes);
+			gridDataEditorScript.DataEditorPersister = new DataEditorPersister(saveFunction, deleteFunction, null, saveableTypes);
 		}
 
 		private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)

@@ -246,7 +246,7 @@ namespace AW.Winforms.Helpers
 			try
 			{
 				bindingSource.DataSource = enumerable.ToBindingListView();
-				showenEnumerable = bindingSource.List != null;
+				showenEnumerable = bindingSource.DataSource != null;
 			}
 			catch (Exception)
 			{
@@ -258,7 +258,7 @@ namespace AW.Winforms.Helpers
 				{
 					bindingSource.DataSource = null;
 				}
-				showenEnumerable = bindingSource.List != null;
+				showenEnumerable = bindingSource.DataSource != null;
 			}
 			return showenEnumerable;
 		}
