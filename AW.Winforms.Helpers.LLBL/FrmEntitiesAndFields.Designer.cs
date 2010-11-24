@@ -42,11 +42,11 @@ namespace AW.Winforms.Helpers.LLBL
 			this.viewPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewPropertyDescriptorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewAttributesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.viewInObjectBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelSelected = new System.Windows.Forms.ToolStripStatusLabel();
 			this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
 			this.propertyGrid = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
-			this.viewInObjectBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.splitContainerVertical.Panel1.SuspendLayout();
 			this.splitContainerVertical.Panel2.SuspendLayout();
 			this.splitContainerVertical.SuspendLayout();
@@ -183,6 +183,13 @@ namespace AW.Winforms.Helpers.LLBL
 			this.viewAttributesToolStripMenuItem.Text = "View Attributes";
 			this.viewAttributesToolStripMenuItem.Click += new System.EventHandler(this.viewAttributesToolStripMenuItem_Click);
 			// 
+			// viewInObjectBrowserToolStripMenuItem
+			// 
+			this.viewInObjectBrowserToolStripMenuItem.Name = "viewInObjectBrowserToolStripMenuItem";
+			this.viewInObjectBrowserToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
+			this.viewInObjectBrowserToolStripMenuItem.Text = "View in Object Browser";
+			this.viewInObjectBrowserToolStripMenuItem.Click += new System.EventHandler(this.viewInObjectBrowserToolStripMenuItem_Click);
+			// 
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -223,13 +230,6 @@ namespace AW.Winforms.Helpers.LLBL
 			this.propertyGrid.Size = new System.Drawing.Size(332, 187);
 			this.propertyGrid.TabIndex = 0;
 			// 
-			// viewInObjectBrowserToolStripMenuItem
-			// 
-			this.viewInObjectBrowserToolStripMenuItem.Name = "viewInObjectBrowserToolStripMenuItem";
-			this.viewInObjectBrowserToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
-			this.viewInObjectBrowserToolStripMenuItem.Text = "View in Object Browser";
-			this.viewInObjectBrowserToolStripMenuItem.Click += new System.EventHandler(this.viewInObjectBrowserToolStripMenuItem_Click);
-			// 
 			// FrmEntitiesAndFields
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,7 +237,7 @@ namespace AW.Winforms.Helpers.LLBL
 			this.ClientSize = new System.Drawing.Size(502, 585);
 			this.Controls.Add(this.statusStrip1);
 			this.Name = "FrmEntitiesAndFields";
-			this.Text = "Entities And Fields";
+			this.Text = "Data Browser";
 			this.WindowSettingsName = "EntitiesAndFieldsWindowSettings";
 			this.Load += new System.EventHandler(this.EntitiesAndFields_Load);
 			this.Controls.SetChildIndex(this.statusStrip1, 0);

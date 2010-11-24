@@ -123,7 +123,7 @@ namespace AW.Helper.LLBL
 
 		public static IEnumerable<Type> GetEntitiesTypes(Assembly entityAssembly)
 		{
-			return typeof(IEntityCore).GetAssignable(entityAssembly.GetExportedTypes());
+			return typeof (IEntityCore).GetAssignable(entityAssembly.GetExportedTypes());
 		}
 
 		public static IEnumerable<Type> GetEntitiesTypes(ILinqMetaData linqMetaData)
@@ -273,12 +273,18 @@ namespace AW.Helper.LLBL
 		{
 			foreach (var dirtyEntity in entityCollection.DirtyEntities)
 				dirtyEntity.RevertChangesToDBValue();
+			var newEntities = entityCollection.Cast<IEntity>().Where(e => e.IsNew).ToList();
+			foreach (var newEntity in newEntities)
+				entityCollection.Remove(newEntity);
 		}
 
 		public static void RevertChangesToDBValue(this IEntityCollection2 entityCollection)
 		{
 			foreach (var dirtyEntity in entityCollection.DirtyEntities)
 				dirtyEntity.RevertChangesToDBValue();
+			var newEntities = entityCollection.Cast<IEntity2>().Where(e => e.IsNew).ToList();
+			foreach (var newEntity in newEntities)
+				entityCollection.Remove(newEntity);
 		}
 
 		public static void RevertChangesToDBValue<T>(IEnumerable<T> entities) where T : class, IEntityCore
@@ -292,28 +298,27 @@ namespace AW.Helper.LLBL
 			if (modifiedEntities is IEntityView)
 				modifiedEntities = ((IEntityView) modifiedEntities).RelatedCollection;
 			if (modifiedEntities is IEntityView2)
-				modifiedEntities = ((IEntityView2)modifiedEntities).RelatedCollection;
+				modifiedEntities = ((IEntityView2) modifiedEntities).RelatedCollection;
 			if (modifiedEntities is IEntityCollection)
 			{
 				var entityCollection = (IEntityCollection) modifiedEntities;
 				if (entityCollection.RemovedEntitiesTracker != null)
-				{
 					entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
-					entityCollection.RemovedEntitiesTracker.Clear();
-				}
 				RevertChangesToDBValue(entityCollection);
-			}
-			if (modifiedEntities is IEntityCollection2)
-			{
-				var entityCollection = (IEntityCollection2)modifiedEntities;
 				if (entityCollection.RemovedEntitiesTracker != null)
-				{
-					entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
 					entityCollection.RemovedEntitiesTracker.Clear();
-				}
-				RevertChangesToDBValue(entityCollection);
 			}
-			RevertChangesToDBValue(modifiedEntities.Cast<IEntityCore>());
+			else if (modifiedEntities is IEntityCollection2)
+			{
+				var entityCollection = (IEntityCollection2) modifiedEntities;
+				if (entityCollection.RemovedEntitiesTracker != null)
+					entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
+				RevertChangesToDBValue(entityCollection);
+				if (entityCollection.RemovedEntitiesTracker != null)
+					entityCollection.RemovedEntitiesTracker.Clear();
+			}
+			else
+				RevertChangesToDBValue(modifiedEntities.Cast<IEntityCore>());
 		}
 
 		public static void Undo(object modifiedData)
@@ -325,9 +330,9 @@ namespace AW.Helper.LLBL
 				if (enumerable == null)
 				{
 					if (modifiedData is IEntity)
-						RevertChangesToDBValue((IEntity)modifiedData);
+						RevertChangesToDBValue((IEntity) modifiedData);
 					else
-						RevertChangesToDBValue((IEntity2)modifiedData);
+						RevertChangesToDBValue((IEntity2) modifiedData);
 				}
 				else
 					RevertChangesToDBValue(enumerable);
