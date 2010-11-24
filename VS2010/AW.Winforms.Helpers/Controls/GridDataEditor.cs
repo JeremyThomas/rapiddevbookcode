@@ -129,6 +129,7 @@ namespace AW.Winforms.Helpers.Controls
 			else
 				saveToolStripButton.Enabled = numSaved == 0 || !SupportsNotifyPropertyChanged;
 			toolStripButtonCancelEdit.Enabled = false;
+			bindingNavigatorPaging.Enabled = true;
 		}
 
 		private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -151,6 +152,7 @@ namespace AW.Winforms.Helpers.Controls
 			{
 				toolStripButtonObjectBrowser.Enabled = false;
 				saveToolStripButton.Enabled = false;
+				bindingNavigatorPaging.Enabled = true;
 			}
 			toolStripLabelSaveResult.Text = "";
 		}
@@ -382,6 +384,7 @@ namespace AW.Winforms.Helpers.Controls
 					case ListChangedType.ItemAdded:
 						saveToolStripButton.Enabled = _canSave;
 						toolStripButtonCancelEdit.Enabled = true;
+						bindingNavigatorPaging.Enabled = false;
 						break;
 				}
 		}
@@ -395,6 +398,7 @@ namespace AW.Winforms.Helpers.Controls
 				saveToolStripButton.Enabled = false;
 			}
 			toolStripButtonCancelEdit.Enabled = false;
+			bindingNavigatorPaging.Enabled = true;
 		}
 
 		private void toolStripButtonObjectListViewVisualizer_Click(object sender, EventArgs e)
