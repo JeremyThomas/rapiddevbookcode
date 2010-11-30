@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Windows.Forms;
 using AW.Helper;
@@ -25,8 +26,6 @@ namespace AW.Winforms.Helpers
 		public FrmPersistantLocation()
 		{
 			InitializeComponent();			
-			if (WindowSettings != null)
-				WindowSettings.Restore(this);
 		}
 
 		protected WindowSettings WindowSettings
@@ -54,20 +53,45 @@ namespace AW.Winforms.Helpers
 			get { return _windowSettingsSettingsProperty ?? (_windowSettingsSettingsProperty = GeneralHelper.GetSetting(Settings.Default, WindowSettingsName, typeof (WindowSettings))); }
 		}
 
-		private void FrmPersistantLocation_Load(object sender, EventArgs e)
+		#region Overrides of Form
+
+		/// <summary>
+		/// Raises the CreateControl event.
+		/// </summary>
+		protected override void OnCreateControl()
 		{
 			RestoreWindowSettings();
+			base.OnCreateControl();
 		}
+
+		/// <summary>
+		/// Raises the <see cref="E:System.Windows.Forms.Form.FormClosing"/> event.
+		/// </summary>
+		/// <param name="e">A <see cref="T:System.Windows.Forms.FormClosingEventArgs"/> that contains the event data. 
+		///                 </param>
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			RecordWindowSettings();
+			base.OnFormClosing(e);
+		}
+
+		/// <summary>
+		/// Raises the <see cref="E:System.Windows.Forms.Form.FormClosed"/> event.
+		/// </summary>
+		/// <param name="e">A <see cref="T:System.Windows.Forms.FormClosedEventArgs"/> that contains the event data. 
+		///                 </param>
+		protected override void OnFormClosed(FormClosedEventArgs e)
+		{
+			base.OnFormClosed(e);
+			Settings.Default.Save();
+		}
+
+		#endregion
 
 		protected virtual void RestoreWindowSettings()
 		{
 			if (WindowSettings != null)
 				WindowSettings.Restore(this, Splitters);
-		}
-
-		private void FrmPersistantLocation_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			RecordWindowSettings();
 		}
 
 		protected virtual void RecordWindowSettings()
@@ -80,9 +104,9 @@ namespace AW.Winforms.Helpers
 				WindowSettings.Record(this, Splitters);
 		}
 
-		private void FrmPersistantLocation_FormClosed(object sender, FormClosedEventArgs e)
-		{
-			Settings.Default.Save();
-		}
+		//private void FrmPersistantLocation_Resize(object sender, EventArgs e)
+		//{
+		//  Text = Size.ToString();
+		//}
 	}
 }

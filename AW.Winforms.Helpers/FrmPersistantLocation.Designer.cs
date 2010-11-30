@@ -36,10 +36,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 262);
 			this.Name = "FrmPersistantLocation";
-			this.Text = "FrmPersistantLocation";
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmPersistantLocation_FormClosing);
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmPersistantLocation_FormClosed);
-			this.Load += new System.EventHandler(this.FrmPersistantLocation_Load);
+			this.Text = "Form Persistant Location";
 			this.ResumeLayout(false);
 
 		}

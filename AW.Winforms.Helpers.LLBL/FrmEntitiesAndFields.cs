@@ -61,24 +61,35 @@ namespace AW.Winforms.Helpers.LLBL
 					base.RestoreWindowSettings();
 				else
 				{
+					var splitterDistanceBefore = splitContainerVertical.SplitterDistance;
 					splitContainerVertical.Panel2Collapsed = true;
 					base.RestoreWindowSettings();
 					splitContainerVertical.Width = ClientSize.Width;
-					//splitContainerVertical.Width = splitContainerVertical.SplitterDistance;
-					SetClientSizeCore(splitContainerVertical.SplitterDistance, ClientSize.Height);
-					if (splitContainerVertical.Width > splitContainerVertical.SplitterDistance)
-						((Panel) splitContainerVertical.Panel2).Width = splitContainerVertical.Width - splitContainerVertical.SplitterDistance - splitContainerVertical.SplitterWidth;
+					if (splitterDistanceBefore != splitContainerVertical.SplitterDistance)
+					{
+						SetClientSizeCore(splitContainerVertical.SplitterDistance, ClientSize.Height);
+						if (splitContainerVertical.Width > splitContainerVertical.SplitterDistance)
+							((Panel) splitContainerVertical.Panel2).Width = splitContainerVertical.Width - splitContainerVertical.SplitterDistance - splitContainerVertical.SplitterWidth;
+					}
 				}
 		}
 
 		#endregion
 
-		private void EntitiesAndFields_Load(object sender, EventArgs e)
+		#region Overrides of Form
+
+		/// <summary>
+		/// Raises the CreateControl event.
+		/// </summary>
+		protected override void OnCreateControl()
 		{
 			gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;
 			if (treeViewEntities.Nodes.Count == 0)
 				LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
+			base.OnCreateControl();
 		}
+
+		#endregion
 
 		public IEnumerable<Type> GetEntitiesTypes()
 		{

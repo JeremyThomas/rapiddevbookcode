@@ -55,9 +55,9 @@ namespace AW.Winforms.Helpers
 			splitContainerVertical.SplitterDistance = Math.Max(panel1Width, oldsp);
 		}
 
-		private void splitContainerVertical_SizeChanged(object sender, EventArgs e)
-		{
-			Text = splitContainerVertical.Panel1.Width + "-" + splitContainerVertical.SplitterDistance + "-" + this.ClientSize.Width;
-		}
+		//private void splitContainerVertical_SizeChanged(object sender, EventArgs e)
+		//{
+		//  Text = splitContainerVertical.Panel1.Width + "-" + splitContainerVertical.SplitterDistance + "-" + this.ClientSize.Width;
+		//}
 	}
 }
