@@ -164,8 +164,8 @@ namespace AW.Winforms.Helpers
 		{
 			var splitterSize =
 				splitter.Orientation == Orientation.Vertical
-					? splitter.Panel2.Width
-					: splitter.Panel2.Height;
+					? ((Panel)splitter.Panel2).Width
+					: ((Panel)splitter.Panel2).Height;
 			return splitterSize;
 		}
 

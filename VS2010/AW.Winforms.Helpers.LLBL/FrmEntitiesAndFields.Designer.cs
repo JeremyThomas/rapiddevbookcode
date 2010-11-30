@@ -239,7 +239,6 @@ namespace AW.Winforms.Helpers.LLBL
 			this.Name = "FrmEntitiesAndFields";
 			this.Text = "Data Browser";
 			this.WindowSettingsName = "EntitiesAndFieldsWindowSettings";
-			this.Load += new System.EventHandler(this.EntitiesAndFields_Load);
 			this.Controls.SetChildIndex(this.statusStrip1, 0);
 			this.Controls.SetChildIndex(this.splitContainerVertical, 0);
 			this.splitContainerVertical.Panel1.ResumeLayout(false);
