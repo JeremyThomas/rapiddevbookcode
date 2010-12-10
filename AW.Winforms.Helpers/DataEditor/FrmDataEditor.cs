@@ -41,9 +41,9 @@ namespace AW.Winforms.Helpers.DataEditor
 		public static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, GridDataEditor gridDataEditor, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
 		{
 			frmDataEditor.Text = GetEnumerableDescription(enumerable);
-			if (enumerable is IEnumerable<string>)
+			if (MetaDataHelper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
 			{
-				enumerable = ((IEnumerable<string>) enumerable).CreateStringWrapperForBinding();
+				enumerable = ValueTypeWrapper.CreateWrapperForBinding(enumerable);
 				readOnly = true;
 			}
 			frmDataEditor.Controls.Add(gridDataEditor);

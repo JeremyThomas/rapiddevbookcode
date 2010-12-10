@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
+using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -128,7 +129,7 @@ namespace AW.Winforms.Helpers.LLBL
 			}
 			else if (!splitContainerVertical.Panel2Collapsed)
 			{
-				Open(30);
+				openPagedToolStripMenuItem_Click(sender, e);
 			}
 			toolStripStatusLabelSelected.Text = treeViewEntities.SelectedNode.Text;
 		}
@@ -173,9 +174,9 @@ namespace AW.Winforms.Helpers.LLBL
 			gridDataEditor.BindEnumerable(entityQueryable, pageSize);
 		}
 
-		private void openPaged20ToolStripMenuItem_Click(object sender, EventArgs e)
+		private void openPagedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			Open(30);
+			Open(DataEditorExtensions.DefaultPageSize);
 		}
 
 		private void getCountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -188,7 +189,7 @@ namespace AW.Winforms.Helpers.LLBL
 		private void treeViewEntities_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
 			if (!e.Node.IsExpanded)
-				toolStripMenuItemOpen_Click(sender, e);
+				openPagedToolStripMenuItem_Click(sender, e);
 		}
 
 		private void treeViewEntities_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
@@ -70,16 +71,12 @@ namespace AW.Winforms.Helpers.DataEditor
 		{
 			if (enumerable != null)
 			{
-				var stringEnumerable = enumerable as IEnumerable<string>;
-				const bool readOnly = false;
-				if (stringEnumerable != null)
+				if (MetaDataHelper.TypeNeedsWrappingForBinding<T>())
 				{
-					stringEnumerable.CreateStringWrapperForBinding().ShowInGrid(dataEditorPersister, pageSize);
-					//enumerable = stringEnumerable.CreateStringWrapperForBinding();
-					//readOnly = true;
-					return enumerable;
+					 ValueTypeWrapper<T>.CreateWrapperForBinding(enumerable).ShowInGrid(dataEditorPersister, pageSize);
+					 return enumerable;
 				}
-				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditorT<T> {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, readOnly).ShowDialog();
+				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditorT<T> {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, false).ShowDialog();
 			}
 			return enumerable;
 		}

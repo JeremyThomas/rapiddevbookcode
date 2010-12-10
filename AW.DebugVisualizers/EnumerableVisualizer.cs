@@ -140,7 +140,15 @@ namespace AW.DebugVisualizers
 		{
 			try
 			{
-				VisualizerObjectSource.Serialize(outgoingData, enumerable);
+				try
+				{
+					VisualizerObjectSource.Serialize(outgoingData, enumerable);
+				}
+				catch (SerializationException)
+				{
+					outgoingData.Position = 0;
+					VisualizerObjectSource.Serialize(outgoingData, enumerable.ToBindingListView());
+				}
 			}
 			catch (SerializationException)
 			{

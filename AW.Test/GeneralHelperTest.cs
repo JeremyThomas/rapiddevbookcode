@@ -132,7 +132,7 @@ namespace AW.Tests
 		public void StringPropertiesTest()
 		{
 			var strings = new[] {"one", "two", "a string"};
-			var stringWrapperForBinding = strings.CreateStringWrapperForBinding();
+			var stringWrapperForBinding = ValueTypeWrapper<string>.CreateWrapperForBinding(strings);
 			var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
 			Assert.AreEqual(1, stringWrapperProperties.Count);
 			Assert.AreEqual(typeof (string), stringWrapperProperties[0].PropertyType);

@@ -14,6 +14,42 @@ namespace AW.Helper
 		public string Value { get; set; }
 	}
 
+	public class ValueTypeWrapper<T>
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
+		/// </summary>
+		public ValueTypeWrapper(T value)
+		{
+			Value = value;
+		}
+
+		public T Value { get; private set; }
+
+		public static IEnumerable<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
+		{
+			return values.Select(data => new ValueTypeWrapper<T>(data)).ToList();
+		}
+	}
+
+	public class ValueTypeWrapper
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
+		/// </summary>
+		public ValueTypeWrapper(object value)
+		{
+			Value = value;
+		}
+
+		public object Value { get; private set; }
+
+		public static IEnumerable<ValueTypeWrapper> CreateWrapperForBinding(IEnumerable values)
+		{
+			return values.Cast<object>().Select(data => new ValueTypeWrapper(data)).ToList();
+		}
+	}
+
 	public static class GeneralHelper
 	{
 		/// <summary>
@@ -156,11 +192,6 @@ namespace AW.Helper
 				tb.Rows.Add(values);
 			}
 			return tb;
-		}
-
-		public static IEnumerable<StringWrapper> CreateStringWrapperForBinding(this IEnumerable<string> strings)
-		{
-			return strings.Select(data => new StringWrapper {Value = data}).ToList();
 		}
 
 		/// <summary>

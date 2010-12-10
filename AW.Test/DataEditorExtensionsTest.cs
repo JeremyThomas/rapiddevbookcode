@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
@@ -81,7 +82,8 @@ namespace AW.Tests
 		[TestMethod]
 		public void EditInDataGridViewTest()
 		{
-			TestShowInGrid(NonSerializableClass.GenerateList(), 3, 3);
+			TestShowInGrid(NonSerializableClass.GenerateList(), NonSerializableClass.NumberOfNonSerializableClassProperties, NonSerializableClass.NumberOfNonSerializableClassProperties);
+			TestShowInGrid(NonSerializableClass.GenerateList(), NonSerializableClass.NumberOfNonSerializableClassProperties, NonSerializableClass.NumberOfNonSerializableClassProperties);
 			TestShowInGrid(SerializableClass.GenerateList(), 4, 4);
 			TestShowInGrid(SerializableClass.GenerateListWithBoth(), 3, 3);
 			TestShowInGrid(SerializableBaseClass.GenerateList(), 1, 1);
@@ -89,10 +91,12 @@ namespace AW.Tests
 		}
 
 		[TestMethod]
-		public void ShowInDataGridViewTest()
+		public void ShowDictionaryInGrid()
 		{
-			TestEditInDataGridView(null);
-			TestShowInGrid(Enumerable.Range(1, 100), 0);
+			var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
+			TestShowInGrid(dictionary, 2);
+			TestShowInGrid(dictionary.Values, NonSerializableClass.NumberOfNonSerializableClassProperties, NonSerializableClass.NumberOfNonSerializableClassProperties);
+			TestShowInGrid(dictionary.Keys, 1);
 		}
 
 		private static FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
@@ -119,12 +123,12 @@ namespace AW.Tests
 		public void FieldsToPropertiesTypeDescriptionProviderTest()
 		{
 			var properties = MetaDataHelper.GetPropertiesToDisplay(typeof (NonSerializableClass));
-			Assert.AreEqual(3, properties.Count());
+			Assert.AreEqual(NonSerializableClass.NumberOfNonSerializableClassProperties, properties.Count());
 			AddFieldsToPropertiesTypeDescriptionProvider(typeof (NonSerializableClass));
 			try
 			{
 				properties = MetaDataHelper.GetPropertiesToDisplay(typeof (NonSerializableClass));
-				Assert.AreEqual(6, properties.Count());
+				Assert.AreEqual(NonSerializableClass.NumberOfNonSerializableClassProperties*2, properties.Count());
 			}
 			finally
 			{
@@ -136,7 +140,7 @@ namespace AW.Tests
 		public void ShowArrayListInGrid()
 		{
 			var arrayList = new ArrayList {1, 2, "3"};
-			TestEditInDataGridView(arrayList, 0);
+			TestEditInDataGridView(arrayList, 1);
 		}
 
 		[TestMethod]
@@ -173,6 +177,23 @@ namespace AW.Tests
 			TestShowInGrid(enumerable, 1);
 			TestEditInDataGridView(new string[0], 1);
 			//TestShowInGrid(new string[0], 0);
+		}
+
+		[TestMethod]
+		public void ShowIntegerEnumerationInGridTest()
+		{
+			var enumerable = Enumerable.Range(1, 100);
+			TestShowInGrid(ValueTypeWrapper<int>.CreateWrapperForBinding(enumerable), 1);
+			TestShowInGrid(enumerable, 1);
+			enumerable = null;
+			TestShowInGrid(enumerable, 1);
+			TestEditInDataGridView(new int[0], 1);
+		}
+
+		[TestMethod]
+		public void NullInDataGridViewTest()
+		{
+			TestEditInDataGridView(null);
 		}
 
 		[TestMethod]
