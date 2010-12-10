@@ -125,7 +125,7 @@ namespace AW.Winforms.Helpers.LLBL
 			this.openPaged30ToolStripMenuItem.Name = "openPaged30ToolStripMenuItem";
 			this.openPaged30ToolStripMenuItem.Size = new System.Drawing.Size(239, 22);
 			this.openPaged30ToolStripMenuItem.Text = "Open 30 per Page";
-			this.openPaged30ToolStripMenuItem.Click += new System.EventHandler(this.openPaged20ToolStripMenuItem_Click);
+			this.openPaged30ToolStripMenuItem.Click += new System.EventHandler(this.openPagedToolStripMenuItem_Click);
 			// 
 			// toolStripMenuItemOpen
 			// 

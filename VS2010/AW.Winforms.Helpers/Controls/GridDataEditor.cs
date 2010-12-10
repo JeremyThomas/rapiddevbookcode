@@ -210,8 +210,8 @@ namespace AW.Winforms.Helpers.Controls
 					return Enumerable.Empty<int>();
 				}
 				_superset = enumerable.AsQueryable();
-				if (_superset.ElementType == typeof (string))
-					_superset = ((IEnumerable<string>) enumerable).CreateStringWrapperForBinding().AsQueryable();
+				if (MetaDataHelper.TypeNeedsWrappingForBinding(_superset.ElementType))
+					_superset = ValueTypeWrapper.CreateWrapperForBinding(enumerable).AsQueryable();
 			}
 			catch (ArgumentException)
 			{

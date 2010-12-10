@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -211,6 +210,20 @@ namespace AW.DebugVisualizers.Tests
 		}
 
 		[TestMethod]
+		public void DictionaryTest()
+		{
+			var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
+			//Show(dictionary);
+			TestShowTransported(dictionary, 2, 1);
+			var expectedColumnCount = NonSerializableClass.NumberOfNonSerializableClassProperties*2;
+			//Show(dictionary.Values);
+			TestShowTransported(dictionary.Values, expectedColumnCount);
+			//Show(dictionary.Keys.ToList());
+			//Show(dictionary.Keys);
+			TestShowTransported(dictionary.Keys, 1);
+		}
+
+		[TestMethod]
 		public void Xml_test()
 		{
 			var xml = TestData.GetTestxmlString();
@@ -254,7 +267,7 @@ namespace AW.DebugVisualizers.Tests
 				Assert.IsInstanceOfType(transportedEnumerableOrDataTable, typeof (IBindingListView));
 		}
 
-		public static void TestShow(object enumerableOrDataTableToVisualize)
+		private static void Show(object enumerableOrDataTableToVisualize)
 		{
 			var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource));
 			visualizerHost.ShowVisualizer();
@@ -270,7 +283,7 @@ namespace AW.DebugVisualizers.Tests
 			var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
 			//AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
 			EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
-			var dataGridView = DataEditorExtensionsTest.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
+			var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
 			Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
 			Application.DoEvents();
 		}
@@ -305,6 +318,7 @@ namespace AW.DebugVisualizers.Tests
 		public DialogResult ShowDialog(Form form)
 		{
 			VisualizerForm = form;
+			//form.ShowDialog(); 
 			form.Show();
 			return DialogResult.None;
 		}

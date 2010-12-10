@@ -94,6 +94,11 @@ namespace AW.Tests
 
 	public class NonSerializableClass : SerializableBaseClass2
 	{
+		/// <summary>
+		/// 3
+		/// </summary>
+		public static int NumberOfNonSerializableClassProperties = 3;
+
 		public DateTime DateTimeField;
 
 		public DateTime DateTimeProperty

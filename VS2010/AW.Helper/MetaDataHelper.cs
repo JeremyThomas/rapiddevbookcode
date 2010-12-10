@@ -124,6 +124,40 @@ namespace AW.Helper
 		}
 
 		/// <summary>
+		/// Creates the generic.
+		/// http://geekswithblogs.net/marcel/archive/2007/03/24/109722.aspx
+		/// </summary>
+		/// <param name="generic">The generic type.</param>
+		/// <param name="innerType">Type of the inner.</param>
+		/// <param name="args">The args.</param>
+		/// <returns></returns>
+		public static object CreateGeneric(Type generic, Type innerType, params object[] args)
+		{
+			var specificType = generic.MakeGenericType(new[] {innerType});
+			return Activator.CreateInstance(specificType, args);
+		}
+
+		/// <summary>
+		/// True if the type the needs wrapping for databinding.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static bool TypeNeedsWrappingForBinding<T>()
+		{
+			return TypeNeedsWrappingForBinding(typeof(T));
+		}
+
+		/// <summary>
+		/// True if the type the needs wrapping for databinding.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns></returns>
+		public static bool TypeNeedsWrappingForBinding(Type type)
+		{
+			return Type.GetTypeCode(type) != TypeCode.Object;
+		}
+
+		/// <summary>
 		/// Returns the data type of the items in the specified list.
 		/// </summary>
 		/// <param name="enumerable">The enumerable to be examined for type information.</param>
@@ -299,5 +333,6 @@ namespace AW.Helper
 		{
 			return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);
 		}
+
 	}
 }
