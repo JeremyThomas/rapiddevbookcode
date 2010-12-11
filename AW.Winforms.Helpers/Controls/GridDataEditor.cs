@@ -204,7 +204,7 @@ namespace AW.Winforms.Helpers.Controls
 				return Enumerable.Empty<int>();
 			try
 			{
-				if (enumerable is ArrayList || enumerable is Array || enumerable is DataView)
+				if (enumerable is ArrayList || enumerable is Array || enumerable is DataView || !enumerable.GetType().IsGenericType)
 				{
 					PageSize = 0;
 					return Enumerable.Empty<int>();

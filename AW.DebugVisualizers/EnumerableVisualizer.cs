@@ -8,7 +8,6 @@ using System.Runtime.Serialization;
 using AW.Helper;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.DataEditor;
-using JesseJohnston;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 
 //http://msdn.microsoft.com/en-us/library/aa991998(VS.100).aspx 'Use IVisualizerObjectProvider..::.GetData when the object is not serializable by .NET and requires custom serialization. 
@@ -86,17 +85,17 @@ namespace AW.DebugVisualizers
 				if (queryable != null)
 					enumerable = queryable.Take(100);
 				var enumerableType = enumerable.GetType();
-				if (itemType.IsSerializable)
+				if (MetaDataHelper.IsSerializable(itemType))
 				{
-					if (enumerableType.IsSerializable)
+					if (MetaDataHelper.IsSerializable(enumerableType))
 						Serialize(outgoingData, enumerable);
 					else
 					{
 						try
 						{
 							var bindingListView = enumerable.ToBindingListView();
-							if (!bindingListView.GetType().IsSerializable) // If the IBindingListView is not serializable use a ObjectListView
-								bindingListView = new ObjectListView(bindingListView);
+							if (!MetaDataHelper.IsSerializable(bindingListView.GetType())) // If the IBindingListView is not serializable use a ObjectListView
+								bindingListView = BindingListHelper.CreateObjectListView(bindingListView, itemType);
 							Serialize(outgoingData, bindingListView);
 						}
 						catch (Exception)
@@ -140,15 +139,7 @@ namespace AW.DebugVisualizers
 		{
 			try
 			{
-				try
-				{
-					VisualizerObjectSource.Serialize(outgoingData, enumerable);
-				}
-				catch (SerializationException)
-				{
-					outgoingData.Position = 0;
-					VisualizerObjectSource.Serialize(outgoingData, enumerable.ToBindingListView());
-				}
+				VisualizerObjectSource.Serialize(outgoingData, enumerable);
 			}
 			catch (SerializationException)
 			{

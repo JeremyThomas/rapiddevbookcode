@@ -219,7 +219,7 @@ namespace AW.DebugVisualizers.Tests
 			//Show(dictionary.Values);
 			TestShowTransported(dictionary.Values, expectedColumnCount);
 			//Show(dictionary.Keys.ToList());
-			//Show(dictionary.Keys);
+			Show(dictionary.Keys);
 			TestShowTransported(dictionary.Keys, 1);
 		}
 
