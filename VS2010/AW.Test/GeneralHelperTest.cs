@@ -78,6 +78,31 @@ namespace AW.Tests
 		}
 
 		[TestMethod]
+		public void GetTypeParametersOfGenericTypeTest()
+		{
+			var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
+			var dictionaryType = dictionary.GetType();
+			var typeParametersOfGenericType = MetaDataHelper.GetTypeParametersOfGenericType(dictionaryType);
+			var expected = new[] {typeof (int), typeof (NonSerializableClass)};
+			CollectionAssert.AreEqual(expected, typeParametersOfGenericType);
+			Assert.IsTrue(dictionaryType.IsSerializable);
+			Assert.IsFalse(MetaDataHelper.IsSerializable(dictionaryType));
+
+			var itemType = MetaDataHelper.GetEnumerableItemType(dictionary);
+			typeParametersOfGenericType = MetaDataHelper.GetTypeParametersOfGenericType(itemType);
+			CollectionAssert.AreEqual(expected, typeParametersOfGenericType);
+			Assert.IsTrue(itemType.IsSerializable);
+			Assert.IsFalse(MetaDataHelper.IsSerializable(itemType));
+		}
+
+		[TestMethod]
+		public void IsSerializableTest()
+		{
+			Assert.IsTrue(MetaDataHelper.IsSerializable(SerializableClass.GenerateList().GetType()));
+			Assert.IsTrue(MetaDataHelper.IsSerializable(typeof(int)));
+		}
+
+		[TestMethod]
 		public void AsNullIfEmptyTest()
 		{
 			Assert.IsNotNull(SerializableClass.GenerateList().AsNullIfEmpty());

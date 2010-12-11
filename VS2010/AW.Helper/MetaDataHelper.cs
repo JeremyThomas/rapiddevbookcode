@@ -77,6 +77,23 @@ namespace AW.Helper
 			return type.IsGenericType ? type.GetGenericArguments().First() : GetTypeParameterOfGenericType(type.BaseType);
 		}
 
+		public static Type[] GetTypeParametersOfGenericType(Type type)
+		{
+			if (type == typeof(object))
+				return null;
+			return type.IsGenericType ? type.GetGenericArguments() : GetTypeParametersOfGenericType(type.BaseType);
+		}
+
+		public static bool IsSerializable(Type type)
+		{
+			if (type.IsSerializable)
+			{
+				var typeParametersOfGenericType = GetTypeParametersOfGenericType(type);
+				return typeParametersOfGenericType.IsNullOrEmpty() || typeParametersOfGenericType.All(t => t.IsSerializable);
+			}
+			return false;
+		}
+
 		/// <summary>
 		/// Determine of specified type is nullable
 		/// </summary>
