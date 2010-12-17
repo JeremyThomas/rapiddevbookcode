@@ -28,6 +28,9 @@ internal static class AssemblyInfoConstants
 	public const string ExecutableVersion = AssemblyInformationalVersion + "." + ExecutableRevision;
 	// Compile a Debug or Release flag into the assembly.
 #if DEBUG
+	/// <summary>
+	/// Debug
+	/// </summary>
 	public const string AssemblyConfiguration = "Debug";
 #else
 	public const string AssemblyConfiguration = "Release";

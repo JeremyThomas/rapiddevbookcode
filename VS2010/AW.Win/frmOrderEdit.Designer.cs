@@ -1,33 +1,33 @@
 namespace AW.Win
 {
-    partial class FrmOrderEdit
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+		partial class FrmOrderEdit
+		{
+				/// <summary>
+				/// Required designer variable.
+				/// </summary>
+				private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+				/// <summary>
+				/// Clean up any resources being used.
+				/// </summary>
+				/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+				protected override void Dispose(bool disposing)
+				{
+						if (disposing && (components != null))
+						{
+								components.Dispose();
+						}
+						base.Dispose(disposing);
+				}
 
-        #region Windows Form Designer generated code
+				#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+				/// <summary>
+				/// Required method for Designer support - do not modify
+				/// the contents of this method with the code editor.
+				/// </summary>
+				private void InitializeComponent()
+				{
 					this.components = new System.ComponentModel.Container();
 					System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmOrderEdit));
 					System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -70,7 +70,7 @@ namespace AW.Win
 					this.toolStripButtonRevert = new System.Windows.Forms.ToolStripButton();
 					this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 					this.dgvDetail = new System.Windows.Forms.DataGridView();
-					this.ProductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+					this.ProductNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 					this.orderQtyDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 					this.unitPriceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 					this.unitPriceDiscountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -384,14 +384,14 @@ namespace AW.Win
 					// toolStrip1
 					// 
 					this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tspSave,
-            this.toolStripSeparator1,
-            this.tspClose,
-            this.toolStripSeparator2,
-            this.tspDelete,
-            this.toolStripButtonViewEntity,
-            this.toolStripButtonRefetch,
-            this.toolStripButtonRevert});
+						this.tspSave,
+						this.toolStripSeparator1,
+						this.tspClose,
+						this.toolStripSeparator2,
+						this.tspDelete,
+						this.toolStripButtonViewEntity,
+						this.toolStripButtonRefetch,
+						this.toolStripButtonRevert});
 					this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 					this.toolStrip1.Name = "toolStrip1";
 					this.toolStrip1.Size = new System.Drawing.Size(642, 25);
@@ -489,11 +489,11 @@ namespace AW.Win
 					this.dgvDetail.BackgroundColor = System.Drawing.Color.White;
 					this.dgvDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 					this.dgvDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ProductName,
-            this.orderQtyDataGridViewTextBoxColumn,
-            this.unitPriceDataGridViewTextBoxColumn,
-            this.unitPriceDiscountDataGridViewTextBoxColumn,
-            this.lineTotalDataGridViewTextBoxColumn});
+						this.ProductNameColumn,
+						this.orderQtyDataGridViewTextBoxColumn,
+						this.unitPriceDataGridViewTextBoxColumn,
+						this.unitPriceDiscountDataGridViewTextBoxColumn,
+						this.lineTotalDataGridViewTextBoxColumn});
 					this.dgvDetail.DataSource = this.salesOrderDetailCollection1;
 					this.dgvDetail.Dock = System.Windows.Forms.DockStyle.Fill;
 					this.dgvDetail.Location = new System.Drawing.Point(5, 162);
@@ -505,12 +505,12 @@ namespace AW.Win
 					// 
 					// ProductName
 					// 
-					this.ProductName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-					this.ProductName.DataPropertyName = "ProductName";
-					this.ProductName.HeaderText = "Name";
-					this.ProductName.Name = "ProductName";
-					this.ProductName.ReadOnly = true;
-					this.ProductName.Width = 60;
+					this.ProductNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+					this.ProductNameColumn.DataPropertyName = "ProductName";
+					this.ProductNameColumn.HeaderText = "Name";
+					this.ProductNameColumn.Name = "ProductName";
+					this.ProductNameColumn.ReadOnly = true;
+					this.ProductNameColumn.Width = 60;
 					// 
 					// orderQtyDataGridViewTextBoxColumn
 					// 
@@ -603,52 +603,52 @@ namespace AW.Win
 					this.ResumeLayout(false);
 					this.PerformLayout();
 
-        }
+				}
 
-        #endregion
+				#endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton tspSave;
-        private System.Windows.Forms.ToolStripButton tspClose;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton tspDelete;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.DateTimePicker dtpOrderDate;
-        private System.Windows.Forms.DateTimePicker dtpDueDate;
-        private System.Windows.Forms.DateTimePicker dtpShipDate;
-        private System.Windows.Forms.CheckBox cbOnlineOrder;
-        private System.Windows.Forms.TextBox tbPurchaseOrder;
-        private System.Windows.Forms.TextBox tbFreight;
-        private System.Windows.Forms.Label lblTotal;
-        private System.Windows.Forms.DataGridView dgvDetail;
-        private System.Windows.Forms.ComboBox cbShipMethod;
-        private AW.Data.CollectionClasses.SalesOrderDetailCollection salesOrderDetailCollection1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TextBox tbCustomer;
-        private System.Windows.Forms.TextBox tbContact;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProductName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderQtyDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unitPriceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn unitPriceDiscountDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lineTotalDataGridViewTextBoxColumn;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.TextBox tbSubtotal;
-        private System.Windows.Forms.TextBox tbTax;
-        private System.Windows.Forms.ErrorProvider myError;
-        private System.Windows.Forms.BindingSource salesOrderHeaderEntityBindingSource;
-        private System.Windows.Forms.ToolStripButton toolStripButtonViewEntity;
-        private System.Windows.Forms.ToolStripButton toolStripButtonRefetch;
-        private System.Windows.Forms.ToolStripButton toolStripButtonRevert;
-    }
+				private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+				private System.Windows.Forms.ToolStrip toolStrip1;
+				private System.Windows.Forms.ToolStripButton tspSave;
+				private System.Windows.Forms.ToolStripButton tspClose;
+				private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+				private System.Windows.Forms.ToolStripButton tspDelete;
+				private System.Windows.Forms.Label label5;
+				private System.Windows.Forms.Label label3;
+				private System.Windows.Forms.Label label1;
+				private System.Windows.Forms.Label label8;
+				private System.Windows.Forms.Label label2;
+				private System.Windows.Forms.Label label7;
+				private System.Windows.Forms.Label label9;
+				private System.Windows.Forms.Label label11;
+				private System.Windows.Forms.Label label12;
+				private System.Windows.Forms.Label label13;
+				private System.Windows.Forms.Label label14;
+				private System.Windows.Forms.DateTimePicker dtpOrderDate;
+				private System.Windows.Forms.DateTimePicker dtpDueDate;
+				private System.Windows.Forms.DateTimePicker dtpShipDate;
+				private System.Windows.Forms.CheckBox cbOnlineOrder;
+				private System.Windows.Forms.TextBox tbPurchaseOrder;
+				private System.Windows.Forms.TextBox tbFreight;
+				private System.Windows.Forms.Label lblTotal;
+				private System.Windows.Forms.DataGridView dgvDetail;
+				private System.Windows.Forms.ComboBox cbShipMethod;
+				private AW.Data.CollectionClasses.SalesOrderDetailCollection salesOrderDetailCollection1;
+				private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+				private System.Windows.Forms.TextBox tbCustomer;
+				private System.Windows.Forms.TextBox tbContact;
+				private System.Windows.Forms.DataGridViewTextBoxColumn ProductNameColumn;
+				private System.Windows.Forms.DataGridViewTextBoxColumn orderQtyDataGridViewTextBoxColumn;
+				private System.Windows.Forms.DataGridViewTextBoxColumn unitPriceDataGridViewTextBoxColumn;
+				private System.Windows.Forms.DataGridViewTextBoxColumn unitPriceDiscountDataGridViewTextBoxColumn;
+				private System.Windows.Forms.DataGridViewTextBoxColumn lineTotalDataGridViewTextBoxColumn;
+				private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+				private System.Windows.Forms.TextBox tbSubtotal;
+				private System.Windows.Forms.TextBox tbTax;
+				private System.Windows.Forms.ErrorProvider myError;
+				private System.Windows.Forms.BindingSource salesOrderHeaderEntityBindingSource;
+				private System.Windows.Forms.ToolStripButton toolStripButtonViewEntity;
+				private System.Windows.Forms.ToolStripButton toolStripButtonRefetch;
+				private System.Windows.Forms.ToolStripButton toolStripButtonRevert;
+		}
 }

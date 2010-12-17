@@ -213,13 +213,9 @@ namespace AW.DebugVisualizers.Tests
 		public void DictionaryTest()
 		{
 			var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
-			//Show(dictionary);
 			TestShowTransported(dictionary, 2, 1);
 			var expectedColumnCount = NonSerializableClass.NumberOfNonSerializableClassProperties*2;
-			//Show(dictionary.Values);
 			TestShowTransported(dictionary.Values, expectedColumnCount);
-			//Show(dictionary.Keys.ToList());
-			Show(dictionary.Keys);
 			TestShowTransported(dictionary.Keys, 1);
 		}
 

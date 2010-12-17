@@ -11318,6 +11318,22 @@
             <returns>the connection string, if found, otherwise empty string</returns>
             <remarks>First tries to read from the connectionstrings settings (new in .NET 2.0). If not found, it will try to read it from the appSettings tag</remarks>
         </member>
+        <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.DistinctFilteringPreferenceType">
+            <summary>
+            Enum which defines the preference type for distinct filtering for select queries. 
+            </summary>
+        </member>
+        <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.DistinctFilteringPreferenceType.System">
+            <summary>
+            Emit Distinct into the SQL query using the rules embedded in the code (default). 
+            </summary>
+        </member>
+        <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.DistinctFilteringPreferenceType.AlwaysClientSide">
+            <summary>
+            Always use client-side Distinct filtering. This can be CPU intensive with large sets of duplicates, however on databases where DISTINCT is 
+            very time consuming, this setting van be an optimization.
+            </summary>
+        </member>
         <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.ScaleOverflowCorrectionAction">
             <summary>
             Enum which defines the action to take when a scale overflow is detected in the build-in validation for precision/scale values. This validation
@@ -14690,6 +14706,17 @@
             <param name="targetKind">targetKind definition.</param>
             <param name="contextType">contextType definition.</param>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DependencyInjectionScope.AddInjectionInfo(System.Type,System.Type,System.String,SD.LLBLGen.Pro.ORMSupportClasses.DependencyInjectionTargetKind,SD.LLBLGen.Pro.ORMSupportClasses.DependencyInjectionContextType,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Adds the injection info passed in to the scope data. Call this method one or more times from an override of <see cref="M:SD.LLBLGen.Pro.ORMSupportClasses.DependencyInjectionScope.InitializeScope"/>.
+            </summary>
+            <param name="instanceType">Type of the instance to inject.</param>
+            <param name="targetType">Type of the target which contains propertyName and which gets an instance of instanceType injected.</param>
+            <param name="propertyName">Name of the property to set with an instace of instanceType.</param>
+            <param name="targetKind">targetKind definition.</param>
+            <param name="contextType">contextType definition.</param>
+            <param name="targetNamespaceFilterFragments">The target namespace filter fragments.</param>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DependencyInjectionScope.EndScope">
             <summary>
             Ends the scope and removes the scope from the dependency injection provider. After this method, call StartScope again to re-add the DI data to
@@ -15234,6 +15261,24 @@
             </summary>
             <param name="persistenceInfo">The persistence info.</param>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DynamicRelationBase.Clone">
+            <summary>
+            Clones this instance. (shallow copy)
+            </summary>
+            <returns>shallow copy of this instance. </returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DynamicRelationBase.SetLeftOperand(System.Object)">
+            <summary>
+            Sets the left operand.
+            </summary>
+            <param name="operand">The operand.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DynamicRelationBase.SetRightOperand(System.Object)">
+            <summary>
+            Sets the right operand.
+            </summary>
+            <param name="operand">The operand.</param>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DynamicRelationBase.SD#LLBLGen#Pro#ORMSupportClasses#IRelation#ToggleArtificialAliasingForTargetPerEntityRelations(System.Boolean)">
             <summary>
             Enables / disables the artificial aliasing for target per entity relations. This method is used to enable the artificial aliasing of entities which
@@ -15274,6 +15319,7 @@
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DynamicRelationBase.GetOperandData(System.Object,System.Boolean,SD.LLBLGen.Pro.ORMSupportClasses.IInheritanceInfo@)">
             <summary>
             Gets the describing field for the operand passed in and the inheritance info for the entity. Operand is either an adapter entity or a selfservicing entity
+            or an entity field (adapter/selfservicing). In case of a field, it returns the same field and only obtains inheritance info.
             </summary>
             <param name="operand">The operand.</param>
             <param name="isLeftOperand">if set to <c>true</c> [is left operand].</param>
@@ -15401,6 +15447,11 @@
         <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.DynamicQueryEngineBase.Switch">
             <summary>
             The traceswitch used in the DQE. Set in the static constructor of the derived class.
+            </summary>
+        </member>
+        <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.DynamicQueryEngineBase.DistinctFilteringPreferenceDefault">
+            <summary>
+            The distinct filtering preference to use for all DQE instances.
             </summary>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DynamicQueryEngineBase.#ctor">
@@ -16118,6 +16169,12 @@
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.DynamicQueryEngineBase.FactoryToUse">
             <summary>
             Gets the DbProviderFactory to use for this DQE. 
+            </summary>
+        </member>
+        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.DynamicQueryEngineBase.DistinctFilteringPreferenceToUse">
+            <summary>
+            Gets or sets the distinct filtering preference to use. The default value is the value of the global variable
+            DynamicQueryEngineBase.DistinctFilteringPreferenceDefault.
             </summary>
         </member>
         <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.ElementCreatorBase">
@@ -21108,6 +21165,17 @@
             <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
             <param name="fieldName">Name of the field mapped onto the relation of which the relation objects have to be obtained.</param>
             <returns>RelationCollection with relation object(s) which represent the relation the field is maped on</returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2.GetAdditionalRelatedData(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Gets the additional related data, next to the data returned by GetRelatedData. This method appends the additional related data to 
+            the passed in toAppendTo dictionary. Key is the property name, value is the entity object or entity collection represented by the property.
+            </summary>
+            <param name="toAppendTo">To append to. the collection to append the additional related data to</param>
+            <returns>the passed in toAppendTo collection</returns>
+            <remarks>Used in Compact/Compact25 XML serialization to serialize entity collections without needing to custom serialization. Only
+            add IEntity2 or IEntityCollection2 implementing objects to the passed in dictionary. If you want to serialize custom classes, use
+            the Compact25 format and custom serialization using the CustomXmlSerializationAttribute attribute</remarks>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.EntityBase2.GetInheritanceInfo">
             <summary>
@@ -31877,6 +31945,16 @@
             <param name="typeToCreateValueFor">The type to create value for.</param>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.FieldUtilities.DetermineValueToSet(SD.LLBLGen.Pro.ORMSupportClasses.IEntityFieldCore,SD.LLBLGen.Pro.ORMSupportClasses.IFieldPersistenceInfo,System.Object,System.Boolean@)">
+            <summary>
+            Determines the value to set for the field specified.
+            </summary>
+            <param name="fieldToSet">The field to set.</param>
+            <param name="persistenceInfo">The persistence info.</param>
+            <param name="currentValue">The current value.</param>
+            <param name="isConverted">flag which is set to true if the value was converted by a typeconverter</param>
+            <returns>the value to set the fieldToSet to. If the value to return is DBNull.Value, null is returned instead</returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.FieldUtilities.CalculateHashCodeForValue(System.Object)">
             <summary>
             Calculates the hashcode for value passed in. If the value is null, the hashcode of DBNull.Value is used. If the value is an array,
@@ -34368,7 +34446,7 @@
             <param name="relations">The relations.</param>
             <returns>the set alias set in relations if relations isn'tnull, string.empty otherwise</returns>
         </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.PersistenceCore.DetermineInheritanceRelations(System.Collections.IEnumerable,SD.LLBLGen.Pro.ORMSupportClasses.IRelationCollection,SD.LLBLGen.Pro.ORMSupportClasses.IPredicate,SD.LLBLGen.Pro.ORMSupportClasses.IInheritanceInfoProvider)">
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.PersistenceCore.DetermineInheritanceRelations(System.Collections.IEnumerable,SD.LLBLGen.Pro.ORMSupportClasses.IRelationCollection,SD.LLBLGen.Pro.ORMSupportClasses.IPredicate,SD.LLBLGen.Pro.ORMSupportClasses.IInheritanceInfoProvider,SD.LLBLGen.Pro.ORMSupportClasses.UniqueValueList{System.String})">
             <summary>
             Determines the inheritance relations which are necessary to add to the query defined by fields, relations and filter.
             </summary>
@@ -34376,7 +34454,10 @@
             <param name="relations">The relations.</param>
             <param name="filter">The filter.</param>
             <param name="inheritanceProvider">The inheritance provider.</param>
-            <returns>RelationsCollection filled with the hierarchy relations required to fulfill the query, or an empty collection if none are needed.</returns>
+            <param name="outerScopeAliases">The outer scope aliases.</param>
+            <returns>
+            RelationsCollection filled with the hierarchy relations required to fulfill the query, or an empty collection if none are needed.
+            </returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.PersistenceCore.PreprocessDerivedTablesForInheritanceInfo(System.Collections.Generic.List{SD.LLBLGen.Pro.ORMSupportClasses.DerivedTableDefinition},SD.LLBLGen.Pro.ORMSupportClasses.IInheritanceInfoProvider)">
             <summary>
@@ -34455,6 +34536,39 @@
             <param name="relations">The relations.</param>
             <param name="infoProvider">The info provider.</param>
             <param name="forEntityName">Name of for entity.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.PersistenceCore.FixupDynamicRelationsWithSubtypes(SD.LLBLGen.Pro.ORMSupportClasses.IRelationCollection,SD.LLBLGen.Pro.ORMSupportClasses.IInheritanceInfoProvider)">
+            <summary>
+            Fixups the dynamic relations with subtypes. It corrects a dynamic relation between A and X if X is a direct/indirect subtype of a given entity B and 
+            the ON clause is defined as a predicate between A and B. This case will lead to wrong SQL if we don't correct the dynamic relationship to be
+            between A and B, leaving the ON clause, and appending all inheritance relationships to add determined from the ON clause after the new dynamic
+            relationship. 
+            </summary>
+            <param name="relations">The relations.</param>
+            <param name="infoProvider">The info provider.</param>
+            <remarks>Alters relations and dynamic relationships which are in relations and which have to be corrected. To do so, it creates a new
+            dynamic relation based on the corrected relation and uses that one instead, to leave the original in-tact. This is necessary because otherwise
+            re-using predicates is impossible.</remarks>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.PersistenceCore.ProcessDynamicRelationSideForFixup(SD.LLBLGen.Pro.ORMSupportClasses.IDynamicRelation,SD.LLBLGen.Pro.ORMSupportClasses.IInheritanceInfo,System.Object,SD.LLBLGen.Pro.ORMSupportClasses.EntityNameFinder,SD.LLBLGen.Pro.ORMSupportClasses.RelationCollection,System.String,SD.LLBLGen.Pro.ORMSupportClasses.IInheritanceInfoProvider,System.Boolean@)">
+            <summary>
+            Processes the dynamic relation side for the FixupDynamicRelationsWithSubtypes method.
+            </summary>
+            <param name="relation">The relation.</param>
+            <param name="sideInheritanceInfo">The side inheritance info.</param>
+            <param name="operand">The operand.</param>
+            <param name="finder">The finder.</param>
+            <param name="additionalRelations">The additional relations.</param>
+            <param name="alias">The alias.</param>
+            <param name="infoProvider">The info provider.</param>
+            <param name="fieldReplaced">if set to <c>true</c> [field replaced].</param>
+            <returns>operand if nothing has to be changed, or the new operand to use, determined from the rest of the elements specified.</returns>
+            <remarks>If operand isn't a field, this method is a no-op.
+            It checks whether the containingobjectname of the operand (if it's a field) is in the list of entity names used in the on clause. If so (the case
+            with no inheritance), nothing is done. However if not, the field belongs to a subtype or supertype (through cast) which isn't in the on-clause. 
+            The relationship then has to be corrected. First we'll check whether the type in the relation is a subtype joined over an inherited field in the on 
+            clause. If that doesn't lead to a solution, we'll check whether the type in the relation is a supertype joined over a subtype's field, which is wrong, 
+            but could be created by a linq provider due to a cast used (e.g. join x in md.SuperType.Cast&lt;SubType&gt;() on ... equals x.SubTypeField).</remarks>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.PersistenceCore.AddAdditionalInheritanceRelationsToRelationCollectionBasedOnFilter(SD.LLBLGen.Pro.ORMSupportClasses.IRelationCollection,SD.LLBLGen.Pro.ORMSupportClasses.IPredicateExpression,SD.LLBLGen.Pro.ORMSupportClasses.IInheritanceInfoProvider)">
             <summary>
@@ -35722,11 +35836,6 @@
             Section masks used for packing TimeSpan values
             </summary>
         </member>
-        <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.SerializationWriter._typeUsage">
-            <summary>
-            type usage member in which counters are stored of all the known types emitted into the output stream. For debugging purposes.
-            </summary>
-        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.SerializationWriter.DumpTypeUsage">
             <summary>
             Dumps the type usage.
@@ -36742,11 +36851,6 @@
             </summary>
             <param name="optimizeFlags"></param>
             <param name="length"></param>
-        </member>
-        <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.SerializationWriter.TypeUsage">
-            <summary>
-            Gets the type usage.
-            </summary>
         </member>
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.SerializationWriter.TypeSurrogates">
             <summary>

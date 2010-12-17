@@ -26,6 +26,14 @@
             <param name="projectionInstantiator">The projection instantiator.</param>
             <param name="indices">The indices.</param>
         </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.DataProjectorToObjectList`1.#ctor(SD.LLBLGen.Pro.ORMSupportClasses.ProjectionValueProducerFunc,System.Int32[],System.Collections.Generic.IList{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:SD.LLBLGen.Pro.LinqSupportClasses.DataProjectorToArray`1"/> class.
+            </summary>
+            <param name="destination">The destination.</param>
+            <param name="projectionInstantiator">The projection instantiator.</param>
+            <param name="indices">The indices.</param>
+        </member>
         <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.DataProjectorToObjectList`1.SD#LLBLGen#Pro#ORMSupportClasses#IEntityDataProjector#AddProjectionResultToContainer(System.Collections.Generic.List{SD.LLBLGen.Pro.ORMSupportClasses.IEntityPropertyProjector},System.Object[])">
             <summary>
             Adds a new projection result to the container contained into this instance. The container has to be set in the constructor.
@@ -1060,6 +1068,13 @@
             <param name="addToCurrentScope">if set to true, it will add the alias to the current scope, otherwise it doesn't</param>
         </member>
         <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.MappingTracker.FindDefaultIfEmptySourceAliasForDefaultIfEmptyAlias(System.String)">
+            <summary>
+            Finds the default if empty source alias for default if empty alias.
+            </summary>
+            <param name="alias">The alias.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.MappingTracker.FindDefaultIfEmptySourceAliasForDefaultIfEmptyAlias(SD.LLBLGen.Pro.LinqSupportClasses.SetAlias)">
             <summary>
             Finds the default if empty source alias for default if empty alias.
             </summary>
@@ -2254,6 +2269,12 @@
             </summary>
             <returns>the value requested</returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionClasses.SetExpression.NewAliasAssigned(SD.LLBLGen.Pro.LinqSupportClasses.MappingTracker)">
+            <summary>
+            A new alias was set, using AssignNewAliasIfRequired. Use this method to map a wrapped expression to the alias set in the tracker passed in.
+            </summary>
+            <param name="mappings">The mappings.</param>
+        </member>
         <member name="P:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionClasses.SetExpression.Source">
             <summary>
             Gets or sets the source expression of the select
@@ -2711,6 +2732,12 @@
             Handles this instance using the specified handler.
             </summary>
             <param name="handler">The handler to handle this instance.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionClasses.LinqExpressionAsSetExpression.NewAliasAssigned(SD.LLBLGen.Pro.LinqSupportClasses.MappingTracker)">
+            <summary>
+            A new alias was set, using AssignNewAliasIfRequired. Use this method to map a wrapped expression to the alias set in the tracker passed in.
+            </summary>
+            <param name="mappings">The mappings.</param>
         </member>
         <member name="P:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionClasses.LinqExpressionAsSetExpression.RepresentedExpression">
             <summary>
@@ -5564,6 +5591,13 @@
             <param name="expressionToHandle">The expression to handle.</param>
             <returns>the handled expression</returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers.QueryExpressionBuilder.HandleMemberAssignment(System.Linq.Expressions.MemberAssignment)">
+            <summary>
+            Handles the member assignment.
+            </summary>
+            <param name="assignmentToHandle">The assignment to handle.</param>
+            <returns>the handled assignment.</returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers.QueryExpressionBuilder.HandleNewArrayExpression(System.Linq.Expressions.NewArrayExpression)">
             <summary>
             Handles the new array expression.
@@ -5746,6 +5780,15 @@
             <param name="handledSourceAsQuery">The handled source as query.</param>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers.QueryExpressionBuilder.DetermineResultProjectionMemberNames(SD.LLBLGen.Pro.LinqSupportClasses.ExpressionClasses.ProjectionExpression,System.String@,System.String@)">
+            <summary>
+            Determines the result projection member names for left and right side. THis is required as a join with a valuelist is referred to by the 
+            member name. We then therefore have to set the alias of the valuelist's field to the member name
+            </summary>
+            <param name="resultProjection">The result projection.</param>
+            <param name="leftSideMemberName">Name of the left side member.</param>
+            <param name="rightSideMemberName">Name of the right side member.</param>
+        </member>
         <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers.QueryExpressionBuilder.ProduceBooleanResultValueFromBinaryInMemoryExpression(System.Object,System.Object,SD.LLBLGen.Pro.ORMSupportClasses.ComparisonOperator)">
             <summary>
             Produces the boolean result value from binary in memory expression.
@@ -5849,6 +5892,13 @@
             The aggregate field which should contain the aggregate function.
             </returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers.QueryExpressionBuilder.HandleCtorOrMemberAssignmentParameter(System.Linq.Expressions.Expression)">
+            <summary>
+            Handles the ctor or member assignment parameter.
+            </summary>
+            <param name="expression">The expression.</param>
+            <returns></returns>
+        </member>
         <member name="T:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers.PreProcessor">
             <summary>
             Specific expression handler which converts various method calls into their special Expression classes and it also collects and assigns
@@ -5877,6 +5927,14 @@
             </summary>
             <param name="expressionToHandle">The expression to handle.</param>
             <returns></returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers.PreProcessor.WrapIGroupingIfNecessary(System.Linq.Expressions.Expression)">
+            <summary>
+            Verifies if the return type is IGrouping&lt;&gt;. If so, and the outer expression isn't a Select, it wraps the expression
+            specified with a Select(x=&gt;x)
+            </summary>
+            <param name="expressionToWrap">The expression to wrap.</param>
+            <returns>expressionToWrap, eventually wrapped with a select if necessary.</returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers.PreProcessor.HandleExpression(System.Linq.Expressions.Expression)">
             <summary>
@@ -6869,7 +6927,7 @@
             new DBFunctionCall object wrapped inside a LLBLGenProExpressionExpression object.
             </returns>
         </member>
-        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.LinqUtils.CreatePkFilterFromEntity(SD.LLBLGen.Pro.ORMSupportClasses.IEntityCore,SD.LLBLGen.Pro.LinqSupportClasses.SetAlias,SD.LLBLGen.Pro.LinqSupportClasses.ITemplateGroupSpecificCreator,System.Boolean)">
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.LinqUtils.CreatePkFilterFromEntity(SD.LLBLGen.Pro.ORMSupportClasses.IEntityCore,SD.LLBLGen.Pro.LinqSupportClasses.SetAlias,SD.LLBLGen.Pro.LinqSupportClasses.ITemplateGroupSpecificCreator,System.Boolean,SD.LLBLGen.Pro.ORMSupportClasses.ComparisonOperator)">
             <summary>
             Creates a pk filter on the PK fields of the passed in entity with the values in the passed in entity. The objectAlias is the alias of the set to filter.
             </summary>
@@ -6877,6 +6935,7 @@
             <param name="objectAlias">The object alias.</param>
             <param name="creator">The creator.</param>
             <param name="selfServicing">if set to true, the provider is for selfservicing, otherwise for adapter</param>
+            <param name="operatorToUse">The operator to use.</param>
             <returns>
             PredicateExpression with 1 or more FieldCompareValuePredicate instances
             </returns>
@@ -7215,6 +7274,16 @@
             <param name="setType">Type of the set.</param>
             <returns>the type of the element of the set, if determinable, otheriwse settype</returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.LinqUtils.DetermineSetElementType(System.Type,System.Boolean)">
+            <summary>
+            Determines the type of the elements in the set which type is passed in.
+            </summary>
+            <param name="setType">Type of the set.</param>
+            <param name="unrollIGrouping">if set to <see langword="true"/> [unroll I grouping].</param>
+            <returns>
+            the type of the element of the set, if determinable, otheriwse settype
+            </returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.LinqUtils.CreateDerivedTableAdapter(SD.LLBLGen.Pro.LinqSupportClasses.ExpressionClasses.QueryExpression,System.String,SD.LLBLGen.Pro.ORMSupportClasses.IElementCreatorCore,SD.LLBLGen.Pro.LinqSupportClasses.ITemplateGroupSpecificCreator)">
             <summary>
             Creates the derived table definition for adapter.
@@ -7236,6 +7305,14 @@
             <param name="frameworkElementCreator">The framework element creator.</param>
             <returns>ready to use derived table definition</returns>
             <remarks>SelfServicing specific</remarks>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.LinqUtils.DetermineInheritanceHierarchyTypeOfEntity(System.Type,SD.LLBLGen.Pro.ORMSupportClasses.IElementCreatorCore)">
+            <summary>
+            Determines the inheritance hierarchy type of entity.
+            </summary>
+            <param name="entityType">Type of the entity.</param>
+            <param name="generatedCodeElementCreator">The generated code element creator.</param>
+            <returns></returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.LinqUtils.ObtainTypeFilterForEntity(System.Type,SD.LLBLGen.Pro.ORMSupportClasses.IElementCreatorCore,SD.LLBLGen.Pro.LinqSupportClasses.SetAlias)">
             <summary>
@@ -8417,6 +8494,15 @@
             <param name="t">The type.</param>
             <returns>
             	true if t implements IEnumerable and isn't of type string, false otherwise
+            </returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.LinqSupportClasses.DotNetFrameworkExtensions.IsAnonymousType(System.Type)">
+            <summary>
+            Determines whether the type specified is an anonymous type.
+            </summary>
+            <param name="t">The type to examine.</param>
+            <returns>
+            	true if the type is an anonymous type, false otherwise.
             </returns>
         </member>
         <member name="T:SD.LLBLGen.Pro.LinqSupportClasses.QueryExpressionHierarchyFlattener">
