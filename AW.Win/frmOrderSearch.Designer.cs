@@ -590,7 +590,6 @@ namespace AW.Win
         private System.Windows.Forms.ComboBox cbCountry;
         private System.Windows.Forms.TextBox tbOrderID;
         private AW.Data.CollectionClasses.SalesOrderHeaderCollection salesOrderHeaderCollection1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn salesOrderIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn salesOrderNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn customerLastNameDataGridViewTextBoxColumn;
