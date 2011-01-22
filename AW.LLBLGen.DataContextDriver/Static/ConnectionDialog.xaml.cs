@@ -8,6 +8,7 @@ using System.Windows;
 using System.Xml.Linq;
 using AW.Helper;
 using AW.LLBLGen.DataContextDriver.Properties;
+using AW.Winforms.Helpers;
 using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Win32;
@@ -55,6 +56,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 //      }
 		}
 
+		protected override void OnSourceInitialized(EventArgs e)
+		{
+			base.OnSourceInitialized(e);
+			this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			base.OnSourceInitialized(e);
+			this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
+		}
+
 		private void btnSaveDefault_Click(object sender, RoutedEventArgs e)
 		{
 			Settings.Default.DefaultDataAccessAdapterFactoryMethod = _cxInfo.DatabaseInfo.Provider;
@@ -66,6 +79,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			Settings.Default.DefaultLinqMetaData = _cxInfo.CustomTypeInfo.CustomTypeName;
 			Settings.Default.DefaultDataAccessAdapterFactoryAssembly = _cxInfo.CustomTypeInfo.CustomMetadataPath;
 			Settings.Default.DefaultDisplayName = _cxInfo.DisplayName;
+
+			Settings.Default.Save();
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			Settings.Default.ConnectionDialogPlacement = this.GetPlacement();
 			Settings.Default.Save();
 		}
 
@@ -369,5 +389,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 			}
 		}
+
 	}
 }
