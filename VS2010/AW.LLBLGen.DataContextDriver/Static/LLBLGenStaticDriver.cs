@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
+#if DEBUG
 using System.Diagnostics;
+#endif
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,16 +28,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	{
 		private static readonly string[] AdditionalAssemblies = new[]
 		                                                        	{
-		                                                        		"AW.Helper.dll",
-		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
-		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
-		                                                        		"AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
+																																"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
+		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",		                                                        		
+		                                                        		"AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
 		                                                        		"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll"
 		                                                        	};
 
 		private static readonly string[] AdditionalNamespaces = new[]
 		                                                        	{
-		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper",
+		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses", 
+																																"SD.LLBLGen.Pro.LinqSupportClasses",
+																																"AW.Helper",
 		                                                        		"AW.Helper.LLBL",
 		                                                        		"AW.Winforms.Helpers.DataEditor",
 		                                                        		"AW.Winforms.Helpers.LLBL"
