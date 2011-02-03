@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Windows;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
 using System.Windows.Interop;
 using System.Xml;
 using System.Xml.Serialization;
@@ -23,10 +21,10 @@ namespace AW.Winforms.Helpers
 
 		public RECT(int left, int top, int right, int bottom)
 		{
-			this.Left = left;
-			this.Top = top;
-			this.Right = right;
-			this.Bottom = bottom;
+			Left = left;
+			Top = top;
+			Right = right;
+			Bottom = bottom;
 		}
 	}
 
@@ -40,8 +38,8 @@ namespace AW.Winforms.Helpers
 
 		public POINT(int x, int y)
 		{
-			this.X = x;
-			this.Y = y;
+			X = x;
+			Y = y;
 		}
 	}
 
@@ -63,8 +61,8 @@ namespace AW.Winforms.Helpers
 	/// </summary>
 	public static class WindowPlacement
 	{
-		private static Encoding encoding = new UTF8Encoding();
-		private static XmlSerializer serializer = new XmlSerializer(typeof(WINDOWPLACEMENT));
+		private static readonly Encoding Encoding = new UTF8Encoding();
+		private static readonly XmlSerializer Serializer = new XmlSerializer(typeof (WINDOWPLACEMENT));
 
 		[DllImport("user32.dll")]
 		private static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
@@ -72,8 +70,8 @@ namespace AW.Winforms.Helpers
 		[DllImport("user32.dll")]
 		private static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
 
-		private const int SW_SHOWNORMAL = 1;
-		private const int SW_SHOWMINIMIZED = 2;
+		private const int SwShownormal = 1;
+		private const int SwShowminimized = 2;
 
 		public static void SetPlacement(IntPtr windowHandle, string placementXml)
 		{
@@ -83,18 +81,18 @@ namespace AW.Winforms.Helpers
 			}
 
 			WINDOWPLACEMENT placement;
-			byte[] xmlBytes = encoding.GetBytes(placementXml);
+			var xmlBytes = Encoding.GetBytes(placementXml);
 
 			try
 			{
-				using (MemoryStream memoryStream = new MemoryStream(xmlBytes))
+				using (var memoryStream = new MemoryStream(xmlBytes))
 				{
-					placement = (WINDOWPLACEMENT)serializer.Deserialize(memoryStream);
+					placement = (WINDOWPLACEMENT) Serializer.Deserialize(memoryStream);
 				}
 
-				placement.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
+				placement.length = Marshal.SizeOf(typeof (WINDOWPLACEMENT));
 				placement.flags = 0;
-				placement.showCmd = (placement.showCmd == SW_SHOWMINIMIZED ? SW_SHOWNORMAL : placement.showCmd);
+				placement.showCmd = (placement.showCmd == SwShowminimized ? SwShownormal : placement.showCmd);
 				SetWindowPlacement(windowHandle, ref placement);
 			}
 			catch (InvalidOperationException)
@@ -105,16 +103,16 @@ namespace AW.Winforms.Helpers
 
 		public static string GetPlacement(IntPtr windowHandle)
 		{
-			WINDOWPLACEMENT placement = new WINDOWPLACEMENT();
+			WINDOWPLACEMENT placement;
 			GetWindowPlacement(windowHandle, out placement);
 
-			using (MemoryStream memoryStream = new MemoryStream())
+			using (var memoryStream = new MemoryStream())
 			{
-				using (XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8))
+				using (var xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8))
 				{
-					serializer.Serialize(xmlTextWriter, placement);
-					byte[] xmlBytes = memoryStream.ToArray();
-					return encoding.GetString(xmlBytes);
+					Serializer.Serialize(xmlTextWriter, placement);
+					var xmlBytes = memoryStream.ToArray();
+					return Encoding.GetString(xmlBytes);
 				}
 			}
 		}
@@ -129,5 +127,4 @@ namespace AW.Winforms.Helpers
 			return GetPlacement(new WindowInteropHelper(window).Handle);
 		}
 	}
-
 }
