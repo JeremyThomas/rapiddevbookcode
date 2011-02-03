@@ -40,7 +40,10 @@
 
 			<DockPanel>
 				<Label Padding="0,0,0,1" >Database connection string (if required):</Label>
-			</DockPanel>
+			<Label Padding="1" DockPanel.Dock="Right" Width="52">
+				<Hyperlink Click="ChooseAdapter">Choose...</Hyperlink>
+			</Label>
+		</DockPanel>
 			<TextBox Name="textBoxDatabaseConnectionString" Margin="0,0,0,6" Text="{Binding DatabaseInfo.CustomCxString}"  />
 
 		<DockPanel>

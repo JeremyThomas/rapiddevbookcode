@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
@@ -19,6 +20,7 @@ using AW.Tests;
 using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL.Linq;
 using NUnit.Extensions.Forms;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -133,6 +135,28 @@ namespace AW.DebugVisualizers.Tests
 		public void QueryWithRelatedFieldsTest()
 		{
 			TestShowTransported(MetaSingletons.MetaData.Address.Take(5), 9);
+		}
+
+		[TestMethod]
+		public void AdapterTest()
+		{
+			var northwindLinqMetaData = GetNorthwindLinqMetaData();
+			var customerList = northwindLinqMetaData.Customer.ToList();
+			TestShowTransported(customerList, 11);
+			TestShowTransported(northwindLinqMetaData.Customer, 11);
+			TestShowTransported(northwindLinqMetaData.Customer.ToEntityCollection2(), 11);
+		}
+
+		public static LinqMetaData GetNorthwindLinqMetaData()
+		{
+			return new LinqMetaData { AdapterToUse = new Northwind.DAL.SqlServer.DataAccessAdapter() };
+		}
+
+		[TestMethod]
+		public void SerializableObservableCollectionTest()
+		{
+			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+			TestShowTransported(new ObservableCollection<AddressTypeEntity>(addressTypeEntityCollection), 4);
 		}
 
 		[TestMethod]

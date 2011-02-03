@@ -153,7 +153,7 @@ namespace AW.Helper.LLBL
 		/// <returns></returns>
 		public static EntityCollectionBase<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
 		{
-			if (enumerable.Count() == 0)
+			if (!enumerable.Any())
 				return GetFactory<T>().CreateEntityCollection() as EntityCollectionBase<T>;
 			var entities = ((IEntity) enumerable.First()).GetEntityFactory().CreateEntityCollection() as EntityCollectionBase<T>;
 			if (entities != null)
@@ -544,6 +544,49 @@ namespace AW.Helper.LLBL
 			return llblGenProProvider2 == null ? null : llblGenProProvider2.AdapterToUse;
 		}
 
+		/// <summary>
+		/// 	Executes the query this object represents and returns its results in its native container - an entity collection.
+		/// </summary>
+		/// <typeparam name = "T">EntityBase2</typeparam>
+		/// <param name = "query">The query.</param>
+		/// <returns>Results of the query in an entity collection.</returns>
+		public static EntityCollectionBase2<T> ToEntityCollection2<T>(this IQueryable<T> query) where T : EntityBase2
+		{
+			var llblQuery = query as ILLBLGenProQuery;
+			return llblQuery == null ? ((IEnumerable<T>)query).ToEntityCollection2() : llblQuery.Execute<EntityCollectionBase2<T>>();
+		}
+
+		/// <summary>
+		/// 	Converts an entity enumeration to an entity collection.
+		/// </summary>
+		/// <typeparam name = "T">EntityBase2</typeparam>
+		/// <param name = "enumerable">The enumerable.</param>
+		/// <returns></returns>
+		public static EntityCollectionBase2<T> ToEntityCollection2<T>(this IEnumerable<T> enumerable) where T : EntityBase2
+		{
+			if (!enumerable.Any())
+				return GetFactory2<T>().CreateEntityCollection() as EntityCollectionBase2<T>;
+			var entities = ((IEntity)enumerable.First()).GetEntityFactory().CreateEntityCollection() as EntityCollectionBase2<T>;
+			if (entities != null)
+				entities.AddRange(enumerable);
+			return entities;
+		}
+
+		public static IEntityFactory2 GetFactory2<T>(IElementCreatorCore elementCreatorCore) where T : EntityBase2
+		{
+			return ((IEntityFactory2)elementCreatorCore.GetFactory(typeof(T)));
+		}
+
+		/// <summary>
+		/// Gets the factory of the entity with the .NET type specified
+		/// </summary>
+		/// <typeparam name="T">The type of entity.</typeparam>
+		/// <returns>factory to use or null if not found</returns>
+		public static IEntityFactory2 GetFactory2<T>() where T : EntityBase2
+		{
+			return ((IEntity2)CreateEntity<T>()).GetEntityFactory();
+		}
+
 		public static IEntityCollection2 ToEntityCollection2(IEnumerable enumerable, Type itemType)
 		{
 			IEntityCollection2 entities = null;
@@ -553,16 +596,17 @@ namespace AW.Helper.LLBL
 			if (entities == null)
 			{
 				var enumerator = enumerable.GetEnumerator();
-				if (enumerator.MoveNext())
+			  while (enumerator.MoveNext())
 				{
 					var firstEntity = ((IEntity2) enumerator.Current);
-					if (firstEntity != null)
+					if (firstEntity != null && firstEntity.GetType() == itemType)
 					{
 						entities = firstEntity.GetEntityFactory().CreateEntityCollection();
 						if (entities == null)
 							return null;
 						foreach (IEntity2 item in enumerable)
 							entities.Add(item);
+						break;
 					}
 				}
 			}
