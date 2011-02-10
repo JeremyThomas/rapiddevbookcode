@@ -21,7 +21,7 @@ namespace AW.Helper
 	///<see cref = "http://support.microsoft.com/default.aspx?scid=kb;en-us;829740" />
 	///<see cref = "http://msdn.microsoft.com/en-us/library/microsoft.synchronization.data.datatablesurrogate(SQL.105).aspx" />
 	[Serializable]
-	public class DataSetSurrogate
+	public class DataSetSurrogate: IEnumerable
 	{
 		//DataSet properties
 		private readonly string _datasetName;
@@ -529,7 +529,87 @@ namespace AW.Helper
 			}
 			return true;
 		}
+
+		#region Implementation of IEnumerable
+
+		/// <summary>
+		/// Returns an enumerator that iterates through a collection.
+		/// </summary>
+		/// <returns>
+		/// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+		/// </returns>
+		/// <filterpriority>2</filterpriority>
+		public IEnumerator GetEnumerator()
+		{
+			return new DataTableSurrogateEnumerator(_dataTableSurrogates);
+		}
+
+		#endregion
 	}
+
+	public class DataTableSurrogateEnumerator : IEnumerator
+	{
+		private readonly DataTableSurrogate[] _dataTableSurrogates;
+		int _position = -1;
+
+		public DataTableSurrogateEnumerator(DataTableSurrogate[] dataTableSurrogates)
+		{
+			_dataTableSurrogates = dataTableSurrogates;
+		}
+
+		#region Implementation of IEnumerator
+
+		/// <summary>
+		/// Advances the enumerator to the next element of the collection.
+		/// </summary>
+		/// <returns>
+		/// true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
+		/// </returns>
+		/// <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created. 
+		///                 </exception><filterpriority>2</filterpriority>
+		public bool MoveNext()
+		{
+			_position++;
+			return (_position < _dataTableSurrogates.Length);
+
+		}
+
+		/// <summary>
+		/// Sets the enumerator to its initial position, which is before the first element in the collection.
+		/// </summary>
+		/// <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created. 
+		///                 </exception><filterpriority>2</filterpriority>
+		public void Reset()
+		{
+			_position = -1;
+		}
+
+		/// <summary>
+		/// Gets the current element in the collection.
+		/// </summary>
+		/// <returns>
+		/// The current element in the collection.
+		/// </returns>
+		/// <exception cref="T:System.InvalidOperationException">The enumerator is positioned before the first element of the collection or after the last element.
+		///                 </exception><filterpriority>2</filterpriority>
+		public object Current
+		{
+			get
+			{
+				try
+				{
+					return _dataTableSurrogates[_position];
+				}
+				catch (IndexOutOfRangeException)
+				{
+					throw new InvalidOperationException();
+				}
+			}
+		}
+
+		#endregion
+	}
+
 
 	[Serializable]
 	public class DataTableSurrogate
@@ -919,21 +999,25 @@ namespace AW.Helper
 			Debug.Assert(_records.Length == colCount);
 			if (rowState != DataRowState.Added)
 			{
-//Unchanged, modified, deleted     
+				//Unchanged, modified, deleted     
 				for (var i = 0; i < colCount; i++)
 				{
 					Debug.Assert(_records[i].Length > bitIndex);
-					_records[i][bitIndex] = row[i, DataRowVersion.Original];
+					var originalValue = row[i, DataRowVersion.Original];
+					if (originalValue.GetType().IsSerializable)
+						_records[i][bitIndex] = originalValue;
 				}
 			}
 
 			if (rowState != DataRowState.Unchanged && rowState != DataRowState.Deleted)
 			{
-//Added, modified state
+				//Added, modified state
 				for (var i = 0; i < colCount; i++)
 				{
 					Debug.Assert(_records[i].Length > bitIndex + 1);
-					_records[i][bitIndex + 1] = row[i, DataRowVersion.Current];
+					var currentVlue = row[i, DataRowVersion.Current];
+					if (currentVlue.GetType().IsSerializable)
+						_records[i][bitIndex + 1] = currentVlue;
 				}
 			}
 		}

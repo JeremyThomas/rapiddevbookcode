@@ -151,6 +151,22 @@ namespace AW.Helper
 			return new ObjectShredder(MetaDataHelper.GetPropertiesToSerialize).Shred(source, null, null);
 		}
 
+		public static DataTable StripTypeColumns(this DataTable source)
+		{
+			var dataColumnsToRemove = source.Columns.OfType<DataColumn>().Where(dc => !dc.DataType.IsSerializable || dc.DataType == typeof (Type)).ToList();
+			foreach (var dataColumn in dataColumnsToRemove)
+				source.Columns.Remove(dataColumn);
+			return source;
+		}
+
+		public static DataTable StripNonSerializables(this DataTable source)
+		{
+			foreach (var dataColumn in source.Columns.OfType<DataColumn>().Where(dc => dc.DataType == typeof (object)))
+				foreach (var row in source.Rows.OfType<DataRow>().Where(row => row[dataColumn] != null && !row[dataColumn].GetType().IsSerializable))
+					row[dataColumn] = null;
+			return source;
+		}
+
 		/// <summary>
 		/// 	Copies enumerable to a data table.
 		/// </summary>

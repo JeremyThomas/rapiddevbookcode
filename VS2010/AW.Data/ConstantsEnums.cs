@@ -671,6 +671,54 @@ namespace AW.Data
 		/// <summary></summary>
 		AmountOfFields
 	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: PurchaseOrderHistory.</summary>
+	public enum PurchaseOrderHistoryFieldIndex
+	{
+		///<summary>ActualCost. Inherited from TransactionHistory</summary>
+		ActualCost,
+		///<summary>ModifiedDate. Inherited from TransactionHistory</summary>
+		ModifiedDate,
+		///<summary>ProductID. Inherited from TransactionHistory</summary>
+		ProductID,
+		///<summary>Quantity. Inherited from TransactionHistory</summary>
+		Quantity,
+		///<summary>ReferenceOrderID. Inherited from TransactionHistory</summary>
+		ReferenceOrderID,
+		///<summary>ReferenceOrderLineID. Inherited from TransactionHistory</summary>
+		ReferenceOrderLineID,
+		///<summary>TransactionDate. Inherited from TransactionHistory</summary>
+		TransactionDate,
+		///<summary>TransactionID. Inherited from TransactionHistory</summary>
+		TransactionID,
+		///<summary>TransactionType. Inherited from TransactionHistory</summary>
+		TransactionType,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: SalesOrderHistory.</summary>
+	public enum SalesOrderHistoryFieldIndex
+	{
+		///<summary>ActualCost. Inherited from TransactionHistory</summary>
+		ActualCost,
+		///<summary>ModifiedDate. Inherited from TransactionHistory</summary>
+		ModifiedDate,
+		///<summary>ProductID. Inherited from TransactionHistory</summary>
+		ProductID,
+		///<summary>Quantity. Inherited from TransactionHistory</summary>
+		Quantity,
+		///<summary>ReferenceOrderID. Inherited from TransactionHistory</summary>
+		ReferenceOrderID,
+		///<summary>ReferenceOrderLineID. Inherited from TransactionHistory</summary>
+		ReferenceOrderLineID,
+		///<summary>TransactionDate. Inherited from TransactionHistory</summary>
+		TransactionDate,
+		///<summary>TransactionID. Inherited from TransactionHistory</summary>
+		TransactionID,
+		///<summary>TransactionType. Inherited from TransactionHistory</summary>
+		TransactionType,
+		/// <summary></summary>
+		AmountOfFields
+	}
 	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: ScrapReason.</summary>
 	public enum ScrapReasonFieldIndex
 	{
@@ -766,6 +814,30 @@ namespace AW.Data
 		StockedQuantity,
 		///<summary>WorkOrderID. </summary>
 		WorkOrderID,
+		/// <summary></summary>
+		AmountOfFields
+	}
+	/// <summary>Index enum to fast-access EntityFields in the IEntityFields collection for the entity: WorkOrderHistory.</summary>
+	public enum WorkOrderHistoryFieldIndex
+	{
+		///<summary>ActualCost. Inherited from TransactionHistory</summary>
+		ActualCost,
+		///<summary>ModifiedDate. Inherited from TransactionHistory</summary>
+		ModifiedDate,
+		///<summary>ProductID. Inherited from TransactionHistory</summary>
+		ProductID,
+		///<summary>Quantity. Inherited from TransactionHistory</summary>
+		Quantity,
+		///<summary>ReferenceOrderID. Inherited from TransactionHistory</summary>
+		ReferenceOrderID,
+		///<summary>ReferenceOrderLineID. Inherited from TransactionHistory</summary>
+		ReferenceOrderLineID,
+		///<summary>TransactionDate. Inherited from TransactionHistory</summary>
+		TransactionDate,
+		///<summary>TransactionID. Inherited from TransactionHistory</summary>
+		TransactionID,
+		///<summary>TransactionType. Inherited from TransactionHistory</summary>
+		TransactionType,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1479,40 +1551,40 @@ namespace AW.Data
 	/// <summary>Index enum to fast-access Typed View EntityFields in the IEntityFields collection for the typed view : CustomerView.</summary>
 	public enum CustomerViewFieldIndex
 	{
-		///<summary>AddressLine1</summary>
-		AddressLine1,
-		///<summary>AddressLine2</summary>
-		AddressLine2,
-		///<summary>AddressType</summary>
-		AddressType,
-		///<summary>City</summary>
-		City,
-		///<summary>CountryRegionName</summary>
-		CountryRegionName,
 		///<summary>CustomerId</summary>
 		CustomerId,
-		///<summary>Demographics</summary>
-		Demographics,
+		///<summary>Title</summary>
+		Title,
+		///<summary>FirstName</summary>
+		FirstName,
+		///<summary>MiddleName</summary>
+		MiddleName,
+		///<summary>LastName</summary>
+		LastName,
+		///<summary>Suffix</summary>
+		Suffix,
+		///<summary>Phone</summary>
+		Phone,
 		///<summary>EmailAddress</summary>
 		EmailAddress,
 		///<summary>EmailPromotion</summary>
 		EmailPromotion,
-		///<summary>FirstName</summary>
-		FirstName,
-		///<summary>LastName</summary>
-		LastName,
-		///<summary>MiddleName</summary>
-		MiddleName,
-		///<summary>Phone</summary>
-		Phone,
-		///<summary>PostalCode</summary>
-		PostalCode,
+		///<summary>AddressType</summary>
+		AddressType,
+		///<summary>AddressLine1</summary>
+		AddressLine1,
+		///<summary>AddressLine2</summary>
+		AddressLine2,
+		///<summary>City</summary>
+		City,
 		///<summary>StateProvinceName</summary>
 		StateProvinceName,
-		///<summary>Suffix</summary>
-		Suffix,
-		///<summary>Title</summary>
-		Title,
+		///<summary>PostalCode</summary>
+		PostalCode,
+		///<summary>CountryRegionName</summary>
+		CountryRegionName,
+		///<summary>Demographics</summary>
+		Demographics,
 		/// <summary></summary>
 		AmountOfFields
 	}
@@ -1625,6 +1697,10 @@ namespace AW.Data
 		ProductReviewEntity,
 		///<summary>ProductSubcategory</summary>
 		ProductSubcategoryEntity,
+		///<summary>PurchaseOrderHistory</summary>
+		PurchaseOrderHistoryEntity,
+		///<summary>SalesOrderHistory</summary>
+		SalesOrderHistoryEntity,
 		///<summary>ScrapReason</summary>
 		ScrapReasonEntity,
 		///<summary>TransactionHistory</summary>
@@ -1635,6 +1711,8 @@ namespace AW.Data
 		UnitMeasureEntity,
 		///<summary>WorkOrder</summary>
 		WorkOrderEntity,
+		///<summary>WorkOrderHistory</summary>
+		WorkOrderHistoryEntity,
 		///<summary>WorkOrderRouting</summary>
 		WorkOrderRoutingEntity,
 		///<summary>ProductVendor</summary>

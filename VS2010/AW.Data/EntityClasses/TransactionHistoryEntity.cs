@@ -67,14 +67,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public TransactionHistoryEntity() : base()
+		internal TransactionHistoryEntity() : base()
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
-		public TransactionHistoryEntity(System.Int32 transactionID)
+		internal TransactionHistoryEntity(System.Int32 transactionID)
 		{
 			InitClassFetch(transactionID, null, null);
 		}
@@ -82,7 +82,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public TransactionHistoryEntity(System.Int32 transactionID, IPrefetchPath prefetchPathToUse)
+		internal TransactionHistoryEntity(System.Int32 transactionID, IPrefetchPath prefetchPathToUse)
 		{
 			InitClassFetch(transactionID, null, prefetchPathToUse);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
 		/// <param name="validator">The custom validator object for this TransactionHistoryEntity</param>
-		public TransactionHistoryEntity(System.Int32 transactionID, IValidator validator)
+		internal TransactionHistoryEntity(System.Int32 transactionID, IValidator validator)
 		{
 			InitClassFetch(transactionID, validator, null);
 		}
@@ -161,7 +161,22 @@ namespace AW.Data.EntityClasses
 			return toReturn;
 		}
 
-
+		/// <summary>Gets a predicateexpression which filters on this entity</summary>
+		/// <returns>ready to use predicateexpression</returns>
+		/// <remarks>Only useful in entity fetches.</remarks>
+		public  static IPredicateExpression GetEntityTypeFilter()
+		{
+			return InheritanceInfoProviderSingleton.GetInstance().GetEntityTypeFilter("TransactionHistoryEntity", false);
+		}
+		
+		/// <summary>Gets a predicateexpression which filters on this entity</summary>
+		/// <param name="negate">Flag to produce a NOT filter, (true), or a normal filter (false). </param>
+		/// <returns>ready to use predicateexpression</returns>
+		/// <remarks>Only useful in entity fetches.</remarks>
+		public  static IPredicateExpression GetEntityTypeFilter(bool negate)
+		{
+			return InheritanceInfoProviderSingleton.GetInstance().GetEntityTypeFilter("TransactionHistoryEntity", negate);
+		}
 
 		/// <summary> ISerializable member. Does custom serialization so event handlers do not get serialized.</summary>
 		/// <param name="info"></param>
@@ -261,6 +276,32 @@ namespace AW.Data.EntityClasses
 			return toReturn;
 		}
 
+		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key specified in a polymorphic way, so the entity returned  could be of a subtype of the current entity or the current entity.</summary>
+		/// <param name="transactionToUse">transaction to use during fetch</param>
+		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
+		/// <param name="contextToUse">Context to use for fetch</param>
+		/// <returns>Fetched entity of the type of this entity or a subtype, or an empty entity of that type if not found.</returns>
+		/// <remarks>Creates a new instance, doesn't fill <i>this</i> entity instance</remarks>
+		public static  TransactionHistoryEntity FetchPolymorphic(ITransaction transactionToUse, System.Int32 transactionID, Context contextToUse)
+		{
+			return FetchPolymorphic(transactionToUse, transactionID, contextToUse, null);
+		}
+				
+		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key specified in a polymorphic way, so the entity returned  could be of a subtype of the current entity or the current entity.</summary>
+		/// <param name="transactionToUse">transaction to use during fetch</param>
+		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
+		/// <param name="contextToUse">Context to use for fetch</param>
+		/// <param name="excludedIncludedFields">The list of IEntityField objects which have to be excluded or included for the fetch. 
+		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
+		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
+		/// <returns>Fetched entity of the type of this entity or a subtype, or an empty entity of that type if not found.</returns>
+		/// <remarks>Creates a new instance, doesn't fill <i>this</i> entity instance</remarks>
+		public static  TransactionHistoryEntity FetchPolymorphic(ITransaction transactionToUse, System.Int32 transactionID, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		{
+			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.TransactionHistoryEntity);
+			fields[(int)TransactionHistoryFieldIndex.TransactionID].ForcedCurrentValueWrite(transactionID);
+			return (TransactionHistoryEntity)new TransactionHistoryDAO().FetchExistingPolymorphic(transactionToUse, fields, contextToUse, excludedIncludedFields);
+		}
 
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
 		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
@@ -309,7 +350,14 @@ namespace AW.Data.EntityClasses
 			return Fetch(this.TransactionID, null, null, null);
 		}
 
-
+		/// <summary>Determines whether this entity is a subType of the entity represented by the passed in enum value, which represents a value in the AW.Data.EntityType enum</summary>
+		/// <param name="typeOfEntity">Type of entity.</param>
+		/// <returns>true if the passed in type is a supertype of this entity, otherwise false</returns>
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		protected override bool CheckIfIsSubTypeOf(int typeOfEntity)
+		{
+			return InheritanceInfoProviderSingleton.GetInstance().CheckIfIsSubTypeOf("TransactionHistoryEntity", ((AW.Data.EntityType)typeOfEntity).ToString());
+		}
 				
 		/// <summary>Gets a list of all the EntityRelation objects the type of this instance has.</summary>
 		/// <returns>A list of all the EntityRelation objects the type of this instance has. Hierarchy relations are excluded.</returns>
@@ -384,7 +432,10 @@ namespace AW.Data.EntityClasses
 			this.Fields = CreateFields();
 			this.Validator = validatorToUse;
 			InitClassMembers();
-
+			if(this.Fields.State==EntityState.New)
+			{
+				this.Fields[(int)TransactionHistoryFieldIndex.TransactionType].ForcedCurrentValueWrite("A");
+			}
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
 
@@ -402,7 +453,10 @@ namespace AW.Data.EntityClasses
 			this.Fields = CreateFields();
 			InitClassMembers();	
 			Fetch(transactionID, prefetchPathToUse, null, null);
-
+			if(this.Fields.State==EntityState.New)
+			{
+				this.Fields[(int)TransactionHistoryFieldIndex.TransactionType].ForcedCurrentValueWrite("A");
+			}
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END
 
@@ -674,7 +728,7 @@ namespace AW.Data.EntityClasses
 		public virtual System.String TransactionType
 		{
 			get { return (System.String)GetValue((int)TransactionHistoryFieldIndex.TransactionType, true); }
-			set	{ SetValue((int)TransactionHistoryFieldIndex.TransactionType, value, true); }
+
 		}
 
 
@@ -748,7 +802,7 @@ namespace AW.Data.EntityClasses
 		[System.ComponentModel.Browsable(false), XmlIgnore]
 		protected override InheritanceHierarchyType LLBLGenProIsInHierarchyOfType
 		{
-			get { return InheritanceHierarchyType.None;}
+			get { return InheritanceHierarchyType.TargetPerEntityHierarchy;}
 		}
 		
 		/// <summary>Returns the AW.Data.EntityType enum value for this entity.</summary>

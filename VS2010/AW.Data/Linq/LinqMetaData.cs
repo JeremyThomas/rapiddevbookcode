@@ -168,6 +168,12 @@ namespace AW.Data.Linq
 				case AW.Data.EntityType.ProductSubcategoryEntity:
 					toReturn = this.ProductSubcategory;
 					break;
+				case AW.Data.EntityType.PurchaseOrderHistoryEntity:
+					toReturn = this.PurchaseOrderHistory;
+					break;
+				case AW.Data.EntityType.SalesOrderHistoryEntity:
+					toReturn = this.SalesOrderHistory;
+					break;
 				case AW.Data.EntityType.ScrapReasonEntity:
 					toReturn = this.ScrapReason;
 					break;
@@ -182,6 +188,9 @@ namespace AW.Data.Linq
 					break;
 				case AW.Data.EntityType.WorkOrderEntity:
 					toReturn = this.WorkOrder;
+					break;
+				case AW.Data.EntityType.WorkOrderHistoryEntity:
+					toReturn = this.WorkOrderHistory;
 					break;
 				case AW.Data.EntityType.WorkOrderRoutingEntity:
 					toReturn = this.WorkOrderRouting;
@@ -458,6 +467,16 @@ namespace AW.Data.Linq
 		{
 			get { return new DataSource<ProductSubcategoryEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
+		/// <summary>returns the datasource to use in a Linq query when targeting PurchaseOrderHistoryEntity instances in the database.</summary>
+		public DataSource<PurchaseOrderHistoryEntity> PurchaseOrderHistory
+		{
+			get { return new DataSource<PurchaseOrderHistoryEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		/// <summary>returns the datasource to use in a Linq query when targeting SalesOrderHistoryEntity instances in the database.</summary>
+		public DataSource<SalesOrderHistoryEntity> SalesOrderHistory
+		{
+			get { return new DataSource<SalesOrderHistoryEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
 		/// <summary>returns the datasource to use in a Linq query when targeting ScrapReasonEntity instances in the database.</summary>
 		public DataSource<ScrapReasonEntity> ScrapReason
 		{
@@ -482,6 +501,11 @@ namespace AW.Data.Linq
 		public DataSource<WorkOrderEntity> WorkOrder
 		{
 			get { return new DataSource<WorkOrderEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
+		}
+		/// <summary>returns the datasource to use in a Linq query when targeting WorkOrderHistoryEntity instances in the database.</summary>
+		public DataSource<WorkOrderHistoryEntity> WorkOrderHistory
+		{
+			get { return new DataSource<WorkOrderHistoryEntity>(_transactionToUse, new ElementCreator(), _customFunctionMappings, _contextToUse); }
 		}
 		/// <summary>returns the datasource to use in a Linq query when targeting WorkOrderRoutingEntity instances in the database.</summary>
 		public DataSource<WorkOrderRoutingEntity> WorkOrderRouting

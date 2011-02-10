@@ -55,6 +55,10 @@ namespace AW.Data.HelperClasses
 		private void Init()
 		{
 			this.AddEntityInfo("EmployeeEntity", string.Empty, new EmployeeRelations(), new EmployeeEntityFactory());
+			this.AddEntityInfo("PurchaseOrderHistoryEntity", "TransactionHistoryEntity", new PurchaseOrderHistoryEntityFactory(), (int)PurchaseOrderHistoryFieldIndex.TransactionType, "P");
+			this.AddEntityInfo("SalesOrderHistoryEntity", "TransactionHistoryEntity", new SalesOrderHistoryEntityFactory(), (int)SalesOrderHistoryFieldIndex.TransactionType, "S");
+			this.AddEntityInfo("TransactionHistoryEntity", string.Empty, new TransactionHistoryEntityFactory(), (int)TransactionHistoryFieldIndex.TransactionType, "A");
+			this.AddEntityInfo("WorkOrderHistoryEntity", "TransactionHistoryEntity", new WorkOrderHistoryEntityFactory(), (int)WorkOrderHistoryFieldIndex.TransactionType, "W");
 			this.AddEntityInfo("CustomerEntity", string.Empty, new CustomerRelations(), new CustomerEntityFactory());
 			this.AddEntityInfo("IndividualEntity", "CustomerEntity", new IndividualRelations(), new IndividualEntityFactory(), 1-1);
 			this.AddEntityInfo("SalesPersonEntity", "EmployeeEntity", new SalesPersonRelations(), new SalesPersonEntityFactory(), 1-1);

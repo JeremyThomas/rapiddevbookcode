@@ -273,6 +273,20 @@ namespace AW.Data.FactoryClasses
 			return new ProductSubcategoryDAO();
 		}
 
+		/// <summary>Creates a new PurchaseOrderHistoryDAO object</summary>
+		/// <returns>the new DAO object ready to use for PurchaseOrderHistory Entities</returns>
+		public static PurchaseOrderHistoryDAO CreatePurchaseOrderHistoryDAO()
+		{
+			return new PurchaseOrderHistoryDAO();
+		}
+
+		/// <summary>Creates a new SalesOrderHistoryDAO object</summary>
+		/// <returns>the new DAO object ready to use for SalesOrderHistory Entities</returns>
+		public static SalesOrderHistoryDAO CreateSalesOrderHistoryDAO()
+		{
+			return new SalesOrderHistoryDAO();
+		}
+
 		/// <summary>Creates a new ScrapReasonDAO object</summary>
 		/// <returns>the new DAO object ready to use for ScrapReason Entities</returns>
 		public static ScrapReasonDAO CreateScrapReasonDAO()
@@ -306,6 +320,13 @@ namespace AW.Data.FactoryClasses
 		public static WorkOrderDAO CreateWorkOrderDAO()
 		{
 			return new WorkOrderDAO();
+		}
+
+		/// <summary>Creates a new WorkOrderHistoryDAO object</summary>
+		/// <returns>the new DAO object ready to use for WorkOrderHistory Entities</returns>
+		public static WorkOrderHistoryDAO CreateWorkOrderHistoryDAO()
+		{
+			return new WorkOrderHistoryDAO();
 		}
 
 		/// <summary>Creates a new WorkOrderRoutingDAO object</summary>

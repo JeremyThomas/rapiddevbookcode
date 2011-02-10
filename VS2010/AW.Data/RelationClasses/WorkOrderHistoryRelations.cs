@@ -17,20 +17,19 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: TransactionHistory. </summary>
-	public partial class TransactionHistoryRelations : IRelationFactory
+	/// <summary>Implements the static Relations variant for the entity: WorkOrderHistory. </summary>
+	public partial class WorkOrderHistoryRelations : TransactionHistoryRelations
 	{
 		/// <summary>CTor</summary>
-		public TransactionHistoryRelations()
+		public WorkOrderHistoryRelations()
 		{
 		}
 
-		/// <summary>Gets all relations of the TransactionHistoryEntity as a list of IEntityRelation objects.</summary>
+		/// <summary>Gets all relations of the WorkOrderHistoryEntity as a list of IEntityRelation objects.</summary>
 		/// <returns>a list of IEntityRelation objects</returns>
-		public virtual List<IEntityRelation> GetAllRelations()
+		public override List<IEntityRelation> GetAllRelations()
 		{
-			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.ProductEntityUsingProductID);
+			List<IEntityRelation> toReturn = base.GetAllRelations();
 			return toReturn;
 		}
 
@@ -38,24 +37,24 @@ namespace AW.Data.RelationClasses
 
 
 
-		/// <summary>Returns a new IEntityRelation object, between TransactionHistoryEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
-		/// TransactionHistory.ProductID - Product.ProductID
+		/// <summary>Returns a new IEntityRelation object, between WorkOrderHistoryEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
+		/// WorkOrderHistory.ProductID - Product.ProductID
 		/// </summary>
-		public virtual IEntityRelation ProductEntityUsingProductID
+		public override IEntityRelation ProductEntityUsingProductID
 		{
 			get
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Product", false);
-				relation.AddEntityFieldPair(ProductFields.ProductID, TransactionHistoryFields.ProductID);
+				relation.AddEntityFieldPair(ProductFields.ProductID, WorkOrderHistoryFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("TransactionHistoryEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderHistoryEntity", true);
 				return relation;
 			}
 		}
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
-		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
+		public override IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
-		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
+		public override IEntityRelation GetSuperTypeRelation() { return null;}
 		#endregion
 
 		#region Included Code

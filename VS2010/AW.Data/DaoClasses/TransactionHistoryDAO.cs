@@ -30,10 +30,17 @@ namespace AW.Data.DaoClasses
 	public partial class TransactionHistoryDAO : CommonDaoBase
 	{
 		/// <summary>CTor</summary>
-		public TransactionHistoryDAO() : base(InheritanceHierarchyType.None, "TransactionHistoryEntity", new TransactionHistoryEntityFactory())
+		public TransactionHistoryDAO() : base(InheritanceHierarchyType.TargetPerEntityHierarchy, "TransactionHistoryEntity", new TransactionHistoryEntityFactory())
 		{
 		}
 
+		/// <summary>Inheritance ctor</summary>
+		/// <param name="typeOfInheritance">Type of inheritance the entity which owns this Dao is in.</param>
+		/// <param name="entityName">Name of the entity owning this Dao</param>
+		/// <param name="entityFactory">Entity factory for the entity owning this Dao.</param>
+		protected TransactionHistoryDAO(InheritanceHierarchyType typeOfInheritance, string entityName, IEntityFactory entityFactory) : base(typeOfInheritance, entityName, entityFactory)
+		{
+		}
 
 
 		/// <summary>Retrieves in the calling TransactionHistoryCollection object all TransactionHistoryEntity objects which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter. </summary>
