@@ -21,6 +21,7 @@ using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.Linq;
+using Northwind.DAL.SqlServer;
 using NUnit.Extensions.Forms;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -149,7 +150,7 @@ namespace AW.DebugVisualizers.Tests
 
 		public static LinqMetaData GetNorthwindLinqMetaData()
 		{
-			return new LinqMetaData { AdapterToUse = new Northwind.DAL.SqlServer.DataAccessAdapter() };
+			return new LinqMetaData {AdapterToUse = new DataAccessAdapter()};
 		}
 
 		[TestMethod]
@@ -258,6 +259,18 @@ namespace AW.DebugVisualizers.Tests
 		}
 
 		[TestMethod]
+		public void XmlSchemaTest()
+		{
+			var xmlSchema = TestData.GetTestXmlSchema();
+			TestShowTransported(xmlSchema.Items, 28, 3);
+			TestShowTransported(xmlSchema.Attributes.Names, 0);
+			TestShowTransported(xmlSchema.Elements.Names, 3);
+			TestShowTransported(xmlSchema.Elements.Values, 28, 23);
+			TestShowTransported(xmlSchema.Groups.Values, 0);
+			TestShowTransported(xmlSchema.SchemaTypes.Values, 0);
+		}
+
+		[TestMethod]
 		public void SettingsPropertyTest()
 		{
 			TestShowTransported(Settings.Default.Properties, 9, 7);
@@ -300,6 +313,7 @@ namespace AW.DebugVisualizers.Tests
 		/// <param name="expectedColumnCount">The expected column count.</param>
 		public static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
 		{
+			Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable || enumerableOrDataTableToVisualize is DataTableSurrogate);
 			var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
 			//AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
 			EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);

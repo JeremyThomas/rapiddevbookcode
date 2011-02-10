@@ -49,7 +49,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores.</summary>
 		private void Init()
 		{
-			this.InitClass( (71 + 1));
+			this.InitClass( (74 + 1));
 			InitAwbuildVersionEntityInfos();
 			InitDatabaseLogEntityInfos();
 			InitErrorLogEntityInfos();
@@ -85,11 +85,14 @@ namespace AW.Data.HelperClasses
 			InitProductProductPhotoEntityInfos();
 			InitProductReviewEntityInfos();
 			InitProductSubcategoryEntityInfos();
+			InitPurchaseOrderHistoryEntityInfos();
+			InitSalesOrderHistoryEntityInfos();
 			InitScrapReasonEntityInfos();
 			InitTransactionHistoryEntityInfos();
 			InitTransactionHistoryArchiveEntityInfos();
 			InitUnitMeasureEntityInfos();
 			InitWorkOrderEntityInfos();
+			InitWorkOrderHistoryEntityInfos();
 			InitWorkOrderRoutingEntityInfos();
 			InitProductVendorEntityInfos();
 			InitPurchaseOrderDetailEntityInfos();
@@ -525,6 +528,18 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("ProductSubcategoryEntity", "ProductSubcategoryID", typeof(System.Int32), true, false, true, false,  (int)ProductSubcategoryFieldIndex.ProductSubcategoryID, 0, 0, 10);
 			this.AddElementFieldInfo("ProductSubcategoryEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)ProductSubcategoryFieldIndex.Rowguid, 0, 0, 0);
 		}
+		/// <summary>Inits PurchaseOrderHistoryEntity's FieldInfo objects</summary>
+		private void InitPurchaseOrderHistoryEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(PurchaseOrderHistoryFieldIndex), "PurchaseOrderHistoryEntity");
+
+		}
+		/// <summary>Inits SalesOrderHistoryEntity's FieldInfo objects</summary>
+		private void InitSalesOrderHistoryEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(SalesOrderHistoryFieldIndex), "SalesOrderHistoryEntity");
+
+		}
 		/// <summary>Inits ScrapReasonEntity's FieldInfo objects</summary>
 		private void InitScrapReasonEntityInfos()
 		{
@@ -545,7 +560,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("TransactionHistoryEntity", "ReferenceOrderLineID", typeof(System.Int32), false, false, false, false,  (int)TransactionHistoryFieldIndex.ReferenceOrderLineID, 0, 0, 10);
 			this.AddElementFieldInfo("TransactionHistoryEntity", "TransactionDate", typeof(System.DateTime), false, false, false, false,  (int)TransactionHistoryFieldIndex.TransactionDate, 0, 0, 0);
 			this.AddElementFieldInfo("TransactionHistoryEntity", "TransactionID", typeof(System.Int32), true, false, true, false,  (int)TransactionHistoryFieldIndex.TransactionID, 0, 0, 10);
-			this.AddElementFieldInfo("TransactionHistoryEntity", "TransactionType", typeof(System.String), false, false, false, false,  (int)TransactionHistoryFieldIndex.TransactionType, 1, 0, 0);
+			this.AddElementFieldInfo("TransactionHistoryEntity", "TransactionType", typeof(System.String), false, false, true, false,  (int)TransactionHistoryFieldIndex.TransactionType, 1, 0, 0);
 		}
 		/// <summary>Inits TransactionHistoryArchiveEntity's FieldInfo objects</summary>
 		private void InitTransactionHistoryArchiveEntityInfos()
@@ -583,6 +598,12 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("WorkOrderEntity", "StartDate", typeof(System.DateTime), false, false, false, false,  (int)WorkOrderFieldIndex.StartDate, 0, 0, 0);
 			this.AddElementFieldInfo("WorkOrderEntity", "StockedQuantity", typeof(System.Int32), false, false, true, false,  (int)WorkOrderFieldIndex.StockedQuantity, 0, 0, 10);
 			this.AddElementFieldInfo("WorkOrderEntity", "WorkOrderID", typeof(System.Int32), true, false, true, false,  (int)WorkOrderFieldIndex.WorkOrderID, 0, 0, 10);
+		}
+		/// <summary>Inits WorkOrderHistoryEntity's FieldInfo objects</summary>
+		private void InitWorkOrderHistoryEntityInfos()
+		{
+			this.AddFieldIndexEnumForElementName(typeof(WorkOrderHistoryFieldIndex), "WorkOrderHistoryEntity");
+
 		}
 		/// <summary>Inits WorkOrderRoutingEntity's FieldInfo objects</summary>
 		private void InitWorkOrderRoutingEntityInfos()
@@ -976,23 +997,23 @@ namespace AW.Data.HelperClasses
 		private void InitCustomerViewTypedViewInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(CustomerViewFieldIndex), "CustomerViewTypedView");
-			this.AddElementFieldInfo("CustomerViewTypedView", "AddressLine1", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressLine1, 60, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "AddressLine2", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressLine2, 60, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "AddressType", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressType, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "City", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.City, 30, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "CountryRegionName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.CountryRegionName, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "CustomerId", typeof(System.Int32), false, false, true, false, (int)CustomerViewFieldIndex.CustomerId, 0, 0, 10);
-			this.AddElementFieldInfo("CustomerViewTypedView", "Demographics", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Demographics, 2147483647, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "Title", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Title, 8, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "FirstName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.FirstName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "MiddleName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.MiddleName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "LastName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.LastName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "Suffix", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Suffix, 10, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "Phone", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Phone, 25, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "EmailAddress", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.EmailAddress, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "EmailPromotion", typeof(System.Int32), false, false, true, false, (int)CustomerViewFieldIndex.EmailPromotion, 0, 0, 10);
-			this.AddElementFieldInfo("CustomerViewTypedView", "FirstName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.FirstName, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "LastName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.LastName, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "MiddleName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.MiddleName, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "Phone", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Phone, 25, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "PostalCode", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.PostalCode, 15, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "AddressType", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressType, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "AddressLine1", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressLine1, 60, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "AddressLine2", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressLine2, 60, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "City", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.City, 30, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "StateProvinceName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.StateProvinceName, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "Suffix", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Suffix, 10, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "Title", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Title, 8, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "PostalCode", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.PostalCode, 15, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "CountryRegionName", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.CountryRegionName, 50, 0, 0);
+			this.AddElementFieldInfo("CustomerViewTypedView", "Demographics", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Demographics, 2147483647, 0, 0);
 		}		
 	}
 }

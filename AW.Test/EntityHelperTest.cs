@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -67,6 +68,9 @@ namespace AW.Tests
 			actual = query.Distinct().ToEntityCollection(); //LLBLGenProQuery
 			CollectionAssert.AreEqual(expected, actual);
 
+			actual = ((IEnumerable<T>)query).ToEntityCollection(); //DataSourceBase as IEnumerable<T> 
+			CollectionAssert.AreEqual(expected, actual);
+
 			CollectionAssert.AreEqual(expected, actual.Distinct().ToEntityCollection()); //IEnumerable<T> 
 
 			var actualQueryable = actual.AsQueryable().ToEntityCollection();
@@ -83,10 +87,33 @@ namespace AW.Tests
 			return expected;
 		}
 
+		private static EntityCollectionBase<T> FetchEntityCollection<T>(IElementCreatorCore elementCreatorCore) where T : EntityBase
+		{
+			var expected = (IEntityFactory)elementCreatorCore.GetFactory(typeof(T)).Create() as EntityCollectionBase<T>;
+			if (expected != null)
+			{
+				expected.GetMulti(null);
+				return expected;
+			}
+			return null;
+		}
+
 		[TestMethod, Description("A test for ToEntityCollection")]
 		public void ToEntityCollectionTest()
 		{
 			ToEntityCollectionTestHelper<AddressTypeEntity>();
+		}
+
+		[TestMethod, Description("A test for ToEntityCollection for abstract entities")]
+		public void ToEntityCollectionAbstractTest()
+		{
+			ToEntityCollectionTestHelper<TransactionHistoryEntity>();
+		}
+
+		[TestMethod, Description("A test for ToEntityCollection for abstract entities")]
+		public void ToEntityCollectionBaseClassTest()
+		{
+			ToEntityCollectionTestHelper<CustomerEntity>();
 		}
 
 		[TestMethod, Description("A test for GetEntitiesTypes")]

@@ -47,7 +47,7 @@ namespace AW.Data.HelperClasses
 		/// <summary>Method which initializes the internal datastores with the structure of hierarchical types.</summary>
 		private void Init()
 		{
-			this.InitClass((71 + 1));
+			this.InitClass((74 + 1));
 			InitAwbuildVersionEntityMappings();
 			InitDatabaseLogEntityMappings();
 			InitErrorLogEntityMappings();
@@ -83,11 +83,14 @@ namespace AW.Data.HelperClasses
 			InitProductProductPhotoEntityMappings();
 			InitProductReviewEntityMappings();
 			InitProductSubcategoryEntityMappings();
+			InitPurchaseOrderHistoryEntityMappings();
+			InitSalesOrderHistoryEntityMappings();
 			InitScrapReasonEntityMappings();
 			InitTransactionHistoryEntityMappings();
 			InitTransactionHistoryArchiveEntityMappings();
 			InitUnitMeasureEntityMappings();
 			InitWorkOrderEntityMappings();
+			InitWorkOrderHistoryEntityMappings();
 			InitWorkOrderRoutingEntityMappings();
 			InitProductVendorEntityMappings();
 			InitPurchaseOrderDetailEntityMappings();
@@ -523,6 +526,18 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldMapping( "ProductSubcategoryEntity", "ProductSubcategoryID", "ProductSubcategoryID", false, "Int", 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 3 );
 			this.AddElementFieldMapping( "ProductSubcategoryEntity", "Rowguid", "rowguid", false, "UniqueIdentifier", 0, 0, 0, false, "", null, typeof(System.Guid), 4 );
 		}
+		/// <summary>Inits PurchaseOrderHistoryEntity's mappings</summary>
+		private void InitPurchaseOrderHistoryEntityMappings()
+		{
+			this.AddElementMapping( "PurchaseOrderHistoryEntity", "AdventureWorks", @"Production", "TransactionHistory", 0 );
+
+		}
+		/// <summary>Inits SalesOrderHistoryEntity's mappings</summary>
+		private void InitSalesOrderHistoryEntityMappings()
+		{
+			this.AddElementMapping( "SalesOrderHistoryEntity", "AdventureWorks", @"Production", "TransactionHistory", 0 );
+
+		}
 		/// <summary>Inits ScrapReasonEntity's mappings</summary>
 		private void InitScrapReasonEntityMappings()
 		{
@@ -581,6 +596,12 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldMapping( "WorkOrderEntity", "StartDate", "StartDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 7 );
 			this.AddElementFieldMapping( "WorkOrderEntity", "StockedQuantity", "StockedQty", false, "Int", 0, 0, 10, false, "", null, typeof(System.Int32), 8 );
 			this.AddElementFieldMapping( "WorkOrderEntity", "WorkOrderID", "WorkOrderID", false, "Int", 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 9 );
+		}
+		/// <summary>Inits WorkOrderHistoryEntity's mappings</summary>
+		private void InitWorkOrderHistoryEntityMappings()
+		{
+			this.AddElementMapping( "WorkOrderHistoryEntity", "AdventureWorks", @"Production", "TransactionHistory", 0 );
+
 		}
 		/// <summary>Inits WorkOrderRoutingEntity's mappings</summary>
 		private void InitWorkOrderRoutingEntityMappings()
@@ -974,23 +995,23 @@ namespace AW.Data.HelperClasses
 		private void InitCustomerViewTypedViewMappings()
 		{
 			this.AddElementMapping( "CustomerViewTypedView", "AdventureWorks", @"Sales", "vIndividualCustomer", 17 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "AddressLine1", "AddressLine1", false, "NVarChar", 60, 0, 0,false, string.Empty, null, typeof(System.String), 0 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "AddressLine2", "AddressLine2", false, "NVarChar", 60, 0, 0,false, string.Empty, null, typeof(System.String), 1 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "AddressType", "AddressType", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 2 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "City", "City", false, "NVarChar", 30, 0, 0,false, string.Empty, null, typeof(System.String), 3 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "CountryRegionName", "CountryRegionName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 4 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "CustomerId", "CustomerID", false, "Int", 0, 0, 10,false, string.Empty, null, typeof(System.Int32), 5 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "Demographics", "Demographics", false, "Xml", 2147483647, 0, 0,false, string.Empty, null, typeof(System.String), 6 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "CustomerId", "CustomerID", false, "Int", 0, 0, 10,false, string.Empty, null, typeof(System.Int32), 0 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "Title", "Title", false, "NVarChar", 8, 0, 0,false, string.Empty, null, typeof(System.String), 1 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "FirstName", "FirstName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 2 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "MiddleName", "MiddleName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 3 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "LastName", "LastName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 4 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "Suffix", "Suffix", false, "NVarChar", 10, 0, 0,false, string.Empty, null, typeof(System.String), 5 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "Phone", "Phone", false, "NVarChar", 25, 0, 0,false, string.Empty, null, typeof(System.String), 6 );
 			this.AddElementFieldMapping( "CustomerViewTypedView", "EmailAddress", "EmailAddress", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 7 );
 			this.AddElementFieldMapping( "CustomerViewTypedView", "EmailPromotion", "EmailPromotion", false, "Int", 0, 0, 10,false, string.Empty, null, typeof(System.Int32), 8 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "FirstName", "FirstName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 9 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "LastName", "LastName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 10 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "MiddleName", "MiddleName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 11 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "Phone", "Phone", false, "NVarChar", 25, 0, 0,false, string.Empty, null, typeof(System.String), 12 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "PostalCode", "PostalCode", false, "NVarChar", 15, 0, 0,false, string.Empty, null, typeof(System.String), 13 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "StateProvinceName", "StateProvinceName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 14 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "Suffix", "Suffix", false, "NVarChar", 10, 0, 0,false, string.Empty, null, typeof(System.String), 15 );
-			this.AddElementFieldMapping( "CustomerViewTypedView", "Title", "Title", false, "NVarChar", 8, 0, 0,false, string.Empty, null, typeof(System.String), 16 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "AddressType", "AddressType", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 9 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "AddressLine1", "AddressLine1", false, "NVarChar", 60, 0, 0,false, string.Empty, null, typeof(System.String), 10 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "AddressLine2", "AddressLine2", false, "NVarChar", 60, 0, 0,false, string.Empty, null, typeof(System.String), 11 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "City", "City", false, "NVarChar", 30, 0, 0,false, string.Empty, null, typeof(System.String), 12 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "StateProvinceName", "StateProvinceName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 13 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "PostalCode", "PostalCode", false, "NVarChar", 15, 0, 0,false, string.Empty, null, typeof(System.String), 14 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "CountryRegionName", "CountryRegionName", false, "NVarChar", 50, 0, 0,false, string.Empty, null, typeof(System.String), 15 );
+			this.AddElementFieldMapping( "CustomerViewTypedView", "Demographics", "Demographics", false, "Xml", 2147483647, 0, 0,false, string.Empty, null, typeof(System.String), 16 );
 		}
 	}
 }

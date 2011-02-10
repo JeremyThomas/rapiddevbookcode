@@ -38,23 +38,23 @@ namespace AW.Data.TypedViewClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private DataColumn _columnAddressLine1;
-		private DataColumn _columnAddressLine2;
-		private DataColumn _columnAddressType;
-		private DataColumn _columnCity;
-		private DataColumn _columnCountryRegionName;
 		private DataColumn _columnCustomerId;
-		private DataColumn _columnDemographics;
+		private DataColumn _columnTitle;
+		private DataColumn _columnFirstName;
+		private DataColumn _columnMiddleName;
+		private DataColumn _columnLastName;
+		private DataColumn _columnSuffix;
+		private DataColumn _columnPhone;
 		private DataColumn _columnEmailAddress;
 		private DataColumn _columnEmailPromotion;
-		private DataColumn _columnFirstName;
-		private DataColumn _columnLastName;
-		private DataColumn _columnMiddleName;
-		private DataColumn _columnPhone;
-		private DataColumn _columnPostalCode;
+		private DataColumn _columnAddressType;
+		private DataColumn _columnAddressLine1;
+		private DataColumn _columnAddressLine2;
+		private DataColumn _columnCity;
 		private DataColumn _columnStateProvinceName;
-		private DataColumn _columnSuffix;
-		private DataColumn _columnTitle;
+		private DataColumn _columnPostalCode;
+		private DataColumn _columnCountryRegionName;
+		private DataColumn _columnDemographics;
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -233,62 +233,62 @@ namespace AW.Data.TypedViewClasses
 			_fieldsCustomProperties = new Hashtable();
 			Hashtable fieldHashtable;
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("AddressLine1", fieldHashtable);
-			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("AddressLine2", fieldHashtable);
-			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("AddressType", fieldHashtable);
-			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("City", fieldHashtable);
-			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("CountryRegionName", fieldHashtable);
-			fieldHashtable = new Hashtable();
 			_fieldsCustomProperties.Add("CustomerId", fieldHashtable);
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("Demographics", fieldHashtable);
+			_fieldsCustomProperties.Add("Title", fieldHashtable);
+			fieldHashtable = new Hashtable();
+			_fieldsCustomProperties.Add("FirstName", fieldHashtable);
+			fieldHashtable = new Hashtable();
+			_fieldsCustomProperties.Add("MiddleName", fieldHashtable);
+			fieldHashtable = new Hashtable();
+			_fieldsCustomProperties.Add("LastName", fieldHashtable);
+			fieldHashtable = new Hashtable();
+			_fieldsCustomProperties.Add("Suffix", fieldHashtable);
+			fieldHashtable = new Hashtable();
+			_fieldsCustomProperties.Add("Phone", fieldHashtable);
 			fieldHashtable = new Hashtable();
 			_fieldsCustomProperties.Add("EmailAddress", fieldHashtable);
 			fieldHashtable = new Hashtable();
 			_fieldsCustomProperties.Add("EmailPromotion", fieldHashtable);
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("FirstName", fieldHashtable);
+			_fieldsCustomProperties.Add("AddressType", fieldHashtable);
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("LastName", fieldHashtable);
+			_fieldsCustomProperties.Add("AddressLine1", fieldHashtable);
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("MiddleName", fieldHashtable);
+			_fieldsCustomProperties.Add("AddressLine2", fieldHashtable);
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("Phone", fieldHashtable);
-			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
+			_fieldsCustomProperties.Add("City", fieldHashtable);
 			fieldHashtable = new Hashtable();
 			_fieldsCustomProperties.Add("StateProvinceName", fieldHashtable);
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("Suffix", fieldHashtable);
+			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
 			fieldHashtable = new Hashtable();
-			_fieldsCustomProperties.Add("Title", fieldHashtable);
+			_fieldsCustomProperties.Add("CountryRegionName", fieldHashtable);
+			fieldHashtable = new Hashtable();
+			_fieldsCustomProperties.Add("Demographics", fieldHashtable);
 		}
 
 		/// <summary>Initialize the datastructures.</summary>
 		protected override void InitClass()
 		{
 			TableName = "CustomerView";		
-			_columnAddressLine1 = GeneralUtils.CreateTypedDataTableColumn("AddressLine1", @"AddressLine1", typeof(System.String), this.Columns);
-			_columnAddressLine2 = GeneralUtils.CreateTypedDataTableColumn("AddressLine2", @"AddressLine2", typeof(System.String), this.Columns);
-			_columnAddressType = GeneralUtils.CreateTypedDataTableColumn("AddressType", @"AddressType", typeof(System.String), this.Columns);
-			_columnCity = GeneralUtils.CreateTypedDataTableColumn("City", @"City", typeof(System.String), this.Columns);
-			_columnCountryRegionName = GeneralUtils.CreateTypedDataTableColumn("CountryRegionName", @"CountryRegionName", typeof(System.String), this.Columns);
 			_columnCustomerId = GeneralUtils.CreateTypedDataTableColumn("CustomerId", @"CustomerId", typeof(System.Int32), this.Columns);
-			_columnDemographics = GeneralUtils.CreateTypedDataTableColumn("Demographics", @"Demographics", typeof(System.String), this.Columns);
+			_columnTitle = GeneralUtils.CreateTypedDataTableColumn("Title", @"Title", typeof(System.String), this.Columns);
+			_columnFirstName = GeneralUtils.CreateTypedDataTableColumn("FirstName", @"FirstName", typeof(System.String), this.Columns);
+			_columnMiddleName = GeneralUtils.CreateTypedDataTableColumn("MiddleName", @"MiddleName", typeof(System.String), this.Columns);
+			_columnLastName = GeneralUtils.CreateTypedDataTableColumn("LastName", @"LastName", typeof(System.String), this.Columns);
+			_columnSuffix = GeneralUtils.CreateTypedDataTableColumn("Suffix", @"Suffix", typeof(System.String), this.Columns);
+			_columnPhone = GeneralUtils.CreateTypedDataTableColumn("Phone", @"Phone", typeof(System.String), this.Columns);
 			_columnEmailAddress = GeneralUtils.CreateTypedDataTableColumn("EmailAddress", @"EmailAddress", typeof(System.String), this.Columns);
 			_columnEmailPromotion = GeneralUtils.CreateTypedDataTableColumn("EmailPromotion", @"EmailPromotion", typeof(System.Int32), this.Columns);
-			_columnFirstName = GeneralUtils.CreateTypedDataTableColumn("FirstName", @"FirstName", typeof(System.String), this.Columns);
-			_columnLastName = GeneralUtils.CreateTypedDataTableColumn("LastName", @"LastName", typeof(System.String), this.Columns);
-			_columnMiddleName = GeneralUtils.CreateTypedDataTableColumn("MiddleName", @"MiddleName", typeof(System.String), this.Columns);
-			_columnPhone = GeneralUtils.CreateTypedDataTableColumn("Phone", @"Phone", typeof(System.String), this.Columns);
-			_columnPostalCode = GeneralUtils.CreateTypedDataTableColumn("PostalCode", @"PostalCode", typeof(System.String), this.Columns);
+			_columnAddressType = GeneralUtils.CreateTypedDataTableColumn("AddressType", @"AddressType", typeof(System.String), this.Columns);
+			_columnAddressLine1 = GeneralUtils.CreateTypedDataTableColumn("AddressLine1", @"AddressLine1", typeof(System.String), this.Columns);
+			_columnAddressLine2 = GeneralUtils.CreateTypedDataTableColumn("AddressLine2", @"AddressLine2", typeof(System.String), this.Columns);
+			_columnCity = GeneralUtils.CreateTypedDataTableColumn("City", @"City", typeof(System.String), this.Columns);
 			_columnStateProvinceName = GeneralUtils.CreateTypedDataTableColumn("StateProvinceName", @"StateProvinceName", typeof(System.String), this.Columns);
-			_columnSuffix = GeneralUtils.CreateTypedDataTableColumn("Suffix", @"Suffix", typeof(System.String), this.Columns);
-			_columnTitle = GeneralUtils.CreateTypedDataTableColumn("Title", @"Title", typeof(System.String), this.Columns);
+			_columnPostalCode = GeneralUtils.CreateTypedDataTableColumn("PostalCode", @"PostalCode", typeof(System.String), this.Columns);
+			_columnCountryRegionName = GeneralUtils.CreateTypedDataTableColumn("CountryRegionName", @"CountryRegionName", typeof(System.String), this.Columns);
+			_columnDemographics = GeneralUtils.CreateTypedDataTableColumn("Demographics", @"Demographics", typeof(System.String), this.Columns);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClass
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -298,23 +298,23 @@ namespace AW.Data.TypedViewClasses
 		/// <summary>Initializes the members, after a clone action.</summary>
 		private void InitMembers()
 		{
-			_columnAddressLine1 = this.Columns["AddressLine1"];
-			_columnAddressLine2 = this.Columns["AddressLine2"];
-			_columnAddressType = this.Columns["AddressType"];
-			_columnCity = this.Columns["City"];
-			_columnCountryRegionName = this.Columns["CountryRegionName"];
 			_columnCustomerId = this.Columns["CustomerId"];
-			_columnDemographics = this.Columns["Demographics"];
+			_columnTitle = this.Columns["Title"];
+			_columnFirstName = this.Columns["FirstName"];
+			_columnMiddleName = this.Columns["MiddleName"];
+			_columnLastName = this.Columns["LastName"];
+			_columnSuffix = this.Columns["Suffix"];
+			_columnPhone = this.Columns["Phone"];
 			_columnEmailAddress = this.Columns["EmailAddress"];
 			_columnEmailPromotion = this.Columns["EmailPromotion"];
-			_columnFirstName = this.Columns["FirstName"];
-			_columnLastName = this.Columns["LastName"];
-			_columnMiddleName = this.Columns["MiddleName"];
-			_columnPhone = this.Columns["Phone"];
-			_columnPostalCode = this.Columns["PostalCode"];
+			_columnAddressType = this.Columns["AddressType"];
+			_columnAddressLine1 = this.Columns["AddressLine1"];
+			_columnAddressLine2 = this.Columns["AddressLine2"];
+			_columnCity = this.Columns["City"];
 			_columnStateProvinceName = this.Columns["StateProvinceName"];
-			_columnSuffix = this.Columns["Suffix"];
-			_columnTitle = this.Columns["Title"];
+			_columnPostalCode = this.Columns["PostalCode"];
+			_columnCountryRegionName = this.Columns["CountryRegionName"];
+			_columnDemographics = this.Columns["Demographics"];
 			// __LLBLGENPRO_USER_CODE_REGION_START InitMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
 		}
@@ -367,46 +367,46 @@ namespace AW.Data.TypedViewClasses
 			get { return CustomerViewTypedView.FieldsCustomProperties;}
 		}
 
-		/// <summary>Returns the column object belonging to the TypedView field AddressLine1</summary>
-		internal DataColumn AddressLine1Column 
-		{
-			get { return _columnAddressLine1; }
-		}
-
-		/// <summary>Returns the column object belonging to the TypedView field AddressLine2</summary>
-		internal DataColumn AddressLine2Column 
-		{
-			get { return _columnAddressLine2; }
-		}
-
-		/// <summary>Returns the column object belonging to the TypedView field AddressType</summary>
-		internal DataColumn AddressTypeColumn 
-		{
-			get { return _columnAddressType; }
-		}
-
-		/// <summary>Returns the column object belonging to the TypedView field City</summary>
-		internal DataColumn CityColumn 
-		{
-			get { return _columnCity; }
-		}
-
-		/// <summary>Returns the column object belonging to the TypedView field CountryRegionName</summary>
-		internal DataColumn CountryRegionNameColumn 
-		{
-			get { return _columnCountryRegionName; }
-		}
-
 		/// <summary>Returns the column object belonging to the TypedView field CustomerId</summary>
 		internal DataColumn CustomerIdColumn 
 		{
 			get { return _columnCustomerId; }
 		}
 
-		/// <summary>Returns the column object belonging to the TypedView field Demographics</summary>
-		internal DataColumn DemographicsColumn 
+		/// <summary>Returns the column object belonging to the TypedView field Title</summary>
+		internal DataColumn TitleColumn 
 		{
-			get { return _columnDemographics; }
+			get { return _columnTitle; }
+		}
+
+		/// <summary>Returns the column object belonging to the TypedView field FirstName</summary>
+		internal DataColumn FirstNameColumn 
+		{
+			get { return _columnFirstName; }
+		}
+
+		/// <summary>Returns the column object belonging to the TypedView field MiddleName</summary>
+		internal DataColumn MiddleNameColumn 
+		{
+			get { return _columnMiddleName; }
+		}
+
+		/// <summary>Returns the column object belonging to the TypedView field LastName</summary>
+		internal DataColumn LastNameColumn 
+		{
+			get { return _columnLastName; }
+		}
+
+		/// <summary>Returns the column object belonging to the TypedView field Suffix</summary>
+		internal DataColumn SuffixColumn 
+		{
+			get { return _columnSuffix; }
+		}
+
+		/// <summary>Returns the column object belonging to the TypedView field Phone</summary>
+		internal DataColumn PhoneColumn 
+		{
+			get { return _columnPhone; }
 		}
 
 		/// <summary>Returns the column object belonging to the TypedView field EmailAddress</summary>
@@ -421,34 +421,28 @@ namespace AW.Data.TypedViewClasses
 			get { return _columnEmailPromotion; }
 		}
 
-		/// <summary>Returns the column object belonging to the TypedView field FirstName</summary>
-		internal DataColumn FirstNameColumn 
+		/// <summary>Returns the column object belonging to the TypedView field AddressType</summary>
+		internal DataColumn AddressTypeColumn 
 		{
-			get { return _columnFirstName; }
+			get { return _columnAddressType; }
 		}
 
-		/// <summary>Returns the column object belonging to the TypedView field LastName</summary>
-		internal DataColumn LastNameColumn 
+		/// <summary>Returns the column object belonging to the TypedView field AddressLine1</summary>
+		internal DataColumn AddressLine1Column 
 		{
-			get { return _columnLastName; }
+			get { return _columnAddressLine1; }
 		}
 
-		/// <summary>Returns the column object belonging to the TypedView field MiddleName</summary>
-		internal DataColumn MiddleNameColumn 
+		/// <summary>Returns the column object belonging to the TypedView field AddressLine2</summary>
+		internal DataColumn AddressLine2Column 
 		{
-			get { return _columnMiddleName; }
+			get { return _columnAddressLine2; }
 		}
 
-		/// <summary>Returns the column object belonging to the TypedView field Phone</summary>
-		internal DataColumn PhoneColumn 
+		/// <summary>Returns the column object belonging to the TypedView field City</summary>
+		internal DataColumn CityColumn 
 		{
-			get { return _columnPhone; }
-		}
-
-		/// <summary>Returns the column object belonging to the TypedView field PostalCode</summary>
-		internal DataColumn PostalCodeColumn 
-		{
-			get { return _columnPostalCode; }
+			get { return _columnCity; }
 		}
 
 		/// <summary>Returns the column object belonging to the TypedView field StateProvinceName</summary>
@@ -457,16 +451,22 @@ namespace AW.Data.TypedViewClasses
 			get { return _columnStateProvinceName; }
 		}
 
-		/// <summary>Returns the column object belonging to the TypedView field Suffix</summary>
-		internal DataColumn SuffixColumn 
+		/// <summary>Returns the column object belonging to the TypedView field PostalCode</summary>
+		internal DataColumn PostalCodeColumn 
 		{
-			get { return _columnSuffix; }
+			get { return _columnPostalCode; }
 		}
 
-		/// <summary>Returns the column object belonging to the TypedView field Title</summary>
-		internal DataColumn TitleColumn 
+		/// <summary>Returns the column object belonging to the TypedView field CountryRegionName</summary>
+		internal DataColumn CountryRegionNameColumn 
 		{
-			get { return _columnTitle; }
+			get { return _columnCountryRegionName; }
+		}
+
+		/// <summary>Returns the column object belonging to the TypedView field Demographics</summary>
+		internal DataColumn DemographicsColumn 
+		{
+			get { return _columnDemographics; }
 		}
 
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalColumnProperties
@@ -503,111 +503,6 @@ namespace AW.Data.TypedViewClasses
 
 		#region Class Property Declarations
 
-		/// <summary>Gets / sets the value of the TypedView field AddressLine1<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressLine1"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 60</remarks>
-		public System.String AddressLine1 
-		{
-			get { return IsAddressLine1Null() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressLine1Column]; }
-			set { this[_parent.AddressLine1Column] = value; }
-		}
-
-		/// <summary>Returns true if the TypedView field AddressLine1 is NULL, false otherwise.</summary>
-		public bool IsAddressLine1Null() 
-		{
-			return IsNull(_parent.AddressLine1Column);
-		}
-
-		/// <summary>Sets the TypedView field AddressLine1 to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetAddressLine1Null() 
-		{
-			this[_parent.AddressLine1Column] = System.Convert.DBNull;
-		}
-
-		/// <summary>Gets / sets the value of the TypedView field AddressLine2<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressLine2"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 60</remarks>
-		public System.String AddressLine2 
-		{
-			get { return IsAddressLine2Null() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressLine2Column]; }
-			set { this[_parent.AddressLine2Column] = value; }
-		}
-
-		/// <summary>Returns true if the TypedView field AddressLine2 is NULL, false otherwise.</summary>
-		public bool IsAddressLine2Null() 
-		{
-			return IsNull(_parent.AddressLine2Column);
-		}
-
-		/// <summary>Sets the TypedView field AddressLine2 to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetAddressLine2Null() 
-		{
-			this[_parent.AddressLine2Column] = System.Convert.DBNull;
-		}
-
-		/// <summary>Gets / sets the value of the TypedView field AddressType<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressType"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String AddressType 
-		{
-			get { return IsAddressTypeNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressTypeColumn]; }
-			set { this[_parent.AddressTypeColumn] = value; }
-		}
-
-		/// <summary>Returns true if the TypedView field AddressType is NULL, false otherwise.</summary>
-		public bool IsAddressTypeNull() 
-		{
-			return IsNull(_parent.AddressTypeColumn);
-		}
-
-		/// <summary>Sets the TypedView field AddressType to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetAddressTypeNull() 
-		{
-			this[_parent.AddressTypeColumn] = System.Convert.DBNull;
-		}
-
-		/// <summary>Gets / sets the value of the TypedView field City<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."City"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 30</remarks>
-		public System.String City 
-		{
-			get { return IsCityNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.CityColumn]; }
-			set { this[_parent.CityColumn] = value; }
-		}
-
-		/// <summary>Returns true if the TypedView field City is NULL, false otherwise.</summary>
-		public bool IsCityNull() 
-		{
-			return IsNull(_parent.CityColumn);
-		}
-
-		/// <summary>Sets the TypedView field City to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetCityNull() 
-		{
-			this[_parent.CityColumn] = System.Convert.DBNull;
-		}
-
-		/// <summary>Gets / sets the value of the TypedView field CountryRegionName<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."CountryRegionName"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String CountryRegionName 
-		{
-			get { return IsCountryRegionNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.CountryRegionNameColumn]; }
-			set { this[_parent.CountryRegionNameColumn] = value; }
-		}
-
-		/// <summary>Returns true if the TypedView field CountryRegionName is NULL, false otherwise.</summary>
-		public bool IsCountryRegionNameNull() 
-		{
-			return IsNull(_parent.CountryRegionNameColumn);
-		}
-
-		/// <summary>Sets the TypedView field CountryRegionName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetCountryRegionNameNull() 
-		{
-			this[_parent.CountryRegionNameColumn] = System.Convert.DBNull;
-		}
-
 		/// <summary>Gets / sets the value of the TypedView field CustomerId<br/><br/></summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."CustomerID"<br/>
 		/// View field characteristics (type, precision, scale, length): Int, 10, 0, 0</remarks>
@@ -629,25 +524,130 @@ namespace AW.Data.TypedViewClasses
 			this[_parent.CustomerIdColumn] = System.Convert.DBNull;
 		}
 
-		/// <summary>Gets / sets the value of the TypedView field Demographics<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."Demographics"<br/>
-		/// View field characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647</remarks>
-		public System.String Demographics 
+		/// <summary>Gets / sets the value of the TypedView field Title<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."Title"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 8</remarks>
+		public System.String Title 
 		{
-			get { return IsDemographicsNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.DemographicsColumn]; }
-			set { this[_parent.DemographicsColumn] = value; }
+			get { return IsTitleNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.TitleColumn]; }
+			set { this[_parent.TitleColumn] = value; }
 		}
 
-		/// <summary>Returns true if the TypedView field Demographics is NULL, false otherwise.</summary>
-		public bool IsDemographicsNull() 
+		/// <summary>Returns true if the TypedView field Title is NULL, false otherwise.</summary>
+		public bool IsTitleNull() 
 		{
-			return IsNull(_parent.DemographicsColumn);
+			return IsNull(_parent.TitleColumn);
 		}
 
-		/// <summary>Sets the TypedView field Demographics to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetDemographicsNull() 
+		/// <summary>Sets the TypedView field Title to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetTitleNull() 
 		{
-			this[_parent.DemographicsColumn] = System.Convert.DBNull;
+			this[_parent.TitleColumn] = System.Convert.DBNull;
+		}
+
+		/// <summary>Gets / sets the value of the TypedView field FirstName<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."FirstName"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
+		public System.String FirstName 
+		{
+			get { return IsFirstNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.FirstNameColumn]; }
+			set { this[_parent.FirstNameColumn] = value; }
+		}
+
+		/// <summary>Returns true if the TypedView field FirstName is NULL, false otherwise.</summary>
+		public bool IsFirstNameNull() 
+		{
+			return IsNull(_parent.FirstNameColumn);
+		}
+
+		/// <summary>Sets the TypedView field FirstName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetFirstNameNull() 
+		{
+			this[_parent.FirstNameColumn] = System.Convert.DBNull;
+		}
+
+		/// <summary>Gets / sets the value of the TypedView field MiddleName<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."MiddleName"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
+		public System.String MiddleName 
+		{
+			get { return IsMiddleNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.MiddleNameColumn]; }
+			set { this[_parent.MiddleNameColumn] = value; }
+		}
+
+		/// <summary>Returns true if the TypedView field MiddleName is NULL, false otherwise.</summary>
+		public bool IsMiddleNameNull() 
+		{
+			return IsNull(_parent.MiddleNameColumn);
+		}
+
+		/// <summary>Sets the TypedView field MiddleName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetMiddleNameNull() 
+		{
+			this[_parent.MiddleNameColumn] = System.Convert.DBNull;
+		}
+
+		/// <summary>Gets / sets the value of the TypedView field LastName<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."LastName"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
+		public System.String LastName 
+		{
+			get { return IsLastNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.LastNameColumn]; }
+			set { this[_parent.LastNameColumn] = value; }
+		}
+
+		/// <summary>Returns true if the TypedView field LastName is NULL, false otherwise.</summary>
+		public bool IsLastNameNull() 
+		{
+			return IsNull(_parent.LastNameColumn);
+		}
+
+		/// <summary>Sets the TypedView field LastName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetLastNameNull() 
+		{
+			this[_parent.LastNameColumn] = System.Convert.DBNull;
+		}
+
+		/// <summary>Gets / sets the value of the TypedView field Suffix<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."Suffix"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 10</remarks>
+		public System.String Suffix 
+		{
+			get { return IsSuffixNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.SuffixColumn]; }
+			set { this[_parent.SuffixColumn] = value; }
+		}
+
+		/// <summary>Returns true if the TypedView field Suffix is NULL, false otherwise.</summary>
+		public bool IsSuffixNull() 
+		{
+			return IsNull(_parent.SuffixColumn);
+		}
+
+		/// <summary>Sets the TypedView field Suffix to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetSuffixNull() 
+		{
+			this[_parent.SuffixColumn] = System.Convert.DBNull;
+		}
+
+		/// <summary>Gets / sets the value of the TypedView field Phone<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."Phone"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 25</remarks>
+		public System.String Phone 
+		{
+			get { return IsPhoneNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.PhoneColumn]; }
+			set { this[_parent.PhoneColumn] = value; }
+		}
+
+		/// <summary>Returns true if the TypedView field Phone is NULL, false otherwise.</summary>
+		public bool IsPhoneNull() 
+		{
+			return IsNull(_parent.PhoneColumn);
+		}
+
+		/// <summary>Sets the TypedView field Phone to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetPhoneNull() 
+		{
+			this[_parent.PhoneColumn] = System.Convert.DBNull;
 		}
 
 		/// <summary>Gets / sets the value of the TypedView field EmailAddress<br/><br/></summary>
@@ -692,109 +692,88 @@ namespace AW.Data.TypedViewClasses
 			this[_parent.EmailPromotionColumn] = System.Convert.DBNull;
 		}
 
-		/// <summary>Gets / sets the value of the TypedView field FirstName<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."FirstName"<br/>
+		/// <summary>Gets / sets the value of the TypedView field AddressType<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressType"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String FirstName 
+		public System.String AddressType 
 		{
-			get { return IsFirstNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.FirstNameColumn]; }
-			set { this[_parent.FirstNameColumn] = value; }
+			get { return IsAddressTypeNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressTypeColumn]; }
+			set { this[_parent.AddressTypeColumn] = value; }
 		}
 
-		/// <summary>Returns true if the TypedView field FirstName is NULL, false otherwise.</summary>
-		public bool IsFirstNameNull() 
+		/// <summary>Returns true if the TypedView field AddressType is NULL, false otherwise.</summary>
+		public bool IsAddressTypeNull() 
 		{
-			return IsNull(_parent.FirstNameColumn);
+			return IsNull(_parent.AddressTypeColumn);
 		}
 
-		/// <summary>Sets the TypedView field FirstName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetFirstNameNull() 
+		/// <summary>Sets the TypedView field AddressType to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetAddressTypeNull() 
 		{
-			this[_parent.FirstNameColumn] = System.Convert.DBNull;
+			this[_parent.AddressTypeColumn] = System.Convert.DBNull;
 		}
 
-		/// <summary>Gets / sets the value of the TypedView field LastName<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."LastName"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String LastName 
+		/// <summary>Gets / sets the value of the TypedView field AddressLine1<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressLine1"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 60</remarks>
+		public System.String AddressLine1 
 		{
-			get { return IsLastNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.LastNameColumn]; }
-			set { this[_parent.LastNameColumn] = value; }
+			get { return IsAddressLine1Null() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressLine1Column]; }
+			set { this[_parent.AddressLine1Column] = value; }
 		}
 
-		/// <summary>Returns true if the TypedView field LastName is NULL, false otherwise.</summary>
-		public bool IsLastNameNull() 
+		/// <summary>Returns true if the TypedView field AddressLine1 is NULL, false otherwise.</summary>
+		public bool IsAddressLine1Null() 
 		{
-			return IsNull(_parent.LastNameColumn);
+			return IsNull(_parent.AddressLine1Column);
 		}
 
-		/// <summary>Sets the TypedView field LastName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetLastNameNull() 
+		/// <summary>Sets the TypedView field AddressLine1 to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetAddressLine1Null() 
 		{
-			this[_parent.LastNameColumn] = System.Convert.DBNull;
+			this[_parent.AddressLine1Column] = System.Convert.DBNull;
 		}
 
-		/// <summary>Gets / sets the value of the TypedView field MiddleName<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."MiddleName"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String MiddleName 
+		/// <summary>Gets / sets the value of the TypedView field AddressLine2<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressLine2"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 60</remarks>
+		public System.String AddressLine2 
 		{
-			get { return IsMiddleNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.MiddleNameColumn]; }
-			set { this[_parent.MiddleNameColumn] = value; }
+			get { return IsAddressLine2Null() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressLine2Column]; }
+			set { this[_parent.AddressLine2Column] = value; }
 		}
 
-		/// <summary>Returns true if the TypedView field MiddleName is NULL, false otherwise.</summary>
-		public bool IsMiddleNameNull() 
+		/// <summary>Returns true if the TypedView field AddressLine2 is NULL, false otherwise.</summary>
+		public bool IsAddressLine2Null() 
 		{
-			return IsNull(_parent.MiddleNameColumn);
+			return IsNull(_parent.AddressLine2Column);
 		}
 
-		/// <summary>Sets the TypedView field MiddleName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetMiddleNameNull() 
+		/// <summary>Sets the TypedView field AddressLine2 to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetAddressLine2Null() 
 		{
-			this[_parent.MiddleNameColumn] = System.Convert.DBNull;
+			this[_parent.AddressLine2Column] = System.Convert.DBNull;
 		}
 
-		/// <summary>Gets / sets the value of the TypedView field Phone<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."Phone"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 25</remarks>
-		public System.String Phone 
+		/// <summary>Gets / sets the value of the TypedView field City<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."City"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 30</remarks>
+		public System.String City 
 		{
-			get { return IsPhoneNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.PhoneColumn]; }
-			set { this[_parent.PhoneColumn] = value; }
+			get { return IsCityNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.CityColumn]; }
+			set { this[_parent.CityColumn] = value; }
 		}
 
-		/// <summary>Returns true if the TypedView field Phone is NULL, false otherwise.</summary>
-		public bool IsPhoneNull() 
+		/// <summary>Returns true if the TypedView field City is NULL, false otherwise.</summary>
+		public bool IsCityNull() 
 		{
-			return IsNull(_parent.PhoneColumn);
+			return IsNull(_parent.CityColumn);
 		}
 
-		/// <summary>Sets the TypedView field Phone to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetPhoneNull() 
+		/// <summary>Sets the TypedView field City to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetCityNull() 
 		{
-			this[_parent.PhoneColumn] = System.Convert.DBNull;
-		}
-
-		/// <summary>Gets / sets the value of the TypedView field PostalCode<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."PostalCode"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 15</remarks>
-		public System.String PostalCode 
-		{
-			get { return IsPostalCodeNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.PostalCodeColumn]; }
-			set { this[_parent.PostalCodeColumn] = value; }
-		}
-
-		/// <summary>Returns true if the TypedView field PostalCode is NULL, false otherwise.</summary>
-		public bool IsPostalCodeNull() 
-		{
-			return IsNull(_parent.PostalCodeColumn);
-		}
-
-		/// <summary>Sets the TypedView field PostalCode to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetPostalCodeNull() 
-		{
-			this[_parent.PostalCodeColumn] = System.Convert.DBNull;
+			this[_parent.CityColumn] = System.Convert.DBNull;
 		}
 
 		/// <summary>Gets / sets the value of the TypedView field StateProvinceName<br/><br/></summary>
@@ -818,46 +797,67 @@ namespace AW.Data.TypedViewClasses
 			this[_parent.StateProvinceNameColumn] = System.Convert.DBNull;
 		}
 
-		/// <summary>Gets / sets the value of the TypedView field Suffix<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."Suffix"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 10</remarks>
-		public System.String Suffix 
+		/// <summary>Gets / sets the value of the TypedView field PostalCode<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."PostalCode"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 15</remarks>
+		public System.String PostalCode 
 		{
-			get { return IsSuffixNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.SuffixColumn]; }
-			set { this[_parent.SuffixColumn] = value; }
+			get { return IsPostalCodeNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.PostalCodeColumn]; }
+			set { this[_parent.PostalCodeColumn] = value; }
 		}
 
-		/// <summary>Returns true if the TypedView field Suffix is NULL, false otherwise.</summary>
-		public bool IsSuffixNull() 
+		/// <summary>Returns true if the TypedView field PostalCode is NULL, false otherwise.</summary>
+		public bool IsPostalCodeNull() 
 		{
-			return IsNull(_parent.SuffixColumn);
+			return IsNull(_parent.PostalCodeColumn);
 		}
 
-		/// <summary>Sets the TypedView field Suffix to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetSuffixNull() 
+		/// <summary>Sets the TypedView field PostalCode to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetPostalCodeNull() 
 		{
-			this[_parent.SuffixColumn] = System.Convert.DBNull;
+			this[_parent.PostalCodeColumn] = System.Convert.DBNull;
 		}
 
-		/// <summary>Gets / sets the value of the TypedView field Title<br/><br/></summary>
-		/// <remarks>Mapped on view field: "vIndividualCustomer"."Title"<br/>
-		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 8</remarks>
-		public System.String Title 
+		/// <summary>Gets / sets the value of the TypedView field CountryRegionName<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."CountryRegionName"<br/>
+		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
+		public System.String CountryRegionName 
 		{
-			get { return IsTitleNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.TitleColumn]; }
-			set { this[_parent.TitleColumn] = value; }
+			get { return IsCountryRegionNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.CountryRegionNameColumn]; }
+			set { this[_parent.CountryRegionNameColumn] = value; }
 		}
 
-		/// <summary>Returns true if the TypedView field Title is NULL, false otherwise.</summary>
-		public bool IsTitleNull() 
+		/// <summary>Returns true if the TypedView field CountryRegionName is NULL, false otherwise.</summary>
+		public bool IsCountryRegionNameNull() 
 		{
-			return IsNull(_parent.TitleColumn);
+			return IsNull(_parent.CountryRegionNameColumn);
 		}
 
-		/// <summary>Sets the TypedView field Title to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
-    	public void SetTitleNull() 
+		/// <summary>Sets the TypedView field CountryRegionName to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetCountryRegionNameNull() 
 		{
-			this[_parent.TitleColumn] = System.Convert.DBNull;
+			this[_parent.CountryRegionNameColumn] = System.Convert.DBNull;
+		}
+
+		/// <summary>Gets / sets the value of the TypedView field Demographics<br/><br/></summary>
+		/// <remarks>Mapped on view field: "vIndividualCustomer"."Demographics"<br/>
+		/// View field characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647</remarks>
+		public System.String Demographics 
+		{
+			get { return IsDemographicsNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.DemographicsColumn]; }
+			set { this[_parent.DemographicsColumn] = value; }
+		}
+
+		/// <summary>Returns true if the TypedView field Demographics is NULL, false otherwise.</summary>
+		public bool IsDemographicsNull() 
+		{
+			return IsNull(_parent.DemographicsColumn);
+		}
+
+		/// <summary>Sets the TypedView field Demographics to NULL. Not recommended; a typed list should be used as a readonly object.</summary>
+    	public void SetDemographicsNull() 
+		{
+			this[_parent.DemographicsColumn] = System.Convert.DBNull;
 		}
 		#endregion
 		

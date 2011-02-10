@@ -851,6 +851,64 @@ namespace AW.Data.FactoryClasses
 		#endregion
 	}
 	
+	/// <summary>Factory to create new, empty PurchaseOrderHistoryEntity objects.</summary>
+	[Serializable]
+	public partial class PurchaseOrderHistoryEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public PurchaseOrderHistoryEntityFactory() : base("PurchaseOrderHistoryEntity", AW.Data.EntityType.PurchaseOrderHistoryEntity) { }
+
+		/// <summary>Creates a new, empty PurchaseOrderHistoryEntity object.</summary>
+		/// <returns>A new, empty PurchaseOrderHistoryEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new PurchaseOrderHistoryEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewPurchaseOrderHistory
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("PurchaseOrderHistoryEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty SalesOrderHistoryEntity objects.</summary>
+	[Serializable]
+	public partial class SalesOrderHistoryEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public SalesOrderHistoryEntityFactory() : base("SalesOrderHistoryEntity", AW.Data.EntityType.SalesOrderHistoryEntity) { }
+
+		/// <summary>Creates a new, empty SalesOrderHistoryEntity object.</summary>
+		/// <returns>A new, empty SalesOrderHistoryEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new SalesOrderHistoryEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesOrderHistory
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("SalesOrderHistoryEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
+
+		#region Included Code
+
+		#endregion
+	}
+	
 	/// <summary>Factory to create new, empty ScrapReasonEntity objects.</summary>
 	[Serializable]
 	public partial class ScrapReasonEntityFactory : EntityFactoryBase {
@@ -889,6 +947,12 @@ namespace AW.Data.FactoryClasses
 			return toReturn;
 		}
 
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("TransactionHistoryEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
 
 		#region Included Code
 
@@ -955,6 +1019,35 @@ namespace AW.Data.FactoryClasses
 			return toReturn;
 		}
 
+
+		#region Included Code
+
+		#endregion
+	}
+	
+	/// <summary>Factory to create new, empty WorkOrderHistoryEntity objects.</summary>
+	[Serializable]
+	public partial class WorkOrderHistoryEntityFactory : EntityFactoryBase {
+		/// <summary>CTor</summary>
+		public WorkOrderHistoryEntityFactory() : base("WorkOrderHistoryEntity", AW.Data.EntityType.WorkOrderHistoryEntity) { }
+
+		/// <summary>Creates a new, empty WorkOrderHistoryEntity object.</summary>
+		/// <returns>A new, empty WorkOrderHistoryEntity object.</returns>
+		public override IEntity Create() {
+			IEntity toReturn = new WorkOrderHistoryEntity();
+			
+			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewWorkOrderHistory
+			// __LLBLGENPRO_USER_CODE_REGION_END
+			
+			return toReturn;
+		}
+
+		/// <summary>Creates the hierarchy fields for the entity to which this factory belongs.</summary>
+		/// <returns>IEntityFields object with the fields of all the entities in teh hierarchy of this entity or the fields of this entity if the entity isn't in a hierarchy.</returns>
+		public override IEntityFields CreateHierarchyFields()
+		{
+			return new EntityFields(InheritanceInfoProviderSingleton.GetInstance().GetHierarchyFields("WorkOrderHistoryEntity"), InheritanceInfoProviderSingleton.GetInstance(), null);
+		}
 
 		#region Included Code
 
@@ -1749,6 +1842,10 @@ namespace AW.Data.FactoryClasses
 					return new ProductReviewCollection();
 				case AW.Data.EntityType.ProductSubcategoryEntity:
 					return new ProductSubcategoryCollection();
+				case AW.Data.EntityType.PurchaseOrderHistoryEntity:
+					return new PurchaseOrderHistoryCollection();
+				case AW.Data.EntityType.SalesOrderHistoryEntity:
+					return new SalesOrderHistoryCollection();
 				case AW.Data.EntityType.ScrapReasonEntity:
 					return new ScrapReasonCollection();
 				case AW.Data.EntityType.TransactionHistoryEntity:
@@ -1759,6 +1856,8 @@ namespace AW.Data.FactoryClasses
 					return new UnitMeasureCollection();
 				case AW.Data.EntityType.WorkOrderEntity:
 					return new WorkOrderCollection();
+				case AW.Data.EntityType.WorkOrderHistoryEntity:
+					return new WorkOrderHistoryCollection();
 				case AW.Data.EntityType.WorkOrderRoutingEntity:
 					return new WorkOrderRoutingCollection();
 				case AW.Data.EntityType.ProductVendorEntity:
@@ -1944,6 +2043,12 @@ namespace AW.Data.FactoryClasses
 				case AW.Data.EntityType.ProductSubcategoryEntity:
 					factoryToUse = new ProductSubcategoryEntityFactory();
 					break;
+				case AW.Data.EntityType.PurchaseOrderHistoryEntity:
+					factoryToUse = new PurchaseOrderHistoryEntityFactory();
+					break;
+				case AW.Data.EntityType.SalesOrderHistoryEntity:
+					factoryToUse = new SalesOrderHistoryEntityFactory();
+					break;
 				case AW.Data.EntityType.ScrapReasonEntity:
 					factoryToUse = new ScrapReasonEntityFactory();
 					break;
@@ -1958,6 +2063,9 @@ namespace AW.Data.FactoryClasses
 					break;
 				case AW.Data.EntityType.WorkOrderEntity:
 					factoryToUse = new WorkOrderEntityFactory();
+					break;
+				case AW.Data.EntityType.WorkOrderHistoryEntity:
+					factoryToUse = new WorkOrderHistoryEntityFactory();
 					break;
 				case AW.Data.EntityType.WorkOrderRoutingEntity:
 					factoryToUse = new WorkOrderRoutingEntityFactory();

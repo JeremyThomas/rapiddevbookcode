@@ -233,6 +233,12 @@
       <SubType>Code</SubType>
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="EntityClasses\PurchaseOrderHistoryEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EntityClasses\SalesOrderHistoryEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="EntityClasses\SpecialOfferProductEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -280,6 +286,9 @@
     </Compile>
     <Compile Include="EntityClasses\CustomerViewRelatedEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="EntityClasses\WorkOrderHistoryEntity.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="FactoryClasses\DaoFactory.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
@@ -337,6 +346,12 @@
     <Compile Include="RelationClasses\DynamicRelation.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="RelationClasses\PurchaseOrderHistoryRelations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RelationClasses\SalesOrderHistoryRelations.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RelationClasses\SpecialOfferProductRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -387,6 +402,9 @@
     </Compile>
     <Compile Include="RelationClasses\CustomerViewRelatedRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="RelationClasses\WorkOrderHistoryRelations.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="SalesOrderHeaderEntityValidator.cs" />
     <Compile Include="StoredProcedureCallerClasses\ActionProcedures.cs">
@@ -1068,6 +1086,24 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="RelationClasses\WorkOrderRoutingRelations.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\PurchaseOrderHistoryCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\SalesOrderHistoryCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="CollectionClasses\WorkOrderHistoryCollection.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\PurchaseOrderHistoryDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\SalesOrderHistoryDAO.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
+    <Compile Include="DaoClasses\WorkOrderHistoryDAO.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
   </ItemGroup>

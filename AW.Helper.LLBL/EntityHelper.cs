@@ -134,31 +134,28 @@ namespace AW.Helper.LLBL
 		#region Self Servicing
 
 		/// <summary>
-		/// Executes the query this object represents and returns its results in its native container - an entity collection.
-		/// </summary>
-		/// <typeparam name="T">EntityBase2</typeparam>
-		/// <param name="query">The query.</param>
-		/// <returns>Results of the query in an entity collection.</returns>
-		public static EntityCollectionBase<T> ToEntityCollection<T>(this IQueryable<T> query) where T : EntityBase
-		{
-			var llblQuery = query as ILLBLGenProQuery;
-			return llblQuery == null ? ((IEnumerable<T>) query).ToEntityCollection() : llblQuery.Execute<EntityCollectionBase<T>>();
-		}
-
-		/// <summary>
-		/// Converts an entity enumeration to an entity collection.
+		/// Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes 
+		/// the query this object represents and returns its results in its native container - an entity collection.
 		/// </summary>
 		/// <typeparam name="T">EntityBase2</typeparam>
 		/// <param name="enumerable">The enumerable.</param>
 		/// <returns></returns>
 		public static EntityCollectionBase<T> ToEntityCollection<T>(this IEnumerable<T> enumerable) where T : EntityBase
 		{
-			if (!enumerable.Any())
-				return GetFactory<T>().CreateEntityCollection() as EntityCollectionBase<T>;
-			var entities = ((IEntity) enumerable.First()).GetEntityFactory().CreateEntityCollection() as EntityCollectionBase<T>;
+			var llblQuery = enumerable as ILLBLGenProQuery;
+			if (llblQuery != null)
+				return llblQuery.Execute<EntityCollectionBase<T>>();
+			var entities = GetEntityFactory(enumerable).CreateEntityCollection() as EntityCollectionBase<T>;
 			if (entities != null)
 				entities.AddRange(enumerable);
 			return entities;
+		}
+
+		private static IEntityFactory GetEntityFactory<T>(IEnumerable<T> enumerable) where T : EntityBase
+		{
+			if (!enumerable.Any())
+				return GetFactory<T>();
+			return ((IEntity) enumerable.First()).GetEntityFactory();
 		}
 
 		public static IEntityCollection ToEntityCollection(IEnumerable enumerable, Type itemType)

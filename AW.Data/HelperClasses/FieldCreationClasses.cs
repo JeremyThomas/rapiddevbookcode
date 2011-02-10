@@ -1314,6 +1314,106 @@ namespace AW.Data.HelperClasses
 		}
 	}
 
+	/// <summary>Field Creation Class for entity PurchaseOrderHistoryEntity</summary>
+	public partial class PurchaseOrderHistoryFields
+	{
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.ActualCost field instance</summary>
+		public static EntityField ActualCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.ActualCost);}
+		}
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.Quantity field instance</summary>
+		public static EntityField Quantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.Quantity);}
+		}
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.ReferenceOrderID field instance</summary>
+		public static EntityField ReferenceOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.ReferenceOrderID);}
+		}
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.ReferenceOrderLineID field instance</summary>
+		public static EntityField ReferenceOrderLineID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.ReferenceOrderLineID);}
+		}
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.TransactionDate field instance</summary>
+		public static EntityField TransactionDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.TransactionDate);}
+		}
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.TransactionID field instance</summary>
+		public static EntityField TransactionID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.TransactionID);}
+		}
+		/// <summary>Creates a new PurchaseOrderHistoryEntity.TransactionType field instance</summary>
+		public static EntityField TransactionType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(PurchaseOrderHistoryFieldIndex.TransactionType);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity SalesOrderHistoryEntity</summary>
+	public partial class SalesOrderHistoryFields
+	{
+		/// <summary>Creates a new SalesOrderHistoryEntity.ActualCost field instance</summary>
+		public static EntityField ActualCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.ActualCost);}
+		}
+		/// <summary>Creates a new SalesOrderHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new SalesOrderHistoryEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new SalesOrderHistoryEntity.Quantity field instance</summary>
+		public static EntityField Quantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.Quantity);}
+		}
+		/// <summary>Creates a new SalesOrderHistoryEntity.ReferenceOrderID field instance</summary>
+		public static EntityField ReferenceOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.ReferenceOrderID);}
+		}
+		/// <summary>Creates a new SalesOrderHistoryEntity.ReferenceOrderLineID field instance</summary>
+		public static EntityField ReferenceOrderLineID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.ReferenceOrderLineID);}
+		}
+		/// <summary>Creates a new SalesOrderHistoryEntity.TransactionDate field instance</summary>
+		public static EntityField TransactionDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.TransactionDate);}
+		}
+		/// <summary>Creates a new SalesOrderHistoryEntity.TransactionID field instance</summary>
+		public static EntityField TransactionID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.TransactionID);}
+		}
+		/// <summary>Creates a new SalesOrderHistoryEntity.TransactionType field instance</summary>
+		public static EntityField TransactionType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesOrderHistoryFieldIndex.TransactionType);}
+		}
+	}
+
 	/// <summary>Field Creation Class for entity ScrapReasonEntity</summary>
 	public partial class ScrapReasonFields
 	{
@@ -1506,6 +1606,56 @@ namespace AW.Data.HelperClasses
 		public static EntityField WorkOrderID
 		{
 			get { return (EntityField)EntityFieldFactory.Create(WorkOrderFieldIndex.WorkOrderID);}
+		}
+	}
+
+	/// <summary>Field Creation Class for entity WorkOrderHistoryEntity</summary>
+	public partial class WorkOrderHistoryFields
+	{
+		/// <summary>Creates a new WorkOrderHistoryEntity.ActualCost field instance</summary>
+		public static EntityField ActualCost
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.ActualCost);}
+		}
+		/// <summary>Creates a new WorkOrderHistoryEntity.ModifiedDate field instance</summary>
+		public static EntityField ModifiedDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.ModifiedDate);}
+		}
+		/// <summary>Creates a new WorkOrderHistoryEntity.ProductID field instance</summary>
+		public static EntityField ProductID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.ProductID);}
+		}
+		/// <summary>Creates a new WorkOrderHistoryEntity.Quantity field instance</summary>
+		public static EntityField Quantity
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.Quantity);}
+		}
+		/// <summary>Creates a new WorkOrderHistoryEntity.ReferenceOrderID field instance</summary>
+		public static EntityField ReferenceOrderID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.ReferenceOrderID);}
+		}
+		/// <summary>Creates a new WorkOrderHistoryEntity.ReferenceOrderLineID field instance</summary>
+		public static EntityField ReferenceOrderLineID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.ReferenceOrderLineID);}
+		}
+		/// <summary>Creates a new WorkOrderHistoryEntity.TransactionDate field instance</summary>
+		public static EntityField TransactionDate
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.TransactionDate);}
+		}
+		/// <summary>Creates a new WorkOrderHistoryEntity.TransactionID field instance</summary>
+		public static EntityField TransactionID
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.TransactionID);}
+		}
+		/// <summary>Creates a new WorkOrderHistoryEntity.TransactionType field instance</summary>
+		public static EntityField TransactionType
+		{
+			get { return (EntityField)EntityFieldFactory.Create(WorkOrderHistoryFieldIndex.TransactionType);}
 		}
 	}
 
@@ -2968,46 +3118,46 @@ namespace AW.Data.HelperClasses
 	/// <summary>Field Creation Class for typedview CustomerViewTypedView</summary>
 	public partial class CustomerViewFields
 	{
-		/// <summary>Creates a new CustomerViewTypedView.AddressLine1 field instance</summary>
-		public static EntityField AddressLine1
-		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.AddressLine1);}
-		}
-
-		/// <summary>Creates a new CustomerViewTypedView.AddressLine2 field instance</summary>
-		public static EntityField AddressLine2
-		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.AddressLine2);}
-		}
-
-		/// <summary>Creates a new CustomerViewTypedView.AddressType field instance</summary>
-		public static EntityField AddressType
-		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.AddressType);}
-		}
-
-		/// <summary>Creates a new CustomerViewTypedView.City field instance</summary>
-		public static EntityField City
-		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.City);}
-		}
-
-		/// <summary>Creates a new CustomerViewTypedView.CountryRegionName field instance</summary>
-		public static EntityField CountryRegionName
-		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.CountryRegionName);}
-		}
-
 		/// <summary>Creates a new CustomerViewTypedView.CustomerId field instance</summary>
 		public static EntityField CustomerId
 		{
 			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.CustomerId);}
 		}
 
-		/// <summary>Creates a new CustomerViewTypedView.Demographics field instance</summary>
-		public static EntityField Demographics
+		/// <summary>Creates a new CustomerViewTypedView.Title field instance</summary>
+		public static EntityField Title
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Demographics);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Title);}
+		}
+
+		/// <summary>Creates a new CustomerViewTypedView.FirstName field instance</summary>
+		public static EntityField FirstName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.FirstName);}
+		}
+
+		/// <summary>Creates a new CustomerViewTypedView.MiddleName field instance</summary>
+		public static EntityField MiddleName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.MiddleName);}
+		}
+
+		/// <summary>Creates a new CustomerViewTypedView.LastName field instance</summary>
+		public static EntityField LastName
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.LastName);}
+		}
+
+		/// <summary>Creates a new CustomerViewTypedView.Suffix field instance</summary>
+		public static EntityField Suffix
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Suffix);}
+		}
+
+		/// <summary>Creates a new CustomerViewTypedView.Phone field instance</summary>
+		public static EntityField Phone
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Phone);}
 		}
 
 		/// <summary>Creates a new CustomerViewTypedView.EmailAddress field instance</summary>
@@ -3022,34 +3172,28 @@ namespace AW.Data.HelperClasses
 			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.EmailPromotion);}
 		}
 
-		/// <summary>Creates a new CustomerViewTypedView.FirstName field instance</summary>
-		public static EntityField FirstName
+		/// <summary>Creates a new CustomerViewTypedView.AddressType field instance</summary>
+		public static EntityField AddressType
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.FirstName);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.AddressType);}
 		}
 
-		/// <summary>Creates a new CustomerViewTypedView.LastName field instance</summary>
-		public static EntityField LastName
+		/// <summary>Creates a new CustomerViewTypedView.AddressLine1 field instance</summary>
+		public static EntityField AddressLine1
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.LastName);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.AddressLine1);}
 		}
 
-		/// <summary>Creates a new CustomerViewTypedView.MiddleName field instance</summary>
-		public static EntityField MiddleName
+		/// <summary>Creates a new CustomerViewTypedView.AddressLine2 field instance</summary>
+		public static EntityField AddressLine2
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.MiddleName);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.AddressLine2);}
 		}
 
-		/// <summary>Creates a new CustomerViewTypedView.Phone field instance</summary>
-		public static EntityField Phone
+		/// <summary>Creates a new CustomerViewTypedView.City field instance</summary>
+		public static EntityField City
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Phone);}
-		}
-
-		/// <summary>Creates a new CustomerViewTypedView.PostalCode field instance</summary>
-		public static EntityField PostalCode
-		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.PostalCode);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.City);}
 		}
 
 		/// <summary>Creates a new CustomerViewTypedView.StateProvinceName field instance</summary>
@@ -3058,16 +3202,22 @@ namespace AW.Data.HelperClasses
 			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.StateProvinceName);}
 		}
 
-		/// <summary>Creates a new CustomerViewTypedView.Suffix field instance</summary>
-		public static EntityField Suffix
+		/// <summary>Creates a new CustomerViewTypedView.PostalCode field instance</summary>
+		public static EntityField PostalCode
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Suffix);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.PostalCode);}
 		}
 
-		/// <summary>Creates a new CustomerViewTypedView.Title field instance</summary>
-		public static EntityField Title
+		/// <summary>Creates a new CustomerViewTypedView.CountryRegionName field instance</summary>
+		public static EntityField CountryRegionName
 		{
-			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Title);}
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.CountryRegionName);}
+		}
+
+		/// <summary>Creates a new CustomerViewTypedView.Demographics field instance</summary>
+		public static EntityField Demographics
+		{
+			get { return (EntityField)EntityFieldFactory.Create(CustomerViewFieldIndex.Demographics);}
 		}
 	}
 }

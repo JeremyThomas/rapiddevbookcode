@@ -203,8 +203,6 @@ namespace AW.Data.EntityClasses
 				case EmployeeFieldIndex.ManagerID:
 					DesetupSyncManager(true, false);
 					_alreadyFetchedManager = false;
-					DesetupSyncManager(true, false);
-					_alreadyFetchedManager = false;
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
