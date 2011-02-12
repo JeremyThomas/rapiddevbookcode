@@ -13,23 +13,37 @@ namespace AW.Helper.LLBL
 	public static class EntityHelper
 	{
 		/// <summary>
-		/// returns the datasource to use in a Linq query for the entity type specified
+		/// returns the DataSource to use in a Linq query for the entity type specified
 		/// </summary>
-		/// <typeparam name="T">the type of the entity to get the datasource for</typeparam>
+		/// <typeparam name="T">the type of the entity to get the DataSource for</typeparam>
 		/// <param name="entity">The entity.</param>
-		/// <param name="linqMetaData">The linq meta data.</param>
-		/// <returns>the requested datasource</returns>
+		/// <param name="linqMetaData">The Linq meta data.</param>
+		/// <returns>the requested DataSource</returns>
 		public static DataSourceBase<T> GetQueryableForEntity<T>(this ILinqMetaData linqMetaData, T entity) where T : class, IEntityCore
 		{
 			return linqMetaData.GetQueryableForEntity(entity.LLBLGenProEntityTypeValue) as DataSourceBase<T>;
 		}
 
-		/// <summary>returns the datasource to use in a Linq query for the entity type specified</summary>
-		/// <typeparam name="T">the type of the entity to get the datasource for</typeparam>
-		/// <returns>the requested datasource</returns>
+		/// <summary>returns the DataSource to use in a Linq query for the entity type specified</summary>
+		/// <typeparam name="T">the type of the entity to get the DataSource for</typeparam>
+		/// <returns>the requested DataSource</returns>
 		public static DataSourceBase<T> GetQueryableForEntity<T>(this ILinqMetaData linqMetaData) where T : class, IEntityCore
 		{
-			return linqMetaData.GetQueryableForEntity(CreateEntity<T>());
+			try
+			{
+				return linqMetaData.GetQueryableForEntity(CreateEntity<T>());
+			}
+			catch (Exception)
+			{
+				try
+				{
+					return GetQueryableForEntitySafely(linqMetaData, typeof (T)) as DataSourceBase<T>;
+				}
+				catch (Exception)
+				{
+					return null;
+				}
+			}
 		}
 
 		public static IDataSource GetQueryableForEntity(this ILinqMetaData linqMetaData, Type typeOfEntity)
@@ -43,17 +57,22 @@ namespace AW.Helper.LLBL
 			{
 				try
 				{
-					for (var entityTypeValueForType = 0; entityTypeValueForType < Int32.MaxValue; entityTypeValueForType++)
-					{
-						var queryableForEntity = linqMetaData.GetQueryableForEntity(entityTypeValueForType);
-						if (queryableForEntity.ElementType == typeOfEntity)
-							return queryableForEntity;
-					}
+					return GetQueryableForEntitySafely(linqMetaData, typeOfEntity);
 				}
 				catch (Exception)
 				{
 					return null;
 				}
+			}
+		}
+
+		private static IDataSource GetQueryableForEntitySafely(ILinqMetaData linqMetaData, Type typeOfEntity)
+		{
+			for (var entityTypeValueForType = 0; entityTypeValueForType < Int32.MaxValue; entityTypeValueForType++)
+			{
+				var queryableForEntity = linqMetaData.GetQueryableForEntity(entityTypeValueForType);
+				if (queryableForEntity.ElementType == typeOfEntity)
+					return queryableForEntity;
 			}
 			return null;
 		}
@@ -65,7 +84,26 @@ namespace AW.Helper.LLBL
 		/// <returns>An instance of the type.</returns>
 		public static IEntityCore CreateEntity(Type typeOfEntity)
 		{
-			return Activator.CreateInstance(typeOfEntity) as IEntityCore;
+			try
+			{
+				return Activator.CreateInstance(typeOfEntity) as IEntityCore;
+			}
+			catch (MissingMethodException)
+			{
+				var elementCreatorCoreType = typeof (IElementCreatorCore).GetAssignable(typeOfEntity.Assembly.GetExportedTypes()).FirstOrDefault();
+				if (elementCreatorCoreType != null)
+				{
+					var elementCreatorCore = Activator.CreateInstance(elementCreatorCoreType) as IElementCreatorCore;
+					if (elementCreatorCore != null)
+						return CreateEntity(typeOfEntity, elementCreatorCore);
+				}
+				throw;
+			}
+		}
+
+		public static IEntityCore CreateEntity(Type typeOfEntity, IElementCreatorCore elementCreatorCore)
+		{
+			return elementCreatorCore.GetFactory(typeOfEntity).Create();
 		}
 
 		/// <summary>
@@ -153,9 +191,12 @@ namespace AW.Helper.LLBL
 
 		private static IEntityFactory GetEntityFactory<T>(IEnumerable<T> enumerable) where T : EntityBase
 		{
-			if (!enumerable.Any())
-				return GetFactory<T>();
-			return ((IEntity) enumerable.First()).GetEntityFactory();
+			if (enumerable.Any())
+			{
+				var first = enumerable.FirstOrDefault(e => e.GetType().Equals(typeof (T))) as IEntity;
+				if (first != null) return first.GetEntityFactory();
+			}
+			return GetFactory<T>();
 		}
 
 		public static IEntityCollection ToEntityCollection(IEnumerable enumerable, Type itemType)
@@ -550,7 +591,7 @@ namespace AW.Helper.LLBL
 		public static EntityCollectionBase2<T> ToEntityCollection2<T>(this IQueryable<T> query) where T : EntityBase2
 		{
 			var llblQuery = query as ILLBLGenProQuery;
-			return llblQuery == null ? ((IEnumerable<T>)query).ToEntityCollection2() : llblQuery.Execute<EntityCollectionBase2<T>>();
+			return llblQuery == null ? ((IEnumerable<T>) query).ToEntityCollection2() : llblQuery.Execute<EntityCollectionBase2<T>>();
 		}
 
 		/// <summary>
@@ -563,7 +604,7 @@ namespace AW.Helper.LLBL
 		{
 			if (!enumerable.Any())
 				return GetFactory2<T>().CreateEntityCollection() as EntityCollectionBase2<T>;
-			var entities = ((IEntity)enumerable.First()).GetEntityFactory().CreateEntityCollection() as EntityCollectionBase2<T>;
+			var entities = ((IEntity) enumerable.First()).GetEntityFactory().CreateEntityCollection() as EntityCollectionBase2<T>;
 			if (entities != null)
 				entities.AddRange(enumerable);
 			return entities;
@@ -571,7 +612,7 @@ namespace AW.Helper.LLBL
 
 		public static IEntityFactory2 GetFactory2<T>(IElementCreatorCore elementCreatorCore) where T : EntityBase2
 		{
-			return ((IEntityFactory2)elementCreatorCore.GetFactory(typeof(T)));
+			return ((IEntityFactory2) elementCreatorCore.GetFactory(typeof (T)));
 		}
 
 		/// <summary>
@@ -581,7 +622,7 @@ namespace AW.Helper.LLBL
 		/// <returns>factory to use or null if not found</returns>
 		public static IEntityFactory2 GetFactory2<T>() where T : EntityBase2
 		{
-			return ((IEntity2)CreateEntity<T>()).GetEntityFactory();
+			return ((IEntity2) CreateEntity<T>()).GetEntityFactory();
 		}
 
 		public static IEntityCollection2 ToEntityCollection2(IEnumerable enumerable, Type itemType)
@@ -593,7 +634,7 @@ namespace AW.Helper.LLBL
 			if (entities == null)
 			{
 				var enumerator = enumerable.GetEnumerator();
-			  while (enumerator.MoveNext())
+				while (enumerator.MoveNext())
 				{
 					var firstEntity = ((IEntity2) enumerator.Current);
 					if (firstEntity != null && firstEntity.GetType() == itemType)

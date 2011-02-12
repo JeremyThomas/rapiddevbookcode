@@ -1,11 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.HelperClasses;
 using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
@@ -17,7 +17,7 @@ namespace AW.Tests
 	[TestClass]
 	public class EntityHelperTest
 	{
-		public static readonly int NumberOfEntities = Enum.GetValues(typeof(EntityType)).GetLength(0);
+		public static readonly int NumberOfEntities = Enum.GetValues(typeof (EntityType)).GetLength(0);
 
 		/// <summary>
 		///Gets or sets the test context which provides
@@ -68,7 +68,7 @@ namespace AW.Tests
 			actual = query.Distinct().ToEntityCollection(); //LLBLGenProQuery
 			CollectionAssert.AreEqual(expected, actual);
 
-			actual = ((IEnumerable<T>)query).ToEntityCollection(); //DataSourceBase as IEnumerable<T> 
+			actual = (query).ToEntityCollection(); //DataSourceBase as IEnumerable<T> 
 			CollectionAssert.AreEqual(expected, actual);
 
 			CollectionAssert.AreEqual(expected, actual.Distinct().ToEntityCollection()); //IEnumerable<T> 
@@ -89,7 +89,7 @@ namespace AW.Tests
 
 		private static EntityCollectionBase<T> FetchEntityCollection<T>(IElementCreatorCore elementCreatorCore) where T : EntityBase
 		{
-			var expected = (IEntityFactory)elementCreatorCore.GetFactory(typeof(T)).Create() as EntityCollectionBase<T>;
+			var expected = (IEntityFactory) elementCreatorCore.GetFactory(typeof (T)).Create() as EntityCollectionBase<T>;
 			if (expected != null)
 			{
 				expected.GetMulti(null);
@@ -110,7 +110,7 @@ namespace AW.Tests
 			ToEntityCollectionTestHelper<TransactionHistoryEntity>();
 		}
 
-		[TestMethod, Description("A test for ToEntityCollection for abstract entities")]
+		[TestMethod, Description("A test for ToEntityCollection for a non - abstract base entities")]
 		public void ToEntityCollectionBaseClassTest()
 		{
 			ToEntityCollectionTestHelper<CustomerEntity>();
@@ -120,12 +120,88 @@ namespace AW.Tests
 		public void GetEntitiesTypesTest()
 		{
 			var allLoadedDescendanceEntitiesType = EntityHelper.GetEntitiesTypes().ToList();
-			var commonEntityBaseEntitiesType = EntityHelper.GetEntitiesTypes(typeof(CommonEntityBase)).ToList();
+			var commonEntityBaseEntitiesType = EntityHelper.GetEntitiesTypes(typeof (CommonEntityBase)).ToList();
 			var assemblyEntitiesType = EntityHelper.GetEntitiesTypes(MetaSingletons.MetaData.GetType().Assembly).ToList();
 			CollectionAssert.AreEqual(allLoadedDescendanceEntitiesType, commonEntityBaseEntitiesType);
 			CollectionAssert.AreEqual(commonEntityBaseEntitiesType, assemblyEntitiesType);
 			Assert.AreEqual(NumberOfEntities, allLoadedDescendanceEntitiesType.Count);
 		}
 
+
+		/// <summary>
+		///A test for GetQueryableForEntity
+		///</summary>
+		public void GetQueryableForEntityTestHelper<T>() where T : class, IEntityCore
+		{
+			var actual = MetaSingletons.MetaData.GetQueryableForEntity<T>();
+			Assert.IsInstanceOfType(actual, typeof (DataSource<T>));
+		}
+
+		[TestMethod]
+		public void GetQueryableForEntityTest()
+		{
+			GetQueryableForEntityTestHelper<AddressTypeEntity>();
+		}
+
+		[TestMethod]
+		public void GetQueryableForAbstractEntityTest()
+		{
+			GetQueryableForEntityTestHelper<TransactionHistoryEntity>();
+		}
+
+		/// <summary>
+		///A test for GetQueryableForEntity
+		///</summary>
+		[TestMethod]
+		public void GetQueryableForEntityTestNonGeneric()
+		{
+			var actual = MetaSingletons.MetaData.GetQueryableForEntity(typeof (AddressTypeEntity));
+			Assert.IsInstanceOfType(actual, MetaSingletons.MetaData.AddressType.GetType());
+		}
+
+		[TestMethod]
+		public void GetQueryableForAbstractEntityTestNonGeneric()
+		{
+			var actual = MetaSingletons.MetaData.GetQueryableForEntity(typeof (TransactionHistoryEntity));
+			Assert.IsInstanceOfType(actual, MetaSingletons.MetaData.TransactionHistory.GetType());
+		}
+
+		/// <summary>
+		///A test for GetQueryableForEntity
+		///</summary>
+		public void GetQueryableForEntityWithEntityTestHelper<T>(T entity) where T : class, IEntityCore
+		{
+			var actual = MetaSingletons.MetaData.GetQueryableForEntity(entity);
+			Assert.IsInstanceOfType(actual, typeof (DataSource<T>));
+		}
+
+		[TestMethod]
+		public void GetQueryableForEntityWithEntityTest()
+		{
+			GetQueryableForEntityWithEntityTestHelper(new AddressTypeEntity());
+		}
+
+		[TestMethod]
+		public void GetQueryableForAbstractEntityWithEntityTest()
+		{
+			GetQueryableForEntityWithEntityTestHelper(FactoryHelper.CreateEntity<TransactionHistoryEntity>());
+		}
+
+		/// <summary>
+		///A test for GetEntityTypeValueForType
+		///</summary>
+		[TestMethod]
+		public void GetEntityTypeValueForTypeTest()
+		{
+			var actual = EntityHelper.GetEntityTypeValueForType(typeof (AddressTypeEntity));
+			Assert.AreEqual((int) EntityType.AddressTypeEntity, actual);
+		}
+
+		[TestMethod]
+		public void GetAbstractEntityTypeValueForTypeTest()
+		{
+			var actual = EntityHelper.GetEntityTypeValueForType(typeof (TransactionHistoryEntity));
+			Assert.AreEqual((int) EntityType.TransactionHistoryEntity, actual);
+		}
 	}
 }
