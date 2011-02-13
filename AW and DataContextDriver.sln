@@ -17,7 +17,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2C
 		Lib\CSScriptLibrary.dll = Lib\CSScriptLibrary.dll
 		Lib\CSScriptLibrary.pdb = Lib\CSScriptLibrary.pdb
 		Lib\CSScriptLibrary.xml = Lib\CSScriptLibrary.xml
-		Lib\nunit.framework.dll = Lib\nunit.framework.dll
 		Lib\sliver.Windows.Forms.StateBrowser.dll = Lib\sliver.Windows.Forms.StateBrowser.dll
 	EndProjectSection
 EndProject
@@ -118,6 +117,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.SqlServerSQL Server", "Northwind\DAL\SQL Server (SqlClient)\Northwind.DAL.SqlServerSQL Server.csproj", "{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.OracleOracle", "Northwind\DAL\Oracle (ODP.NET)\Northwind.DAL.OracleOracle.csproj", "{9F67CB50-9D2F-482E-827C-4F4E43FA4842}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9E62DAD6-C73A-49CA-9906-14E28325549C}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\Test\Moq.chm = Lib\Test\Moq.chm
+		Lib\Test\Moq.dll = Lib\Test\Moq.dll
+		Lib\Test\Moq.pdb = Lib\Test\Moq.pdb
+		Lib\Test\Moq.xml = Lib\Test\Moq.xml
+		Lib\Test\NMock2.dll = Lib\Test\NMock2.dll
+		Lib\nunit.framework.dll = Lib\nunit.framework.dll
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -352,6 +361,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
+		{9E62DAD6-C73A-49CA-9906-14E28325549C} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 
