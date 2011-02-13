@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -57,7 +58,7 @@ namespace AW.Tests
 
 		#endregion
 
-		public static void ToEntityCollectionTestHelper<T>() where T : CommonEntityBase
+		public static EntityCollectionBase<T> ToEntityCollectionTestHelper<T>() where T : CommonEntityBase
 		{
 			var query = MetaSingletons.MetaData.GetQueryableForEntity<T>();
 			var expected = FetchEntityCollection<T>();
@@ -76,8 +77,11 @@ namespace AW.Tests
 			var actualQueryable = actual.AsQueryable().ToEntityCollection();
 			CollectionAssert.AreEqual(expected, actualQueryable); //IQueryable not ILLBLGenProQuery
 
+			CollectionAssert.AreEqual(expected, (EntityCollectionBase<T>)EntityHelper.ToEntityCollection(expected, typeof(T))); //IEnumerable
+
 			var emptyCollection = FactoryHelper.CreateEntityCollection<T>();
 			CollectionAssert.AreEqual(emptyCollection, emptyCollection.Distinct().ToEntityCollection()); //IEnumerable<T> 
+			return expected;
 		}
 
 		private static EntityCollectionBase<T> FetchEntityCollection<T>() where T : EntityBase
