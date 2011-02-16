@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml.Schema;
 using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
@@ -151,6 +152,13 @@ namespace AW.Tests
 			listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString()});
 			CopyToDataTableAndAssert(listofNonSerializableClasses, typeof (SerializableClass));
 			CopyToDataTableAndAssert(MetaDataHelper.GetPropertiesToSerialize(typeof (AddressTypeEntity)));
+		}
+
+		[TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("A test for CopyToDataTable")]
+		public void XmlSchemaObjectCollectionCopyToDataTableTest()
+		{
+			var xmlSchema = TestData.GetTestXmlSchema();
+			CopyToDataTableAndAssert(xmlSchema.Items, xmlSchema.Items[0].GetType());
 		}
 
 		[TestMethod]

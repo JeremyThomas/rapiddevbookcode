@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Schema;
 using AQDPortal.UnitTestUtilities;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -262,13 +263,23 @@ namespace AW.DebugVisualizers.Tests
 		public void XmlSchemaTest()
 		{
 			var xmlSchema = TestData.GetTestXmlSchema();
-			TestShowTransported(xmlSchema.Items, 28, 3);
+			TestShowTransported(xmlSchema.Items, 28, 23);
 			TestShowTransported(xmlSchema.Attributes.Names, 0);
 			TestShowTransported(xmlSchema.Elements.Names, 3);
 			TestShowTransported(xmlSchema.Elements.Values, 28, 23);
 			TestShowTransported(xmlSchema.Groups.Values, 0);
 			TestShowTransported(xmlSchema.SchemaTypes.Values, 0);
 		}
+
+		//[TestMethod]
+		//public void XmlSchemaFromFileTest()
+		//{
+		//  var xmlSchema = TestData.GetTestXmlSchema(@"C:\TFSProjects\AQDPortal\Trunk\AQDPortal.MVC\AQD.ExportUtility\RASchemas\Occurrence_1_0.xsd");
+		//  TestShowTransported(xmlSchema.Items, 5, 28);
+		//  TestShowTransported(xmlSchema.Groups.Values, 0);
+		//  var xmlSchemaComplexType = (xmlSchema.Elements.Values.Cast<XmlSchemaElement>().First(element => element.Name == "OccurrenceDetails").ElementSchemaType as XmlSchemaComplexType);
+		//  TestShowTransported((xmlSchemaComplexType.Particle as XmlSchemaSequence).Items, 28, 23);
+		//}
 
 		[TestMethod]
 		public void SettingsPropertyTest()

@@ -98,6 +98,20 @@ namespace AW.Tests
 			return compiledSchema;
 		}
 
+		public static XmlSchema GetTestXmlSchema(string path)
+		{
+			if (File.Exists(path))
+			{
+				var schema = XmlSchema.Read(new FileStream(path, FileMode.Open, FileAccess.Read), ValidationCallbackOne);
+				var schemaSet = new XmlSchemaSet();
+				schemaSet.ValidationEventHandler += ValidationCallbackOne;
+				schemaSet.Add(schema);
+				schemaSet.Compile();
+				return schema;
+			}
+			return GetTestXmlSchema();
+		}
+
 		public static void ValidationCallbackOne(object sender, ValidationEventArgs args)
 		{
 		}

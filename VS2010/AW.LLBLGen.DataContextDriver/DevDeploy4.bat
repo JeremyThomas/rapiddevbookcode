@@ -18,3 +18,4 @@ rem xcopy /i/y AW.LLBLGen.DataContextDriver.dll "C:\Documents and Settings\All U
 rem xcopy /i/y AW.LLBLGen.DataContextDriver.pdb "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\3.5\AW.LLBLGen.DataContextDriver (30e1e0e3428e39e5)\"
 xcopy /i/y *.dll "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\4.0\AW.LLBLGen.DataContextDriver (d500980a8809e663)\"
 xcopy /i/y *.pdb "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\4.0\AW.LLBLGen.DataContextDriver (d500980a8809e663)"
+pause
