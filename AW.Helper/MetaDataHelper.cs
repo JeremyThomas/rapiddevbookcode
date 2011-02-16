@@ -251,6 +251,11 @@ namespace AW.Helper
 			return GetPropertiesToDisplay(type).FilterBySerializable().FilterByIsNotAssignableFrom(typeof (IDictionary));
 		}
 
+		public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(IEnumerable enumerable)
+		{
+			return GetPropertiesToSerialize(GetEnumerableItemType(enumerable));
+		}
+
 		/// <summary>
 		/// Gets the properties that can be serialized.
 		/// </summary>

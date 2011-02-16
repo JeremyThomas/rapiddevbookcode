@@ -69,6 +69,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -111,6 +112,7 @@
     <Compile Include="HierarchyEditorTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />
     <Compile Include="LookUpQueriesTest.cs" />
+    <Compile Include="MetaDataHelperTest.cs" />
     <Compile Include="NorthwindTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

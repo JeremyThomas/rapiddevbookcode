@@ -308,7 +308,7 @@ namespace AW.Winforms.Helpers.Controls
 			{
 				var fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
 				_fieldsToPropertiesTypeDescriptionProviders.Add(typeToEdit, fieldsToPropertiesTypeDescriptionProvider);
-				TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, typeToEdit);
+				TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, typeToEdit);		
 			}
 		}
 
@@ -340,6 +340,7 @@ namespace AW.Winforms.Helpers.Controls
 			}
 			set
 			{
+				if (_itemType == value) return;
 				_itemType = value;
 				OnSetItemType();
 			}
