@@ -4,9 +4,9 @@
 		Title="LLBLGen Pro 3.0 Connection"
 		Background="{x:Static SystemColors.ControlBrush}" Width="489" 
 		WindowStartupLocation="CenterScreen" Height="470" MaxHeight="470" MinHeight="400" MinWidth="300" Closing="Window_Closing" Loaded="Window_Loaded">
-		<StackPanel Margin="7" MinHeight="0" Height="410">
+	<StackPanel Margin="7" MinHeight="0" Height="410">
 
-				<DockPanel>
+		<DockPanel>
 						<Label DockPanel.Dock="Right" Padding="1">
 								<Hyperlink Click="BrowseAssembly">Browse...</Hyperlink>
 						</Label>
@@ -31,7 +31,7 @@
 						<Label Padding="0,0,0,1">Application config file (if required):</Label>
 				</DockPanel>
 
-				<TextBox Name="txtAppConfigPath" Text="{Binding AppConfigPath}"/>
+				<TextBox Name="txtAppConfigPath" Text="{Binding Path=AppConfigPath}"/>
 			
 				<DockPanel>
 			<Label Padding="0,0,0,1" >Database Provider (or dataAccessAdapter factory method) (if required):</Label>
@@ -40,8 +40,8 @@
 
 			<DockPanel>
 				<Label Padding="0,0,0,1" >Database connection string (if required):</Label>
-			<Label Padding="1" DockPanel.Dock="Right" Width="52">
-				<Hyperlink Click="ChooseAdapter">Choose...</Hyperlink>
+			<Label Padding="1" DockPanel.Dock="Right" HorizontalAlignment="Right">
+				<Hyperlink Click="DataBaseConnectionDialog">Choose...</Hyperlink>
 			</Label>
 		</DockPanel>
 			<TextBox Name="textBoxDatabaseConnectionString" Margin="0,0,0,6" Text="{Binding DatabaseInfo.CustomCxString}"  />
