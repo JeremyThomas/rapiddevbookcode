@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Xml.Linq;
+using ADODB;
 using AW.Helper;
 using AW.LLBLGen.DataContextDriver.Properties;
 using AW.Winforms.Helpers;
 using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Win32;
+using MSDASC;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.LLBLGen.DataContextDriver.Static
@@ -66,6 +69,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			base.OnSourceInitialized(e);
 			this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
+			System.Windows.Data.CollectionViewSource iConnectionInfoViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("iConnectionInfoViewSource")));
+			// Load data by setting the CollectionViewSource.Source property:
+			// iConnectionInfoViewSource.Source = [generic data source]
 		}
 
 		private void btnSaveDefault_Click(object sender, RoutedEventArgs e)
@@ -387,6 +393,45 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					AddAssembly(_cxInfo, fileName);
 				}
+			}
+		}
+
+		private void DataBaseConnectionDialog(object sender, RoutedEventArgs e)
+		{
+			var mydlg = new DataLinks();
+			var adoType = Type.GetTypeFromProgID("ADODB.Connection");
+			if (adoType == null)
+			{
+				//Cast the generic object that PromptNew returns to an ADODB._Connection.
+				ProcessConnection((_Connection)mydlg.PromptNew());
+			}
+			else
+			{
+				var connection = (_Connection)Activator.CreateInstance(adoType);
+				connection.ConnectionString = _cxInfo.DatabaseInfo.CustomCxString;
+				if (mydlg.PromptEdit(connection))
+					ProcessConnection(connection);
+			}
+		}
+
+		private void ProcessConnection(_Connection connection)
+		{
+			var oleDbConnectionStringBuilder = new OleDbConnectionStringBuilder();
+			oleDbConnectionStringBuilder.ConnectionString = connection.ConnectionString;
+			if (oleDbConnectionStringBuilder.PersistSecurityInfo)
+			{
+				connection.Open("", "", "", 0);
+				if (connection.State == 1)
+				{
+					_cxInfo.DatabaseInfo.CustomCxString = connection.ConnectionString;
+					connection.Close();
+					connection.Open();
+				}
+			}
+			else
+			{
+				_cxInfo.DatabaseInfo.CustomCxString = connection.ConnectionString;
+				connection.Open();
 			}
 		}
 

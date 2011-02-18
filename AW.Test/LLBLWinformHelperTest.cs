@@ -105,7 +105,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void PopulateTreeViewWithSchemaTest()
 		{
-			TestPopulateTreeViewWithSchema(EntityHelperTest.NumberOfEntities, EntityTreeView, null, null);
+			TestPopulateTreeViewWithSchema(EntityTreeView, null, null);
 		}
 
 		/// <summary>
@@ -114,7 +114,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void PopulateTreeViewWithSchemaCommonEntityBaseTest()
 		{
-			TestPopulateTreeViewWithSchema(EntityHelperTest.NumberOfEntities, EntityTreeView, typeof(CommonEntityBase), null);
+			TestPopulateTreeViewWithSchema(EntityTreeView, typeof(CommonEntityBase), null);
 		}
 
 		/// <summary>
@@ -123,7 +123,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void PopulateTreeViewWithSchemaILinqMetaDataTest()
 		{
-			TestPopulateTreeViewWithSchema(EntityHelperTest.NumberOfEntities, EntityTreeView, null, MetaSingletons.MetaData);
+			TestPopulateTreeViewWithSchema(EntityTreeView, null, MetaSingletons.MetaData);
 		}
 
 		/// <summary>
@@ -144,16 +144,17 @@ namespace AW.Tests
 			return baseType == null ? (linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(linqMetaData.GetType().Assembly)) : EntityHelper.GetEntitiesTypes(baseType);
 		}
 
-		private static void TestPopulateTreeViewWithSchema(int expectedNodeCount, TreeView entityTreeView, Type baseType, ILinqMetaData linqMetaData)
+		private static void TestPopulateTreeViewWithSchema(TreeView entityTreeView, Type baseType, ILinqMetaData linqMetaData)
 		{
-			TestPopulateTreeViewWithSchema(expectedNodeCount, entityTreeView, GetEntitiesTypes(baseType, linqMetaData));
+			TestPopulateTreeViewWithSchema(entityTreeView, GetEntitiesTypes(baseType, linqMetaData));
 		}
 
-		private static void TestPopulateTreeViewWithSchema(int expectedNodeCount, TreeView entityTreeView, IEnumerable<Type> entitiesTypes)
+		private static void TestPopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes)
 		{
 			LLBLWinformHelper.PopulateTreeViewWithSchema(entityTreeView, entitiesTypes);
-			Assert.AreEqual(expectedNodeCount, entityTreeView.Nodes.Count);
-			Assert.AreEqual(NumSchemaObjects, entityTreeView.Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count());
+			Assert.AreEqual(entitiesTypes.Count(), entityTreeView.Nodes.Count, "entityTreeView.Nodes.Count");
+			if (entityTreeView.Nodes.Count == EntityHelperTest.NumberOfEntities)
+			  Assert.AreEqual(NumSchemaObjects, entityTreeView.Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count(), "NumSchemaObjects");
 		}
 
 		/// <summary>
