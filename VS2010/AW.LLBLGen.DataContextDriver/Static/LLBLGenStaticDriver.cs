@@ -106,25 +106,44 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void InitializeAdapter(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
 		{
-			var adapterTypeName = ConnectionDialog.GetAdapterType(cxInfo);
-			if (string.IsNullOrEmpty(adapterTypeName))
+			ConnectionDialog.UpGradeDriverDataElements(cxInfo);
+			var adapterTypeName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameAdaptertype);
+			var factoryTypeName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryType);
+			if (string.IsNullOrEmpty(adapterTypeName) && string.IsNullOrEmpty(factoryTypeName))
 				throw new ApplicationException("CommonDaoBase or adapter not found!");
-			if (!File.Exists(cxInfo.CustomTypeInfo.CustomMetadataPath))
-				throw new ApplicationException("Adapter assembly: " + cxInfo.CustomTypeInfo.CustomMetadataPath + " not found!");
-			var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
-			if (dataAccessAdapterAssembly == null)
-				throw new ApplicationException("Adapter assembly: " + cxInfo.CustomTypeInfo.CustomMetadataPath + " could not be loaded!");
-			var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
-			if (dataAccessAdapterType == null)
-				throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, cxInfo.CustomTypeInfo.CustomMetadataPath));
+
+			var adapterAssemblyPath = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameAdapterAssembly);
+			var factoryAssemblyPath = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryAssembly);
+			if (!File.Exists(adapterAssemblyPath) && !File.Exists(factoryAssemblyPath))
+				throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " not found!" + Environment.NewLine+
+			"Factory assembly: " + factoryAssemblyPath + " not found!");
+
 			var linqMetaData = context as ILinqMetaData;
 			if (linqMetaData != null)
 			{
-				var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
-				DataAccessAdapterBase adapter;
-
-				if (typeof (DataAccessAdapterBase).IsAssignableFrom(dataAccessAdapterType))
+				int connectionTypeIndex;
+				Assembly dataAccessAdapterAssembly = null;
+				if (!int.TryParse(ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameConnectionType), out connectionTypeIndex))
 				{
+					dataAccessAdapterAssembly = Assembly.LoadFile(adapterAssemblyPath);
+					if (dataAccessAdapterAssembly == null)
+						connectionTypeIndex = (int)LLBLConnectionType.AdapterFactory;
+					else
+					{
+						connectionTypeIndex = (int)LLBLConnectionType.Adapter;
+					}
+					cxInfo.DriverData.SetElementValue(ConnectionDialog.ElementNameConnectionType, connectionTypeIndex);
+				}
+				DataAccessAdapterBase adapter;
+				if (connectionTypeIndex == (int)LLBLConnectionType.Adapter)
+				{
+					if (dataAccessAdapterAssembly == null)
+						dataAccessAdapterAssembly = Assembly.LoadFile(adapterAssemblyPath);
+					if (dataAccessAdapterAssembly == null)
+						throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
+					var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
+					if (dataAccessAdapterType == null)
+						throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, adapterAssemblyPath));
 					if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
 					{
 						adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
@@ -139,7 +158,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 							                                                          	}) as DataAccessAdapterBase;
 						else
 						{
-							if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
+							if (cxInfo.DatabaseInfo.CustomCxString.Contains("Oracle"))
 								adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
 								                                                          	{
 								                                                          		cxInfo.DatabaseInfo.CustomCxString,
@@ -155,10 +174,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				else
 				{
-					var fullListQueryMethod = dataAccessAdapterType.GetMethod(cxInfo.DatabaseInfo.Provider, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, null, new[] {typeof (string)}, null);
+					string factoryMethodName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryMethod);
+					var factoryAdapterAssembly = Assembly.LoadFile(factoryAssemblyPath);
+					if (factoryAdapterAssembly == null)
+						throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
+					var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
+					if (factoryType == null)
+						throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, adapterAssemblyPath));
+					var fullListQueryMethod = factoryType.GetMethod(factoryMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(string) }, null);
 					if (fullListQueryMethod == null)
 					{
-						GeneralHelper.TraceOut(cxInfo.DatabaseInfo.Provider + " not found");
+						GeneralHelper.TraceOut(factoryMethodName + " not found");
 						adapter = null;
 					}
 					else
@@ -175,6 +201,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 				if (adapter != null)
 				{
+					var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
 					adapterToUseProperty.SetValue(linqMetaData, adapter, null);
 					if (string.IsNullOrEmpty(adapter.ConnectionString))
 						if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))

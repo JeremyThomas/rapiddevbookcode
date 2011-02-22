@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.OleDb;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Documents;
 using System.Xml.Linq;
 using ADODB;
 using AW.Helper;
@@ -24,6 +26,24 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	/// </summary>
 	public partial class ConnectionDialog
 	{
+		/// <summary>
+		/// AdapterType
+		/// </summary>
+		public const string ElementNameAdaptertype = "AdapterType";
+
+		public const string ElementNameAdapterAssembly = "AdapterAssembly";
+
+		/// <summary>
+		/// AdditionalAssemblies
+		/// </summary>
+		public const string ElementNameAdditionalassemblies = "AdditionalAssemblies";
+
+		public const string ElementNameConnectionType = "ConnectionType";
+		public const string ElementNameFactoryMethod = "FactoryMethod";
+		public const string ElementNameFactoryType = "FactoryType";
+		public const string ElementNameFactoryAssembly = "FactoryAssembly";
+
+
 		private readonly IConnectionInfo _cxInfo;
 
 		public ConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
@@ -33,21 +53,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			InitializeComponent();
 			if (isNewConnection)
 			{
-				var defaultDataAccessAdapterFactoryMethod = Settings.Default.DefaultDataAccessAdapterFactoryMethod;
-				if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryMethod))
-					_cxInfo.DatabaseInfo.Provider = defaultDataAccessAdapterFactoryMethod;
-
-				var defaultDataAccessAdapterFactoryType = Settings.Default.DefaultDataAccessAdapterFactoryType;
-				if (!string.IsNullOrEmpty(defaultDataAccessAdapterFactoryType) && string.IsNullOrEmpty(_cxInfo.DatabaseInfo.DbVersion))
-					_cxInfo.DatabaseInfo.DbVersion = Settings.Default.DefaultDataAccessAdapterFactoryType;
+				CreateDriverDataElements(cxInfo);
 
 				_cxInfo.AppConfigPath = Settings.Default.DefaultApplicationConfig;
 				_cxInfo.DatabaseInfo.CustomCxString = Settings.Default.DefaultDatabaseConnection;
 				_cxInfo.CustomTypeInfo.CustomAssemblyPath = Settings.Default.DefaultLinqMetaDataAssembly;
 				_cxInfo.CustomTypeInfo.CustomTypeName = Settings.Default.DefaultLinqMetaData;
-				_cxInfo.CustomTypeInfo.CustomMetadataPath = Settings.Default.DefaultDataAccessAdapterFactoryAssembly;
 				_cxInfo.DisplayName = Settings.Default.DefaultDisplayName;
-				GetAdapterType(_cxInfo);
+			}
+			else
+			{
+				UpGradeDriverDataElements(cxInfo);
 			}
 //      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
 //.OfType<DataRow>()
@@ -57,6 +73,53 @@ namespace AW.LLBLGen.DataContextDriver.Static
 //      {
 //        comboBoxDatabaseProvider.Items.Add(item);
 //      }
+		}
+
+		private static void CreateDriverDataElements(IConnectionInfo cxInfo)
+		{
+			CreateElementIfNeeded(cxInfo, ElementNameAdaptertype, Settings.Default.DefaultAdapterType);
+			CreateElementIfNeeded(cxInfo, ElementNameAdapterAssembly, Settings.Default.DefaultAdapterAssembly);
+			CreateElementIfNeeded(cxInfo, ElementNameFactoryMethod, Settings.Default.DefaultDataAccessAdapterFactoryMethod);
+			CreateElementIfNeeded(cxInfo, ElementNameFactoryType, Settings.Default.DefaultDataAccessAdapterFactoryType);
+			CreateElementIfNeeded(cxInfo, ElementNameFactoryAssembly, Settings.Default.DefaultDataAccessAdapterFactoryAssembly);
+			CreateElementIfNeeded(cxInfo, ElementNameConnectionType, Settings.Default.DefaultConnectionType.ToString());
+			//CreateElementIfNeeded(cxInfo, ElementNameAdaptertype, Settings.Default.DefaultDataAccessAdapterFactoryType);
+		}
+
+		public static void UpGradeDriverDataElements(IConnectionInfo cxInfo)
+		{
+			CreateElementIfNeeded(cxInfo, ElementNameAdaptertype, null);
+			CreateElementIfNeeded(cxInfo, ElementNameAdapterAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
+			CreateElementIfNeeded(cxInfo, ElementNameFactoryMethod, cxInfo.DatabaseInfo.Provider);
+			CreateElementIfNeeded(cxInfo, ElementNameFactoryType, cxInfo.DatabaseInfo.DbVersion);
+			CreateElementIfNeeded(cxInfo, ElementNameFactoryAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
+			CreateElementIfNeeded(cxInfo, ElementNameConnectionType, null);
+			cxInfo.CustomTypeInfo.CustomMetadataPath = null;
+			cxInfo.DatabaseInfo.Provider = null;
+			cxInfo.DatabaseInfo.DbVersion = null;
+		}
+
+		private static void CreateElementIfNeeded(IConnectionInfo cxInfo, string elementName, string defaultValue)
+		{
+			if (cxInfo.DriverData.Element(elementName) == null)
+			{
+				var xElement = new XElement(elementName);
+				if (defaultValue != null)
+					xElement.Value = defaultValue;
+				cxInfo.DriverData.Add(xElement);
+			}
+		}
+
+		public static string GetDriverDataValue(IConnectionInfo cxInfo, string elementName)
+		{
+			var xElement = cxInfo.DriverData.Element(elementName);
+			if (xElement != null) return xElement.Value;
+			return null;
+		}
+
+		public string GetDriverDataValue(string elementName)
+		{
+			return GetDriverDataValue(_cxInfo, elementName);
 		}
 
 		protected override void OnSourceInitialized(EventArgs e)
@@ -69,27 +132,34 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			base.OnSourceInitialized(e);
 			this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
-			System.Windows.Data.CollectionViewSource iConnectionInfoViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("iConnectionInfoViewSource")));
+			//System.Windows.Data.CollectionViewSource iConnectionInfoViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("iConnectionInfoViewSource")));
 			// Load data by setting the CollectionViewSource.Source property:
 			// iConnectionInfoViewSource.Source = [generic data source]
 		}
 
 		private void btnSaveDefault_Click(object sender, RoutedEventArgs e)
 		{
-			Settings.Default.DefaultDataAccessAdapterFactoryMethod = _cxInfo.DatabaseInfo.Provider;
-			Settings.Default.DefaultDataAccessAdapterFactoryType = _cxInfo.DatabaseInfo.DbVersion;
+			Settings.Default.DefaultDataAccessAdapterFactoryMethod = GetDriverDataValue(ElementNameFactoryMethod);
+			Settings.Default.DefaultDataAccessAdapterFactoryType = GetDriverDataValue(ElementNameFactoryType);
+			Settings.Default.DefaultDataAccessAdapterFactoryAssembly = GetDriverDataValue(ElementNameFactoryAssembly);
 
 			Settings.Default.DefaultApplicationConfig = _cxInfo.AppConfigPath;
 			Settings.Default.DefaultDatabaseConnection = _cxInfo.DatabaseInfo.CustomCxString;
 			Settings.Default.DefaultLinqMetaDataAssembly = _cxInfo.CustomTypeInfo.CustomAssemblyPath;
 			Settings.Default.DefaultLinqMetaData = _cxInfo.CustomTypeInfo.CustomTypeName;
-			Settings.Default.DefaultDataAccessAdapterFactoryAssembly = _cxInfo.CustomTypeInfo.CustomMetadataPath;
+
 			Settings.Default.DefaultDisplayName = _cxInfo.DisplayName;
+
+			Settings.Default.DefaultAdapterType = GetDriverDataValue(ElementNameAdaptertype);
+			Settings.Default.DefaultAdapterAssembly = GetDriverDataValue(ElementNameAdaptertype);
+			int connectionTypeIndex;
+			if (int.TryParse(GetDriverDataValue(ElementNameConnectionType), out connectionTypeIndex))
+				Settings.Default.DefaultConnectionType = connectionTypeIndex;
 
 			Settings.Default.Save();
 		}
 
-		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		private void Window_Closing(object sender, CancelEventArgs e)
 		{
 			Settings.Default.ConnectionDialogPlacement = this.GetPlacement();
 			Settings.Default.Save();
@@ -98,7 +168,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void btnOK_Click(object sender, RoutedEventArgs e)
 		{
 			_cxInfo.DatabaseInfo.CustomCxString = textBoxDatabaseConnectionString.Text;
-			GetAdapterType(_cxInfo);
 			DialogResult = true;
 		}
 
@@ -129,30 +198,38 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 		}
 
-
 		private void BrowseDataAccessAdapterAssembly(object sender, RoutedEventArgs e)
 		{
-			var dialog = new OpenFileDialog
-			             	{
-			             		Title = "Choose Data Access Adapter assembly",
-			             		DefaultExt = ".dll",
-			             	};
-
-			if (dialog.ShowDialog() == true)
+			var hl = sender as Hyperlink;
+			if (hl != null)
 			{
-				_cxInfo.CustomTypeInfo.CustomMetadataPath = dialog.FileName;
-				//var dataAccessAdapterAssembly  = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-				try
+				var element = _cxInfo.DriverData.Element(hl.TargetName);
+				if (element != null)
 				{
-					var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
-					if (customTypes.Count() == 1)
-						AdapterType = customTypes.First();
-				}
-				catch (Exception)
-				{
-					Debugger.Break();
-					return;
+					var dialog = new OpenFileDialog
+					             	{
+					             		Title = "Choose Data Access Adapter assembly",
+					             		DefaultExt = ".dll",
+					             		FileName = element.Value
+					             	};
+
+					if (dialog.ShowDialog() == true)
+					{
+						element.Value = dialog.FileName;
+						//var dataAccessAdapterAssembly  = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
+						var dataAccessAdapterAssembly = Assembly.LoadFrom(dialog.FileName);
+						try
+						{
+							var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
+							if (customTypes.Count() == 1)
+								_cxInfo.DriverData.SetElementValue(hl.TargetName.Replace("Assembly", "Type"), customTypes.First());
+						}
+						catch (Exception)
+						{
+							Debugger.Break();
+							return;
+						}
+					}
 				}
 			}
 		}
@@ -236,105 +313,67 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void ChooseAdapter(object sender, RoutedEventArgs e)
 		{
-			var assemPath = _cxInfo.CustomTypeInfo.CustomMetadataPath;
-			if (assemPath.Length == 0)
+			var hl = sender as Hyperlink;
+			if (hl != null)
 			{
-				MessageBox.Show("First enter a path to an assembly.");
-				return;
-			}
-
-			if (!File.Exists(assemPath))
-			{
-				MessageBox.Show("File '" + assemPath + "' does not exist.");
-				return;
-			}
-
-			string[] customTypes;
-			try
-			{
-				var dataAccessAdapterAssembly = Assembly.LoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
-				var types = dataAccessAdapterAssembly.GetTypes();
-				customTypes = GetDataAccessAdapterTypeNamesBothWays(types);
-			}
-			catch (ReflectionTypeLoadException ex)
-			{
-				customTypes = GetDataAccessAdapterTypeNamesBothWays(ex.Types);
-				if (customTypes.Length == 0)
+				var assemPath = GetDriverDataValue(hl.TargetName.Replace("Type", "Assembly"));
+				if (assemPath.Length == 0)
 				{
-					MessageBox.Show("Error obtaining adapter types: " + ex.Message + Environment.NewLine +
-					                ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
+					MessageBox.Show("First enter a path to an assembly.");
+					return;
+				}
+
+				if (!File.Exists(assemPath))
+				{
+					MessageBox.Show("File '" + assemPath + "' does not exist.");
+					return;
+				}
+
+				string[] customTypes;
+				try
+				{
+					var dataAccessAdapterAssembly = Assembly.LoadFrom(assemPath);
+					var types = dataAccessAdapterAssembly.GetTypes();
+					if (hl.TargetName == ElementNameAdaptertype)
+						customTypes = GetDataAccessAdapterTypeNamesBothWays(types);
+					else
+					{
+						customTypes = types.Select(t => t.FullName).ToArray();
+					}
+				}
+				catch (ReflectionTypeLoadException ex)
+				{
+					customTypes = GetDataAccessAdapterTypeNamesBothWays(ex.Types);
+					if (customTypes.Length == 0)
+					{
+						MessageBox.Show("Error obtaining adapter types: " + ex.Message + Environment.NewLine +
+						                ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
+						Debugger.Break();
+						return;
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Error obtaining adapter types: " + ex.Message);
 					Debugger.Break();
 					return;
 				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error obtaining adapter types: " + ex.Message);
-				Debugger.Break();
-				return;
-			}
-			if (customTypes.Length == 0)
-			{
-				MessageBox.Show("There are no public types in that assembly that implement IDataAccessAdapter.");
-				Debugger.Break();
-				return;
-			}
-			if (customTypes.Length == 1)
-				AdapterType = customTypes.First();
-			else
-			{
-				var result = (string) Dialogs.PickFromList("Choose adapter Type", customTypes);
-				if (result != null)
-					AdapterType = result;
-			}
-		}
-
-		public string AdapterType
-		{
-			get { return GetAdapterType(_cxInfo); }
-			set { SetAdapterType(_cxInfo, value); }
-		}
-
-		public static string GetAdapterType(IConnectionInfo connectionInfo)
-		{
-			if (connectionInfo.DriverData == null)
-				return null;
-			var adapterType = GetAdapterTypeElement(connectionInfo);
-			if (!string.IsNullOrEmpty(connectionInfo.DatabaseInfo.DbVersion))
-				if (adapterType == null)
+				if (customTypes.Length == 0)
 				{
-					connectionInfo.DriverData.Add(new XElement("AdapterType") {Value = connectionInfo.DatabaseInfo.DbVersion});
-					adapterType = GetAdapterTypeElement(connectionInfo);
+					MessageBox.Show("There are no public types in that assembly that implement IDataAccessAdapter.");
+					Debugger.Break();
+					return;
 				}
+				if (customTypes.Length == 1)
+					_cxInfo.DriverData.SetElementValue(hl.TargetName, customTypes.First());
 				else
 				{
-					adapterType.Value = connectionInfo.DatabaseInfo.DbVersion;
+					var result = (string) Dialogs.PickFromList("Choose " + hl.TargetName, customTypes);
+					if (result != null)
+						_cxInfo.DriverData.SetElementValue(hl.TargetName, result);
 				}
-			return adapterType == null ? null : adapterType.Value;
-		}
-
-		private static XElement GetAdapterTypeElement(IConnectionInfo connectionInfo)
-		{
-			return connectionInfo.DriverData.Element("AdapterType");
-		}
-
-		public static void SetAdapterType(IConnectionInfo connectionInfo, string adapterType)
-		{
-			if (string.IsNullOrEmpty(adapterType))
-				return;
-			GeneralHelper.TraceOut(adapterType);
-			if (connectionInfo.DriverData == null)
-				return;
-			var adapterTypeElement = GetAdapterTypeElement(connectionInfo);
-			if (adapterTypeElement == null)
-				connectionInfo.DriverData.Add(new XElement("AdapterType") {Value = adapterType});
-			else
-			{
-				adapterTypeElement.Value = adapterType;
 			}
-			connectionInfo.DatabaseInfo.DbVersion = adapterType;
 		}
-
 
 		public static void AddAssembly(IConnectionInfo connectionInfo, string assemblyName)
 		{
@@ -344,10 +383,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			assemblyName = Path.GetFileName(assemblyName);
 			if (connectionInfo.DriverData == null)
 				return;
-			var additionalAssembliesElement = connectionInfo.DriverData.Element("AdditionalAssemblies");
+			var additionalAssembliesElement = connectionInfo.DriverData.Element(ElementNameAdditionalassemblies);
 			if (additionalAssembliesElement == null)
 			{
-				additionalAssembliesElement = new XElement("AdditionalAssemblies");
+				additionalAssembliesElement = new XElement(ElementNameAdditionalassemblies);
 				connectionInfo.DriverData.Add(additionalAssembliesElement);
 			}
 
@@ -372,7 +411,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			if (connectionInfo.DriverData == null)
 				return null;
-			var additionalAssembliesElement = connectionInfo.DriverData.Element("AdditionalAssemblies");
+			var additionalAssembliesElement = connectionInfo.DriverData.Element(ElementNameAdditionalassemblies);
 			if (additionalAssembliesElement == null)
 				return null;
 			return GetAdditionalAssemblies(additionalAssembliesElement);
@@ -403,11 +442,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (adoType == null)
 			{
 				//Cast the generic object that PromptNew returns to an ADODB._Connection.
-				ProcessConnection((_Connection)mydlg.PromptNew());
+				ProcessConnection((_Connection) mydlg.PromptNew());
 			}
 			else
 			{
-				var connection = (_Connection)Activator.CreateInstance(adoType);
+				var connection = (_Connection) Activator.CreateInstance(adoType);
 				connection.ConnectionString = _cxInfo.DatabaseInfo.CustomCxString;
 				if (mydlg.PromptEdit(connection))
 					ProcessConnection(connection);
@@ -434,6 +473,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				connection.Open();
 			}
 		}
+	}
 
+	internal enum LLBLConnectionType
+	{
+		SelfServicing,
+		Adapter,
+		AdapterFactory
 	}
 }

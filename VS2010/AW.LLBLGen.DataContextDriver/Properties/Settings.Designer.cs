@@ -146,5 +146,41 @@ namespace AW.LLBLGen.DataContextDriver.Properties {
                 this["ConnectionDialogPlacement"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultAdapterAssembly {
+            get {
+                return ((string)(this["DefaultAdapterAssembly"]));
+            }
+            set {
+                this["DefaultAdapterAssembly"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultAdapterType {
+            get {
+                return ((string)(this["DefaultAdapterType"]));
+            }
+            set {
+                this["DefaultAdapterType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int DefaultConnectionType {
+            get {
+                return ((int)(this["DefaultConnectionType"]));
+            }
+            set {
+                this["DefaultConnectionType"] = value;
+            }
+        }
     }
 }
