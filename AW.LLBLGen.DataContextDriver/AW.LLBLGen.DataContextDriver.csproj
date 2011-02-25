@@ -132,6 +132,7 @@
     <Compile Include="Static\ConnectionDialog.xaml.cs">
       <DependentUpon>ConnectionDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Static\LLBLConnectionTypeToVisibilityConverter.cs" />
     <Compile Include="Static\LLBLGenStaticDriver.cs" />
     <Compile Include="LLBLMemberProvider.cs" />
   </ItemGroup>
@@ -144,6 +145,7 @@
     <None Include="DevDeploy.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Properties\DataSources\AW.LLBLGen.DataContextDriver.Properties.Settings.datasource" />
     <None Include="Properties\DataSources\LINQPad.Extensibility.DataContext.IConnectionInfo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

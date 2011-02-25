@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -157,8 +158,14 @@ namespace AW.DebugVisualizers.Tests
 		[TestMethod]
 		public void SerializableObservableCollectionTest()
 		{
-			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-			TestShowTransported(new ObservableCollection<AddressTypeEntity>(addressTypeEntityCollection), 4);
+			TestShowTransported(new ObservableCollection<AddressTypeEntity>(MetaSingletons.MetaData.AddressType.ToEntityCollection()), 4);
+		}
+
+		[TestMethod]
+		public void SerializableCollectionViewTest()
+		{
+			var collectionView = (new CollectionViewSource { Source = MetaSingletons.MetaData.AddressType.ToEntityCollection() }).View;
+			TestShowTransported(collectionView, 4);
 		}
 
 		[TestMethod]
