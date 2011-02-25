@@ -12,6 +12,7 @@ using System.Configuration.Provider;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
@@ -64,6 +65,10 @@ using Microsoft.VisualBasic;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(ComboBox.ObjectCollection), Description = EnumerableVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(Control.ControlCollection), Description = EnumerableVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(TreeNodeCollection), Description = EnumerableVisualizer.Description)]
+
+//-WPF
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(CompositeCollection), Description = EnumerableVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(CollectionView), Description = EnumerableVisualizer.Description)]
 
 //-Other classes
 

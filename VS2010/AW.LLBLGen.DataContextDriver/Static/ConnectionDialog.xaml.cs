@@ -83,20 +83,30 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			CreateElementIfNeeded(cxInfo, ElementNameFactoryType, Settings.Default.DefaultDataAccessAdapterFactoryType);
 			CreateElementIfNeeded(cxInfo, ElementNameFactoryAssembly, Settings.Default.DefaultDataAccessAdapterFactoryAssembly);
 			CreateElementIfNeeded(cxInfo, ElementNameConnectionType, Settings.Default.DefaultConnectionType.ToString());
-			//CreateElementIfNeeded(cxInfo, ElementNameAdaptertype, Settings.Default.DefaultDataAccessAdapterFactoryType);
 		}
 
 		public static void UpGradeDriverDataElements(IConnectionInfo cxInfo)
 		{
-			CreateElementIfNeeded(cxInfo, ElementNameAdaptertype, null);
-			CreateElementIfNeeded(cxInfo, ElementNameAdapterAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
-			CreateElementIfNeeded(cxInfo, ElementNameFactoryMethod, cxInfo.DatabaseInfo.Provider);
-			CreateElementIfNeeded(cxInfo, ElementNameFactoryType, cxInfo.DatabaseInfo.DbVersion);
-			CreateElementIfNeeded(cxInfo, ElementNameFactoryAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
-			CreateElementIfNeeded(cxInfo, ElementNameConnectionType, null);
+			var adaptertypeName = GetDriverDataValue(cxInfo, ElementNameAdaptertype);
+			if (string.IsNullOrEmpty(adaptertypeName))
+				CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.SelfServicing).ToString());
+			else if (adaptertypeName == cxInfo.DatabaseInfo.DbVersion)
+			{
+				CreateElementIfNeeded(cxInfo, ElementNameFactoryMethod, cxInfo.DatabaseInfo.Provider);
+				CreateElementIfNeeded(cxInfo, ElementNameFactoryType, cxInfo.DatabaseInfo.DbVersion);
+				CreateElementIfNeeded(cxInfo, ElementNameFactoryAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
+				CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.AdapterFactory).ToString());			
+				cxInfo.DatabaseInfo.Provider = null;
+			  cxInfo.DatabaseInfo.DbVersion = null;
+				cxInfo.DriverData.Element(ElementNameAdaptertype).Value = string.Empty;
+			}
+			else
+			{
+				CreateElementIfNeeded(cxInfo, ElementNameAdaptertype, null);
+				CreateElementIfNeeded(cxInfo, ElementNameAdapterAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
+				CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.Adapter).ToString());
+			}
 			cxInfo.CustomTypeInfo.CustomMetadataPath = null;
-			cxInfo.DatabaseInfo.Provider = null;
-			cxInfo.DatabaseInfo.DbVersion = null;
 		}
 
 		private static void CreateElementIfNeeded(IConnectionInfo cxInfo, string elementName, string defaultValue)
@@ -113,8 +123,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public static string GetDriverDataValue(IConnectionInfo cxInfo, string elementName)
 		{
 			var xElement = cxInfo.DriverData.Element(elementName);
-			if (xElement != null) return xElement.Value;
-			return null;
+			return xElement != null ? xElement.Value : null;
 		}
 
 		public string GetDriverDataValue(string elementName)
@@ -135,6 +144,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			//System.Windows.Data.CollectionViewSource iConnectionInfoViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("iConnectionInfoViewSource")));
 			// Load data by setting the CollectionViewSource.Source property:
 			// iConnectionInfoViewSource.Source = [generic data source]
+			System.Windows.Data.CollectionViewSource settingsViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("settingsViewSource")));
+			// Load data by setting the CollectionViewSource.Source property:
+			// settingsViewSource.Source = [generic data source]
 		}
 
 		private void btnSaveDefault_Click(object sender, RoutedEventArgs e)
@@ -177,23 +189,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			             	{
 			             		Title = "Choose LLBL entity assembly",
 			             		DefaultExt = ".dll",
+			             		FileName = _cxInfo.CustomTypeInfo.CustomAssemblyPath
 			             	};
 
 			if (dialog.ShowDialog() == true)
 			{
 				_cxInfo.CustomTypeInfo.CustomAssemblyPath = dialog.FileName;
-				string[] customTypes;
-				try
-				{
-					customTypes = _cxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.LinqSupportClasses.ILinqMetaData");
+				var customTypes = GetLinqMetaDataTypes();
 
-					if (customTypes.Length == 1)
-						_cxInfo.CustomTypeInfo.CustomTypeName = customTypes[0];
-				}
-				catch (Exception)
+				if (customTypes.Length == 1)
 				{
-					Debugger.Break();
-					return;
+					_cxInfo.CustomTypeInfo.CustomTypeName = customTypes[0];
+					var element = _cxInfo.DriverData.Element(ElementNameConnectionType);
+					var selfServicingEntities = _cxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase");
+					if (element != null) element.Value = selfServicingEntities.IsNullOrEmpty() ? ((int) LLBLConnectionType.Adapter).ToString() : ((int) LLBLConnectionType.SelfServicing).ToString();
 				}
 			}
 		}
@@ -271,17 +280,30 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void ChooseType(object sender, RoutedEventArgs e)
 		{
+			var customTypes = GetLinqMetaDataTypes();
+			if (customTypes.Length == 1)
+			{
+				_cxInfo.CustomTypeInfo.CustomTypeName = customTypes[0];
+				return;
+			}
+
+			var result = (string) Dialogs.PickFromList("Choose Custom Type", customTypes);
+			if (result != null) _cxInfo.CustomTypeInfo.CustomTypeName = result;
+		}
+
+		private string[] GetLinqMetaDataTypes()
+		{
 			var assemPath = _cxInfo.CustomTypeInfo.CustomAssemblyPath;
 			if (assemPath.Length == 0)
 			{
 				MessageBox.Show("First enter a path to an assembly.");
-				return;
+				return null;
 			}
 
 			if (!File.Exists(assemPath))
 			{
 				MessageBox.Show("File '" + assemPath + "' does not exist.");
-				return;
+				return null;
 			}
 
 			string[] customTypes;
@@ -293,22 +315,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				MessageBox.Show("Error obtaining custom types: " + ex.Message);
 				Debugger.Break();
-				return;
+				return null;
 			}
 			if (customTypes.Length == 0)
 			{
 				MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData.");
 				Debugger.Break();
-				return;
+				return customTypes;
 			}
-			if (customTypes.Length == 1)
-			{
-				_cxInfo.CustomTypeInfo.CustomTypeName = customTypes[0];
-				return;
-			}
-
-			var result = (string) Dialogs.PickFromList("Choose Custom Type", customTypes);
-			if (result != null) _cxInfo.CustomTypeInfo.CustomTypeName = result;
+			return customTypes;
 		}
 
 		private void ChooseAdapter(object sender, RoutedEventArgs e)
@@ -475,8 +490,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		}
 	}
 
-	internal enum LLBLConnectionType
+	public enum LLBLConnectionType
 	{
+		Unknown,
 		SelfServicing,
 		Adapter,
 		AdapterFactory
