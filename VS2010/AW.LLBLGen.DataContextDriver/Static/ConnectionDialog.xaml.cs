@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Xml.Linq;
 using ADODB;
@@ -49,7 +50,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public ConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
 		{
 			_cxInfo = cxInfo;
-			DataContext = cxInfo;
+			//DataContext = cxInfo;
 			InitializeComponent();
 			if (isNewConnection)
 			{
@@ -65,6 +66,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				UpGradeDriverDataElements(cxInfo);
 			}
+			var iConnectionInfoViewSource = ((CollectionViewSource) (FindResource("iConnectionInfoViewSource")));
+			// Load data by setting the CollectionViewSource.Source property:
+			iConnectionInfoViewSource.Source = new List<IConnectionInfo> {cxInfo};
+
 //      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
 //.OfType<DataRow>()
 //.Select(r => r["InvariantName"])
@@ -95,9 +100,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				CreateElementIfNeeded(cxInfo, ElementNameFactoryMethod, cxInfo.DatabaseInfo.Provider);
 				CreateElementIfNeeded(cxInfo, ElementNameFactoryType, cxInfo.DatabaseInfo.DbVersion);
 				CreateElementIfNeeded(cxInfo, ElementNameFactoryAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
-				CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.AdapterFactory).ToString());			
+				CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.AdapterFactory).ToString());
 				cxInfo.DatabaseInfo.Provider = null;
-			  cxInfo.DatabaseInfo.DbVersion = null;
+				cxInfo.DatabaseInfo.DbVersion = null;
 				cxInfo.DriverData.Element(ElementNameAdaptertype).Value = string.Empty;
 			}
 			else
@@ -141,12 +146,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			base.OnSourceInitialized(e);
 			this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
-			//System.Windows.Data.CollectionViewSource iConnectionInfoViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("iConnectionInfoViewSource")));
+			var settingsViewSource = ((CollectionViewSource) (FindResource("settingsViewSource")));
+			settingsViewSource.Source = new List<Settings> {Settings.Default};
 			// Load data by setting the CollectionViewSource.Source property:
-			// iConnectionInfoViewSource.Source = [generic data source]
-			System.Windows.Data.CollectionViewSource settingsViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("settingsViewSource")));
-			// Load data by setting the CollectionViewSource.Source property:
-			// settingsViewSource.Source = [generic data source]
 		}
 
 		private void btnSaveDefault_Click(object sender, RoutedEventArgs e)
