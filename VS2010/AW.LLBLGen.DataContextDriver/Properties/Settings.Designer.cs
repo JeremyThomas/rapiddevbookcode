@@ -23,19 +23,25 @@ namespace AW.LLBLGen.DataContextDriver.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::System.Collections.Specialized.StringCollection AdditionalAssemblies {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["AdditionalAssemblies"]));
             }
+            set {
+                this["AdditionalAssemblies"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public global::System.Collections.Specialized.StringCollection AdditionalNamespaces {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["AdditionalNamespaces"]));
+            }
+            set {
+                this["AdditionalNamespaces"] = value;
             }
         }
         
