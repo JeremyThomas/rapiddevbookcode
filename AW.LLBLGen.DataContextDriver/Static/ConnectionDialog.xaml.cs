@@ -146,9 +146,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			base.OnSourceInitialized(e);
 			this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
-			var settingsViewSource = ((CollectionViewSource) (FindResource("settingsViewSource")));
-			settingsViewSource.Source = new List<Settings> {Settings.Default};
-			// Load data by setting the CollectionViewSource.Source property:
+			var settingsViewSource = ((CollectionViewSource)(FindResource("settingsViewSource")));
+			settingsViewSource.Source = new List<Settings> { Settings.Default };
 		}
 
 		private void btnSaveDefault_Click(object sender, RoutedEventArgs e)

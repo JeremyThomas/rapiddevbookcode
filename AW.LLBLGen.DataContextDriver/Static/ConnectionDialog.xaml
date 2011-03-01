@@ -9,6 +9,7 @@
 		<CollectionViewSource x:Key="settingsViewSource" d:DesignSource="{d:DesignInstance Properties:Settings, CreateList=True}" />
 		<CollectionViewSource x:Key="iConnectionInfoViewSource" d:DesignSource="{d:DesignInstance my:IConnectionInfo, CreateList=True}" />
 	</Window.Resources>
+	<StackPanel>
 	<TabControl>
 		<TabItem Header="Connection" DataContext="{StaticResource iConnectionInfoViewSource}">
 			<StackPanel Margin="7" MinHeight="0" >
@@ -106,17 +107,77 @@
 		</DockPanel>
 		<TextBox Name="textBoxConnectionDisplayName" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.DisplayName}"  />
 
-		<CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
-
-		<DockPanel LastChildFill="False" Margin="0,10,0,0">
-			<Button Name="btnCancel" DockPanel.Dock="Right" Content="Cancel" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsCancel="True" TabIndex="2" />
-			<Button Name="btnOK" DockPanel.Dock="Right" Content="OK" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsDefault="True" TabIndex="1" Click="btnOK_Click" />
-			<Button Name="btnSaveDefault" DockPanel.Dock="Left" Content="Save as default" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsDefault="True" TabIndex="1" Click="btnSaveDefault_Click" />
-		</DockPanel>
+					<StackPanel Orientation="Horizontal">
+						<CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
+			<Button Name="btnSaveDefault" Content="Save as default" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsDefault="True" TabIndex="1" Click="btnSaveDefault_Click" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+</StackPanel>
 			</StackPanel>
 		</TabItem>
-		<TabItem Header="Driver" DataContext="{StaticResource settingsViewSource}" ><StackPanel>
-				<ListView ItemsSource="{Binding Source={x:Static Properties:Settings.Default}, Path=AdditionalAssemblies, Mode=OneWay}" />
+			<TabItem Header="DatabaseInfo" DataContext="{StaticResource iConnectionInfoViewSource}">
+				<Grid HorizontalAlignment="Left" Name="grid12" VerticalAlignment="Top">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Label Content="Attach File:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<CheckBox Content="" Grid.Column="1" Grid.Row="0" Height="16" HorizontalAlignment="Left" IsChecked="{Binding Path=DatabaseInfo.AttachFile, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" Margin="3" Name="attachFileCheckBox" VerticalAlignment="Center" />
+					<Label Content="Attach File Name:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<TextBox Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3" Name="attachFileNameTextBox" Text="{Binding Path=DatabaseInfo.AttachFileName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+					<Label Content="Custom Cx String:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3" Name="customCxStringTextBox" Text="{Binding Path=DatabaseInfo.CustomCxString, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+					<Label Content="Database:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<TextBox Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" Margin="3" Name="databaseTextBox" Text="{Binding Path=DatabaseInfo.Database, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+					<Label Content="Db Version:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<TextBox Grid.Column="1" Grid.Row="4" Height="23" HorizontalAlignment="Left" Margin="3" Name="dbVersionTextBox" Text="{Binding Path=DatabaseInfo.DbVersion, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+					<Label Content="Encrypt Custom Cx String:" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<CheckBox Content="" Grid.Column="1" Grid.Row="5" Height="16" HorizontalAlignment="Left" IsChecked="{Binding Path=DatabaseInfo.EncryptCustomCxString, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" Margin="3" Name="encryptCustomCxStringCheckBox" VerticalAlignment="Center" />
+					<Label Content="Encrypt Traffic:" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<CheckBox Content="" Grid.Column="1" Grid.Row="6" Height="16" HorizontalAlignment="Left" IsChecked="{Binding Path=DatabaseInfo.EncryptTraffic, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" Margin="3" Name="encryptTrafficCheckBox" VerticalAlignment="Center" />
+					<Label Content="Is Sql CE:" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<CheckBox Content="" Grid.Column="1" Grid.Row="7" Height="16" HorizontalAlignment="Left" IsChecked="{Binding Path=DatabaseInfo.IsSqlCE, Mode=OneWay}" Margin="3" Name="isSqlCECheckBox" VerticalAlignment="Center" />
+					<Label Content="Is Sql Server:" Grid.Column="0" Grid.Row="8" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<CheckBox Content="" Grid.Column="1" Grid.Row="8" Height="16" HorizontalAlignment="Left" IsChecked="{Binding Path=DatabaseInfo.IsSqlServer, Mode=OneWay}" Margin="3" Name="isSqlServerCheckBox" VerticalAlignment="Center" />
+					<Label Content="Max Database Size:" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<TextBox Grid.Column="1" Grid.Row="9" Height="23" HorizontalAlignment="Left" Margin="3" Name="maxDatabaseSizeTextBox" Text="{Binding Path=DatabaseInfo.MaxDatabaseSize, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+					<Label Content="Password:" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<TextBox Grid.Column="1" Grid.Row="10" Height="23" HorizontalAlignment="Left" Margin="3" Name="passwordTextBox" Text="{Binding Path=DatabaseInfo.Password, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+					<Label Content="Provider:" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<ComboBox DisplayMemberPath="DatabaseInfo.Provider" Grid.Column="1" Grid.Row="11" Height="23" HorizontalAlignment="Left" ItemsSource="{Binding}" Margin="3" Name="providerComboBox" VerticalAlignment="Center" Width="120">
+						<ComboBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel />
+							</ItemsPanelTemplate>
+						</ComboBox.ItemsPanel>
+					</ComboBox>
+					<Label Content="Server:" Grid.Column="0" Grid.Row="12" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<TextBox Grid.Column="1" Grid.Row="12" Height="23" HorizontalAlignment="Left" Margin="3" Name="serverTextBox" Text="{Binding Path=DatabaseInfo.Server, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+					<Label Content="Sql Security:" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<CheckBox Content="" Grid.Column="1" Grid.Row="13" Height="16" HorizontalAlignment="Left" IsChecked="{Binding Path=DatabaseInfo.SqlSecurity, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" Margin="3" Name="sqlSecurityCheckBox" VerticalAlignment="Center" />
+					<Label Content="User Instance:" Grid.Column="0" Grid.Row="14" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<CheckBox Content="" Grid.Column="1" Grid.Row="14" Height="16" HorizontalAlignment="Left" IsChecked="{Binding Path=DatabaseInfo.UserInstance, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" Margin="3" Name="userInstanceCheckBox" VerticalAlignment="Center" />
+					<Label Content="User Name:" Grid.Column="0" Grid.Row="15" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+					<TextBox Grid.Column="1" Grid.Row="15" Height="23" HorizontalAlignment="Left" Margin="3" Name="userNameTextBox" Text="{Binding Path=DatabaseInfo.UserName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
+				</Grid>
+			</TabItem>
+			<TabItem Header="Driver" DataContext="{StaticResource settingsViewSource}" ><StackPanel>
 				<Grid HorizontalAlignment="Left" Name="grid1" VerticalAlignment="Top">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -238,52 +299,17 @@
 					<Label Content="Default Linq Meta Data Assembly:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
 					<TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3" Name="defaultLinqMetaDataAssemblyTextBox" Text="{Binding Path=DefaultLinqMetaDataAssembly, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"  />
 				</Grid>
-				<ListView Name="listView1" ItemsSource="{Binding Path=AdditionalAssemblies, Mode=OneWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
+				<ListView ItemsSource="{Binding Source={x:Static Properties:Settings.Default}, Path=AdditionalAssemblies, Mode=OneWay}" />
+				<ListView Name="listView1" ItemsSource="{Binding Path=AdditionalAssemblies, ValidatesOnExceptions=true, NotifyOnValidationError=true}"/>
+				<ListBox ItemsSource="{Binding Source={x:Static Properties:Settings.Default}, Path=AdditionalNamespaces, Mode=OneWay}" />
 			</StackPanel>
 		</TabItem>
-		<TabItem Header="tabItem1" Name="tabItem1" DataContext="{StaticResource iConnectionInfoViewSource}">
-			<Grid>
-				<Grid  HorizontalAlignment="Left" Margin="32,38,0,0" Name="grid12" VerticalAlignment="Top">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<Label Content="App Config Path:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-					<TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3" Name="appConfigPathTextBox" Text="{Binding Path=AppConfigPath, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"  />
-				</Grid>
-				<Grid HorizontalAlignment="Left" Margin="73,117,0,0" Name="grid13" VerticalAlignment="Top">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<Label Content="Display Name:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-					<TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3" Name="displayNameTextBox" Text="{Binding Path=DisplayName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"  />
-				</Grid>
-				<Grid HorizontalAlignment="Left" Margin="32,200,0,0" Name="grid14" VerticalAlignment="Top">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<Label Content="Custom Assembly Path:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-					<TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3" Name="customAssemblyPathTextBox" Text="{Binding Path=CustomTypeInfo.CustomAssemblyPath, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"  />
-					<Label Content="Custom Metadata Path:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-					<TextBox Grid.Column="1" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="3" Name="customMetadataPathTextBox" Text="{Binding Path=CustomTypeInfo.CustomMetadataPath, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"  />
-					<Label Content="Custom Type Name:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-					<TextBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="3" Name="customTypeNameTextBox" Text="{Binding Path=CustomTypeInfo.CustomTypeName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"  />
-				</Grid>
-			</Grid>
-		</TabItem>
-	</TabControl>
 
+	</TabControl>
+		<DockPanel LastChildFill="False" Margin="0,10,0,0">
+			<Button Name="btnCancel" DockPanel.Dock="Right" Content="Cancel" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsCancel="True" TabIndex="2" />
+			<Button Name="btnOK" DockPanel.Dock="Right" Content="OK" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsDefault="True" TabIndex="1" Click="btnOK_Click" />
+
+		</DockPanel>
+	</StackPanel>
 </Window>
