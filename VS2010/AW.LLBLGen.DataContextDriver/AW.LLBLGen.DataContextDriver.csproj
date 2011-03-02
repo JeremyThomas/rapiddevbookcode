@@ -121,6 +121,7 @@
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,6 +147,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\DataSources\AW.LLBLGen.DataContextDriver.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\AW.LLBLGen.DataContextDriver.Static.ConnectionDialog.datasource" />
     <None Include="Properties\DataSources\LINQPad.Extensibility.DataContext.IConnectionInfo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

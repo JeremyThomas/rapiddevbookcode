@@ -70,6 +70,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			// Load data by setting the CollectionViewSource.Source property:
 			iConnectionInfoViewSource.Source = new List<IConnectionInfo> {cxInfo};
 
+			var connectionDialogViewSource = ((CollectionViewSource)(FindResource("connectionDialogViewSource")));
+			// Load data by setting the CollectionViewSource.Source property:
+			connectionDialogViewSource.Source = new List<ConnectionDialog> { this };
+
+			AdditionalNamespaces = Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding();
+
 //      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
 //.OfType<DataRow>()
 //.Select(r => r["InvariantName"])
@@ -78,6 +84,22 @@ namespace AW.LLBLGen.DataContextDriver.Static
 //      {
 //        comboBoxDatabaseProvider.Items.Add(item);
 //      }
+		}
+
+		public List<ValueTypeWrapper<string>> AdditionalNamespaces { get; private set; }
+
+		private List<ValueTypeWrapper<string>> _additionalAssemblies;
+
+		public List<ValueTypeWrapper<string>> AdditionalAssemblies
+		{
+			get
+			{
+				if (_additionalAssemblies == null)
+				{
+					_additionalAssemblies = Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding();
+				}
+				return _additionalAssemblies;
+			}
 		}
 
 		private static void CreateDriverDataElements(IConnectionInfo cxInfo)
