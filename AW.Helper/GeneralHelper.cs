@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -9,26 +10,31 @@ using System.Reflection;
 
 namespace AW.Helper
 {
-	public class StringWrapper
+	public class ValueTypeWrapper<T>
 	{
-		public string Value { get; set; }
+		public T Value { get; set; }
+
+		public static List<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
+		{
+			return values.Select(data => new ValueTypeWrapper<T> {Value = data}).ToList();
+		}
 	}
 
-	public class ValueTypeWrapper<T>
+	public class ReadonlyValueTypeWrapper<T>
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
 		/// </summary>
-		public ValueTypeWrapper(T value)
+		public ReadonlyValueTypeWrapper(T value)
 		{
 			Value = value;
 		}
 
 		public T Value { get; private set; }
 
-		public static IEnumerable<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
+		public static IEnumerable<ReadonlyValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
 		{
-			return values.Select(data => new ValueTypeWrapper<T>(data)).ToList();
+			return values.Select(data => new ReadonlyValueTypeWrapper<T>(data)).ToList();
 		}
 	}
 
@@ -44,7 +50,7 @@ namespace AW.Helper
 
 		public object Value { get; private set; }
 
-		public static IEnumerable<ValueTypeWrapper> CreateWrapperForBinding(IEnumerable values)
+		public static List<ValueTypeWrapper> CreateWrapperForBinding(IEnumerable values)
 		{
 			return values.Cast<object>().Select(data => new ValueTypeWrapper(data)).ToList();
 		}
@@ -235,6 +241,11 @@ namespace AW.Helper
 			if (items is ICollection)
 				return ((ICollection) items).Count == 0;
 			return items.AsNullIfEmpty() == null;
+		}
+
+		public static List<ValueTypeWrapper<string>> CreateStringWrapperForBinding(this StringCollection strings)
+		{
+			return ValueTypeWrapper<string>.CreateWrapperForBinding(strings.Cast<string>());
 		}
 
 		#region Settings
