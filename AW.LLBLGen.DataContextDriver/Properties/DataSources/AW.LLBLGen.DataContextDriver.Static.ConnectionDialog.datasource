@@ -6,5 +6,24 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="ConnectionDialog" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>AW.LLBLGen.DataContextDriver.Static.ConnectionDialog, AW.LLBLGen.DataContextDriver, Version=1.3.0.0, Culture=neutral, PublicKeyToken=d500980a8809e663</TypeInfo>
+   <Children>
+      <GenericObjectDataSource DisplayName="DbProviderFactoryNames" Version="1.0">
+         <TypeInfo>System.Collections.Generic.IEnumerable`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeInfo>
+         <TypeUISetting>
+            <PropertyUISettings>
+               <PropertyUISetting Name="ConnectionDialog.DbProviderFactoryNames">
+                  <ControlSettings>
+                     <ControlSetting ArtifactName="Microsoft:System.Windows:WPF">
+                        <BindableControlInfo Name="ListBox" Type="System.Windows.Controls.ListBox" AssemblyName="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+                     </ControlSetting>
+                  </ControlSettings>
+               </PropertyUISetting>
+            </PropertyUISettings>
+         </TypeUISetting>
+      </GenericObjectDataSource>
+      <GenericObjectDataSource DisplayName="AdditionalNamespaces" Version="1.0">
+         <TypeInfo>AW.Helper.ValueTypeWrapper`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], AW.Helper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5</TypeInfo>
+      </GenericObjectDataSource>
+   </Children>
+   <TypeInfo>AW.LLBLGen.DataContextDriver.Static.ConnectionDialog, AW.LLBLGen.DataContextDriver, Version=1.4.0.0, Culture=neutral, PublicKeyToken=d500980a8809e663</TypeInfo>
 </GenericObjectDataSource>
