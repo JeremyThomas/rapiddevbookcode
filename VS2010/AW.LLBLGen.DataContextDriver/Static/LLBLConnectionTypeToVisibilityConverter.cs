@@ -9,31 +9,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	{
 		public LLBLConnectionType LLBLConnectionType { get; set; }
 
+		public bool Invert { get; set; }
 
 		private object VisibilityToLLBLConnectionType(object value)
 		{
 			if (!(value is Visibility))
-
 				return DependencyProperty.UnsetValue;
-
-
 			return (((Visibility)value) == Visibility.Visible) ? LLBLConnectionType : LLBLConnectionType.Unknown;
 		}
-
 
 		private object LLBLConnectionTypeToVisibility(object value)
 		{
 			if (!(value is LLBLConnectionType))
-			{
-				var intVal = System.Convert.ToInt32(value);
-				value = intVal;
-				//return DependencyProperty.UnsetValue;
-			}
+				value = System.Convert.ToInt32(value);
 
-
-			return ((LLBLConnectionType)value == LLBLConnectionType)
-			       	? Visibility.Visible
-			       	: Visibility.Collapsed;
+			return (LLBLConnectionType)value == LLBLConnectionType
+				? Invert ? Visibility.Collapsed : Visibility.Visible
+							: Invert ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 

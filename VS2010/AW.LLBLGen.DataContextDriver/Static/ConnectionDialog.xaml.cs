@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Data.Common;
 using System.Data.OleDb;
 using System.Diagnostics;
 using System.IO;
@@ -51,7 +53,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			_cxInfo = cxInfo;
 			//DataContext = cxInfo;
+			var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"]).Cast<string>();
+			DbProviderFactoryNames = factoryClasses.ToList();
+			AdditionalNamespaces = Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding();
 			InitializeComponent();
+
 			if (isNewConnection)
 			{
 				CreateDriverDataElements(cxInfo);
@@ -70,36 +76,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			// Load data by setting the CollectionViewSource.Source property:
 			iConnectionInfoViewSource.Source = new List<IConnectionInfo> {cxInfo};
 
-			var connectionDialogViewSource = ((CollectionViewSource)(FindResource("connectionDialogViewSource")));
+			var connectionDialogViewSource = ((CollectionViewSource) (FindResource("connectionDialogViewSource")));
 			// Load data by setting the CollectionViewSource.Source property:
-			connectionDialogViewSource.Source = new List<ConnectionDialog> { this };
-
-			AdditionalNamespaces = Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding();
-
-//      var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows
-//.OfType<DataRow>()
-//.Select(r => r["InvariantName"])
-//.ToArray();
-//      foreach (var item in factoryClasses)
-//      {
-//        comboBoxDatabaseProvider.Items.Add(item);
-//      }
+			connectionDialogViewSource.Source = new List<ConnectionDialog> {this};
 		}
 
-		public List<ValueTypeWrapper<string>> AdditionalNamespaces { get; private set; }
+		public IEnumerable<string> DbProviderFactoryNames { get; set; }
+
+		public List<ValueTypeWrapper<string>> AdditionalNamespaces { get; set; }
 
 		private List<ValueTypeWrapper<string>> _additionalAssemblies;
 
 		public List<ValueTypeWrapper<string>> AdditionalAssemblies
 		{
-			get
-			{
-				if (_additionalAssemblies == null)
-				{
-					_additionalAssemblies = Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding();
-				}
-				return _additionalAssemblies;
-			}
+			get { return _additionalAssemblies ?? (_additionalAssemblies = Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding()); }
 		}
 
 		private static void CreateDriverDataElements(IConnectionInfo cxInfo)
@@ -168,8 +158,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			base.OnSourceInitialized(e);
 			this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
-			var settingsViewSource = ((CollectionViewSource)(FindResource("settingsViewSource")));
-			settingsViewSource.Source = new List<Settings> { Settings.Default };
+			var settingsViewSource = ((CollectionViewSource) (FindResource("settingsViewSource")));
+			settingsViewSource.Source = new List<Settings> {Settings.Default};
 		}
 
 		private void btnSaveDefault_Click(object sender, RoutedEventArgs e)
@@ -202,7 +192,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void btnOK_Click(object sender, RoutedEventArgs e)
 		{
-			_cxInfo.DatabaseInfo.CustomCxString = textBoxDatabaseConnectionString.Text;
+			Settings.Default.AdditionalAssemblies.Clear();
+			Settings.Default.AdditionalAssemblies.AddRange(AdditionalAssemblies.Select(sr => sr.Value).ToArray());
+			Settings.Default.AdditionalNamespaces.Clear();
+			Settings.Default.AdditionalNamespaces.AddRange(AdditionalNamespaces.Select(sr => sr.Value).ToArray());
 			DialogResult = true;
 		}
 
