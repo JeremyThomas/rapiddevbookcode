@@ -7,6 +7,20 @@
 -->
 <GenericObjectDataSource DisplayName="ConnectionDialog" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
    <Children>
+      <GenericObjectDataSource DisplayName="CxInfo" Version="1.0">
+         <TypeInfo>LINQPad.Extensibility.DataContext.IConnectionInfo, LINQPad, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21353812cd2a2db5</TypeInfo>
+         <TypeUISetting>
+            <PropertyUISettings>
+               <PropertyUISetting Name="ConnectionDialog.CxInfo">
+                  <ControlSettings>
+                     <ControlSetting ArtifactName="Microsoft:System.Windows:WPF">
+                        <BindableControlInfo Name="Details" Type="Microsoft.VSDesigner.Data.DataForm.Windows.DetailView" />
+                     </ControlSetting>
+                  </ControlSettings>
+               </PropertyUISetting>
+            </PropertyUISettings>
+         </TypeUISetting>
+      </GenericObjectDataSource>
       <GenericObjectDataSource DisplayName="DbProviderFactoryNames" Version="1.0">
          <TypeInfo>System.Collections.Generic.IEnumerable`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeInfo>
          <TypeUISetting>
@@ -21,8 +35,33 @@
             </PropertyUISettings>
          </TypeUISetting>
       </GenericObjectDataSource>
-      <GenericObjectDataSource DisplayName="AdditionalNamespaces" Version="1.0">
-         <TypeInfo>AW.Helper.ValueTypeWrapper`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], AW.Helper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5</TypeInfo>
+      <GenericObjectDataSource DisplayName="DatabaseInfo" Version="1.0">
+         <TypeInfo>LINQPad.Extensibility.DataContext.IDatabaseInfo, LINQPad, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21353812cd2a2db5</TypeInfo>
+         <TypeUISetting>
+            <PropertyUISettings>
+               <PropertyUISetting Name="ConnectionDialog.CxInfo.DatabaseInfo">
+                  <ControlSettings>
+                     <ControlSetting ArtifactName="Microsoft:System.Windows:WPF">
+                        <BindableControlInfo Name="Details" Type="Microsoft.VSDesigner.Data.DataForm.Windows.DetailView" />
+                     </ControlSetting>
+                  </ControlSettings>
+               </PropertyUISetting>
+            </PropertyUISettings>
+         </TypeUISetting>
+      </GenericObjectDataSource>
+      <GenericObjectDataSource DisplayName="CustomTypeInfo" Version="1.0">
+         <TypeInfo>LINQPad.Extensibility.DataContext.ICustomTypeInfo, LINQPad, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21353812cd2a2db5</TypeInfo>
+         <TypeUISetting>
+            <PropertyUISettings>
+               <PropertyUISetting Name="ConnectionDialog.CxInfo.CustomTypeInfo">
+                  <ControlSettings>
+                     <ControlSetting ArtifactName="Microsoft:System.Windows:WPF">
+                        <BindableControlInfo Name="Details" Type="Microsoft.VSDesigner.Data.DataForm.Windows.DetailView" />
+                     </ControlSetting>
+                  </ControlSettings>
+               </PropertyUISetting>
+            </PropertyUISettings>
+         </TypeUISetting>
       </GenericObjectDataSource>
    </Children>
    <TypeInfo>AW.LLBLGen.DataContextDriver.Static.ConnectionDialog, AW.LLBLGen.DataContextDriver, Version=1.4.0.0, Culture=neutral, PublicKeyToken=d500980a8809e663</TypeInfo>

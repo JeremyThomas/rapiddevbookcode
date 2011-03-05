@@ -12,12 +12,10 @@
 		<Static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterFactoryToVisability" LLBLConnectionType="AdapterFactory" />
 		<Static:LLBLConnectionTypeToVisibilityConverter x:Key="NotSelfServicingToVisability" LLBLConnectionType="SelfServicing" Invert="True" />
 		<CollectionViewSource x:Key="settingsViewSource" d:DesignSource="{d:DesignInstance Properties:Settings, CreateList=True}" />
-		<CollectionViewSource x:Key="iConnectionInfoViewSource" d:DesignSource="{d:DesignInstance my:IConnectionInfo, CreateList=True}" />
-		<CollectionViewSource x:Key="connectionDialogViewSource" d:DesignSource="{d:DesignInstance Static:ConnectionDialog, CreateList=True}" />
 	</Window.Resources>
 	<StackPanel>
-	<TabControl>
-		<TabItem Header="Connection" DataContext="{StaticResource iConnectionInfoViewSource}">
+		<TabControl Name="TabControl"  d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" >
+			<TabItem Header="Connection" DataContext="{Binding CxInfo}">
 			<StackPanel Margin="7" MinHeight="0" >
 
 		<DockPanel>
@@ -27,25 +25,25 @@
 			<Label Padding="0,0,0,1" Content="Path to LLBL assembly containing a ILinqMetaData:"></Label>
 		</DockPanel>
 
-		<TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding Path=CustomTypeInfo.CustomAssemblyPath}"/>
+		<TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding Path=CustomTypeInfo.CustomAssemblyPath}" DataContext="{Binding}" />
 
-		<DockPanel>
+					<DockPanel d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" Visibility="{Binding Path=CustomTypeNameVisibility}">
 			<Label DockPanel.Dock="Right" Padding="1">
 				<Hyperlink Click="ChooseType">Choose...</Hyperlink>
 			</Label>
 			<Label Padding="0,0,0,1">Full name of LinqMetaData type:</Label>
 		</DockPanel>
 
-		<TextBox Name="txtTypeName" Margin="0,0,0,6" Text="{Binding Path=CustomTypeInfo.CustomTypeName}"/>
+					<TextBox  d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" Visibility="{Binding Path=CustomTypeNameVisibility}" Name="txtTypeName" Margin="0,0,0,6" Text="{Binding Path=CustomTypeInfo.CustomTypeName}"/>
 
-		<DockPanel>
+					<DockPanel>
 			<Label DockPanel.Dock="Right" Padding="1">
 				<Hyperlink Click="BrowseAppConfig">Browse...</Hyperlink>
 			</Label>
 			<Label Padding="0,0,0,1">Application config file (if required):</Label>
 		</DockPanel>
 
-		<TextBox Name="txtAppConfigPath" Text="{Binding Path=AppConfigPath}"/>
+		<TextBox  Name="txtAppConfigPath" Text="{Binding Path=AppConfigPath}"/>
 
 		<DockPanel>
 			<Label Padding="0,0,0,1" >Database connection string (if required):</Label>
@@ -55,14 +53,14 @@
 		</DockPanel>
 		<TextBox Name="textBoxDatabaseConnectionString" Margin="0,0,0,6" Text="{Binding DatabaseInfo.CustomCxString}"  />
 
-					<ComboBox Name="comboBoxConnectionType" Margin="0,0,0,6" SelectedIndex="{Binding DriverData.Element[ConnectionType].Value}" 
-										Visibility="{Binding SelectedIndex, ElementName=comboBoxConnectionType, Converter={StaticResource NotSelfServicingToVisability}}" >
+					<ComboBox d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" Name="comboBoxConnectionType" Margin="0,0,0,6" SelectedIndex="{Binding CxInfo.DriverData.Element[ConnectionType].Value}" 
+										Visibility="{Binding Path=ConnectionTypeVisibility}" >
 			<ComboBoxItem Content="0" />
 			<ComboBoxItem Content="1" />
 			<ComboBoxItem Content="2" />
 			<ComboBoxItem Content="3" />
 		</ComboBox>
-		<StackPanel  Visibility="{Binding SelectedIndex, ElementName=comboBoxConnectionType, Converter={StaticResource AdapterFactoryToVisability}}">
+					<StackPanel  Visibility="{Binding DriverData.Element[ConnectionType].Value, Converter={StaticResource AdapterFactoryToVisability}}">
 			<DockPanel>
 				<Label DockPanel.Dock="Right" Padding="1" >
 					<Hyperlink TargetName="FactoryAssembly" Click="BrowseDataAccessAdapterAssembly">Browse...</Hyperlink>
@@ -109,10 +107,10 @@
 					<StackPanel Orientation="Horizontal">
 						<CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
 			<Button Name="btnSaveDefault" Content="Save as default" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsDefault="True" TabIndex="1" Click="btnSaveDefault_Click" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
-</StackPanel>
+					</StackPanel>
 			</StackPanel>
 		</TabItem>
-			<TabItem Header="DatabaseInfo" DataContext="{StaticResource iConnectionInfoViewSource}">
+			<TabItem Header="DatabaseInfo" DataContext="{Binding CxInfo}">
 				<Grid  Name="grid12" >
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -159,7 +157,7 @@
 					<Label Content="Password:" Grid.Column="0" Grid.Row="10" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
 					<TextBox Grid.Column="1" Grid.Row="10" Height="23" HorizontalAlignment="Left" Margin="3" Name="passwordTextBox" Text="{Binding Path=DatabaseInfo.Password, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" MinWidth="200" />
 					<Label Content="Provider:" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
-					<ComboBox SelectedItem="{Binding Path=DatabaseInfo.Provider}" Grid.Column="1" Grid.Row="11" MinHeight="23" HorizontalAlignment="Left" ItemsSource="{Binding Source={StaticResource connectionDialogViewSource}, Path=DbProviderFactoryNames}" Margin="3" Name="providerComboBox" VerticalAlignment="Center" MinWidth="150" />
+					<ComboBox d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" SelectedItem="{Binding Path=CxInfo.DatabaseInfo.Provider}" Grid.Column="1" Grid.Row="11" MinHeight="23" HorizontalAlignment="Left" ItemsSource="{Binding Path=DbProviderFactoryNames}" Margin="3" Name="providerComboBox" VerticalAlignment="Center" MinWidth="150" />
 					<Label Content="Server:" Grid.Column="0" Grid.Row="12" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
 					<TextBox Grid.Column="1" Grid.Row="12" Height="23" HorizontalAlignment="Left" Margin="3" Name="serverTextBox" Text="{Binding Path=DatabaseInfo.Server, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" MinWidth="200" />
 					<Label Content="Sql Security:" Grid.Column="0" Grid.Row="13" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
@@ -292,7 +290,7 @@
 					<Label Content="Default Linq Meta Data Assembly:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
 					<TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3" Name="defaultLinqMetaDataAssemblyTextBox" Text="{Binding Path=DefaultLinqMetaDataAssembly, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"  />
 				</Grid>
-				<StackPanel DataContext="{StaticResource connectionDialogViewSource}" Orientation="Horizontal">
+				<StackPanel Orientation="Horizontal">
 						<WpfToolkit:DataGrid Name="AdditionalAssembliesDataGrid"  ItemsSource="{Binding Path=AdditionalAssemblies, ValidatesOnExceptions=true, NotifyOnValidationError=true}" MinWidth="100" MinHeight="100" AutoGenerateColumns="False">
 							<WpfToolkit:DataGrid.Columns>
 								<WpfToolkit:DataGridTextColumn Header="Additional Assemblies" Binding="{Binding Path=Value }" />
@@ -311,7 +309,6 @@
 		<DockPanel LastChildFill="False" Margin="0,10,0,0">
 			<Button Name="btnCancel" DockPanel.Dock="Right" Content="Cancel" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsCancel="True" TabIndex="2" />
 			<Button Name="btnOK" DockPanel.Dock="Right" Content="OK" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsDefault="True" TabIndex="1" Click="btnOK_Click" />
-
 		</DockPanel>
 	</StackPanel>
 </Window>
