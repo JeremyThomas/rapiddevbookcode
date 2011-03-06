@@ -21,7 +21,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private object LLBLConnectionTypeToVisibility(object value)
 		{
 			if (!(value is LLBLConnectionType))
-				value = System.Convert.ToInt32(value);
+				if (string.Empty.Equals(value))
+					value = Static.LLBLConnectionType.Unknown;
+				else
+					value = System.Convert.ToInt32(value);
 
 			return (LLBLConnectionType)value == LLBLConnectionType
 				? Invert ? Visibility.Collapsed : Visibility.Visible

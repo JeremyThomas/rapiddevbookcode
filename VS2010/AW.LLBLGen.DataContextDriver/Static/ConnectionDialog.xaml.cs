@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Xml.Linq;
@@ -27,7 +28,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	/// <summary>
 	/// 	Interaction logic for ConnectionDialog.xaml
 	/// </summary>
-	public partial class ConnectionDialog
+	public partial class ConnectionDialog : INotifyPropertyChanged
 	{
 		/// <summary>
 		/// AdapterType
@@ -48,20 +49,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public IConnectionInfo CxInfo { get; private set; }
 
-		public ConnectionDialog(){}
+		public ConnectionDialog()
+		{
+			InitializeComponent();
+		}
 
 		public ConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
 		{
 			CxInfo = cxInfo;
-			DataContext = this;
-
 			var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"]).Cast<string>();
 			DbProviderFactoryNames = factoryClasses.ToList();
 			AdditionalNamespaces = Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding();
-			InitializeComponent();
-			providerComboBox.DataContext = this;
-			comboBoxConnectionType.DataContext = this;
-
 			if (isNewConnection)
 			{
 				CreateDriverDataElements(cxInfo);
@@ -76,19 +74,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				UpGradeDriverDataElements(cxInfo);
 			}
-
+			DataContext = this;
+			InitializeComponent();
+			providerComboBox.DataContext = this;
+			comboBoxConnectionType.DataContext = this;
+			txtTypeName.DataContext = this;
+			DockPanelTypeName.DataContext = this;
+			AdditionalAssembliesDataGrid.DataContext = this;
+			AdditionalNamespacesDataGrid.DataContext = this;
 		}
 
-				/// <summary>
+		/// <summary>
 		/// Gets the CustomTypeNameVisibility.
 		/// </summary>
 		/// <value>The CustomTypeNameVisibility.</value>
 		public Visibility CustomTypeNameVisibility
 		{
-			get
-			{
-				return string.IsNullOrEmpty(CxInfo.CustomTypeInfo.CustomAssemblyPath)?Visibility.Collapsed:Visibility.Visible;
-			}
+			get { return string.IsNullOrEmpty(txtAssemblyPath.Text) ? Visibility.Collapsed : Visibility.Visible; }
 		}
 
 		/// <summary>
@@ -99,12 +101,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			get
 			{
-				if (CustomTypeNameVisibility == Visibility.Collapsed)
-					return Visibility.Collapsed;
-				//var x = new[] {LLBLConnectionType.Adapter,LLBLConnectionType.AdapterFactory};
-				if (LLBLConnectionType!=LLBLConnectionType.SelfServicing)
-					return Visibility.Visible;
-				return Visibility.Collapsed;
+				return AdapterConnectionTypes.Contains(LLBLConnectionType) ? Visibility.Visible : Visibility.Collapsed;
 			}
 		}
 
@@ -112,11 +109,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			get
 			{
+				if (string.IsNullOrEmpty(CxInfo.CustomTypeInfo.CustomTypeName))
+					return LLBLConnectionType = LLBLConnectionType.Unknown;
 				int connectionTypeIndex;
-				if (!int.TryParse(ConnectionDialog.GetDriverDataValue(CxInfo, ElementNameConnectionType), out connectionTypeIndex))
+				if (int.TryParse(GetDriverDataValue(ElementNameConnectionType), out connectionTypeIndex))
 					return (LLBLConnectionType) connectionTypeIndex;
 				return LLBLConnectionType.Unknown;
 			}
+			set { SetDriverDataValue(ElementNameConnectionType, ((int) value).ToString()); }
 		}
 
 		public IEnumerable<string> DbProviderFactoryNames { get; set; }
@@ -124,6 +124,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public List<ValueTypeWrapper<string>> AdditionalNamespaces { get; set; }
 
 		private List<ValueTypeWrapper<string>> _additionalAssemblies;
+		private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[] { LLBLConnectionType.Adapter, LLBLConnectionType.AdapterFactory };
 
 		public List<ValueTypeWrapper<string>> AdditionalAssemblies
 		{
@@ -173,6 +174,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					xElement.Value = defaultValue;
 				cxInfo.DriverData.Add(xElement);
 			}
+		}
+
+		public void SetDriverDataValue(string elementName, string value)
+		{
+			CreateElementIfNeeded(CxInfo, elementName, null);
+// ReSharper disable PossibleNullReferenceException
+			CxInfo.DriverData.Element(elementName).Value = value;
+// ReSharper restore PossibleNullReferenceException
 		}
 
 		public static string GetDriverDataValue(IConnectionInfo cxInfo, string elementName)
@@ -253,12 +262,66 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 				if (customTypes.Length == 1)
 				{
-					CxInfo.CustomTypeInfo.CustomTypeName = customTypes[0];
-					var element = CxInfo.DriverData.Element(ElementNameConnectionType);
-					var selfServicingEntities = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase");
-					if (element != null) element.Value = selfServicingEntities.IsNullOrEmpty() ? ((int) LLBLConnectionType.Adapter).ToString() : ((int) LLBLConnectionType.SelfServicing).ToString();
+					SetCustomTypeName(customTypes[0]);
 				}
 			}
+		}
+
+		private void SetCustomTypeName(string customType)
+		{
+			CxInfo.CustomTypeInfo.CustomTypeName = customType;
+			var selfServicingEntities = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase");
+			LLBLConnectionType = selfServicingEntities.IsNullOrEmpty() ? LLBLConnectionType.Adapter : LLBLConnectionType.SelfServicing;
+			OnPropertyChanged("ConnectionTypeVisibility");
+		}
+
+		private void ChooseType(object sender, RoutedEventArgs e)
+		{
+			var customTypes = GetLinqMetaDataTypes();
+			if (customTypes.Length == 1)
+			{
+				SetCustomTypeName(customTypes[0]);
+				return;
+			}
+
+			var result = (string) Dialogs.PickFromList("Choose Custom Type", customTypes);
+			if (result != null)
+				SetCustomTypeName(CxInfo.CustomTypeInfo.CustomTypeName);
+		}
+
+		private string[] GetLinqMetaDataTypes()
+		{
+			var assemPath = CxInfo.CustomTypeInfo.CustomAssemblyPath;
+			if (assemPath.Length == 0)
+			{
+				MessageBox.Show("First enter a path to an assembly.");
+				return null;
+			}
+
+			if (!File.Exists(assemPath))
+			{
+				MessageBox.Show("File '" + assemPath + "' does not exist.");
+				return null;
+			}
+
+			string[] customTypes;
+			try
+			{
+				customTypes = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.LinqSupportClasses.ILinqMetaData");
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Error obtaining custom types: " + ex.Message);
+				Debugger.Break();
+				return null;
+			}
+			if (customTypes.Length == 0)
+			{
+				MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData.");
+				Debugger.Break();
+				return customTypes;
+			}
+			return customTypes;
 		}
 
 		private void BrowseDataAccessAdapterAssembly(object sender, RoutedEventArgs e)
@@ -330,54 +393,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 			if (dialog.ShowDialog() == true)
 				CxInfo.AppConfigPath = dialog.FileName;
-		}
-
-		private void ChooseType(object sender, RoutedEventArgs e)
-		{
-			var customTypes = GetLinqMetaDataTypes();
-			if (customTypes.Length == 1)
-			{
-				CxInfo.CustomTypeInfo.CustomTypeName = customTypes[0];
-				return;
-			}
-
-			var result = (string) Dialogs.PickFromList("Choose Custom Type", customTypes);
-			if (result != null) CxInfo.CustomTypeInfo.CustomTypeName = result;
-		}
-
-		private string[] GetLinqMetaDataTypes()
-		{
-			var assemPath = CxInfo.CustomTypeInfo.CustomAssemblyPath;
-			if (assemPath.Length == 0)
-			{
-				MessageBox.Show("First enter a path to an assembly.");
-				return null;
-			}
-
-			if (!File.Exists(assemPath))
-			{
-				MessageBox.Show("File '" + assemPath + "' does not exist.");
-				return null;
-			}
-
-			string[] customTypes;
-			try
-			{
-				customTypes = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.LinqSupportClasses.ILinqMetaData");
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error obtaining custom types: " + ex.Message);
-				Debugger.Break();
-				return null;
-			}
-			if (customTypes.Length == 0)
-			{
-				MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData.");
-				Debugger.Break();
-				return customTypes;
-			}
-			return customTypes;
 		}
 
 		private void ChooseAdapter(object sender, RoutedEventArgs e)
@@ -541,6 +556,30 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				CxInfo.DatabaseInfo.CustomCxString = connection.ConnectionString;
 				connection.Open();
 			}
+		}
+
+		private void buttonClear_Click(object sender, RoutedEventArgs e)
+		{
+			Settings.Default.Reset();
+		}
+
+		#region Implementation of INotifyPropertyChanged
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected void OnPropertyChanged(string propertyName)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+
+		#endregion
+
+		private void txtAssemblyPath_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			OnPropertyChanged("CustomTypeNameVisibility");
 		}
 	}
 

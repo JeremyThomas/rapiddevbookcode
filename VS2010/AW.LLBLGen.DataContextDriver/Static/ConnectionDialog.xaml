@@ -15,7 +15,7 @@
 	</Window.Resources>
 	<StackPanel>
 		<TabControl Name="TabControl"  d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" >
-			<TabItem Header="Connection" DataContext="{Binding CxInfo}">
+			<TabItem Header="Connection" DataContext="{Binding CxInfo}" ToolTip="Connection settings required by LLBL">
 			<StackPanel Margin="7" MinHeight="0" >
 
 		<DockPanel>
@@ -25,16 +25,16 @@
 			<Label Padding="0,0,0,1" Content="Path to LLBL assembly containing a ILinqMetaData:"></Label>
 		</DockPanel>
 
-		<TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding Path=CustomTypeInfo.CustomAssemblyPath}" DataContext="{Binding}" />
+		<TextBox Name="txtAssemblyPath" Margin="0,0,0,6" Text="{Binding Path=CustomTypeInfo.CustomAssemblyPath}" DataContext="{Binding}" TextChanged="txtAssemblyPath_TextChanged" />
 
-					<DockPanel d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" Visibility="{Binding Path=CustomTypeNameVisibility}">
+					<DockPanel d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" Visibility="{Binding Path=CustomTypeNameVisibility}" Name="DockPanelTypeName">
 			<Label DockPanel.Dock="Right" Padding="1">
 				<Hyperlink Click="ChooseType">Choose...</Hyperlink>
 			</Label>
 			<Label Padding="0,0,0,1">Full name of LinqMetaData type:</Label>
 		</DockPanel>
 
-					<TextBox  d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" Visibility="{Binding Path=CustomTypeNameVisibility}" Name="txtTypeName" Margin="0,0,0,6" Text="{Binding Path=CustomTypeInfo.CustomTypeName}"/>
+					<TextBox  d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" Visibility="{Binding Path=CustomTypeNameVisibility}" Name="txtTypeName" Margin="0,0,0,6" Text="{Binding Path=CxInfo.CustomTypeInfo.CustomTypeName}" IsReadOnly="True" />
 
 					<DockPanel>
 			<Label DockPanel.Dock="Right" Padding="1">
@@ -52,13 +52,13 @@
 			</Label>
 		</DockPanel>
 		<TextBox Name="textBoxDatabaseConnectionString" Margin="0,0,0,6" Text="{Binding DatabaseInfo.CustomCxString}"  />
-
+					<DockPanel>
+						<Label Padding="0,0,0,1" >Connection Display Name (Optional):</Label>
+					</DockPanel>
+					<TextBox Name="textBoxConnectionDisplayName" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.DisplayName}"  />
 					<ComboBox d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}" Name="comboBoxConnectionType" Margin="0,0,0,6" SelectedIndex="{Binding CxInfo.DriverData.Element[ConnectionType].Value}" 
-										Visibility="{Binding Path=ConnectionTypeVisibility}" >
-			<ComboBoxItem Content="0" />
-			<ComboBoxItem Content="1" />
-			<ComboBoxItem Content="2" />
-			<ComboBoxItem Content="3" />
+										Visibility="{Binding Path=ConnectionTypeVisibility}"  ItemsSource="{Binding Source={Static:Enumeration {x:Type Static:LLBLConnectionType}}}"
+										DisplayMemberPath="Description" >
 		</ComboBox>
 					<StackPanel  Visibility="{Binding DriverData.Element[ConnectionType].Value, Converter={StaticResource AdapterFactoryToVisability}}">
 			<DockPanel>
@@ -99,21 +99,16 @@
 			<TextBox  Name="textBoxAdapterType" Text="{Binding DriverData.Element[AdapterType].Value}"  />
 		</StackPanel>
 
-		<DockPanel>
-			<Label Padding="0,0,0,1" >Connection Display Name (Optional):</Label>
-		</DockPanel>
-		<TextBox Name="textBoxConnectionDisplayName" Margin="0,0,0,6" Text="{Binding CustomTypeInfo.DisplayName}"  />
-
 					<StackPanel Orientation="Horizontal">
 						<CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
 			<Button Name="btnSaveDefault" Content="Save as default" Margin="5,0,0,0" Padding="8,2" MinWidth="60" IsDefault="True" TabIndex="1" Click="btnSaveDefault_Click" HorizontalAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" />
 					</StackPanel>
 			</StackPanel>
 		</TabItem>
-			<TabItem Header="DatabaseInfo" DataContext="{Binding CxInfo}">
+			<TabItem Header="SQL Database Settings" DataContext="{Binding CxInfo}" ToolTip="Database connection settings used to Execute SQL">
 				<Grid  Name="grid12" >
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="153" />
 						<ColumnDefinition  />
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
@@ -168,7 +163,7 @@
 					<TextBox Grid.Column="1" Grid.Row="15" Height="23" HorizontalAlignment="Left" Margin="3" Name="userNameTextBox" Text="{Binding Path=DatabaseInfo.UserName, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" MinWidth="200" />
 				</Grid>
 			</TabItem>
-			<TabItem Header="Driver" DataContext="{StaticResource settingsViewSource}" ><StackPanel>
+			<TabItem Header="Driver" DataContext="{StaticResource settingsViewSource}" Name="DriverTab" ToolTip="Settings global to all connections"><StackPanel>
 				<Grid HorizontalAlignment="Left" Name="grid1" VerticalAlignment="Top">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="Auto" />
@@ -290,17 +285,18 @@
 					<Label Content="Default Linq Meta Data Assembly:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
 					<TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3" Name="defaultLinqMetaDataAssemblyTextBox" Text="{Binding Path=DefaultLinqMetaDataAssembly, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center"  />
 				</Grid>
-				<StackPanel Orientation="Horizontal">
+					<StackPanel Orientation="Horizontal" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type=Static:ConnectionDialog}">
 						<WpfToolkit:DataGrid Name="AdditionalAssembliesDataGrid"  ItemsSource="{Binding Path=AdditionalAssemblies, ValidatesOnExceptions=true, NotifyOnValidationError=true}" MinWidth="100" MinHeight="100" AutoGenerateColumns="False">
 							<WpfToolkit:DataGrid.Columns>
-								<WpfToolkit:DataGridTextColumn Header="Additional Assemblies" Binding="{Binding Path=Value }" />
+								<WpfToolkit:DataGridTextColumn Header="Additional Assemblies" Binding="{Binding Path=Value}" />
 							</WpfToolkit:DataGrid.Columns>
 						</WpfToolkit:DataGrid>
-						<WpfToolkit:DataGrid ItemsSource="{Binding Path=AdditionalNamespaces, ValidatesOnExceptions=true, NotifyOnValidationError=true}" MinWidth="100" MinHeight="100" AutoGenerateColumns="False">
+						<WpfToolkit:DataGrid ItemsSource="{Binding Path=AdditionalNamespaces, ValidatesOnExceptions=true, NotifyOnValidationError=true}" MinWidth="100" MinHeight="100" AutoGenerateColumns="False" Name="AdditionalNamespacesDataGrid">
 							<WpfToolkit:DataGrid.Columns>
 								<WpfToolkit:DataGridTextColumn Header="Additional Namespaces" Binding="{Binding Path=Value }" />
 							</WpfToolkit:DataGrid.Columns>
 						</WpfToolkit:DataGrid>
+						<Button Content="Clear" Height="23" Name="buttonClear" Width="75" Click="buttonClear_Click" />
 					</StackPanel>
 				</StackPanel>
 		</TabItem>
