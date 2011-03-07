@@ -35,7 +35,7 @@ namespace AW.Data.Queries
       var Orders = new SalesOrderHeaderCollection();
       //note      Orders.SupportsSorting = true;
 
-      IPrefetchPath Prefetch = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntityBase.PrefetchPathCustomerViewRelated} : null;
+      IPrefetchPath Prefetch = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated} : null;
       Orders.GetMulti(Filter, maxNumberOfItemsToReturn, Sort, relations, Prefetch);
       return Orders;
     }

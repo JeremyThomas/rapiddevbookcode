@@ -552,7 +552,6 @@ namespace AW.Win
           this.Tag = "True";
           this.Text = "Order Search";
           this.Load += new System.EventHandler(this.frmOrderSearch_Load);
-          this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmOrderSearch_FormClosed);
           this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmOrderSearch_FormClosing);
           this.tableLayoutPanel1.ResumeLayout(false);
           this.tableLayoutPanel2.ResumeLayout(false);
@@ -591,7 +590,6 @@ namespace AW.Win
         private System.Windows.Forms.ComboBox cbCountry;
         private System.Windows.Forms.TextBox tbOrderID;
         private AW.Data.CollectionClasses.SalesOrderHeaderCollection salesOrderHeaderCollection1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn salesOrderIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn salesOrderNumberDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderDateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn customerLastNameDataGridViewTextBoxColumn;

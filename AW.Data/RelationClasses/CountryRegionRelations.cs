@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: CountryRegion. </summary>
+	/// <summary>Implements the relations factory for the entity: CountryRegion. </summary>
 	public partial class CountryRegionRelations
 	{
 		/// <summary>CTor</summary>
@@ -30,29 +30,12 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.CountryRegionCurrencyEntityUsingCountryRegionCode);
 			toReturn.Add(this.StateProvinceEntityUsingCountryRegionCode);
-
-
+			toReturn.Add(this.CountryRegionCurrencyEntityUsingCountryRegionCode);
 			return toReturn;
 		}
 
 		#region Class Property Declarations
-
-		/// <summary>Returns a new IEntityRelation object, between CountryRegionEntity and CountryRegionCurrencyEntity over the 1:n relation they have, using the relation between the fields:
-		/// CountryRegion.CountryRegionCode - CountryRegionCurrency.CountryRegionCode
-		/// </summary>
-		public virtual IEntityRelation CountryRegionCurrencyEntityUsingCountryRegionCode
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CountryRegionCurrency" , true);
-				relation.AddEntityFieldPair(CountryRegionFields.CountryRegionCode, CountryRegionCurrencyFields.CountryRegionCode);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionCurrencyEntity", false);
-				return relation;
-			}
-		}
 
 		/// <summary>Returns a new IEntityRelation object, between CountryRegionEntity and StateProvinceEntity over the 1:n relation they have, using the relation between the fields:
 		/// CountryRegion.CountryRegionCode - StateProvince.CountryRegionCode
@@ -69,17 +52,42 @@ namespace AW.Data.RelationClasses
 			}
 		}
 
+		/// <summary>Returns a new IEntityRelation object, between CountryRegionEntity and CountryRegionCurrencyEntity over the 1:n relation they have, using the relation between the fields:
+		/// CountryRegion.CountryRegionCode - CountryRegionCurrency.CountryRegionCode
+		/// </summary>
+		public virtual IEntityRelation CountryRegionCurrencyEntityUsingCountryRegionCode
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CountryRegionCurrencies" , true);
+				relation.AddEntityFieldPair(CountryRegionFields.CountryRegionCode, CountryRegionCurrencyFields.CountryRegionCode);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionCurrencyEntity", false);
+				return relation;
+			}
+		}
 
 
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticCountryRegionRelations
+	{
+		internal static readonly IEntityRelation StateProvinceEntityUsingCountryRegionCodeStatic = new CountryRegionRelations().StateProvinceEntityUsingCountryRegionCode;
+		internal static readonly IEntityRelation CountryRegionCurrencyEntityUsingCountryRegionCodeStatic = new CountryRegionRelations().CountryRegionCurrencyEntityUsingCountryRegionCode;
+
+		/// <summary>CTor</summary>
+		static StaticCountryRegionRelations()
+		{
+		}
 	}
 }

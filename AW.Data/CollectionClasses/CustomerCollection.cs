@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -40,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public CustomerCollection(IList<CustomerEntity> initialContents):base(new CustomerEntityFactory())
+		public CustomerCollection(IEnumerable<CustomerEntity> initialContents):base(new CustomerEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -65,7 +64,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiManyToOne(IEntity salesTerritoryInstance)
 		{
-			return GetMultiManyToOne(salesTerritoryInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(salesTerritoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which have data in common with the specified related Entities.
@@ -75,7 +74,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiManyToOne(IEntity salesTerritoryInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(salesTerritoryInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(salesTerritoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which have data in common with the specified related Entities.
@@ -107,12 +106,11 @@ namespace AW.Data.CollectionClasses
 			{
 				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
 			}
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMulti(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, filter, salesTerritoryInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCustomerDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, salesTerritoryInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all Customer entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
@@ -121,8 +119,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
 		public int DeleteMultiManyToOne(IEntity salesTerritoryInstance)
 		{
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.DeleteMulti(base.Transaction, salesTerritoryInstance);
+			return DAOFactory.CreateCustomerDAO().DeleteMulti(this.Transaction, salesTerritoryInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all Customer entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
@@ -132,86 +129,18 @@ namespace AW.Data.CollectionClasses
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
 		public int UpdateMultiManyToOne(CustomerEntity entityWithNewValues, IEntity salesTerritoryInstance)
 		{
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.UpdateMulti(entityWithNewValues, base.Transaction, salesTerritoryInstance);
+			return DAOFactory.CreateCustomerDAO().UpdateMulti(entityWithNewValues, this.Transaction, salesTerritoryInstance);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance)
-		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingAddressCollectionViaSalesOrderHeader_(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingAddressCollectionViaSalesOrderHeader_(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(IEntity addressInstance)
 		{
-			return GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -221,8 +150,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(addressInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -231,26 +168,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingAddressCollectionViaCustomerAddress(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingAddressCollectionViaCustomerAddress(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -258,25 +183,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaCustomerAddress(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingAddressCollectionViaCustomerAddress(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, prefetchPathToUse);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingAddressCollectionViaCustomerAddress(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance)
 		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -286,8 +208,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -296,26 +226,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingAddressCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingAddressCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(addressInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -323,25 +241,80 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingAddressCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressInstance, prefetchPathToUse);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingAddressCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressTypeEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(addressInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingAddressCollectionViaSalesOrderHeader_(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, null, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressCollectionViaSalesOrderHeader_(IEntity addressInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingAddressCollectionViaSalesOrderHeader_(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressInstance, prefetchPathToUse, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in AddressTypeEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressTypeInstance">AddressTypeEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(IEntity addressTypeInstance)
 		{
-			return GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(addressTypeInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(addressTypeInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressTypeEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressTypeEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressTypeInstance">AddressTypeEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -351,8 +324,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(addressTypeInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressTypeEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in AddressTypeEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="addressTypeInstance">AddressTypeEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(IEntity addressTypeInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(addressTypeInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressTypeEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressTypeInstance">AddressTypeEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -361,26 +342,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(IEntity addressTypeInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingAddressTypeCollectionViaCustomerAddres(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressTypeInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingAddressTypeCollectionViaCustomerAddres(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressTypeInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in AddressTypeEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="addressTypeInstance">AddressTypeEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(IEntity addressTypeInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(addressTypeInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressTypeEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in AddressTypeEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="addressTypeInstance">AddressTypeEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -388,25 +357,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingAddressTypeCollectionViaCustomerAddres(IEntity addressTypeInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingAddressTypeCollectionViaCustomerAddres(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, addressTypeInstance, prefetchPathToUse);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingAddressTypeCollectionViaCustomerAddres(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, addressTypeInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance)
 		{
-			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -416,8 +382,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -426,26 +400,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingContactCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, contactInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingContactCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, contactInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(contactInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ContactEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="contactInstance">ContactEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -453,350 +415,22 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingContactCollectionViaSalesOrderHeader(IEntity contactInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingContactCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, contactInstance, prefetchPathToUse);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingContactCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, contactInstance, prefetchPathToUse, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in CreditCardEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance)
-		{
-			return GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(creditCardInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CreditCardEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(creditCardInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CreditCardEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingCreditCardCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, creditCardInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in CreditCardEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(creditCardInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CreditCardEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingCreditCardCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, creditCardInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance)
-		{
-			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, currencyRateInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, currencyRateInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance)
-		{
-			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(customerViewRelatedInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(customerViewRelatedInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, customerViewRelatedInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(customerViewRelatedInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, customerViewRelatedInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in SalesPersonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance)
-		{
-			return GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(salesPersonInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesPersonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(salesPersonInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesPersonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingSalesPersonCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesPersonInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in SalesPersonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(salesPersonInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesPersonEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesPersonInstance">SalesPersonEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesPersonCollectionViaSalesOrderHeader(IEntity salesPersonInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingSalesPersonCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesPersonInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance)
-		{
-			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesTerritoryInstance, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!base.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, salesTerritoryInstance, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance)
 		{
-			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, 0, 0);
+			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
 		}
 		
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -806,8 +440,16 @@ namespace AW.Data.CollectionClasses
 			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -816,26 +458,14 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public virtual bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingShipMethodCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, shipMethodInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingShipMethodCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, shipMethodInstance, null, pageNumber, pageSize);
 		}
 
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
-		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(shipMethodInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, prefetchPathToUse);
-		}
-
-		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. 
-		/// All current elements in the collection are removed from the collection.</summary>
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in ShipMethodEntity. All current elements in the collection are removed from the collection.</summary>
 		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -843,14 +473,244 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if the retrieval succeeded, false otherwise</returns>
 		public bool GetMultiManyToManyUsingShipMethodCollectionViaSalesOrderHeader(IEntity shipMethodInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
 		{
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetMultiUsingShipMethodCollectionViaSalesOrderHeader(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, shipMethodInstance, prefetchPathToUse);
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingShipMethodCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, shipMethodInstance, prefetchPathToUse, 0, 0);
 		}
 
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in CreditCardEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance)
+		{
+			return GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(creditCardInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CreditCardEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(creditCardInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in CreditCardEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(creditCardInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CreditCardEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingCreditCardCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, creditCardInstance, null, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CreditCardEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCreditCardCollectionViaSalesOrderHeader(IEntity creditCardInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingCreditCardCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, creditCardInstance, prefetchPathToUse, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance)
+		{
+			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(currencyRateInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, currencyRateInstance, null, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CurrencyRateEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCurrencyRateCollectionViaSalesOrderHeader(IEntity currencyRateInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, currencyRateInstance, prefetchPathToUse, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance)
+		{
+			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(customerViewRelatedInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(customerViewRelatedInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(customerViewRelatedInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, customerViewRelatedInstance, null, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in CustomerViewRelatedEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(IEntity customerViewRelatedInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader_____(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, customerViewRelatedInstance, prefetchPathToUse, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  Relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance)
+		{
+			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a Relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(salesTerritoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, salesTerritoryInstance, null, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this CustomerCollection object all CustomerEntity objects which are related via a  relation of type 'm:n' with the passed in SalesTerritoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSalesTerritoryCollectionViaSalesOrderHeader(IEntity salesTerritoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateCustomerDAO().GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, salesTerritoryInstance, prefetchPathToUse, 0, 0);
+		}
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
 		/// <param name="selectFilter">A predicate or predicate expression which should be used as filter for the entities to retrieve.</param>
@@ -888,6 +748,22 @@ namespace AW.Data.CollectionClasses
 		}
 
 
+		/// <summary> Deletes from the persistent storage all Customer entities which match with the specified filter, formulated in the predicate or predicate expression definition.</summary>
+		/// <param name="deleteFilter">A predicate or predicate expression which should be used as filter for the entities to delete. Can be null, which will result in a query removing all Customer entities from the persistent storage</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public override int DeleteMulti(IPredicate deleteFilter)
+		{
+			throw new NotSupportedException("This method isn't supported for this entity");
+		}
+
+		/// <summary> Deletes from the persistent storage all Customer entities which match with the specified filter, formulated in the predicate or predicate expression definition.</summary>
+		/// <param name="deleteFilter">A predicate or predicate expression which should be used as filter for the entities to delete.</param>
+		/// <param name="relations">The set of relations to walk to construct the total query.</param>
+		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
+		public override int DeleteMulti(IPredicate deleteFilter, IRelationCollection relations)
+		{
+			throw new NotSupportedException("This method isn't supported for this entity");
+		}
 		
 		/// <summary> Gets a scalar value, calculated with the aggregate. the field index specified is the field the aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
@@ -908,8 +784,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -952,8 +827,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			CustomerDAO dao = DAOFactory.CreateCustomerDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateCustomerDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -969,7 +843,6 @@ namespace AW.Data.CollectionClasses
 		{
 			return new Transaction(levelOfIsolation, name);
 		}
-
 
 		#region Custom EntityCollection code
 		

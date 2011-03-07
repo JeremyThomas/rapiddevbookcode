@@ -4,22 +4,14 @@ using System.Data;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.Controls;
-using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers.DataEditor
 {
-	public partial class FrmDataEditor : Form
+	public partial class FrmDataEditor : FrmPersistantLocation
 	{
 		public FrmDataEditor()
 		{
 			InitializeComponent();
-			AWHelper.SetWindowSizeAndLocation(this, Settings.Default.EntityViewerSizeLocation);
-		}
-
-		private void FrmDataEditor_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			Settings.Default.EntityViewerSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-			Settings.Default.Save();
 		}
 
 		public static string GetEnumerableDescription(IEnumerable enumerable)
@@ -38,7 +30,7 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		public static Form CreateDataViewForm(IEnumerable enumerable)
 		{
-			return CreateDataEditorForm(enumerable, new GridDataEditor { Dock = DockStyle.Fill }, null, DataEditorExtensions.DefaultPageSize, true);
+			return CreateDataEditorForm(enumerable, new GridDataEditor {Dock = DockStyle.Fill}, null, DataEditorExtensions.DefaultPageSize, true);
 		}
 
 		public static Form CreateDataEditorForm(IEnumerable enumerable, GridDataEditor gridDataEditor, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
@@ -49,9 +41,9 @@ namespace AW.Winforms.Helpers.DataEditor
 		public static Form InitialiseDataEditorForm(Form frmDataEditor, IEnumerable enumerable, GridDataEditor gridDataEditor, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
 		{
 			frmDataEditor.Text = GetEnumerableDescription(enumerable);
-			if (enumerable is IEnumerable<string>)
+			if (MetaDataHelper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
 			{
-				enumerable = ((IEnumerable<string>) enumerable).CreateStringWrapperForBinding();
+				enumerable = ValueTypeWrapper.CreateWrapperForBinding(enumerable);
 				readOnly = true;
 			}
 			frmDataEditor.Controls.Add(gridDataEditor);

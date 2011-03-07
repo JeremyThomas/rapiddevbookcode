@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace AW.Helper
@@ -32,9 +33,21 @@ namespace AW.Helper
 		/// <returns>All exported types in the Current Domain.</returns>
 		private static IEnumerable<Type> GetAllExportedTypes()
 		{
-			return from assemby in AppDomain.CurrentDomain.GetAssemblies()
-			       from exportedType in assemby.GetExportedTypes()
+			return from assembly in AppDomain.CurrentDomain.GetAssemblies()
+			       from exportedType in GetPublicTypes(assembly)
 			       select exportedType;
+		}
+
+		private static IEnumerable<Type> GetPublicTypes(Assembly assembly)
+		{
+			try
+			{
+				return assembly.GetExportedTypes();
+			}
+			catch (Exception)
+			{
+				return new Type[] {};
+			}
 		}
 
 		/// <summary>
@@ -62,6 +75,23 @@ namespace AW.Helper
 			if (type == typeof (object))
 				return null;
 			return type.IsGenericType ? type.GetGenericArguments().First() : GetTypeParameterOfGenericType(type.BaseType);
+		}
+
+		public static Type[] GetTypeParametersOfGenericType(Type type)
+		{
+			if (type == typeof(object))
+				return null;
+			return type.IsGenericType ? type.GetGenericArguments() : GetTypeParametersOfGenericType(type.BaseType);
+		}
+
+		public static bool IsSerializable(Type type)
+		{
+			if (type.IsSerializable)
+			{
+				var typeParametersOfGenericType = GetTypeParametersOfGenericType(type);
+				return typeParametersOfGenericType.IsNullOrEmpty() || typeParametersOfGenericType.All(t => t.IsSerializable);
+			}
+			return false;
 		}
 
 		/// <summary>
@@ -108,6 +138,40 @@ namespace AW.Helper
 				type = type.BaseType;
 			}
 			return null;
+		}
+
+		/// <summary>
+		/// Creates the generic.
+		/// http://geekswithblogs.net/marcel/archive/2007/03/24/109722.aspx
+		/// </summary>
+		/// <param name="generic">The generic type.</param>
+		/// <param name="innerType">Type of the inner.</param>
+		/// <param name="args">The args.</param>
+		/// <returns></returns>
+		public static object CreateGeneric(Type generic, Type innerType, params object[] args)
+		{
+			var specificType = generic.MakeGenericType(new[] {innerType});
+			return Activator.CreateInstance(specificType, args);
+		}
+
+		/// <summary>
+		/// True if the type the needs wrapping for databinding.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static bool TypeNeedsWrappingForBinding<T>()
+		{
+			return TypeNeedsWrappingForBinding(typeof(T));
+		}
+
+		/// <summary>
+		/// True if the type the needs wrapping for databinding.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns></returns>
+		public static bool TypeNeedsWrappingForBinding(Type type)
+		{
+			return Type.GetTypeCode(type) != TypeCode.Object;
 		}
 
 		/// <summary>
@@ -168,7 +232,8 @@ namespace AW.Helper
 
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(IEnumerable enumerable)
 		{
-			return GetPropertiesToDisplay(GetEnumerableItemType(enumerable));
+			var enumerableItemType = GetEnumerableItemType(enumerable);
+			return GetPropertiesToDisplay(enumerableItemType == typeof (object) ? enumerable.GetType() : enumerableItemType);
 		}
 
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay<T>(IEnumerable<T> enumerable)
@@ -183,7 +248,12 @@ namespace AW.Helper
 		/// <returns></returns>
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
 		{
-			return GetPropertiesToDisplay(type).FilterBySerializable();
+			return GetPropertiesToDisplay(type).FilterBySerializable().FilterByIsNotAssignableFrom(typeof (IDictionary));
+		}
+
+		public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(IEnumerable enumerable)
+		{
+			return GetPropertiesToSerialize(GetEnumerableItemType(enumerable));
 		}
 
 		/// <summary>
@@ -198,6 +268,13 @@ namespace AW.Helper
 			       select propertyDescriptor;
 		}
 
+		public static IEnumerable<PropertyDescriptor> FilterByIsNotAssignableFrom(this IEnumerable<PropertyDescriptor> propertyDescriptors, Type typeToFilterOut)
+		{
+			return from propertyDescriptor in propertyDescriptors
+			       where !typeToFilterOut.IsAssignableFrom(propertyDescriptor.PropertyType)
+			       select propertyDescriptor;
+		}
+
 		/// <summary>
 		/// Adds the associated metadata providers for each type.
 		/// </summary>
@@ -207,6 +284,17 @@ namespace AW.Helper
 		{
 			foreach (var typeWithBuddyClass in typesWhichMayHaveBuddyClasses)
 				TypeDescriptor.AddProvider(new AssociatedMetadataTypeTypeDescriptionProvider(typeWithBuddyClass), typeWithBuddyClass);
+		}
+
+		/// <summary>
+		/// Adds the associated metadata providers for each type.
+		/// </summary>
+		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
+		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
+		public static void AddAssociatedMetadataProviders(params Type[] typesWhichMayHaveBuddyClasses)
+		{
+			if (!typesWhichMayHaveBuddyClasses.IsNullOrEmpty())
+				AddAssociatedMetadataProviders((IEnumerable<Type>) typesWhichMayHaveBuddyClasses);
 		}
 
 		/// <summary>
@@ -267,5 +355,6 @@ namespace AW.Helper
 		{
 			return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);
 		}
+
 	}
 }

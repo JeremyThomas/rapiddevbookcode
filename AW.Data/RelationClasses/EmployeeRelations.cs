@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,8 +17,8 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: Employee. </summary>
-	public partial class EmployeeRelations
+	/// <summary>Implements the relations factory for the entity: Employee. </summary>
+	public partial class EmployeeRelations : IRelationFactory
 	{
 		/// <summary>CTor</summary>
 		public EmployeeRelations()
@@ -36,9 +36,8 @@ namespace AW.Data.RelationClasses
 			toReturn.Add(this.EmployeePayHistoryEntityUsingEmployeeID);
 			toReturn.Add(this.JobCandidateEntityUsingEmployeeID);
 			toReturn.Add(this.PurchaseOrderHeaderEntityUsingEmployeeID);
-			toReturn.Add(this.SalesPersonEntityUsingSalesPersonID);
-			toReturn.Add(this.ContactEntityUsingContactID);
 			toReturn.Add(this.EmployeeEntityUsingEmployeeIDManagerID);
+			toReturn.Add(this.ContactEntityUsingContactID);
 			return toReturn;
 		}
 
@@ -81,7 +80,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "EmployeeDepartmentHistory" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "EmployeeDepartmentHistories" , true);
 				relation.AddEntityFieldPair(EmployeeFields.EmployeeID, EmployeeDepartmentHistoryFields.EmployeeID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeDepartmentHistoryEntity", false);
@@ -96,7 +95,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "EmployeePayHistory" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "EmployeePayHistories" , true);
 				relation.AddEntityFieldPair(EmployeeFields.EmployeeID, EmployeePayHistoryFields.EmployeeID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeePayHistoryEntity", false);
@@ -111,7 +110,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "JobCandidate" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "JobCandidates" , true);
 				relation.AddEntityFieldPair(EmployeeFields.EmployeeID, JobCandidateFields.EmployeeID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("JobCandidateEntity", false);
@@ -126,7 +125,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderHeader" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderHeaders" , true);
 				relation.AddEntityFieldPair(EmployeeFields.EmployeeID, PurchaseOrderHeaderFields.EmployeeID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHeaderEntity", false);
@@ -134,39 +133,7 @@ namespace AW.Data.RelationClasses
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between EmployeeEntity and SalesPersonEntity over the 1:1 relation they have, using the relation between the fields:
-		/// Employee.EmployeeID - SalesPerson.SalesPersonID
-		/// </summary>
-		public virtual IEntityRelation SalesPersonEntityUsingSalesPersonID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, "SalesPerson", true);
 
-				relation.AddEntityFieldPair(EmployeeFields.EmployeeID, SalesPersonFields.SalesPersonID);
-
-
-
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesPersonEntity", false);
-				return relation;
-			}
-		}
-
-		/// <summary>Returns a new IEntityRelation object, between EmployeeEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
-		/// Employee.ContactID - Contact.ContactID
-		/// </summary>
-		public virtual IEntityRelation ContactEntityUsingContactID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Contact", false);
-				relation.AddEntityFieldPair(ContactFields.ContactID, EmployeeFields.ContactID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", true);
-				return relation;
-			}
-		}
 		/// <summary>Returns a new IEntityRelation object, between EmployeeEntity and EmployeeEntity over the m:1 relation they have, using the relation between the fields:
 		/// Employee.ManagerID - Employee.EmployeeID
 		/// </summary>
@@ -181,16 +148,78 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
+		/// <summary>Returns a new IEntityRelation object, between EmployeeEntity and ContactEntity over the m:1 relation they have, using the relation between the fields:
+		/// Employee.ContactID - Contact.ContactID
+		/// </summary>
+		public virtual IEntityRelation ContactEntityUsingContactID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Contact", false);
+				relation.AddEntityFieldPair(ContactFields.ContactID, EmployeeFields.ContactID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeEntity", true);
+				return relation;
+			}
+		}
 
-		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
-		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
-		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
-		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
+
+
+		/// <summary>Returns a new IEntityRelation object, between EmployeeEntity and SalesPersonEntity over the 1:1 relation they have, which is used to build a target per entity hierarchy</summary>		
+		internal IEntityRelation RelationToSubTypeSalesPersonEntity
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToOne, true);
+				relation.AddEntityFieldPair(EmployeeFields.EmployeeID, SalesPersonFields.EmployeeID);
+				relation.IsHierarchyRelation=true;
+				return relation;
+			}
+		}
+		
+		/// <summary>Returns the relation object the entity, to which this relation factory belongs, has with the subtype with the specified name</summary>
+		/// <param name="subTypeEntityName">name of direct subtype which is a subtype of the current entity through the relation to return.</param>
+		/// <returns>relation which makes the current entity a supertype of the subtype entity with the name specified, or null if not applicable/found</returns>
+		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName)
+		{
+			switch(subTypeEntityName)
+			{
+				case "SalesPersonEntity":
+					return this.RelationToSubTypeSalesPersonEntity;
+				default:
+					return null;
+			}
+		}
+		
+		/// <summary>Returns the relation object the entity, to which this relation factory belongs, has with its supertype, if applicable.</summary>
+		/// <returns>relation which makes the current entity a subtype of its supertype entity or null if not applicable/found</returns>
+		public virtual IEntityRelation GetSuperTypeRelation()
+		{
+			return null;
+		}
 
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticEmployeeRelations
+	{
+		internal static readonly IEntityRelation EmployeeEntityUsingManagerIDStatic = new EmployeeRelations().EmployeeEntityUsingManagerID;
+		internal static readonly IEntityRelation EmployeeAddressEntityUsingEmployeeIDStatic = new EmployeeRelations().EmployeeAddressEntityUsingEmployeeID;
+		internal static readonly IEntityRelation EmployeeDepartmentHistoryEntityUsingEmployeeIDStatic = new EmployeeRelations().EmployeeDepartmentHistoryEntityUsingEmployeeID;
+		internal static readonly IEntityRelation EmployeePayHistoryEntityUsingEmployeeIDStatic = new EmployeeRelations().EmployeePayHistoryEntityUsingEmployeeID;
+		internal static readonly IEntityRelation JobCandidateEntityUsingEmployeeIDStatic = new EmployeeRelations().JobCandidateEntityUsingEmployeeID;
+		internal static readonly IEntityRelation PurchaseOrderHeaderEntityUsingEmployeeIDStatic = new EmployeeRelations().PurchaseOrderHeaderEntityUsingEmployeeID;
+		internal static readonly IEntityRelation EmployeeEntityUsingEmployeeIDManagerIDStatic = new EmployeeRelations().EmployeeEntityUsingEmployeeIDManagerID;
+		internal static readonly IEntityRelation ContactEntityUsingContactIDStatic = new EmployeeRelations().ContactEntityUsingContactID;
+
+		/// <summary>CTor</summary>
+		static StaticEmployeeRelations()
+		{
+		}
 	}
 }

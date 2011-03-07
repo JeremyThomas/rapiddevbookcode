@@ -12,7 +12,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 {
 	private readonly TypeDescriptionProvider _baseProvider;
 	private PropertyDescriptorCollection _propCache;
-	private FilterCache _filterCache;
+	private readonly Dictionary<Type, FilterCache> _filterCaches = new Dictionary<Type, FilterCache>();
 
 	private readonly BindingFlags _bindingFlag = BindingFlags.Instance | BindingFlags.Public |
 	                                             BindingFlags.NonPublic | BindingFlags.Static;
@@ -44,6 +44,16 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 			if (Attributes.Length != other.Length) return false;
 			return !other.Where((t, i) => !Attributes[i].Match(t)).Any();
 		}
+	}
+
+	private void AddToCache(Type type, Attribute[] attributes, PropertyDescriptorCollection props)
+	{
+		_filterCaches.Add(type, new FilterCache { FilteredProperties = props, Attributes = attributes });
+	}
+
+	private FilterCache GetCache(Type type)
+	{
+		return _filterCaches.ContainsKey(type) ? _filterCaches[type] : null;
 	}
 
 	public class FieldPropertyDescriptor : PropertyDescriptor
@@ -380,7 +390,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 		{
 			// Retrieve cached properties and filtered properties
 			var filtering = attributes != null && attributes.Length > 0;
-			var cache = _provider._filterCache;
+			var cache = _provider.GetCache(_objectType);
 			var props = _provider._propCache;
 
 			// Use a cached version if we can
@@ -388,7 +398,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 			if (!filtering && props != null) return props;
 
 			// use a stack to reverse hierarchy
-			// if fieldnames occure in more than one class
+			// if fieldnames occur in more than one class
 			// use the one from the class that is highest in the class hierarchy
 			var objectHierarchy = new Stack<Type>();
 			var curType = _objectType;
@@ -405,7 +415,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 				props.Add(prop);
 			}
 
-			// list to rememnber already added names
+			// list to remember already added names
 			var addedMemberNames = new List<string>();
 
 			while (objectHierarchy.Count > 0)
@@ -418,14 +428,15 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 			// Store the updated properties
 			if (filtering)
 			{
-				cache = new FilterCache {FilteredProperties = props, Attributes = attributes};
-				_provider._filterCache = cache;
+				_provider.AddToCache(_objectType, attributes, props);
 			}
 			else _provider._propCache = props;
 
 			// Return the computed properties
 			return props;
 		}
+
+
 
 		/// <summary>
 		/// Add the  fields of an object
@@ -448,7 +459,15 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 				addedMemberNames.Add(field.Name);
 				var fieldDesc = new FieldPropertyDescriptor(field);
 				if (!filtering || fieldDesc.Attributes.Contains(attributes))
-					fields.Add(fieldDesc);
+				{
+					var existing = fields.Find(fieldDesc.Name, false);
+					if (existing == null || !existing.IsBrowsable)
+					{
+						fields.Add(fieldDesc);
+						if (existing != null)
+							fields.Remove(existing);
+					}
+				}
 			}
 		}
 

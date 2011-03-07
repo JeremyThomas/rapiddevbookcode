@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,10 +9,14 @@ using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LLBLGen.DataContextDriver.Properties;
+using AW.Winforms.Helpers.LLBL;
 using LINQPad;
 using LINQPad.Extensibility.DataContext;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+
+#if DEBUG
+#endif
 
 namespace AW.LLBLGen.DataContextDriver.Static
 {
@@ -25,16 +28,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	{
 		private static readonly string[] AdditionalAssemblies = new[]
 		                                                        	{
-		                                                        		"AW.Helper.dll",
-		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
 		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
-		                                                        		"AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
+		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
+		                                                        		"AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
 		                                                        		"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll"
 		                                                        	};
 
 		private static readonly string[] AdditionalNamespaces = new[]
 		                                                        	{
-		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses", "AW.Helper",
+		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses",
+		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses",
+		                                                        		"AW.Helper",
 		                                                        		"AW.Helper.LLBL",
 		                                                        		"AW.Winforms.Helpers.DataEditor",
 		                                                        		"AW.Winforms.Helpers.LLBL"
@@ -44,7 +48,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override string Name
 		{
-			get { return "AW LLBL V2.6 Driver"; }
+			get { return "AW LLBL V3.1 Driver"; }
 		}
 
 		public override string Author
@@ -68,8 +72,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			try
 			{
+				LLBLWinformHelper.ForceInitialization();
 				var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
-				var type = assembly.GetTypes().Where(t => t.Name.Equals("DbUtils") && t.IsClass).SingleOrDefault();
+				var type = assembly.GetTypes().Where(t => t.Name.Contains("CommonDaoBase") && t.IsClass).SingleOrDefault();
 				if (type == null)
 				{
 					InitializeAdapter(cxInfo, context, executionManager);
@@ -82,7 +87,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (Exception e)
 			{
 				GeneralHelper.TraceOut(e.Message);
-				Debugger.Break();
 			}
 		}
 
@@ -102,83 +106,42 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void InitializeAdapter(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
 		{
-			var adapterTypeName = ConnectionDialog.GetAdapterType(cxInfo);
-			if (string.IsNullOrEmpty(adapterTypeName))
+			ConnectionDialog.UpGradeDriverDataElements(cxInfo);
+			var adapterTypeName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameAdaptertype);
+			var factoryTypeName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryType);
+			if (string.IsNullOrEmpty(adapterTypeName) && string.IsNullOrEmpty(factoryTypeName))
 				throw new ApplicationException("CommonDaoBase or adapter not found!");
-			if (!File.Exists(cxInfo.CustomTypeInfo.CustomMetadataPath))
-				throw new ApplicationException("Adapter assembly: " + cxInfo.CustomTypeInfo.CustomMetadataPath + " not found!");
-			var dataAccessAdapterAssembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomMetadataPath);
-			if (dataAccessAdapterAssembly == null)
-				throw new ApplicationException("Adapter assembly: " + cxInfo.CustomTypeInfo.CustomMetadataPath + " could not be loaded!");
-			var dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
-			if (dataAccessAdapterType == null)
-				throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, cxInfo.CustomTypeInfo.CustomMetadataPath));
+
+			var adapterAssemblyPath = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameAdapterAssembly);
+			var factoryAssemblyPath = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryAssembly);
+			if (!File.Exists(adapterAssemblyPath) && !File.Exists(factoryAssemblyPath))
+				throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " not found!" + Environment.NewLine +
+				                               "Factory assembly: " + factoryAssemblyPath + " not found!");
+
 			var linqMetaData = context as ILinqMetaData;
 			if (linqMetaData != null)
 			{
-				var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
-				DataAccessAdapterBase adapter;
-
-				if (typeof(DataAccessAdapterBase).IsAssignableFrom(dataAccessAdapterType))
+				int connectionTypeIndex;
+				Assembly dataAccessAdapterAssembly = null;
+				Type dataAccessAdapterType = null;
+				if (!int.TryParse(ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameConnectionType), out connectionTypeIndex))
 				{
-					if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
-					{
-						adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
-					}
-					else
-					{
-						if (cxInfo.DatabaseInfo.IsSqlServer)
-							adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-							                                                          	{
-							                                                          		cxInfo.DatabaseInfo.CustomCxString,
-							                                                          		true, CatalogNameUsage.Clear, null
-							                                                          	}) as DataAccessAdapterBase;
-						else
-						{
-							if (cxInfo.DatabaseInfo.Provider.Contains("Oracle"))
-								adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-								                                                          	{
-								                                                          		cxInfo.DatabaseInfo.CustomCxString,
-								                                                          		true, SchemaNameUsage.Default, null
-								                                                          	}) as DataAccessAdapterBase;
-							else
-								adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
-								                                                          	{
-								                                                          		cxInfo.DatabaseInfo.CustomCxString
-								                                                          	}) as DataAccessAdapterBase;
-						}
-					}
+					dataAccessAdapterAssembly = Assembly.LoadFile(adapterAssemblyPath);
+					dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
+					connectionTypeIndex = typeof (DataAccessAdapterBase).IsAssignableFrom(dataAccessAdapterType) ? (int) LLBLConnectionType.Adapter : (int) LLBLConnectionType.AdapterFactory;
+					cxInfo.DriverData.SetElementValue(ConnectionDialog.ElementNameConnectionType, connectionTypeIndex);
 				}
-				else
-				{
-					var fullListQueryMethod = dataAccessAdapterType.GetMethod(cxInfo.DatabaseInfo.Provider, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(string) }, null);
-					if (fullListQueryMethod == null)
-					{
-						GeneralHelper.TraceOut(cxInfo.DatabaseInfo.Provider + " not found");
-						adapter = null;
-					}
-					else
-						try
-						{
-							adapter = fullListQueryMethod.Invoke(null, BindingFlags.InvokeMethod, null, new object[] { cxInfo.DatabaseInfo.CustomCxString }, null) as DataAccessAdapterBase;
-						}
-						catch (TargetInvocationException invocationException)
-						{
-							ThrowInnerException(invocationException);
-							throw;
-						}
-				}
+				var adapter = GetAdapter(cxInfo, adapterTypeName, factoryTypeName, adapterAssemblyPath, factoryAssemblyPath, dataAccessAdapterAssembly, dataAccessAdapterType, connectionTypeIndex);
 
-				if (adapter == null)
-					Debugger.Break();
-				else
+				if (adapter != null)
 				{
+					var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
 					adapterToUseProperty.SetValue(linqMetaData, adapter, null);
 					if (string.IsNullOrEmpty(adapter.ConnectionString))
 						if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
 						{
 							var firstConnectionString = (from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
-																					 select connectionStringSetting).FirstOrDefault();
+							                             select connectionStringSetting).FirstOrDefault();
 							if (firstConnectionString != null)
 								adapter.ConnectionString = firstConnectionString.ConnectionString;
 						}
@@ -187,10 +150,81 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 		}
 
+		private static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo, string adapterTypeName, string factoryTypeName, string adapterAssemblyPath, string factoryAssemblyPath, Assembly dataAccessAdapterAssembly, Type dataAccessAdapterType,
+		                                                int connectionTypeIndex)
+		{
+			DataAccessAdapterBase adapter;
+			if (connectionTypeIndex == (int) LLBLConnectionType.Adapter)
+			{
+				if (dataAccessAdapterAssembly == null)
+					dataAccessAdapterAssembly = Assembly.LoadFile(adapterAssemblyPath);
+				if (dataAccessAdapterAssembly == null)
+					throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
+				if (dataAccessAdapterType == null)
+					dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
+				if (dataAccessAdapterType == null)
+					throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, adapterAssemblyPath));
+				if (string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString))
+				{
+					adapter = dataAccessAdapterAssembly.CreateInstance(adapterTypeName) as DataAccessAdapterBase;
+				}
+				else
+				{
+					if (cxInfo.DatabaseInfo.IsSqlServer)
+						adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+						                                                          	{
+						                                                          		cxInfo.DatabaseInfo.CustomCxString,
+						                                                          		true, CatalogNameUsage.Clear, null
+						                                                          	}) as DataAccessAdapterBase;
+					else
+					{
+						if (cxInfo.DatabaseInfo.CustomCxString.Contains("Oracle"))
+							adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+							                                                          	{
+							                                                          		cxInfo.DatabaseInfo.CustomCxString,
+							                                                          		true, SchemaNameUsage.Default, null
+							                                                          	}) as DataAccessAdapterBase;
+						else
+							adapter = Activator.CreateInstance(dataAccessAdapterType, new object[]
+							                                                          	{
+							                                                          		cxInfo.DatabaseInfo.CustomCxString
+							                                                          	}) as DataAccessAdapterBase;
+					}
+				}
+			}
+			else
+			{
+				var factoryMethodName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryMethod);
+				var factoryAdapterAssembly = Assembly.LoadFile(factoryAssemblyPath);
+				if (factoryAdapterAssembly == null)
+					throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
+				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
+				if (factoryType == null)
+					throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, adapterAssemblyPath));
+				var fullListQueryMethod = factoryType.GetMethod(factoryMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, null, new[] {typeof (string)}, null);
+				if (fullListQueryMethod == null)
+				{
+					GeneralHelper.TraceOut(factoryMethodName + " not found");
+					adapter = null;
+				}
+				else
+					try
+					{
+						adapter = fullListQueryMethod.Invoke(null, BindingFlags.InvokeMethod, null, new object[] {cxInfo.DatabaseInfo.CustomCxString}, null) as DataAccessAdapterBase;
+					}
+					catch (TargetInvocationException invocationException)
+					{
+						ThrowInnerException(invocationException);
+						throw;
+					}
+			}
+			return adapter;
+		}
+
 		private static void ThrowInnerException(Exception invocationException)
 		{
 			if (invocationException.InnerException != null)
-					ThrowInnerException(invocationException.InnerException);
+				ThrowInnerException(invocationException.InnerException);
 			throw invocationException;
 		}
 
@@ -361,19 +395,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		/// <returns></returns>
 		private static IEnumerable<PropertyDescriptor> GetPropertiesToShowInSchema(Type type)
 		{
-			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(GetPropertiesOfTypeEntity(type));
-		}
-
-		/// <summary>
-		/// 	Gets the properties of type entity since these properties are not browsable so they need to be handled as a special case.
-		/// </summary>
-		/// <param name = "type">The type.</param>
-		/// <returns></returns>
-		private static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
-		{
-			return from propertyDescriptor in TypeDescriptor.GetProperties(type, null).Cast<PropertyDescriptor>()
-			       where typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
-			       select propertyDescriptor;
+			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
 		}
 
 		private static ExplorerItem GetChildItem(ILookup<Type, ExplorerItem> elementTypeLookup, PropertyDescriptor childProp)

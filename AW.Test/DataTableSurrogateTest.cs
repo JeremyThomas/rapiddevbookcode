@@ -70,6 +70,16 @@ namespace AW.Tests
 			//TestDataTableSurrogateSerializeDeserialize(GeneralHelper.CopyToDataTable(MetaSingletons.MetaData.AddressType));
 		}
 
+		///<summary>
+		///	A test for DataTableSurrogate Constructor
+		///</summary>
+		[TestMethod]
+		public void DataTableSurrogateSerializeDeserializexmlSchemaTest()
+		{
+			var xmlSchema = TestData.GetTestXmlSchema();
+			TestDataTableSurrogateSerializeDeserialize(xmlSchema.Items.CopyToDataTable());
+		}
+
 		private static void TestDataTableSurrogateSerializeDeserialize(DataTable datatable)
 		{
 			var target = new DataTableSurrogate(datatable);

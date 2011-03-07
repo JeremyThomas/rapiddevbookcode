@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using AW.Helper;
 using JesseJohnston;
@@ -19,7 +18,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected override Type ItemType
 		{
-			get { return typeof(T); }
+			get { return typeof (T); }
 		}
 
 		protected override bool GetFirstPage()
@@ -29,7 +28,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected override bool GetFirstPage(IEnumerable enumerable)
 		{
-			return GetFirstPage((IEnumerable<T>)enumerable);
+			return GetFirstPage((IEnumerable<T>) enumerable);
 		}
 
 		private bool GetFirstPage(IEnumerable<T> enumerable)
@@ -37,13 +36,13 @@ namespace AW.Winforms.Helpers.Controls
 			var firstPageEnumerable = enumerable;
 			if (Paging())
 				firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
-			var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, typeof(T)));
+			var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, typeof (T)));
 			return isEnumerable;
 		}
 
 		protected override IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
 		{
-			return CreatePageDataSource(pageSize, (IEnumerable<T>)enumerable);
+			return CreatePageDataSource(pageSize, (IEnumerable<T>) enumerable);
 		}
 
 		protected IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable<T> enumerable)
@@ -65,7 +64,7 @@ namespace AW.Winforms.Helpers.Controls
 			if (_supersetG is IQueryable && SupportsNotifyPropertyChanged)
 				saveToolStripButton.Enabled = false;
 			if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
-				((ObjectListView<T>)bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
+				((ObjectListView<T>) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
 			else
 				base.SetRemovingItem();
 		}

@@ -130,7 +130,7 @@ namespace AW.Tests
 			                	{
 			                		soh.SalesOrderID,
 			                		sod.SalesOrderDetailID,
-													MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.Name
+			                		MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.Name
 			                	});
 			var result = q.Where(x => x.SalesOrderID < 43690).ToList();
 
@@ -140,7 +140,7 @@ namespace AW.Tests
 			                 	{
 			                 		soh.SalesOrderID,
 			                 		sod.SalesOrderDetailID,
-													MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.CatalogDescription
+			                 		MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.CatalogDescription
 			                 	});
 
 			var result1 = q1.Where(x => x.SalesOrderID < 43690).ToList();
@@ -152,14 +152,14 @@ namespace AW.Tests
 			                                    		soh.SalesOrderID,
 			                                    		sod.SalesOrderDetailID,
 			                                    		MetaSingletons.MetaData.Product.First(p => p.ProductID == sod.ProductID).ProductModel.Name,
-																							(
-																							  from p in MetaSingletons.MetaData.Product
-																							  where p.ProductID == sod.ProductID
-																							  join pm in MetaSingletons.MetaData.ProductModel on p.ProductID equals pm.ProductModelID
-																							  select pm
-																							).First().CatalogDescription			                                    		
+			                                    		(
+			                                    			from p in MetaSingletons.MetaData.Product
+			                                    			where p.ProductID == sod.ProductID
+			                                    			join pm in MetaSingletons.MetaData.ProductModel on p.ProductID equals pm.ProductModelID
+			                                    			select pm
+			                                    		).First().CatalogDescription			                                    		
 			                                    		//MetaSingletons.MetaData.Product.Where(p => p.ProductID == sod.ProductID)
-																							//.Join(MetaSingletons.MetaData.ProductModel, p => p.ProductID, pm => pm.ProductModelID, (p, pm) => pm).First().CatalogDescription
+			                                    		//.Join(MetaSingletons.MetaData.ProductModel, p => p.ProductID, pm => pm.ProductModelID, (p, pm) => pm).First().CatalogDescription
 			                                    	});
 			qwithProductModelJoin.Where(x => x.SalesOrderID < 43690).ToList();
 
@@ -182,7 +182,7 @@ namespace AW.Tests
 			var q = (from soh in MetaSingletons.MetaData.SalesOrderHeader
 			         where soh.SalesOrderID < 43690
 			         from sod in soh.SalesOrderDetails
-							 //orderby soh.SalesOrderID
+			         //orderby soh.SalesOrderID
 			         select new
 			                	{
 			                		soh.SalesOrderID,
@@ -196,13 +196,14 @@ namespace AW.Tests
 		public void NestedQueryUsingFirst()
 		{
 			var k = from employeeAddress in MetaSingletons.MetaData.EmployeeAddress
-							//let employee = employeeAddress.Employee
+			        //let employee = employeeAddress.Employee
 			        select new
 			               	{
-			               		employeeAddress.Employee.Contact.FirstName, //this is fine
-												//MetaSingletons.MetaData.Employee.First(e => e.EmployeeID == employeeAddress.EmployeeID).Contact.MiddleName,
-												//MetaSingletons.MetaData.Contact.First(c => c.ContactID == employee.ContactID).LastName,
-												MetaSingletons.MetaData.Contact.First(c => c.ContactID == employeeAddress.Employee.ContactID).LastName //getting similar field using a nested query
+			               		employeeAddress.Employee.Contact.FirstName,
+			               		//this is fine
+			               		//MetaSingletons.MetaData.Employee.First(e => e.EmployeeID == employeeAddress.EmployeeID).Contact.MiddleName,
+			               		//MetaSingletons.MetaData.Contact.First(c => c.ContactID == employee.ContactID).LastName,
+			               		MetaSingletons.MetaData.Contact.First(c => c.ContactID == employeeAddress.Employee.ContactID).LastName //getting similar field using a nested query
 			               	};
 
 			k.ToList(); //The multi-part identifier "LPLA_4.ContactID" could not be bound.

@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: CountryRegionCurrency. </summary>
+	/// <summary>Implements the relations factory for the entity: CountryRegionCurrency. </summary>
 	public partial class CountryRegionCurrencyRelations
 	{
 		/// <summary>CTor</summary>
@@ -30,8 +30,6 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-
-
 			toReturn.Add(this.CountryRegionEntityUsingCountryRegionCode);
 			toReturn.Add(this.CurrencyEntityUsingCurrencyCode);
 			return toReturn;
@@ -69,16 +67,26 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticCountryRegionCurrencyRelations
+	{
+		internal static readonly IEntityRelation CountryRegionEntityUsingCountryRegionCodeStatic = new CountryRegionCurrencyRelations().CountryRegionEntityUsingCountryRegionCode;
+		internal static readonly IEntityRelation CurrencyEntityUsingCurrencyCodeStatic = new CountryRegionCurrencyRelations().CurrencyEntityUsingCurrencyCode;
+
+		/// <summary>CTor</summary>
+		static StaticCountryRegionCurrencyRelations()
+		{
+		}
 	}
 }

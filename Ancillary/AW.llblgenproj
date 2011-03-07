@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--LLBLGen Pro v3.0 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
-<Project Version="3.0" TargetFrameworkName="LLBLGen Pro Runtime Framework">
+<!--LLBLGen Pro v3.1 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
+<Project Version="3.1" TargetFrameworkName="LLBLGen Pro Runtime Framework">
   <Properties>
     <Abbreviations>
       <Abbreviation Name="id" Value="ID" />
@@ -45,25 +45,29 @@
     <Property Name="RelationshipsFollowDBForeignKeyConstraints" Value="0" />
     <Property Name="RemoveUnderscoresFromElementName" Value="true" />
     <Property Name="RemoveUnmappedElementsAfterRefresh" Value="0" />
+    <Property Name="ResetFieldOrderBasedOnTargetOrderAtRefresh" Value="false" />
     <Property Name="RetrieveDBCustomProperties" Value="true" />
     <Property Name="RootNamespace" Value="" />
     <Property Name="SequencePattern" Value="SEQ_{$EntityName}" />
     <Property Name="SetGroupNameAfterSchemaName" Value="true" />
+    <Property Name="SetSchemaNameAfterGroupName" Value="true" />
     <Property Name="StoredProcNameStripPattern" Value="{pr_, sp_}{}" />
     <Property Name="StoreTimeLastGeneratedIntoProject" Value="false" />
     <Property Name="SyncMappedElementNamesAfterRefresh" Value="0" />
     <Property Name="SyncRelationalModelDataElementNameAfterRename" Value="0" />
     <Property Name="SyncRenamedMappedElementNamesAfterRefresh" Value="0" />
+    <Property Name="TargetPerEntityEdgesRequireBackingFkConstraint" Value="true" />
     <Property Name="TypedViewFieldNameStripPattern" Value="{}{}" />
     <Property Name="TypedViewNameStripPattern" Value="{vw_}{}" />
     <Property Name="UniqueConstraintsFollowDBUniqueConstraints" Value="0" />
     <Property Name="UpdateCustomPropertiesAfterRefresh" Value="1" />
+    <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts />
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
       <LastUsedPreferences>
-        <DestinationRootFolder Value="C:\Users\jeremy.thomas\Documents\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\AW.Data" />
+        <DestinationRootFolder Value="..\AW.Data" />
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
         <PlatformName Value=".NET 3.5" />
@@ -1994,6 +1998,8 @@
           </CustomProperties>
         </OutputSettingValues>
       </EntityDefinition>
+      <EntityDefinition Name="PurchaseOrderHistory" GroupName="Production" InheritanceType="1" DiscriminatorValue="P" DiscriminatorValueType="5" />
+      <EntityDefinition Name="SalesOrderHistory" GroupName="Production" InheritanceType="1" DiscriminatorValue="S" DiscriminatorValueType="5" />
       <EntityDefinition Name="ScrapReason" GroupName="Production">
         <Fields>
           <Field Name="ModifiedDate" Type="datetime">
@@ -2024,7 +2030,7 @@
           </CustomProperties>
         </OutputSettingValues>
       </EntityDefinition>
-      <EntityDefinition Name="TransactionHistory" GroupName="Production">
+      <EntityDefinition Name="TransactionHistory" GroupName="Production" IsAbstract="true" InheritanceType="1" DiscriminatorValue="A" DiscriminatorValueType="5">
         <Fields>
           <Field Name="ActualCost" Type="decimal" Precision="19" Scale="4">
             <OutputSettingValues>
@@ -2082,7 +2088,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="TransactionType" Type="string" MaxLength="1">
+          <Field Name="TransactionType" Type="string" IsReadOnly="true" MaxLength="1" IsDiscriminator="true">
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="W = WorkOrder, S = SalesOrder, P = PurchaseOrder" />
@@ -2277,6 +2283,7 @@
           </CustomProperties>
         </OutputSettingValues>
       </EntityDefinition>
+      <EntityDefinition Name="WorkOrderHistory" GroupName="Production" InheritanceType="1" DiscriminatorValue="W" DiscriminatorValueType="5" />
       <EntityDefinition Name="WorkOrderRouting" GroupName="Production">
         <Fields>
           <Field Name="ActualCost" Type="decimal" IsOptional="true" Precision="19" Scale="4">
@@ -4555,6 +4562,9 @@
       <IndirectRelationship Start="Sales:SpecialOfferProduct" End="Sales:SalesOrderHeader" StartNavigator="SalesOrderHeaderCollectionViaSalesOrderDetail" EndNavigator="SpecialOfferProductCollectionViaSalesOrderDetail" Relationship1="Sales.SalesOrderDetail.SpecialOfferProduct-Sales.SpecialOfferProduct.SalesOrderDetails" Relationship2="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" />
     </Relationships>
     <InheritanceHierarchies>
+      <InheritanceHierarchy SuperType="Production:TransactionHistory" SubType="Production:PurchaseOrderHistory" />
+      <InheritanceHierarchy SuperType="Production:TransactionHistory" SubType="Production:SalesOrderHistory" />
+      <InheritanceHierarchy SuperType="Production:TransactionHistory" SubType="Production:WorkOrderHistory" />
       <InheritanceHierarchy SuperType="Sales:Customer" SubType="Sales:Individual" />
       <InheritanceHierarchy SuperType="HumanResources:Employee" SubType="Sales:SalesPerson" />
       <InheritanceHierarchy SuperType="Sales:Customer" SubType="Sales:Store" />
@@ -9022,6 +9032,12 @@
             <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
           </FieldMappings>
         </EntityMapping>
+        <EntityMapping EntityName="Production:PurchaseOrderHistory" TargetName="AdventureWorks:Production:TransactionHistory">
+          <FieldMappings />
+        </EntityMapping>
+        <EntityMapping EntityName="Production:SalesOrderHistory" TargetName="AdventureWorks:Production:TransactionHistory">
+          <FieldMappings />
+        </EntityMapping>
         <EntityMapping EntityName="Production:ScrapReason" TargetName="AdventureWorks:Production:ScrapReason">
           <FieldMappings>
             <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
@@ -9075,6 +9091,9 @@
             <FieldMapping FieldName="StockedQuantity" TargetFieldName="StockedQty" />
             <FieldMapping FieldName="WorkOrderID" TargetFieldName="WorkOrderID" SequenceToUse="SCOPE_IDENTITY()" />
           </FieldMappings>
+        </EntityMapping>
+        <EntityMapping EntityName="Production:WorkOrderHistory" TargetName="AdventureWorks:Production:TransactionHistory">
+          <FieldMappings />
         </EntityMapping>
         <EntityMapping EntityName="Production:WorkOrderRouting" TargetName="AdventureWorks:Production:WorkOrderRouting">
           <FieldMappings>
@@ -9471,5 +9490,21 @@
       <TypeConversionDefinitions />
     </MappingStore>
   </MappingStores>
-  <ModelViews />
+  <ModelViews>
+    <ModelView Name="Customer">
+      <EntityDefinitions>
+        <Entity Name="Sales:Customer" />
+        <Entity Name="Sales:Individual" />
+        <Entity Name="Sales:Store" />
+      </EntityDefinitions>
+      <Documentation><![CDATA[]]></Documentation>
+    </ModelView>
+    <ModelView Name="Employee">
+      <EntityDefinitions>
+        <Entity Name="HumanResources:Employee" />
+        <Entity Name="Sales:SalesPerson" />
+      </EntityDefinitions>
+      <Documentation><![CDATA[]]></Documentation>
+    </ModelView>
+  </ModelViews>
 </Project>

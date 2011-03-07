@@ -1,13 +1,12 @@
 using System;
 using System.Windows.Forms;
 using AW.Data.Queries;
-using AW.Win.Properties;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.EntityViewer;
 
 namespace AW.Win
 {
-	public partial class FrmCustomers: Form
+	public partial class FrmCustomers : FrmPersistantLocation
 	{
 		public FrmCustomers()
 		{
@@ -22,12 +21,10 @@ namespace AW.Win
 
 		private void frmCustomers_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			Settings.Default.CustomersSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
 		}
 
 		private void frmCustomers_Load(object sender, EventArgs e)
 		{
-			AWHelper.SetWindowSizeAndLocation(this, Settings.Default.CustomersSizeLocation);
 			dgvResults.AutoGenerateColumns = true;
 		}
 
@@ -88,7 +85,7 @@ namespace AW.Win
 
 		private void View()
 		{
-			((FrmMain)MdiParent).LaunchChildForm(typeof (FrmEntityViewer), bindingSourceCustomerList.Current);
+			((FrmMain) MdiParent).LaunchChildForm(typeof (FrmEntityViewer), bindingSourceCustomerList.Current);
 		}
 
 		private void dgvResults_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

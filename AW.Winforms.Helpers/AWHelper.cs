@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
@@ -35,10 +36,10 @@ namespace AW.Winforms.Helpers
 			foreach (DataGridViewColumn column in dataGridView.Columns)
 			{
 				stringCollection.Add(String.Format(
-															 "{0},{1},{2}",
-															 column.DisplayIndex,
-															 column.Width,
-															 column.Visible));
+					"{0},{1},{2}",
+					column.DisplayIndex,
+					column.Width,
+					column.Visible));
 			}
 			return stringCollection;
 		}
@@ -139,9 +140,7 @@ namespace AW.Winforms.Helpers
 
 		public static Form GetMdiParent()
 		{
-			return (from form in Application.OpenForms.Cast<Form>()
-							where form.IsMdiContainer
-							select form).FirstOrDefault();
+			return Application.OpenForms.Cast<Form>().FirstOrDefault(form => form.IsMdiContainer);
 		}
 
 		public static int GetIndexOfForm(Form form)
@@ -152,18 +151,15 @@ namespace AW.Winforms.Helpers
 			return -1;
 		}
 
-		public static Form ShowChildForm(Form childForm, Form mdiParent)
+		private static void ShowChildForm(Form childForm, Control parent)
 		{
-			if (mdiParent != null)
+			var mdiParent = parent as Form;
+			if (mdiParent != null && mdiParent.IsMdiContainer)
 				childForm.MdiParent = mdiParent;
+			else
+				childForm.Parent = parent;
 			childForm.WindowState = FormWindowState.Normal;
 			childForm.Show();
-			return childForm;
-		}
-
-		public static Form ShowChildForm(Form childForm)
-		{
-			return ShowChildForm(childForm, GetMdiParent());
 		}
 
 		public static Form ShowForm(Form form)
@@ -171,35 +167,83 @@ namespace AW.Winforms.Helpers
 			return ShowForm(form, GetMdiParent());
 		}
 
-		public static Form ShowForm(Form form, Form mdiParent)
+		public static Form ShowForm(Form form, Control parent)
 		{
 			if (Application.MessageLoop)
-				ShowChildForm(form, mdiParent);
+				ShowChildForm(form, parent);
 			else
 				form.ShowDialog();
 			return form;
 		}
 
-		public static Form ShowFormModalIfParentLess(Form form)
-		{
-			return ShowFormModalIfParentLess(form, GetMdiParent());
-		}
+		#endregion
 
-		public static Form ShowFormModalIfParentLess(Form form, Control parent)
+		#region Controls
+
+		public static Control GetFocusedControl(Control.ControlCollection controls)
 		{
-			form.WindowState = FormWindowState.Normal;
-			if (parent == null)
-				form.ShowDialog();
-			else
+			// store focused control...
+			foreach (Control clsControl in controls)
 			{
-				var mdiParent = parent as Form;
-				if (mdiParent != null && mdiParent.IsMdiContainer)
-					form.MdiParent = mdiParent;
-				else
-					form.Parent = parent;
-				form.Show();
+				if (clsControl.Focused)
+				{
+					return clsControl;
+				}
+				if (clsControl.ContainsFocus)
+				{
+					return clsControl.Controls.Count == 0 ? clsControl : GetFocusedControl(clsControl.Controls);
+				}
 			}
-			return form;
+			// no focus...
+			return null;
+		}
+
+		/// <summary>
+		/// Recursively gets the focused control.
+		/// </summary>
+		/// <param name="control">A parent control.</param>
+		/// <returns>The child control(if any) that has focus</returns>
+		public static Control GetFocusedControl(Control control)
+		{
+			if (control == null || control.Focused)
+			{
+				return control;
+			}
+			if (control.ContainsFocus)
+			{
+				if (control is ContainerControl && ((ContainerControl) control).ActiveControl.ContainsFocus)
+					return GetFocusedControl(((ContainerControl) control).ActiveControl);
+				return GetFocusedControl(control.Controls);
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Recursivly gets all the contained controls.
+		/// </summary>
+		/// <param name="controls">The controls.</param>
+		/// <see cref="http://weblogs.asp.net/dfindley/archive/2007/06/29/linq-the-uber-findcontrol.aspx"/>
+		/// /// <see cref="http://stackoverflow.com/questions/253937/recursive-control-search-with-linq"/>
+		/// <returns>All the contained controls.</returns>
+		public static IEnumerable<Control> All(this Control.ControlCollection controls)
+		{
+			foreach (Control control in controls)
+			{
+				foreach (var grandChild in control.Controls.All())
+					yield return grandChild;
+
+				yield return control;
+			}
+		}
+
+		/// <summary>
+		/// Recursivly gets all the contained controls.
+		/// </summary>
+		/// <param name="control">The control.</param>
+		/// <returns>All the contained controls.</returns>
+		public static IEnumerable<Control> GetAllContainedControls(this Control control)
+		{
+			return control.Controls.All();
 		}
 
 		#endregion

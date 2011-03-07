@@ -133,7 +133,7 @@ namespace JesseJohnston
     private readonly Queue<EventArgs> eventQueue = new Queue<EventArgs>();
     private bool suppressUpdates;
     private int lockCount;
-    [NonSerialized] private PropertyComparerCollection propertyComparers;
+    private PropertyComparerCollection propertyComparers;
     [NonSerialized] private ListChangedEventHandler listChangedEvent;
     [NonSerialized] private AddingNewEventHandler addingNewEvent;
     [NonSerialized] private EventHandler sortedEvent;

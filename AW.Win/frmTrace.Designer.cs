@@ -105,7 +105,6 @@
 			this.checkBoxSQLTrace.TabIndex = 5;
 			this.checkBoxSQLTrace.Text = "SQLTrace";
 			this.checkBoxSQLTrace.UseVisualStyleBackColor = true;
-			this.checkBoxSQLTrace.Visible = false;
 			this.checkBoxSQLTrace.CheckedChanged += new System.EventHandler(this.checkBoxSQLTrace_CheckedChanged);
 			// 
 			// label2
@@ -144,10 +143,10 @@
 			this.Name = "FrmTrace";
 			this.Tag = "True";
 			this.Text = "Trace form";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmTrace_FormClosing);
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmTrace_FormClosed);
 			this.Load += new System.EventHandler(this.FrmTrace_Load);
 			this.Shown += new System.EventHandler(this.frmTrace_Shown);
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmTrace_FormClosed);
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmTrace_FormClosing);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel1.PerformLayout();
 			this.splitContainer1.Panel2.ResumeLayout(false);
