@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JesseJohnston</RootNamespace>
+    <AssemblyName>ObjectListView</AssemblyName>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <PublishUrl>http://localhost/ObjectListView/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;TEST</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>docs\ObjectListView.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>docs\ObjectListView.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release - Test|AnyCPU' ">
+    <OutputPath>bin\Release - Test\</OutputPath>
+    <DefineConstants>TRACE;TEST</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <DocumentationFile>docs\ObjectListView.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="nunit.framework, Version=2.5.4.10098, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnalysisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AnalysisForm.Designer.cs">
+      <DependentUpon>AnalysisForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExtendedProperty.cs" />
+    <Compile Include="ExtendedPropertyEventArgs.cs" />
+    <Compile Include="ExtendedPropertyDescriptor.cs" />
+    <Compile Include="FilterEvaluator.cs" />
+    <Compile Include="FilterEvaluatorT.cs" />
+    <Compile Include="LogicalOperator.cs" />
+    <Compile Include="ObjectListViewHelper.cs" />
+    <Compile Include="Predicate.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyComparerPredicate.cs" />
+    <Compile Include="PropertyPathDescriptor.cs" />
+    <Compile Include="RelationalExpression.cs" />
+    <Compile Include="RelationalOperator.cs" />
+    <Compile Include="FilterNode.cs" />
+    <Compile Include="IEditableObjectEvents.cs" />
+    <Compile Include="ListItemChangeEvents.cs" />
+    <Compile Include="ObjectListView.cs" />
+    <Compile Include="ObjectListViewT.cs" />
+    <Compile Include="ObjectView.cs" />
+    <Compile Include="ObjectViewT.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyComparerCollection.cs" />
+    <Compile Include="RemovingItemEventArgs.cs" />
+    <Compile Include="SortDescription.cs" />
+    <Compile Include="SortDescriptionCollection.cs" />
+    <Compile Include="StringComparerPredicate.cs" />
+    <Compile Include="StringComparerPredicateT.cs" />
+    <Compile Include="TestsGeneric\IBindingList.cs" />
+    <Compile Include="TestsGeneric\IBindingListView.cs" />
+    <Compile Include="TestsGeneric\ICancelAddNew.cs" />
+    <Compile Include="TestsGeneric\ICollection.cs" />
+    <Compile Include="TestsGeneric\ICollectionT.cs" />
+    <Compile Include="TestsGeneric\IEnumerable.cs" />
+    <Compile Include="TestsGeneric\IEnumerableT.cs" />
+    <Compile Include="TestsGeneric\IList.cs" />
+    <Compile Include="TestsGeneric\IListT.cs" />
+    <Compile Include="TestsGeneric\IRaiseItemChangedEvents.cs" />
+    <Compile Include="TestsGeneric\ITypedList.cs" />
+    <Compile Include="TestsGeneric\NotifyingList.cs" />
+    <Compile Include="TestsGeneric\ObjectListView.cs" />
+    <Compile Include="TestsGeneric\ViewFactory.cs" />
+    <Compile Include="Tests\AccountRep.cs" />
+    <Compile Include="Tests\Company.cs" />
+    <Compile Include="Tests\Customer.cs" />
+    <Compile Include="Tests\CustomerProgram.cs" />
+    <Compile Include="Tests\DateTimeDayComparer.cs" />
+    <Compile Include="Tests\ExplicitEditableObject.cs" />
+    <Compile Include="Tests\ExtendedProperty.cs" />
+    <Compile Include="Tests\FilterNode.cs" />
+    <Compile Include="Tests\IBindingList.cs" />
+    <Compile Include="Tests\IBindingListView.cs" />
+    <Compile Include="Tests\ICancelAddNew.cs" />
+    <Compile Include="Tests\ICollection.cs" />
+    <Compile Include="Tests\IEnumerable.cs" />
+    <Compile Include="Tests\IList.cs" />
+    <Compile Include="Tests\IRaiseItemChangedEvents.cs" />
+    <Compile Include="Tests\ITypedList.cs" />
+    <Compile Include="Tests\NotifyingList.cs" />
+    <Compile Include="Tests\NotifyingListItem.cs" />
+    <Compile Include="Tests\NotifyingListItemEvents.cs" />
+    <Compile Include="Tests\ObjectListView.cs" />
+    <Compile Include="Tests\Order.cs" />
+    <Compile Include="Tests\RelationalExpression.cs" />
+    <Compile Include="Tests\SimpleClass.cs" />
+    <Compile Include="Tests\SimpleEditableObject.cs" />
+    <Compile Include="Tests\StringLengthComparer.cs" />
+    <Compile Include="Tests\ViewFactory.cs" />
+    <Compile Include="ObjectListViewVisualizer.cs" />
+    <Compile Include="VisualizerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualizerForm.Designer.cs">
+      <DependentUpon>VisualizerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VisualizerTForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VisualizerTForm.Designer.cs">
+      <DependentUpon>VisualizerTForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AnalysisForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AnalysisForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualizerForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>VisualizerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VisualizerTForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>VisualizerTForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Docs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Ancillary\AdventureWorks.snk">
+      <Link>AdventureWorks.snk</Link>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
