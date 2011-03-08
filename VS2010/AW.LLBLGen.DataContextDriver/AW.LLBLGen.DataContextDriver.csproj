@@ -77,8 +77,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LINQPad">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
