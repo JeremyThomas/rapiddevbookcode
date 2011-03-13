@@ -123,6 +123,7 @@
     <Compile Include="SalesOrderQueriesTest.cs" />
     <Compile Include="BugsTest.cs" />
     <Compile Include="TestData.cs" />
+    <Compile Include="ValueTypeWrapperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Data\AW.Data.csproj">
