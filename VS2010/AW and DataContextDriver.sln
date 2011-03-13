@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E5E0-4B67-A97C-464F8697A452}"
 	ProjectSection(SolutionItems) = preProject
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.dll
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.pdb
 		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
 		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml
 		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll

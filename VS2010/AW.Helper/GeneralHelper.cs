@@ -16,7 +16,12 @@ namespace AW.Helper
 
 		public static List<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
 		{
-			return values.Select(data => new ValueTypeWrapper<T> {Value = data}).ToList();
+			return values == null ? new List<ValueTypeWrapper<T>>() : values.Select(data => new ValueTypeWrapper<T> {Value = data}).ToList();
+		}
+
+		public static IEnumerable<T> UnWrap(IEnumerable<ValueTypeWrapper<T>> values)
+		{
+			return values.Select(sr => sr.Value);
 		}
 	}
 
@@ -245,7 +250,17 @@ namespace AW.Helper
 
 		public static List<ValueTypeWrapper<string>> CreateStringWrapperForBinding(this StringCollection strings)
 		{
-			return strings == null ? null : ValueTypeWrapper<string>.CreateWrapperForBinding(strings.Cast<string>());
+			return ValueTypeWrapper<string>.CreateWrapperForBinding(AsEnumerable(strings));
+		}
+
+		public static IEnumerable<string> AsEnumerable(this StringCollection strings)
+		{
+			return strings == null ? null : strings.Cast<string>();
+		}
+
+		public static IEnumerable<T> UnWrap<T>(this IEnumerable<ValueTypeWrapper<T>> values)
+		{
+			return ValueTypeWrapper<T>.UnWrap(values);
 		}
 
 		#region Settings

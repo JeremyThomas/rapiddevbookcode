@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Schema;
 using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
@@ -100,7 +100,7 @@ namespace AW.Tests
 		public void IsSerializableTest()
 		{
 			Assert.IsTrue(MetaDataHelper.IsSerializable(SerializableClass.GenerateList().GetType()));
-			Assert.IsTrue(MetaDataHelper.IsSerializable(typeof(int)));
+			Assert.IsTrue(MetaDataHelper.IsSerializable(typeof (int)));
 		}
 
 		[TestMethod]
@@ -177,6 +177,33 @@ namespace AW.Tests
 			//Assert.AreEqual(1, stringProperties.Count);
 			//Assert.AreEqual(typeof(string), stringProperties[0].PropertyType);
 			//strings.ShowInGrid(null);
+		}
+
+		/// <summary>
+		///A test for CreateStringWrapperForBinding
+		///</summary>
+		[TestMethod]
+		public void CreateStringWrapperForBindingNullTest()
+		{
+			StringCollection strings = null; // TODO: Initialize to an appropriate value
+			var expected = new List<ValueTypeWrapper<string>>();
+			var actual = strings.CreateStringWrapperForBinding();
+			Assert.IsNotNull(actual);
+		}
+
+		/// <summary>
+		///A test for CreateStringWrapperForBinding
+		///</summary>
+		[TestMethod]
+		public void CreateStringWrapperForBindingTest()
+		{
+			var strings = new StringCollection {"one", "two"};
+			var expected = new List<ValueTypeWrapper<string>> { new ValueTypeWrapper<string> { Value = strings[0] }, new ValueTypeWrapper<string> { Value = strings[1] } };
+			var actual = strings.CreateStringWrapperForBinding();
+			Assert.IsNotNull(actual);
+			Assert.IsInstanceOfType(actual,typeof(List<ValueTypeWrapper<string>>));
+			Assert.AreEqual(strings.Count, actual.Count);
+			//CollectionAssert.AreEqual(expected, actual);
 		}
 	}
 
