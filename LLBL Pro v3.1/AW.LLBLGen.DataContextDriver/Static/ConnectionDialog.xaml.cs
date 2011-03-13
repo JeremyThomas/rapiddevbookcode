@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
@@ -239,10 +240,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void btnOK_Click(object sender, RoutedEventArgs e)
 		{
-			Settings.Default.AdditionalAssemblies.Clear();
-			Settings.Default.AdditionalAssemblies.AddRange(AdditionalAssemblies.Select(sr => sr.Value).ToArray());
-			Settings.Default.AdditionalNamespaces.Clear();
-			Settings.Default.AdditionalNamespaces.AddRange(AdditionalNamespaces.Select(sr => sr.Value).ToArray());
+			if (AdditionalAssemblies != null)
+			{
+				Settings.Default.AdditionalAssemblies = new StringCollection();
+				Settings.Default.AdditionalAssemblies.AddRange(AdditionalAssemblies.UnWrap().ToArray());
+			}
+			if (AdditionalNamespaces != null)
+			{
+				Settings.Default.AdditionalNamespaces = new StringCollection();
+				Settings.Default.AdditionalNamespaces.AddRange(AdditionalNamespaces.UnWrap().ToArray());
+			}
+
 			DialogResult = true;
 		}
 
@@ -588,6 +596,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		Unknown,
 		SelfServicing,
 		Adapter,
+	 [Description("Adapter Factory")]
 		AdapterFactory
 	}
 }

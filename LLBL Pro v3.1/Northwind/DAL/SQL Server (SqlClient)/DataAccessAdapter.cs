@@ -13,6 +13,7 @@ using System.Data;
 using System.Data.Common;
 using System.Configuration;
 using System.EnterpriseServices;
+using AW.Helper.LLBL;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.DQE.SqlServer;
 
@@ -154,8 +155,59 @@ namespace Northwind.DAL.SqlServer
 		}
 
 		#region Custom DataAccessAdapter code.
-		
+
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomDataAccessAdapterCode
+
+		/// <summary>
+		/// Event which is raised whenever a query is executed. Use this event to perform SQL tracing. 
+		/// </summary>
+		public event EventHandler<SQLTraceEventArgs> SQLTraceEvent;
+
+		/// <summary>
+		/// Called whenever a query is executed.
+		/// </summary>
+		/// <param name="query">The query.</param>
+		protected void OnExecuteQuery(IQuery query)
+		{
+			if (SQLTraceEvent != null)
+				SQLTraceEvent(this, new SQLTraceEventArgs(query));
+		}
+
+		/// <summary>
+		/// 	Executes the passed in action query and, if not null, runs it inside the passed in transaction.
+		/// </summary>
+		/// <param name = "queryToExecute">ActionQuery to execute.</param>
+		/// <returns>execution result, which is the amount of rows affected (if applicable)</returns>
+		public override int ExecuteActionQuery(IActionQuery queryToExecute)
+		{
+			OnExecuteQuery(queryToExecute);
+			return base.ExecuteActionQuery(queryToExecute);
+		}
+
+		/// <summary>
+		/// 	Creates a new Select DQ for the fields passed in using the parameters specified.
+		/// </summary>
+		/// <param name = "fieldsToFetch">fields to fetch using the select</param>
+		/// <param name = "persistenceInfoObjects">persistence info objects for the fields</param>
+		/// <param name = "filter">filter to use for the where clause</param>
+		/// <param name = "maxNumberOfItemsToReturn">max. amount of rows to return</param>
+		/// <param name = "sortClauses">sort clause specifications to use</param>
+		/// <param name = "relationsToWalk">relations to walk to build the FROM clause</param>
+		/// <param name = "allowDuplicates">flag to specify if duplicates should be returned</param>
+		/// <param name = "groupByClause">group by clause to embed in the query</param>
+		/// <param name = "pageNumber">The page number to retrieve</param>
+		/// <param name = "pageSize">the page size to retrieve</param>
+		/// <returns>ready to use query to use.</returns>
+		protected override IRetrievalQuery CreateSelectDQ(IEntityFields2 fieldsToFetch, IFieldPersistenceInfo[] persistenceInfoObjects,
+																											IPredicateExpression filter, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IRelationCollection relationsToWalk,
+																											bool allowDuplicates, IGroupByCollection groupByClause, int pageNumber, int pageSize)
+		{
+			var query = base.CreateSelectDQ(fieldsToFetch, persistenceInfoObjects, filter, maxNumberOfItemsToReturn, sortClauses, relationsToWalk,
+																			allowDuplicates, groupByClause, pageNumber, pageSize);
+			OnExecuteQuery(query);
+			return query;
+		}
+
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 		

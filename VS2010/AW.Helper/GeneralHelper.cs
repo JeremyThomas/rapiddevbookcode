@@ -245,7 +245,7 @@ namespace AW.Helper
 
 		public static List<ValueTypeWrapper<string>> CreateStringWrapperForBinding(this StringCollection strings)
 		{
-			return ValueTypeWrapper<string>.CreateWrapperForBinding(strings.Cast<string>());
+			return strings == null ? null : ValueTypeWrapper<string>.CreateWrapperForBinding(strings.Cast<string>());
 		}
 
 		#region Settings
