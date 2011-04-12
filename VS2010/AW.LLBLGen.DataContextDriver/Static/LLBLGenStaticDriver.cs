@@ -26,6 +26,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	/// </summary>
 	public class LLBLGenStaticDriver : StaticDataContextDriver
 	{
+		#region Constants
+
 		private static readonly string[] AdditionalAssemblies = new[]
 		                                                        	{
 		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
@@ -43,6 +45,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		                                                        		"AW.Winforms.Helpers.DataEditor",
 		                                                        		"AW.Winforms.Helpers.LLBL"
 		                                                        	};
+
+		#endregion
 
 		#region Overrides of DataContextDriver
 
@@ -338,6 +342,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					       	{
 					       		IsEnumerable = true,
 					       		ToolTipText = FormatTypeName(prop.PropertyType, false),
+										DragText = prop.Name,
 					       		// Store the entity type to the Tag property. We'll use it later.
 					       		Tag = ienumerableOfT.GetGenericArguments()[0]
 					       	}
@@ -359,12 +364,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override IEnumerable<string> GetAssembliesToAdd()
 		{
-			return Settings.Default.AdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(Settings.Default.AdditionalAssemblies.Cast<string>());
+			return AdditionalAssemblies.Union(Settings.Default.AdditionalAssemblies.AsEnumerable());
 		}
 
 		public override IEnumerable<string> GetNamespacesToAdd()
 		{
-			return Settings.Default.AdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(Settings.Default.AdditionalNamespaces.Cast<string>());
+			return AdditionalNamespaces.Union(Settings.Default.AdditionalNamespaces.AsEnumerable());
 		}
 
 		public override IEnumerable<string> GetNamespacesToRemove()
@@ -384,9 +389,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		#endregion
 
+		#region Schema helpers
+
 		/// <summary>
 		/// 	Gets the properties to show in schema. 
-		/// 	They should be all the browsable properties with the addition of selfservicing entity properties.
+		/// 	They should be all the browsable properties with the addition of self servicing entity properties.
 		/// </summary>
 		/// <remarks>
 		/// 	See MetaDataHelper.GetPropertiesToDisplay
@@ -406,8 +413,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				return new ExplorerItem(childProp.Name, ExplorerItemKind.ReferenceLink, ExplorerIcon.ManyToOne)
 				       	{
 				       		HyperlinkTarget = elementTypeLookup[childProp.PropertyType].First(),
-				       		// FormatTypeName is a helper method that returns a nicely formatted type name.
-				       		ToolTipText = FormatTypeName(childProp.PropertyType, true)
+				       		ToolTipText = FormatTypeName(childProp.PropertyType, true),
+									DragText = childProp.Name
 				       	};
 
 			// Is the property's type a collection of entities?
@@ -419,13 +426,19 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					return new ExplorerItem(childProp.Name, ExplorerItemKind.CollectionLink, ExplorerIcon.OneToMany)
 					       	{
 					       		HyperlinkTarget = elementTypeLookup[elementType].First(),
-					       		ToolTipText = FormatTypeName(elementType, true)
+					       		ToolTipText = FormatTypeName(elementType, true),
+					       		DragText = childProp.Name
 					       	};
 			}
 
 			// Ordinary property:
 			return new ExplorerItem(childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")",
-			                        ExplorerItemKind.Property, ExplorerIcon.Column);
+															ExplorerItemKind.Property, ExplorerIcon.Column)
+															{
+																DragText = childProp.Name
+															};
 		}
+
+		#endregion
 	}
 }

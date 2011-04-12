@@ -52,12 +52,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override string Name
 		{
-			get { return "AW LLBL V3.1 Driver"; }
+			get { return Constants.Name; }
 		}
 
 		public override string Author
 		{
-			get { return "Jeremy Thomas"; }
+			get { return Constants.Author; }
 		}
 
 		public override string GetConnectionDescription(IConnectionInfo cxInfo)

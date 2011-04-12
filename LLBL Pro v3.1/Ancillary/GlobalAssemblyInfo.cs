@@ -19,7 +19,7 @@ using System.Security;
 internal static class AssemblyInfoConstants
 {
 	public const string AssemblyCompany = "Adventure Works Cycles";
-	public const string AssemblyCopyright = "Copyright © 2010 Adventure Works Cycles";
+	public const string AssemblyCopyright = "Copyright © 2011 Adventure Works Cycles";
 	public const string AssemblyProduct = "Adventure Works Cycles LLBL Sample";
 	public const string AssemblyInformationalVersion = "1.0.0";
 	public const string AssemblyRevision = "0";
