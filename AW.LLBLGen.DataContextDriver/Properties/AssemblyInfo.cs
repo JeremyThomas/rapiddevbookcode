@@ -1,15 +1,16 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using AW.LLBLGen.DataContextDriver;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("AW.LLBLGen.DataContextDriver")]
-[assembly: AssemblyDescription("AW LLBLGen v3.0 LINQPad static data context driver")]
-[assembly: AssemblyProduct("AW.LLBLGen.DataContextDriver")]
-[assembly: AssemblyCompany("Jeremy Thomas")]
-[assembly: AssemblyCopyright("Jeremy Thomas")]
+[assembly: AssemblyTitle(Constants.DriverName)]
+[assembly: AssemblyDescription(Constants.AssemblyDescription)]
+[assembly: AssemblyProduct(Constants.AssemblyProduct)]
+[assembly: AssemblyCompany(Constants.AssemblyCompany)]
+[assembly: AssemblyCopyright(Constants.AssemblyCopyright)]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -18,10 +19,6 @@ using System.Runtime.InteropServices;
 // COM, set the ComVisible attribute to true on that type.
 
 [assembly: ComVisible(false)]
-
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-
-[assembly: Guid("73678194-bf89-484f-a938-370b6d47e963")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -34,8 +31,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyVersion(Constants.AssemblyVersion)]
 
 // The AssemblyFileVersion appears to users when they import Data Context Drivers.
 
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion(Constants.AssemblyVersion)]
