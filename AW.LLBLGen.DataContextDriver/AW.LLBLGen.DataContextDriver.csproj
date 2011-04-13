@@ -13,8 +13,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>AW.LLBLGen.DataContextDriver.3.0.snk</AssemblyOriginatorKeyFile>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -79,6 +78,7 @@
   <ItemGroup>
     <Reference Include="LINQPad">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -122,12 +122,15 @@
     </Reference>
     <Reference Include="WPFToolkit.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\Lib\WPF\WPFToolkit.Design.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="WPFToolkit.VisualStudio.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\Lib\WPF\WPFToolkit.VisualStudio.Design.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -229,7 +232,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>DevDeploy.bat
-DevDeploy4.bat</PostBuildEvent>
+    <PostBuildEvent>Call DevDeploy.bat
+Call DevDeploy4.bat</PostBuildEvent>
   </PropertyGroup>
 </Project>
