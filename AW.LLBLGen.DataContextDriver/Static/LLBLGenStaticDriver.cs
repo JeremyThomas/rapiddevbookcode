@@ -52,7 +52,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override string Name
 		{
-			get { return Constants.Name; }
+			get { return Constants.DriverName; }
 		}
 
 		public override string Author

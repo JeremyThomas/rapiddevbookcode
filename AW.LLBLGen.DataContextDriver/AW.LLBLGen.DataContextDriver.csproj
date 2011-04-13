@@ -231,7 +231,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>DevDeploy.bat
-DevDeploy4.bat</PostBuildEvent>
+    <PostBuildEvent>Call DevDeploy4.bat
+Call DevDeploy.bat</PostBuildEvent>
   </PropertyGroup>
 </Project>
