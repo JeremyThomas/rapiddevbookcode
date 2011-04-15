@@ -48,7 +48,7 @@
 					<DockPanel Name="DockPanelTypeName"
 					           d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
 					                                            Type=Static:ConnectionDialog}"
-					           Visibility="{Binding Path=CustomTypeNameVisibility}">
+					           Visibility="{Binding Path=CustomTypeNameVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
 						<Label DockPanel.Dock="Right" Padding="1">
 							<Hyperlink Click="ChooseType">Choose...</Hyperlink>
 						</Label>
@@ -60,7 +60,7 @@
 					         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
 					                                          Type=Static:ConnectionDialog}"
 					         IsReadOnly="True"
-					         Text="{Binding Path=CxInfo.CustomTypeInfo.CustomTypeName}"
+					         Text="{Binding Path=CxInfo.CustomTypeInfo.CustomTypeName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
 					         Visibility="{Binding Path=CustomTypeNameVisibility}" />
 
 					<DockPanel>
@@ -95,7 +95,8 @@
 					                                           Type=Static:ConnectionDialog}"
 					          DisplayMemberPath="Description"
 					          ItemsSource="{Binding Source={Static:Enumeration {x:Type Static:LLBLConnectionType}}}"
-					          SelectedIndex="{Binding CxInfo.DriverData.Element[ConnectionType].Value}"
+										SelectedValue="{Binding Path=DataContext.LLBLConnectionType, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+						        SelectedValuePath="Value"
 					          Visibility="{Binding Path=ConnectionTypeVisibility}" />
 
 					<StackPanel Visibility="{Binding DriverData.Element[ConnectionType].Value, Converter={StaticResource AdapterFactoryToVisibility}}">
@@ -390,8 +391,8 @@
 					          VerticalAlignment="Center"
 					          d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
 					                                           Type=Static:ConnectionDialog}"
-					          ItemsSource="{Binding Path=DbProviderFactoryNames}"
-					          SelectedItem="{Binding Path=CxInfo.DatabaseInfo.Provider}" />
+					          ItemsSource="{Binding Path=DbProviderFactoryNames, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+					          SelectedItem="{Binding Path=CxInfo.DatabaseInfo.Provider, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" />
 					<Label Grid.Row="12"
 					       Grid.Column="0"
 					       Margin="3"
@@ -784,7 +785,7 @@
 						                     MinWidth="100"
 						                     MinHeight="100"
 						                     AutoGenerateColumns="False"
-						                     ItemsSource="{Binding Path=AdditionalAssemblies,
+						                     ItemsSource="{Binding Path=AdditionalAssemblies, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}},
 						                                           ValidatesOnExceptions=true,
 						                                           NotifyOnValidationError=true}">
 							<WpfToolkit:DataGrid.Columns>
@@ -795,7 +796,7 @@
 						                     MinWidth="100"
 						                     MinHeight="100"
 						                     AutoGenerateColumns="False"
-						                     ItemsSource="{Binding Path=AdditionalNamespaces,
+						                     ItemsSource="{Binding Path=AdditionalNamespaces, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}},
 						                                           ValidatesOnExceptions=true,
 						                                           NotifyOnValidationError=true}">
 							<WpfToolkit:DataGrid.Columns>
