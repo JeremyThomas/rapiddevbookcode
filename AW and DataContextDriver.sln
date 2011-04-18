@@ -140,9 +140,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{8D111638-495
 		Lib\WPF\WPFToolkit.VisualStudio.Design.pdb = Lib\WPF\WPFToolkit.VisualStudio.Design.pdb
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.DataContextDriver.Tests", "AW.LLBLGen.DataContextDriver.Tests\AW.LLBLGen.DataContextDriver.Tests.csproj", "{C7514B66-375D-4EA3-B211-711DA2EB450A}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 20
+		SccNumberOfProjects = 21
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -203,6 +205,9 @@ Global
 		SccProjectUniqueName19 = Northwind\\DAL\\Oracle\u0020(ODP.NET)\\Northwind.DAL.OracleOracle.csproj
 		SccProjectName19 = Northwind/DAL/Oracle\u0020(ODP.NET)
 		SccLocalPath19 = Northwind\\DAL\\Oracle\u0020(ODP.NET)
+		SccProjectUniqueName20 = AW.LLBLGen.DataContextDriver.Tests\\AW.LLBLGen.DataContextDriver.Tests.csproj
+		SccProjectName20 = AW.LLBLGen.DataContextDriver.Tests
+		SccLocalPath20 = AW.LLBLGen.DataContextDriver.Tests
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -366,6 +371,14 @@ Global
 		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release - Test|Any CPU.Build.0 = Release|Any CPU
 		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
