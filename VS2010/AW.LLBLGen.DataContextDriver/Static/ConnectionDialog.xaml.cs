@@ -77,12 +77,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			DataContext = this;
 			InitializeComponent();
-			providerComboBox.DataContext = this;
-			comboBoxConnectionType.DataContext = this;
-			txtTypeName.DataContext = this;
-			DockPanelTypeName.DataContext = this;
-			AdditionalAssembliesDataGrid.DataContext = this;
-			AdditionalNamespacesDataGrid.DataContext = this;
+		//	providerComboBox.DataContext = this;
+		//	comboBoxConnectionType.DataContext = this;
+		//	txtTypeName.DataContext = this;
+		//	DockPanelTypeName.DataContext = this;
+			//AdditionalAssembliesDataGrid.DataContext = this;
+			//AdditionalNamespacesDataGrid.DataContext = this;
 		}
 
 		/// <summary>
@@ -117,7 +117,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					return (LLBLConnectionType) connectionTypeIndex;
 				return LLBLConnectionType.Unknown;
 			}
-			set { SetDriverDataValue(ElementNameConnectionType, ((int) value).ToString()); }
+			set
+			{
+				var connectionType = ((int) value).ToString();
+				if (connectionType != GetDriverDataValue(ElementNameConnectionType))
+				{
+					SetDriverDataValue(ElementNameConnectionType, connectionType);
+					OnPropertyChanged("LLBLConnectionType");
+				}
+			}
 		}
 
 		public IEnumerable<string> DbProviderFactoryNames { get; set; }
@@ -426,12 +434,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					var dataAccessAdapterAssembly = Assembly.LoadFrom(assemPath);
 					var types = dataAccessAdapterAssembly.GetTypes();
-					if (hl.TargetName == ElementNameAdaptertype)
-						customTypes = GetDataAccessAdapterTypeNamesBothWays(types);
-					else
-					{
-						customTypes = types.Select(t => t.FullName).ToArray();
-					}
+					customTypes = hl.TargetName == ElementNameAdaptertype ? GetDataAccessAdapterTypeNamesBothWays(types) : types.Select(t => t.FullName).ToArray();
 				}
 				catch (ReflectionTypeLoadException ex)
 				{
@@ -491,12 +494,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			connectionInfo.DatabaseInfo.Database = GetAdditionalAssemblies(additionalAssembliesElement);
 		}
 
-		private static string GetAdditionalAssemblies(XElement additionalAssembliesElement)
+		private static string GetAdditionalAssemblies(XContainer additionalAssembliesElement)
 		{
-			var y = from e in additionalAssembliesElement.Elements()
-			        select e.Value;
-			var additionalAssemblies = y.JoinAsString();
-			return additionalAssemblies;
+			return additionalAssembliesElement.Elements().Select(e => e.Value).JoinAsString();
 		}
 
 		public static string GetAdditionalAssemblies(IConnectionInfo connectionInfo)
@@ -547,8 +547,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void ProcessConnection(_Connection connection)
 		{
-			var oleDbConnectionStringBuilder = new OleDbConnectionStringBuilder();
-			oleDbConnectionStringBuilder.ConnectionString = connection.ConnectionString;
+			var oleDbConnectionStringBuilder = new OleDbConnectionStringBuilder {ConnectionString = connection.ConnectionString};
 			if (oleDbConnectionStringBuilder.PersistSecurityInfo)
 			{
 				connection.Open("", "", "", 0);
