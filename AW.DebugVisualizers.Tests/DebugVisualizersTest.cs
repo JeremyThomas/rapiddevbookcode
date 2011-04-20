@@ -10,7 +10,6 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Schema;
 using AQDPortal.UnitTestUtilities;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -119,6 +118,14 @@ namespace AW.DebugVisualizers.Tests
 		}
 
 		[TestMethod]
+		public void LookupTest()
+		{
+			var lookup = MetaSingletons.MetaData.AddressType.ToLookup(at => at.Name);
+			//Show(lookup);
+			TestShow(lookup, 1);
+		}
+
+		[TestMethod]
 		public void EntityFieldsTest()
 		{
 			var addressType = MetaSingletons.MetaData.AddressType.First();
@@ -164,7 +171,7 @@ namespace AW.DebugVisualizers.Tests
 		[TestMethod]
 		public void SerializableCollectionViewTest()
 		{
-			var collectionView = (new CollectionViewSource { Source = MetaSingletons.MetaData.AddressType.ToEntityCollection() }).View;
+			var collectionView = (new CollectionViewSource {Source = MetaSingletons.MetaData.AddressType.ToEntityCollection()}).View;
 			TestShowTransported(collectionView, 4);
 		}
 
