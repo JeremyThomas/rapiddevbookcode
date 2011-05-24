@@ -822,7 +822,7 @@
 			        DockPanel.Dock="Right"
 			        IsCancel="True"
 			        Padding="8,2"
-			        TabIndex="2" />
+			        TabIndex="2" Click="btnCancel_Click" />
 			<Button Name="btnOK"
 			        MinWidth="60"
 			        Margin="5,0,0,0"

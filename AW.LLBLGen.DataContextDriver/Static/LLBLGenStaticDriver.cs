@@ -69,7 +69,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public override bool ShowConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
 		{
 			// Prompt the user for a custom assembly and type name:
-			return new ConnectionDialog(cxInfo, isNewConnection).ShowDialog() == true;
+			try
+			{
+				return new ConnectionDialog(cxInfo, isNewConnection).ShowDialog() == true;
+			}
+			catch (Exception e)
+			{
+				GeneralHelper.TraceOut(e.Message);
+				Application.OnThreadException(e);
+			}
+			return true;
 		}
 
 		public override void InitializeContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
@@ -204,7 +213,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
 				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
 				if (factoryType == null)
-					throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", adapterTypeName, adapterAssemblyPath));
+					throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", factoryTypeName, adapterAssemblyPath));
 				var fullListQueryMethod = factoryType.GetMethod(factoryMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, null, new[] {typeof (string)}, null);
 				if (fullListQueryMethod == null)
 				{
@@ -327,12 +336,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override IEnumerable<string> GetAssembliesToAdd()
 		{
-			return AdditionalAssemblies.Union(Settings.Default.AdditionalAssemblies.AsEnumerable());
+			var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable();
+			return globalAdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(globalAdditionalAssemblies);
 		}
 
 		public override IEnumerable<string> GetNamespacesToAdd()
 		{
-			return AdditionalNamespaces.Union(Settings.Default.AdditionalNamespaces.AsEnumerable());
+			var globalAdditionalNamespaces = Settings.Default.AdditionalNamespaces.AsEnumerable();
+			return globalAdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(globalAdditionalNamespaces);
 		}
 
 		public override IEnumerable<string> GetNamespacesToRemove()
@@ -382,7 +393,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 				// Populate the columns (properties) of each entity:
 				foreach (var table in topLevelProps)
-					table.Children = GetFieldsToShowInSchema((Type)table.Tag)
+					table.Children = GetFieldsToShowInSchema((Type) table.Tag)
 						.Select(childProp => GetChildItem(elementTypeLookup, childProp))
 						.OrderBy(childItem => childItem.Kind)
 						.ToList();
@@ -424,7 +435,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var entityCore = EntityHelper.CreateEntity(type);
 			var propertyNames = entityCore.Fields.Cast<IEntityFieldCore>().Select(ef => ef.Name);
 			propertyNames = propertyNames.Union(entityCore.GetAllRelations().Select(r => r.MappedFieldName));
-			return propertyDescriptorCollection.Cast<PropertyDescriptor>().Where(pd=> propertyNames.Contains(pd.Name));
+			return propertyDescriptorCollection.Cast<PropertyDescriptor>().Where(pd => propertyNames.Contains(pd.Name));
 		}
 
 		private static ExplorerItem GetChildItem(ILookup<Type, ExplorerItem> elementTypeLookup, PropertyDescriptor childProp)
@@ -465,4 +476,3 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 	#endregion
 }
-
