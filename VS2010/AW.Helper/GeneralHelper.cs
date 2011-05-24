@@ -131,6 +131,23 @@ namespace AW.Helper
 			return (T) Enum.Parse(typeof (T), fixedString, true);
 		}
 
+		/// <summary>
+		/// Enums as an enumerable.
+		/// </summary>
+		/// <typeparam name="TEnum">The type of the enum.</typeparam>
+		/// <see cref="http://weblogs.asp.net/alnurismail/archive/2008/10/06/c-iterating-through-an-enum.aspx"/>
+		/// <returns>Enums as enumerable</returns>
+		public static TEnum[] EnumAsEnumerable<TEnum>(params TEnum[] enumsToExclude)
+		{
+			var enumType = typeof(TEnum);
+			if (enumType == typeof(Enum))
+				throw new ArgumentException("typeof(TEnum) == System.Enum", "TEnum");
+			if (!(enumType.IsEnum))
+				throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "TEnum");
+			var enumAsEnumerable = (TEnum[])Enum.GetValues(enumType);
+			return enumsToExclude.IsNullOrEmpty() ? enumAsEnumerable : enumAsEnumerable.Where(et => !enumsToExclude.Contains(et)).ToArray();
+		}
+
 		public static string JoinAsString<T>(this IEnumerable<T> input)
 		{
 			return JoinAsString(input, StringJoinSeperator);
