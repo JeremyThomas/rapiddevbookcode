@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C7514B66-375D-4EA3-B211-711DA2EB450A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AW.LLBLGen.DataContextDriver.Tests</RootNamespace>
+    <AssemblyName>AW.LLBLGen.DataContextDriver.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Interop.ActiveDs">
+      <HintPath>..\AW.LLBLGen.DataContextDriver\obj\Debug\Interop.ActiveDs.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Interop.ADODB">
+      <HintPath>..\AW.LLBLGen.DataContextDriver\obj\Debug\Interop.ADODB.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Interop.MSDASC">
+      <HintPath>..\AW.LLBLGen.DataContextDriver\obj\Debug\Interop.MSDASC.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LINQPad">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Moq">
+      <HintPath>..\Lib\Test\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="WPFToolkit.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="WPFToolkit.VisualStudio.Design, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LLBLGenStaticDriverTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AW.Data\AW.Data.csproj">
+      <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
+      <Name>AW.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
+      <Project>{7919C746-73F3-4279-A53B-CC6C08F42318}</Project>
+      <Name>AW.Helper.LLBL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">
+      <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.LLBLGen.DataContextDriver\AW.LLBLGen.DataContextDriver.csproj">
+      <Project>{2661F1B5-62FB-4783-A1A0-57445F397F9E}</Project>
+      <Name>AW.LLBLGen.DataContextDriver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Winforms.Helpers.LLBL\AW.Winforms.Helpers.LLBL.csproj">
+      <Project>{A67A2102-BA0E-48B3-9EF8-831F72B47160}</Project>
+      <Name>AW.Winforms.Helpers.LLBL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
+      <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
+      <Name>AW.Winforms.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Northwind\DAL\Northwind.DAL.csproj">
+      <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
+      <Name>Northwind.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

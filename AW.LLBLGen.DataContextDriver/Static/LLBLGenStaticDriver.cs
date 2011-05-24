@@ -325,43 +325,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		#endregion
 
-		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
-		{
-			// Return the objects with which to populate the Schema Explorer by reflecting over customType.
-
-			// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
-			var topLevelProps =
-				(
-					from prop in customType.GetProperties()
-					where prop.PropertyType != typeof (string)
-					// Display all properties of type IEnumerable<T> (except for string!)
-					let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
-					where ienumerableOfT != null
-					orderby prop.Name
-					select new ExplorerItem(prop.Name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
-					       	{
-					       		IsEnumerable = true,
-					       		ToolTipText = FormatTypeName(prop.PropertyType, false),
-										DragText = prop.Name,
-					       		// Store the entity type to the Tag property. We'll use it later.
-					       		Tag = ienumerableOfT.GetGenericArguments()[0]
-					       	}
-				).ToList();
-
-			// Create a lookup keying each element type to the properties of that type. This will allow
-			// us to build hyperlink targets allowing the user to click between associations:
-			var elementTypeLookup = topLevelProps.ToLookup(tp => (Type) tp.Tag);
-
-			// Populate the columns (properties) of each entity:
-			foreach (var table in topLevelProps)
-				table.Children = GetPropertiesToShowInSchema((Type) table.Tag)
-					.Select(childProp => GetChildItem(elementTypeLookup, childProp))
-					.OrderBy(childItem => childItem.Kind)
-					.ToList();
-
-			return topLevelProps;
-		}
-
 		public override IEnumerable<string> GetAssembliesToAdd()
 		{
 			return AdditionalAssemblies.Union(Settings.Default.AdditionalAssemblies.AsEnumerable());
@@ -387,6 +350,56 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return LLBLMemberProvider.CreateCustomDisplayMemberProviderIfNeeded(objectToWrite);
 		}
 
+		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
+		{
+			// Return the objects with which to populate the Schema Explorer by reflecting over customType.
+
+			// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
+			var topLevelProps =
+				(
+					from prop in customType.GetProperties()
+					where prop.PropertyType != typeof (string)
+					// Display all properties of type IEnumerable<T> (except for string!)
+					let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
+					where ienumerableOfT != null
+					orderby prop.Name
+					select new ExplorerItem(prop.Name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
+					       	{
+					       		IsEnumerable = true,
+					       		ToolTipText = FormatTypeName(prop.PropertyType, false),
+					       		DragText = prop.Name,
+					       		// Store the entity type to the Tag property. We'll use it later.
+					       		Tag = ienumerableOfT.GetGenericArguments()[0]
+					       	}
+				).ToList();
+
+			// Create a lookup keying each element type to the properties of that type. This will allow
+			// us to build hyperlink targets allowing the user to click between associations:
+			var elementTypeLookup = topLevelProps.ToLookup(tp => (Type) tp.Tag);
+
+			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
+			if (usefieldsElement != null && usefieldsElement.Value == true.ToString())
+
+				// Populate the columns (properties) of each entity:
+				foreach (var table in topLevelProps)
+					table.Children = GetFieldsToShowInSchema((Type)table.Tag)
+						.Select(childProp => GetChildItem(elementTypeLookup, childProp))
+						.OrderBy(childItem => childItem.Kind)
+						.ToList();
+
+			else
+			{
+				// Populate the columns (properties) of each entity:
+				foreach (var table in topLevelProps)
+					table.Children = GetPropertiesToShowInSchema((Type) table.Tag)
+						.Select(childProp => GetChildItem(elementTypeLookup, childProp))
+						.OrderBy(childItem => childItem.Kind)
+						.ToList();
+			}
+
+			return topLevelProps;
+		}
+
 		#endregion
 
 		#region Schema helpers
@@ -405,40 +418,51 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
 		}
 
+		private static IEnumerable<PropertyDescriptor> GetFieldsToShowInSchema(Type type)
+		{
+			var propertyDescriptorCollection = TypeDescriptor.GetProperties(type, null);
+			var entityCore = EntityHelper.CreateEntity(type);
+			var propertyNames = entityCore.Fields.Cast<IEntityFieldCore>().Select(ef => ef.Name);
+			propertyNames = propertyNames.Union(entityCore.GetAllRelations().Select(r => r.MappedFieldName));
+			return propertyDescriptorCollection.Cast<PropertyDescriptor>().Where(pd=> propertyNames.Contains(pd.Name));
+		}
+
 		private static ExplorerItem GetChildItem(ILookup<Type, ExplorerItem> elementTypeLookup, PropertyDescriptor childProp)
 		{
 			// If the property's type is in our list of entities, then it's a Many:1 (or 1:1) reference.
 			// We'll assume it's a Many:1 (we can't reliably identify 1:1s purely from reflection).
-			if (elementTypeLookup.Contains(childProp.PropertyType))
-				return new ExplorerItem(childProp.Name, ExplorerItemKind.ReferenceLink, ExplorerIcon.ManyToOne)
-				       	{
-				       		HyperlinkTarget = elementTypeLookup[childProp.PropertyType].First(),
-				       		ToolTipText = FormatTypeName(childProp.PropertyType, true),
-									DragText = childProp.Name
-				       	};
-
-			// Is the property's type a collection of entities?
-			var ienumerableOfT = childProp.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1");
-			if (ienumerableOfT != null)
+			var explorerItem = CreateEntityExplorerItem(childProp, elementTypeLookup, childProp.PropertyType, ExplorerItemKind.ReferenceLink, ExplorerIcon.ManyToOne);
+			if (explorerItem == null)
 			{
-				var elementType = ienumerableOfT.GetGenericArguments()[0];
-				if (elementTypeLookup.Contains(elementType))
-					return new ExplorerItem(childProp.Name, ExplorerItemKind.CollectionLink, ExplorerIcon.OneToMany)
-					       	{
-					       		HyperlinkTarget = elementTypeLookup[elementType].First(),
-					       		ToolTipText = FormatTypeName(elementType, true),
-					       		DragText = childProp.Name
-					       	};
+				// Is the property's type a collection of entities?
+				var ienumerableOfT = childProp.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1");
+				if (ienumerableOfT != null)
+					explorerItem = CreateEntityExplorerItem(childProp, elementTypeLookup, ienumerableOfT.GetGenericArguments()[0], ExplorerItemKind.CollectionLink, ExplorerIcon.OneToMany);
 			}
 
-			// Ordinary property:
-			return new ExplorerItem(childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")",
-															ExplorerItemKind.Property, ExplorerIcon.Column)
-															{
-																DragText = childProp.Name
-															};
+			if (explorerItem == null)
+				// Ordinary property:
+				return new ExplorerItem(childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")",
+				                        ExplorerItemKind.Property, ExplorerIcon.Column)
+				       	{
+				       		DragText = childProp.Name
+				       	};
+			return explorerItem;
 		}
 
-		#endregion
+		private static ExplorerItem CreateEntityExplorerItem(PropertyDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
+		{
+			return elementTypeLookup.Contains(elementType)
+			       	? new ExplorerItem(childProp.Name, kind, icon)
+			       	  	{
+			       	  		HyperlinkTarget = elementTypeLookup[elementType].First(),
+			       	  		ToolTipText = FormatTypeName(elementType, true),
+			       	  		DragText = childProp.Name
+			       	  	}
+			       	: null;
+		}
 	}
+
+	#endregion
 }
+

@@ -8,7 +8,7 @@
         xmlns:Static="clr-namespace:AW.LLBLGen.DataContextDriver.Static"
         xmlns:WpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit" xmlns:DataContextDriver="clr-namespace:AW.LLBLGen.DataContextDriver" 
 				Title="{x:Static DataContextDriver:Constants.Name}"
-        Width="489"
+        Width="513"
         Height="627"
         MinWidth="300"
         MinHeight="400"
@@ -139,8 +139,9 @@
 						<TextBox Name="textBoxAdapterType" Text="{Binding DriverData.Element[AdapterType].Value}" />
 					</StackPanel>
 
-					<StackPanel Orientation="Horizontal">
-						<CheckBox IsChecked="{Binding Persist}">Remember this connection</CheckBox>
+					<StackPanel Orientation="Horizontal" >
+						<CheckBox IsChecked="{Binding Persist}" Margin="1,0,0,1">Remember this connection</CheckBox>
+						<CheckBox IsChecked="{Binding DriverData.Element[UseFields].Value}" Margin="1,0,0,1">Show fields rather then properties</CheckBox>
 						<Button Name="btnSaveDefault"
 						        MinWidth="60"
 						        Margin="5,0,0,0"
