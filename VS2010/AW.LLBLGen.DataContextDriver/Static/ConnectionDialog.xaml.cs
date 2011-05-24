@@ -249,6 +249,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			Settings.Default.Save();
 		}
 
+		private void btnCancel_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
 		private void btnOK_Click(object sender, RoutedEventArgs e)
 		{
 			if (AdditionalAssemblies != null)
@@ -399,7 +404,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static IEnumerable<string> GetDataAccessAdapterTypeNamesByName(IEnumerable<Type> types)
 		{
-			return types.Where(t => t.Name.Contains("DataAccessAdapter") && t.IsClass).Select(t => t.FullName);
+			return types.Where(t => t!= null && !String.IsNullOrEmpty(t.Name) && t.Name.Contains("DataAccessAdapter") && t.IsClass).Select(t => t.FullName);
 		}
 
 		private void BrowseAppConfig(object sender, RoutedEventArgs e)
@@ -444,8 +449,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					customTypes = GetDataAccessAdapterTypeNamesBothWays(ex.Types);
 					if (customTypes.Length == 0)
 					{
-						MessageBox.Show("Error obtaining adapter types: " + ex.Message + Environment.NewLine +
-						                ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine));
+						MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
+						                ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine), "Error obtaining adapter types");
 						Debugger.Break();
 						return;
 					}
@@ -591,6 +596,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			OnPropertyChanged("CustomTypeNameVisibility");
 		}
+
+
 	}
 
 	public enum LLBLConnectionType
