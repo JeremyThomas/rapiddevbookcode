@@ -265,6 +265,49 @@ namespace AW.Helper
 			return items.AsNullIfEmpty() == null;
 		}
 
+		public static bool IsNullOrEmpty(ICollection collection)
+		{
+			return collection == null ? true : collection.Count == 0;
+		}
+
+		/// <summary>
+		/// Determines whether the specified enumerable has any items.
+		/// </summary>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <returns></returns>
+		public static bool Any(IEnumerable enumerable)
+		{
+			return Any(enumerable, false);
+		}
+
+		public static bool Any(ICollection collection)
+		{
+			return !IsNullOrEmpty(collection);
+		}
+
+		/// <summary>
+		/// Determines whether the specified enumerable has any items.
+		/// </summary>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="reset">if set to <c>true</c> reset the enumerator if there are any items found.</param>
+		/// <returns></returns>
+		public static bool Any(IEnumerable enumerable, bool reset)
+		{
+			if (enumerable is ICollection)
+				return Any((ICollection)enumerable);
+			var enumerator = enumerable.GetEnumerator();
+			var any = enumerator.MoveNext();
+			if (any && reset)
+				try
+				{
+					enumerator.Reset();
+				}
+				catch (NotSupportedException)
+				{
+				}
+			return any;
+		}
+
 		public static List<ValueTypeWrapper<string>> CreateStringWrapperForBinding(this StringCollection strings)
 		{
 			return ValueTypeWrapper<string>.CreateWrapperForBinding(AsEnumerable(strings));
