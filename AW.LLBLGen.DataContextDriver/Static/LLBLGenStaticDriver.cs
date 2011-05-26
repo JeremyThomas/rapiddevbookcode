@@ -213,7 +213,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
 				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
 				if (factoryType == null)
-					throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", factoryTypeName, adapterAssemblyPath));
+					throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", factoryTypeName, factoryAssemblyPath));
 				var fullListQueryMethod = factoryType.GetMethod(factoryMethodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, null, new[] {typeof (string)}, null);
 				if (fullListQueryMethod == null)
 				{

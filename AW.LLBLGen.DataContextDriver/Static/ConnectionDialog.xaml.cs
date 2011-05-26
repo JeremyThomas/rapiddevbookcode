@@ -576,6 +576,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void buttonClear_Click(object sender, RoutedEventArgs e)
 		{
 			Settings.Default.Reset();
+			AdditionalNamespaces.Clear();
+			AdditionalAssemblies.Clear();
 		}
 
 		#region Implementation of INotifyPropertyChanged
