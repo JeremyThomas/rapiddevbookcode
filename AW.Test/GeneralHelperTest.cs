@@ -165,7 +165,7 @@ namespace AW.Tests
 		public void StringPropertiesTest()
 		{
 			var strings = new[] {"one", "two", "a string"};
-			var stringWrapperForBinding = ValueTypeWrapper<string>.CreateWrapperForBinding(strings);
+			var stringWrapperForBinding = ValueTypeWrapper<string>.CreateListWrapperForBinding(strings);
 			var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
 			Assert.AreEqual(1, stringWrapperProperties.Count);
 			Assert.AreEqual(typeof (string), stringWrapperProperties[0].PropertyType);
@@ -201,8 +201,8 @@ namespace AW.Tests
 			var expected = new List<ValueTypeWrapper<string>> { new ValueTypeWrapper<string> { Value = strings[0] }, new ValueTypeWrapper<string> { Value = strings[1] } };
 			var actual = strings.CreateStringWrapperForBinding();
 			Assert.IsNotNull(actual);
-			Assert.IsInstanceOfType(actual,typeof(List<ValueTypeWrapper<string>>));
-			Assert.AreEqual(strings.Count, actual.Count);
+			Assert.IsInstanceOfType(actual, typeof(IEnumerable<ValueTypeWrapper<string>>));
+			Assert.AreEqual(strings.Count, actual.Count());
 			//CollectionAssert.AreEqual(expected, actual);
 		}
 	}

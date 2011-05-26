@@ -14,9 +14,14 @@ namespace AW.Helper
 	{
 		public T Value { get; set; }
 
-		public static List<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
+		public static List<ValueTypeWrapper<T>> CreateListWrapperForBinding(IEnumerable<T> values)
 		{
-			return values == null ? new List<ValueTypeWrapper<T>>() : values.Select(data => new ValueTypeWrapper<T> {Value = data}).ToList();
+			return CreateWrapperForBinding(values).ToList();
+		}
+
+		public static IEnumerable<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
+		{
+			return values == null ? Enumerable.Empty<ValueTypeWrapper<T>>() : values.Select(data => new ValueTypeWrapper<T> { Value = data });
 		}
 
 		public static IEnumerable<T> UnWrap(IEnumerable<ValueTypeWrapper<T>> values)
@@ -308,9 +313,14 @@ namespace AW.Helper
 			return any;
 		}
 
-		public static List<ValueTypeWrapper<string>> CreateStringWrapperForBinding(this StringCollection strings)
+		public static IEnumerable<ValueTypeWrapper<string>> CreateStringWrapperForBinding(this StringCollection strings)
 		{
-			return ValueTypeWrapper<string>.CreateWrapperForBinding(AsEnumerable(strings));
+			return CreateStringWrapperForBinding(strings.AsEnumerable());
+		}
+
+		public static IEnumerable<ValueTypeWrapper<string>> CreateStringWrapperForBinding(this IEnumerable<string> strings)
+		{
+			return ValueTypeWrapper<string>.CreateWrapperForBinding(strings);
 		}
 
 		public static IEnumerable<string> AsEnumerable(this StringCollection strings)

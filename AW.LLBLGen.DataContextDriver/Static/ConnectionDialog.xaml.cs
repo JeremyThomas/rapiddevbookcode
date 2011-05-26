@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
@@ -61,7 +62,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			CxInfo = cxInfo;
 			var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"]).Cast<string>();
 			DbProviderFactoryNames = factoryClasses.ToList();
-			AdditionalNamespaces = Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding();
+			AdditionalNamespaces = new ObservableCollection<ValueTypeWrapper<string>>(Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding());
 			if (isNewConnection)
 			{
 				CreateDriverDataElements(cxInfo);
@@ -131,14 +132,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public IEnumerable<string> DbProviderFactoryNames { get; set; }
 
-		public List<ValueTypeWrapper<string>> AdditionalNamespaces { get; set; }
+		public ObservableCollection<ValueTypeWrapper<string>> AdditionalNamespaces { get; set; }
 
-		private List<ValueTypeWrapper<string>> _additionalAssemblies;
+		private ObservableCollection<ValueTypeWrapper<string>> _additionalAssemblies;
 		private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[] { LLBLConnectionType.Adapter, LLBLConnectionType.AdapterFactory };
 
-		public List<ValueTypeWrapper<string>> AdditionalAssemblies
+		public ObservableCollection<ValueTypeWrapper<string>> AdditionalAssemblies
 		{
-			get { return _additionalAssemblies ?? (_additionalAssemblies = Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding()); }
+			get { return _additionalAssemblies ?? (_additionalAssemblies = new ObservableCollection<ValueTypeWrapper<string>>(Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding())); }
 		}
 
 		private static void CreateDriverDataElements(IConnectionInfo cxInfo)
@@ -477,46 +478,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 			}
 		}
-
-		public static void AddAssembly(IConnectionInfo connectionInfo, string assemblyName)
-		{
-			if (string.IsNullOrEmpty(assemblyName))
-				return;
-			GeneralHelper.TraceOut(assemblyName);
-			assemblyName = Path.GetFileName(assemblyName);
-			if (connectionInfo.DriverData == null)
-				return;
-			var additionalAssembliesElement = connectionInfo.DriverData.Element(ElementNameAdditionalassemblies);
-			if (additionalAssembliesElement == null)
-			{
-				additionalAssembliesElement = new XElement(ElementNameAdditionalassemblies);
-				connectionInfo.DriverData.Add(additionalAssembliesElement);
-			}
-
-			var c = (from e in additionalAssembliesElement.Elements()
-			         where e.Value == assemblyName
-			         select e).Count();
-
-			if (c == 0)
-				additionalAssembliesElement.Add(new XElement("AssemblyName") {Value = assemblyName});
-			connectionInfo.DatabaseInfo.Database = GetAdditionalAssemblies(additionalAssembliesElement);
-		}
-
-		private static string GetAdditionalAssemblies(XContainer additionalAssembliesElement)
-		{
-			return additionalAssembliesElement.Elements().Select(e => e.Value).JoinAsString();
-		}
-
-		public static string GetAdditionalAssemblies(IConnectionInfo connectionInfo)
-		{
-			if (connectionInfo.DriverData == null)
-				return null;
-			var additionalAssembliesElement = connectionInfo.DriverData.Element(ElementNameAdditionalassemblies);
-			if (additionalAssembliesElement == null)
-				return null;
-			return GetAdditionalAssemblies(additionalAssembliesElement);
-		}
-
+		
 		private void ChooseAssemblies(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
@@ -527,12 +489,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			             	};
 
 			if (dialog.ShowDialog() == true)
-			{
-				foreach (var fileName in dialog.FileNames)
+				foreach (var fileName in dialog.FileNames
+					.Where(fileName => !LLBLGenStaticDriver.AdditionalAssemblies.Contains(Path.GetFileName(fileName))).CreateStringWrapperForBinding()
+					.Where(fileName => !AdditionalAssemblies.Contains(fileName))
+					)
 				{
-					AddAssembly(CxInfo, fileName);
+					AdditionalAssemblies.Add(fileName);
 				}
-			}
 		}
 
 		private void DataBaseConnectionDialog(object sender, RoutedEventArgs e)
@@ -598,8 +561,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			OnPropertyChanged("CustomTypeNameVisibility");
 		}
-
-
+		
 	}
 
 	public enum LLBLConnectionType

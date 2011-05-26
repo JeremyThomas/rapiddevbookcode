@@ -28,7 +28,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	{
 		#region Constants
 
-		private static readonly string[] AdditionalAssemblies = new[]
+		public static readonly string[] AdditionalAssemblies = new[]
 		                                                        	{
 		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
 		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
@@ -36,7 +36,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		                                                        		"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll"
 		                                                        	};
 
-		private static readonly string[] AdditionalNamespaces = new[]
+		public static readonly string[] AdditionalNamespaces = new[]
 		                                                        	{
 		                                                        		"SD.LLBLGen.Pro.ORMSupportClasses",
 		                                                        		"SD.LLBLGen.Pro.LinqSupportClasses",

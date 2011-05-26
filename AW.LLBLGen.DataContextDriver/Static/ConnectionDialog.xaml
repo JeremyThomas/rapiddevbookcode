@@ -476,7 +476,12 @@
 							 DataContext="{StaticResource settingsViewSource}"
 							 Header="Driver"
 							 ToolTip="Settings global to all connections">
-				<StackPanel>
+				<TabItem.Resources>
+					<Style TargetType="TextBox">
+						<Setter Property="MinWidth" Value="50"  />
+					</Style>
+				</TabItem.Resources>
+					<StackPanel>
 					<Grid Name="grid1"
 								HorizontalAlignment="Left"
 								VerticalAlignment="Top">
@@ -800,7 +805,7 @@
 																											 ValidatesOnExceptions=true,
 																											 NotifyOnValidationError=true}">
 							<WpfToolkit:DataGrid.Columns>
-								<WpfToolkit:DataGridTextColumn Binding="{Binding Path=Value}" Header="Additional Assemblies" />
+								<WpfToolkit:DataGridTextColumn Binding="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}" Header="Additional Assemblies" />
 							</WpfToolkit:DataGrid.Columns>
 						</WpfToolkit:DataGrid>
 						<WpfToolkit:DataGrid Name="AdditionalNamespacesDataGrid"
@@ -815,10 +820,9 @@
 							</WpfToolkit:DataGrid.Columns>
 						</WpfToolkit:DataGrid>
 						<Button Name="buttonClear"
-										Width="75"
-										Height="23"
 										Click="buttonClear_Click"
-										Content="Clear" />
+										Content="Clear" VerticalAlignment="Center" Margin="5,0,0,0"/>
+						<Button Content="Add Assemblies..." VerticalAlignment="Center" Margin="5,0,0,0" Click="ChooseAssemblies" />
 					</StackPanel>
 				</StackPanel>
 			</TabItem>
