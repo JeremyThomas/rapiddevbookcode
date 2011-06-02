@@ -5,7 +5,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
-using System.Data.OleDb;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -15,14 +14,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Xml.Linq;
-using ADODB;
 using AW.Helper;
 using AW.LLBLGen.DataContextDriver.Properties;
 using AW.Winforms.Helpers;
+using AW.Winforms.Helpers.ConnectionUI;
 using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
+using Microsoft.Data.ConnectionUI;
 using Microsoft.Win32;
-using MSDASC;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.LLBLGen.DataContextDriver.Static
@@ -32,6 +31,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	/// </summary>
 	public partial class ConnectionDialog : INotifyPropertyChanged
 	{
+		private readonly bool _isNewConnection;
+		private bool _providerHasBeenSet;
+
 		/// <summary>
 		/// AdapterType
 		/// </summary>
@@ -50,6 +52,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public const string ElementNameFactoryAssembly = "FactoryAssembly";
 		public const string ElementNameUseFields = "UseFields";
 
+		public static readonly string AdditionalAssembliesToolTip = "The driver adds these assemblies to the ones LINQPad provides"
+		                                                            + Environment.NewLine + LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
+		                                                            + Environment.NewLine + "If you want any additional assemblies add them in here, with or with out a path.";
+
+		public static readonly string AdditionalNamespacesToolTip = "The driver adds these namespaces to the ones LINQPad provides"
+		                                                            + Environment.NewLine + LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
+		                                                            + "If you want any additional namespaces add them in here.";
+
 		public IConnectionInfo CxInfo { get; private set; }
 
 		public ConnectionDialog()
@@ -59,9 +69,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public ConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
 		{
+			_isNewConnection = isNewConnection;
 			CxInfo = cxInfo;
-			var factoryClasses = DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"]).Cast<string>();
-			DbProviderFactoryNames = factoryClasses.ToList();
+			DbProviderFactoryNames = (new[] {""}).Union(DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"])).Cast<string>().ToList();
+
 			AdditionalNamespaces = new ObservableCollection<ValueTypeWrapper<string>>(Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding());
 			if (isNewConnection)
 			{
@@ -69,6 +80,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 				CxInfo.AppConfigPath = Settings.Default.DefaultApplicationConfig;
 				CxInfo.DatabaseInfo.CustomCxString = Settings.Default.DefaultDatabaseConnection;
+				Provider = Settings.Default.DefaultProvider;
 				CxInfo.CustomTypeInfo.CustomAssemblyPath = Settings.Default.DefaultLinqMetaDataAssembly;
 				CxInfo.CustomTypeInfo.CustomTypeName = Settings.Default.DefaultLinqMetaData;
 				CxInfo.DisplayName = Settings.Default.DefaultDisplayName;
@@ -79,12 +91,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			DataContext = this;
 			InitializeComponent();
-		//	providerComboBox.DataContext = this;
-		//	comboBoxConnectionType.DataContext = this;
-		//	txtTypeName.DataContext = this;
-		//	DockPanelTypeName.DataContext = this;
-			//AdditionalAssembliesDataGrid.DataContext = this;
-			//AdditionalNamespacesDataGrid.DataContext = this;
 		}
 
 		/// <summary>
@@ -102,10 +108,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		/// <value>The ConnectionTypeVisibility.</value>
 		public Visibility ConnectionTypeVisibility
 		{
-			get
-			{
-				return AdapterConnectionTypes.Contains(LLBLConnectionType) ? Visibility.Visible : Visibility.Collapsed;
-			}
+			get { return AdapterConnectionTypes.Contains(LLBLConnectionType) ? Visibility.Visible : Visibility.Collapsed; }
 		}
 
 		public LLBLConnectionType LLBLConnectionType
@@ -130,12 +133,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 		}
 
+		public string Provider
+		{
+			get { return _providerHasBeenSet || !_isNewConnection ? CxInfo.DatabaseInfo.Provider : ""; }
+			set
+			{
+				if (CxInfo.DatabaseInfo.Provider != value || string.Equals(value, "System.Data.SqlClient", StringComparison.InvariantCultureIgnoreCase))
+				{
+					_providerHasBeenSet = value != "";
+					CxInfo.DatabaseInfo.Provider = value;
+					OnPropertyChanged("Provider");
+				}
+			}
+		}
+
 		public IEnumerable<string> DbProviderFactoryNames { get; set; }
 
 		public ObservableCollection<ValueTypeWrapper<string>> AdditionalNamespaces { get; set; }
 
 		private ObservableCollection<ValueTypeWrapper<string>> _additionalAssemblies;
-		private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[] { LLBLConnectionType.Adapter, LLBLConnectionType.AdapterFactory };
+		private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[] {LLBLConnectionType.Adapter, LLBLConnectionType.AdapterFactory};
 
 		public ObservableCollection<ValueTypeWrapper<string>> AdditionalAssemblies
 		{
@@ -230,6 +247,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 			Settings.Default.DefaultApplicationConfig = CxInfo.AppConfigPath;
 			Settings.Default.DefaultDatabaseConnection = CxInfo.DatabaseInfo.CustomCxString;
+			Settings.Default.DefaultProvider = Provider;
 			Settings.Default.DefaultLinqMetaDataAssembly = CxInfo.CustomTypeInfo.CustomAssemblyPath;
 			Settings.Default.DefaultLinqMetaData = CxInfo.CustomTypeInfo.CustomTypeName;
 
@@ -252,7 +270,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
 		{
-
+			Close();
 		}
 
 		private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -268,7 +286,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				Settings.Default.AdditionalNamespaces.AddRange(AdditionalNamespaces.UnWrap().ToArray());
 			}
 
-			DialogResult = true;
+			try
+			{
+				DialogResult = true;
+			}
+			catch (Exception )
+			{
+				Close();
+			}
 		}
 
 		private void BrowseAssembly(object sender, RoutedEventArgs e)
@@ -405,7 +430,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static IEnumerable<string> GetDataAccessAdapterTypeNamesByName(IEnumerable<Type> types)
 		{
-			return types.Where(t => t!= null && !String.IsNullOrEmpty(t.Name) && t.Name.Contains("DataAccessAdapter") && t.IsClass).Select(t => t.FullName);
+			return types.Where(t => t != null && !String.IsNullOrEmpty(t.Name) && t.Name.Contains("DataAccessAdapter") && t.IsClass).Select(t => t.FullName);
 		}
 
 		private void BrowseAppConfig(object sender, RoutedEventArgs e)
@@ -478,7 +503,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 			}
 		}
-		
+
 		private void ChooseAssemblies(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
@@ -500,40 +525,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void DataBaseConnectionDialog(object sender, RoutedEventArgs e)
 		{
-			var mydlg = new DataLinks();
-			var adoType = Type.GetTypeFromProgID("ADODB.Connection");
-			if (adoType == null)
-			{
-				//Cast the generic object that PromptNew returns to an ADODB._Connection.
-				ProcessConnection((_Connection) mydlg.PromptNew());
-			}
-			else
-			{
-				var connection = (_Connection) Activator.CreateInstance(adoType);
-				connection.ConnectionString = CxInfo.DatabaseInfo.CustomCxString;
-				if (mydlg.PromptEdit(connection))
-					ProcessConnection(connection);
-			}
-		}
+			var dcd = new DataConnectionDialog();
+			var dcs = new DataConnectionConfiguration(null);
+			dcs.LoadConfiguration(dcd);
 
-		private void ProcessConnection(_Connection connection)
-		{
-			var oleDbConnectionStringBuilder = new OleDbConnectionStringBuilder {ConnectionString = connection.ConnectionString};
-			if (oleDbConnectionStringBuilder.PersistSecurityInfo)
+			var dataProvider = dcd.UnspecifiedDataSource.Providers.FirstOrDefault(p => p.Name == Provider);
+			if (dataProvider != null)
 			{
-				connection.Open("", "", "", 0);
-				if (connection.State == 1)
-				{
-					CxInfo.DatabaseInfo.CustomCxString = connection.ConnectionString;
-					connection.Close();
-					connection.Open();
-				}
+				dcd.SelectedDataSource = dcd.UnspecifiedDataSource;
+				dcd.SelectedDataProvider = dataProvider;
 			}
-			else
+
+			if (dcd.SelectedDataProvider != null)
+				dcd.ConnectionString = CxInfo.DatabaseInfo.CustomCxString;
+			if (DataConnectionDialog.Show(dcd) == System.Windows.Forms.DialogResult.OK)
 			{
-				CxInfo.DatabaseInfo.CustomCxString = connection.ConnectionString;
-				connection.Open();
+				CxInfo.DatabaseInfo.CustomCxString = dcd.ConnectionString;
+				if (dcd.SelectedDataProvider != null)
+					Provider = dcd.SelectedDataProvider.Name;
 			}
+			//dcs.SaveConfiguration(dcd);
 		}
 
 		private void buttonClear_Click(object sender, RoutedEventArgs e)
@@ -561,7 +572,38 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			OnPropertyChanged("CustomTypeNameVisibility");
 		}
-		
+
+		private void SetConnectionString_Click(object sender, RoutedEventArgs e)
+		{
+			CxInfo.DatabaseInfo.CustomCxString = CxInfo.DatabaseInfo.GetCxString();
+		}
+
+		private void GetConnectionString_Click(object sender, RoutedEventArgs e)
+		{
+	   try
+			{
+				var dbProviderFactory = DbProviderFactories.GetFactory(CxInfo.DatabaseInfo.Provider);
+				var connectionStringBuilder = dbProviderFactory.CreateConnectionStringBuilder();
+				if (connectionStringBuilder == null)
+					connectionStringBuilder = new DbConnectionStringBuilder { ConnectionString = CxInfo.DatabaseInfo.CustomCxString };
+				else
+					connectionStringBuilder.ConnectionString = CxInfo.DatabaseInfo.CustomCxString;
+				if (connectionStringBuilder.ContainsKey("data source"))
+					CxInfo.DatabaseInfo.Server = Convert.ToString(connectionStringBuilder["data source"]);
+				if (connectionStringBuilder.ContainsKey("initial catalog"))
+					CxInfo.DatabaseInfo.Database = Convert.ToString(connectionStringBuilder["initial catalog"]);
+				if (connectionStringBuilder.ContainsKey("initial file name"))
+					CxInfo.DatabaseInfo.AttachFileName = Convert.ToString(connectionStringBuilder["initial file name"]);
+				if (connectionStringBuilder.ContainsKey("user id"))
+					CxInfo.DatabaseInfo.UserName = Convert.ToString(connectionStringBuilder["user id"]);
+				if (connectionStringBuilder.ContainsKey("password"))
+					CxInfo.DatabaseInfo.Password = Convert.ToString(connectionStringBuilder["password"]);
+			}
+			catch (Exception ex)
+			{
+				System.Windows.Forms.Application.OnThreadException(ex);
+			}
+		}
 	}
 
 	public enum LLBLConnectionType
@@ -569,7 +611,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		Unknown,
 		SelfServicing,
 		Adapter,
-	 [Description("Adapter Factory")]
-		AdapterFactory
+		[Description("Adapter Factory")] AdapterFactory
 	}
 }

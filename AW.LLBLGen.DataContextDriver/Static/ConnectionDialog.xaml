@@ -4,12 +4,14 @@
 				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 				xmlns:DataContextDriver="clr-namespace:AW.LLBLGen.DataContextDriver"
 				xmlns:LINQPad="LINQPad.Extensibility.DataContext"
+				xmlns:local="clr-namespace:AW.Winforms.Helpers.WPF;assembly=AW.Winforms.Helpers"
 				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:my="clr-namespace:LINQPad.Extensibility.DataContext;assembly=LINQPad"
 				xmlns:Properties="clr-namespace:AW.LLBLGen.DataContextDriver.Properties"
 				xmlns:Static="clr-namespace:AW.LLBLGen.DataContextDriver.Static"
-				xmlns:WpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit" xmlns:System="clr-namespace:System;assembly=mscorlib" 
-				xmlns:local="clr-namespace:AW.Winforms.Helpers.WPF;assembly=AW.Winforms.Helpers" Title="{x:Static DataContextDriver:Constants.Name}"
+				xmlns:System="clr-namespace:System;assembly=mscorlib"
+				xmlns:WpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+				Title="{x:Static DataContextDriver:Constants.Name}"
 				MinWidth="300"
 				MinHeight="400"
 				Background="{x:Static SystemColors.ControlBrush}"
@@ -20,7 +22,7 @@
 				d:DesignWidth="513"
 				Loaded="Window_Loaded"
 				WindowStartupLocation="CenterScreen"
-				mc:Ignorable="d">
+				mc:Ignorable="d" SizeToContent="WidthAndHeight">
 	<Window.Resources>
 		<Static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterToVisibility" LLBLConnectionType="Adapter" />
 		<Static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterFactoryToVisibility" LLBLConnectionType="AdapterFactory" />
@@ -30,7 +32,10 @@
 		<CollectionViewSource x:Key="settingsViewSource" d:DesignSource="{d:DesignInstance Properties:Settings, CreateList=True}" />
 
 		<local:NullToBoolConverter x:Key="cnvNullToBool" />
-		<local:BoolToVisibilityConverter TrueValue="Visible" FalseValue="Collapsed"  x:Key="cnvBoolToVisibilityConverter" Link="{StaticResource cnvNullToBool}" />
+		<local:BoolToVisibilityConverter x:Key="cnvBoolToVisibilityConverter"
+																		 FalseValue="Collapsed"
+																		 Link="{StaticResource cnvNullToBool}"
+																		 TrueValue="Visible" />
 	</Window.Resources>
 	<StackPanel>
 		<TabControl Name="TabControl">
@@ -77,7 +82,7 @@
 						<Label HorizontalAlignment="Right"
 									 DockPanel.Dock="Right"
 									 Padding="1">
-							<Hyperlink Click="DataBaseConnectionDialog">Choose...</Hyperlink>
+							<Hyperlink Click="DataBaseConnectionDialog" ToolTip="Connection Dialog">Create...</Hyperlink>
 						</Label>
 					</DockPanel>
 					<TextBox Name="textBoxDatabaseConnectionString"
@@ -89,14 +94,22 @@
 					<TextBox Name="textBoxConnectionDisplayName"
 									 Margin="0,0,0,6"
 									 Text="{Binding CxInfo.CustomTypeInfo.DisplayName}" />
-					<GroupBox Header="Adapter configuration" Visibility="{Binding Path=ConnectionTypeVisibility}">					
-						<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" >
-						<StackPanel.Resources>
-							<local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-						</StackPanel.Resources>
-						<RadioButton IsChecked="{Binding Path=LLBLConnectionType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static Static:LLBLConnectionType.Adapter}}" Content="Adapter" Margin="5,0,10,0" />
-						<RadioButton IsChecked="{Binding Path=LLBLConnectionType, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static Static:LLBLConnectionType.AdapterFactory}}" Content="Adapter Factory" Margin="0,0,5,0" />
-					</StackPanel>
+					<GroupBox Header="Adapter configuration" Visibility="{Binding Path=ConnectionTypeVisibility}">
+						<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+							<StackPanel.Resources>
+								<local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+							</StackPanel.Resources>
+							<RadioButton Margin="5,0,10,0"
+													 Content="Adapter"
+													 IsChecked="{Binding Path=LLBLConnectionType,
+																							 Converter={StaticResource EnumToBooleanConverter},
+																							 ConverterParameter={x:Static Static:LLBLConnectionType.Adapter}}" />
+							<RadioButton Margin="0,0,5,0"
+													 Content="Adapter Factory"
+													 IsChecked="{Binding Path=LLBLConnectionType,
+																							 Converter={StaticResource EnumToBooleanConverter},
+																							 ConverterParameter={x:Static Static:LLBLConnectionType.AdapterFactory}}" />
+						</StackPanel>
 					</GroupBox>
 
 					<StackPanel Visibility="{Binding CxInfo.DriverData.Element[ConnectionType].Value, Converter={StaticResource AdapterFactoryToVisibility}}">
@@ -140,8 +153,8 @@
 					</StackPanel>
 
 					<StackPanel Orientation="Horizontal">
-						<CheckBox Margin="1,0,0,1" IsChecked="{Binding CxInfo.Persist}">Remember this connection</CheckBox>
-						<CheckBox Margin="1,0,0,1" IsChecked="{Binding CxInfo.DriverData.Element[UseFields].Value}">Show fields rather then properties</CheckBox>
+						<CheckBox Margin="1,0,0,5" IsChecked="{Binding CxInfo.Persist}">Remember this connection</CheckBox>
+						<CheckBox Margin="5,0,0,5" IsChecked="{Binding CxInfo.DriverData.Element[UseFields].Value}">Show fields rather then properties</CheckBox>
 						<Button Name="btnSaveDefault"
 										MinWidth="60"
 										Margin="5,0,0,0"
@@ -162,12 +175,17 @@
 				<Grid Name="grid12">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="153" />
+						<ColumnDefinition Width="20" />
+						<ColumnDefinition Width="91" />
 						<ColumnDefinition />
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="29" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
+						<RowDefinition Height="29" />
+						<RowDefinition Height="29" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
@@ -182,14 +200,15 @@
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
-					<Label Grid.Row="0"
+					<Border Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" Grid.RowSpan="16" BorderBrush="LightBlue" BorderThickness="2,2,2,2" CornerRadius="10,10,10,10" Margin="0" Padding="0,5"></Border>
+					<Label Grid.Row="6"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Attach File:" />
 					<CheckBox Name="attachFileCheckBox"
-										Grid.Row="0"
+										Grid.Row="6"
 										Grid.Column="1"
 										Height="16"
 										Margin="3"
@@ -200,15 +219,16 @@
 																				Mode=TwoWay,
 																				ValidatesOnExceptions=true,
 																				NotifyOnValidationError=true}" />
-					<Label Grid.Row="1"
+					<Label Grid.Row="7"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Attach File Name:" />
 					<TextBox Name="attachFileNameTextBox"
-									 Grid.Row="1"
+									 Grid.Row="7"
 									 Grid.Column="1"
+									 Grid.ColumnSpan="3"
 									 Height="23"
 									 MinWidth="200"
 									 Margin="3"
@@ -223,11 +243,12 @@
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
-								 Content="Custom Cx String:" />
+								 >
+						<Hyperlink Click="DataBaseConnectionDialog" ToolTip="Create">Custom Cx String:</Hyperlink>
+					</Label>
 					<TextBox Name="customCxStringTextBox"
 									 Grid.Row="2"
-									 Grid.Column="1"
-									 Height="23"
+									 Grid.Column="1" Height="23"
 									 MinWidth="200"
 									 Margin="3"
 									 HorizontalAlignment="Left"
@@ -235,16 +256,17 @@
 									 Text="{Binding Path=DatabaseInfo.CustomCxString,
 																	Mode=TwoWay,
 																	ValidatesOnExceptions=true,
-																	NotifyOnValidationError=true}" />
-					<Label Grid.Row="3"
+																	NotifyOnValidationError=true}" Grid.ColumnSpan="3" />
+					<Label Grid.Row="4"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Database:" />
 					<TextBox Name="databaseTextBox"
-									 Grid.Row="3"
+									 Grid.Row="4"
 									 Grid.Column="1"
+									 Grid.ColumnSpan="3"
 									 Height="23"
 									 MinWidth="200"
 									 Margin="3"
@@ -254,15 +276,16 @@
 																	Mode=TwoWay,
 																	ValidatesOnExceptions=true,
 																	NotifyOnValidationError=true}" />
-					<Label Grid.Row="4"
+					<Label Grid.Row="5"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Db Version:" />
 					<TextBox Name="dbVersionTextBox"
-									 Grid.Row="4"
+									 Grid.Row="5"
 									 Grid.Column="1"
+									 Grid.ColumnSpan="3"
 									 Height="23"
 									 MinWidth="200"
 									 Margin="3"
@@ -272,14 +295,14 @@
 																	Mode=TwoWay,
 																	ValidatesOnExceptions=true,
 																	NotifyOnValidationError=true}" />
-					<Label Grid.Row="5"
+					<Label Grid.Row="8"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Encrypt Custom Cx String:" />
 					<CheckBox Name="encryptCustomCxStringCheckBox"
-										Grid.Row="5"
+										Grid.Row="8"
 										Grid.Column="1"
 										Height="16"
 										Margin="3"
@@ -290,15 +313,15 @@
 																				Mode=TwoWay,
 																				ValidatesOnExceptions=true,
 																				NotifyOnValidationError=true}" />
-					<Label Grid.Row="6"
-								 Grid.Column="0"
+					<Label Grid.Row="8"
+								 Grid.Column="2"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Encrypt Traffic:" />
 					<CheckBox Name="encryptTrafficCheckBox"
-										Grid.Row="6"
-										Grid.Column="1"
+										Grid.Row="8"
+										Grid.Column="3"
 										Height="16"
 										Margin="3"
 										HorizontalAlignment="Left"
@@ -308,46 +331,14 @@
 																				Mode=TwoWay,
 																				ValidatesOnExceptions=true,
 																				NotifyOnValidationError=true}" />
-					<Label Grid.Row="7"
-								 Grid.Column="0"
-								 Margin="3"
-								 HorizontalAlignment="Left"
-								 VerticalAlignment="Center"
-								 Content="Is Sql CE:" />
-					<CheckBox Name="isSqlCECheckBox"
-										Grid.Row="7"
-										Grid.Column="1"
-										Height="16"
-										Margin="3"
-										HorizontalAlignment="Left"
-										VerticalAlignment="Center"
-										Content=""
-										IsChecked="{Binding Path=DatabaseInfo.IsSqlCE,
-																				Mode=OneWay}" />
-					<Label Grid.Row="8"
-								 Grid.Column="0"
-								 Margin="3"
-								 HorizontalAlignment="Left"
-								 VerticalAlignment="Center"
-								 Content="Is Sql Server:" />
-					<CheckBox Name="isSqlServerCheckBox"
-										Grid.Row="8"
-										Grid.Column="1"
-										Height="16"
-										Margin="3"
-										HorizontalAlignment="Left"
-										VerticalAlignment="Center"
-										Content=""
-										IsChecked="{Binding Path=DatabaseInfo.IsSqlServer,
-																				Mode=OneWay}" />
-					<Label Grid.Row="9"
+					<Label Grid.Row="13"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Max Database Size:" />
 					<TextBox Name="maxDatabaseSizeTextBox"
-									 Grid.Row="9"
+									 Grid.Row="13"
 									 Grid.Column="1"
 									 Height="23"
 									 MinWidth="200"
@@ -357,15 +348,15 @@
 									 Text="{Binding Path=DatabaseInfo.MaxDatabaseSize,
 																	Mode=TwoWay,
 																	ValidatesOnExceptions=true,
-																	NotifyOnValidationError=true}" />
-					<Label Grid.Row="10"
+																	NotifyOnValidationError=true}" Grid.ColumnSpan="3" />
+					<Label Grid.Row="18"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Password:" />
 					<TextBox Name="passwordTextBox"
-									 Grid.Row="10"
+									 Grid.Row="18"
 									 Grid.Column="1"
 									 Height="23"
 									 MinWidth="200"
@@ -375,16 +366,13 @@
 									 Text="{Binding Path=DatabaseInfo.Password,
 																	Mode=TwoWay,
 																	ValidatesOnExceptions=true,
-																	NotifyOnValidationError=true}" />
-					<Label Grid.Row="11"
-								 Grid.Column="0"
+																	NotifyOnValidationError=true}" Grid.ColumnSpan="3" />
+					<Label Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Provider:" />
-					<ComboBox Name="providerComboBox"
-										Grid.Row="11"
-										Grid.Column="1"
+					<ComboBox Name="providerComboBox" Grid.Column="1"
 										MinWidth="150"
 										MinHeight="23"
 										Margin="3"
@@ -395,17 +383,24 @@
 										ItemsSource="{Binding Path=DbProviderFactoryNames,
 																					RelativeSource={RelativeSource Mode=FindAncestor,
 																																				 AncestorType={x:Type Window}}}"
-										SelectedItem="{Binding Path=CxInfo.DatabaseInfo.Provider,
+										SelectedItem="{Binding Path=Provider,
 																					 RelativeSource={RelativeSource Mode=FindAncestor,
-																																					AncestorType={x:Type Window}}}" />
-					<Label Grid.Row="12"
+																																					AncestorType={x:Type Window}}}" Grid.ColumnSpan="3" />
+					<StackPanel Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="4" Orientation="Horizontal" Margin="3,0,0,0">
+					<Button Content="Set connection string" VerticalAlignment="Center" HorizontalAlignment="Left" 
+									IsEnabled="{Binding Path=DatabaseInfo.Server, Converter={StaticResource cnvNullToBool}}" Name="SetConnectionString" Click="SetConnectionString_Click" Margin="5,0,0,5" Padding="5,1"></Button>
+					<Button Grid.Row="1" Grid.Column="1" Content="Fill from connection string" VerticalAlignment="Center" HorizontalAlignment="Left" 
+									IsEnabled="{Binding Path=DatabaseInfo.CustomCxString, Converter={StaticResource cnvNullToBool}}" Name="GetConnectionString" Click="GetConnectionString_Click" Margin="5,0,0,5" Padding="5,1"></Button>
+					</StackPanel>
+
+					<Label Grid.Row="3"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Server:" />
 					<TextBox Name="serverTextBox"
-									 Grid.Row="12"
+									 Grid.Row="3"
 									 Grid.Column="1"
 									 Height="23"
 									 MinWidth="200"
@@ -415,15 +410,15 @@
 									 Text="{Binding Path=DatabaseInfo.Server,
 																	Mode=TwoWay,
 																	ValidatesOnExceptions=true,
-																	NotifyOnValidationError=true}" />
-					<Label Grid.Row="13"
+																	NotifyOnValidationError=true}" Grid.ColumnSpan="3" />
+					<Label Grid.Row="15"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="Sql Security:" />
 					<CheckBox Name="sqlSecurityCheckBox"
-										Grid.Row="13"
+										Grid.Row="15"
 										Grid.Column="1"
 										Height="16"
 										Margin="3"
@@ -434,15 +429,15 @@
 																				Mode=TwoWay,
 																				ValidatesOnExceptions=true,
 																				NotifyOnValidationError=true}" />
-					<Label Grid.Row="14"
-								 Grid.Column="0"
+					<Label Grid.Row="15"
+								 Grid.Column="2"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="User Instance:" />
 					<CheckBox Name="userInstanceCheckBox"
-										Grid.Row="14"
-										Grid.Column="1"
+										Grid.Row="15"
+										Grid.Column="3"
 										Height="16"
 										Margin="3"
 										HorizontalAlignment="Left"
@@ -452,14 +447,14 @@
 																				Mode=TwoWay,
 																				ValidatesOnExceptions=true,
 																				NotifyOnValidationError=true}" />
-					<Label Grid.Row="15"
+					<Label Grid.Row="17"
 								 Grid.Column="0"
 								 Margin="3"
 								 HorizontalAlignment="Left"
 								 VerticalAlignment="Center"
 								 Content="User Name:" />
 					<TextBox Name="userNameTextBox"
-									 Grid.Row="15"
+									 Grid.Row="17"
 									 Grid.Column="1"
 									 Height="23"
 									 MinWidth="200"
@@ -469,7 +464,7 @@
 									 Text="{Binding Path=DatabaseInfo.UserName,
 																	Mode=TwoWay,
 																	ValidatesOnExceptions=true,
-																	NotifyOnValidationError=true}" />
+																	NotifyOnValidationError=true}" Grid.ColumnSpan="3" />
 				</Grid>
 			</TabItem>
 			<TabItem Name="DriverTab"
@@ -478,13 +473,11 @@
 							 ToolTip="Settings global to all connections">
 				<TabItem.Resources>
 					<Style TargetType="TextBox">
-						<Setter Property="MinWidth" Value="50"  />
+						<Setter Property="MinWidth" Value="50" />
 					</Style>
 				</TabItem.Resources>
-					<StackPanel>
-					<Grid Name="grid1"
-								HorizontalAlignment="Left"
-								VerticalAlignment="Top">
+				<StackPanel>
+					<Grid HorizontalAlignment="Left" Name="grid13" VerticalAlignment="Top">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="Auto" />
@@ -492,48 +485,31 @@
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
-						<Label Grid.Row="0"
-									 Grid.Column="0"
-									 Margin="3"
-									 HorizontalAlignment="Left"
-									 VerticalAlignment="Center"
-									 Content="Default Adapter Assembly:" />
-						<TextBox Name="defaultAdapterAssemblyTextBox"
-										 Grid.Row="0"
-										 Grid.Column="1"
-										 Height="23"
-										 Margin="3"
-										 HorizontalAlignment="Left"
-										 VerticalAlignment="Center"
-										 Text="{Binding Path=DefaultAdapterAssembly,
-																		Mode=TwoWay,
-																		ValidatesOnExceptions=true,
-																		NotifyOnValidationError=true}" />
+						<Label Content="Default Provider:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Margin="3" VerticalAlignment="Center" />
+						<TextBox Grid.Column="1" Grid.Row="0" Height="23" HorizontalAlignment="Left" Margin="3" Name="defaultProviderTextBox" Text="{Binding Path=DefaultProvider, Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}" VerticalAlignment="Center" Width="120" />
 					</Grid>
-					<Grid Name="grid2"
+					<Grid Name="grid8"
 								HorizontalAlignment="Left"
 								VerticalAlignment="Top">
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="116" />
+							<ColumnDefinition Width="28" />
+							<ColumnDefinition Width="29" />
 							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
-						<Label Grid.Row="0"
-									 Grid.Column="0"
-									 Margin="3"
+						<Label Margin="3,3,0,3"
 									 HorizontalAlignment="Left"
 									 VerticalAlignment="Center"
-									 Content="Default Adapter Type:" />
-						<TextBox Name="defaultAdapterTypeTextBox"
-										 Grid.Row="0"
-										 Grid.Column="1"
+									 Content="Default Database Connection:" Grid.ColumnSpan="3" />
+						<TextBox Name="defaultDatabaseConnectionTextBox" Grid.Column="3"
 										 Height="23"
 										 Margin="3"
 										 HorizontalAlignment="Left"
 										 VerticalAlignment="Center"
-										 Text="{Binding Path=DefaultAdapterType,
+										 Text="{Binding Path=DefaultDatabaseConnection,
 																		Mode=TwoWay,
 																		ValidatesOnExceptions=true,
 																		NotifyOnValidationError=true}" />
@@ -590,118 +566,6 @@
 										 HorizontalAlignment="Left"
 										 VerticalAlignment="Center"
 										 Text="{Binding Path=DefaultConnectionType,
-																		Mode=TwoWay,
-																		ValidatesOnExceptions=true,
-																		NotifyOnValidationError=true}" />
-					</Grid>
-					<Grid Name="grid5"
-								HorizontalAlignment="Left"
-								VerticalAlignment="Top">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<Label Grid.Row="0"
-									 Grid.Column="0"
-									 Margin="3"
-									 HorizontalAlignment="Left"
-									 VerticalAlignment="Center"
-									 Content="Default Data Access Adapter Factory Assembly:" />
-						<TextBox Name="defaultDataAccessAdapterFactoryAssemblyTextBox"
-										 Grid.Row="0"
-										 Grid.Column="1"
-										 Height="23"
-										 Margin="3"
-										 HorizontalAlignment="Left"
-										 VerticalAlignment="Center"
-										 Text="{Binding Path=DefaultDataAccessAdapterFactoryAssembly,
-																		Mode=TwoWay,
-																		ValidatesOnExceptions=true,
-																		NotifyOnValidationError=true}" />
-					</Grid>
-					<Grid Name="grid6"
-								HorizontalAlignment="Left"
-								VerticalAlignment="Top">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<Label Grid.Row="0"
-									 Grid.Column="0"
-									 Margin="3"
-									 HorizontalAlignment="Left"
-									 VerticalAlignment="Center"
-									 Content="Default Data Access Adapter Factory Method:" />
-						<TextBox Name="defaultDataAccessAdapterFactoryMethodTextBox"
-										 Grid.Row="0"
-										 Grid.Column="1"
-										 Height="23"
-										 Margin="3"
-										 HorizontalAlignment="Left"
-										 VerticalAlignment="Center"
-										 Text="{Binding Path=DefaultDataAccessAdapterFactoryMethod,
-																		Mode=TwoWay,
-																		ValidatesOnExceptions=true,
-																		NotifyOnValidationError=true}" />
-					</Grid>
-					<Grid Name="grid7"
-								HorizontalAlignment="Left"
-								VerticalAlignment="Top">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<Label Grid.Row="0"
-									 Grid.Column="0"
-									 Margin="3"
-									 HorizontalAlignment="Left"
-									 VerticalAlignment="Center"
-									 Content="Default Data Access Adapter Factory Type:" />
-						<TextBox Name="defaultDataAccessAdapterFactoryTypeTextBox"
-										 Grid.Row="0"
-										 Grid.Column="1"
-										 Height="23"
-										 Margin="3"
-										 HorizontalAlignment="Left"
-										 VerticalAlignment="Center"
-										 Text="{Binding Path=DefaultDataAccessAdapterFactoryType,
-																		Mode=TwoWay,
-																		ValidatesOnExceptions=true,
-																		NotifyOnValidationError=true}" />
-					</Grid>
-					<Grid Name="grid8"
-								HorizontalAlignment="Left"
-								VerticalAlignment="Top">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="Auto" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<Label Grid.Row="0"
-									 Grid.Column="0"
-									 Margin="3"
-									 HorizontalAlignment="Left"
-									 VerticalAlignment="Center"
-									 Content="Default Database Connection:" />
-						<TextBox Name="defaultDatabaseConnectionTextBox"
-										 Grid.Row="0"
-										 Grid.Column="1"
-										 Height="23"
-										 Margin="3"
-										 HorizontalAlignment="Left"
-										 VerticalAlignment="Center"
-										 Text="{Binding Path=DefaultDatabaseConnection,
 																		Mode=TwoWay,
 																		ValidatesOnExceptions=true,
 																		NotifyOnValidationError=true}" />
@@ -790,6 +654,150 @@
 																		ValidatesOnExceptions=true,
 																		NotifyOnValidationError=true}" />
 					</Grid>
+					<Grid Name="grid1"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Grid.Row="0"
+									 Grid.Column="0"
+									 Margin="3"
+									 HorizontalAlignment="Left"
+									 VerticalAlignment="Center"
+									 Content="Default Adapter Assembly:" />
+						<TextBox Name="defaultAdapterAssemblyTextBox"
+										 Grid.Row="0"
+										 Grid.Column="1"
+										 Height="23"
+										 Margin="3"
+										 HorizontalAlignment="Left"
+										 VerticalAlignment="Center"
+										 Text="{Binding Path=DefaultAdapterAssembly,
+																		Mode=TwoWay,
+																		ValidatesOnExceptions=true,
+																		NotifyOnValidationError=true}" />
+					</Grid>
+					<Grid Name="grid2"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Grid.Row="0"
+									 Grid.Column="0"
+									 Margin="3"
+									 HorizontalAlignment="Left"
+									 VerticalAlignment="Center"
+									 Content="Default Adapter Type:" />
+						<TextBox Name="defaultAdapterTypeTextBox"
+										 Grid.Row="0"
+										 Grid.Column="1"
+										 Height="23"
+										 Margin="3"
+										 HorizontalAlignment="Left"
+										 VerticalAlignment="Center"
+										 Text="{Binding Path=DefaultAdapterType,
+																		Mode=TwoWay,
+																		ValidatesOnExceptions=true,
+																		NotifyOnValidationError=true}" />
+					</Grid>
+			
+				
+					<Grid Name="grid5"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Grid.Row="0"
+									 Grid.Column="0"
+									 Margin="3"
+									 HorizontalAlignment="Left"
+									 VerticalAlignment="Center"
+									 Content="Default Data Access Adapter Factory Assembly:" />
+						<TextBox Name="defaultDataAccessAdapterFactoryAssemblyTextBox"
+										 Grid.Row="0"
+										 Grid.Column="1"
+										 Height="23"
+										 Margin="3"
+										 HorizontalAlignment="Left"
+										 VerticalAlignment="Center"
+										 Text="{Binding Path=DefaultDataAccessAdapterFactoryAssembly,
+																		Mode=TwoWay,
+																		ValidatesOnExceptions=true,
+																		NotifyOnValidationError=true}" />
+					</Grid>
+					<Grid Name="grid6"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Grid.Row="0"
+									 Grid.Column="0"
+									 Margin="3"
+									 HorizontalAlignment="Left"
+									 VerticalAlignment="Center"
+									 Content="Default Data Access Adapter Factory Method:" />
+						<TextBox Name="defaultDataAccessAdapterFactoryMethodTextBox"
+										 Grid.Row="0"
+										 Grid.Column="1"
+										 Height="23"
+										 Margin="3"
+										 HorizontalAlignment="Left"
+										 VerticalAlignment="Center"
+										 Text="{Binding Path=DefaultDataAccessAdapterFactoryMethod,
+																		Mode=TwoWay,
+																		ValidatesOnExceptions=true,
+																		NotifyOnValidationError=true}" />
+					</Grid>
+					<Grid Name="grid7"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Top">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+						</Grid.RowDefinitions>
+						<Label Grid.Row="0"
+									 Grid.Column="0"
+									 Margin="3"
+									 HorizontalAlignment="Left"
+									 VerticalAlignment="Center"
+									 Content="Default Data Access Adapter Factory Type:" />
+						<TextBox Name="defaultDataAccessAdapterFactoryTypeTextBox"
+										 Grid.Row="0"
+										 Grid.Column="1"
+										 Height="23"
+										 Margin="3"
+										 HorizontalAlignment="Left"
+										 VerticalAlignment="Center"
+										 Text="{Binding Path=DefaultDataAccessAdapterFactoryType,
+																		Mode=TwoWay,
+																		ValidatesOnExceptions=true,
+																		NotifyOnValidationError=true}" />
+					</Grid>
+
+
 					<StackPanel d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
 																											 Type=Static:ConnectionDialog}"
 											DataContext="{Binding RelativeSource={RelativeSource FindAncestor,
@@ -803,7 +811,8 @@
 																 d:DesignHeight="100"
 																 ItemsSource="{Binding Path=AdditionalAssemblies,
 																											 ValidatesOnExceptions=true,
-																											 NotifyOnValidationError=true}">
+																											 NotifyOnValidationError=true}"
+																 ToolTip="{x:Static Static:ConnectionDialog.AdditionalAssembliesToolTip}">
 							<WpfToolkit:DataGrid.Columns>
 								<WpfToolkit:DataGridTextColumn Binding="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}" Header="Additional Assemblies" />
 							</WpfToolkit:DataGrid.Columns>
@@ -812,6 +821,7 @@
 																 MinWidth="100"
 																 AutoGenerateColumns="False"
 																 d:DesignHeight="100"
+																 ToolTip="{x:Static Static:ConnectionDialog.AdditionalNamespacesToolTip}"
 																 ItemsSource="{Binding Path=AdditionalNamespaces,
 																											 ValidatesOnExceptions=true,
 																											 NotifyOnValidationError=true}">
@@ -820,10 +830,16 @@
 							</WpfToolkit:DataGrid.Columns>
 						</WpfToolkit:DataGrid>
 						<Button Name="buttonClear"
+										Margin="5,0,0,0"
+										VerticalAlignment="Center"
 										Click="buttonClear_Click"
-										Content="Clear" VerticalAlignment="Center" Margin="5,0,0,0"/>
-						<Button Content="Add Assemblies..." VerticalAlignment="Center" Margin="5,0,0,0" Click="ChooseAssemblies" />
+										Content="Clear" />
+						<Button Margin="5,0,0,0"
+										VerticalAlignment="Center"
+										Click="ChooseAssemblies"
+										Content="Add Assemblies..." />
 					</StackPanel>
+
 				</StackPanel>
 			</TabItem>
 
@@ -831,7 +847,7 @@
 		<DockPanel Margin="0,10,0,0" LastChildFill="False">
 			<Button Name="btnCancel"
 							MinWidth="60"
-							Margin="5,0,0,0"
+							Margin="5,0,5,5"
 							Click="btnCancel_Click"
 							Content="Cancel"
 							DockPanel.Dock="Right"
@@ -840,7 +856,7 @@
 							TabIndex="2" />
 			<Button Name="btnOK"
 							MinWidth="60"
-							Margin="5,0,0,0"
+							Margin="5,0,5,5"
 							Click="btnOK_Click"
 							Content="OK"
 							DockPanel.Dock="Right"
