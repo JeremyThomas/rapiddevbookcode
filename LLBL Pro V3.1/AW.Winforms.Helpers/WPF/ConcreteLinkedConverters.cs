@@ -26,6 +26,8 @@ namespace AW.Winforms.Helpers.WPF
 		/// </summary>
 		protected override object InstanceConvert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
+			if (value is string)
+				return !string.IsNullOrEmpty((string) value);
 			return value != null;
 		}
 
