@@ -59,6 +59,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E
 		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
 		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb
 		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml
+		Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.dll = Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.dll
+		Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.XML = Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.XML
 		Lib\LLBL\SD.LLBLGen.Pro.TypeConverters.dll = Lib\LLBL\SD.LLBLGen.Pro.TypeConverters.dll
 	EndProjectSection
 EndProject

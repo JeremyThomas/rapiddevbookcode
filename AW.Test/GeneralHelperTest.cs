@@ -160,51 +160,7 @@ namespace AW.Tests
 			var xmlSchema = TestData.GetTestXmlSchema();
 			CopyToDataTableAndAssert(xmlSchema.Items, xmlSchema.Items[0].GetType());
 		}
-
-		[TestMethod]
-		public void StringPropertiesTest()
-		{
-			var strings = new[] {"one", "two", "a string"};
-			var stringWrapperForBinding = ValueTypeWrapper<string>.CreateListWrapperForBinding(strings);
-			var stringWrapperProperties = ListBindingHelper.GetListItemProperties(stringWrapperForBinding);
-			Assert.AreEqual(1, stringWrapperProperties.Count);
-			Assert.AreEqual(typeof (string), stringWrapperProperties[0].PropertyType);
-			//stringWrapperForBinding.ShowInGrid(null);
-			//strings.ShowInGrid(null);
-
-			//TypeDescriptor.AddProvider(new StringTypeDescriptorProvider(typeof(string)), typeof(string));
-			//var stringProperties = ListBindingHelper.GetListItemProperties(strings);
-			//Assert.AreEqual(1, stringProperties.Count);
-			//Assert.AreEqual(typeof(string), stringProperties[0].PropertyType);
-			//strings.ShowInGrid(null);
-		}
-
-		/// <summary>
-		///A test for CreateStringWrapperForBinding
-		///</summary>
-		[TestMethod]
-		public void CreateStringWrapperForBindingNullTest()
-		{
-			StringCollection strings = null; // TODO: Initialize to an appropriate value
-			var expected = new List<ValueTypeWrapper<string>>();
-			var actual = strings.CreateStringWrapperForBinding();
-			Assert.IsNotNull(actual);
-		}
-
-		/// <summary>
-		///A test for CreateStringWrapperForBinding
-		///</summary>
-		[TestMethod]
-		public void CreateStringWrapperForBindingTest()
-		{
-			var strings = new StringCollection {"one", "two"};
-			var expected = new List<ValueTypeWrapper<string>> { new ValueTypeWrapper<string> { Value = strings[0] }, new ValueTypeWrapper<string> { Value = strings[1] } };
-			var actual = strings.CreateStringWrapperForBinding();
-			Assert.IsNotNull(actual);
-			Assert.IsInstanceOfType(actual, typeof(IEnumerable<ValueTypeWrapper<string>>));
-			Assert.AreEqual(strings.Count, actual.Count());
-			//CollectionAssert.AreEqual(expected, actual);
-		}
+	
 	}
 
 	public class StringPropertyDescriptor : PropertyDescriptor
@@ -212,7 +168,6 @@ namespace AW.Tests
 		public StringPropertyDescriptor(string name, Attribute[] attrs) : base(name, attrs)
 		{
 		}
-
 
 		public override TypeConverter Converter
 		{

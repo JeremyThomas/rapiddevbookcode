@@ -73,7 +73,7 @@ namespace AW.Winforms.Helpers.DataEditor
 			{
 				if (MetaDataHelper.TypeNeedsWrappingForBinding<T>())
 				{
-					 ValueTypeWrapper<T>.CreateListWrapperForBinding(enumerable).ShowInGrid(dataEditorPersister, pageSize);
+					 ValueTypeWrapper<T>.CreateWrapperForBinding(enumerable).ShowInGrid(dataEditorPersister, pageSize);
 					 return enumerable;
 				}
 				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditorT<T> {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, false).ShowDialog();

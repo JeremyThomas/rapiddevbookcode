@@ -14,11 +14,6 @@ namespace AW.Helper
 	{
 		public T Value { get; set; }
 
-		public static List<ValueTypeWrapper<T>> CreateListWrapperForBinding(IEnumerable<T> values)
-		{
-			return CreateWrapperForBinding(values).ToList();
-		}
-
 		public static IEnumerable<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
 		{
 			return values == null ? Enumerable.Empty<ValueTypeWrapper<T>>() : values.Select(data => new ValueTypeWrapper<T> { Value = data });
@@ -31,7 +26,7 @@ namespace AW.Helper
 
 		public static void Add(ICollection<ValueTypeWrapper<T>> wrappedValues, ValueTypeWrapper<T> wrappedValue)
 		{
-			if (wrappedValues.Contains(wrappedValue))
+			if (!wrappedValues.Contains(wrappedValue))
 				wrappedValues.Add(wrappedValue);
 		}
 
@@ -44,7 +39,7 @@ namespace AW.Helper
 		{
 			var newWrappedValues = CreateWrapperForBinding(values);
 			foreach (var wrappedValue in newWrappedValues)
-				wrappedValues.Add(wrappedValue);
+				Add(wrappedValues, wrappedValue);
 		}
 
 		/// <summary>
@@ -88,7 +83,9 @@ namespace AW.Helper
 		/// <filterpriority>2</filterpriority>
 		public override int GetHashCode()
 		{
-			return Value.GetHashCode();
+// ReSharper disable CompareNonConstrainedGenericWithNull
+			return Value == null ? 0: Value.GetHashCode();
+// ReSharper restore CompareNonConstrainedGenericWithNull
 		}
 
 		public static bool operator ==(ValueTypeWrapper<T> left, ValueTypeWrapper<T> right)
@@ -234,6 +231,17 @@ namespace AW.Helper
 		{
 			var ar = input.Select(i => i.ToString()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
 			return String.Join(seperator, ar);
+		}
+
+		/// <summary>
+		/// 	Joins an array of non empty strings together as one string with a separator between each non empty original string.
+		/// </summary>
+		/// <param name = "separator">The separator.</param>
+		/// <param name = "values">The values.</param>
+		/// <returns></returns>
+		public static string Join(String separator, params String[] values)
+		{
+			return String.Join(separator, values.Where(s => !string.IsNullOrEmpty(s)).ToArray());
 		}
 
 		public static IEnumerable<T> SkipTake<T>(this IEnumerable<T> superset, int pageIndex, int pageSize)
