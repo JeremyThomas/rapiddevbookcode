@@ -56,7 +56,7 @@ namespace AW.Tests
 		///</summary>
 		public void CreateWrapperForBindingTestHelper<T>(IEnumerable<T> values)
 		{
-			var actual = ValueTypeWrapper<T>.CreateWrapperForBinding(values);
+			var actual = ValueTypeWrapper<T>.CreateListWrapperForBinding(values);
 			Assert.IsNotNull(actual);
 			Assert.IsInstanceOfType(actual, typeof (List<ValueTypeWrapper<string>>));
 			var expectedCount = values.IsNullOrEmpty() ? 0 : values.Count();

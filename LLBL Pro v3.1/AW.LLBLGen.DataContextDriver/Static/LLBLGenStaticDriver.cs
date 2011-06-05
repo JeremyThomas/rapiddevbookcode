@@ -81,6 +81,183 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return true;
 		}
 
+		#region SQLTranslationWriter
+
+		private void SetSQLTranslationWriter(Type typeBeingTraced, QueryExecutionManager executionManager)
+		{
+			SetSQLTranslationWriter(typeBeingTraced, null, executionManager);
+		}
+
+		private void SetSQLTranslationWriter(DataAccessAdapterBase adapter, QueryExecutionManager executionManager)
+		{
+			SetSQLTranslationWriter(adapter.GetType(), adapter, executionManager);
+		}
+
+		private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
+		{
+			var eventInfo = typeBeingTraced.GetEvent("SQLTraceEvent");
+			if (eventInfo != null && eventInfo.EventHandlerType != null)
+				try
+				{
+					//EventHandler<SQLTraceEventArgs> handler = (sender, e) => WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
+					//Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Method);
+
+					var handlerSQLTraceEvent = GetType().GetMethod("SQLTraceEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
+
+					_executionManager = executionManager;
+					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
+					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] { typedDelegate });
+				}
+				catch (Exception e)
+				{
+					GeneralHelper.TraceOut(e.Message);
+				}
+		}
+
+		private QueryExecutionManager _executionManager;
+
+		private void SQLTraceEventHandler(object sender, EventArgs e)
+		{
+			if (_executionManager != null)
+				WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
+		}
+
+		private static void WriteSQLTranslation(TextWriter sqlTranslationWriter, EventArgs e)
+		{
+			if (sqlTranslationWriter != null && e != null)
+			{
+				if (e is SQLTraceEventArgs)
+				{
+					var sqlTraceEventArgs = (SQLTraceEventArgs)e;
+					if (!string.IsNullOrEmpty(sqlTraceEventArgs.SQLTrace))
+					{
+						sqlTranslationWriter.WriteLine(sqlTraceEventArgs.SQLTrace);
+						return;
+					}
+					if (sqlTraceEventArgs.Query != null)
+					{
+						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(sqlTraceEventArgs.Query));
+						return;
+					}
+				}
+				else if (e is QueryTraceEventArgs)
+				{
+					var queryTraceEventArgs = (QueryTraceEventArgs)e;
+					if (queryTraceEventArgs.Query != null)
+					{
+						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(queryTraceEventArgs.Query));
+						return;
+					}
+				}
+				else
+				{
+					var sqlTracePi = e.GetType().GetProperty("SQLTrace");
+					if (sqlTracePi != null)
+					{
+						var sqlTrace = sqlTracePi.GetValue(e, null) as string;
+						if (!string.IsNullOrEmpty(sqlTrace))
+						{
+							sqlTranslationWriter.WriteLine(sqlTrace);
+							return;
+						}
+					}
+					var queryPi = e.GetType().GetProperty("Query");
+					if (queryPi != null)
+					{
+						var query = queryPi.GetValue(e, null) as IQuery;
+						if (query != null)
+							sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(query));
+					}
+				}
+			}
+		}
+
+		#endregion
+
+		//public override bool AreRepositoriesEquivalent(IConnectionInfo c1, IConnectionInfo c2)
+		//{
+		//  return base.AreRepositoriesEquivalent(c1, c2);
+		//}
+
+		public override IEnumerable<string> GetAssembliesToAdd()
+		{
+			var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable();
+			return globalAdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(globalAdditionalAssemblies);
+		}
+
+		public override IEnumerable<string> GetNamespacesToAdd()
+		{
+			var globalAdditionalNamespaces = Settings.Default.AdditionalNamespaces.AsEnumerable();
+			return globalAdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(globalAdditionalNamespaces);
+		}
+
+		public override IEnumerable<string> GetNamespacesToRemove()
+		{
+			return new[] { "System.Data.Linq" };
+		}
+
+		/// <summary>
+		/// 	Gets the custom display member provider.
+		/// </summary>
+		/// <param name = "objectToWrite">The object to write.</param>
+		/// <returns></returns>
+		public override ICustomMemberProvider GetCustomDisplayMemberProvider(object objectToWrite)
+		{
+			return LLBLMemberProvider.CreateCustomDisplayMemberProviderIfNeeded(objectToWrite);
+		}
+
+		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
+		{
+			// Return the objects with which to populate the Schema Explorer by reflecting over customType.
+
+			// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
+			var topLevelProps =
+				(
+					from prop in customType.GetProperties()
+					where prop.PropertyType != typeof(string)
+					// Display all properties of type IEnumerable<T> (except for string!)
+					let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
+					where ienumerableOfT != null
+					orderby prop.Name
+					select new ExplorerItem(prop.Name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
+					{
+						IsEnumerable = true,
+						ToolTipText = FormatTypeName(prop.PropertyType, false),
+						DragText = prop.Name,
+						// Store the entity type to the Tag property. We'll use it later.
+						Tag = ienumerableOfT.GetGenericArguments()[0]
+					}
+				).ToList();
+
+			// Create a lookup keying each element type to the properties of that type. This will allow
+			// us to build hyperlink targets allowing the user to click between associations:
+			var elementTypeLookup = topLevelProps.ToLookup(tp => (Type)tp.Tag);
+
+			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
+			if (usefieldsElement != null && usefieldsElement.Value == true.ToString())
+
+				// Populate the columns (properties) of each entity:
+				foreach (var table in topLevelProps)
+					table.Children = CreateFieldExplorerItems(GetFieldsToShowInSchema((Type)table.Tag), elementTypeLookup);
+
+			else
+				// Populate the columns (properties) of each entity:
+				foreach (var table in topLevelProps)
+					table.Children = CreateFieldExplorerItems(GetPropertiesToShowInSchema((Type)table.Tag), elementTypeLookup);
+
+			return topLevelProps;
+		}
+
+		private static List<ExplorerItem> CreateFieldExplorerItems(IEnumerable<PropertyDescriptor> fieldsToShowInSchema, ILookup<Type, ExplorerItem> elementTypeLookup)
+		{
+			if (fieldsToShowInSchema != null)
+				return fieldsToShowInSchema
+					.Select(childProp => GetChildItem(elementTypeLookup, childProp))
+					.OrderBy(childItem => childItem.Kind)
+					.ToList();
+			return null;
+		}
+
 		public override void InitializeContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
 		{
 			try
@@ -102,6 +279,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				GeneralHelper.TraceOut(e.Message);
 			}
 		}
+
+		#endregion
 
 		private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)
 		{
@@ -246,180 +425,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				ThrowInnerException(invocationException.InnerException);
 			throw invocationException;
 		}
-
-		#region SQLTranslationWriter
-
-		private void SetSQLTranslationWriter(Type typeBeingTraced, QueryExecutionManager executionManager)
-		{
-			SetSQLTranslationWriter(typeBeingTraced, null, executionManager);
-		}
-
-		private void SetSQLTranslationWriter(DataAccessAdapterBase adapter, QueryExecutionManager executionManager)
-		{
-			SetSQLTranslationWriter(adapter.GetType(), adapter, executionManager);
-		}
-
-		private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
-		{
-			var eventInfo = typeBeingTraced.GetEvent("SQLTraceEvent");
-			if (eventInfo != null && eventInfo.EventHandlerType != null)
-				try
-				{
-					//EventHandler<SQLTraceEventArgs> handler = (sender, e) => WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
-					//Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Method);
-
-					var handlerSQLTraceEvent = GetType().GetMethod("SQLTraceEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
-
-					_executionManager = executionManager;
-					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
-					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] { typedDelegate });
-				}
-				catch (Exception e)
-				{
-					GeneralHelper.TraceOut(e.Message);
-				}
-		}
-
-		private QueryExecutionManager _executionManager;
-
-		private void SQLTraceEventHandler(object sender, EventArgs e)
-		{
-			if (_executionManager != null)
-				WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
-		}
-
-		private static void WriteSQLTranslation(TextWriter sqlTranslationWriter, EventArgs e)
-		{
-			if (sqlTranslationWriter != null && e != null)
-			{
-				if (e is SQLTraceEventArgs)
-				{
-					var sqlTraceEventArgs = (SQLTraceEventArgs)e;
-					if (!string.IsNullOrEmpty(sqlTraceEventArgs.SQLTrace))
-					{
-						sqlTranslationWriter.WriteLine(sqlTraceEventArgs.SQLTrace);
-						return;
-					}
-					if (sqlTraceEventArgs.Query != null)
-					{
-						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(sqlTraceEventArgs.Query));
-						return;
-					}
-				}
-				else if (e is QueryTraceEventArgs)
-				{
-					var queryTraceEventArgs = (QueryTraceEventArgs)e;
-					if (queryTraceEventArgs.Query != null)
-					{
-						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(queryTraceEventArgs.Query));
-						return;
-					}
-				}
-				else
-				{
-					var sqlTracePi = e.GetType().GetProperty("SQLTrace");
-					if (sqlTracePi != null)
-					{
-						var sqlTrace = sqlTracePi.GetValue(e, null) as string;
-						if (!string.IsNullOrEmpty(sqlTrace))
-						{
-							sqlTranslationWriter.WriteLine(sqlTrace);
-							return;
-						}
-					}
-					var queryPi = e.GetType().GetProperty("Query");
-					if (queryPi != null)
-					{
-						var query = queryPi.GetValue(e, null) as IQuery;
-						if (query != null)
-							sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(query));
-					}
-				}
-			}
-		}
-
-		#endregion
-
-		public override IEnumerable<string> GetAssembliesToAdd()
-		{
-			var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable();
-			return globalAdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(globalAdditionalAssemblies);
-		}
-
-		public override IEnumerable<string> GetNamespacesToAdd()
-		{
-			var globalAdditionalNamespaces = Settings.Default.AdditionalNamespaces.AsEnumerable();
-			return globalAdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(globalAdditionalNamespaces);
-		}
-
-		public override IEnumerable<string> GetNamespacesToRemove()
-		{
-			return new[] { "System.Data.Linq" };
-		}
-
-		/// <summary>
-		/// 	Gets the custom display member provider.
-		/// </summary>
-		/// <param name = "objectToWrite">The object to write.</param>
-		/// <returns></returns>
-		public override ICustomMemberProvider GetCustomDisplayMemberProvider(object objectToWrite)
-		{
-			return LLBLMemberProvider.CreateCustomDisplayMemberProviderIfNeeded(objectToWrite);
-		}
-
-		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
-		{
-			// Return the objects with which to populate the Schema Explorer by reflecting over customType.
-
-			// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
-			var topLevelProps =
-				(
-					from prop in customType.GetProperties()
-					where prop.PropertyType != typeof(string)
-					// Display all properties of type IEnumerable<T> (except for string!)
-					let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
-					where ienumerableOfT != null
-					orderby prop.Name
-					select new ExplorerItem(prop.Name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
-					{
-						IsEnumerable = true,
-						ToolTipText = FormatTypeName(prop.PropertyType, false),
-						DragText = prop.Name,
-						// Store the entity type to the Tag property. We'll use it later.
-						Tag = ienumerableOfT.GetGenericArguments()[0]
-					}
-				).ToList();
-
-			// Create a lookup keying each element type to the properties of that type. This will allow
-			// us to build hyperlink targets allowing the user to click between associations:
-			var elementTypeLookup = topLevelProps.ToLookup(tp => (Type)tp.Tag);
-
-			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
-			if (usefieldsElement != null && usefieldsElement.Value == true.ToString())
-
-				// Populate the columns (properties) of each entity:
-				foreach (var table in topLevelProps)
-					table.Children = CreateFieldExplorerItems(GetFieldsToShowInSchema((Type)table.Tag), elementTypeLookup);
-
-			else
-				// Populate the columns (properties) of each entity:
-				foreach (var table in topLevelProps)
-					table.Children = CreateFieldExplorerItems(GetPropertiesToShowInSchema((Type)table.Tag), elementTypeLookup);
-
-			return topLevelProps;
-		}
-
-		private static List<ExplorerItem> CreateFieldExplorerItems(IEnumerable<PropertyDescriptor> fieldsToShowInSchema, ILookup<Type, ExplorerItem> elementTypeLookup)
-		{
-			if (fieldsToShowInSchema != null)
-				return fieldsToShowInSchema
-					.Select(childProp => GetChildItem(elementTypeLookup, childProp))
-					.OrderBy(childItem => childItem.Kind)
-					.ToList();
-			return null;
-		}
-
-		#endregion
 
 		#region Schema helpers
 

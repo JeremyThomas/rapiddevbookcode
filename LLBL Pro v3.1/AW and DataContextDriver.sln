@@ -142,6 +142,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{8D111638-495
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.DataContextDriver.Tests", "AW.LLBLGen.DataContextDriver.Tests\AW.LLBLGen.DataContextDriver.Tests.csproj", "{C7514B66-375D-4EA3-B211-711DA2EB450A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{E041D28F-1794-4FD2-8CB5-034464537EAF}"
+	ProjectSection(SolutionItems) = preProject
+		packages\repositories.config = packages\repositories.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 21

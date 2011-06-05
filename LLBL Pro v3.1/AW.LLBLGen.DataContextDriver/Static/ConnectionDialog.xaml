@@ -130,6 +130,9 @@
 						<TextBox Text="{Binding CxInfo.DriverData.Element[FactoryType].Value}" />
 
 						<DockPanel>
+							<Label DockPanel.Dock="Right" Padding="1">
+								<Hyperlink Click="ChooseAdapterFactoryMethod">Choose...</Hyperlink>
+							</Label>
 							<Label Padding="0,0,0,1">Adapter factory method:</Label>
 						</DockPanel>
 						<TextBox Text="{Binding CxInfo.DriverData.Element[FactoryMethod].Value}" />
@@ -814,7 +817,11 @@
 																											 NotifyOnValidationError=true}"
 																 ToolTip="{x:Static Static:ConnectionDialog.AdditionalAssembliesToolTip}">
 							<WpfToolkit:DataGrid.Columns>
-								<WpfToolkit:DataGridTextColumn Binding="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}" Header="Additional Assemblies" />
+								<WpfToolkit:DataGridTextColumn Binding="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}">
+									<WpfToolkit:DataGridTextColumn.Header>
+										<Hyperlink Click="ChooseAssemblies">Additional Assemblies</Hyperlink>										
+									</WpfToolkit:DataGridTextColumn.Header>
+								</WpfToolkit:DataGridTextColumn>
 							</WpfToolkit:DataGrid.Columns>
 						</WpfToolkit:DataGrid>
 						<WpfToolkit:DataGrid Name="AdditionalNamespacesDataGrid"
@@ -829,15 +836,25 @@
 								<WpfToolkit:DataGridTextColumn Binding="{Binding Path=Value}" Header="Additional Namespaces" />
 							</WpfToolkit:DataGrid.Columns>
 						</WpfToolkit:DataGrid>
-						<Button Name="buttonClear"
+
+						<Button Name="buttonClearAdditional"
 										Margin="5,0,0,0"
 										VerticalAlignment="Center"
-										Click="buttonClear_Click"
-										Content="Clear" />
+										Click="buttonClearAdditionalClick"
+										Content="Clear additional" />
 						<Button Margin="5,0,0,0"
 										VerticalAlignment="Center"
 										Click="ChooseAssemblies"
-										Content="Add Assemblies..." />
+										Content="Add Assemblies..." ToolTip="Browse for Additional Assemblies" />
+						<Button Margin="5,0,0,0"
+										VerticalAlignment="Center"
+										Click="AddQuerySpec"
+										Content="Add QuerySpec assembly and namespaces" />
+						<Button Name="buttonClearDefaults"
+										Margin="5,0,0,0"
+										VerticalAlignment="Center"
+										Click="buttonClear_Click"
+										Content="Clear defaults" />
 					</StackPanel>
 
 				</StackPanel>
