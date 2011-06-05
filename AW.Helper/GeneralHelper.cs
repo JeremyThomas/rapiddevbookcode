@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace AW.Helper
 {
-	public class ValueTypeWrapper<T>
+	public class ValueTypeWrapper<T> : IEquatable<ValueTypeWrapper<T>>
 	{
 		public T Value { get; set; }
 
@@ -24,9 +24,81 @@ namespace AW.Helper
 			return values == null ? Enumerable.Empty<ValueTypeWrapper<T>>() : values.Select(data => new ValueTypeWrapper<T> { Value = data });
 		}
 
-		public static IEnumerable<T> UnWrap(IEnumerable<ValueTypeWrapper<T>> values)
+		public static IEnumerable<T> UnWrap(IEnumerable<ValueTypeWrapper<T>> wrappedValues)
 		{
-			return values.Select(sr => sr.Value);
+			return wrappedValues.Select(sr => sr.Value);
+		}
+
+		public static void Add(ICollection<ValueTypeWrapper<T>> wrappedValues, ValueTypeWrapper<T> wrappedValue)
+		{
+			if (wrappedValues.Contains(wrappedValue))
+				wrappedValues.Add(wrappedValue);
+		}
+
+		public static void Add(ICollection<ValueTypeWrapper<T>> wrappedValues, params T[] values)
+		{
+			AddRange(wrappedValues, values);
+		}
+
+		public static void AddRange(ICollection<ValueTypeWrapper<T>> wrappedValues, IEnumerable<T> values)
+		{
+			var newWrappedValues = CreateWrapperForBinding(values);
+			foreach (var wrappedValue in newWrappedValues)
+				wrappedValues.Add(wrappedValue);
+		}
+
+		/// <summary>
+		/// Indicates whether the current object is equal to another object of the same type.
+		/// </summary>
+		/// <returns>
+		/// true if the current object is equal to the <paramref name="other"/> parameter; otherwise, false.
+		/// </returns>
+		/// <param name="other">An object to compare with this object.
+		///                 </param>
+		public bool Equals(ValueTypeWrapper<T> other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return Equals(other.Value, Value);
+		}
+
+		/// <summary>
+		/// Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.
+		/// </summary>
+		/// <returns>
+		/// true if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, false.
+		/// </returns>
+		/// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>. 
+		///                 </param><exception cref="T:System.NullReferenceException">The <paramref name="obj"/> parameter is null.
+		///                 </exception><filterpriority>2</filterpriority>
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != typeof (ValueTypeWrapper<T>)) return false;
+			return Equals((ValueTypeWrapper<T>) obj);
+		}
+
+		/// <summary>
+		/// Serves as a hash function for a particular type. 
+		/// </summary>
+		/// <returns>
+		/// A hash code for the current <see cref="T:System.Object"/>.
+		/// </returns>
+		/// <filterpriority>2</filterpriority>
+		public override int GetHashCode()
+		{
+			return Value.GetHashCode();
+		}
+
+		public static bool operator ==(ValueTypeWrapper<T> left, ValueTypeWrapper<T> right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(ValueTypeWrapper<T> left, ValueTypeWrapper<T> right)
+		{
+			return !Equals(left, right);
 		}
 	}
 
