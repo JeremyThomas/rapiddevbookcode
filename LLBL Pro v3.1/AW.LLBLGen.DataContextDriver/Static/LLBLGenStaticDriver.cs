@@ -476,9 +476,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (explorerItem == null)
 				// Ordinary property:
 				return new ExplorerItem(childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")",
-																ExplorerItemKind.Property, ExplorerIcon.Column)
-				{
-					DragText = childProp.Name
+				                        ExplorerItemKind.Property, ExplorerIcon.Column)
+				       	{
+				       		DragText = childProp.Name,
+									ToolTipText = GeneralHelper.Join(childProp.DisplayName, childProp.Description),
 				};
 			return explorerItem;
 		}
@@ -489,7 +490,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 							? new ExplorerItem(childProp.Name, kind, icon)
 							{
 								HyperlinkTarget = elementTypeLookup[elementType].First(),
-								ToolTipText = FormatTypeName(elementType, true),
+								ToolTipText = GeneralHelper.Join(FormatTypeName(elementType, true), childProp.DisplayName, childProp.Description),
 								DragText = childProp.Name
 							}
 							: null;
