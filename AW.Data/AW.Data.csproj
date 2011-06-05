@@ -91,6 +91,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
     </Reference>
+    <Reference Include="SD.LLBLGen.Pro.QuerySpec">
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -307,6 +310,7 @@
     </Compile>
     <Compile Include="FactoryClasses\PredicateFactory.cs" />
     <Compile Include="FactoryClasses\PropertyDescriptorFactory.cs" />
+    <Compile Include="FactoryClasses\QueryFactory.cs" />
     <Compile Include="FactoryClasses\SortClauseFactory.cs" />
     <Compile Include="Filters\SalesOrderHeaderFilters.cs" />
     <Compile Include="HelperClasses\FieldInfoProvider.cs">

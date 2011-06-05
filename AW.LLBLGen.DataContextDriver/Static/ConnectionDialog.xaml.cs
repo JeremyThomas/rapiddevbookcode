@@ -23,6 +23,7 @@ using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Data.ConnectionUI;
 using Microsoft.Win32;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using Application = System.Windows.Forms.Application;
 
 namespace AW.LLBLGen.DataContextDriver.Static
 {
@@ -290,7 +291,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				DialogResult = true;
 			}
-			catch (Exception )
+			catch (Exception)
 			{
 				Close();
 			}
@@ -321,7 +322,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			CxInfo.CustomTypeInfo.CustomTypeName = customType;
 			var selfServicingEntities = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase");
-			LLBLConnectionType = selfServicingEntities.IsNullOrEmpty() ? LLBLConnectionType.Adapter : LLBLConnectionType.SelfServicing;
+			LLBLConnectionType = selfServicingEntities.IsNullOrEmpty() ? LLBLConnectionType == LLBLConnectionType.AdapterFactory ? LLBLConnectionType : LLBLConnectionType.Adapter : LLBLConnectionType.SelfServicing;
 			OnPropertyChanged("ConnectionTypeVisibility");
 		}
 
@@ -362,13 +363,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (Exception ex)
 			{
 				MessageBox.Show("Error obtaining custom types: " + ex.Message);
-				Debugger.Break();
+				BreakIntoDebugger();
 				return null;
 			}
 			if (customTypes.Length == 0)
 			{
 				MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData.");
-				Debugger.Break();
+				BreakIntoDebugger();
 				return customTypes;
 			}
 			return customTypes;
@@ -402,7 +403,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 						}
 						catch (Exception)
 						{
-							Debugger.Break();
+							BreakIntoDebugger();
 							return;
 						}
 					}
@@ -420,11 +421,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return types.Where(t => typeof (IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
 		}
 
-		private static string[] GetDataAccessAdapterTypeNamesBothWays(IEnumerable<Type> types)
+		private static IEnumerable<string> GetDataAccessAdapterTypeNamesBothWays(IEnumerable<Type> types)
 		{
-			var customTypes = GetDataAccessAdapterTypeNames(types).ToArray();
-			if (customTypes.Length == 0)
-				customTypes = GetDataAccessAdapterTypeNamesByName(types).ToArray();
+			var customTypes = GetDataAccessAdapterTypeNames(types);
+			if (!customTypes.Any())
+				customTypes = GetDataAccessAdapterTypeNamesByName(types);
 			return customTypes;
 		}
 
@@ -463,45 +464,88 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					return;
 				}
 
-				string[] customTypes;
+				IEnumerable<string> customTypes;
 				try
 				{
 					var dataAccessAdapterAssembly = Assembly.LoadFrom(assemPath);
 					var types = dataAccessAdapterAssembly.GetTypes();
-					customTypes = hl.TargetName == ElementNameAdaptertype ? GetDataAccessAdapterTypeNamesBothWays(types) : types.Select(t => t.FullName).ToArray();
+					customTypes = LLBLConnectionType == LLBLConnectionType.Adapter ? GetDataAccessAdapterTypeNamesBothWays(types) : types.Select(t => t.FullName).OrderBy(s => s);
 				}
 				catch (ReflectionTypeLoadException ex)
 				{
 					customTypes = GetDataAccessAdapterTypeNamesBothWays(ex.Types);
-					if (customTypes.Length == 0)
+					if (!customTypes.Any())
 					{
 						MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-						                ex.LoaderExceptions.Select(le => le.Message).JoinAsString(Environment.NewLine), "Error obtaining adapter types");
-						Debugger.Break();
+						                ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine), "Error obtaining adapter types");
+						BreakIntoDebugger();
 						return;
 					}
 				}
 				catch (Exception ex)
 				{
 					MessageBox.Show("Error obtaining adapter types: " + ex.Message);
-					Debugger.Break();
+					BreakIntoDebugger();
 					return;
 				}
-				if (customTypes.Length == 0)
+				if (!customTypes.Any())
 				{
 					MessageBox.Show("There are no public types in that assembly that implement IDataAccessAdapter.");
-					Debugger.Break();
+					BreakIntoDebugger();
 					return;
 				}
-				if (customTypes.Length == 1)
+				if (customTypes.Count() == 1)
 					CxInfo.DriverData.SetElementValue(hl.TargetName, customTypes.First());
 				else
 				{
-					var result = (string) Dialogs.PickFromList("Choose " + hl.TargetName, customTypes);
+					var result = (string) Dialogs.PickFromList("Choose " + hl.TargetName, customTypes.ToArray());
 					if (result != null)
 						CxInfo.DriverData.SetElementValue(hl.TargetName, result);
 				}
 			}
+		}
+
+		private void ChooseAdapterFactoryMethod(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				var factoryTypeName = GetDriverDataValue(CxInfo, ElementNameFactoryType);
+				var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
+				var factoryAdapterAssembly = Assembly.LoadFrom(factoryAssemblyPath);
+				if (factoryAdapterAssembly == null)
+					throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
+				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
+				if (factoryType == null)
+				{
+					factoryAdapterAssembly.GetTypes();
+					throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", factoryTypeName, factoryAssemblyPath));
+				}
+				var methodInfos = factoryType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+				var validMethods = from m in methodInfos
+				                   let ps = m.GetParameters()
+				                   where ps.Length == 1
+				                   where ps.Single().ParameterType == typeof (string) && typeof (IDataAccessAdapter).IsAssignableFrom(m.ReturnType)
+				                   select m;
+				var count = validMethods.Count();
+				if (count == 1)
+					CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, validMethods.Single().Name);
+				else
+				{
+					var result = (MethodInfo) Dialogs.PickFromList("Choose factory method", validMethods.ToArray());
+					if (result != null)
+						CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, result.Name);
+				}
+			}
+			catch (Exception ex)
+			{
+				Application.OnThreadException(ex);
+			}
+		}
+
+		[Conditional("DEBUG")]
+		private static void BreakIntoDebugger()
+		{
+			Debugger.Break();
 		}
 
 		private void ChooseAssemblies(object sender, RoutedEventArgs e)
@@ -521,6 +565,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					AdditionalAssemblies.Add(fileName);
 				}
+		}
+
+		private void AddQuerySpec(object sender, RoutedEventArgs e)
+		{
+			ValueTypeWrapper<string>.Add(AdditionalAssemblies, "SD.LLBLGen.Pro.QuerySpec.dll");
+			ValueTypeWrapper<string>.Add(AdditionalNamespaces, "SD.LLBLGen.Pro.QuerySpec", "SD.LLBLGen.Pro.QuerySpec.SelfServicing", "SD.LLBLGen.Pro.QuerySpec.Adapter");
 		}
 
 		private void DataBaseConnectionDialog(object sender, RoutedEventArgs e)
@@ -550,6 +600,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void buttonClear_Click(object sender, RoutedEventArgs e)
 		{
 			Settings.Default.Reset();
+		}
+
+		private void buttonClearAdditionalClick(object sender, RoutedEventArgs e)
+		{
 			AdditionalNamespaces.Clear();
 			AdditionalAssemblies.Clear();
 		}
@@ -580,12 +634,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void GetConnectionString_Click(object sender, RoutedEventArgs e)
 		{
-	   try
+			try
 			{
 				var dbProviderFactory = DbProviderFactories.GetFactory(CxInfo.DatabaseInfo.Provider);
 				var connectionStringBuilder = dbProviderFactory.CreateConnectionStringBuilder();
 				if (connectionStringBuilder == null)
-					connectionStringBuilder = new DbConnectionStringBuilder { ConnectionString = CxInfo.DatabaseInfo.CustomCxString };
+					connectionStringBuilder = new DbConnectionStringBuilder {ConnectionString = CxInfo.DatabaseInfo.CustomCxString};
 				else
 					connectionStringBuilder.ConnectionString = CxInfo.DatabaseInfo.CustomCxString;
 				if (connectionStringBuilder.ContainsKey("data source"))
@@ -601,7 +655,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			catch (Exception ex)
 			{
-				System.Windows.Forms.Application.OnThreadException(ex);
+				Application.OnThreadException(ex);
 			}
 		}
 	}
