@@ -71,7 +71,7 @@ namespace AW.Winforms.Helpers.DataEditor
 		{
 			if (enumerable != null)
 			{
-				if (MetaDataHelper.TypeNeedsWrappingForBinding<T>())
+				if (ValueTypeWrapper<T>.TypeNeedsWrappingForBinding())
 				{
 					 ValueTypeWrapper<T>.CreateWrapperForBinding(enumerable).ShowInGrid(dataEditorPersister, pageSize);
 					 return enumerable;

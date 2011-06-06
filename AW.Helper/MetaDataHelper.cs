@@ -155,26 +155,6 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// True if the type the needs wrapping for databinding.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		public static bool TypeNeedsWrappingForBinding<T>()
-		{
-			return TypeNeedsWrappingForBinding(typeof(T));
-		}
-
-		/// <summary>
-		/// True if the type the needs wrapping for databinding.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <returns></returns>
-		public static bool TypeNeedsWrappingForBinding(Type type)
-		{
-			return Type.GetTypeCode(type) != TypeCode.Object;
-		}
-
-		/// <summary>
 		/// Returns the data type of the items in the specified list.
 		/// </summary>
 		/// <param name="enumerable">The enumerable to be examined for type information.</param>
@@ -335,6 +315,24 @@ namespace AW.Helper
 		}
 
 		/// <summary>
+		/// Gets the attributes from a collection of properties for a particular property name.
+		/// </summary>
+		/// <param name="properties">The properties.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		/// <returns>The validation attributes.</returns>
+		public static IEnumerable<T> GetAttributes<T>(IEnumerable<PropertyDescriptor> properties, string fieldName) where T : Attribute
+		{
+			if (!string.IsNullOrEmpty(fieldName))
+				properties = properties.Where(p => p.Name == fieldName);
+			return properties.SelectMany(prop => prop.Attributes.OfType<T>());
+		}
+
+		public static IEnumerable<T> GetAttributes<T>(Type type, string fieldName) where T : Attribute
+		{
+			return GetAttributes<T>(GetPropertyDescriptors(type), fieldName);
+		}
+
+		/// <summary>
 		/// Gets the validation attributes from a collection of properties for a particular property name.
 		/// </summary>
 		/// <param name="properties">The properties.</param>
@@ -356,5 +354,9 @@ namespace AW.Helper
 			return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);
 		}
 
+		public static IEnumerable<DisplayNameAttribute> GetDisplayNameAttributes(Type type, string fieldName)
+		{
+			return GetAttributes<DisplayNameAttribute>(type, fieldName);
+		}
 	}
 }

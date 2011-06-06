@@ -484,7 +484,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return explorerItem;
 		}
 
-		private static ExplorerItem CreateEntityExplorerItem(PropertyDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
+		private static ExplorerItem CreateEntityExplorerItem(MemberDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
 		{
 			return elementTypeLookup.Contains(elementType)
 							? new ExplorerItem(childProp.Name, kind, icon)

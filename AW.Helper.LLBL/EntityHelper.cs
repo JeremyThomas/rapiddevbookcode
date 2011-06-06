@@ -683,5 +683,12 @@ namespace AW.Helper.LLBL
 			       where typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
 			       select propertyDescriptor;
 		}
+
+		public static IEntityFields2 GetFieldsFromType(Type type)
+		{
+			var ef = CreateEntity(type) as IEntity2;
+			//			return ef.Create().Fields;
+			return ef.Fields;
+		}
 	}
 }
