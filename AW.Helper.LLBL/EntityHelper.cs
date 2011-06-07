@@ -160,22 +160,22 @@ namespace AW.Helper.LLBL
 			return entity == null ? 0 : entity.LLBLGenProEntityTypeValue;
 		}
 
-		public static Type GetEntityTypeFromEntityTypeValue(IEntityFactoryCore entityFactoryCore, int entityTypeValue)
-		{
-			var entityFactory = entityFactoryCore as EntityFactoryCore;
-			if (entityFactory != null)
-			{
-				var entity = entityFactory.CreateEntityFromEntityTypeValue(entityTypeValue);
-				return entity == null ? null : entity.GetType();
-			}
-			var entityFactory2 = entityFactoryCore as EntityFactoryCore2;
-			if (entityFactory2 != null)
-			{
-				var entity = entityFactory2.CreateEntityFromEntityTypeValue(entityTypeValue);
-				return entity == null ? null : entity.GetType();
-			}
-			return null;
-		}
+		//public static Type GetEntityTypeFromEntityTypeValue(IEntityFactoryCore entityFactoryCore, int entityTypeValue)
+		//{
+		//  var entityFactory = entityFactoryCore as EntityFactoryCore;
+		//  if (entityFactory != null)
+		//  {
+		//    var entity = entityFactory.CreateEntityFromEntityTypeValue(entityTypeValue);
+		//    return entity == null ? null : entity.GetType();
+		//  }
+		//  var entityFactory2 = entityFactoryCore as EntityFactoryCore2;
+		//  if (entityFactory2 != null)
+		//  {
+		//    var entity = entityFactory2.CreateEntityFromEntityTypeValue(entityTypeValue);
+		//    return entity == null ? null : entity.GetType();
+		//  }
+		//  return null;
+		//}
 
 		public static int GetEntityTypeValueForType<T>() where T : class, IEntityCore
 		{

@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Tests
 {
@@ -156,6 +158,66 @@ namespace AW.Tests
 			var queryable = from c in GetNorthwindLinqMetaData().Customer
 			                select new CustomerVM(c.Address, c.City, null, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region);
 			queryable.ToList();
+		}
+
+		/// <summary>
+		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
+		/// </summary>
+		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+		public void CustomerLeftJoinCustomerDemographic()
+		{
+			var queryable = from c in GetNorthwindLinqMetaData().Customer
+			                from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+			                select new {c.ContactName, ccd.CustomerId, ccd.CustomerDemographic.CustomerDesc};
+			var result = queryable.ToList();
+			Assert.AreEqual(1, result.Count);
+		}
+
+		/// <summary>
+		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
+		/// </summary>
+		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+		public void CustomerExpicitLeftJoinCustomerDemographic()
+		{
+			var queryable = from c in GetNorthwindLinqMetaData().Customer
+			                from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+			                join cd in GetNorthwindLinqMetaData().CustomerDemographic on ccd.CustomerTypeId equals cd.CustomerTypeId into customerDemographics
+			                from cd in customerDemographics.DefaultIfEmpty()
+			                select new {c.ContactName, ccd.CustomerId, cd.CustomerDesc};
+			var result = queryable.ToList();
+			Assert.AreEqual(91, result.Count);
+		}
+
+		/// <summary>
+		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
+		/// </summary>
+		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+		public void CustomerLeftJoinCustomerDemographicViaMany()
+		{
+			var queryable = from c in GetNorthwindLinqMetaData().Customer
+			                from cd in c.CustomerDemographics.DefaultIfEmpty()
+			                select new {c.ContactName, c.CustomerId, cd.CustomerDesc};
+			var result = queryable.ToList();
+			Assert.AreEqual(1, result.Count);
+		}
+
+		/// <summary>
+		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
+		/// </summary>
+		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+		public void CustomerLeftJoinCustomerDemographicLinqToObject()
+		{
+			var cus = GetNorthwindLinqMetaData().Customer.WithPath(cp => cp.Prefetch<CustomerCustomerDemoEntity>(c => c.CustomerCustomerDemos).SubPath(p => p.Prefetch(c => c.CustomerDemographic))).ToList();
+			var cusproj = from c in cus
+			              from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+			              select
+			              	new
+			              		{
+			              			c.ContactName,
+			              			CustomerId = ccd == null ? null : ccd.CustomerId,
+			              			CustomerDesc = ccd == null ? null : ccd.CustomerDemographic.CustomerDesc
+			              		};
+			Assert.AreEqual(91, cusproj.Count());
 		}
 	}
 }

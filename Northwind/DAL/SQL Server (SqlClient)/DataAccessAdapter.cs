@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 3.1
-// Code is generated on: Monday, 7 March 2011 9:22:10 p.m.
+// Code is generated on: Tuesday, 7 June 2011 3:12:01 p.m.
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -13,7 +13,6 @@ using System.Data;
 using System.Data.Common;
 using System.Configuration;
 using System.EnterpriseServices;
-using AW.Helper.LLBL;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.DQE.SqlServer;
 
@@ -22,6 +21,7 @@ namespace Northwind.DAL.SqlServer
 {
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+	using AW.Helper.LLBL;
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Data access adapter class, which controls the complete database interaction with the database for all objects.</summary>
 	/// <remarks>Use a DataAccessAdapter object solely per thread, and per connection. A DataAccessAdapter object contains 1 active connection 
@@ -155,7 +155,7 @@ namespace Northwind.DAL.SqlServer
 		}
 
 		#region Custom DataAccessAdapter code.
-
+		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomDataAccessAdapterCode
 
 		/// <summary>
