@@ -89,12 +89,17 @@ namespace AW.Helper
 		public static TEnum[] EnumAsEnumerable<TEnum>(params TEnum[] enumsToExclude)
 		{
 			var enumType = typeof(TEnum);
+			CheckIsEnum(enumType);
+			var enumAsEnumerable = (TEnum[])Enum.GetValues(enumType);
+			return enumsToExclude.IsNullOrEmpty() ? enumAsEnumerable : enumAsEnumerable.Where(et => !enumsToExclude.Contains(et)).ToArray();
+		}
+
+		public static void CheckIsEnum(Type enumType)
+		{
 			if (enumType == typeof(Enum))
 				throw new ArgumentException("typeof(TEnum) == System.Enum", "TEnum");
 			if (!(enumType.IsEnum))
 				throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "TEnum");
-			var enumAsEnumerable = (TEnum[])Enum.GetValues(enumType);
-			return enumsToExclude.IsNullOrEmpty() ? enumAsEnumerable : enumAsEnumerable.Where(et => !enumsToExclude.Contains(et)).ToArray();
 		}
 
 		public static string JoinAsString<T>(this IEnumerable<T> input)

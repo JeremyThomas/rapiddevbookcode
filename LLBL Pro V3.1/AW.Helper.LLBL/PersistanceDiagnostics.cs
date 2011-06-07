@@ -15,7 +15,6 @@ namespace AW.Helper.LLBL
 	/// </summary>
 	public static class PersistanceDiagnostics
 	{
-
 		/// <summary>
 		/// Checks entities can be fetched.
 		/// </summary>
@@ -23,7 +22,7 @@ namespace AW.Helper.LLBL
 		/// <param name="maxNumberOfItemsToReturn">The max number of items to return. If 0, all entities are returned.</param>
 		/// <param name="entityTypes">The entity types.</param>
 		/// <returns></returns>
-		public static StringBuilder CheckEntitiesCanBeFetched(EntityFactoryCore2 entityFactoryCore, IDataAccessAdapter adapter, int maxNumberOfItemsToReturn, params int[] entityTypes)
+		public static StringBuilder CheckEntitiesCanBeFetched<TEnum>(Func<TEnum, IEntityFactory2> entityFactoryFactory, IDataAccessAdapter adapter, int maxNumberOfItemsToReturn, params TEnum[] entityTypes)
 		{
 			var errors = new StringBuilder();
 			if (adapter == null)
@@ -31,11 +30,14 @@ namespace AW.Helper.LLBL
 			else
 			{
 				if (entityTypes.IsNullOrEmpty())
-					entityTypes = GeneralHelper.EnumAsEnumerable<int>();
+					entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
+				else
+					GeneralHelper.CheckIsEnum(typeof (TEnum));
 				var inheritanceErrors = new StringBuilder();
 				foreach (var entityType in entityTypes)
 				{
-					var entity = EntityHelper.GetEntityTypeFromEntityTypeValue(entityFactoryCore, entityType);
+					var entityFactoryCore = entityFactoryFactory(entityType);
+					var entity = entityFactoryCore.Create();
 					var entityCollection = entityFactoryCore.CreateEntityCollection();
 					try
 					{
@@ -43,20 +45,17 @@ namespace AW.Helper.LLBL
 					}
 					catch (ORMQueryExecutionException e)
 					{
-						
 						errors.AppendLine(entity.ToString());
 						errors.AppendLine(e.Message);
 						errors.AppendLine(e.QueryExecuted);
 					}
 					catch (ORMInheritanceInfoException e)
 					{
-						
 						inheritanceErrors.AppendLine(entity.ToString());
 						inheritanceErrors.AppendLine(e.Message);
 					}
 					catch (Exception e)
 					{
-						
 						errors.AppendLine(entity.ToString());
 						errors.AppendLine(e.Message);
 					}
@@ -80,14 +79,16 @@ namespace AW.Helper.LLBL
 		/// <param name="maxNumberOfItemsToReturn">The max number of items to return.</param>
 		/// <param name="entityTypes">The entity types.</param>
 		/// <returns></returns>
-		public static StringBuilder CheckAllEntitiesCanBeFetchedUsingLINQ(ILinqMetaData metaData, ushort maxNumberOfItemsToReturn, params int[] entityTypes)
+		public static StringBuilder CheckAllEntitiesCanBeFetchedUsingLINQ<TEnum>(ILinqMetaData metaData, ushort maxNumberOfItemsToReturn, params TEnum[] entityTypes)
 		{
 			if (entityTypes.IsNullOrEmpty())
-				entityTypes = GeneralHelper.EnumAsEnumerable<int>().ToArray();
+				entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>().ToArray();
+			else
+				GeneralHelper.CheckIsEnum(typeof (TEnum));
 			var errors = new StringBuilder();
 			var inheritanceErrors = new StringBuilder();
 			foreach (var query in entityTypes
-				.Select(entityType => metaData.GetQueryableForEntity((int) entityType))
+				.Select(entityType => metaData.GetQueryableForEntity(Convert.ToInt32(entityType)))
 				.Select(dataSource => dataSource).OfType<ILLBLGenProQuery>())
 				CheckEntityCanBeFetchedUsingLINQ(query, true, maxNumberOfItemsToReturn, errors, inheritanceErrors);
 			return errors;
@@ -102,7 +103,7 @@ namespace AW.Helper.LLBL
 		/// <param name="errors">The errors.</param>
 		/// <param name="inheritanceErrors">The inheritance errors.</param>
 		/// <returns></returns>
-		public static bool CheckEntityCanBeFetchedUsingLINQ(ILLBLGenProQuery query, Boolean forceTableAlias, ushort maxNumberOfItemsToReturn, StringBuilder errors, StringBuilder inheritanceErrors)
+		private static bool CheckEntityCanBeFetchedUsingLINQ(ILLBLGenProQuery query, Boolean forceTableAlias, ushort maxNumberOfItemsToReturn, StringBuilder errors, StringBuilder inheritanceErrors)
 		{
 			var initalErrorlength = errors.Length;
 			try
@@ -116,27 +117,23 @@ namespace AW.Helper.LLBL
 			}
 			catch (ORMQueryExecutionException e)
 			{
-				
 				errors.AppendLine(query.ElementType.ToString());
 				errors.AppendLine(e.Message);
 				errors.AppendLine(e.QueryExecuted);
 			}
 			catch (ORMInheritanceInfoException e)
 			{
-				
 				inheritanceErrors.AppendLine(query.ElementType.ToString());
 				inheritanceErrors.AppendLine(e.Message);
 			}
 			catch (ArgumentException e)
 			{
-				
 				errors.AppendLine(query.ElementType.ToString());
 				errors.AppendLine(e.Message);
 				errors.AppendLine(e.ParamName);
 			}
 			catch (DbException e)
 			{
-				
 				errors.AppendLine(query.ElementType.ToString());
 				errors.AppendLine(e.ErrorCode + " - " + e.Message);
 				DynamicQueryEngineBase.Switch.Level = TraceLevel.Verbose;
@@ -145,7 +142,6 @@ namespace AW.Helper.LLBL
 			}
 			catch (Exception e)
 			{
-
 				errors.AppendLine(query.ElementType.ToString());
 				errors.AppendLine(e.Message);
 			}
@@ -217,12 +213,12 @@ namespace AW.Helper.LLBL
 		}
 
 		/// <summary>
-		/// Gets the field information of the auditable entities.
+		/// Gets the field information of the entities.
 		/// </summary>
 		/// <returns></returns>
-		public static IEnumerable<FieldAndEntityInformation> GetEntityFieldInformation(IDataAccessAdapter adapter)
+		public static IEnumerable<EntityInformation> GetEntityFieldInformation<TEnum>(IDataAccessAdapter adapter, Func<TEnum, IEntityFactory2> entityFactoryFactory)
 		{
-			return FieldAndEntityInformation.FieldAndEntityInformationFactory(adapter,null).OrderBy(fi => fi.Entity).ThenBy(fi => fi.DisplayNames);
+			return EntityInformation.EntityInfoFactory(adapter, entityFactoryFactory).OrderBy(fi => fi.Entity);
 		}
 	}
 
@@ -242,13 +238,7 @@ namespace AW.Helper.LLBL
 		/// Gets or sets the name of the SQL server table.
 		/// </summary>
 		/// <value>The name of the SQL server table.</value>
-		public string SQLServerTableName { get; private set; }
-
-		/// <summary>
-		/// Gets or sets the name of the oracle table.
-		/// </summary>
-		/// <value>The name of the oracle table.</value>
-		public string OracleTableName { get; private set; }
+		public string TableName { get; private set; }
 
 		/// <summary>
 		/// Gets or sets the custom properties.
@@ -274,7 +264,7 @@ namespace AW.Helper.LLBL
 			var fieldAndEntityInformation = fieldAndEntityInformations.FirstOrDefault();
 			if (fieldAndEntityInformation != null)
 			{
-				SQLServerTableName = fieldAndEntityInformation.SQLServerTableName;
+				TableName = fieldAndEntityInformation.TableName;
 			}
 			CustomProperties = entity.CustomPropertiesOfType.Values.JoinAsString();
 		}
@@ -284,15 +274,17 @@ namespace AW.Helper.LLBL
 		/// </summary>
 		/// <param name="entityTypes">The entity types.</param>
 		/// <returns></returns>
-		public static IEnumerable<EntityInformation> EntityInfoFactory(EntityFactoryCore2 entityFactoryCore, IDataAccessAdapter adapter, params int[] entityTypes)
+		public static IEnumerable<EntityInformation> EntityInfoFactory<TEnum>(IDataAccessAdapter adapter, Func<TEnum, IEntityFactory2> entityFactoryFactory, params TEnum[] entityTypes)
 		{
 			LLBL.FieldInformation.SQLServerDataAccessAdapter = adapter;
 			if (entityTypes.IsNullOrEmpty())
-				entityTypes = GeneralHelper.EnumAsEnumerable<int>();
+				entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
+			else
+				GeneralHelper.CheckIsEnum(typeof (TEnum));
 			return from entityType in entityTypes
-			       select EntityHelper.GetEntityTypeFromEntityTypeValue(entityFactoryCore, entityType)
+			       select entityFactoryFactory(entityType)
 			       into factory
-							 select new EntityInformation(EntityHelper.CreateEntity(factory) as IEntity2);
+			       select new EntityInformation(factory.Create());
 		}
 	}
 
@@ -352,12 +344,13 @@ namespace AW.Helper.LLBL
 			var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(entity, field.Name);
 			DisplayNames = displayNameAttributes.Select(dna => dna.DisplayName).JoinAsString();
 			DisplayNameAttributeTypes = displayNameAttributes.JoinAsString();
-			SQLServerFieldPersistenceInfo = GetFieldPersistenceInfoPublic(SQLServerDataAccessAdapter,field);
+			SQLServerFieldPersistenceInfo = GetFieldPersistenceInfoPublic(SQLServerDataAccessAdapter, field);
 		}
 
 		private IFieldPersistenceInfo GetFieldPersistenceInfoPublic(IDataAccessAdapter sqlServerDataAccessAdapter, IEntityField2 field)
 		{
-			return null;
+			var fullListQueryMethod = sqlServerDataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);
+			return fullListQueryMethod.Invoke(sqlServerDataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
 		}
 
 		/// <summary>
@@ -383,7 +376,7 @@ namespace AW.Helper.LLBL
 		/// The name of the corresponding column in a view or table for an entityfield. This name is used to map a column in a resultset onto the entity field.
 		/// </summary>
 		/// <value>The name of the SQL server column.</value>
-		public string SQLServerColumnName
+		public string ColumnName
 		{
 			get { return SQLServerFieldPersistenceInfo.SourceColumnName; }
 		}
@@ -411,7 +404,7 @@ namespace AW.Helper.LLBL
 		/// Gets the name of the SQL server table.
 		/// </summary>
 		/// <value>The name of the SQL server table.</value>
-		internal string SQLServerTableName
+		internal string TableName
 		{
 			get { return SQLServerFieldPersistenceInfo.SourceObjectName; }
 		}
