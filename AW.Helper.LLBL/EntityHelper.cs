@@ -684,7 +684,14 @@ namespace AW.Helper.LLBL
 			       select propertyDescriptor;
 		}
 
-		public static IEntityFields2 GetFieldsFromType(Type type)
+		public static IEntityFields GetFieldsFromType(Type type)
+		{
+			var ef = CreateEntity(type) as IEntity;
+			//			return ef.Create().Fields;
+			return ef.Fields;
+		}
+
+		public static IEntityFields2 GetFieldsFromType2(Type type)
 		{
 			var ef = CreateEntity(type) as IEntity2;
 			//			return ef.Create().Fields;

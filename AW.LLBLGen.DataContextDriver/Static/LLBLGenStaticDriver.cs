@@ -248,16 +248,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return topLevelProps;
 		}
 
-		private static List<ExplorerItem> CreateFieldExplorerItems(IEnumerable<PropertyDescriptor> fieldsToShowInSchema, ILookup<Type, ExplorerItem> elementTypeLookup)
-		{
-			if (fieldsToShowInSchema != null)
-				return fieldsToShowInSchema
-					.Select(childProp => GetChildItem(elementTypeLookup, childProp))
-					.OrderBy(childItem => childItem.Kind)
-					.ToList();
-			return null;
-		}
-
 		public override void InitializeContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
 		{
 			try
@@ -428,6 +418,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		#region Schema helpers
 
+		private static List<ExplorerItem> CreateFieldExplorerItems(IEnumerable<PropertyDescriptor> fieldsToShowInSchema, ILookup<Type, ExplorerItem> elementTypeLookup)
+		{
+			if (fieldsToShowInSchema != null)
+				return fieldsToShowInSchema
+					.Select(childProp => GetChildItem(elementTypeLookup, childProp))
+					.OrderBy(childItem => childItem.Kind)
+					.ToList();
+			return null;
+		}
+
 		/// <summary>
 		/// 	Gets the properties to show in schema. 
 		/// 	They should be all the browsable properties with the addition of self servicing entity properties.
@@ -442,9 +442,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
 		}
 
-		private static IEnumerable<PropertyDescriptor> GetFieldsToShowInSchema(Type type)
+		public static IEnumerable<PropertyDescriptor> GetFieldsToShowInSchema(Type type)
 		{
-			var propertyDescriptorCollection = TypeDescriptor.GetProperties(type, null);
+			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(type);
 			try
 			{
 				var entityCore = EntityHelper.CreateEntity(type);
@@ -452,7 +452,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					return null;
 				var propertyNames = entityCore.Fields.Cast<IEntityFieldCore>().Select(ef => ef.Name);
 				propertyNames = propertyNames.Union(entityCore.GetAllRelations().Select(r => r.MappedFieldName));
-				return propertyDescriptorCollection.Cast<PropertyDescriptor>().Where(pd => propertyNames.Contains(pd.Name));
+				var fieldsToShowInSchema = propertyDescriptors.Where(pd => propertyNames.Contains(pd.Name));
+				foreach (var propertyDescriptor in fieldsToShowInSchema.Where(pd=>string.IsNullOrEmpty(pd.Description)))
+				{
+					if (entityCore.FieldsCustomPropertiesOfType.ContainsKey(propertyDescriptor.Name) )
+					{
+						var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(type, propertyDescriptor.Name);
+						var x = entityCore.FieldsCustomPropertiesOfType[propertyDescriptor.Name].Values.JoinAsString();
+						//propertyDescriptor.Attributes.
+						//propertyDescriptor.Description = entityCore.FieldsCustomPropertiesOfType[propertyDescriptor.Name];
+					}
+				}
+				return fieldsToShowInSchema;
 			}
 			catch (Exception)
 			{
