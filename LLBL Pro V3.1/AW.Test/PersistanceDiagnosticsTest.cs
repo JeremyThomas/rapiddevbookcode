@@ -1,13 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Text;
+using AW.Data;
 using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Northwind.DAL;
 using Northwind.DAL.FactoryClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using EntityType = Northwind.DAL.EntityType;
 
 namespace AW.Tests
 {
@@ -64,46 +66,50 @@ namespace AW.Tests
 		/// <summary>
 		///A test for CheckAllEntitiesCanBeFetchedUsingLINQ
 		///</summary>
-		public void CheckAllEntitiesCanBeFetchedUsingLINQTestHelper<TEnum>()
-		{
-			ILinqMetaData metaData = GetNorthwindLinqMetaData();
-			const ushort maxNumberOfItemsToReturn = 1;
-			var errors = PersistanceDiagnostics.CheckAllEntitiesCanBeFetchedUsingLINQ<EntityType>(metaData, maxNumberOfItemsToReturn);
-			Assert.AreEqual(0, errors.Length, errors.ToString());
-		}
-
 		[TestMethod]
-		public void CheckAllEntitiesCanBeFetchedUsingLINQTest()
+		public void CheckAlltNorthWindEntitiesCanBeFetchedUsingLINQTest()
 		{
-			CheckAllEntitiesCanBeFetchedUsingLINQTestHelper<GenericParameterHelper>();
-		}
-
-		/// <summary>
-		///A test for CheckEntitiesCanBeFetched
-		///</summary>
-		public void CheckEntitiesCanBeFetchedTestHelper<TEnum>()
-		{
-			IDataAccessAdapter adapter = new DataAccessAdapter();
-			const int maxNumberOfItemsToReturn = 1;
-			var errors = PersistanceDiagnostics.CheckEntitiesCanBeFetched<EntityType>(EntityFactoryFactory.GetFactory, adapter, maxNumberOfItemsToReturn);
+			var errors = PersistanceDiagnostics.CheckAllEntitiesCanBeFetchedUsingLINQ<EntityType>(GetNorthwindLinqMetaData(), 1);
 			Assert.AreEqual(0, errors.Length, errors.ToString());
 		}
 
 		[TestMethod, Ignore]
-		public void CheckEntitiesCanBeFetchedTest()
+		public void CheckAllAWEntitiesCanBeFetchedUsingLINQTest()
 		{
-			CheckEntitiesCanBeFetchedTestHelper<GenericParameterHelper>();
+			var errors = PersistanceDiagnostics.CheckAllEntitiesCanBeFetchedUsingLINQ<Data.EntityType>(MetaSingletons.MetaData, 1);
+			Assert.AreEqual(0, errors.Length, errors.ToString());
+		}
+
+		[TestMethod, Description("A test for CheckEntitiesCanBeFetched")]
+		public void ChecktNorthWindEntitiesCanBeFetchedTes()
+		{
+			var errors = PersistanceDiagnostics.CheckEntitiesCanBeFetched<EntityType>(EntityFactoryFactory.GetFactory, new DataAccessAdapter(), 1);
+			Assert.AreEqual(0, errors.Length, errors.ToString());
+		}
+
+		[TestMethod]
+		public void CheckAWEntitiesCanBeFetchedTest()
+		{
+			var errors = PersistanceDiagnostics.CheckEntitiesCanBeFetched<Data.EntityType>(Data.FactoryClasses.EntityFactoryFactory.GetFactory, 1);
+			Assert.AreEqual(0, errors.Length, errors.ToString());
 		}
 
 		/// <summary>
 		///A test for GetEntityFieldInformation
 		///</summary>
 		[TestMethod]
-		public void GetEntityFieldInformationTest()
+		public void GettNorthWindEntityFieldInformationTest()
 		{
 			IDataAccessAdapter adapter = new DataAccessAdapter();
 			var actual = PersistanceDiagnostics.GetEntityFieldInformation<EntityType>(adapter, EntityFactoryFactory.GetFactory);
-			Assert.AreEqual(13, actual.Count());
+			Assert.AreEqual(Enum.GetNames(typeof(EntityType)).Length, actual.Count());
+		}
+
+		[TestMethod]
+		public void GeAWEntityFieldInformationTest()
+		{
+			var actual = EntityInformation.EntityInfoFactory<Data.EntityType>(Data.FactoryClasses.EntityFactoryFactory.GetFactory).OrderBy(fi => fi.Entity);
+			Assert.AreEqual(Enum.GetNames(typeof(Data.EntityType)).Length, actual.Count());
 		}
 
 		/// <summary>

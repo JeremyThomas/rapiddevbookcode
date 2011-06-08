@@ -256,7 +256,7 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Adds the associated metadata providers for each type.
+		/// Adds the associated metadata providers for each type. But doesn't seem to work for properties on inherited classes for version of .net before 4.0
 		/// </summary>
 		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
 		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
@@ -290,17 +290,25 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the property descriptors for a class including those in any MetadataClass(buddy class).
+		/// Gets the property descriptors for a class.
 		/// </summary>
 		/// <param name="modelClass">The model class.</param>
-		/// <returns>The property descriptors for a class including those in any MetadataClass.</returns>
-		public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass)
+		/// <param name="attributes">An array of type System.Attribute that is used as a filter.</param>
+		/// <returns>The property descriptors for a class.</returns>
+		public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass, params Attribute[] attributes)
 		{
-			var modelClassProperties = TypeDescriptor.GetProperties(modelClass).Cast<PropertyDescriptor>();
+			var propertyDescriptorCollection = attributes.IsNullOrEmpty() ? TypeDescriptor.GetProperties(modelClass) : TypeDescriptor.GetProperties(modelClass, attributes);
+			var modelClassProperties = propertyDescriptorCollection.Cast<PropertyDescriptor>().ToList();
 			if (TypeDescriptor.GetProvider(modelClass) is AssociatedMetadataTypeTypeDescriptionProvider)
 				return modelClassProperties; //No need to get the MetadataType(buddy class)
-			var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
-			return metadataAttrib == null ? modelClassProperties : modelClassProperties.Union(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>());
+
+			if (Environment.Version.Major < 4) // Not needed if .net 4.0 and LinqMetaData.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
+			{
+				var metadataAttrib = modelClass.GetCustomAttributes(typeof(MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
+				if (metadataAttrib != null)
+					modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>().ToList());
+			}
+			return modelClassProperties;
 		}
 
 		/// <summary>

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Xml.Linq;
 using AW.Data;
+using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.Linq;
 using AW.Helper;
@@ -103,6 +104,13 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 				Assert.AreEqual(entityRelations.Count(er => er.TypeOfRelation == RelationType.OneToMany), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.CollectionLink), entityFactory.ForEntityName + " - " + explorerItem.Text);
 				Assert.AreEqual(entityRelations.Count(er => er.TypeOfRelation == RelationType.ManyToOne), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink), entityFactory.ForEntityName + " - " + explorerItem.Text);
 			}
+		}
+
+		[TestMethod]
+		public void GetFieldsToShowInSchemaTest()
+		{
+			var fieldsToShowInSchema = LLBLGenStaticDriver.GetFieldsToShowInSchema(typeof (AddressEntity));
+			Assert.IsFalse(String.IsNullOrEmpty(fieldsToShowInSchema.First().Description));
 		}
 	}
 }

@@ -18,6 +18,8 @@ namespace AW.Helper.LLBL
 		/// <summary>
 		/// Checks entities can be fetched.
 		/// </summary>
+		/// <typeparam name="TEnum">The type of the enum.</typeparam>
+		/// <param name="entityFactoryFactory">The entity factory factory.</param>
 		/// <param name="adapter">The adapter.</param>
 		/// <param name="maxNumberOfItemsToReturn">The max number of items to return. If 0, all entities are returned.</param>
 		/// <param name="entityTypes">The entity types.</param>
@@ -62,6 +64,54 @@ namespace AW.Helper.LLBL
 					foreach (
 						var invalidCastErrors in
 							entityCollection.Cast<EntityBase2>().Select(ReadEveryBindableProperty)
+								.Where(invalidCastErrors => invalidCastErrors.Length > 0))
+					{
+						errors.AppendLine(invalidCastErrors.ToString());
+						break;
+					}
+				}
+			}
+			return errors;
+		}
+
+		public static StringBuilder CheckEntitiesCanBeFetched<TEnum>(Func<TEnum, IEntityFactory> entityFactoryFactory, int maxNumberOfItemsToReturn, params TEnum[] entityTypes)
+		{
+			var errors = new StringBuilder();
+
+			{
+				if (entityTypes.IsNullOrEmpty())
+					entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
+				else
+					GeneralHelper.CheckIsEnum(typeof (TEnum));
+				var inheritanceErrors = new StringBuilder();
+				foreach (var entityType in entityTypes)
+				{
+					var entityFactoryCore = entityFactoryFactory(entityType);
+					var entity = entityFactoryCore.Create();
+					var entityCollection = entityFactoryCore.CreateEntityCollection();
+					try
+					{
+						entityCollection.GetMulti(null, maxNumberOfItemsToReturn);
+					}
+					catch (ORMQueryExecutionException e)
+					{
+						errors.AppendLine(entity.ToString());
+						errors.AppendLine(e.Message);
+						errors.AppendLine(e.QueryExecuted);
+					}
+					catch (ORMInheritanceInfoException e)
+					{
+						inheritanceErrors.AppendLine(entity.ToString());
+						inheritanceErrors.AppendLine(e.Message);
+					}
+					catch (Exception e)
+					{
+						errors.AppendLine(entity.ToString());
+						errors.AppendLine(e.Message);
+					}
+					foreach (
+						var invalidCastErrors in
+							entityCollection.Cast<EntityBase>().Select(ReadEveryBindableProperty)
 								.Where(invalidCastErrors => invalidCastErrors.Length > 0))
 					{
 						errors.AppendLine(invalidCastErrors.ToString());
@@ -157,7 +207,7 @@ namespace AW.Helper.LLBL
 		{
 			if (query != null)
 			{
-				var entityCollection = query.Execute() as IEntityCollection2;
+				var entityCollection = query.Execute() as IEntityCollectionCore;
 				ReadEveryBindableProperty(entityCollection, errors);
 			}
 		}
@@ -167,12 +217,12 @@ namespace AW.Helper.LLBL
 		/// </summary>
 		/// <param name="entityCollection">The entity collection.</param>
 		/// <param name="errors">The errors.</param>
-		public static void ReadEveryBindableProperty(IEntityCollection2 entityCollection, StringBuilder errors)
+		public static void ReadEveryBindableProperty(IEntityCollectionCore entityCollection, StringBuilder errors)
 		{
 			if (entityCollection != null)
 				foreach (
 					var invalidCastErrors in
-						entityCollection.Cast<EntityBase2>().Select(ReadEveryBindableProperty)
+						entityCollection.Cast<IEntityCore>().Select(ReadEveryBindableProperty)
 							.Where(invalidCastErrors => invalidCastErrors.Length > 0))
 				{
 					errors.AppendLine(invalidCastErrors.ToString());
@@ -185,7 +235,7 @@ namespace AW.Helper.LLBL
 		/// </summary>
 		/// <param name = "entity">The entity.</param>
 		/// <returns></returns>
-		public static StringBuilder ReadEveryBindableProperty(IEntity2 entity)
+		public static StringBuilder ReadEveryBindableProperty(IEntityCore entity)
 		{
 			var errors = new StringBuilder();
 			foreach (var browsableProperty in MetaDataHelper.GetPropertiesToDisplay(entity.GetType()))
@@ -197,13 +247,20 @@ namespace AW.Helper.LLBL
 				{
 					if (e.InnerException is InvalidCastException)
 					{
-// ReSharper disable AccessToModifiedClosure
-						var field = entity.Fields.GetFieldsFromEntityFields().Where(f => f.Name == browsableProperty.Name).FirstOrDefault();
-// ReSharper restore AccessToModifiedClosure
+						var entity2 = entity as IEntity2;
+						IEntityFieldCore field;
+						if (entity2 == null)
+							field = ((IEntity) entity).Fields.GetFieldsFromEntityFields().Where(f => f.Name == browsableProperty.Name).FirstOrDefault();
+						else
+						{
+							field = entity2.Fields.GetFieldsFromEntityFields().Where(f => f.Name == browsableProperty.Name).FirstOrDefault();
+						}
+
 						errors.AppendLine(e.Message);
 						if (field != null)
 							errors.AppendFormat("{0} of type {1} has a value of {2} is attempting to being cast to a {3}",
 							                    field.Name, field.CurrentValue.GetType(), field.CurrentValue, browsableProperty.PropertyType);
+
 						errors.AppendLine();
 					}
 					else
@@ -216,11 +273,13 @@ namespace AW.Helper.LLBL
 		/// Gets the field information of the entities.
 		/// </summary>
 		/// <returns></returns>
-		public static IEnumerable<EntityInformation> GetEntityFieldInformation<TEnum>(IDataAccessAdapter adapter, Func<TEnum, IEntityFactory2> entityFactoryFactory)
+		public static IEnumerable<EntityInformation2> GetEntityFieldInformation<TEnum>(IDataAccessAdapter adapter, Func<TEnum, IEntityFactory2> entityFactoryFactory)
 		{
-			return EntityInformation.EntityInfoFactory(adapter, entityFactoryFactory).OrderBy(fi => fi.Entity);
+			return EntityInformation2.EntityInfoFactory(adapter, entityFactoryFactory).OrderBy(fi => fi.Entity);
 		}
 	}
+
+	#region EntityInformation
 
 	/// <summary>
 	/// Class to display info about an entity and it's fields and their display names
@@ -247,19 +306,21 @@ namespace AW.Helper.LLBL
 		public string CustomProperties { get; private set; }
 
 		/// <summary>
-		/// FieldInformation for the entity
+		/// FieldInformation2 for the entity
 		/// </summary>
 		public IEnumerable<FieldAndEntityInformation> FieldInformation;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
 		/// </summary>
-		public EntityInformation(IEntity2 entity)
+		public EntityInformation(IEntity entity)
 		{
 			Entity = entity.LLBLGenProEntityName.Replace("Entity", "");
 			var fieldAndEntityInformations = from field in entity.Fields.GetFieldsFromEntityFields()
 			                                 where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
-			                                 select new FieldAndEntityInformation(entity.GetType(), field, entity.FieldsCustomPropertiesOfType[field.Name]);
+			                                 select new FieldAndEntityInformation(entity.GetType(), field,
+			                                                                      entity.FieldsCustomPropertiesOfType.ContainsKey(field.Name) 
+																																						? entity.FieldsCustomPropertiesOfType[field.Name] : new Dictionary<string, string>());
 			FieldInformation = fieldAndEntityInformations;
 			var fieldAndEntityInformation = fieldAndEntityInformations.FirstOrDefault();
 			if (fieldAndEntityInformation != null)
@@ -272,11 +333,12 @@ namespace AW.Helper.LLBL
 		/// <summary>
 		/// Entities the info factory.
 		/// </summary>
+		/// <typeparam name="TEnum">The type of the enum.</typeparam>
+		/// <param name="entityFactoryFactory">The entity factory factory.</param>
 		/// <param name="entityTypes">The entity types.</param>
 		/// <returns></returns>
-		public static IEnumerable<EntityInformation> EntityInfoFactory<TEnum>(IDataAccessAdapter adapter, Func<TEnum, IEntityFactory2> entityFactoryFactory, params TEnum[] entityTypes)
+		public static IEnumerable<EntityInformation> EntityInfoFactory<TEnum>(Func<TEnum, IEntityFactory> entityFactoryFactory, params TEnum[] entityTypes)
 		{
-			LLBL.FieldInformation.SQLServerDataAccessAdapter = adapter;
 			if (entityTypes.IsNullOrEmpty())
 				entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
 			else
@@ -294,17 +356,15 @@ namespace AW.Helper.LLBL
 	[Serializable]
 	public class FieldInformation
 	{
-		internal static IDataAccessAdapter SQLServerDataAccessAdapter;
 		internal IFieldPersistenceInfo SQLServerFieldPersistenceInfo;
 
 		/// <summary>
-		/// Factory to create FieldInformation for the supplied entity types.
+		/// Factory to create FieldInformation2 for the supplied entity types.
 		/// </summary>
 		/// <param name="entities">The entities.</param>
 		/// <returns></returns>
-		public static IEnumerable<FieldInformation> FieldInfoFactory(IDataAccessAdapter adapter, List<Type> entities)
+		public static IEnumerable<FieldInformation> FieldInfoFactory(List<Type> entities)
 		{
-			SQLServerDataAccessAdapter = adapter;
 			return from entity in entities
 			       from field in EntityHelper.GetFieldsFromType(entity).GetFieldsFromEntityFields()
 			       where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
@@ -312,45 +372,45 @@ namespace AW.Helper.LLBL
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FieldInformation"/> class.
+		/// Initializes a new instance of the <see cref="FieldInformation2"/> class.
 		/// </summary>
 		/// <param name="entity">The entity.</param>
 		/// <param name="field">The field.</param>
-		public FieldInformation(Type entity, IEntityField2 field) : this(entity, field, "")
+		public FieldInformation(Type entity, IEntityField field)
+			: this(entity, field, "")
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FieldInformation"/> class.
+		/// Initializes a new instance of the <see cref="FieldInformation2"/> class.
 		/// </summary>
 		/// <param name="entity">The entity.</param>
 		/// <param name="field">The field.</param>
 		/// <param name="customProperties">The custom properties.</param>
-		public FieldInformation(Type entity, IEntityField2 field, Dictionary<string, string> customProperties)
+		public FieldInformation(Type entity, IEntityField field, Dictionary<string, string> customProperties)
 			: this(entity, field, customProperties.Values.JoinAsString())
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FieldInformation"/> class.
+		/// Initializes a new instance of the <see cref="FieldInformation2"/> class.
 		/// </summary>
 		/// <param name="entity">The entity.</param>
 		/// <param name="field">The field.</param>
 		/// <param name="customProperties">The custom properties.</param>
-		public FieldInformation(Type entity, IEntityField2 field, string customProperties)
+		public FieldInformation(Type entity, IEntityField field, string customProperties)
 		{
 			CustomProperties = customProperties;
 			FieldName = field.Name;
 			var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(entity, field.Name);
 			DisplayNames = displayNameAttributes.Select(dna => dna.DisplayName).JoinAsString();
 			DisplayNameAttributeTypes = displayNameAttributes.JoinAsString();
-			SQLServerFieldPersistenceInfo = GetFieldPersistenceInfoPublic(SQLServerDataAccessAdapter, field);
+			SQLServerFieldPersistenceInfo = GetFieldPersistenceInfoPublic(field);
 		}
 
-		private IFieldPersistenceInfo GetFieldPersistenceInfoPublic(IDataAccessAdapter sqlServerDataAccessAdapter, IEntityField2 field)
+		private static IFieldPersistenceInfo GetFieldPersistenceInfoPublic(IEntityField field)
 		{
-			var fullListQueryMethod = sqlServerDataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);
-			return fullListQueryMethod.Invoke(sqlServerDataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
+			return field;
 		}
 
 		/// <summary>
@@ -410,40 +470,273 @@ namespace AW.Helper.LLBL
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FieldAndEntityInformation"/> class.
+		/// Initializes a new instance of the <see cref="FieldAndEntityInformation2"/> class.
 		/// </summary>
 		/// <param name="entity">The entity.</param>
 		/// <param name="field">The field.</param>
 		/// <param name="customProperties">The custom properties.</param>
-		public FieldAndEntityInformation(Type entity, IEntityField2 field, Dictionary<string, string> customProperties)
+		public FieldAndEntityInformation(Type entity, IEntityField field, Dictionary<string, string> customProperties)
 			: this(entity, field, customProperties.Values.JoinAsString())
 		{
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FieldAndEntityInformation"/> class.
+		/// Initializes a new instance of the <see cref="FieldAndEntityInformation2"/> class.
 		/// </summary>
 		/// <param name="entity">The entity.</param>
 		/// <param name="field">The field.</param>
 		/// <param name="customProperties">The custom properties.</param>
-		public FieldAndEntityInformation(Type entity, IEntityField2 field, string customProperties)
+		public FieldAndEntityInformation(Type entity, IEntityField field, string customProperties)
 			: base(entity, field, customProperties)
 		{
 			Entity = field.ActualContainingObjectName.Replace("Entity", "");
 		}
 
 		/// <summary>
-		/// Factory to create FieldAndEntityInformation for the supplied entity types.
+		/// Factory to create FieldAndEntityInformation2 for the supplied entity types.
 		/// </summary>
 		/// <param name="entities">The entities.</param>
 		/// <returns></returns>
-		public static IEnumerable<FieldAndEntityInformation> FieldAndEntityInformationFactory(IDataAccessAdapter adapter, List<Type> entities)
+		public static IEnumerable<FieldAndEntityInformation> FieldAndEntityInformationFactory(List<Type> entities)
 		{
-			SQLServerDataAccessAdapter = adapter;
 			return from entity in entities
 			       from field in EntityHelper.GetFieldsFromType(entity).GetFieldsFromEntityFields()
 			       where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
 			       select new FieldAndEntityInformation(entity, field, "");
 		}
 	}
+
+	#endregion
+
+	#region EntityInformation2
+
+	/// <summary>
+	/// Class to display info about an entity and it's fields and their display names
+	/// </summary>
+	[Serializable]
+	public class EntityInformation2
+	{
+		/// <summary>
+		/// Gets or sets the entity name.
+		/// </summary>
+		/// <value>The entity.</value>
+		public string Entity { get; private set; }
+
+		/// <summary>
+		/// Gets or sets the name of the SQL server table.
+		/// </summary>
+		/// <value>The name of the SQL server table.</value>
+		public string TableName { get; private set; }
+
+		/// <summary>
+		/// Gets or sets the custom properties.
+		/// </summary>
+		/// <value>The custom properties.</value>
+		public string CustomProperties { get; private set; }
+
+		/// <summary>
+		/// FieldInformation2 for the entity
+		/// </summary>
+		public IEnumerable<FieldAndEntityInformation2> FieldInformation;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
+		/// </summary>
+		public EntityInformation2(IEntity2 entity)
+		{
+			Entity = entity.LLBLGenProEntityName.Replace("Entity", "");
+			var fieldAndEntityInformations = from field in entity.Fields.GetFieldsFromEntityFields()
+			                                 where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
+			                                 select new FieldAndEntityInformation2(entity.GetType(), field, entity.FieldsCustomPropertiesOfType[field.Name]);
+			FieldInformation = fieldAndEntityInformations;
+			var fieldAndEntityInformation = fieldAndEntityInformations.FirstOrDefault();
+			if (fieldAndEntityInformation != null)
+			{
+				TableName = fieldAndEntityInformation.TableName;
+			}
+			CustomProperties = entity.CustomPropertiesOfType.Values.JoinAsString();
+		}
+
+		/// <summary>
+		/// Entities the info factory.
+		/// </summary>
+		/// <typeparam name="TEnum">The type of the enum.</typeparam>
+		/// <param name="adapter">The adapter.</param>
+		/// <param name="entityFactoryFactory">The entity factory factory.</param>
+		/// <param name="entityTypes">The entity types.</param>
+		/// <returns></returns>
+		public static IEnumerable<EntityInformation2> EntityInfoFactory<TEnum>(IDataAccessAdapter adapter, Func<TEnum, IEntityFactory2> entityFactoryFactory, params TEnum[] entityTypes)
+		{
+			FieldInformation2.SQLServerDataAccessAdapter = adapter;
+			if (entityTypes.IsNullOrEmpty())
+				entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
+			else
+				GeneralHelper.CheckIsEnum(typeof (TEnum));
+			return from entityType in entityTypes
+			       select entityFactoryFactory(entityType)
+			       into factory
+			       select new EntityInformation2(factory.Create());
+		}
+	}
+
+	/// <summary>
+	/// Class to display info about fields and their display names
+	/// </summary>
+	[Serializable]
+	public class FieldInformation2
+	{
+		internal static IDataAccessAdapter SQLServerDataAccessAdapter;
+		internal IFieldPersistenceInfo SQLServerFieldPersistenceInfo;
+
+		/// <summary>
+		/// Factory to create FieldInformation2 for the supplied entity types.
+		/// </summary>
+		/// <param name="entities">The entities.</param>
+		/// <returns></returns>
+		public static IEnumerable<FieldInformation2> FieldInfoFactory(IDataAccessAdapter adapter, List<Type> entities)
+		{
+			SQLServerDataAccessAdapter = adapter;
+			return from entity in entities
+			       from field in EntityHelper.GetFieldsFromType2(entity).GetFieldsFromEntityFields()
+			       where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
+			       select new FieldInformation2(entity, field);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FieldInformation2"/> class.
+		/// </summary>
+		/// <param name="entity">The entity.</param>
+		/// <param name="field">The field.</param>
+		public FieldInformation2(Type entity, IEntityField2 field) : this(entity, field, "")
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FieldInformation2"/> class.
+		/// </summary>
+		/// <param name="entity">The entity.</param>
+		/// <param name="field">The field.</param>
+		/// <param name="customProperties">The custom properties.</param>
+		public FieldInformation2(Type entity, IEntityField2 field, Dictionary<string, string> customProperties)
+			: this(entity, field, customProperties.Values.JoinAsString())
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FieldInformation2"/> class.
+		/// </summary>
+		/// <param name="entity">The entity.</param>
+		/// <param name="field">The field.</param>
+		/// <param name="customProperties">The custom properties.</param>
+		public FieldInformation2(Type entity, IEntityField2 field, string customProperties)
+		{
+			CustomProperties = customProperties;
+			FieldName = field.Name;
+			var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(entity, field.Name);
+			DisplayNames = displayNameAttributes.Select(dna => dna.DisplayName).JoinAsString();
+			DisplayNameAttributeTypes = displayNameAttributes.JoinAsString();
+			SQLServerFieldPersistenceInfo = GetFieldPersistenceInfoPublic(SQLServerDataAccessAdapter, field);
+		}
+
+		private IFieldPersistenceInfo GetFieldPersistenceInfoPublic(IDataAccessAdapter sqlServerDataAccessAdapter, IEntityField2 field)
+		{
+			var fullListQueryMethod = sqlServerDataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);
+			return fullListQueryMethod.Invoke(sqlServerDataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
+		}
+
+		/// <summary>
+		/// Gets or sets the name of the field.
+		/// </summary>
+		/// <value>The name of the field.</value>
+		public string FieldName { get; private set; }
+
+		/// <summary>
+		/// Gets or sets the display names.
+		/// </summary>
+		/// <value>The display names.</value>
+		public string DisplayNames { get; private set; }
+
+		/// <summary>
+		/// Gets or sets the display name attribute types.
+		/// </summary>
+		/// <value>The display name attribute types.</value>
+		public string DisplayNameAttributeTypes { get; private set; }
+
+		/// <summary>
+		/// Gets the name of the SQL server column.
+		/// The name of the corresponding column in a view or table for an entityfield. This name is used to map a column in a resultset onto the entity field.
+		/// </summary>
+		/// <value>The name of the SQL server column.</value>
+		public string ColumnName
+		{
+			get { return SQLServerFieldPersistenceInfo.SourceColumnName; }
+		}
+
+		/// <summary>
+		/// Gets or sets the custom properties.
+		/// </summary>
+		/// <value>The custom properties.</value>
+		public string CustomProperties { get; private set; }
+	}
+
+	/// <summary>
+	/// Class to display info about fields and their display names and entities
+	/// </summary>
+	[Serializable]
+	public class FieldAndEntityInformation2 : FieldInformation2
+	{
+		/// <summary>
+		/// Gets or sets the entity name.
+		/// </summary>
+		/// <value>The entity.</value>
+		internal string Entity { get; private set; }
+
+		/// <summary>
+		/// Gets the name of the SQL server table.
+		/// </summary>
+		/// <value>The name of the SQL server table.</value>
+		internal string TableName
+		{
+			get { return SQLServerFieldPersistenceInfo.SourceObjectName; }
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FieldAndEntityInformation2"/> class.
+		/// </summary>
+		/// <param name="entity">The entity.</param>
+		/// <param name="field">The field.</param>
+		/// <param name="customProperties">The custom properties.</param>
+		public FieldAndEntityInformation2(Type entity, IEntityField2 field, Dictionary<string, string> customProperties)
+			: this(entity, field, customProperties.Values.JoinAsString())
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FieldAndEntityInformation2"/> class.
+		/// </summary>
+		/// <param name="entity">The entity.</param>
+		/// <param name="field">The field.</param>
+		/// <param name="customProperties">The custom properties.</param>
+		public FieldAndEntityInformation2(Type entity, IEntityField2 field, string customProperties)
+			: base(entity, field, customProperties)
+		{
+			Entity = field.ActualContainingObjectName.Replace("Entity", "");
+		}
+
+		/// <summary>
+		/// Factory to create FieldAndEntityInformation2 for the supplied entity types.
+		/// </summary>
+		/// <param name="entities">The entities.</param>
+		/// <returns></returns>
+		public static IEnumerable<FieldAndEntityInformation2> FieldAndEntityInformationFactory(IDataAccessAdapter adapter, List<Type> entities)
+		{
+			SQLServerDataAccessAdapter = adapter;
+			return from entity in entities
+			       from field in EntityHelper.GetFieldsFromType2(entity).GetFieldsFromEntityFields()
+			       where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
+			       select new FieldAndEntityInformation2(entity, field, "");
+		}
+	}
+
+	#endregion
 }
