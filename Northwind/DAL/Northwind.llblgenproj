@@ -36,7 +36,7 @@
     <Property Name="PreferDecimalOverCurrencyTypes" Value="true" />
     <Property Name="PreferNaturalCharacterTypes" Value="true" />
     <Property Name="PreferVariableLengthTypes" Value="true" />
-    <Property Name="ProjectCreator" Value="DE" />
+    <Property Name="ProjectCreator" Value="Jeremy" />
     <Property Name="ProjectName" Value="Northwind" />
     <Property Name="RelationalModelDataElementNameCasingCaseSensitiveDBs" Value="3" />
     <Property Name="RelationshipsFollowDBForeignKeyConstraints" Value="0" />
@@ -88,15 +88,16 @@
       <SettingValue Name="1:AdapterDbSpecificNamespaceSuffix" Value="" Type="18" />
       <SettingValue Name="1:AdapterDbSpecificProjectFileSuffix" Value="" Type="18" />
       <SettingValue Name="1:AdapterDbSpecificSubFolderName" Value="" Type="18" />
+      <SettingValue Name="1:TdlEmitTimeDateInOutputFiles" Value="false" Type="3" />
     </SettingValues>
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
     <TargetElement Type="256">
-      <Defaults>
+      <OutputSettingValues>
         <Attributes>
           <Attribute Value="Browsable($false)" />
         </Attributes>
-      </Defaults>
+      </OutputSettingValues>
     </TargetElement>
   </CodeGenerationMetaDataDefaults>
   <EntityModel>
@@ -310,6 +311,7 @@
         </FieldRelationships>
       </NormalRelationship>
       <IndirectRelationship Start=":Customer" End=":CustomerDemographic" StartNavigator="CustomerDemographics" EndNavigator="Customers" Relationship1="CustomerCustomerDemo.Customer-Customer.CustomerCustomerDemos" Relationship2="CustomerCustomerDemo.CustomerDemographic-CustomerDemographic.CustomerCustomerDemos" />
+      <IndirectRelationship Start=":Customer" End=":Employee" StartNavigator="EmployeesViaOrders" EndNavigator="CustomersViaOrders" Relationship1="Order.Customer-Customer.Orders" Relationship2="Order.Employee-Employee.Orders" />
     </Relationships>
     <InheritanceHierarchies />
   </EntityModel>

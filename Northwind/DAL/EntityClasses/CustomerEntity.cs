@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 3.1
-// Code is generated on: Tuesday, 7 June 2011 3:12:00 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -35,6 +35,7 @@ namespace Northwind.DAL.EntityClasses
 		private EntityCollection<CustomerCustomerDemoEntity> _customerCustomerDemos;
 		private EntityCollection<OrderEntity> _orders;
 		private EntityCollection<CustomerDemographicEntity> _customerDemographics;
+		private EntityCollection<EmployeeEntity> _employeesViaOrders;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -53,6 +54,8 @@ namespace Northwind.DAL.EntityClasses
 			public static readonly string Orders = "Orders";
 			/// <summary>Member name CustomerDemographics</summary>
 			public static readonly string CustomerDemographics = "CustomerDemographics";
+			/// <summary>Member name EmployeesViaOrders</summary>
+			public static readonly string EmployeesViaOrders = "EmployeesViaOrders";
 		}
 		#endregion
 		
@@ -113,6 +116,7 @@ namespace Northwind.DAL.EntityClasses
 				_customerCustomerDemos = (EntityCollection<CustomerCustomerDemoEntity>)info.GetValue("_customerCustomerDemos", typeof(EntityCollection<CustomerCustomerDemoEntity>));
 				_orders = (EntityCollection<OrderEntity>)info.GetValue("_orders", typeof(EntityCollection<OrderEntity>));
 				_customerDemographics = (EntityCollection<CustomerDemographicEntity>)info.GetValue("_customerDemographics", typeof(EntityCollection<CustomerDemographicEntity>));
+				_employeesViaOrders = (EntityCollection<EmployeeEntity>)info.GetValue("_employeesViaOrders", typeof(EntityCollection<EmployeeEntity>));
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
@@ -138,6 +142,11 @@ namespace Northwind.DAL.EntityClasses
 					this.CustomerDemographics.IsReadOnly = false;
 					this.CustomerDemographics.Add((CustomerDemographicEntity)entity);
 					this.CustomerDemographics.IsReadOnly = true;
+					break;
+				case "EmployeesViaOrders":
+					this.EmployeesViaOrders.IsReadOnly = false;
+					this.EmployeesViaOrders.Add((EmployeeEntity)entity);
+					this.EmployeesViaOrders.IsReadOnly = true;
 					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
@@ -170,6 +179,10 @@ namespace Northwind.DAL.EntityClasses
 				case "CustomerDemographics":
 					toReturn.Add(Relations.CustomerCustomerDemoEntityUsingCustomerId, "CustomerEntity__", "CustomerCustomerDemo_", JoinHint.None);
 					toReturn.Add(CustomerCustomerDemoEntity.Relations.CustomerDemographicEntityUsingCustomerTypeId, "CustomerCustomerDemo_", string.Empty, JoinHint.None);
+					break;
+				case "EmployeesViaOrders":
+					toReturn.Add(Relations.OrderEntityUsingCustomerId, "CustomerEntity__", "Order_", JoinHint.None);
+					toReturn.Add(OrderEntity.Relations.EmployeeEntityUsingEmployeeId, "Order_", string.Empty, JoinHint.None);
 					break;
 				default:
 					break;				
@@ -267,6 +280,7 @@ namespace Northwind.DAL.EntityClasses
 				info.AddValue("_customerCustomerDemos", ((_customerCustomerDemos!=null) && (_customerCustomerDemos.Count>0) && !this.MarkedForDeletion)?_customerCustomerDemos:null);
 				info.AddValue("_orders", ((_orders!=null) && (_orders.Count>0) && !this.MarkedForDeletion)?_orders:null);
 				info.AddValue("_customerDemographics", ((_customerDemographics!=null) && (_customerDemographics.Count>0) && !this.MarkedForDeletion)?_customerDemographics:null);
+				info.AddValue("_employeesViaOrders", ((_employeesViaOrders!=null) && (_employeesViaOrders.Count>0) && !this.MarkedForDeletion)?_employeesViaOrders:null);
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -309,6 +323,16 @@ namespace Northwind.DAL.EntityClasses
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CustomerFields.CustomerId, null, ComparisonOperator.Equal, this.CustomerId, "CustomerEntity__"));
 			return bucket;
 		}
+
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Employee' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoEmployeesViaOrders()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.Relations.AddRange(GetRelationsForFieldOfType("EmployeesViaOrders"));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(CustomerFields.CustomerId, null, ComparisonOperator.Equal, this.CustomerId, "CustomerEntity__"));
+			return bucket;
+		}
 		
 
 		/// <summary>Creates a new instance of the factory related to this entity</summary>
@@ -325,6 +349,7 @@ namespace Northwind.DAL.EntityClasses
 			collectionsQueue.Enqueue(this._customerCustomerDemos);
 			collectionsQueue.Enqueue(this._orders);
 			collectionsQueue.Enqueue(this._customerDemographics);
+			collectionsQueue.Enqueue(this._employeesViaOrders);
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -335,6 +360,7 @@ namespace Northwind.DAL.EntityClasses
 			this._customerCustomerDemos = (EntityCollection<CustomerCustomerDemoEntity>) collectionsQueue.Dequeue();
 			this._orders = (EntityCollection<OrderEntity>) collectionsQueue.Dequeue();
 			this._customerDemographics = (EntityCollection<CustomerDemographicEntity>) collectionsQueue.Dequeue();
+			this._employeesViaOrders = (EntityCollection<EmployeeEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -346,6 +372,7 @@ namespace Northwind.DAL.EntityClasses
 			toReturn |=(this._customerCustomerDemos != null);
 			toReturn |=(this._orders != null);
 			toReturn |= (this._customerDemographics != null);
+			toReturn |= (this._employeesViaOrders != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -358,6 +385,7 @@ namespace Northwind.DAL.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CustomerCustomerDemoEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CustomerCustomerDemoEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<OrderEntity>(EntityFactoryCache2.GetEntityFactory(typeof(OrderEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CustomerDemographicEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CustomerDemographicEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<EmployeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployeeEntityFactory))) : null);
 		}
 #endif
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
@@ -368,6 +396,7 @@ namespace Northwind.DAL.EntityClasses
 			toReturn.Add("CustomerCustomerDemos", _customerCustomerDemos);
 			toReturn.Add("Orders", _orders);
 			toReturn.Add("CustomerDemographics", _customerDemographics);
+			toReturn.Add("EmployeesViaOrders", _employeesViaOrders);
 			return toReturn;
 		}
 
@@ -469,6 +498,19 @@ namespace Northwind.DAL.EntityClasses
 				intermediateRelation.SetAliases(string.Empty, "CustomerCustomerDemo_");
 				return new PrefetchPathElement2(new EntityCollection<CustomerDemographicEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CustomerDemographicEntityFactory))), intermediateRelation,
 					(int)Northwind.DAL.EntityType.CustomerEntity, (int)Northwind.DAL.EntityType.CustomerDemographicEntity, 0, null, null, GetRelationsForField("CustomerDemographics"), null, "CustomerDemographics", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Employee' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathEmployeesViaOrders
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.OrderEntityUsingCustomerId;
+				intermediateRelation.SetAliases(string.Empty, "Order_");
+				return new PrefetchPathElement2(new EntityCollection<EmployeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployeeEntityFactory))), intermediateRelation,
+					(int)Northwind.DAL.EntityType.CustomerEntity, (int)Northwind.DAL.EntityType.EmployeeEntity, 0, null, null, GetRelationsForField("EmployeesViaOrders"), null, "EmployeesViaOrders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
 			}
 		}
 
@@ -625,6 +667,13 @@ namespace Northwind.DAL.EntityClasses
 		public virtual EntityCollection<CustomerDemographicEntity> CustomerDemographics
 		{
 			get { return GetOrCreateEntityCollection<CustomerDemographicEntity, CustomerDemographicEntityFactory>("Customers", false, true, ref _customerDemographics);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'EmployeeEntity' which are related to this entity via a relation of type 'm:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(EmployeeEntity))]
+		public virtual EntityCollection<EmployeeEntity> EmployeesViaOrders
+		{
+			get { return GetOrCreateEntityCollection<EmployeeEntity, EmployeeEntityFactory>("CustomersViaOrders", false, true, ref _employeesViaOrders);	}
 		}
 	
 		/// <summary> Gets the type of the hierarchy this entity is in. </summary>

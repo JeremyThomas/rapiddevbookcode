@@ -243,44 +243,67 @@ namespace AW.Tests
 			var northwindLinqMetaData = GetNorthwindLinqMetaData();
 			northwindLinqMetaData.ContextToUse = contextToUse;
 			const string alfki = "ALFKI";
-			var cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Where(c => c.CustomerId == alfki).ToEntityCollection2();
-			Assert.AreEqual(alfki, cus.Single().CustomerId);
-			Assert.AreEqual(1, cus.Single().CustomerDemographics.Count());
-			cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Where(c => c.CustomerId == alfki).ToEntityCollection2();
-			Assert.AreEqual(alfki, cus.Single().CustomerId);
-			Assert.AreEqual(1, cus.Single().CustomerDemographics.Count());
+			AssertOneCustomerDemographicAfterPrefetch(northwindLinqMetaData, alfki);
+			AssertOneCustomerDemographicAfterPrefetch(northwindLinqMetaData, alfki);
 		}
 
-		//private static void TestContextFilterBug(Context contextToUse)
-		//{
-		//  var northwindLinqMetaData = GetNorthwindLinqMetaData();
-		//  northwindLinqMetaData.ContextToUse = contextToUse;
-		//  const string alfki = "ALFKI";
-		//  var cus = northwindLinqMetaData.Customer.PrefetchOrderOrderDetailProduct().Where(c=>c.CustomerId==alfki).ToEntityCollection2();
-		//  Assert.AreEqual(alfki, cus.Single().CustomerId);
-		//  cus = northwindLinqMetaData.Customer.PrefetchOrderOrderDetailProduct().Where(c => c.CustomerId == alfki).ToEntityCollection2();
+		private static void AssertOneCustomerDemographicAfterPrefetch(LinqMetaData northwindLinqMetaData, string alfki)
+		{
+			var cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Where(c => c.CustomerId == alfki).Single();
+			Assert.AreEqual(alfki, cus.CustomerId);
+			Assert.AreEqual(1, cus.CustomerDemographics.Count());
+		}
 
-		//  var customerEntities = from c in cus
-		//                         from o in c.Orders
-		//                         where o.OrderDetails.Any()
-		//                         where c.CustomerId == alfki 
-		//                         select c;
-		//  Assert.AreEqual(1, customerEntities.Count());
-		//}
+		[TestMethod]
+		public void PrefetchWithContext2()
+		{
+			var metaData = GetNorthwindLinqMetaData();
+			metaData.ContextToUse = new Context();
+			const string customerToSearch = "ALFKI";
 
-		//private static void TestContextFilterBug(Context contextToUse)
-		//{
-		//  var northwindLinqMetaData = GetNorthwindLinqMetaData();
-		//  northwindLinqMetaData.ContextToUse = contextToUse;
-		//  var productEntities = northwindLinqMetaData.Product.PrefetchOrderDetailOrderCustomer().Where(p => p.ProductId == 1).ToEntityCollection2();
-		//  Assert.AreEqual(1, productEntities.Single().ProductId);
-		//  productEntities = northwindLinqMetaData.Product.PrefetchOrderDetailOrderCustomer().Where(p => p.ProductId == 1).ToEntityCollection2();
+			// first time
+			var customerList = (from c in metaData.Customer
+			                    where c.CustomerId == customerToSearch
+			                    select c)
+				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders));
+			Assert.AreEqual(customerToSearch, customerList.Single().CustomerId);
+			var employeesCountToTest = customerList.Single().EmployeesViaOrders.Count();
 
-		//  var occurrencesFilter = from p in productEntities
-		//                          from i in p.OrderDetails
-		//                          where i.Order.Customer.CustomerId != "c"
-		//                          select oc;
-		//  Assert.AreEqual(1, occurrencesFilter.Count());
-		//}
+
+			// second time
+			customerList = (from c in metaData.Customer
+			                where c.CustomerId == customerToSearch
+			                select c)
+				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders));
+			Assert.AreEqual(customerToSearch, customerList.Single().CustomerId);
+			Assert.AreEqual(employeesCountToTest, customerList.Single().EmployeesViaOrders.Count());
+		}
+
+		[TestMethod]
+		public void PrefetchWithContext()
+		{
+			var metaData = GetNorthwindLinqMetaData();
+			metaData.ContextToUse = new Context();
+			const string customerToSearch = "ALFKI";
+
+			// first time
+			var customer = (from c in metaData.Customer
+			                where c.CustomerId == customerToSearch
+			                select c)
+				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders))
+				.Single();
+			Assert.AreEqual(customerToSearch, customer.CustomerId);
+			var employeesCountToTest = customer.EmployeesViaOrders.Count;
+
+
+			// second time
+			customer = (from c in metaData.Customer
+			            where c.CustomerId == customerToSearch
+			            select c)
+				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders))
+				.Single();
+			Assert.AreEqual(customerToSearch, customer.CustomerId);
+			Assert.AreEqual(employeesCountToTest, customer.EmployeesViaOrders.Count);
+		}
 	}
 }
