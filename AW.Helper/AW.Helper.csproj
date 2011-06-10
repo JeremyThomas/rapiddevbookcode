@@ -75,6 +75,7 @@
     <Compile Include="MetaDataHelper.cs" />
     <Compile Include="ObjectShredder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticReflection.cs" />
     <Compile Include="ValueTypeWrapper.cs" />
   </ItemGroup>
   <ItemGroup>

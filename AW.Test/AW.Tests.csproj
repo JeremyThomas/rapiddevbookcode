@@ -52,6 +52,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\CSScriptLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=68293a411f0cabcc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -157,10 +161,6 @@
       <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
       <Name>AW.Winforms.Helpers</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
-      <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>
-      <Name>DynamicQuery</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Northwind\DAL\Northwind.DAL.csproj">
       <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
       <Name>Northwind.DAL</Name>
@@ -187,10 +187,14 @@
       <Link>AdventureWorks.snk</Link>
     </None>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dynamic Expressions.html" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
