@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Reflection;
 using System.Text;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -159,10 +160,10 @@ namespace AW.Helper.LLBL
 			try
 			{
 				var q = query;
-				//if (forceTableAlias)
-				//  q = q.Where("null == null") as ILLBLGenProQuery; //To force an table alias
-				//if (maxNumberOfItemsToReturn != 0)
-				//  q = q.Take(maxNumberOfItemsToReturn) as ILLBLGenProQuery;
+				if (forceTableAlias)
+					q = q.Where("null == null") as ILLBLGenProQuery; //To force an table alias
+				if (maxNumberOfItemsToReturn != 0)
+					q = q.Take(maxNumberOfItemsToReturn) as ILLBLGenProQuery;
 				ExecuteQueryAndReadEveryBindableProperty(q, errors);
 			}
 			catch (ORMQueryExecutionException e)

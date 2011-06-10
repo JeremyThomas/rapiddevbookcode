@@ -141,7 +141,7 @@ namespace AW.Helper.LLBL
 
 		private static IEntityFactoryCore GetFactoryCore<T>(IEnumerable<T> enumerable) where T : class, IEntityCore
 		{
-			if (enumerable.Any())
+			if (!enumerable.IsNullOrEmpty())
 			{
 				var first = enumerable.FirstOrDefault(e => e.GetType().Equals(typeof(T))) as IEntityCore;
 				if (first != null) return GetFactoryCore(first);
@@ -482,7 +482,7 @@ namespace AW.Helper.LLBL
 		#endregion
 
 		#region Adapter
-
+		
 		/// <summary>
 		/// Saves all dirty objects inside the enumeration passed to the persistent storage.
 		/// </summary>
@@ -621,13 +621,22 @@ namespace AW.Helper.LLBL
 		/// </returns>
 		public static EntityCollectionBase2<T> ToEntityCollection2<T>(this IEnumerable<T> enumerable) where T : EntityBase2
 		{
+			var entityCollection = enumerable as EntityCollectionBase2<T>;
+			if (entityCollection != null)
+				return entityCollection;
 			var llblQuery = enumerable as ILLBLGenProQuery;
-			if (llblQuery != null)
-				return llblQuery.Execute<EntityCollectionBase2<T>>();
-			var entities = ((IEntityFactory2)GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase2<T>;
-			if (entities != null)
-				entities.AddRange(enumerable);
-			return entities;
+			return llblQuery == null ? ToEntityCollection(enumerable, ((IEntityFactory2)GetFactoryCore(enumerable))) : llblQuery.Execute<EntityCollectionBase2<T>>();
+		}
+
+		private static EntityCollectionBase2<T> ToEntityCollection<T>(IEnumerable<T> enumerable, IEntityFactory2 entityFactory) where T : EntityBase2
+		{
+			var entityCollection = entityFactory.CreateEntityCollection() as EntityCollectionBase2<T>;
+			if (entityCollection != null)
+			{
+				entityCollection.AddRange(enumerable);
+				return entityCollection;
+			}
+			return null;
 		}
 
 		public static IEntityCollection2 ToEntityCollection2(IEnumerable enumerable, Type itemType)

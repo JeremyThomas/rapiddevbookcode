@@ -72,6 +72,7 @@
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
+          <Binding Name="SD.TemplateBindings.QuerySpecTemplates" />
           <Binding Name="SD.TemplateBindings.OracleODPNetSpecific.NET20" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific.NET20" />
@@ -308,6 +309,7 @@
           <FieldFieldRelationship FkField="RegionId" PkField="RegionId" />
         </FieldRelationships>
       </NormalRelationship>
+      <IndirectRelationship Start=":Customer" End=":CustomerDemographic" StartNavigator="CustomerDemographics" EndNavigator="Customers" Relationship1="CustomerCustomerDemo.Customer-Customer.CustomerCustomerDemos" Relationship2="CustomerCustomerDemo.CustomerDemographic-CustomerDemographic.CustomerCustomerDemos" />
     </Relationships>
     <InheritanceHierarchies />
   </EntityModel>

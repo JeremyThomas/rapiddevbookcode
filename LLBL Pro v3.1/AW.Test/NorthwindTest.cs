@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
 {
@@ -207,7 +209,7 @@ namespace AW.Tests
 		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographicLinqToObject()
 		{
-			var cus = GetNorthwindLinqMetaData().Customer.WithPath(cp => cp.Prefetch<CustomerCustomerDemoEntity>(c => c.CustomerCustomerDemos).SubPath(p => p.Prefetch(c => c.CustomerDemographic))).ToList();
+			var cus = GetNorthwindLinqMetaData().Customer.PrefetchCustomerCustomerDemoCustomerDemographic().ToEntityCollection2();
 			var cusproj = from c in cus
 			              from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
 			              select
@@ -219,5 +221,66 @@ namespace AW.Tests
 			              		};
 			Assert.AreEqual(91, cusproj.Count());
 		}
+
+		/// <summary>
+		/// Tests whether a second m:n prefetch results in duplicate
+		/// </summary>
+		[TestMethod]
+		public void ManyToManyPrefetchContextBugTest()
+		{
+			AssertOneCustomerDemographicAfterSecondPrefetch(null); //Passes
+			AssertOneCustomerDemographicAfterSecondPrefetch(new Context()); //Fails
+		}
+
+		/// <summary>
+		/// Tests that there is only one CustomerDemographic after a second prefetch
+		/// CustomerCustomerDemo Table has 1 row: ALFKI 1          
+		/// CustomerDemographic Table has 1 row: xxx 1
+		/// </summary>
+		/// <param name="contextToUse">The context to use.</param>
+		private static void AssertOneCustomerDemographicAfterSecondPrefetch(Context contextToUse)
+		{
+			var northwindLinqMetaData = GetNorthwindLinqMetaData();
+			northwindLinqMetaData.ContextToUse = contextToUse;
+			const string alfki = "ALFKI";
+			var cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Where(c => c.CustomerId == alfki).ToEntityCollection2();
+			Assert.AreEqual(alfki, cus.Single().CustomerId);
+			Assert.AreEqual(1, cus.Single().CustomerDemographics.Count());
+			cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Where(c => c.CustomerId == alfki).ToEntityCollection2();
+			Assert.AreEqual(alfki, cus.Single().CustomerId);
+			Assert.AreEqual(1, cus.Single().CustomerDemographics.Count());
+		}
+
+		//private static void TestContextFilterBug(Context contextToUse)
+		//{
+		//  var northwindLinqMetaData = GetNorthwindLinqMetaData();
+		//  northwindLinqMetaData.ContextToUse = contextToUse;
+		//  const string alfki = "ALFKI";
+		//  var cus = northwindLinqMetaData.Customer.PrefetchOrderOrderDetailProduct().Where(c=>c.CustomerId==alfki).ToEntityCollection2();
+		//  Assert.AreEqual(alfki, cus.Single().CustomerId);
+		//  cus = northwindLinqMetaData.Customer.PrefetchOrderOrderDetailProduct().Where(c => c.CustomerId == alfki).ToEntityCollection2();
+
+		//  var customerEntities = from c in cus
+		//                         from o in c.Orders
+		//                         where o.OrderDetails.Any()
+		//                         where c.CustomerId == alfki 
+		//                         select c;
+		//  Assert.AreEqual(1, customerEntities.Count());
+		//}
+
+		//private static void TestContextFilterBug(Context contextToUse)
+		//{
+		//  var northwindLinqMetaData = GetNorthwindLinqMetaData();
+		//  northwindLinqMetaData.ContextToUse = contextToUse;
+		//  var productEntities = northwindLinqMetaData.Product.PrefetchOrderDetailOrderCustomer().Where(p => p.ProductId == 1).ToEntityCollection2();
+		//  Assert.AreEqual(1, productEntities.Single().ProductId);
+		//  productEntities = northwindLinqMetaData.Product.PrefetchOrderDetailOrderCustomer().Where(p => p.ProductId == 1).ToEntityCollection2();
+
+		//  var occurrencesFilter = from p in productEntities
+		//                          from i in p.OrderDetails
+		//                          where i.Order.Customer.CustomerId != "c"
+		//                          select oc;
+		//  Assert.AreEqual(1, occurrencesFilter.Count());
+		//}
 	}
 }
