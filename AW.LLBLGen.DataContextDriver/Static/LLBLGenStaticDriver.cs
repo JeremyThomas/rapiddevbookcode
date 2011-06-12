@@ -450,9 +450,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var entityCore = EntityHelper.CreateEntity(type);
 				if (entityCore == null)
 					return null;
-				var propertyNames = entityCore.Fields.Cast<IEntityFieldCore>().Select(ef => ef.Name);
-				propertyNames = propertyNames.Union(entityCore.GetAllRelations().Select(r => r.MappedFieldName));
-				var fieldsToShowInSchema = propertyDescriptors.Where(pd => propertyNames.Contains(pd.Name));
+				var fieldsToShowInSchema = propertyDescriptors.FilterByIsField(entityCore).Union(propertyDescriptors.FilterByIsNavigator(entityCore));
 				foreach (var propertyDescriptor in fieldsToShowInSchema.Where(pd=>string.IsNullOrEmpty(pd.Description)))
 				{
 					if (entityCore.FieldsCustomPropertiesOfType.ContainsKey(propertyDescriptor.Name) )
@@ -498,13 +496,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static ExplorerItem CreateEntityExplorerItem(MemberDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
 		{
 			return elementTypeLookup.Contains(elementType)
-							? new ExplorerItem(childProp.Name, kind, icon)
-							{
-								HyperlinkTarget = elementTypeLookup[elementType].First(),
-								ToolTipText = GeneralHelper.Join(FormatTypeName(elementType, true), childProp.DisplayName, childProp.Description),
-								DragText = childProp.Name
-							}
+							? CreateEntityExplorerItem2(childProp, elementTypeLookup, elementType, kind, icon)
 							: null;
+		}
+
+		private static ExplorerItem CreateEntityExplorerItem2(MemberDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
+		{
+			return new ExplorerItem(childProp.Name, kind, icon)
+				{
+					HyperlinkTarget = elementTypeLookup[elementType].First(),
+					ToolTipText = GeneralHelper.Join(FormatTypeName(elementType, true), childProp.DisplayName, childProp.Description),
+					DragText = childProp.Name
+				};
 		}
 	}
 

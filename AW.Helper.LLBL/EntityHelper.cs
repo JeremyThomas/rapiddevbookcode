@@ -273,12 +273,17 @@ namespace AW.Helper.LLBL
 			return entity.Fields[fieldName] ?? entity.Fields.Cast<IEntityField>().FirstOrDefault(ef => ef.Name.Equals(fieldName, StringComparison.InvariantCultureIgnoreCase));
 		}
 
+		public static IEnumerable<IEntityCore> AsEnumerable(this IEntityCollectionCore entityCollection)
+		{
+			return entityCollection.Cast<IEntityCore>();
+		}
+
 		/// <summary>
 		/// Gets a entity field enumeration from entity fields.
 		/// </summary>
 		/// <param name="entityFields">The entity fields.</param>
 		/// <returns>entity field enumeration</returns>
-		public static IEnumerable<IEntityField> GetFieldsFromEntityFields(this IEntityFields entityFields)
+		public static IEnumerable<IEntityField> AsEnumerable(this IEntityFields entityFields)
 		{
 			return entityFields.Cast<IEntityField>();
 		}
@@ -288,51 +293,26 @@ namespace AW.Helper.LLBL
 		/// </summary>
 		/// <param name="entityFields">The entity fields.</param>
 		/// <returns>entity field enumeration</returns>
-		public static IEnumerable<IEntityField2> GetFieldsFromEntityFields(this IEntityFields2 entityFields)
+		public static IEnumerable<IEntityField2> AsEnumerable(this IEntityFields2 entityFields)
 		{
 			return entityFields.Cast<IEntityField2>();
 		}
 
-		public static IEnumerable<IEntityField> GetChangedFields(this IEntity entity)
+		public static IEnumerable<IEntityFieldCore> GetFields(this IEntityCore entityCore)
 		{
-			return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Where(f => f.IsChanged) : new EntityFields(0);
+			return entityCore.Fields.Cast<IEntityFieldCore>();
 		}
 
-		public static IEnumerable<IEntityField2> GetChangedFields(this IEntity2 entity)
+		public static IEnumerable<IEntityFieldCore> GetChangedFields(this IEntityCore entity)
 		{
-			return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Where(f => f.IsChanged) : new EntityFields2(0);
+			return entity.IsDirty ? GetFields(entity).Where(f => f.IsChanged) : Enumerable.Empty<IEntityFieldCore>();
 		}
 
-		//public static IEnumerable<T> GetChangedFields<T> (this IEntityCore entity) where T : IEntityFieldCore
-		//{
-		//  return entity is IEntity ? (IEnumerable<T>)GetChangedFields((IEntity)entity) : (IEnumerable<T>)GetChangedFields((IEntity2)entity);
-		//}
-
-		public static int GetNumberOfChangedFields(this IEntity entity)
-		{
-			return entity.IsDirty ? GetFieldsFromEntityFields(entity.Fields).Count(f => f.IsChanged) : 0;
-		}
-
-		private static void RevertChangesToDBValue(this IEntity entity)
+	  public static void RevertChangesToDBValue(this IEntityCore entity) 
 		{
 			foreach (var changedField in entity.GetChangedFields())
 				changedField.ForcedCurrentValueWrite(changedField.DbValue, changedField.DbValue);
 			entity.IsDirty = false;
-		}
-
-		private static void RevertChangesToDBValue(this IEntity2 entity)
-		{
-			foreach (var changedField in entity.GetChangedFields())
-				changedField.ForcedCurrentValueWrite(changedField.DbValue, changedField.DbValue);
-			entity.IsDirty = false;
-		}
-
-		public static void RevertChangesToDBValue(this IEntityCore entity)
-		{
-			if (entity is IEntity)
-				RevertChangesToDBValue((IEntity) entity);
-			else
-				RevertChangesToDBValue((IEntity2) entity);
 		}
 
 		public static void RevertChangesToDBValue(this IEntityCollection entityCollection)
@@ -688,9 +668,17 @@ namespace AW.Helper.LLBL
 		/// <returns></returns>
 		public static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
 		{
-			return from propertyDescriptor in TypeDescriptor.GetProperties(type, null).Cast<PropertyDescriptor>()
-			       where typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType)
-			       select propertyDescriptor;
+			return MetaDataHelper.GetPropertyDescriptors(type).FilterByIsEntityCore(true);
+		}
+
+		public static IEnumerable<PropertyDescriptor> FilterByIsEntityCore(this IEnumerable<PropertyDescriptor> propertyDescriptors, bool? isEntityCore)
+		{
+			return isEntityCore.HasValue ? propertyDescriptors.Where(propertyDescriptor => IsEntityCore(propertyDescriptor) == isEntityCore.Value) : propertyDescriptors;
+		}
+
+		public static bool IsEntityCore(PropertyDescriptor propertyDescriptor)
+		{
+			return typeof(IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType);
 		}
 
 		public static IEntityFields GetFieldsFromType(Type type)
@@ -706,5 +694,28 @@ namespace AW.Helper.LLBL
 			//			return ef.Create().Fields;
 			return ef.Fields;
 		}
+
+		public static IEnumerable<PropertyDescriptor> GetNavigatorProperties(IEntityCore entityCore)
+		{
+			return MetaDataHelper.GetPropertyDescriptors(entityCore.GetType()).FilterByIsNavigator(entityCore);
+		}
+
+		public static IEnumerable<PropertyDescriptor> FilterByIsNavigator(this IEnumerable<PropertyDescriptor> propertyDescriptors, IEntityCore entityCore)
+		{
+			return propertyDescriptors.Where(propertyDescriptor => FieldIsNavigator(entityCore, propertyDescriptor.Name));
+		}
+
+		public static IEnumerable<PropertyDescriptor> FilterByIsField(this IEnumerable<PropertyDescriptor> propertyDescriptors, IEntityCore entityCore)
+		{
+			var propertyNames = entityCore.Fields. Cast<IEntityFieldCore>().Select(ef => ef.Name);
+			return propertyDescriptors.Where(propertyDescriptor => propertyNames.Contains(propertyDescriptor.Name));
+		}
+	
+		public static bool FieldIsNavigator(IEntityCore entityCore, string fieldName)
+		{
+			var relations = entityCore.GetRelationsForFieldOfType(fieldName);
+			return relations.Count>0;
+		}
+
 	}
 }

@@ -488,6 +488,7 @@
     <None Include="..\..\..\Ancillary\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
     </None>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NUnitForms\NUnitForms.csproj">
