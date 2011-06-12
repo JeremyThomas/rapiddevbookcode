@@ -13,11 +13,12 @@ namespace Northwind.DAL.Linq
 
 		public static IQueryable<CustomerEntity> PrefetchCustomerCustomerDemographic(this DataSource2<CustomerEntity> customerEntities)
 		{
-			return customerEntities.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathCustomerDemographics));
+			return customerEntities.WithPath(new PathEdge<CustomerDemographicEntity>(CustomerEntity.PrefetchPathCustomerDemographics));
 		}
 
 		public static IQueryable<CustomerEntity> PrefetchOrderOrderDetailProduct(this DataSource2<CustomerEntity> customerEntities)
 		{
+		//	return customerEntities.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.o));
 			return customerEntities.WithPath(cp => cp.Prefetch<OrderEntity>(c => c.Orders).SubPath(i => i.Prefetch<OrderDetailEntity>(inv => inv.OrderDetails).SubPath(f => f.Prefetch(f1 => f1.Product))));
 		}
 

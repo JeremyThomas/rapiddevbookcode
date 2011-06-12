@@ -14,9 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2CA-4CCC-9960-748D511B5BAC}"
 	ProjectSection(SolutionItems) = preProject
-		Lib\CSScriptLibrary.dll = Lib\CSScriptLibrary.dll
-		Lib\CSScriptLibrary.pdb = Lib\CSScriptLibrary.pdb
-		Lib\CSScriptLibrary.xml = Lib\CSScriptLibrary.xml
+		Lib\CSScriptLibrary.v3.5.dll = Lib\CSScriptLibrary.v3.5.dll
 		Lib\sliver.Windows.Forms.StateBrowser.dll = Lib\sliver.Windows.Forms.StateBrowser.dll
 	EndProjectSection
 EndProject
@@ -116,10 +114,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitForms.Test", "nunitfor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL", "Northwind\DAL\Northwind.DAL.csproj", "{24FA312C-06E0-462D-97FA-709AC20D09EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.SqlServerSQL Server", "Northwind\DAL\SQL Server (SqlClient)\Northwind.DAL.SqlServerSQL Server.csproj", "{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.OracleOracle", "Northwind\DAL\Oracle (ODP.NET)\Northwind.DAL.OracleOracle.csproj", "{9F67CB50-9D2F-482E-827C-4F4E43FA4842}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9E62DAD6-C73A-49CA-9906-14E28325549C}"
 	ProjectSection(SolutionItems) = preProject
 		Lib\Test\Moq.chm = Lib\Test\Moq.chm
@@ -154,6 +148,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{0A1DF75C-9F0C-4B2E-BD03-316671ED8146}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{79351B3D-6F22-43FC-B6E3-84403C789513}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.SqlServer", "Northwind\DAL\SQL Server (SqlClient)\Northwind.DAL.SqlServer.csproj", "{0AAD790B-15C7-4119-9987-3137A0BB20B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.Oracle", "Northwind\DAL\Oracle (ODP.NET)\Northwind.DAL.Oracle.csproj", "{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -220,18 +218,18 @@ Global
 		SccProjectTopLevelParentUniqueName16 = AW\u0020and\u0020DataContextDriver.sln
 		SccProjectName16 = Northwind/DAL
 		SccLocalPath16 = Northwind\\DAL
-		SccProjectUniqueName17 = Northwind\\DAL\\SQL\u0020Server\u0020(SqlClient)\\Northwind.DAL.SqlServerSQL\u0020Server.csproj
+		SccProjectUniqueName17 = AW.LLBLGen.DataContextDriver.Tests\\AW.LLBLGen.DataContextDriver.Tests.csproj
 		SccProjectTopLevelParentUniqueName17 = AW\u0020and\u0020DataContextDriver.sln
-		SccProjectName17 = Northwind/DAL/SQL\u0020Server\u0020(SqlClient)
-		SccLocalPath17 = Northwind\\DAL\\SQL\u0020Server\u0020(SqlClient)
-		SccProjectUniqueName18 = Northwind\\DAL\\Oracle\u0020(ODP.NET)\\Northwind.DAL.OracleOracle.csproj
+		SccProjectName17 = AW.LLBLGen.DataContextDriver.Tests
+		SccLocalPath17 = AW.LLBLGen.DataContextDriver.Tests
+		SccProjectUniqueName18 = Northwind\\DAL\\SQL\u0020Server\u0020(SqlClient)\\Northwind.DAL.SqlServer.csproj
 		SccProjectTopLevelParentUniqueName18 = AW\u0020and\u0020DataContextDriver.sln
-		SccProjectName18 = Northwind/DAL/Oracle\u0020(ODP.NET)
-		SccLocalPath18 = Northwind\\DAL\\Oracle\u0020(ODP.NET)
-		SccProjectUniqueName19 = AW.LLBLGen.DataContextDriver.Tests\\AW.LLBLGen.DataContextDriver.Tests.csproj
+		SccProjectName18 = Northwind/DAL/SQL\u0020Server\u0020(SqlClient)
+		SccLocalPath18 = Northwind\\DAL\\SQL\u0020Server\u0020(SqlClient)
+		SccProjectUniqueName19 = Northwind\\DAL\\Oracle\u0020(ODP.NET)\\Northwind.DAL.Oracle.csproj
 		SccProjectTopLevelParentUniqueName19 = AW\u0020and\u0020DataContextDriver.sln
-		SccProjectName19 = AW.LLBLGen.DataContextDriver.Tests
-		SccLocalPath19 = AW.LLBLGen.DataContextDriver.Tests
+		SccProjectName19 = Northwind/DAL/Oracle\u0020(ODP.NET)
+		SccLocalPath19 = Northwind\\DAL\\Oracle\u0020(ODP.NET)
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -443,30 +441,6 @@ Global
 		{24FA312C-06E0-462D-97FA-709AC20D09EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24FA312C-06E0-462D-97FA-709AC20D09EF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24FA312C-06E0-462D-97FA-709AC20D09EF}.Release|x86.ActiveCfg = Release|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Release - Test|Any CPU.Build.0 = Release|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Release - Test|x86.ActiveCfg = Release|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D}.Release|x86.ActiveCfg = Release|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release - Test|Any CPU.Build.0 = Release|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release - Test|x86.ActiveCfg = Release|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842}.Release|x86.ActiveCfg = Release|Any CPU
 		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
@@ -479,6 +453,30 @@ Global
 		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C7514B66-375D-4EA3-B211-711DA2EB450A}.Release|x86.ActiveCfg = Release|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9}.Release|x86.ActiveCfg = Release|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -488,9 +486,6 @@ Global
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{9E62DAD6-C73A-49CA-9906-14E28325549C} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{8D111638-4952-4BB9-8853-16EB6D1BB1B9} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
-		{3A62F36D-4E53-4532-B9EF-3B303A578B5E} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
-		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
-		{E779CBD7-1CCE-4796-AE12-00AB56A8A815} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
 		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{7919C746-73F3-4279-A53B-CC6C08F42318} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{A67A2102-BA0E-48B3-9EF8-831F72B47160} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
@@ -499,9 +494,12 @@ Global
 		{E19E19F1-71EE-4C76-BF94-350A46075BED} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 		{C7514B66-375D-4EA3-B211-711DA2EB450A} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 		{2661F1B5-62FB-4783-A1A0-57445F397F9E} = {79351B3D-6F22-43FC-B6E3-84403C789513}
-		{79162193-6027-4D8C-ADB5-B2BEFBEAFA7D} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
-		{9F67CB50-9D2F-482E-827C-4F4E43FA4842} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
+		{3A62F36D-4E53-4532-B9EF-3B303A578B5E} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
 		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
+		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
+		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 

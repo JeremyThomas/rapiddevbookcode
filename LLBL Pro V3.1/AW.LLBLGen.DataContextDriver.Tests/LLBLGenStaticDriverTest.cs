@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Xml.Linq;
 using AW.Data;
@@ -6,6 +8,7 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.Linq;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.LLBLGen.DataContextDriver.Static;
 using LINQPad.Extensibility.DataContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -68,15 +71,30 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var customType = typeof (LinqMetaData);
 			GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, true);
 		}
+
+		/// <summary>
+		///A test for GetSchema using AW
+		///</summary>
+		[TestMethod, Ignore]
+		public void GetAWSchemaPropertiesTest()
+		{
+			var customType = typeof(LinqMetaData);
+			GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, false);
+		}
 		
 		/// <summary>
 		///A test for GetSchema using Northwind
 		///</summary>
 		[TestMethod]
-		public void GetNorthwindSchemaTest()
+		public void GetNorthwindSchemaFieldsTest()
 		{
 			GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData), Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, true);
-			GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData), Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, false);
+		}
+
+		[TestMethod]
+		public void GetNorthwindSchemaPropertiesTest()
+		{
+			GetSchemaTest<Northwind.DAL.EntityType>(typeof(Northwind.DAL.Linq.LinqMetaData), Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, false);
 		}
 
 		private static void GetSchemaTest<TEnum>(Type customType, Func<TEnum, IEntityFactoryCore> entityFactoryFactory, bool useFields)
@@ -95,18 +113,31 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			foreach (var entityType in orderedEnumerable)
 			{
 				var entityFactory = entityFactoryFactory(entityType);
-				var entity = entityFactory.Create();
+				IEntityCore entity = entityFactory.Create();
 				var fieldNames = entity.Fields.Cast<IEntityFieldCore>().Select(f => f.Name).Distinct();
-				var entityRelations = entity.GetAllRelations();
+				var navigatorProperties = EntityHelper.GetNavigatorProperties(entity);
 				var explorerItem = actual[index];
 				index++;
-				Assert.AreEqual(fieldNames.Count(), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.Property), entityFactory.ForEntityName + " - " + explorerItem.Text);
-				Assert.AreEqual(entityRelations.Count(er => er.TypeOfRelation == RelationType.OneToMany), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.CollectionLink), entityFactory.ForEntityName + " - " + explorerItem.Text);
-				Assert.AreEqual(entityRelations.Count(er => er.TypeOfRelation == RelationType.ManyToOne), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink), entityFactory.ForEntityName + " - " + explorerItem.Text);
+				var entityName = entityFactory.ForEntityName + " - " + explorerItem.Text;
+				Assert.AreEqual(fieldNames.Count(), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.Property), entityName + " - fieldNames");
+				Assert.AreEqual(navigatorProperties.Count(er => !EntityHelper.IsEntityCore(er)), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.CollectionLink), entityName + " - Many navigator");
+				Assert.AreEqual(navigatorProperties.Count(EntityHelper.IsEntityCore), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink), entityName + " - single navigator");
 			}
 		}
 
 		[TestMethod]
+		public void GetNavigatorPropertiesTest()
+		{
+			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var toManyProperties = EntityHelper.GetNavigatorProperties(customer);
+			Assert.AreEqual(4, toManyProperties.Count());
+
+			var employeeEntity = new Northwind.DAL.EntityClasses.EmployeeEntity();
+			toManyProperties = EntityHelper.GetNavigatorProperties(employeeEntity);
+			Assert.AreEqual(5, toManyProperties.Count());
+		}
+
+		[TestMethod, Ignore]
 		public void GetFieldsToShowInSchemaTest()
 		{
 			var fieldsToShowInSchema = LLBLGenStaticDriver.GetFieldsToShowInSchema(typeof (AddressEntity));

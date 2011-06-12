@@ -20,7 +20,7 @@ namespace AW.Helper.LLBL
 		/// Checks entities can be fetched.
 		/// </summary>
 		/// <typeparam name="TEnum">The type of the enum.</typeparam>
-		/// <param name="entityFactoryFactory">The entity factory factory.</param>
+		/// /// <param name="entityFactoryFactory">The entity factory factory.</param>
 		/// <param name="adapter">The adapter.</param>
 		/// <param name="maxNumberOfItemsToReturn">The max number of items to return. If 0, all entities are returned.</param>
 		/// <param name="entityTypes">The entity types.</param>
@@ -31,54 +31,25 @@ namespace AW.Helper.LLBL
 			if (adapter == null)
 				errors.Append("Adapter is null");
 			else
-			{
-				if (entityTypes.IsNullOrEmpty())
-					entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
-				else
-					GeneralHelper.CheckIsEnum(typeof (TEnum));
-				var inheritanceErrors = new StringBuilder();
-				foreach (var entityType in entityTypes)
-				{
-					var entityFactoryCore = entityFactoryFactory(entityType);
-					var entity = entityFactoryCore.Create();
-					var entityCollection = entityFactoryCore.CreateEntityCollection();
-					try
-					{
-						adapter.FetchEntityCollection(entityCollection, null, maxNumberOfItemsToReturn);
-					}
-					catch (ORMQueryExecutionException e)
-					{
-						errors.AppendLine(entity.ToString());
-						errors.AppendLine(e.Message);
-						errors.AppendLine(e.QueryExecuted);
-					}
-					catch (ORMInheritanceInfoException e)
-					{
-						inheritanceErrors.AppendLine(entity.ToString());
-						inheritanceErrors.AppendLine(e.Message);
-					}
-					catch (Exception e)
-					{
-						errors.AppendLine(entity.ToString());
-						errors.AppendLine(e.Message);
-					}
-					foreach (
-						var invalidCastErrors in
-							entityCollection.Cast<EntityBase2>().Select(ReadEveryBindableProperty)
-								.Where(invalidCastErrors => invalidCastErrors.Length > 0))
-					{
-						errors.AppendLine(invalidCastErrors.ToString());
-						break;
-					}
-				}
-			}
+				return CheckEntitiesCanBeFetched(entityFactoryFactory, entityCollection => adapter.FetchEntityCollection((IEntityCollection2) entityCollection, null, maxNumberOfItemsToReturn), true, entityTypes);
 			return errors;
 		}
 
 		public static StringBuilder CheckEntitiesCanBeFetched<TEnum>(Func<TEnum, IEntityFactory> entityFactoryFactory, int maxNumberOfItemsToReturn, params TEnum[] entityTypes)
 		{
-			var errors = new StringBuilder();
+			return CheckEntitiesCanBeFetched(entityFactoryFactory, entityCollection => ((IEntityCollection) entityCollection).GetMulti(null, maxNumberOfItemsToReturn), true, entityTypes);
+		}
 
+		public static StringBuilder CheckEntitiesCanBeFetched<TEnum, TFactoryType>(Func<TEnum, TFactoryType> entityFactoryFactory, Action<IEntityCollectionCore> fetchEntityCollection,
+		                                                                           bool DoReadEveryBindableProperty,
+		                                                                           params TEnum[] entityTypes) where TFactoryType : IEntityFactoryCore
+		{
+			var errors = new StringBuilder();
+			if (entityFactoryFactory == null)
+				errors.Append("entityFactoryFactory is null");
+			if (fetchEntityCollection == null)
+				errors.Append("fetchEntityCollection is null");
+			if (errors.Length == 0)
 			{
 				if (entityTypes.IsNullOrEmpty())
 					entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
@@ -88,11 +59,11 @@ namespace AW.Helper.LLBL
 				foreach (var entityType in entityTypes)
 				{
 					var entityFactoryCore = entityFactoryFactory(entityType);
+					var entityCollection = CreateEntityCollection(entityFactoryCore);
 					var entity = entityFactoryCore.Create();
-					var entityCollection = entityFactoryCore.CreateEntityCollection();
 					try
 					{
-						entityCollection.GetMulti(null, maxNumberOfItemsToReturn);
+						fetchEntityCollection(entityCollection);
 					}
 					catch (ORMQueryExecutionException e)
 					{
@@ -110,18 +81,20 @@ namespace AW.Helper.LLBL
 						errors.AppendLine(entity.ToString());
 						errors.AppendLine(e.Message);
 					}
-					foreach (
-						var invalidCastErrors in
-							entityCollection.Cast<EntityBase>().Select(ReadEveryBindableProperty)
-								.Where(invalidCastErrors => invalidCastErrors.Length > 0))
-					{
-						errors.AppendLine(invalidCastErrors.ToString());
-						break;
-					}
+					if (DoReadEveryBindableProperty)
+						ReadEveryBindableProperty(entityCollection, errors);
 				}
 			}
 			return errors;
 		}
+
+		private static IEntityCollectionCore CreateEntityCollection<TFactoryType>(TFactoryType entityFactoryCore)
+		{
+			return typeof (TFactoryType) == typeof (IEntityFactory)
+			       	? (IEntityCollectionCore) ((IEntityFactory) entityFactoryCore).CreateEntityCollection()
+			       	: ((IEntityFactory2) entityFactoryCore).CreateEntityCollection();
+		}
+
 
 		/// <summary>
 		/// Checks all entities can be fetched using LINQ.
@@ -189,7 +162,7 @@ namespace AW.Helper.LLBL
 				errors.AppendLine(e.ErrorCode + " - " + e.Message);
 				DynamicQueryEngineBase.Switch.Level = TraceLevel.Verbose;
 				if (CheckEntityCanBeFetchedUsingLINQ(query, false, maxNumberOfItemsToReturn, errors, inheritanceErrors))
-					errors.AppendLine("Plain query succeded");
+					errors.AppendLine("Plain query succeeded");
 			}
 			catch (Exception e)
 			{
@@ -223,7 +196,7 @@ namespace AW.Helper.LLBL
 			if (entityCollection != null)
 				foreach (
 					var invalidCastErrors in
-						entityCollection.Cast<IEntityCore>().Select(ReadEveryBindableProperty)
+						entityCollection.AsEnumerable().Select(ReadEveryBindableProperty)
 							.Where(invalidCastErrors => invalidCastErrors.Length > 0))
 				{
 					errors.AppendLine(invalidCastErrors.ToString());
@@ -248,15 +221,7 @@ namespace AW.Helper.LLBL
 				{
 					if (e.InnerException is InvalidCastException)
 					{
-						var entity2 = entity as IEntity2;
-						IEntityFieldCore field;
-						if (entity2 == null)
-							field = ((IEntity) entity).Fields.GetFieldsFromEntityFields().Where(f => f.Name == browsableProperty.Name).FirstOrDefault();
-						else
-						{
-							field = entity2.Fields.GetFieldsFromEntityFields().Where(f => f.Name == browsableProperty.Name).FirstOrDefault();
-						}
-
+						var field = entity.GetFields().FirstOrDefault(f => f.Name == browsableProperty.Name);
 						errors.AppendLine(e.Message);
 						if (field != null)
 							errors.AppendFormat("{0} of type {1} has a value of {2} is attempting to being cast to a {3}",
@@ -317,11 +282,12 @@ namespace AW.Helper.LLBL
 		public EntityInformation(IEntity entity)
 		{
 			Entity = entity.LLBLGenProEntityName.Replace("Entity", "");
-			var fieldAndEntityInformations = from field in entity.Fields.GetFieldsFromEntityFields()
+			var fieldAndEntityInformations = from field in entity.Fields.AsEnumerable()
 			                                 where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
 			                                 select new FieldAndEntityInformation(entity.GetType(), field,
-			                                                                      entity.FieldsCustomPropertiesOfType.ContainsKey(field.Name) 
-																																						? entity.FieldsCustomPropertiesOfType[field.Name] : new Dictionary<string, string>());
+			                                                                      entity.FieldsCustomPropertiesOfType.ContainsKey(field.Name)
+			                                                                      	? entity.FieldsCustomPropertiesOfType[field.Name]
+			                                                                      	: new Dictionary<string, string>());
 			FieldInformation = fieldAndEntityInformations;
 			var fieldAndEntityInformation = fieldAndEntityInformations.FirstOrDefault();
 			if (fieldAndEntityInformation != null)
@@ -367,7 +333,7 @@ namespace AW.Helper.LLBL
 		public static IEnumerable<FieldInformation> FieldInfoFactory(List<Type> entities)
 		{
 			return from entity in entities
-			       from field in EntityHelper.GetFieldsFromType(entity).GetFieldsFromEntityFields()
+			       from field in EntityHelper.GetFieldsFromType(entity).AsEnumerable()
 			       where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
 			       select new FieldInformation(entity, field);
 		}
@@ -501,7 +467,7 @@ namespace AW.Helper.LLBL
 		public static IEnumerable<FieldAndEntityInformation> FieldAndEntityInformationFactory(List<Type> entities)
 		{
 			return from entity in entities
-			       from field in EntityHelper.GetFieldsFromType(entity).GetFieldsFromEntityFields()
+			       from field in EntityHelper.GetFieldsFromType(entity).AsEnumerable()
 			       where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
 			       select new FieldAndEntityInformation(entity, field, "");
 		}
@@ -546,7 +512,7 @@ namespace AW.Helper.LLBL
 		public EntityInformation2(IEntity2 entity)
 		{
 			Entity = entity.LLBLGenProEntityName.Replace("Entity", "");
-			var fieldAndEntityInformations = from field in entity.Fields.GetFieldsFromEntityFields()
+			var fieldAndEntityInformations = from field in entity.Fields.AsEnumerable()
 			                                 where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
 			                                 select new FieldAndEntityInformation2(entity.GetType(), field, entity.FieldsCustomPropertiesOfType[field.Name]);
 			FieldInformation = fieldAndEntityInformations;
@@ -598,7 +564,7 @@ namespace AW.Helper.LLBL
 		{
 			SQLServerDataAccessAdapter = adapter;
 			return from entity in entities
-			       from field in EntityHelper.GetFieldsFromType2(entity).GetFieldsFromEntityFields()
+			       from field in EntityHelper.GetFieldsFromType2(entity).AsEnumerable()
 			       where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
 			       select new FieldInformation2(entity, field);
 		}
@@ -733,7 +699,7 @@ namespace AW.Helper.LLBL
 		{
 			SQLServerDataAccessAdapter = adapter;
 			return from entity in entities
-			       from field in EntityHelper.GetFieldsFromType2(entity).GetFieldsFromEntityFields()
+			       from field in EntityHelper.GetFieldsFromType2(entity).AsEnumerable()
 			       where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
 			       select new FieldAndEntityInformation2(entity, field, "");
 		}

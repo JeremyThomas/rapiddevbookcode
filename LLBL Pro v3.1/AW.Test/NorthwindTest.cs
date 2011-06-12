@@ -252,31 +252,8 @@ namespace AW.Tests
 			var cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Where(c => c.CustomerId == alfki).Single();
 			Assert.AreEqual(alfki, cus.CustomerId);
 			Assert.AreEqual(1, cus.CustomerDemographics.Count());
-		}
-
-		[TestMethod]
-		public void PrefetchWithContext2()
-		{
-			var metaData = GetNorthwindLinqMetaData();
-			metaData.ContextToUse = new Context();
-			const string customerToSearch = "ALFKI";
-
-			// first time
-			var customerList = (from c in metaData.Customer
-			                    where c.CustomerId == customerToSearch
-			                    select c)
-				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders));
-			Assert.AreEqual(customerToSearch, customerList.Single().CustomerId);
-			var employeesCountToTest = customerList.Single().EmployeesViaOrders.Count();
-
-
-			// second time
-			customerList = (from c in metaData.Customer
-			                where c.CustomerId == customerToSearch
-			                select c)
-				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders));
-			Assert.AreEqual(customerToSearch, customerList.Single().CustomerId);
-			Assert.AreEqual(employeesCountToTest, customerList.Single().EmployeesViaOrders.Count());
+			if (northwindLinqMetaData.ContextToUse != null) 
+				northwindLinqMetaData.ContextToUse.Add(cus.CustomerDemographics);
 		}
 
 		[TestMethod]
@@ -295,6 +272,8 @@ namespace AW.Tests
 			Assert.AreEqual(customerToSearch, customer.CustomerId);
 			var employeesCountToTest = customer.EmployeesViaOrders.Count;
 
+			// add the related collection to the context
+			metaData.ContextToUse.Add(customer.EmployeesViaOrders);
 
 			// second time
 			customer = (from c in metaData.Customer

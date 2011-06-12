@@ -298,7 +298,7 @@ namespace AW.Helper
 		public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass, params Attribute[] attributes)
 		{
 			var propertyDescriptorCollection = attributes.IsNullOrEmpty() ? TypeDescriptor.GetProperties(modelClass) : TypeDescriptor.GetProperties(modelClass, attributes);
-			var modelClassProperties = propertyDescriptorCollection.Cast<PropertyDescriptor>().ToList();
+			var modelClassProperties = AsEnumerable(propertyDescriptorCollection).ToList();
 			if (TypeDescriptor.GetProvider(modelClass) is AssociatedMetadataTypeTypeDescriptionProvider)
 				return modelClassProperties; //No need to get the MetadataType(buddy class)
 
@@ -309,6 +309,11 @@ namespace AW.Helper
 					modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>().ToList());
 			}
 			return modelClassProperties;
+		}
+
+		public static IEnumerable<PropertyDescriptor> AsEnumerable(this PropertyDescriptorCollection propertyDescriptorCollection)
+		{
+			return propertyDescriptorCollection.Cast<PropertyDescriptor>();
 		}
 
 		/// <summary>

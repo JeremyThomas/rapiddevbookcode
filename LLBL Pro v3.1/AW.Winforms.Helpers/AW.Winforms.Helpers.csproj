@@ -59,9 +59,8 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSScriptLibrary, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\CSScriptLibrary.dll</HintPath>
+    <Reference Include="CSScriptLibrary.v3.5">
+      <HintPath>..\Lib\CSScriptLibrary.v3.5.dll</HintPath>
     </Reference>
     <Reference Include="Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=68293a411f0cabcc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
