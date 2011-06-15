@@ -275,6 +275,8 @@ namespace AW.Tests
 			// add the related collection to the context
 			metaData.ContextToUse.Add(customer.EmployeesViaOrders);
 
+			//Assert.AreEqual(1, customer.EmployeesViaOrders.First().CustomersViaOrders);
+
 			// second time
 			customer = (from c in metaData.Customer
 			            where c.CustomerId == customerToSearch
@@ -283,6 +285,44 @@ namespace AW.Tests
 				.Single();
 			Assert.AreEqual(customerToSearch, customer.CustomerId);
 			Assert.AreEqual(employeesCountToTest, customer.EmployeesViaOrders.Count);
+		}
+
+		[TestMethod, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+		public void BiDirectionalManyToMany()
+		{
+			var metaData = GetNorthwindLinqMetaData();
+			var customer = metaData.Customer
+				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders))
+				.First();
+			Assert.AreNotEqual(0, customer.EmployeesViaOrders.Count);
+
+			Assert.AreEqual(1, customer.EmployeesViaOrders.First().CustomersViaOrders.Count); //Fails
+		}
+
+		[TestMethod, Description("After a prefetch of a  1:n intermediate m:1 relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+		public void BiDirectionalManyToManyInCode()
+		{
+			var metaData = GetNorthwindLinqMetaData();
+			var customer = metaData.Customer
+				.WithPath(new PathEdge<OrderEntity>(CustomerEntity.PrefetchPathOrders, new PathEdge<EmployeeEntity>(OrderEntity.PrefetchPathEmployee)))
+				.First();
+			Assert.AreNotEqual(0, customer.Orders.Count);
+			Assert.AreNotEqual(0, customer.EmployeesViaOrdersInCode.Count());
+
+			Assert.AreEqual(1, customer.EmployeesViaOrdersInCode.First().CustomersViaOrdersInCode.Count());
+			Assert.AreEqual(customer, customer.EmployeesViaOrdersInCode.First().CustomersViaOrdersInCode.Single());
+		}
+
+		[TestMethod]
+		public void BiDirectionalOneToMany()
+		{
+			var metaData = GetNorthwindLinqMetaData();
+			var customer = metaData.Customer
+				.WithPath(new PathEdge<OrderEntity>(CustomerEntity.PrefetchPathOrders))
+				.First();
+			Assert.AreNotEqual(0, customer.Orders.Count);
+
+			Assert.AreEqual(customer, customer.Orders.First().Customer);
 		}
 	}
 }

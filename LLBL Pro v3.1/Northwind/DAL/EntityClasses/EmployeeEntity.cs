@@ -24,6 +24,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 namespace Northwind.DAL.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+	using System.Linq;
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'Employee'.<br/><br/></summary>
 	[Serializable]
@@ -890,6 +891,12 @@ namespace Northwind.DAL.EntityClasses
 		#region Custom Entity code
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
+
+		public virtual IEnumerable<CustomerEntity> CustomersViaOrdersInCode
+		{
+			get { return Orders.Select(o => o.Customer); }
+		}
+
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 

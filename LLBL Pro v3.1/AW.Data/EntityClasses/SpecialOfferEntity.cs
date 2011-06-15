@@ -43,8 +43,6 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.SpecialOfferProductCollection	_specialOfferProducts;
 		private bool	_alwaysFetchSpecialOfferProducts, _alreadyFetchedSpecialOfferProducts;
-		private AW.Data.CollectionClasses.ProductCollection _productCollectionViaSpecialOfferProduct;
-		private bool	_alwaysFetchProductCollectionViaSpecialOfferProduct, _alreadyFetchedProductCollectionViaSpecialOfferProduct;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -59,8 +57,6 @@ namespace AW.Data.EntityClasses
 		{
 			/// <summary>Member name SpecialOfferProducts</summary>
 			public static readonly string SpecialOfferProducts = "SpecialOfferProducts";
-			/// <summary>Member name ProductCollectionViaSpecialOfferProduct</summary>
-			public static readonly string ProductCollectionViaSpecialOfferProduct = "ProductCollectionViaSpecialOfferProduct";
 		}
 		#endregion
 		
@@ -107,9 +103,6 @@ namespace AW.Data.EntityClasses
 			_specialOfferProducts = (AW.Data.CollectionClasses.SpecialOfferProductCollection)info.GetValue("_specialOfferProducts", typeof(AW.Data.CollectionClasses.SpecialOfferProductCollection));
 			_alwaysFetchSpecialOfferProducts = info.GetBoolean("_alwaysFetchSpecialOfferProducts");
 			_alreadyFetchedSpecialOfferProducts = info.GetBoolean("_alreadyFetchedSpecialOfferProducts");
-			_productCollectionViaSpecialOfferProduct = (AW.Data.CollectionClasses.ProductCollection)info.GetValue("_productCollectionViaSpecialOfferProduct", typeof(AW.Data.CollectionClasses.ProductCollection));
-			_alwaysFetchProductCollectionViaSpecialOfferProduct = info.GetBoolean("_alwaysFetchProductCollectionViaSpecialOfferProduct");
-			_alreadyFetchedProductCollectionViaSpecialOfferProduct = info.GetBoolean("_alreadyFetchedProductCollectionViaSpecialOfferProduct");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -120,7 +113,6 @@ namespace AW.Data.EntityClasses
 		protected override void PostReadXmlFixups()
 		{
 			_alreadyFetchedSpecialOfferProducts = (_specialOfferProducts.Count > 0);
-			_alreadyFetchedProductCollectionViaSpecialOfferProduct = (_productCollectionViaSpecialOfferProduct.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -142,10 +134,6 @@ namespace AW.Data.EntityClasses
 				case "SpecialOfferProducts":
 					toReturn.Add(Relations.SpecialOfferProductEntityUsingSpecialOfferID);
 					break;
-				case "ProductCollectionViaSpecialOfferProduct":
-					toReturn.Add(Relations.SpecialOfferProductEntityUsingSpecialOfferID, "SpecialOfferEntity__", "SpecialOfferProduct_", JoinHint.None);
-					toReturn.Add(SpecialOfferProductEntity.Relations.ProductEntityUsingProductID, "SpecialOfferProduct_", string.Empty, JoinHint.None);
-					break;
 				default:
 					break;				
 			}
@@ -163,9 +151,6 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_specialOfferProducts", (!this.MarkedForDeletion?_specialOfferProducts:null));
 			info.AddValue("_alwaysFetchSpecialOfferProducts", _alwaysFetchSpecialOfferProducts);
 			info.AddValue("_alreadyFetchedSpecialOfferProducts", _alreadyFetchedSpecialOfferProducts);
-			info.AddValue("_productCollectionViaSpecialOfferProduct", (!this.MarkedForDeletion?_productCollectionViaSpecialOfferProduct:null));
-			info.AddValue("_alwaysFetchProductCollectionViaSpecialOfferProduct", _alwaysFetchProductCollectionViaSpecialOfferProduct);
-			info.AddValue("_alreadyFetchedProductCollectionViaSpecialOfferProduct", _alreadyFetchedProductCollectionViaSpecialOfferProduct);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -186,13 +171,6 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.SpecialOfferProducts.Add((SpecialOfferProductEntity)entity);
-					}
-					break;
-				case "ProductCollectionViaSpecialOfferProduct":
-					_alreadyFetchedProductCollectionViaSpecialOfferProduct = true;
-					if(entity!=null)
-					{
-						this.ProductCollectionViaSpecialOfferProduct.Add((ProductEntity)entity);
 					}
 					break;
 				default:
@@ -372,44 +350,6 @@ namespace AW.Data.EntityClasses
 			_specialOfferProducts.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'ProductEntity'</returns>
-		public AW.Data.CollectionClasses.ProductCollection GetMultiProductCollectionViaSpecialOfferProduct(bool forceFetch)
-		{
-			return GetMultiProductCollectionViaSpecialOfferProduct(forceFetch, _productCollectionViaSpecialOfferProduct.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.ProductCollection GetMultiProductCollectionViaSpecialOfferProduct(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedProductCollectionViaSpecialOfferProduct || forceFetch || _alwaysFetchProductCollectionViaSpecialOfferProduct) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_productCollectionViaSpecialOfferProduct);
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(SpecialOfferFields.SpecialOfferID, ComparisonOperator.Equal, this.SpecialOfferID, "SpecialOfferEntity__"));
-				_productCollectionViaSpecialOfferProduct.SuppressClearInGetMulti=!forceFetch;
-				_productCollectionViaSpecialOfferProduct.EntityFactoryToUse = entityFactoryToUse;
-				_productCollectionViaSpecialOfferProduct.GetMulti(filter, GetRelationsForField("ProductCollectionViaSpecialOfferProduct"));
-				_productCollectionViaSpecialOfferProduct.SuppressClearInGetMulti=false;
-				_alreadyFetchedProductCollectionViaSpecialOfferProduct = true;
-			}
-			return _productCollectionViaSpecialOfferProduct;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'ProductCollectionViaSpecialOfferProduct'. These settings will be taken into account
-		/// when the property ProductCollectionViaSpecialOfferProduct is requested or GetMultiProductCollectionViaSpecialOfferProduct is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersProductCollectionViaSpecialOfferProduct(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_productCollectionViaSpecialOfferProduct.SortClauses=sortClauses;
-			_productCollectionViaSpecialOfferProduct.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -417,7 +357,6 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("SpecialOfferProducts", _specialOfferProducts);
-			toReturn.Add("ProductCollectionViaSpecialOfferProduct", _productCollectionViaSpecialOfferProduct);
 			return toReturn;
 		}
 	
@@ -460,7 +399,6 @@ namespace AW.Data.EntityClasses
 
 			_specialOfferProducts = new AW.Data.CollectionClasses.SpecialOfferProductCollection();
 			_specialOfferProducts.SetContainingEntityInfo(this, "SpecialOffer");
-			_productCollectionViaSpecialOfferProduct = new AW.Data.CollectionClasses.ProductCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -568,18 +506,6 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathSpecialOfferProducts
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SpecialOfferProductCollection(), (IEntityRelation)GetRelationsForField("SpecialOfferProducts")[0], (int)AW.Data.EntityType.SpecialOfferEntity, (int)AW.Data.EntityType.SpecialOfferProductEntity, 0, null, null, null, "SpecialOfferProducts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Product'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathProductCollectionViaSpecialOfferProduct
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = Relations.SpecialOfferProductEntityUsingSpecialOfferID;
-				intermediateRelation.SetAliases(string.Empty, "SpecialOfferProduct_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), intermediateRelation,	(int)AW.Data.EntityType.SpecialOfferEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, GetRelationsForField("ProductCollectionViaSpecialOfferProduct"), "ProductCollectionViaSpecialOfferProduct", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
 		}
 
 		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
@@ -764,40 +690,6 @@ namespace AW.Data.EntityClasses
 					_specialOfferProducts.Clear();
 				}
 				_alreadyFetchedSpecialOfferProducts = value;
-			}
-		}
-
-		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type 'm:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiProductCollectionViaSpecialOfferProduct()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.ProductCollection ProductCollectionViaSpecialOfferProduct
-		{
-			get { return GetMultiProductCollectionViaSpecialOfferProduct(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for ProductCollectionViaSpecialOfferProduct. When set to true, ProductCollectionViaSpecialOfferProduct is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time ProductCollectionViaSpecialOfferProduct is accessed. You can always execute a forced fetch by calling GetMultiProductCollectionViaSpecialOfferProduct(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchProductCollectionViaSpecialOfferProduct
-		{
-			get	{ return _alwaysFetchProductCollectionViaSpecialOfferProduct; }
-			set	{ _alwaysFetchProductCollectionViaSpecialOfferProduct = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property ProductCollectionViaSpecialOfferProduct already has been fetched. Setting this property to false when ProductCollectionViaSpecialOfferProduct has been fetched
-		/// will clear the ProductCollectionViaSpecialOfferProduct collection well. Setting this property to true while ProductCollectionViaSpecialOfferProduct hasn't been fetched disables lazy loading for ProductCollectionViaSpecialOfferProduct</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedProductCollectionViaSpecialOfferProduct
-		{
-			get { return _alreadyFetchedProductCollectionViaSpecialOfferProduct;}
-			set 
-			{
-				if(_alreadyFetchedProductCollectionViaSpecialOfferProduct && !value && (_productCollectionViaSpecialOfferProduct != null))
-				{
-					_productCollectionViaSpecialOfferProduct.Clear();
-				}
-				_alreadyFetchedProductCollectionViaSpecialOfferProduct = value;
 			}
 		}
 

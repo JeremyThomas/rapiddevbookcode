@@ -4,9 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
 		Ancillary\AdventureWorks.snk = Ancillary\AdventureWorks.snk
+		AW and DataContextDriver.vsmdi = AW and DataContextDriver.vsmdi
 		Ancillary\AW.llblgenproj = Ancillary\AW.llblgenproj
 		Ancillary\AW.llblgenproj.layout = Ancillary\AW.llblgenproj.layout
-		AW.vsmdi = AW.vsmdi
 		Ancillary\GlobalAssemblyInfo.cs = Ancillary\GlobalAssemblyInfo.cs
 		Ancillary\GlobalAssemblyVersion.cs = Ancillary\GlobalAssemblyVersion.cs
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
@@ -232,7 +232,7 @@ Global
 		SccLocalPath19 = Northwind\\DAL\\Oracle\u0020(ODP.NET)
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = AW.vsmdi
+		CategoryFile = AW and DataContextDriver.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU

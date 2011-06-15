@@ -59,63 +59,6 @@ namespace AW.Data.CollectionClasses
 
 
 
-		/// <summary> Retrieves in this SpecialOfferCollection object all SpecialOfferEntity objects which are related via a  Relation of type 'm:n' with the passed in ProductEntity. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productInstance">ProductEntity object to be used as a filter in the m:n relation</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingProductCollectionViaSpecialOfferProduct(IEntity productInstance)
-		{
-			return GetMultiManyToManyUsingProductCollectionViaSpecialOfferProduct(productInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
-		}
-		
-		/// <summary> Retrieves in this SpecialOfferCollection object all SpecialOfferEntity objects which are related via a  relation of type 'm:n' with the passed in ProductEntity. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productInstance">ProductEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingProductCollectionViaSpecialOfferProduct(IEntity productInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			return GetMultiManyToManyUsingProductCollectionViaSpecialOfferProduct(productInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
-		}
-
-		/// <summary> Retrieves in this SpecialOfferCollection object all SpecialOfferEntity objects which are related via a Relation of type 'm:n' with the passed in ProductEntity. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productInstance">ProductEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingProductCollectionViaSpecialOfferProduct(IEntity productInstance, IPrefetchPath prefetchPathToUse)
-		{
-			return GetMultiManyToManyUsingProductCollectionViaSpecialOfferProduct(productInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
-		}
-		
-		/// <summary> Retrieves in this SpecialOfferCollection object all SpecialOfferEntity objects which are related via a  relation of type 'm:n' with the passed in ProductEntity. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productInstance">ProductEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToManyUsingProductCollectionViaSpecialOfferProduct(IEntity productInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
-		{
-			if(!this.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			return DAOFactory.CreateSpecialOfferDAO().GetMultiUsingProductCollectionViaSpecialOfferProduct(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, productInstance, null, pageNumber, pageSize);
-		}
-
-		/// <summary> Retrieves in this SpecialOfferCollection object all SpecialOfferEntity objects which are related via a  relation of type 'm:n' with the passed in ProductEntity. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productInstance">ProductEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <returns>true if the retrieval succeeded, false otherwise</returns>
-		public bool GetMultiManyToManyUsingProductCollectionViaSpecialOfferProduct(IEntity productInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
-		{
-			if(!this.SuppressClearInGetMulti)
-			{
-				this.Clear();
-			}
-			return DAOFactory.CreateSpecialOfferDAO().GetMultiUsingProductCollectionViaSpecialOfferProduct(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, productInstance, prefetchPathToUse, 0, 0);
-		}
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
 		/// <param name="selectFilter">A predicate or predicate expression which should be used as filter for the entities to retrieve.</param>
