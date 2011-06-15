@@ -46,8 +46,6 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchStateProvinces, _alreadyFetchedStateProvinces;
 		private AW.Data.CollectionClasses.CountryRegionCurrencyCollection	_countryRegionCurrencies;
 		private bool	_alwaysFetchCountryRegionCurrencies, _alreadyFetchedCountryRegionCurrencies;
-		private AW.Data.CollectionClasses.SalesTerritoryCollection _salesTerritoryCollectionViaStateProvince;
-		private bool	_alwaysFetchSalesTerritoryCollectionViaStateProvince, _alreadyFetchedSalesTerritoryCollectionViaStateProvince;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -64,8 +62,6 @@ namespace AW.Data.EntityClasses
 			public static readonly string StateProvinces = "StateProvinces";
 			/// <summary>Member name CountryRegionCurrencies</summary>
 			public static readonly string CountryRegionCurrencies = "CountryRegionCurrencies";
-			/// <summary>Member name SalesTerritoryCollectionViaStateProvince</summary>
-			public static readonly string SalesTerritoryCollectionViaStateProvince = "SalesTerritoryCollectionViaStateProvince";
 		}
 		#endregion
 		
@@ -116,9 +112,6 @@ namespace AW.Data.EntityClasses
 			_countryRegionCurrencies = (AW.Data.CollectionClasses.CountryRegionCurrencyCollection)info.GetValue("_countryRegionCurrencies", typeof(AW.Data.CollectionClasses.CountryRegionCurrencyCollection));
 			_alwaysFetchCountryRegionCurrencies = info.GetBoolean("_alwaysFetchCountryRegionCurrencies");
 			_alreadyFetchedCountryRegionCurrencies = info.GetBoolean("_alreadyFetchedCountryRegionCurrencies");
-			_salesTerritoryCollectionViaStateProvince = (AW.Data.CollectionClasses.SalesTerritoryCollection)info.GetValue("_salesTerritoryCollectionViaStateProvince", typeof(AW.Data.CollectionClasses.SalesTerritoryCollection));
-			_alwaysFetchSalesTerritoryCollectionViaStateProvince = info.GetBoolean("_alwaysFetchSalesTerritoryCollectionViaStateProvince");
-			_alreadyFetchedSalesTerritoryCollectionViaStateProvince = info.GetBoolean("_alreadyFetchedSalesTerritoryCollectionViaStateProvince");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -130,7 +123,6 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedStateProvinces = (_stateProvinces.Count > 0);
 			_alreadyFetchedCountryRegionCurrencies = (_countryRegionCurrencies.Count > 0);
-			_alreadyFetchedSalesTerritoryCollectionViaStateProvince = (_salesTerritoryCollectionViaStateProvince.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -155,10 +147,6 @@ namespace AW.Data.EntityClasses
 				case "CountryRegionCurrencies":
 					toReturn.Add(Relations.CountryRegionCurrencyEntityUsingCountryRegionCode);
 					break;
-				case "SalesTerritoryCollectionViaStateProvince":
-					toReturn.Add(Relations.StateProvinceEntityUsingCountryRegionCode, "CountryRegionEntity__", "StateProvince_", JoinHint.None);
-					toReturn.Add(StateProvinceEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "StateProvince_", string.Empty, JoinHint.None);
-					break;
 				default:
 					break;				
 			}
@@ -179,9 +167,6 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_countryRegionCurrencies", (!this.MarkedForDeletion?_countryRegionCurrencies:null));
 			info.AddValue("_alwaysFetchCountryRegionCurrencies", _alwaysFetchCountryRegionCurrencies);
 			info.AddValue("_alreadyFetchedCountryRegionCurrencies", _alreadyFetchedCountryRegionCurrencies);
-			info.AddValue("_salesTerritoryCollectionViaStateProvince", (!this.MarkedForDeletion?_salesTerritoryCollectionViaStateProvince:null));
-			info.AddValue("_alwaysFetchSalesTerritoryCollectionViaStateProvince", _alwaysFetchSalesTerritoryCollectionViaStateProvince);
-			info.AddValue("_alreadyFetchedSalesTerritoryCollectionViaStateProvince", _alreadyFetchedSalesTerritoryCollectionViaStateProvince);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -209,13 +194,6 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.CountryRegionCurrencies.Add((CountryRegionCurrencyEntity)entity);
-					}
-					break;
-				case "SalesTerritoryCollectionViaStateProvince":
-					_alreadyFetchedSalesTerritoryCollectionViaStateProvince = true;
-					if(entity!=null)
-					{
-						this.SalesTerritoryCollectionViaStateProvince.Add((SalesTerritoryEntity)entity);
 					}
 					break;
 				default:
@@ -457,44 +435,6 @@ namespace AW.Data.EntityClasses
 			_countryRegionCurrencies.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves all related entities of type 'SalesTerritoryEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'SalesTerritoryEntity'</returns>
-		public AW.Data.CollectionClasses.SalesTerritoryCollection GetMultiSalesTerritoryCollectionViaStateProvince(bool forceFetch)
-		{
-			return GetMultiSalesTerritoryCollectionViaStateProvince(forceFetch, _salesTerritoryCollectionViaStateProvince.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'SalesTerritoryEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.SalesTerritoryCollection GetMultiSalesTerritoryCollectionViaStateProvince(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedSalesTerritoryCollectionViaStateProvince || forceFetch || _alwaysFetchSalesTerritoryCollectionViaStateProvince) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_salesTerritoryCollectionViaStateProvince);
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(CountryRegionFields.CountryRegionCode, ComparisonOperator.Equal, this.CountryRegionCode, "CountryRegionEntity__"));
-				_salesTerritoryCollectionViaStateProvince.SuppressClearInGetMulti=!forceFetch;
-				_salesTerritoryCollectionViaStateProvince.EntityFactoryToUse = entityFactoryToUse;
-				_salesTerritoryCollectionViaStateProvince.GetMulti(filter, GetRelationsForField("SalesTerritoryCollectionViaStateProvince"));
-				_salesTerritoryCollectionViaStateProvince.SuppressClearInGetMulti=false;
-				_alreadyFetchedSalesTerritoryCollectionViaStateProvince = true;
-			}
-			return _salesTerritoryCollectionViaStateProvince;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'SalesTerritoryCollectionViaStateProvince'. These settings will be taken into account
-		/// when the property SalesTerritoryCollectionViaStateProvince is requested or GetMultiSalesTerritoryCollectionViaStateProvince is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersSalesTerritoryCollectionViaStateProvince(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_salesTerritoryCollectionViaStateProvince.SortClauses=sortClauses;
-			_salesTerritoryCollectionViaStateProvince.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -503,7 +443,6 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("StateProvinces", _stateProvinces);
 			toReturn.Add("CountryRegionCurrencies", _countryRegionCurrencies);
-			toReturn.Add("SalesTerritoryCollectionViaStateProvince", _salesTerritoryCollectionViaStateProvince);
 			return toReturn;
 		}
 	
@@ -549,7 +488,6 @@ namespace AW.Data.EntityClasses
 
 			_countryRegionCurrencies = new AW.Data.CollectionClasses.CountryRegionCurrencyCollection();
 			_countryRegionCurrencies.SetContainingEntityInfo(this, "CountryRegion");
-			_salesTerritoryCollectionViaStateProvince = new AW.Data.CollectionClasses.SalesTerritoryCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -640,18 +578,6 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathCountryRegionCurrencies
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.CountryRegionCurrencyCollection(), (IEntityRelation)GetRelationsForField("CountryRegionCurrencies")[0], (int)AW.Data.EntityType.CountryRegionEntity, (int)AW.Data.EntityType.CountryRegionCurrencyEntity, 0, null, null, null, "CountryRegionCurrencies", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesTerritory'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathSalesTerritoryCollectionViaStateProvince
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = Relations.StateProvinceEntityUsingCountryRegionCode;
-				intermediateRelation.SetAliases(string.Empty, "StateProvince_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryCollection(), intermediateRelation,	(int)AW.Data.EntityType.CountryRegionEntity, (int)AW.Data.EntityType.SalesTerritoryEntity, 0, null, null, GetRelationsForField("SalesTerritoryCollectionViaStateProvince"), "SalesTerritoryCollectionViaStateProvince", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
 		}
 
 		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
@@ -781,40 +707,6 @@ namespace AW.Data.EntityClasses
 					_countryRegionCurrencies.Clear();
 				}
 				_alreadyFetchedCountryRegionCurrencies = value;
-			}
-		}
-
-		/// <summary> Retrieves all related entities of type 'SalesTerritoryEntity' using a relation of type 'm:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesTerritoryCollectionViaStateProvince()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.SalesTerritoryCollection SalesTerritoryCollectionViaStateProvince
-		{
-			get { return GetMultiSalesTerritoryCollectionViaStateProvince(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for SalesTerritoryCollectionViaStateProvince. When set to true, SalesTerritoryCollectionViaStateProvince is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time SalesTerritoryCollectionViaStateProvince is accessed. You can always execute a forced fetch by calling GetMultiSalesTerritoryCollectionViaStateProvince(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchSalesTerritoryCollectionViaStateProvince
-		{
-			get	{ return _alwaysFetchSalesTerritoryCollectionViaStateProvince; }
-			set	{ _alwaysFetchSalesTerritoryCollectionViaStateProvince = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property SalesTerritoryCollectionViaStateProvince already has been fetched. Setting this property to false when SalesTerritoryCollectionViaStateProvince has been fetched
-		/// will clear the SalesTerritoryCollectionViaStateProvince collection well. Setting this property to true while SalesTerritoryCollectionViaStateProvince hasn't been fetched disables lazy loading for SalesTerritoryCollectionViaStateProvince</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedSalesTerritoryCollectionViaStateProvince
-		{
-			get { return _alreadyFetchedSalesTerritoryCollectionViaStateProvince;}
-			set 
-			{
-				if(_alreadyFetchedSalesTerritoryCollectionViaStateProvince && !value && (_salesTerritoryCollectionViaStateProvince != null))
-				{
-					_salesTerritoryCollectionViaStateProvince.Clear();
-				}
-				_alreadyFetchedSalesTerritoryCollectionViaStateProvince = value;
 			}
 		}
 

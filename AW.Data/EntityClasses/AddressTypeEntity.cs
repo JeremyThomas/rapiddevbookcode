@@ -45,10 +45,6 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchVendorAddresses, _alreadyFetchedVendorAddresses;
 		private AW.Data.CollectionClasses.CustomerAddressCollection	_customerAddresses;
 		private bool	_alwaysFetchCustomerAddresses, _alreadyFetchedCustomerAddresses;
-		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaCustomerAddres;
-		private bool	_alwaysFetchAddressCollectionViaCustomerAddres, _alreadyFetchedAddressCollectionViaCustomerAddres;
-		private AW.Data.CollectionClasses.CustomerCollection _customerCollectionViaCustomerAddres;
-		private bool	_alwaysFetchCustomerCollectionViaCustomerAddres, _alreadyFetchedCustomerCollectionViaCustomerAddres;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -65,10 +61,6 @@ namespace AW.Data.EntityClasses
 			public static readonly string VendorAddresses = "VendorAddresses";
 			/// <summary>Member name CustomerAddresses</summary>
 			public static readonly string CustomerAddresses = "CustomerAddresses";
-			/// <summary>Member name AddressCollectionViaCustomerAddres</summary>
-			public static readonly string AddressCollectionViaCustomerAddres = "AddressCollectionViaCustomerAddres";
-			/// <summary>Member name CustomerCollectionViaCustomerAddres</summary>
-			public static readonly string CustomerCollectionViaCustomerAddres = "CustomerCollectionViaCustomerAddres";
 		}
 		#endregion
 		
@@ -119,13 +111,6 @@ namespace AW.Data.EntityClasses
 			_customerAddresses = (AW.Data.CollectionClasses.CustomerAddressCollection)info.GetValue("_customerAddresses", typeof(AW.Data.CollectionClasses.CustomerAddressCollection));
 			_alwaysFetchCustomerAddresses = info.GetBoolean("_alwaysFetchCustomerAddresses");
 			_alreadyFetchedCustomerAddresses = info.GetBoolean("_alreadyFetchedCustomerAddresses");
-			_addressCollectionViaCustomerAddres = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaCustomerAddres", typeof(AW.Data.CollectionClasses.AddressCollection));
-			_alwaysFetchAddressCollectionViaCustomerAddres = info.GetBoolean("_alwaysFetchAddressCollectionViaCustomerAddres");
-			_alreadyFetchedAddressCollectionViaCustomerAddres = info.GetBoolean("_alreadyFetchedAddressCollectionViaCustomerAddres");
-
-			_customerCollectionViaCustomerAddres = (AW.Data.CollectionClasses.CustomerCollection)info.GetValue("_customerCollectionViaCustomerAddres", typeof(AW.Data.CollectionClasses.CustomerCollection));
-			_alwaysFetchCustomerCollectionViaCustomerAddres = info.GetBoolean("_alwaysFetchCustomerCollectionViaCustomerAddres");
-			_alreadyFetchedCustomerCollectionViaCustomerAddres = info.GetBoolean("_alreadyFetchedCustomerCollectionViaCustomerAddres");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -137,8 +122,6 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedVendorAddresses = (_vendorAddresses.Count > 0);
 			_alreadyFetchedCustomerAddresses = (_customerAddresses.Count > 0);
-			_alreadyFetchedAddressCollectionViaCustomerAddres = (_addressCollectionViaCustomerAddres.Count > 0);
-			_alreadyFetchedCustomerCollectionViaCustomerAddres = (_customerCollectionViaCustomerAddres.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -163,14 +146,6 @@ namespace AW.Data.EntityClasses
 				case "CustomerAddresses":
 					toReturn.Add(Relations.CustomerAddressEntityUsingAddressTypeID);
 					break;
-				case "AddressCollectionViaCustomerAddres":
-					toReturn.Add(Relations.CustomerAddressEntityUsingAddressTypeID, "AddressTypeEntity__", "CustomerAddress_", JoinHint.None);
-					toReturn.Add(CustomerAddressEntity.Relations.AddressEntityUsingAddressID, "CustomerAddress_", string.Empty, JoinHint.None);
-					break;
-				case "CustomerCollectionViaCustomerAddres":
-					toReturn.Add(Relations.CustomerAddressEntityUsingAddressTypeID, "AddressTypeEntity__", "CustomerAddress_", JoinHint.None);
-					toReturn.Add(CustomerAddressEntity.Relations.CustomerEntityUsingCustomerID, "CustomerAddress_", string.Empty, JoinHint.None);
-					break;
 				default:
 					break;				
 			}
@@ -191,12 +166,6 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_customerAddresses", (!this.MarkedForDeletion?_customerAddresses:null));
 			info.AddValue("_alwaysFetchCustomerAddresses", _alwaysFetchCustomerAddresses);
 			info.AddValue("_alreadyFetchedCustomerAddresses", _alreadyFetchedCustomerAddresses);
-			info.AddValue("_addressCollectionViaCustomerAddres", (!this.MarkedForDeletion?_addressCollectionViaCustomerAddres:null));
-			info.AddValue("_alwaysFetchAddressCollectionViaCustomerAddres", _alwaysFetchAddressCollectionViaCustomerAddres);
-			info.AddValue("_alreadyFetchedAddressCollectionViaCustomerAddres", _alreadyFetchedAddressCollectionViaCustomerAddres);
-			info.AddValue("_customerCollectionViaCustomerAddres", (!this.MarkedForDeletion?_customerCollectionViaCustomerAddres:null));
-			info.AddValue("_alwaysFetchCustomerCollectionViaCustomerAddres", _alwaysFetchCustomerCollectionViaCustomerAddres);
-			info.AddValue("_alreadyFetchedCustomerCollectionViaCustomerAddres", _alreadyFetchedCustomerCollectionViaCustomerAddres);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -224,20 +193,6 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.CustomerAddresses.Add((CustomerAddressEntity)entity);
-					}
-					break;
-				case "AddressCollectionViaCustomerAddres":
-					_alreadyFetchedAddressCollectionViaCustomerAddres = true;
-					if(entity!=null)
-					{
-						this.AddressCollectionViaCustomerAddres.Add((AddressEntity)entity);
-					}
-					break;
-				case "CustomerCollectionViaCustomerAddres":
-					_alreadyFetchedCustomerCollectionViaCustomerAddres = true;
-					if(entity!=null)
-					{
-						this.CustomerCollectionViaCustomerAddres.Add((CustomerEntity)entity);
 					}
 					break;
 				default:
@@ -479,82 +434,6 @@ namespace AW.Data.EntityClasses
 			_customerAddresses.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaCustomerAddres(bool forceFetch)
-		{
-			return GetMultiAddressCollectionViaCustomerAddres(forceFetch, _addressCollectionViaCustomerAddres.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaCustomerAddres(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedAddressCollectionViaCustomerAddres || forceFetch || _alwaysFetchAddressCollectionViaCustomerAddres) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_addressCollectionViaCustomerAddres);
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(AddressTypeFields.AddressTypeID, ComparisonOperator.Equal, this.AddressTypeID, "AddressTypeEntity__"));
-				_addressCollectionViaCustomerAddres.SuppressClearInGetMulti=!forceFetch;
-				_addressCollectionViaCustomerAddres.EntityFactoryToUse = entityFactoryToUse;
-				_addressCollectionViaCustomerAddres.GetMulti(filter, GetRelationsForField("AddressCollectionViaCustomerAddres"));
-				_addressCollectionViaCustomerAddres.SuppressClearInGetMulti=false;
-				_alreadyFetchedAddressCollectionViaCustomerAddres = true;
-			}
-			return _addressCollectionViaCustomerAddres;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaCustomerAddres'. These settings will be taken into account
-		/// when the property AddressCollectionViaCustomerAddres is requested or GetMultiAddressCollectionViaCustomerAddres is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersAddressCollectionViaCustomerAddres(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_addressCollectionViaCustomerAddres.SortClauses=sortClauses;
-			_addressCollectionViaCustomerAddres.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
-		/// <summary> Retrieves all related entities of type 'CustomerEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'CustomerEntity'</returns>
-		public AW.Data.CollectionClasses.CustomerCollection GetMultiCustomerCollectionViaCustomerAddres(bool forceFetch)
-		{
-			return GetMultiCustomerCollectionViaCustomerAddres(forceFetch, _customerCollectionViaCustomerAddres.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'CustomerEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.CustomerCollection GetMultiCustomerCollectionViaCustomerAddres(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedCustomerCollectionViaCustomerAddres || forceFetch || _alwaysFetchCustomerCollectionViaCustomerAddres) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_customerCollectionViaCustomerAddres);
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(AddressTypeFields.AddressTypeID, ComparisonOperator.Equal, this.AddressTypeID, "AddressTypeEntity__"));
-				_customerCollectionViaCustomerAddres.SuppressClearInGetMulti=!forceFetch;
-				_customerCollectionViaCustomerAddres.EntityFactoryToUse = entityFactoryToUse;
-				_customerCollectionViaCustomerAddres.GetMulti(filter, GetRelationsForField("CustomerCollectionViaCustomerAddres"));
-				_customerCollectionViaCustomerAddres.SuppressClearInGetMulti=false;
-				_alreadyFetchedCustomerCollectionViaCustomerAddres = true;
-			}
-			return _customerCollectionViaCustomerAddres;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'CustomerCollectionViaCustomerAddres'. These settings will be taken into account
-		/// when the property CustomerCollectionViaCustomerAddres is requested or GetMultiCustomerCollectionViaCustomerAddres is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersCustomerCollectionViaCustomerAddres(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_customerCollectionViaCustomerAddres.SortClauses=sortClauses;
-			_customerCollectionViaCustomerAddres.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -563,8 +442,6 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("VendorAddresses", _vendorAddresses);
 			toReturn.Add("CustomerAddresses", _customerAddresses);
-			toReturn.Add("AddressCollectionViaCustomerAddres", _addressCollectionViaCustomerAddres);
-			toReturn.Add("CustomerCollectionViaCustomerAddres", _customerCollectionViaCustomerAddres);
 			return toReturn;
 		}
 	
@@ -610,8 +487,6 @@ namespace AW.Data.EntityClasses
 
 			_customerAddresses = new AW.Data.CollectionClasses.CustomerAddressCollection();
 			_customerAddresses.SetContainingEntityInfo(this, "AddressType");
-			_addressCollectionViaCustomerAddres = new AW.Data.CollectionClasses.AddressCollection();
-			_customerCollectionViaCustomerAddres = new AW.Data.CollectionClasses.CustomerCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -705,30 +580,6 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathCustomerAddresses
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerAddressCollection(), (IEntityRelation)GetRelationsForField("CustomerAddresses")[0], (int)AW.Data.EntityType.AddressTypeEntity, (int)AW.Data.EntityType.CustomerAddressEntity, 0, null, null, null, "CustomerAddresses", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathAddressCollectionViaCustomerAddres
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = Relations.CustomerAddressEntityUsingAddressTypeID;
-				intermediateRelation.SetAliases(string.Empty, "CustomerAddress_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,	(int)AW.Data.EntityType.AddressTypeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaCustomerAddres"), "AddressCollectionViaCustomerAddres", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Customer'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathCustomerCollectionViaCustomerAddres
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = Relations.CustomerAddressEntityUsingAddressTypeID;
-				intermediateRelation.SetAliases(string.Empty, "CustomerAddress_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerCollection(), intermediateRelation,	(int)AW.Data.EntityType.AddressTypeEntity, (int)AW.Data.EntityType.CustomerEntity, 0, null, null, GetRelationsForField("CustomerCollectionViaCustomerAddres"), "CustomerCollectionViaCustomerAddres", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
 		}
 
 		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
@@ -869,74 +720,6 @@ namespace AW.Data.EntityClasses
 					_customerAddresses.Clear();
 				}
 				_alreadyFetchedCustomerAddresses = value;
-			}
-		}
-
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaCustomerAddres()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaCustomerAddres
-		{
-			get { return GetMultiAddressCollectionViaCustomerAddres(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaCustomerAddres. When set to true, AddressCollectionViaCustomerAddres is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaCustomerAddres is accessed. You can always execute a forced fetch by calling GetMultiAddressCollectionViaCustomerAddres(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchAddressCollectionViaCustomerAddres
-		{
-			get	{ return _alwaysFetchAddressCollectionViaCustomerAddres; }
-			set	{ _alwaysFetchAddressCollectionViaCustomerAddres = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaCustomerAddres already has been fetched. Setting this property to false when AddressCollectionViaCustomerAddres has been fetched
-		/// will clear the AddressCollectionViaCustomerAddres collection well. Setting this property to true while AddressCollectionViaCustomerAddres hasn't been fetched disables lazy loading for AddressCollectionViaCustomerAddres</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedAddressCollectionViaCustomerAddres
-		{
-			get { return _alreadyFetchedAddressCollectionViaCustomerAddres;}
-			set 
-			{
-				if(_alreadyFetchedAddressCollectionViaCustomerAddres && !value && (_addressCollectionViaCustomerAddres != null))
-				{
-					_addressCollectionViaCustomerAddres.Clear();
-				}
-				_alreadyFetchedAddressCollectionViaCustomerAddres = value;
-			}
-		}
-
-		/// <summary> Retrieves all related entities of type 'CustomerEntity' using a relation of type 'm:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiCustomerCollectionViaCustomerAddres()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.CustomerCollection CustomerCollectionViaCustomerAddres
-		{
-			get { return GetMultiCustomerCollectionViaCustomerAddres(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for CustomerCollectionViaCustomerAddres. When set to true, CustomerCollectionViaCustomerAddres is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time CustomerCollectionViaCustomerAddres is accessed. You can always execute a forced fetch by calling GetMultiCustomerCollectionViaCustomerAddres(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchCustomerCollectionViaCustomerAddres
-		{
-			get	{ return _alwaysFetchCustomerCollectionViaCustomerAddres; }
-			set	{ _alwaysFetchCustomerCollectionViaCustomerAddres = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property CustomerCollectionViaCustomerAddres already has been fetched. Setting this property to false when CustomerCollectionViaCustomerAddres has been fetched
-		/// will clear the CustomerCollectionViaCustomerAddres collection well. Setting this property to true while CustomerCollectionViaCustomerAddres hasn't been fetched disables lazy loading for CustomerCollectionViaCustomerAddres</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedCustomerCollectionViaCustomerAddres
-		{
-			get { return _alreadyFetchedCustomerCollectionViaCustomerAddres;}
-			set 
-			{
-				if(_alreadyFetchedCustomerCollectionViaCustomerAddres && !value && (_customerCollectionViaCustomerAddres != null))
-				{
-					_customerCollectionViaCustomerAddres.Clear();
-				}
-				_alreadyFetchedCustomerCollectionViaCustomerAddres = value;
 			}
 		}
 
