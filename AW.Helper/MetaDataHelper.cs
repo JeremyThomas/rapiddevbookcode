@@ -79,7 +79,7 @@ namespace AW.Helper
 
 		public static Type[] GetTypeParametersOfGenericType(Type type)
 		{
-			if (type == typeof(object))
+			if (type == typeof (object))
 				return null;
 			return type.IsGenericType ? type.GetGenericArguments() : GetTypeParametersOfGenericType(type.BaseType);
 		}
@@ -112,12 +112,10 @@ namespace AW.Helper
 			return t;
 		}
 
-		internal static Type GetElementType(Type enumerableType)
+		public static Type GetElementType(Type enumerableType)
 		{
 			var ienumType = FindGenericType(typeof (IEnumerable<>), enumerableType);
-			if (ienumType != null)
-				return ienumType.GetGenericArguments()[0];
-			return enumerableType;
+			return ienumType == null ? enumerableType : GetTypeParameterOfGenericType(ienumType);
 		}
 
 		internal static Type FindGenericType(Type definition, Type type)
@@ -127,14 +125,8 @@ namespace AW.Helper
 				if (type.IsGenericType && type.GetGenericTypeDefinition() == definition)
 					return type;
 				if (definition.IsInterface)
-				{
-					foreach (var itype in type.GetInterfaces())
-					{
-						var found = FindGenericType(definition, itype);
-						if (found != null)
-							return found;
-					}
-				}
+					foreach (var found in type.GetInterfaces().Select(itype => FindGenericType(definition, itype)).Where(found => found != null))
+						return found;
 				type = type.BaseType;
 			}
 			return null;
@@ -255,6 +247,14 @@ namespace AW.Helper
 			       select propertyDescriptor;
 		}
 
+		public static IEnumerable<PropertyDescriptor> FilterByIsEnumerable(this IEnumerable<PropertyDescriptor> propertyDescriptors, Type elementTypeToFilterBy)
+		{
+			return from propertyDescriptor in propertyDescriptors
+			       let elementType = GetElementType(propertyDescriptor.PropertyType)
+			       where elementTypeToFilterBy.IsAssignableFrom(elementType)
+			       select propertyDescriptor;
+		}
+
 		/// <summary>
 		/// Adds the associated metadata providers for each type. But doesn't seem to work for properties on inherited classes for version of .net before 4.0
 		/// </summary>
@@ -298,13 +298,13 @@ namespace AW.Helper
 		public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass, params Attribute[] attributes)
 		{
 			var propertyDescriptorCollection = attributes.IsNullOrEmpty() ? TypeDescriptor.GetProperties(modelClass) : TypeDescriptor.GetProperties(modelClass, attributes);
-			var modelClassProperties = AsEnumerable(propertyDescriptorCollection).ToList();
+			var modelClassProperties = propertyDescriptorCollection.AsEnumerable().ToList();
 			if (TypeDescriptor.GetProvider(modelClass) is AssociatedMetadataTypeTypeDescriptionProvider)
 				return modelClassProperties; //No need to get the MetadataType(buddy class)
 
 			if (Environment.Version.Major < 4) // Not needed if .net 4.0 and LinqMetaData.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
 			{
-				var metadataAttrib = modelClass.GetCustomAttributes(typeof(MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
+				var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
 				if (metadataAttrib != null)
 					modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>().ToList());
 			}

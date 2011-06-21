@@ -15,9 +15,6 @@ using LINQPad.Extensibility.DataContext;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-#if DEBUG
-#endif
-
 namespace AW.LLBLGen.DataContextDriver.Static
 {
 	/// <summary>
@@ -206,48 +203,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return LLBLMemberProvider.CreateCustomDisplayMemberProviderIfNeeded(objectToWrite);
 		}
 
-		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
-		{
-			// Return the objects with which to populate the Schema Explorer by reflecting over customType.
-
-			// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
-			var topLevelProps =
-				(
-					from prop in customType.GetProperties()
-					where prop.PropertyType != typeof(string)
-					// Display all properties of type IEnumerable<T> (except for string!)
-					let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
-					where ienumerableOfT != null
-					orderby prop.Name
-					select new ExplorerItem(prop.Name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
-					{
-						IsEnumerable = true,
-						ToolTipText = FormatTypeName(prop.PropertyType, false),
-						DragText = prop.Name,
-						// Store the entity type to the Tag property. We'll use it later.
-						Tag = ienumerableOfT.GetGenericArguments()[0]
-					}
-				).ToList();
-
-			// Create a lookup keying each element type to the properties of that type. This will allow
-			// us to build hyperlink targets allowing the user to click between associations:
-			var elementTypeLookup = topLevelProps.ToLookup(tp => (Type)tp.Tag);
-
-			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
-			if (usefieldsElement != null && usefieldsElement.Value == true.ToString())
-
-				// Populate the columns (properties) of each entity:
-				foreach (var table in topLevelProps)
-					table.Children = CreateFieldExplorerItems(GetFieldsToShowInSchema((Type)table.Tag), elementTypeLookup);
-
-			else
-				// Populate the columns (properties) of each entity:
-				foreach (var table in topLevelProps)
-					table.Children = CreateFieldExplorerItems(GetPropertiesToShowInSchema((Type)table.Tag), elementTypeLookup);
-
-			return topLevelProps;
-		}
-
 		public override void InitializeContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
 		{
 			try
@@ -270,7 +225,66 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 		}
 
+			// Return the objects with which to populate the Schema Explorer by reflecting over customType.
+
+			// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
+		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
+		{
+				List<ExplorerItem> topLevelProps;
+				if (typeof(IElementCreatorCore).IsAssignableFrom(customType))
+				{
+					topLevelProps = (
+														from type in EntityHelper.GetEntitiesTypes(customType.Assembly)
+														let name = type.Name.Replace("Entity","")
+														orderby name
+														select new ExplorerItem(name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
+					                	       	{
+					                	       		IsEnumerable = true,
+																			ToolTipText = FormatTypeName(type, false),// + entity.CustomPropertiesOfType.Values.JoinAsString(),
+																			DragText = name,
+					                	       		// Store the entity type to the Tag property. We'll use it later.
+																			Tag = type
+					                	       	}
+					                ).ToList();
+				}
+				else
+					topLevelProps = (
+														from prop in MetaDataHelper.GetPropertyDescriptors(customType)
+														let elementType = MetaDataHelper.GetElementType(prop.PropertyType)
+														where typeof(IEntityCore).IsAssignableFrom(elementType)
+														orderby prop.Name
+														select new ExplorerItem(prop.Name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
+																		{
+																			IsEnumerable = true,
+																			ToolTipText = GeneralHelper.Join(FormatTypeName(prop.PropertyType, false), prop.DisplayName, prop.Description),
+																			DragText = prop.Name,
+																			// Store the entity type to the Tag property. We'll use it later.
+																			Tag = elementType
+																		}
+													).ToList();
+
+			// Create a lookup keying each element type to the properties of that type. This will allow
+			// us to build hyperlink targets allowing the user to click between associations:
+			var elementTypeLookup = topLevelProps.ToLookup(tp => (Type)tp.Tag);
+
+			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
+			if (usefieldsElement != null && usefieldsElement.Value == true.ToString())
+
+				// Populate the columns (properties) of each entity:
+				foreach (var table in topLevelProps)
+					table.Children = CreateFieldExplorerItems(GetFieldsToShowInSchema((Type)table.Tag), elementTypeLookup);
+
+			else
+				// Populate the columns (properties) of each entity:
+				foreach (var table in topLevelProps)
+					table.Children = CreateFieldExplorerItems(GetPropertiesToShowInSchema((Type)table.Tag), elementTypeLookup);
+
+			return topLevelProps;
+		}
+
 		#endregion
+
+		#region Initialization
 
 		private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)
 		{
@@ -402,19 +416,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					}
 					catch (TargetInvocationException invocationException)
 					{
-						ThrowInnerException(invocationException);
+						GeneralHelper.ThrowInnerException(invocationException);
 						throw;
 					}
 			}
 			return adapter;
-		}
+		} 
 
-		private static void ThrowInnerException(Exception invocationException)
-		{
-			if (invocationException.InnerException != null)
-				ThrowInnerException(invocationException.InnerException);
-			throw invocationException;
-		}
+		#endregion
 
 		#region Schema helpers
 
@@ -477,9 +486,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (explorerItem == null)
 			{
 				// Is the property's type a collection of entities?
-				var ienumerableOfT = childProp.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1");
-				if (ienumerableOfT != null)
-					explorerItem = CreateEntityExplorerItem(childProp, elementTypeLookup, ienumerableOfT.GetGenericArguments()[0], ExplorerItemKind.CollectionLink, ExplorerIcon.OneToMany);
+				var elementType = MetaDataHelper.GetElementType(childProp.PropertyType);
+				if (elementType != childProp.PropertyType)
+					explorerItem = CreateEntityExplorerItem(childProp, elementTypeLookup, elementType, ExplorerItemKind.CollectionLink, ExplorerIcon.OneToMany);
 			}
 
 			if (explorerItem == null)

@@ -120,7 +120,7 @@ namespace AW.Helper
 		/// <returns></returns>
 		public static string Join(params String[] values)
 		{
-			return String.Join(StringJoinSeperator, values.Where(s => !string.IsNullOrEmpty(s)).ToArray());
+			return String.Join(StringJoinSeperator, values.Where(s => !String.IsNullOrEmpty(s)).ToArray());
 		}
 
 		public static IEnumerable<T> SkipTake<T>(this IEnumerable<T> superset, int pageIndex, int pageSize)
@@ -345,5 +345,12 @@ namespace AW.Helper
 		}
 
 		#endregion
+
+		public static void ThrowInnerException(Exception invocationException)
+		{
+			if (invocationException.InnerException != null)
+				ThrowInnerException(invocationException.InnerException);
+			throw invocationException;
+		}
 	}
 }
