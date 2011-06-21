@@ -303,17 +303,25 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			             	{
 			             		Title = "Choose LLBL entity assembly",
 			             		DefaultExt = ".dll",
-			             		FileName = CxInfo.CustomTypeInfo.CustomAssemblyPath
+											FileName = Path.GetFileName(CxInfo.CustomTypeInfo.CustomAssemblyPath)
 			             	};
+
+			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
+				dialog.InitialDirectory = Path.GetDirectoryName(dialog.FileName);
 
 			if (dialog.ShowDialog() == true)
 			{
 				CxInfo.CustomTypeInfo.CustomAssemblyPath = dialog.FileName;
 				var customTypes = GetLinqMetaDataTypes();
 
-				if (customTypes.Length == 1)
+				switch (customTypes.Length)
 				{
-					SetCustomTypeName(customTypes[0]);
+					case 1:
+						SetCustomTypeName(customTypes[0]);
+						break;
+					case 0:
+						SetCustomTypeName("");
+						break;
 				}
 			}
 		}
@@ -321,9 +329,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void SetCustomTypeName(string customType)
 		{
 			CxInfo.CustomTypeInfo.CustomTypeName = customType;
-			var selfServicingEntities = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase");
-			LLBLConnectionType = selfServicingEntities.IsNullOrEmpty() ? LLBLConnectionType == LLBLConnectionType.AdapterFactory ? LLBLConnectionType : LLBLConnectionType.Adapter : LLBLConnectionType.SelfServicing;
+			LLBLConnectionType = IsSelfServicing(CxInfo) ? LLBLConnectionType == LLBLConnectionType.AdapterFactory ? LLBLConnectionType : LLBLConnectionType.Adapter : LLBLConnectionType.SelfServicing;
 			OnPropertyChanged("ConnectionTypeVisibility");
+		}
+
+		public static bool IsSelfServicing(IConnectionInfo connectionInfo)
+		{
+			var selfServicingEntities = connectionInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase");
+			return selfServicingEntities.IsNullOrEmpty();
 		}
 
 		private void ChooseType(object sender, RoutedEventArgs e)
@@ -368,8 +381,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			if (customTypes.Length == 0)
 			{
+				customTypes = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.IElementCreatorCore");
+				if (customTypes.Length == 0)
 				MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData.");
-				BreakIntoDebugger();
+				else
+				{
+					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData but there is an implementation of IElementCreatorCore.");
+				}
 				return customTypes;
 			}
 			return customTypes;

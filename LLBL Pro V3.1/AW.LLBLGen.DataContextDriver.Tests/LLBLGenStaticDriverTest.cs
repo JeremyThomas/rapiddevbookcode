@@ -92,6 +92,12 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		}
 
 		[TestMethod]
+		public void GetNorthwindElementCreatorSchemaFieldsTest()
+		{
+			GetSchemaTest<Northwind.DAL.EntityType>(typeof(Northwind.DAL.FactoryClasses.ElementCreator), Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, true);
+		}
+
+		[TestMethod]
 		public void GetNorthwindSchemaPropertiesTest()
 		{
 			GetSchemaTest<Northwind.DAL.EntityType>(typeof(Northwind.DAL.Linq.LinqMetaData), Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, false);
@@ -115,7 +121,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 				var entityFactory = entityFactoryFactory(entityType);
 				IEntityCore entity = entityFactory.Create();
 				var fieldNames = entity.Fields.Cast<IEntityFieldCore>().Select(f => f.Name).Distinct();
-				var navigatorProperties = EntityHelper.GetNavigatorProperties(entity);
+				var navigatorProperties = useFields ? EntityHelper.GetNavigatorProperties(entity) : MetaDataHelper.FilterByIsEnumerable(MetaDataHelper.GetPropertyDescriptors(entity.GetType()), typeof(IEntityCore)); ;
 				var explorerItem = actual[index];
 				index++;
 				var entityName = entityFactory.ForEntityName + " - " + explorerItem.Text;
@@ -135,6 +141,35 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var employeeEntity = new Northwind.DAL.EntityClasses.EmployeeEntity();
 			toManyProperties = EntityHelper.GetNavigatorProperties(employeeEntity);
 			Assert.AreEqual(5, toManyProperties.Count());
+		}
+
+		[TestMethod]
+		public void GetEnumerablePropertyTest()
+		{
+			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
+			var propertyDescriptor = propertyDescriptors.SingleOrDefault(pd=>pd.Name=="EmployeesViaOrdersInCode");
+			var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
+			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), typeParameterOfGenericType);
+			var elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
+			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), elementType);
+			//var interfaces = propertyDescriptor.PropertyType.GetInterfaces();
+
+			propertyDescriptor = propertyDescriptors.SingleOrDefault(pd => pd.Name == "EmployeesViaOrders");
+			typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
+			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), typeParameterOfGenericType);
+			elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
+			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), elementType);
+			//interfaces = propertyDescriptor.PropertyType.GetInterfaces();
+		}
+
+		[TestMethod]
+		public void GetEnumerablePropertiesTest()
+		{
+			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
+			var enumerableProperties = MetaDataHelper.FilterByIsEnumerable(propertyDescriptors, typeof(IEntityCore));
+			Assert.AreEqual(5, enumerableProperties.Count());
 		}
 
 		[TestMethod, Ignore]
