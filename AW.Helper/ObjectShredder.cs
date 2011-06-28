@@ -60,7 +60,7 @@ namespace AW.Helper
 		{
 			SetType(source);
 			// Load the table from the scalar sequence if _type is a primitive type.
-			if (Type.IsPrimitive)
+			if (ValueTypeWrapper.TypeNeedsWrappingForBinding(Type))
 				return ShredPrimitive(source, table, options);
 
 			// Create a new table if the input table is null.

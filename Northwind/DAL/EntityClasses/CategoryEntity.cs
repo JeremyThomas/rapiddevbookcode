@@ -329,12 +329,15 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Number automatically assigned to a new category.");
 			_fieldsCustomProperties.Add("CategoryId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of food category.");
 			_fieldsCustomProperties.Add("CategoryName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Description", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"A picture representing the food category.");
 			_fieldsCustomProperties.Add("Picture", fieldHashtable);
 		}
 		#endregion
@@ -401,7 +404,8 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CategoryId property of the Entity Category<br/><br/></summary>
+		/// <summary> The CategoryId property of the Entity Category<br/><br/>
+		/// MS_Description: Number automatically assigned to a new category.<br/></summary>
 		/// <remarks>Mapped on  table field: "Categories"."CategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -411,7 +415,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)CategoryFieldIndex.CategoryId, value); }
 		}
 
-		/// <summary> The CategoryName property of the Entity Category<br/><br/></summary>
+		/// <summary> The CategoryName property of the Entity Category<br/><br/>
+		/// MS_Description: Name of food category.<br/></summary>
 		/// <remarks>Mapped on  table field: "Categories"."CategoryName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -431,7 +436,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)CategoryFieldIndex.Description, value); }
 		}
 
-		/// <summary> The Picture property of the Entity Category<br/><br/></summary>
+		/// <summary> The Picture property of the Entity Category<br/><br/>
+		/// MS_Description: A picture representing the food category.<br/></summary>
 		/// <remarks>Mapped on  table field: "Categories"."Picture"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Image, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

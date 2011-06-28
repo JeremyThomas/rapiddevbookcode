@@ -473,6 +473,7 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Street or post-office box.");
 			_fieldsCustomProperties.Add("Address", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("BirthDate", fieldHashtable);
@@ -481,32 +482,41 @@ namespace Northwind.DAL.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Country", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Number automatically assigned to new employee.");
 			_fieldsCustomProperties.Add("EmployeeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Internal telephone extension number.");
 			_fieldsCustomProperties.Add("Extension", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("FirstName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("HireDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Phone number includes country code or area code.");
 			_fieldsCustomProperties.Add("HomePhone", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("LastName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"General information about employee's background.");
 			_fieldsCustomProperties.Add("Notes", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Picture of employee.");
 			_fieldsCustomProperties.Add("Photo", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PhotoPath", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"State or province.");
 			_fieldsCustomProperties.Add("Region", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Employee's supervisor.");
 			_fieldsCustomProperties.Add("ReportsTo", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Employee's title.");
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Title used in salutations.");
 			_fieldsCustomProperties.Add("TitleOfCourtesy", fieldHashtable);
 		}
 		#endregion
@@ -640,7 +650,8 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Address property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Address property of the Entity Employee<br/><br/>
+		/// MS_Description: Street or post-office box.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Address"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -680,7 +691,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Country, value); }
 		}
 
-		/// <summary> The EmployeeId property of the Entity Employee<br/><br/></summary>
+		/// <summary> The EmployeeId property of the Entity Employee<br/><br/>
+		/// MS_Description: Number automatically assigned to new employee.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -690,7 +702,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.EmployeeId, value); }
 		}
 
-		/// <summary> The Extension property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Extension property of the Entity Employee<br/><br/>
+		/// MS_Description: Internal telephone extension number.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Extension"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 4<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -720,7 +733,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.HireDate, value); }
 		}
 
-		/// <summary> The HomePhone property of the Entity Employee<br/><br/></summary>
+		/// <summary> The HomePhone property of the Entity Employee<br/><br/>
+		/// MS_Description: Phone number includes country code or area code.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."HomePhone"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 24<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -740,7 +754,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.LastName, value); }
 		}
 
-		/// <summary> The Notes property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Notes property of the Entity Employee<br/><br/>
+		/// MS_Description: General information about employee's background.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Notes"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NText, 0, 0, 1073741823<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -750,7 +765,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Notes, value); }
 		}
 
-		/// <summary> The Photo property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Photo property of the Entity Employee<br/><br/>
+		/// MS_Description: Picture of employee.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Photo"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Image, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -780,7 +796,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.PostalCode, value); }
 		}
 
-		/// <summary> The Region property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Region property of the Entity Employee<br/><br/>
+		/// MS_Description: State or province.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Region"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -790,7 +807,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Region, value); }
 		}
 
-		/// <summary> The ReportsTo property of the Entity Employee<br/><br/></summary>
+		/// <summary> The ReportsTo property of the Entity Employee<br/><br/>
+		/// MS_Description: Employee's supervisor.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."ReportsTo"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -800,7 +818,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.ReportsTo, value); }
 		}
 
-		/// <summary> The Title property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Title property of the Entity Employee<br/><br/>
+		/// MS_Description: Employee's title.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Title"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 30<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -810,7 +829,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Title, value); }
 		}
 
-		/// <summary> The TitleOfCourtesy property of the Entity Employee<br/><br/></summary>
+		/// <summary> The TitleOfCourtesy property of the Entity Employee<br/><br/>
+		/// MS_Description: Title used in salutations.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."TitleOfCourtesy"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

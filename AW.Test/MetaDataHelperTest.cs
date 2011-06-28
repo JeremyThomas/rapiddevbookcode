@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Xml.Schema;
 using AW.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
 {
@@ -139,6 +140,15 @@ namespace AW.Tests
 			{
 				TypeDescriptor.RemoveProvider(fieldsToPropertiesTypeDescriptionProvider, serializableClassType);
 			}
+		}
+
+		[TestMethod]
+		public void GetEnumerablePropertiesTest()
+		{
+			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
+			var enumerableProperties = propertyDescriptors.FilterByIsEnumerable(typeof(IEntityCore));
+			Assert.AreEqual(5, enumerableProperties.Count());
 		}
 	}
 }

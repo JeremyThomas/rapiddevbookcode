@@ -287,7 +287,10 @@ namespace AW.Tests
 			Assert.AreEqual(employeesCountToTest, customer.EmployeesViaOrders.Count);
 		}
 
-		[TestMethod, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+		/// <summary>
+		/// http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
+		/// </summary>
+		[TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
 		public void BiDirectionalManyToMany()
 		{
 			var metaData = GetNorthwindLinqMetaData();
