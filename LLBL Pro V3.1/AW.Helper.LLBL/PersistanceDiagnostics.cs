@@ -456,7 +456,7 @@ namespace AW.Helper.LLBL
 		public FieldAndEntityInformation(Type entity, IEntityField field, string customProperties)
 			: base(entity, field, customProperties)
 		{
-			Entity = field.ActualContainingObjectName.Replace("Entity", "");
+			Entity = EntityHelper.GetNameFromEntityName(field.ActualContainingObjectName);
 		}
 
 		/// <summary>
@@ -511,7 +511,7 @@ namespace AW.Helper.LLBL
 		/// </summary>
 		public EntityInformation2(IEntity2 entity)
 		{
-			Entity = entity.LLBLGenProEntityName.Replace("Entity", "");
+			Entity = EntityHelper.GetNameFromEntity(entity);
 			var fieldAndEntityInformations = from field in entity.Fields.AsEnumerable()
 			                                 where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
 			                                 select new FieldAndEntityInformation2(entity.GetType(), field, entity.FieldsCustomPropertiesOfType[field.Name]);
@@ -602,13 +602,7 @@ namespace AW.Helper.LLBL
 			var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(entity, field.Name);
 			DisplayNames = displayNameAttributes.Select(dna => dna.DisplayName).JoinAsString();
 			DisplayNameAttributeTypes = displayNameAttributes.JoinAsString();
-			SQLServerFieldPersistenceInfo = GetFieldPersistenceInfoPublic(SQLServerDataAccessAdapter, field);
-		}
-
-		private IFieldPersistenceInfo GetFieldPersistenceInfoPublic(IDataAccessAdapter sqlServerDataAccessAdapter, IEntityField2 field)
-		{
-			var fullListQueryMethod = sqlServerDataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);
-			return fullListQueryMethod.Invoke(sqlServerDataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
+			SQLServerFieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(SQLServerDataAccessAdapter, field);
 		}
 
 		/// <summary>

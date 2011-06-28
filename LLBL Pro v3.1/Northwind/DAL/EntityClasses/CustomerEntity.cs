@@ -420,6 +420,7 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Street or post-office box.");
 			_fieldsCustomProperties.Add("Address", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("City", fieldHashtable);
@@ -432,14 +433,18 @@ namespace Northwind.DAL.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Country", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique five-character code based on customer name.");
 			_fieldsCustomProperties.Add("CustomerId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Phone number includes country code or area code.");
 			_fieldsCustomProperties.Add("Fax", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Phone number includes country code or area code.");
 			_fieldsCustomProperties.Add("Phone", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"State or province.");
 			_fieldsCustomProperties.Add("Region", fieldHashtable);
 		}
 		#endregion
@@ -539,10 +544,12 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Address property of the Entity Customer<br/><br/></summary>
+		/// <summary> The Address property of the Entity Customer<br/><br/>
+		/// MS_Description: Street or post-office box.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customers"."Address"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		[Description("Test Description attribute")]
 		public virtual System.String Address
 		{
 			get { return (System.String)GetValue((int)CustomerFieldIndex.Address, true); }
@@ -563,6 +570,8 @@ namespace Northwind.DAL.EntityClasses
 		/// <remarks>Mapped on  table field: "Customers"."CompanyName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 40<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		[DisplayName("Company Name")]
+		[Description("Test Description attribute")]
 		public virtual System.String CompanyName
 		{
 			get { return (System.String)GetValue((int)CustomerFieldIndex.CompanyName, true); }
@@ -599,7 +608,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)CustomerFieldIndex.Country, value); }
 		}
 
-		/// <summary> The CustomerId property of the Entity Customer<br/><br/></summary>
+		/// <summary> The CustomerId property of the Entity Customer<br/><br/>
+		/// MS_Description: Unique five-character code based on customer name.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customers"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 5<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -609,7 +619,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)CustomerFieldIndex.CustomerId, value); }
 		}
 
-		/// <summary> The Fax property of the Entity Customer<br/><br/></summary>
+		/// <summary> The Fax property of the Entity Customer<br/><br/>
+		/// MS_Description: Phone number includes country code or area code.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customers"."Fax"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 24<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -619,7 +630,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)CustomerFieldIndex.Fax, value); }
 		}
 
-		/// <summary> The Phone property of the Entity Customer<br/><br/></summary>
+		/// <summary> The Phone property of the Entity Customer<br/><br/>
+		/// MS_Description: Phone number includes country code or area code.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customers"."Phone"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 24<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -639,7 +651,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)CustomerFieldIndex.PostalCode, value); }
 		}
 
-		/// <summary> The Region property of the Entity Customer<br/><br/></summary>
+		/// <summary> The Region property of the Entity Customer<br/><br/>
+		/// MS_Description: State or province.<br/></summary>
 		/// <remarks>Mapped on  table field: "Customers"."Region"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

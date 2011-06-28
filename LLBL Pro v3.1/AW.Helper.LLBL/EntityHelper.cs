@@ -90,15 +90,22 @@ namespace AW.Helper.LLBL
 			}
 			catch (MissingMethodException)
 			{
-				var elementCreatorCoreType = typeof (IElementCreatorCore).GetAssignable(typeOfEntity.Assembly.GetExportedTypes()).FirstOrDefault();
-				if (elementCreatorCoreType != null)
-				{
-					var elementCreatorCore = Activator.CreateInstance(elementCreatorCoreType) as IElementCreatorCore;
-					if (elementCreatorCore != null)
-						return CreateEntity(typeOfEntity, elementCreatorCore);
-				}
+				var elementCreatorCore = CreateElementCreator(typeOfEntity);
+				if (elementCreatorCore != null)
+					return CreateEntity(typeOfEntity, elementCreatorCore);
 				throw;
 			}
+		}
+
+		public static IElementCreatorCore CreateElementCreator(Type typeInTheSameAssemblyAsElementCreator)
+		{
+			return CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
+		}
+
+		public static IElementCreatorCore CreateElementCreator(IEnumerable<Type> types)
+		{
+			var elementCreatorCoreType = typeof (IElementCreatorCore).GetAssignable(types).FirstOrDefault();
+			return elementCreatorCoreType == null ? null : Activator.CreateInstance(elementCreatorCoreType) as IElementCreatorCore;
 		}
 
 		public static IEntityCore CreateEntity(Type typeOfEntity, IElementCreatorCore elementCreatorCore)
@@ -118,14 +125,14 @@ namespace AW.Helper.LLBL
 
 		public static IEntityFactoryCore GetFactoryCore<T>(IElementCreatorCore elementCreatorCore) where T : class, IEntityCore
 		{
-			return (elementCreatorCore.GetFactory(typeof(T)));
+			return (elementCreatorCore.GetFactory(typeof (T)));
 		}
 
 		public static IEntityFactoryCore GetFactoryCore(IEntityCore entity)
 		{
 			var entity2 = entity as IEntity2;
-			if (entity2 == null) 
-				return((IEntity) entity).GetEntityFactory();
+			if (entity2 == null)
+				return ((IEntity) entity).GetEntityFactory();
 			return entity2.GetEntityFactory();
 		}
 
@@ -143,7 +150,7 @@ namespace AW.Helper.LLBL
 		{
 			if (!enumerable.IsNullOrEmpty())
 			{
-				var first = enumerable.FirstOrDefault(e => e.GetType().Equals(typeof(T))) as IEntityCore;
+				var first = enumerable.FirstOrDefault(e => e.GetType().Equals(typeof (T))) as IEntityCore;
 				if (first != null) return GetFactoryCore(first);
 			}
 			return GetFactoryCore<T>();
@@ -216,7 +223,7 @@ namespace AW.Helper.LLBL
 			var llblQuery = enumerable as ILLBLGenProQuery;
 			if (llblQuery != null)
 				return llblQuery.Execute<EntityCollectionBase<T>>();
-			var entities = ((IEntityFactory)GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
+			var entities = ((IEntityFactory) GetFactoryCore(enumerable)).CreateEntityCollection() as EntityCollectionBase<T>;
 			if (entities != null)
 				entities.AddRange(enumerable);
 			return entities;
@@ -308,7 +315,7 @@ namespace AW.Helper.LLBL
 			return entity.IsDirty ? GetFields(entity).Where(f => f.IsChanged) : Enumerable.Empty<IEntityFieldCore>();
 		}
 
-	  public static void RevertChangesToDBValue(this IEntityCore entity) 
+		public static void RevertChangesToDBValue(this IEntityCore entity)
 		{
 			foreach (var changedField in entity.GetChangedFields())
 				changedField.ForcedCurrentValueWrite(changedField.DbValue, changedField.DbValue);
@@ -394,7 +401,6 @@ namespace AW.Helper.LLBL
 		//{
 		//  return ((IEntity) CreateEntity<T>()).GetEntityFactory();
 		//}
-
 		/// <summary>
 		/// Deletes the entities.
 		/// </summary>
@@ -462,7 +468,7 @@ namespace AW.Helper.LLBL
 		#endregion
 
 		#region Adapter
-		
+
 		/// <summary>
 		/// Saves all dirty objects inside the enumeration passed to the persistent storage.
 		/// </summary>
@@ -605,7 +611,7 @@ namespace AW.Helper.LLBL
 			if (entityCollection != null)
 				return entityCollection;
 			var llblQuery = enumerable as ILLBLGenProQuery;
-			return llblQuery == null ? ToEntityCollection(enumerable, ((IEntityFactory2)GetFactoryCore(enumerable))) : llblQuery.Execute<EntityCollectionBase2<T>>();
+			return llblQuery == null ? ToEntityCollection(enumerable, ((IEntityFactory2) GetFactoryCore(enumerable))) : llblQuery.Execute<EntityCollectionBase2<T>>();
 		}
 
 		private static EntityCollectionBase2<T> ToEntityCollection<T>(IEnumerable<T> enumerable, IEntityFactory2 entityFactory) where T : EntityBase2
@@ -630,7 +636,7 @@ namespace AW.Helper.LLBL
 				var enumerator = enumerable.GetEnumerator();
 				while (enumerator.MoveNext())
 				{
-					var firstEntity = ((IEntity2)enumerator.Current);
+					var firstEntity = ((IEntity2) enumerator.Current);
 					if (firstEntity == null || !itemType.Equals(firstEntity.GetType())) continue;
 					entities = firstEntity.GetEntityFactory().CreateEntityCollection();
 					if (entities == null)
@@ -642,7 +648,7 @@ namespace AW.Helper.LLBL
 			}
 			if (entities == null)
 			{
-				entities = ((IEntity2)CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection();
+				entities = ((IEntity2) CreateEntity(itemType)).GetEntityFactory().CreateEntityCollection();
 				if (entities == null)
 					return null;
 				foreach (IEntity2 item in enumerable)
@@ -678,7 +684,7 @@ namespace AW.Helper.LLBL
 
 		public static bool IsEntityCore(PropertyDescriptor propertyDescriptor)
 		{
-			return typeof(IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType);
+			return typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType);
 		}
 
 		public static IEntityFields GetFieldsFromType(Type type)
@@ -707,15 +713,35 @@ namespace AW.Helper.LLBL
 
 		public static IEnumerable<PropertyDescriptor> FilterByIsField(this IEnumerable<PropertyDescriptor> propertyDescriptors, IEntityCore entityCore)
 		{
-			var propertyNames = entityCore.Fields. Cast<IEntityFieldCore>().Select(ef => ef.Name);
+			var propertyNames = entityCore.Fields.Cast<IEntityFieldCore>().Select(ef => ef.Name);
 			return propertyDescriptors.Where(propertyDescriptor => propertyNames.Contains(propertyDescriptor.Name));
 		}
-	
+
 		public static bool FieldIsNavigator(IEntityCore entityCore, string fieldName)
 		{
 			var relations = entityCore.GetRelationsForFieldOfType(fieldName);
-			return relations.Count>0;
+			return relations.Count > 0;
 		}
 
+		public static string GetNameFromEntity(IEntityCore entity)
+		{
+			return GetNameFromEntityName(entity.LLBLGenProEntityName);
+		}
+
+		public static string GetNameFromEntityEnum(Enum entity)
+		{
+			return GetNameFromEntityName(entity.ToString());
+		}
+
+		public static string GetNameFromEntityName(string llblGenProEntityName)
+		{
+			return llblGenProEntityName.Replace("Entity", "");
+		}
+
+		public static IFieldPersistenceInfo GetFieldPersistenceInfo(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
+		{
+			var fullListQueryMethod = dataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);
+			return fullListQueryMethod.Invoke(dataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
+		}
 	}
 }

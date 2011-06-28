@@ -91,6 +91,7 @@ namespace Northwind.DAL.EntityClasses
 						destination.SetContainingEntityInfo(this, navigatorName);
 					}
 				}
+				destination.ActiveContext = this.ActiveContext;
 			}
 			return destination;
 		}

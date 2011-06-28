@@ -391,8 +391,10 @@ namespace Northwind.DAL.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Discount", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same as Order ID in Orders table.");
 			_fieldsCustomProperties.Add("OrderId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same as Product ID in Products table.");
 			_fieldsCustomProperties.Add("ProductId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Quantity", fieldHashtable);
@@ -546,7 +548,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderDetailFieldIndex.Discount, value); }
 		}
 
-		/// <summary> The OrderId property of the Entity OrderDetail<br/><br/></summary>
+		/// <summary> The OrderId property of the Entity OrderDetail<br/><br/>
+		/// MS_Description: Same as Order ID in Orders table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Order Details"."OrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -556,7 +559,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderDetailFieldIndex.OrderId, value); }
 		}
 
-		/// <summary> The ProductId property of the Entity OrderDetail<br/><br/></summary>
+		/// <summary> The ProductId property of the Entity OrderDetail<br/><br/>
+		/// MS_Description: Same as Product ID in Products table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Order Details"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

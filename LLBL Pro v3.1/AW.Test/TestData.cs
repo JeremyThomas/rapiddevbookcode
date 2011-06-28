@@ -13,6 +13,8 @@ namespace AW.Tests
 {
 	public static class TestData
 	{
+		public static readonly List<string> ThreeStrings = new List<string> { "s1", "s2", "s3" };
+
 		public static string GetTestxmlString()
 		{
 			var x = new XmlSerializer(typeof (List<SerializableClass>));
@@ -130,6 +132,11 @@ namespace AW.Tests
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 			addressTypeEntityCollection.CreateHierarchicalProjection(ds);
 			return ds.Tables[0];
+		}
+
+		public static IEnumerable<string> ThreeStringsEnumerable
+		{
+			get { return ThreeStrings.Distinct(); }
 		}
 	}
 

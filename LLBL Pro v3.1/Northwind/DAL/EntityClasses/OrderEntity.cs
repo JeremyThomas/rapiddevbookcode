@@ -455,32 +455,39 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same entry as in Customers table.");
 			_fieldsCustomProperties.Add("CustomerId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same entry as in Employees table.");
 			_fieldsCustomProperties.Add("EmployeeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Freight", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("OrderDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Unique order number.");
 			_fieldsCustomProperties.Add("OrderId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("RequiredDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Street address only -- no post-office box allowed.");
 			_fieldsCustomProperties.Add("ShipAddress", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("ShipCity", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("ShipCountry", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of person or company to receive the shipment.");
 			_fieldsCustomProperties.Add("ShipName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("ShippedDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("ShipPostalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"State or province.");
 			_fieldsCustomProperties.Add("ShipRegion", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same as Shipper ID in Shippers table.");
 			_fieldsCustomProperties.Add("ShipVia", fieldHashtable);
 		}
 		#endregion
@@ -667,7 +674,8 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CustomerId property of the Entity Order<br/><br/></summary>
+		/// <summary> The CustomerId property of the Entity Order<br/><br/>
+		/// MS_Description: Same entry as in Customers table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Orders"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 5<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -677,7 +685,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderFieldIndex.CustomerId, value); }
 		}
 
-		/// <summary> The EmployeeId property of the Entity Order<br/><br/></summary>
+		/// <summary> The EmployeeId property of the Entity Order<br/><br/>
+		/// MS_Description: Same entry as in Employees table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Orders"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -707,7 +716,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderFieldIndex.OrderDate, value); }
 		}
 
-		/// <summary> The OrderId property of the Entity Order<br/><br/></summary>
+		/// <summary> The OrderId property of the Entity Order<br/><br/>
+		/// MS_Description: Unique order number.<br/></summary>
 		/// <remarks>Mapped on  table field: "Orders"."OrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -727,7 +737,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderFieldIndex.RequiredDate, value); }
 		}
 
-		/// <summary> The ShipAddress property of the Entity Order<br/><br/></summary>
+		/// <summary> The ShipAddress property of the Entity Order<br/><br/>
+		/// MS_Description: Street address only -- no post-office box allowed.<br/></summary>
 		/// <remarks>Mapped on  table field: "Orders"."ShipAddress"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -757,7 +768,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderFieldIndex.ShipCountry, value); }
 		}
 
-		/// <summary> The ShipName property of the Entity Order<br/><br/></summary>
+		/// <summary> The ShipName property of the Entity Order<br/><br/>
+		/// MS_Description: Name of person or company to receive the shipment.<br/></summary>
 		/// <remarks>Mapped on  table field: "Orders"."ShipName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 40<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -787,7 +799,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderFieldIndex.ShipPostalCode, value); }
 		}
 
-		/// <summary> The ShipRegion property of the Entity Order<br/><br/></summary>
+		/// <summary> The ShipRegion property of the Entity Order<br/><br/>
+		/// MS_Description: State or province.<br/></summary>
 		/// <remarks>Mapped on  table field: "Orders"."ShipRegion"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -797,7 +810,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderFieldIndex.ShipRegion, value); }
 		}
 
-		/// <summary> The ShipVia property of the Entity Order<br/><br/></summary>
+		/// <summary> The ShipVia property of the Entity Order<br/><br/>
+		/// MS_Description: Same as Shipper ID in Shippers table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Orders"."ShipVia"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

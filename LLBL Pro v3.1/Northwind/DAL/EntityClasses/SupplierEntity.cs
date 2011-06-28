@@ -329,6 +329,7 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Street or post-office box.");
 			_fieldsCustomProperties.Add("Address", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("City", fieldHashtable);
@@ -341,16 +342,21 @@ namespace Northwind.DAL.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Country", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Phone number includes country code or area code.");
 			_fieldsCustomProperties.Add("Fax", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Supplier's home page on World Wide Web.");
 			_fieldsCustomProperties.Add("HomePage", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Phone number includes country code or area code.");
 			_fieldsCustomProperties.Add("Phone", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"State or province.");
 			_fieldsCustomProperties.Add("Region", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Number automatically assigned to new supplier.");
 			_fieldsCustomProperties.Add("SupplierId", fieldHashtable);
 		}
 		#endregion
@@ -417,7 +423,8 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Address property of the Entity Supplier<br/><br/></summary>
+		/// <summary> The Address property of the Entity Supplier<br/><br/>
+		/// MS_Description: Street or post-office box.<br/></summary>
 		/// <remarks>Mapped on  table field: "Suppliers"."Address"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -477,7 +484,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)SupplierFieldIndex.Country, value); }
 		}
 
-		/// <summary> The Fax property of the Entity Supplier<br/><br/></summary>
+		/// <summary> The Fax property of the Entity Supplier<br/><br/>
+		/// MS_Description: Phone number includes country code or area code.<br/></summary>
 		/// <remarks>Mapped on  table field: "Suppliers"."Fax"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 24<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -487,7 +495,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)SupplierFieldIndex.Fax, value); }
 		}
 
-		/// <summary> The HomePage property of the Entity Supplier<br/><br/></summary>
+		/// <summary> The HomePage property of the Entity Supplier<br/><br/>
+		/// MS_Description: Supplier's home page on World Wide Web.<br/></summary>
 		/// <remarks>Mapped on  table field: "Suppliers"."HomePage"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NText, 0, 0, 1073741823<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -497,7 +506,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)SupplierFieldIndex.HomePage, value); }
 		}
 
-		/// <summary> The Phone property of the Entity Supplier<br/><br/></summary>
+		/// <summary> The Phone property of the Entity Supplier<br/><br/>
+		/// MS_Description: Phone number includes country code or area code.<br/></summary>
 		/// <remarks>Mapped on  table field: "Suppliers"."Phone"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 24<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -517,7 +527,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)SupplierFieldIndex.PostalCode, value); }
 		}
 
-		/// <summary> The Region property of the Entity Supplier<br/><br/></summary>
+		/// <summary> The Region property of the Entity Supplier<br/><br/>
+		/// MS_Description: State or province.<br/></summary>
 		/// <remarks>Mapped on  table field: "Suppliers"."Region"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -527,7 +538,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)SupplierFieldIndex.Region, value); }
 		}
 
-		/// <summary> The SupplierId property of the Entity Supplier<br/><br/></summary>
+		/// <summary> The SupplierId property of the Entity Supplier<br/><br/>
+		/// MS_Description: Number automatically assigned to new supplier.<br/></summary>
 		/// <remarks>Mapped on  table field: "Suppliers"."SupplierID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
