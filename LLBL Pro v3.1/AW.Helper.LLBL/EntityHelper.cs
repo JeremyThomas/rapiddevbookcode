@@ -92,7 +92,7 @@ namespace AW.Helper.LLBL
 			{
 				var elementCreatorCore = CreateElementCreator(typeOfEntity);
 				if (elementCreatorCore != null)
-					return CreateEntity(typeOfEntity, elementCreatorCore);
+					return LinqUtils.CreateEntityInstanceFromEntityType(typeOfEntity, elementCreatorCore);
 				throw;
 			}
 		}
@@ -106,11 +106,6 @@ namespace AW.Helper.LLBL
 		{
 			var elementCreatorCoreType = typeof (IElementCreatorCore).GetAssignable(types).FirstOrDefault();
 			return elementCreatorCoreType == null ? null : Activator.CreateInstance(elementCreatorCoreType) as IElementCreatorCore;
-		}
-
-		public static IEntityCore CreateEntity(Type typeOfEntity, IElementCreatorCore elementCreatorCore)
-		{
-			return elementCreatorCore.GetFactory(typeOfEntity).Create();
 		}
 
 		/// <summary>
@@ -166,23 +161,6 @@ namespace AW.Helper.LLBL
 			var entity = CreateEntity(typeOfEntity);
 			return entity == null ? 0 : entity.LLBLGenProEntityTypeValue;
 		}
-
-		//public static Type GetEntityTypeFromEntityTypeValue(IEntityFactoryCore entityFactoryCore, int entityTypeValue)
-		//{
-		//  var entityFactory = entityFactoryCore as EntityFactoryCore;
-		//  if (entityFactory != null)
-		//  {
-		//    var entity = entityFactory.CreateEntityFromEntityTypeValue(entityTypeValue);
-		//    return entity == null ? null : entity.GetType();
-		//  }
-		//  var entityFactory2 = entityFactoryCore as EntityFactoryCore2;
-		//  if (entityFactory2 != null)
-		//  {
-		//    var entity = entityFactory2.CreateEntityFromEntityTypeValue(entityTypeValue);
-		//    return entity == null ? null : entity.GetType();
-		//  }
-		//  return null;
-		//}
 
 		public static int GetEntityTypeValueForType<T>() where T : class, IEntityCore
 		{

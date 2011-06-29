@@ -207,5 +207,19 @@ namespace AW.Tests
 			var actual = EntityHelper.GetEntityTypeValueForType(typeof (TransactionHistoryEntity));
 			Assert.AreEqual((int) EntityType.TransactionHistoryEntity, actual);
 		}
+
+		[TestMethod]
+		public void GetNavigatorPropertiesTest()
+		{
+			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var toManyProperties = EntityHelper.GetNavigatorProperties(customer);
+			Assert.AreEqual(4, toManyProperties.Count());
+
+			var employeeEntity = new Northwind.DAL.EntityClasses.EmployeeEntity();
+			toManyProperties = EntityHelper.GetNavigatorProperties(employeeEntity);
+			Assert.AreEqual(5, toManyProperties.Count());
+		}
+
+
 	}
 }

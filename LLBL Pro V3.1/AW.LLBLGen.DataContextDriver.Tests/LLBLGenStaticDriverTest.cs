@@ -70,7 +70,20 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		public void GetAWSchemaTest()
 		{
 			var customType = typeof (LinqMetaData);
-			GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, true);
+			var explorerItems = GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, true);
+			var explorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.CustomerEntity));
+			IEntityCore customerEntity = new CustomerEntity();
+			var msDescription = customerEntity.CustomPropertiesOfType.Values.First();
+			StringAssert.Contains(explorerItem.ToolTipText,msDescription);
+
+			var firstExplorerItem = explorerItem.Children.First();
+			Assert.IsFalse(string.IsNullOrWhiteSpace(firstExplorerItem.ToolTipText));
+			var firstField = (IEntityField)customerEntity.Fields[0];
+			StringAssert.Contains(firstExplorerItem.ToolTipText, firstField.SourceColumnName);
+
+			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceObjectName);
+			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceCatalogName);
+			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceSchemaName);
 		}
 
 		/// <summary>
@@ -141,38 +154,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			}
 			return actual;
 		}
-
-		[TestMethod]
-		public void GetNavigatorPropertiesTest()
-		{
-			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
-			var toManyProperties = EntityHelper.GetNavigatorProperties(customer);
-			Assert.AreEqual(4, toManyProperties.Count());
-
-			var employeeEntity = new Northwind.DAL.EntityClasses.EmployeeEntity();
-			toManyProperties = EntityHelper.GetNavigatorProperties(employeeEntity);
-			Assert.AreEqual(5, toManyProperties.Count());
-		}
-
-		[TestMethod]
-		public void GetEnumerablePropertyTest()
-		{
-			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
-			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
-			var propertyDescriptor = propertyDescriptors.SingleOrDefault(pd=>pd.Name=="EmployeesViaOrdersInCode");
-			var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
-			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), typeParameterOfGenericType);
-			var elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
-			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), elementType);
-			//var interfaces = propertyDescriptor.PropertyType.GetInterfaces();
-
-			propertyDescriptor = propertyDescriptors.SingleOrDefault(pd => pd.Name == "EmployeesViaOrders");
-			typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
-			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), typeParameterOfGenericType);
-			elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
-			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), elementType);
-			//interfaces = propertyDescriptor.PropertyType.GetInterfaces();
-		}
+		
 		
 		//[TestMethod]
 		//public void GetFieldsToShowInSchemaTest()
