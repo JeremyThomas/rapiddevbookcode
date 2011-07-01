@@ -137,7 +137,7 @@
                 <CustomProperty Name="MS_Description" Value="Street or post-office box." />
               </CustomProperties>
               <Attributes>
-                <Attribute Value="Description(&quot;Test Description attribute&quot;)" />
+                <Attribute Value="Description(&quot;Addres Description attribute&quot;)" />
               </Attributes>
             </OutputSettingValues>
           </Field>
@@ -146,7 +146,7 @@
             <OutputSettingValues>
               <Attributes>
                 <Attribute Value="DisplayName(&quot;Company Name&quot;)" />
-                <Attribute Value="Description(&quot;Test Description attribute&quot;)" />
+                <Attribute Value="Description(&quot;CompnyName description attribute&quot;)" />
               </Attributes>
             </OutputSettingValues>
           </Field>
@@ -183,6 +183,12 @@
             </OutputSettingValues>
           </Field>
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="Description(&quot;Customer test description attribute&quot;)" />
+            <Attribute Value="DisplayName(&quot;CustomerEntityDisplayName&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="CustomerCustomerDemo">
         <Fields>
@@ -536,6 +542,12 @@
         <FieldRelationships>
           <FieldFieldRelationship FkField="CustomerId" PkField="CustomerId" />
         </FieldRelationships>
+        <StartNavigatorOutputSettingValues>
+          <Attributes>
+            <Attribute Value="Description(&quot;The customer who made the order.&quot;)" />
+            <Attribute Value="DisplayName(&quot;The customer&quot;)" />
+          </Attributes>
+        </StartNavigatorOutputSettingValues>
       </NormalRelationship>
       <NormalRelationship Name="Order.Employee-Employee.Orders" Start=":Order" End=":Employee" StartNavigator="Employee" EndNavigator="Orders" Type="4">
         <FieldRelationships>

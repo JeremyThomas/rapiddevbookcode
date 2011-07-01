@@ -830,6 +830,8 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> Gets / sets related entity of type 'CustomerEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
 		[Browsable(false)]
+		[Description("The customer who made the order.")]
+		[DisplayName("The customer")]
 		public virtual CustomerEntity Customer
 		{
 			get	{ return _customer; }

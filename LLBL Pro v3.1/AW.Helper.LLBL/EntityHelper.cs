@@ -99,13 +99,20 @@ namespace AW.Helper.LLBL
 
 		public static IElementCreatorCore CreateElementCreator(Type typeInTheSameAssemblyAsElementCreator)
 		{
-			return CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
+			return typeof(IElementCreatorCore).IsAssignableFrom(typeInTheSameAssemblyAsElementCreator) 
+				? CreateElementCreatorFromType(typeInTheSameAssemblyAsElementCreator) 
+				: CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
 		}
 
 		public static IElementCreatorCore CreateElementCreator(IEnumerable<Type> types)
 		{
 			var elementCreatorCoreType = typeof (IElementCreatorCore).GetAssignable(types).FirstOrDefault();
-			return elementCreatorCoreType == null ? null : Activator.CreateInstance(elementCreatorCoreType) as IElementCreatorCore;
+			return elementCreatorCoreType == null ? null : CreateElementCreatorFromType(elementCreatorCoreType);
+		}
+
+		private static IElementCreatorCore CreateElementCreatorFromType(Type elementCreatorCoreType)
+		{
+			return Activator.CreateInstance(elementCreatorCoreType) as IElementCreatorCore;
 		}
 
 		/// <summary>
@@ -720,6 +727,13 @@ namespace AW.Helper.LLBL
 		{
 			var fullListQueryMethod = dataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);
 			return fullListQueryMethod.Invoke(dataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
+		}
+
+		public static IFieldPersistenceInfo GetFieldPersistenceInfo(IEntityFieldCore field, IDataAccessAdapter adapter)
+		{
+			if (field is IEntityField)
+				return (IEntityField)field;
+			return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2)field);
 		}
 	}
 }

@@ -103,11 +103,36 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		public void GetNorthwindSchemaFieldsTest()
 		{
 			var explorerItems = GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData), Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, true);
-			var explorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.CustomerEntity));
+			var customerName = EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.CustomerEntity);
+			var explorerItem = explorerItems.First(e => e.Text == customerName);
+
+			var orderExplorerItem = explorerItems.Single(e => e.Text == EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.OrderEntity));
+			var customerNavigator = orderExplorerItem.Children.Single(e => e.Text == customerName);
+
+			var customerEntitytype = typeof(Northwind.DAL.EntityClasses.CustomerEntity);
+			var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(customerEntitytype).ToList();
+			foreach (var displayNameAttribute in displayNameAttributes)
+			{
+				StringAssert.Contains(explorerItem.ToolTipText,displayNameAttribute.DisplayName);
+				StringAssert.Contains(customerNavigator.ToolTipText, displayNameAttribute.DisplayName);
+			}
+			var descriptionAttributes = MetaDataHelper.GetDescriptionAttributes(customerEntitytype).ToList();
+			foreach (var descriptionAttribute in descriptionAttributes)
+			{
+				StringAssert.Contains(explorerItem.ToolTipText, descriptionAttribute.Description);
+				StringAssert.Contains(customerNavigator.ToolTipText, descriptionAttribute.Description);
+			}
+
+			var orderEntitytype = typeof(Northwind.DAL.EntityClasses.OrderEntity);
+			var orderPropertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(orderEntitytype);
+			var customerPropertyDescriptor = orderPropertiesToShowInSchema.Single(p => p.Name == customerName);
+			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.Description);
+			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.DisplayName);
+
 			var first = explorerItem.Children.First();
 			Assert.IsFalse(string.IsNullOrWhiteSpace(first.ToolTipText));
-			var propertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(typeof(Northwind.DAL.EntityClasses.CustomerEntity));
-			var description = propertiesToShowInSchema.First().Description;
+			var customerPropertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(customerEntitytype);
+			var description = customerPropertiesToShowInSchema.First().Description;
 			Assert.IsFalse(String.IsNullOrEmpty(description));
 			Assert.IsTrue(first.ToolTipText.Contains(description));
 		}

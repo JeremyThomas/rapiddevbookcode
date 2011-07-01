@@ -345,6 +345,11 @@ namespace AW.Helper
 			return GetAttributes<T>(GetPropertyDescriptors(type), fieldName);
 		}
 
+		public static IEnumerable<T> GetAttributes<T>(Type type) where T : Attribute
+		{
+			return GetAttributes<T>(type, "");
+		}
+
 		/// <summary>
 		/// Gets the validation attributes from a collection of properties for a particular property name.
 		/// </summary>
@@ -370,6 +375,21 @@ namespace AW.Helper
 		public static IEnumerable<DisplayNameAttribute> GetDisplayNameAttributes(Type type, string fieldName)
 		{
 			return GetAttributes<DisplayNameAttribute>(type, fieldName);
+		}
+
+		public static IEnumerable<DisplayNameAttribute> GetDisplayNameAttributes(Type type)
+		{
+			return GetDisplayNameAttributes(type, "");
+		}
+
+		public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type, string fieldName)
+		{
+			return GetAttributes<DescriptionAttribute>(type, fieldName);
+		}
+
+		public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type)
+		{
+			return GetDescriptionAttributes(type, "");
 		}
 	}
 }

@@ -28,6 +28,8 @@ namespace Northwind.DAL.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'Customer'.<br/><br/></summary>
 	[Serializable]
+	[Description("Customer test description attribute")]
+	[DisplayName("CustomerEntityDisplayName")]
 	public partial class CustomerEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
@@ -549,7 +551,7 @@ namespace Northwind.DAL.EntityClasses
 		/// <remarks>Mapped on  table field: "Customers"."Address"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		[Description("Test Description attribute")]
+		[Description("Addres Description attribute")]
 		public virtual System.String Address
 		{
 			get { return (System.String)GetValue((int)CustomerFieldIndex.Address, true); }
@@ -571,7 +573,7 @@ namespace Northwind.DAL.EntityClasses
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 40<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
 		[DisplayName("Company Name")]
-		[Description("Test Description attribute")]
+		[Description("CompnyName description attribute")]
 		public virtual System.String CompanyName
 		{
 			get { return (System.String)GetValue((int)CustomerFieldIndex.CompanyName, true); }
