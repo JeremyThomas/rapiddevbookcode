@@ -379,7 +379,7 @@ namespace AW.Helper
 
 		public static IEnumerable<DisplayNameAttribute> GetDisplayNameAttributes(Type type)
 		{
-			return GetDisplayNameAttributes(type, "");
+			return GetTypesAttributes<DisplayNameAttribute>(type);
 		}
 
 		public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type, string fieldName)
@@ -389,7 +389,12 @@ namespace AW.Helper
 
 		public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type)
 		{
-			return GetDescriptionAttributes(type, "");
+			return GetTypesAttributes<DescriptionAttribute>(type);
+		}
+
+		private static IEnumerable<T> GetTypesAttributes<T>(Type type) where T : Attribute
+		{
+			return type.GetCustomAttributes(typeof(T), true).Cast<T>();
 		}
 	}
 }

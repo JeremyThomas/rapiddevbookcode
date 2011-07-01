@@ -109,18 +109,19 @@ namespace AW.Helper
 
 		public static string JoinAsString<T>(this IEnumerable<T> input, string seperator)
 		{
-			var ar = input.Select(i => i.ToString()).Where(s => !String.IsNullOrEmpty(s)).ToArray();
-			return String.Join(seperator, ar);
+			var ar = input.Select(i => Convert.ToString(i)).ToArray();
+			return Join(seperator, ar);
 		}
 
 		/// <summary>
 		/// 	Joins an array of non empty strings together as one string with a separator between each non empty original string.
 		/// </summary>
+		/// <param name = "separator">The separator.</param>
 		/// <param name = "values">The values.</param>
 		/// <returns></returns>
-		public static string Join(params String[] values)
+		public static string Join(String separator, params String[] values)
 		{
-			return String.Join(StringJoinSeperator, values.Where(s => !String.IsNullOrEmpty(s)).ToArray());
+			return String.Join(separator, values.Where(s => !string.IsNullOrEmpty(s)).ToArray());
 		}
 
 		public static IEnumerable<T> SkipTake<T>(this IEnumerable<T> superset, int pageIndex, int pageSize)
