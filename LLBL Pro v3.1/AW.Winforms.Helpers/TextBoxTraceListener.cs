@@ -24,9 +24,10 @@ namespace AW.Winforms.Helpers
     {
       _target = target;
       _invokeWrite = SendString;
+    	Name = "TextBoxTraceListener";
     }
 
-    public TextBoxTraceListener(TextBox target, bool _scrollToBottom):this(target)
+  	public TextBoxTraceListener(TextBox target, bool _scrollToBottom):this(target)
     {
       this._scrollToBottom = _scrollToBottom;
     }

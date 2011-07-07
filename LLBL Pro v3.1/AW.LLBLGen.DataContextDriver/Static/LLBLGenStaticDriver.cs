@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -382,103 +383,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		#region Schema helpers
 
-		private static List<ExplorerItem> GetSchemaFromEntities(IConnectionInfo cxInfo, Type customType)
-		{
-			var elementCreator = EntityHelper.CreateElementCreator(customType);
-			var adapter = GetDataAccessAdapter(cxInfo, elementCreator is IElementCreator2);
-
-			var topLevelProps = (from type in EntityHelper.GetEntitiesTypes(customType.Assembly)
-			                     let entity = LinqUtils.CreateEntityInstanceFromEntityType(type, elementCreator)
-			                     let name = EntityHelper.GetNameFromEntity(entity)
-			                     orderby name
-			                     select CreateTableExplorerItem(entity, name, adapter)
-			                    ).ToList();
-
-			// Create a lookup keying each element type to the properties of that type. This will allow
-			// us to build hyperlink targets allowing the user to click between associations:
-			var elementTypeLookup = topLevelProps.ToLookup(tp => tp.Tag.GetType());
-
-			// Populate the columns (properties) of each entity:
-			foreach (var table in topLevelProps)
-			{
-				var entity = (IEntityCore) table.Tag;
-				table.Children.AddRange(EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup)));
-				table.Tag = null;
-			}
-
-			return topLevelProps;
-		}
-
-		private static DataAccessAdapterBase GetDataAccessAdapter(IConnectionInfo cxInfo, bool isAdapter)
-		{
-			if (isAdapter)
-				try
-				{
-					return GetAdapter(cxInfo);
-				}
-				catch (Exception e)
-				{
-					GeneralHelper.TraceOut(e.Message);
-				}
-			return null;
-		}
-
-		private static ExplorerItem CreateTableExplorerItem(IEntityCore entity, string name, IDataAccessAdapter adapter)
-		{
-			var tableExplorerItem = new ExplorerItem(name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
-			                        	{
-			                        		IsEnumerable = true,
-			                        		DragText = name,
-			                        		// Store the entity to the Tag property. We'll use it later.
-			                        		Tag = entity
-			                        	};
-
-			tableExplorerItem.Children = CreateFieldExplorerItems(tableExplorerItem, adapter);
-			return tableExplorerItem;
-		}
-
-		private static List<ExplorerItem> CreateFieldExplorerItems(ExplorerItem explorerItem, IDataAccessAdapter adapter)
-		{
-			var entity = (IEntityCore) explorerItem.Tag;
-
-			IFieldPersistenceInfo fieldPersistenceInfo = null;
-
-			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(entity.GetType());
-			var fieldExplorerItems = new List<ExplorerItem>();
-
-			foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)))
-			{
-				fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
-				fieldExplorerItems.Add(new ExplorerItem(CreateFieldText(field), ExplorerItemKind.Property, ExplorerIcon.Column)
-				                       	{
-				                       		DragText = field.Name,
-				                       		//SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
-				                       		//SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
-				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.First(pd => pd.Name == field.Name))
-				                       	});
-			}
-
-			explorerItem.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
-			return fieldExplorerItems;
-		}
-
-		private static ExplorerItem CreateNavigatorExplorerItem(IEntityCore entity, PropertyDescriptor navigatorProperty, ILookup<Type, ExplorerItem> elementTypeLookup)
-		{
-			var entityRelation = entity.GetRelationsForFieldOfType(navigatorProperty.Name)[0] as IEntityRelation;
-			var elementType = MetaDataHelper.GetElementType(navigatorProperty.PropertyType);
-			var hyperlinkTarget = elementTypeLookup[elementType].First();
-			var explorerIcon = ExplorerIcon.OneToMany;
-			if (entityRelation != null)
-				explorerIcon = GetExplorerIcon(entityRelation.TypeOfRelation);
-			var explorerItemKind = GetExplorerItemKind(explorerIcon);
-			return new ExplorerItem(navigatorProperty.Name, explorerItemKind, explorerIcon)
-			       	{
-			       		DragText = navigatorProperty.Name,
-			       		HyperlinkTarget = hyperlinkTarget,
-			       		ToolTipText = CreateNavigatorToolTipText(entity, navigatorProperty, hyperlinkTarget),
-			       	};
-		}
-
 		private static ExplorerItemKind GetExplorerItemKind(ExplorerIcon explorerIcon)
 		{
 			switch (explorerIcon)
@@ -519,6 +423,131 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return ExplorerItemKind.CollectionLink;
 		}
 
+		#region Entities
+
+		private static List<ExplorerItem> GetSchemaFromEntities(IConnectionInfo cxInfo, Type customType)
+		{
+			var elementCreator = EntityHelper.CreateElementCreator(customType);
+			var adapter = GetDataAccessAdapter(cxInfo, elementCreator is IElementCreator2);
+
+			var topLevelProps = (from type in EntityHelper.GetEntitiesTypes(customType.Assembly)
+			                     let entity = LinqUtils.CreateEntityInstanceFromEntityType(type, elementCreator)
+			                     let name = EntityHelper.GetNameFromEntity(entity)
+			                     orderby name
+			                     select CreateTableExplorerItem(entity, name, adapter)
+			                    ).ToList();
+
+			// Create a lookup keying each element type to the properties of that type. This will allow
+			// us to build hyperlink targets allowing the user to click between associations:
+			var elementTypeLookup = topLevelProps.ToLookup(tp => tp.Tag.GetType());
+
+			// Populate the columns (properties) of each entity:
+			foreach (var table in topLevelProps)
+			{
+				var entity = (IEntityCore) table.Tag;
+				try
+				{
+					table.Children.AddRange(EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup)));
+				}
+				catch (Exception e)
+				{
+					GeneralHelper.TraceOut(e.Message);
+				}
+				table.Tag = null;
+			}
+
+			return topLevelProps;
+		}
+
+		private static DataAccessAdapterBase GetDataAccessAdapter(IConnectionInfo cxInfo, bool isAdapter)
+		{
+			if (isAdapter)
+				try
+				{
+					return GetAdapter(cxInfo);
+				}
+				catch (Exception e)
+				{
+					GeneralHelper.TraceOut(e.Message);
+				}
+			return null;
+		}
+
+		private static ExplorerItem CreateTableExplorerItem(IEntityCore entity, string name, IDataAccessAdapter adapter)
+		{
+			var tableExplorerItem = new ExplorerItem(name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
+			                        	{
+			                        		IsEnumerable = true,
+			                        		DragText = name,
+			                        		// Store the entity to the Tag property. We'll use it later.
+			                        		Tag = entity
+			                        	};
+
+			tableExplorerItem.Children = CreateFieldExplorerItems(tableExplorerItem, adapter);
+			return tableExplorerItem;
+		}
+
+		private static List<ExplorerItem> CreateFieldExplorerItems(ExplorerItem explorerItem, IDataAccessAdapter adapter)
+		{
+			var entity = (IEntityCore) explorerItem.Tag;
+
+			IFieldPersistenceInfo fieldPersistenceInfo = null;
+
+			var propertyDescriptors = Enumerable.Empty<PropertyDescriptor>();
+			try
+			{
+				propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(entity.GetType());
+			}
+			catch (Exception e)
+			{
+				GeneralHelper.TraceOut(e.Message);
+			}
+			var fieldExplorerItems = new List<ExplorerItem>();
+
+			foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)))
+			{
+				fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
+				fieldExplorerItems.Add(new ExplorerItem(CreateFieldText(field), ExplorerItemKind.Property, ExplorerIcon.Column)
+				                       	{
+				                       		DragText = field.Name,
+				                       		//SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
+				                       		//SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
+				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, GetFieldPropertyDescriptor(propertyDescriptors, field.Name))
+				                       	});
+			}
+
+			explorerItem.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
+			return fieldExplorerItems;
+		}
+
+		private static PropertyDescriptor GetFieldPropertyDescriptor(IEnumerable<PropertyDescriptor> propertyDescriptors, string fieldName)
+		{
+			return propertyDescriptors.FirstOrDefault(pd => pd.Name == fieldName);
+		}
+
+		private static ExplorerItem CreateNavigatorExplorerItem(IEntityCore entity, PropertyDescriptor navigatorProperty, ILookup<Type, ExplorerItem> elementTypeLookup)
+		{
+			var elementType = MetaDataHelper.GetElementType(navigatorProperty.PropertyType);
+			var hyperlinkTarget = elementTypeLookup[elementType].First();
+			var explorerIcon = GetExplorerIcon(entity, navigatorProperty.Name);
+			var explorerItemKind = GetExplorerItemKind(explorerIcon);
+			return new ExplorerItem(navigatorProperty.Name, explorerItemKind, explorerIcon)
+			       	{
+			       		DragText = navigatorProperty.Name,
+			       		HyperlinkTarget = hyperlinkTarget,
+			       		ToolTipText = CreateNavigatorToolTipText(entity, navigatorProperty, hyperlinkTarget),
+			       	};
+		}
+
+		private static ExplorerIcon GetExplorerIcon(IEntityCore entity, string fieldName)
+		{
+			var relationsForFieldOfType = entity.GetRelationsForFieldOfType(fieldName);
+			if (relationsForFieldOfType.Count > 1)
+				return ExplorerIcon.ManyToMany;
+			var entityRelation = relationsForFieldOfType[0] as IEntityRelation;
+			return entityRelation == null ? ExplorerIcon.OneToMany : GetExplorerIcon(entityRelation.TypeOfRelation);
+		}
+
 		private static ExplorerIcon GetExplorerIcon(RelationType typeOfRelation)
 		{
 			switch (typeOfRelation)
@@ -538,7 +567,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static string CreateFieldText(IFieldInfo field)
 		{
-			return field.Name + " (" + FormatTypeName(field.DataType, false) + ")";
+			var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey ? "PK" : "", field.IsForeignKey ? "FK" : "", field.IsReadOnly ? "RO" : "");
+			return GeneralHelper.Join(" - ", field.Name + " (" + FormatTypeName(field.DataType, false) + ")", extra);
 		}
 
 		private static string CreateTableToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo)
@@ -558,6 +588,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static string CreateNavigatorToolTipText(IEntityCore entity, PropertyDescriptor navigatorProperty, ExplorerItem hyperlinkTarget)
 		{
 			var toolTipText = CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, navigatorProperty);
+			if (typeof (IEnumerable).IsAssignableFrom(navigatorProperty.PropertyType))
+			{
+				var targetTipText = hyperlinkTarget.ToolTipText;				
+				if (navigatorProperty.PropertyType.IsGenericType)
+				{
+					var elementType = MetaDataHelper.GetElementType(navigatorProperty.PropertyType);
+					targetTipText = targetTipText.Replace(FormatTypeName(elementType, true), "").Trim();
+				}
+				return GeneralHelper.Join(Environment.NewLine, toolTipText, FormatTypeName(navigatorProperty.PropertyType, true), targetTipText);
+			}
 			return GeneralHelper.Join(Environment.NewLine, toolTipText, hyperlinkTarget.ToolTipText);
 		}
 
@@ -568,29 +608,36 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				var sourceColumnIsNullable = fieldPersistenceInfo.SourceColumnIsNullable ? "" : " not ";
 				var sizeAndPrecision = "";
-				if (fieldPersistenceInfo.SourceColumnMaxLength < ushort.MaxValue && fieldPersistenceInfo.SourceColumnMaxLength >0 || fieldPersistenceInfo.SourceColumnPrecision > 0)
-				 sizeAndPrecision = string.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength+fieldPersistenceInfo.SourceColumnPrecision);
+				if (fieldPersistenceInfo.SourceColumnMaxLength < ushort.MaxValue && fieldPersistenceInfo.SourceColumnMaxLength > 0 || fieldPersistenceInfo.SourceColumnPrecision > 0)
+					sizeAndPrecision = string.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
 				var dbInfo = string.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
 				                           sizeAndPrecision, sourceColumnIsNullable);
-				toolTipText += Environment.NewLine + dbInfo;
+				toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeperator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
 			}
 			return toolTipText.Trim();
 		}
 
 		private static string CreateDisplayNameDescriptionCustomPropertiesToolTipText(IEntityCore entity, MemberDescriptor propertyDescriptor)
 		{
-			var displayName = propertyDescriptor.DisplayName == propertyDescriptor.Name ? "" : propertyDescriptor.DisplayName;
-			var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, displayName, propertyDescriptor.Description);
-			toolTipText += Environment.NewLine + GetFieldsCustomProperties(entity, propertyDescriptor.Name).JoinAsString();
-			return toolTipText.Trim();
+			if (propertyDescriptor != null)
+			{
+				var toolTipText = CreateDisplayNameDescriptionToolTipText(propertyDescriptor);
+				toolTipText += Environment.NewLine + EntityHelper.GetFieldsCustomProperties(entity, propertyDescriptor.Name).JoinAsString();
+				return toolTipText.Trim();
+			}
+			return "";
 		}
 
-		private static IEnumerable<string> GetFieldsCustomProperties(IEntityCore entity, string key)
+		#endregion
+
+		private static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor)
 		{
-			return entity.FieldsCustomPropertiesOfType.ContainsKey(key)
-			       	? entity.FieldsCustomPropertiesOfType[key].Values
-			       	: Enumerable.Empty<string>();
+			var displayName = propertyDescriptor.DisplayName == propertyDescriptor.Name ? "" : propertyDescriptor.DisplayName;
+			var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, displayName, propertyDescriptor.Description);
+			return toolTipText;
 		}
+
+		#region Reflection
 
 		private static List<ExplorerItem> GetSchemaByReflection(Type customType)
 		{
@@ -598,17 +645,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (typeof (IElementCreatorCore).IsAssignableFrom(customType))
 			{
 				topLevelProps = (from type in EntityHelper.GetEntitiesTypes(customType.Assembly)
-				                 let name = type.Name.Replace("Entity", "")
+				                 let name = EntityHelper.GetNameFromEntityName(type.Name)
 				                 orderby name
-				                 select new ExplorerItem(name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
-				                        	{
-				                        		IsEnumerable = true,
-				                        		ToolTipText = FormatTypeName(type, false),
-				                        		// + entity.CustomPropertiesOfType.Values.JoinAsString(),
-				                        		DragText = name,
-				                        		// Store the entity type to the Tag property. We'll use it later.
-				                        		Tag = type
-				                        	}
+				                 select CreateTableExplorerItem(name, type)
 				                ).ToList();
 			}
 			else
@@ -616,14 +655,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				                 let elementType = MetaDataHelper.GetElementType(prop.PropertyType)
 				                 where typeof (IEntityCore).IsAssignableFrom(elementType)
 				                 orderby prop.Name
-				                 select new ExplorerItem(prop.Name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
-				                        	{
-				                        		IsEnumerable = true,
-				                        		ToolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, FormatTypeName(prop.PropertyType, false), prop.DisplayName, prop.Description),
-				                        		DragText = prop.Name,
-				                        		// Store the entity type to the Tag property. We'll use it later.
-				                        		Tag = elementType
-				                        	}
+				                 select CreateTableExplorerItem(prop.Name, elementType)
 				                ).ToList();
 
 			// Create a lookup keying each element type to the properties of that type. This will allow
@@ -635,6 +667,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				table.Children = CreateFieldExplorerItems(GetPropertiesToShowInSchema((Type) table.Tag), elementTypeLookup);
 
 			return topLevelProps;
+		}
+
+		private static ExplorerItem CreateTableExplorerItem(string propertName, Type elementType)
+		{
+			return new ExplorerItem(propertName, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
+			       	{
+			       		IsEnumerable = true,
+			       		ToolTipText = GeneralHelper.Join(Environment.NewLine, FormatTypeName(elementType, true),
+			       		                                 MetaDataHelper.GetDisplayNameAttributes(elementType).Select(da => da.DisplayName)
+			       		                                 	.Union(MetaDataHelper.GetDescriptionAttributes(elementType).Select(da => da.Description)).JoinAsString()),
+			       		DragText = propertName,
+			       		// Store the entity type to the Tag property. We'll use it later.
+			       		Tag = elementType
+			       	};
 		}
 
 		private static List<ExplorerItem> CreateFieldExplorerItems(IEnumerable<PropertyDescriptor> fieldsToShowInSchema, ILookup<Type, ExplorerItem> elementTypeLookup)
@@ -658,7 +704,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		/// <returns></returns>
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToShowInSchema(Type type)
 		{
-			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
+			return ListBindingHelper.GetListItemProperties(type).AsEnumerable().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
 		}
 
 		private static ExplorerItem GetChildItem(ILookup<Type, ExplorerItem> elementTypeLookup, PropertyDescriptor childProp)
@@ -680,27 +726,43 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				                        ExplorerItemKind.Property, ExplorerIcon.Column)
 				       	{
 				       		DragText = childProp.Name,
-				       		ToolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, childProp.DisplayName, childProp.Description),
+				       		ToolTipText = CreateDisplayNameDescriptionToolTipText(childProp)
 				       	};
 			return explorerItem;
 		}
 
-		private static ExplorerItem CreateEntityExplorerItem(MemberDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
+		private static ExplorerItem CreateEntityExplorerItem(PropertyDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
 		{
 			return elementTypeLookup.Contains(elementType)
 			       	? CreateEntityExplorerItem2(childProp, elementTypeLookup, elementType, kind, icon)
 			       	: null;
 		}
 
-		private static ExplorerItem CreateEntityExplorerItem2(MemberDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
+		private static ExplorerItem CreateEntityExplorerItem2(PropertyDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
 		{
+			var hyperlinkTarget = elementTypeLookup[elementType].First();
+			var toolTipText = CreateDisplayNameDescriptionToolTipText(childProp);
+			var targetTipText = hyperlinkTarget.ToolTipText;
+			if (typeof(IEnumerable).IsAssignableFrom(childProp.PropertyType))
+			{
+				if (childProp.PropertyType.IsGenericType)
+				{
+					if (elementType.FullName != null)
+						targetTipText = targetTipText.Replace(elementType.FullName, "").Trim();
+				}
+				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText, FormatTypeName(childProp.PropertyType, true), targetTipText);
+			}
+			else
+				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText, targetTipText);
 			return new ExplorerItem(childProp.Name, kind, icon)
 			       	{
-			       		HyperlinkTarget = elementTypeLookup[elementType].First(),
-			       		ToolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, FormatTypeName(elementType, true), childProp.DisplayName, childProp.Description),
+			       		HyperlinkTarget = hyperlinkTarget,
+			       		ToolTipText = toolTipText,
 			       		DragText = childProp.Name
 			       	};
 		}
+
+		#endregion
 	}
 
 	#endregion

@@ -19,7 +19,7 @@
 				d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
 																				 Type=Static:ConnectionDialog}"
 				d:DesignHeight="627"
-				d:DesignWidth="513"
+				d:DesignWidth="549"
 				Loaded="Window_Loaded"
 				WindowStartupLocation="CenterScreen"
 				mc:Ignorable="d" SizeToContent="WidthAndHeight">
@@ -46,7 +46,7 @@
 						<Label DockPanel.Dock="Right" Padding="1">
 							<Hyperlink Click="BrowseAssembly">Browse...</Hyperlink>
 						</Label>
-						<Label Content="Path to LLBL assembly containing a ILinqMetaData:" Padding="0,0,0,1" />
+						<Label Content="Path to LLBL assembly containing a ILinqMetaData or IElementCreatorCore:" Padding="0,0,0,1" />
 					</DockPanel>
 
 					<TextBox Name="txtAssemblyPath"
@@ -59,7 +59,7 @@
 						<Label DockPanel.Dock="Right" Padding="1">
 							<Hyperlink Click="ChooseType">Choose...</Hyperlink>
 						</Label>
-						<Label Padding="0,0,0,1">Full name of LinqMetaData type:</Label>
+						<Label Padding="0,0,0,1">Full name of LinqMetaData or ElementCreatorCore type:</Label>
 					</DockPanel>
 
 					<TextBox Name="txtTypeName"
@@ -157,7 +157,9 @@
 
 					<StackPanel Orientation="Horizontal">
 						<CheckBox Margin="1,0,0,5" IsChecked="{Binding CxInfo.Persist}">Remember this connection</CheckBox>
-						<CheckBox Margin="5,0,0,5" IsChecked="{Binding CxInfo.DriverData.Element[UseFields].Value}">Show fields rather then properties</CheckBox>
+						<CheckBox Margin="5,0,0,5" IsChecked="{Binding CxInfo.DriverData.Element[UseFields].Value}" 
+											ToolTip="If you choose to use entity information to create the schema tree more information will be shown in the tree nodes tooltips however only properties created by the designer are shown"
+											>Use entity info rather then just reflection</CheckBox>
 						<Button Name="btnSaveDefault"
 										MinWidth="60"
 										Margin="5,0,0,0"

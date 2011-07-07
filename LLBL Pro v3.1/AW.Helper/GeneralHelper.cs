@@ -12,6 +12,12 @@ namespace AW.Helper
 {
 	public static class GeneralHelper
 	{
+		static GeneralHelper()
+		{
+			if (!Trace.Listeners.Cast<TraceListener>().Any(tl => tl.Name.Equals("Default")))
+				Trace.Listeners.Add(new DefaultTraceListener());
+		}
+
 		/// <summary>
 		/// 	Used for converting any spaces in the string version of an enum name to a substitute in the CLR enum name.
 		/// </summary>
@@ -31,6 +37,7 @@ namespace AW.Helper
 		/// <param name = "msg">The message.</param>
 		public static void TraceOut(string msg)
 		{
+			//Debugger.Log(0, "Trace", msg);
 			Trace.WriteLine(new StackTrace(false).GetFrame(1).GetMethod().Name + ": " + msg);
 		}
 
@@ -88,15 +95,15 @@ namespace AW.Helper
 		/// <returns>Enums as enumerable</returns>
 		public static TEnum[] EnumAsEnumerable<TEnum>(params TEnum[] enumsToExclude)
 		{
-			var enumType = typeof(TEnum);
+			var enumType = typeof (TEnum);
 			CheckIsEnum(enumType);
-			var enumAsEnumerable = (TEnum[])Enum.GetValues(enumType);
+			var enumAsEnumerable = (TEnum[]) Enum.GetValues(enumType);
 			return enumsToExclude.IsNullOrEmpty() ? enumAsEnumerable : enumAsEnumerable.Where(et => !enumsToExclude.Contains(et)).ToArray();
 		}
 
 		public static void CheckIsEnum(Type enumType)
 		{
-			if (enumType == typeof(Enum))
+			if (enumType == typeof (Enum))
 				throw new ArgumentException("typeof(TEnum) == System.Enum", "TEnum");
 			if (!(enumType.IsEnum))
 				throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "TEnum");
@@ -259,7 +266,7 @@ namespace AW.Helper
 		public static bool Any(IEnumerable enumerable, bool reset)
 		{
 			if (enumerable is ICollection)
-				return Any((ICollection)enumerable);
+				return Any((ICollection) enumerable);
 			var enumerator = enumerable.GetEnumerator();
 			var any = enumerator.MoveNext();
 			if (any && reset)

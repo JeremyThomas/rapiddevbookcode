@@ -735,5 +735,12 @@ namespace AW.Helper.LLBL
 				return (IEntityField)field;
 			return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2)field);
 		}
+
+		public static IEnumerable<string> GetFieldsCustomProperties(IEntityCore entity, string fieldName)
+		{
+			return entity.FieldsCustomPropertiesOfType.ContainsKey(fieldName)
+			       	? entity.FieldsCustomPropertiesOfType[fieldName].Values
+			       	: Enumerable.Empty<string>();
+		}
 	}
 }
