@@ -30,7 +30,7 @@ namespace AW.Win
 
 		private void frmMain_Load(object sender, EventArgs e)
 		{
-			MetaDataHelper.AddAssociatedMetadataProviders(MetaDataHelper.GetDescendance(typeof (CommonEntityBase)));
+			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
 		}
 
 		private void frmMain_Shown(object sender, EventArgs e)

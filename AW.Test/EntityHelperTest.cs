@@ -4,6 +4,7 @@ using System.Linq;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.HelperClasses;
+using AW.Helper;
 using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -124,7 +125,7 @@ namespace AW.Tests
 		public void GetEntitiesTypesTest()
 		{
 			var allLoadedDescendanceEntitiesType = EntityHelper.GetEntitiesTypes().ToList();
-			var commonEntityBaseEntitiesType = EntityHelper.GetEntitiesTypes(typeof (CommonEntityBase)).ToList();
+			var commonEntityBaseEntitiesType = MetaDataHelper.GetDescendants(typeof (CommonEntityBase)).ToList();
 			var assemblyEntitiesType = EntityHelper.GetEntitiesTypes(MetaSingletons.MetaData.GetType().Assembly).ToList();
 			CollectionAssert.AreEqual(allLoadedDescendanceEntitiesType, commonEntityBaseEntitiesType);
 			CollectionAssert.AreEqual(commonEntityBaseEntitiesType, assemblyEntitiesType);

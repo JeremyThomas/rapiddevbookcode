@@ -512,17 +512,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				                       		DragText = field.Name,
 				                       		//SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
 				                       		//SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
-				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, GetFieldPropertyDescriptor(propertyDescriptors, field.Name))
+				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, MetaDataHelper.GetFieldPropertyDescriptor(propertyDescriptors, field.Name))
 				                       	});
 			}
 
 			explorerItem.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
 			return fieldExplorerItems;
-		}
-
-		private static PropertyDescriptor GetFieldPropertyDescriptor(IEnumerable<PropertyDescriptor> propertyDescriptors, string fieldName)
-		{
-			return propertyDescriptors.FirstOrDefault(pd => pd.Name == fieldName);
 		}
 
 		private static ExplorerItem CreateNavigatorExplorerItem(IEntityCore entity, PropertyDescriptor navigatorProperty, ILookup<Type, ExplorerItem> elementTypeLookup)
@@ -691,6 +686,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static ExplorerItem CreateTableExplorerItem(string propertName, Type elementType)
 		{
+			MetaDataHelper.AddAssociatedMetadataProvider(elementType);
 			return new ExplorerItem(propertName, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
 			       	{
 			       		IsEnumerable = true,
@@ -774,9 +770,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			else
 			{
-				if (targetTipText.Contains(toolTipText))
-					toolTipText = targetTipText;
-				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText, targetTipText);
+				toolTipText = targetTipText.Contains(toolTipText) ? targetTipText : GeneralHelper.Join(Environment.NewLine, toolTipText, targetTipText);
 			}
 			return new ExplorerItem(childProp.Name, kind, icon)
 			       	{

@@ -137,6 +137,7 @@
     <Compile Include="Linq\LinqMetaData.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="Linq\LinqMetaDataExtended.cs" />
     <Compile Include="Linq\Prefetches.cs" />
     <Compile Include="RelationClasses\CategoryRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
@@ -264,6 +265,12 @@
       <Link>AdventureWorks.snk</Link>
     </None>
     <None Include="Northwind.llblgenproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AW.Helper\AW.Helper.csproj">
+      <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>
