@@ -864,7 +864,6 @@ namespace AW.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewPurchaseOrderHistory
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 
@@ -893,7 +892,6 @@ namespace AW.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSalesOrderHistory
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 
@@ -1038,7 +1036,6 @@ namespace AW.Data.FactoryClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewWorkOrderHistory
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 

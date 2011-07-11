@@ -89,10 +89,6 @@ namespace AW.Data.EntityClasses
 			public static readonly string SalesTerritoryHistories = "SalesTerritoryHistories";
 			/// <summary>Member name Stores</summary>
 			public static readonly string Stores = "Stores";
-			/// <summary>Member name AddressCollectionViaEmployeeAddress</summary>
-			public static readonly string AddressCollectionViaEmployeeAddress = "AddressCollectionViaEmployeeAddress";
-			/// <summary>Member name ContactCollectionViaEmployee</summary>
-			public static readonly string ContactCollectionViaEmployee = "ContactCollectionViaEmployee";
 		}
 		#endregion
 		

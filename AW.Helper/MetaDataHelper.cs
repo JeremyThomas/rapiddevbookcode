@@ -79,7 +79,7 @@ namespace AW.Helper
 
 		public static Type[] GetTypeParametersOfGenericType(Type type)
 		{
-			if (type == typeof(object))
+			if (type == typeof (object))
 				return null;
 			return type.IsGenericType ? type.GetGenericArguments() : GetTypeParametersOfGenericType(type.BaseType);
 		}
@@ -112,12 +112,10 @@ namespace AW.Helper
 			return t;
 		}
 
-		internal static Type GetElementType(Type enumerableType)
+		public static Type GetElementType(Type enumerableType)
 		{
 			var ienumType = FindGenericType(typeof (IEnumerable<>), enumerableType);
-			if (ienumType != null)
-				return ienumType.GetGenericArguments()[0];
-			return enumerableType;
+			return ienumType == null ? enumerableType : GetTypeParameterOfGenericType(ienumType);
 		}
 
 		internal static Type FindGenericType(Type definition, Type type)
@@ -127,14 +125,8 @@ namespace AW.Helper
 				if (type.IsGenericType && type.GetGenericTypeDefinition() == definition)
 					return type;
 				if (definition.IsInterface)
-				{
-					foreach (var itype in type.GetInterfaces())
-					{
-						var found = FindGenericType(definition, itype);
-						if (found != null)
-							return found;
-					}
-				}
+					foreach (var found in type.GetInterfaces().Select(itype => FindGenericType(definition, itype)).Where(found => found != null))
+						return found;
 				type = type.BaseType;
 			}
 			return null;
@@ -152,26 +144,6 @@ namespace AW.Helper
 		{
 			var specificType = generic.MakeGenericType(new[] {innerType});
 			return Activator.CreateInstance(specificType, args);
-		}
-
-		/// <summary>
-		/// True if the type the needs wrapping for databinding.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		public static bool TypeNeedsWrappingForBinding<T>()
-		{
-			return TypeNeedsWrappingForBinding(typeof(T));
-		}
-
-		/// <summary>
-		/// True if the type the needs wrapping for databinding.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <returns></returns>
-		public static bool TypeNeedsWrappingForBinding(Type type)
-		{
-			return Type.GetTypeCode(type) != TypeCode.Object;
 		}
 
 		/// <summary>
@@ -275,8 +247,16 @@ namespace AW.Helper
 			       select propertyDescriptor;
 		}
 
+		public static IEnumerable<PropertyDescriptor> FilterByIsEnumerable(this IEnumerable<PropertyDescriptor> propertyDescriptors, Type elementTypeToFilterBy)
+		{
+			return from propertyDescriptor in propertyDescriptors
+			       let elementType = GetElementType(propertyDescriptor.PropertyType)
+			       where elementTypeToFilterBy.IsAssignableFrom(elementType)
+			       select propertyDescriptor;
+		}
+
 		/// <summary>
-		/// Adds the associated metadata providers for each type.
+		/// Adds the associated metadata providers for each type. But doesn't seem to work for properties on inherited classes for version of .net before 4.0
 		/// </summary>
 		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
 		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
@@ -310,17 +290,30 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the property descriptors for a class including those in any MetadataClass(buddy class).
+		/// Gets the property descriptors for a class.
 		/// </summary>
 		/// <param name="modelClass">The model class.</param>
-		/// <returns>The property descriptors for a class including those in any MetadataClass.</returns>
-		public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass)
+		/// <param name="attributes">An array of type System.Attribute that is used as a filter.</param>
+		/// <returns>The property descriptors for a class.</returns>
+		public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass, params Attribute[] attributes)
 		{
-			var modelClassProperties = TypeDescriptor.GetProperties(modelClass).Cast<PropertyDescriptor>();
+			var propertyDescriptorCollection = attributes.IsNullOrEmpty() ? TypeDescriptor.GetProperties(modelClass) : TypeDescriptor.GetProperties(modelClass, attributes);
+			var modelClassProperties = propertyDescriptorCollection.AsEnumerable().ToList();
 			if (TypeDescriptor.GetProvider(modelClass) is AssociatedMetadataTypeTypeDescriptionProvider)
 				return modelClassProperties; //No need to get the MetadataType(buddy class)
-			var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
-			return metadataAttrib == null ? modelClassProperties : modelClassProperties.Union(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>());
+
+			if (Environment.Version.Major < 4) // Not needed if .net 4.0 and LinqMetaData.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
+			{
+				var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
+				if (metadataAttrib != null)
+					modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>().ToList());
+			}
+			return modelClassProperties;
+		}
+
+		public static IEnumerable<PropertyDescriptor> AsEnumerable(this PropertyDescriptorCollection propertyDescriptorCollection)
+		{
+			return propertyDescriptorCollection.Cast<PropertyDescriptor>();
 		}
 
 		/// <summary>
@@ -332,6 +325,29 @@ namespace AW.Helper
 		public static IEnumerable<Attribute> GetAttributes(IEnumerable<PropertyDescriptor> properties, string fieldName)
 		{
 			return properties.Where(p => p.Name == fieldName).SelectMany(prop => prop.Attributes.Cast<Attribute>());
+		}
+
+		/// <summary>
+		/// Gets the attributes from a collection of properties for a particular property name.
+		/// </summary>
+		/// <param name="properties">The properties.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		/// <returns>The validation attributes.</returns>
+		public static IEnumerable<T> GetAttributes<T>(IEnumerable<PropertyDescriptor> properties, string fieldName) where T : Attribute
+		{
+			if (!string.IsNullOrEmpty(fieldName))
+				properties = properties.Where(p => p.Name == fieldName);
+			return properties.SelectMany(prop => prop.Attributes.OfType<T>());
+		}
+
+		public static IEnumerable<T> GetAttributes<T>(Type type, string fieldName) where T : Attribute
+		{
+			return GetAttributes<T>(GetPropertyDescriptors(type), fieldName);
+		}
+
+		public static IEnumerable<T> GetAttributes<T>(Type type) where T : Attribute
+		{
+			return GetAttributes<T>(type, "");
 		}
 
 		/// <summary>
@@ -356,5 +372,29 @@ namespace AW.Helper
 			return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);
 		}
 
+		public static IEnumerable<DisplayNameAttribute> GetDisplayNameAttributes(Type type, string fieldName)
+		{
+			return GetAttributes<DisplayNameAttribute>(type, fieldName);
+		}
+
+		public static IEnumerable<DisplayNameAttribute> GetDisplayNameAttributes(Type type)
+		{
+			return GetTypesAttributes<DisplayNameAttribute>(type);
+		}
+
+		public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type, string fieldName)
+		{
+			return GetAttributes<DescriptionAttribute>(type, fieldName);
+		}
+
+		public static IEnumerable<DescriptionAttribute> GetDescriptionAttributes(Type type)
+		{
+			return GetTypesAttributes<DescriptionAttribute>(type);
+		}
+
+		private static IEnumerable<T> GetTypesAttributes<T>(Type type) where T : Attribute
+		{
+			return type.GetCustomAttributes(typeof(T), true).Cast<T>();
+		}
 	}
 }

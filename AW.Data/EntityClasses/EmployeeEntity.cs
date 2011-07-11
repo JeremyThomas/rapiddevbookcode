@@ -54,10 +54,6 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchJobCandidates, _alreadyFetchedJobCandidates;
 		private AW.Data.CollectionClasses.PurchaseOrderHeaderCollection	_purchaseOrderHeaders;
 		private bool	_alwaysFetchPurchaseOrderHeaders, _alreadyFetchedPurchaseOrderHeaders;
-		private AW.Data.CollectionClasses.AddressCollection _addressCollectionViaEmployeeAddress;
-		private bool	_alwaysFetchAddressCollectionViaEmployeeAddress, _alreadyFetchedAddressCollectionViaEmployeeAddress;
-		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaEmployee;
-		private bool	_alwaysFetchContactCollectionViaEmployee, _alreadyFetchedContactCollectionViaEmployee;
 		private EmployeeEntity _manager;
 		private bool	_alwaysFetchManager, _alreadyFetchedManager, _managerReturnsNewIfNotFound;
 		private ContactEntity _contact;
@@ -90,10 +86,6 @@ namespace AW.Data.EntityClasses
 			public static readonly string JobCandidates = "JobCandidates";
 			/// <summary>Member name PurchaseOrderHeaders</summary>
 			public static readonly string PurchaseOrderHeaders = "PurchaseOrderHeaders";
-			/// <summary>Member name AddressCollectionViaEmployeeAddress</summary>
-			public static readonly string AddressCollectionViaEmployeeAddress = "AddressCollectionViaEmployeeAddress";
-			/// <summary>Member name ContactCollectionViaEmployee</summary>
-			public static readonly string ContactCollectionViaEmployee = "ContactCollectionViaEmployee";
 		}
 		#endregion
 		
@@ -160,13 +152,6 @@ namespace AW.Data.EntityClasses
 			_purchaseOrderHeaders = (AW.Data.CollectionClasses.PurchaseOrderHeaderCollection)info.GetValue("_purchaseOrderHeaders", typeof(AW.Data.CollectionClasses.PurchaseOrderHeaderCollection));
 			_alwaysFetchPurchaseOrderHeaders = info.GetBoolean("_alwaysFetchPurchaseOrderHeaders");
 			_alreadyFetchedPurchaseOrderHeaders = info.GetBoolean("_alreadyFetchedPurchaseOrderHeaders");
-			_addressCollectionViaEmployeeAddress = (AW.Data.CollectionClasses.AddressCollection)info.GetValue("_addressCollectionViaEmployeeAddress", typeof(AW.Data.CollectionClasses.AddressCollection));
-			_alwaysFetchAddressCollectionViaEmployeeAddress = info.GetBoolean("_alwaysFetchAddressCollectionViaEmployeeAddress");
-			_alreadyFetchedAddressCollectionViaEmployeeAddress = info.GetBoolean("_alreadyFetchedAddressCollectionViaEmployeeAddress");
-
-			_contactCollectionViaEmployee = (AW.Data.CollectionClasses.ContactCollection)info.GetValue("_contactCollectionViaEmployee", typeof(AW.Data.CollectionClasses.ContactCollection));
-			_alwaysFetchContactCollectionViaEmployee = info.GetBoolean("_alwaysFetchContactCollectionViaEmployee");
-			_alreadyFetchedContactCollectionViaEmployee = info.GetBoolean("_alreadyFetchedContactCollectionViaEmployee");
 			_manager = (EmployeeEntity)info.GetValue("_manager", typeof(EmployeeEntity));
 			if(_manager!=null)
 			{
@@ -219,8 +204,6 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedEmployeePayHistories = (_employeePayHistories.Count > 0);
 			_alreadyFetchedJobCandidates = (_jobCandidates.Count > 0);
 			_alreadyFetchedPurchaseOrderHeaders = (_purchaseOrderHeaders.Count > 0);
-			_alreadyFetchedAddressCollectionViaEmployeeAddress = (_addressCollectionViaEmployeeAddress.Count > 0);
-			_alreadyFetchedContactCollectionViaEmployee = (_contactCollectionViaEmployee.Count > 0);
 			_alreadyFetchedManager = (_manager != null);
 			_alreadyFetchedContact = (_contact != null);
 		}
@@ -264,14 +247,6 @@ namespace AW.Data.EntityClasses
 					break;
 				case "PurchaseOrderHeaders":
 					toReturn.Add(Relations.PurchaseOrderHeaderEntityUsingEmployeeID);
-					break;
-				case "AddressCollectionViaEmployeeAddress":
-					toReturn.Add(Relations.EmployeeAddressEntityUsingEmployeeID, "EmployeeEntity__", "EmployeeAddress_", JoinHint.None);
-					toReturn.Add(EmployeeAddressEntity.Relations.AddressEntityUsingAddressID, "EmployeeAddress_", string.Empty, JoinHint.None);
-					break;
-				case "ContactCollectionViaEmployee":
-					toReturn.Add(Relations.EmployeeEntityUsingManagerID, "EmployeeEntity__", "Employee_", JoinHint.None);
-					toReturn.Add(EmployeeEntity.Relations.ContactEntityUsingContactID, "Employee_", string.Empty, JoinHint.None);
 					break;
 				default:
 					break;				
@@ -320,12 +295,6 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_purchaseOrderHeaders", (!this.MarkedForDeletion?_purchaseOrderHeaders:null));
 			info.AddValue("_alwaysFetchPurchaseOrderHeaders", _alwaysFetchPurchaseOrderHeaders);
 			info.AddValue("_alreadyFetchedPurchaseOrderHeaders", _alreadyFetchedPurchaseOrderHeaders);
-			info.AddValue("_addressCollectionViaEmployeeAddress", (!this.MarkedForDeletion?_addressCollectionViaEmployeeAddress:null));
-			info.AddValue("_alwaysFetchAddressCollectionViaEmployeeAddress", _alwaysFetchAddressCollectionViaEmployeeAddress);
-			info.AddValue("_alreadyFetchedAddressCollectionViaEmployeeAddress", _alreadyFetchedAddressCollectionViaEmployeeAddress);
-			info.AddValue("_contactCollectionViaEmployee", (!this.MarkedForDeletion?_contactCollectionViaEmployee:null));
-			info.AddValue("_alwaysFetchContactCollectionViaEmployee", _alwaysFetchContactCollectionViaEmployee);
-			info.AddValue("_alreadyFetchedContactCollectionViaEmployee", _alreadyFetchedContactCollectionViaEmployee);
 			info.AddValue("_manager", (!this.MarkedForDeletion?_manager:null));
 			info.AddValue("_managerReturnsNewIfNotFound", _managerReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchManager", _alwaysFetchManager);
@@ -397,20 +366,6 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.PurchaseOrderHeaders.Add((PurchaseOrderHeaderEntity)entity);
-					}
-					break;
-				case "AddressCollectionViaEmployeeAddress":
-					_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
-					if(entity!=null)
-					{
-						this.AddressCollectionViaEmployeeAddress.Add((AddressEntity)entity);
-					}
-					break;
-				case "ContactCollectionViaEmployee":
-					_alreadyFetchedContactCollectionViaEmployee = true;
-					if(entity!=null)
-					{
-						this.ContactCollectionViaEmployee.Add((ContactEntity)entity);
 					}
 					break;
 				default:
@@ -953,82 +908,6 @@ namespace AW.Data.EntityClasses
 			_purchaseOrderHeaders.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'AddressEntity'</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddress(bool forceFetch)
-		{
-			return GetMultiAddressCollectionViaEmployeeAddress(forceFetch, _addressCollectionViaEmployeeAddress.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.AddressCollection GetMultiAddressCollectionViaEmployeeAddress(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedAddressCollectionViaEmployeeAddress || forceFetch || _alwaysFetchAddressCollectionViaEmployeeAddress) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_addressCollectionViaEmployeeAddress);
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeID, ComparisonOperator.Equal, this.EmployeeID, "EmployeeEntity__"));
-				_addressCollectionViaEmployeeAddress.SuppressClearInGetMulti=!forceFetch;
-				_addressCollectionViaEmployeeAddress.EntityFactoryToUse = entityFactoryToUse;
-				_addressCollectionViaEmployeeAddress.GetMulti(filter, GetRelationsForField("AddressCollectionViaEmployeeAddress"));
-				_addressCollectionViaEmployeeAddress.SuppressClearInGetMulti=false;
-				_alreadyFetchedAddressCollectionViaEmployeeAddress = true;
-			}
-			return _addressCollectionViaEmployeeAddress;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'AddressCollectionViaEmployeeAddress'. These settings will be taken into account
-		/// when the property AddressCollectionViaEmployeeAddress is requested or GetMultiAddressCollectionViaEmployeeAddress is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersAddressCollectionViaEmployeeAddress(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_addressCollectionViaEmployeeAddress.SortClauses=sortClauses;
-			_addressCollectionViaEmployeeAddress.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
-		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'ContactEntity'</returns>
-		public AW.Data.CollectionClasses.ContactCollection GetMultiContactCollectionViaEmployee(bool forceFetch)
-		{
-			return GetMultiContactCollectionViaEmployee(forceFetch, _contactCollectionViaEmployee.EntityFactoryToUse);
-		}
-
-		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.ContactCollection GetMultiContactCollectionViaEmployee(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
- 			if( ( !_alreadyFetchedContactCollectionViaEmployee || forceFetch || _alwaysFetchContactCollectionViaEmployee) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_contactCollectionViaEmployee);
-				IPredicateExpression filter = new PredicateExpression();
-				filter.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeID, ComparisonOperator.Equal, this.EmployeeID, "EmployeeEntity__"));
-				_contactCollectionViaEmployee.SuppressClearInGetMulti=!forceFetch;
-				_contactCollectionViaEmployee.EntityFactoryToUse = entityFactoryToUse;
-				_contactCollectionViaEmployee.GetMulti(filter, GetRelationsForField("ContactCollectionViaEmployee"));
-				_contactCollectionViaEmployee.SuppressClearInGetMulti=false;
-				_alreadyFetchedContactCollectionViaEmployee = true;
-			}
-			return _contactCollectionViaEmployee;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'ContactCollectionViaEmployee'. These settings will be taken into account
-		/// when the property ContactCollectionViaEmployee is requested or GetMultiContactCollectionViaEmployee is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersContactCollectionViaEmployee(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_contactCollectionViaEmployee.SortClauses=sortClauses;
-			_contactCollectionViaEmployee.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
 		/// <summary> Retrieves the related entity of type 'EmployeeEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'EmployeeEntity' which is related to this entity.</returns>
 		public EmployeeEntity GetSingleManager()
@@ -1119,8 +998,6 @@ namespace AW.Data.EntityClasses
 			_employeePayHistories.ActiveContext = this.ActiveContext;
 			_jobCandidates.ActiveContext = this.ActiveContext;
 			_purchaseOrderHeaders.ActiveContext = this.ActiveContext;
-			_addressCollectionViaEmployeeAddress.ActiveContext = this.ActiveContext;
-			_contactCollectionViaEmployee.ActiveContext = this.ActiveContext;
 			if(_manager!=null)
 			{
 				_manager.ActiveContext = this.ActiveContext;
@@ -1144,8 +1021,6 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("EmployeePayHistories", _employeePayHistories);
 			toReturn.Add("JobCandidates", _jobCandidates);
 			toReturn.Add("PurchaseOrderHeaders", _purchaseOrderHeaders);
-			toReturn.Add("AddressCollectionViaEmployeeAddress", _addressCollectionViaEmployeeAddress);
-			toReturn.Add("ContactCollectionViaEmployee", _contactCollectionViaEmployee);
 			return toReturn;
 		}
 	
@@ -1202,8 +1077,6 @@ namespace AW.Data.EntityClasses
 
 			_purchaseOrderHeaders = new AW.Data.CollectionClasses.PurchaseOrderHeaderCollection();
 			_purchaseOrderHeaders.SetContainingEntityInfo(this, "Employee");
-			_addressCollectionViaEmployeeAddress = new AW.Data.CollectionClasses.AddressCollection();
-			_contactCollectionViaEmployee = new AW.Data.CollectionClasses.ContactCollection();
 			_managerReturnsNewIfNotFound = true;
 			_contactReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
@@ -1429,30 +1302,6 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathPurchaseOrderHeaders
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.PurchaseOrderHeaderCollection(), (IEntityRelation)GetRelationsForField("PurchaseOrderHeaders")[0], (int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.PurchaseOrderHeaderEntity, 0, null, null, null, "PurchaseOrderHeaders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Address'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathAddressCollectionViaEmployeeAddress
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = Relations.EmployeeAddressEntityUsingEmployeeID;
-				intermediateRelation.SetAliases(string.Empty, "EmployeeAddress_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.AddressCollection(), intermediateRelation,	(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.AddressEntity, 0, null, null, GetRelationsForField("AddressCollectionViaEmployeeAddress"), "AddressCollectionViaEmployeeAddress", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
-		}
-
-		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Contact'  for this entity.</summary>
-		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathContactCollectionViaEmployee
-		{
-			get
-			{
-				IEntityRelation intermediateRelation = Relations.EmployeeEntityUsingManagerID;
-				intermediateRelation.SetAliases(string.Empty, "Employee_");
-				return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(), intermediateRelation,	(int)AW.Data.EntityType.EmployeeEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, GetRelationsForField("ContactCollectionViaEmployee"), "ContactCollectionViaEmployee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
-			}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Employee'  for this entity.</summary>
@@ -1871,74 +1720,6 @@ namespace AW.Data.EntityClasses
 					_purchaseOrderHeaders.Clear();
 				}
 				_alreadyFetchedPurchaseOrderHeaders = value;
-			}
-		}
-
-		/// <summary> Retrieves all related entities of type 'AddressEntity' using a relation of type 'm:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiAddressCollectionViaEmployeeAddress()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.AddressCollection AddressCollectionViaEmployeeAddress
-		{
-			get { return GetMultiAddressCollectionViaEmployeeAddress(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for AddressCollectionViaEmployeeAddress. When set to true, AddressCollectionViaEmployeeAddress is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time AddressCollectionViaEmployeeAddress is accessed. You can always execute a forced fetch by calling GetMultiAddressCollectionViaEmployeeAddress(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchAddressCollectionViaEmployeeAddress
-		{
-			get	{ return _alwaysFetchAddressCollectionViaEmployeeAddress; }
-			set	{ _alwaysFetchAddressCollectionViaEmployeeAddress = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property AddressCollectionViaEmployeeAddress already has been fetched. Setting this property to false when AddressCollectionViaEmployeeAddress has been fetched
-		/// will clear the AddressCollectionViaEmployeeAddress collection well. Setting this property to true while AddressCollectionViaEmployeeAddress hasn't been fetched disables lazy loading for AddressCollectionViaEmployeeAddress</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedAddressCollectionViaEmployeeAddress
-		{
-			get { return _alreadyFetchedAddressCollectionViaEmployeeAddress;}
-			set 
-			{
-				if(_alreadyFetchedAddressCollectionViaEmployeeAddress && !value && (_addressCollectionViaEmployeeAddress != null))
-				{
-					_addressCollectionViaEmployeeAddress.Clear();
-				}
-				_alreadyFetchedAddressCollectionViaEmployeeAddress = value;
-			}
-		}
-
-		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiContactCollectionViaEmployee()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.ContactCollection ContactCollectionViaEmployee
-		{
-			get { return GetMultiContactCollectionViaEmployee(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for ContactCollectionViaEmployee. When set to true, ContactCollectionViaEmployee is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time ContactCollectionViaEmployee is accessed. You can always execute a forced fetch by calling GetMultiContactCollectionViaEmployee(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchContactCollectionViaEmployee
-		{
-			get	{ return _alwaysFetchContactCollectionViaEmployee; }
-			set	{ _alwaysFetchContactCollectionViaEmployee = value; }
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property ContactCollectionViaEmployee already has been fetched. Setting this property to false when ContactCollectionViaEmployee has been fetched
-		/// will clear the ContactCollectionViaEmployee collection well. Setting this property to true while ContactCollectionViaEmployee hasn't been fetched disables lazy loading for ContactCollectionViaEmployee</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedContactCollectionViaEmployee
-		{
-			get { return _alreadyFetchedContactCollectionViaEmployee;}
-			set 
-			{
-				if(_alreadyFetchedContactCollectionViaEmployee && !value && (_contactCollectionViaEmployee != null))
-				{
-					_contactCollectionViaEmployee.Clear();
-				}
-				_alreadyFetchedContactCollectionViaEmployee = value;
 			}
 		}
 

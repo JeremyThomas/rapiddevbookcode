@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 3.0
-// Code is generated on: Thursday, 3 February 2011 11:46:46 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -25,13 +25,11 @@ namespace Northwind.DAL.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity class which represents the entity 'OrderDetail'.<br/><br/></summary>
 	[Serializable]
 	public partial class OrderDetailEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private OrderEntity _order;
@@ -39,7 +37,6 @@ namespace Northwind.DAL.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -128,7 +125,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 		
@@ -296,7 +292,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 
@@ -395,7 +390,6 @@ namespace Northwind.DAL.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -410,8 +404,10 @@ namespace Northwind.DAL.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Discount", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same as Order ID in Orders table.");
 			_fieldsCustomProperties.Add("OrderId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same as Product ID in Products table.");
 			_fieldsCustomProperties.Add("ProductId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Quantity", fieldHashtable);
@@ -498,7 +494,6 @@ namespace Northwind.DAL.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 
@@ -566,7 +561,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderDetailFieldIndex.Discount, value); }
 		}
 
-		/// <summary> The OrderId property of the Entity OrderDetail<br/><br/></summary>
+		/// <summary> The OrderId property of the Entity OrderDetail<br/><br/>
+		/// MS_Description: Same as Order ID in Orders table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Order Details"."OrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -576,7 +572,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)OrderDetailFieldIndex.OrderId, value); }
 		}
 
-		/// <summary> The ProductId property of the Entity OrderDetail<br/><br/></summary>
+		/// <summary> The ProductId property of the Entity OrderDetail<br/><br/>
+		/// MS_Description: Same as Product ID in Products table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Order Details"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -668,7 +665,6 @@ namespace Northwind.DAL.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code

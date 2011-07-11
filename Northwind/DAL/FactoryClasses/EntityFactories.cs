@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 3.0
-// Code is generated on: Thursday, 3 February 2011 11:46:47 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -19,7 +19,6 @@ namespace Northwind.DAL.FactoryClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	
 	/// <summary>general base class for the generated factories</summary>
 	[Serializable]
@@ -113,7 +112,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new CategoryEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCategoryUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -134,7 +132,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new CustomerEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomerUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -155,7 +152,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new CustomerCustomerDemoEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomerCustomerDemoUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -176,7 +172,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new CustomerDemographicEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewCustomerDemographicUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -197,7 +192,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new EmployeeEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewEmployeeUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -218,7 +212,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new EmployeeTerritoryEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewEmployeeTerritoryUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -239,7 +232,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new OrderEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewOrderUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -260,7 +252,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new OrderDetailEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewOrderDetailUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -281,7 +272,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new ProductEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewProductUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -302,7 +292,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new RegionEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewRegionUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -323,7 +312,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new ShipperEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewShipperUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -344,7 +332,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new SupplierEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewSupplierUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code
@@ -365,7 +352,6 @@ namespace Northwind.DAL.FactoryClasses
 			IEntity2 toReturn = new TerritoryEntity(fields);
 			// __LLBLGENPRO_USER_CODE_REGION_START CreateNewTerritoryUsingFields
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			return toReturn;
 		}
 		#region Included Code

@@ -1,8 +1,10 @@
 using System.Linq;
 using System.Linq.Dynamic;
 using AW.Data;
+using AW.Data.EntityClasses;
 using AW.Data.Queries;
 using AW.Helper;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
@@ -208,5 +210,17 @@ namespace AW.Tests
 
 			k.ToList(); //The multi-part identifier "LPLA_4.ContactID" could not be bound.
 		}
+
+		[TestMethod]
+		public void BiDirectionalManyToMany()
+		{
+		// first time
+			var contact = MetaSingletons.MetaData.Contact.WithPath(new PathEdge<ShipMethodEntity>(ContactEntity.PrefetchPathStores)).First();
+			Assert.AreNotEqual(0, contact.Stores.Count);
+
+			Assert.AreEqual(1, contact.Stores.First().Contacts.Count);
+			Assert.AreEqual(contact, contact.Stores.First().Contacts.Single());
+		}
+
 	}
 }

@@ -122,7 +122,7 @@ namespace AW.Winforms.Helpers
 		private static IBindingListView CreateBindingListView(IEnumerable enumerable)
 		{
 			var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
-			return itemType == typeof (string) ? null : CreateBindingListView(enumerable, itemType);
+			return CreateBindingListView(enumerable, itemType);
 		}
 
 		private static IBindingListView CreateBindingListView(IEnumerable enumerable, Type itemType)
@@ -194,8 +194,6 @@ namespace AW.Winforms.Helpers
 
 		private static IBindingListView ToObjectListView<T>(this IEnumerable<T> enumerable)
 		{
-			if (typeof (T) == typeof (string))
-				return null;
 			enumerable = (IEnumerable<T>) ListBindingHelper.GetList(enumerable);
 			return ToObjectListView((IList<T>) enumerable.ToList());
 		}

@@ -47,7 +47,9 @@
     <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSScriptLibrary, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=68293a411f0cabcc, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,14 +119,6 @@
     <ProjectReference Include="..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
       <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
       <Name>AW.Winforms.Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
-      <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>
-      <Name>DynamicQuery</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
-      <Project>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</Project>
-      <Name>ObjectListView</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

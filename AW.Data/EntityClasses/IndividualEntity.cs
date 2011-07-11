@@ -63,26 +63,6 @@ namespace AW.Data.EntityClasses
 			public static readonly string CustomerAddresses = "CustomerAddresses";
 			/// <summary>Member name SalesOrderHeaders</summary>
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
-			/// <summary>Member name AddressCollectionViaCustomerAddress</summary>
-			public static readonly string AddressCollectionViaCustomerAddress = "AddressCollectionViaCustomerAddress";
-			/// <summary>Member name AddressCollectionViaSalesOrderHeader</summary>
-			public static readonly string AddressCollectionViaSalesOrderHeader = "AddressCollectionViaSalesOrderHeader";
-			/// <summary>Member name AddressCollectionViaSalesOrderHeader_</summary>
-			public static readonly string AddressCollectionViaSalesOrderHeader_ = "AddressCollectionViaSalesOrderHeader_";
-			/// <summary>Member name AddressTypeCollectionViaCustomerAddres</summary>
-			public static readonly string AddressTypeCollectionViaCustomerAddres = "AddressTypeCollectionViaCustomerAddres";
-			/// <summary>Member name ContactCollectionViaSalesOrderHeader</summary>
-			public static readonly string ContactCollectionViaSalesOrderHeader = "ContactCollectionViaSalesOrderHeader";
-			/// <summary>Member name ShipMethodCollectionViaSalesOrderHeader</summary>
-			public static readonly string ShipMethodCollectionViaSalesOrderHeader = "ShipMethodCollectionViaSalesOrderHeader";
-			/// <summary>Member name CreditCardCollectionViaSalesOrderHeader</summary>
-			public static readonly string CreditCardCollectionViaSalesOrderHeader = "CreditCardCollectionViaSalesOrderHeader";
-			/// <summary>Member name CurrencyRateCollectionViaSalesOrderHeader</summary>
-			public static readonly string CurrencyRateCollectionViaSalesOrderHeader = "CurrencyRateCollectionViaSalesOrderHeader";
-			/// <summary>Member name CustomerViewRelatedCollectionViaSalesOrderHeader_____</summary>
-			public static readonly string CustomerViewRelatedCollectionViaSalesOrderHeader_____ = "CustomerViewRelatedCollectionViaSalesOrderHeader_____";
-			/// <summary>Member name SalesTerritoryCollectionViaSalesOrderHeader</summary>
-			public static readonly string SalesTerritoryCollectionViaSalesOrderHeader = "SalesTerritoryCollectionViaSalesOrderHeader";
 		}
 		#endregion
 		

@@ -194,11 +194,17 @@ namespace AW.Tests
 			var actual = TestToBindingListView(enumerable);
 			CollectionAssert.AreEqual(enumerable.ToList(), actual);
 
+			TestToBindingListView(SerializableClass.GenerateList().ToBindingListView());
+		}
+
+		[TestMethod]
+		public void StringToBindingListViewTest()
+		{
 			Assert.IsNull("A string".ToBindingListView());
 
-			Assert.IsNull((new[] {"s1", "s2", "s3"}).ToBindingListView());
-
-			TestToBindingListView(SerializableClass.GenerateList().ToBindingListView());
+			CollectionAssert.AreEqual(TestData.ThreeStrings, TestData.ThreeStrings.ToBindingListView());
+			CollectionAssert.AreEqual(TestData.ThreeStrings, ((IEnumerable)TestData.ThreeStrings).ToBindingListView());
+			CollectionAssert.AreEqual(TestData.ThreeStringsEnumerable.ToList(), TestData.ThreeStringsEnumerable.ToBindingListView());
 		}
 
 		[TestMethod]

@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 3.0
-// Code is generated on: Thursday, 3 February 2011 11:46:46 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -25,13 +25,11 @@ namespace Northwind.DAL.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity class which represents the entity 'Product'.<br/><br/></summary>
 	[Serializable]
 	public partial class ProductEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private EntityCollection<OrderDetailEntity> _orderDetails;
@@ -40,7 +38,6 @@ namespace Northwind.DAL.EntityClasses
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -128,7 +125,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 		
@@ -310,7 +306,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 
@@ -427,7 +422,6 @@ namespace Northwind.DAL.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -440,18 +434,24 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same entry as in Categories table.");
 			_fieldsCustomProperties.Add("CategoryId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Yes means item is no longer available.");
 			_fieldsCustomProperties.Add("Discontinued", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Number automatically assigned to new product.");
 			_fieldsCustomProperties.Add("ProductId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("ProductName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"(e.g., 24-count case, 1-liter bottle).");
 			_fieldsCustomProperties.Add("QuantityPerUnit", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Minimum units to maintain in stock.");
 			_fieldsCustomProperties.Add("ReorderLevel", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Same entry as in Suppliers table.");
 			_fieldsCustomProperties.Add("SupplierId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("UnitPrice", fieldHashtable);
@@ -540,7 +540,6 @@ namespace Northwind.DAL.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 
@@ -605,7 +604,8 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CategoryId property of the Entity Product<br/><br/></summary>
+		/// <summary> The CategoryId property of the Entity Product<br/><br/>
+		/// MS_Description: Same entry as in Categories table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Products"."CategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -615,7 +615,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.CategoryId, value); }
 		}
 
-		/// <summary> The Discontinued property of the Entity Product<br/><br/></summary>
+		/// <summary> The Discontinued property of the Entity Product<br/><br/>
+		/// MS_Description: Yes means item is no longer available.<br/></summary>
 		/// <remarks>Mapped on  table field: "Products"."Discontinued"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -625,7 +626,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.Discontinued, value); }
 		}
 
-		/// <summary> The ProductId property of the Entity Product<br/><br/></summary>
+		/// <summary> The ProductId property of the Entity Product<br/><br/>
+		/// MS_Description: Number automatically assigned to new product.<br/></summary>
 		/// <remarks>Mapped on  table field: "Products"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -645,7 +647,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ProductName, value); }
 		}
 
-		/// <summary> The QuantityPerUnit property of the Entity Product<br/><br/></summary>
+		/// <summary> The QuantityPerUnit property of the Entity Product<br/><br/>
+		/// MS_Description: (e.g., 24-count case, 1-liter bottle).<br/></summary>
 		/// <remarks>Mapped on  table field: "Products"."QuantityPerUnit"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 20<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -655,7 +658,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.QuantityPerUnit, value); }
 		}
 
-		/// <summary> The ReorderLevel property of the Entity Product<br/><br/></summary>
+		/// <summary> The ReorderLevel property of the Entity Product<br/><br/>
+		/// MS_Description: Minimum units to maintain in stock.<br/></summary>
 		/// <remarks>Mapped on  table field: "Products"."ReorderLevel"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -665,7 +669,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.ReorderLevel, value); }
 		}
 
-		/// <summary> The SupplierId property of the Entity Product<br/><br/></summary>
+		/// <summary> The SupplierId property of the Entity Product<br/><br/>
+		/// MS_Description: Same entry as in Suppliers table.<br/></summary>
 		/// <remarks>Mapped on  table field: "Products"."SupplierID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -774,7 +779,6 @@ namespace Northwind.DAL.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code

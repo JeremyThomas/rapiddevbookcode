@@ -25,7 +25,6 @@ namespace AW.Data.DaoClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 
 	/// <summary>General DAO class for the WorkOrderHistory Entity. It will perform database oriented actions for a entity of type 'WorkOrderHistoryEntity'.</summary>
 	public partial class WorkOrderHistoryDAO : TransactionHistoryDAO
@@ -47,7 +46,6 @@ namespace AW.Data.DaoClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomDAOCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 		
 		#region Included Code

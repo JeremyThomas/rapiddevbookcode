@@ -37,28 +37,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.ActiveDs">
-      <HintPath>..\AW.LLBLGen.DataContextDriver\obj\Debug\Interop.ActiveDs.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Interop.ADODB">
-      <HintPath>..\AW.LLBLGen.DataContextDriver\obj\Debug\Interop.ADODB.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Interop.MSDASC">
-      <HintPath>..\AW.LLBLGen.DataContextDriver\obj\Debug\Interop.MSDASC.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="LINQPad">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="Moq">
-      <HintPath>..\Lib\Test\Moq.dll</HintPath>
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -128,6 +113,9 @@
       <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
       <Name>Northwind.DAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

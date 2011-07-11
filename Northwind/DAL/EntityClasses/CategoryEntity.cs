@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 3.0
-// Code is generated on: Thursday, 3 February 2011 11:46:46 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -25,20 +25,17 @@ namespace Northwind.DAL.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity class which represents the entity 'Category'.<br/><br/></summary>
 	[Serializable]
 	public partial class CategoryEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private EntityCollection<ProductEntity> _products;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -112,7 +109,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 
@@ -242,7 +238,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 
@@ -331,7 +326,6 @@ namespace Northwind.DAL.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -344,12 +338,15 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Number automatically assigned to a new category.");
 			_fieldsCustomProperties.Add("CategoryId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of food category.");
 			_fieldsCustomProperties.Add("CategoryName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Description", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"A picture representing the food category.");
 			_fieldsCustomProperties.Add("Picture", fieldHashtable);
 		}
 		#endregion
@@ -366,7 +363,6 @@ namespace Northwind.DAL.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 
@@ -417,7 +413,8 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CategoryId property of the Entity Category<br/><br/></summary>
+		/// <summary> The CategoryId property of the Entity Category<br/><br/>
+		/// MS_Description: Number automatically assigned to a new category.<br/></summary>
 		/// <remarks>Mapped on  table field: "Categories"."CategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -427,7 +424,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)CategoryFieldIndex.CategoryId, value); }
 		}
 
-		/// <summary> The CategoryName property of the Entity Category<br/><br/></summary>
+		/// <summary> The CategoryName property of the Entity Category<br/><br/>
+		/// MS_Description: Name of food category.<br/></summary>
 		/// <remarks>Mapped on  table field: "Categories"."CategoryName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -447,7 +445,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)CategoryFieldIndex.Description, value); }
 		}
 
-		/// <summary> The Picture property of the Entity Category<br/><br/></summary>
+		/// <summary> The Picture property of the Entity Category<br/><br/>
+		/// MS_Description: A picture representing the food category.<br/></summary>
 		/// <remarks>Mapped on  table field: "Categories"."Picture"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Image, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -490,7 +489,6 @@ namespace Northwind.DAL.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code

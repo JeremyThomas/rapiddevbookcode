@@ -93,7 +93,7 @@ namespace AW.DebugVisualizers
 					{
 						try
 						{
-							var bindingListView = enumerable.ToBindingListView();
+							var bindingListView = enumerable.ToBindingListView() ?? BindingListHelper.CreateObjectListView(enumerable, itemType);
 							if (!MetaDataHelper.IsSerializable(bindingListView.GetType())) // If the IBindingListView is not serializable use a ObjectListView
 								bindingListView = BindingListHelper.CreateObjectListView(bindingListView, itemType);
 							Serialize(outgoingData, bindingListView);

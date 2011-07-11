@@ -27,6 +27,11 @@ namespace AW.Winforms.Helpers.QueryRunner
 			gridDataEditorScript.DataEditorPersister = new DataEditorPersister(saveFunction, deleteFunction, null, saveableTypes);
 		}
 
+		/// <summary>
+		/// Handles the Click event of the toolStripButtonViewRunQuery control.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
 		private void toolStripButtonViewRunQuery_Click(object sender, EventArgs e)
 		{
 			var helper = new AsmHelper(CSScript.LoadCode(textBoxScript.Text, null, true));

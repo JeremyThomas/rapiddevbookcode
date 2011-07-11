@@ -183,7 +183,7 @@ namespace AW.Tests
 		public void ShowIntegerEnumerationInGridTest()
 		{
 			var enumerable = Enumerable.Range(1, 100);
-			TestShowInGrid(ValueTypeWrapper<int>.CreateListWrapperForBinding(enumerable), 1);
+			TestShowInGrid(ValueTypeWrapper<int>.CreateWrapperForBinding(enumerable), 1);
 			TestShowInGrid(enumerable, 1);
 			enumerable = null;
 			TestShowInGrid(enumerable, 1);

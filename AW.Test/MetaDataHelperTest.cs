@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Xml.Schema;
 using AW.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
 {
@@ -139,6 +140,35 @@ namespace AW.Tests
 			{
 				TypeDescriptor.RemoveProvider(fieldsToPropertiesTypeDescriptionProvider, serializableClassType);
 			}
+		}
+
+		[TestMethod]
+		public void GetEnumerablePropertiesTest()
+		{
+			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
+			var enumerableProperties = propertyDescriptors.FilterByIsEnumerable(typeof(IEntityCore));
+			Assert.AreEqual(5, enumerableProperties.Count());
+		}
+
+		[TestMethod]
+		public void GetEnumerablePropertyTest()
+		{
+			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
+			var propertyDescriptor = propertyDescriptors.SingleOrDefault(pd => pd.Name == "EmployeesViaOrdersInCode");
+			var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
+			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), typeParameterOfGenericType);
+			var elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
+			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), elementType);
+			//var interfaces = propertyDescriptor.PropertyType.GetInterfaces();
+
+			propertyDescriptor = propertyDescriptors.SingleOrDefault(pd => pd.Name == "EmployeesViaOrders");
+			typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
+			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), typeParameterOfGenericType);
+			elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
+			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), elementType);
+			//interfaces = propertyDescriptor.PropertyType.GetInterfaces();
 		}
 	}
 }
