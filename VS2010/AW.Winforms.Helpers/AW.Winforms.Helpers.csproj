@@ -59,9 +59,12 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSScriptLibrary, Version=2.3.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CSScriptLibrary.v3.5">
+      <HintPath>..\Lib\CSScriptLibrary.v3.5.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=68293a411f0cabcc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\CSScriptLibrary.dll</HintPath>
+      <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.ConnectionUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -336,16 +339,13 @@
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicQuery\DynamicQuery.csproj">
-      <Project>{F285CEB0-4108-440C-AD94-1C1A7C159D7C}</Project>
-      <Name>DynamicQuery</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">
       <Project>{3A62F36D-4E53-4532-B9EF-3B303A578B5E}</Project>
       <Name>ObjectListView</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Dynamic Expressions.html" />
     <Content Include="MostRecentlyUsedHandler\MRUHandler.bmp" />
     <Content Include="Resources\Members.png" />
   </ItemGroup>

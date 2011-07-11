@@ -25,7 +25,6 @@ namespace AW.Data.DaoClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 
 	/// <summary>General DAO class for the PurchaseOrderHistory Entity. It will perform database oriented actions for a entity of type 'PurchaseOrderHistoryEntity'.</summary>
 	public partial class PurchaseOrderHistoryDAO : TransactionHistoryDAO
@@ -47,7 +46,6 @@ namespace AW.Data.DaoClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomDAOCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 		
 		#region Included Code

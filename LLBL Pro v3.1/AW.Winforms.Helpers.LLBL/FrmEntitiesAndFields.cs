@@ -95,7 +95,7 @@ namespace AW.Winforms.Helpers.LLBL
 		public IEnumerable<Type> GetEntitiesTypes()
 		{
 			if (_baseType != null)
-				return EntityHelper.GetEntitiesTypes(_baseType);
+				return MetaDataHelper.GetDescendants(_baseType);
 			return _linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(_linqMetaData);
 		}
 

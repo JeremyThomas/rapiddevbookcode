@@ -343,6 +343,7 @@
     <Compile Include="Linq\LinqMetaData.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="Linq\LinqMetaDataExtended.cs" />
     <Compile Include="Queries\CustomerQueries.cs" />
     <Compile Include="Queries\LookUpQueries.cs" />
     <Compile Include="Queries\SalesOrderQueries.cs" />

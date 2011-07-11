@@ -1,15 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using AW.Data;
 using AW.Data.FactoryClasses;
 using AW.Data.Linq;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.LLBLGen.DataContextDriver.Static;
 using LINQPad.Extensibility.DataContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Northwind.DAL.EntityClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using CustomerEntity = AW.Data.EntityClasses.CustomerEntity;
+using ElementCreator = Northwind.DAL.FactoryClasses.ElementCreator;
 
 namespace AW.LLBLGen.DataContextDriver.Tests
 {
@@ -65,28 +70,111 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		public void GetAWSchemaTest()
 		{
 			var customType = typeof (LinqMetaData);
-			GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, true);
+			var explorerItems = GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, true);
+			var explorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.CustomerEntity));
+			IEntityCore customerEntity = new CustomerEntity();
+			var msDescription = customerEntity.CustomPropertiesOfType.Values.First();
+			StringAssert.Contains(explorerItem.ToolTipText, msDescription);
+
+			var firstExplorerItem = explorerItem.Children.First();
+			Assert.IsFalse(string.IsNullOrWhiteSpace(firstExplorerItem.ToolTipText));
+			var firstField = (IEntityField) customerEntity.Fields[0];
+			StringAssert.Contains(firstExplorerItem.ToolTipText, firstField.SourceColumnName);
+
+			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceObjectName);
+			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceCatalogName);
+			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceSchemaName);
 		}
-		
+
+		/// <summary>
+		///A test for GetSchema using AW
+		///</summary>
+		[TestMethod, Ignore]
+		public void GetAWSchemaPropertiesTest()
+		{
+			var customType = typeof (LinqMetaData);
+			GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, false);
+		}
+
 		/// <summary>
 		///A test for GetSchema using Northwind
 		///</summary>
 		[TestMethod]
-		public void GetNorthwindSchemaTest()
+		public void GetNorthwindSchemaFieldsTest()
 		{
-			GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData), Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, true);
-			GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData), Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, false);
+			var explorerItems = GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData),
+			                                                            Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, true);
+
+			var customerExplorerItem = TestNorthWindToolTips(explorerItems);
+			var employeeExplorerItem = customerExplorerItem.Children.Single(e => e.Text == "EmployeesViaOrders");
+			Assert.AreEqual(ExplorerIcon.ManyToMany, employeeExplorerItem.Icon);
 		}
 
-		private static void GetSchemaTest<TEnum>(Type customType, Func<TEnum, IEntityFactoryCore> entityFactoryFactory, bool useFields)
+		private static ExplorerItem TestNorthWindToolTips(List<ExplorerItem> explorerItems)
+		{
+			var customerName = EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.CustomerEntity);
+			var explorerItem = explorerItems.First(e => e.Text == customerName);
+
+			var orderExplorerItem = explorerItems.Single(e => e.Text == EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.OrderEntity));
+			var customerNavigator = orderExplorerItem.Children.Single(e => e.Text == customerName);
+
+			var customerEntitytype = typeof (Northwind.DAL.EntityClasses.CustomerEntity);
+			var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(customerEntitytype).ToList();
+			foreach (var displayNameAttribute in displayNameAttributes)
+			{
+				StringAssert.Contains(explorerItem.ToolTipText, displayNameAttribute.DisplayName);
+				StringAssert.Contains(customerNavigator.ToolTipText, displayNameAttribute.DisplayName);
+			}
+			var descriptionAttributes = MetaDataHelper.GetDescriptionAttributes(customerEntitytype).ToList();
+			foreach (var descriptionAttribute in descriptionAttributes)
+			{
+				StringAssert.Contains(explorerItem.ToolTipText, descriptionAttribute.Description);
+				StringAssert.Contains(customerNavigator.ToolTipText, descriptionAttribute.Description);
+			}
+
+			var orderEntitytype = typeof (OrderEntity);
+			var orderPropertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(orderEntitytype);
+			var customerPropertyDescriptor = orderPropertiesToShowInSchema.Single(p => p.Name == customerName);
+			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.Description);
+			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.DisplayName);
+
+			var first = explorerItem.Children.First();
+			Assert.IsFalse(string.IsNullOrWhiteSpace(first.ToolTipText));
+			var customerPropertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(customerEntitytype);
+			var description = customerPropertiesToShowInSchema.First().Description;
+			Assert.IsFalse(String.IsNullOrEmpty(description));
+			Assert.IsTrue(first.ToolTipText.Contains(description));
+
+			return explorerItem;
+		}
+
+		[TestMethod]
+		public void GetNorthwindElementCreatorSchemaFieldsTest()
+		{
+			var explorerItems = GetSchemaTest<Northwind.DAL.EntityType>(typeof (ElementCreator),
+			                                                            Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, true);
+			TestNorthWindToolTips(explorerItems);
+		}
+
+		[TestMethod]
+		public void GetNorthwindSchemaPropertiesTest()
+		{
+			var explorerItems = GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData),
+			                                                            Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, false);
+			TestNorthWindToolTips(explorerItems);
+		}
+
+		private static List<ExplorerItem> GetSchemaTest<TEnum>(Type customType, Func<TEnum, IEntityFactoryCore> entityFactoryFactory, bool useFields)
 		{
 			var entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
 			var target = new LLBLGenStaticDriver();
+			var mockedICustomTypeInfo = new Mock<ICustomTypeInfo>();
 			var mockedIConnectionInfo = new Mock<IConnectionInfo>();
 			var xElementDriverData = new XElement("DriverData");
 			var xElementUseFields = new XElement(ConnectionDialog.ElementNameUseFields) {Value = useFields.ToString()};
 			xElementDriverData.Add(xElementUseFields);
 			mockedIConnectionInfo.Setup(ci => ci.DriverData).Returns(xElementDriverData);
+			mockedIConnectionInfo.Setup(ci => ci.CustomTypeInfo).Returns(mockedICustomTypeInfo.Object);
 			var actual = target.GetSchema(mockedIConnectionInfo.Object, customType);
 			Assert.AreEqual(entityTypes.Length, actual.Count);
 			var orderedEnumerable = entityTypes.OrderBy(et => et.ToString().Replace("Entity", ""));
@@ -96,13 +184,31 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 				var entityFactory = entityFactoryFactory(entityType);
 				var entity = entityFactory.Create();
 				var fieldNames = entity.Fields.Cast<IEntityFieldCore>().Select(f => f.Name).Distinct();
-				var entityRelations = entity.GetAllRelations();
+				var navigatorProperties = useFields ? EntityHelper.GetNavigatorProperties(entity) : MetaDataHelper.GetPropertyDescriptors(entity.GetType()).FilterByIsEnumerable(typeof (IEntityCore));
+				;
 				var explorerItem = actual[index];
 				index++;
-				Assert.AreEqual(fieldNames.Count(), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.Property), entityFactory.ForEntityName + " - " + explorerItem.Text);
-				Assert.AreEqual(entityRelations.Count(er => er.TypeOfRelation == RelationType.OneToMany), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.CollectionLink), entityFactory.ForEntityName + " - " + explorerItem.Text);
-				Assert.AreEqual(entityRelations.Count(er => er.TypeOfRelation == RelationType.ManyToOne), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink), entityFactory.ForEntityName + " - " + explorerItem.Text);
+				var entityName = entityFactory.ForEntityName + " - " + explorerItem.Text;
+				Assert.AreEqual(fieldNames.Count(), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.Property), entityName + " - fieldNames");
+				Assert.AreEqual(navigatorProperties.Count(er => !EntityHelper.IsEntityCore(er)), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.CollectionLink), entityName + " - Many navigator");
+				Assert.AreEqual(navigatorProperties.Count(EntityHelper.IsEntityCore), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink), entityName + " - single navigator");
 			}
+			return actual;
+		}
+
+
+		//[TestMethod]
+		//public void GetFieldsToShowInSchemaTest()
+		//{
+		//  var fieldsToShowInSchema = LLBLGenStaticDriver.GetFieldsToShowInSchema(typeof (Northwind.DAL.EntityClasses.CustomerEntity));
+		//  Assert.IsFalse(String.IsNullOrEmpty(fieldsToShowInSchema.First().Description));
+		//}
+
+		[TestMethod]
+		public void GetPropertiesToShowInSchemaTest()
+		{
+			var propertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(typeof (Northwind.DAL.EntityClasses.CustomerEntity));
+			Assert.IsFalse(String.IsNullOrEmpty(propertiesToShowInSchema.First().Description));
 		}
 	}
 }

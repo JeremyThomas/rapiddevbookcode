@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -129,7 +130,7 @@ namespace AW.DebugVisualizers.Tests
 		public void EntityFieldsTest()
 		{
 			var addressType = MetaSingletons.MetaData.AddressType.First();
-			TestShow(addressType.Fields, 38);
+			TestShow(addressType.Fields, TestData.NumFieldPropeeties);
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -152,9 +153,10 @@ namespace AW.DebugVisualizers.Tests
 		{
 			var northwindLinqMetaData = GetNorthwindLinqMetaData();
 			var customerList = northwindLinqMetaData.Customer.ToList();
-			TestShowTransported(customerList, 11);
-			TestShowTransported(northwindLinqMetaData.Customer, 11);
-			TestShowTransported(northwindLinqMetaData.Customer.ToEntityCollection2(), 11);
+			const int expectedColumnCount = 12;
+			TestShowTransported(customerList, expectedColumnCount);
+			TestShowTransported(northwindLinqMetaData.Customer, expectedColumnCount);
+			TestShowTransported(northwindLinqMetaData.Customer.ToEntityCollection2(), expectedColumnCount);
 		}
 
 		public static LinqMetaData GetNorthwindLinqMetaData()
@@ -223,6 +225,9 @@ namespace AW.DebugVisualizers.Tests
 		{
 			var enumerable = new[] {"s1", "s2", "s3"};
 			TestShow(enumerable, 1);
+			var stringEnumerable = enumerable.Where(s => s.Length > 1);
+			TestShow(stringEnumerable, 1);
+			TestShowTransported(stringEnumerable, 1);
 		}
 
 		[TestMethod]

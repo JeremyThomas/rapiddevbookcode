@@ -95,12 +95,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <SpecificVersion>True</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Solutions Design\LLBLGen Pro v3.0\Frameworks\LLBLGen Pro\RuntimeLibraries\Net3.5\</HintPath>
+      <HintPath>..\..\Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</HintPath>
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <SpecificVersion>True</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Solutions Design\LLBLGen Pro v3.0\Frameworks\LLBLGen Pro\RuntimeLibraries\Net2.0\</HintPath>
+      <HintPath>..\..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -137,6 +135,7 @@
     <Compile Include="Linq\LinqMetaData.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="Linq\Prefetches.cs" />
     <Compile Include="RelationClasses\CategoryRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -262,6 +261,7 @@
     <None Include="..\..\Ancillary\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
     </None>
+    <None Include="Northwind.llblgenproj" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>

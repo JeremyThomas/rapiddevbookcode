@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 3.0
-// Code is generated on: Thursday, 3 February 2011 11:46:46 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -25,20 +25,17 @@ namespace Northwind.DAL.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity class which represents the entity 'Shipper'.<br/><br/></summary>
 	[Serializable]
 	public partial class ShipperEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private EntityCollection<OrderEntity> _orders;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -112,7 +109,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 
@@ -242,7 +238,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 
@@ -331,7 +326,6 @@ namespace Northwind.DAL.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -344,10 +338,13 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Name of shipping company.");
 			_fieldsCustomProperties.Add("CompanyName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Phone number includes country code or area code.");
 			_fieldsCustomProperties.Add("Phone", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Number automatically assigned to new shipper.");
 			_fieldsCustomProperties.Add("ShipperId", fieldHashtable);
 		}
 		#endregion
@@ -364,7 +361,6 @@ namespace Northwind.DAL.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 
@@ -415,7 +411,8 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The CompanyName property of the Entity Shipper<br/><br/></summary>
+		/// <summary> The CompanyName property of the Entity Shipper<br/><br/>
+		/// MS_Description: Name of shipping company.<br/></summary>
 		/// <remarks>Mapped on  table field: "Shippers"."CompanyName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 40<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -425,7 +422,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)ShipperFieldIndex.CompanyName, value); }
 		}
 
-		/// <summary> The Phone property of the Entity Shipper<br/><br/></summary>
+		/// <summary> The Phone property of the Entity Shipper<br/><br/>
+		/// MS_Description: Phone number includes country code or area code.<br/></summary>
 		/// <remarks>Mapped on  table field: "Shippers"."Phone"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 24<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -435,7 +433,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)ShipperFieldIndex.Phone, value); }
 		}
 
-		/// <summary> The ShipperId property of the Entity Shipper<br/><br/></summary>
+		/// <summary> The ShipperId property of the Entity Shipper<br/><br/>
+		/// MS_Description: Number automatically assigned to new shipper.<br/></summary>
 		/// <remarks>Mapped on  table field: "Shippers"."ShipperID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -478,7 +477,6 @@ namespace Northwind.DAL.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code

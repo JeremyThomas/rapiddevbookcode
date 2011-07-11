@@ -91,6 +91,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
     </Reference>
+    <Reference Include="SD.LLBLGen.Pro.QuerySpec">
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -235,9 +238,11 @@
     </Compile>
     <Compile Include="EntityClasses\PurchaseOrderHistoryEntity.cs">
       <SubType>Code</SubType>
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="EntityClasses\SalesOrderHistoryEntity.cs">
       <SubType>Code</SubType>
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="EntityClasses\SpecialOfferProductEntity.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
@@ -289,6 +294,7 @@
     </Compile>
     <Compile Include="EntityClasses\WorkOrderHistoryEntity.cs">
       <SubType>Code</SubType>
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="FactoryClasses\DaoFactory.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
@@ -304,11 +310,9 @@
     </Compile>
     <Compile Include="FactoryClasses\PredicateFactory.cs" />
     <Compile Include="FactoryClasses\PropertyDescriptorFactory.cs" />
+    <Compile Include="FactoryClasses\QueryFactory.cs" />
     <Compile Include="FactoryClasses\SortClauseFactory.cs" />
     <Compile Include="Filters\SalesOrderHeaderFilters.cs" />
-    <Compile Include="HelperClasses\DbUtilsComPlus.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
     <Compile Include="HelperClasses\FieldInfoProvider.cs">
       <SubType>Code</SubType>
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
@@ -348,9 +352,11 @@
     </Compile>
     <Compile Include="RelationClasses\PurchaseOrderHistoryRelations.cs">
       <SubType>Code</SubType>
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="RelationClasses\SalesOrderHistoryRelations.cs">
       <SubType>Code</SubType>
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="RelationClasses\SpecialOfferProductRelations.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
@@ -405,6 +411,7 @@
     </Compile>
     <Compile Include="RelationClasses\WorkOrderHistoryRelations.cs">
       <SubType>Code</SubType>
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="SalesOrderHeaderEntityValidator.cs" />
     <Compile Include="StoredProcedureCallerClasses\ActionProcedures.cs">

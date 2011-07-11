@@ -52,7 +52,7 @@ namespace AW.Tests
 			{
 				var displayPropertyCount = MetaDataHelper.GetPropertiesToDisplay(enumerable).Count();
 				if (displayPropertyCount == 0)
-					if (MetaDataHelper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
+					if (ValueTypeWrapper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
 						displayPropertyCount = MetaDataHelper.GetPropertiesToDisplay(ValueTypeWrapper.CreateWrapperForBinding(enumerable)).Count();
 
 				if (numProperties > 0)

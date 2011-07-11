@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--LLBLGen Pro v3.0 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
-<Project Version="3.0" TargetFrameworkName="LLBLGen Pro Runtime Framework">
+<!--LLBLGen Pro v3.1 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
+<Project Version="3.1" TargetFrameworkName="LLBLGen Pro Runtime Framework">
   <Properties>
     <Abbreviations />
     <Property Name="AdditionalTaskPerformerFolder" Value="" />
@@ -36,25 +36,29 @@
     <Property Name="PreferDecimalOverCurrencyTypes" Value="true" />
     <Property Name="PreferNaturalCharacterTypes" Value="true" />
     <Property Name="PreferVariableLengthTypes" Value="true" />
-    <Property Name="ProjectCreator" Value="DE" />
+    <Property Name="ProjectCreator" Value="Jeremy" />
     <Property Name="ProjectName" Value="Northwind" />
     <Property Name="RelationalModelDataElementNameCasingCaseSensitiveDBs" Value="3" />
     <Property Name="RelationshipsFollowDBForeignKeyConstraints" Value="0" />
     <Property Name="RemoveUnderscoresFromElementName" Value="true" />
     <Property Name="RemoveUnmappedElementsAfterRefresh" Value="0" />
-    <Property Name="RetrieveDBCustomProperties" Value="false" />
+    <Property Name="ResetFieldOrderBasedOnTargetOrderAtRefresh" Value="false" />
+    <Property Name="RetrieveDBCustomProperties" Value="true" />
     <Property Name="RootNamespace" Value="" />
     <Property Name="SequencePattern" Value="SEQ_{$EntityName}" />
     <Property Name="SetGroupNameAfterSchemaName" Value="true" />
+    <Property Name="SetSchemaNameAfterGroupName" Value="true" />
     <Property Name="StoredProcNameStripPattern" Value="{pr_, sp_}{}" />
     <Property Name="StoreTimeLastGeneratedIntoProject" Value="false" />
     <Property Name="SyncMappedElementNamesAfterRefresh" Value="0" />
     <Property Name="SyncRelationalModelDataElementNameAfterRename" Value="0" />
     <Property Name="SyncRenamedMappedElementNamesAfterRefresh" Value="0" />
+    <Property Name="TargetPerEntityEdgesRequireBackingFkConstraint" Value="true" />
     <Property Name="TypedViewFieldNameStripPattern" Value="{}{}" />
     <Property Name="TypedViewNameStripPattern" Value="{vw_}{}" />
     <Property Name="UniqueConstraintsFollowDBUniqueConstraints" Value="0" />
     <Property Name="UpdateCustomPropertiesAfterRefresh" Value="0" />
+    <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts />
   <CodeGenerationCyclePreferences>
@@ -68,6 +72,7 @@
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
+          <Binding Name="SD.TemplateBindings.QuerySpecTemplates" />
           <Binding Name="SD.TemplateBindings.OracleODPNetSpecific.NET20" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific.NET20" />
@@ -83,6 +88,7 @@
       <SettingValue Name="1:AdapterDbSpecificNamespaceSuffix" Value="" Type="18" />
       <SettingValue Name="1:AdapterDbSpecificProjectFileSuffix" Value="" Type="18" />
       <SettingValue Name="1:AdapterDbSpecificSubFolderName" Value="" Type="18" />
+      <SettingValue Name="1:TdlEmitTimeDateInOutputFiles" Value="false" Type="3" />
     </SettingValues>
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
@@ -99,26 +105,90 @@
     <EntityDefinitions>
       <EntityDefinition Name="Category">
         <Fields>
-          <Field Name="CategoryId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
-          <Field Name="CategoryName" Type="string" MaxLength="15" />
+          <Field Name="CategoryId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="CategoryName" Type="string" MaxLength="15">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Name of food category." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="Description" Type="string" IsOptional="true" MaxLength="1073741823" />
-          <Field Name="Picture" Type="byte[]" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="Picture" Type="byte[]" IsOptional="true" MaxLength="2147483647">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="A picture representing the food category." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="Customer">
         <Fields>
-          <Field Name="Address" Type="string" IsOptional="true" MaxLength="60" />
+          <Field Name="Address" Type="string" IsOptional="true" MaxLength="60">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Street or post-office box." />
+              </CustomProperties>
+              <Attributes>
+                <Attribute Value="Description(&quot;Addres Description attribute&quot;)" />
+              </Attributes>
+            </OutputSettingValues>
+          </Field>
           <Field Name="City" Type="string" IsOptional="true" MaxLength="15" />
-          <Field Name="CompanyName" Type="string" MaxLength="40" />
+          <Field Name="CompanyName" Type="string" MaxLength="40">
+            <OutputSettingValues>
+              <Attributes>
+                <Attribute Value="DisplayName(&quot;Company Name&quot;)" />
+                <Attribute Value="Description(&quot;CompnyName description attribute&quot;)" />
+              </Attributes>
+            </OutputSettingValues>
+          </Field>
           <Field Name="ContactName" Type="string" IsOptional="true" MaxLength="30" />
           <Field Name="ContactTitle" Type="string" IsOptional="true" MaxLength="30" />
           <Field Name="Country" Type="string" IsOptional="true" MaxLength="15" />
-          <Field Name="CustomerId" Type="string" MaxLength="5" IsPrimaryKey="true" />
-          <Field Name="Fax" Type="string" IsOptional="true" MaxLength="24" />
-          <Field Name="Phone" Type="string" IsOptional="true" MaxLength="24" />
+          <Field Name="CustomerId" Type="string" MaxLength="5" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Unique five-character code based on customer name." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="Fax" Type="string" IsOptional="true" MaxLength="24">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="Phone" Type="string" IsOptional="true" MaxLength="24">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="PostalCode" Type="string" IsOptional="true" MaxLength="10" />
-          <Field Name="Region" Type="string" IsOptional="true" MaxLength="15" />
+          <Field Name="Region" Type="string" IsOptional="true" MaxLength="15">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="State or province." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="Description(&quot;Customer test description attribute&quot;)" />
+            <Attribute Value="DisplayName(&quot;CustomerEntityDisplayName&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="CustomerCustomerDemo">
         <Fields>
@@ -134,24 +204,84 @@
       </EntityDefinition>
       <EntityDefinition Name="Employee">
         <Fields>
-          <Field Name="Address" Type="string" IsOptional="true" MaxLength="60" />
+          <Field Name="Address" Type="string" IsOptional="true" MaxLength="60">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Street or post-office box." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="BirthDate" Type="datetime" IsOptional="true" />
           <Field Name="City" Type="string" IsOptional="true" MaxLength="15" />
           <Field Name="Country" Type="string" IsOptional="true" MaxLength="15" />
-          <Field Name="EmployeeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
-          <Field Name="Extension" Type="string" IsOptional="true" MaxLength="4" />
+          <Field Name="EmployeeId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Number automatically assigned to new employee." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="Extension" Type="string" IsOptional="true" MaxLength="4">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Internal telephone extension number." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="FirstName" Type="string" MaxLength="10" />
           <Field Name="HireDate" Type="datetime" IsOptional="true" />
-          <Field Name="HomePhone" Type="string" IsOptional="true" MaxLength="24" />
+          <Field Name="HomePhone" Type="string" IsOptional="true" MaxLength="24">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="LastName" Type="string" MaxLength="20" />
-          <Field Name="Notes" Type="string" IsOptional="true" MaxLength="1073741823" />
-          <Field Name="Photo" Type="byte[]" IsOptional="true" MaxLength="2147483647" />
+          <Field Name="Notes" Type="string" IsOptional="true" MaxLength="1073741823">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="General information about employee's background." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="Photo" Type="byte[]" IsOptional="true" MaxLength="2147483647">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Picture of employee." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="PhotoPath" Type="string" IsOptional="true" MaxLength="255" />
           <Field Name="PostalCode" Type="string" IsOptional="true" MaxLength="10" />
-          <Field Name="Region" Type="string" IsOptional="true" MaxLength="15" />
-          <Field Name="ReportsTo" Type="int" IsOptional="true" Precision="10" />
-          <Field Name="Title" Type="string" IsOptional="true" MaxLength="30" />
-          <Field Name="TitleOfCourtesy" Type="string" IsOptional="true" MaxLength="25" />
+          <Field Name="Region" Type="string" IsOptional="true" MaxLength="15">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="State or province." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="ReportsTo" Type="int" IsOptional="true" Precision="10">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Employee's supervisor." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="Title" Type="string" IsOptional="true" MaxLength="30">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Employee's title." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="TitleOfCourtesy" Type="string" IsOptional="true" MaxLength="25">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Title used in salutations." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="EmployeeTerritory">
@@ -162,40 +292,130 @@
       </EntityDefinition>
       <EntityDefinition Name="Order">
         <Fields>
-          <Field Name="CustomerId" Type="string" IsOptional="true" MaxLength="5" />
-          <Field Name="EmployeeId" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="CustomerId" Type="string" IsOptional="true" MaxLength="5">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Same entry as in Customers table." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="EmployeeId" Type="int" IsOptional="true" Precision="10">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Same entry as in Employees table." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="Freight" Type="decimal" IsOptional="true" Precision="19" Scale="4" />
           <Field Name="OrderDate" Type="datetime" IsOptional="true" />
-          <Field Name="OrderId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="OrderId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Unique order number." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="RequiredDate" Type="datetime" IsOptional="true" />
-          <Field Name="ShipAddress" Type="string" IsOptional="true" MaxLength="60" />
+          <Field Name="ShipAddress" Type="string" IsOptional="true" MaxLength="60">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Street address only -- no post-office box allowed." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="ShipCity" Type="string" IsOptional="true" MaxLength="15" />
           <Field Name="ShipCountry" Type="string" IsOptional="true" MaxLength="15" />
-          <Field Name="ShipName" Type="string" IsOptional="true" MaxLength="40" />
+          <Field Name="ShipName" Type="string" IsOptional="true" MaxLength="40">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Name of person or company to receive the shipment." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="ShippedDate" Type="datetime" IsOptional="true" />
           <Field Name="ShipPostalCode" Type="string" IsOptional="true" MaxLength="10" />
-          <Field Name="ShipRegion" Type="string" IsOptional="true" MaxLength="15" />
-          <Field Name="ShipVia" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="ShipRegion" Type="string" IsOptional="true" MaxLength="15">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="State or province." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="ShipVia" Type="int" IsOptional="true" Precision="10">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Same as Shipper ID in Shippers table." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="OrderDetail">
         <Fields>
           <Field Name="Discount" Type="single" Precision="24" />
-          <Field Name="OrderId" Type="int" Precision="10" IsPrimaryKey="true" />
-          <Field Name="ProductId" Type="int" Precision="10" IsPrimaryKey="true" />
+          <Field Name="OrderId" Type="int" Precision="10" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Same as Order ID in Orders table." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="ProductId" Type="int" Precision="10" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Same as Product ID in Products table." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="Quantity" Type="short" Precision="5" />
           <Field Name="UnitPrice" Type="decimal" Precision="19" Scale="4" />
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="Product">
         <Fields>
-          <Field Name="CategoryId" Type="int" IsOptional="true" Precision="10" />
-          <Field Name="Discontinued" Type="bool" />
-          <Field Name="ProductId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="CategoryId" Type="int" IsOptional="true" Precision="10">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Same entry as in Categories table." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="Discontinued" Type="bool">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Yes means item is no longer available." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="ProductId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Number automatically assigned to new product." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="ProductName" Type="string" MaxLength="40" />
-          <Field Name="QuantityPerUnit" Type="string" IsOptional="true" MaxLength="20" />
-          <Field Name="ReorderLevel" Type="short" IsOptional="true" Precision="5" />
-          <Field Name="SupplierId" Type="int" IsOptional="true" Precision="10" />
+          <Field Name="QuantityPerUnit" Type="string" IsOptional="true" MaxLength="20">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="(e.g., 24-count case, 1-liter bottle)." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="ReorderLevel" Type="short" IsOptional="true" Precision="5">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Minimum units to maintain in stock." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="SupplierId" Type="int" IsOptional="true" Precision="10">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Same entry as in Suppliers table." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="UnitPrice" Type="decimal" IsOptional="true" Precision="19" Scale="4" />
           <Field Name="UnitsInStock" Type="short" IsOptional="true" Precision="5" />
           <Field Name="UnitsOnOrder" Type="short" IsOptional="true" Precision="5" />
@@ -209,25 +429,79 @@
       </EntityDefinition>
       <EntityDefinition Name="Shipper">
         <Fields>
-          <Field Name="CompanyName" Type="string" MaxLength="40" />
-          <Field Name="Phone" Type="string" IsOptional="true" MaxLength="24" />
-          <Field Name="ShipperId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="CompanyName" Type="string" MaxLength="40">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Name of shipping company." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="Phone" Type="string" IsOptional="true" MaxLength="24">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="ShipperId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Number automatically assigned to new shipper." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="Supplier">
         <Fields>
-          <Field Name="Address" Type="string" IsOptional="true" MaxLength="60" />
+          <Field Name="Address" Type="string" IsOptional="true" MaxLength="60">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Street or post-office box." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="City" Type="string" IsOptional="true" MaxLength="15" />
           <Field Name="CompanyName" Type="string" MaxLength="40" />
           <Field Name="ContactName" Type="string" IsOptional="true" MaxLength="30" />
           <Field Name="ContactTitle" Type="string" IsOptional="true" MaxLength="30" />
           <Field Name="Country" Type="string" IsOptional="true" MaxLength="15" />
-          <Field Name="Fax" Type="string" IsOptional="true" MaxLength="24" />
-          <Field Name="HomePage" Type="string" IsOptional="true" MaxLength="1073741823" />
-          <Field Name="Phone" Type="string" IsOptional="true" MaxLength="24" />
+          <Field Name="Fax" Type="string" IsOptional="true" MaxLength="24">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="HomePage" Type="string" IsOptional="true" MaxLength="1073741823">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Supplier's home page on World Wide Web." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="Phone" Type="string" IsOptional="true" MaxLength="24">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
           <Field Name="PostalCode" Type="string" IsOptional="true" MaxLength="10" />
-          <Field Name="Region" Type="string" IsOptional="true" MaxLength="15" />
-          <Field Name="SupplierId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true" />
+          <Field Name="Region" Type="string" IsOptional="true" MaxLength="15">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="State or province." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="SupplierId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Number automatically assigned to new supplier." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
         </Fields>
       </EntityDefinition>
       <EntityDefinition Name="Territory">
@@ -268,6 +542,12 @@
         <FieldRelationships>
           <FieldFieldRelationship FkField="CustomerId" PkField="CustomerId" />
         </FieldRelationships>
+        <StartNavigatorOutputSettingValues>
+          <Attributes>
+            <Attribute Value="Description(&quot;The customer who made the order.&quot;)" />
+            <Attribute Value="DisplayName(&quot;The customer&quot;)" />
+          </Attributes>
+        </StartNavigatorOutputSettingValues>
       </NormalRelationship>
       <NormalRelationship Name="Order.Employee-Employee.Orders" Start=":Order" End=":Employee" StartNavigator="Employee" EndNavigator="Orders" Type="4">
         <FieldRelationships>
@@ -304,6 +584,8 @@
           <FieldFieldRelationship FkField="RegionId" PkField="RegionId" />
         </FieldRelationships>
       </NormalRelationship>
+      <IndirectRelationship Start=":Customer" End=":CustomerDemographic" StartNavigator="CustomerDemographics" EndNavigator="Customers" Relationship1="CustomerCustomerDemo.Customer-Customer.CustomerCustomerDemos" Relationship2="CustomerCustomerDemo.CustomerDemographic-CustomerDemographic.CustomerCustomerDemos" />
+      <IndirectRelationship Start=":Customer" End=":Employee" StartNavigator="EmployeesViaOrders" EndNavigator="CustomersViaOrders" Relationship1="Order.Customer-Customer.Orders" Relationship2="Order.Employee-Employee.Orders" />
     </Relationships>
     <InheritanceHierarchies />
   </EntityModel>
@@ -327,10 +609,22 @@
               <Tables>
                 <Table Name="Categories">
                   <Fields>
-                    <Field Name="CategoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10" />
-                    <Field Name="CategoryName" Ordinal="2" DbType="12" Length="15" />
+                    <Field Name="CategoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="CategoryName" Ordinal="2" DbType="12" Length="15">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Name of food category." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="Description" Ordinal="3" IsOptional="true" DbType="11" Length="1073741823" />
-                    <Field Name="Picture" Ordinal="4" IsOptional="true" DbType="7" Length="2147483647" />
+                    <Field Name="Picture" Ordinal="4" IsOptional="true" DbType="7" Length="2147483647">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="A picture representing the food category." />
+                      </CustomProperties>
+                    </Field>
                   </Fields>
                 </Table>
                 <Table Name="CustomerCustomerDemo">
@@ -347,38 +641,98 @@
                 </Table>
                 <Table Name="Customers">
                   <Fields>
-                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Customers" DbType="10" Length="5" />
+                    <Field Name="CustomerID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Customers" DbType="10" Length="5">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Unique five-character code based on customer name." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="CompanyName" Ordinal="2" DbType="12" Length="40" />
                     <Field Name="ContactName" Ordinal="3" IsOptional="true" DbType="12" Length="30" />
                     <Field Name="ContactTitle" Ordinal="4" IsOptional="true" DbType="12" Length="30" />
-                    <Field Name="Address" Ordinal="5" IsOptional="true" DbType="12" Length="60" />
+                    <Field Name="Address" Ordinal="5" IsOptional="true" DbType="12" Length="60">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Street or post-office box." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="City" Ordinal="6" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Region" Ordinal="7" IsOptional="true" DbType="12" Length="15" />
+                    <Field Name="Region" Ordinal="7" IsOptional="true" DbType="12" Length="15">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="State or province." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="PostalCode" Ordinal="8" IsOptional="true" DbType="12" Length="10" />
                     <Field Name="Country" Ordinal="9" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Phone" Ordinal="10" IsOptional="true" DbType="12" Length="24" />
-                    <Field Name="Fax" Ordinal="11" IsOptional="true" DbType="12" Length="24" />
+                    <Field Name="Phone" Ordinal="10" IsOptional="true" DbType="12" Length="24">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="Fax" Ordinal="11" IsOptional="true" DbType="12" Length="24">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+                      </CustomProperties>
+                    </Field>
                   </Fields>
                 </Table>
                 <Table Name="Employees">
                   <Fields>
-                    <Field Name="EmployeeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Employees" DbType="8" Precision="10" />
+                    <Field Name="EmployeeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Employees" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Number automatically assigned to new employee." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="LastName" Ordinal="2" DbType="12" Length="20" />
                     <Field Name="FirstName" Ordinal="3" DbType="12" Length="10" />
-                    <Field Name="Title" Ordinal="4" IsOptional="true" DbType="12" Length="30" />
-                    <Field Name="TitleOfCourtesy" Ordinal="5" IsOptional="true" DbType="12" Length="25" />
+                    <Field Name="Title" Ordinal="4" IsOptional="true" DbType="12" Length="30">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Employee's title." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="TitleOfCourtesy" Ordinal="5" IsOptional="true" DbType="12" Length="25">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Title used in salutations." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="BirthDate" Ordinal="6" IsOptional="true" DbType="4" />
                     <Field Name="HireDate" Ordinal="7" IsOptional="true" DbType="4" />
-                    <Field Name="Address" Ordinal="8" IsOptional="true" DbType="12" Length="60" />
+                    <Field Name="Address" Ordinal="8" IsOptional="true" DbType="12" Length="60">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Street or post-office box." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="City" Ordinal="9" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Region" Ordinal="10" IsOptional="true" DbType="12" Length="15" />
+                    <Field Name="Region" Ordinal="10" IsOptional="true" DbType="12" Length="15">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="State or province." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="PostalCode" Ordinal="11" IsOptional="true" DbType="12" Length="10" />
                     <Field Name="Country" Ordinal="12" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="HomePhone" Ordinal="13" IsOptional="true" DbType="12" Length="24" />
-                    <Field Name="Extension" Ordinal="14" IsOptional="true" DbType="12" Length="4" />
-                    <Field Name="Photo" Ordinal="15" IsOptional="true" DbType="7" Length="2147483647" />
-                    <Field Name="Notes" Ordinal="16" IsOptional="true" DbType="11" Length="1073741823" />
-                    <Field Name="ReportsTo" Ordinal="17" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="HomePhone" Ordinal="13" IsOptional="true" DbType="12" Length="24">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="Extension" Ordinal="14" IsOptional="true" DbType="12" Length="4">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Internal telephone extension number." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="Photo" Ordinal="15" IsOptional="true" DbType="7" Length="2147483647">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Picture of employee." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="Notes" Ordinal="16" IsOptional="true" DbType="11" Length="1073741823">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="General information about employee's background." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="ReportsTo" Ordinal="17" IsOptional="true" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Employee's supervisor." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="PhotoPath" Ordinal="18" IsOptional="true" DbType="12" Length="255" />
                   </Fields>
                 </Table>
@@ -390,8 +744,16 @@
                 </Table>
                 <Table Name="Order Details">
                   <Fields>
-                    <Field Name="OrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Order_Details" DbType="8" Precision="10" />
-                    <Field Name="ProductID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_Order_Details" DbType="8" Precision="10" />
+                    <Field Name="OrderID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Order_Details" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Same as Order ID in Orders table." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="ProductID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_Order_Details" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Same as Product ID in Products table." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="UnitPrice" Ordinal="3" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
                     <Field Name="Quantity" Ordinal="4" DefaultValue="((1))" DbType="16" Precision="5" />
                     <Field Name="Discount" Ordinal="5" DefaultValue="((0))" DbType="14" Precision="24" />
@@ -399,34 +761,86 @@
                 </Table>
                 <Table Name="Orders">
                   <Fields>
-                    <Field Name="OrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Orders" DbType="8" Precision="10" />
-                    <Field Name="CustomerID" Ordinal="2" IsOptional="true" DbType="10" Length="5" />
-                    <Field Name="EmployeeID" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="OrderID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Orders" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Unique order number." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="CustomerID" Ordinal="2" IsOptional="true" DbType="10" Length="5">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Same entry as in Customers table." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="EmployeeID" Ordinal="3" IsOptional="true" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Same entry as in Employees table." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="OrderDate" Ordinal="4" IsOptional="true" DbType="4" />
                     <Field Name="RequiredDate" Ordinal="5" IsOptional="true" DbType="4" />
                     <Field Name="ShippedDate" Ordinal="6" IsOptional="true" DbType="4" />
-                    <Field Name="ShipVia" Ordinal="7" IsOptional="true" DbType="8" Precision="10" />
+                    <Field Name="ShipVia" Ordinal="7" IsOptional="true" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Same as Shipper ID in Shippers table." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="Freight" Ordinal="8" IsOptional="true" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
-                    <Field Name="ShipName" Ordinal="9" IsOptional="true" DbType="12" Length="40" />
-                    <Field Name="ShipAddress" Ordinal="10" IsOptional="true" DbType="12" Length="60" />
+                    <Field Name="ShipName" Ordinal="9" IsOptional="true" DbType="12" Length="40">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Name of person or company to receive the shipment." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="ShipAddress" Ordinal="10" IsOptional="true" DbType="12" Length="60">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Street address only -- no post-office box allowed." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="ShipCity" Ordinal="11" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="ShipRegion" Ordinal="12" IsOptional="true" DbType="12" Length="15" />
+                    <Field Name="ShipRegion" Ordinal="12" IsOptional="true" DbType="12" Length="15">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="State or province." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="ShipPostalCode" Ordinal="13" IsOptional="true" DbType="12" Length="10" />
                     <Field Name="ShipCountry" Ordinal="14" IsOptional="true" DbType="12" Length="15" />
                   </Fields>
                 </Table>
                 <Table Name="Products">
                   <Fields>
-                    <Field Name="ProductID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Products" DbType="8" Precision="10" />
+                    <Field Name="ProductID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Products" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Number automatically assigned to new product." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="ProductName" Ordinal="2" DbType="12" Length="40" />
-                    <Field Name="SupplierID" Ordinal="3" IsOptional="true" DbType="8" Precision="10" />
-                    <Field Name="CategoryID" Ordinal="4" IsOptional="true" DbType="8" Precision="10" />
-                    <Field Name="QuantityPerUnit" Ordinal="5" IsOptional="true" DbType="12" Length="20" />
+                    <Field Name="SupplierID" Ordinal="3" IsOptional="true" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Same entry as in Suppliers table." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="CategoryID" Ordinal="4" IsOptional="true" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Same entry as in Categories table." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="QuantityPerUnit" Ordinal="5" IsOptional="true" DbType="12" Length="20">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="(e.g., 24-count case, 1-liter bottle)." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="UnitPrice" Ordinal="6" IsOptional="true" DefaultValue="((0))" DbType="9" Precision="19" Scale="4" />
                     <Field Name="UnitsInStock" Ordinal="7" IsOptional="true" DefaultValue="((0))" DbType="16" Precision="5" />
                     <Field Name="UnitsOnOrder" Ordinal="8" IsOptional="true" DefaultValue="((0))" DbType="16" Precision="5" />
-                    <Field Name="ReorderLevel" Ordinal="9" IsOptional="true" DefaultValue="((0))" DbType="16" Precision="5" />
-                    <Field Name="Discontinued" Ordinal="10" DefaultValue="((0))" DbType="2" />
+                    <Field Name="ReorderLevel" Ordinal="9" IsOptional="true" DefaultValue="((0))" DbType="16" Precision="5">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Minimum units to maintain in stock." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="Discontinued" Ordinal="10" DefaultValue="((0))" DbType="2">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Yes means item is no longer available." />
+                      </CustomProperties>
+                    </Field>
                   </Fields>
                 </Table>
                 <Table Name="Region">
@@ -437,25 +851,61 @@
                 </Table>
                 <Table Name="Shippers">
                   <Fields>
-                    <Field Name="ShipperID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Shippers" DbType="8" Precision="10" />
-                    <Field Name="CompanyName" Ordinal="2" DbType="12" Length="40" />
-                    <Field Name="Phone" Ordinal="3" IsOptional="true" DbType="12" Length="24" />
+                    <Field Name="ShipperID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Shippers" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Number automatically assigned to new shipper." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="CompanyName" Ordinal="2" DbType="12" Length="40">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Name of shipping company." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="Phone" Ordinal="3" IsOptional="true" DbType="12" Length="24">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+                      </CustomProperties>
+                    </Field>
                   </Fields>
                 </Table>
                 <Table Name="Suppliers">
                   <Fields>
-                    <Field Name="SupplierID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Suppliers" DbType="8" Precision="10" />
+                    <Field Name="SupplierID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Suppliers" DbType="8" Precision="10">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Number automatically assigned to new supplier." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="CompanyName" Ordinal="2" DbType="12" Length="40" />
                     <Field Name="ContactName" Ordinal="3" IsOptional="true" DbType="12" Length="30" />
                     <Field Name="ContactTitle" Ordinal="4" IsOptional="true" DbType="12" Length="30" />
-                    <Field Name="Address" Ordinal="5" IsOptional="true" DbType="12" Length="60" />
+                    <Field Name="Address" Ordinal="5" IsOptional="true" DbType="12" Length="60">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Street or post-office box." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="City" Ordinal="6" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Region" Ordinal="7" IsOptional="true" DbType="12" Length="15" />
+                    <Field Name="Region" Ordinal="7" IsOptional="true" DbType="12" Length="15">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="State or province." />
+                      </CustomProperties>
+                    </Field>
                     <Field Name="PostalCode" Ordinal="8" IsOptional="true" DbType="12" Length="10" />
                     <Field Name="Country" Ordinal="9" IsOptional="true" DbType="12" Length="15" />
-                    <Field Name="Phone" Ordinal="10" IsOptional="true" DbType="12" Length="24" />
-                    <Field Name="Fax" Ordinal="11" IsOptional="true" DbType="12" Length="24" />
-                    <Field Name="HomePage" Ordinal="12" IsOptional="true" DbType="11" Length="1073741823" />
+                    <Field Name="Phone" Ordinal="10" IsOptional="true" DbType="12" Length="24">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="Fax" Ordinal="11" IsOptional="true" DbType="12" Length="24">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Phone number includes country code or area code." />
+                      </CustomProperties>
+                    </Field>
+                    <Field Name="HomePage" Ordinal="12" IsOptional="true" DbType="11" Length="1073741823">
+                      <CustomProperties>
+                        <CustomProperty Name="MS_Description" Value="Supplier's home page on World Wide Web." />
+                      </CustomProperties>
+                    </Field>
                   </Fields>
                 </Table>
                 <Table Name="Territories">

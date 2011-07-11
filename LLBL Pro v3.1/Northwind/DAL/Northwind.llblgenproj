@@ -381,7 +381,7 @@
             <Namespace Name="System.ComponentModel.DataAnnotations" />
           </Namespaces>
           <Attributes>
-            <Attribute Value="[MetadataType(typeof(IOrderDetailMetadata))]" />
+            <Attribute Value="MetadataType(typeof(IOrderDetailMetadata))" />
           </Attributes>
         </OutputSettingValues>
       </EntityDefinition>

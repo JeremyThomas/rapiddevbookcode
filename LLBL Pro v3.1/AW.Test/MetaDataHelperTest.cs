@@ -3,9 +3,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Schema;
+using AW.Data.EntityClasses;
 using AW.Helper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL.EntityClasses;
+using Northwind.DAL.Linq;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using CommonEntityBase = Northwind.DAL.EntityClasses.CommonEntityBase;
+using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
+using EmployeeEntity = Northwind.DAL.EntityClasses.EmployeeEntity;
 
 namespace AW.Tests
 {
@@ -145,30 +151,73 @@ namespace AW.Tests
 		[TestMethod]
 		public void GetEnumerablePropertiesTest()
 		{
-			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var customer = new CustomerEntity();
 			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
-			var enumerableProperties = propertyDescriptors.FilterByIsEnumerable(typeof(IEntityCore));
+			var enumerableProperties = propertyDescriptors.FilterByIsEnumerable(typeof (IEntityCore));
 			Assert.AreEqual(5, enumerableProperties.Count());
 		}
 
 		[TestMethod]
 		public void GetEnumerablePropertyTest()
 		{
-			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
+			var customer = new CustomerEntity();
 			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(customer.GetType());
 			var propertyDescriptor = propertyDescriptors.SingleOrDefault(pd => pd.Name == "EmployeesViaOrdersInCode");
 			var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
-			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), typeParameterOfGenericType);
+			Assert.AreEqual(typeof (EmployeeEntity), typeParameterOfGenericType);
 			var elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
-			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), elementType);
+			Assert.AreEqual(typeof (EmployeeEntity), elementType);
 			//var interfaces = propertyDescriptor.PropertyType.GetInterfaces();
 
 			propertyDescriptor = propertyDescriptors.SingleOrDefault(pd => pd.Name == "EmployeesViaOrders");
 			typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(propertyDescriptor.PropertyType);
-			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), typeParameterOfGenericType);
+			Assert.AreEqual(typeof (EmployeeEntity), typeParameterOfGenericType);
 			elementType = MetaDataHelper.GetElementType(propertyDescriptor.PropertyType);
-			Assert.AreEqual(typeof(Northwind.DAL.EntityClasses.EmployeeEntity), elementType);
+			Assert.AreEqual(typeof (EmployeeEntity), elementType);
 			//interfaces = propertyDescriptor.PropertyType.GetInterfaces();
+		}
+
+		/// <summary>
+		///A test for FoldAllAssociatedMetadataProvidersIntoTheSubjectType
+		///</summary>
+		[TestMethod]
+		public void FoldAllAssociatedMetadataProvidersIntoTheSubjectTypeTest()
+		{
+			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
+			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(CommonEntityBase));
+			AssertNorthwindFoldAllAssociatedMetadataProvidersIntoTheSubjectType();
+			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (Data.EntityClasses.CommonEntityBase));
+			AssertAWFoldAllAssociatedMetadataProvidersIntoTheSubjectType();
+		}
+
+		[TestMethod]
+		public void TestIsFoldAllAssociatedMetadataProvidersIntoTheSubjectType()
+		{
+			var linqMetaData = new LinqMetaData();
+			AssertNorthwindFoldAllAssociatedMetadataProvidersIntoTheSubjectType();
+			var awLinqMetaData = new Data.Linq.LinqMetaData();
+			new SalesOrderHeaderEntity();
+			AssertAWFoldAllAssociatedMetadataProvidersIntoTheSubjectType();
+		}
+
+		private static void AssertNorthwindFoldAllAssociatedMetadataProvidersIntoTheSubjectType()
+		{
+			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(typeof (OrderDetailEntity));
+			var quantityPropertyDescriptor = propertyDescriptors.Single(pd => pd.Name.Equals("Quantity"));
+			Assert.AreEqual("Quantity description attribute", quantityPropertyDescriptor.Description);
+			var displayNameAttributes = MetaDataHelper.GetAttributes<DisplayNameAttribute>(propertyDescriptors, "Quantity");
+			Assert.AreEqual(1, displayNameAttributes.Count());
+			var descriptionAttributes = MetaDataHelper.GetAttributes<System.ComponentModel.DescriptionAttribute>(propertyDescriptors, "Quantity");
+			Assert.AreEqual(1, descriptionAttributes.Count());
+		}
+
+		private static void AssertAWFoldAllAssociatedMetadataProvidersIntoTheSubjectType()
+		{
+//			var description = MetaDataHelper.GetDescriptionAttributes(typeof (AW.Data.EntityClasses.SalesOrderHeaderEntity)).Select(da => da.Description).JoinAsString();
+			//		Assert.AreEqual("You can use this page to find out what is happening with an order", description);
+			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(typeof (SalesOrderHeaderEntity));
+			var quantityPropertyDescriptor = propertyDescriptors.Single(pd => pd.Name.Equals("PurchaseOrderNumber"));
+			Assert.AreEqual(SalesOrderHeaderEntity.PurchaseOrderNumberDescription, quantityPropertyDescriptor.Description);
 		}
 	}
 }

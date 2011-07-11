@@ -38,192 +38,24 @@ namespace AW.Data.DaoClasses
 
 
 
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in EmployeeEntity.</summary>
+		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in StoreEntity.</summary>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
 		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="employeeInstance">EmployeeEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="storeInstance">StoreEntity object to be used as a filter in the m:n relation</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingEmployeeCollectionViaEmployee(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity employeeInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
+		public bool GetMultiUsingStores(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity storeInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
 		{
 			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.EmployeeEntityUsingContactID, "Employee_");
-			relations.Add(EmployeeEntity.Relations.EmployeeEntityUsingManagerID, "Employee_", string.Empty, JoinHint.None);
+			relations.Add(ContactEntity.Relations.StoreContactEntityUsingContactID, "StoreContact_");
+			relations.Add(StoreContactEntity.Relations.StoreEntityUsingCustomerID, "StoreContact_", string.Empty, JoinHint.None);
 			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(employeeInstance.Fields[(int)EmployeeFieldIndex.EmployeeID], ComparisonOperator.Equal));
-			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
-		}
-
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in AddressEntity.</summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingAddressCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
-		{
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingBillToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
-			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
-		}
-
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in AddressEntity.</summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="addressInstance">AddressEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingAddressCollectionViaSalesOrderHeader_(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity addressInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
-		{
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.AddressEntityUsingShipToAddressID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(addressInstance.Fields[(int)AddressFieldIndex.AddressID], ComparisonOperator.Equal));
-			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
-		}
-
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in ShipMethodEntity.</summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="shipMethodInstance">ShipMethodEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingShipMethodCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity shipMethodInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
-		{
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.ShipMethodEntityUsingShipMethodID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(shipMethodInstance.Fields[(int)ShipMethodFieldIndex.ShipMethodID], ComparisonOperator.Equal));
-			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
-		}
-
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in CreditCardEntity.</summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="creditCardInstance">CreditCardEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingCreditCardCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity creditCardInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
-		{
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CreditCardEntityUsingCreditCardID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(creditCardInstance.Fields[(int)CreditCardFieldIndex.CreditCardID], ComparisonOperator.Equal));
-			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
-		}
-
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in CurrencyRateEntity.</summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="currencyRateInstance">CurrencyRateEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingCurrencyRateCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity currencyRateInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
-		{
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CurrencyRateEntityUsingCurrencyRateID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(currencyRateInstance.Fields[(int)CurrencyRateFieldIndex.CurrencyRateID], ComparisonOperator.Equal));
-			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
-		}
-
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in CustomerEntity.</summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="customerInstance">CustomerEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingCustomerCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity customerInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
-		{
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CustomerEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(customerInstance.Fields[(int)CustomerFieldIndex.CustomerID], ComparisonOperator.Equal));
-			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
-		}
-
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in CustomerViewRelatedEntity.</summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="customerViewRelatedInstance">CustomerViewRelatedEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingCustomerViewRelatedCollectionViaSalesOrderHeader__(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity customerViewRelatedInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
-		{
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(customerViewRelatedInstance.Fields[(int)CustomerViewRelatedFieldIndex.CustomerId], ComparisonOperator.Equal));
-			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
-		}
-
-		/// <summary>Retrieves in the calling ContactCollection object all ContactEntity objects which are related via a relation of type 'm:n' with the passed in SalesTerritoryEntity.</summary>
-		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="collectionToFill">Collection to fill with the entity objects retrieved</param>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query. When set to 0, no limitations are specified.</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
-		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
-		/// <param name="salesTerritoryInstance">SalesTerritoryEntity object to be used as a filter in the m:n relation</param>
-		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
-		/// <param name="pageNumber">The page number to retrieve.</param>
-		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiUsingSalesTerritoryCollectionViaSalesOrderHeader(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IEntity salesTerritoryInstance, IPrefetchPath prefetchPathToUse, int pageNumber, int pageSize)
-		{
-			RelationCollection relations = new RelationCollection();
-			relations.Add(ContactEntity.Relations.SalesOrderHeaderEntityUsingContactID, "SalesOrderHeader_");
-			relations.Add(SalesOrderHeaderEntity.Relations.SalesTerritoryEntityUsingTerritoryID, "SalesOrderHeader_", string.Empty, JoinHint.None);
-			IPredicateExpression selectFilter = new PredicateExpression();
-			selectFilter.Add(new FieldCompareValuePredicate(salesTerritoryInstance.Fields[(int)SalesTerritoryFieldIndex.TerritoryID], ComparisonOperator.Equal));
+			selectFilter.Add(new FieldCompareValuePredicate(storeInstance.Fields[(int)StoreFieldIndex.CustomerID], ComparisonOperator.Equal));
 			return this.GetMulti(containingTransaction, collectionToFill, maxNumberOfItemsToReturn, sortClauses, entityFactoryToUse, selectFilter, relations, prefetchPathToUse, pageNumber, pageSize);
 		}
 

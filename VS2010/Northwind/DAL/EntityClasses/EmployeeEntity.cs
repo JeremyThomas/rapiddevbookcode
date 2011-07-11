@@ -2,7 +2,7 @@
 // This is generated code. 
 //////////////////////////////////////////////////////////////
 // Code is generated using LLBLGen Pro version: 3.0
-// Code is generated on: Thursday, 3 February 2011 11:46:46 p.m.
+// Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
 // Templates version: 
@@ -24,24 +24,23 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 namespace Northwind.DAL.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+	using System.Linq;
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 	/// <summary>Entity class which represents the entity 'Employee'.<br/><br/></summary>
 	[Serializable]
 	public partial class EmployeeEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
-		// __LLBLGENPRO_USER_CODE_REGION_END
-			
+		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
 		private EntityCollection<EmployeeEntity> _employees;
 		private EntityCollection<EmployeeTerritoryEntity> _employeeTerritories;
 		private EntityCollection<OrderEntity> _orders;
+		private EntityCollection<CustomerEntity> _customersViaOrders;
 		private EmployeeEntity _employee;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Statics
@@ -59,6 +58,8 @@ namespace Northwind.DAL.EntityClasses
 			public static readonly string EmployeeTerritories = "EmployeeTerritories";
 			/// <summary>Member name Orders</summary>
 			public static readonly string Orders = "Orders";
+			/// <summary>Member name CustomersViaOrders</summary>
+			public static readonly string CustomersViaOrders = "CustomersViaOrders";
 		}
 		#endregion
 		
@@ -119,6 +120,7 @@ namespace Northwind.DAL.EntityClasses
 				_employees = (EntityCollection<EmployeeEntity>)info.GetValue("_employees", typeof(EntityCollection<EmployeeEntity>));
 				_employeeTerritories = (EntityCollection<EmployeeTerritoryEntity>)info.GetValue("_employeeTerritories", typeof(EntityCollection<EmployeeTerritoryEntity>));
 				_orders = (EntityCollection<OrderEntity>)info.GetValue("_orders", typeof(EntityCollection<OrderEntity>));
+				_customersViaOrders = (EntityCollection<CustomerEntity>)info.GetValue("_customersViaOrders", typeof(EntityCollection<CustomerEntity>));
 				_employee = (EmployeeEntity)info.GetValue("_employee", typeof(EmployeeEntity));
 				if(_employee!=null)
 				{
@@ -128,7 +130,6 @@ namespace Northwind.DAL.EntityClasses
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 		}
 
 		
@@ -167,6 +168,11 @@ namespace Northwind.DAL.EntityClasses
 				case "Orders":
 					this.Orders.Add((OrderEntity)entity);
 					break;
+				case "CustomersViaOrders":
+					this.CustomersViaOrders.IsReadOnly = false;
+					this.CustomersViaOrders.Add((CustomerEntity)entity);
+					this.CustomersViaOrders.IsReadOnly = true;
+					break;
 				default:
 					this.OnSetRelatedEntityProperty(propertyName, entity);
 					break;
@@ -200,6 +206,10 @@ namespace Northwind.DAL.EntityClasses
 					break;
 				case "Orders":
 					toReturn.Add(Relations.OrderEntityUsingEmployeeId);
+					break;
+				case "CustomersViaOrders":
+					toReturn.Add(Relations.OrderEntityUsingEmployeeId, "EmployeeEntity__", "Order_", JoinHint.None);
+					toReturn.Add(OrderEntity.Relations.CustomerEntityUsingCustomerId, "Order_", string.Empty, JoinHint.None);
 					break;
 				default:
 					break;				
@@ -314,11 +324,11 @@ namespace Northwind.DAL.EntityClasses
 				info.AddValue("_employees", ((_employees!=null) && (_employees.Count>0) && !this.MarkedForDeletion)?_employees:null);
 				info.AddValue("_employeeTerritories", ((_employeeTerritories!=null) && (_employeeTerritories.Count>0) && !this.MarkedForDeletion)?_employeeTerritories:null);
 				info.AddValue("_orders", ((_orders!=null) && (_orders.Count>0) && !this.MarkedForDeletion)?_orders:null);
+				info.AddValue("_customersViaOrders", ((_customersViaOrders!=null) && (_customersViaOrders.Count>0) && !this.MarkedForDeletion)?_customersViaOrders:null);
 				info.AddValue("_employee", (!this.MarkedForDeletion?_employee:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			base.GetObjectData(info, context);
 		}
 
@@ -358,6 +368,16 @@ namespace Northwind.DAL.EntityClasses
 			return bucket;
 		}
 
+		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Customer' to this entity.</summary>
+		/// <returns></returns>
+		public virtual IRelationPredicateBucket GetRelationInfoCustomersViaOrders()
+		{
+			IRelationPredicateBucket bucket = new RelationPredicateBucket();
+			bucket.Relations.AddRange(GetRelationsForFieldOfType("CustomersViaOrders"));
+			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeId, null, ComparisonOperator.Equal, this.EmployeeId, "EmployeeEntity__"));
+			return bucket;
+		}
+
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Employee' to this entity.</summary>
 		/// <returns></returns>
 		public virtual IRelationPredicateBucket GetRelationInfoEmployee()
@@ -382,6 +402,7 @@ namespace Northwind.DAL.EntityClasses
 			collectionsQueue.Enqueue(this._employees);
 			collectionsQueue.Enqueue(this._employeeTerritories);
 			collectionsQueue.Enqueue(this._orders);
+			collectionsQueue.Enqueue(this._customersViaOrders);
 		}
 		
 		/// <summary>Gets the member collections queue from the queue (base first)</summary>
@@ -392,6 +413,7 @@ namespace Northwind.DAL.EntityClasses
 			this._employees = (EntityCollection<EmployeeEntity>) collectionsQueue.Dequeue();
 			this._employeeTerritories = (EntityCollection<EmployeeTerritoryEntity>) collectionsQueue.Dequeue();
 			this._orders = (EntityCollection<OrderEntity>) collectionsQueue.Dequeue();
+			this._customersViaOrders = (EntityCollection<CustomerEntity>) collectionsQueue.Dequeue();
 
 		}
 		
@@ -403,6 +425,7 @@ namespace Northwind.DAL.EntityClasses
 			toReturn |=(this._employees != null);
 			toReturn |=(this._employeeTerritories != null);
 			toReturn |=(this._orders != null);
+			toReturn |= (this._customersViaOrders != null);
 			return toReturn ? true : base.HasPopulatedMemberEntityCollections();
 		}
 		
@@ -415,6 +438,7 @@ namespace Northwind.DAL.EntityClasses
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<EmployeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployeeEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<EmployeeTerritoryEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployeeTerritoryEntityFactory))) : null);
 			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<OrderEntity>(EntityFactoryCache2.GetEntityFactory(typeof(OrderEntityFactory))) : null);
+			collectionsQueue.Enqueue(requiredQueue.Dequeue() ? new EntityCollection<CustomerEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CustomerEntityFactory))) : null);
 		}
 #endif
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
@@ -426,6 +450,7 @@ namespace Northwind.DAL.EntityClasses
 			toReturn.Add("Employees", _employees);
 			toReturn.Add("EmployeeTerritories", _employeeTerritories);
 			toReturn.Add("Orders", _orders);
+			toReturn.Add("CustomersViaOrders", _customersViaOrders);
 			return toReturn;
 		}
 		
@@ -444,6 +469,10 @@ namespace Northwind.DAL.EntityClasses
 			{
 				_orders.ActiveContext = this.ActiveContext;
 			}
+			if(_customersViaOrders!=null)
+			{
+				_customersViaOrders.ActiveContext = this.ActiveContext;
+			}
 			if(_employee!=null)
 			{
 				_employee.ActiveContext = this.ActiveContext;
@@ -457,7 +486,6 @@ namespace Northwind.DAL.EntityClasses
 			
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 			OnInitClassMembersComplete();
 		}
 
@@ -470,6 +498,7 @@ namespace Northwind.DAL.EntityClasses
 			_fieldsCustomProperties = new Dictionary<string, Dictionary<string, string>>();
 			Dictionary<string, string> fieldHashtable;
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Street or post-office box.");
 			_fieldsCustomProperties.Add("Address", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("BirthDate", fieldHashtable);
@@ -478,32 +507,41 @@ namespace Northwind.DAL.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("Country", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Number automatically assigned to new employee.");
 			_fieldsCustomProperties.Add("EmployeeId", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Internal telephone extension number.");
 			_fieldsCustomProperties.Add("Extension", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("FirstName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("HireDate", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Phone number includes country code or area code.");
 			_fieldsCustomProperties.Add("HomePhone", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("LastName", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"General information about employee's background.");
 			_fieldsCustomProperties.Add("Notes", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Picture of employee.");
 			_fieldsCustomProperties.Add("Photo", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PhotoPath", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			_fieldsCustomProperties.Add("PostalCode", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"State or province.");
 			_fieldsCustomProperties.Add("Region", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Employee's supervisor.");
 			_fieldsCustomProperties.Add("ReportsTo", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Employee's title.");
 			_fieldsCustomProperties.Add("Title", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Title used in salutations.");
 			_fieldsCustomProperties.Add("TitleOfCourtesy", fieldHashtable);
 		}
 		#endregion
@@ -553,7 +591,6 @@ namespace Northwind.DAL.EntityClasses
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
-			
 
 			OnInitialized();
 
@@ -594,6 +631,19 @@ namespace Northwind.DAL.EntityClasses
 			get	{ return new PrefetchPathElement2( new EntityCollection<OrderEntity>(EntityFactoryCache2.GetEntityFactory(typeof(OrderEntityFactory))), (IEntityRelation)GetRelationsForField("Orders")[0], (int)Northwind.DAL.EntityType.EmployeeEntity, (int)Northwind.DAL.EntityType.OrderEntity, 0, null, null, null, null, "Orders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
+		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Customer' for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
+		public static IPrefetchPathElement2 PrefetchPathCustomersViaOrders
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.OrderEntityUsingEmployeeId;
+				intermediateRelation.SetAliases(string.Empty, "Order_");
+				return new PrefetchPathElement2(new EntityCollection<CustomerEntity>(EntityFactoryCache2.GetEntityFactory(typeof(CustomerEntityFactory))), intermediateRelation,
+					(int)Northwind.DAL.EntityType.EmployeeEntity, (int)Northwind.DAL.EntityType.CustomerEntity, 0, null, null, GetRelationsForField("CustomersViaOrders"), null, "CustomersViaOrders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Employee' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
 		public static IPrefetchPathElement2 PrefetchPathEmployee
@@ -625,7 +675,8 @@ namespace Northwind.DAL.EntityClasses
 			get { return FieldsCustomProperties;}
 		}
 
-		/// <summary> The Address property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Address property of the Entity Employee<br/><br/>
+		/// MS_Description: Street or post-office box.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Address"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -665,7 +716,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Country, value); }
 		}
 
-		/// <summary> The EmployeeId property of the Entity Employee<br/><br/></summary>
+		/// <summary> The EmployeeId property of the Entity Employee<br/><br/>
+		/// MS_Description: Number automatically assigned to new employee.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -675,7 +727,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.EmployeeId, value); }
 		}
 
-		/// <summary> The Extension property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Extension property of the Entity Employee<br/><br/>
+		/// MS_Description: Internal telephone extension number.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Extension"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 4<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -705,7 +758,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.HireDate, value); }
 		}
 
-		/// <summary> The HomePhone property of the Entity Employee<br/><br/></summary>
+		/// <summary> The HomePhone property of the Entity Employee<br/><br/>
+		/// MS_Description: Phone number includes country code or area code.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."HomePhone"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 24<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -725,7 +779,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.LastName, value); }
 		}
 
-		/// <summary> The Notes property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Notes property of the Entity Employee<br/><br/>
+		/// MS_Description: General information about employee's background.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Notes"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NText, 0, 0, 1073741823<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -735,7 +790,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Notes, value); }
 		}
 
-		/// <summary> The Photo property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Photo property of the Entity Employee<br/><br/>
+		/// MS_Description: Picture of employee.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Photo"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Image, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -765,7 +821,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.PostalCode, value); }
 		}
 
-		/// <summary> The Region property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Region property of the Entity Employee<br/><br/>
+		/// MS_Description: State or province.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Region"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -775,7 +832,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Region, value); }
 		}
 
-		/// <summary> The ReportsTo property of the Entity Employee<br/><br/></summary>
+		/// <summary> The ReportsTo property of the Entity Employee<br/><br/>
+		/// MS_Description: Employee's supervisor.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."ReportsTo"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -785,7 +843,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.ReportsTo, value); }
 		}
 
-		/// <summary> The Title property of the Entity Employee<br/><br/></summary>
+		/// <summary> The Title property of the Entity Employee<br/><br/>
+		/// MS_Description: Employee's title.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."Title"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 30<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -795,7 +854,8 @@ namespace Northwind.DAL.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.Title, value); }
 		}
 
-		/// <summary> The TitleOfCourtesy property of the Entity Employee<br/><br/></summary>
+		/// <summary> The TitleOfCourtesy property of the Entity Employee<br/><br/>
+		/// MS_Description: Title used in salutations.<br/></summary>
 		/// <remarks>Mapped on  table field: "Employees"."TitleOfCourtesy"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -824,6 +884,13 @@ namespace Northwind.DAL.EntityClasses
 		public virtual EntityCollection<OrderEntity> Orders
 		{
 			get { return GetOrCreateEntityCollection<OrderEntity, OrderEntityFactory>("Employee", true, false, ref _orders);	}
+		}
+
+		/// <summary> Gets the EntityCollection with the related entities of type 'CustomerEntity' which are related to this entity via a relation of type 'm:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
+		[TypeContainedAttribute(typeof(CustomerEntity))]
+		public virtual EntityCollection<CustomerEntity> CustomersViaOrders
+		{
+			get { return GetOrCreateEntityCollection<CustomerEntity, CustomerEntityFactory>("EmployeesViaOrders", false, true, ref _customersViaOrders);	}
 		}
 
 		/// <summary> Gets / sets related entity of type 'EmployeeEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
@@ -869,8 +936,13 @@ namespace Northwind.DAL.EntityClasses
 		#region Custom Entity code
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
+
+		public virtual IEnumerable<CustomerEntity> CustomersViaOrdersInCode
+		{
+			get { return Orders.Select(o => o.Customer); }
+		}
+
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 
 		#region Included code
