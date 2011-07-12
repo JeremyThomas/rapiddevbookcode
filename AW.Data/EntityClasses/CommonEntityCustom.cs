@@ -12,6 +12,16 @@ namespace AW.Data.EntityClasses
   /// <summary>Common base class which is the base class for all generated entities which aren't a subtype of another entity.</summary>
   public abstract partial class CommonEntityBase : ICustomMemberProvider
   {
+		static CommonEntityBase()
+		{
+			//if (Environment.Version.Major >= 4)
+				MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
+		}
+
+		public static void Initialize()
+		{
+		}
+
     /// <summary>
     /// Called at the end of the initialization routine. Raises Initialized event.
     /// </summary>

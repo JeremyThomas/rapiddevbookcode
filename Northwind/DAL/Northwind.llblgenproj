@@ -283,6 +283,12 @@
             </OutputSettingValues>
           </Field>
         </Fields>
+        <OutputSettingValues>
+          <Attributes>
+            <Attribute Value="Description(&quot;Employee test description attribute&quot;)" />
+            <Attribute Value="DisplayName(&quot;EmployeeEntityDisplayName&quot;)" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="EmployeeTerritory">
         <Fields>
@@ -370,6 +376,14 @@
           <Field Name="Quantity" Type="short" Precision="5" />
           <Field Name="UnitPrice" Type="decimal" Precision="19" Scale="4" />
         </Fields>
+        <OutputSettingValues>
+          <Namespaces>
+            <Namespace Name="System.ComponentModel.DataAnnotations" />
+          </Namespaces>
+          <Attributes>
+            <Attribute Value="MetadataType(typeof(IOrderDetailMetadata))" />
+          </Attributes>
+        </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Product">
         <Fields>

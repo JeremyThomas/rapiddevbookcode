@@ -173,7 +173,12 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="Concurrency.cs" />
-    <Compile Include="DaoClasses\CommonDaoBase.Extended.cs" />
+    <Compile Include="DaoClasses\CommonDaoBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DaoClasses\CommonDaoBase.Extended.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DaoClasses\SpecialOfferProductDAO.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -492,9 +497,6 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="ViewModels\CustomerListLinqedTypedList.cs" />
-    <Compile Include="DaoClasses\CommonDaoBase.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
     <Compile Include="CollectionClasses\AwbuildVersionCollection.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

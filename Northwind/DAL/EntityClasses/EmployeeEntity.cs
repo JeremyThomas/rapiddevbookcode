@@ -28,6 +28,8 @@ namespace Northwind.DAL.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'Employee'.<br/><br/></summary>
 	[Serializable]
+	[Description("Employee test description attribute")]
+	[DisplayName("EmployeeEntityDisplayName")]
 	public partial class EmployeeEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	

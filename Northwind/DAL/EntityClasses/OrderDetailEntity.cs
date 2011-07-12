@@ -18,7 +18,7 @@ using Northwind.DAL;
 using Northwind.DAL.HelperClasses;
 using Northwind.DAL.FactoryClasses;
 using Northwind.DAL.RelationClasses;
-
+using System.ComponentModel.DataAnnotations;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.EntityClasses
@@ -27,6 +27,7 @@ namespace Northwind.DAL.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'OrderDetail'.<br/><br/></summary>
 	[Serializable]
+	[MetadataType(typeof(IOrderDetailMetadata))]
 	public partial class OrderDetailEntity : CommonEntityBase
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
