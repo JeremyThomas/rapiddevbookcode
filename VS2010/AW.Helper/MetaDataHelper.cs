@@ -13,13 +13,26 @@ namespace AW.Helper
 	public static class MetaDataHelper
 	{
 		/// <summary>
-		/// Gets the public concrete descendance of a type.
+		/// Gets the public concrete descendants of a type.
 		/// </summary>
 		/// <param name="ancestorType">Type of the ancestor.</param>
-		/// <returns>the descendance.</returns>
-		public static IEnumerable<Type> GetDescendance(Type ancestorType)
+		/// <returns>The descendants.</returns>
+		public static IEnumerable<Type> GetDescendants(Type ancestorType)
 		{
-			return GetAssignable(ancestorType, ancestorType.Assembly.GetExportedTypes());
+			return GetDescendants(ancestorType, ancestorType.Assembly.GetExportedTypes());
+		}
+
+		/// <summary>
+		/// Gets the public concrete descendant of a type for a list of types.
+		/// </summary>
+		/// <param name="ancestorType">Type of the ancestor.</param>
+		/// <param name="exportedTypes">The types to select from.</param>
+		/// <returns>The Descendants.</returns>
+		public static IEnumerable<Type> GetDescendants(Type ancestorType, IEnumerable<Type> exportedTypes)
+		{
+			return from type in exportedTypes
+						 where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
+						 select type;
 		}
 
 		public static IEnumerable<Type> GetAllLoadedDescendance(Type ancestorType)
@@ -51,7 +64,7 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the public concrete descendance of a type from a list of types.
+		/// Gets the public concrete descendants of a type from a list of types.
 		/// </summary>
 		/// <param name="ancestorType">Type of the ancestor.</param>
 		/// <param name="descendantTypes">The descendant types.</param>
@@ -255,6 +268,11 @@ namespace AW.Helper
 			       select propertyDescriptor;
 		}
 
+		public static PropertyDescriptor GetFieldPropertyDescriptor(this IEnumerable<PropertyDescriptor> propertyDescriptors, string fieldName)
+		{
+			return propertyDescriptors.FirstOrDefault(pd => pd.Name == fieldName);
+		}
+
 		/// <summary>
 		/// Adds the associated metadata providers for each type. But doesn't seem to work for properties on inherited classes for version of .net before 4.0
 		/// </summary>
@@ -263,7 +281,12 @@ namespace AW.Helper
 		public static void AddAssociatedMetadataProviders(IEnumerable<Type> typesWhichMayHaveBuddyClasses)
 		{
 			foreach (var typeWithBuddyClass in typesWhichMayHaveBuddyClasses)
-				TypeDescriptor.AddProvider(new AssociatedMetadataTypeTypeDescriptionProvider(typeWithBuddyClass), typeWithBuddyClass);
+				AddAssociatedMetadataProvider(typeWithBuddyClass);
+		}
+
+		public static void AddAssociatedMetadataProvider(Type typeWithBuddyClass)
+		{
+			TypeDescriptor.AddProvider(new AssociatedMetadataTypeTypeDescriptionProvider(typeWithBuddyClass), typeWithBuddyClass);
 		}
 
 		/// <summary>
@@ -275,6 +298,14 @@ namespace AW.Helper
 		{
 			if (!typesWhichMayHaveBuddyClasses.IsNullOrEmpty())
 				AddAssociatedMetadataProviders((IEnumerable<Type>) typesWhichMayHaveBuddyClasses);
+		}
+
+		/// <summary>
+		/// Folds all of the associated metadata providers into the type of the subject.
+		/// </summary>
+		public static void FoldAllAssociatedMetadataProvidersIntoTheSubjectType(Type ancestorType)
+		{
+			AddAssociatedMetadataProviders(GetDescendants(ancestorType));
 		}
 
 		/// <summary>
@@ -302,12 +333,12 @@ namespace AW.Helper
 			if (TypeDescriptor.GetProvider(modelClass) is AssociatedMetadataTypeTypeDescriptionProvider)
 				return modelClassProperties; //No need to get the MetadataType(buddy class)
 
-			if (Environment.Version.Major < 4) // Not needed if .net 4.0 and LinqMetaData.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
-			{
-				var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
-				if (metadataAttrib != null)
-					modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>().ToList());
-			}
+			//if (Environment.Version.Major < 4) // Not needed if .net 4.0 and LinqMetaData.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
+			//{
+			//  var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
+			//  if (metadataAttrib != null)
+			//    modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>().ToList());
+			//}
 			return modelClassProperties;
 		}
 
@@ -335,7 +366,7 @@ namespace AW.Helper
 		/// <returns>The validation attributes.</returns>
 		public static IEnumerable<T> GetAttributes<T>(IEnumerable<PropertyDescriptor> properties, string fieldName) where T : Attribute
 		{
-			if (!string.IsNullOrEmpty(fieldName))
+			if (!String.IsNullOrEmpty(fieldName))
 				properties = properties.Where(p => p.Name == fieldName);
 			return properties.SelectMany(prop => prop.Attributes.OfType<T>());
 		}
@@ -396,5 +427,7 @@ namespace AW.Helper
 		{
 			return type.GetCustomAttributes(typeof(T), true).Cast<T>();
 		}
+
+
 	}
 }

@@ -100,6 +100,9 @@
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <HintPath>..\..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
     </Reference>
+    <Reference Include="SD.LLBLGen.Pro.QuerySpec">
+      <HintPath>..\..\Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -116,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntityClasses\Metadata.cs" />
+    <Compile Include="FactoryClasses\QueryFactory.cs" />
     <Compile Include="HelperClasses\EntityCollection.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

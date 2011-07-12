@@ -512,17 +512,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				                       		DragText = field.Name,
 				                       		//SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
 				                       		//SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
-				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, GetFieldPropertyDescriptor(propertyDescriptors, field.Name))
+				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, MetaDataHelper.GetFieldPropertyDescriptor(propertyDescriptors, field.Name))
 				                       	});
 			}
 
 			explorerItem.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
 			return fieldExplorerItems;
-		}
-
-		private static PropertyDescriptor GetFieldPropertyDescriptor(IEnumerable<PropertyDescriptor> propertyDescriptors, string fieldName)
-		{
-			return propertyDescriptors.FirstOrDefault(pd => pd.Name == fieldName);
 		}
 
 		private static ExplorerItem CreateNavigatorExplorerItem(IEntityCore entity, PropertyDescriptor navigatorProperty, ILookup<Type, ExplorerItem> elementTypeLookup)
@@ -567,8 +562,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static string CreateFieldText(IFieldInfo field)
 		{
-			var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey ? "PK" : "", field.IsForeignKey ? "FK" : "", field.IsReadOnly ? "RO" : "");
-			return GeneralHelper.Join(" - ", field.Name + " (" + FormatTypeName(field.DataType, false) + ")", extra);
+			var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey
+			                                                                  	? "PK"
+			                                                                  	: "", field.IsForeignKey
+			                                                                  	      	? "FK"
+			                                                                  	      	: "", field.IsReadOnly ? "RO" : "");
+			var typeName = FormatTypeName(field.DataType, false);
+			if (field.MaxLength > 0 && field.MaxLength < 1073741823)
+				typeName += "{" + field.MaxLength + "}";
+			else
+			{
+				var scalePrecision = string.Empty;
+				if (field.Scale > 0)
+					scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Scale.ToString());
+				if (field.Precision > 0 && !(field.Precision == 10 && MetaDataHelper.GetCoreType(field.DataType).Equals(typeof (Int32)))
+				    && !(field.Precision == 5 && MetaDataHelper.GetCoreType(field.DataType).Equals(typeof (Int16))))
+					scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Precision.ToString());
+				if (!string.IsNullOrEmpty(scalePrecision))
+					typeName += "{" + scalePrecision + "}";
+			}
+			return GeneralHelper.Join(" - ", field.Name + " (" + typeName + ")", extra);
 		}
 
 		private static string CreateTableToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo)
@@ -590,7 +603,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var toolTipText = CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, navigatorProperty);
 			if (typeof (IEnumerable).IsAssignableFrom(navigatorProperty.PropertyType))
 			{
-				var targetTipText = hyperlinkTarget.ToolTipText;				
+				var targetTipText = hyperlinkTarget.ToolTipText;
 				if (navigatorProperty.PropertyType.IsGenericType)
 				{
 					var elementType = MetaDataHelper.GetElementType(navigatorProperty.PropertyType);
@@ -598,6 +611,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				return GeneralHelper.Join(Environment.NewLine, toolTipText, FormatTypeName(navigatorProperty.PropertyType, true), targetTipText);
 			}
+			if (hyperlinkTarget.ToolTipText.Contains(toolTipText))
+				return hyperlinkTarget.ToolTipText;
 			return GeneralHelper.Join(Environment.NewLine, toolTipText, hyperlinkTarget.ToolTipText);
 		}
 
@@ -671,6 +686,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static ExplorerItem CreateTableExplorerItem(string propertName, Type elementType)
 		{
+			MetaDataHelper.AddAssociatedMetadataProvider(elementType);
 			return new ExplorerItem(propertName, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
 			       	{
 			       		IsEnumerable = true,
@@ -743,7 +759,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var hyperlinkTarget = elementTypeLookup[elementType].First();
 			var toolTipText = CreateDisplayNameDescriptionToolTipText(childProp);
 			var targetTipText = hyperlinkTarget.ToolTipText;
-			if (typeof(IEnumerable).IsAssignableFrom(childProp.PropertyType))
+			if (typeof (IEnumerable).IsAssignableFrom(childProp.PropertyType))
 			{
 				if (childProp.PropertyType.IsGenericType)
 				{
@@ -753,7 +769,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText, FormatTypeName(childProp.PropertyType, true), targetTipText);
 			}
 			else
-				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText, targetTipText);
+			{
+				toolTipText = targetTipText.Contains(toolTipText) ? targetTipText : GeneralHelper.Join(Environment.NewLine, toolTipText, targetTipText);
+			}
 			return new ExplorerItem(childProp.Name, kind, icon)
 			       	{
 			       		HyperlinkTarget = hyperlinkTarget,

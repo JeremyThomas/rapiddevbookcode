@@ -174,11 +174,6 @@ namespace AW.Helper.LLBL
 			return GetEntityTypeValueForType(typeof (T));
 		}
 
-		public static IEnumerable<Type> GetEntitiesTypes(Type baseType)
-		{
-			return MetaDataHelper.GetDescendance(baseType);
-		}
-
 		public static IEnumerable<Type> GetEntitiesTypes()
 		{
 			return MetaDataHelper.GetAllLoadedDescendance(typeof (IEntityCore));

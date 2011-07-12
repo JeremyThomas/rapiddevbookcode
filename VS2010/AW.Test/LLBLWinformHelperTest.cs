@@ -141,7 +141,7 @@ namespace AW.Tests
 
 		private static IEnumerable<Type> GetEntitiesTypes(Type baseType, ILinqMetaData linqMetaData)
 		{
-			return baseType == null ? (linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(linqMetaData.GetType().Assembly)) : EntityHelper.GetEntitiesTypes(baseType);
+			return baseType == null ? (linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(linqMetaData.GetType().Assembly)) : MetaDataHelper.GetDescendants(baseType);
 		}
 
 		private static void TestPopulateTreeViewWithSchema(TreeView entityTreeView, Type baseType, ILinqMetaData linqMetaData)

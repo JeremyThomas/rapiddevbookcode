@@ -20,6 +20,7 @@ using System.Runtime.Serialization;
 namespace Northwind.DAL.EntityClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+	using AW.Helper;
 	// __LLBLGENPRO_USER_CODE_REGION_END
 
 	/// <summary>Common base class which is the base class for all generated entities which aren't a subtype of another entity.</summary>
@@ -98,6 +99,17 @@ namespace Northwind.DAL.EntityClasses
 		#region Custom Entity code
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
+
+		static CommonEntityBase()
+		{
+			//if (Environment.Version.Major >= 4)
+			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(CommonEntityBase));
+		}
+
+		public static void Initialize()
+		{
+		}
+
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 

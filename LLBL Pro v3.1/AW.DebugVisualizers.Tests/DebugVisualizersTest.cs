@@ -130,7 +130,7 @@ namespace AW.DebugVisualizers.Tests
 		public void EntityFieldsTest()
 		{
 			var addressType = MetaSingletons.MetaData.AddressType.First();
-			TestShow(addressType.Fields, 38);
+			TestShow(addressType.Fields, TestData.NumFieldProperties);
 		}
 
 		[TestMethod, Timeout(10000)]

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using AW.Data;
+using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.Linq;
 using AW.Helper;
@@ -11,10 +11,12 @@ using AW.LLBLGen.DataContextDriver.Static;
 using LINQPad.Extensibility.DataContext;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Northwind.DAL;
 using Northwind.DAL.EntityClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using CustomerEntity = AW.Data.EntityClasses.CustomerEntity;
 using ElementCreator = Northwind.DAL.FactoryClasses.ElementCreator;
+using EntityType = AW.Data.EntityType;
 
 namespace AW.LLBLGen.DataContextDriver.Tests
 {
@@ -89,7 +91,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		/// <summary>
 		///A test for GetSchema using AW
 		///</summary>
-		[TestMethod, Ignore]
+		[TestMethod]
 		public void GetAWSchemaPropertiesTest()
 		{
 			var customType = typeof (LinqMetaData);
@@ -144,6 +146,10 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var description = customerPropertiesToShowInSchema.First().Description;
 			Assert.IsFalse(String.IsNullOrEmpty(description));
 			Assert.IsTrue(first.ToolTipText.Contains(description));
+
+			var orderDetailExplorerItem = explorerItems.Single(e => e.Text == EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.OrderDetailEntity));
+			var quantityExplorerItem = orderDetailExplorerItem.Children.Single(ei => ei.DragText == "Quantity");
+			StringAssert.Contains(quantityExplorerItem.ToolTipText, "Quantity description attribute");
 
 			return explorerItem;
 		}
@@ -209,6 +215,17 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		{
 			var propertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(typeof (Northwind.DAL.EntityClasses.CustomerEntity));
 			Assert.IsFalse(String.IsNullOrEmpty(propertiesToShowInSchema.First().Description));
+		}
+
+		[TestMethod]
+		public void GetPropertiesToShowInSchemaBuddyTest()
+		{
+			Type type= typeof (OrderDetailEntity);;
+			MetaDataHelper.AddAssociatedMetadataProvider(type);
+			var descriptionAttributes = MetaDataHelper.GetDescriptionAttributes(type, OrderDetailFieldIndex.Quantity.ToString());
+			Assert.IsTrue(descriptionAttributes.Any());
+			var propertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(type);
+			Assert.IsFalse(String.IsNullOrEmpty(propertiesToShowInSchema.GetFieldPropertyDescriptor(OrderDetailFieldIndex.Quantity.ToString()).Description));
 		}
 	}
 }

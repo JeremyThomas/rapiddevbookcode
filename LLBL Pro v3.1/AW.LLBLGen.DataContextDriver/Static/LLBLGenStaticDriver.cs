@@ -475,6 +475,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static ExplorerItem CreateTableExplorerItem(IEntityCore entity, string name, IDataAccessAdapter adapter)
 		{
+			MetaDataHelper.AddAssociatedMetadataProvider(entity.GetType());
 			var tableExplorerItem = new ExplorerItem(name, ExplorerItemKind.QueryableObject, ExplorerIcon.Table)
 			                        	{
 			                        		IsEnumerable = true,
