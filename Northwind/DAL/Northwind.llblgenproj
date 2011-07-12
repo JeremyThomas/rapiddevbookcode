@@ -68,7 +68,7 @@
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
         <PlatformName Value=".NET 3.5" />
-        <PresetName Value="SD.Presets.Adapter.General2008" />
+        <PresetName Value="SD.Presets.Adapter.QuerySpec" />
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>

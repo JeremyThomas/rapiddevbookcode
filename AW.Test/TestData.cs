@@ -13,6 +13,8 @@ namespace AW.Tests
 {
 	public static class TestData
 	{
+		public const int NumFieldProperties = 38;
+
 		public static readonly List<string> ThreeStrings = new List<string> { "s1", "s2", "s3" };
 
 		public static string GetTestxmlString()
@@ -138,6 +140,7 @@ namespace AW.Tests
 		{
 			get { return ThreeStrings.Distinct(); }
 		}
+
 	}
 
 	[Serializable]
