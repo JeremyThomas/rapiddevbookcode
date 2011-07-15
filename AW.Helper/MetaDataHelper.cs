@@ -31,8 +31,8 @@ namespace AW.Helper
 		public static IEnumerable<Type> GetDescendants(Type ancestorType, IEnumerable<Type> exportedTypes)
 		{
 			return from type in exportedTypes
-						 where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
-						 select type;
+			       where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
+			       select type;
 		}
 
 		public static IEnumerable<Type> GetAllLoadedDescendance(Type ancestorType)
@@ -81,6 +81,13 @@ namespace AW.Helper
 			return (from ancestorType in ancestorTypes
 			        where ancestorType.IsAssignableFrom(type)
 			        select type).Count() > 0;
+		}
+
+		public static IEnumerable<Type> FilterByImplements(this IEnumerable<Type> types, string interfaceName)
+		{
+			return from type in types
+			       where type.GetInterface(interfaceName) != null
+			       select type;
 		}
 
 		public static Type GetTypeParameterOfGenericType(Type type)
@@ -425,9 +432,7 @@ namespace AW.Helper
 
 		private static IEnumerable<T> GetTypesAttributes<T>(Type type) where T : Attribute
 		{
-			return type.GetCustomAttributes(typeof(T), true).Cast<T>();
+			return type.GetCustomAttributes(typeof (T), true).Cast<T>();
 		}
-
-
 	}
 }
