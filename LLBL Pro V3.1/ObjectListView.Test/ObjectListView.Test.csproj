@@ -55,6 +55,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generic\IBindingList.cs" />
+    <Compile Include="Generic\IBindingListView.cs" />
+    <Compile Include="Generic\ICancelAddNew.cs" />
+    <Compile Include="Generic\ICollection.cs" />
+    <Compile Include="Generic\ICollectionT.cs" />
+    <Compile Include="Generic\IEnumerable.cs" />
+    <Compile Include="Generic\IEnumerableT.cs" />
+    <Compile Include="Generic\IList.cs" />
+    <Compile Include="Generic\IListT.cs" />
+    <Compile Include="Generic\IRaiseItemChangedEvents.cs" />
+    <Compile Include="Generic\ITypedList.cs" />
+    <Compile Include="Generic\NotifyingList.cs" />
+    <Compile Include="Generic\ObjectListView.cs" />
+    <Compile Include="Generic\ViewFactory.cs" />
+    <Compile Include="NonGeneric\AccountRep.cs" />
+    <Compile Include="NonGeneric\Company.cs" />
+    <Compile Include="NonGeneric\Customer.cs" />
+    <Compile Include="NonGeneric\CustomerProgram.cs" />
+    <Compile Include="NonGeneric\DateTimeDayComparer.cs" />
+    <Compile Include="NonGeneric\ExplicitEditableObject.cs" />
+    <Compile Include="NonGeneric\ExtendedProperty.cs" />
+    <Compile Include="NonGeneric\FilterNode.cs" />
+    <Compile Include="NonGeneric\IBindingList.cs" />
+    <Compile Include="NonGeneric\IBindingListView.cs" />
+    <Compile Include="NonGeneric\ICancelAddNew.cs" />
+    <Compile Include="NonGeneric\ICollection.cs" />
+    <Compile Include="NonGeneric\IEnumerable.cs" />
+    <Compile Include="NonGeneric\IList.cs" />
+    <Compile Include="NonGeneric\IRaiseItemChangedEvents.cs" />
+    <Compile Include="NonGeneric\ITypedList.cs" />
+    <Compile Include="NonGeneric\NotifyingList.cs" />
+    <Compile Include="NonGeneric\NotifyingListItem.cs" />
+    <Compile Include="NonGeneric\NotifyingListItemEvents.cs" />
+    <Compile Include="NonGeneric\ObjectListView.cs" />
+    <Compile Include="NonGeneric\Order.cs" />
+    <Compile Include="NonGeneric\RelationalExpression.cs" />
+    <Compile Include="NonGeneric\SimpleClass.cs" />
+    <Compile Include="NonGeneric\SimpleEditableObject.cs" />
+    <Compile Include="NonGeneric\StringLengthComparer.cs" />
+    <Compile Include="NonGeneric\ViewFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

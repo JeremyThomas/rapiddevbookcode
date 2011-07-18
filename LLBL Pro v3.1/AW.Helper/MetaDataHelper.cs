@@ -83,11 +83,29 @@ namespace AW.Helper
 			        select type).Count() > 0;
 		}
 
+		public static bool Implements(this Type type, Type interfaceType)
+		{
+			return type.GetInterface(interfaceType.FullName) != null;
+		}
+
 		public static IEnumerable<Type> FilterByImplements(this IEnumerable<Type> types, string interfaceName)
 		{
 			return from type in types
-			       where type.GetInterface(interfaceName) != null
+			       where type.GetInterface(interfaceName) != null  && type.IsClass
 			       select type;
+		}
+		
+		public static IEnumerable<Type> FilterByClassIsAssignableTo(this IEnumerable<Type> types, Type typeIsAssignableTo)
+		{
+			return typeIsAssignableTo.GetAssignable(types).Where(t=>t.IsClass);
+		}
+
+		public static IEnumerable<Type> GetInterfaceImplementersBothWays(this IEnumerable<Type> types, Type interfaceType)
+		{
+			var implementers = FilterByClassIsAssignableTo(types, interfaceType);
+			if (!implementers.Any())
+				implementers = FilterByImplements(types, interfaceType.FullName);
+			return implementers;
 		}
 
 		public static Type GetTypeParameterOfGenericType(Type type)

@@ -22,20 +22,20 @@ namespace AW.Winforms.Helpers.ConnectionUI
 	/// </summary>
 	public class DataConnectionConfiguration : IDataConnectionConfiguration
 	{
-		private const string configFileName = @"DataConnection.xml";
-		private readonly string fullFilePath;
-		private readonly XDocument xDoc;
+		private const string ConfigFileName = @"DataConnection.xml";
+		private readonly string _fullFilePath;
+		private readonly XDocument _xDoc;
 
 		// Available data sources:
-		private IDictionary<string, DataSource> dataSources;
+		private IDictionary<string, DataSource> _dataSources;
 
 		// Available data providers: 
-		private IDictionary<string, DataProvider> dataProviders;
+		private IDictionary<string, DataProvider> _dataProviders;
 
-		static DataConnectionConfiguration()
-		{
-			AppDomain.CurrentDomain.AssemblyResolve += MyResolveEventHandler;
-		}
+		//static DataConnectionConfiguration()
+		//{
+		//  AppDomain.CurrentDomain.AssemblyResolve += MyResolveEventHandler;
+		//}
 
 		/// <summary>
 		/// Constructor
@@ -43,18 +43,18 @@ namespace AW.Winforms.Helpers.ConnectionUI
 		/// <param name="path">Configuration file path.</param>
 		public DataConnectionConfiguration(string path)
 		{
-			fullFilePath = !String.IsNullOrEmpty(path) ? Path.GetFullPath(Path.Combine(path, configFileName)) : Path.Combine(Environment.CurrentDirectory, configFileName);
-			if (!String.IsNullOrEmpty(fullFilePath) && File.Exists(fullFilePath))
+			_fullFilePath = !String.IsNullOrEmpty(path) ? Path.GetFullPath(Path.Combine(path, ConfigFileName)) : Path.Combine(Environment.CurrentDirectory, ConfigFileName);
+			if (!String.IsNullOrEmpty(_fullFilePath) && File.Exists(_fullFilePath))
 			{
-				xDoc = XDocument.Load(fullFilePath);
+				_xDoc = XDocument.Load(_fullFilePath);
 			}
 			else
 			{
-				xDoc = new XDocument();
-				xDoc.Add(new XElement("ConnectionDialog", new XElement("DataSourceSelection")));
+				_xDoc = new XDocument();
+				_xDoc.Add(new XElement("ConnectionDialog", new XElement("DataSourceSelection")));
 			}
 
-			RootElement = xDoc.Root;
+			RootElement = _xDoc.Root;
 		}
 
 		public XElement RootElement { get; set; }
@@ -62,63 +62,36 @@ namespace AW.Winforms.Helpers.ConnectionUI
 		public void LoadConfiguration(DataConnectionDialog dialog)
 		{
 			DataSource.AddStandardDataSources(dialog);
-			//dialog.DataSources.Add(DataSource.SqlDataSource);
-			//dialog.DataSources.Add(DataSource.SqlFileDataSource);
-			//dialog.DataSources.Add(DataSource.OracleDataSource);
-			//dialog.DataSources.Add(DataSource.AccessDataSource);
-			//dialog.DataSources.Add(DataSource.OdbcDataSource);
-			//dialog.DataSources.Add(SqlCe.SqlCeDataSource);
 			AddDataSources(dialog, SqlCe.SqlCeDataSource);
-			AddDataSources(dialog, CreateSQLiteDataSource());
-			//Oracle Data Provider for .NETOracle Data Provider for .NETOracle.DataAccess.Client
+			//AddDataSources(dialog, CreateSQLiteDataSource());
+			////Oracle Data Provider for .NETOracle Data Provider for .NETOracle.DataAccess.Client
 
-			AddDataSources(dialog, CreateDataSource("Oracle.DataAccess.Client", "Oracle Data Provider for .NET", "Oracle Database",
-			                                        "Oracle Database",
-			                                        @"C:\app\jeremy.thomas\product\11.2.0\client_1\odt\vs2010\Oracle.VsDevTools.DLL"));
+			//AddDataSources(dialog, CreateDataSource("Oracle.DataAccess.Client", "Oracle Data Provider for .NET", "Oracle Database",
+			//                                        "Oracle Database",
+			//                                        @"C:\app\jeremy.thomas\product\11.2.0\client_1\odt\vs2010\Oracle.VsDevTools.DLL"));
 
-			//dialog.UnspecifiedDataSource.Providers.Add(SqlCe.SqlCeDataProvider);
-			//dialog.UnspecifiedDataSource.Providers.Add(DataProvider.SqlDataProvider);
-			//dialog.UnspecifiedDataSource.Providers.Add(DataProvider.OracleDataProvider);
-			//dialog.UnspecifiedDataSource.Providers.Add(DataProvider.OleDBDataProvider);
-			//dialog.UnspecifiedDataSource.Providers.Add(DataProvider.OdbcDataProvider);
-			//dialog.DataSources.Add(dialog.UnspecifiedDataSource);
-			dataSources = new Dictionary<string, DataSource>();
-			dataProviders = new Dictionary<string, DataProvider>();
+			_dataSources = new Dictionary<string, DataSource>();
+			_dataProviders = new Dictionary<string, DataProvider>();
 			foreach (var dataSource in dialog.DataSources)
 			{
-				dataSources.Add(dataSource.Name ?? dataSource.DisplayName, dataSource);
+				_dataSources.Add(dataSource.Name ?? dataSource.DisplayName, dataSource);
 				foreach (var dataProvider in dataSource.Providers)
 				{
-					if (!dataProviders.ContainsKey(dataProvider.Name))
-						dataProviders.Add(dataProvider.Name, dataProvider);
+					if (!_dataProviders.ContainsKey(dataProvider.Name))
+						_dataProviders.Add(dataProvider.Name, dataProvider);
 				}
 			}
-			//this.dataSources.Add(DataSource.SqlDataSource.Name, DataSource.SqlDataSource);
-			//this.dataSources.Add(DataSource.SqlFileDataSource.Name, DataSource.SqlFileDataSource);
-			//this.dataSources.Add(DataSource.OracleDataSource.Name, DataSource.OracleDataSource);
-			//this.dataSources.Add(DataSource.AccessDataSource.Name, DataSource.AccessDataSource);
-			//this.dataSources.Add(DataSource.OdbcDataSource.Name, DataSource.OdbcDataSource);
-			//this.dataSources.Add(SqlCe.SqlCeDataSource.Name, SqlCe.SqlCeDataSource);
-			//this.dataSources.Add(dialog.UnspecifiedDataSource.DisplayName, dialog.UnspecifiedDataSource);
 
-
-			//this.dataProviders.Add(DataProvider.SqlDataProvider.Name, DataProvider.SqlDataProvider);
-			//this.dataProviders.Add(DataProvider.OracleDataProvider.Name, DataProvider.OracleDataProvider);
-			//this.dataProviders.Add(DataProvider.OleDBDataProvider.Name, DataProvider.OleDBDataProvider);
-			//this.dataProviders.Add(DataProvider.OdbcDataProvider.Name, DataProvider.OdbcDataProvider);
-			//this.dataProviders.Add(SqlCe.SqlCeDataProvider.Name, SqlCe.SqlCeDataProvider);
-
-
-			DataSource ds = null;
+			DataSource ds;
 			var dsName = GetSelectedSource();
-			if (!String.IsNullOrEmpty(dsName) && dataSources.TryGetValue(dsName, out ds))
+			if (!String.IsNullOrEmpty(dsName) && _dataSources.TryGetValue(dsName, out ds))
 			{
 				dialog.SelectedDataSource = ds;
 			}
 
-			DataProvider dp = null;
+			DataProvider dp;
 			var dpName = GetSelectedProvider();
-			if (!String.IsNullOrEmpty(dpName) && dataProviders.TryGetValue(dpName, out dp))
+			if (!String.IsNullOrEmpty(dpName) && _dataProviders.TryGetValue(dpName, out dp))
 			{
 				dialog.SelectedDataProvider = dp;
 			}
@@ -163,7 +136,7 @@ namespace AW.Winforms.Helpers.ConnectionUI
 					SaveSelectedProvider(dp.Name);
 				}
 
-				xDoc.Save(fullFilePath);
+				_xDoc.Save(_fullFilePath);
 			}
 		}
 
@@ -256,14 +229,11 @@ namespace AW.Winforms.Helpers.ConnectionUI
 			                        ".NET Framework Data Provider for SQLite", @"C:\Program Files (x86)\SQLite.NET\bin\Designer\SQLite.Designer.DLL");
 		}
 
-		private DataSource CreateDataSource(string providerInvariantName, string displayName, string shortDisplayName,
+		private static DataSource CreateDataSource(string providerInvariantName, string displayName, string shortDisplayName,
 		                                    string description, string designerAssemblyPath)
 		{
 			try
 			{
-				//var currentDomain = AppDomain.CurrentDomain;
-				//	currentDomain.CreateInstance("SQLite.Designer.DLL", "SQLiteConnectionUIControl");
-
 				var sqLiteDesigner = Assembly.LoadFrom(designerAssemblyPath);
 				if (sqLiteDesigner != null)
 				{
@@ -301,7 +271,6 @@ namespace AW.Winforms.Helpers.ConnectionUI
 			if (args.Name.Contains(".resources"))
 				return null;
 			return Assembly.LoadFrom(@"C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\" + shortAssemblyName);
-			;
 		}
 
 		public static DataSource CreateDataSource(string name, string displayName, string shortDisplayName,

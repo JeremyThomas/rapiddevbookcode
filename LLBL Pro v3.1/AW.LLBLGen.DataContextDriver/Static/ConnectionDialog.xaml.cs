@@ -62,10 +62,29 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		                                                            + "If you want any additional namespaces add them in here.";
 
 		public IConnectionInfo CxInfo { get; private set; }
+		
+		//static ConnectionDialog()
+		//{
+		//  AppDomain.CurrentDomain. ReflectionOnlyAssemblyResolve  += MyResolveEventHandler;
+		//}
+
+		private Assembly MyResolveEventHandler(object sender, ResolveEventArgs args)
+		{
+			var shortAssemblyName = new AssemblyName(args.Name).Name;
+			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
+			{
+				string directoryName = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var path = Path.Combine(directoryName, shortAssemblyName);
+				if (File.Exists(path))
+					return Assembly.ReflectionOnlyLoadFrom(path);
+			}
+				return null;
+		}
 
 		public ConnectionDialog()
 		{
 			InitializeComponent();
+			AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += MyResolveEventHandler;
 		}
 
 		public ConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
@@ -265,6 +284,19 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
+			if (DialogResult.GetValueOrDefault() && !string.IsNullOrEmpty(CxInfo.DatabaseInfo.CustomCxString) && string.IsNullOrEmpty(providerComboBox.Text))
+				switch (MessageBox.Show("Database Provider has not been set!" + Environment.NewLine 
+					+	"This is required to execute SQL" + Environment.NewLine 
+					+ "Do you wish to close anyway?", "Do you wish to close?", MessageBoxButton.YesNo))
+				{
+					case MessageBoxResult.Yes:
+						break;
+					case MessageBoxResult.No:
+						e.Cancel = true;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException();
+				}
 			Settings.Default.ConnectionDialogPlacement = this.GetPlacement();
 			Settings.Default.Save();
 		}
@@ -303,7 +335,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			             	{
 			             		Title = "Choose LLBL entity assembly",
 			             		DefaultExt = ".dll",
-											FileName = Path.GetFileName(CxInfo.CustomTypeInfo.CustomAssemblyPath)
+			             		FileName = Path.GetFileName(CxInfo.CustomTypeInfo.CustomAssemblyPath)
 			             	};
 
 			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
@@ -358,7 +390,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var assemPath = CxInfo.CustomTypeInfo.CustomAssemblyPath;
 			if (assemPath.Length == 0)
 			{
-				MessageBox.Show("First enter a path to an assembly.");
+				MessageBox.Show("First enter a path to an assembly containing LLBL entities.");
 				return null;
 			}
 
@@ -375,7 +407,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Error obtaining custom types: " + ex.Message);
+				MessageBox.Show(ex.Message,"Error obtaining custom types");
 				BreakIntoDebugger();
 				return null;
 			}
@@ -383,7 +415,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				customTypes = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.IElementCreatorCore");
 				if (customTypes.Length == 0)
-				MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData.");
+					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData or IElementCreatorCore.", "Wrong Assembly chosen");
 				else
 				{
 					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData but there is an implementation of IElementCreatorCore.");
@@ -411,7 +443,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					if (dialog.ShowDialog() == true)
 					{
 						element.Value = dialog.FileName;
-						//var dataAccessAdapterAssembly  = Assembly.ReflectionOnlyLoadFrom(_cxInfo.CustomTypeInfo.CustomMetadataPath);
 						var dataAccessAdapterAssembly = Assembly.LoadFrom(dialog.FileName);
 						try
 						{
@@ -431,25 +462,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static IEnumerable<string> GetDataAccessAdapterTypeNames(Assembly dataAccessAdapterAssembly)
 		{
-			return GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly.GetTypes());
-		}
-
-		private static IEnumerable<string> GetDataAccessAdapterTypeNames(IEnumerable<Type> types)
-		{
-			return types.Where(t => typeof (IDataAccessAdapter).IsAssignableFrom(t) && t.IsClass).Select(t => t.FullName);
+			return GetDataAccessAdapterTypeNamesBothWays(dataAccessAdapterAssembly.GetTypes());
 		}
 
 		private static IEnumerable<string> GetDataAccessAdapterTypeNamesBothWays(IEnumerable<Type> types)
 		{
-			var customTypes = GetDataAccessAdapterTypeNames(types);
-			if (!customTypes.Any())
-				customTypes = GetDataAccessAdapterTypeNamesByName(types);
-			return customTypes;
-		}
-
-		private static IEnumerable<string> GetDataAccessAdapterTypeNamesByName(IEnumerable<Type> types)
-		{
-			return types.Where(t => t != null && !String.IsNullOrEmpty(t.Name) && t.Name.Contains("DataAccessAdapter") && t.IsClass).Select(t => t.FullName);
+			return types.GetInterfaceImplementersBothWays(typeof(IDataAccessAdapter)).Select(t => t.FullName);
 		}
 
 		private void BrowseAppConfig(object sender, RoutedEventArgs e)
@@ -518,7 +536,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					var result = (string) Dialogs.PickFromList("Choose " + hl.TargetName, customTypes.ToArray());
 					if (result != null)
+					{
 						CxInfo.DriverData.SetElementValue(hl.TargetName, result);
+						ChooseAdapterFactoryMethod(sender, e);
+					}
 				}
 			}
 		}
@@ -542,7 +563,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var validMethods = from m in methodInfos
 				                   let ps = m.GetParameters()
 				                   where ps.Length == 1
-				                   where ps.Single().ParameterType == typeof (string) && typeof (IDataAccessAdapter).IsAssignableFrom(m.ReturnType)
+													 where ps.Single().ParameterType == typeof(string) && m.ReturnType.Implements(typeof(IDataAccessAdapter))
 				                   select m;
 				var count = validMethods.Count();
 				if (count == 1)
@@ -552,6 +573,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					var result = (MethodInfo) Dialogs.PickFromList("Choose factory method", validMethods.ToArray());
 					if (result != null)
 						CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, result.Name);
+					else
+					{
+						Dialogs.PickFromList("An array of assemblies in this application domain.", AppDomain.CurrentDomain.GetAssemblies().OrderBy(a=>a.FullName).ToArray());
+					}
 				}
 			}
 			catch (Exception ex)
@@ -652,29 +677,32 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void GetConnectionString_Click(object sender, RoutedEventArgs e)
 		{
-			try
-			{
-				var dbProviderFactory = DbProviderFactories.GetFactory(CxInfo.DatabaseInfo.Provider);
-				var connectionStringBuilder = dbProviderFactory.CreateConnectionStringBuilder();
-				if (connectionStringBuilder == null)
-					connectionStringBuilder = new DbConnectionStringBuilder {ConnectionString = CxInfo.DatabaseInfo.CustomCxString};
-				else
-					connectionStringBuilder.ConnectionString = CxInfo.DatabaseInfo.CustomCxString;
-				if (connectionStringBuilder.ContainsKey("data source"))
-					CxInfo.DatabaseInfo.Server = Convert.ToString(connectionStringBuilder["data source"]);
-				if (connectionStringBuilder.ContainsKey("initial catalog"))
-					CxInfo.DatabaseInfo.Database = Convert.ToString(connectionStringBuilder["initial catalog"]);
-				if (connectionStringBuilder.ContainsKey("initial file name"))
-					CxInfo.DatabaseInfo.AttachFileName = Convert.ToString(connectionStringBuilder["initial file name"]);
-				if (connectionStringBuilder.ContainsKey("user id"))
-					CxInfo.DatabaseInfo.UserName = Convert.ToString(connectionStringBuilder["user id"]);
-				if (connectionStringBuilder.ContainsKey("password"))
-					CxInfo.DatabaseInfo.Password = Convert.ToString(connectionStringBuilder["password"]);
-			}
-			catch (Exception ex)
-			{
-				Application.OnThreadException(ex);
-			}
+			if (string.IsNullOrEmpty(providerComboBox.Text))
+				MessageBox.Show("Provider has not been set" + Environment.NewLine + "Choose from list.");
+			else
+				try
+				{
+					var dbProviderFactory = DbProviderFactories.GetFactory(CxInfo.DatabaseInfo.Provider);
+					var connectionStringBuilder = dbProviderFactory.CreateConnectionStringBuilder();
+					if (connectionStringBuilder == null)
+						connectionStringBuilder = new DbConnectionStringBuilder {ConnectionString = CxInfo.DatabaseInfo.CustomCxString};
+					else
+						connectionStringBuilder.ConnectionString = CxInfo.DatabaseInfo.CustomCxString;
+					if (connectionStringBuilder.ContainsKey("data source"))
+						CxInfo.DatabaseInfo.Server = Convert.ToString(connectionStringBuilder["data source"]);
+					if (connectionStringBuilder.ContainsKey("initial catalog"))
+						CxInfo.DatabaseInfo.Database = Convert.ToString(connectionStringBuilder["initial catalog"]);
+					if (connectionStringBuilder.ContainsKey("initial file name"))
+						CxInfo.DatabaseInfo.AttachFileName = Convert.ToString(connectionStringBuilder["initial file name"]);
+					if (connectionStringBuilder.ContainsKey("user id"))
+						CxInfo.DatabaseInfo.UserName = Convert.ToString(connectionStringBuilder["user id"]);
+					if (connectionStringBuilder.ContainsKey("password"))
+						CxInfo.DatabaseInfo.Password = Convert.ToString(connectionStringBuilder["password"]);
+				}
+				catch (Exception ex)
+				{
+					Application.OnThreadException(ex);
+				}
 		}
 	}
 

@@ -141,6 +141,21 @@ namespace AW.Tests
 			get { return ThreeStrings.Distinct(); }
 		}
 
+		static readonly Dictionary<Type, StaticMembersDynamicWrapper> TypeLookup = new Dictionary<Type, StaticMembersDynamicWrapper>();
+
+		public static dynamic StaticMembersProxy(this Type type)
+		{
+
+			StaticMembersDynamicWrapper smdw;
+
+			if (!TypeLookup.TryGetValue(type, out smdw))
+
+				TypeLookup[type] = smdw = new StaticMembersDynamicWrapper(type);
+
+			return smdw;
+
+		}
+
 	}
 
 	[Serializable]
@@ -246,5 +261,7 @@ namespace AW.Tests
 			list.AddRange(GenerateList().Cast<SerializableBaseClass>());
 			return list;
 		}
+
+
 	}
 }
