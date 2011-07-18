@@ -121,7 +121,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9E62DAD6-C
 		Lib\Test\Moq.pdb = Lib\Test\Moq.pdb
 		Lib\Test\Moq.xml = Lib\Test\Moq.xml
 		Lib\Test\NMock2.dll = Lib\Test\NMock2.dll
-		Lib\nunit.framework.dll = Lib\nunit.framework.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{8D111638-4952-4BB9-8853-16EB6D1BB1B9}"
