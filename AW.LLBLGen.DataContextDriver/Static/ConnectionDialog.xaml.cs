@@ -52,6 +52,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public const string ElementNameFactoryType = "FactoryType";
 		public const string ElementNameFactoryAssembly = "FactoryAssembly";
 		public const string ElementNameUseFields = "UseFields";
+		public const string TitleChooseLLBLEntityAssembly = "Choose LLBL entity assembly";
+		public const string TitleChooseCustomType = "Choose LinqMetaData or ElementCreatorCore Type";
+		public const string TitleChooseDataAccessAdapterAssembly = "Choose Data Access Adapter assembly";
+		public const string TitleChooseFactoryAssembly = "Choose the assembly containing the factory method";
+		public const string TitleChooseApplicationConfigFile = "Choose application config file";
+		public const string TitleChooseExtraAssembly = "Choose extra assembly";
+		public const string TitleChooseFactoryMethod = "Choose factory method";
 
 		public static readonly string AdditionalAssembliesToolTip = "The driver adds these assemblies to the ones LINQPad provides"
 		                                                            + Environment.NewLine + LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
@@ -62,7 +69,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		                                                            + "If you want any additional namespaces add them in here.";
 
 		public IConnectionInfo CxInfo { get; private set; }
-		
+
 		//static ConnectionDialog()
 		//{
 		//  AppDomain.CurrentDomain. ReflectionOnlyAssemblyResolve  += MyResolveEventHandler;
@@ -73,22 +80,172 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var shortAssemblyName = new AssemblyName(args.Name).Name;
 			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
 			{
-				string directoryName = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
-				var path = Path.Combine(directoryName, shortAssemblyName);
+				var directoryName = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var path = Path.Combine(directoryName, shortAssemblyName) + ".dll";
 				if (File.Exists(path))
 					return Assembly.ReflectionOnlyLoadFrom(path);
 			}
-				return null;
+			//  // Look in the GAC.  It may not be there, so we need to catch
+			//  // FileNotFoundException.
+			//  // As an optimization, don't probe in the GAC if the public
+			//  // key token is null, because by definition the assembly
+			//  // can't be in the GAC.
+			if (!args.Name.Contains("PublicKeyToken=null"))
+			{
+				try
+				{
+					return Assembly.ReflectionOnlyLoad(args.Name);
+				}
+				catch (FileNotFoundException)
+				{
+				}
+
+				try
+				{
+					// As a final effort, look in the GAC after appying loader policy.
+					// This lets us resolves references for assemblies built against an older version of the framework.
+					return Assembly.ReflectionOnlyLoad(AppDomain.CurrentDomain.ApplyPolicy(args.Name));
+				}
+				catch (FileNotFoundException)
+				{
+				}
+			}
+			return null;
 		}
+
+		// Soon, this assembly resolve event won't be used during inspection.
+		// But we'll need this exact same code during activation.
+		//internal Assembly ResolveAssembly(Object sender, ResolveEventArgs args)
+		//{
+		//  String assemblyRef = args.Name;
+		//  // I need to look in both the directory structure on disk for add-in
+		//  // pipeline components, as well as in the GAC for assemblies like
+		//  // System.dll, which I haven't pre-loaded into the ReflectionOnly
+		//  // loader context.
+		//  // LoadFrom respects publisher policy, but ReflectionOnlyLoadFrom doesn't,
+		//  // but that's OK.
+		//  // Do I have to look in the GAC _first_ to mimic behavior
+		//  // at runtime, which would respect policy when calling LoadFrom?
+		//  // The problem with that is I'll be looking in the GAC for assemblies
+		//  // that won't exist some portion of the time, meaning we have
+		//  // to throw and ---- FileNotFoundExceptions.  The debugging experience
+		//  // and performance are horrible.
+
+		//  String simpleName = assemblyRef.Substring(0, assemblyRef.IndexOf(','));
+		//  if (String.Equals(simpleName, "System.AddIn"))
+		//    return SystemAddInInReflectionOnlyContext;
+		//  if (String.Equals(simpleName, "System.AddIn.Contract"))
+		//    return SystemAddInContractsInReflectionOnlyContext;
+		//  String rootDir = Path.GetDirectoryName(Path.GetDirectoryName(_assemblyFileName));
+		//  if (_currentComponentType == PipelineComponentType.AddIn)
+		//    rootDir = Path.GetDirectoryName(rootDir);
+
+		//  List<string> dirsToLookIn = new List<string>();
+		//  switch (_currentComponentType)
+		//  {
+		//    case PipelineComponentType.HostAdapter:
+		//      // Look in contract directory.  For loading the HAV,
+		//      // we can't do that at discovery time since we don't know
+		//      // which directory contains the HAV.  This is why we're
+		//      // writing our own metadata parser in managed code.
+		//      // At activation time, the HAV should already be loaded
+		//      // within the host's AppDomain.
+		//      dirsToLookIn.Add(Path.Combine(rootDir, AddInStore.ContractsDirName));
+		//      break;
+
+		//    case PipelineComponentType.Contract:
+		//      break;
+
+		//    case PipelineComponentType.AddInAdapter:
+		//      // Look in contract directory and addin base directory.
+		//      dirsToLookIn.Add(Path.Combine(rootDir, AddInStore.ContractsDirName));
+		//      dirsToLookIn.Add(Path.Combine(rootDir, AddInStore.AddInBasesDirName));
+		//      break;
+
+		//    case PipelineComponentType.AddInBase:
+		//      // look for other assemblies in the same folder
+		//      dirsToLookIn.Add(Path.Combine(rootDir, AddInStore.AddInBasesDirName));
+		//      // @
+
+
+		//      break;
+
+		//    /*
+		//case PipelineComponentType.AddIn:
+		//    // Look in both the add-in's directory and the add-in base's
+		//    // directory.  We do the first by setting the app base for the AppDomain,
+		//    // but we may not be able to do that if the user created the appdomain.
+		//    dirsToLookIn.Add(Path.Combine(rootDir, AddInBasesDirName));
+		//    dirsToLookIn.Add(Path.GetDirectoryName(_assemblyFileName));
+		//    break;
+		//    */
+
+		//    default:
+		//      System.Diagnostics.Contracts.Contract.Assert(false, "Fell through switch in the inspection assembly resolve event!");
+		//      break;
+		//  }
+
+		//  List<string> potentialFileNames = new List<string>(dirsToLookIn.Count * 2);
+		//  foreach (String path in dirsToLookIn)
+		//  {
+		//    String simpleFileName = Path.Combine(path, simpleName);
+		//    String dllName = simpleFileName + ".dll";
+		//    if (File.Exists(dllName))
+		//      potentialFileNames.Add(dllName);
+		//    else if (File.Exists(simpleFileName + ".exe"))
+		//      potentialFileNames.Add(simpleFileName + ".exe");
+		//  }
+
+		//  foreach (String fileName in potentialFileNames)
+		//  {
+		//    try
+		//    {
+		//      Assembly a = Assembly.ReflectionOnlyLoadFrom(fileName);
+		//      // We should at least be comparing the public key token
+		//      // for the two assemblies here.  The version numbers may
+		//      // potentially be different, dependent on publisher policy.
+		//      if (Utils.AssemblyRefEqualsDef(assemblyRef, a.FullName))
+		//        return a;
+		//    }
+		//    catch (BadImageFormatException)
+		//    {
+		//    }
+		//  }
+
+		//  // Look in the GAC.  It may not be there, so we need to catch
+		//  // FileNotFoundException.
+		//  // As an optimization, don't probe in the GAC if the public
+		//  // key token is null, because by definition the assembly
+		//  // can't be in the GAC.
+		//  if (!assemblyRef.Contains("PublicKeyToken=null"))
+		//  {
+		//    try
+		//    {
+		//      return Assembly.ReflectionOnlyLoad(assemblyRef);
+		//    }
+		//    catch (FileNotFoundException) { }
+
+		//    try
+		//    {
+		//      // As a final effort, look in the GAC after appying loader policy.
+		//      // This lets us resolves references for assemblies built against an older version of the framework.
+		//      return Assembly.ReflectionOnlyLoad(AppDomain.CurrentDomain.ApplyPolicy(assemblyRef));
+		//    }
+		//    catch (FileNotFoundException) { }
+		//  }
+
+		//  //Console.WriteLine("Couldn't resolve assembly {0} while loading a {1}", simpleName, _currentComponentType);
+		//  return null;
+		//} 
 
 		public ConnectionDialog()
 		{
 			InitializeComponent();
-			AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += MyResolveEventHandler;
 		}
 
 		public ConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
 		{
+			AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += MyResolveEventHandler;
 			_isNewConnection = isNewConnection;
 			CxInfo = cxInfo;
 			DbProviderFactoryNames = (new[] {""}).Union(DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"])).Cast<string>().ToList();
@@ -285,9 +442,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
 			if (DialogResult.GetValueOrDefault() && !string.IsNullOrEmpty(CxInfo.DatabaseInfo.CustomCxString) && string.IsNullOrEmpty(providerComboBox.Text))
-				switch (MessageBox.Show("Database Provider has not been set!" + Environment.NewLine 
-					+	"This is required to execute SQL" + Environment.NewLine 
-					+ "Do you wish to close anyway?", "Do you wish to close?", MessageBoxButton.YesNo))
+				switch (MessageBox.Show("Database Provider has not been set!" + Environment.NewLine
+				                        + "This is required to execute SQL" + Environment.NewLine
+				                        + "Do you wish to close anyway?", "Do you wish to close?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						break;
@@ -333,13 +490,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			var dialog = new OpenFileDialog
 			             	{
-			             		Title = "Choose LLBL entity assembly",
+			             		Title = TitleChooseLLBLEntityAssembly,
 			             		DefaultExt = ".dll",
-			             		FileName = Path.GetFileName(CxInfo.CustomTypeInfo.CustomAssemblyPath)
+			             		FileName = CxInfo.CustomTypeInfo.CustomAssemblyPath,
+											Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
 			             	};
 
 			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
-				dialog.InitialDirectory = Path.GetDirectoryName(dialog.FileName);
+				dialog.InitialDirectory = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
 
 			if (dialog.ShowDialog() == true)
 			{
@@ -380,7 +538,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				return;
 			}
 
-			var result = (string) Dialogs.PickFromList("Choose Custom Type", customTypes);
+			var result = (string) Dialogs.PickFromList(TitleChooseCustomType, customTypes);
 			if (result != null)
 				SetCustomTypeName(CxInfo.CustomTypeInfo.CustomTypeName);
 		}
@@ -407,7 +565,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show(ex.Message,"Error obtaining custom types");
+				MessageBox.Show(ex.Message, "Error obtaining custom types");
 				BreakIntoDebugger();
 				return null;
 			}
@@ -435,15 +593,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					var dialog = new OpenFileDialog
 					             	{
-					             		Title = "Choose Data Access Adapter assembly",
 					             		DefaultExt = ".dll",
-					             		FileName = element.Value
+					             		FileName = element.Value,
+					             		Title = hl.TargetName.Equals(ElementNameFactoryAssembly) ? TitleChooseFactoryAssembly : TitleChooseDataAccessAdapterAssembly,
+					             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
 					             	};
-
+					if (File.Exists(element.Value))
+						dialog.InitialDirectory = Path.GetDirectoryName(element.Value);
 					if (dialog.ShowDialog() == true)
 					{
 						element.Value = dialog.FileName;
-						var dataAccessAdapterAssembly = Assembly.LoadFrom(dialog.FileName);
+						var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(dialog.FileName);
 						try
 						{
 							var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
@@ -467,14 +627,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static IEnumerable<string> GetDataAccessAdapterTypeNamesBothWays(IEnumerable<Type> types)
 		{
-			return types.GetInterfaceImplementersBothWays(typeof(IDataAccessAdapter)).Select(t => t.FullName);
+			return types.GetInterfaceImplementersBothWays(typeof (IDataAccessAdapter)).Select(t => t.FullName);
 		}
 
 		private void BrowseAppConfig(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
 			             	{
-			             		Title = "Choose application config file",
+			             		Title = TitleChooseApplicationConfigFile,
+											Filter = "Config files (*.config)|*.config|All files (*.*)|*.*",
 			             		DefaultExt = ".config",
 			             	};
 
@@ -503,7 +664,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				IEnumerable<string> customTypes;
 				try
 				{
-					var dataAccessAdapterAssembly = Assembly.LoadFrom(assemPath);
+					var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(assemPath);
 					var types = dataAccessAdapterAssembly.GetTypes();
 					customTypes = LLBLConnectionType == LLBLConnectionType.Adapter ? GetDataAccessAdapterTypeNamesBothWays(types) : types.Select(t => t.FullName).OrderBy(s => s);
 				}
@@ -550,32 +711,32 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				var factoryTypeName = GetDriverDataValue(CxInfo, ElementNameFactoryType);
 				var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
-				var factoryAdapterAssembly = Assembly.LoadFrom(factoryAssemblyPath);
+				var factoryAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(factoryAssemblyPath);
 				if (factoryAdapterAssembly == null)
-					throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
+					throw new ApplicationException("Factory assembly: " + factoryAssemblyPath + " could not be loaded!");
 				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
 				if (factoryType == null)
 				{
 					factoryAdapterAssembly.GetTypes();
-					throw new ApplicationException(string.Format("Adapter type: {0} could not be loaded from: {1}!", factoryTypeName, factoryAssemblyPath));
+					throw new ApplicationException(string.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName, factoryAssemblyPath));
 				}
 				var methodInfos = factoryType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
 				var validMethods = from m in methodInfos
 				                   let ps = m.GetParameters()
 				                   where ps.Length == 1
-													 where ps.Single().ParameterType == typeof(string) && m.ReturnType.Implements(typeof(IDataAccessAdapter))
+				                   where ps.Single().ParameterType == typeof (string) && m.ReturnType.Implements(typeof (IDataAccessAdapter))
 				                   select m;
 				var count = validMethods.Count();
 				if (count == 1)
 					CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, validMethods.Single().Name);
 				else
 				{
-					var result = (MethodInfo) Dialogs.PickFromList("Choose factory method", validMethods.ToArray());
+					var result = (MethodInfo) Dialogs.PickFromList(TitleChooseFactoryMethod, validMethods.ToArray());
 					if (result != null)
 						CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, result.Name);
 					else
 					{
-						Dialogs.PickFromList("An array of assemblies in this application domain.", AppDomain.CurrentDomain.GetAssemblies().OrderBy(a=>a.FullName).ToArray());
+						Dialogs.PickFromList("An array of assemblies in this application domain.", AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
 					}
 				}
 			}
@@ -585,7 +746,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 		}
 
-		[Conditional("DEBUG")]
+		[Conditional("DEBUGX")]
 		private static void BreakIntoDebugger()
 		{
 			Debugger.Break();
@@ -595,8 +756,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			var dialog = new OpenFileDialog
 			             	{
-			             		Title = "Choose extra assembly",
+			             		Title = TitleChooseExtraAssembly,
 			             		DefaultExt = ".dll",
+											Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*",
 			             		Multiselect = true
 			             	};
 
