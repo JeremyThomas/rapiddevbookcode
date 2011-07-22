@@ -22,6 +22,7 @@ using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Data.ConnectionUI;
 using Microsoft.Win32;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using Application = System.Windows.Forms.Application;
 
@@ -32,9 +33,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	/// </summary>
 	public partial class ConnectionDialog : INotifyPropertyChanged
 	{
-		private readonly bool _isNewConnection;
-		private bool _providerHasBeenSet;
-
 		/// <summary>
 		/// AdapterType
 		/// </summary>
@@ -61,182 +59,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public const string TitleChooseFactoryMethod = "Choose factory method";
 
 		public static readonly string AdditionalAssembliesToolTip = "The driver adds these assemblies to the ones LINQPad provides"
-		                                                            + Environment.NewLine + LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
-		                                                            + Environment.NewLine + "If you want any additional assemblies add them in here, with or with out a path.";
+		                                                            + Environment.NewLine +
+		                                                            LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
+		                                                            + Environment.NewLine +
+		                                                            "If you want any additional assemblies add them in here, with or with out a path.";
 
 		public static readonly string AdditionalNamespacesToolTip = "The driver adds these namespaces to the ones LINQPad provides"
-		                                                            + Environment.NewLine + LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
-		                                                            + "If you want any additional namespaces add them in here.";
+		                                                            + Environment.NewLine +
+		                                                            LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
+		                                                            +
+		                                                            "If you want any additional namespaces add them in here.";
 
-		public IConnectionInfo CxInfo { get; private set; }
+		private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[]
+		                                                                      	{
+		                                                                      		LLBLConnectionType.Adapter,
+		                                                                      		LLBLConnectionType.AdapterFactory
+		                                                                      	};
 
-		//static ConnectionDialog()
-		//{
-		//  AppDomain.CurrentDomain. ReflectionOnlyAssemblyResolve  += MyResolveEventHandler;
-		//}
-
-		private Assembly MyResolveEventHandler(object sender, ResolveEventArgs args)
-		{
-			var shortAssemblyName = new AssemblyName(args.Name).Name;
-			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
-			{
-				var directoryName = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
-				var path = Path.Combine(directoryName, shortAssemblyName) + ".dll";
-				if (File.Exists(path))
-					return Assembly.ReflectionOnlyLoadFrom(path);
-			}
-			//  // Look in the GAC.  It may not be there, so we need to catch
-			//  // FileNotFoundException.
-			//  // As an optimization, don't probe in the GAC if the public
-			//  // key token is null, because by definition the assembly
-			//  // can't be in the GAC.
-			if (!args.Name.Contains("PublicKeyToken=null"))
-			{
-				try
-				{
-					return Assembly.ReflectionOnlyLoad(args.Name);
-				}
-				catch (FileNotFoundException)
-				{
-				}
-
-				try
-				{
-					// As a final effort, look in the GAC after appying loader policy.
-					// This lets us resolves references for assemblies built against an older version of the framework.
-					return Assembly.ReflectionOnlyLoad(AppDomain.CurrentDomain.ApplyPolicy(args.Name));
-				}
-				catch (FileNotFoundException)
-				{
-				}
-			}
-			return null;
-		}
-
-		// Soon, this assembly resolve event won't be used during inspection.
-		// But we'll need this exact same code during activation.
-		//internal Assembly ResolveAssembly(Object sender, ResolveEventArgs args)
-		//{
-		//  String assemblyRef = args.Name;
-		//  // I need to look in both the directory structure on disk for add-in
-		//  // pipeline components, as well as in the GAC for assemblies like
-		//  // System.dll, which I haven't pre-loaded into the ReflectionOnly
-		//  // loader context.
-		//  // LoadFrom respects publisher policy, but ReflectionOnlyLoadFrom doesn't,
-		//  // but that's OK.
-		//  // Do I have to look in the GAC _first_ to mimic behavior
-		//  // at runtime, which would respect policy when calling LoadFrom?
-		//  // The problem with that is I'll be looking in the GAC for assemblies
-		//  // that won't exist some portion of the time, meaning we have
-		//  // to throw and ---- FileNotFoundExceptions.  The debugging experience
-		//  // and performance are horrible.
-
-		//  String simpleName = assemblyRef.Substring(0, assemblyRef.IndexOf(','));
-		//  if (String.Equals(simpleName, "System.AddIn"))
-		//    return SystemAddInInReflectionOnlyContext;
-		//  if (String.Equals(simpleName, "System.AddIn.Contract"))
-		//    return SystemAddInContractsInReflectionOnlyContext;
-		//  String rootDir = Path.GetDirectoryName(Path.GetDirectoryName(_assemblyFileName));
-		//  if (_currentComponentType == PipelineComponentType.AddIn)
-		//    rootDir = Path.GetDirectoryName(rootDir);
-
-		//  List<string> dirsToLookIn = new List<string>();
-		//  switch (_currentComponentType)
-		//  {
-		//    case PipelineComponentType.HostAdapter:
-		//      // Look in contract directory.  For loading the HAV,
-		//      // we can't do that at discovery time since we don't know
-		//      // which directory contains the HAV.  This is why we're
-		//      // writing our own metadata parser in managed code.
-		//      // At activation time, the HAV should already be loaded
-		//      // within the host's AppDomain.
-		//      dirsToLookIn.Add(Path.Combine(rootDir, AddInStore.ContractsDirName));
-		//      break;
-
-		//    case PipelineComponentType.Contract:
-		//      break;
-
-		//    case PipelineComponentType.AddInAdapter:
-		//      // Look in contract directory and addin base directory.
-		//      dirsToLookIn.Add(Path.Combine(rootDir, AddInStore.ContractsDirName));
-		//      dirsToLookIn.Add(Path.Combine(rootDir, AddInStore.AddInBasesDirName));
-		//      break;
-
-		//    case PipelineComponentType.AddInBase:
-		//      // look for other assemblies in the same folder
-		//      dirsToLookIn.Add(Path.Combine(rootDir, AddInStore.AddInBasesDirName));
-		//      // @
-
-
-		//      break;
-
-		//    /*
-		//case PipelineComponentType.AddIn:
-		//    // Look in both the add-in's directory and the add-in base's
-		//    // directory.  We do the first by setting the app base for the AppDomain,
-		//    // but we may not be able to do that if the user created the appdomain.
-		//    dirsToLookIn.Add(Path.Combine(rootDir, AddInBasesDirName));
-		//    dirsToLookIn.Add(Path.GetDirectoryName(_assemblyFileName));
-		//    break;
-		//    */
-
-		//    default:
-		//      System.Diagnostics.Contracts.Contract.Assert(false, "Fell through switch in the inspection assembly resolve event!");
-		//      break;
-		//  }
-
-		//  List<string> potentialFileNames = new List<string>(dirsToLookIn.Count * 2);
-		//  foreach (String path in dirsToLookIn)
-		//  {
-		//    String simpleFileName = Path.Combine(path, simpleName);
-		//    String dllName = simpleFileName + ".dll";
-		//    if (File.Exists(dllName))
-		//      potentialFileNames.Add(dllName);
-		//    else if (File.Exists(simpleFileName + ".exe"))
-		//      potentialFileNames.Add(simpleFileName + ".exe");
-		//  }
-
-		//  foreach (String fileName in potentialFileNames)
-		//  {
-		//    try
-		//    {
-		//      Assembly a = Assembly.ReflectionOnlyLoadFrom(fileName);
-		//      // We should at least be comparing the public key token
-		//      // for the two assemblies here.  The version numbers may
-		//      // potentially be different, dependent on publisher policy.
-		//      if (Utils.AssemblyRefEqualsDef(assemblyRef, a.FullName))
-		//        return a;
-		//    }
-		//    catch (BadImageFormatException)
-		//    {
-		//    }
-		//  }
-
-		//  // Look in the GAC.  It may not be there, so we need to catch
-		//  // FileNotFoundException.
-		//  // As an optimization, don't probe in the GAC if the public
-		//  // key token is null, because by definition the assembly
-		//  // can't be in the GAC.
-		//  if (!assemblyRef.Contains("PublicKeyToken=null"))
-		//  {
-		//    try
-		//    {
-		//      return Assembly.ReflectionOnlyLoad(assemblyRef);
-		//    }
-		//    catch (FileNotFoundException) { }
-
-		//    try
-		//    {
-		//      // As a final effort, look in the GAC after appying loader policy.
-		//      // This lets us resolves references for assemblies built against an older version of the framework.
-		//      return Assembly.ReflectionOnlyLoad(AppDomain.CurrentDomain.ApplyPolicy(assemblyRef));
-		//    }
-		//    catch (FileNotFoundException) { }
-		//  }
-
-		//  //Console.WriteLine("Couldn't resolve assembly {0} while loading a {1}", simpleName, _currentComponentType);
-		//  return null;
-		//} 
+		private readonly bool _isNewConnection;
+		private ObservableCollection<ValueTypeWrapper<string>> _additionalAssemblies;
+		private bool _providerHasBeenSet;
 
 		public ConnectionDialog()
 		{
@@ -246,11 +88,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public ConnectionDialog(IConnectionInfo cxInfo, bool isNewConnection)
 		{
 			AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += MyResolveEventHandler;
+			AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 			_isNewConnection = isNewConnection;
 			CxInfo = cxInfo;
-			DbProviderFactoryNames = (new[] {""}).Union(DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"])).Cast<string>().ToList();
+			DbProviderFactoryNames =
+				(new[] {""}).Union(DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"])).
+					Cast<string>().ToList();
 
-			AdditionalNamespaces = new ObservableCollection<ValueTypeWrapper<string>>(Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding());
+			AdditionalNamespaces =
+				new ObservableCollection<ValueTypeWrapper<string>>(
+					Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding());
 			if (isNewConnection)
 			{
 				CreateDriverDataElements(cxInfo);
@@ -269,6 +116,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			DataContext = this;
 			InitializeComponent();
 		}
+
+		public IConnectionInfo CxInfo { get; private set; }
 
 		/// <summary>
 		/// Gets the CustomTypeNameVisibility.
@@ -315,7 +164,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			get { return _providerHasBeenSet || !_isNewConnection ? CxInfo.DatabaseInfo.Provider : ""; }
 			set
 			{
-				if (CxInfo.DatabaseInfo.Provider != value || string.Equals(value, "System.Data.SqlClient", StringComparison.InvariantCultureIgnoreCase))
+				if (CxInfo.DatabaseInfo.Provider != value ||
+				    string.Equals(value, "System.Data.SqlClient", StringComparison.InvariantCultureIgnoreCase))
 				{
 					_providerHasBeenSet = value != "";
 					CxInfo.DatabaseInfo.Provider = value;
@@ -328,12 +178,69 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public ObservableCollection<ValueTypeWrapper<string>> AdditionalNamespaces { get; set; }
 
-		private ObservableCollection<ValueTypeWrapper<string>> _additionalAssemblies;
-		private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[] {LLBLConnectionType.Adapter, LLBLConnectionType.AdapterFactory};
-
 		public ObservableCollection<ValueTypeWrapper<string>> AdditionalAssemblies
 		{
-			get { return _additionalAssemblies ?? (_additionalAssemblies = new ObservableCollection<ValueTypeWrapper<string>>(Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding())); }
+			get
+			{
+				return _additionalAssemblies ??
+				       (_additionalAssemblies =
+				        new ObservableCollection<ValueTypeWrapper<string>>(
+				        	Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding()));
+			}
+		}
+
+		private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+		{
+			var shortAssemblyName = new AssemblyName(args.Name).Name;
+			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
+			{
+				var directoryName = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var path = Path.Combine(directoryName, shortAssemblyName) + ".dll";
+				if (File.Exists(path))
+					return Assembly.LoadFrom(path);
+			}
+			return null;
+		}
+
+		private Assembly MyResolveEventHandler(object sender, ResolveEventArgs args)
+		{
+			var shortAssemblyName = new AssemblyName(args.Name).Name;
+			var firstOrDefault = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == args.Name);
+			if (firstOrDefault != null)
+				return Assembly.ReflectionOnlyLoad(firstOrDefault.Location);
+			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
+			{
+				var directoryName = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var path = Path.Combine(directoryName, shortAssemblyName) + ".dll";
+				if (File.Exists(path))
+					return Assembly.ReflectionOnlyLoad(path);
+			}
+			//  // Look in the GAC.  It may not be there, so we need to catch
+			//  // FileNotFoundException.
+			//  // As an optimization, don't probe in the GAC if the public
+			//  // key token is null, because by definition the assembly
+			//  // can't be in the GAC.
+			if (!args.Name.Contains("PublicKeyToken=null"))
+			{
+				try
+				{
+					return Assembly.ReflectionOnlyLoad(args.Name);
+				}
+				catch (FileNotFoundException)
+				{
+				}
+
+				try
+				{
+					// As a final effort, look in the GAC after appying loader policy.
+					// This lets us resolves references for assemblies built against an older version of the framework.
+					return Assembly.ReflectionOnlyLoad(AppDomain.CurrentDomain.ApplyPolicy(args.Name));
+				}
+				catch (FileNotFoundException)
+				{
+				}
+			}
+			return null;
 		}
 
 		private static void CreateDriverDataElements(IConnectionInfo cxInfo)
@@ -441,7 +348,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
-			if (DialogResult.GetValueOrDefault() && !string.IsNullOrEmpty(CxInfo.DatabaseInfo.CustomCxString) && string.IsNullOrEmpty(providerComboBox.Text))
+			if (DialogResult.GetValueOrDefault() && !string.IsNullOrEmpty(CxInfo.DatabaseInfo.CustomCxString) &&
+			    string.IsNullOrEmpty(providerComboBox.Text))
 				switch (MessageBox.Show("Database Provider has not been set!" + Environment.NewLine
 				                        + "This is required to execute SQL" + Environment.NewLine
 				                        + "Do you wish to close anyway?", "Do you wish to close?", MessageBoxButton.YesNo))
@@ -493,7 +401,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			             		Title = TitleChooseLLBLEntityAssembly,
 			             		DefaultExt = ".dll",
 			             		FileName = CxInfo.CustomTypeInfo.CustomAssemblyPath,
-											Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
+			             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
 			             	};
 
 			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
@@ -519,13 +427,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void SetCustomTypeName(string customType)
 		{
 			CxInfo.CustomTypeInfo.CustomTypeName = customType;
-			LLBLConnectionType = IsSelfServicing(CxInfo) ? LLBLConnectionType == LLBLConnectionType.AdapterFactory ? LLBLConnectionType : LLBLConnectionType.Adapter : LLBLConnectionType.SelfServicing;
+			LLBLConnectionType = IsSelfServicing(CxInfo)
+			                     	? LLBLConnectionType == LLBLConnectionType.AdapterFactory
+			                     	  	? LLBLConnectionType
+			                     	  	: LLBLConnectionType.Adapter
+			                     	: LLBLConnectionType.SelfServicing;
 			OnPropertyChanged("ConnectionTypeVisibility");
 		}
 
 		public static bool IsSelfServicing(IConnectionInfo connectionInfo)
 		{
-			var selfServicingEntities = connectionInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase");
+			var selfServicingEntities =
+				connectionInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.EntityBase");
 			return selfServicingEntities.IsNullOrEmpty();
 		}
 
@@ -545,16 +458,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private string[] GetLinqMetaDataTypes()
 		{
-			var assemPath = CxInfo.CustomTypeInfo.CustomAssemblyPath;
-			if (assemPath.Length == 0)
+			if (CxInfo.CustomTypeInfo.CustomAssemblyPath.Length == 0)
 			{
 				MessageBox.Show("First enter a path to an assembly containing LLBL entities.");
 				return null;
 			}
 
-			if (!File.Exists(assemPath))
+			if (!File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
 			{
-				MessageBox.Show("File '" + assemPath + "' does not exist.");
+				MessageBox.Show("File '" + CxInfo.CustomTypeInfo.CustomAssemblyPath + "' does not exist.");
 				return null;
 			}
 
@@ -573,12 +485,24 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				customTypes = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly("SD.LLBLGen.Pro.ORMSupportClasses.IElementCreatorCore");
 				if (customTypes.Length == 0)
-					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData or IElementCreatorCore.", "Wrong Assembly chosen");
+					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData or IElementCreatorCore.",
+					                "Wrong Assembly chosen");
 				else
 				{
-					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData but there is an implementation of IElementCreatorCore.");
+					MessageBox.Show(
+						"There are no public types in that assembly that implement ILinqMetaData but there is an implementation of IElementCreatorCore.");
 				}
-				return customTypes;
+			}
+			if (customTypes.Length == 1)
+			{
+				var loadFrom = Assembly.LoadFile(CxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var type = loadFrom.GetType(customTypes[0]);
+				if (!(typeof (ILinqMetaData).IsAssignableFrom(type) || typeof (IElementCreatorCore).IsAssignableFrom(type)))
+				{
+					var @interface = type.GetInterface(typeof (ILinqMetaData));
+					MessageBox.Show(string.Format("A {0} was found but it was not from {1}", type.FullName,
+					                              Constants.LLBLGenNameVersion));
+				}
 			}
 			return customTypes;
 		}
@@ -595,7 +519,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					             	{
 					             		DefaultExt = ".dll",
 					             		FileName = element.Value,
-					             		Title = hl.TargetName.Equals(ElementNameFactoryAssembly) ? TitleChooseFactoryAssembly : TitleChooseDataAccessAdapterAssembly,
+					             		Title =
+					             			hl.TargetName.Equals(ElementNameFactoryAssembly)
+					             				? TitleChooseFactoryAssembly
+					             				: TitleChooseDataAccessAdapterAssembly,
 					             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
 					             	};
 					if (File.Exists(element.Value))
@@ -603,7 +530,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					if (dialog.ShowDialog() == true)
 					{
 						element.Value = dialog.FileName;
-						var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(dialog.FileName);
+						var dataAccessAdapterAssembly = Assembly.LoadFile(dialog.FileName);
 						try
 						{
 							var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
@@ -635,7 +562,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var dialog = new OpenFileDialog
 			             	{
 			             		Title = TitleChooseApplicationConfigFile,
-											Filter = "Config files (*.config)|*.config|All files (*.*)|*.*",
+			             		Filter = "Config files (*.config)|*.config|All files (*.*)|*.*",
 			             		DefaultExt = ".config",
 			             	};
 
@@ -664,9 +591,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				IEnumerable<string> customTypes;
 				try
 				{
-					var dataAccessAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(assemPath);
+					var dataAccessAdapterAssembly = Assembly.LoadFrom(assemPath);
 					var types = dataAccessAdapterAssembly.GetTypes();
-					customTypes = LLBLConnectionType == LLBLConnectionType.Adapter ? GetDataAccessAdapterTypeNamesBothWays(types) : types.Select(t => t.FullName).OrderBy(s => s);
+					customTypes = LLBLConnectionType == LLBLConnectionType.Adapter
+					              	? GetDataAccessAdapterTypeNamesBothWays(types)
+					              	: types.Select(t => t.FullName).OrderBy(s => s);
 				}
 				catch (ReflectionTypeLoadException ex)
 				{
@@ -674,7 +603,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					if (!customTypes.Any())
 					{
 						MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-						                ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine), "Error obtaining adapter types");
+						                ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine),
+						                "Error obtaining adapter types");
 						BreakIntoDebugger();
 						return;
 					}
@@ -711,20 +641,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				var factoryTypeName = GetDriverDataValue(CxInfo, ElementNameFactoryType);
 				var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
-				var factoryAdapterAssembly = Assembly.ReflectionOnlyLoadFrom(factoryAssemblyPath);
+				var factoryAdapterAssembly = Assembly.LoadFrom(factoryAssemblyPath);
 				if (factoryAdapterAssembly == null)
 					throw new ApplicationException("Factory assembly: " + factoryAssemblyPath + " could not be loaded!");
 				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
 				if (factoryType == null)
 				{
 					factoryAdapterAssembly.GetTypes();
-					throw new ApplicationException(string.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName, factoryAssemblyPath));
+					throw new ApplicationException(string.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName,
+					                                             factoryAssemblyPath));
 				}
 				var methodInfos = factoryType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
 				var validMethods = from m in methodInfos
 				                   let ps = m.GetParameters()
 				                   where ps.Length == 1
-				                   where ps.Single().ParameterType == typeof (string) && m.ReturnType.Implements(typeof (IDataAccessAdapter))
+				                   where
+				                   	ps.Single().ParameterType == typeof (string) &&
+				                   	m.ReturnType.Implements(typeof (IDataAccessAdapter))
 				                   select m;
 				var count = validMethods.Count();
 				if (count == 1)
@@ -736,7 +669,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 						CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, result.Name);
 					else
 					{
-						Dialogs.PickFromList("An array of assemblies in this application domain.", AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
+						Dialogs.PickFromList("An array of assemblies in this application domain.",
+						                     AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
 					}
 				}
 			}
@@ -758,13 +692,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			             	{
 			             		Title = TitleChooseExtraAssembly,
 			             		DefaultExt = ".dll",
-											Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*",
+			             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*",
 			             		Multiselect = true
 			             	};
 
 			if (dialog.ShowDialog() == true)
 				foreach (var fileName in dialog.FileNames
-					.Where(fileName => !LLBLGenStaticDriver.AdditionalAssemblies.Contains(Path.GetFileName(fileName))).CreateStringWrapperForBinding()
+					.Where(fileName => !LLBLGenStaticDriver.AdditionalAssemblies.Contains(Path.GetFileName(fileName))).
+					CreateStringWrapperForBinding()
 					.Where(fileName => !AdditionalAssemblies.Contains(fileName))
 					)
 				{
@@ -775,7 +710,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void AddQuerySpec(object sender, RoutedEventArgs e)
 		{
 			ValueTypeWrapper<string>.Add(AdditionalAssemblies, "SD.LLBLGen.Pro.QuerySpec.dll");
-			ValueTypeWrapper<string>.Add(AdditionalNamespaces, "SD.LLBLGen.Pro.QuerySpec", "SD.LLBLGen.Pro.QuerySpec.SelfServicing", "SD.LLBLGen.Pro.QuerySpec.Adapter");
+			ValueTypeWrapper<string>.Add(AdditionalNamespaces, "SD.LLBLGen.Pro.QuerySpec",
+			                             "SD.LLBLGen.Pro.QuerySpec.SelfServicing", "SD.LLBLGen.Pro.QuerySpec.Adapter");
 		}
 
 		private void DataBaseConnectionDialog(object sender, RoutedEventArgs e)
@@ -812,20 +748,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			AdditionalNamespaces.Clear();
 			AdditionalAssemblies.Clear();
 		}
-
-		#region Implementation of INotifyPropertyChanged
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		protected void OnPropertyChanged(string propertyName)
-		{
-			if (PropertyChanged != null)
-			{
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-
-		#endregion
 
 		private void txtAssemblyPath_TextChanged(object sender, TextChangedEventArgs e)
 		{
@@ -866,6 +788,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					Application.OnThreadException(ex);
 				}
 		}
+
+		#region Implementation of INotifyPropertyChanged
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected void OnPropertyChanged(string propertyName)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+
+		#endregion
 	}
 
 	public enum LLBLConnectionType
