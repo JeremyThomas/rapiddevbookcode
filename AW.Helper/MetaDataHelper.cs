@@ -112,9 +112,9 @@ namespace AW.Helper
 
 		public static IEnumerable<Type> GetInterfaceImplementersBothWays(this IEnumerable<Type> types, Type interfaceType)
 		{
-			var implementers = FilterByClassIsAssignableTo(types, interfaceType);
+			var implementers = types.FilterByClassIsAssignableTo(interfaceType);
 			if (!implementers.Any())
-				implementers = FilterByImplements(types, interfaceType.FullName);
+				implementers = types.FilterByImplements(interfaceType.FullName);
 			return implementers;
 		}
 

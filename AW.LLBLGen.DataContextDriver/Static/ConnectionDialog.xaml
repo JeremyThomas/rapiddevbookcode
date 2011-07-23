@@ -131,7 +131,7 @@
 
 						<DockPanel>
 							<Label DockPanel.Dock="Right" Padding="1">
-								<Hyperlink Click="ChooseAdapter" TargetName="FactoryType" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=TargetName}">Choose...</Hyperlink>
+								<Hyperlink Click="ChooseAdapterOrFactoryClass" TargetName="FactoryType" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=TargetName}">Choose...</Hyperlink>
 							</Label>
 							<Label Padding="0,0,0,1" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Content}" Name="lblAdapterFactoryType">Full name of type containing Adapter Factory method:</Label>
 						</DockPanel>
@@ -156,7 +156,7 @@
 						<TextBox Name="textBoxDataAccessAdapterAssemblyPath" Text="{Binding CxInfo.DriverData.Element[AdapterAssembly].Value}" ToolTip="{Binding ElementName=lblAdapterAssembly, Path=Content}" />
 						<DockPanel>
 							<Label DockPanel.Dock="Right" Padding="1" >
-								<Hyperlink Click="ChooseAdapter" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=TargetName}"
+								<Hyperlink Click="ChooseAdapterOrFactoryClass" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=TargetName}"
 													 TargetName="{x:Static Static:ConnectionDialog.ElementNameAdaptertype}">Choose...</Hyperlink>
 							</Label>
 							<Label Padding="0,0,0,1" ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=Content}" Name="lblAdapterType">Full name of Adapter type:</Label>
