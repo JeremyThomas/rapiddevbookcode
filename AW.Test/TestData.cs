@@ -13,7 +13,7 @@ namespace AW.Tests
 {
 	public static class TestData
 	{
-		public const int NumFieldPropeeties = 36;
+		public const int NumFieldProperties = 36;
 
 		public static readonly List<string> ThreeStrings = new List<string> { "s1", "s2", "s3" };
 
@@ -141,6 +141,21 @@ namespace AW.Tests
 			get { return ThreeStrings.Distinct(); }
 		}
 
+		static readonly Dictionary<Type, StaticMembersDynamicWrapper> TypeLookup = new Dictionary<Type, StaticMembersDynamicWrapper>();
+
+		public static dynamic StaticMembersProxy(this Type type)
+		{
+
+			StaticMembersDynamicWrapper smdw;
+
+			if (!TypeLookup.TryGetValue(type, out smdw))
+
+				TypeLookup[type] = smdw = new StaticMembersDynamicWrapper(type);
+
+			return smdw;
+
+		}
+
 	}
 
 	[Serializable]
@@ -246,5 +261,7 @@ namespace AW.Tests
 			list.AddRange(GenerateList().Cast<SerializableBaseClass>());
 			return list;
 		}
+
+
 	}
 }

@@ -31,8 +31,8 @@ namespace AW.Helper
 		public static IEnumerable<Type> GetDescendants(Type ancestorType, IEnumerable<Type> exportedTypes)
 		{
 			return from type in exportedTypes
-						 where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
-						 select type;
+			       where type.IsPublic && !type.IsAbstract && type.IsSubclassOf(ancestorType)
+			       select type;
 		}
 
 		public static IEnumerable<Type> GetAllLoadedDescendance(Type ancestorType)
@@ -81,6 +81,41 @@ namespace AW.Helper
 			return (from ancestorType in ancestorTypes
 			        where ancestorType.IsAssignableFrom(type)
 			        select type).Count() > 0;
+		}
+
+		public static Type GetInterface(this Type type, Type interfaceType)
+		{
+			return type.GetInterface(interfaceType.FullName);
+		}
+
+		public static bool Implements(this Type type, Type interfaceType)
+		{
+			return type.Implements(interfaceType.FullName);
+		}
+
+		public static bool Implements(this Type type, string interfaceName)
+		{
+			return type.GetInterface(interfaceName) != null;
+		}
+
+		public static IEnumerable<Type> FilterByImplements(this IEnumerable<Type> types, string interfaceName)
+		{
+			return from type in types
+						 where type.Implements(interfaceName) && type.IsClass
+			       select type;
+		}
+		
+		public static IEnumerable<Type> FilterByClassIsAssignableTo(this IEnumerable<Type> types, Type typeIsAssignableTo)
+		{
+			return typeIsAssignableTo.GetAssignable(types).Where(t=>t.IsClass);
+		}
+
+		public static IEnumerable<Type> GetInterfaceImplementersBothWays(this IEnumerable<Type> types, Type interfaceType)
+		{
+			var implementers = types.FilterByClassIsAssignableTo(interfaceType);
+			if (!implementers.Any())
+				implementers = types.FilterByImplements(interfaceType.FullName);
+			return implementers;
 		}
 
 		public static Type GetTypeParameterOfGenericType(Type type)
@@ -425,9 +460,7 @@ namespace AW.Helper
 
 		private static IEnumerable<T> GetTypesAttributes<T>(Type type) where T : Attribute
 		{
-			return type.GetCustomAttributes(typeof(T), true).Cast<T>();
+			return type.GetCustomAttributes(typeof (T), true).Cast<T>();
 		}
-
-
 	}
 }
