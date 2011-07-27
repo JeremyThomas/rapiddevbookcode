@@ -120,7 +120,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9E62DAD6-C
 		Lib\Test\Moq.pdb = Lib\Test\Moq.pdb
 		Lib\Test\Moq.xml = Lib\Test\Moq.xml
 		Lib\Test\NMock2.dll = Lib\Test\NMock2.dll
-		Lib\nunit.framework.dll = Lib\nunit.framework.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{8D111638-4952-4BB9-8853-16EB6D1BB1B9}"
@@ -152,9 +151,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.SqlServer", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.Oracle", "Northwind\DAL\Oracle (ODP.NET)\Northwind.DAL.Oracle.csproj", "{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView.Test", "ObjectListView.Test\ObjectListView.Test.csproj", "{D978DA92-C5B6-4670-98E4-17390BBCCF08}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 20
+		SccNumberOfProjects = 21
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -229,6 +230,10 @@ Global
 		SccProjectTopLevelParentUniqueName19 = AW\u0020and\u0020DataContextDriver.sln
 		SccProjectName19 = Northwind/DAL/Oracle\u0020(ODP.NET)
 		SccLocalPath19 = Northwind\\DAL\\Oracle\u0020(ODP.NET)
+		SccProjectUniqueName20 = ObjectListView.Test\\ObjectListView.Test.csproj
+		SccProjectTopLevelParentUniqueName20 = AW\u0020and\u0020DataContextDriver.sln
+		SccProjectName20 = ObjectListView.Test
+		SccLocalPath20 = ObjectListView.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW and DataContextDriver.vsmdi
@@ -476,6 +481,18 @@ Global
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release|x86.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -496,6 +513,7 @@ Global
 		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
 		{E779CBD7-1CCE-4796-AE12-00AB56A8A815} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
 		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
