@@ -88,7 +88,7 @@
 						<Label HorizontalAlignment="Right"
 									 DockPanel.Dock="Right"
 									 Padding="1">
-							<Hyperlink Click="DataBaseConnectionDialog" ToolTip="Database connection string Editor" Name="hlDataBaseConnectionDialog">Edit...</Hyperlink>
+							<Hyperlink Click="DataBaseConnectionDialog" ToolTip="Launch editor for framework provided database connection strings" Name="hlDataBaseConnectionDialog">Edit...</Hyperlink>
 						</Label>
 					</DockPanel>
 					<TextBox Name="textBoxDatabaseConnectionString"
