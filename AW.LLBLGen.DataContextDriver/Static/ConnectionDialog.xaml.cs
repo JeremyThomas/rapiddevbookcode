@@ -70,8 +70,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public static readonly string AdditionalNamespacesToolTip = "The driver adds these namespaces to the ones LINQPad provides"
 		                                                            + Environment.NewLine +
 		                                                            LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
-		                                                            +
-		                                                            "If you want any additional namespaces add them in here.";
+		                                                            + "If you want any additional namespaces add them in here.";
 
 		private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[]
 		                                                                      	{
@@ -562,8 +561,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					                "Wrong Assembly chosen");
 				else
 				{
-					MessageBox.Show(
-						"There are no public types in that assembly that implement ILinqMetaData but there is an implementation of IElementCreatorCore.");
+					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData but there is an implementation of IElementCreatorCore.");
 				}
 			}
 			if (customTypes.Length == 1)
@@ -597,18 +595,25 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					if (dialog.ShowDialog() == true)
 					{
 						element.Value = dialog.FileName;
-						var dataAccessAdapterAssembly = Assembly.LoadFile(dialog.FileName);
-						try
+						if (hl.TargetName.Contains("Type"))
 						{
-							var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
-							if (customTypes.Count() == 1)
-								CxInfo.DriverData.SetElementValue(hl.TargetName.Replace("Assembly", "Type"), customTypes.First());
+							var dataAccessAdapterAssembly = Assembly.LoadFile(dialog.FileName);
+							try
+							{
+								var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
+								if (customTypes.Count() == 1)
+									CxInfo.DriverData.SetElementValue(hl.TargetName.Replace("Assembly", "Type"), customTypes.First());
+							}
+							catch (Exception ex)
+							{
+								BreakIntoDebugger();
+								GeneralHelper.TraceOut(ex.Message);
+								return;
+							}
 						}
-						catch (Exception ex)
+						else
 						{
-							BreakIntoDebugger();
-							GeneralHelper.TraceOut(ex.Message);
-							return;
+							ChooseAdapterOrFactoryClass(sender, e);
 						}
 					}
 				}
@@ -640,13 +645,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				var loaderException = ex.LoaderExceptions[0];
 				if (loaderException.Message.Contains(LlblgenProNameSpace) && !loaderException.Message.Contains(Constants.LLBLVersion))
-					MessageBox.Show(string.Format("The assembly of {0} is not for {1}", dataAccessAdapterAssembly.Location, Constants.LLBLGenNameVersion));
+					MessageBox.Show(string.Format("The assembly {0} is not for {1}", dataAccessAdapterAssembly.Location, Constants.LLBLGenNameVersion));
 				else
 					//Dialogs.PickFromList("An array of assemblies in this application domain.",
 					//             AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
 					MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-													ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine),
-													"Error obtaining adapter types");
+					                ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine),
+					                "Error obtaining adapter types");
 			}
 			return Enumerable.Empty<string>();
 		}
@@ -707,7 +712,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					var loaderException = ex.LoaderExceptions[0];
 					if (loaderException.Message.Contains(LlblgenProNameSpace) && !loaderException.Message.Contains(Constants.LLBLVersion))
-						MessageBox.Show(string.Format("The assembly of {0} is not for {1}", assemPath, Constants.LLBLGenNameVersion));
+						MessageBox.Show(string.Format("The assembly {0} is not for {1}", assemPath, Constants.LLBLGenNameVersion));
 					else
 						//Dialogs.PickFromList("An array of assemblies in this application domain.",
 						//             AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
@@ -757,52 +762,55 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			try
 			{
 				var factoryTypeName = GetDriverDataValue(CxInfo, ElementNameFactoryType);
-				var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
-				var factoryAdapterAssembly = Assembly.LoadFile(factoryAssemblyPath);
-				if (factoryAdapterAssembly == null)
-					throw new ApplicationException("Factory assembly: " + factoryAssemblyPath + " could not be loaded!");
-				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
-				if (factoryType == null)
+				if (!string.IsNullOrEmpty(factoryTypeName))
 				{
-					factoryAdapterAssembly.GetTypes();
-					throw new ApplicationException(string.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName,
-					                                             factoryAssemblyPath));
-				}
-				var methodInfos = factoryType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
-				var validMethods = from m in methodInfos
-				                   let ps = m.GetParameters()
-				                   where
-				                   	ps.Length == 1 && ps.Single().ParameterType == typeof (string) &&
-				                   	m.ReturnType.Implements(IdataAccessAdapterType)
-				                   select m;
-				var count = validMethods.Count();
-				if (count == 1)
-				{
-					var methodInfo = validMethods.Single();
-					if (IdataAccessAdapterType.IsAssignableFrom(methodInfo.ReturnType))
+					var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
+					var factoryAdapterAssembly = Assembly.LoadFile(factoryAssemblyPath);
+					if (factoryAdapterAssembly == null)
+						throw new ApplicationException("Factory assembly: " + factoryAssemblyPath + " could not be loaded!");
+					var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
+					if (factoryType == null)
 					{
-						CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, methodInfo.Name);
+						factoryAdapterAssembly.GetTypes();
+						throw new ApplicationException(string.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName,
+						                                             factoryAssemblyPath));
+					}
+					var methodInfos = factoryType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+					var validMethods = from m in methodInfos
+					                   let ps = m.GetParameters()
+					                   where
+					                   	ps.Length == 1 && ps.Single().ParameterType == typeof (string) &&
+					                   	m.ReturnType.Implements(IdataAccessAdapterType)
+					                   select m;
+					var count = validMethods.Count();
+					if (count == 1)
+					{
+						var methodInfo = validMethods.Single();
+						if (IdataAccessAdapterType.IsAssignableFrom(methodInfo.ReturnType))
+						{
+							CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, methodInfo.Name);
+						}
+						else
+						{
+							var assembly = methodInfo.ReturnType.GetInterface(IdataAccessAdapterType.FullName).Assembly;
+							var assemblyName = new AssemblyName(assembly.FullName);
+							MessageBox.Show(
+								string.Format("A method with a return type of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
+								              IdataAccessAdapterType.FullName, methodInfo.Name, Constants.LLBLGenNameVersion,
+								              assemblyName.Version));
+							CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, "");
+						}
 					}
 					else
 					{
-						var assembly = methodInfo.ReturnType.GetInterface(IdataAccessAdapterType.FullName).Assembly;
-						var assemblyName = new AssemblyName(assembly.FullName);
-						MessageBox.Show(
-							string.Format("A method with a return type of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
-							              IdataAccessAdapterType.FullName, methodInfo.Name, Constants.LLBLGenNameVersion,
-							              assemblyName.Version));
-						CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, "");
-					}
-				}
-				else
-				{
-					var result = (MethodInfo) Dialogs.PickFromList(TitleChooseFactoryMethod, validMethods.ToArray());
-					if (result != null)
-						CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, result.Name);
-					else
-					{
-						Dialogs.PickFromList("An array of assemblies in this application domain.",
-						                     AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
+						var result = (MethodInfo) Dialogs.PickFromList(TitleChooseFactoryMethod, validMethods.ToArray());
+						if (result != null)
+							CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, result.Name);
+						else
+						{
+							Dialogs.PickFromList("An array of assemblies in this application domain.",
+							                     AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
+						}
 					}
 				}
 			}
