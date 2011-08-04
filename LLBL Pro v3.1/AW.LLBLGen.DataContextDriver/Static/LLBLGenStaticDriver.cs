@@ -41,7 +41,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		                                                       		"AW.Helper",
 		                                                       		"AW.Helper.LLBL",
 		                                                       		"AW.Winforms.Helpers.DataEditor",
-		                                                       		"AW.Winforms.Helpers.LLBL"
+		                                                       		"AW.Winforms.Helpers.LLBL",
+																															"AW.LLBLGen.DataContextDriver.Static"
 		                                                       	};
 
 		#endregion
@@ -239,6 +240,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		#region Initialization
 
+		private static Dictionary<IElementCreatorCore, DataAccessAdapterBase> adapters = new Dictionary<IElementCreatorCore, DataAccessAdapterBase>();
+
 		private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)
 		{
 			var actualConnectionStringField = commonDaoBaseType.GetField("ActualConnectionString");
@@ -256,7 +259,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void InitializeAdapter(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
 		{
 			var linqMetaData = context as ILinqMetaData;
-			if (linqMetaData == null)
+			if (linqMetaData == null && !(context is IElementCreatorCore))
 			{
 				var type = context.GetType();
 				type = type.BaseType ?? type;
@@ -267,19 +270,35 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var adapter = GetAdapter(cxInfo);
 				if (adapter != null)
 				{
-					var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
-					adapterToUseProperty.SetValue(linqMetaData, adapter, null);
+					if (linqMetaData == null)
+						adapters.Add(context as IElementCreatorCore, adapter);
+					else
+					{
+						var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
+						adapterToUseProperty.SetValue(linqMetaData, adapter, null);
+					}
 					if (string.IsNullOrEmpty(adapter.ConnectionString))
 						if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
 						{
-							var firstConnectionString = (from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
-							                             select connectionStringSetting).FirstOrDefault();
+							ConfigurationManager.OpenExeConfiguration(cxInfo.AppConfigPath);
+							var firstConnectionString = ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>().FirstOrDefault();
 							if (firstConnectionString != null)
 								adapter.ConnectionString = firstConnectionString.ConnectionString;
 						}
 					SetSQLTranslationWriter(adapter, executionManager);
 				}
 			}
+		}
+
+		public static DataAccessAdapterBase GetAdapter(IElementCreatorCore elementCreator)
+		{
+			return adapters[elementCreator];
+		}
+
+		public static DataAccessAdapterBase GetAdapter(ILinqMetaData linqMetaData)
+		{
+			var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
+			return adapterToUseProperty.GetValue(linqMetaData, null) as DataAccessAdapterBase;
 		}
 
 		private static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo)
