@@ -36,6 +36,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\AW.LLBLGen.DataContextDriver\AW.LLBLGen.DataContextDriver.3.1.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="LINQPad">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
@@ -111,6 +117,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\AW.LLBLGen.DataContextDriver\AW.LLBLGen.DataContextDriver.3.1.snk">
+      <Link>AW.LLBLGen.DataContextDriver.3.1.snk</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
