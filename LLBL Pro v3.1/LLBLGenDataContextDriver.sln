@@ -11,7 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2C
 		Lib\CSScriptLibrary.dll = Lib\CSScriptLibrary.dll
 		Lib\CSScriptLibrary.pdb = Lib\CSScriptLibrary.pdb
 		Lib\CSScriptLibrary.xml = Lib\CSScriptLibrary.xml
-		Lib\nunit.framework.dll = Lib\nunit.framework.dll
 		Lib\sliver.Windows.Forms.StateBrowser.dll = Lib\sliver.Windows.Forms.StateBrowser.dll
 	EndProjectSection
 EndProject
@@ -59,8 +58,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hawkeye", "Hawkeye", "{A951
 		Lib\ACorns.PropertyGridExtender.dll = Lib\ACorns.PropertyGridExtender.dll
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Helper", "AW.Helper\AW.Helper.csproj", "{FFC5B55E-9157-4CE6-81BD-E593E4C08422}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Winforms.Helpers", "AW.Winforms.Helpers\AW.Winforms.Helpers.csproj", "{D8041984-1823-4672-9B6E-3E99AB6A3A7A}"
@@ -73,33 +70,56 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.DataContextDrive
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView", "ObjectListView\ObjectListView.csproj", "{3A62F36D-4E53-4532-B9EF-3B303A578B5E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{773449BB-0C90-42BA-BB2A-04DFE8B08013}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView.Test", "ObjectListView.Test\ObjectListView.Test.csproj", "{D978DA92-C5B6-4670-98E4-17390BBCCF08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packages", "Packages", "{4FDD2CF0-D9CD-404F-B16D-F96175AFE3D0}"
+	ProjectSection(SolutionItems) = preProject
+		packages\repositories.config = packages\repositories.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{0EB81684-888D-4720-BC6A-A12873684EAE}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\WPF\WPFToolkit.Design.dll = Lib\WPF\WPFToolkit.Design.dll
+		Lib\WPF\WPFToolkit.Design.pdb = Lib\WPF\WPFToolkit.Design.pdb
+		Lib\WPF\WPFToolkit.dll = Lib\WPF\WPFToolkit.dll
+		Lib\WPF\WPFToolkit.pdb = Lib\WPF\WPFToolkit.pdb
+		Lib\WPF\WPFToolkit.VisualStudio.Design.dll = Lib\WPF\WPFToolkit.VisualStudio.Design.dll
+		Lib\WPF\WPFToolkit.VisualStudio.Design.pdb = Lib\WPF\WPFToolkit.VisualStudio.Design.pdb
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = DynamicQuery\\DynamicQuery.csproj
-		SccProjectName1 = DynamicQuery
-		SccLocalPath1 = DynamicQuery
-		SccProjectUniqueName2 = AW.Helper\\AW.Helper.csproj
-		SccProjectName2 = AW.Helper
-		SccLocalPath2 = AW.Helper
-		SccProjectUniqueName3 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
-		SccProjectName3 = AW.Winforms.Helpers
-		SccLocalPath3 = AW.Winforms.Helpers
-		SccProjectUniqueName4 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
-		SccProjectName4 = AW.Helper.LLBL
-		SccLocalPath4 = AW.Helper.LLBL
-		SccProjectUniqueName5 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
-		SccProjectName5 = AW.Winforms.Helpers.LLBL
-		SccLocalPath5 = AW.Winforms.Helpers.LLBL
-		SccProjectUniqueName6 = AW.LLBLGen.DataContextDriver\\AW.LLBLGen.DataContextDriver.csproj
-		SccProjectName6 = AW.LLBLGen.DataContextDriver
-		SccLocalPath6 = AW.LLBLGen.DataContextDriver
-		SccProjectUniqueName7 = ObjectListView\\ObjectListView.csproj
-		SccProjectName7 = ObjectListView
-		SccLocalPath7 = ObjectListView
+		SccProjectUniqueName1 = AW.Helper\\AW.Helper.csproj
+		SccProjectTopLevelParentUniqueName1 = LLBLGenDataContextDriver.sln
+		SccProjectName1 = AW.Helper
+		SccLocalPath1 = AW.Helper
+		SccProjectUniqueName2 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
+		SccProjectTopLevelParentUniqueName2 = LLBLGenDataContextDriver.sln
+		SccProjectName2 = AW.Winforms.Helpers
+		SccLocalPath2 = AW.Winforms.Helpers
+		SccProjectUniqueName3 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
+		SccProjectTopLevelParentUniqueName3 = LLBLGenDataContextDriver.sln
+		SccProjectName3 = AW.Helper.LLBL
+		SccLocalPath3 = AW.Helper.LLBL
+		SccProjectUniqueName4 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
+		SccProjectTopLevelParentUniqueName4 = LLBLGenDataContextDriver.sln
+		SccProjectName4 = AW.Winforms.Helpers.LLBL
+		SccLocalPath4 = AW.Winforms.Helpers.LLBL
+		SccProjectUniqueName5 = AW.LLBLGen.DataContextDriver\\AW.LLBLGen.DataContextDriver.csproj
+		SccProjectName5 = AW.LLBLGen.DataContextDriver
+		SccLocalPath5 = AW.LLBLGen.DataContextDriver
+		SccProjectUniqueName6 = ObjectListView\\ObjectListView.csproj
+		SccProjectName6 = ObjectListView
+		SccLocalPath6 = ObjectListView
+		SccProjectUniqueName7 = ObjectListView.Test\\ObjectListView.Test.csproj
+		SccProjectName7 = ObjectListView.Test
+		SccLocalPath7 = ObjectListView.Test
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
@@ -108,14 +128,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release - Test|Any CPU.Build.0 = Release|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -164,6 +176,14 @@ Global
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release - Test|Any CPU.Build.0 = Release - Test|Any CPU
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -171,6 +191,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
+		{0EB81684-888D-4720-BC6A-A12873684EAE} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
+		{A67A2102-BA0E-48B3-9EF8-831F72B47160} = {773449BB-0C90-42BA-BB2A-04DFE8B08013}
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {773449BB-0C90-42BA-BB2A-04DFE8B08013}
+		{FFC5B55E-9157-4CE6-81BD-E593E4C08422} = {773449BB-0C90-42BA-BB2A-04DFE8B08013}
+		{7919C746-73F3-4279-A53B-CC6C08F42318} = {773449BB-0C90-42BA-BB2A-04DFE8B08013}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 

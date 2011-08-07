@@ -4,8 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
 		Ancillary\AdventureWorks.snk = Ancillary\AdventureWorks.snk
-		Ancillary\AW.Data.lgp = Ancillary\AW.Data.lgp
-		Ancillary\AW.Data.Plural.lgp = Ancillary\AW.Data.Plural.lgp
+		Ancillary\AW.llblgenproj = Ancillary\AW.llblgenproj
 		AW.vsmdi = AW.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
@@ -52,8 +51,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Data", "AW.Data\AW.Data.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Tests", "AW.Test\AW.Tests.csproj", "{80418BDD-8FF2-4F01-8782-AD22A496AF79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Helper", "AW.Helper\AW.Helper.csproj", "{FFC5B55E-9157-4CE6-81BD-E593E4C08422}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Winforms.Helpers", "AW.Winforms.Helpers\AW.Winforms.Helpers.csproj", "{D8041984-1823-4672-9B6E-3E99AB6A3A7A}"
@@ -68,42 +65,54 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.DebugVisualizers.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView", "ObjectListView\ObjectListView.csproj", "{3A62F36D-4E53-4532-B9EF-3B303A578B5E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{58076FE5-6982-4C92-A968-12DD9CE85BE6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd Party", "3rd Party", "{42C8D572-EEFF-496A-9D7E-D357651D2611}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView.Test", "ObjectListView.Test\ObjectListView.Test.csproj", "{D978DA92-C5B6-4670-98E4-17390BBCCF08}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 11
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = AW.Data\\AW.Data.csproj
 		SccProjectName1 = AW.Data
 		SccLocalPath1 = AW.Data
-		SccProjectUniqueName2 = DynamicQuery\\DynamicQuery.csproj
-		SccProjectName2 = DynamicQuery
-		SccLocalPath2 = DynamicQuery
-		SccProjectUniqueName3 = AW.Helper\\AW.Helper.csproj
-		SccProjectName3 = AW.Helper
-		SccLocalPath3 = AW.Helper
-		SccProjectUniqueName4 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
-		SccProjectName4 = AW.Winforms.Helpers
-		SccLocalPath4 = AW.Winforms.Helpers
-		SccProjectUniqueName5 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
-		SccProjectName5 = AW.Helper.LLBL
-		SccLocalPath5 = AW.Helper.LLBL
-		SccProjectUniqueName6 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
-		SccProjectName6 = AW.Winforms.Helpers.LLBL
-		SccLocalPath6 = AW.Winforms.Helpers.LLBL
-		SccProjectUniqueName7 = AW.DebugVisualizers\\AW.DebugVisualizers.csproj
-		SccProjectName7 = AW.DebugVisualizers
-		SccLocalPath7 = AW.DebugVisualizers
-		SccProjectUniqueName8 = AW.DebugVisualizers.Tests\\AW.DebugVisualizers.Tests.csproj
-		SccProjectName8 = AW.DebugVisualizers.Tests
-		SccLocalPath8 = AW.DebugVisualizers.Tests
-		SccProjectUniqueName9 = AW.Test\\AW.Tests.csproj
-		SccProjectName9 = AW.Test
-		SccLocalPath9 = AW.Test
-		SccProjectUniqueName10 = ObjectListView\\ObjectListView.csproj
-		SccProjectName10 = ObjectListView
-		SccLocalPath10 = ObjectListView
+		SccProjectUniqueName2 = AW.Helper\\AW.Helper.csproj
+		SccProjectTopLevelParentUniqueName2 = AW.DebugVisualizersWithTests.sln
+		SccProjectName2 = AW.Helper
+		SccLocalPath2 = AW.Helper
+		SccProjectUniqueName3 = AW.Winforms.Helpers\\AW.Winforms.Helpers.csproj
+		SccProjectTopLevelParentUniqueName3 = AW.DebugVisualizersWithTests.sln
+		SccProjectName3 = AW.Winforms.Helpers
+		SccLocalPath3 = AW.Winforms.Helpers
+		SccProjectUniqueName4 = AW.Helper.LLBL\\AW.Helper.LLBL.csproj
+		SccProjectTopLevelParentUniqueName4 = AW.DebugVisualizersWithTests.sln
+		SccProjectName4 = AW.Helper.LLBL
+		SccLocalPath4 = AW.Helper.LLBL
+		SccProjectUniqueName5 = AW.Winforms.Helpers.LLBL\\AW.Winforms.Helpers.LLBL.csproj
+		SccProjectTopLevelParentUniqueName5 = AW.DebugVisualizersWithTests.sln
+		SccProjectName5 = AW.Winforms.Helpers.LLBL
+		SccLocalPath5 = AW.Winforms.Helpers.LLBL
+		SccProjectUniqueName6 = AW.DebugVisualizers\\AW.DebugVisualizers.csproj
+		SccProjectName6 = AW.DebugVisualizers
+		SccLocalPath6 = AW.DebugVisualizers
+		SccProjectUniqueName7 = AW.DebugVisualizers.Tests\\AW.DebugVisualizers.Tests.csproj
+		SccProjectName7 = AW.DebugVisualizers.Tests
+		SccLocalPath7 = AW.DebugVisualizers.Tests
+		SccProjectUniqueName8 = AW.Test\\AW.Tests.csproj
+		SccProjectName8 = AW.Test
+		SccLocalPath8 = AW.Test
+		SccProjectUniqueName9 = ObjectListView\\ObjectListView.csproj
+		SccProjectTopLevelParentUniqueName9 = AW.DebugVisualizersWithTests.sln
+		SccProjectName9 = ObjectListView
+		SccLocalPath9 = ObjectListView
+		SccProjectUniqueName10 = ObjectListView.Test\\ObjectListView.Test.csproj
+		SccProjectTopLevelParentUniqueName10 = AW.DebugVisualizersWithTests.sln
+		SccProjectName10 = ObjectListView.Test
+		SccLocalPath10 = ObjectListView.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW.vsmdi
@@ -130,14 +139,6 @@ Global
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Release - Test|Any CPU.Build.0 = Release|Any CPU
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release - Test|Any CPU.Build.0 = Release|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F285CEB0-4108-440C-AD94-1C1A7C159D7C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -194,6 +195,14 @@ Global
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release - Test|Any CPU.Build.0 = Release - Test|Any CPU
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -201,6 +210,12 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
+		{7919C746-73F3-4279-A53B-CC6C08F42318} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
+		{A67A2102-BA0E-48B3-9EF8-831F72B47160} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
+		{FFC5B55E-9157-4CE6-81BD-E593E4C08422} = {58076FE5-6982-4C92-A968-12DD9CE85BE6}
+		{3A62F36D-4E53-4532-B9EF-3B303A578B5E} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 

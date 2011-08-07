@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -41,7 +40,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		                                                       		"AW.Helper",
 		                                                       		"AW.Helper.LLBL",
 		                                                       		"AW.Winforms.Helpers.DataEditor",
-		                                                       		"AW.Winforms.Helpers.LLBL"
+		                                                       		"AW.Winforms.Helpers.LLBL",
+		                                                       		"AW.LLBLGen.DataContextDriver.Static"
 		                                                       	};
 
 		#endregion
@@ -226,6 +226,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 		}
 
+		public override void TearDownContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager, object[] constructorArguments)
+		{
+			base.TearDownContext(cxInfo, context, executionManager, constructorArguments);
+			var dataAccessAdapterBase = GetAdapter(context);
+			if (dataAccessAdapterBase == null) return;
+			dataAccessAdapterBase.Dispose();
+			_mostRecentAdapter = null;
+		}
+
 		// Return the objects with which to populate the Schema Explorer by reflecting over customType.
 
 		// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
@@ -242,21 +251,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)
 		{
 			var actualConnectionStringField = commonDaoBaseType.GetField("ActualConnectionString");
-#if DEBUG
-			var actualConnectionString = Convert.ToString(actualConnectionStringField.GetValue(context));
-			GeneralHelper.DebugOut(actualConnectionString);
-#endif
-			actualConnectionStringField.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
-#if DEBUG
-			GeneralHelper.DebugOut(Convert.ToString(actualConnectionStringField.GetValue(context)));
-#endif
+			//var actualConnectionString = actualConnectionStringField.GetValue(context) as string;
+			if (!string.IsNullOrEmpty(cxInfo.DatabaseInfo.CustomCxString)) //CustomCxString overrides config value
+				actualConnectionStringField.SetValue(context, cxInfo.DatabaseInfo.CustomCxString);
 			SetSQLTranslationWriter(commonDaoBaseType, executionManager);
 		}
 
 		private void InitializeAdapter(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
 		{
 			var linqMetaData = context as ILinqMetaData;
-			if (linqMetaData == null)
+			if (linqMetaData == null && !(context is IElementCreatorCore))
 			{
 				var type = context.GetType();
 				type = type.BaseType ?? type;
@@ -267,19 +271,55 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var adapter = GetAdapter(cxInfo);
 				if (adapter != null)
 				{
-					var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
-					adapterToUseProperty.SetValue(linqMetaData, adapter, null);
-					if (string.IsNullOrEmpty(adapter.ConnectionString))
-						if (!string.IsNullOrEmpty(cxInfo.AppConfigPath))
-						{
-							var firstConnectionString = (from connectionStringSetting in ConfigurationManager.ConnectionStrings.Cast<ConnectionStringSettings>()
-							                             select connectionStringSetting).FirstOrDefault();
-							if (firstConnectionString != null)
-								adapter.ConnectionString = firstConnectionString.ConnectionString;
-						}
+					if (linqMetaData == null)
+						_mostRecentAdapter = adapter;
+					else
+					{
+						var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
+						adapterToUseProperty.SetValue(linqMetaData, adapter, null);
+					}
 					SetSQLTranslationWriter(adapter, executionManager);
 				}
 			}
+		}
+
+		private static DataAccessAdapterBase GetAdapter(object context)
+		{
+			var linqMetaData = context as ILinqMetaData;
+			if (linqMetaData == null)
+			{
+				var elementCreator = context as IElementCreatorCore;
+				if (elementCreator != null)
+					return GetAdapter(elementCreator);
+			}
+			else
+				return GetAdapter(linqMetaData);
+			return null;
+		}
+
+		private static DataAccessAdapterBase _mostRecentAdapter;
+
+		/// <summary>
+		/// Gets the adapter.
+		/// </summary>
+		/// <param name="elementCreator">The element creator (ignored).</param>
+		/// <returns></returns>
+		public static DataAccessAdapterBase GetAdapter(IElementCreatorCore elementCreator)
+		{
+			return _mostRecentAdapter;
+		}
+
+		/// <summary>
+		/// Gets the adapter from the ILinqMetaData.
+		/// </summary>
+		/// <param name="linqMetaData">The linq meta data.</param>
+		/// <returns></returns>
+		public static DataAccessAdapterBase GetAdapter(ILinqMetaData linqMetaData)
+		{
+			var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
+			if (adapterToUseProperty != null)
+				return adapterToUseProperty.GetValue(linqMetaData, null) as DataAccessAdapterBase;
+			return null;
 		}
 
 		private static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo)
@@ -513,7 +553,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				                       		DragText = field.Name,
 				                       		//SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
 				                       		//SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
-				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, MetaDataHelper.GetFieldPropertyDescriptor(propertyDescriptors, field.Name))
+				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.GetFieldPropertyDescriptor(field.Name))
 				                       	});
 			}
 
@@ -719,7 +759,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		/// </remarks>
 		/// <param name = "type">The type.</param>
 		/// <returns></returns>
-		public static IEnumerable<PropertyDescriptor> GetPropertiesToShowInSchema(Type type)
+		internal static IEnumerable<PropertyDescriptor> GetPropertiesToShowInSchema(Type type)
 		{
 			return ListBindingHelper.GetListItemProperties(type).AsEnumerable().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
 		}

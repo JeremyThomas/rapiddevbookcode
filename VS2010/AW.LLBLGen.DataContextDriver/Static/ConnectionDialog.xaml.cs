@@ -594,15 +594,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 						dialog.InitialDirectory = Path.GetDirectoryName(element.Value);
 					if (dialog.ShowDialog() == true)
 					{
-						element.Value = dialog.FileName;
+						element.Value = dialog.FileName;							
+						var typeName=hl.TargetName.Replace("Assembly", "Type");
 						if (hl.TargetName.Contains("Type"))
 						{
+
 							var dataAccessAdapterAssembly = Assembly.LoadFile(dialog.FileName);
 							try
 							{
 								var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
 								if (customTypes.Count() == 1)
-									CxInfo.DriverData.SetElementValue(hl.TargetName.Replace("Assembly", "Type"), customTypes.First());
+									CxInfo.DriverData.SetElementValue(typeName, customTypes.First());
 							}
 							catch (Exception ex)
 							{
@@ -613,7 +615,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 						}
 						else
 						{
+							var orig = hl.TargetName;
+							hl.TargetName = typeName;
 							ChooseAdapterOrFactoryClass(sender, e);
+							hl.TargetName = orig;
 						}
 					}
 				}

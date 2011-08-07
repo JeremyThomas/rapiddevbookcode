@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using AW.LLBLGen.DataContextDriver;
 
@@ -11,8 +12,10 @@ using AW.LLBLGen.DataContextDriver;
 [assembly: AssemblyProduct(Constants.AssemblyProduct)]
 [assembly: AssemblyCompany(Constants.AssemblyCompany)]
 [assembly: AssemblyCopyright(Constants.AssemblyCopyright)]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: InternalsVisibleTo("AW.LLBLGen.DataContextDriver.Tests, PublicKey=00240000048000009400000006020000002400005253413100040000010001007d800709f8676f"
+															+ "e5986fc7818b30ce8693b45184b69b1cfb4b311b0fb90d5852c11d7cff4e7b6e68af070ee5cfc5"
+															+ "bd70d92e236eb771f2729a2844f63474868ef1fbbc2e55d784240a0d360e7a706fb2a68eaf6fc2"
+															+ "7effb4a7a5666fe41e363bc0c61aa23840f57cc71f3048da0a94d300429e23951bb4fb5a0a766b4dd9eaa5")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
