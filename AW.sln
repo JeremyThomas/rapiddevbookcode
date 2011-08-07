@@ -4,8 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
 		Ancillary\AdventureWorks.snk = Ancillary\AdventureWorks.snk
-		Ancillary\AW.Data.lgp = Ancillary\AW.Data.lgp
-		Ancillary\AW.Data.Plural.lgp = Ancillary\AW.Data.Plural.lgp
+		Ancillary\AW.llblgenproj = Ancillary\AW.llblgenproj
+		Ancillary\AW.llblgenproj.layout = Ancillary\AW.llblgenproj.layout
 		AW1.vsmdi = AW1.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
@@ -114,9 +114,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.SqlServer", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.Oracle", "Northwind\DAL\Oracle (ODP.NET)\Northwind.DAL.Oracle.csproj", "{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView.Test", "ObjectListView.Test\ObjectListView.Test.csproj", "{D978DA92-C5B6-4670-98E4-17390BBCCF08}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 16
+		SccNumberOfProjects = 17
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -175,6 +177,10 @@ Global
 		SccProjectTopLevelParentUniqueName15 = AW.sln
 		SccProjectName15 = Northwind/DAL/Oracle\u0020(ODP.NET)
 		SccLocalPath15 = Northwind\\DAL\\Oracle\u0020(ODP.NET)
+		SccProjectUniqueName16 = ObjectListView.Test\\ObjectListView.Test.csproj
+		SccProjectTopLevelParentUniqueName16 = AW.sln
+		SccProjectName16 = ObjectListView.Test
+		SccLocalPath16 = ObjectListView.Test
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW1.vsmdi
@@ -306,6 +312,14 @@ Global
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release - Test|Any CPU.Build.0 = Release|Any CPU
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -320,6 +334,7 @@ Global
 		{3A62F36D-4E53-4532-B9EF-3B303A578B5E} = {2717A56C-13C5-4D15-97AE-F23E7D751ECA}
 		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B} = {2717A56C-13C5-4D15-97AE-F23E7D751ECA}
 		{E779CBD7-1CCE-4796-AE12-00AB56A8A815} = {2717A56C-13C5-4D15-97AE-F23E7D751ECA}
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08} = {2717A56C-13C5-4D15-97AE-F23E7D751ECA}
 		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {8FA92823-3099-4836-8A00-60210F133781}
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {8FA92823-3099-4836-8A00-60210F133781}
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45} = {8FA92823-3099-4836-8A00-60210F133781}
