@@ -42,10 +42,10 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AW.Data.CollectionClasses.BillOfMaterialCollection	_billOfMaterials;
-		private bool	_alwaysFetchBillOfMaterials, _alreadyFetchedBillOfMaterials;
-		private AW.Data.CollectionClasses.BillOfMaterialCollection	_billOfMaterials_;
-		private bool	_alwaysFetchBillOfMaterials_, _alreadyFetchedBillOfMaterials_;
+		private AW.Data.CollectionClasses.BillOfMaterialCollection	_billOfComponentMaterials;
+		private bool	_alwaysFetchBillOfComponentMaterials, _alreadyFetchedBillOfComponentMaterials;
+		private AW.Data.CollectionClasses.BillOfMaterialCollection	_billOfAssemblyMaterials;
+		private bool	_alwaysFetchBillOfAssemblyMaterials, _alreadyFetchedBillOfAssemblyMaterials;
 		private AW.Data.CollectionClasses.ProductCostHistoryCollection	_productCostHistories;
 		private bool	_alwaysFetchProductCostHistories, _alreadyFetchedProductCostHistories;
 		private AW.Data.CollectionClasses.ProductDocumentCollection	_productDocuments;
@@ -74,10 +74,10 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchProductModel, _alreadyFetchedProductModel, _productModelReturnsNewIfNotFound;
 		private ProductSubcategoryEntity _productSubcategory;
 		private bool	_alwaysFetchProductSubcategory, _alreadyFetchedProductSubcategory, _productSubcategoryReturnsNewIfNotFound;
-		private UnitMeasureEntity _unitMeasure;
-		private bool	_alwaysFetchUnitMeasure, _alreadyFetchedUnitMeasure, _unitMeasureReturnsNewIfNotFound;
-		private UnitMeasureEntity _unitMeasure_;
-		private bool	_alwaysFetchUnitMeasure_, _alreadyFetchedUnitMeasure_, _unitMeasure_ReturnsNewIfNotFound;
+		private UnitMeasureEntity _sizeUnitMeasure;
+		private bool	_alwaysFetchSizeUnitMeasure, _alreadyFetchedSizeUnitMeasure, _sizeUnitMeasureReturnsNewIfNotFound;
+		private UnitMeasureEntity _weightUnitMeasure;
+		private bool	_alwaysFetchWeightUnitMeasure, _alreadyFetchedWeightUnitMeasure, _weightUnitMeasureReturnsNewIfNotFound;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -94,14 +94,14 @@ namespace AW.Data.EntityClasses
 			public static readonly string ProductModel = "ProductModel";
 			/// <summary>Member name ProductSubcategory</summary>
 			public static readonly string ProductSubcategory = "ProductSubcategory";
-			/// <summary>Member name UnitMeasure</summary>
-			public static readonly string UnitMeasure = "UnitMeasure";
-			/// <summary>Member name UnitMeasure_</summary>
-			public static readonly string UnitMeasure_ = "UnitMeasure_";
-			/// <summary>Member name BillOfMaterials</summary>
-			public static readonly string BillOfMaterials = "BillOfMaterials";
-			/// <summary>Member name BillOfMaterials_</summary>
-			public static readonly string BillOfMaterials_ = "BillOfMaterials_";
+			/// <summary>Member name SizeUnitMeasure</summary>
+			public static readonly string SizeUnitMeasure = "SizeUnitMeasure";
+			/// <summary>Member name WeightUnitMeasure</summary>
+			public static readonly string WeightUnitMeasure = "WeightUnitMeasure";
+			/// <summary>Member name BillOfComponentMaterials</summary>
+			public static readonly string BillOfComponentMaterials = "BillOfComponentMaterials";
+			/// <summary>Member name BillOfAssemblyMaterials</summary>
+			public static readonly string BillOfAssemblyMaterials = "BillOfAssemblyMaterials";
 			/// <summary>Member name ProductCostHistories</summary>
 			public static readonly string ProductCostHistories = "ProductCostHistories";
 			/// <summary>Member name ProductDocuments</summary>
@@ -169,13 +169,13 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected ProductEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_billOfMaterials = (AW.Data.CollectionClasses.BillOfMaterialCollection)info.GetValue("_billOfMaterials", typeof(AW.Data.CollectionClasses.BillOfMaterialCollection));
-			_alwaysFetchBillOfMaterials = info.GetBoolean("_alwaysFetchBillOfMaterials");
-			_alreadyFetchedBillOfMaterials = info.GetBoolean("_alreadyFetchedBillOfMaterials");
+			_billOfComponentMaterials = (AW.Data.CollectionClasses.BillOfMaterialCollection)info.GetValue("_billOfComponentMaterials", typeof(AW.Data.CollectionClasses.BillOfMaterialCollection));
+			_alwaysFetchBillOfComponentMaterials = info.GetBoolean("_alwaysFetchBillOfComponentMaterials");
+			_alreadyFetchedBillOfComponentMaterials = info.GetBoolean("_alreadyFetchedBillOfComponentMaterials");
 
-			_billOfMaterials_ = (AW.Data.CollectionClasses.BillOfMaterialCollection)info.GetValue("_billOfMaterials_", typeof(AW.Data.CollectionClasses.BillOfMaterialCollection));
-			_alwaysFetchBillOfMaterials_ = info.GetBoolean("_alwaysFetchBillOfMaterials_");
-			_alreadyFetchedBillOfMaterials_ = info.GetBoolean("_alreadyFetchedBillOfMaterials_");
+			_billOfAssemblyMaterials = (AW.Data.CollectionClasses.BillOfMaterialCollection)info.GetValue("_billOfAssemblyMaterials", typeof(AW.Data.CollectionClasses.BillOfMaterialCollection));
+			_alwaysFetchBillOfAssemblyMaterials = info.GetBoolean("_alwaysFetchBillOfAssemblyMaterials");
+			_alreadyFetchedBillOfAssemblyMaterials = info.GetBoolean("_alreadyFetchedBillOfAssemblyMaterials");
 
 			_productCostHistories = (AW.Data.CollectionClasses.ProductCostHistoryCollection)info.GetValue("_productCostHistories", typeof(AW.Data.CollectionClasses.ProductCostHistoryCollection));
 			_alwaysFetchProductCostHistories = info.GetBoolean("_alwaysFetchProductCostHistories");
@@ -242,23 +242,23 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchProductSubcategory = info.GetBoolean("_alwaysFetchProductSubcategory");
 			_alreadyFetchedProductSubcategory = info.GetBoolean("_alreadyFetchedProductSubcategory");
 
-			_unitMeasure = (UnitMeasureEntity)info.GetValue("_unitMeasure", typeof(UnitMeasureEntity));
-			if(_unitMeasure!=null)
+			_sizeUnitMeasure = (UnitMeasureEntity)info.GetValue("_sizeUnitMeasure", typeof(UnitMeasureEntity));
+			if(_sizeUnitMeasure!=null)
 			{
-				_unitMeasure.AfterSave+=new EventHandler(OnEntityAfterSave);
+				_sizeUnitMeasure.AfterSave+=new EventHandler(OnEntityAfterSave);
 			}
-			_unitMeasureReturnsNewIfNotFound = info.GetBoolean("_unitMeasureReturnsNewIfNotFound");
-			_alwaysFetchUnitMeasure = info.GetBoolean("_alwaysFetchUnitMeasure");
-			_alreadyFetchedUnitMeasure = info.GetBoolean("_alreadyFetchedUnitMeasure");
+			_sizeUnitMeasureReturnsNewIfNotFound = info.GetBoolean("_sizeUnitMeasureReturnsNewIfNotFound");
+			_alwaysFetchSizeUnitMeasure = info.GetBoolean("_alwaysFetchSizeUnitMeasure");
+			_alreadyFetchedSizeUnitMeasure = info.GetBoolean("_alreadyFetchedSizeUnitMeasure");
 
-			_unitMeasure_ = (UnitMeasureEntity)info.GetValue("_unitMeasure_", typeof(UnitMeasureEntity));
-			if(_unitMeasure_!=null)
+			_weightUnitMeasure = (UnitMeasureEntity)info.GetValue("_weightUnitMeasure", typeof(UnitMeasureEntity));
+			if(_weightUnitMeasure!=null)
 			{
-				_unitMeasure_.AfterSave+=new EventHandler(OnEntityAfterSave);
+				_weightUnitMeasure.AfterSave+=new EventHandler(OnEntityAfterSave);
 			}
-			_unitMeasure_ReturnsNewIfNotFound = info.GetBoolean("_unitMeasure_ReturnsNewIfNotFound");
-			_alwaysFetchUnitMeasure_ = info.GetBoolean("_alwaysFetchUnitMeasure_");
-			_alreadyFetchedUnitMeasure_ = info.GetBoolean("_alreadyFetchedUnitMeasure_");
+			_weightUnitMeasureReturnsNewIfNotFound = info.GetBoolean("_weightUnitMeasureReturnsNewIfNotFound");
+			_alwaysFetchWeightUnitMeasure = info.GetBoolean("_alwaysFetchWeightUnitMeasure");
+			_alreadyFetchedWeightUnitMeasure = info.GetBoolean("_alreadyFetchedWeightUnitMeasure");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -280,12 +280,12 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedProductSubcategory = false;
 					break;
 				case ProductFieldIndex.SizeUnitMeasureCode:
-					DesetupSyncUnitMeasure(true, false);
-					_alreadyFetchedUnitMeasure = false;
+					DesetupSyncSizeUnitMeasure(true, false);
+					_alreadyFetchedSizeUnitMeasure = false;
 					break;
 				case ProductFieldIndex.WeightUnitMeasureCode:
-					DesetupSyncUnitMeasure_(true, false);
-					_alreadyFetchedUnitMeasure_ = false;
+					DesetupSyncWeightUnitMeasure(true, false);
+					_alreadyFetchedWeightUnitMeasure = false;
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -296,8 +296,8 @@ namespace AW.Data.EntityClasses
 		/// <summary> Will perform post-ReadXml actions</summary>
 		protected override void PostReadXmlFixups()
 		{
-			_alreadyFetchedBillOfMaterials = (_billOfMaterials.Count > 0);
-			_alreadyFetchedBillOfMaterials_ = (_billOfMaterials_.Count > 0);
+			_alreadyFetchedBillOfComponentMaterials = (_billOfComponentMaterials.Count > 0);
+			_alreadyFetchedBillOfAssemblyMaterials = (_billOfAssemblyMaterials.Count > 0);
 			_alreadyFetchedProductCostHistories = (_productCostHistories.Count > 0);
 			_alreadyFetchedProductDocuments = (_productDocuments.Count > 0);
 			_alreadyFetchedProductInventories = (_productInventories.Count > 0);
@@ -312,8 +312,8 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedSpecialOfferProducts = (_specialOfferProducts.Count > 0);
 			_alreadyFetchedProductModel = (_productModel != null);
 			_alreadyFetchedProductSubcategory = (_productSubcategory != null);
-			_alreadyFetchedUnitMeasure = (_unitMeasure != null);
-			_alreadyFetchedUnitMeasure_ = (_unitMeasure_ != null);
+			_alreadyFetchedSizeUnitMeasure = (_sizeUnitMeasure != null);
+			_alreadyFetchedWeightUnitMeasure = (_weightUnitMeasure != null);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -338,16 +338,16 @@ namespace AW.Data.EntityClasses
 				case "ProductSubcategory":
 					toReturn.Add(Relations.ProductSubcategoryEntityUsingProductSubcategoryID);
 					break;
-				case "UnitMeasure":
+				case "SizeUnitMeasure":
 					toReturn.Add(Relations.UnitMeasureEntityUsingSizeUnitMeasureCode);
 					break;
-				case "UnitMeasure_":
+				case "WeightUnitMeasure":
 					toReturn.Add(Relations.UnitMeasureEntityUsingWeightUnitMeasureCode);
 					break;
-				case "BillOfMaterials":
+				case "BillOfComponentMaterials":
 					toReturn.Add(Relations.BillOfMaterialEntityUsingComponentID);
 					break;
-				case "BillOfMaterials_":
+				case "BillOfAssemblyMaterials":
 					toReturn.Add(Relations.BillOfMaterialEntityUsingProductAssemblyID);
 					break;
 				case "ProductCostHistories":
@@ -400,12 +400,12 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		protected override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_billOfMaterials", (!this.MarkedForDeletion?_billOfMaterials:null));
-			info.AddValue("_alwaysFetchBillOfMaterials", _alwaysFetchBillOfMaterials);
-			info.AddValue("_alreadyFetchedBillOfMaterials", _alreadyFetchedBillOfMaterials);
-			info.AddValue("_billOfMaterials_", (!this.MarkedForDeletion?_billOfMaterials_:null));
-			info.AddValue("_alwaysFetchBillOfMaterials_", _alwaysFetchBillOfMaterials_);
-			info.AddValue("_alreadyFetchedBillOfMaterials_", _alreadyFetchedBillOfMaterials_);
+			info.AddValue("_billOfComponentMaterials", (!this.MarkedForDeletion?_billOfComponentMaterials:null));
+			info.AddValue("_alwaysFetchBillOfComponentMaterials", _alwaysFetchBillOfComponentMaterials);
+			info.AddValue("_alreadyFetchedBillOfComponentMaterials", _alreadyFetchedBillOfComponentMaterials);
+			info.AddValue("_billOfAssemblyMaterials", (!this.MarkedForDeletion?_billOfAssemblyMaterials:null));
+			info.AddValue("_alwaysFetchBillOfAssemblyMaterials", _alwaysFetchBillOfAssemblyMaterials);
+			info.AddValue("_alreadyFetchedBillOfAssemblyMaterials", _alreadyFetchedBillOfAssemblyMaterials);
 			info.AddValue("_productCostHistories", (!this.MarkedForDeletion?_productCostHistories:null));
 			info.AddValue("_alwaysFetchProductCostHistories", _alwaysFetchProductCostHistories);
 			info.AddValue("_alreadyFetchedProductCostHistories", _alreadyFetchedProductCostHistories);
@@ -450,14 +450,14 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_productSubcategoryReturnsNewIfNotFound", _productSubcategoryReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchProductSubcategory", _alwaysFetchProductSubcategory);
 			info.AddValue("_alreadyFetchedProductSubcategory", _alreadyFetchedProductSubcategory);
-			info.AddValue("_unitMeasure", (!this.MarkedForDeletion?_unitMeasure:null));
-			info.AddValue("_unitMeasureReturnsNewIfNotFound", _unitMeasureReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchUnitMeasure", _alwaysFetchUnitMeasure);
-			info.AddValue("_alreadyFetchedUnitMeasure", _alreadyFetchedUnitMeasure);
-			info.AddValue("_unitMeasure_", (!this.MarkedForDeletion?_unitMeasure_:null));
-			info.AddValue("_unitMeasure_ReturnsNewIfNotFound", _unitMeasure_ReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchUnitMeasure_", _alwaysFetchUnitMeasure_);
-			info.AddValue("_alreadyFetchedUnitMeasure_", _alreadyFetchedUnitMeasure_);
+			info.AddValue("_sizeUnitMeasure", (!this.MarkedForDeletion?_sizeUnitMeasure:null));
+			info.AddValue("_sizeUnitMeasureReturnsNewIfNotFound", _sizeUnitMeasureReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchSizeUnitMeasure", _alwaysFetchSizeUnitMeasure);
+			info.AddValue("_alreadyFetchedSizeUnitMeasure", _alreadyFetchedSizeUnitMeasure);
+			info.AddValue("_weightUnitMeasure", (!this.MarkedForDeletion?_weightUnitMeasure:null));
+			info.AddValue("_weightUnitMeasureReturnsNewIfNotFound", _weightUnitMeasureReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchWeightUnitMeasure", _alwaysFetchWeightUnitMeasure);
+			info.AddValue("_alreadyFetchedWeightUnitMeasure", _alreadyFetchedWeightUnitMeasure);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -481,26 +481,26 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedProductSubcategory = true;
 					this.ProductSubcategory = (ProductSubcategoryEntity)entity;
 					break;
-				case "UnitMeasure":
-					_alreadyFetchedUnitMeasure = true;
-					this.UnitMeasure = (UnitMeasureEntity)entity;
+				case "SizeUnitMeasure":
+					_alreadyFetchedSizeUnitMeasure = true;
+					this.SizeUnitMeasure = (UnitMeasureEntity)entity;
 					break;
-				case "UnitMeasure_":
-					_alreadyFetchedUnitMeasure_ = true;
-					this.UnitMeasure_ = (UnitMeasureEntity)entity;
+				case "WeightUnitMeasure":
+					_alreadyFetchedWeightUnitMeasure = true;
+					this.WeightUnitMeasure = (UnitMeasureEntity)entity;
 					break;
-				case "BillOfMaterials":
-					_alreadyFetchedBillOfMaterials = true;
+				case "BillOfComponentMaterials":
+					_alreadyFetchedBillOfComponentMaterials = true;
 					if(entity!=null)
 					{
-						this.BillOfMaterials.Add((BillOfMaterialEntity)entity);
+						this.BillOfComponentMaterials.Add((BillOfMaterialEntity)entity);
 					}
 					break;
-				case "BillOfMaterials_":
-					_alreadyFetchedBillOfMaterials_ = true;
+				case "BillOfAssemblyMaterials":
+					_alreadyFetchedBillOfAssemblyMaterials = true;
 					if(entity!=null)
 					{
-						this.BillOfMaterials_.Add((BillOfMaterialEntity)entity);
+						this.BillOfAssemblyMaterials.Add((BillOfMaterialEntity)entity);
 					}
 					break;
 				case "ProductCostHistories":
@@ -607,17 +607,17 @@ namespace AW.Data.EntityClasses
 				case "ProductSubcategory":
 					SetupSyncProductSubcategory(relatedEntity);
 					break;
-				case "UnitMeasure":
-					SetupSyncUnitMeasure(relatedEntity);
+				case "SizeUnitMeasure":
+					SetupSyncSizeUnitMeasure(relatedEntity);
 					break;
-				case "UnitMeasure_":
-					SetupSyncUnitMeasure_(relatedEntity);
+				case "WeightUnitMeasure":
+					SetupSyncWeightUnitMeasure(relatedEntity);
 					break;
-				case "BillOfMaterials":
-					_billOfMaterials.Add((BillOfMaterialEntity)relatedEntity);
+				case "BillOfComponentMaterials":
+					_billOfComponentMaterials.Add((BillOfMaterialEntity)relatedEntity);
 					break;
-				case "BillOfMaterials_":
-					_billOfMaterials_.Add((BillOfMaterialEntity)relatedEntity);
+				case "BillOfAssemblyMaterials":
+					_billOfAssemblyMaterials.Add((BillOfMaterialEntity)relatedEntity);
 					break;
 				case "ProductCostHistories":
 					_productCostHistories.Add((ProductCostHistoryEntity)relatedEntity);
@@ -675,17 +675,17 @@ namespace AW.Data.EntityClasses
 				case "ProductSubcategory":
 					DesetupSyncProductSubcategory(false, true);
 					break;
-				case "UnitMeasure":
-					DesetupSyncUnitMeasure(false, true);
+				case "SizeUnitMeasure":
+					DesetupSyncSizeUnitMeasure(false, true);
 					break;
-				case "UnitMeasure_":
-					DesetupSyncUnitMeasure_(false, true);
+				case "WeightUnitMeasure":
+					DesetupSyncWeightUnitMeasure(false, true);
 					break;
-				case "BillOfMaterials":
-					this.PerformRelatedEntityRemoval(_billOfMaterials, relatedEntity, signalRelatedEntityManyToOne);
+				case "BillOfComponentMaterials":
+					this.PerformRelatedEntityRemoval(_billOfComponentMaterials, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "BillOfMaterials_":
-					this.PerformRelatedEntityRemoval(_billOfMaterials_, relatedEntity, signalRelatedEntityManyToOne);
+				case "BillOfAssemblyMaterials":
+					this.PerformRelatedEntityRemoval(_billOfAssemblyMaterials, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "ProductCostHistories":
 					this.PerformRelatedEntityRemoval(_productCostHistories, relatedEntity, signalRelatedEntityManyToOne);
@@ -749,13 +749,13 @@ namespace AW.Data.EntityClasses
 			{
 				toReturn.Add(_productSubcategory);
 			}
-			if(_unitMeasure!=null)
+			if(_sizeUnitMeasure!=null)
 			{
-				toReturn.Add(_unitMeasure);
+				toReturn.Add(_sizeUnitMeasure);
 			}
-			if(_unitMeasure_!=null)
+			if(_weightUnitMeasure!=null)
 			{
-				toReturn.Add(_unitMeasure_);
+				toReturn.Add(_weightUnitMeasure);
 			}
 			return toReturn;
 		}
@@ -765,8 +765,8 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
-			toReturn.Add(_billOfMaterials);
-			toReturn.Add(_billOfMaterials_);
+			toReturn.Add(_billOfComponentMaterials);
+			toReturn.Add(_billOfAssemblyMaterials);
 			toReturn.Add(_productCostHistories);
 			toReturn.Add(_productDocuments);
 			toReturn.Add(_productInventories);
@@ -843,27 +843,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfMaterials(bool forceFetch)
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch)
 		{
-			return GetMultiBillOfMaterials(forceFetch, _billOfMaterials.EntityFactoryToUse, null);
+			return GetMultiBillOfComponentMaterials(forceFetch, _billOfComponentMaterials.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfMaterials(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiBillOfMaterials(forceFetch, _billOfMaterials.EntityFactoryToUse, filter);
+			return GetMultiBillOfComponentMaterials(forceFetch, _billOfComponentMaterials.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfMaterials(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiBillOfMaterials(forceFetch, entityFactoryToUse, null);
+			return GetMultiBillOfComponentMaterials(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
@@ -871,54 +871,54 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfMaterials(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedBillOfMaterials || forceFetch || _alwaysFetchBillOfMaterials) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+ 			if( ( !_alreadyFetchedBillOfComponentMaterials || forceFetch || _alwaysFetchBillOfComponentMaterials) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
 			{
-				AddToTransactionIfNecessary(_billOfMaterials);
-				_billOfMaterials.SuppressClearInGetMulti=!forceFetch;
-				_billOfMaterials.EntityFactoryToUse = entityFactoryToUse;
-				_billOfMaterials.GetMultiManyToOne(this, null, null, filter);
-				_billOfMaterials.SuppressClearInGetMulti=false;
-				_alreadyFetchedBillOfMaterials = true;
+				AddToTransactionIfNecessary(_billOfComponentMaterials);
+				_billOfComponentMaterials.SuppressClearInGetMulti=!forceFetch;
+				_billOfComponentMaterials.EntityFactoryToUse = entityFactoryToUse;
+				_billOfComponentMaterials.GetMultiManyToOne(this, null, null, filter);
+				_billOfComponentMaterials.SuppressClearInGetMulti=false;
+				_alreadyFetchedBillOfComponentMaterials = true;
 			}
-			return _billOfMaterials;
+			return _billOfComponentMaterials;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'BillOfMaterials'. These settings will be taken into account
-		/// when the property BillOfMaterials is requested or GetMultiBillOfMaterials is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'BillOfComponentMaterials'. These settings will be taken into account
+		/// when the property BillOfComponentMaterials is requested or GetMultiBillOfComponentMaterials is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersBillOfMaterials(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersBillOfComponentMaterials(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_billOfMaterials.SortClauses=sortClauses;
-			_billOfMaterials.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_billOfComponentMaterials.SortClauses=sortClauses;
+			_billOfComponentMaterials.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfMaterials_(bool forceFetch)
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfAssemblyMaterials(bool forceFetch)
 		{
-			return GetMultiBillOfMaterials_(forceFetch, _billOfMaterials_.EntityFactoryToUse, null);
+			return GetMultiBillOfAssemblyMaterials(forceFetch, _billOfAssemblyMaterials.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfMaterials_(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfAssemblyMaterials(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiBillOfMaterials_(forceFetch, _billOfMaterials_.EntityFactoryToUse, filter);
+			return GetMultiBillOfAssemblyMaterials(forceFetch, _billOfAssemblyMaterials.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfMaterials_(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfAssemblyMaterials(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiBillOfMaterials_(forceFetch, entityFactoryToUse, null);
+			return GetMultiBillOfAssemblyMaterials(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
@@ -926,28 +926,28 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfMaterials_(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfAssemblyMaterials(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedBillOfMaterials_ || forceFetch || _alwaysFetchBillOfMaterials_) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+ 			if( ( !_alreadyFetchedBillOfAssemblyMaterials || forceFetch || _alwaysFetchBillOfAssemblyMaterials) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
 			{
-				AddToTransactionIfNecessary(_billOfMaterials_);
-				_billOfMaterials_.SuppressClearInGetMulti=!forceFetch;
-				_billOfMaterials_.EntityFactoryToUse = entityFactoryToUse;
-				_billOfMaterials_.GetMultiManyToOne(null, this, null, filter);
-				_billOfMaterials_.SuppressClearInGetMulti=false;
-				_alreadyFetchedBillOfMaterials_ = true;
+				AddToTransactionIfNecessary(_billOfAssemblyMaterials);
+				_billOfAssemblyMaterials.SuppressClearInGetMulti=!forceFetch;
+				_billOfAssemblyMaterials.EntityFactoryToUse = entityFactoryToUse;
+				_billOfAssemblyMaterials.GetMultiManyToOne(null, this, null, filter);
+				_billOfAssemblyMaterials.SuppressClearInGetMulti=false;
+				_alreadyFetchedBillOfAssemblyMaterials = true;
 			}
-			return _billOfMaterials_;
+			return _billOfAssemblyMaterials;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'BillOfMaterials_'. These settings will be taken into account
-		/// when the property BillOfMaterials_ is requested or GetMultiBillOfMaterials_ is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'BillOfAssemblyMaterials'. These settings will be taken into account
+		/// when the property BillOfAssemblyMaterials is requested or GetMultiBillOfAssemblyMaterials is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersBillOfMaterials_(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersBillOfAssemblyMaterials(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_billOfMaterials_.SortClauses=sortClauses;
-			_billOfMaterials_.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_billOfAssemblyMaterials.SortClauses=sortClauses;
+			_billOfAssemblyMaterials.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductCostHistoryEntity' using a relation of type '1:n'.</summary>
@@ -1694,17 +1694,17 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Retrieves the related entity of type 'UnitMeasureEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'UnitMeasureEntity' which is related to this entity.</returns>
-		public UnitMeasureEntity GetSingleUnitMeasure()
+		public UnitMeasureEntity GetSingleSizeUnitMeasure()
 		{
-			return GetSingleUnitMeasure(false);
+			return GetSingleSizeUnitMeasure(false);
 		}
 
 		/// <summary> Retrieves the related entity of type 'UnitMeasureEntity', using a relation of type 'n:1'</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
 		/// <returns>A fetched entity of type 'UnitMeasureEntity' which is related to this entity.</returns>
-		public virtual UnitMeasureEntity GetSingleUnitMeasure(bool forceFetch)
+		public virtual UnitMeasureEntity GetSingleSizeUnitMeasure(bool forceFetch)
 		{
-			if( ( !_alreadyFetchedUnitMeasure || forceFetch || _alwaysFetchUnitMeasure) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
+			if( ( !_alreadyFetchedSizeUnitMeasure || forceFetch || _alwaysFetchSizeUnitMeasure) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
 			{
 				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.UnitMeasureEntityUsingSizeUnitMeasureCode);
 				UnitMeasureEntity newEntity = new UnitMeasureEntity();
@@ -1720,32 +1720,32 @@ namespace AW.Data.EntityClasses
 				}
 				else
 				{
-					if(!_unitMeasureReturnsNewIfNotFound)
+					if(!_sizeUnitMeasureReturnsNewIfNotFound)
 					{
 						RemoveFromTransactionIfNecessary(newEntity);
 						newEntity = null;
 					}
 				}
-				this.UnitMeasure = newEntity;
-				_alreadyFetchedUnitMeasure = fetchResult;
+				this.SizeUnitMeasure = newEntity;
+				_alreadyFetchedSizeUnitMeasure = fetchResult;
 			}
-			return _unitMeasure;
+			return _sizeUnitMeasure;
 		}
 
 
 		/// <summary> Retrieves the related entity of type 'UnitMeasureEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'UnitMeasureEntity' which is related to this entity.</returns>
-		public UnitMeasureEntity GetSingleUnitMeasure_()
+		public UnitMeasureEntity GetSingleWeightUnitMeasure()
 		{
-			return GetSingleUnitMeasure_(false);
+			return GetSingleWeightUnitMeasure(false);
 		}
 
 		/// <summary> Retrieves the related entity of type 'UnitMeasureEntity', using a relation of type 'n:1'</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
 		/// <returns>A fetched entity of type 'UnitMeasureEntity' which is related to this entity.</returns>
-		public virtual UnitMeasureEntity GetSingleUnitMeasure_(bool forceFetch)
+		public virtual UnitMeasureEntity GetSingleWeightUnitMeasure(bool forceFetch)
 		{
-			if( ( !_alreadyFetchedUnitMeasure_ || forceFetch || _alwaysFetchUnitMeasure_) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
+			if( ( !_alreadyFetchedWeightUnitMeasure || forceFetch || _alwaysFetchWeightUnitMeasure) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
 			{
 				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.UnitMeasureEntityUsingWeightUnitMeasureCode);
 				UnitMeasureEntity newEntity = new UnitMeasureEntity();
@@ -1761,16 +1761,16 @@ namespace AW.Data.EntityClasses
 				}
 				else
 				{
-					if(!_unitMeasure_ReturnsNewIfNotFound)
+					if(!_weightUnitMeasureReturnsNewIfNotFound)
 					{
 						RemoveFromTransactionIfNecessary(newEntity);
 						newEntity = null;
 					}
 				}
-				this.UnitMeasure_ = newEntity;
-				_alreadyFetchedUnitMeasure_ = fetchResult;
+				this.WeightUnitMeasure = newEntity;
+				_alreadyFetchedWeightUnitMeasure = fetchResult;
 			}
-			return _unitMeasure_;
+			return _weightUnitMeasure;
 		}
 
 
@@ -1781,10 +1781,10 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("ProductModel", _productModel);
 			toReturn.Add("ProductSubcategory", _productSubcategory);
-			toReturn.Add("UnitMeasure", _unitMeasure);
-			toReturn.Add("UnitMeasure_", _unitMeasure_);
-			toReturn.Add("BillOfMaterials", _billOfMaterials);
-			toReturn.Add("BillOfMaterials_", _billOfMaterials_);
+			toReturn.Add("SizeUnitMeasure", _sizeUnitMeasure);
+			toReturn.Add("WeightUnitMeasure", _weightUnitMeasure);
+			toReturn.Add("BillOfComponentMaterials", _billOfComponentMaterials);
+			toReturn.Add("BillOfAssemblyMaterials", _billOfAssemblyMaterials);
 			toReturn.Add("ProductCostHistories", _productCostHistories);
 			toReturn.Add("ProductDocuments", _productDocuments);
 			toReturn.Add("ProductInventories", _productInventories);
@@ -1837,11 +1837,11 @@ namespace AW.Data.EntityClasses
 		private void InitClassMembers()
 		{
 
-			_billOfMaterials = new AW.Data.CollectionClasses.BillOfMaterialCollection();
-			_billOfMaterials.SetContainingEntityInfo(this, "Product");
+			_billOfComponentMaterials = new AW.Data.CollectionClasses.BillOfMaterialCollection();
+			_billOfComponentMaterials.SetContainingEntityInfo(this, "ProductComponent");
 
-			_billOfMaterials_ = new AW.Data.CollectionClasses.BillOfMaterialCollection();
-			_billOfMaterials_.SetContainingEntityInfo(this, "Product_");
+			_billOfAssemblyMaterials = new AW.Data.CollectionClasses.BillOfMaterialCollection();
+			_billOfAssemblyMaterials.SetContainingEntityInfo(this, "ProductAssembly");
 
 			_productCostHistories = new AW.Data.CollectionClasses.ProductCostHistoryCollection();
 			_productCostHistories.SetContainingEntityInfo(this, "Product");
@@ -1880,8 +1880,8 @@ namespace AW.Data.EntityClasses
 			_specialOfferProducts.SetContainingEntityInfo(this, "Product");
 			_productModelReturnsNewIfNotFound = true;
 			_productSubcategoryReturnsNewIfNotFound = true;
-			_unitMeasureReturnsNewIfNotFound = true;
-			_unitMeasure_ReturnsNewIfNotFound = true;
+			_sizeUnitMeasureReturnsNewIfNotFound = true;
+			_weightUnitMeasureReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -2041,31 +2041,31 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _unitMeasure</summary>
+		/// <summary> Removes the sync logic for member _sizeUnitMeasure</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncUnitMeasure(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncSizeUnitMeasure(bool signalRelatedEntity, bool resetFKFields)
 		{
-			this.PerformDesetupSyncRelatedEntity( _unitMeasure, new PropertyChangedEventHandler( OnUnitMeasurePropertyChanged ), "UnitMeasure", AW.Data.RelationClasses.StaticProductRelations.UnitMeasureEntityUsingSizeUnitMeasureCodeStatic, true, signalRelatedEntity, "Products", resetFKFields, new int[] { (int)ProductFieldIndex.SizeUnitMeasureCode } );		
-			_unitMeasure = null;
+			this.PerformDesetupSyncRelatedEntity( _sizeUnitMeasure, new PropertyChangedEventHandler( OnSizeUnitMeasurePropertyChanged ), "SizeUnitMeasure", AW.Data.RelationClasses.StaticProductRelations.UnitMeasureEntityUsingSizeUnitMeasureCodeStatic, true, signalRelatedEntity, "ProductsOfSize", resetFKFields, new int[] { (int)ProductFieldIndex.SizeUnitMeasureCode } );		
+			_sizeUnitMeasure = null;
 		}
 		
-		/// <summary> setups the sync logic for member _unitMeasure</summary>
+		/// <summary> setups the sync logic for member _sizeUnitMeasure</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncUnitMeasure(IEntity relatedEntity)
+		private void SetupSyncSizeUnitMeasure(IEntity relatedEntity)
 		{
-			if(_unitMeasure!=relatedEntity)
+			if(_sizeUnitMeasure!=relatedEntity)
 			{		
-				DesetupSyncUnitMeasure(true, true);
-				_unitMeasure = (UnitMeasureEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _unitMeasure, new PropertyChangedEventHandler( OnUnitMeasurePropertyChanged ), "UnitMeasure", AW.Data.RelationClasses.StaticProductRelations.UnitMeasureEntityUsingSizeUnitMeasureCodeStatic, true, ref _alreadyFetchedUnitMeasure, new string[] {  } );
+				DesetupSyncSizeUnitMeasure(true, true);
+				_sizeUnitMeasure = (UnitMeasureEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _sizeUnitMeasure, new PropertyChangedEventHandler( OnSizeUnitMeasurePropertyChanged ), "SizeUnitMeasure", AW.Data.RelationClasses.StaticProductRelations.UnitMeasureEntityUsingSizeUnitMeasureCodeStatic, true, ref _alreadyFetchedSizeUnitMeasure, new string[] {  } );
 			}
 		}
 
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnUnitMeasurePropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnSizeUnitMeasurePropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -2074,31 +2074,31 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
-		/// <summary> Removes the sync logic for member _unitMeasure_</summary>
+		/// <summary> Removes the sync logic for member _weightUnitMeasure</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncUnitMeasure_(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncWeightUnitMeasure(bool signalRelatedEntity, bool resetFKFields)
 		{
-			this.PerformDesetupSyncRelatedEntity( _unitMeasure_, new PropertyChangedEventHandler( OnUnitMeasure_PropertyChanged ), "UnitMeasure_", AW.Data.RelationClasses.StaticProductRelations.UnitMeasureEntityUsingWeightUnitMeasureCodeStatic, true, signalRelatedEntity, "Products_", resetFKFields, new int[] { (int)ProductFieldIndex.WeightUnitMeasureCode } );		
-			_unitMeasure_ = null;
+			this.PerformDesetupSyncRelatedEntity( _weightUnitMeasure, new PropertyChangedEventHandler( OnWeightUnitMeasurePropertyChanged ), "WeightUnitMeasure", AW.Data.RelationClasses.StaticProductRelations.UnitMeasureEntityUsingWeightUnitMeasureCodeStatic, true, signalRelatedEntity, "ProductsOfWeight", resetFKFields, new int[] { (int)ProductFieldIndex.WeightUnitMeasureCode } );		
+			_weightUnitMeasure = null;
 		}
 		
-		/// <summary> setups the sync logic for member _unitMeasure_</summary>
+		/// <summary> setups the sync logic for member _weightUnitMeasure</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncUnitMeasure_(IEntity relatedEntity)
+		private void SetupSyncWeightUnitMeasure(IEntity relatedEntity)
 		{
-			if(_unitMeasure_!=relatedEntity)
+			if(_weightUnitMeasure!=relatedEntity)
 			{		
-				DesetupSyncUnitMeasure_(true, true);
-				_unitMeasure_ = (UnitMeasureEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _unitMeasure_, new PropertyChangedEventHandler( OnUnitMeasure_PropertyChanged ), "UnitMeasure_", AW.Data.RelationClasses.StaticProductRelations.UnitMeasureEntityUsingWeightUnitMeasureCodeStatic, true, ref _alreadyFetchedUnitMeasure_, new string[] {  } );
+				DesetupSyncWeightUnitMeasure(true, true);
+				_weightUnitMeasure = (UnitMeasureEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _weightUnitMeasure, new PropertyChangedEventHandler( OnWeightUnitMeasurePropertyChanged ), "WeightUnitMeasure", AW.Data.RelationClasses.StaticProductRelations.UnitMeasureEntityUsingWeightUnitMeasureCodeStatic, true, ref _alreadyFetchedWeightUnitMeasure, new string[] {  } );
 			}
 		}
 
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnUnitMeasure_PropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnWeightUnitMeasurePropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -2160,16 +2160,16 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'BillOfMaterial' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathBillOfMaterials
+		public static IPrefetchPathElement PrefetchPathBillOfComponentMaterials
 		{
-			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.BillOfMaterialCollection(), (IEntityRelation)GetRelationsForField("BillOfMaterials")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.BillOfMaterialEntity, 0, null, null, null, "BillOfMaterials", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.BillOfMaterialCollection(), (IEntityRelation)GetRelationsForField("BillOfComponentMaterials")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.BillOfMaterialEntity, 0, null, null, null, "BillOfComponentMaterials", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'BillOfMaterial' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathBillOfMaterials_
+		public static IPrefetchPathElement PrefetchPathBillOfAssemblyMaterials
 		{
-			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.BillOfMaterialCollection(), (IEntityRelation)GetRelationsForField("BillOfMaterials_")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.BillOfMaterialEntity, 0, null, null, null, "BillOfMaterials_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.BillOfMaterialCollection(), (IEntityRelation)GetRelationsForField("BillOfAssemblyMaterials")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.BillOfMaterialEntity, 0, null, null, null, "BillOfAssemblyMaterials", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductCostHistory' for this entity.</summary>
@@ -2272,16 +2272,16 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'UnitMeasure'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathUnitMeasure
+		public static IPrefetchPathElement PrefetchPathSizeUnitMeasure
 		{
-			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.UnitMeasureCollection(), (IEntityRelation)GetRelationsForField("UnitMeasure")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.UnitMeasureEntity, 0, null, null, null, "UnitMeasure", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.UnitMeasureCollection(), (IEntityRelation)GetRelationsForField("SizeUnitMeasure")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.UnitMeasureEntity, 0, null, null, null, "SizeUnitMeasure", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'UnitMeasure'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathUnitMeasure_
+		public static IPrefetchPathElement PrefetchPathWeightUnitMeasure
 		{
-			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.UnitMeasureCollection(), (IEntityRelation)GetRelationsForField("UnitMeasure_")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.UnitMeasureEntity, 0, null, null, null, "UnitMeasure_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.UnitMeasureCollection(), (IEntityRelation)GetRelationsForField("WeightUnitMeasure")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.UnitMeasureEntity, 0, null, null, null, "WeightUnitMeasure", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
@@ -2591,68 +2591,68 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiBillOfMaterials()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiBillOfComponentMaterials()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection BillOfMaterials
+		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection BillOfComponentMaterials
 		{
-			get	{ return GetMultiBillOfMaterials(false); }
+			get	{ return GetMultiBillOfComponentMaterials(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for BillOfMaterials. When set to true, BillOfMaterials is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time BillOfMaterials is accessed. You can always execute/ a forced fetch by calling GetMultiBillOfMaterials(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for BillOfComponentMaterials. When set to true, BillOfComponentMaterials is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time BillOfComponentMaterials is accessed. You can always execute/ a forced fetch by calling GetMultiBillOfComponentMaterials(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchBillOfMaterials
+		public bool AlwaysFetchBillOfComponentMaterials
 		{
-			get	{ return _alwaysFetchBillOfMaterials; }
-			set	{ _alwaysFetchBillOfMaterials = value; }	
+			get	{ return _alwaysFetchBillOfComponentMaterials; }
+			set	{ _alwaysFetchBillOfComponentMaterials = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property BillOfMaterials already has been fetched. Setting this property to false when BillOfMaterials has been fetched
-		/// will clear the BillOfMaterials collection well. Setting this property to true while BillOfMaterials hasn't been fetched disables lazy loading for BillOfMaterials</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property BillOfComponentMaterials already has been fetched. Setting this property to false when BillOfComponentMaterials has been fetched
+		/// will clear the BillOfComponentMaterials collection well. Setting this property to true while BillOfComponentMaterials hasn't been fetched disables lazy loading for BillOfComponentMaterials</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedBillOfMaterials
+		public bool AlreadyFetchedBillOfComponentMaterials
 		{
-			get { return _alreadyFetchedBillOfMaterials;}
+			get { return _alreadyFetchedBillOfComponentMaterials;}
 			set 
 			{
-				if(_alreadyFetchedBillOfMaterials && !value && (_billOfMaterials != null))
+				if(_alreadyFetchedBillOfComponentMaterials && !value && (_billOfComponentMaterials != null))
 				{
-					_billOfMaterials.Clear();
+					_billOfComponentMaterials.Clear();
 				}
-				_alreadyFetchedBillOfMaterials = value;
+				_alreadyFetchedBillOfComponentMaterials = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiBillOfMaterials_()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiBillOfAssemblyMaterials()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection BillOfMaterials_
+		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection BillOfAssemblyMaterials
 		{
-			get	{ return GetMultiBillOfMaterials_(false); }
+			get	{ return GetMultiBillOfAssemblyMaterials(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for BillOfMaterials_. When set to true, BillOfMaterials_ is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time BillOfMaterials_ is accessed. You can always execute/ a forced fetch by calling GetMultiBillOfMaterials_(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for BillOfAssemblyMaterials. When set to true, BillOfAssemblyMaterials is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time BillOfAssemblyMaterials is accessed. You can always execute/ a forced fetch by calling GetMultiBillOfAssemblyMaterials(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchBillOfMaterials_
+		public bool AlwaysFetchBillOfAssemblyMaterials
 		{
-			get	{ return _alwaysFetchBillOfMaterials_; }
-			set	{ _alwaysFetchBillOfMaterials_ = value; }	
+			get	{ return _alwaysFetchBillOfAssemblyMaterials; }
+			set	{ _alwaysFetchBillOfAssemblyMaterials = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property BillOfMaterials_ already has been fetched. Setting this property to false when BillOfMaterials_ has been fetched
-		/// will clear the BillOfMaterials_ collection well. Setting this property to true while BillOfMaterials_ hasn't been fetched disables lazy loading for BillOfMaterials_</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property BillOfAssemblyMaterials already has been fetched. Setting this property to false when BillOfAssemblyMaterials has been fetched
+		/// will clear the BillOfAssemblyMaterials collection well. Setting this property to true while BillOfAssemblyMaterials hasn't been fetched disables lazy loading for BillOfAssemblyMaterials</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedBillOfMaterials_
+		public bool AlreadyFetchedBillOfAssemblyMaterials
 		{
-			get { return _alreadyFetchedBillOfMaterials_;}
+			get { return _alreadyFetchedBillOfAssemblyMaterials;}
 			set 
 			{
-				if(_alreadyFetchedBillOfMaterials_ && !value && (_billOfMaterials_ != null))
+				if(_alreadyFetchedBillOfAssemblyMaterials && !value && (_billOfAssemblyMaterials != null))
 				{
-					_billOfMaterials_.Clear();
+					_billOfAssemblyMaterials.Clear();
 				}
-				_alreadyFetchedBillOfMaterials_ = value;
+				_alreadyFetchedBillOfAssemblyMaterials = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'ProductCostHistoryEntity' using a relation of type '1:n'.<br/><br/>
@@ -3174,118 +3174,118 @@ namespace AW.Data.EntityClasses
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
 		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
 		/// </summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleUnitMeasure()', because 
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSizeUnitMeasure()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
 		[Browsable(true)]
-		public virtual UnitMeasureEntity UnitMeasure
+		public virtual UnitMeasureEntity SizeUnitMeasure
 		{
-			get	{ return GetSingleUnitMeasure(false); }
+			get	{ return GetSingleSizeUnitMeasure(false); }
 			set 
 			{ 
 				if(this.IsDeserializing)
 				{
-					SetupSyncUnitMeasure(value);
+					SetupSyncSizeUnitMeasure(value);
 				}
 				else
 				{
-					SetSingleRelatedEntityNavigator(value, "Products", "UnitMeasure", _unitMeasure, true); 
+					SetSingleRelatedEntityNavigator(value, "ProductsOfSize", "SizeUnitMeasure", _sizeUnitMeasure, true); 
 				}
 			}
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for UnitMeasure. When set to true, UnitMeasure is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time UnitMeasure is accessed. You can always execute a forced fetch by calling GetSingleUnitMeasure(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for SizeUnitMeasure. When set to true, SizeUnitMeasure is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SizeUnitMeasure is accessed. You can always execute a forced fetch by calling GetSingleSizeUnitMeasure(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchUnitMeasure
+		public bool AlwaysFetchSizeUnitMeasure
 		{
-			get	{ return _alwaysFetchUnitMeasure; }
-			set	{ _alwaysFetchUnitMeasure = value; }	
+			get	{ return _alwaysFetchSizeUnitMeasure; }
+			set	{ _alwaysFetchSizeUnitMeasure = value; }	
 		}
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property UnitMeasure already has been fetched. Setting this property to false when UnitMeasure has been fetched
-		/// will set UnitMeasure to null as well. Setting this property to true while UnitMeasure hasn't been fetched disables lazy loading for UnitMeasure</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property SizeUnitMeasure already has been fetched. Setting this property to false when SizeUnitMeasure has been fetched
+		/// will set SizeUnitMeasure to null as well. Setting this property to true while SizeUnitMeasure hasn't been fetched disables lazy loading for SizeUnitMeasure</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedUnitMeasure
+		public bool AlreadyFetchedSizeUnitMeasure
 		{
-			get { return _alreadyFetchedUnitMeasure;}
+			get { return _alreadyFetchedSizeUnitMeasure;}
 			set 
 			{
-				if(_alreadyFetchedUnitMeasure && !value)
+				if(_alreadyFetchedSizeUnitMeasure && !value)
 				{
-					this.UnitMeasure = null;
+					this.SizeUnitMeasure = null;
 				}
-				_alreadyFetchedUnitMeasure = value;
+				_alreadyFetchedSizeUnitMeasure = value;
 			}
 		}
 
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property UnitMeasure is not found
-		/// in the database. When set to true, UnitMeasure will return a new entity instance if the related entity is not found, otherwise 
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property SizeUnitMeasure is not found
+		/// in the database. When set to true, SizeUnitMeasure will return a new entity instance if the related entity is not found, otherwise 
 		/// null be returned if the related entity is not found. Default: true.</summary>
 		[Browsable(false)]
-		public bool UnitMeasureReturnsNewIfNotFound
+		public bool SizeUnitMeasureReturnsNewIfNotFound
 		{
-			get	{ return _unitMeasureReturnsNewIfNotFound; }
-			set { _unitMeasureReturnsNewIfNotFound = value; }	
+			get	{ return _sizeUnitMeasureReturnsNewIfNotFound; }
+			set { _sizeUnitMeasureReturnsNewIfNotFound = value; }	
 		}
 
 		/// <summary> Gets / sets related entity of type 'UnitMeasureEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
 		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
 		/// </summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleUnitMeasure_()', because 
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleWeightUnitMeasure()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
 		[Browsable(true)]
-		public virtual UnitMeasureEntity UnitMeasure_
+		public virtual UnitMeasureEntity WeightUnitMeasure
 		{
-			get	{ return GetSingleUnitMeasure_(false); }
+			get	{ return GetSingleWeightUnitMeasure(false); }
 			set 
 			{ 
 				if(this.IsDeserializing)
 				{
-					SetupSyncUnitMeasure_(value);
+					SetupSyncWeightUnitMeasure(value);
 				}
 				else
 				{
-					SetSingleRelatedEntityNavigator(value, "Products_", "UnitMeasure_", _unitMeasure_, true); 
+					SetSingleRelatedEntityNavigator(value, "ProductsOfWeight", "WeightUnitMeasure", _weightUnitMeasure, true); 
 				}
 			}
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for UnitMeasure_. When set to true, UnitMeasure_ is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time UnitMeasure_ is accessed. You can always execute a forced fetch by calling GetSingleUnitMeasure_(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for WeightUnitMeasure. When set to true, WeightUnitMeasure is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time WeightUnitMeasure is accessed. You can always execute a forced fetch by calling GetSingleWeightUnitMeasure(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchUnitMeasure_
+		public bool AlwaysFetchWeightUnitMeasure
 		{
-			get	{ return _alwaysFetchUnitMeasure_; }
-			set	{ _alwaysFetchUnitMeasure_ = value; }	
+			get	{ return _alwaysFetchWeightUnitMeasure; }
+			set	{ _alwaysFetchWeightUnitMeasure = value; }	
 		}
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property UnitMeasure_ already has been fetched. Setting this property to false when UnitMeasure_ has been fetched
-		/// will set UnitMeasure_ to null as well. Setting this property to true while UnitMeasure_ hasn't been fetched disables lazy loading for UnitMeasure_</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property WeightUnitMeasure already has been fetched. Setting this property to false when WeightUnitMeasure has been fetched
+		/// will set WeightUnitMeasure to null as well. Setting this property to true while WeightUnitMeasure hasn't been fetched disables lazy loading for WeightUnitMeasure</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedUnitMeasure_
+		public bool AlreadyFetchedWeightUnitMeasure
 		{
-			get { return _alreadyFetchedUnitMeasure_;}
+			get { return _alreadyFetchedWeightUnitMeasure;}
 			set 
 			{
-				if(_alreadyFetchedUnitMeasure_ && !value)
+				if(_alreadyFetchedWeightUnitMeasure && !value)
 				{
-					this.UnitMeasure_ = null;
+					this.WeightUnitMeasure = null;
 				}
-				_alreadyFetchedUnitMeasure_ = value;
+				_alreadyFetchedWeightUnitMeasure = value;
 			}
 		}
 
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property UnitMeasure_ is not found
-		/// in the database. When set to true, UnitMeasure_ will return a new entity instance if the related entity is not found, otherwise 
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property WeightUnitMeasure is not found
+		/// in the database. When set to true, WeightUnitMeasure will return a new entity instance if the related entity is not found, otherwise 
 		/// null be returned if the related entity is not found. Default: true.</summary>
 		[Browsable(false)]
-		public bool UnitMeasure_ReturnsNewIfNotFound
+		public bool WeightUnitMeasureReturnsNewIfNotFound
 		{
-			get	{ return _unitMeasure_ReturnsNewIfNotFound; }
-			set { _unitMeasure_ReturnsNewIfNotFound = value; }	
+			get	{ return _weightUnitMeasureReturnsNewIfNotFound; }
+			set { _weightUnitMeasureReturnsNewIfNotFound = value; }	
 		}
 
 

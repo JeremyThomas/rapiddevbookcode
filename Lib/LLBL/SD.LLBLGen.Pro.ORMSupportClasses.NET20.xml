@@ -7585,8 +7585,9 @@
             Initializes a new instance of the <see cref="T:SD.LLBLGen.Pro.ORMSupportClasses.PredicateFinder"/> class.
             </summary>
             <param name="predicateTypeToFind">The predicate type to find.</param>
-            <param name="traverseSetPredicateInnerSetElements">the flag to traverse the inner elements of a FieldCompareSetPredicate. (default is true). Set to false if you use the findings of this
-            crawler to adjust an outer query, as the inner elements of a fieldcompareset are a different scope.</param>
+            <param name="traverseSetPredicateInnerSetElements">the flag to traverse the inner elements of a FieldCompareSetPredicate. (default is false). 
+            Keep this value to false if you use the findings of this crawler to adjust an outer query, as the inner elements of a fieldcompareset are a 
+            different scope.</param>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.PredicateFinder.Traverse(SD.LLBLGen.Pro.ORMSupportClasses.IPredicate)">
             <summary>
@@ -7733,11 +7734,10 @@
             compiled delegate which is ready to use to set the field defined by fieldInfo on instances of the type specified
             </returns>
         </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Miscellaneous.DynamicMethodCompiler.CreateSetDynamicMethod(System.Type)">
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Miscellaneous.DynamicMethodCompiler.CreateSetDynamicMethod">
             <summary>
             Creates a dynamic method
             </summary>
-            <param name="type">The type.</param>
             <returns></returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Miscellaneous.DynamicMethodCompiler.UnboxIfNeeded(System.Type,System.Reflection.Emit.ILGenerator)">
@@ -11394,6 +11394,13 @@
             <summary>
             Always use client-side Distinct filtering. This can be CPU intensive with large sets of duplicates, however on databases where DISTINCT is 
             very time consuming, this setting can be an optimization.
+            </summary>
+        </member>
+        <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.DistinctFilteringPreferenceType.Legacy">
+            <summary>
+            Use the v2.6 rules set for emitting distinct. Similar to 'System', but with one exception: if the relationships specified contain m:1 or
+            1:1 relationships, it will see the resultset as 'unique rows' and will use that into account when emitting Distinct and TOP for entity fetches.
+            This option can give wrong results (no distinct emitted while it should emit distinct). In that case, use 'System' (recommended).
             </summary>
         </member>
         <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.ScaleOverflowCorrectionAction">
@@ -16231,6 +16238,14 @@
             <param name="relationsToWalk">The relations to walk.</param>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DynamicQueryEngineBase.ClampAliasName(System.String,System.String)">
+            <summary>
+            Clamps the alias specified to the length limit (if applicable)
+            </summary>
+            <param name="rawAlias">The raw alias.</param>
+            <param name="alternativeAlias">The alternative alias.</param>
+            <returns></returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DynamicQueryEngineBase.CreateDbSpecificCreator">
             <summary>
             Creates a new IDbSpecificCreator and initializes it
@@ -18100,6 +18115,13 @@
             <param name="relationsToUse">The relations to use.</param>
             <param name="excludedFieldsToUse">The excluded fields to use.</param>
             <param name="resultFields">The result fields.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.DaoBase.DisposeConnectionIfNecessary(System.Data.Common.DbConnection,SD.LLBLGen.Pro.ORMSupportClasses.ITransaction)">
+            <summary>
+            Disposes the connection if necessary.
+            </summary>
+            <param name="toDispose">To dispose.</param>
+            <param name="containingTransaction">The containing transaction.</param>
         </member>
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.DaoBase.DbProviderFactoryToUse">
             <summary>
@@ -34003,7 +34025,6 @@
             <summary>
             Gets or sets a value indicating whether refetching of data should be performed
             </summary>
-            <value><c>true</c> if refetch; otherwise, <c>false</c>.</value>
         </member>
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.LLBLGenProDataSourceView2.UoW">
             <summary>
