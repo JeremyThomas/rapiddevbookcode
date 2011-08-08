@@ -43,10 +43,10 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.BillOfMaterialCollection	_billOfMaterials;
 		private bool	_alwaysFetchBillOfMaterials, _alreadyFetchedBillOfMaterials;
-		private AW.Data.CollectionClasses.ProductCollection	_products;
-		private bool	_alwaysFetchProducts, _alreadyFetchedProducts;
-		private AW.Data.CollectionClasses.ProductCollection	_products_;
-		private bool	_alwaysFetchProducts_, _alreadyFetchedProducts_;
+		private AW.Data.CollectionClasses.ProductCollection	_productsOfSize;
+		private bool	_alwaysFetchProductsOfSize, _alreadyFetchedProductsOfSize;
+		private AW.Data.CollectionClasses.ProductCollection	_productsOfWeight;
+		private bool	_alwaysFetchProductsOfWeight, _alreadyFetchedProductsOfWeight;
 		private AW.Data.CollectionClasses.ProductVendorCollection	_productVendors;
 		private bool	_alwaysFetchProductVendors, _alreadyFetchedProductVendors;
 
@@ -63,10 +63,10 @@ namespace AW.Data.EntityClasses
 		{
 			/// <summary>Member name BillOfMaterials</summary>
 			public static readonly string BillOfMaterials = "BillOfMaterials";
-			/// <summary>Member name Products</summary>
-			public static readonly string Products = "Products";
-			/// <summary>Member name Products_</summary>
-			public static readonly string Products_ = "Products_";
+			/// <summary>Member name ProductsOfSize</summary>
+			public static readonly string ProductsOfSize = "ProductsOfSize";
+			/// <summary>Member name ProductsOfWeight</summary>
+			public static readonly string ProductsOfWeight = "ProductsOfWeight";
 			/// <summary>Member name ProductVendors</summary>
 			public static readonly string ProductVendors = "ProductVendors";
 		}
@@ -116,13 +116,13 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchBillOfMaterials = info.GetBoolean("_alwaysFetchBillOfMaterials");
 			_alreadyFetchedBillOfMaterials = info.GetBoolean("_alreadyFetchedBillOfMaterials");
 
-			_products = (AW.Data.CollectionClasses.ProductCollection)info.GetValue("_products", typeof(AW.Data.CollectionClasses.ProductCollection));
-			_alwaysFetchProducts = info.GetBoolean("_alwaysFetchProducts");
-			_alreadyFetchedProducts = info.GetBoolean("_alreadyFetchedProducts");
+			_productsOfSize = (AW.Data.CollectionClasses.ProductCollection)info.GetValue("_productsOfSize", typeof(AW.Data.CollectionClasses.ProductCollection));
+			_alwaysFetchProductsOfSize = info.GetBoolean("_alwaysFetchProductsOfSize");
+			_alreadyFetchedProductsOfSize = info.GetBoolean("_alreadyFetchedProductsOfSize");
 
-			_products_ = (AW.Data.CollectionClasses.ProductCollection)info.GetValue("_products_", typeof(AW.Data.CollectionClasses.ProductCollection));
-			_alwaysFetchProducts_ = info.GetBoolean("_alwaysFetchProducts_");
-			_alreadyFetchedProducts_ = info.GetBoolean("_alreadyFetchedProducts_");
+			_productsOfWeight = (AW.Data.CollectionClasses.ProductCollection)info.GetValue("_productsOfWeight", typeof(AW.Data.CollectionClasses.ProductCollection));
+			_alwaysFetchProductsOfWeight = info.GetBoolean("_alwaysFetchProductsOfWeight");
+			_alreadyFetchedProductsOfWeight = info.GetBoolean("_alreadyFetchedProductsOfWeight");
 
 			_productVendors = (AW.Data.CollectionClasses.ProductVendorCollection)info.GetValue("_productVendors", typeof(AW.Data.CollectionClasses.ProductVendorCollection));
 			_alwaysFetchProductVendors = info.GetBoolean("_alwaysFetchProductVendors");
@@ -137,8 +137,8 @@ namespace AW.Data.EntityClasses
 		protected override void PostReadXmlFixups()
 		{
 			_alreadyFetchedBillOfMaterials = (_billOfMaterials.Count > 0);
-			_alreadyFetchedProducts = (_products.Count > 0);
-			_alreadyFetchedProducts_ = (_products_.Count > 0);
+			_alreadyFetchedProductsOfSize = (_productsOfSize.Count > 0);
+			_alreadyFetchedProductsOfWeight = (_productsOfWeight.Count > 0);
 			_alreadyFetchedProductVendors = (_productVendors.Count > 0);
 		}
 				
@@ -161,10 +161,10 @@ namespace AW.Data.EntityClasses
 				case "BillOfMaterials":
 					toReturn.Add(Relations.BillOfMaterialEntityUsingUnitMeasureCode);
 					break;
-				case "Products":
+				case "ProductsOfSize":
 					toReturn.Add(Relations.ProductEntityUsingSizeUnitMeasureCode);
 					break;
-				case "Products_":
+				case "ProductsOfWeight":
 					toReturn.Add(Relations.ProductEntityUsingWeightUnitMeasureCode);
 					break;
 				case "ProductVendors":
@@ -187,12 +187,12 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_billOfMaterials", (!this.MarkedForDeletion?_billOfMaterials:null));
 			info.AddValue("_alwaysFetchBillOfMaterials", _alwaysFetchBillOfMaterials);
 			info.AddValue("_alreadyFetchedBillOfMaterials", _alreadyFetchedBillOfMaterials);
-			info.AddValue("_products", (!this.MarkedForDeletion?_products:null));
-			info.AddValue("_alwaysFetchProducts", _alwaysFetchProducts);
-			info.AddValue("_alreadyFetchedProducts", _alreadyFetchedProducts);
-			info.AddValue("_products_", (!this.MarkedForDeletion?_products_:null));
-			info.AddValue("_alwaysFetchProducts_", _alwaysFetchProducts_);
-			info.AddValue("_alreadyFetchedProducts_", _alreadyFetchedProducts_);
+			info.AddValue("_productsOfSize", (!this.MarkedForDeletion?_productsOfSize:null));
+			info.AddValue("_alwaysFetchProductsOfSize", _alwaysFetchProductsOfSize);
+			info.AddValue("_alreadyFetchedProductsOfSize", _alreadyFetchedProductsOfSize);
+			info.AddValue("_productsOfWeight", (!this.MarkedForDeletion?_productsOfWeight:null));
+			info.AddValue("_alwaysFetchProductsOfWeight", _alwaysFetchProductsOfWeight);
+			info.AddValue("_alreadyFetchedProductsOfWeight", _alreadyFetchedProductsOfWeight);
 			info.AddValue("_productVendors", (!this.MarkedForDeletion?_productVendors:null));
 			info.AddValue("_alwaysFetchProductVendors", _alwaysFetchProductVendors);
 			info.AddValue("_alreadyFetchedProductVendors", _alreadyFetchedProductVendors);
@@ -218,18 +218,18 @@ namespace AW.Data.EntityClasses
 						this.BillOfMaterials.Add((BillOfMaterialEntity)entity);
 					}
 					break;
-				case "Products":
-					_alreadyFetchedProducts = true;
+				case "ProductsOfSize":
+					_alreadyFetchedProductsOfSize = true;
 					if(entity!=null)
 					{
-						this.Products.Add((ProductEntity)entity);
+						this.ProductsOfSize.Add((ProductEntity)entity);
 					}
 					break;
-				case "Products_":
-					_alreadyFetchedProducts_ = true;
+				case "ProductsOfWeight":
+					_alreadyFetchedProductsOfWeight = true;
 					if(entity!=null)
 					{
-						this.Products_.Add((ProductEntity)entity);
+						this.ProductsOfWeight.Add((ProductEntity)entity);
 					}
 					break;
 				case "ProductVendors":
@@ -256,11 +256,11 @@ namespace AW.Data.EntityClasses
 				case "BillOfMaterials":
 					_billOfMaterials.Add((BillOfMaterialEntity)relatedEntity);
 					break;
-				case "Products":
-					_products.Add((ProductEntity)relatedEntity);
+				case "ProductsOfSize":
+					_productsOfSize.Add((ProductEntity)relatedEntity);
 					break;
-				case "Products_":
-					_products_.Add((ProductEntity)relatedEntity);
+				case "ProductsOfWeight":
+					_productsOfWeight.Add((ProductEntity)relatedEntity);
 					break;
 				case "ProductVendors":
 					_productVendors.Add((ProductVendorEntity)relatedEntity);
@@ -282,11 +282,11 @@ namespace AW.Data.EntityClasses
 				case "BillOfMaterials":
 					this.PerformRelatedEntityRemoval(_billOfMaterials, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "Products":
-					this.PerformRelatedEntityRemoval(_products, relatedEntity, signalRelatedEntityManyToOne);
+				case "ProductsOfSize":
+					this.PerformRelatedEntityRemoval(_productsOfSize, relatedEntity, signalRelatedEntityManyToOne);
 					break;
-				case "Products_":
-					this.PerformRelatedEntityRemoval(_products_, relatedEntity, signalRelatedEntityManyToOne);
+				case "ProductsOfWeight":
+					this.PerformRelatedEntityRemoval(_productsOfWeight, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "ProductVendors":
 					this.PerformRelatedEntityRemoval(_productVendors, relatedEntity, signalRelatedEntityManyToOne);
@@ -318,8 +318,8 @@ namespace AW.Data.EntityClasses
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
 			toReturn.Add(_billOfMaterials);
-			toReturn.Add(_products);
-			toReturn.Add(_products_);
+			toReturn.Add(_productsOfSize);
+			toReturn.Add(_productsOfWeight);
 			toReturn.Add(_productVendors);
 
 			return toReturn;
@@ -440,27 +440,27 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'ProductEntity'</returns>
-		public AW.Data.CollectionClasses.ProductCollection GetMultiProducts(bool forceFetch)
+		public AW.Data.CollectionClasses.ProductCollection GetMultiProductsOfSize(bool forceFetch)
 		{
-			return GetMultiProducts(forceFetch, _products.EntityFactoryToUse, null);
+			return GetMultiProductsOfSize(forceFetch, _productsOfSize.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'ProductEntity'</returns>
-		public AW.Data.CollectionClasses.ProductCollection GetMultiProducts(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.ProductCollection GetMultiProductsOfSize(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiProducts(forceFetch, _products.EntityFactoryToUse, filter);
+			return GetMultiProductsOfSize(forceFetch, _productsOfSize.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.ProductCollection GetMultiProducts(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.ProductCollection GetMultiProductsOfSize(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiProducts(forceFetch, entityFactoryToUse, null);
+			return GetMultiProductsOfSize(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.</summary>
@@ -468,54 +468,54 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.ProductCollection GetMultiProducts(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.ProductCollection GetMultiProductsOfSize(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedProducts || forceFetch || _alwaysFetchProducts) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+ 			if( ( !_alreadyFetchedProductsOfSize || forceFetch || _alwaysFetchProductsOfSize) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
 			{
-				AddToTransactionIfNecessary(_products);
-				_products.SuppressClearInGetMulti=!forceFetch;
-				_products.EntityFactoryToUse = entityFactoryToUse;
-				_products.GetMultiManyToOne(null, null, this, null, filter);
-				_products.SuppressClearInGetMulti=false;
-				_alreadyFetchedProducts = true;
+				AddToTransactionIfNecessary(_productsOfSize);
+				_productsOfSize.SuppressClearInGetMulti=!forceFetch;
+				_productsOfSize.EntityFactoryToUse = entityFactoryToUse;
+				_productsOfSize.GetMultiManyToOne(null, null, this, null, filter);
+				_productsOfSize.SuppressClearInGetMulti=false;
+				_alreadyFetchedProductsOfSize = true;
 			}
-			return _products;
+			return _productsOfSize;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'Products'. These settings will be taken into account
-		/// when the property Products is requested or GetMultiProducts is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'ProductsOfSize'. These settings will be taken into account
+		/// when the property ProductsOfSize is requested or GetMultiProductsOfSize is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersProducts(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersProductsOfSize(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_products.SortClauses=sortClauses;
-			_products.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_productsOfSize.SortClauses=sortClauses;
+			_productsOfSize.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'ProductEntity'</returns>
-		public AW.Data.CollectionClasses.ProductCollection GetMultiProducts_(bool forceFetch)
+		public AW.Data.CollectionClasses.ProductCollection GetMultiProductsOfWeight(bool forceFetch)
 		{
-			return GetMultiProducts_(forceFetch, _products_.EntityFactoryToUse, null);
+			return GetMultiProductsOfWeight(forceFetch, _productsOfWeight.EntityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of type 'ProductEntity'</returns>
-		public AW.Data.CollectionClasses.ProductCollection GetMultiProducts_(bool forceFetch, IPredicateExpression filter)
+		public AW.Data.CollectionClasses.ProductCollection GetMultiProductsOfWeight(bool forceFetch, IPredicateExpression filter)
 		{
-			return GetMultiProducts_(forceFetch, _products_.EntityFactoryToUse, filter);
+			return GetMultiProductsOfWeight(forceFetch, _productsOfWeight.EntityFactoryToUse, filter);
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.ProductCollection GetMultiProducts_(bool forceFetch, IEntityFactory entityFactoryToUse)
+		public AW.Data.CollectionClasses.ProductCollection GetMultiProductsOfWeight(bool forceFetch, IEntityFactory entityFactoryToUse)
 		{
-			return GetMultiProducts_(forceFetch, entityFactoryToUse, null);
+			return GetMultiProductsOfWeight(forceFetch, entityFactoryToUse, null);
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.</summary>
@@ -523,28 +523,28 @@ namespace AW.Data.EntityClasses
 		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
 		/// <param name="filter">Extra filter to limit the resultset.</param>
 		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.ProductCollection GetMultiProducts_(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		public virtual AW.Data.CollectionClasses.ProductCollection GetMultiProductsOfWeight(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
 		{
- 			if( ( !_alreadyFetchedProducts_ || forceFetch || _alwaysFetchProducts_) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+ 			if( ( !_alreadyFetchedProductsOfWeight || forceFetch || _alwaysFetchProductsOfWeight) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
 			{
-				AddToTransactionIfNecessary(_products_);
-				_products_.SuppressClearInGetMulti=!forceFetch;
-				_products_.EntityFactoryToUse = entityFactoryToUse;
-				_products_.GetMultiManyToOne(null, null, null, this, filter);
-				_products_.SuppressClearInGetMulti=false;
-				_alreadyFetchedProducts_ = true;
+				AddToTransactionIfNecessary(_productsOfWeight);
+				_productsOfWeight.SuppressClearInGetMulti=!forceFetch;
+				_productsOfWeight.EntityFactoryToUse = entityFactoryToUse;
+				_productsOfWeight.GetMultiManyToOne(null, null, null, this, filter);
+				_productsOfWeight.SuppressClearInGetMulti=false;
+				_alreadyFetchedProductsOfWeight = true;
 			}
-			return _products_;
+			return _productsOfWeight;
 		}
 
-		/// <summary> Sets the collection parameters for the collection for 'Products_'. These settings will be taken into account
-		/// when the property Products_ is requested or GetMultiProducts_ is called.</summary>
+		/// <summary> Sets the collection parameters for the collection for 'ProductsOfWeight'. These settings will be taken into account
+		/// when the property ProductsOfWeight is requested or GetMultiProductsOfWeight is called.</summary>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersProducts_(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		public virtual void SetCollectionParametersProductsOfWeight(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
 		{
-			_products_.SortClauses=sortClauses;
-			_products_.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+			_productsOfWeight.SortClauses=sortClauses;
+			_productsOfWeight.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductVendorEntity' using a relation of type '1:n'.</summary>
@@ -609,8 +609,8 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("BillOfMaterials", _billOfMaterials);
-			toReturn.Add("Products", _products);
-			toReturn.Add("Products_", _products_);
+			toReturn.Add("ProductsOfSize", _productsOfSize);
+			toReturn.Add("ProductsOfWeight", _productsOfWeight);
 			toReturn.Add("ProductVendors", _productVendors);
 			return toReturn;
 		}
@@ -655,11 +655,11 @@ namespace AW.Data.EntityClasses
 			_billOfMaterials = new AW.Data.CollectionClasses.BillOfMaterialCollection();
 			_billOfMaterials.SetContainingEntityInfo(this, "UnitMeasure");
 
-			_products = new AW.Data.CollectionClasses.ProductCollection();
-			_products.SetContainingEntityInfo(this, "UnitMeasure");
+			_productsOfSize = new AW.Data.CollectionClasses.ProductCollection();
+			_productsOfSize.SetContainingEntityInfo(this, "SizeUnitMeasure");
 
-			_products_ = new AW.Data.CollectionClasses.ProductCollection();
-			_products_.SetContainingEntityInfo(this, "UnitMeasure_");
+			_productsOfWeight = new AW.Data.CollectionClasses.ProductCollection();
+			_productsOfWeight.SetContainingEntityInfo(this, "WeightUnitMeasure");
 
 			_productVendors = new AW.Data.CollectionClasses.ProductVendorCollection();
 			_productVendors.SetContainingEntityInfo(this, "UnitMeasure");
@@ -750,16 +750,16 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Product' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathProducts
+		public static IPrefetchPathElement PrefetchPathProductsOfSize
 		{
-			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("Products")[0], (int)AW.Data.EntityType.UnitMeasureEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "Products", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("ProductsOfSize")[0], (int)AW.Data.EntityType.UnitMeasureEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "ProductsOfSize", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Product' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathProducts_
+		public static IPrefetchPathElement PrefetchPathProductsOfWeight
 		{
-			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("Products_")[0], (int)AW.Data.EntityType.UnitMeasureEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "Products_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("ProductsOfWeight")[0], (int)AW.Data.EntityType.UnitMeasureEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "ProductsOfWeight", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductVendor' for this entity.</summary>
@@ -867,68 +867,68 @@ namespace AW.Data.EntityClasses
 		}
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiProducts()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiProductsOfSize()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.ProductCollection Products
+		public virtual AW.Data.CollectionClasses.ProductCollection ProductsOfSize
 		{
-			get	{ return GetMultiProducts(false); }
+			get	{ return GetMultiProductsOfSize(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for Products. When set to true, Products is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time Products is accessed. You can always execute/ a forced fetch by calling GetMultiProducts(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for ProductsOfSize. When set to true, ProductsOfSize is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ProductsOfSize is accessed. You can always execute/ a forced fetch by calling GetMultiProductsOfSize(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchProducts
+		public bool AlwaysFetchProductsOfSize
 		{
-			get	{ return _alwaysFetchProducts; }
-			set	{ _alwaysFetchProducts = value; }	
+			get	{ return _alwaysFetchProductsOfSize; }
+			set	{ _alwaysFetchProductsOfSize = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property Products already has been fetched. Setting this property to false when Products has been fetched
-		/// will clear the Products collection well. Setting this property to true while Products hasn't been fetched disables lazy loading for Products</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property ProductsOfSize already has been fetched. Setting this property to false when ProductsOfSize has been fetched
+		/// will clear the ProductsOfSize collection well. Setting this property to true while ProductsOfSize hasn't been fetched disables lazy loading for ProductsOfSize</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedProducts
+		public bool AlreadyFetchedProductsOfSize
 		{
-			get { return _alreadyFetchedProducts;}
+			get { return _alreadyFetchedProductsOfSize;}
 			set 
 			{
-				if(_alreadyFetchedProducts && !value && (_products != null))
+				if(_alreadyFetchedProductsOfSize && !value && (_productsOfSize != null))
 				{
-					_products.Clear();
+					_productsOfSize.Clear();
 				}
-				_alreadyFetchedProducts = value;
+				_alreadyFetchedProductsOfSize = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiProducts_()', because 
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiProductsOfWeight()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.ProductCollection Products_
+		public virtual AW.Data.CollectionClasses.ProductCollection ProductsOfWeight
 		{
-			get	{ return GetMultiProducts_(false); }
+			get	{ return GetMultiProductsOfWeight(false); }
 		}
 
-		/// <summary> Gets / sets the lazy loading flag for Products_. When set to true, Products_ is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time Products_ is accessed. You can always execute/ a forced fetch by calling GetMultiProducts_(true).</summary>
+		/// <summary> Gets / sets the lazy loading flag for ProductsOfWeight. When set to true, ProductsOfWeight is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ProductsOfWeight is accessed. You can always execute/ a forced fetch by calling GetMultiProductsOfWeight(true).</summary>
 		[Browsable(false)]
-		public bool AlwaysFetchProducts_
+		public bool AlwaysFetchProductsOfWeight
 		{
-			get	{ return _alwaysFetchProducts_; }
-			set	{ _alwaysFetchProducts_ = value; }	
+			get	{ return _alwaysFetchProductsOfWeight; }
+			set	{ _alwaysFetchProductsOfWeight = value; }	
 		}		
 				
-		/// <summary>Gets / Sets the lazy loading flag if the property Products_ already has been fetched. Setting this property to false when Products_ has been fetched
-		/// will clear the Products_ collection well. Setting this property to true while Products_ hasn't been fetched disables lazy loading for Products_</summary>
+		/// <summary>Gets / Sets the lazy loading flag if the property ProductsOfWeight already has been fetched. Setting this property to false when ProductsOfWeight has been fetched
+		/// will clear the ProductsOfWeight collection well. Setting this property to true while ProductsOfWeight hasn't been fetched disables lazy loading for ProductsOfWeight</summary>
 		[Browsable(false)]
-		public bool AlreadyFetchedProducts_
+		public bool AlreadyFetchedProductsOfWeight
 		{
-			get { return _alreadyFetchedProducts_;}
+			get { return _alreadyFetchedProductsOfWeight;}
 			set 
 			{
-				if(_alreadyFetchedProducts_ && !value && (_products_ != null))
+				if(_alreadyFetchedProductsOfWeight && !value && (_productsOfWeight != null))
 				{
-					_products_.Clear();
+					_productsOfWeight.Clear();
 				}
-				_alreadyFetchedProducts_ = value;
+				_alreadyFetchedProductsOfWeight = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'ProductVendorEntity' using a relation of type '1:n'.<br/><br/>

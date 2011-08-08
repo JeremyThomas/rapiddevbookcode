@@ -45,15 +45,15 @@ namespace AW.Data.DaoClasses
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to return</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance, int pageNumber, int pageSize)
+		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance, int pageNumber, int pageSize)
 		{
 			this.EntityFactoryToUse = entityFactoryToUse;
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ProductEntity);
-			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, fieldsToReturn);
+			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance, fieldsToReturn);
 			if(filter!=null)
 			{
 				selectFilter.AddWithAnd(filter);
@@ -68,13 +68,13 @@ namespace AW.Data.DaoClasses
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to delete</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to delete</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to delete</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to delete</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to delete</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to delete</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMulti(ITransaction containingTransaction, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance)
+		public int DeleteMulti(ITransaction containingTransaction, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ProductEntity);
-			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, fields);
+			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance, fields);
 			return this.DeleteMulti(containingTransaction, deleteFilter);
 		}
 
@@ -85,24 +85,24 @@ namespace AW.Data.DaoClasses
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects to update</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects to update</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to update</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to update</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to update</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects to update</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance)
+		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.ProductEntity);
-			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(productModelInstance, productSubcategoryInstance, unitMeasureInstance, unitMeasure_Instance, fields);
+			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(productModelInstance, productSubcategoryInstance, sizeUnitMeasureInstance, weightUnitMeasureInstance, fields);
 			return this.UpdateMulti(entityWithNewValues, containingTransaction, updateFilter);
 		}
 
 		/// <summary>Creates a PredicateExpression which should be used as a filter when any combination of available foreign keys is specified.</summary>
 		/// <param name="productModelInstance">ProductModelEntity instance to use as a filter for the ProductEntity objects</param>
 		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity instance to use as a filter for the ProductEntity objects</param>
-		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects</param>
-		/// <param name="unitMeasure_Instance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects</param>
+		/// <param name="sizeUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects</param>
+		/// <param name="weightUnitMeasureInstance">UnitMeasureEntity instance to use as a filter for the ProductEntity objects</param>
 		/// <param name="fieldsToReturn">IEntityFields implementation which forms the definition of the fieldset of the target entity.</param>
 		/// <returns>A ready to use PredicateExpression based on the passed in foreign key value holders.</returns>
-		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity unitMeasureInstance, IEntity unitMeasure_Instance, IEntityFields fieldsToReturn)
+		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity productModelInstance, IEntity productSubcategoryInstance, IEntity sizeUnitMeasureInstance, IEntity weightUnitMeasureInstance, IEntityFields fieldsToReturn)
 		{
 			IPredicateExpression selectFilter = new PredicateExpression();
 			
@@ -114,13 +114,13 @@ namespace AW.Data.DaoClasses
 			{
 				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)ProductFieldIndex.ProductSubcategoryID], ComparisonOperator.Equal, ((ProductSubcategoryEntity)productSubcategoryInstance).ProductSubcategoryID));
 			}
-			if(unitMeasureInstance != null)
+			if(sizeUnitMeasureInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)ProductFieldIndex.SizeUnitMeasureCode], ComparisonOperator.Equal, ((UnitMeasureEntity)unitMeasureInstance).UnitMeasureCode));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)ProductFieldIndex.SizeUnitMeasureCode], ComparisonOperator.Equal, ((UnitMeasureEntity)sizeUnitMeasureInstance).UnitMeasureCode));
 			}
-			if(unitMeasure_Instance != null)
+			if(weightUnitMeasureInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)ProductFieldIndex.WeightUnitMeasureCode], ComparisonOperator.Equal, ((UnitMeasureEntity)unitMeasure_Instance).UnitMeasureCode));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)ProductFieldIndex.WeightUnitMeasureCode], ComparisonOperator.Equal, ((UnitMeasureEntity)weightUnitMeasureInstance).UnitMeasureCode));
 			}
 			return selectFilter;
 		}
