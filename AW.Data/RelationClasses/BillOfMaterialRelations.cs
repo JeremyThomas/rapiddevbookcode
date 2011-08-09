@@ -30,8 +30,8 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.ProductEntityUsingComponentID);
 			toReturn.Add(this.ProductEntityUsingProductAssemblyID);
+			toReturn.Add(this.ProductEntityUsingComponentID);
 			toReturn.Add(this.UnitMeasureEntityUsingUnitMeasureCode);
 			return toReturn;
 		}
@@ -41,28 +41,28 @@ namespace AW.Data.RelationClasses
 
 
 		/// <summary>Returns a new IEntityRelation object, between BillOfMaterialEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
-		/// BillOfMaterial.ComponentID - Product.ProductID
-		/// </summary>
-		public virtual IEntityRelation ProductEntityUsingComponentID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Product", false);
-				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ComponentID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", true);
-				return relation;
-			}
-		}
-		/// <summary>Returns a new IEntityRelation object, between BillOfMaterialEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
 		/// BillOfMaterial.ProductAssemblyID - Product.ProductID
 		/// </summary>
 		public virtual IEntityRelation ProductEntityUsingProductAssemblyID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Product_", false);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "ProductAssembly", false);
 				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ProductAssemblyID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", true);
+				return relation;
+			}
+		}
+		/// <summary>Returns a new IEntityRelation object, between BillOfMaterialEntity and ProductEntity over the m:1 relation they have, using the relation between the fields:
+		/// BillOfMaterial.ComponentID - Product.ProductID
+		/// </summary>
+		public virtual IEntityRelation ProductEntityUsingComponentID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "ProductComponent", false);
+				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ComponentID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", true);
 				return relation;

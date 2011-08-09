@@ -30,8 +30,8 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.BillOfMaterialEntityUsingComponentID);
 			toReturn.Add(this.BillOfMaterialEntityUsingProductAssemblyID);
+			toReturn.Add(this.BillOfMaterialEntityUsingComponentID);
 			toReturn.Add(this.ProductCostHistoryEntityUsingProductID);
 			toReturn.Add(this.ProductDocumentEntityUsingProductID);
 			toReturn.Add(this.ProductInventoryEntityUsingProductID);
@@ -54,14 +54,14 @@ namespace AW.Data.RelationClasses
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialEntity over the 1:n relation they have, using the relation between the fields:
-		/// Product.ProductID - BillOfMaterial.ComponentID
+		/// Product.ProductID - BillOfMaterial.ProductAssemblyID
 		/// </summary>
-		public virtual IEntityRelation BillOfMaterialEntityUsingComponentID
+		public virtual IEntityRelation BillOfMaterialEntityUsingProductAssemblyID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfMaterials" , true);
-				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ComponentID);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfAssemblyMaterials" , true);
+				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ProductAssemblyID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", false);
 				return relation;
@@ -69,14 +69,14 @@ namespace AW.Data.RelationClasses
 		}
 
 		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialEntity over the 1:n relation they have, using the relation between the fields:
-		/// Product.ProductID - BillOfMaterial.ProductAssemblyID
+		/// Product.ProductID - BillOfMaterial.ComponentID
 		/// </summary>
-		public virtual IEntityRelation BillOfMaterialEntityUsingProductAssemblyID
+		public virtual IEntityRelation BillOfMaterialEntityUsingComponentID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfMaterials_" , true);
-				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ProductAssemblyID);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfComponentMaterials" , true);
+				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ComponentID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", false);
 				return relation;
@@ -299,7 +299,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "UnitMeasure", false);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SizeUnitMeasure", false);
 				relation.AddEntityFieldPair(UnitMeasureFields.UnitMeasureCode, ProductFields.SizeUnitMeasureCode);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UnitMeasureEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
@@ -313,7 +313,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "UnitMeasure_", false);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "WeightUnitMeasure", false);
 				relation.AddEntityFieldPair(UnitMeasureFields.UnitMeasureCode, ProductFields.WeightUnitMeasureCode);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UnitMeasureEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);

@@ -175,6 +175,7 @@
     <Compile Include="Concurrency.cs" />
     <Compile Include="DaoClasses\CommonDaoBase.cs">
       <SubType>Code</SubType>
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="DaoClasses\CommonDaoBase.Extended.cs">
       <SubType>Code</SubType>
