@@ -165,7 +165,7 @@ namespace AW.Tests
 		/// <summary>
 		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
 		/// </summary>
-		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+		[TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographic()
 		{
 			var queryable = from c in GetNorthwindLinqMetaData().Customer
@@ -193,7 +193,7 @@ namespace AW.Tests
 		/// <summary>
 		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
 		/// </summary>
-		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+		[TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographicViaMany()
 		{
 			var queryable = from c in GetNorthwindLinqMetaData().Customer
@@ -243,6 +243,13 @@ namespace AW.Tests
 			var northwindLinqMetaData = GetNorthwindLinqMetaData();
 			northwindLinqMetaData.ContextToUse = contextToUse;
 			const string alfki = "ALFKI";
+			if (!northwindLinqMetaData.CustomerDemographic.Any())
+			{
+				var customerDemographicEntity = new CustomerDemographicEntity("1") {CustomerDesc = "CustomerDesc"};
+				var customerCustomerDemos = customerDemographicEntity.CustomerCustomerDemos.AddNew();
+				customerCustomerDemos.CustomerId = alfki;
+				northwindLinqMetaData.AdapterToUse.SaveEntity(customerDemographicEntity);
+			}
 			AssertOneCustomerDemographicAfterPrefetch(northwindLinqMetaData, alfki);
 			AssertOneCustomerDemographicAfterPrefetch(northwindLinqMetaData, alfki);
 		}

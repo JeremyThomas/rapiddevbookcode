@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -63,7 +64,8 @@ namespace AW.Tests
 		[TestMethod]
 		public void ShowEntitiesAndFieldsTest()
 		{
-			TestShowEntitiesAndFields(null, null);
+			if (EntityHelper.GetEntitiesTypes().Count() == EntityHelperTest.NumberOfEntities)
+				TestShowEntitiesAndFields(null, null);
 		}
 
 		[TestMethod]

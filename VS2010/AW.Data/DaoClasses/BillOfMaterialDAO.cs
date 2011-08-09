@@ -43,16 +43,16 @@ namespace AW.Data.DaoClasses
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="entityFactoryToUse">The EntityFactory to use when creating entity objects during a GetMulti() call.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
-		/// <param name="productInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
-		/// <param name="product_Instance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
+		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
-		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity productInstance, IEntity product_Instance, IEntity unitMeasureInstance, int pageNumber, int pageSize)
+		public bool GetMulti(ITransaction containingTransaction, IEntityCollection collectionToFill, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IEntityFactory entityFactoryToUse, IPredicateExpression filter, IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance, int pageNumber, int pageSize)
 		{
 			this.EntityFactoryToUse = entityFactoryToUse;
 			IEntityFields fieldsToReturn = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.BillOfMaterialEntity);
-			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(productInstance, product_Instance, unitMeasureInstance, fieldsToReturn);
+			IPredicateExpression selectFilter = CreateFilterUsingForeignKeys(productAssemblyInstance, productComponentInstance, unitMeasureInstance, fieldsToReturn);
 			if(filter!=null)
 			{
 				selectFilter.AddWithAnd(filter);
@@ -65,14 +65,14 @@ namespace AW.Data.DaoClasses
 
 		/// <summary>Deletes from the persistent storage all 'BillOfMaterial' entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="productInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to delete</param>
-		/// <param name="product_Instance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to delete</param>
+		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to delete</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to delete</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to delete</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMulti(ITransaction containingTransaction, IEntity productInstance, IEntity product_Instance, IEntity unitMeasureInstance)
+		public int DeleteMulti(ITransaction containingTransaction, IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.BillOfMaterialEntity);
-			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(productInstance, product_Instance, unitMeasureInstance, fields);
+			IPredicateExpression deleteFilter = CreateFilterUsingForeignKeys(productAssemblyInstance, productComponentInstance, unitMeasureInstance, fields);
 			return this.DeleteMulti(containingTransaction, deleteFilter);
 		}
 
@@ -81,34 +81,34 @@ namespace AW.Data.DaoClasses
 		/// of <i>entityWithNewValues</i> which are affected by the filterBucket's filter will thus also be updated.</summary>
 		/// <param name="entityWithNewValues">IEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
 		/// <param name="containingTransaction">A containing transaction, if caller is added to a transaction, or null if not.</param>
-		/// <param name="productInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to update</param>
-		/// <param name="product_Instance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to update</param>
+		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to update</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to update</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to update</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity productInstance, IEntity product_Instance, IEntity unitMeasureInstance)
+		public int UpdateMulti(IEntity entityWithNewValues, ITransaction containingTransaction, IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.BillOfMaterialEntity);
-			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(productInstance, product_Instance, unitMeasureInstance, fields);
+			IPredicateExpression updateFilter = CreateFilterUsingForeignKeys(productAssemblyInstance, productComponentInstance, unitMeasureInstance, fields);
 			return this.UpdateMulti(entityWithNewValues, containingTransaction, updateFilter);
 		}
 
 		/// <summary>Creates a PredicateExpression which should be used as a filter when any combination of available foreign keys is specified.</summary>
-		/// <param name="productInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects</param>
-		/// <param name="product_Instance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects</param>
+		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects</param>
 		/// <param name="fieldsToReturn">IEntityFields implementation which forms the definition of the fieldset of the target entity.</param>
 		/// <returns>A ready to use PredicateExpression based on the passed in foreign key value holders.</returns>
-		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity productInstance, IEntity product_Instance, IEntity unitMeasureInstance, IEntityFields fieldsToReturn)
+		private IPredicateExpression CreateFilterUsingForeignKeys(IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance, IEntityFields fieldsToReturn)
 		{
 			IPredicateExpression selectFilter = new PredicateExpression();
 			
-			if(productInstance != null)
+			if(productAssemblyInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)BillOfMaterialFieldIndex.ComponentID], ComparisonOperator.Equal, ((ProductEntity)productInstance).ProductID));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)BillOfMaterialFieldIndex.ProductAssemblyID], ComparisonOperator.Equal, ((ProductEntity)productAssemblyInstance).ProductID));
 			}
-			if(product_Instance != null)
+			if(productComponentInstance != null)
 			{
-				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)BillOfMaterialFieldIndex.ProductAssemblyID], ComparisonOperator.Equal, ((ProductEntity)product_Instance).ProductID));
+				selectFilter.Add(new FieldCompareValuePredicate(fieldsToReturn[(int)BillOfMaterialFieldIndex.ComponentID], ComparisonOperator.Equal, ((ProductEntity)productComponentInstance).ProductID));
 			}
 			if(unitMeasureInstance != null)
 			{

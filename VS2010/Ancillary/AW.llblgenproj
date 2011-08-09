@@ -4122,14 +4122,14 @@
           <FieldFieldRelationship FkField="TerritoryID" PkField="TerritoryID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Production.BillOfMaterial.Product-Production.Product.BillOfMaterials" Start="Production:BillOfMaterial" End="Production:Product" StartNavigator="Product" EndNavigator="BillOfMaterials" Type="4">
-        <FieldRelationships>
-          <FieldFieldRelationship FkField="ComponentID" PkField="ProductID" />
-        </FieldRelationships>
-      </NormalRelationship>
-      <NormalRelationship Name="Production.BillOfMaterial.Product_-Production.Product.BillOfMaterials_" Start="Production:BillOfMaterial" End="Production:Product" StartNavigator="Product_" EndNavigator="BillOfMaterials_" Type="4">
+      <NormalRelationship Name="Production.BillOfMaterial.ProductAssembly-Production.Product.BillOfAssemblyMaterials" Start="Production:BillOfMaterial" End="Production:Product" StartNavigator="ProductAssembly" EndNavigator="BillOfAssemblyMaterials" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="ProductAssemblyID" PkField="ProductID" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Production.BillOfMaterial.ProductComponent-Production.Product.BillOfComponentMaterials" Start="Production:BillOfMaterial" End="Production:Product" StartNavigator="ProductComponent" EndNavigator="BillOfComponentMaterials" Type="4">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="ComponentID" PkField="ProductID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Production.BillOfMaterial.UnitMeasure-Production.UnitMeasure.BillOfMaterials" Start="Production:BillOfMaterial" End="Production:UnitMeasure" StartNavigator="UnitMeasure" EndNavigator="BillOfMaterials" Type="4">
@@ -4147,12 +4147,12 @@
           <FieldFieldRelationship FkField="ProductSubcategoryID" PkField="ProductSubcategoryID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Production.Product.UnitMeasure-Production.UnitMeasure.Products" Start="Production:Product" End="Production:UnitMeasure" StartNavigator="UnitMeasure" EndNavigator="Products" Type="4">
+      <NormalRelationship Name="Production.Product.SizeUnitMeasure-Production.UnitMeasure.ProductsOfSize" Start="Production:Product" End="Production:UnitMeasure" StartNavigator="SizeUnitMeasure" EndNavigator="ProductsOfSize" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="SizeUnitMeasureCode" PkField="UnitMeasureCode" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Production.Product.UnitMeasure_-Production.UnitMeasure.Products_" Start="Production:Product" End="Production:UnitMeasure" StartNavigator="UnitMeasure_" EndNavigator="Products_" Type="4">
+      <NormalRelationship Name="Production.Product.WeightUnitMeasure-Production.UnitMeasure.ProductsOfWeight" Start="Production:Product" End="Production:UnitMeasure" StartNavigator="WeightUnitMeasure" EndNavigator="ProductsOfWeight" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="WeightUnitMeasureCode" PkField="UnitMeasureCode" />
         </FieldRelationships>

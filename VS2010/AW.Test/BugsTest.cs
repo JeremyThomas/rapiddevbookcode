@@ -4,8 +4,8 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
 using AW.Helper;
-using SD.LLBLGen.Pro.LinqSupportClasses;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Tests
 {
@@ -214,7 +214,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void BiDirectionalManyToMany()
 		{
-		// first time
+			// first time
 			var contact = MetaSingletons.MetaData.Contact.WithPath(new PathEdge<ShipMethodEntity>(ContactEntity.PrefetchPathStores)).First();
 			Assert.AreNotEqual(0, contact.Stores.Count);
 
@@ -222,5 +222,55 @@ namespace AW.Tests
 			Assert.AreEqual(contact, contact.Stores.First().Contacts.Single());
 		}
 
+
+		[TestMethod]
+		public void TestMultipleRelationsToTheSameTable()
+		{
+			var productProjection = from p in MetaSingletons.MetaData.Product
+			                        where p.SizeUnitMeasure != null
+			                        select new
+			                               	{
+			                               		SizeUnitMeasureCodeViaNav = p.SizeUnitMeasure.UnitMeasureCode,
+			                               		UnitMeasureName = p.SizeUnitMeasure.Name,
+			                               		WeightUnitMeasureCodeViaNav = p.WeightUnitMeasure.UnitMeasureCode,
+			                               		UnitMeasure_Name = p.WeightUnitMeasure.Name,
+			                               		p.Name,
+			                               		p.ProductID,
+			                               		p.ProductNumber,
+			                               		p.SizeUnitMeasureCode,
+			                               		p.WeightUnitMeasureCode
+			                               	};
+			var firstProductProjection = productProjection.First();
+			Assert.AreEqual(firstProductProjection.SizeUnitMeasureCode, firstProductProjection.SizeUnitMeasureCodeViaNav);
+			Assert.AreEqual(firstProductProjection.WeightUnitMeasureCode, firstProductProjection.WeightUnitMeasureCodeViaNav);
+		}
+
+		/// <summary>
+		/// Problem with projection with multiple ManyToOne navigations to any entity and further ManyToOne navigation from that entity.
+		/// http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=20148
+		/// </summary>
+		[TestMethod, Ignore, Description("Tests entity A with multiple ManyToOne relations to entity B" +
+														 "(which itself has a ManyToOne relation to entity C) can navigate to C (via all the navigators to B) correctly")]
+		public void TestMultipleRelationsToTheSameTableWithHopToRelated()
+		{
+			var billOfMaterialProjection = from b in MetaSingletons.MetaData.BillOfMaterial
+			                               where b.BillOfMaterialsID == 1404
+			                               select new
+			                                      	{
+			                                      		b.BillOfMaterialsID,
+			                                      		b.UnitMeasureCode,
+			                                      		b.ComponentID,
+			                                      		ProductComponentSubcategoryID = b.ProductComponent.ProductSubcategoryID,
+			                                      		ProductComponentSubcategoryIDViaNav = b.ProductComponent.ProductSubcategory.ProductSubcategoryID,
+			                                      		b.ProductAssemblyID,
+			                                      		ProductAssemblySubcategoryID = b.ProductAssembly.ProductSubcategoryID,
+			                                      		ProductAssemblySubcategoryIDViaNav = b.ProductAssembly.ProductSubcategory.ProductSubcategoryID,
+			                                      	};
+			var firstBillOfMaterialProjectionProjection = billOfMaterialProjection.First();
+			Assert.AreEqual(firstBillOfMaterialProjectionProjection.ProductComponentSubcategoryID,
+			                firstBillOfMaterialProjectionProjection.ProductComponentSubcategoryIDViaNav, "ProductComponentSubcategoryID");
+			Assert.AreEqual(firstBillOfMaterialProjectionProjection.ProductAssemblySubcategoryID,
+			                firstBillOfMaterialProjectionProjection.ProductAssemblySubcategoryIDViaNav, "ProductAssemblySubcategoryID"); //Fails
+		}
 	}
 }
