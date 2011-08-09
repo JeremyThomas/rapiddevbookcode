@@ -125,11 +125,14 @@ namespace AW.Tests
 		public void GetEntitiesTypesTest()
 		{
 			var allLoadedDescendanceEntitiesType = EntityHelper.GetEntitiesTypes().ToList();
-			var commonEntityBaseEntitiesType = MetaDataHelper.GetDescendants(typeof (CommonEntityBase)).ToList();
-			var assemblyEntitiesType = EntityHelper.GetEntitiesTypes(MetaSingletons.MetaData.GetType().Assembly).ToList();
-			CollectionAssert.AreEqual(allLoadedDescendanceEntitiesType, commonEntityBaseEntitiesType);
-			CollectionAssert.AreEqual(commonEntityBaseEntitiesType, assemblyEntitiesType);
-			Assert.AreEqual(NumberOfEntities, allLoadedDescendanceEntitiesType.Count);
+			if (allLoadedDescendanceEntitiesType.Count() == NumberOfEntities)
+			{
+				var commonEntityBaseEntitiesType = MetaDataHelper.GetDescendants(typeof(CommonEntityBase)).ToList();
+				var assemblyEntitiesType = EntityHelper.GetEntitiesTypes(MetaSingletons.MetaData.GetType().Assembly).ToList();
+				CollectionAssert.AreEqual(allLoadedDescendanceEntitiesType, commonEntityBaseEntitiesType);
+				CollectionAssert.AreEqual(commonEntityBaseEntitiesType, assemblyEntitiesType);
+				Assert.AreEqual(NumberOfEntities, allLoadedDescendanceEntitiesType.Count);
+			}
 		}
 
 

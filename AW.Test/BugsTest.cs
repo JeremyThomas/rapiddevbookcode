@@ -249,7 +249,7 @@ namespace AW.Tests
 		/// Problem with projection with multiple ManyToOne navigations to any entity and further ManyToOne navigation from that entity.
 		/// http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=20148
 		/// </summary>
-		[TestMethod, Description("Tests entity A with multiple ManyToOne relations to entity B" +
+		[TestMethod, Ignore, Description("Tests entity A with multiple ManyToOne relations to entity B" +
 														 "(which itself has a ManyToOne relation to entity C) can navigate to C (via all the navigators to B) correctly")]
 		public void TestMultipleRelationsToTheSameTableWithHopToRelated()
 		{
