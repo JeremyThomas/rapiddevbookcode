@@ -549,7 +549,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			catch (Exception ex)
 			{
 				MessageBox.Show(ex.Message, "Error obtaining custom types");
-				BreakIntoDebugger();
 				return null;
 			}
 			if (customTypes.Length == 0)
@@ -571,56 +570,46 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return customTypes;
 		}
 
-
 		private void BrowseDataAccessAdapterAssembly(object sender, RoutedEventArgs e)
 		{
 			var hl = sender as Hyperlink;
-			if (hl != null)
+			if (hl == null) return;
+			var element = CxInfo.DriverData.Element(hl.TargetName);
+			if (element == null) return;
+			var dialog = new OpenFileDialog
+			             	{
+			             		DefaultExt = ".dll",
+			             		FileName = element.Value,
+			             		Title =
+			             			hl.TargetName.Equals(ElementNameFactoryAssembly)
+			             				? TitleChooseFactoryAssembly
+			             				: TitleChooseDataAccessAdapterAssembly,
+			             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
+			             	};
+			if (File.Exists(element.Value))
+				dialog.InitialDirectory = Path.GetDirectoryName(element.Value);
+			if (dialog.ShowDialog() == true)
 			{
-				var element = CxInfo.DriverData.Element(hl.TargetName);
-				if (element != null)
+				element.Value = dialog.FileName;
+				var typeName = hl.TargetName.Replace("Assembly", "Type");
+				if (hl.TargetName.Contains("Type"))
 				{
-					var dialog = new OpenFileDialog
-					             	{
-					             		DefaultExt = ".dll",
-					             		FileName = element.Value,
-					             		Title =
-					             			hl.TargetName.Equals(ElementNameFactoryAssembly)
-					             				? TitleChooseFactoryAssembly
-					             				: TitleChooseDataAccessAdapterAssembly,
-					             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
-					             	};
-					if (File.Exists(element.Value))
-						dialog.InitialDirectory = Path.GetDirectoryName(element.Value);
-					if (dialog.ShowDialog() == true)
+					var dataAccessAdapterAssembly = Assembly.LoadFile(dialog.FileName);
+					try
 					{
-						element.Value = dialog.FileName;							
-						var typeName=hl.TargetName.Replace("Assembly", "Type");
-						if (hl.TargetName.Contains("Type"))
-						{
-
-							var dataAccessAdapterAssembly = Assembly.LoadFile(dialog.FileName);
-							try
-							{
-								var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
-								if (customTypes.Count() == 1)
-									CxInfo.DriverData.SetElementValue(typeName, customTypes.First());
-							}
-							catch (Exception ex)
-							{
-								BreakIntoDebugger();
-								GeneralHelper.TraceOut(ex.Message);
-								return;
-							}
-						}
-						else
-						{
-							var orig = hl.TargetName;
-							hl.TargetName = typeName;
-							ChooseAdapterOrFactoryClass(sender, e);
-							hl.TargetName = orig;
-						}
+						var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
+						if (customTypes.Count() == 1)
+							CxInfo.DriverData.SetElementValue(typeName, customTypes.First());
 					}
+					catch (Exception ex)
+					{
+						GeneralHelper.TraceOut(ex.Message);
+						return;
+					}
+				}
+				else
+				{
+					ChooseAdapterOrFactoryClass(typeName);
 				}
 			}
 		}
@@ -691,61 +680,67 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var hl = sender as Hyperlink;
 			if (hl != null)
 			{
-				var assemPath = GetDriverDataValue(hl.TargetName.Replace("Type", "Assembly"));
-				if (assemPath.Length == 0)
-				{
-					MessageBox.Show("First enter a path to an assembly.");
-					return;
-				}
+				var targetName = hl.TargetName;
+				ChooseAdapterOrFactoryClass(targetName);
+			}
+		}
 
-				if (!File.Exists(assemPath))
-				{
-					MessageBox.Show("File '" + assemPath + "' does not exist.");
-					return;
-				}
+		private void ChooseAdapterOrFactoryClass(string targetName)
+		{
+			var assemPath = GetDriverDataValue(targetName.Replace("Type", "Assembly"));
+			if (assemPath.Length == 0)
+			{
+				MessageBox.Show("First enter a path to an assembly.");
+				return;
+			}
 
-				IEnumerable<string> customTypes;
-				try
-				{
-					var dataAccessAdapterAssembly = LoadAssembly(assemPath);
-					var types = dataAccessAdapterAssembly.GetTypes();
-					customTypes = LLBLConnectionType == LLBLConnectionType.Adapter
-					              	? GetDataAccessAdapterTypeNames(types)
-					              	: types.Select(t => t.FullName).OrderBy(s => s);
-				}
-				catch (ReflectionTypeLoadException ex)
-				{
-					var loaderException = ex.LoaderExceptions[0];
-					if (loaderException.Message.Contains(LlblgenProNameSpace) && !loaderException.Message.Contains(Constants.LLBLVersion))
-						MessageBox.Show(string.Format("The assembly {0} is not for {1}", assemPath, Constants.LLBLGenNameVersion));
-					else
-						//Dialogs.PickFromList("An array of assemblies in this application domain.",
-						//             AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
-						MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-						                ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine),
-						                "Error obtaining adapter types");
-					return;
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show("Error obtaining adapter types: " + ex.Message);
-					BreakIntoDebugger();
-					return;
-				}
-				if (customTypes.Count() == 1)
-					CxInfo.DriverData.SetElementValue(hl.TargetName, customTypes.First());
-				else if (customTypes.Count() == 0)
-				{
-					CxInfo.DriverData.SetElementValue(hl.TargetName, "");
-				}
+			if (!File.Exists(assemPath))
+			{
+				MessageBox.Show("File '" + assemPath + "' does not exist.");
+				return;
+			}
+
+			IEnumerable<string> customTypes;
+			try
+			{
+				var dataAccessAdapterAssembly = LoadAssembly(assemPath);
+				var types = dataAccessAdapterAssembly.GetTypes();
+				customTypes = LLBLConnectionType == LLBLConnectionType.Adapter
+				              	? GetDataAccessAdapterTypeNames(types)
+				              	: types.Select(t => t.FullName).OrderBy(s => s);
+			}
+			catch (ReflectionTypeLoadException ex)
+			{
+				var loaderException = ex.LoaderExceptions[0];
+				if (loaderException.Message.Contains(LlblgenProNameSpace) && !loaderException.Message.Contains(Constants.LLBLVersion))
+					MessageBox.Show(string.Format("The assembly {0} is not for {1}", assemPath, Constants.LLBLGenNameVersion));
 				else
+					//Dialogs.PickFromList("An array of assemblies in this application domain.",
+					//             AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
+					MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
+					                ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine),
+					                "Error obtaining adapter types");
+				return;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Error obtaining adapter types: " + ex.Message);
+				BreakIntoDebugger();
+				return;
+			}
+			if (customTypes.Count() == 1)
+				CxInfo.DriverData.SetElementValue(targetName, customTypes.First());
+			else if (customTypes.Count() == 0)
+			{
+				CxInfo.DriverData.SetElementValue(targetName, "");
+			}
+			else
+			{
+				var result = (string) Dialogs.PickFromList("Choose " + targetName, customTypes.ToArray());
+				if (result != null)
 				{
-					var result = (string) Dialogs.PickFromList("Choose " + hl.TargetName, customTypes.ToArray());
-					if (result != null)
-					{
-						CxInfo.DriverData.SetElementValue(hl.TargetName, result);
-						ChooseAdapterFactoryMethod(sender, e);
-					}
+					CxInfo.DriverData.SetElementValue(targetName, result);
+					ChooseAdapterFactoryMethod();
 				}
 			}
 		}
@@ -763,6 +758,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		}
 
 		private void ChooseAdapterFactoryMethod(object sender, RoutedEventArgs e)
+		{
+			ChooseAdapterFactoryMethod();
+		}
+
+		private void ChooseAdapterFactoryMethod()
 		{
 			try
 			{
@@ -800,9 +800,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 							var assembly = methodInfo.ReturnType.GetInterface(IdataAccessAdapterType.FullName).Assembly;
 							var assemblyName = new AssemblyName(assembly.FullName);
 							MessageBox.Show(
-								string.Format("A method with a return type of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
-								              IdataAccessAdapterType.FullName, methodInfo.Name, Constants.LLBLGenNameVersion,
-								              assemblyName.Version));
+								string.Format(
+									"A method with a return type of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
+									IdataAccessAdapterType.FullName, methodInfo.Name, Constants.LLBLGenNameVersion,
+									assemblyName.Version));
 							CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, "");
 						}
 					}
