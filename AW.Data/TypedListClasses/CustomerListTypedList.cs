@@ -123,7 +123,7 @@ namespace AW.Data.TypedListClasses
 			toReturn.Add(CountryRegionEntity.Relations.StateProvinceEntityUsingCountryRegionCode, "", "", JoinHint.Inner);
 			toReturn.Add(AddressTypeEntity.Relations.CustomerAddressEntityUsingAddressTypeID, "", "", JoinHint.Inner);
 			toReturn.Add(CustomerEntity.Relations.CustomerAddressEntityUsingCustomerID, "", "", JoinHint.Inner);
-			toReturn.Add(CustomerEntity.Relations.CustomerAddressEntityUsingCustomerID, "", "", JoinHint.Inner);
+			toReturn.Add(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID, "", "", JoinHint.Inner);
 			toReturn.Add(ContactEntity.Relations.IndividualEntityUsingContactID, "", "", JoinHint.Inner);
 			// __LLBLGENPRO_USER_CODE_REGION_START AdditionalRelations
 			// __LLBLGENPRO_USER_CODE_REGION_END
