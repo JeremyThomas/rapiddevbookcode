@@ -737,5 +737,24 @@ namespace AW.Helper.LLBL
 			       	? entity.FieldsCustomPropertiesOfType[fieldName].Values
 			       	: Enumerable.Empty<string>();
 		}
+
+		/// <summary>
+		/// Gets the navigator name for a foreign key field.
+		/// </summary>
+		/// <param name="entity">The entity.</param>
+		/// <param name="field">The foreign key field.</param>
+		/// <returns></returns>
+		public static string GetNavigator(IEntityCore entity, IEntityFieldCore field)
+		{
+			foreach (var entityRelation in entity.GetAllRelations())
+			{
+				foreach (var fkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects())
+				{
+					if (fkEntityFieldCoreObject.Name.Equals(field.Name))
+						return entityRelation.MappedFieldName;
+				}
+			}
+			return "";
+		}
 	}
 }

@@ -112,7 +112,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			Assert.AreEqual(ExplorerIcon.ManyToMany, employeeExplorerItem.Icon);
 		}
 
-		private static ExplorerItem TestNorthWindToolTips(List<ExplorerItem> explorerItems)
+		private static ExplorerItem TestNorthWindToolTips(List<ExplorerItem> explorerItems, bool testForiegnKey = true)
 		{
 			var customerName = EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.CustomerEntity);
 			var explorerItem = explorerItems.First(e => e.Text == customerName);
@@ -139,6 +139,9 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var customerPropertyDescriptor = orderPropertiesToShowInSchema.Single(p => p.Name == customerName);
 			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.Description);
 			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.DisplayName);
+
+			if (testForiegnKey)
+			  StringAssert.Contains(customerNavigator.ToolTipText, OrderFieldIndex.CustomerId.ToString());
 
 			var first = explorerItem.Children.First();
 			Assert.IsFalse(string.IsNullOrWhiteSpace(first.ToolTipText));
@@ -167,7 +170,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		{
 			var explorerItems = GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData),
 			                                                            Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, false);
-			TestNorthWindToolTips(explorerItems);
+			TestNorthWindToolTips(explorerItems, false);
 		}
 
 		private static List<ExplorerItem> GetSchemaTest<TEnum>(Type customType, Func<TEnum, IEntityFactoryCore> entityFactoryFactory, bool useFields)
