@@ -548,12 +548,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)))
 			{
 				fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
+				var fkNavigator = field.IsForeignKey ? "Navigator is: " + EntityHelper.GetNavigator(entity,field) : "";
 				fieldExplorerItems.Add(new ExplorerItem(CreateFieldText(field), ExplorerItemKind.Property, ExplorerIcon.Column)
 				                       	{
 				                       		DragText = field.Name,
 				                       		//SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
 				                       		//SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
-				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.GetFieldPropertyDescriptor(field.Name))
+																	ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.GetFieldPropertyDescriptor(field.Name), fkNavigator)
 				                       	});
 			}
 
@@ -652,14 +653,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 				return GeneralHelper.Join(Environment.NewLine, toolTipText, FormatTypeName(navigatorProperty.PropertyType, true), targetTipText);
 			}
-			if (hyperlinkTarget.ToolTipText.Contains(toolTipText))
-				return hyperlinkTarget.ToolTipText;
-			return GeneralHelper.Join(Environment.NewLine, toolTipText, hyperlinkTarget.ToolTipText);
+			var relationsForFieldOfType = entity.GetRelationsForFieldOfType(navigatorProperty.Name);
+			foreach (IEntityRelation relation in relationsForFieldOfType)
+			{
+				var allFkEntityFieldCoreObjects = relation.GetAllFKEntityFieldCoreObjects();
+				var plurilizer = allFkEntityFieldCoreObjects.Count == 1 ? "" : "(s)";
+				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
+																				 string.Format("Foriegn Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
+			}
+			return hyperlinkTarget.ToolTipText.Contains(toolTipText) ? hyperlinkTarget.ToolTipText : GeneralHelper.Join(Environment.NewLine, toolTipText, hyperlinkTarget.ToolTipText);
 		}
 
-		private static string CreateFieldToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo, MemberDescriptor propertyDescriptor)
+		private static string CreateFieldToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo, MemberDescriptor propertyDescriptor, string fkNavigator)
 		{
-			var toolTipText = CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, propertyDescriptor);
+			var toolTipText = GeneralHelper.Join(Environment.NewLine, CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, propertyDescriptor), fkNavigator);
 			if (fieldPersistenceInfo != null)
 			{
 				var sourceColumnIsNullable = fieldPersistenceInfo.SourceColumnIsNullable ? "" : " not ";
