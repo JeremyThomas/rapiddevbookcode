@@ -99,9 +99,9 @@ namespace AW.Helper.LLBL
 
 		public static IElementCreatorCore CreateElementCreator(Type typeInTheSameAssemblyAsElementCreator)
 		{
-			return typeof(IElementCreatorCore).IsAssignableFrom(typeInTheSameAssemblyAsElementCreator) 
-				? CreateElementCreatorFromType(typeInTheSameAssemblyAsElementCreator) 
-				: CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
+			return typeof (IElementCreatorCore).IsAssignableFrom(typeInTheSameAssemblyAsElementCreator)
+			       	? CreateElementCreatorFromType(typeInTheSameAssemblyAsElementCreator)
+			       	: CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
 		}
 
 		public static IElementCreatorCore CreateElementCreator(IEnumerable<Type> types)
@@ -727,8 +727,8 @@ namespace AW.Helper.LLBL
 		public static IFieldPersistenceInfo GetFieldPersistenceInfo(IEntityFieldCore field, IDataAccessAdapter adapter)
 		{
 			if (field is IEntityField)
-				return (IEntityField)field;
-			return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2)field);
+				return (IEntityField) field;
+			return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2) field);
 		}
 
 		public static IEnumerable<string> GetFieldsCustomProperties(IEntityCore entity, string fieldName)
@@ -739,22 +739,17 @@ namespace AW.Helper.LLBL
 		}
 
 		/// <summary>
-		/// Gets the navigator name for a foreign key field.
+		/// Gets the navigator name(s) for a foreign key field.
 		/// </summary>
 		/// <param name="entity">The entity.</param>
-		/// <param name="field">The foreign key field.</param>
+		/// <param name="fieldName">Name of the field.</param>
 		/// <returns></returns>
-		public static string GetNavigator(IEntityCore entity, IEntityFieldCore field)
+		public static IEnumerable<string> GetNavigatorNames(IEntityCore entity, string fieldName)
 		{
-			foreach (var entityRelation in entity.GetAllRelations())
-			{
-				foreach (var fkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects())
-				{
-					if (fkEntityFieldCoreObject.Name.Equals(field.Name))
-						return entityRelation.MappedFieldName;
-				}
-			}
-			return "";
+			return from entityRelation in entity.GetAllRelations().Where(r => !r.StartEntityIsPkSide) 
+						 from fkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects() 
+						 where fkEntityFieldCoreObject.Name.Equals(fieldName) 
+						 select entityRelation.MappedFieldName;
 		}
 	}
 }

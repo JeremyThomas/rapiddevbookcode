@@ -548,13 +548,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)))
 			{
 				fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
-				var fkNavigator = field.IsForeignKey ? "Navigator is: " + EntityHelper.GetNavigator(entity,field) : "";
+				var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
 				fieldExplorerItems.Add(new ExplorerItem(CreateFieldText(field), ExplorerItemKind.Property, ExplorerIcon.Column)
 				                       	{
 				                       		DragText = field.Name,
 				                       		//SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
 				                       		//SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
-																	ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.GetFieldPropertyDescriptor(field.Name), fkNavigator)
+				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.GetFieldPropertyDescriptor(field.Name), fkNavigator)
 				                       	});
 			}
 
@@ -610,26 +610,33 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			                                                                  	      	? "FK"
 			                                                                  	      	: "", field.IsReadOnly ? "RO" : "");
 			var typeName = FormatTypeName(field.DataType, false);
-			if (field.MaxLength > 0 && field.MaxLength < 1073741823)
-				typeName += "{" + field.MaxLength + "}";
-			else
-			{
-				var scalePrecision = string.Empty;
-				if (field.Scale > 0)
-					scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Scale.ToString());
-				if (field.Precision > 0 && !(field.Precision == 10 && MetaDataHelper.GetCoreType(field.DataType).Equals(typeof (Int32)))
-				    && !(field.Precision == 5 && MetaDataHelper.GetCoreType(field.DataType).Equals(typeof (Int16))))
-					scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Precision.ToString());
-				if (!string.IsNullOrEmpty(scalePrecision))
-					typeName += "{" + scalePrecision + "}";
-			}
+			var coreDataType = MetaDataHelper.GetCoreType(field.DataType);
+			var typeCode = Type.GetTypeCode(coreDataType);
+			if (!coreDataType.IsEnum && typeCode != TypeCode.Boolean)
+				if (field.MaxLength > 0 && field.MaxLength < 1073741823)
+					typeName += "{" + field.MaxLength + "}";
+				else
+				{
+					var scalePrecision = string.Empty;
+					if (field.Scale > 0)
+						scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Scale.ToString());
+					if (field.Precision > 0 && !(field.Precision == 10 && typeCode == TypeCode.Int32)
+					    && !(field.Precision == 5 && typeCode == TypeCode.Int16))
+						scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Precision.ToString());
+					if (!string.IsNullOrEmpty(scalePrecision))
+						typeName += "{" + scalePrecision + "}";
+				}
 			return GeneralHelper.Join(" - ", field.Name + " (" + typeName + ")", extra);
 		}
 
 		private static string CreateTableToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo)
 		{
 			var type = entity.GetType();
-			var toolTipText = GeneralHelper.Join(Environment.NewLine, FormatTypeName(type, true),
+			var baseType = "";
+			if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
+				if (type.BaseType != null && !type.BaseType.IsAbstract)
+					baseType = "Base Type: " + type.BaseType.Name;
+			var toolTipText = GeneralHelper.Join(Environment.NewLine, FormatTypeName(type, true), baseType,
 			                                     MetaDataHelper.GetDisplayNameAttributes(type).Select(da => da.DisplayName).Union(MetaDataHelper.GetDescriptionAttributes(type).Select(da => da.Description)).JoinAsString(),
 			                                     entity.CustomPropertiesOfType.Values.JoinAsString());
 			if (fieldPersistenceInfo != null)
@@ -657,16 +664,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			foreach (IEntityRelation relation in relationsForFieldOfType)
 			{
 				var allFkEntityFieldCoreObjects = relation.GetAllFKEntityFieldCoreObjects();
-				var plurilizer = allFkEntityFieldCoreObjects.Count == 1 ? "" : "(s)";
+				var plurilizer = allFkEntityFieldCoreObjects.Count == 1 ? "" : "s";
 				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-																				 string.Format("Foriegn Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
+				                                 string.Format("Foriegn Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
 			}
 			return hyperlinkTarget.ToolTipText.Contains(toolTipText) ? hyperlinkTarget.ToolTipText : GeneralHelper.Join(Environment.NewLine, toolTipText, hyperlinkTarget.ToolTipText);
 		}
 
-		private static string CreateFieldToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo, MemberDescriptor propertyDescriptor, string fkNavigator)
+		private static string CreateFieldToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo, PropertyDescriptor propertyDescriptor, string fkNavigator)
 		{
 			var toolTipText = GeneralHelper.Join(Environment.NewLine, CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, propertyDescriptor), fkNavigator);
+			var coreType = MetaDataHelper.GetCoreType(propertyDescriptor.PropertyType);
+			if (coreType.IsEnum)
+				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
+				                                 string.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
 			if (fieldPersistenceInfo != null)
 			{
 				var sourceColumnIsNullable = fieldPersistenceInfo.SourceColumnIsNullable ? "" : " not ";
