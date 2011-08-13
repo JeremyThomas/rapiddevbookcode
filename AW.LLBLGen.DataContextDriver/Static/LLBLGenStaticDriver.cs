@@ -481,6 +481,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			// us to build hyperlink targets allowing the user to click between associations:
 			var elementTypeLookup = topLevelProps.ToLookup(tp => tp.Tag.GetType());
 
+			//Copy ToolTipText from base type fields
+			foreach (var table in topLevelProps)
+			{
+				var entity = (IEntityCore)table.Tag;
+				if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
+				{
+					var explorerItems = elementTypeLookup[entity.GetType().BaseType];
+					var baseItem = explorerItems.SingleOrDefault();
+					if (baseItem != null)
+						foreach (var explorerItem in baseItem.Children)
+						{
+							var item = table.Children.Single(c => c.Text == explorerItem.Text);
+							item.ToolTipText = explorerItem.ToolTipText;
+						}
+				}
+			}
+
 			// Populate the columns (properties) of each entity:
 			foreach (var table in topLevelProps)
 			{
@@ -666,7 +683,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var allFkEntityFieldCoreObjects = relation.GetAllFKEntityFieldCoreObjects();
 				var plurilizer = allFkEntityFieldCoreObjects.Count == 1 ? "" : "s";
 				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-				                                 string.Format("Foriegn Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
+				                                 string.Format("Foreign Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
 			}
 			return hyperlinkTarget.ToolTipText.Contains(toolTipText) ? hyperlinkTarget.ToolTipText : GeneralHelper.Join(Environment.NewLine, toolTipText, hyperlinkTarget.ToolTipText);
 		}
@@ -674,10 +691,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static string CreateFieldToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo, PropertyDescriptor propertyDescriptor, string fkNavigator)
 		{
 			var toolTipText = GeneralHelper.Join(Environment.NewLine, CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, propertyDescriptor), fkNavigator);
-			var coreType = MetaDataHelper.GetCoreType(propertyDescriptor.PropertyType);
-			if (coreType.IsEnum)
-				toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-				                                 string.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
+			if (propertyDescriptor != null)
+			{
+				var coreType = MetaDataHelper.GetCoreType(propertyDescriptor.PropertyType);
+				if (coreType.IsEnum)
+					toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
+					                                 string.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
+			}
 			if (fieldPersistenceInfo != null)
 			{
 				var sourceColumnIsNullable = fieldPersistenceInfo.SourceColumnIsNullable ? "" : " not ";
