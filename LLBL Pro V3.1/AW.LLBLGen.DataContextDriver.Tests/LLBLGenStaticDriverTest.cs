@@ -73,19 +73,26 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		{
 			var customType = typeof (LinqMetaData);
 			var explorerItems = GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, true);
-			var explorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.CustomerEntity));
+			var customerExplorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.CustomerEntity));
 			IEntityCore customerEntity = new CustomerEntity();
 			var msDescription = customerEntity.CustomPropertiesOfType.Values.First();
-			StringAssert.Contains(explorerItem.ToolTipText, msDescription);
+			StringAssert.Contains(customerExplorerItem.ToolTipText, msDescription);
 
-			var firstExplorerItem = explorerItem.Children.First();
+			var firstExplorerItem = customerExplorerItem.Children.First();
 			Assert.IsFalse(string.IsNullOrWhiteSpace(firstExplorerItem.ToolTipText));
 			var firstField = (IEntityField) customerEntity.Fields[0];
 			StringAssert.Contains(firstExplorerItem.ToolTipText, firstField.SourceColumnName);
 
-			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceObjectName);
-			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceCatalogName);
-			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceSchemaName);
+			StringAssert.Contains(customerExplorerItem.ToolTipText, firstField.SourceObjectName);
+			StringAssert.Contains(customerExplorerItem.ToolTipText, firstField.SourceCatalogName);
+			StringAssert.Contains(customerExplorerItem.ToolTipText, firstField.SourceSchemaName);
+
+			var individualExplorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.IndividualEntity));
+			foreach (var explorerItem in customerExplorerItem.Children)
+			{
+				var item = individualExplorerItem.Children.Single(c=>c.Text==explorerItem.Text);
+				Assert.AreEqual(explorerItem.ToolTipText, item.ToolTipText);
+			}
 		}
 
 		/// <summary>
@@ -194,7 +201,6 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 				var entity = entityFactory.Create();
 				var fieldNames = entity.Fields.Cast<IEntityFieldCore>().Select(f => f.Name).Distinct();
 				var navigatorProperties = useFields ? EntityHelper.GetNavigatorProperties(entity) : MetaDataHelper.GetPropertyDescriptors(entity.GetType()).FilterByIsEnumerable(typeof (IEntityCore));
-				;
 				var explorerItem = actual[index];
 				index++;
 				var entityName = entityFactory.ForEntityName + " - " + explorerItem.Text;
