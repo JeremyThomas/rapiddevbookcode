@@ -14,8 +14,7 @@ namespace AW.Data.EntityClasses
   {
 		static CommonEntityBase()
 		{
-			//if (Environment.Version.Major >= 4)
-				MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
+			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
 		}
 
 		public static void Initialize()

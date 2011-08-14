@@ -471,11 +471,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var adapter = GetDataAccessAdapter(cxInfo, elementCreator is IElementCreator2);
 
 			var topLevelProps = (from type in EntityHelper.GetEntitiesTypes(customType.Assembly)
-			                     let entity = LinqUtils.CreateEntityInstanceFromEntityType(type, elementCreator)
-			                     let name = EntityHelper.GetNameFromEntity(entity)
-			                     orderby name
-			                     select CreateTableExplorerItem(entity, name, adapter)
-			                    ).ToList();
+													 let entity = LinqUtils.CreateEntityInstanceFromEntityType(type, elementCreator)
+													 let name = EntityHelper.GetNameFromEntity(entity)
+													 orderby name
+													 select CreateTableExplorerItem(entity, name, adapter)
+													).ToList();
 
 			// Create a lookup keying each element type to the properties of that type. This will allow
 			// us to build hyperlink targets allowing the user to click between associations:
@@ -493,7 +493,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 						foreach (var explorerItem in baseItem.Children)
 						{
 							var item = table.Children.Single(c => c.Text == explorerItem.Text);
-							item.ToolTipText = explorerItem.ToolTipText;
+							if (explorerItem.ToolTipText.Contains(item.ToolTipText))
+								item.ToolTipText = explorerItem.ToolTipText;
 						}
 				}
 			}
@@ -501,10 +502,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			// Populate the columns (properties) of each entity:
 			foreach (var table in topLevelProps)
 			{
-				var entity = (IEntityCore) table.Tag;
+				var entity = (IEntityCore)table.Tag;
 				try
 				{
-					table.Children.AddRange(EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup)));
+					var navigatorExplorerItems = EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup));
+					table.Children.AddRange(navigatorExplorerItems.OrderBy(ei => ei.Kind).ThenBy(ei => ei.Text));
 				}
 				catch (Exception e)
 				{
@@ -562,7 +564,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			var fieldExplorerItems = new List<ExplorerItem>();
 
-			foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)))
+			foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)).OrderBy(f => f.Name))
 			{
 				fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
 				var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
@@ -622,10 +624,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static string CreateFieldText(IFieldInfo field)
 		{
 			var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey
-			                                                                  	? "PK"
-			                                                                  	: "", field.IsForeignKey
-			                                                                  	      	? "FK"
-			                                                                  	      	: "", field.IsReadOnly ? "RO" : "");
+																																					? "PK"
+																																					: "", field.IsForeignKey
+																																									? "FK"
+																																									: "", field.IsReadOnly ? "RO" : "");
 			var typeName = FormatTypeName(field.DataType, false);
 			var coreDataType = MetaDataHelper.GetCoreType(field.DataType);
 			var typeCode = Type.GetTypeCode(coreDataType);
@@ -637,13 +639,21 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					var scalePrecision = string.Empty;
 					if (field.Scale > 0)
 						scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Scale.ToString());
-					if (field.Precision > 0 && !(field.Precision == 10 && typeCode == TypeCode.Int32)
-					    && !(field.Precision == 5 && typeCode == TypeCode.Int16))
-						scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Precision.ToString());
+					var precision = field.Precision;
+					if (precision > 0 && IsNonNormalPrecision(typeCode, precision))
+						scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, precision.ToString());
 					if (!string.IsNullOrEmpty(scalePrecision))
 						typeName += "{" + scalePrecision + "}";
 				}
 			return GeneralHelper.Join(" - ", field.Name + " (" + typeName + ")", extra);
+		}
+
+		private static bool IsNonNormalPrecision(TypeCode typeCode, byte precision)
+		{
+			return !(precision == 10 && typeCode == TypeCode.Int32)
+			       && !(precision == 5 && typeCode == TypeCode.Int16) 
+						 && !(precision == 24 && typeCode == TypeCode.Single)
+			       && !(precision == 3 && typeCode == TypeCode.Byte);
 		}
 
 		private static string CreateTableToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo)
@@ -691,12 +701,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static string CreateFieldToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo, PropertyDescriptor propertyDescriptor, string fkNavigator)
 		{
 			var toolTipText = GeneralHelper.Join(Environment.NewLine, CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, propertyDescriptor), fkNavigator);
-			if (propertyDescriptor != null)
+			if (propertyDescriptor == null)
+				GeneralHelper.TraceOut(entity.LLBLGenProEntityName + " propertyDescriptor == null");
+			else
 			{
 				var coreType = MetaDataHelper.GetCoreType(propertyDescriptor.PropertyType);
 				if (coreType.IsEnum)
 					toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-					                                 string.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
+																					 string.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
 			}
 			if (fieldPersistenceInfo != null)
 			{
@@ -705,7 +717,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				if (fieldPersistenceInfo.SourceColumnMaxLength < ushort.MaxValue && fieldPersistenceInfo.SourceColumnMaxLength > 0 || fieldPersistenceInfo.SourceColumnPrecision > 0)
 					sizeAndPrecision = string.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
 				var dbInfo = string.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
-				                           sizeAndPrecision, sourceColumnIsNullable);
+																	 sizeAndPrecision, sourceColumnIsNullable);
 				toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeperator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
 			}
 			return toolTipText.Trim();

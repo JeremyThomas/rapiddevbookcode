@@ -103,7 +103,6 @@ namespace Northwind.DAL.EntityClasses
 
 		static CommonEntityBase()
 		{
-			//if (Environment.Version.Major >= 4)
 			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(CommonEntityBase));
 		}
 
