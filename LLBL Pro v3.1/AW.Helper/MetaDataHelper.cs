@@ -303,25 +303,40 @@ namespace AW.Helper
 			       select propertyDescriptor;
 		}
 
-		public static PropertyDescriptor GetFieldPropertyDescriptor(this IEnumerable<PropertyDescriptor> propertyDescriptors, string fieldName)
+		public static IEnumerable<PropertyDescriptor> FilterByName(this IEnumerable<PropertyDescriptor> propertyDescriptors, string name)
 		{
-			return propertyDescriptors.FirstOrDefault(pd => pd.Name == fieldName);
+			return from propertyDescriptor in propertyDescriptors
+						 where propertyDescriptor.Name == name
+						 select propertyDescriptor;
 		}
 
 		/// <summary>
-		/// Adds the associated metadata providers for each type. But doesn't seem to work for properties on inherited classes for version of .net before 4.0
+		/// Gets the property descriptor for a property. If there are more than 1 get the one with the 'most' information otherwise take the last.
 		/// </summary>
-		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
-		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
-		public static void AddAssociatedMetadataProviders(IEnumerable<Type> typesWhichMayHaveBuddyClasses)
+		/// <param name="propertyDescriptors">The property descriptors.</param>
+		/// <param name="name">The property name.</param>
+		/// <returns></returns>
+		public static PropertyDescriptor GetFieldPropertyDescriptor(this IEnumerable<PropertyDescriptor> propertyDescriptors, string name)
 		{
-			foreach (var typeWithBuddyClass in typesWhichMayHaveBuddyClasses)
-				AddAssociatedMetadataProvider(typeWithBuddyClass);
-		}
-
-		public static void AddAssociatedMetadataProvider(Type typeWithBuddyClass)
+			var descriptorsWithName = propertyDescriptors.FilterByName(name);
+			PropertyDescriptor result = null;
+			if (descriptorsWithName != null)
+				foreach (var propertyDescriptor in descriptorsWithName)
+				{
+					result = propertyDescriptor;
+					if (result.Name != result.DisplayName)
+						return result;
+				}
+			return result;
+		}		
+		
+		/// <summary>
+		/// Folds all of the associated metadata providers into the type of the subject. Does not work properly before .net 4.
+		/// </summary>
+		public static void FoldAllAssociatedMetadataProvidersIntoTheSubjectType(Type ancestorType)
 		{
-			TypeDescriptor.AddProvider(new AssociatedMetadataTypeTypeDescriptionProvider(typeWithBuddyClass), typeWithBuddyClass);
+			if (Environment.Version.Major >= 4)
+			  AddAssociatedMetadataProviders(GetDescendants(ancestorType));
 		}
 
 		/// <summary>
@@ -329,20 +344,34 @@ namespace AW.Helper
 		/// </summary>
 		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
 		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
-		public static void AddAssociatedMetadataProviders(params Type[] typesWhichMayHaveBuddyClasses)
+		internal static void AddAssociatedMetadataProviders(params Type[] typesWhichMayHaveBuddyClasses)
 		{
 			if (!typesWhichMayHaveBuddyClasses.IsNullOrEmpty())
 				AddAssociatedMetadataProviders((IEnumerable<Type>) typesWhichMayHaveBuddyClasses);
 		}
 
 		/// <summary>
-		/// Folds all of the associated metadata providers into the type of the subject.
+		/// Adds the associated metadata providers for each type. But doesn't seem to work for properties on inherited classes for version of .net before 4.0
 		/// </summary>
-		public static void FoldAllAssociatedMetadataProvidersIntoTheSubjectType(Type ancestorType)
+		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
+		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
+		internal static void AddAssociatedMetadataProviders(IEnumerable<Type> typesWhichMayHaveBuddyClasses)
 		{
-			AddAssociatedMetadataProviders(GetDescendants(ancestorType));
+			foreach (var typeWithBuddyClass in typesWhichMayHaveBuddyClasses)
+				AddAssociatedMetadataProvider(typeWithBuddyClass);
 		}
 
+		/// <summary>
+		/// Adds the associated metadata provider.
+		/// </summary>
+		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
+		/// <param name="typeWithBuddyClass">The type with buddy class.</param>
+		public static void AddAssociatedMetadataProvider(Type typeWithBuddyClass)
+		{
+			if (Environment.Version.Major >= 4)
+			  TypeDescriptor.AddProvider(new AssociatedMetadataTypeTypeDescriptionProvider(typeWithBuddyClass), typeWithBuddyClass);
+		}
+		
 		/// <summary>
 		/// Creates an instance of type if type is an ancestorType or a descendant
 		/// </summary>
@@ -368,12 +397,12 @@ namespace AW.Helper
 			if (TypeDescriptor.GetProvider(modelClass) is AssociatedMetadataTypeTypeDescriptionProvider)
 				return modelClassProperties; //No need to get the MetadataType(buddy class)
 
-			//if (Environment.Version.Major < 4) // Not needed if .net 4.0 and LinqMetaData.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
-			//{
-			//  var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
-			//  if (metadataAttrib != null)
-			//    modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).Cast<PropertyDescriptor>().ToList());
-			//}
+			if (Environment.Version.Major < 4) // Not needed if .net 4.0 and FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
+			{
+				var metadataAttrib = modelClass.GetCustomAttributes(typeof(MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
+				if (metadataAttrib != null)
+					modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).AsEnumerable());
+			}
 			return modelClassProperties;
 		}
 
