@@ -471,11 +471,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var adapter = GetDataAccessAdapter(cxInfo, elementCreator is IElementCreator2);
 
 			var topLevelProps = (from type in EntityHelper.GetEntitiesTypes(customType.Assembly)
-													 let entity = LinqUtils.CreateEntityInstanceFromEntityType(type, elementCreator)
-													 let name = EntityHelper.GetNameFromEntity(entity)
-													 orderby name
-													 select CreateTableExplorerItem(entity, name, adapter)
-													).ToList();
+			                     let entity = LinqUtils.CreateEntityInstanceFromEntityType(type, elementCreator)
+			                     let name = EntityHelper.GetNameFromEntity(entity)
+			                     orderby name
+			                     select CreateTableExplorerItem(entity, name, adapter)
+			                    ).ToList();
 
 			// Create a lookup keying each element type to the properties of that type. This will allow
 			// us to build hyperlink targets allowing the user to click between associations:
@@ -484,7 +484,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			//Copy ToolTipText from base type fields
 			foreach (var table in topLevelProps)
 			{
-				var entity = (IEntityCore)table.Tag;
+				var entity = (IEntityCore) table.Tag;
 				if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
 				{
 					var explorerItems = elementTypeLookup[entity.GetType().BaseType];
@@ -502,11 +502,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			// Populate the columns (properties) of each entity:
 			foreach (var table in topLevelProps)
 			{
-				var entity = (IEntityCore)table.Tag;
+				var entity = (IEntityCore) table.Tag;
 				try
 				{
-					var navigatorExplorerItems = EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup));
-					table.Children.AddRange(navigatorExplorerItems.OrderBy(ei => ei.Kind).ThenBy(ei => ei.Text));
+					var navigatorExplorerItems = EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup)).Where(ei => ei != null).ToList();
+					var navigatorExplorerItems2 = navigatorExplorerItems.OrderBy(ei => ei.Icon).ThenBy(ei => ei.Text).ToList();
+					table.Children.AddRange(navigatorExplorerItems2);
 				}
 				catch (Exception e)
 				{
@@ -584,7 +585,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static ExplorerItem CreateNavigatorExplorerItem(IEntityCore entity, PropertyDescriptor navigatorProperty, ILookup<Type, ExplorerItem> elementTypeLookup)
 		{
 			var elementType = MetaDataHelper.GetElementType(navigatorProperty.PropertyType);
-			var hyperlinkTarget = elementTypeLookup[elementType].First();
+			var explorerItems = elementTypeLookup[elementType];
+			var hyperlinkTarget = explorerItems.SingleOrDefault();
+			if (hyperlinkTarget == null)
+			{
+				GeneralHelper.TraceOut(GeneralHelper.Join(entity.LLBLGenProEntityName, navigatorProperty.Name, navigatorProperty.DisplayName, navigatorProperty.Description));
+				return null;
+			}			
 			var explorerIcon = GetExplorerIcon(entity, navigatorProperty.Name);
 			var explorerItemKind = GetExplorerItemKind(explorerIcon);
 			return new ExplorerItem(navigatorProperty.Name, explorerItemKind, explorerIcon)
@@ -624,10 +631,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static string CreateFieldText(IFieldInfo field)
 		{
 			var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey
-																																					? "PK"
-																																					: "", field.IsForeignKey
-																																									? "FK"
-																																									: "", field.IsReadOnly ? "RO" : "");
+			                                                                  	? "PK"
+			                                                                  	: "", field.IsForeignKey
+			                                                                  	      	? "FK"
+			                                                                  	      	: "", field.IsReadOnly ? "RO" : "");
 			var typeName = FormatTypeName(field.DataType, false);
 			var coreDataType = MetaDataHelper.GetCoreType(field.DataType);
 			var typeCode = Type.GetTypeCode(coreDataType);
@@ -651,8 +658,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private static bool IsNonNormalPrecision(TypeCode typeCode, byte precision)
 		{
 			return !(precision == 10 && typeCode == TypeCode.Int32)
-			       && !(precision == 5 && typeCode == TypeCode.Int16) 
-						 && !(precision == 24 && typeCode == TypeCode.Single)
+			       && !(precision == 5 && typeCode == TypeCode.Int16)
+			       && !(precision == 24 && typeCode == TypeCode.Single)
 			       && !(precision == 3 && typeCode == TypeCode.Byte);
 		}
 
@@ -708,7 +715,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var coreType = MetaDataHelper.GetCoreType(propertyDescriptor.PropertyType);
 				if (coreType.IsEnum)
 					toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-																					 string.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
+					                                 string.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
 			}
 			if (fieldPersistenceInfo != null)
 			{
@@ -717,7 +724,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				if (fieldPersistenceInfo.SourceColumnMaxLength < ushort.MaxValue && fieldPersistenceInfo.SourceColumnMaxLength > 0 || fieldPersistenceInfo.SourceColumnPrecision > 0)
 					sizeAndPrecision = string.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
 				var dbInfo = string.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
-																	 sizeAndPrecision, sourceColumnIsNullable);
+				                           sizeAndPrecision, sourceColumnIsNullable);
 				toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeperator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
 			}
 			return toolTipText.Trim();

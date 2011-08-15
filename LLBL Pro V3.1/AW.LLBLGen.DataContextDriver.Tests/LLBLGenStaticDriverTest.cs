@@ -159,7 +159,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 
 			var orderDetailExplorerItem = explorerItems.Single(e => e.Text == EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.OrderDetailEntity));
 			var quantityExplorerItem = orderDetailExplorerItem.Children.Single(ei => ei.DragText == "Quantity");
-			StringAssert.Contains(quantityExplorerItem.ToolTipText, "Quantity description attribute");
+			StringAssert.Contains(quantityExplorerItem.ToolTipText, "Quantity IOrderDetailMetadata description attribute");
 
 			return explorerItem;
 		}
@@ -186,14 +186,19 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var target = new LLBLGenStaticDriver();
 			var mockedICustomTypeInfo = new Mock<ICustomTypeInfo>();
 			var mockedIConnectionInfo = new Mock<IConnectionInfo>();
+			var mockedIDatabaseInfo = new Mock<IDatabaseInfo>();
 			var xElementDriverData = new XElement("DriverData");
 			var xElementUseFields = new XElement(ConnectionDialog.ElementNameUseFields) {Value = useFields.ToString()};
 			xElementDriverData.Add(xElementUseFields);
 			mockedIConnectionInfo.Setup(ci => ci.DriverData).Returns(xElementDriverData);
 			mockedIConnectionInfo.Setup(ci => ci.CustomTypeInfo).Returns(mockedICustomTypeInfo.Object);
+			mockedIConnectionInfo.Setup(ci => ci.DatabaseInfo).Returns(mockedIDatabaseInfo.Object);
+			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdaptertype, "Northwind.DAL.SqlServer.DataAccessAdapter");
+			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdapterAssembly, "Northwind.DAL.SqlServer.dll");
+
 			var actual = target.GetSchema(mockedIConnectionInfo.Object, customType);
 			Assert.AreEqual(entityTypes.Length, actual.Count);
-			var orderedEnumerable = entityTypes.OrderBy(et => et.ToString().Replace("Entity", ""));
+			var orderedEnumerable = entityTypes.OrderBy(et => EntityHelper.GetNameFromEntityName(et.ToString()));
 			var index = 0;
 			foreach (var entityType in orderedEnumerable)
 			{
