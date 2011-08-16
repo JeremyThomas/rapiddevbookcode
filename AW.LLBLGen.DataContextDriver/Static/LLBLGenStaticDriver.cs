@@ -505,9 +505,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var entity = (IEntityCore) table.Tag;
 				try
 				{
-					var navigatorExplorerItems = EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup)).Where(ei => ei != null).ToList();
-					var navigatorExplorerItems2 = navigatorExplorerItems.OrderBy(ei => ei.Icon).ThenBy(ei => ei.Text).ToList();
-					table.Children.AddRange(navigatorExplorerItems2);
+					var navigatorExplorerItems = EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup))
+						.Where(ei => ei != null).OrderBy(ei => ei.Icon).ThenBy(ei => ei.Text).ToList();
+					table.Children.AddRange(navigatorExplorerItems);
 				}
 				catch (Exception e)
 				{
@@ -589,7 +589,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var hyperlinkTarget = explorerItems.SingleOrDefault();
 			if (hyperlinkTarget == null)
 			{
-				GeneralHelper.TraceOut(GeneralHelper.Join(entity.LLBLGenProEntityName, navigatorProperty.Name, navigatorProperty.DisplayName, navigatorProperty.Description));
+				GeneralHelper.TraceOut(GeneralHelper.Join(GeneralHelper.StringJoinSeperator, entity.LLBLGenProEntityName, navigatorProperty.Name, navigatorProperty.DisplayName, navigatorProperty.Description));
 				return null;
 			}			
 			var explorerIcon = GetExplorerIcon(entity, navigatorProperty.Name);

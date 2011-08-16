@@ -357,7 +357,7 @@ namespace AW.Helper.LLBL
 		public static void Undo(object modifiedData)
 		{
 			var listItemType = ListBindingHelper.GetListItemType(modifiedData);
-			if (typeof (IEntityCore).IsAssignableFrom(listItemType))
+			if (IsEntityCore(listItemType))
 			{
 				var enumerable = modifiedData as IEnumerable;
 				if (enumerable == null)
@@ -664,7 +664,17 @@ namespace AW.Helper.LLBL
 
 		public static bool IsEntityCore(PropertyDescriptor propertyDescriptor)
 		{
-			return typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType);
+			return IsEntityCore(propertyDescriptor.PropertyType);
+		}
+
+		public static bool IsMemberOfEntityCore(PropertyDescriptor propertyDescriptor)
+		{
+			return IsEntityCore(propertyDescriptor.ComponentType);
+		}
+
+		private static bool IsEntityCore(Type type)
+		{
+			return typeof (IEntityCore).IsAssignableFrom(type);
 		}
 
 		public static IEntityFields GetFieldsFromType(Type type)
@@ -688,7 +698,7 @@ namespace AW.Helper.LLBL
 
 		public static IEnumerable<PropertyDescriptor> FilterByIsNavigator(this IEnumerable<PropertyDescriptor> propertyDescriptors, IEntityCore entityCore)
 		{
-			return propertyDescriptors.Where(propertyDescriptor => FieldIsNavigator(entityCore, propertyDescriptor.Name));
+			return propertyDescriptors.Where(propertyDescriptor => FieldIsNavigator(entityCore, propertyDescriptor.Name) && IsMemberOfEntityCore(propertyDescriptor));
 		}
 
 		public static IEnumerable<PropertyDescriptor> FilterByIsField(this IEnumerable<PropertyDescriptor> propertyDescriptors, IEntityCore entityCore)
