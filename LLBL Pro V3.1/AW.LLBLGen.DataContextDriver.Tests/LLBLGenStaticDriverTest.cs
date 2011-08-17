@@ -159,7 +159,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 
 			var orderDetailExplorerItem = explorerItems.Single(e => e.Text == EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.OrderDetailEntity));
 			var quantityExplorerItem = orderDetailExplorerItem.Children.Single(ei => ei.DragText == "Quantity");
-			StringAssert.Contains(quantityExplorerItem.ToolTipText, "Quantity IOrderDetailMetadata description attribute");
+			StringAssert.Contains(quantityExplorerItem.ToolTipText, StringConstants.QuantityDescription);
 
 			return explorerItem;
 		}

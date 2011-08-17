@@ -3,8 +3,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Xml.Schema;
+using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.FactoryClasses;
 using AW.Helper;
+using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
@@ -218,6 +221,31 @@ namespace AW.Tests
 			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(typeof (SalesOrderHeaderEntity));
 			var quantityPropertyDescriptor = propertyDescriptors.Single(pd => pd.Name.Equals("PurchaseOrderNumber"));
 			Assert.AreEqual(SalesOrderHeaderEntity.PurchaseOrderNumberDescription, quantityPropertyDescriptor.Description);
+		}
+
+		[TestMethod, Microsoft.VisualStudio.TestTools.UnitTesting.Description("A test that All Fields Have Property Descriptors")]
+		public void TestAllFieldsHavePropertyDescriptors()
+		{
+			AssertAllFieldsHavePropertyDescriptors<EntityType>(EntityFactoryFactory.GetFactory, EntityType.IndividualEntity);
+			AssertAllFieldsHavePropertyDescriptors<Northwind.DAL.EntityType>(Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory);
+		}
+
+		public static void AssertAllFieldsHavePropertyDescriptors<TEnum>(Func<TEnum, IEntityFactoryCore> entityFactoryFactory, params TEnum[] entityTypes)
+		{
+			if (entityTypes.IsNullOrEmpty())
+				entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>().ToArray();
+			else
+				GeneralHelper.CheckIsEnum(typeof(TEnum));
+			foreach (var entityType in entityTypes)
+			{
+				var entityFactoryCore = entityFactoryFactory(entityType);
+				var entity2 = entityFactoryCore.Create();
+				var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(entity2.GetType());
+				foreach (var entityFieldCore in entity2.GetFields())
+				{
+					Assert.IsNotNull(propertyDescriptors.GetFieldPropertyDescriptor(entityFieldCore.Name));
+				}
+			}
 		}
 	}
 }
