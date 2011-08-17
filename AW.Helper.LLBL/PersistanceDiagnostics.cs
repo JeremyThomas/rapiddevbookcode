@@ -281,9 +281,10 @@ namespace AW.Helper.LLBL
 		/// </summary>
 		public EntityInformation(IEntity entity)
 		{
-			Entity = entity.LLBLGenProEntityName.Replace("Entity", "");
-			var fieldAndEntityInformations = from field in entity.Fields.AsEnumerable()
-			                                 where field.ContainingObjectName.Equals(field.ActualContainingObjectName)
+			Entity = EntityHelper.GetNameFromEntity(entity);
+			var entityFields = entity.Fields.AsEnumerable().GroupBy(f => f.Name).Select(y => y.First()).Where(field => field.ContainingObjectName.Equals(field.ActualContainingObjectName));
+			//	remove duplicate field names and ancestor fields
+			var fieldAndEntityInformations = from field in entityFields
 			                                 select new FieldAndEntityInformation(entity.GetType(), field,
 			                                                                      entity.FieldsCustomPropertiesOfType.ContainsKey(field.Name)
 			                                                                      	? entity.FieldsCustomPropertiesOfType[field.Name]

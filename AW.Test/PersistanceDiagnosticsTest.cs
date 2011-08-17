@@ -110,6 +110,17 @@ namespace AW.Tests
 		{
 			var actual = EntityInformation.EntityInfoFactory<Data.EntityType>(Data.FactoryClasses.EntityFactoryFactory.GetFactory).OrderBy(fi => fi.Entity);
 			Assert.AreEqual(Enum.GetNames(typeof(Data.EntityType)).Length, actual.Count());
+			var individualEntityInformation = actual.Single(ei => ei.Entity == "Individual");
+			Assert.AreEqual(2, individualEntityInformation.FieldInformation.Count());
+
+			foreach (var entityInformation in actual.Where(ei => !ei.Entity.Contains("History") && !ei.Entity.Contains("CustomerViewRelated")))
+			{
+				Assert.IsFalse(string.IsNullOrWhiteSpace(entityInformation.CustomProperties),entityInformation.Entity);
+				foreach (var fieldAndEntityInformation in entityInformation.FieldInformation)
+				{
+					Assert.IsFalse(string.IsNullOrWhiteSpace(fieldAndEntityInformation.CustomProperties),fieldAndEntityInformation.FieldName);
+				}
+			}
 		}
 
 		/// <summary>
@@ -144,8 +155,7 @@ namespace AW.Tests
 		{
 			IEntity2 entity = null; // TODO: Initialize to an appropriate value
 			StringBuilder expected = null; // TODO: Initialize to an appropriate value
-			StringBuilder actual;
-			actual = PersistanceDiagnostics.ReadEveryBindableProperty(entity);
+			StringBuilder actual = PersistanceDiagnostics.ReadEveryBindableProperty(entity);
 			Assert.AreEqual(expected, actual);
 			Assert.Inconclusive("Verify the correctness of this test method.");
 		}

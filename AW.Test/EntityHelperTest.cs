@@ -216,12 +216,16 @@ namespace AW.Tests
 		public void GetNavigatorPropertiesTest()
 		{
 			var customer = new Northwind.DAL.EntityClasses.CustomerEntity();
-			var toManyProperties = EntityHelper.GetNavigatorProperties(customer);
-			Assert.AreEqual(4, toManyProperties.Count());
+			var properties = EntityHelper.GetNavigatorProperties(customer);
+			Assert.AreEqual(4, properties.Count());
 
 			var employeeEntity = new Northwind.DAL.EntityClasses.EmployeeEntity();
-			toManyProperties = EntityHelper.GetNavigatorProperties(employeeEntity);
-			Assert.AreEqual(5, toManyProperties.Count());
+			properties = EntityHelper.GetNavigatorProperties(employeeEntity);
+			Assert.AreEqual(5, properties.Count());
+
+			var orderDetailEntity = new Northwind.DAL.EntityClasses.OrderDetailEntity();
+			properties = EntityHelper.GetNavigatorProperties(orderDetailEntity);
+			Assert.AreEqual(2, properties.Count());
 		}
 
 

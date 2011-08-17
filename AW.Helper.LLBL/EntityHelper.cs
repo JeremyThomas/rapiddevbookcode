@@ -99,9 +99,9 @@ namespace AW.Helper.LLBL
 
 		public static IElementCreatorCore CreateElementCreator(Type typeInTheSameAssemblyAsElementCreator)
 		{
-			return typeof(IElementCreatorCore).IsAssignableFrom(typeInTheSameAssemblyAsElementCreator) 
-				? CreateElementCreatorFromType(typeInTheSameAssemblyAsElementCreator) 
-				: CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
+			return typeof (IElementCreatorCore).IsAssignableFrom(typeInTheSameAssemblyAsElementCreator)
+			       	? CreateElementCreatorFromType(typeInTheSameAssemblyAsElementCreator)
+			       	: CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
 		}
 
 		public static IElementCreatorCore CreateElementCreator(IEnumerable<Type> types)
@@ -357,7 +357,7 @@ namespace AW.Helper.LLBL
 		public static void Undo(object modifiedData)
 		{
 			var listItemType = ListBindingHelper.GetListItemType(modifiedData);
-			if (typeof (IEntityCore).IsAssignableFrom(listItemType))
+			if (IsEntityCore(listItemType))
 			{
 				var enumerable = modifiedData as IEnumerable;
 				if (enumerable == null)
@@ -664,7 +664,17 @@ namespace AW.Helper.LLBL
 
 		public static bool IsEntityCore(PropertyDescriptor propertyDescriptor)
 		{
-			return typeof (IEntityCore).IsAssignableFrom(propertyDescriptor.PropertyType);
+			return IsEntityCore(propertyDescriptor.PropertyType);
+		}
+
+		public static bool IsMemberOfEntityCore(PropertyDescriptor propertyDescriptor)
+		{
+			return IsEntityCore(propertyDescriptor.ComponentType);
+		}
+
+		private static bool IsEntityCore(Type type)
+		{
+			return typeof (IEntityCore).IsAssignableFrom(type);
 		}
 
 		public static IEntityFields GetFieldsFromType(Type type)
@@ -688,7 +698,7 @@ namespace AW.Helper.LLBL
 
 		public static IEnumerable<PropertyDescriptor> FilterByIsNavigator(this IEnumerable<PropertyDescriptor> propertyDescriptors, IEntityCore entityCore)
 		{
-			return propertyDescriptors.Where(propertyDescriptor => FieldIsNavigator(entityCore, propertyDescriptor.Name));
+			return propertyDescriptors.Where(propertyDescriptor => FieldIsNavigator(entityCore, propertyDescriptor.Name) && IsMemberOfEntityCore(propertyDescriptor));
 		}
 
 		public static IEnumerable<PropertyDescriptor> FilterByIsField(this IEnumerable<PropertyDescriptor> propertyDescriptors, IEntityCore entityCore)
@@ -727,8 +737,8 @@ namespace AW.Helper.LLBL
 		public static IFieldPersistenceInfo GetFieldPersistenceInfo(IEntityFieldCore field, IDataAccessAdapter adapter)
 		{
 			if (field is IEntityField)
-				return (IEntityField)field;
-			return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2)field);
+				return (IEntityField) field;
+			return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2) field);
 		}
 
 		public static IEnumerable<string> GetFieldsCustomProperties(IEntityCore entity, string fieldName)
@@ -736,6 +746,20 @@ namespace AW.Helper.LLBL
 			return entity.FieldsCustomPropertiesOfType.ContainsKey(fieldName)
 			       	? entity.FieldsCustomPropertiesOfType[fieldName].Values
 			       	: Enumerable.Empty<string>();
+		}
+
+		/// <summary>
+		/// Gets the navigator name(s) for a foreign key field.
+		/// </summary>
+		/// <param name="entity">The entity.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		/// <returns></returns>
+		public static IEnumerable<string> GetNavigatorNames(IEntityCore entity, string fieldName)
+		{
+			return from entityRelation in entity.GetAllRelations().Where(r => !r.StartEntityIsPkSide) 
+						 from fkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects() 
+						 where fkEntityFieldCoreObject.Name.Equals(fieldName) 
+						 select entityRelation.MappedFieldName;
 		}
 	}
 }

@@ -249,13 +249,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public void SetDriverDataValue(string elementName, string value)
 		{
-			CreateElementIfNeeded(CxInfo, elementName, null);
+			SetDriverDataValue(CxInfo, elementName, value);
+		}
+
+		internal static void SetDriverDataValue(IConnectionInfo connectionInfo, string elementName, string value)
+		{
+			CreateElementIfNeeded(connectionInfo, elementName, null);
 // ReSharper disable PossibleNullReferenceException
-			CxInfo.DriverData.Element(elementName).Value = value;
+			connectionInfo.DriverData.Element(elementName).Value = value;
 // ReSharper restore PossibleNullReferenceException
 		}
 
-		public static string GetDriverDataValue(IConnectionInfo cxInfo, string elementName)
+		internal static string GetDriverDataValue(IConnectionInfo cxInfo, string elementName)
 		{
 			var xElement = cxInfo.DriverData.Element(elementName);
 			return xElement != null ? xElement.Value : null;

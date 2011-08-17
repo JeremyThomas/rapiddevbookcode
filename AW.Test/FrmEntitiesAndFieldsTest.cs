@@ -95,8 +95,9 @@ namespace AW.Tests
 
 		public void Handler(string name, IntPtr hWnd, Form form)
 		{
-			_rootNodesCount = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes.Count;
-			_nodesCount = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count();
+			var treeNodeCollection = GetTreeViewEntitiesFromFrmEntitiesAndFields(form).Nodes;
+			_rootNodesCount = treeNodeCollection.Count;
+			_nodesCount = treeNodeCollection.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count();
 			form.Close();
 		}
 
