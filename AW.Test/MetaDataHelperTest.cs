@@ -207,7 +207,7 @@ namespace AW.Tests
 		{
 			var propertyDescriptors = MetaDataHelper.GetPropertyDescriptors(typeof (OrderDetailEntity));
 			var quantityPropertyDescriptor = propertyDescriptors.Single(pd => pd.Name.Equals("Quantity"));
-			Assert.AreEqual("Quantity description attribute", quantityPropertyDescriptor.Description);
+			Assert.AreEqual(StringConstants.QuantityDescription, quantityPropertyDescriptor.Description);
 			var displayNameAttributes = MetaDataHelper.GetAttributes<DisplayNameAttribute>(propertyDescriptors, "Quantity");
 			Assert.AreEqual(1, displayNameAttributes.Count());
 			var descriptionAttributes = MetaDataHelper.GetAttributes<System.ComponentModel.DescriptionAttribute>(propertyDescriptors, "Quantity");
