@@ -2,22 +2,38 @@ using System.ComponentModel;
 
 namespace Northwind.DAL.EntityClasses
 {
+	public static class StringConstants
+	{
+		public const string QuantityDescription= "Quantity IOrderDetailMetadata description attribute";
+		public const string QuantityDisplayName = "Quantity IOrderDetailMetadata DisplayName";
+	
+		public const string UnitPriceDescription = "UnitPrice IOrderDetailMetadata description attribute";
+		public const string UnitPriceDisplayName = "UnitPrice IOrderDetailMetadata DisplayName";
+
+		public const string OrderDescription = "Order IOrderDetailMetadata description attribute";
+		public const string OrderDisplayName = "Order IOrderDetailMetadata DisplayName";
+
+		public const string ProductDescription = "Product IOrderDetailMetadata description attribute";
+		public const string ProductDisplayName = "Product IOrderDetailMetadata DisplayName";
+	}
+
+
 	internal interface IOrderDetailMetadata
 	{
-		[Description("Quantity IOrderDetailMetadata description attribute")]
-		[DisplayName("Quantity IOrderDetailMetadata DisplayName")]
+		[Description(StringConstants.QuantityDescription)]
+		[DisplayName(StringConstants.QuantityDisplayName)]
 		object Quantity { get; set; }
 
-		[Description("UnitPrice IOrderDetailMetadata description attribute")]
-		[DisplayName("UnitPrice IOrderDetailMetadata DisplayName")]
+		[Description(StringConstants.UnitPriceDescription)]
+		[DisplayName(StringConstants.UnitPriceDisplayName)]
 		object UnitPrice { get; set; }
 
-		[Description("Order IOrderDetailMetadata description attribute")]
-		[DisplayName("Order IOrderDetailMetadata DisplayName")]
+		[Description(StringConstants.OrderDescription)]
+		[DisplayName(StringConstants.OrderDisplayName)]
 		object Order { get; set; }
 
-		[Description("Product IOrderDetailMetadata description attribute")]
-		[DisplayName("Product IOrderDetailMetadata DisplayName")]
+		[Description(StringConstants.ProductDescription)]
+		[DisplayName(StringConstants.ProductDisplayName)]
 		object Product { get; set; }
 	}
 }
