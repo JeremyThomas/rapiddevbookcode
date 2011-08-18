@@ -73,19 +73,26 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		{
 			var customType = typeof (LinqMetaData);
 			var explorerItems = GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, true);
-			var explorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.CustomerEntity));
+			var customerExplorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.CustomerEntity));
 			IEntityCore customerEntity = new CustomerEntity();
 			var msDescription = customerEntity.CustomPropertiesOfType.Values.First();
-			StringAssert.Contains(explorerItem.ToolTipText, msDescription);
+			StringAssert.Contains(customerExplorerItem.ToolTipText, msDescription);
 
-			var firstExplorerItem = explorerItem.Children.First();
+			var firstExplorerItem = customerExplorerItem.Children.First();
 			Assert.IsFalse(string.IsNullOrWhiteSpace(firstExplorerItem.ToolTipText));
 			var firstField = (IEntityField) customerEntity.Fields[0];
 			StringAssert.Contains(firstExplorerItem.ToolTipText, firstField.SourceColumnName);
 
-			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceObjectName);
-			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceCatalogName);
-			StringAssert.Contains(explorerItem.ToolTipText, firstField.SourceSchemaName);
+			StringAssert.Contains(customerExplorerItem.ToolTipText, firstField.SourceObjectName);
+			StringAssert.Contains(customerExplorerItem.ToolTipText, firstField.SourceCatalogName);
+			StringAssert.Contains(customerExplorerItem.ToolTipText, firstField.SourceSchemaName);
+
+			var individualExplorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.IndividualEntity));
+			foreach (var explorerItem in customerExplorerItem.Children)
+			{
+				var item = individualExplorerItem.Children.Single(c=>c.Text==explorerItem.Text);
+				Assert.AreEqual(explorerItem.ToolTipText, item.ToolTipText);
+			}
 		}
 
 		/// <summary>
@@ -112,7 +119,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			Assert.AreEqual(ExplorerIcon.ManyToMany, employeeExplorerItem.Icon);
 		}
 
-		private static ExplorerItem TestNorthWindToolTips(List<ExplorerItem> explorerItems)
+		private static ExplorerItem TestNorthWindToolTips(List<ExplorerItem> explorerItems, bool testForiegnKey = true)
 		{
 			var customerName = EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.CustomerEntity);
 			var explorerItem = explorerItems.First(e => e.Text == customerName);
@@ -140,6 +147,9 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.Description);
 			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.DisplayName);
 
+			if (testForiegnKey)
+			  StringAssert.Contains(customerNavigator.ToolTipText, OrderFieldIndex.CustomerId.ToString());
+
 			var first = explorerItem.Children.First();
 			Assert.IsFalse(string.IsNullOrWhiteSpace(first.ToolTipText));
 			var customerPropertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(customerEntitytype);
@@ -149,7 +159,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 
 			var orderDetailExplorerItem = explorerItems.Single(e => e.Text == EntityHelper.GetNameFromEntityEnum(Northwind.DAL.EntityType.OrderDetailEntity));
 			var quantityExplorerItem = orderDetailExplorerItem.Children.Single(ei => ei.DragText == "Quantity");
-			StringAssert.Contains(quantityExplorerItem.ToolTipText, "Quantity description attribute");
+			StringAssert.Contains(quantityExplorerItem.ToolTipText, StringConstants.QuantityDescription);
 
 			return explorerItem;
 		}
@@ -167,7 +177,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		{
 			var explorerItems = GetSchemaTest<Northwind.DAL.EntityType>(typeof (Northwind.DAL.Linq.LinqMetaData),
 			                                                            Northwind.DAL.FactoryClasses.EntityFactoryFactory.GetFactory, false);
-			TestNorthWindToolTips(explorerItems);
+			TestNorthWindToolTips(explorerItems, false);
 		}
 
 		private static List<ExplorerItem> GetSchemaTest<TEnum>(Type customType, Func<TEnum, IEntityFactoryCore> entityFactoryFactory, bool useFields)
@@ -176,14 +186,19 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var target = new LLBLGenStaticDriver();
 			var mockedICustomTypeInfo = new Mock<ICustomTypeInfo>();
 			var mockedIConnectionInfo = new Mock<IConnectionInfo>();
+			var mockedIDatabaseInfo = new Mock<IDatabaseInfo>();
 			var xElementDriverData = new XElement("DriverData");
 			var xElementUseFields = new XElement(ConnectionDialog.ElementNameUseFields) {Value = useFields.ToString()};
 			xElementDriverData.Add(xElementUseFields);
 			mockedIConnectionInfo.Setup(ci => ci.DriverData).Returns(xElementDriverData);
 			mockedIConnectionInfo.Setup(ci => ci.CustomTypeInfo).Returns(mockedICustomTypeInfo.Object);
+			mockedIConnectionInfo.Setup(ci => ci.DatabaseInfo).Returns(mockedIDatabaseInfo.Object);
+			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdaptertype, "Northwind.DAL.SqlServer.DataAccessAdapter");
+			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdapterAssembly, "Northwind.DAL.SqlServer.dll");
+
 			var actual = target.GetSchema(mockedIConnectionInfo.Object, customType);
 			Assert.AreEqual(entityTypes.Length, actual.Count);
-			var orderedEnumerable = entityTypes.OrderBy(et => et.ToString().Replace("Entity", ""));
+			var orderedEnumerable = entityTypes.OrderBy(et => EntityHelper.GetNameFromEntityName(et.ToString()));
 			var index = 0;
 			foreach (var entityType in orderedEnumerable)
 			{
@@ -191,7 +206,6 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 				var entity = entityFactory.Create();
 				var fieldNames = entity.Fields.Cast<IEntityFieldCore>().Select(f => f.Name).Distinct();
 				var navigatorProperties = useFields ? EntityHelper.GetNavigatorProperties(entity) : MetaDataHelper.GetPropertyDescriptors(entity.GetType()).FilterByIsEnumerable(typeof (IEntityCore));
-				;
 				var explorerItem = actual[index];
 				index++;
 				var entityName = entityFactory.ForEntityName + " - " + explorerItem.Text;
