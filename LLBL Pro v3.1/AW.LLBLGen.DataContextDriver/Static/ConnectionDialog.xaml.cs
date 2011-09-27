@@ -300,7 +300,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			Settings.Default.DefaultDisplayName = CxInfo.DisplayName;
 
 			Settings.Default.DefaultAdapterType = GetDriverDataValue(ElementNameAdaptertype);
-			Settings.Default.DefaultAdapterAssembly = GetDriverDataValue(ElementNameAdaptertype);
+			Settings.Default.DefaultAdapterAssembly = GetDriverDataValue(ElementNameAdapterAssembly);
 			int connectionTypeIndex;
 			if (int.TryParse(GetDriverDataValue(ElementNameConnectionType), out connectionTypeIndex))
 				Settings.Default.DefaultConnectionType = connectionTypeIndex;
