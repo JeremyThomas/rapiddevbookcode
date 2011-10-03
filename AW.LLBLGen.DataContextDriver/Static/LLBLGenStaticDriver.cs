@@ -41,7 +41,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		                                                       		"AW.Helper.LLBL",
 		                                                       		"AW.Winforms.Helpers.DataEditor",
 		                                                       		"AW.Winforms.Helpers.LLBL",
-		                                                       		"AW.LLBLGen.DataContextDriver.Static"
+		                                                       		"AW.LinqPadExtensions",
+																															"AW.LLBLGen.DataContextDriver",
+																															"AW.LLBLGen.DataContextDriver.Static"
 		                                                       	};
 
 		#endregion
@@ -572,8 +574,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				fieldExplorerItems.Add(new ExplorerItem(CreateFieldText(field), ExplorerItemKind.Property, ExplorerIcon.Column)
 				                       	{
 				                       		DragText = field.Name,
-				                       		//SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
-				                       		//SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
+				                       		SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
+				                       		SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
 				                       		ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.GetFieldPropertyDescriptor(field.Name), fkNavigator)
 				                       	});
 			}

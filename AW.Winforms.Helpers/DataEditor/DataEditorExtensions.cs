@@ -34,7 +34,7 @@ namespace AW.Winforms.Helpers.DataEditor
 		public static IEnumerable ShowInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
-				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditor {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, false).ShowDialog();
+				FrmDataEditor.CreateDataEditorForm(enumerable, dataEditorPersister, pageSize).ShowDialog();
 			return enumerable;
 		}
 
@@ -70,14 +70,7 @@ namespace AW.Winforms.Helpers.DataEditor
 		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
-			{
-				if (ValueTypeWrapper<T>.TypeNeedsWrappingForBinding())
-				{
-					 ValueTypeWrapper<T>.CreateWrapperForBinding(enumerable).ShowInGrid(dataEditorPersister, pageSize);
-					 return enumerable;
-				}
-				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditorT<T> {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, false).ShowDialog();
-			}
+				FrmDataEditor.CreateDataEditorForm(enumerable, dataEditorPersister, pageSize, false).ShowDialog();
 			return enumerable;
 		}
 
