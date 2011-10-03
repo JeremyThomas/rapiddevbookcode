@@ -1,11 +1,14 @@
-﻿namespace AW.Winforms.Helpers.Controls
+﻿using System.ComponentModel;
+using System.Drawing;
+
+namespace AW.Winforms.Helpers.Controls
 {
   partial class GridDataEditorT<T>
   {
     /// <summary> 
     /// Required designer variable.
     /// </summary>
-    private System.ComponentModel.IContainer components = null;
+    private IContainer components = null;
 
     /// <summary> 
     /// Clean up any resources being used.
@@ -28,8 +31,8 @@
     /// </summary>
     private void InitializeComponent()
     {
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePaging)).BeginInit();
+      ((ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
+      ((ISupportInitialize)(this.bindingSourcePaging)).BeginInit();
       this.SuspendLayout();
       // 
       // bindingSourcePaging
@@ -37,10 +40,10 @@
       // 
       // GridDataEditorT
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      this.AutoScaleDimensions = new SizeF(6F, 13F);
       this.Name = "GridDataEditorT";
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.bindingSourcePaging)).EndInit();
+      ((ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
+      ((ISupportInitialize)(this.bindingSourcePaging)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 

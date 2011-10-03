@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AW.Helper;
+using AW.Winforms.Helpers.DataEditor;
 using JesseJohnston;
 
 namespace AW.Winforms.Helpers.Controls
@@ -14,6 +15,28 @@ namespace AW.Winforms.Helpers.Controls
 		public GridDataEditorT()
 		{
 			OnSetItemType();
+		}
+
+		public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable)
+		{
+			return GridDataEditorFactory(enumerable, null, DataEditorExtensions.DefaultPageSize, true); 
+		}
+
+		public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
+		{
+			GridDataEditor gridDataEditor;
+			if (ValueTypeWrapper<T>.TypeNeedsWrappingForBinding())
+			{
+				gridDataEditor = new GridDataEditorT<ValueTypeWrapper<T>>();
+				var enumerableWrapperForBinding = ValueTypeWrapper<T>.CreateWrapperForBinding(enumerable);
+				gridDataEditor.InitialiseAndBindGridDataEditor(enumerableWrapperForBinding, dataEditorPersister, pageSize, readOnly);
+			}
+			else
+			{
+				gridDataEditor = new GridDataEditorT<T>();
+				gridDataEditor.InitialiseAndBindGridDataEditor(enumerable, dataEditorPersister, pageSize, readOnly);
+			}
+			return gridDataEditor;
 		}
 
 		protected override Type ItemType
@@ -83,5 +106,6 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			return bindingSourceEnumerable.List is ObjectListView<T>;
 		}
+
 	}
 }

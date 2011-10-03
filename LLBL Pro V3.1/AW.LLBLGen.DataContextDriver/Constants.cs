@@ -13,7 +13,7 @@
 		public const string AssemblyProduct = "AW.LLBLGen.DataContextDriver";
 		public const string AssemblyDescription = LLBLGenNameVersion + " LINQPad static data context driver";
 		public const string MajorVersion = "2";
-		public const string MinorVersion = "0";
+		public const string MinorVersion = "1";
 		public const string Version = MajorVersion + "." + MinorVersion;
 		public const string AssemblyVersion = Version + ".0.0";
 	}

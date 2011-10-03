@@ -24,12 +24,37 @@ namespace AW.Winforms.Helpers.Controls
 		private bool _canSave;
 		private IQueryable _superset;
 		public IDataEditorPersister DataEditorPersister;
-		private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> _fieldsToPropertiesTypeDescriptionProviders = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
+		private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
 
 		public GridDataEditor()
 		{
 			InitializeComponent();
 			dataGridViewEnumerable.AutoGenerateColumns = true;
+		}
+		
+		/// <summary>
+		/// 	Initializes a new instance of the <see cref = "T:System.Windows.Forms.UserControl" /> class.
+		/// </summary>
+		public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly) : this()
+		{
+			if (ValueTypeWrapper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
+			{
+				enumerable = ValueTypeWrapper.CreateWrapperForBinding(enumerable);
+				readOnly = true;
+			}
+			InitialiseAndBindGridDataEditor(enumerable, dataEditorPersister, pageSize, readOnly);
+		}
+
+		public GridDataEditor(IEnumerable enumerable) : this(enumerable, null, DataEditorExtensions.DefaultPageSize, true)
+		{
+		}
+
+		public void InitialiseAndBindGridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister,
+		                                            ushort pageSize, bool readOnly)
+		{
+			DataEditorPersister = dataEditorPersister;
+			Readonly = readOnly;
+			BindEnumerable(enumerable, pageSize);
 		}
 
 		#region Properties
@@ -304,20 +329,20 @@ namespace AW.Winforms.Helpers.Controls
 
 		private static void AddFieldsToPropertiesTypeDescriptionProvider(Type typeToEdit)
 		{
-			if (typeToEdit != null && !_fieldsToPropertiesTypeDescriptionProviders.ContainsKey(typeToEdit))
+			if (typeToEdit != null && !FieldsToPropertiesTypeDescriptionProviders.ContainsKey(typeToEdit))
 			{
 				var fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
-				_fieldsToPropertiesTypeDescriptionProviders.Add(typeToEdit, fieldsToPropertiesTypeDescriptionProvider);
-				TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, typeToEdit);		
+				FieldsToPropertiesTypeDescriptionProviders.Add(typeToEdit, fieldsToPropertiesTypeDescriptionProvider);
+				TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, typeToEdit);
 			}
 		}
 
 		protected void TidyUp()
 		{
-			if (ItemType != null && _fieldsToPropertiesTypeDescriptionProviders.ContainsKey(ItemType))
+			if (ItemType != null && FieldsToPropertiesTypeDescriptionProviders.ContainsKey(ItemType))
 			{
-				TypeDescriptor.RemoveProvider(_fieldsToPropertiesTypeDescriptionProviders[ItemType], ItemType);
-				_fieldsToPropertiesTypeDescriptionProviders.Remove(ItemType);
+				TypeDescriptor.RemoveProvider(FieldsToPropertiesTypeDescriptionProviders[ItemType], ItemType);
+				FieldsToPropertiesTypeDescriptionProviders.Remove(ItemType);
 			}
 		}
 
@@ -393,7 +418,7 @@ namespace AW.Winforms.Helpers.Controls
 		private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
 		{
 			bindingSourceEnumerable.CancelEdit();
-			if (DataEditorPersister != null  && DataEditorPersister.Undo(bindingSourceEnumerable.List))
+			if (DataEditorPersister != null && DataEditorPersister.Undo(bindingSourceEnumerable.List))
 			{
 				bindingSourceEnumerable.ResetBindings(false);
 				saveToolStripButton.Enabled = false;
