@@ -104,6 +104,7 @@ namespace Northwind.DAL.EntityClasses
 		static CommonEntityBase()
 		{
 			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(CommonEntityBase));
+			ProfilerHelper.InitializeOrmProfilerIfEnabled();
 		}
 
 		public static void Initialize()

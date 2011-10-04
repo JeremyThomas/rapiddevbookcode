@@ -30,7 +30,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		                                                       		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
 		                                                       		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
 		                                                       		"AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
-		                                                       		"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll"
+		                                                       		"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
+																															"AW.LinqPadExtensions.dll"
 		                                                       	};
 
 		public static readonly string[] AdditionalNamespaces = new[]
