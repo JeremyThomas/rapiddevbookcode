@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
+using System.Linq;
 using System.Reflection;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
@@ -12,32 +13,62 @@ namespace AW.LinqPadExtensions
 	{
 		#region DataGridView
 
+		/// <summary>
+		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// </summary>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <returns></returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable)
 		{
 			return DisplayInGrid(enumerable, DataEditorExtensions.DefaultPageSize);
 		}
 
+		/// <summary>
+		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// </summary>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <returns></returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable, ushort pageSize)
 		{
 			return DisplayInGrid(enumerable, null, pageSize);
 		}
 
+		/// <summary>
+		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// </summary>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="dataEditorPersister">The data editor persister.</param>
+		/// <returns></returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister)
 		{
 			return DisplayInGrid(enumerable, dataEditorPersister, DataEditorExtensions.DefaultPageSize);
 		}
 
+		/// <summary>
+		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// </summary>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="dataEditorPersister">The data editor persister.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <returns></returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
 				PanelManager.DisplayControl(new GridDataEditor(enumerable, dataEditorPersister, pageSize, false));
-			return enumerable;
+			return Enumerable.Empty<object>(); //So can be used in a linqpad expression
 		}
 
 		#endregion
 
 		#region DataGridViewGeneric
 
+		/// <summary>
+		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <returns></returns>
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable)
 		{
 			if (enumerable != null)
@@ -47,26 +78,38 @@ namespace AW.LinqPadExtensions
 				{
 					var queryContext = contextField.GetValue(enumerable) as DataContext;
 					if (queryContext != null)
-					{
-						DisplayInGrid(enumerable, queryContext);
-						return enumerable;
-					}
+						return DisplayInGrid(enumerable, queryContext);
 				}
 				return DisplayInGrid(enumerable, (IDataEditorPersister)null);
 			}
 			return null;
 		}
 
+		/// <summary>
+		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="dataEditorPersister">The data editor persister.</param>
+		/// <returns></returns>
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister)
 		{
 			return DisplayInGrid(enumerable, dataEditorPersister, DataEditorExtensions.DefaultPageSize);
 		}
 
+		/// <summary>
+		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="dataEditorPersister">The data editor persister.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <returns></returns>
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
 				PanelManager.DisplayControl(GridDataEditorT<T>.GridDataEditorFactory(enumerable, dataEditorPersister, pageSize, false));
-			return enumerable;
+			return Enumerable.Empty<T>(); //So can be used in a linqpad expression
 		}
 
 		#endregion
