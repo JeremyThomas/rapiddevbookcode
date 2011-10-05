@@ -10,7 +10,7 @@ namespace AW.Winforms.Helpers.Controls
 {
 	public partial class GridDataEditorT<T> : GridDataEditor
 	{
-		private IEnumerable<T> _supersetG;
+		private IQueryable<T> _supersetG;
 
 		public GridDataEditorT()
 		{
@@ -60,15 +60,16 @@ namespace AW.Winforms.Helpers.Controls
 			if (Paging())
 				firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
 			var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, typeof (T)));
+			IsBinding = false;
 			return isEnumerable;
 		}
 
 		protected override IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
 		{
-			return CreatePageDataSource(pageSize, (IEnumerable<T>) enumerable);
+			return CreatePageDataSourceImplementation(pageSize, (IQueryable<T>)enumerable.AsQueryable());
 		}
 
-		protected IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable<T> enumerable)
+		protected IEnumerable<int> CreatePageDataSourceImplementation(ushort pageSize, IQueryable<T> enumerable)
 		{
 			PageSize = pageSize;
 			_supersetG = enumerable;

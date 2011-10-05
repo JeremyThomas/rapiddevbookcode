@@ -88,10 +88,10 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Enums as an enumerable.
+		/// 	Enums as an enumerable.
 		/// </summary>
-		/// <typeparam name="TEnum">The type of the enum.</typeparam>
-		/// <see cref="http://weblogs.asp.net/alnurismail/archive/2008/10/06/c-iterating-through-an-enum.aspx"/>
+		/// <typeparam name = "TEnum">The type of the enum.</typeparam>
+		/// <see cref = "http://weblogs.asp.net/alnurismail/archive/2008/10/06/c-iterating-through-an-enum.aspx" />
 		/// <returns>Enums as enumerable</returns>
 		public static TEnum[] EnumAsEnumerable<TEnum>(params TEnum[] enumsToExclude)
 		{
@@ -132,6 +132,11 @@ namespace AW.Helper
 		}
 
 		public static IEnumerable<T> SkipTake<T>(this IEnumerable<T> superset, int pageIndex, int pageSize)
+		{
+			return superset.Skip(pageIndex*pageSize).Take(pageSize);
+		}
+
+		public static IQueryable<T> SkipTake<T>(this IQueryable<T> superset, int pageIndex, int pageSize)
 		{
 			return superset.Skip(pageIndex*pageSize).Take(pageSize);
 		}
@@ -211,10 +216,10 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// returns null if empty.
+		/// 	returns null if empty.
 		/// </summary>
-		/// <see cref="http://haacked.com/archive/2010/06/16/null-or-empty-coalescing.aspx"/>
-		/// <param name="items">The items.</param>
+		/// <see cref = "http://haacked.com/archive/2010/06/16/null-or-empty-coalescing.aspx" />
+		/// <param name = "items">The items.</param>
 		/// <returns></returns>
 		public static IEnumerable<T> AsNullIfEmpty<T>(this IEnumerable<T> items)
 		{
@@ -222,11 +227,11 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Determines whether the specified IEnumerable is null or empty.
+		/// 	Determines whether the specified IEnumerable is null or empty.
 		/// </summary>
-		/// <see cref="http://haacked.com/archive/2010/06/10/checking-for-empty-enumerations.aspx"/>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="items">The items.</param>
+		/// <see cref = "http://haacked.com/archive/2010/06/10/checking-for-empty-enumerations.aspx" />
+		/// <typeparam name = "T"></typeparam>
+		/// <param name = "items">The items.</param>
 		/// <returns>
 		/// 	<c>true</c> if specified IEnumerable is null or empty; otherwise, <c>false</c>.
 		/// </returns>
@@ -243,9 +248,9 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Determines whether the specified enumerable has any items.
+		/// 	Determines whether the specified enumerable has any items.
 		/// </summary>
-		/// <param name="enumerable">The enumerable.</param>
+		/// <param name = "enumerable">The enumerable.</param>
 		/// <returns></returns>
 		public static bool Any(IEnumerable enumerable)
 		{
@@ -258,10 +263,10 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Determines whether the specified enumerable has any items.
+		/// 	Determines whether the specified enumerable has any items.
 		/// </summary>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <param name="reset">if set to <c>true</c> reset the enumerator if there are any items found.</param>
+		/// <param name = "enumerable">The enumerable.</param>
+		/// <param name = "reset">if set to <c>true</c> reset the enumerator if there are any items found.</param>
 		/// <returns></returns>
 		public static bool Any(IEnumerable enumerable, bool reset)
 		{
