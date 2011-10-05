@@ -19,7 +19,7 @@ namespace AW.Winforms.Helpers.Controls
 	public partial class GridDataEditor : UserControl
 	{
 		private readonly ArrayList _deleteItems = new ArrayList();
-		private bool _binding = true;
+		protected bool IsBinding = true;
 		private bool _loaded;
 		private bool _canSave;
 		private IQueryable _superset;
@@ -214,7 +214,7 @@ namespace AW.Winforms.Helpers.Controls
 				firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
 
 			var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null));
-			_binding = false;
+			IsBinding = false;
 			return isEnumerable;
 		}
 
@@ -267,7 +267,7 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			try
 			{
-				_binding = true;
+				IsBinding = true;
 				if (GetPageIndex() > 0)
 					BindEnumerable();
 				else
@@ -276,7 +276,7 @@ namespace AW.Winforms.Helpers.Controls
 			}
 			finally
 			{
-				_binding = false;
+				IsBinding = false;
 			}
 		}
 
@@ -292,7 +292,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
 		{
-			_binding = true;
+			IsBinding = true;
 			SetItemType(enumerable);
 			bindingSourcePaging.DataSource = null;
 			bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
@@ -402,7 +402,7 @@ namespace AW.Winforms.Helpers.Controls
 		private void bindingSourceEnumerable_ListChanged(object sender, ListChangedEventArgs e)
 		{
 			toolStripLabelSaveResult.Text = "";
-			if (!_binding && _loaded)
+			if (!IsBinding && _loaded)
 				switch (e.ListChangedType)
 				{
 					case ListChangedType.ItemDeleted:

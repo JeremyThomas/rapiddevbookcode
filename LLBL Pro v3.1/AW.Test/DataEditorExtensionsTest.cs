@@ -205,7 +205,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void EditPagedQueryInDataGridViewTest()
 		{
-			var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 15);
+			var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 40);
 			ModalFormHandler = Handler;
 			ExpectedColumnCount = 9;
 			addressEntities.ShowSelfServicingInGrid(20);
