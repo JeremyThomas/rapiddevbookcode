@@ -252,9 +252,13 @@ namespace AW.Winforms.Helpers.Controls
 			return GeneralHelper.GetPageCount(PageSize, SuperSetCount());
 		}
 
+		protected int? _superSetCount;
+
 		protected virtual int SuperSetCount()
 		{
-			return _superset.Count();
+			if (!_superSetCount.HasValue)
+			  _superSetCount = _superset.Count();
+			return _superSetCount.Value;
 		}
 
 		private void bindingSourcePaging_PositionChanged(object sender, EventArgs e)
@@ -303,7 +307,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		private IEnumerable SkipTake()
 		{
-			return _superset.Skip((GetPageIndex())*PageSize).Take(PageSize);
+			return _superset.SkipTakeDynamic(GetPageIndex(), PageSize);
 		}
 
 		protected int GetPageIndex()
@@ -315,7 +319,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected virtual void SetRemovingItem()
 		{
-			if (_superset is IQueryable && SupportsNotifyPropertyChanged)
+			if (SupportsNotifyPropertyChanged)
 				saveToolStripButton.Enabled = false;
 			if (bindingSourceEnumerable.DataSource is ObjectListView)
 				((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;

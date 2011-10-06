@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Helper;
 
@@ -247,6 +248,18 @@ namespace AW.Winforms.Helpers
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Skips then takes.
+		/// </summary>
+		/// <param name="queryable">The queryable.</param>
+		/// <param name="pageIndex">Index of the page.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <returns></returns>
+		public static IQueryable SkipTakeDynamic(this IQueryable queryable, int pageIndex, int pageSize)
+		{
+			return queryable.Skip(pageIndex * pageSize).Take(pageSize);
+		}
 	}
 
 	public class WindowWrapper : IWin32Window

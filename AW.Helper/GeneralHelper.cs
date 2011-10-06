@@ -131,14 +131,30 @@ namespace AW.Helper
 			return String.Join(separator, values.Where(s => !string.IsNullOrEmpty(s)).ToArray());
 		}
 
-		public static IEnumerable<T> SkipTake<T>(this IEnumerable<T> superset, int pageIndex, int pageSize)
+		/// <summary>
+		/// Skips then takes.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="enumerable">The enumerable.</param>
+		/// <param name="pageIndex">Index of the page.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <returns></returns>
+		public static IEnumerable<T> SkipTake<T>(this IEnumerable<T> enumerable, int pageIndex, int pageSize)
 		{
-			return superset.Skip(pageIndex*pageSize).Take(pageSize);
+			return enumerable.Skip(pageIndex*pageSize).Take(pageSize);
 		}
 
-		public static IQueryable<T> SkipTake<T>(this IQueryable<T> superset, int pageIndex, int pageSize)
+		/// <summary>
+		/// Skips then takes.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="queryable">The query able.</param>
+		/// <param name="pageIndex">Index of the page.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <returns></returns>
+		public static IQueryable<T> SkipTake<T>(this IQueryable<T> queryable, int pageIndex, int pageSize)
 		{
-			return superset.Skip(pageIndex*pageSize).Take(pageSize);
+			return queryable.Skip(pageIndex * pageSize).Take(pageSize);
 		}
 
 		public static int GetPageCount(int pageSize, int totalItemCount)

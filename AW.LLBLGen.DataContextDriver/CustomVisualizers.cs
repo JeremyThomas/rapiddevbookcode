@@ -22,7 +22,7 @@ namespace AW.LLBLGen.DataContextDriver
 
 		public static IEnumerable<T> DisplaySelfServicingInGrid<T>(this IEnumerable<T> enumerable) where T : EntityBase
 		{
-			return enumerable.DisplaySelfServicingInGrid(DataEditorExtensions.DefaultPageSize);
+			return enumerable.DisplaySelfServicingInGrid(LinqPadExtensions.CustomVisualizers.DefaultPageSize);
 		}
 
 		public static IEnumerable DisplaySelfServicingInGrid(this IEnumerable enumerable, ushort pageSize)
@@ -56,7 +56,7 @@ namespace AW.LLBLGen.DataContextDriver
 
 		public static IEnumerable<T> DisplayAdapterInGrid<T>(this IQueryable<T> query) where T : EntityBase2
 		{
-			return DisplayAdapterInGrid(query, DataEditorExtensions.DefaultPageSize);
+			return DisplayAdapterInGrid(query, LinqPadExtensions.CustomVisualizers.DefaultPageSize);
 		}
 
 		//public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2

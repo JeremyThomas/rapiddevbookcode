@@ -14,13 +14,18 @@ namespace AW.LinqPadExtensions
 		#region DataGridView
 
 		/// <summary>
+		/// 10
+		/// </summary>
+		public const int DefaultPageSize = 10;
+
+		/// <summary>
 		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
 		/// <param name="enumerable">The enumerable.</param>
 		/// <returns></returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable)
 		{
-			return DisplayInGrid(enumerable, DataEditorExtensions.DefaultPageSize);
+			return DisplayInGrid(enumerable, DefaultPageSize);
 		}
 
 		/// <summary>
@@ -42,7 +47,7 @@ namespace AW.LinqPadExtensions
 		/// <returns></returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister)
 		{
-			return DisplayInGrid(enumerable, dataEditorPersister, DataEditorExtensions.DefaultPageSize);
+			return DisplayInGrid(enumerable, dataEditorPersister, DefaultPageSize);
 		}
 
 		/// <summary>
@@ -94,7 +99,7 @@ namespace AW.LinqPadExtensions
 		/// <returns></returns>
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister)
 		{
-			return DisplayInGrid(enumerable, dataEditorPersister, DataEditorExtensions.DefaultPageSize);
+			return DisplayInGrid(enumerable, dataEditorPersister, DefaultPageSize);
 		}
 
 		/// <summary>
