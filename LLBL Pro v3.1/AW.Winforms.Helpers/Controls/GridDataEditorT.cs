@@ -19,7 +19,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable)
 		{
-			return GridDataEditorFactory(enumerable, null, DataEditorExtensions.DefaultPageSize, true); 
+			return GridDataEditorFactory(enumerable, null, DataEditorExtensions.DefaultPageSize, true);
 		}
 
 		public static GridDataEditor GridDataEditorFactory(IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly)
@@ -66,26 +66,33 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected override IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
 		{
-			return CreatePageDataSourceImplementation(pageSize, (IQueryable<T>)enumerable.AsQueryable());
+			return CreatePageDataSourceImplementation(pageSize, (IQueryable<T>) enumerable.AsQueryable());
 		}
 
 		protected IEnumerable<int> CreatePageDataSourceImplementation(ushort pageSize, IQueryable<T> enumerable)
 		{
 			PageSize = pageSize;
 			_supersetG = enumerable;
-			if (pageSize == 0 || !enumerable.Any())
+			if (pageSize == 0 || Empty())
 				return Enumerable.Empty<int>();
 			return Enumerable.Range(1, GetPageCount());
 		}
 
+		private bool Empty()
+		{
+			return SuperSetCount() == 0;
+		}
+
 		protected override int SuperSetCount()
 		{
-			return _supersetG != null ? _supersetG.Count() : 0;
+			if (!_superSetCount.HasValue)
+				_superSetCount = _supersetG != null ? _supersetG.Count() : _superSetCount.GetValueOrDefault();
+			return _superSetCount.Value;
 		}
 
 		protected override void SetRemovingItem()
 		{
-			if (_supersetG is IQueryable && SupportsNotifyPropertyChanged)
+			if (SupportsNotifyPropertyChanged)
 				saveToolStripButton.Enabled = false;
 			if (bindingSourceEnumerable.DataSource is ObjectListView<T>)
 				((ObjectListView<T>) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
@@ -107,6 +114,5 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			return bindingSourceEnumerable.List is ObjectListView<T>;
 		}
-
 	}
 }

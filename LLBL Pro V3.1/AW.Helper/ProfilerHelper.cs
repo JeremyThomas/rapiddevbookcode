@@ -58,7 +58,7 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Returns wether the Orm profiler is enabled with the AppSetting ORMProfiler in the config file.
+		/// Returns whether the Orm profiler is enabled with the AppSetting ORMProfiler in the config file.
 		/// </summary>
 		/// <returns></returns>
 		public static bool OrmProfilerEnabled()
