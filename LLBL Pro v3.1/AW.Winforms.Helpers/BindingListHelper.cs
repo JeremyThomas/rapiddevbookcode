@@ -204,12 +204,21 @@ namespace AW.Winforms.Helpers
 			if (showenEnumerable)
 				if (setReadonly && bindingSource.AllowEdit && bindingSource.DataSource is IBindingList)
 				{
-					if (!(SetReadonly<T>((IBindingList) bindingSource.DataSource)))
-						bindingSource.DataSource = new ObjectListView<T>(enumerable.ToList().AsReadOnly());
+					SetReadonly<T>(bindingSource);
 				}
 				else
 					bindingSource.AllowNew = !setReadonly;
 			return showenEnumerable;
+		}
+
+		private static void SetReadonly<T>(BindingSource bindingSource)
+		{
+			var bindingList = (IBindingList) bindingSource.DataSource;
+			if (!(SetReadonly<T>(bindingList)))
+			{
+				var list = ((IEnumerable<T>) bindingList).ToList();
+				bindingSource.DataSource = new ObjectListView<T>(list.AsReadOnly());
+			}
 		}
 
 		public static bool BindEnumerable(this BindingSource bindingSource, IEnumerable enumerable, bool setReadonly)

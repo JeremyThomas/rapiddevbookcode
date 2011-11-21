@@ -19,7 +19,8 @@ namespace AW.Winforms.Helpers.DataEditor
 			: this()
 		{
 			if (hierarchicalData == null) throw new ArgumentNullException("hierarchicalData");
-			bindingSourceHierarchicalData.DataSource = hierarchicalData;
+			bindingSourceHierarchicalData.BindEnumerable(hierarchicalData, false);
+			bindingNavigatorDeleteItem.Enabled = bindingSourceHierarchicalData.AllowRemove;
 			dataTreeView.IDColumn = iDPropertyName;
 			dataTreeView.ParentIDColumn = parentIDPropertyName;
 			dataTreeView.NameColumn = nameColumn;
@@ -30,6 +31,7 @@ namespace AW.Winforms.Helpers.DataEditor
 		{
 			gridDataEditor.DataEditorPersister = dataEditorPersister;
 			saveToolStripButton.Enabled = gridDataEditor.DataEditorPersister != null;
+			toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
 		}
 
 		public static Form LaunchForm(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister)
@@ -71,5 +73,17 @@ namespace AW.Winforms.Helpers.DataEditor
 			if (gridDataEditor.DataEditorPersister != null)
 				gridDataEditor.DataEditorPersister.Save(bindingSourceHierarchicalData.DataSource);
 		}
+
+		private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
+		{
+			bindingSourceHierarchicalData.CancelEdit();
+			if (gridDataEditor.DataEditorPersister != null && gridDataEditor.DataEditorPersister.Undo(bindingSourceHierarchicalData.List))
+			{
+				bindingSourceHierarchicalData.ResetBindings(false);
+				//saveToolStripButton.Enabled = false;
+			}
+			//toolStripButtonCancelEdit.Enabled = false;
+		}
+
 	}
 }

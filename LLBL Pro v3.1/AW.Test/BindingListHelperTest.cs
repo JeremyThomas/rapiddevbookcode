@@ -84,6 +84,8 @@ namespace AW.Tests
 		[TestMethod]
 		public void BindEnumerableTest()
 		{
+			TestBindEnumerable(MetaSingletons.MetaData.AddressType);
+
 			TestBindEnumerable(TestData.GetAddressTypeDataTable().DefaultView);
 
 			TestBindEnumerable(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, true, 2);
