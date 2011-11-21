@@ -105,6 +105,7 @@ namespace Northwind.DAL.EntityClasses
 		{
 			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(CommonEntityBase));
 			ProfilerHelper.InitializeOrmProfilerIfEnabled();
+			MarkSavedEntitiesAsFetched = true;
 		}
 
 		public static void Initialize()
@@ -112,6 +113,7 @@ namespace Northwind.DAL.EntityClasses
 		}
 
 		// __LLBLGENPRO_USER_CODE_REGION_END
+
 		#endregion
 
 		#region Included code
