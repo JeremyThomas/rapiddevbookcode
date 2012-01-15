@@ -127,6 +127,7 @@
     <Compile Include="HierarchyEditorTest.cs" />
     <Compile Include="LLBLWinformHelperTest.cs" />
     <Compile Include="LookUpQueriesTest.cs" />
+    <Compile Include="MemberNameTest.cs" />
     <Compile Include="MetaDataHelperTest.cs" />
     <Compile Include="NorthwindTest.cs" />
     <Compile Include="PersistanceDiagnosticsTest.cs">

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.Properties;
+using MemberNameUtil;
 
 namespace AW.Winforms.Helpers.DataEditor
 {
@@ -32,6 +35,12 @@ namespace AW.Winforms.Helpers.DataEditor
 			gridDataEditor.DataEditorPersister = dataEditorPersister;
 			saveToolStripButton.Enabled = gridDataEditor.DataEditorPersister != null;
 			toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
+		}
+
+		public static Form LaunchForm<T, TId, TParentId, TName>(IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+			Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister)
+		{
+			return LaunchForm(enumerable, MemberName.For(iDPropertyExpression), MemberName.For(parentIDPropertyExpression), MemberName.For(namePropertyExpression), dataEditorPersister);
 		}
 
 		public static Form LaunchForm(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister)
