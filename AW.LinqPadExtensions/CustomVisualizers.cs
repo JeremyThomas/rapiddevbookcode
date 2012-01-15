@@ -87,7 +87,7 @@ namespace AW.LinqPadExtensions
 				}
 				return DisplayInGrid(enumerable, (IDataEditorPersister)null);
 			}
-			return null;
+			return Enumerable.Empty<T>();
 		}
 
 		/// <summary>

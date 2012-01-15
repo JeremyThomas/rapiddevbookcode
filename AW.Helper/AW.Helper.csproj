@@ -72,6 +72,7 @@
     <Compile Include="DataSetSurrogate.cs" />
     <Compile Include="GeneralHelper.cs" />
     <Compile Include="HiearchicalQueryableExtensions.cs" />
+    <Compile Include="MemberName.cs" />
     <Compile Include="MetaDataHelper.cs" />
     <Compile Include="ObjectShredder.cs" />
     <Compile Include="ProfilerHelper.cs" />
