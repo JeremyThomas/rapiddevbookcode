@@ -40,8 +40,18 @@ namespace AW.Helper.LLBL
 			return CheckEntitiesCanBeFetched(entityFactoryFactory, entityCollection => ((IEntityCollection) entityCollection).GetMulti(null, maxNumberOfItemsToReturn), true, entityTypes);
 		}
 
+		/// <summary>
+		/// Checks the entities can be fetched.
+		/// </summary>
+		/// <typeparam name="TEnum">The type of the enum.</typeparam>
+		/// <typeparam name="TFactoryType">The type of the factory type.</typeparam>
+		/// <param name="entityFactoryFactory">The entity factory factory.</param>
+		/// <param name="fetchEntityCollection">The fetch entity collection.</param>
+		/// <param name="doReadEveryBindableProperty">if set to <c>true</c> [do read every bindable property].</param>
+		/// <param name="entityTypes">The entity types.</param>
+		/// <returns></returns>
 		public static StringBuilder CheckEntitiesCanBeFetched<TEnum, TFactoryType>(Func<TEnum, TFactoryType> entityFactoryFactory, Action<IEntityCollectionCore> fetchEntityCollection,
-		                                                                           bool DoReadEveryBindableProperty,
+		                                                                           bool doReadEveryBindableProperty,
 		                                                                           params TEnum[] entityTypes) where TFactoryType : IEntityFactoryCore
 		{
 			var errors = new StringBuilder();
@@ -55,37 +65,39 @@ namespace AW.Helper.LLBL
 					entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
 				else
 					GeneralHelper.CheckIsEnum(typeof (TEnum));
-				var inheritanceErrors = new StringBuilder();
 				foreach (var entityType in entityTypes)
 				{
+// ReSharper disable PossibleNullReferenceException
 					var entityFactoryCore = entityFactoryFactory(entityType);
+// ReSharper restore PossibleNullReferenceException
 					var entityCollection = CreateEntityCollection(entityFactoryCore);
 					var entity = entityFactoryCore.Create();
 					try
 					{
+// ReSharper disable PossibleNullReferenceException
 						fetchEntityCollection(entityCollection);
+// ReSharper restore PossibleNullReferenceException
 					}
 					catch (ORMQueryExecutionException e)
 					{
-						errors.AppendLine(entity.ToString());
-						errors.AppendLine(e.Message);
+						LogError(e, errors, entity);
 						errors.AppendLine(e.QueryExecuted);
-					}
-					catch (ORMInheritanceInfoException e)
-					{
-						inheritanceErrors.AppendLine(entity.ToString());
-						inheritanceErrors.AppendLine(e.Message);
 					}
 					catch (Exception e)
 					{
-						errors.AppendLine(entity.ToString());
-						errors.AppendLine(e.Message);
+						LogError(e, errors, entity);
 					}
-					if (DoReadEveryBindableProperty)
+					if (doReadEveryBindableProperty)
 						ReadEveryBindableProperty(entityCollection, errors);
 				}
 			}
 			return errors;
+		}
+
+		private static void LogError(Exception e, StringBuilder errors, object entity)
+		{
+			errors.AppendLine(entity.ToString());
+			errors.AppendLine(e.Message);
 		}
 
 		private static IEntityCollectionCore CreateEntityCollection<TFactoryType>(TFactoryType entityFactoryCore)
@@ -110,11 +122,10 @@ namespace AW.Helper.LLBL
 			else
 				GeneralHelper.CheckIsEnum(typeof (TEnum));
 			var errors = new StringBuilder();
-			var inheritanceErrors = new StringBuilder();
 			foreach (var query in entityTypes
 				.Select(entityType => metaData.GetQueryableForEntity(Convert.ToInt32(entityType)))
 				.Select(dataSource => dataSource).OfType<ILLBLGenProQuery>())
-				CheckEntityCanBeFetchedUsingLINQ(query, true, maxNumberOfItemsToReturn, errors, inheritanceErrors);
+				CheckEntityCanBeFetchedUsingLINQ(query, true, maxNumberOfItemsToReturn, errors);
 			return errors;
 		}
 
@@ -125,9 +136,8 @@ namespace AW.Helper.LLBL
 		/// <param name="forceTableAlias">if set to <c>true</c> [force table alias].</param>
 		/// <param name="maxNumberOfItemsToReturn">The max number of items to return. If less than 1 all entities are returned, if 0 a where clause is added to force an table alias.</param>
 		/// <param name="errors">The errors.</param>
-		/// <param name="inheritanceErrors">The inheritance errors.</param>
 		/// <returns></returns>
-		private static bool CheckEntityCanBeFetchedUsingLINQ(ILLBLGenProQuery query, Boolean forceTableAlias, ushort maxNumberOfItemsToReturn, StringBuilder errors, StringBuilder inheritanceErrors)
+		private static bool CheckEntityCanBeFetchedUsingLINQ(ILLBLGenProQuery query, Boolean forceTableAlias, ushort maxNumberOfItemsToReturn, StringBuilder errors)
 		{
 			var initalErrorlength = errors.Length;
 			try
@@ -141,19 +151,12 @@ namespace AW.Helper.LLBL
 			}
 			catch (ORMQueryExecutionException e)
 			{
-				errors.AppendLine(query.ElementType.ToString());
-				errors.AppendLine(e.Message);
+				LogError(query, errors, e);
 				errors.AppendLine(e.QueryExecuted);
-			}
-			catch (ORMInheritanceInfoException e)
-			{
-				inheritanceErrors.AppendLine(query.ElementType.ToString());
-				inheritanceErrors.AppendLine(e.Message);
 			}
 			catch (ArgumentException e)
 			{
-				errors.AppendLine(query.ElementType.ToString());
-				errors.AppendLine(e.Message);
+				LogError(query, errors, e);
 				errors.AppendLine(e.ParamName);
 			}
 			catch (DbException e)
@@ -161,15 +164,20 @@ namespace AW.Helper.LLBL
 				errors.AppendLine(query.ElementType.ToString());
 				errors.AppendLine(e.ErrorCode + " - " + e.Message);
 				DynamicQueryEngineBase.Switch.Level = TraceLevel.Verbose;
-				if (CheckEntityCanBeFetchedUsingLINQ(query, false, maxNumberOfItemsToReturn, errors, inheritanceErrors))
+				if (CheckEntityCanBeFetchedUsingLINQ(query, false, maxNumberOfItemsToReturn, errors))
 					errors.AppendLine("Plain query succeeded");
 			}
 			catch (Exception e)
 			{
-				errors.AppendLine(query.ElementType.ToString());
-				errors.AppendLine(e.Message);
+				LogError(query, errors, e);
 			}
 			return initalErrorlength == errors.Length;
+		}
+
+		private static void LogError(IQueryable query, StringBuilder errors, Exception e)
+		{
+			errors.AppendLine(query.ElementType.ToString());
+			errors.AppendLine(e.Message);
 		}
 
 		/// <summary>
