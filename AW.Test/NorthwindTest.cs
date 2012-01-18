@@ -256,10 +256,10 @@ namespace AW.Tests
 
 		private static void AssertOneCustomerDemographicAfterPrefetch(LinqMetaData northwindLinqMetaData, string alfki)
 		{
-			var cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Where(c => c.CustomerId == alfki).Single();
+			var cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Single(c => c.CustomerId == alfki);
 			Assert.AreEqual(alfki, cus.CustomerId);
 			Assert.AreEqual(1, cus.CustomerDemographics.Count());
-			if (northwindLinqMetaData.ContextToUse != null) 
+			if (northwindLinqMetaData.ContextToUse != null)
 				northwindLinqMetaData.ContextToUse.Add(cus.CustomerDemographics);
 		}
 
@@ -333,6 +333,37 @@ namespace AW.Tests
 			Assert.AreNotEqual(0, customer.Orders.Count);
 
 			Assert.AreEqual(customer, customer.Orders.First().Customer);
+		}
+
+		/// <summary>
+		/// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=20595
+		/// </summary>
+		[TestMethod, Description("SQL bind exception with two Where predicates with the same Entity")]
+		public void SQLBindExceptionWithTwoWherePredicatesWithTheSameEntity()
+		{
+			var metaData = GetNorthwindLinqMetaData();
+			var employees = from e in metaData.Employee
+			                where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+			                select e;
+
+			Assert.AreEqual(7, employees.ToEntityCollection2().Count()); //This is ok
+
+			employees = from e in metaData.Employee
+			            from order in e.Orders
+			            from et in e.EmployeeTerritories
+									where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+			            select e;
+
+			Assert.AreEqual(9, employees.ToEntityCollection2().Count()); //So is this
+
+
+			// This one throws 'The multi-part identifier "LPLA_4.EmployeeID" could not be bound.'
+			employees = from e in metaData.Employee
+			            from et in e.EmployeeTerritories
+									where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+			            select e;
+
+			Assert.AreEqual(9, employees.ToEntityCollection2().Count()); 
 		}
 	}
 }
