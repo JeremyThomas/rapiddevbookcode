@@ -4049,6 +4049,14 @@
             </returns>
             <exception cref="T:System.InvalidOperationException">The <see cref="T:System.Collections.Generic.ICollection`1"></see> is read-only.</exception>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.CollectionCore`1.RemoveRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Removes the elements in the range specified from this collection. 
+            </summary>
+            <param name="toRemove">To remove.</param>
+            <returns>number of items removed</returns>
+            <remarks>Raises OnListChanged(reset) once, instead of OnListChanged(ItemDeleted) for every T in toRemove.</remarks>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.CollectionCore`1.Sort(System.Int32,System.ComponentModel.ListSortDirection)">
             <summary>
             Applies sorting like IBindingList.ApplySort, on the field with the index fieldIndex and with the direction specified.
@@ -4325,6 +4333,16 @@
             Performs the add.
             </summary>
             <param name="item">The item.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.CollectionCore`1.PerformRemove(`0,System.Boolean,System.Boolean)">
+            <summary>
+            Removes the element 'item' from this collection.
+            </summary>
+            <param name="item">The item.</param>
+            <param name="silentRemove">If true, doesn't notify related entities the entity was removed</param>
+            <param name="inBulkRemoval">if true, it doesn't destroy the index. If true, it also doesn't raise an OnListChanged(itemdeleted). Raise
+            an OnListChanged(reset) after the bulk operation instead.</param>
             <returns></returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.CollectionCore`1.SD#LLBLGen#Pro#ORMSupportClasses#IEntityCollectionCore#FindMatches(SD.LLBLGen.Pro.ORMSupportClasses.IPredicate)">

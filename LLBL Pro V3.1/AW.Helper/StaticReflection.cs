@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using MemberNameUtil;
 
 namespace AW.Helper
 {

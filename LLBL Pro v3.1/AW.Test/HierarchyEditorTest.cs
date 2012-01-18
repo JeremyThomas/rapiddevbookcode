@@ -6,7 +6,6 @@ using AW.Data;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
-using MemberNameUtil;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
