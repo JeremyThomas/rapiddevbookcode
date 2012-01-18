@@ -120,6 +120,12 @@
       <DependentUpon>SqlCeConnectionUIControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DataEditorPersister.cs" />
+    <Compile Include="Controls\HierarchyEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\HierarchyEditor.Designer.cs">
+      <DependentUpon>HierarchyEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GridDataEditorT.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -236,6 +242,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ConnectionUI\SqlCeDataProvider\SqlCeConnectionUIControl.resx">
       <DependentUpon>SqlCeConnectionUIControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\HierarchyEditor.resx">
+      <DependentUpon>HierarchyEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GridDataEditorT.resx">
       <DependentUpon>GridDataEditorT.cs</DependentUpon>

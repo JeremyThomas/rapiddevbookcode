@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using AW.Winforms.Helpers.Controls;
-using AW.Winforms.Helpers.DataEditor;
 using LINQPad;
 
 namespace AW.LinqPadExtensions
@@ -14,49 +15,49 @@ namespace AW.LinqPadExtensions
 		#region DataGridView
 
 		/// <summary>
-		/// 10
+		/// 	10
 		/// </summary>
 		public const int DefaultPageSize = 10;
 
 		/// <summary>
-		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <returns></returns>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <returns> </returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable)
 		{
 			return DisplayInGrid(enumerable, DefaultPageSize);
 		}
 
 		/// <summary>
-		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <param name="pageSize">Size of the page.</param>
-		/// <returns></returns>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <param name="pageSize"> Size of the page. </param>
+		/// <returns> </returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable, ushort pageSize)
 		{
 			return DisplayInGrid(enumerable, null, pageSize);
 		}
 
 		/// <summary>
-		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <param name="dataEditorPersister">The data editor persister.</param>
-		/// <returns></returns>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <param name="dataEditorPersister"> The data editor persister. </param>
+		/// <returns> </returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister)
 		{
 			return DisplayInGrid(enumerable, dataEditorPersister, DefaultPageSize);
 		}
 
 		/// <summary>
-		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <param name="dataEditorPersister">The data editor persister.</param>
-		/// <param name="pageSize">Size of the page.</param>
-		/// <returns></returns>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <param name="dataEditorPersister"> The data editor persister. </param>
+		/// <param name="pageSize"> Size of the page. </param>
+		/// <returns> </returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
@@ -69,11 +70,11 @@ namespace AW.LinqPadExtensions
 		#region DataGridViewGeneric
 
 		/// <summary>
-		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <returns> </returns>
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable)
 		{
 			if (enumerable != null)
@@ -85,31 +86,31 @@ namespace AW.LinqPadExtensions
 					if (queryContext != null)
 						return DisplayInGrid(enumerable, queryContext);
 				}
-				return DisplayInGrid(enumerable, (IDataEditorPersister)null);
+				return DisplayInGrid(enumerable, (IDataEditorPersister) null);
 			}
 			return Enumerable.Empty<T>();
 		}
 
 		/// <summary>
-		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <param name="dataEditorPersister">The data editor persister.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <param name="dataEditorPersister"> The data editor persister. </param>
+		/// <returns> </returns>
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister)
 		{
 			return DisplayInGrid(enumerable, dataEditorPersister, DefaultPageSize);
 		}
 
 		/// <summary>
-		/// Displays the enumerable in a paged DataGridView Custom Visualizer.
+		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <param name="dataEditorPersister">The data editor persister.</param>
-		/// <param name="pageSize">Size of the page.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <param name="dataEditorPersister"> The data editor persister. </param>
+		/// <param name="pageSize"> Size of the page. </param>
+		/// <returns> </returns>
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
@@ -123,7 +124,7 @@ namespace AW.LinqPadExtensions
 
 		public static IEnumerable<T> DisplayInGrid<T>(this Table<T> table) where T : class
 		{
-			return DisplayInGrid(table, DataEditorExtensions.DefaultPageSize);
+			return DisplayInGrid(table, DefaultPageSize);
 		}
 
 		public static IEnumerable<T> DisplayInGrid<T>(this Table<T> table, ushort pageSize) where T : class
@@ -133,44 +134,49 @@ namespace AW.LinqPadExtensions
 
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> dataQuery, DataContext dataContext)
 		{
-			return DisplayInGrid(dataQuery, dataContext, DataEditorExtensions.DefaultPageSize);
+			return DisplayInGrid(dataQuery, dataContext, DefaultPageSize);
 		}
 
 		/// <summary>
 		/// 	Edits the DataQuery in a DataGridView.
 		/// </summary>
-		/// <typeparam name = "T"></typeparam>
-		/// <param name = "dataQuery">The data query (System.Data.Linq.DataQuery`1).</param>
-		/// <param name = "dataContext">The data context.</param>
-		/// <param name = "pageSize">Size of the page.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="dataQuery"> The data query (System.Data.Linq.DataQuery`1). </param>
+		/// <param name="dataContext"> The data context. </param>
+		/// <param name="pageSize"> Size of the page. </param>
+		/// <returns> </returns>
 		public static IEnumerable<T> DisplayInGrid<T>(this IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize)
 		{
 			return DisplayInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
 		}
 
-		//public static IEnumerable<T> ShowHierarchyInTree<T>(this Table<T> table, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : class
-		//{
-		//  return table.ShowHierarchyInTree(table.Context, iDPropertyName, parentIDPropertyName, nameColumn);
-		//}
-
-		//public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, DataContext dataContext, string iDPropertyName, string parentIDPropertyName, string nameColumn)
-		//{
-		//  return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLinqtoSQLPersister(dataContext));
-		//}
-
 		#endregion
 
-		//public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
-		//{
-		//  return DisplayHierarchyInTree(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, null);
-		//}
+		public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
+		{
+			return DisplayHierarchyInTree(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, null);
+		}
 
-		//public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister)
-		//{
-		//  if (enumerable != null)
-		//    PanelManager.DisplayControl(new FrmHierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister));
-		//  return enumerable;
-		//}
+		public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister)
+		{
+			if (enumerable != null)
+				PanelManager.DisplayControl(new HierarchyEditor(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister));
+			return enumerable;
+		}
+
+		public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+		                                                                              Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
+		{
+			return DisplayHierarchyInTree(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, null);
+		}
+
+		public static IEnumerable<T> DisplayHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+		                                                                              Expression<Func<T, TParentId>> parentIDPropertyExpression,
+		                                                                              Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister)
+		{
+			if (enumerable != null)
+				PanelManager.DisplayControl(HierarchyEditor.HierarchyEditorFactory(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister));
+			return enumerable;
+		}
 	}
 }

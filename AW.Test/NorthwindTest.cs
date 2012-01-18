@@ -346,7 +346,9 @@ namespace AW.Tests
 			                where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
 			                select e;
 
-			Assert.AreEqual(7, employees.ToEntityCollection2().Count()); //This is ok
+			const int expected = 7;
+			Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //This is ok
+			Assert.AreEqual(expected, employees.Count()); 
 
 			employees = from e in metaData.Employee
 			            from order in e.Orders
@@ -354,8 +356,8 @@ namespace AW.Tests
 									where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
 			            select e;
 
-			Assert.AreEqual(9, employees.ToEntityCollection2().Count()); //So is this
-
+			Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //So is this
+			Assert.AreEqual(expected, employees.Count()); 
 
 			// This one throws 'The multi-part identifier "LPLA_4.EmployeeID" could not be bound.'
 			employees = from e in metaData.Employee
@@ -363,7 +365,8 @@ namespace AW.Tests
 									where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
 			            select e;
 
-			Assert.AreEqual(9, employees.ToEntityCollection2().Count()); 
+			Assert.AreEqual(expected, employees.ToEntityCollection2().Count());
+			Assert.AreEqual(expected, employees.Count()); 
 		}
 	}
 }
