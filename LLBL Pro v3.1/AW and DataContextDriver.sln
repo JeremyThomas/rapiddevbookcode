@@ -116,21 +116,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL", "Northwind\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9E62DAD6-C73A-49CA-9906-14E28325549C}"
 	ProjectSection(SolutionItems) = preProject
-		Lib\Test\Moq.chm = Lib\Test\Moq.chm
-		Lib\Test\Moq.dll = Lib\Test\Moq.dll
-		Lib\Test\Moq.pdb = Lib\Test\Moq.pdb
-		Lib\Test\Moq.xml = Lib\Test\Moq.xml
 		Lib\Test\NMock2.dll = Lib\Test\NMock2.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{8D111638-4952-4BB9-8853-16EB6D1BB1B9}"
-	ProjectSection(SolutionItems) = preProject
-		Lib\WPF\WPFToolkit.Design.dll = Lib\WPF\WPFToolkit.Design.dll
-		Lib\WPF\WPFToolkit.Design.pdb = Lib\WPF\WPFToolkit.Design.pdb
-		Lib\WPF\WPFToolkit.dll = Lib\WPF\WPFToolkit.dll
-		Lib\WPF\WPFToolkit.pdb = Lib\WPF\WPFToolkit.pdb
-		Lib\WPF\WPFToolkit.VisualStudio.Design.dll = Lib\WPF\WPFToolkit.VisualStudio.Design.dll
-		Lib\WPF\WPFToolkit.VisualStudio.Design.pdb = Lib\WPF\WPFToolkit.VisualStudio.Design.pdb
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.DataContextDriver.Tests", "AW.LLBLGen.DataContextDriver.Tests\AW.LLBLGen.DataContextDriver.Tests.csproj", "{C7514B66-375D-4EA3-B211-711DA2EB450A}"
@@ -514,7 +500,6 @@ Global
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{9E62DAD6-C73A-49CA-9906-14E28325549C} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
-		{8D111638-4952-4BB9-8853-16EB6D1BB1B9} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{7919C746-73F3-4279-A53B-CC6C08F42318} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{A67A2102-BA0E-48B3-9EF8-831F72B47160} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}

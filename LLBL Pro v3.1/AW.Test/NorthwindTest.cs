@@ -106,14 +106,13 @@ namespace AW.Tests
 	}
 
 	/// <summary>
-	/// Summary description for NorthwindTest
+	/// 	Summary description for NorthwindTest
 	/// </summary>
 	[TestClass]
 	public class NorthwindTest
 	{
-		/// <summary>
-		///Gets or sets the test context which provides
-		///information about and functionality for the current test run.
+		///<summary>
+		///	Gets or sets the test context which provides information about and functionality for the current test run.
 		///</summary>
 		public TestContext TestContext { get; set; }
 
@@ -163,7 +162,7 @@ namespace AW.Tests
 		}
 
 		/// <summary>
-		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
+		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
 		/// </summary>
 		[TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographic()
@@ -176,7 +175,7 @@ namespace AW.Tests
 		}
 
 		/// <summary>
-		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
+		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
 		/// </summary>
 		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerExpicitLeftJoinCustomerDemographic()
@@ -191,7 +190,7 @@ namespace AW.Tests
 		}
 
 		/// <summary>
-		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
+		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
 		/// </summary>
 		[TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographicViaMany()
@@ -204,7 +203,7 @@ namespace AW.Tests
 		}
 
 		/// <summary>
-		/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256"/>
+		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
 		/// </summary>
 		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographicLinqToObject()
@@ -223,7 +222,7 @@ namespace AW.Tests
 		}
 
 		/// <summary>
-		/// Tests whether a second m:n prefetch results in duplicate
+		/// 	Tests whether a second m:n prefetch results in duplicate
 		/// </summary>
 		[TestMethod]
 		public void ManyToManyPrefetchContextBugTest()
@@ -233,11 +232,9 @@ namespace AW.Tests
 		}
 
 		/// <summary>
-		/// Tests that there is only one CustomerDemographic after a second prefetch
-		/// CustomerCustomerDemo Table has 1 row: ALFKI 1          
-		/// CustomerDemographic Table has 1 row: xxx 1
+		/// 	Tests that there is only one CustomerDemographic after a second prefetch CustomerCustomerDemo Table has 1 row: ALFKI 1 CustomerDemographic Table has 1 row: xxx 1
 		/// </summary>
-		/// <param name="contextToUse">The context to use.</param>
+		/// <param name="contextToUse"> The context to use. </param>
 		private static void AssertOneCustomerDemographicAfterSecondPrefetch(Context contextToUse)
 		{
 			var northwindLinqMetaData = GetNorthwindLinqMetaData();
@@ -295,7 +292,7 @@ namespace AW.Tests
 		}
 
 		/// <summary>
-		/// http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
+		/// 	http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
 		/// </summary>
 		[TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
 		public void BiDirectionalManyToMany()
@@ -336,7 +333,7 @@ namespace AW.Tests
 		}
 
 		/// <summary>
-		/// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=20595
+		/// 	http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=20595
 		/// </summary>
 		[TestMethod, Description("SQL bind exception with two Where predicates with the same Entity")]
 		public void SQLBindExceptionWithTwoWherePredicatesWithTheSameEntity()
@@ -348,25 +345,25 @@ namespace AW.Tests
 
 			const int expected = 7;
 			Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //This is ok
-			Assert.AreEqual(expected, employees.Count()); 
+			Assert.AreEqual(expected, employees.Count());
 
 			employees = from e in metaData.Employee
 			            from order in e.Orders
 			            from et in e.EmployeeTerritories
-									where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+			            where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
 			            select e;
 
 			Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //So is this
-			Assert.AreEqual(expected, employees.Count()); 
+			Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
 
 			// This one throws 'The multi-part identifier "LPLA_4.EmployeeID" could not be bound.'
 			employees = from e in metaData.Employee
 			            from et in e.EmployeeTerritories
-									where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+			            where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
 			            select e;
 
 			Assert.AreEqual(expected, employees.ToEntityCollection2().Count());
-			Assert.AreEqual(expected, employees.Count()); 
+			Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
 		}
 	}
 }

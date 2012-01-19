@@ -572,7 +572,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
 				var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
-				fieldExplorerItems.Add(new ExplorerItem(CreateFieldText(field), ExplorerItemKind.Property, ExplorerIcon.Column)
+				fieldExplorerItems.Add(new ExplorerItem(CreateFieldText(field), ExplorerItemKind.Property, field.IsPrimaryKey ? ExplorerIcon.Key : ExplorerIcon.Column)
 				                       	{
 				                       		DragText = field.Name,
 				                       		SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
