@@ -4,7 +4,7 @@
 	{
 		public const string Author = "Jeremy Thomas";
 		public const string AssemblyCompany = Author;
-		public const string CopyrightYear = "2011";
+		public const string CopyrightYear = "2012";
 		public const string Name = "AW LINQPad Custom Visualizers" + " (v" + Version + ")";
 		public const string AssemblyCopyright = "Copyright " + CopyrightYear + " " + Author;
 		public const string AssemblyProduct = "AW LINQPad Custom Visualizers";
