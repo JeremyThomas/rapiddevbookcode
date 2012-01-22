@@ -142,9 +142,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView.Test", "Obje
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LinqPadExtensions", "AW.LinqPadExtensions\AW.LinqPadExtensions.csproj", "{BBD8CAD5-6A28-494F-A6B0-A5280EC6F92E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.Services", "Northwind\DAL\Services\Northwind.DAL.Services.csproj", "{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 22
+		SccNumberOfProjects = 23
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -227,6 +229,10 @@ Global
 		SccProjectTopLevelParentUniqueName21 = AW\u0020and\u0020DataContextDriver.sln
 		SccProjectName21 = AW.LinqPadExtensions
 		SccLocalPath21 = AW.LinqPadExtensions
+		SccProjectUniqueName22 = Northwind\\DAL\\Services\\Northwind.DAL.Services.csproj
+		SccProjectTopLevelParentUniqueName22 = AW\u0020and\u0020DataContextDriver.sln
+		SccProjectName22 = Northwind/DAL/Services
+		SccLocalPath22 = Northwind\\DAL\\Services
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW and DataContextDriver.vsmdi
@@ -492,6 +498,18 @@ Global
 		{BBD8CAD5-6A28-494F-A6B0-A5280EC6F92E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BBD8CAD5-6A28-494F-A6B0-A5280EC6F92E}.Release|x86.ActiveCfg = Release|x86
 		{BBD8CAD5-6A28-494F-A6B0-A5280EC6F92E}.Release|x86.Build.0 = Release|x86
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -516,6 +534,7 @@ Global
 		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
+		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 

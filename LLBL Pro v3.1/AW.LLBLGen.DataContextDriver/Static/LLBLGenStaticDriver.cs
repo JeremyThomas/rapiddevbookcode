@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -212,8 +213,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			try
 			{
 				LLBLWinformHelper.ForceInitialization();
-				var assembly = Assembly.LoadFile(cxInfo.CustomTypeInfo.CustomAssemblyPath);
-				var type = assembly.GetTypes().Where(t => t.Name.Contains("CommonDaoBase") && t.IsClass).SingleOrDefault();
+				var assembly = LoadAssemblySafely(cxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var type = assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
 				if (type == null)
 				{
 					InitializeAdapter(cxInfo, context, executionManager);
@@ -246,7 +247,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
 			return usefieldsElement != null && usefieldsElement.Value == true.ToString() ? GetSchemaFromEntities(cxInfo, customType) : GetSchemaByReflection(customType);
 		}
-
+		
+		public override IDbConnection GetIDbConnection(IConnectionInfo cxInfo)
+		{
+			return base.GetIDbConnection(cxInfo);
+		}
+		
 		#endregion
 
 		#region Initialization
@@ -343,7 +349,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			Type dataAccessAdapterType = null;
 			if (!int.TryParse(ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameConnectionType), out connectionTypeIndex))
 			{
-				dataAccessAdapterAssembly = Assembly.LoadFile(adapterAssemblyPath);
+				dataAccessAdapterAssembly = LoadAssemblySafely(adapterAssemblyPath);
 				dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
 				connectionTypeIndex = typeof (DataAccessAdapterBase).IsAssignableFrom(dataAccessAdapterType) ? (int) LLBLConnectionType.Adapter : (int) LLBLConnectionType.AdapterFactory;
 				cxInfo.DriverData.SetElementValue(ConnectionDialog.ElementNameConnectionType, connectionTypeIndex);
@@ -358,7 +364,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (connectionTypeIndex == (int) LLBLConnectionType.Adapter)
 			{
 				if (dataAccessAdapterAssembly == null)
-					dataAccessAdapterAssembly = Assembly.LoadFile(adapterAssemblyPath);
+					dataAccessAdapterAssembly = LoadAssemblySafely(adapterAssemblyPath);
 				if (dataAccessAdapterAssembly == null)
 					throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
 				if (dataAccessAdapterType == null)
@@ -396,7 +402,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			else
 			{
 				var factoryMethodName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryMethod);
-				var factoryAdapterAssembly = Assembly.LoadFile(factoryAssemblyPath);
+				var factoryAdapterAssembly = LoadAssemblySafely(factoryAssemblyPath);
 				if (factoryAdapterAssembly == null)
 					throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
 				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
