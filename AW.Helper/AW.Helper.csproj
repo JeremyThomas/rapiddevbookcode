@@ -69,6 +69,7 @@
     <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
       <Link>GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="DataHelper.cs" />
     <Compile Include="DataSetSurrogate.cs" />
     <Compile Include="GeneralHelper.cs" />
     <Compile Include="HiearchicalQueryableExtensions.cs" />

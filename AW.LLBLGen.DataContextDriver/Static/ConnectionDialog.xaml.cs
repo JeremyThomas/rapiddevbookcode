@@ -379,7 +379,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			try
 			{
-				var customAssembly = Assembly.LoadFile(CxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var customAssembly = LoadAssembly(CxInfo.CustomTypeInfo.CustomAssemblyPath);
 				var type = customAssembly.GetType(customType);
 				if (!(IlinqMetaDataType.IsAssignableFrom(type) || IelementCreatorCoreType.IsAssignableFrom(type)))
 				{
@@ -420,7 +420,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var directoryName = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
 				var path = Path.Combine(directoryName, shortAssemblyName) + ".dll";
 				if (File.Exists(path))
-					return Assembly.LoadFile(path);
+					return LoadAssembly(path);
 			}
 			return null;
 		}
@@ -599,7 +599,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var typeName = hl.TargetName.Replace("Assembly", "Type");
 				if (hl.TargetName.Contains("Type"))
 				{
-					var dataAccessAdapterAssembly = Assembly.LoadFile(dialog.FileName);
+					var dataAccessAdapterAssembly = LoadAssembly(dialog.FileName);
 					try
 					{
 						var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
@@ -735,7 +735,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			if (customTypes.Count() == 1)
 				CxInfo.DriverData.SetElementValue(targetName, customTypes.First());
-			else if (customTypes.Count() == 0)
+			else if (!customTypes.Any())
 			{
 				CxInfo.DriverData.SetElementValue(targetName, "");
 			}
@@ -754,7 +754,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			try
 			{
-				return Assembly.LoadFile(assemPath);
+				return Assembly.LoadFile(assemPath); // LINQPad.Extensibility.DataContext.DataContextDriver.LoadAssemblySafely(assemPath);
 			}
 			catch (ReflectionTypeLoadException)
 			{
@@ -774,24 +774,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var factoryTypeName = GetDriverDataValue(CxInfo, ElementNameFactoryType);
 				if (!string.IsNullOrEmpty(factoryTypeName))
 				{
-					var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
-					var factoryAdapterAssembly = Assembly.LoadFile(factoryAssemblyPath);
-					if (factoryAdapterAssembly == null)
-						throw new ApplicationException("Factory assembly: " + factoryAssemblyPath + " could not be loaded!");
-					var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
-					if (factoryType == null)
-					{
-						factoryAdapterAssembly.GetTypes();
-						throw new ApplicationException(string.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName,
-						                                             factoryAssemblyPath));
-					}
-					var methodInfos = factoryType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
-					var validMethods = from m in methodInfos
-					                   let ps = m.GetParameters()
-					                   where
-					                   	ps.Length == 1 && ps.Single().ParameterType == typeof (string) &&
-					                   	m.ReturnType.Implements(IdataAccessAdapterType)
-					                   select m;
+					var validMethods = GetMethodsFromFactoryAssembly(factoryTypeName);
 					var count = validMethods.Count();
 					if (count == 1)
 					{
@@ -829,6 +812,29 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				Application.OnThreadException(ex);
 			}
+		}
+
+		private IEnumerable<MethodInfo> GetMethodsFromFactoryAssembly(string factoryTypeName)
+		{
+			var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
+			var factoryAdapterAssembly = LoadAssembly(factoryAssemblyPath);
+			if (factoryAdapterAssembly == null)
+				throw new ApplicationException("Factory assembly: " + factoryAssemblyPath + " could not be loaded!");
+			var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
+			if (factoryType == null)
+			{
+				factoryAdapterAssembly.GetTypes();
+				throw new ApplicationException(string.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName,
+				                                             factoryAssemblyPath));
+			}
+			var methodInfos = factoryType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+			var validMethods = from m in methodInfos
+			                   let ps = m.GetParameters()
+			                   where
+			                   	ps.Length == 1 && ps.Single().ParameterType == typeof (string) &&
+			                   	m.ReturnType.Implements(IdataAccessAdapterType)
+			                   select m;
+			return validMethods;
 		}
 
 		#endregion
