@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Ancillary\GlobalAssemblyInfo.cs = Ancillary\GlobalAssemblyInfo.cs
 		Ancillary\GlobalAssemblyVersion.cs = Ancillary\GlobalAssemblyVersion.cs
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		Ancillary\ToolsAssemblyConstants.cs = Ancillary\ToolsAssemblyConstants.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2CA-4CCC-9960-748D511B5BAC}"
