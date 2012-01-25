@@ -8,7 +8,7 @@
     <link href="~/Site.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="template">
-    <h1><span class="allcaps">Dynamic Data Site</span></h1>
+    <h1><span class="allcaps">Northwind Dynamic Data Site</span></h1>
     <div class="back">
         <a runat="server" href="~/"><img alt="Back to home page" runat="server" src="DynamicData/Content/Images/back.gif" />Back to home page</a>
     </div>

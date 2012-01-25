@@ -1,0 +1,1 @@
+﻿<%@ Application Language="C#" CodeBehind="Global.asax.cs" Inherits="AW_Dynamic_Data.Global" %>
