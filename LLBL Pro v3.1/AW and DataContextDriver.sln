@@ -53,6 +53,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E
 		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.pdb
 		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
 		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml
+		Lib\LLBL\SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35.dll
 		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll
 		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML
 		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
@@ -145,9 +146,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LinqPadExtensions", "AW.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.Services", "Northwind\DAL\Services\Northwind.DAL.Services.csproj", "{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamic Data", "Northwind\Dynamic Data\Dynamic Data.csproj", "{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 23
+		SccNumberOfProjects = 24
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -234,6 +237,10 @@ Global
 		SccProjectTopLevelParentUniqueName22 = AW\u0020and\u0020DataContextDriver.sln
 		SccProjectName22 = Northwind/DAL/Services
 		SccLocalPath22 = Northwind\\DAL\\Services
+		SccProjectUniqueName23 = Northwind\\Dynamic\u0020Data\\Dynamic\u0020Data.csproj
+		SccProjectTopLevelParentUniqueName23 = AW\u0020and\u0020DataContextDriver.sln
+		SccProjectName23 = Northwind/Dynamic\u0020Data
+		SccLocalPath23 = Northwind\\Dynamic\u0020Data
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW and DataContextDriver.vsmdi
@@ -511,6 +518,18 @@ Global
 		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5}.Release|x86.ActiveCfg = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -536,6 +555,7 @@ Global
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 
