@@ -1,47 +1,19 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml.Linq;
 using System.Web.DynamicData;
+using System.Web.UI;
 
 namespace Dynamic_Data
 {
-	public partial class ChildrenField : System.Web.DynamicData.FieldTemplateUserControl
+	public partial class ChildrenField : FieldTemplateUserControl
 	{
 		private bool _allowNavigation = true;
-		private string _navigateUrl;
 
-		public string NavigateUrl
-		{
-			get
-			{
-				return _navigateUrl;
-			}
-			set
-			{
-				_navigateUrl = value;
-			}
-		}
+		public string NavigateUrl { get; set; }
 
 		public bool AllowNavigation
 		{
-			get
-			{
-				return _allowNavigation;
-			}
-			set
-			{
-				_allowNavigation = value;
-			}
+			get { return _allowNavigation; }
+			set { _allowNavigation = value; }
 		}
 
 		protected void Page_Load(object sender, EventArgs e)
@@ -68,10 +40,7 @@ namespace Dynamic_Data
 
 		public override Control DataControl
 		{
-			get
-			{
-				return HyperLink1;
-			}
+			get { return HyperLink1; }
 		}
 	}
 }
