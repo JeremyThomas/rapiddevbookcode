@@ -1,29 +1,19 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml.Linq;
 using System.Web.DynamicData;
+using System.Web.UI;
 
 namespace AW_Dynamic_Data
 {
-	public partial class Boolean_EditField : System.Web.DynamicData.FieldTemplateUserControl
+	public partial class Boolean_EditField : FieldTemplateUserControl
 	{
 		protected override void OnDataBinding(EventArgs e)
 		{
 			base.OnDataBinding(e);
 
-			object val = FieldValue;
+			var val = FieldValue;
 			if (val != null)
-				CheckBox1.Checked = (bool)val;
+				CheckBox1.Checked = (bool) val;
 		}
 
 		protected override void ExtractValues(IOrderedDictionary dictionary)
@@ -33,10 +23,7 @@ namespace AW_Dynamic_Data
 
 		public override Control DataControl
 		{
-			get
-			{
-				return CheckBox1;
-			}
+			get { return CheckBox1; }
 		}
 	}
 }

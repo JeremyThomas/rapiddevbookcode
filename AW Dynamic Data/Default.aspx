@@ -12,7 +12,7 @@
         <Columns>
             <asp:TemplateField HeaderText="Table Name" SortExpression="TableName">
                 <ItemTemplate>
-                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%#Eval("ListActionPath") %>'><%#Eval("DisplayName") %></asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("ListActionPath") %>'><%# Eval("DisplayName") %></asp:HyperLink>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

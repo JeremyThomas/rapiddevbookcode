@@ -1,32 +1,21 @@
 ﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml.Linq;
-using System.Web.DynamicData;
 
 namespace AW_Dynamic_Data
 {
-	public partial class GridViewPager : System.Web.UI.UserControl
+	public partial class GridViewPager : UserControl
 	{
 		private GridView _gridView;
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			Control c = Parent;
+			var c = Parent;
 			while (c != null)
 			{
 				if (c is GridView)
 				{
-					_gridView = (GridView)c;
+					_gridView = (GridView) c;
 					break;
 				}
 				c = c.Parent;
@@ -61,9 +50,9 @@ namespace AW_Dynamic_Data
 			{
 				return;
 			}
-			DropDownList dropdownlistpagersize = (DropDownList)sender;
+			var dropdownlistpagersize = (DropDownList) sender;
 			_gridView.PageSize = Convert.ToInt32(dropdownlistpagersize.SelectedValue);
-			int pageindex = _gridView.PageIndex;
+			var pageindex = _gridView.PageIndex;
 			_gridView.DataBind();
 			if (_gridView.PageIndex != pageindex)
 			{
