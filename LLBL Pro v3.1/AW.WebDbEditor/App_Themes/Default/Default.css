@@ -1,0 +1,204 @@
+﻿BODY
+{
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #000000;
+	font-size : 8pt;
+	background-color: #f2f1ee;
+	margin: 0 0 0 0;
+}
+
+TD
+{
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #000000;
+	font-size : 8pt;
+	background-color: #f2f1ee;
+}
+
+A
+{
+	color : #006486;
+	font-weight : bold;
+	text-decoration: underline;
+}
+
+A:visited
+{
+	color : #006486;
+}
+
+A:active
+{
+	color : #006486;
+}
+
+A:hover
+{
+	color : #006486;
+	background : #FBE39C;
+	text-decoration : none;
+}
+
+H1
+{
+	font-size : 14pt;
+	color : #E1E0DE;
+	margin-bottom : 0px;
+	margin-top : 0px;
+	background-color : #004C65;
+}
+
+H2
+{
+	font-size : 10pt;
+	font-weight : bold;
+	margin-bottom : 0px;
+	margin-top : 0px;
+}
+
+input.text
+{
+	height : 20px;
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #000000;
+	font-size : 8pt;
+}
+
+input.required
+{
+	height : 20px;
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #000000;
+	font-size : 8pt;
+	background-color : #FFE283;
+}
+
+textarea
+{
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #000000;
+	font-size : 8pt;
+}
+
+textarea.required
+{
+	font-family : Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #000000;
+	font-size : 8pt;
+	background-color : #FFE283;
+}
+
+HR
+{
+	color : #99B7C1;
+	height : 1px;
+}
+
+.tableborder
+{
+	background-color : #004C65;
+}
+
+.lightfont
+{
+	
+}
+
+.darkbackground
+{
+	background-color : #004C65;
+	margin-bottom : 20px;
+}
+
+.headers
+{
+	color : #FFE283;
+	background-color : #447C8E;
+	font-size : 10pt;
+	font-weight : bold;
+}
+
+.content
+{
+	background-color : #CCDBE0;
+}
+
+.tableborder
+{
+	border-top: none;
+	border-left: solid 1px #f2f1ee;
+	border-bottom: solid 1px #f2f1ee;
+	border-right: none;
+}
+
+.columncontent
+{
+	background-color : #CCDBE0;
+	border-top: none;
+	border-bottom: solid 1px #f2f1ee;
+	border-left: solid 1px #f2f1ee;
+	border-right: solid 1px #f2f1ee;
+}
+
+.formtexts
+{
+	font-size : 8pt;
+	background-color : #CCDBE0;
+}
+
+.tableheaders
+{
+	font-weight: bold;
+	background-color : #A0BCC5;
+	font-size: 9pt;
+	border-top: none;
+	border-bottom: none;
+	border-left: solid 1px #f2f1ee;
+	border-right: solid 1px #f2f1ee;
+}
+
+.FormButtons
+{
+	height : 18px;
+	font-size : 8pt;
+	font-weight : bold;
+	color: #006486;
+	background-color : #FFE283;
+	margin-bottom : 1px;
+	margin-left : 5px;
+	border-bottom-color : #447C8E;
+	border-right-color : #447C8E;
+	border-left-color : #99B7C1;
+	border-top-color : #99B7C1;
+	border-bottom-width : 1px;
+	border-top-width : 1px;
+	border-right-width : 1px;
+	border-left-width : 1px;
+	padding-bottom : 0px;
+	padding-left : 0px;
+	padding-right : 0px;
+	padding-top : 0px;
+}
+
+.FormButtons:hover
+{
+	height : 18px;
+	font-size : 8pt;
+	font-weight : bold;
+	color : #FFE283;
+	background-color : #006486;
+	margin-bottom : 1px;
+	margin-left : 5px;
+	border-bottom-color : #447C8E;
+	border-right-color : #447C8E;
+	border-left-color : #99B7C1;
+	border-top-color : #99B7C1;
+	border-bottom-width : 1px;
+	border-top-width : 1px;
+	border-right-width : 1px;
+	border-left-width : 1px;
+	padding-bottom : 0px;
+	padding-left : 0px;
+	padding-right : 0px;
+	padding-top : 0px;
+}

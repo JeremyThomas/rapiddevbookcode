@@ -5,7 +5,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:DynamicDataManager ID="DynamicDataManager1" runat="server" AutoLoadForeignKeys="true" />
 
-    <h2><%= table.DisplayName%></h2>
+    <h2><%= table.DisplayName %></h2>
 
     <asp:ScriptManagerProxy runat="server" ID="ScriptManagerProxy1" />
 

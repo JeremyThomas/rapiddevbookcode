@@ -67,15 +67,15 @@
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
       <LastUsedPreferences>
-        <DestinationRootFolder Value="..\AW.Data" />
+        <DestinationRootFolder Value="..\" />
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
         <PlatformName Value=".NET 3.5" />
-        <PresetName Value="SD.Presets.SelfServicing.General2008" />
+        <PresetName Value="SD.Presets.SelfServicing.WebDbEditor" />
         <RootNamespace Value="AW.Data" />
         <TemplateGroup Value="SelfServicing" />
         <TemplateBindings>
-          <Binding Name="SD.TemplateBindings.QuerySpecTemplates" />
+          <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET20" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific.NET20" />

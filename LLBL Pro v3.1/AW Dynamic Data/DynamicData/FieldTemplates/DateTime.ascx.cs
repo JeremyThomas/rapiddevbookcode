@@ -1,28 +1,13 @@
-﻿using System;
-using System.Data;
-using System.Configuration;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
+﻿using System.Web.DynamicData;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.UI.HtmlControls;
-using System.Xml.Linq;
-using System.Web.DynamicData;
 
 namespace AW_Dynamic_Data
 {
-	public partial class DateTimeField : System.Web.DynamicData.FieldTemplateUserControl
+	public partial class DateTimeField : FieldTemplateUserControl
 	{
 		public override Control DataControl
 		{
-			get
-			{
-				return Literal1;
-			}
+			get { return Literal1; }
 		}
 	}
 }
