@@ -21,15 +21,14 @@ namespace AW_Dynamic_Data
 			// that you want all tables in the data model to support a scaffold (i.e. templates) 
 			// view. To control scaffolding for individual tables, create a partial class for 
 			// the entity and apply the [Scaffold(true)] attribute to the partial class.
-			var config = new ContextConfiguration();
+			var config = new ContextConfiguration {ScaffoldAllTables = true};
 
 			// Set ScaffoldAllTables = true if you are sure that you want all your tables to support a scaffold (i.e. templated) view.
-			config.ScaffoldAllTables = true;
 
 			// Define the model provider. You've to specify the type of the type of the generated EntityType enum below.
 			// An example is given in the commented out lines below. Uncomment the lines below and adjust the namespaces for
 			// the EntityType enum, the LinqMetaData type and the ElementCreator type. 
-
+			LinqMetaData.Initialize();
 			var modelProvider =
 				new LLBLGenProDataModelProvider(
 					typeof (EntityType), // <<<<< Replace 'YourRootNamespace' with the namespace you specified for Root namespace when you generated code
