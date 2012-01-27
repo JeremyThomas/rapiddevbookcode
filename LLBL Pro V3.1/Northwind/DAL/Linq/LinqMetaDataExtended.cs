@@ -8,5 +8,9 @@ namespace Northwind.DAL.Linq
 		{
 			CommonEntityBase.Initialize();
 		}
+
+		public static void Initialize()
+		{
+		}
 	}
 }

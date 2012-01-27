@@ -1,7 +1,5 @@
 ﻿#pragma warning disable 1699
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System;
 
 [assembly: AssemblyTitle("LLBLGen Pro Dynamic Data Support Classes library")]

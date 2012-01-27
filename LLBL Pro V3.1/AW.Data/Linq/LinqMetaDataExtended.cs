@@ -9,5 +9,9 @@ namespace AW.Data.Linq
 			//if (Environment.Version.Major >= 4)
 				CommonEntityBase.Initialize();
 		}
+
+		public static void Initialize()
+		{
+		}
 	}
 }
