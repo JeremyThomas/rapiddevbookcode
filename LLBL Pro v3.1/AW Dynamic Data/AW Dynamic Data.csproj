@@ -44,7 +44,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer.NET20, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
-    <Reference Include="SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -255,6 +254,10 @@
     <ProjectReference Include="..\AW.Data\AW.Data.csproj">
       <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
       <Name>AW.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj">
+      <Project>{64696470-5D05-4E00-95C4-C320F268E526}</Project>
+      <Name>SD.LLBLGen.Pro.DynamicDataSupportClasses</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
