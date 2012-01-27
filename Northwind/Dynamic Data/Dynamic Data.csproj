@@ -43,9 +43,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Lib\LLBL\SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35.dll</HintPath>
-    </Reference>
     <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -247,6 +244,10 @@
     <Folder Include="DynamicData\CustomPages\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj">
+      <Project>{64696470-5D05-4E00-95C4-C320F268E526}</Project>
+      <Name>SD.LLBLGen.Pro.DynamicDataSupportClasses</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DAL\Northwind.DAL.csproj">
       <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
       <Name>Northwind.DAL</Name>
