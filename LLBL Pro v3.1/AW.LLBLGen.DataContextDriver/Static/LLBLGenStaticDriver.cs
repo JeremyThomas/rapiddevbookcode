@@ -213,7 +213,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			try
 			{
 				LLBLWinformHelper.ForceInitialization();
-				var assembly = LoadAssemblySafely(cxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var assembly = LoadAssembly(cxInfo.CustomTypeInfo.CustomAssemblyPath);
 				var type = assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
 				if (type == null)
 				{
@@ -349,12 +349,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			Type dataAccessAdapterType = null;
 			if (!int.TryParse(ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameConnectionType), out connectionTypeIndex))
 			{
-				dataAccessAdapterAssembly = LoadAssemblySafely(adapterAssemblyPath);
+				dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
 				dataAccessAdapterType = dataAccessAdapterAssembly.GetType(adapterTypeName);
 				connectionTypeIndex = typeof (DataAccessAdapterBase).IsAssignableFrom(dataAccessAdapterType) ? (int) LLBLConnectionType.Adapter : (int) LLBLConnectionType.AdapterFactory;
 				cxInfo.DriverData.SetElementValue(ConnectionDialog.ElementNameConnectionType, connectionTypeIndex);
 			}
 			return GetAdapter(cxInfo, adapterTypeName, factoryTypeName, adapterAssemblyPath, factoryAssemblyPath, dataAccessAdapterAssembly, dataAccessAdapterType, connectionTypeIndex);
+		}
+
+		private static Assembly LoadAssembly(string adapterAssemblyPath)
+		{
+			return Assembly.LoadFile(adapterAssemblyPath);
+			//return LoadAssemblySafely(adapterAssemblyPath);
 		}
 
 		private static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo, string adapterTypeName, string factoryTypeName, string adapterAssemblyPath, string factoryAssemblyPath, Assembly dataAccessAdapterAssembly, Type dataAccessAdapterType,
@@ -364,7 +370,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (connectionTypeIndex == (int) LLBLConnectionType.Adapter)
 			{
 				if (dataAccessAdapterAssembly == null)
-					dataAccessAdapterAssembly = LoadAssemblySafely(adapterAssemblyPath);
+					dataAccessAdapterAssembly = LoadAssembly(adapterAssemblyPath);
 				if (dataAccessAdapterAssembly == null)
 					throw new ApplicationException("Adapter assembly: " + adapterAssemblyPath + " could not be loaded!");
 				if (dataAccessAdapterType == null)
@@ -402,7 +408,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			else
 			{
 				var factoryMethodName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryMethod);
-				var factoryAdapterAssembly = LoadAssemblySafely(factoryAssemblyPath);
+				var factoryAdapterAssembly = LoadAssembly(factoryAssemblyPath);
 				if (factoryAdapterAssembly == null)
 					throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
 				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
