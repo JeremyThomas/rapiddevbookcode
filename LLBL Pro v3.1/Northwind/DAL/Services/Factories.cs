@@ -13,5 +13,12 @@ namespace Northwind.DAL.Services
 			var connectionStringBuilder = DataHelper.ConvertConnectionStringBuilder(oleDbConnectionStringBuilder, DataHelper.GetDBSourceType(oleDbConnectionString));
 			return new DataAccessAdapter(connectionStringBuilder.ConnectionString);
 		}
+
+		public static DataAccessAdapterBase CreateDataAccessAdapter2(string oleDbConnectionString)
+		{
+			var oleDbConnectionStringBuilder = new OleDbConnectionStringBuilder(oleDbConnectionString);
+			var connectionStringBuilder = DataHelper.ConvertConnectionStringBuilder(oleDbConnectionStringBuilder, DataHelper.GetDBSourceType(oleDbConnectionString));
+			return new DataAccessAdapter(connectionStringBuilder.ConnectionString);
+		}
 	}
 }

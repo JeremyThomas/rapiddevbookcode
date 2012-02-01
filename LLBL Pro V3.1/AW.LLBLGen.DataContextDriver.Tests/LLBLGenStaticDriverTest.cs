@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using AW.Data.FactoryClasses;
@@ -183,17 +184,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		{
 			var entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
 			var target = new LLBLGenStaticDriver();
-			var mockedICustomTypeInfo = new Mock<ICustomTypeInfo>();
-			var mockedIConnectionInfo = new Mock<IConnectionInfo>();
-			var mockedIDatabaseInfo = new Mock<IDatabaseInfo>();
-			var xElementDriverData = new XElement("DriverData");
-			var xElementUseFields = new XElement(ConnectionDialog.ElementNameUseFields) {Value = useFields.ToString()};
-			xElementDriverData.Add(xElementUseFields);
-			mockedIConnectionInfo.Setup(ci => ci.DriverData).Returns(xElementDriverData);
-			mockedIConnectionInfo.Setup(ci => ci.CustomTypeInfo).Returns(mockedICustomTypeInfo.Object);
-			mockedIConnectionInfo.Setup(ci => ci.DatabaseInfo).Returns(mockedIDatabaseInfo.Object);
-			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdaptertype, "Northwind.DAL.SqlServer.DataAccessAdapter");
-			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdapterAssembly, "Northwind.DAL.SqlServer.dll");
+			var mockedIConnectionInfo = MockedIConnectionInfo(useFields);
 
 			var actual = target.GetSchema(mockedIConnectionInfo.Object, customType);
 			Assert.AreEqual(entityTypes.Length, actual.Count);
@@ -213,6 +204,22 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 				Assert.AreEqual(navigatorProperties.Count(EntityHelper.IsEntityCore), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink), entityName + " - single navigator");
 			}
 			return actual;
+		}
+
+		private static Mock<IConnectionInfo> MockedIConnectionInfo(bool useFields)
+		{
+			var mockedICustomTypeInfo = new Mock<ICustomTypeInfo>();
+			var mockedIConnectionInfo = new Mock<IConnectionInfo>();
+			var mockedIDatabaseInfo = new Mock<IDatabaseInfo>();
+			var xElementDriverData = new XElement("DriverData");
+			var xElementUseFields = new XElement(ConnectionDialog.ElementNameUseFields) {Value = useFields.ToString()};
+			xElementDriverData.Add(xElementUseFields);
+			mockedIConnectionInfo.Setup(ci => ci.DriverData).Returns(xElementDriverData);
+			mockedIConnectionInfo.Setup(ci => ci.CustomTypeInfo).Returns(mockedICustomTypeInfo.Object);
+			mockedIConnectionInfo.Setup(ci => ci.DatabaseInfo).Returns(mockedIDatabaseInfo.Object);
+			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdaptertype, "Northwind.DAL.SqlServer.DataAccessAdapter");
+			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdapterAssembly, "Northwind.DAL.SqlServer.dll");
+			return mockedIConnectionInfo;
 		}
 
 
@@ -239,6 +246,15 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			Assert.IsTrue(descriptionAttributes.Any());
 			var propertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(type);
 			Assert.IsFalse(String.IsNullOrEmpty(propertiesToShowInSchema.GetFieldPropertyDescriptor(OrderDetailFieldIndex.Quantity.ToString()).Description));
+		}
+
+		[TestMethod]
+		public void ConnectionDialogTest()
+		{
+			var mockedIConnectionInfo = MockedIConnectionInfo(true);
+			ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdapterAssembly, Path.GetFullPath("Northwind.DAL.SqlServer.dll"));
+			var connectionDialog = new ConnectionDialog(mockedIConnectionInfo.Object, false);
+			connectionDialog.ChooseAdapterOrFactoryClass("AdapterAssembly");
 		}
 	}
 }

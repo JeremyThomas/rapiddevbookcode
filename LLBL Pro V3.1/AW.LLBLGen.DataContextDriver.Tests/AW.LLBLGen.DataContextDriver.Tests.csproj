@@ -43,9 +43,9 @@
     <AssemblyOriginatorKeyFile>..\AW.LLBLGen.DataContextDriver\AW.LLBLGen.DataContextDriver.3.1.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LINQPad">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
-      <Private>True</Private>
+    <Reference Include="LINQPad, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21353812cd2a2db5, processorArchitecture=MSIL">
+      <ExecutableExtension>.exe</ExecutableExtension>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\LINQPad\Beta\LINQPad.exe</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
@@ -116,6 +116,10 @@
     <ProjectReference Include="..\Northwind\DAL\Northwind.DAL.csproj">
       <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
       <Name>Northwind.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Northwind\DAL\SQL Server %28SqlClient%29\Northwind.DAL.SqlServer.csproj">
+      <Project>{0AAD790B-15C7-4119-9987-3137A0BB20B9}</Project>
+      <Name>Northwind.DAL.SqlServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
