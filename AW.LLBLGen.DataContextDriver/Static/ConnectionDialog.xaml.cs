@@ -31,19 +31,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 	/// <summary>
 	/// 	Interaction logic for ConnectionDialog.xaml
 	/// </summary>
+	[Serializable]
 	public partial class ConnectionDialog : INotifyPropertyChanged
 	{
 		#region Fields
 
 		/// <summary>
-		/// AdapterType
+		/// 	AdapterType
 		/// </summary>
 		public const string ElementNameAdaptertype = "AdapterType";
 
 		public const string ElementNameAdapterAssembly = "AdapterAssembly";
 
 		/// <summary>
-		/// AdditionalAssemblies
+		/// 	AdditionalAssemblies
 		/// </summary>
 		public const string ElementNameAdditionalassemblies = "AdditionalAssemblies";
 
@@ -62,21 +63,21 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private const string LlblgenProNameSpace = "SD.LLBLGen.Pro";
 
 		public static readonly string AdditionalAssembliesToolTip = "The driver adds these assemblies to the ones LINQPad provides"
-		                                                            + Environment.NewLine +
-		                                                            LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
-		                                                            + Environment.NewLine +
-		                                                            "If you want any additional assemblies add them in here, with or with out a path.";
+																																+ Environment.NewLine +
+																																LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
+																																+ Environment.NewLine +
+																																"If you want any additional assemblies add them in here, with or with out a path.";
 
 		public static readonly string AdditionalNamespacesToolTip = "The driver adds these namespaces to the ones LINQPad provides"
-		                                                            + Environment.NewLine +
-		                                                            LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
-		                                                            + "If you want any additional namespaces add them in here.";
+																																+ Environment.NewLine +
+																																LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
+																																+ "If you want any additional namespaces add them in here.";
 
 		private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[]
-		                                                                      	{
-		                                                                      		LLBLConnectionType.Adapter,
-		                                                                      		LLBLConnectionType.AdapterFactory
-		                                                                      	};
+																																						{
+																																							LLBLConnectionType.Adapter,
+																																							LLBLConnectionType.AdapterFactory
+																																						};
 
 		private readonly bool _isNewConnection;
 		private ObservableCollection<ValueTypeWrapper<string>> _additionalAssemblies;
@@ -92,18 +93,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public IConnectionInfo CxInfo { get; private set; }
 
 		/// <summary>
-		/// Gets the CustomTypeNameVisibility.
+		/// 	Gets the CustomTypeNameVisibility.
 		/// </summary>
-		/// <value>The CustomTypeNameVisibility.</value>
+		/// <value> The CustomTypeNameVisibility. </value>
 		public Visibility CustomTypeNameVisibility
 		{
 			get { return string.IsNullOrEmpty(txtAssemblyPath.Text) ? Visibility.Collapsed : Visibility.Visible; }
 		}
 
 		/// <summary>
-		/// Gets the ConnectionTypeVisibility.
+		/// 	Gets the ConnectionTypeVisibility.
 		/// </summary>
-		/// <value>The ConnectionTypeVisibility.</value>
+		/// <value> The ConnectionTypeVisibility. </value>
 		public Visibility ConnectionTypeVisibility
 		{
 			get { return AdapterConnectionTypes.Contains(LLBLConnectionType) ? Visibility.Visible : Visibility.Collapsed; }
@@ -137,7 +138,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			set
 			{
 				if (CxInfo.DatabaseInfo.Provider != value ||
-				    string.Equals(value, "System.Data.SqlClient", StringComparison.InvariantCultureIgnoreCase))
+						string.Equals(value, "System.Data.SqlClient", StringComparison.InvariantCultureIgnoreCase))
 				{
 					_providerHasBeenSet = value != "";
 					CxInfo.DatabaseInfo.Provider = value;
@@ -155,9 +156,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			get
 			{
 				return _additionalAssemblies ??
-				       (_additionalAssemblies =
-				        new ObservableCollection<ValueTypeWrapper<string>>(
-				        	Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding()));
+							 (_additionalAssemblies =
+								new ObservableCollection<ValueTypeWrapper<string>>(
+									Settings.Default.AdditionalAssemblies.CreateStringWrapperForBinding()));
 			}
 		}
 
@@ -311,10 +312,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void Window_Closing(object sender, CancelEventArgs e)
 		{
 			if (DialogResult.GetValueOrDefault() && !string.IsNullOrEmpty(CxInfo.DatabaseInfo.CustomCxString) &&
-			    string.IsNullOrEmpty(providerComboBox.Text))
+					string.IsNullOrEmpty(providerComboBox.Text))
 				switch (MessageBox.Show("Database Provider has not been set!" + Environment.NewLine
-				                        + "This is required to execute SQL" + Environment.NewLine
-				                        + "Do you wish to close anyway?", "Do you wish to close?", MessageBoxButton.YesNo))
+																+ "This is required to execute SQL" + Environment.NewLine
+																+ "Do you wish to close anyway?", "Do you wish to close?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						break;
@@ -365,29 +366,30 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void BrowseAppConfig(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
-			             	{
-			             		Title = TitleChooseApplicationConfigFile,
-			             		Filter = "Config files (*.config)|*.config|All files (*.*)|*.*",
-			             		DefaultExt = ".config",
-			             	};
+										{
+											Title = TitleChooseApplicationConfigFile,
+											Filter = "Config files (*.config)|*.config|All files (*.*)|*.*",
+											DefaultExt = ".config",
+										};
 
 			if (dialog.ShowDialog() == true)
 				CxInfo.AppConfigPath = dialog.FileName;
 		}
 
-		private string CheckCustomAssemblyIsTheRightVersion(string customType, string interfaceTypeName)
-		{
+		private static void CheckCustomAssemblyIsTheRightVersion()
+		{		    
+		var customType = (string)AppDomain.CurrentDomain.GetData("customType");
 			try
 			{
-				var customAssembly = LoadAssembly(CxInfo.CustomTypeInfo.CustomAssemblyPath);
+				var customAssembly = LoadAssembly((string)AppDomain.CurrentDomain.GetData("CustomAssemblyPath"));
 				var type = customAssembly.GetType(customType);
 				if (!(IlinqMetaDataType.IsAssignableFrom(type) || IelementCreatorCoreType.IsAssignableFrom(type)))
 				{
 					var fullName = type.FullName.IndexOf("Linq") > -1 ? IlinqMetaDataType.FullName : IelementCreatorCoreType.FullName;
-					MessageBox.Show(string.Format("An implementation of {0} was found <{1}>, but it was not for {2}", fullName,
-					                              type.FullName,
-					                              Constants.LLBLGenNameVersion));
-					return "";
+					AppDomain.CurrentDomain.SetData("errorMessage", string.Format("An implementation of {0} was found <{1}>, but it was not for {2}", fullName,
+																				type.FullName,
+																				Constants.LLBLGenNameVersion));
+					AppDomain.CurrentDomain.SetData("customType", "");
 				}
 			}
 			catch (FileLoadException e)
@@ -395,14 +397,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				if (e.FileName.Contains(LlblgenProNameSpace) && !e.Message.Contains(Constants.LLBLVersion))
 				{
 					var assemblyName = new AssemblyName(e.FileName);
-					MessageBox.Show(string.Format("An implementation of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
-					                              IdataAccessAdapterType.FullName, customType, Constants.LLBLGenNameVersion,
-					                              assemblyName.Version));
-					return "";
+					AppDomain.CurrentDomain.SetData("errorMessage", string.Format("An implementation of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
+																				IdataAccessAdapterType.FullName, customType, Constants.LLBLGenNameVersion,
+																				assemblyName.Version));
+					AppDomain.CurrentDomain.SetData("customType", "");
 				}
 				GeneralHelper.TraceOut(e.Message);
 			}
-			return customType;
 		}
 
 		private Assembly CurrentDomainAssemblyResolve(object sender, ResolveEventArgs args)
@@ -415,7 +416,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			//  return firstOrDefault;
 			//}
 			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath) && (shortAssemblyName.IndexOf(LlblgenProNameSpace) < 0
-			                                                              || assemblyName.Version.ToString().Contains(Constants.LLBLVersion)))
+																																		|| assemblyName.Version.ToString().Contains(Constants.LLBLVersion)))
 			{
 				var directoryName = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
 				var path = Path.Combine(directoryName, shortAssemblyName) + ".dll";
@@ -469,12 +470,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void BrowseAssembly(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
-			             	{
-			             		Title = TitleChooseLLBLEntityAssembly,
-			             		DefaultExt = ".dll",
-			             		FileName = CxInfo.CustomTypeInfo.CustomAssemblyPath,
-			             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
-			             	};
+										{
+											Title = TitleChooseLLBLEntityAssembly,
+											DefaultExt = ".dll",
+											FileName = CxInfo.CustomTypeInfo.CustomAssemblyPath,
+											Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
+										};
 
 			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
 				dialog.InitialDirectory = Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath);
@@ -499,11 +500,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void SetCustomTypeName(string customType)
 		{
 			CxInfo.CustomTypeInfo.CustomTypeName = customType;
-			LLBLConnectionType = IsSelfServicing(CxInfo)
-			                     	? LLBLConnectionType == LLBLConnectionType.AdapterFactory
-			                     	  	? LLBLConnectionType
-			                     	  	: LLBLConnectionType.Adapter
-			                     	: LLBLConnectionType.SelfServicing;
+			if (string.IsNullOrEmpty(CxInfo.CustomTypeInfo.CustomTypeName))
+				LLBLConnectionType = LLBLConnectionType.Unknown;
+			else
+				LLBLConnectionType = IsSelfServicing(CxInfo)
+														? LLBLConnectionType == LLBLConnectionType.AdapterFactory
+																? LLBLConnectionType
+																: LLBLConnectionType.Adapter
+														: LLBLConnectionType.SelfServicing;
 			OnPropertyChanged("ConnectionTypeVisibility");
 		}
 
@@ -517,14 +521,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void ChooseType(object sender, RoutedEventArgs e)
 		{
 			var customTypes = GetLinqMetaDataTypes();
+			if (customTypes.IsNullOrEmpty())
+			{
+				SetCustomTypeName("");
+				return;
+			}
 			if (customTypes.Length == 1)
 			{
 				SetCustomTypeName(customTypes[0]);
-				return;
-			}
-			if (customTypes.Length == 0)
-			{
-				SetCustomTypeName("");
 				return;
 			}
 			var result = (string) Dialogs.PickFromList(TitleChooseCustomType, customTypes);
@@ -562,7 +566,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				customTypes = CxInfo.CustomTypeInfo.GetCustomTypesInAssembly(interfaceTypeName);
 				if (customTypes.Length == 0)
 					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData or IElementCreatorCore.",
-					                "Wrong Assembly chosen");
+													"Wrong Assembly chosen");
 				else
 				{
 					MessageBox.Show("There are no public types in that assembly that implement ILinqMetaData but there is an implementation of IElementCreatorCore.");
@@ -570,7 +574,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			if (customTypes.Length == 1)
 			{
-				customTypes[0] = CheckCustomAssemblyIsTheRightVersion(customTypes[0], interfaceTypeName);
+				using (var domainIsolator = new DomainIsolator("Inspect Custom Assembly"))
+				{
+					domainIsolator.Domain.SetData("customType", customTypes[0]);
+					domainIsolator.Domain.SetData("CustomAssemblyPath", CxInfo.CustomTypeInfo.CustomAssemblyPath);
+					domainIsolator.Domain.DoCallBack(CheckCustomAssemblyIsTheRightVersion);
+					var errorMessage = (string)domainIsolator.Domain.GetData("errorMessage");
+					customTypes[0] = (string)domainIsolator.Domain.GetData("customType");
+					if (!string.IsNullOrEmpty(errorMessage))
+					{
+						MessageBox.Show(errorMessage);
+					}
+				}
 			}
 			return customTypes;
 		}
@@ -582,15 +597,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var element = CxInfo.DriverData.Element(hl.TargetName);
 			if (element == null) return;
 			var dialog = new OpenFileDialog
-			             	{
-			             		DefaultExt = ".dll",
-			             		FileName = element.Value,
-			             		Title =
-			             			hl.TargetName.Equals(ElementNameFactoryAssembly)
-			             				? TitleChooseFactoryAssembly
-			             				: TitleChooseDataAccessAdapterAssembly,
-			             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
-			             	};
+										{
+											DefaultExt = ".dll",
+											FileName = element.Value,
+											Title =
+												hl.TargetName.Equals(ElementNameFactoryAssembly)
+													? TitleChooseFactoryAssembly
+													: TitleChooseDataAccessAdapterAssembly,
+											Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*"
+										};
 			if (File.Exists(element.Value))
 				dialog.InitialDirectory = Path.GetDirectoryName(element.Value);
 			if (dialog.ShowDialog() == true)
@@ -599,23 +614,39 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var typeName = hl.TargetName.Replace("Assembly", "Type");
 				if (hl.TargetName.Contains("Type"))
 				{
-					var dataAccessAdapterAssembly = LoadAssembly(dialog.FileName);
-					try
+					using (var domainIsolator = new DomainIsolator("Inspect Custom Assembly"))
 					{
-						var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
-						if (customTypes.Count() == 1)
-							CxInfo.DriverData.SetElementValue(typeName, customTypes.First());
-					}
-					catch (Exception ex)
-					{
-						GeneralHelper.TraceOut(ex.Message);
-						return;
+						domainIsolator.Domain.SetData("typeName", hl.TargetName);
+						domainIsolator.Domain.SetData("assemblyFileName", dialog.FileName);
+						domainIsolator.Domain.DoCallBack(LoadAdapterAssembly);
 					}
 				}
 				else
 				{
 					ChooseAdapterOrFactoryClass(typeName);
 				}
+			}
+		}
+
+		private void LoadAdapterAssembly()
+		{
+			var assemblyFile = (string) AppDomain.CurrentDomain.GetData("assemblyFileName");
+			var typeName = (string) AppDomain.CurrentDomain.GetData("typeName");
+			LoadAdapterAssembly(typeName, assemblyFile);
+		}
+
+		private void LoadAdapterAssembly(string typeName, string assemblyFileName)
+		{
+			var dataAccessAdapterAssembly = LoadAssembly(assemblyFileName);
+			try
+			{
+				var customTypes = GetDataAccessAdapterTypeNames(dataAccessAdapterAssembly);
+				if (customTypes.Count() == 1)
+					CxInfo.DriverData.SetElementValue(typeName, customTypes.First());
+			}
+			catch (Exception ex)
+			{
+				GeneralHelper.TraceOut(ex.Message);
 			}
 		}
 
@@ -649,8 +680,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					//Dialogs.PickFromList("An array of assemblies in this application domain.",
 					//             AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
 					MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-					                ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine),
-					                "Error obtaining adapter types");
+													ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine),
+													"Error obtaining adapter types");
 			}
 			return Enumerable.Empty<string>();
 		}
@@ -668,8 +699,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 					var assembly = implementer.GetInterface(IdataAccessAdapterType.FullName).Assembly;
 					var assemblyName = new AssemblyName(assembly.FullName);
 					MessageBox.Show(string.Format("An implementation of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
-					                              IdataAccessAdapterType.FullName, implementer.FullName, Constants.LLBLGenNameVersion,
-					                              assemblyName.Version));
+																				IdataAccessAdapterType.FullName, implementer.FullName, Constants.LLBLGenNameVersion,
+																				assemblyName.Version));
 					implementers = Enumerable.Empty<Type>();
 				}
 				else
@@ -690,7 +721,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 		}
 
-		private void ChooseAdapterOrFactoryClass(string targetName)
+		public void ChooseAdapterOrFactoryClass(string targetName)
 		{
 			var assemPath = GetDriverDataValue(targetName.Replace("Type", "Assembly"));
 			if (assemPath.Length == 0)
@@ -705,49 +736,80 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				return;
 			}
 
-			IEnumerable<string> customTypes;
+			using (var domainIsolator = new DomainIsolator("Inspect Custom Assembly"))
+			{
+				domainIsolator.Domain.SetData("assemblyFileName", assemPath);
+				domainIsolator.Domain.SetData("LLBLConnectionType", LLBLConnectionType);
+				try
+				{
+					domainIsolator.Domain.DoCallBack(GetAdapterOrFactoryClasses);
+					var errorMessage = (string) domainIsolator.Domain.GetData("errorMessage");
+					var errorMessageTitle = (string) domainIsolator.Domain.GetData("errorMessageTitle");
+					var customTypes = (string[]) domainIsolator.Domain.GetData("types");
+					if (!string.IsNullOrEmpty(errorMessage))
+					{
+						MessageBox.Show(errorMessage, errorMessageTitle);
+						return;
+					}
+					if (customTypes.Count() == 1)
+						CxInfo.DriverData.SetElementValue(targetName, customTypes.First());
+					else if (!customTypes.Any())
+					{
+						CxInfo.DriverData.SetElementValue(targetName, "");
+					}
+					else
+					{
+						var result = (string) Dialogs.PickFromList("Choose " + targetName, customTypes.ToArray());
+						if (result != null)
+						{
+							CxInfo.DriverData.SetElementValue(targetName, result);
+							domainIsolator.Domain.SetData("CxInfo", CxInfo);
+							domainIsolator.Domain.DoCallBack(GetAdapterFactoryMethod);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+				}
+			}
+		}
+
+		private static void GetAdapterOrFactoryClasses()
+		{
+			var errorMessageTitle = "";
+
+			var errorMessage = "";
+
+			var assemPath = (string) AppDomain.CurrentDomain.GetData("assemblyFileName");
+			var lLblConnectionType = (LLBLConnectionType) AppDomain.CurrentDomain.GetData("LLBLConnectionType");
 			try
 			{
 				var dataAccessAdapterAssembly = LoadAssembly(assemPath);
 				var types = dataAccessAdapterAssembly.GetTypes();
-				customTypes = LLBLConnectionType == LLBLConnectionType.Adapter
-				              	? GetDataAccessAdapterTypeNames(types)
-				              	: types.Select(t => t.FullName).OrderBy(s => s);
+				IEnumerable<string> customTypes = lLblConnectionType == LLBLConnectionType.Adapter
+				                                  	? GetDataAccessAdapterTypeNames(types)
+				                                  	: types.Select(t => t.FullName).OrderBy(s => s);
+				AppDomain.CurrentDomain.SetData("types", customTypes.ToArray());
 			}
 			catch (ReflectionTypeLoadException ex)
 			{
 				var loaderException = ex.LoaderExceptions[0];
 				if (loaderException.Message.Contains(LlblgenProNameSpace) && !loaderException.Message.Contains(Constants.LLBLVersion))
-					MessageBox.Show(string.Format("The assembly {0} is not for {1}", assemPath, Constants.LLBLGenNameVersion));
+					errorMessage = string.Format("The assembly {0} is not for {1}", assemPath, Constants.LLBLGenNameVersion);
 				else
 					//Dialogs.PickFromList("An array of assemblies in this application domain.",
 					//             AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
-					MessageBox.Show(ex.Message + Environment.NewLine + Environment.NewLine +
-					                ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine),
-					                "Error obtaining adapter types");
-				return;
+					errorMessage = ex.Message + Environment.NewLine + Environment.NewLine +
+												 ex.LoaderExceptions.Select(le => le.Message).Distinct().JoinAsString(Environment.NewLine);
+				errorMessageTitle = "Error obtaining adapter types";
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show("Error obtaining adapter types: " + ex.Message);
+				errorMessage = "Error obtaining adapter types: " + ex.Message;
 				BreakIntoDebugger();
-				return;
 			}
-			if (customTypes.Count() == 1)
-				CxInfo.DriverData.SetElementValue(targetName, customTypes.First());
-			else if (!customTypes.Any())
-			{
-				CxInfo.DriverData.SetElementValue(targetName, "");
-			}
-			else
-			{
-				var result = (string) Dialogs.PickFromList("Choose " + targetName, customTypes.ToArray());
-				if (result != null)
-				{
-					CxInfo.DriverData.SetElementValue(targetName, result);
-					ChooseAdapterFactoryMethod();
-				}
-			}
+			AppDomain.CurrentDomain.SetData("errorMessageTitle", errorMessageTitle);
+			AppDomain.CurrentDomain.SetData("errorMessage", errorMessage);
 		}
 
 		private static Assembly LoadAssembly(string assemPath)
@@ -764,24 +826,35 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void ChooseAdapterFactoryMethod(object sender, RoutedEventArgs e)
 		{
-			ChooseAdapterFactoryMethod();
+			using (var domainIsolator = new DomainIsolator("Inspect Custom Assembly"))
+			{
+				domainIsolator.Domain.SetData("CxInfo", CxInfo);
+				domainIsolator.Domain.DoCallBack(GetAdapterFactoryMethod);
+				var factoryMethodName = domainIsolator.Domain.GetData(ElementNameFactoryMethod);
+				CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, factoryMethodName);
+			}
 		}
 
-		private void ChooseAdapterFactoryMethod()
+		private static void GetAdapterFactoryMethod()
+		{
+			ChooseAdapterFactoryMethod((IConnectionInfo)AppDomain.CurrentDomain.GetData("CxInfo"));
+		}
+
+		private static void ChooseAdapterFactoryMethod(IConnectionInfo connectionInfo)
 		{
 			try
 			{
-				var factoryTypeName = GetDriverDataValue(CxInfo, ElementNameFactoryType);
+				var factoryTypeName = GetDriverDataValue(connectionInfo, ElementNameFactoryType);
 				if (!string.IsNullOrEmpty(factoryTypeName))
 				{
-					var validMethods = GetMethodsFromFactoryAssembly(factoryTypeName);
+					var validMethods = GetMethodsFromFactoryAssembly(connectionInfo, factoryTypeName);
 					var count = validMethods.Count();
 					if (count == 1)
 					{
 						var methodInfo = validMethods.Single();
 						if (IdataAccessAdapterType.IsAssignableFrom(methodInfo.ReturnType))
 						{
-							CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, methodInfo.Name);
+							AppDomain.CurrentDomain.SetData(ElementNameFactoryMethod, methodInfo.Name);
 						}
 						else
 						{
@@ -792,20 +865,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 									"A method with a return type of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
 									IdataAccessAdapterType.FullName, methodInfo.Name, Constants.LLBLGenNameVersion,
 									assemblyName.Version));
-							CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, "");
+							AppDomain.CurrentDomain.SetData(ElementNameFactoryMethod, "");
 						}
 					}
 					else
 					{
 						var result = (MethodInfo) Dialogs.PickFromList(TitleChooseFactoryMethod, validMethods.ToArray());
 						if (result != null)
-							CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, result.Name);
-						else
-						{
-							Dialogs.PickFromList("An array of assemblies in this application domain.",
-							                     AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
-						}
+							AppDomain.CurrentDomain.SetData(ElementNameFactoryMethod, result.Name);
 					}
+					
 				}
 			}
 			catch (Exception ex)
@@ -814,9 +883,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 		}
 
-		private IEnumerable<MethodInfo> GetMethodsFromFactoryAssembly(string factoryTypeName)
+		private static IEnumerable<MethodInfo> GetMethodsFromFactoryAssembly(IConnectionInfo connectionInfo, string factoryTypeName)
 		{
-			var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
+			var factoryAssemblyPath = GetDriverDataValue(connectionInfo, ElementNameFactoryAssembly);
 			var factoryAdapterAssembly = LoadAssembly(factoryAssemblyPath);
 			if (factoryAdapterAssembly == null)
 				throw new ApplicationException("Factory assembly: " + factoryAssemblyPath + " could not be loaded!");
@@ -850,12 +919,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void ChooseAssemblies(object sender, RoutedEventArgs e)
 		{
 			var dialog = new OpenFileDialog
-			             	{
-			             		Title = TitleChooseExtraAssembly,
-			             		DefaultExt = ".dll",
-			             		Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*",
-			             		Multiselect = true
-			             	};
+										{
+											Title = TitleChooseExtraAssembly,
+											DefaultExt = ".dll",
+											Filter = "Assemblies (*.dll)|*.dll|All files (*.*)|*.*",
+											Multiselect = true
+										};
 
 			if (dialog.ShowDialog() == true)
 				foreach (var fileName in dialog.FileNames
@@ -872,7 +941,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			ValueTypeWrapper<string>.Add(AdditionalAssemblies, "SD.LLBLGen.Pro.QuerySpec.dll");
 			ValueTypeWrapper<string>.Add(AdditionalNamespaces, "SD.LLBLGen.Pro.QuerySpec",
-			                             "SD.LLBLGen.Pro.QuerySpec.SelfServicing", "SD.LLBLGen.Pro.QuerySpec.Adapter");
+																	 "SD.LLBLGen.Pro.QuerySpec.SelfServicing", "SD.LLBLGen.Pro.QuerySpec.Adapter");
 		}
 
 		private void DataBaseConnectionDialog(object sender, RoutedEventArgs e)

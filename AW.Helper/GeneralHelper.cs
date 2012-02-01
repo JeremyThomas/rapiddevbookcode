@@ -253,14 +253,12 @@ namespace AW.Helper
 		/// </returns>
 		public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
 		{
-			if (items is ICollection)
-				return ((ICollection) items).Count == 0;
-			return items.AsNullIfEmpty() == null;
+			return items is ICollection ? ((ICollection) items).Count == 0 : items.AsNullIfEmpty() == null;
 		}
 
 		public static bool IsNullOrEmpty(ICollection collection)
 		{
-			return collection == null ? true : collection.Count == 0;
+			return collection == null || collection.Count == 0;
 		}
 
 		/// <summary>
@@ -286,8 +284,9 @@ namespace AW.Helper
 		/// <returns></returns>
 		public static bool Any(IEnumerable enumerable, bool reset)
 		{
-			if (enumerable is ICollection)
-				return Any((ICollection) enumerable);
+			var collection = enumerable as ICollection;
+			if (collection != null)
+				return Any(collection);
 			var enumerator = enumerable.GetEnumerator();
 			var any = enumerator.MoveNext();
 			if (any && reset)
