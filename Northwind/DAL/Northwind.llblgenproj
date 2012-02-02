@@ -6,7 +6,7 @@
     <Property Name="AdditionalTaskPerformerFolder" Value="" />
     <Property Name="AdditionalTasksFolder" Value="" />
     <Property Name="AdditionalTemplatesFolder" Value="" />
-    <Property Name="AdditionalTypeConverterFolder" Value="" />
+    <Property Name="AdditionalTypeConverterFolder" Value="C:\Users\jeremy.thomas\Documents\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\LLBL Pro V3.1\AW.Helper.LLBL\bin\Debug" />
     <Property Name="AddNewElementsAfterRefresh" Value="0" />
     <Property Name="AddNewFieldsAfterRefresh" Value="0" />
     <Property Name="AddNewViewsAsEntitiesAfterRefresh" Value="0" />
@@ -38,7 +38,7 @@
     <Property Name="PreferVariableLengthTypes" Value="true" />
     <Property Name="ProjectCreator" Value="Jeremy" />
     <Property Name="ProjectName" Value="Northwind" />
-    <Property Name="RelationalModelDataElementNameCasingCaseSensitiveDBs" Value="3" />
+    <Property Name="RelationalModelDataElementNameCasingCaseSensitiveDBs" Value="1" />
     <Property Name="RelationshipsFollowDBForeignKeyConstraints" Value="0" />
     <Property Name="RemoveUnderscoresFromElementName" Value="true" />
     <Property Name="RemoveUnmappedElementsAfterRefresh" Value="0" />
@@ -68,7 +68,7 @@
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
         <PlatformName Value=".NET 3.5" />
-        <PresetName Value="SD.Presets.Adapter.QuerySpec" />
+        <PresetName Value="SD.Presets.Adapter.General2008" />
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
@@ -1004,230 +1004,236 @@
     </TargetDatabase>
     <TargetDatabase Type="A8034CB0-319D-4cdd-BC7D-1E7CFDBA3B74">
       <ConnectionElements>
+        <ConnectionElement Name="ServerName" Value="//localhost/xe" />
+        <ConnectionElement Name="CatalogName" Value="//localhost/xe" />
+        <ConnectionElement Name="UserID" Value="dbo_Northwind" />
         <ConnectionElement Name="Password" Value="" />
       </ConnectionElements>
       <SystemSequences />
       <Catalogs>
-        <Catalog Name="Default">
+        <Catalog Name="//localhost/xe">
           <Schemas>
-            <Schema Name="Default" CreatedByDesigner="true">
+            <Schema Name="DBO_NORTHWIND">
               <Sequences>
-                <Sequence Name="SEQ_Category" CreatedByDesigner="true" />
-                <Sequence Name="SEQ_Employee" CreatedByDesigner="true" />
-                <Sequence Name="SEQ_Order" CreatedByDesigner="true" />
-                <Sequence Name="SEQ_Product" CreatedByDesigner="true" />
-                <Sequence Name="SEQ_Region" CreatedByDesigner="true" />
-                <Sequence Name="SEQ_Shipper" CreatedByDesigner="true" />
-                <Sequence Name="SEQ_Supplier" CreatedByDesigner="true" />
+                <Sequence Name="AUDITINFO_AUDITINFOID_SEQ" />
+                <Sequence Name="CATEGORIES_CATEGORYID_SEQ" />
+                <Sequence Name="EMPLOYEES_EMPLOYEEID_SEQ" />
+                <Sequence Name="ORDERS_ORDERID_SEQ" />
+                <Sequence Name="PRODUCTS_PRODUCTID_SEQ" />
+                <Sequence Name="SHIPPERS_SHIPPERID_SEQ" />
+                <Sequence Name="SUPPLIERS_SUPPLIERID_SEQ" />
               </Sequences>
               <Tables>
-                <Table Name="Category" CreatedByDesigner="true">
+                <Table Name="CATEGORIES">
                   <Fields>
-                    <Field Name="CategoryId" Ordinal="1" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_70f678044cdb2c27d0dc8cfffb0" DbType="22" Precision="9" />
-                    <Field Name="CategoryName" Ordinal="2" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="Description" Ordinal="3" IsOptional="true" CreatedByDesigner="true" DbType="21" Length="2147483647" />
-                    <Field Name="Picture" Ordinal="4" IsOptional="true" CreatedByDesigner="true" DbType="2" Length="2147483647" />
+                    <Field Name="CATEGORYID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CATEGORIES" DbType="22" Precision="10" />
+                    <Field Name="CATEGORYNAME" Ordinal="2" DbType="24" Length="15" />
+                    <Field Name="DESCRIPTION" Ordinal="3" IsOptional="true" DbType="21" Length="2147483647" />
+                    <Field Name="PICTURE" Ordinal="4" IsOptional="true" DbType="2" Length="2147483647" />
                   </Fields>
                 </Table>
-                <Table Name="Customer" CreatedByDesigner="true">
+                <Table Name="CUSTOMERCUSTOMERDEMO">
                   <Fields>
-                    <Field Name="Address" Ordinal="1" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="60" />
-                    <Field Name="City" Ordinal="2" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="CompanyName" Ordinal="3" CreatedByDesigner="true" DbType="24" Length="40" />
-                    <Field Name="ContactName" Ordinal="4" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="30" />
-                    <Field Name="ContactTitle" Ordinal="5" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="30" />
-                    <Field Name="Country" Ordinal="6" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="CustomerId" Ordinal="7" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_d2f75b440a5a4690c57ef551de2" DbType="24" Length="5" />
-                    <Field Name="Fax" Ordinal="8" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="24" />
-                    <Field Name="Phone" Ordinal="9" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="24" />
-                    <Field Name="PostalCode" Ordinal="10" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="10" />
-                    <Field Name="Region" Ordinal="11" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
+                    <Field Name="CUSTOMERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CUSTOMERCUSTOMERDEMO" DbType="20" Length="5" />
+                    <Field Name="CUSTOMERTYPEID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_CUSTOMERCUSTOMERDEMO" DbType="20" Length="10" />
                   </Fields>
                 </Table>
-                <Table Name="CustomerCustomerDemo" CreatedByDesigner="true">
+                <Table Name="CUSTOMERDEMOGRAPHICS">
                   <Fields>
-                    <Field Name="CustomerId" Ordinal="1" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_c03daf64760a5e510c04d9c7ff7" DbType="24" Length="5" />
-                    <Field Name="CustomerTypeId" Ordinal="2" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_905a3f24a60945d21a8c6aa7ee1" DbType="24" Length="10" />
+                    <Field Name="CUSTOMERTYPEID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CUSTOMERDEMOGRAPHICS" DbType="20" Length="10" />
+                    <Field Name="CUSTOMERDESC" Ordinal="2" IsOptional="true" DbType="21" Length="2147483647" />
                   </Fields>
                 </Table>
-                <Table Name="CustomerDemographic" CreatedByDesigner="true">
+                <Table Name="CUSTOMERS">
                   <Fields>
-                    <Field Name="CustomerDesc" Ordinal="1" IsOptional="true" CreatedByDesigner="true" DbType="21" Length="2147483647" />
-                    <Field Name="CustomerTypeId" Ordinal="2" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_afebf714844a303d2e8cf94df0a" DbType="24" Length="10" />
+                    <Field Name="CUSTOMERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_CUSTOMERS" DbType="20" Length="5" />
+                    <Field Name="COMPANYNAME" Ordinal="2" DbType="24" Length="40" />
+                    <Field Name="CONTACTNAME" Ordinal="3" IsOptional="true" DbType="24" Length="30" />
+                    <Field Name="CONTACTTITLE" Ordinal="4" IsOptional="true" DbType="24" Length="30" />
+                    <Field Name="ADDRESS" Ordinal="5" IsOptional="true" DbType="24" Length="60" />
+                    <Field Name="CITY" Ordinal="6" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="REGION" Ordinal="7" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="POSTALCODE" Ordinal="8" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="COUNTRY" Ordinal="9" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="PHONE" Ordinal="10" IsOptional="true" DbType="24" Length="24" />
+                    <Field Name="FAX" Ordinal="11" IsOptional="true" DbType="24" Length="24" />
                   </Fields>
                 </Table>
-                <Table Name="Employee" CreatedByDesigner="true">
+                <Table Name="EMPLOYEES">
                   <Fields>
-                    <Field Name="Address" Ordinal="1" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="60" />
-                    <Field Name="BirthDate" Ordinal="2" IsOptional="true" CreatedByDesigner="true" DbType="7" />
-                    <Field Name="City" Ordinal="3" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="Country" Ordinal="4" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="EmployeeId" Ordinal="5" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_d067caf4d589c599b468fcda53a" DbType="22" Precision="9" />
-                    <Field Name="Extension" Ordinal="6" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="4" />
-                    <Field Name="FirstName" Ordinal="7" CreatedByDesigner="true" DbType="24" Length="10" />
-                    <Field Name="HireDate" Ordinal="8" IsOptional="true" CreatedByDesigner="true" DbType="7" />
-                    <Field Name="HomePhone" Ordinal="9" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="24" />
-                    <Field Name="LastName" Ordinal="10" CreatedByDesigner="true" DbType="24" Length="20" />
-                    <Field Name="Notes" Ordinal="11" IsOptional="true" CreatedByDesigner="true" DbType="21" Length="2147483647" />
-                    <Field Name="Photo" Ordinal="12" IsOptional="true" CreatedByDesigner="true" DbType="2" Length="2147483647" />
-                    <Field Name="PhotoPath" Ordinal="13" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="255" />
-                    <Field Name="PostalCode" Ordinal="14" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="10" />
-                    <Field Name="Region" Ordinal="15" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="ReportsTo" Ordinal="16" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="9" />
-                    <Field Name="Title" Ordinal="17" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="30" />
-                    <Field Name="TitleOfCourtesy" Ordinal="18" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="25" />
+                    <Field Name="EMPLOYEEID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_EMPLOYEES" DbType="22" Precision="10" />
+                    <Field Name="LASTNAME" Ordinal="2" DbType="24" Length="20" />
+                    <Field Name="FIRSTNAME" Ordinal="3" DbType="24" Length="10" />
+                    <Field Name="TITLE" Ordinal="4" IsOptional="true" DbType="24" Length="30" />
+                    <Field Name="TITLEOFCOURTESY" Ordinal="5" IsOptional="true" DbType="24" Length="25" />
+                    <Field Name="BIRTHDATE" Ordinal="6" IsOptional="true" DbType="7" />
+                    <Field Name="HIREDATE" Ordinal="7" IsOptional="true" DbType="7" />
+                    <Field Name="ADDRESS" Ordinal="8" IsOptional="true" DbType="24" Length="60" />
+                    <Field Name="CITY" Ordinal="9" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="REGION" Ordinal="10" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="POSTALCODE" Ordinal="11" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="COUNTRY" Ordinal="12" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="HOMEPHONE" Ordinal="13" IsOptional="true" DbType="24" Length="24" />
+                    <Field Name="EXTENSION" Ordinal="14" IsOptional="true" DbType="24" Length="4" />
+                    <Field Name="PHOTO" Ordinal="15" IsOptional="true" DbType="2" Length="2147483647" />
+                    <Field Name="NOTES" Ordinal="16" IsOptional="true" DbType="21" Length="2147483647" />
+                    <Field Name="REPORTSTO" Ordinal="17" IsOptional="true" DbType="22" Precision="10" />
+                    <Field Name="PHOTOPATH" Ordinal="18" IsOptional="true" DbType="24" Length="255" />
                   </Fields>
                 </Table>
-                <Table Name="EmployeeTerritory" CreatedByDesigner="true">
+                <Table Name="EMPLOYEETERRITORIES">
                   <Fields>
-                    <Field Name="EmployeeId" Ordinal="1" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_56865564a0ea1fb06ca4f44438f" DbType="22" Precision="9" />
-                    <Field Name="TerritoryId" Ordinal="2" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_5c979d14725ac61cedd0a264ec0" DbType="24" Length="20" />
+                    <Field Name="EMPLOYEEID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_EMPLOYEETERRITORIES" DbType="22" Precision="10" />
+                    <Field Name="TERRITORYID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_EMPLOYEETERRITORIES" DbType="24" Length="20" />
                   </Fields>
                 </Table>
-                <Table Name="Order" CreatedByDesigner="true">
+                <Table Name="ORDER_DETAILS">
                   <Fields>
-                    <Field Name="CustomerId" Ordinal="1" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="5" />
-                    <Field Name="EmployeeId" Ordinal="2" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="9" />
-                    <Field Name="Freight" Ordinal="3" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="19" Scale="4" />
-                    <Field Name="OrderDate" Ordinal="4" IsOptional="true" CreatedByDesigner="true" DbType="7" />
-                    <Field Name="OrderId" Ordinal="5" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_0b10a7844dfb2bbe0d05c4e610f" DbType="22" Precision="9" />
-                    <Field Name="RequiredDate" Ordinal="6" IsOptional="true" CreatedByDesigner="true" DbType="7" />
-                    <Field Name="ShipAddress" Ordinal="7" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="60" />
-                    <Field Name="ShipCity" Ordinal="8" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="ShipCountry" Ordinal="9" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="ShipName" Ordinal="10" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="40" />
-                    <Field Name="ShippedDate" Ordinal="11" IsOptional="true" CreatedByDesigner="true" DbType="7" />
-                    <Field Name="ShipPostalCode" Ordinal="12" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="10" />
-                    <Field Name="ShipRegion" Ordinal="13" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="ShipVia" Ordinal="14" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="9" />
+                    <Field Name="ORDERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ORDER_DETAILS" DbType="22" Precision="10" />
+                    <Field Name="PRODUCTID" Ordinal="2" IsPrimaryKey="true" PkConstraintName="PK_ORDER_DETAILS" DbType="22" Precision="10" />
+                    <Field Name="UNITPRICE" Ordinal="3" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="QUANTITY" Ordinal="4" DbType="22" Precision="5" />
+                    <Field Name="DISCOUNT" Ordinal="5" DbType="11" Precision="38" Scale="38" />
+                  </Fields>
+                  <CustomProperties>
+                    <CustomProperty Name="Description" Value="ORIGINAL NAME:Order Details" />
+                  </CustomProperties>
+                </Table>
+                <Table Name="ORDERS">
+                  <Fields>
+                    <Field Name="ORDERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ORDERS" DbType="22" Precision="10" />
+                    <Field Name="CUSTOMERID" Ordinal="2" IsOptional="true" DbType="20" Length="5" />
+                    <Field Name="EMPLOYEEID" Ordinal="3" IsOptional="true" DbType="22" Precision="10" />
+                    <Field Name="ORDERDATE" Ordinal="4" IsOptional="true" DbType="7" />
+                    <Field Name="REQUIREDDATE" Ordinal="5" IsOptional="true" DbType="7" />
+                    <Field Name="SHIPPEDDATE" Ordinal="6" IsOptional="true" DbType="7" />
+                    <Field Name="SHIPVIA" Ordinal="7" IsOptional="true" DbType="22" Precision="10" />
+                    <Field Name="FREIGHT" Ordinal="8" IsOptional="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="SHIPNAME" Ordinal="9" IsOptional="true" DbType="24" Length="40" />
+                    <Field Name="SHIPADDRESS" Ordinal="10" IsOptional="true" DbType="24" Length="60" />
+                    <Field Name="SHIPCITY" Ordinal="11" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="SHIPREGION" Ordinal="12" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="SHIPPOSTALCODE" Ordinal="13" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="SHIPCOUNTRY" Ordinal="14" IsOptional="true" DbType="24" Length="15" />
                   </Fields>
                 </Table>
-                <Table Name="OrderDetail" CreatedByDesigner="true">
+                <Table Name="PRODUCTS">
                   <Fields>
-                    <Field Name="Discount" Ordinal="1" CreatedByDesigner="true" DbType="44" />
-                    <Field Name="OrderId" Ordinal="2" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_a6cd3ab4679b2d41992fee85769" DbType="22" Precision="9" />
-                    <Field Name="ProductId" Ordinal="3" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_a8d22a14923b0036a6870bfbafc" DbType="22" Precision="9" />
-                    <Field Name="Quantity" Ordinal="4" CreatedByDesigner="true" DbType="22" Precision="4" />
-                    <Field Name="UnitPrice" Ordinal="5" CreatedByDesigner="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="PRODUCTID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_PRODUCTS" DbType="22" Precision="10" />
+                    <Field Name="PRODUCTNAME" Ordinal="2" DbType="24" Length="40" />
+                    <Field Name="SUPPLIERID" Ordinal="3" IsOptional="true" DbType="22" Precision="10" />
+                    <Field Name="CATEGORYID" Ordinal="4" IsOptional="true" DbType="22" Precision="10" />
+                    <Field Name="QUANTITYPERUNIT" Ordinal="5" IsOptional="true" DbType="24" Length="20" />
+                    <Field Name="UNITPRICE" Ordinal="6" IsOptional="true" DbType="22" Precision="19" Scale="4" />
+                    <Field Name="UNITSINSTOCK" Ordinal="7" IsOptional="true" DbType="22" Precision="5" />
+                    <Field Name="UNITSONORDER" Ordinal="8" IsOptional="true" DbType="22" Precision="5" />
+                    <Field Name="REORDERLEVEL" Ordinal="9" IsOptional="true" DbType="22" Precision="5" />
+                    <Field Name="DISCONTINUED" Ordinal="10" DbType="22" Precision="1" />
                   </Fields>
                 </Table>
-                <Table Name="Product" CreatedByDesigner="true">
+                <Table Name="REGION">
                   <Fields>
-                    <Field Name="CategoryId" Ordinal="1" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="9" />
-                    <Field Name="ProductId" Ordinal="2" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_d2273e9433485e62935b85f48d9" DbType="22" Precision="9" />
-                    <Field Name="ProductName" Ordinal="3" CreatedByDesigner="true" DbType="24" Length="40" />
-                    <Field Name="QuantityPerUnit" Ordinal="4" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="20" />
-                    <Field Name="ReorderLevel" Ordinal="5" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="4" />
-                    <Field Name="SupplierId" Ordinal="6" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="9" />
-                    <Field Name="UnitPrice" Ordinal="7" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="19" Scale="4" />
-                    <Field Name="UnitsInStock" Ordinal="8" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="4" />
-                    <Field Name="UnitsOnOrder" Ordinal="9" IsOptional="true" CreatedByDesigner="true" DbType="22" Precision="4" />
-                    <Field Name="Discontinued" Ordinal="10" CreatedByDesigner="true" DbType="22" Precision="1" />
+                    <Field Name="REGIONID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_REGION" DbType="22" Precision="10" />
+                    <Field Name="REGIONDESCRIPTION" Ordinal="2" DbType="20" Length="50" />
                   </Fields>
                 </Table>
-                <Table Name="Region" CreatedByDesigner="true">
+                <Table Name="SHIPPERS">
                   <Fields>
-                    <Field Name="RegionDescription" Ordinal="1" CreatedByDesigner="true" DbType="24" Length="50" />
-                    <Field Name="RegionId" Ordinal="2" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_bdda6fe4793a05cceb9919cfc17" DbType="22" Precision="9" />
+                    <Field Name="SHIPPERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_SHIPPERS" DbType="22" Precision="10" />
+                    <Field Name="COMPANYNAME" Ordinal="2" DbType="24" Length="40" />
+                    <Field Name="PHONE" Ordinal="3" IsOptional="true" DbType="24" Length="24" />
                   </Fields>
                 </Table>
-                <Table Name="Shipper" CreatedByDesigner="true">
+                <Table Name="SUPPLIERS">
                   <Fields>
-                    <Field Name="CompanyName" Ordinal="1" CreatedByDesigner="true" DbType="24" Length="40" />
-                    <Field Name="Phone" Ordinal="2" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="24" />
-                    <Field Name="ShipperId" Ordinal="3" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_590eeb344c496910420631cdab5" DbType="22" Precision="9" />
+                    <Field Name="SUPPLIERID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_SUPPLIERS" DbType="22" Precision="10" />
+                    <Field Name="COMPANYNAME" Ordinal="2" DbType="24" Length="40" />
+                    <Field Name="CONTACTNAME" Ordinal="3" IsOptional="true" DbType="24" Length="30" />
+                    <Field Name="CONTACTTITLE" Ordinal="4" IsOptional="true" DbType="24" Length="30" />
+                    <Field Name="ADDRESS" Ordinal="5" IsOptional="true" DbType="24" Length="60" />
+                    <Field Name="CITY" Ordinal="6" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="REGION" Ordinal="7" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="POSTALCODE" Ordinal="8" IsOptional="true" DbType="24" Length="10" />
+                    <Field Name="COUNTRY" Ordinal="9" IsOptional="true" DbType="24" Length="15" />
+                    <Field Name="PHONE" Ordinal="10" IsOptional="true" DbType="24" Length="24" />
+                    <Field Name="FAX" Ordinal="11" IsOptional="true" DbType="24" Length="24" />
+                    <Field Name="HOMEPAGE" Ordinal="12" IsOptional="true" DbType="21" Length="2147483647" />
                   </Fields>
                 </Table>
-                <Table Name="Supplier" CreatedByDesigner="true">
+                <Table Name="TERRITORIES">
                   <Fields>
-                    <Field Name="Address" Ordinal="1" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="60" />
-                    <Field Name="City" Ordinal="2" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="CompanyName" Ordinal="3" CreatedByDesigner="true" DbType="24" Length="40" />
-                    <Field Name="ContactName" Ordinal="4" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="30" />
-                    <Field Name="ContactTitle" Ordinal="5" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="30" />
-                    <Field Name="Country" Ordinal="6" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="Fax" Ordinal="7" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="24" />
-                    <Field Name="HomePage" Ordinal="8" IsOptional="true" CreatedByDesigner="true" DbType="21" Length="2147483647" />
-                    <Field Name="Phone" Ordinal="9" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="24" />
-                    <Field Name="PostalCode" Ordinal="10" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="10" />
-                    <Field Name="Region" Ordinal="11" IsOptional="true" CreatedByDesigner="true" DbType="24" Length="15" />
-                    <Field Name="SupplierId" Ordinal="12" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_95f028842c7838a713b798264dd" DbType="22" Precision="9" />
-                  </Fields>
-                </Table>
-                <Table Name="Territory" CreatedByDesigner="true">
-                  <Fields>
-                    <Field Name="RegionId" Ordinal="1" CreatedByDesigner="true" DbType="22" Precision="9" />
-                    <Field Name="TerritoryDescription" Ordinal="2" CreatedByDesigner="true" DbType="24" Length="50" />
-                    <Field Name="TerritoryId" Ordinal="3" TrackedChanges="4608" IsPrimaryKey="true" CreatedByDesigner="true" PkConstraintName="PK_339f08a4576a970fe629e528ac9" DbType="24" Length="20" />
+                    <Field Name="TERRITORYID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_TERRITORIES" DbType="24" Length="20" />
+                    <Field Name="TERRITORYDESCRIPTION" Ordinal="2" DbType="20" Length="50" />
+                    <Field Name="REGIONID" Ordinal="3" DbType="22" Precision="10" />
                   </Fields>
                 </Table>
               </Tables>
             </Schema>
           </Schemas>
           <ForeignKeyConstraints>
-            <ForeignKeyConstraint Name="Default:CustomerCustomerDemo:FK_98a81aa45cca9d28d48a75da31b" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:CUSTOMERCUSTOMERDEMO:FK_CUSTOMERCUSTOMERDEMO">
               <FieldPairs>
-                <FieldPair PkField="Default:Customer:CustomerId" FkField="Default:CustomerCustomerDemo:CustomerId" />
+                <FieldPair PkField="DBO_NORTHWIND:CUSTOMERDEMOGRAPHICS:CUSTOMERTYPEID" FkField="DBO_NORTHWIND:CUSTOMERCUSTOMERDEMO:CUSTOMERTYPEID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:CustomerCustomerDemo:FK_db480fa4140ae3f1bc322b5ae92" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:CUSTOMERCUSTOMERDEMO:FK_CUSTOMERCUSTOMERDEMO_CUSTOM">
               <FieldPairs>
-                <FieldPair PkField="Default:CustomerDemographic:CustomerTypeId" FkField="Default:CustomerCustomerDemo:CustomerTypeId" />
+                <FieldPair PkField="DBO_NORTHWIND:CUSTOMERS:CUSTOMERID" FkField="DBO_NORTHWIND:CUSTOMERCUSTOMERDEMO:CUSTOMERID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:Employee:FK_4b49c504ed0b25a01a75d717615" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:EMPLOYEES:FK_EMPLOYEES_EMPLOYEES">
               <FieldPairs>
-                <FieldPair PkField="Default:Employee:EmployeeId" FkField="Default:Employee:ReportsTo" />
+                <FieldPair PkField="DBO_NORTHWIND:EMPLOYEES:EMPLOYEEID" FkField="DBO_NORTHWIND:EMPLOYEES:REPORTSTO" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:EmployeeTerritory:FK_3543c974565a057650b98847da9" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:EMPLOYEETERRITORIES:FK_EMPLOYEETERRITORIES_EMPLOYE">
               <FieldPairs>
-                <FieldPair PkField="Default:Territory:TerritoryId" FkField="Default:EmployeeTerritory:TerritoryId" />
+                <FieldPair PkField="DBO_NORTHWIND:EMPLOYEES:EMPLOYEEID" FkField="DBO_NORTHWIND:EMPLOYEETERRITORIES:EMPLOYEEID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:EmployeeTerritory:FK_67bbac14faaa5e3fa5a8fa47a00" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:EMPLOYEETERRITORIES:FK_EMPLOYEETERRITORIES_TERRITO">
               <FieldPairs>
-                <FieldPair PkField="Default:Employee:EmployeeId" FkField="Default:EmployeeTerritory:EmployeeId" />
+                <FieldPair PkField="DBO_NORTHWIND:TERRITORIES:TERRITORYID" FkField="DBO_NORTHWIND:EMPLOYEETERRITORIES:TERRITORYID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:Order:FK_5825d8742a4a2c58cea3e7110d9" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:ORDER_DETAILS:FK_ORDER_DETAILS_ORDERS">
               <FieldPairs>
-                <FieldPair PkField="Default:Employee:EmployeeId" FkField="Default:Order:EmployeeId" />
+                <FieldPair PkField="DBO_NORTHWIND:ORDERS:ORDERID" FkField="DBO_NORTHWIND:ORDER_DETAILS:ORDERID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:Order:FK_acf93904d09927d1ef877861f00" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:ORDER_DETAILS:FK_ORDER_DETAILS_PRODUCTS">
               <FieldPairs>
-                <FieldPair PkField="Default:Shipper:ShipperId" FkField="Default:Order:ShipVia" />
+                <FieldPair PkField="DBO_NORTHWIND:PRODUCTS:PRODUCTID" FkField="DBO_NORTHWIND:ORDER_DETAILS:PRODUCTID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:Order:FK_d03c14e41c59f45281579789cec" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:ORDERS:FK_ORDERS_CUSTOMERS">
               <FieldPairs>
-                <FieldPair PkField="Default:Customer:CustomerId" FkField="Default:Order:CustomerId" />
+                <FieldPair PkField="DBO_NORTHWIND:CUSTOMERS:CUSTOMERID" FkField="DBO_NORTHWIND:ORDERS:CUSTOMERID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:OrderDetail:FK_2fedecd411a850cb11326a5e8de" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:ORDERS:FK_ORDERS_EMPLOYEES">
               <FieldPairs>
-                <FieldPair PkField="Default:Product:ProductId" FkField="Default:OrderDetail:ProductId" />
+                <FieldPair PkField="DBO_NORTHWIND:EMPLOYEES:EMPLOYEEID" FkField="DBO_NORTHWIND:ORDERS:EMPLOYEEID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:OrderDetail:FK_77d3e164e6ab2b4b79461fe7b2c" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:ORDERS:FK_ORDERS_SHIPPERS">
               <FieldPairs>
-                <FieldPair PkField="Default:Order:OrderId" FkField="Default:OrderDetail:OrderId" />
+                <FieldPair PkField="DBO_NORTHWIND:SHIPPERS:SHIPPERID" FkField="DBO_NORTHWIND:ORDERS:SHIPVIA" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:Product:FK_e3dd817493a97e9732041fe98aa" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:PRODUCTS:FK_PRODUCTS_CATEGORIES">
               <FieldPairs>
-                <FieldPair PkField="Default:Category:CategoryId" FkField="Default:Product:CategoryId" />
+                <FieldPair PkField="DBO_NORTHWIND:CATEGORIES:CATEGORYID" FkField="DBO_NORTHWIND:PRODUCTS:CATEGORYID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:Product:FK_f66c2b7401bac33b5a70e15a805" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:PRODUCTS:FK_PRODUCTS_SUPPLIERS">
               <FieldPairs>
-                <FieldPair PkField="Default:Supplier:SupplierId" FkField="Default:Product:SupplierId" />
+                <FieldPair PkField="DBO_NORTHWIND:SUPPLIERS:SUPPLIERID" FkField="DBO_NORTHWIND:PRODUCTS:SUPPLIERID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Default:Territory:FK_5d7313b4090bc7005553dae2631" CreatedByDesigner="true">
+            <ForeignKeyConstraint Name="DBO_NORTHWIND:TERRITORIES:FK_TERRITORIES_REGION">
               <FieldPairs>
-                <FieldPair PkField="Default:Region:RegionId" FkField="Default:Territory:RegionId" />
+                <FieldPair PkField="DBO_NORTHWIND:REGION:REGIONID" FkField="DBO_NORTHWIND:TERRITORIES:REGIONID" />
               </FieldPairs>
             </ForeignKeyConstraint>
           </ForeignKeyConstraints>
@@ -1385,150 +1391,152 @@
     </MappingStore>
     <MappingStore Type="A8034CB0-319D-4cdd-BC7D-1E7CFDBA3B74">
       <EntityMappings>
-        <EntityMapping EntityName=":Category" TargetName="Default:Default:Category">
+        <EntityMapping EntityName=":Category" TargetName="//localhost/xe:DBO_NORTHWIND:CATEGORIES">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CategoryId" SequenceToUse="Default:Default:SEQ_Category" />
-            <FieldMapping FieldName="CategoryName" TargetFieldName="CategoryName" />
-            <FieldMapping FieldName="Description" TargetFieldName="Description" />
-            <FieldMapping FieldName="Picture" TargetFieldName="Picture" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:CATEGORIES_CATEGORYID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
+            <FieldMapping FieldName="Description" TargetFieldName="DESCRIPTION" />
+            <FieldMapping FieldName="Picture" TargetFieldName="PICTURE" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":Customer" TargetName="Default:Default:Customer">
+        <EntityMapping EntityName=":Customer" TargetName="//localhost/xe:DBO_NORTHWIND:CUSTOMERS">
           <FieldMappings>
-            <FieldMapping FieldName="Address" TargetFieldName="Address" />
-            <FieldMapping FieldName="City" TargetFieldName="City" />
-            <FieldMapping FieldName="CompanyName" TargetFieldName="CompanyName" />
-            <FieldMapping FieldName="ContactName" TargetFieldName="ContactName" />
-            <FieldMapping FieldName="ContactTitle" TargetFieldName="ContactTitle" />
-            <FieldMapping FieldName="Country" TargetFieldName="Country" />
-            <FieldMapping FieldName="CustomerId" TargetFieldName="CustomerId" />
-            <FieldMapping FieldName="Fax" TargetFieldName="Fax" />
-            <FieldMapping FieldName="Phone" TargetFieldName="Phone" />
-            <FieldMapping FieldName="PostalCode" TargetFieldName="PostalCode" />
-            <FieldMapping FieldName="Region" TargetFieldName="Region" />
+            <FieldMapping FieldName="Address" TargetFieldName="ADDRESS" />
+            <FieldMapping FieldName="City" TargetFieldName="CITY" />
+            <FieldMapping FieldName="CompanyName" TargetFieldName="COMPANYNAME" />
+            <FieldMapping FieldName="ContactName" TargetFieldName="CONTACTNAME" />
+            <FieldMapping FieldName="ContactTitle" TargetFieldName="CONTACTTITLE" />
+            <FieldMapping FieldName="Country" TargetFieldName="COUNTRY" />
+            <FieldMapping FieldName="CustomerId" TargetFieldName="CUSTOMERID" />
+            <FieldMapping FieldName="Fax" TargetFieldName="FAX" />
+            <FieldMapping FieldName="Phone" TargetFieldName="PHONE" />
+            <FieldMapping FieldName="PostalCode" TargetFieldName="POSTALCODE" />
+            <FieldMapping FieldName="Region" TargetFieldName="REGION" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":CustomerCustomerDemo" TargetName="Default:Default:CustomerCustomerDemo">
+        <EntityMapping EntityName=":CustomerCustomerDemo" TargetName="//localhost/xe:DBO_NORTHWIND:CUSTOMERCUSTOMERDEMO">
           <FieldMappings>
-            <FieldMapping FieldName="CustomerId" TargetFieldName="CustomerId" />
-            <FieldMapping FieldName="CustomerTypeId" TargetFieldName="CustomerTypeId" />
+            <FieldMapping FieldName="CustomerId" TargetFieldName="CUSTOMERID" />
+            <FieldMapping FieldName="CustomerTypeId" TargetFieldName="CUSTOMERTYPEID" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":CustomerDemographic" TargetName="Default:Default:CustomerDemographic">
+        <EntityMapping EntityName=":CustomerDemographic" TargetName="//localhost/xe:DBO_NORTHWIND:CUSTOMERDEMOGRAPHICS">
           <FieldMappings>
-            <FieldMapping FieldName="CustomerDesc" TargetFieldName="CustomerDesc" />
-            <FieldMapping FieldName="CustomerTypeId" TargetFieldName="CustomerTypeId" />
+            <FieldMapping FieldName="CustomerDesc" TargetFieldName="CUSTOMERDESC" />
+            <FieldMapping FieldName="CustomerTypeId" TargetFieldName="CUSTOMERTYPEID" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":Employee" TargetName="Default:Default:Employee">
+        <EntityMapping EntityName=":Employee" TargetName="//localhost/xe:DBO_NORTHWIND:EMPLOYEES">
           <FieldMappings>
-            <FieldMapping FieldName="Address" TargetFieldName="Address" />
-            <FieldMapping FieldName="BirthDate" TargetFieldName="BirthDate" />
-            <FieldMapping FieldName="City" TargetFieldName="City" />
-            <FieldMapping FieldName="Country" TargetFieldName="Country" />
-            <FieldMapping FieldName="EmployeeId" TargetFieldName="EmployeeId" SequenceToUse="Default:Default:SEQ_Employee" />
-            <FieldMapping FieldName="Extension" TargetFieldName="Extension" />
-            <FieldMapping FieldName="FirstName" TargetFieldName="FirstName" />
-            <FieldMapping FieldName="HireDate" TargetFieldName="HireDate" />
-            <FieldMapping FieldName="HomePhone" TargetFieldName="HomePhone" />
-            <FieldMapping FieldName="LastName" TargetFieldName="LastName" />
-            <FieldMapping FieldName="Notes" TargetFieldName="Notes" />
-            <FieldMapping FieldName="Photo" TargetFieldName="Photo" />
-            <FieldMapping FieldName="PhotoPath" TargetFieldName="PhotoPath" />
-            <FieldMapping FieldName="PostalCode" TargetFieldName="PostalCode" />
-            <FieldMapping FieldName="Region" TargetFieldName="Region" />
-            <FieldMapping FieldName="ReportsTo" TargetFieldName="ReportsTo" />
-            <FieldMapping FieldName="Title" TargetFieldName="Title" />
-            <FieldMapping FieldName="TitleOfCourtesy" TargetFieldName="TitleOfCourtesy" />
+            <FieldMapping FieldName="Address" TargetFieldName="ADDRESS" />
+            <FieldMapping FieldName="BirthDate" TargetFieldName="BIRTHDATE" />
+            <FieldMapping FieldName="City" TargetFieldName="CITY" />
+            <FieldMapping FieldName="Country" TargetFieldName="COUNTRY" />
+            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:EMPLOYEES_EMPLOYEEID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="Extension" TargetFieldName="EXTENSION" />
+            <FieldMapping FieldName="FirstName" TargetFieldName="FIRSTNAME" />
+            <FieldMapping FieldName="HireDate" TargetFieldName="HIREDATE" />
+            <FieldMapping FieldName="HomePhone" TargetFieldName="HOMEPHONE" />
+            <FieldMapping FieldName="LastName" TargetFieldName="LASTNAME" />
+            <FieldMapping FieldName="Notes" TargetFieldName="NOTES" />
+            <FieldMapping FieldName="Photo" TargetFieldName="PHOTO" />
+            <FieldMapping FieldName="PhotoPath" TargetFieldName="PHOTOPATH" />
+            <FieldMapping FieldName="PostalCode" TargetFieldName="POSTALCODE" />
+            <FieldMapping FieldName="Region" TargetFieldName="REGION" />
+            <FieldMapping FieldName="ReportsTo" TargetFieldName="REPORTSTO" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="Title" TargetFieldName="TITLE" />
+            <FieldMapping FieldName="TitleOfCourtesy" TargetFieldName="TITLEOFCOURTESY" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":EmployeeTerritory" TargetName="Default:Default:EmployeeTerritory">
+        <EntityMapping EntityName=":EmployeeTerritory" TargetName="//localhost/xe:DBO_NORTHWIND:EMPLOYEETERRITORIES">
           <FieldMappings>
-            <FieldMapping FieldName="EmployeeId" TargetFieldName="EmployeeId" />
-            <FieldMapping FieldName="TerritoryId" TargetFieldName="TerritoryId" />
+            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="TerritoryId" TargetFieldName="TERRITORYID" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":Order" TargetName="Default:Default:Order">
+        <EntityMapping EntityName=":Order" TargetName="//localhost/xe:DBO_NORTHWIND:ORDERS">
           <FieldMappings>
-            <FieldMapping FieldName="CustomerId" TargetFieldName="CustomerId" />
-            <FieldMapping FieldName="EmployeeId" TargetFieldName="EmployeeId" />
-            <FieldMapping FieldName="Freight" TargetFieldName="Freight" />
-            <FieldMapping FieldName="OrderDate" TargetFieldName="OrderDate" />
-            <FieldMapping FieldName="OrderId" TargetFieldName="OrderId" SequenceToUse="Default:Default:SEQ_Order" />
-            <FieldMapping FieldName="RequiredDate" TargetFieldName="RequiredDate" />
-            <FieldMapping FieldName="ShipAddress" TargetFieldName="ShipAddress" />
-            <FieldMapping FieldName="ShipCity" TargetFieldName="ShipCity" />
-            <FieldMapping FieldName="ShipCountry" TargetFieldName="ShipCountry" />
-            <FieldMapping FieldName="ShipName" TargetFieldName="ShipName" />
-            <FieldMapping FieldName="ShippedDate" TargetFieldName="ShippedDate" />
-            <FieldMapping FieldName="ShipPostalCode" TargetFieldName="ShipPostalCode" />
-            <FieldMapping FieldName="ShipRegion" TargetFieldName="ShipRegion" />
-            <FieldMapping FieldName="ShipVia" TargetFieldName="ShipVia" />
+            <FieldMapping FieldName="CustomerId" TargetFieldName="CUSTOMERID" />
+            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="Freight" TargetFieldName="FREIGHT" />
+            <FieldMapping FieldName="OrderDate" TargetFieldName="ORDERDATE" />
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:ORDERS_ORDERID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="RequiredDate" TargetFieldName="REQUIREDDATE" />
+            <FieldMapping FieldName="ShipAddress" TargetFieldName="SHIPADDRESS" />
+            <FieldMapping FieldName="ShipCity" TargetFieldName="SHIPCITY" />
+            <FieldMapping FieldName="ShipCountry" TargetFieldName="SHIPCOUNTRY" />
+            <FieldMapping FieldName="ShipName" TargetFieldName="SHIPNAME" />
+            <FieldMapping FieldName="ShippedDate" TargetFieldName="SHIPPEDDATE" />
+            <FieldMapping FieldName="ShipPostalCode" TargetFieldName="SHIPPOSTALCODE" />
+            <FieldMapping FieldName="ShipRegion" TargetFieldName="SHIPREGION" />
+            <FieldMapping FieldName="ShipVia" TargetFieldName="SHIPVIA" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":OrderDetail" TargetName="Default:Default:OrderDetail">
+        <EntityMapping EntityName=":OrderDetail" TargetName="//localhost/xe:DBO_NORTHWIND:ORDER_DETAILS">
           <FieldMappings>
-            <FieldMapping FieldName="Discount" TargetFieldName="Discount" />
-            <FieldMapping FieldName="OrderId" TargetFieldName="OrderId" />
-            <FieldMapping FieldName="ProductId" TargetFieldName="ProductId" />
-            <FieldMapping FieldName="Quantity" TargetFieldName="Quantity" />
-            <FieldMapping FieldName="UnitPrice" TargetFieldName="UnitPrice" />
+            <FieldMapping FieldName="Discount" TargetFieldName="DISCOUNT" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SingleNumericConverter" />
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="Quantity" TargetFieldName="QUANTITY" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SmallIntegerNumericConverter" />
+            <FieldMapping FieldName="UnitPrice" TargetFieldName="UNITPRICE" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":Product" TargetName="Default:Default:Product">
+        <EntityMapping EntityName=":Product" TargetName="//localhost/xe:DBO_NORTHWIND:PRODUCTS">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CategoryId" />
-            <FieldMapping FieldName="Discontinued" TargetFieldName="Discontinued" TypeConverterToUse="SD.LLBLGen.Pro.TypeConverters.BooleanNumericConverter" />
-            <FieldMapping FieldName="ProductId" TargetFieldName="ProductId" SequenceToUse="Default:Default:SEQ_Product" />
-            <FieldMapping FieldName="ProductName" TargetFieldName="ProductName" />
-            <FieldMapping FieldName="QuantityPerUnit" TargetFieldName="QuantityPerUnit" />
-            <FieldMapping FieldName="ReorderLevel" TargetFieldName="ReorderLevel" />
-            <FieldMapping FieldName="SupplierId" TargetFieldName="SupplierId" />
-            <FieldMapping FieldName="UnitPrice" TargetFieldName="UnitPrice" />
-            <FieldMapping FieldName="UnitsInStock" TargetFieldName="UnitsInStock" />
-            <FieldMapping FieldName="UnitsOnOrder" TargetFieldName="UnitsOnOrder" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="Discontinued" TargetFieldName="DISCONTINUED" TypeConverterToUse="SD.LLBLGen.Pro.TypeConverters.BooleanNumericConverter" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:PRODUCTS_PRODUCTID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
+            <FieldMapping FieldName="QuantityPerUnit" TargetFieldName="QUANTITYPERUNIT" />
+            <FieldMapping FieldName="ReorderLevel" TargetFieldName="REORDERLEVEL" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SmallIntegerNumericConverter" />
+            <FieldMapping FieldName="SupplierId" TargetFieldName="SUPPLIERID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="UnitPrice" TargetFieldName="UNITPRICE" />
+            <FieldMapping FieldName="UnitsInStock" TargetFieldName="UNITSINSTOCK" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SmallIntegerNumericConverter" />
+            <FieldMapping FieldName="UnitsOnOrder" TargetFieldName="UNITSONORDER" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SmallIntegerNumericConverter" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":Region" TargetName="Default:Default:Region">
+        <EntityMapping EntityName=":Region" TargetName="//localhost/xe:DBO_NORTHWIND:REGION">
           <FieldMappings>
-            <FieldMapping FieldName="RegionDescription" TargetFieldName="RegionDescription" />
-            <FieldMapping FieldName="RegionId" TargetFieldName="RegionId" />
+            <FieldMapping FieldName="RegionDescription" TargetFieldName="REGIONDESCRIPTION" />
+            <FieldMapping FieldName="RegionId" TargetFieldName="REGIONID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":Shipper" TargetName="Default:Default:Shipper">
+        <EntityMapping EntityName=":Shipper" TargetName="//localhost/xe:DBO_NORTHWIND:SHIPPERS">
           <FieldMappings>
-            <FieldMapping FieldName="CompanyName" TargetFieldName="CompanyName" />
-            <FieldMapping FieldName="Phone" TargetFieldName="Phone" />
-            <FieldMapping FieldName="ShipperId" TargetFieldName="ShipperId" SequenceToUse="Default:Default:SEQ_Shipper" />
+            <FieldMapping FieldName="CompanyName" TargetFieldName="COMPANYNAME" />
+            <FieldMapping FieldName="Phone" TargetFieldName="PHONE" />
+            <FieldMapping FieldName="ShipperId" TargetFieldName="SHIPPERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:SHIPPERS_SHIPPERID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":Supplier" TargetName="Default:Default:Supplier">
+        <EntityMapping EntityName=":Supplier" TargetName="//localhost/xe:DBO_NORTHWIND:SUPPLIERS">
           <FieldMappings>
-            <FieldMapping FieldName="Address" TargetFieldName="Address" />
-            <FieldMapping FieldName="City" TargetFieldName="City" />
-            <FieldMapping FieldName="CompanyName" TargetFieldName="CompanyName" />
-            <FieldMapping FieldName="ContactName" TargetFieldName="ContactName" />
-            <FieldMapping FieldName="ContactTitle" TargetFieldName="ContactTitle" />
-            <FieldMapping FieldName="Country" TargetFieldName="Country" />
-            <FieldMapping FieldName="Fax" TargetFieldName="Fax" />
-            <FieldMapping FieldName="HomePage" TargetFieldName="HomePage" />
-            <FieldMapping FieldName="Phone" TargetFieldName="Phone" />
-            <FieldMapping FieldName="PostalCode" TargetFieldName="PostalCode" />
-            <FieldMapping FieldName="Region" TargetFieldName="Region" />
-            <FieldMapping FieldName="SupplierId" TargetFieldName="SupplierId" SequenceToUse="Default:Default:SEQ_Supplier" />
+            <FieldMapping FieldName="Address" TargetFieldName="ADDRESS" />
+            <FieldMapping FieldName="City" TargetFieldName="CITY" />
+            <FieldMapping FieldName="CompanyName" TargetFieldName="COMPANYNAME" />
+            <FieldMapping FieldName="ContactName" TargetFieldName="CONTACTNAME" />
+            <FieldMapping FieldName="ContactTitle" TargetFieldName="CONTACTTITLE" />
+            <FieldMapping FieldName="Country" TargetFieldName="COUNTRY" />
+            <FieldMapping FieldName="Fax" TargetFieldName="FAX" />
+            <FieldMapping FieldName="HomePage" TargetFieldName="HOMEPAGE" />
+            <FieldMapping FieldName="Phone" TargetFieldName="PHONE" />
+            <FieldMapping FieldName="PostalCode" TargetFieldName="POSTALCODE" />
+            <FieldMapping FieldName="Region" TargetFieldName="REGION" />
+            <FieldMapping FieldName="SupplierId" TargetFieldName="SUPPLIERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:SUPPLIERS_SUPPLIERID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
           </FieldMappings>
         </EntityMapping>
-        <EntityMapping EntityName=":Territory" TargetName="Default:Default:Territory">
+        <EntityMapping EntityName=":Territory" TargetName="//localhost/xe:DBO_NORTHWIND:TERRITORIES">
           <FieldMappings>
-            <FieldMapping FieldName="RegionId" TargetFieldName="RegionId" />
-            <FieldMapping FieldName="TerritoryDescription" TargetFieldName="TerritoryDescription" />
-            <FieldMapping FieldName="TerritoryId" TargetFieldName="TerritoryId" />
+            <FieldMapping FieldName="RegionId" TargetFieldName="REGIONID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="TerritoryDescription" TargetFieldName="TERRITORYDESCRIPTION" />
+            <FieldMapping FieldName="TerritoryId" TargetFieldName="TERRITORYID" />
           </FieldMappings>
         </EntityMapping>
       </EntityMappings>
       <TypedViewMappings />
       <SPCallMappings />
-      <TypeConversionDefinitions />
+      <TypeConversionDefinitions>
+        <TypeConversionDefinition TypeConverter="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" DbDotNetType="System.Int64" />
+      </TypeConversionDefinitions>
     </MappingStore>
   </MappingStores>
   <ModelViews />
