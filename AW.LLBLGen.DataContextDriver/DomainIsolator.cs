@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Security;
@@ -16,6 +15,10 @@ namespace AW.LLBLGen.DataContextDriver
 	/// </summary>
 	internal class DomainIsolator : IDisposable
 	{
+		public const string LinqpadPath = "LINQPadPath";
+		public const string ProbePaths = "ProbePaths";
+		public const string LlblgenProNameSpace = "SD.LLBLGen.Pro";
+
 		private readonly AppDomain _domain;
 
 		public AppDomain Domain
@@ -34,11 +37,18 @@ namespace AW.LLBLGen.DataContextDriver
 		public DomainIsolator(string friendlyName, AppDomainSetup setup)
 			: this(AppDomain.CreateDomain(friendlyName, null, setup, new PermissionSet(PermissionState.Unrestricted), new StrongName[0]))
 		{
-			if (AppDomain.CurrentDomain.GetData("LINQPadPath") == null)
-				return;
-			var linqPadAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.FullName.Contains("LINQPad"));
-			if (linqPadAssembly != null) 
-				_domain.SetData("LINQPadPath", linqPadAssembly.Location);
+			var linqPadPath = AppDomain.CurrentDomain.GetData(LinqpadPath);
+			if (linqPadPath == null)
+			{
+				var linqPadAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.FullName.Contains("LINQPad,"));
+				if (linqPadAssembly != null)
+				{
+					linqPadPath = linqPadAssembly.Location;
+					AppDomain.CurrentDomain.SetData(LinqpadPath, linqPadPath);
+				}
+			}
+			_domain.SetData(LinqpadPath, linqPadPath);
+			_domain.SetData(ProbePaths, AppDomain.CurrentDomain.GetData(ProbePaths));
 			((AddAssemblyResolver) _domain.CreateInstanceFromAndUnwrap(typeof (AddAssemblyResolver).Assembly.Location, typeof (AddAssemblyResolver).FullName)).Go();
 		}
 
@@ -54,7 +64,7 @@ namespace AW.LLBLGen.DataContextDriver
 			{
 				return (T) _domain.CreateInstanceFromAndUnwrap(typeof (T).Assembly.Location, typeof (T).FullName);
 			}
-			catch (FileNotFoundException ex)
+			catch (FileNotFoundException)
 			{
 				return (T) _domain.CreateInstanceAndUnwrap(typeof (T).Assembly.FullName, typeof (T).FullName);
 			}
@@ -69,9 +79,7 @@ namespace AW.LLBLGen.DataContextDriver
 		{
 			private static bool _linqPadAssemblyResolverAdded;
 
-			private static readonly Dictionary<string, Assembly> _libs = new Dictionary<string, Assembly>();
-
-			internal static void AddLINQPadAssemblyResolver()
+			private static void AddLINQPadAssemblyResolver()
 			{
 				if (_linqPadAssemblyResolverAdded)
 					return;
@@ -80,41 +88,26 @@ namespace AW.LLBLGen.DataContextDriver
 				                                                                  	{
 				                                                                  		if (args.Name.ToLowerInvariant().StartsWith("linqpad,"))
 				                                                                  		{
-				                                                                  			var local_0 = AppDomain.CurrentDomain.GetData("LINQPadPath") as string;
-				                                                                  			if (!string.IsNullOrEmpty(local_0))
-				                                                                  				return Assembly.LoadFrom(local_0);
+																																								var linqpadPath = AppDomain.CurrentDomain.GetData(LinqpadPath) as string;
+				                                                                  			if (!String.IsNullOrEmpty(linqpadPath))
+				                                                                  				return Assembly.LoadFrom(linqpadPath);
 				                                                                  		}
-				                                                                  		if (args.Name == "Ionic.Zip.Reduced, Version=1.7.2.12, Culture=neutral, PublicKeyToken=791165b13cf84eca" || args.Name == "ActiproSoftware.SyntaxEditor.Net20, Version=4.0.277.0, Culture=neutral, PublicKeyToken=21a821480e210563" || (args.Name == "ActiproSoftware.WinUICore.Net20, Version=1.0.96.0, Culture=neutral, PublicKeyToken=1eba893a2bc55de5" || args.Name == "ActiproSoftware.Shared.Net20, Version=1.0.96.0, Culture=neutral, PublicKeyToken=36ff2196ab5654b9") || (args.Name == "ActiproSoftware.SyntaxEditor.Addons.DotNet.Net20, Version=4.0.277.0, Culture=neutral, PublicKeyToken=21a821480e210563" || args.Name == "DotNetLanguage, Version=4.9.0.0, Culture=neutral, PublicKeyToken=53cd1b2bfe1e886e") || args.Name == "System.Data.Services.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089")
-				                                                                  			return FindAssem(sender, args);
-				                                                                  		else
-				                                                                  			return (Assembly) null;
+				                                                                  		var assemblyName = new AssemblyName(args.Name);
+				                                                                  		var shortAssemblyName = assemblyName.Name;
+				                                                                  		var probePaths = AppDomain.CurrentDomain.GetData(ProbePaths) as List<string>;
+				                                                                  		if (probePaths != null)
+				                                                                  			foreach (var probePath in probePaths)
+				                                                                  			{
+				                                                                  				if ((shortAssemblyName.IndexOf(LlblgenProNameSpace) < 0
+				                                                                  				     || assemblyName.Version.ToString().Contains(Constants.LLBLVersion)))
+				                                                                  				{
+				                                                                  					var path = Path.Combine(probePath, shortAssemblyName) + ".dll";
+				                                                                  					if (File.Exists(path))
+				                                                                  						return Assembly.LoadFrom(path);
+				                                                                  				}
+				                                                                  			}
+				                                                                  		return null;
 				                                                                  	});
-			}
-
-			internal static Assembly FindAssem(object sender, ResolveEventArgs args)
-			{
-				var str = args.Name.ToLowerInvariant();
-				if (!str.Contains("actipro") && !str.Contains("dotnetlanguage") && (!str.Contains("mono.cecil") && !str.Contains("resources")) && (!str.Contains("icsharpcode") && !str.Contains("ionic.zip")) && !str.Contains("data.services.design"))
-					return null;
-				var key = new AssemblyName(args.Name).Name;
-				if (key.EndsWith(".resources", StringComparison.OrdinalIgnoreCase))
-					return null;
-				if (key.Contains("sources"))
-					key = key + "4";
-				if (_libs.ContainsKey(key))
-					return _libs[key];
-				var manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("LINQPad.assemblies." + key + ".bin");
-				if (manifestResourceStream == null)
-					return null;
-				using (manifestResourceStream)
-				{
-					using (var deflateStream = new DeflateStream(manifestResourceStream, CompressionMode.Decompress))
-					{
-						var assembly = Assembly.Load(new BinaryReader(deflateStream).ReadBytes(2000000));
-						_libs[key] = assembly;
-						return assembly;
-					}
-				}
 			}
 
 			public void Go()
