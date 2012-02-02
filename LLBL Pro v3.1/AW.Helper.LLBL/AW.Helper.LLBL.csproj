@@ -83,6 +83,9 @@
     <Compile Include="EntityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQLTraceEventArgs.cs" />
+    <Compile Include="TypeConverters\NumericConverters.cs" />
+    <Compile Include="TypeConverters\BaseNumericConverter.cs" />
+    <Compile Include="TypeConverters\TypeConverterHelper.cs" />
     <Compile Include="Validation.cs" />
   </ItemGroup>
   <ItemGroup>

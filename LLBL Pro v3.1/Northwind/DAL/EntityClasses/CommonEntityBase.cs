@@ -113,7 +113,6 @@ namespace Northwind.DAL.EntityClasses
 		}
 
 		// __LLBLGENPRO_USER_CODE_REGION_END
-
 		#endregion
 
 		#region Included code
