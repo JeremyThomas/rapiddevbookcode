@@ -359,8 +359,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static Assembly LoadAssembly(string adapterAssemblyPath)
 		{
-			return Assembly.LoadFile(adapterAssemblyPath);
-			//return LoadAssemblySafely(adapterAssemblyPath);
+			//return Assembly.LoadFile(adapterAssemblyPath);
+			return MetaDataHelper.GetAssembly(adapterAssemblyPath) ?? LoadAssemblySafely(adapterAssemblyPath);
 		}
 
 		private static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo, string adapterTypeName, string factoryTypeName, string adapterAssemblyPath, string factoryAssemblyPath, Assembly dataAccessAdapterAssembly, Type dataAccessAdapterType,

@@ -7,6 +7,7 @@ using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
 using System.Threading;
+using AW.Helper;
 
 namespace AW.LLBLGen.DataContextDriver
 {
@@ -18,6 +19,7 @@ namespace AW.LLBLGen.DataContextDriver
 		public const string LinqpadPath = "LINQPadPath";
 		public const string ProbePaths = "ProbePaths";
 		public const string LlblgenProNameSpace = "SD.LLBLGen.Pro";
+		private const string LinqpadAssemblyName = "LINQPad,";
 
 		private readonly AppDomain _domain;
 
@@ -40,7 +42,7 @@ namespace AW.LLBLGen.DataContextDriver
 			var linqPadPath = AppDomain.CurrentDomain.GetData(LinqpadPath);
 			if (linqPadPath == null)
 			{
-				var linqPadAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.FullName.Contains("LINQPad,"));
+				var linqPadAssembly = AppDomain.CurrentDomain.GetAssemblies().GetAssembly(LinqpadAssemblyName);
 				if (linqPadAssembly != null)
 				{
 					linqPadPath = linqPadAssembly.Location;
@@ -96,16 +98,12 @@ namespace AW.LLBLGen.DataContextDriver
 				                                                                  		var shortAssemblyName = assemblyName.Name;
 				                                                                  		var probePaths = AppDomain.CurrentDomain.GetData(ProbePaths) as List<string>;
 				                                                                  		if (probePaths != null)
-				                                                                  			foreach (var probePath in probePaths)
-				                                                                  			{
-				                                                                  				if ((shortAssemblyName.IndexOf(LlblgenProNameSpace) < 0
-				                                                                  				     || assemblyName.Version.ToString().Contains(Constants.LLBLVersion)))
-				                                                                  				{
-				                                                                  					var path = Path.Combine(probePath, shortAssemblyName) + ".dll";
-				                                                                  					if (File.Exists(path))
-				                                                                  						return Assembly.LoadFrom(path);
-				                                                                  				}
-				                                                                  			}
+				                                                                  			return (from probePath in probePaths where (shortAssemblyName.IndexOf(LlblgenProNameSpace) < 0 
+																																													|| assemblyName.Version.ToString().Contains(Constants.LLBLVersion)) 
+																																												select Path.Combine(probePath, shortAssemblyName) + ".dll" 
+																																												into path 
+																																												where File.Exists(path) 
+																																												select Assembly.LoadFrom(path)).FirstOrDefault();
 				                                                                  		return null;
 				                                                                  	});
 			}

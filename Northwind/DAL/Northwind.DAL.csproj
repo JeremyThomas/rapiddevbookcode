@@ -118,6 +118,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\NorthwindAssemblyInfo.cs">
+      <Link>NorthwindAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="EntityClasses\Metadata.cs" />
     <Compile Include="FactoryClasses\QueryFactory.cs" />
     <Compile Include="HelperClasses\EntityCollection.cs">
