@@ -51,6 +51,16 @@ namespace AW.Helper
 			       select exportedType;
 		}
 
+		public static Assembly GetAssembly(string assemblyName)
+		{
+			return GetAssembly(AppDomain.CurrentDomain. GetAssemblies(), assemblyName);
+		}
+
+		public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, string assemblyName)
+		{
+			return assemblies.SingleOrDefault(a => a.FullName.Contains(assemblyName) || a.Location.Contains(assemblyName));
+		}
+
 		private static IEnumerable<Type> GetPublicTypes(Assembly assembly)
 		{
 			try
@@ -80,7 +90,7 @@ namespace AW.Helper
 		{
 			return (from ancestorType in ancestorTypes
 			        where ancestorType.IsAssignableFrom(type)
-			        select type).Count() > 0;
+			        select type).Any();
 		}
 
 		public static Type GetInterface(this Type type, Type interfaceType)

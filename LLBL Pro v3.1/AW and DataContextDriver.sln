@@ -172,10 +172,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor", "AW.WebDbE
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "21731"
+		VWDPort = "40911"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataSupportClasses", "DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj", "{64696470-5D05-4E00-95C4-C320F268E526}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataSupportClasses", "..\..\..\..\..\LLBLGen Pro Projects\DynamicData_Sourcecode\DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj", "{64696470-5D05-4E00-95C4-C320F268E526}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -278,9 +278,9 @@ Global
 		SccProjectName25 = AW.WebDbEditor
 		SccLocalPath25 = AW.WebDbEditor
 		SccProjectEnlistmentChoice25 = 2
-		SccProjectUniqueName26 = DynamicDataSupportClasses\\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj
+		SccProjectUniqueName26 = ..\\..\\..\\..\\..\\LLBLGen\u0020Pro\u0020Projects\\DynamicData_Sourcecode\\DynamicDataSupportClasses\\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj
 		SccProjectName26 = DynamicDataSupportClasses
-		SccLocalPath26 = DynamicDataSupportClasses
+		SccLocalPath26 = ..\\..\\..\\..\\..\\LLBLGen\u0020Pro\u0020Projects\\DynamicData_Sourcecode\\DynamicDataSupportClasses
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW and DataContextDriver.vsmdi
@@ -562,7 +562,6 @@ Global
 		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
 		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
 		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release - Test|Any CPU.Build.0 = Release|Any CPU
@@ -574,7 +573,6 @@ Global
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release - Test|Any CPU.Build.0 = Release|Any CPU
@@ -586,7 +584,6 @@ Global
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release - Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
