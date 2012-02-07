@@ -213,15 +213,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			try
 			{
 				LLBLWinformHelper.ForceInitialization();
-				var assembly = LoadAssembly(cxInfo.CustomTypeInfo.CustomAssemblyPath);
-				var type = assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
-				if (type == null)
+				var baseType = context.GetType().BaseType;
+				if (baseType != null)
 				{
-					InitializeAdapter(cxInfo, context, executionManager);
-				}
-				else
-				{
-					InitializeSelfservicing(cxInfo, type, context, executionManager);
+					var assembly = baseType.Assembly;
+					//baseType.GetProperty("AdapterToUse")
+					var type = assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
+					if (type == null)
+					{
+						InitializeAdapter(cxInfo, context, executionManager);
+					}
+					else
+					{
+						InitializeSelfservicing(cxInfo, type, context, executionManager);
+					}
 				}
 			}
 			catch (Exception e)
@@ -256,6 +261,30 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		#endregion
 
 		#region Initialization
+
+		//public LLBLGenStaticDriver()
+		//{
+		//  AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+		//  AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
+		//}
+
+		//void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
+		//{
+		//  GeneralHelper.DebugOut(args.LoadedAssembly.FullName);
+		//}
+
+		//private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+		//{
+		//  var x = MetaDataHelper.GetAssembly(args.Name);
+		//  if (x != null)
+		//    return x;
+		//  return null;
+		//}
+
+		private static Assembly LoadAssembly(string assemblyPath)
+		{			
+			return MetaDataHelper.GetAssembly(assemblyPath) ?? Assembly.LoadFrom(assemblyPath);
+		}
 
 		private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)
 		{
@@ -355,12 +384,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				cxInfo.DriverData.SetElementValue(ConnectionDialog.ElementNameConnectionType, connectionTypeIndex);
 			}
 			return GetAdapter(cxInfo, adapterTypeName, factoryTypeName, adapterAssemblyPath, factoryAssemblyPath, dataAccessAdapterAssembly, dataAccessAdapterType, connectionTypeIndex);
-		}
-
-		private static Assembly LoadAssembly(string adapterAssemblyPath)
-		{
-			//return Assembly.LoadFile(adapterAssemblyPath);
-			return MetaDataHelper.GetAssembly(adapterAssemblyPath) ?? LoadAssemblySafely(adapterAssemblyPath);
 		}
 
 		private static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo, string adapterTypeName, string factoryTypeName, string adapterAssemblyPath, string factoryAssemblyPath, Assembly dataAccessAdapterAssembly, Type dataAccessAdapterType,
