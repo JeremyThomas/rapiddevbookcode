@@ -261,29 +261,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		#endregion
 
 		#region Initialization
-
-		//public LLBLGenStaticDriver()
-		//{
-		//  AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-		//  AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
-		//}
-
-		//void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
-		//{
-		//  GeneralHelper.DebugOut(args.LoadedAssembly.FullName);
-		//}
-
-		//private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-		//{
-		//  var x = MetaDataHelper.GetAssembly(args.Name);
-		//  if (x != null)
-		//    return x;
-		//  return null;
-		//}
-
+		
 		private static Assembly LoadAssembly(string assemblyPath)
 		{			
-			return MetaDataHelper.GetAssembly(assemblyPath) ?? Assembly.LoadFrom(assemblyPath);
+			return LoadAssemblySafely(assemblyPath);
 		}
 
 		private void InitializeSelfservicing(IConnectionInfo cxInfo, Type commonDaoBaseType, object context, QueryExecutionManager executionManager)

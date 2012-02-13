@@ -58,7 +58,14 @@ namespace AW.Helper
 
 		public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, string assemblyName)
 		{
-			return assemblies.SingleOrDefault(a => !a.FullName.Contains("Anonymously Hosted DynamicMethods") && (a.FullName.Contains(assemblyName) || a.Location.Contains(assemblyName)));
+			try
+			{
+				return assemblies.SingleOrDefault(a => !a.FullName.Contains("Anonymously Hosted DynamicMethods") && (a.FullName.Contains(assemblyName) || a.Location.Contains(assemblyName)));
+			}
+			catch (Exception)
+			{
+				return null;
+			}
 		}
 
 		private static IEnumerable<Type> GetPublicTypes(Assembly assembly)
