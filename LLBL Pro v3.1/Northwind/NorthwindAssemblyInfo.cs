@@ -19,8 +19,8 @@ using System.Security;
 internal static class NorthwindAssemblyInfoConstants
 {
 	public const string AssemblyCompany = "Northwind Traders";
-	public const string AssemblyCopyright = "Copyright © 2012 Northwind Traderss";
-	public const string AssemblyProduct = "Northwind Traders LLBL Sample";
+	public const string AssemblyCopyright = "Copyright © 2012 " + AssemblyCompany;
+	public const string AssemblyProduct = AssemblyCompany + " LLBL Sample";
 	public const string AssemblyInformationalVersion = "1.0.0";
 	public const string AssemblyRevision = "0";
 	public const string AssemblyVersion = AssemblyInformationalVersion + "." + AssemblyRevision;
