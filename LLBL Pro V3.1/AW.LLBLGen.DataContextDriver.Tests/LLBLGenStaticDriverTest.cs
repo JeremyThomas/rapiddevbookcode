@@ -142,7 +142,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			}
 
 			var orderEntitytype = typeof (OrderEntity);
-			var orderPropertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(orderEntitytype);
+			var orderPropertiesToShowInSchema = LLBLGenDriverHelper.GetPropertiesToShowInSchema(orderEntitytype);
 			var customerPropertyDescriptor = orderPropertiesToShowInSchema.Single(p => p.Name == customerName);
 			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.Description);
 			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.DisplayName);
@@ -152,7 +152,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 
 			var first = explorerItem.Children.First();
 			Assert.IsFalse(string.IsNullOrWhiteSpace(first.ToolTipText));
-			var customerPropertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(customerEntitytype);
+			var customerPropertiesToShowInSchema = LLBLGenDriverHelper.GetPropertiesToShowInSchema(customerEntitytype);
 			var description = customerPropertiesToShowInSchema.First().Description;
 			Assert.IsFalse(String.IsNullOrEmpty(description));
 			Assert.IsTrue(first.ToolTipText.Contains(description));
@@ -233,7 +233,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		[TestMethod]
 		public void GetPropertiesToShowInSchemaTest()
 		{
-			var propertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(typeof (Northwind.DAL.EntityClasses.CustomerEntity));
+			var propertiesToShowInSchema = LLBLGenDriverHelper.GetPropertiesToShowInSchema(typeof (Northwind.DAL.EntityClasses.CustomerEntity));
 			Assert.IsFalse(String.IsNullOrEmpty(propertiesToShowInSchema.First().Description));
 		}
 
@@ -244,7 +244,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			MetaDataHelper.AddAssociatedMetadataProvider(type);
 			var descriptionAttributes = MetaDataHelper.GetDescriptionAttributes(type, OrderDetailFieldIndex.Quantity.ToString());
 			Assert.IsTrue(descriptionAttributes.Any());
-			var propertiesToShowInSchema = LLBLGenStaticDriver.GetPropertiesToShowInSchema(type);
+			var propertiesToShowInSchema = LLBLGenDriverHelper.GetPropertiesToShowInSchema(type);
 			Assert.IsFalse(String.IsNullOrEmpty(propertiesToShowInSchema.GetFieldPropertyDescriptor(OrderDetailFieldIndex.Quantity.ToString()).Description));
 		}
 

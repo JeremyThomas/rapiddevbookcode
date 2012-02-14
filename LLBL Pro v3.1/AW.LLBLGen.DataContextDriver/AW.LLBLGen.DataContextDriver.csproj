@@ -159,6 +159,7 @@
     <Compile Include="Static\LLBLConnectionTypeToVisibilityConverter.cs" />
     <Compile Include="Static\LLBLGenStaticDriver.cs" />
     <Compile Include="LLBLMemberProvider.cs" />
+    <Compile Include="Static\LLBLGenDriverHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
