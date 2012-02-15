@@ -62,7 +62,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			return null;
 		}
 
-		private static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo)
+		public static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo)
 		{
 			ConnectionDialog.UpGradeDriverDataElements(cxInfo);
 			var adapterTypeName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameAdaptertype);

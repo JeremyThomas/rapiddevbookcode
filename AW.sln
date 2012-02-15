@@ -116,9 +116,41 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.Oracle", "Nor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectListView.Test", "ObjectListView.Test\ObjectListView.Test.csproj", "{D978DA92-C5B6-4670-98E4-17390BBCCF08}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{B6F6AA15-E496-47EF-AEF5-35523BF3A91A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataSupportClasses", "DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj", "{64696470-5D05-4E00-95C4-C320F268E526}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW Dynamic Data", "AW Dynamic Data\AW Dynamic Data.csproj", "{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor", "AW.WebDbEditor", "{273A2D2A-3143-44D3-8166-097706668058}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/AW.WebDbEditor"
+		Debug.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/AW.WebDbEditor"
+		Release.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "40911"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamic Data", "Northwind\Dynamic Data\Dynamic Data.csproj", "{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 17
+		SccNumberOfProjects = 21
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -181,6 +213,24 @@ Global
 		SccProjectTopLevelParentUniqueName16 = AW.sln
 		SccProjectName16 = ObjectListView.Test
 		SccLocalPath16 = ObjectListView.Test
+		SccProjectUniqueName17 = DynamicDataSupportClasses\\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj
+		SccProjectTopLevelParentUniqueName17 = AW.sln
+		SccProjectName17 = DynamicDataSupportClasses
+		SccLocalPath17 = DynamicDataSupportClasses
+		SccProjectUniqueName18 = AW\u0020Dynamic\u0020Data\\AW\u0020Dynamic\u0020Data.csproj
+		SccProjectTopLevelParentUniqueName18 = AW.sln
+		SccProjectName18 = AW\u0020Dynamic\u0020Data
+		SccLocalPath18 = AW\u0020Dynamic\u0020Data
+		SccWebProject19 = true
+		SccProjectUniqueName19 = AW.WebDbEditor
+		SccProjectTopLevelParentUniqueName19 = AW.sln
+		SccProjectName19 = AW.WebDbEditor
+		SccLocalPath19 = AW.WebDbEditor
+		SccProjectEnlistmentChoice19 = 2
+		SccProjectUniqueName20 = Northwind\\Dynamic\u0020Data\\Dynamic\u0020Data.csproj
+		SccProjectTopLevelParentUniqueName20 = AW.sln
+		SccProjectName20 = Northwind/Dynamic\u0020Data
+		SccLocalPath20 = Northwind\\Dynamic\u0020Data
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW1.vsmdi
@@ -320,6 +370,38 @@ Global
 		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release - Test|Any CPU.Build.0 = Release|Any CPU
 		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D978DA92-C5B6-4670-98E4-17390BBCCF08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64696470-5D05-4E00-95C4-C320F268E526}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273A2D2A-3143-44D3-8166-097706668058}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{273A2D2A-3143-44D3-8166-097706668058}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{273A2D2A-3143-44D3-8166-097706668058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273A2D2A-3143-44D3-8166-097706668058}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273A2D2A-3143-44D3-8166-097706668058}.Release - Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{273A2D2A-3143-44D3-8166-097706668058}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
+		{273A2D2A-3143-44D3-8166-097706668058}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{273A2D2A-3143-44D3-8166-097706668058}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -338,6 +420,10 @@ Global
 		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {8FA92823-3099-4836-8A00-60210F133781}
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {8FA92823-3099-4836-8A00-60210F133781}
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45} = {8FA92823-3099-4836-8A00-60210F133781}
+		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F} = {8FA92823-3099-4836-8A00-60210F133781}
+		{64696470-5D05-4E00-95C4-C320F268E526} = {B6F6AA15-E496-47EF-AEF5-35523BF3A91A}
+		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312} = {B6F6AA15-E496-47EF-AEF5-35523BF3A91A}
+		{273A2D2A-3143-44D3-8166-097706668058} = {B6F6AA15-E496-47EF-AEF5-35523BF3A91A}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 
