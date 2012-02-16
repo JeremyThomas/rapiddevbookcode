@@ -931,12 +931,17 @@
 						<Button Margin="5,0,0,0"
 										VerticalAlignment="Center"
 										Click="AddQuerySpec"
-										Content="Add QuerySpec" ToolTip="Add QuerySpec assembly and namespaces" />
+										Content="Add QuerySpec" ToolTip="Add QuerySpec assembly and namespaces" />						
+						<Button Margin="5,0,0,0"
+										VerticalAlignment="Center"
+										Click="AddORMProfiler"
+										Content="Add ORM Profiler" ToolTip="Add ORM Profiler assemblies" />
 						<Button Name="buttonClearDefaults"
 										Margin="5,0,0,0"
 										VerticalAlignment="Center"
 										Click="buttonClear_Click"
 										Content="Clear defaults" ToolTip="Clear defaults" />
+
 					</WrapPanel>
 
 				</StackPanel>

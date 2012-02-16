@@ -393,7 +393,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					var assemblyName = new AssemblyName(e.FileName);
 					AppDomain.CurrentDomain.SetData("errorMessage", string.Format("An implementation of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
-																																				IlinqMetaDataType.FullName, customType, Constants.LLBLGenNameVersion,
+					                                                              IlinqMetaDataType.FullName, customType, Constants.LLBLGenNameVersion,
 					                                                              assemblyName.Version));
 					AppDomain.CurrentDomain.SetData("customType", "");
 				}
@@ -892,6 +892,42 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			ValueTypeWrapper<string>.Add(AdditionalAssemblies, "SD.LLBLGen.Pro.QuerySpec.dll");
 			ValueTypeWrapper<string>.Add(AdditionalNamespaces, "SD.LLBLGen.Pro.QuerySpec",
 			                             "SD.LLBLGen.Pro.QuerySpec.SelfServicing", "SD.LLBLGen.Pro.QuerySpec.Adapter");
+		}
+
+		private void AddORMProfiler(object sender, RoutedEventArgs e)
+		{
+			var ormProfilerPathAssemblies = new[] {"SD.Tools.OrmProfiler.Interceptor.dll", "SD.Tools.OrmProfiler.Shared.dll ", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
+			var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+			const string solutionsDesignORMProfilerPath = @"Solutions Design\ORM Profiler v1.0";
+			var ormProfilerPath = Path.Combine(folderPath, solutionsDesignORMProfilerPath);
+			if (Directory.Exists(ormProfilerPath))
+			{
+				if (AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies))
+				return;
+			}
+			var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
+			if (programFilesPathx86 != null && !programFilesPathx86.Equals(folderPath))
+			{
+				ormProfilerPath = Path.Combine(programFilesPathx86, solutionsDesignORMProfilerPath);
+				if (Directory.Exists(ormProfilerPath) && AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies))
+					return;
+			}
+			ValueTypeWrapper<string>.Add(AdditionalAssemblies, ormProfilerPathAssemblies);
+		}
+
+		private bool AddormProfilerPathAssemblies(string folderPath, IEnumerable<string> ormProfilerPathAssemblies)
+		{
+			var result = false;
+			foreach (var ormProfilerPathAssembly in ormProfilerPathAssemblies)
+			{
+				var ormProfilerPathAssemblyPath = Path.Combine(folderPath, ormProfilerPathAssembly);
+				result = File.Exists(ormProfilerPathAssemblyPath);
+				if (result)
+					ValueTypeWrapper<string>.Add(AdditionalAssemblies, ormProfilerPathAssemblyPath);
+				else
+					return false;
+			}
+			return result;
 		}
 
 		private void DataBaseConnectionDialog(object sender, RoutedEventArgs e)
