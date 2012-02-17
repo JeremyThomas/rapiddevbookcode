@@ -61,6 +61,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public const string TitleChooseExtraAssembly = "Choose extra assembly";
 		public const string TitleChooseFactoryMethod = "Choose factory method";
 
+
 		public static readonly string AdditionalAssembliesToolTip = "The driver adds these assemblies to the ones LINQPad provides"
 		                                                            + Environment.NewLine +
 		                                                            LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
@@ -896,10 +897,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void AddORMProfiler(object sender, RoutedEventArgs e)
 		{
-			var ormProfilerPathAssemblies = new[] {"SD.Tools.OrmProfiler.Interceptor.dll", "SD.Tools.OrmProfiler.Shared.dll ", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
+			var ormProfilerPathAssemblies = new[] {ProfilerHelper.OrmProfilerAssemblyString+ ".dll", "SD.Tools.OrmProfiler.Shared.dll", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
 			var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-			const string solutionsDesignORMProfilerPath = @"Solutions Design\ORM Profiler v1.0";
-			var ormProfilerPath = Path.Combine(folderPath, solutionsDesignORMProfilerPath);
+			var ormProfilerPath = Path.Combine(folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath);
 			if (Directory.Exists(ormProfilerPath))
 			{
 				if (AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies))
@@ -908,7 +908,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
 			if (programFilesPathx86 != null && !programFilesPathx86.Equals(folderPath))
 			{
-				ormProfilerPath = Path.Combine(programFilesPathx86, solutionsDesignORMProfilerPath);
+				ormProfilerPath = Path.Combine(programFilesPathx86, ProfilerHelper.SolutionsDesignOrmProfilerPath);
 				if (Directory.Exists(ormProfilerPath) && AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies))
 					return;
 			}
@@ -918,9 +918,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private bool AddormProfilerPathAssemblies(string folderPath, IEnumerable<string> ormProfilerPathAssemblies)
 		{
 			var result = false;
-			foreach (var ormProfilerPathAssembly in ormProfilerPathAssemblies)
+			foreach (var ormProfilerPathAssemblyPath in ormProfilerPathAssemblies.Select(ormProfilerPathAssembly => Path.Combine(folderPath, ormProfilerPathAssembly)))
 			{
-				var ormProfilerPathAssemblyPath = Path.Combine(folderPath, ormProfilerPathAssembly);
 				result = File.Exists(ormProfilerPathAssemblyPath);
 				if (result)
 					ValueTypeWrapper<string>.Add(AdditionalAssemblies, ormProfilerPathAssemblyPath);

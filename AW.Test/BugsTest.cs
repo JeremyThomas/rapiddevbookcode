@@ -1,5 +1,9 @@
+using System;
+using System.Data.Common;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Reflection;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
@@ -271,6 +275,18 @@ namespace AW.Tests
 			                firstBillOfMaterialProjectionProjection.ProductComponentSubcategoryIDViaNav, "ProductComponentSubcategoryID");
 			Assert.AreEqual(firstBillOfMaterialProjectionProjection.ProductAssemblySubcategoryID,
 			                firstBillOfMaterialProjectionProjection.ProductAssemblySubcategoryIDViaNav, "ProductAssemblySubcategoryID"); //Fails
+		}
+
+		[TestMethod]
+		public void GetFactoryTest()
+		{
+			var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)") ?? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+			var interceptorAssembly = Assembly.LoadFrom(Path.Combine(Path.Combine(programFilesPathx86, ProfilerHelper.SolutionsDesignOrmProfilerPath), ProfilerHelper.OrmProfilerAssemblyFileName));
+			var type = interceptorAssembly.GetType(ProfilerHelper.OrmProfilerInterceptorTypeName);
+			Assert.IsNotNull(type);
+			DbProviderFactories.GetFactory("System.Data.SqlClient");
+			ProfilerHelper.InterceptorCoreInitialize(type);
+			DbProviderFactories.GetFactory("System.Data.SqlClient");
 		}
 	}
 }
