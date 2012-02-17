@@ -6,19 +6,20 @@ using System.Reflection;
 namespace AW.Helper
 {
 	/// <summary>
-	/// 	http://www.ormprofiler.com
+	/// 	http://www.OrmProfiler.com
 	/// </summary>
 	public static class ProfilerHelper
 	{
-		public const string OrmprofilerAssemblyString = "SD.Tools.OrmProfiler.Interceptor";
-		public const string OrmprofilerInterceptorTypeName = OrmprofilerAssemblyString + ".InterceptorCore";
-		public const string OrmprofilerInterceptorAssemblyQualifiedTypeName = OrmprofilerInterceptorTypeName + ", " + OrmprofilerAssemblyString;
+		public const string OrmProfilerAssemblyString = "SD.Tools.OrmProfiler.Interceptor";
+		public const string OrmProfilerAssemblyFileName = OrmProfilerAssemblyString + ".dll";
+		public const string OrmProfilerInterceptorTypeName = OrmProfilerAssemblyString + ".InterceptorCore";
+		public const string OrmProfilerInterceptorAssemblyQualifiedTypeName = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyString;
 		public const string InitializeMethodName = "Initialize";
-		public const string OrmprofilerAppSettingsName = "ORMProfiler";
+		public const string OrmProfilerAppSettingsName = "ORMProfiler";
+		public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.0";
 
 		/// <summary>
-		/// 	Initializes the ORM profiler if enabled with the AppSetting ORMProfiler in the config file 
-		///   and the assemblies: SD.Tools.OrmProfiler.Interceptor.dll, SD.Tools.OrmProfiler.Shared.dll SD.Tools.BCLExtensions.dll, SD.Tools.Algorithmia.dll can be loaded
+		/// 	Initializes the ORM profiler if enabled with the AppSetting ORM Profiler in the config file and the assemblies: SD.Tools.OrmProfiler.Interceptor.dll, SD.Tools.OrmProfiler.Shared.dll SD.Tools.BCLExtensions.dll, SD.Tools.Algorithmia.dll can be loaded
 		/// </summary>
 		/// <returns> </returns>
 		public static bool InitializeOrmProfilerIfEnabled()
@@ -34,31 +35,38 @@ namespace AW.Helper
 		{
 			try
 			{
-				var interceptor = Type.GetType(OrmprofilerInterceptorAssemblyQualifiedTypeName);
-				if (interceptor != null)
-				{
-					interceptor.InvokeMember(InitializeMethodName,
-					                         BindingFlags.Public |
-					                         BindingFlags.InvokeMethod |
-					                         BindingFlags.Static,
-					                         null, null, new[] {ApplicationName}, CultureInfo.CurrentUICulture);
-					return true;
-				}
+				return InterceptorCoreInitialize(Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName));
 			}
 			catch (Exception e)
 			{
-				GeneralHelper.TraceOut(e.Message);
+				GeneralHelper.TraceOut(e.Message);	
+				return false;
 			}
-			return false;
 		}
 
 		/// <summary>
-		/// 	Returns whether the ORM profiler is enabled with the AppSetting ORMProfiler in the config file.
+		/// 	Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
+		/// </summary>
+		/// <param name="interceptor"> The interceptor type. </param>
+		public static bool InterceptorCoreInitialize(Type interceptor)
+		{
+			if (interceptor == null)
+				return false;
+			interceptor.InvokeMember(InitializeMethodName,
+			                         BindingFlags.Public |
+			                         BindingFlags.InvokeMethod |
+			                         BindingFlags.Static,
+			                         null, null, new[] {ApplicationName}, CultureInfo.CurrentUICulture);
+			return true;
+		}
+
+		/// <summary>
+		/// 	Returns whether the ORM Profiler is enabled with the AppSetting OrmProfiler in the config file.
 		/// </summary>
 		/// <returns> </returns>
 		public static bool OrmProfilerEnabled()
 		{
-			var ormProfilerAppSetting = ConfigurationManager.AppSettings[OrmprofilerAppSettingsName];
+			var ormProfilerAppSetting = ConfigurationManager.AppSettings[OrmProfilerAppSettingsName];
 			Boolean ormProfilerEnabled;
 			Boolean.TryParse(ormProfilerAppSetting, out ormProfilerEnabled);
 			return ormProfilerEnabled;

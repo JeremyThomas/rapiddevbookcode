@@ -20,16 +20,14 @@ using EntityType = AW.Data.EntityType;
 
 namespace AW.LLBLGen.DataContextDriver.Tests
 {
-	/// <summary>
-	///This is a test class for LLBLGenStaticDriverTest and is intended
-	///to contain all LLBLGenStaticDriverTest Unit Tests
+	///<summary>
+	///	This is a test class for LLBLGenStaticDriverTest and is intended to contain all LLBLGenStaticDriverTest Unit Tests
 	///</summary>
 	[TestClass]
 	public class LLBLGenStaticDriverTest
 	{
-		/// <summary>
-		///Gets or sets the test context which provides
-		///information about and functionality for the current test run.
+		///<summary>
+		///	Gets or sets the test context which provides information about and functionality for the current test run.
 		///</summary>
 		public TestContext TestContext { get; set; }
 
@@ -65,8 +63,8 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 
 		#endregion
 
-		/// <summary>
-		///A test for GetSchema using AW
+		///<summary>
+		///	A test for GetSchema using AW
 		///</summary>
 		[TestMethod]
 		public void GetAWSchemaTest()
@@ -90,13 +88,13 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var individualExplorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.IndividualEntity));
 			foreach (var explorerItem in customerExplorerItem.Children)
 			{
-				var item = individualExplorerItem.Children.Single(c=>c.Text==explorerItem.Text);
+				var item = individualExplorerItem.Children.Single(c => c.Text == explorerItem.Text);
 				Assert.AreEqual(explorerItem.ToolTipText, item.ToolTipText);
 			}
 		}
 
-		/// <summary>
-		///A test for GetSchema using AW
+		///<summary>
+		///	A test for GetSchema using AW
 		///</summary>
 		[TestMethod]
 		public void GetAWSchemaPropertiesTest()
@@ -105,8 +103,8 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, false);
 		}
 
-		/// <summary>
-		///A test for GetSchema using Northwind
+		///<summary>
+		///	A test for GetSchema using Northwind
 		///</summary>
 		[TestMethod]
 		public void GetNorthwindSchemaFieldsTest()
@@ -148,7 +146,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			StringAssert.Contains(customerNavigator.ToolTipText, customerPropertyDescriptor.DisplayName);
 
 			if (testForiegnKey)
-			  StringAssert.Contains(customerNavigator.ToolTipText, OrderFieldIndex.CustomerId.ToString());
+				StringAssert.Contains(customerNavigator.ToolTipText, OrderFieldIndex.CustomerId.ToString());
 
 			var first = explorerItem.Children.First();
 			Assert.IsFalse(string.IsNullOrWhiteSpace(first.ToolTipText));
@@ -240,7 +238,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		[TestMethod]
 		public void GetPropertiesToShowInSchemaBuddyTest()
 		{
-			Type type= typeof (OrderDetailEntity);;
+			var type = typeof (OrderDetailEntity);
 			MetaDataHelper.AddAssociatedMetadataProvider(type);
 			var descriptionAttributes = MetaDataHelper.GetDescriptionAttributes(type, OrderDetailFieldIndex.Quantity.ToString());
 			Assert.IsTrue(descriptionAttributes.Any());
@@ -256,5 +254,6 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var connectionDialog = new ConnectionDialog(mockedIConnectionInfo.Object, false);
 			connectionDialog.ChooseAdapterOrFactoryClass("AdapterAssembly");
 		}
+
 	}
 }
