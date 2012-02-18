@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -153,14 +153,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
 		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
 		{
-			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
-			return usefieldsElement != null && usefieldsElement.Value == true.ToString() ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
-		}
+			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(GetType().Assembly);
 
-		public override IDbConnection GetIDbConnection(IConnectionInfo cxInfo)
-		{
-			return base.GetIDbConnection(cxInfo);
-		}
+			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
+			return usefieldsElement != null && usefieldsElement.Value == true.ToString(CultureInfo.InvariantCulture) ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
+		}		
 
 		#endregion
 
@@ -295,5 +292,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		}
 
 		#endregion
+
+
 	}
 }

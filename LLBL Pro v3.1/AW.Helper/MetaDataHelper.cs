@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -53,19 +54,39 @@ namespace AW.Helper
 
 		public static Assembly GetAssembly(string assemblyName)
 		{
-			return GetAssembly(AppDomain.CurrentDomain. GetAssemblies(), assemblyName);
+			return GetAssembly(AppDomain.CurrentDomain.GetAssemblies(), assemblyName);
 		}
 
 		public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, string assemblyName)
 		{
-			try
-			{
-				return assemblies.SingleOrDefault(a => !a.FullName.Contains("Anonymously Hosted DynamicMethods") && (a.FullName.Contains(assemblyName) || a.Location.Contains(assemblyName)));
-			}
-			catch (Exception)
-			{
-				return null;
-			}
+				return assemblies.SingleOrDefault(a => a.FullName.Contains(assemblyName));
+		}
+
+		public static Assembly GetAssembly(AssemblyName assemblyName)
+		{
+			return AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => assemblyName.FullName.Equals(a));
+		}
+
+		/// <summary>
+		/// Assembly resolver that probes the assemblies loaded in the current Domain.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="System.ResolveEventArgs"/> instance containing the event data.</param>
+		/// <returns></returns>
+		public static Assembly LoadedAssemblyResolver(object sender, ResolveEventArgs args)
+		{
+			return GetAssembly(args.Name);
+		}
+
+		public static void AddLoadedAssemblyResolverIfNeeded(Assembly assembly)
+		{
+			AddLoadedAssemblyResolverIfNeeded(Path.GetDirectoryName(assembly.Location));
+		}
+
+		public static void AddLoadedAssemblyResolverIfNeeded(string directoryPath)
+		{
+			if (!AppDomain.CurrentDomain.BaseDirectory.Equals(directoryPath, StringComparison.OrdinalIgnoreCase))
+				AppDomain.CurrentDomain.AssemblyResolve += LoadedAssemblyResolver;
 		}
 
 		private static IEnumerable<Type> GetPublicTypes(Assembly assembly)
