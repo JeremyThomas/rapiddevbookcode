@@ -285,6 +285,7 @@ namespace AW.Tests
 			var type = interceptorAssembly.GetType(ProfilerHelper.OrmProfilerInterceptorTypeName);
 			Assert.IsNotNull(type);
 			DbProviderFactories.GetFactory("System.Data.SqlClient");
+			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(interceptorAssembly);
 			ProfilerHelper.InterceptorCoreInitialize(type);
 			DbProviderFactories.GetFactory("System.Data.SqlClient");
 		}
