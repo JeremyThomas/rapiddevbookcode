@@ -224,7 +224,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 						var sqlTrace = sqlTracePi.GetValue(e, null) as string;
 						if (!string.IsNullOrEmpty(sqlTrace))
 						{
-							sqlTranslationWriter.WriteLine(sqlTrace);+
+							sqlTranslationWriter.WriteLine(sqlTrace);
 							return;
 						}
 					}
