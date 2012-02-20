@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -528,6 +529,18 @@ namespace AW.Helper
 		private static IEnumerable<T> GetTypesAttributes<T>(Type type) where T : Attribute
 		{
 			return type.GetCustomAttributes(typeof (T), true).Cast<T>();
+		}
+
+		public static MethodInfo GetMethodInfo<T>(Expression<Action<T>> expression)
+		{
+			var methodCallExpression = expression.Body as MethodCallExpression;
+			return methodCallExpression == null ? null : methodCallExpression.Method;
+		}
+
+		public static MemberInfo GetMemberInfo<T>(Expression<Func<T, object>> expression)
+		{
+			var memberExpression = expression.Body as MemberExpression;
+			return memberExpression == null ? null : memberExpression.Member;
 		}
 	}
 }

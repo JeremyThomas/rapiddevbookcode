@@ -42,6 +42,11 @@ namespace AW.Helper
 
 		private static string FindMemberName(Expression expression)
 		{
+			return FindMember(expression);
+		}
+
+		private static string FindMember(Expression expression)
+		{
 			if (expression is MethodCallExpression)
 				return (expression as MethodCallExpression).Method.Name;
 			if (expression is MemberExpression)
