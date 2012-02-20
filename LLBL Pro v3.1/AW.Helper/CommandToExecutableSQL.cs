@@ -10,19 +10,31 @@ using System.Text;
 
 namespace AW.Helper
 {
+	/// <summary>
+	/// 	Methods to get an executable SQL string from a Db Command for using in tracing etc. 
+	/// <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=15420" /> 
+	/// <see cref="http://cs.rthand.com/blogs/blog_with_righthand/pages/Implementing-more-useful-tracing-for-LLBLGenPro-2.0.aspx" />
+	/// </summary>
 	public static class CommandToExecutableSQL
 	{
 		private static readonly string[] CommonKeywords = new[] {"FROM", "WHERE", "GROUP BY", "HAVING", "INNER JOIN", "LEFT JOIN", "RIGHT JOIN"};
+		private static readonly string[] ActionKeywords = new[] {"INSERT INTO", "DELETE"};
+		private static readonly string[] SelectKeywords = new[] {"SELECT DISTINCT", "SELECT"};
 
 		public static void GetExecutableSQLFromActionCommand(StringBuilder sb, DbCommand dbCommand)
 		{
 			var text = dbCommand.CommandText;
-			DumpParameters(sb, (IEnumerable<IDbDataParameter>)dbCommand.Parameters);
-			text = ReplaceAllWholeKeywords(text, "\r\n", "", "INSERT INTO", "DELETE");
+			text = DumpOrInlineParameters(sb, dbCommand, text);
+			text = FormatSQL(text, ActionKeywords);
+			sb.AppendLine(text);
+		}
+
+		private static string FormatSQL(string text, string[] keywords)
+		{
+			text = ReplaceAllWholeKeywords(text, "\r\n", "", keywords);
 			text = ReplaceAllWholeKeywords(text, "\r\n", "\r\n ", CommonKeywords);
 			text = ReplaceAllKeywords(text, "", "\r\n ", ",");
-
-			sb.AppendLine(text);
+			return text;
 		}
 
 		public static void GetExecutableSQLFromQueryCommand(StringBuilder sb, DbCommand dbCommand)
@@ -35,13 +47,14 @@ namespace AW.Helper
 
 		private static void DumpStoredProcedureRetrievalQuery(StringBuilder sb, DbCommand dbCommand)
 		{
-			DumpParameters(sb, (IEnumerable<IDbDataParameter>) dbCommand.Parameters);
-			sb.Append(dbCommand.CommandText);
+			var text = DumpOrInlineParameters(sb, dbCommand, dbCommand.CommandText);
+			sb.Append(text);
 			sb.Append("(");
 
 			for (var i = 0; i < dbCommand.Parameters.Count; i++)
 			{
-				if (i > 0) sb.Append(", ");
+				if (i > 0)
+					sb.Append(", ");
 				sb.Append(((IDataParameter) dbCommand.Parameters[i]).ParameterName);
 			}
 
@@ -51,10 +64,13 @@ namespace AW.Helper
 		private static void DumpSelectCommand(StringBuilder sb, DbCommand dbCommand)
 		{
 			var text = dbCommand.CommandText;
-			text = ReplaceAllWholeKeywords(text, "\r\n", "\r\n ", "SELECT DISTINCT", "SELECT");
-			text = ReplaceAllWholeKeywords(text, "\r\n", "\r\n ", CommonKeywords);
-			text = ReplaceAllKeywords(text, "", "\r\n ", ",");
+			text = FormatSQL(text, SelectKeywords);
+			text = DumpOrInlineParameters(sb, dbCommand, text);
+			sb.AppendLine(text);
+		}
 
+		private static string DumpOrInlineParameters(StringBuilder sb, DbCommand dbCommand, string text)
+		{
 			if (dbCommand.Connection is SqlConnection)
 				DumpParameters(sb, (IEnumerable<IDbDataParameter>) dbCommand.Parameters);
 			else
@@ -63,8 +79,7 @@ namespace AW.Helper
 					var value = ParameterValueToString(param);
 					text = text.Replace(param.ParameterName, value);
 				}
-
-			sb.AppendLine(text);
+			return text;
 		}
 
 		private static void DumpParameters(StringBuilder sb, IEnumerable<IDbDataParameter> parameters)
@@ -124,11 +139,11 @@ namespace AW.Helper
 						break;
 
 					case DbType.DateTime:
-						value = "'" + ((DateTime)param.Value).ToString("yyyyMMdd HH:mm:ss") + "'";
+						value = "'" + ((DateTime) param.Value).ToString("yyyyMMdd HH:mm:ss") + "'";
 						break;
 
 					case DbType.Date:
-						value = "'" + ((DateTime)param.Value).ToString("dd/MM/yy") + "'";
+						value = "'" + ((DateTime) param.Value).ToString("dd/MM/yy") + "'";
 						break;
 
 					default:
@@ -166,6 +181,5 @@ namespace AW.Helper
 			}
 			return text;
 		}
-
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
@@ -153,11 +154,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
 		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
 		{
-			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(GetType().Assembly);
-
 			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
 			return usefieldsElement != null && usefieldsElement.Value == true.ToString(CultureInfo.InvariantCulture) ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
-		}		
+		}
 
 		#endregion
 
@@ -176,17 +175,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
 		{
 			var eventInfo = typeBeingTraced.GetEvent("SQLTraceEvent");
-			if (eventInfo != null && eventInfo.EventHandlerType != null)
+			if (eventInfo != null)
 				try
 				{
 					//EventHandler<SQLTraceEventArgs> handler = (sender, e) => WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
 					//Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Method);
 
-					var handlerSQLTraceEvent = GetType().GetMethod("SQLTraceEventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
+					var handlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(this, null));
 
 					_executionManager = executionManager;
 					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
-					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] { typedDelegate });
+					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] {typedDelegate});
 				}
 				catch (Exception e)
 				{
@@ -208,40 +207,28 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			{
 				if (e is SQLTraceEventArgs)
 				{
-					var sqlTraceEventArgs = (SQLTraceEventArgs)e;
+					var sqlTraceEventArgs = (SQLTraceEventArgs) e;
 					if (!string.IsNullOrEmpty(sqlTraceEventArgs.SQLTrace))
 					{
 						sqlTranslationWriter.WriteLine(sqlTraceEventArgs.SQLTrace);
 						return;
 					}
 					if (sqlTraceEventArgs.Query != null)
-					{
 						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(sqlTraceEventArgs.Query));
-						return;
-					}
 				}
-				else if (e is QueryTraceEventArgs)
+					else
 				{
-					var queryTraceEventArgs = (QueryTraceEventArgs)e;
-					if (queryTraceEventArgs.Query != null)
-					{
-						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(queryTraceEventArgs.Query));
-						return;
-					}
-				}
-				else
-				{
-					var sqlTracePi = e.GetType().GetProperty("SQLTrace");
+					var sqlTracePi = MetaDataHelper.GetMemberInfo<SQLTraceEventArgs>(ste => ste.SQLTrace) as PropertyInfo;
 					if (sqlTracePi != null)
 					{
 						var sqlTrace = sqlTracePi.GetValue(e, null) as string;
 						if (!string.IsNullOrEmpty(sqlTrace))
 						{
-							sqlTranslationWriter.WriteLine(sqlTrace);
+							sqlTranslationWriter.WriteLine(sqlTrace);+
 							return;
 						}
 					}
-					var queryPi = e.GetType().GetProperty("Query");
+					var queryPi = MetaDataHelper.GetMemberInfo<SQLTraceEventArgs>(ste => ste.Query) as PropertyInfo;
 					if (queryPi != null)
 					{
 						var query = queryPi.GetValue(e, null) as IQuery;
@@ -292,7 +279,5 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		}
 
 		#endregion
-
-
 	}
 }

@@ -10,16 +10,35 @@ namespace AW.Helper
 	/// </summary>
 	public static class ProfilerHelper
 	{
+		/// <summary>
+		/// SD.Tools.OrmProfiler.Interceptor
+		/// </summary>
 		public const string OrmProfilerAssemblyString = "SD.Tools.OrmProfiler.Interceptor";
 		public const string OrmProfilerAssemblyFileName = OrmProfilerAssemblyString + ".dll";
+		/// <summary>
+		/// SD.Tools.OrmProfiler.Interceptor.InterceptorCore
+		/// </summary>
 		public const string OrmProfilerInterceptorTypeName = OrmProfilerAssemblyString + ".InterceptorCore";
+		/// <summary>
+		/// SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.dll
+		/// </summary>
 		public const string OrmProfilerInterceptorAssemblyQualifiedTypeName = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyString;
+		/// <summary>
+		/// Initialize
+		/// </summary>
 		public const string InitializeMethodName = "Initialize";
+		/// <summary>
+		/// ORMProfiler
+		/// </summary>
 		public const string OrmProfilerAppSettingsName = "ORMProfiler";
+		/// <summary>
+		/// Solutions Design\ORM Profiler v1.0
+		/// </summary>
 		public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.0";
 
 		/// <summary>
-		/// 	Initializes the ORM profiler if enabled with the AppSetting ORM Profiler in the config file and the assemblies: SD.Tools.OrmProfiler.Interceptor.dll, SD.Tools.OrmProfiler.Shared.dll SD.Tools.BCLExtensions.dll, SD.Tools.Algorithmia.dll can be loaded
+		/// 	Initializes the ORM profiler if enabled with the AppSetting ORM Profiler in the config file and the assemblies: 
+		///   SD.Tools.OrmProfiler.Interceptor.dll, SD.Tools.OrmProfiler.Shared.dll SD.Tools.BCLExtensions.dll, SD.Tools.Algorithmia.dll can be loaded
 		/// </summary>
 		/// <returns> </returns>
 		public static bool InitializeOrmProfilerIfEnabled()
@@ -57,6 +76,7 @@ namespace AW.Helper
 			                         BindingFlags.InvokeMethod |
 			                         BindingFlags.Static,
 			                         null, null, new[] {ApplicationName}, CultureInfo.CurrentUICulture);
+			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(interceptor.Assembly);
 			return true;
 		}
 
