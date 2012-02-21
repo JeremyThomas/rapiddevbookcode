@@ -13,6 +13,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Northwind.DAL;
 using Northwind.DAL.EntityClasses;
+using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using CustomerEntity = AW.Data.EntityClasses.CustomerEntity;
 using ElementCreator = Northwind.DAL.FactoryClasses.ElementCreator;
@@ -255,5 +256,46 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			connectionDialog.ChooseAdapterOrFactoryClass("AdapterAssembly");
 		}
 
+		[TestMethod]
+		public void SetSQLTranslationWriterTest()
+		{
+			var dataAccessAdapter = new DataAccessAdapter();
+			var eventInfo = dataAccessAdapter.GetType().GetEvent(SQLTraceEventArgs.SqlTraceEventName);
+			Assert.IsNotNull(eventInfo);
+
+			var handlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriverTest>(x => x.SQLTraceEventHandler(null, null));
+
+			var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
+			eventInfo.GetAddMethod().Invoke(dataAccessAdapter, new[] {typedDelegate});
+
+			var handler = new Action<object, EventArgs>((sender, e) => SQLTraceEventHandler(null, null));
+			typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handler.Method);
+			eventInfo.GetAddMethod().Invoke(dataAccessAdapter, new[] { typedDelegate });
+
+			TextWriter writer = null;
+			var handler2 = new Action<object, EventArgs>((sender, e) =>
+			                     	{
+			                     		if (e != null)
+			                     		{
+			                     			//var x = 1 + 2;
+			                     			//SQLTraceEventHandler(sender, e);
+			                     			SQLTraceEventArgs.WriteSQLTranslation(writer, null);
+			                     		}
+			                     	});
+			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler2.Method);
+
+			EventHandler<EventArgs> handler3 = (sender, e) =>  SQLTraceEventArgs.WriteSQLTranslation(writer, e); 
+			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler3.Method);
+
+			QueryExecutionManager _executionManager = null;
+
+			EventHandler<EventArgs> handler4 = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
+			Delegate.CreateDelegate(eventInfo.EventHandlerType, _executionManager, handler4.Method);
+		}
+
+		private void SQLTraceEventHandler(object sender, EventArgs e)
+		{
+			SQLTraceEventArgs.WriteSQLTranslation(null, e);
+		}
 	}
 }

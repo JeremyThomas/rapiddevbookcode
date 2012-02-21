@@ -76,7 +76,7 @@ namespace AW.Helper
 			                         BindingFlags.InvokeMethod |
 			                         BindingFlags.Static,
 			                         null, null, new[] {ApplicationName}, CultureInfo.CurrentUICulture);
-			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(interceptor.Assembly);
+			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(interceptor);
 			return true;
 		}
 
