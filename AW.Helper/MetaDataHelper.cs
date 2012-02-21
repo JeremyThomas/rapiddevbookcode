@@ -15,21 +15,21 @@ namespace AW.Helper
 	public static class MetaDataHelper
 	{
 		/// <summary>
-		/// Gets the public concrete descendants of a type.
+		/// 	Gets the public concrete descendants of a type.
 		/// </summary>
-		/// <param name="ancestorType">Type of the ancestor.</param>
-		/// <returns>The descendants.</returns>
+		/// <param name="ancestorType"> Type of the ancestor. </param>
+		/// <returns> The descendants. </returns>
 		public static IEnumerable<Type> GetDescendants(Type ancestorType)
 		{
 			return GetDescendants(ancestorType, ancestorType.Assembly.GetExportedTypes());
 		}
 
 		/// <summary>
-		/// Gets the public concrete descendant of a type for a list of types.
+		/// 	Gets the public concrete descendant of a type for a list of types.
 		/// </summary>
-		/// <param name="ancestorType">Type of the ancestor.</param>
-		/// <param name="exportedTypes">The types to select from.</param>
-		/// <returns>The Descendants.</returns>
+		/// <param name="ancestorType"> Type of the ancestor. </param>
+		/// <param name="exportedTypes"> The types to select from. </param>
+		/// <returns> The Descendants. </returns>
 		public static IEnumerable<Type> GetDescendants(Type ancestorType, IEnumerable<Type> exportedTypes)
 		{
 			return from type in exportedTypes
@@ -43,9 +43,9 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets all exported types in the Current Domain.
+		/// 	Gets all exported types in the Current Domain.
 		/// </summary>
-		/// <returns>All exported types in the Current Domain.</returns>
+		/// <returns> All exported types in the Current Domain. </returns>
 		private static IEnumerable<Type> GetAllExportedTypes()
 		{
 			return from assembly in AppDomain.CurrentDomain.GetAssemblies()
@@ -60,7 +60,7 @@ namespace AW.Helper
 
 		public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, string assemblyName)
 		{
-				return assemblies.SingleOrDefault(a => a.FullName.Contains(assemblyName));
+			return assemblies.SingleOrDefault(a => a.FullName.Contains(assemblyName));
 		}
 
 		public static Assembly GetAssembly(AssemblyName assemblyName)
@@ -69,14 +69,38 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Assembly resolver that probes the assemblies loaded in the current Domain.
+		/// 	Assembly resolver that probes the assemblies loaded in the current Domain.
+		/// </summary>
+		/// <param name="sender"> The sender. </param>
+		/// <param name="args"> The <see cref="System.ResolveEventArgs" /> instance containing the event data. </param>
+		/// <returns> </returns>
+		public static Assembly LoadedAssemblyResolver(object sender, ResolveEventArgs args)
+		{
+			return GetAssembly(args.Name);
+		}
+
+		/// <summary>
+		/// Assembly resolver that returns itself if it is being looked for.
+		/// This needs to be copied into the assembly where this is needed.
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="args">The <see cref="System.ResolveEventArgs"/> instance containing the event data.</param>
 		/// <returns></returns>
-		public static Assembly LoadedAssemblyResolver(object sender, ResolveEventArgs args)
+		public static Assembly SelfAssemblyResolver(object sender, ResolveEventArgs args)
 		{
-			return GetAssembly(args.Name);
+			var executingAssembly = Assembly.GetExecutingAssembly();
+			return executingAssembly.FullName == args.Name ? executingAssembly : null;
+		}
+
+		public static void AddLoadedAssemblyResolverIfNeeded(Type type)
+		{
+			AddAssemblyResolverIfNeeded(type, LoadedAssemblyResolver);
+		}
+
+		public static void AddAssemblyResolverIfNeeded(Type type, ResolveEventHandler assemblyResolver)
+		{
+			if (type.AssemblyQualifiedName != null && Type.GetType(type.AssemblyQualifiedName) == null)
+				AppDomain.CurrentDomain.AssemblyResolve += assemblyResolver;
 		}
 
 		public static void AddLoadedAssemblyResolverIfNeeded(Assembly assembly)
@@ -103,11 +127,11 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the public concrete descendants of a type from a list of types.
+		/// 	Gets the public concrete descendants of a type from a list of types.
 		/// </summary>
-		/// <param name="ancestorType">Type of the ancestor.</param>
-		/// <param name="descendantTypes">The descendant types.</param>
-		/// <returns></returns>
+		/// <param name="ancestorType"> Type of the ancestor. </param>
+		/// <param name="descendantTypes"> The descendant types. </param>
+		/// <returns> </returns>
 		public static IEnumerable<Type> GetAssignable(this Type ancestorType, IEnumerable<Type> descendantTypes)
 		{
 			return from type in descendantTypes
@@ -140,13 +164,13 @@ namespace AW.Helper
 		public static IEnumerable<Type> FilterByImplements(this IEnumerable<Type> types, string interfaceName)
 		{
 			return from type in types
-						 where type.Implements(interfaceName) && type.IsClass
+			       where type.Implements(interfaceName) && type.IsClass
 			       select type;
 		}
-		
+
 		public static IEnumerable<Type> FilterByClassIsAssignableTo(this IEnumerable<Type> types, Type typeIsAssignableTo)
 		{
-			return typeIsAssignableTo.GetAssignable(types).Where(t=>t.IsClass);
+			return typeIsAssignableTo.GetAssignable(types).Where(t => t.IsClass);
 		}
 
 		public static IEnumerable<Type> GetInterfaceImplementersBothWays(this IEnumerable<Type> types, Type interfaceType)
@@ -182,7 +206,7 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Determine of specified type is nullable
+		/// 	Determine of specified type is nullable
 		/// </summary>
 		public static bool IsNullable(Type t)
 		{
@@ -190,7 +214,7 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Return underlying type if type is Nullable otherwise return the type
+		/// 	Return underlying type if type is Nullable otherwise return the type
 		/// </summary>
 		public static Type GetCoreType(Type t)
 		{
@@ -220,13 +244,12 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Creates the generic.
-		/// http://geekswithblogs.net/marcel/archive/2007/03/24/109722.aspx
+		/// 	Creates the generic. http://geekswithblogs.net/marcel/archive/2007/03/24/109722.aspx
 		/// </summary>
-		/// <param name="generic">The generic type.</param>
-		/// <param name="innerType">Type of the inner.</param>
-		/// <param name="args">The args.</param>
-		/// <returns></returns>
+		/// <param name="generic"> The generic type. </param>
+		/// <param name="innerType"> Type of the inner. </param>
+		/// <param name="args"> The args. </param>
+		/// <returns> </returns>
 		public static object CreateGeneric(Type generic, Type innerType, params object[] args)
 		{
 			var specificType = generic.MakeGenericType(new[] {innerType});
@@ -234,10 +257,10 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Returns the data type of the items in the specified list.
+		/// 	Returns the data type of the items in the specified list.
 		/// </summary>
-		/// <param name="enumerable">The enumerable to be examined for type information.</param>
-		/// <returns>The System.Type of the items contained in the list.</returns>
+		/// <param name="enumerable"> The enumerable to be examined for type information. </param>
+		/// <returns> The System.Type of the items contained in the list. </returns>
 		public static Type GetEnumerableItemType(IEnumerable enumerable)
 		{
 			var queryable = enumerable as IQueryable;
@@ -265,10 +288,10 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the type of the object type if it isn't enumerable or if it is get the enumerable Item Type.
+		/// 	Gets the type of the object type if it isn't enumerable or if it is get the enumerable Item Type.
 		/// </summary>
-		/// <param name="o">The object.</param>
-		/// <returns></returns>
+		/// <param name="o"> The object. </param>
+		/// <returns> </returns>
 		public static Type GetObjectTypeorEnumerableItemType(object o)
 		{
 			if (o == null)
@@ -278,10 +301,12 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
+		/// 	Gets the properties to display in LINQPad's Dump method. They should be the same as would appear in a DataGridView with AutoGenerateColumns.
 		/// </summary>
-		/// <remarks>Where clause copied from DataGridViewDataConnection.GetCollectionOfBoundDataGridViewColumns()</remarks>
-		/// <returns>The properties to display in LINQPad's Dump</returns>
+		/// <remarks>
+		/// 	Where clause copied from DataGridViewDataConnection.GetCollectionOfBoundDataGridViewColumns()
+		/// </remarks>
+		/// <returns> The properties to display in LINQPad's Dump </returns>
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(Type type)
 		{
 			return from propertyDescriptor in ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>()
@@ -301,10 +326,10 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the properties to serialize to display in a DataGridView.
+		/// 	Gets the properties to serialize to display in a DataGridView.
 		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <returns></returns>
+		/// <param name="type"> The type. </param>
+		/// <returns> </returns>
 		public static IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
 		{
 			return GetPropertiesToDisplay(type).FilterBySerializable().FilterByIsNotAssignableFrom(typeof (IDictionary));
@@ -316,10 +341,10 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the properties that can be serialized.
+		/// 	Gets the properties that can be serialized.
 		/// </summary>
-		/// <param name="propertyDescriptors">The property descriptors.</param>
-		/// <returns></returns>
+		/// <param name="propertyDescriptors"> The property descriptors. </param>
+		/// <returns> </returns>
 		public static IEnumerable<PropertyDescriptor> FilterBySerializable(this IEnumerable<PropertyDescriptor> propertyDescriptors)
 		{
 			return from propertyDescriptor in propertyDescriptors
@@ -345,16 +370,16 @@ namespace AW.Helper
 		public static IEnumerable<PropertyDescriptor> FilterByName(this IEnumerable<PropertyDescriptor> propertyDescriptors, string name)
 		{
 			return from propertyDescriptor in propertyDescriptors
-						 where propertyDescriptor.Name == name
-						 select propertyDescriptor;
+			       where propertyDescriptor.Name == name
+			       select propertyDescriptor;
 		}
 
 		/// <summary>
-		/// Gets the property descriptor for a property. If there are more than 1 get the one with the 'most' information otherwise take the last.
+		/// 	Gets the property descriptor for a property. If there are more than 1 get the one with the 'most' information otherwise take the last.
 		/// </summary>
-		/// <param name="propertyDescriptors">The property descriptors.</param>
-		/// <param name="name">The property name.</param>
-		/// <returns></returns>
+		/// <param name="propertyDescriptors"> The property descriptors. </param>
+		/// <param name="name"> The property name. </param>
+		/// <returns> </returns>
 		public static PropertyDescriptor GetFieldPropertyDescriptor(this IEnumerable<PropertyDescriptor> propertyDescriptors, string name)
 		{
 			var descriptorsWithName = propertyDescriptors.FilterByName(name);
@@ -367,22 +392,23 @@ namespace AW.Helper
 						return result;
 				}
 			return result;
-		}		
-		
+		}
+
 		/// <summary>
-		/// Folds all of the associated metadata providers into the type of the subject. Does not work properly before .net 4.
+		/// 	Folds all of the associated metadata providers into the type of the subject. Does not work properly before .net 4.
 		/// </summary>
 		public static void FoldAllAssociatedMetadataProvidersIntoTheSubjectType(Type ancestorType)
 		{
 			if (Environment.Version.Major >= 4)
-			  AddAssociatedMetadataProviders(GetDescendants(ancestorType));
+				AddAssociatedMetadataProviders(GetDescendants(ancestorType));
 		}
 
 		/// <summary>
-		/// Adds the associated metadata providers for each type.
+		/// 	Adds the associated metadata providers for each type.
 		/// </summary>
-		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
-		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
+		/// <see
+		/// 	cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx" />
+		/// <param name="typesWhichMayHaveBuddyClasses"> The types which may have buddy classes. </param>
 		internal static void AddAssociatedMetadataProviders(params Type[] typesWhichMayHaveBuddyClasses)
 		{
 			if (!typesWhichMayHaveBuddyClasses.IsNullOrEmpty())
@@ -390,10 +416,11 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Adds the associated metadata providers for each type. But doesn't seem to work for properties on inherited classes for version of .net before 4.0
+		/// 	Adds the associated metadata providers for each type. But doesn't seem to work for properties on inherited classes for version of .net before 4.0
 		/// </summary>
-		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
-		/// <param name="typesWhichMayHaveBuddyClasses">The types which may have buddy classes.</param>
+		/// <see
+		/// 	cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx" />
+		/// <param name="typesWhichMayHaveBuddyClasses"> The types which may have buddy classes. </param>
 		internal static void AddAssociatedMetadataProviders(IEnumerable<Type> typesWhichMayHaveBuddyClasses)
 		{
 			foreach (var typeWithBuddyClass in typesWhichMayHaveBuddyClasses)
@@ -401,34 +428,35 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Adds the associated metadata provider.
+		/// 	Adds the associated metadata provider.
 		/// </summary>
-		/// <see cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx"/>
-		/// <param name="typeWithBuddyClass">The type with buddy class.</param>
+		/// <see
+		/// 	cref="http://blogs.msdn.com/davidebb/archive/2009/07/24/using-an-associated-metadata-class-outside-dynamic-data.aspx" />
+		/// <param name="typeWithBuddyClass"> The type with buddy class. </param>
 		public static void AddAssociatedMetadataProvider(Type typeWithBuddyClass)
 		{
 			if (Environment.Version.Major >= 4)
-			  TypeDescriptor.AddProvider(new AssociatedMetadataTypeTypeDescriptionProvider(typeWithBuddyClass), typeWithBuddyClass);
+				TypeDescriptor.AddProvider(new AssociatedMetadataTypeTypeDescriptionProvider(typeWithBuddyClass), typeWithBuddyClass);
 		}
-		
+
 		/// <summary>
-		/// Creates an instance of type if type is an ancestorType or a descendant
+		/// 	Creates an instance of type if type is an ancestorType or a descendant
 		/// </summary>
-		/// <param name="ancestorType">Type of the ancestor.</param>
-		/// <param name="type">The type.</param>
-		/// <param name="args">The args.</param>
-		/// <returns>The Instance</returns>
+		/// <param name="ancestorType"> Type of the ancestor. </param>
+		/// <param name="type"> The type. </param>
+		/// <param name="args"> The args. </param>
+		/// <returns> The Instance </returns>
 		public static object CreateInstanceOf(Type ancestorType, Type type, params Object[] args)
 		{
 			return ancestorType.IsAssignableFrom(type) ? Activator.CreateInstance(type, args) : null;
 		}
 
 		/// <summary>
-		/// Gets the property descriptors for a class.
+		/// 	Gets the property descriptors for a class.
 		/// </summary>
-		/// <param name="modelClass">The model class.</param>
-		/// <param name="attributes">An array of type System.Attribute that is used as a filter.</param>
-		/// <returns>The property descriptors for a class.</returns>
+		/// <param name="modelClass"> The model class. </param>
+		/// <param name="attributes"> An array of type System.Attribute that is used as a filter. </param>
+		/// <returns> The property descriptors for a class. </returns>
 		public static IEnumerable<PropertyDescriptor> GetPropertyDescriptors(Type modelClass, params Attribute[] attributes)
 		{
 			var propertyDescriptorCollection = attributes.IsNullOrEmpty() ? TypeDescriptor.GetProperties(modelClass) : TypeDescriptor.GetProperties(modelClass, attributes);
@@ -438,7 +466,7 @@ namespace AW.Helper
 
 			if (Environment.Version.Major < 4) // Not needed if .net 4.0 and FoldAllAssociatedMetadataProvidersIntoTheSubjectType(); is used
 			{
-				var metadataAttrib = modelClass.GetCustomAttributes(typeof(MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
+				var metadataAttrib = modelClass.GetCustomAttributes(typeof (MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().FirstOrDefault();
 				if (metadataAttrib != null)
 					modelClassProperties.AddRange(TypeDescriptor.GetProperties(metadataAttrib.MetadataClassType).AsEnumerable());
 			}
@@ -451,22 +479,22 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the attributes from a collection of properties for a particular property name.
+		/// 	Gets the attributes from a collection of properties for a particular property name.
 		/// </summary>
-		/// <param name="properties">The properties.</param>
-		/// <param name="fieldName">Name of the field.</param>
-		/// <returns>The validation attributes.</returns>
+		/// <param name="properties"> The properties. </param>
+		/// <param name="fieldName"> Name of the field. </param>
+		/// <returns> The validation attributes. </returns>
 		public static IEnumerable<Attribute> GetAttributes(IEnumerable<PropertyDescriptor> properties, string fieldName)
 		{
 			return properties.Where(p => p.Name == fieldName).SelectMany(prop => prop.Attributes.Cast<Attribute>());
 		}
 
 		/// <summary>
-		/// Gets the attributes from a collection of properties for a particular property name.
+		/// 	Gets the attributes from a collection of properties for a particular property name.
 		/// </summary>
-		/// <param name="properties">The properties.</param>
-		/// <param name="fieldName">Name of the field.</param>
-		/// <returns>The validation attributes.</returns>
+		/// <param name="properties"> The properties. </param>
+		/// <param name="fieldName"> Name of the field. </param>
+		/// <returns> The validation attributes. </returns>
 		public static IEnumerable<T> GetAttributes<T>(IEnumerable<PropertyDescriptor> properties, string fieldName) where T : Attribute
 		{
 			if (!String.IsNullOrEmpty(fieldName))
@@ -485,22 +513,22 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the validation attributes from a collection of properties for a particular property name.
+		/// 	Gets the validation attributes from a collection of properties for a particular property name.
 		/// </summary>
-		/// <param name="properties">The properties.</param>
-		/// <param name="fieldName">Name of the field.</param>
-		/// <returns>The validation attributes.</returns>
+		/// <param name="properties"> The properties. </param>
+		/// <param name="fieldName"> Name of the field. </param>
+		/// <returns> The validation attributes. </returns>
 		public static IEnumerable<ValidationAttribute> GetValidationAttributes(IEnumerable<PropertyDescriptor> properties, string fieldName)
 		{
 			return GetAttributes(properties, fieldName).OfType<ValidationAttribute>();
 		}
 
 		/// <summary>
-		/// Gets the validation attributes of a type of entity.
+		/// 	Gets the validation attributes of a type of entity.
 		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <param name="fieldName">Name of the field.</param>
-		/// <returns>The validation attributes.</returns>
+		/// <param name="type"> The type. </param>
+		/// <param name="fieldName"> Name of the field. </param>
+		/// <returns> The validation attributes. </returns>
 		public static IEnumerable<ValidationAttribute> GetValidationAttributes(Type type, string fieldName)
 		{
 			return GetValidationAttributes(GetPropertyDescriptors(type), fieldName);

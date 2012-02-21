@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
@@ -154,7 +152,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
 		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
 		{
-			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(GetType().Assembly);
+			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(GetType());
 			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
 			return usefieldsElement != null && usefieldsElement.Value == true.ToString(CultureInfo.InvariantCulture) ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
 		}
@@ -176,14 +174,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
 		{
 			var eventInfo = typeBeingTraced.GetEvent(SQLTraceEventArgs.SqlTraceEventName);
-			if (eventInfo != null)
+			if (eventInfo != null && executionManager != null)
 				try
 				{
 					//EventHandler<EventArgs> handler = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
-					//var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handler.Method);
+					//var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, executionManager, handler.Method);
 
 					_executionManager = executionManager;
-					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, _handlerSQLTraceEvent);
+					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, HandlerSQLTraceEvent);
 					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] {typedDelegate});
 				}
 				catch (Exception e)
@@ -194,12 +192,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private QueryExecutionManager _executionManager;
 
-		private static MethodInfo _handlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
+		private static readonly MethodInfo HandlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
 
 		private void SQLTraceEventHandler(object sender, EventArgs e)
 		{
-			if (_executionManager != null)
-				SQLTraceEventArgs.WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
+			SQLTraceEventArgs.WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
 		}
 
 		#endregion
