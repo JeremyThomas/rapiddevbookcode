@@ -154,6 +154,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
 		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
 		{
+			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(GetType().Assembly);
 			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
 			return usefieldsElement != null && usefieldsElement.Value == true.ToString(CultureInfo.InvariantCulture) ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
 		}
@@ -174,17 +175,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
 		{
-			var eventInfo = typeBeingTraced.GetEvent("SQLTraceEvent");
+			var eventInfo = typeBeingTraced.GetEvent(SQLTraceEventArgs.SqlTraceEventName);
 			if (eventInfo != null)
 				try
 				{
-					//EventHandler<SQLTraceEventArgs> handler = (sender, e) => WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
-					//Delegate.CreateDelegate(eventInfo.EventHandlerType, handler.Method);
-
-					var handlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(this, null));
+					//EventHandler<EventArgs> handler = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
+					//var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handler.Method);
 
 					_executionManager = executionManager;
-					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
+					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, _handlerSQLTraceEvent);
 					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] {typedDelegate});
 				}
 				catch (Exception e)
@@ -195,48 +194,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private QueryExecutionManager _executionManager;
 
+		private static MethodInfo _handlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
+
 		private void SQLTraceEventHandler(object sender, EventArgs e)
 		{
 			if (_executionManager != null)
-				WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
-		}
-
-		private static void WriteSQLTranslation(TextWriter sqlTranslationWriter, EventArgs e)
-		{
-			if (sqlTranslationWriter != null && e != null)
-			{
-				if (e is SQLTraceEventArgs)
-				{
-					var sqlTraceEventArgs = (SQLTraceEventArgs) e;
-					if (!string.IsNullOrEmpty(sqlTraceEventArgs.SQLTrace))
-					{
-						sqlTranslationWriter.WriteLine(sqlTraceEventArgs.SQLTrace);
-						return;
-					}
-					if (sqlTraceEventArgs.Query != null)
-						sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(sqlTraceEventArgs.Query));
-				}
-					else
-				{
-					var sqlTracePi = MetaDataHelper.GetMemberInfo<SQLTraceEventArgs>(ste => ste.SQLTrace) as PropertyInfo;
-					if (sqlTracePi != null)
-					{
-						var sqlTrace = sqlTracePi.GetValue(e, null) as string;
-						if (!string.IsNullOrEmpty(sqlTrace))
-						{
-							sqlTranslationWriter.WriteLine(sqlTrace);
-							return;
-						}
-					}
-					var queryPi = MetaDataHelper.GetMemberInfo<SQLTraceEventArgs>(ste => ste.Query) as PropertyInfo;
-					if (queryPi != null)
-					{
-						var query = queryPi.GetValue(e, null) as IQuery;
-						if (query != null)
-							sqlTranslationWriter.WriteLine(QueryToSQL.GetExecutableSQLFromQuery(query));
-					}
-				}
-			}
+				SQLTraceEventArgs.WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
 		}
 
 		#endregion
