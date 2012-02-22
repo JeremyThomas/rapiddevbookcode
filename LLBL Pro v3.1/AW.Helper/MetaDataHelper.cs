@@ -86,10 +86,20 @@ namespace AW.Helper
 		/// <param name="sender">The sender.</param>
 		/// <param name="args">The <see cref="System.ResolveEventArgs"/> instance containing the event data.</param>
 		/// <returns></returns>
-		public static Assembly SelfAssemblyResolver(object sender, ResolveEventArgs args)
+		private static Assembly SelfAssemblyResolver(object sender, ResolveEventArgs args)
 		{
 			var executingAssembly = Assembly.GetExecutingAssembly();
 			return executingAssembly.FullName == args.Name ? executingAssembly : null;
+		}
+
+		/// <summary>
+		/// Adds a self assembly resolver if needed.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		public static void AddSelfAssemblyResolverIfNeeded(Type type)
+		{
+			if (AssemblyResolverIsNeeded(type))
+				AddSelfAssemblyResolve(type.Assembly);
 		}
 
 		public static void AddLoadedAssemblyResolverIfNeeded(Type type)
@@ -99,19 +109,53 @@ namespace AW.Helper
 
 		public static void AddAssemblyResolverIfNeeded(Type type, ResolveEventHandler assemblyResolver)
 		{
-			if (type.AssemblyQualifiedName != null && Type.GetType(type.AssemblyQualifiedName) == null)
+			if (AssemblyResolverIsNeeded(type))
 				AppDomain.CurrentDomain.AssemblyResolve += assemblyResolver;
 		}
 
-		public static void AddLoadedAssemblyResolverIfNeeded(Assembly assembly)
+		private static bool AssemblyResolverIsNeeded(Type type)
 		{
-			AddLoadedAssemblyResolverIfNeeded(Path.GetDirectoryName(assembly.Location));
+			return type.AssemblyQualifiedName != null && Type.GetType(type.AssemblyQualifiedName) == null;
 		}
 
-		public static void AddLoadedAssemblyResolverIfNeeded(string directoryPath)
+		/// <summary>
+		/// Adds the loaded assembly resolver if needed.
+		/// </summary>
+		/// <param name="assembly">The assembly.</param>
+		public static void AddLoadedAssemblyResolverIfNeeded(Assembly assembly)
 		{
-			if (!AppDomain.CurrentDomain.BaseDirectory.Equals(directoryPath, StringComparison.OrdinalIgnoreCase))
+			if (AssemblyResolverIsNeeded(assembly))
 				AppDomain.CurrentDomain.AssemblyResolve += LoadedAssemblyResolver;
+		}
+
+		/// <summary>
+		/// Adds the self assembly resolver if needed.
+		/// </summary>
+		/// <param name="assembly">The assembly.</param>
+		public static void AddSelfAssemblyResolverIfNeeded(Assembly assembly)
+		{
+			if (AssemblyResolverIsNeeded(assembly))
+				AddSelfAssemblyResolve(assembly);
+		}
+
+		private static void AddSelfAssemblyResolve(Assembly assembly)
+		{
+			AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => ReturnAssemblyIfAMatch(assembly, args);
+		}
+
+		private static Assembly ReturnAssemblyIfAMatch(Assembly assembly, ResolveEventArgs args)
+		{
+			return assembly.FullName == args.Name ? assembly : null;
+		}
+
+		private static bool AssemblyResolverIsNeeded(Assembly assembly)
+		{
+			return AssemblyResolverIsNeeded(Path.GetDirectoryName(assembly.Location));
+		}
+
+		private static bool AssemblyResolverIsNeeded(string directoryPath)
+		{
+			return !AppDomain.CurrentDomain.BaseDirectory.Equals(directoryPath, StringComparison.OrdinalIgnoreCase);
 		}
 
 		private static IEnumerable<Type> GetPublicTypes(Assembly assembly)
