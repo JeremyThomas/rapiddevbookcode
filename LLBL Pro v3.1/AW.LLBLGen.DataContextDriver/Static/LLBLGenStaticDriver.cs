@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -177,12 +178,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			if (eventInfo != null && executionManager != null)
 				try
 				{
-					//EventHandler<EventArgs> handler = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(executionManager.SqlTranslationWriter, e);
-					//var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, executionManager, handler.Method);
-
-					_executionManager = executionManager;
-					var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, HandlerSQLTraceEvent);
-					eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] {typedDelegate});
+					SubscribeToSqlTraceEvent(objectBeingTraced, eventInfo, executionManager.SqlTranslationWriter);
 				}
 				catch (Exception e)
 				{
@@ -190,13 +186,22 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				}
 		}
 
-		private QueryExecutionManager _executionManager;
+		public void SubscribeToSqlTraceEvent(object objectBeingTraced, EventInfo eventInfo, TextWriter sqlTranslationWriter)
+		{
+			_sqlTranslationWriter = sqlTranslationWriter;
+			EventHandler<EventArgs> handler = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(_sqlTranslationWriter, e);
+			//var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, _sqlTranslationWriter, handler.Method);
+
+			var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, HandlerSQLTraceEvent);
+			eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] {typedDelegate});
+		}
 
 		private static readonly MethodInfo HandlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
+		private TextWriter _sqlTranslationWriter;
 
 		private void SQLTraceEventHandler(object sender, EventArgs e)
 		{
-			SQLTraceEventArgs.WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
+			SQLTraceEventArgs.WriteSQLTranslation(_sqlTranslationWriter, e);
 		}
 
 		#endregion

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 using AW.Data.FactoryClasses;
 using AW.Data.Linq;
@@ -15,6 +17,7 @@ using Northwind.DAL;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using CommonEntityBase = AW.Data.EntityClasses.CommonEntityBase;
 using CustomerEntity = AW.Data.EntityClasses.CustomerEntity;
 using ElementCreator = Northwind.DAL.FactoryClasses.ElementCreator;
 using EntityType = AW.Data.EntityType;
@@ -263,39 +266,60 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var eventInfo = dataAccessAdapter.GetType().GetEvent(SQLTraceEventArgs.SqlTraceEventName);
 			Assert.IsNotNull(eventInfo);
 
-			var handlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriverTest>(x => x.SQLTraceEventHandler(null, null));
-
-			var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handlerSQLTraceEvent);
-			eventInfo.GetAddMethod().Invoke(dataAccessAdapter, new[] {typedDelegate});
-
-			var handler = new Action<object, EventArgs>((sender, e) => SQLTraceEventHandler(null, null));
-			typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, handler.Method);
-			eventInfo.GetAddMethod().Invoke(dataAccessAdapter, new[] { typedDelegate });
-
 			TextWriter writer = null;
 			var handler2 = new Action<object, EventArgs>((sender, e) =>
-			                     	{
-			                     		if (e != null)
-			                     		{
-			                     			//var x = 1 + 2;
-			                     			//SQLTraceEventHandler(sender, e);
-			                     			SQLTraceEventArgs.WriteSQLTranslation(writer, null);
-			                     		}
-			                     	});
+			                                             	{
+			                                             		if (e != null)
+			                                             		{
+			                                             			//var x = 1 + 2;
+			                                             			//SQLTraceEventHandler(sender, e);
+			                                             			SQLTraceEventArgs.WriteSQLTranslation(writer, null);
+			                                             		}
+			                                             	});
 			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler2.Method);
 
-			EventHandler<EventArgs> handler3 = (sender, e) =>  SQLTraceEventArgs.WriteSQLTranslation(writer, e); 
+			EventHandler<EventArgs> handler3 = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(writer, e);
 			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler3.Method);
 
 			QueryExecutionManager _executionManager = null;
 
 			EventHandler<EventArgs> handler4 = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
 			Delegate.CreateDelegate(eventInfo.EventHandlerType, _executionManager, handler4.Method);
+
+			var llblGenStaticDriver = new LLBLGenStaticDriver();
+			llblGenStaticDriver.SubscribeToSqlTraceEvent(dataAccessAdapter, eventInfo, writer);
 		}
 
-		private void SQLTraceEventHandler(object sender, EventArgs e)
+		[TestMethod]
+		public void GetFactoryAfterInterceptorCoreInitializeDomainIsolatorTest()
 		{
-			SQLTraceEventArgs.WriteSQLTranslation(null, e);
+			var appDomainSetup = new AppDomainSetup
+			                     	{
+			                     		ApplicationBase = Environment.GetEnvironmentVariable("TEMP")
+			                     	};
+			var domainIsolator = new DomainIsolator("friendlyName", appDomainSetup);
+			domainIsolator.GetInstance<MarshalByRefClass>().GetFactoryAfterInterceptorCoreInitializeTest();
+		}
+
+		[TestMethod]
+		public void GetFactoryAfterInterceptorCoreInitializeTest()
+		{
+			var marshalByRefClass = new MarshalByRefClass();
+			marshalByRefClass.GetFactoryAfterInterceptorCoreInitializeTest();
+		}
+	}
+
+	internal class MarshalByRefClass : MarshalByRefObject
+	{
+		public void GetFactoryAfterInterceptorCoreInitializeTest()
+		{
+			var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)") ?? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+			var interceptorAssembly = Assembly.LoadFrom(Path.Combine(Path.Combine(programFilesPathx86, ProfilerHelper.SolutionsDesignOrmProfilerPath), ProfilerHelper.OrmProfilerAssemblyFileName));
+			var type = interceptorAssembly.GetType(ProfilerHelper.OrmProfilerInterceptorTypeName);
+			Assert.IsNotNull(type);
+			ProfilerHelper.InterceptorCoreInitialize(type);
+			CommonEntityBase.Initialize();
+			DbProviderFactories.GetFactory("System.Data.SqlClient");
 		}
 	}
 }

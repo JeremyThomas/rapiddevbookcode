@@ -277,18 +277,5 @@ namespace AW.Tests
 			                firstBillOfMaterialProjectionProjection.ProductAssemblySubcategoryIDViaNav, "ProductAssemblySubcategoryID"); //Fails
 		}
 
-		[TestMethod]
-		public void GetFactoryTest()
-		{
-			var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)") ?? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-			var interceptorAssembly = Assembly.LoadFrom(Path.Combine(Path.Combine(programFilesPathx86, ProfilerHelper.SolutionsDesignOrmProfilerPath), ProfilerHelper.OrmProfilerAssemblyFileName));
-			var type = interceptorAssembly.GetType(ProfilerHelper.OrmProfilerInterceptorTypeName);
-			Assert.IsNotNull(type);
-			DbProviderFactories.GetFactory("System.Data.SqlClient");
-			//MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(type);
-			ProfilerHelper.InterceptorCoreInitialize(type);
-			DbProviderFactories.GetFactory("System.Data.SqlClient");
-		}
-
 	}
 }
