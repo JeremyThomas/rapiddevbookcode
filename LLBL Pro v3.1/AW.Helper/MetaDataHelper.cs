@@ -60,12 +60,7 @@ namespace AW.Helper
 
 		public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, string assemblyName)
 		{
-			return assemblies.SingleOrDefault(a => a.FullName.Contains(assemblyName));
-		}
-
-		public static Assembly GetAssembly(AssemblyName assemblyName)
-		{
-			return AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => assemblyName.FullName.Equals(a));
+			return assemblies.SingleOrDefault(a => AssembliesMatch(a, assemblyName));
 		}
 
 		/// <summary>
@@ -99,20 +94,7 @@ namespace AW.Helper
 			if (AssemblyResolverIsNeeded(assembly))
 				AppDomain.CurrentDomain.AssemblyResolve += LoadedAssemblyResolver;
 		}
-
-		/// <summary>
-		/// Assembly resolver that returns itself if it is being looked for.
-		/// This needs to be copied into the assembly where this is needed.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="args">The <see cref="System.ResolveEventArgs"/> instance containing the event data.</param>
-		/// <returns></returns>
-		private static Assembly SelfAssemblyResolver(object sender, ResolveEventArgs args)
-		{
-			var executingAssembly = Assembly.GetExecutingAssembly();
-			return executingAssembly.FullName == args.Name ? executingAssembly : null;
-		}		
-		
+	
 		/// <summary>
 		/// Adds the self assembly resolver if needed.
 		/// </summary>

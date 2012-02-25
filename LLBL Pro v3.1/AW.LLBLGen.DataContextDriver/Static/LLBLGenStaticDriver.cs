@@ -153,7 +153,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
 		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
 		{
-			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(GetType().Assembly);
+			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(customType);
 			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
 			return usefieldsElement != null && usefieldsElement.Value == true.ToString(CultureInfo.InvariantCulture) ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
 		}
