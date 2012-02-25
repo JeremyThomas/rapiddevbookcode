@@ -262,32 +262,15 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		[TestMethod]
 		public void SetSQLTranslationWriterTest()
 		{
-			var dataAccessAdapter = new DataAccessAdapter();
-			var eventInfo = dataAccessAdapter.GetType().GetEvent(SQLTraceEventArgs.SqlTraceEventName);
-			Assert.IsNotNull(eventInfo);
+			var marshalByRefClass = new MarshalByRefClass();
+			marshalByRefClass.SetSQLTranslationWriterTest();
+		}
 
-			TextWriter writer = null;
-			var handler2 = new Action<object, EventArgs>((sender, e) =>
-			                                             	{
-			                                             		if (e != null)
-			                                             		{
-			                                             			//var x = 1 + 2;
-			                                             			//SQLTraceEventHandler(sender, e);
-			                                             			SQLTraceEventArgs.WriteSQLTranslation(writer, null);
-			                                             		}
-			                                             	});
-			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler2.Method);
-
-			EventHandler<EventArgs> handler3 = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(writer, e);
-			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler3.Method);
-
-			QueryExecutionManager _executionManager = null;
-
-			EventHandler<EventArgs> handler4 = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(_executionManager.SqlTranslationWriter, e);
-			Delegate.CreateDelegate(eventInfo.EventHandlerType, _executionManager, handler4.Method);
-
-			var llblGenStaticDriver = new LLBLGenStaticDriver();
-			llblGenStaticDriver.SubscribeToSqlTraceEvent(dataAccessAdapter, eventInfo, writer);
+		[TestMethod]
+		public void SetSQLTranslationWriterDomainIsolatorTest()
+		{
+			var domainIsolator = new DomainIsolator("friendlyName");
+			domainIsolator.GetInstance<MarshalByRefClass>().SetSQLTranslationWriterTest();
 		}
 
 		[TestMethod]
@@ -307,6 +290,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var marshalByRefClass = new MarshalByRefClass();
 			marshalByRefClass.GetFactoryAfterInterceptorCoreInitializeTest();
 		}
+
 	}
 
 	internal class MarshalByRefClass : MarshalByRefObject
@@ -319,7 +303,37 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			Assert.IsNotNull(type);
 			ProfilerHelper.InterceptorCoreInitialize(type);
 			CommonEntityBase.Initialize();
+			Assert.AreEqual(type, Type.GetType(type.AssemblyQualifiedName));
+			Assert.AreEqual(type, Type.GetType(ProfilerHelper.OrmProfilerInterceptorAssemblyQualifiedTypeName));
 			DbProviderFactories.GetFactory("System.Data.SqlClient");
+		}
+
+		public void SetSQLTranslationWriterTest()
+		{
+			var dataAccessAdapter = new DataAccessAdapter();
+			var eventInfo = dataAccessAdapter.GetType().GetEvent(SQLTraceEventArgs.SqlTraceEventName);
+			Assert.IsNotNull(eventInfo);
+
+			TextWriter writer = null;
+			var handler2 = new Action<object, EventArgs>((sender, e) =>
+			{
+				if (e != null)
+				{
+					//var x = 1 + 2;
+					//SQLTraceEventHandler(sender, e);
+					SQLTraceEventArgs.WriteSQLTranslation(writer, null);
+				}
+			});
+			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler2.Method);
+
+			EventHandler<EventArgs> handler3 = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(writer, e);
+			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler3.Method);
+
+			var handler4 = new EventHandler<EventArgs>((sender, e) => SQLTraceEventArgs.WriteSQLTranslation(writer, e));
+			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler4.Method);
+
+			var llblGenStaticDriver = new LLBLGenStaticDriver();
+			llblGenStaticDriver.SubscribeToSqlTraceEvent(dataAccessAdapter, eventInfo, writer);
 		}
 	}
 }
