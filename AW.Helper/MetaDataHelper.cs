@@ -79,29 +79,6 @@ namespace AW.Helper
 			return GetAssembly(args.Name);
 		}
 
-		/// <summary>
-		/// Assembly resolver that returns itself if it is being looked for.
-		/// This needs to be copied into the assembly where this is needed.
-		/// </summary>
-		/// <param name="sender">The sender.</param>
-		/// <param name="args">The <see cref="System.ResolveEventArgs"/> instance containing the event data.</param>
-		/// <returns></returns>
-		private static Assembly SelfAssemblyResolver(object sender, ResolveEventArgs args)
-		{
-			var executingAssembly = Assembly.GetExecutingAssembly();
-			return executingAssembly.FullName == args.Name ? executingAssembly : null;
-		}
-
-		/// <summary>
-		/// Adds a self assembly resolver if needed.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		public static void AddSelfAssemblyResolverIfNeeded(Type type)
-		{
-			if (AssemblyResolverIsNeeded(type))
-				AddSelfAssemblyResolve(type.Assembly);
-		}
-
 		public static void AddLoadedAssemblyResolverIfNeeded(Type type)
 		{
 			AddAssemblyResolverIfNeeded(type, LoadedAssemblyResolver);
@@ -111,11 +88,6 @@ namespace AW.Helper
 		{
 			if (AssemblyResolverIsNeeded(type))
 				AppDomain.CurrentDomain.AssemblyResolve += assemblyResolver;
-		}
-
-		private static bool AssemblyResolverIsNeeded(Type type)
-		{
-			return type.AssemblyQualifiedName != null && Type.GetType(type.AssemblyQualifiedName) == null;
 		}
 
 		/// <summary>
@@ -129,6 +101,19 @@ namespace AW.Helper
 		}
 
 		/// <summary>
+		/// Assembly resolver that returns itself if it is being looked for.
+		/// This needs to be copied into the assembly where this is needed.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="args">The <see cref="System.ResolveEventArgs"/> instance containing the event data.</param>
+		/// <returns></returns>
+		private static Assembly SelfAssemblyResolver(object sender, ResolveEventArgs args)
+		{
+			var executingAssembly = Assembly.GetExecutingAssembly();
+			return executingAssembly.FullName == args.Name ? executingAssembly : null;
+		}		
+		
+		/// <summary>
 		/// Adds the self assembly resolver if needed.
 		/// </summary>
 		/// <param name="assembly">The assembly.</param>
@@ -138,6 +123,26 @@ namespace AW.Helper
 				AddSelfAssemblyResolve(assembly);
 		}
 
+		/// <summary>
+		/// Adds a self assembly resolver if needed.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		public static void AddSelfAssemblyResolverIfNeeded(Type type)
+		{
+			if (AssemblyResolverIsNeeded(type))
+				AddSelfAssemblyResolve(type.Assembly);
+		}
+
+		private static bool AssemblyResolverIsNeeded(Type type)
+		{
+			return Type.GetType(GetShortAssemblyQualifiedName(type)) == null;
+		}
+
+		private static string GetShortAssemblyQualifiedName(Type type)
+		{
+			return type.FullName + ", " + type.Assembly.GetName().Name;
+		}
+
 		private static void AddSelfAssemblyResolve(Assembly assembly)
 		{
 			AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => ReturnAssemblyIfAMatch(assembly, args);
@@ -145,7 +150,15 @@ namespace AW.Helper
 
 		private static Assembly ReturnAssemblyIfAMatch(Assembly assembly, ResolveEventArgs args)
 		{
-			return assembly.FullName == args.Name ? assembly : null;
+			return AssembliesMatch(assembly, args.Name) ? assembly : null;
+		}
+
+		public static bool AssembliesMatch(Assembly assembly, String assemblyName)
+		{
+			var assemblyName1 = assembly.GetName();
+			var assemblyName2 = new AssemblyName(assemblyName);
+			return assemblyName1.Equals(assemblyName2) || AssemblyName.ReferenceMatchesDefinition(assemblyName1, assemblyName2) 
+				|| assemblyName1.Name.Equals(assemblyName2.Name);
 		}
 
 		private static bool AssemblyResolverIsNeeded(Assembly assembly)
