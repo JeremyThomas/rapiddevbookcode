@@ -19,7 +19,7 @@ namespace AW.LLBLGen.DataContextDriver
 		public const string LinqpadPath = "LINQPadPath";
 		public const string ProbePaths = "ProbePaths";
 		public const string LlblgenProNameSpace = "SD.LLBLGen.Pro";
-		private const string LinqpadAssemblyName = "LINQPad,";
+		private const string LinqpadAssemblyName = "LINQPad";
 
 		private readonly AppDomain _domain;
 

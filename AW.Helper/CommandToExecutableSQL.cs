@@ -31,10 +31,43 @@ namespace AW.Helper
 
 		private static string FormatSQL(string text, string[] keywords)
 		{
-			text = ReplaceAllWholeKeywords(text, "\r\n", "", keywords);
-			text = ReplaceAllWholeKeywords(text, "\r\n", "\r\n ", CommonKeywords);
-			text = ReplaceAllKeywords(text, "", "\r\n ", ",");
+			if (!FormatSQLUsingTGSqlParser(ref text))
+			{
+				text = ReplaceAllWholeKeywords(text, "\r\n", "", keywords);
+				text = ReplaceAllWholeKeywords(text, "\r\n", "\r\n ", CommonKeywords);
+				text = ReplaceAllKeywords(text, "", "\r\n ", ",");
+			}
 			return text;
+		}
+
+		/// <summary>
+		/// Formats the SQL using TG SQL parser.
+		/// var sqlparser = new TGSqlParser(getDBVendor()) {SqlText = {Text = inputsql.Text}};
+		/// var i = sqlparser.PrettyPrint();
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <returns></returns>
+		private static bool FormatSQLUsingTGSqlParser(ref string text)
+		{
+			var type = Type.GetType("gudusoft.gsqlparser.TGSqlParser, gudusoft.gsqlparser");
+			if (type == null)
+				return false;
+			var sqlparser = Activator.CreateInstance(type, Enum.ToObject(type.Assembly.GetType("gudusoft.gsqlparser.TDbVendor"), 0));
+			var sqlTextPropertyInfo = type.GetProperty("SqlText");
+			var sqlTextProperty = sqlTextPropertyInfo.GetValue(sqlparser, null);
+			var textPropertyInfo = sqlTextProperty.GetType().GetProperty("Text");
+			textPropertyInfo.SetValue(sqlTextProperty, text, null);
+			var prettyPrintMethodInfo = type.GetMethod("PrettyPrint");
+			var i = (int) prettyPrintMethodInfo.Invoke(sqlparser, null);
+			if (i != 0)
+				return false;
+			{
+				var formattedSqlTextPropertyInfo = type.GetProperty("FormattedSqlText");
+				var formattedSqlTextProperty = formattedSqlTextPropertyInfo.GetValue(sqlparser, null);
+				textPropertyInfo = formattedSqlTextProperty.GetType().GetProperty("Text");
+				text = textPropertyInfo.GetValue(formattedSqlTextProperty, null) as string;
+				return true;
+			}
 		}
 
 		public static void GetExecutableSQLFromQueryCommand(StringBuilder sb, DbCommand dbCommand)

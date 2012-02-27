@@ -60,7 +60,14 @@ namespace AW.Helper
 
 		public static Assembly GetAssembly(this IEnumerable<Assembly> assemblies, string assemblyName)
 		{
-			return assemblies.SingleOrDefault(a => AssembliesMatch(a, assemblyName));
+			try
+			{
+				return assemblies.SingleOrDefault(a => AssembliesMatch(a, new AssemblyName(assemblyName)));
+			}
+			catch
+			{
+				return assemblies.SingleOrDefault(a => a.FullName.Equals(assemblyName));
+			}
 		}
 
 		/// <summary>
@@ -138,9 +145,27 @@ namespace AW.Helper
 		public static bool AssembliesMatch(Assembly assembly, String assemblyName)
 		{
 			var assemblyName1 = assembly.GetName();
-			var assemblyName2 = new AssemblyName(assemblyName);
-			return assemblyName1.Equals(assemblyName2) || AssemblyName.ReferenceMatchesDefinition(assemblyName1, assemblyName2) 
-				|| assemblyName1.Name.Equals(assemblyName2.Name);
+			AssemblyName assemblyName2;
+			try
+			{
+				assemblyName2 = new AssemblyName(assemblyName);
+			}
+			catch
+			{
+				return assemblyName1.Name.Equals(assemblyName);
+			}
+			return AssembliesMatch(assemblyName1, assemblyName2);
+		}
+
+		public static bool AssembliesMatch(Assembly assembly, AssemblyName assemblyName)
+		{
+			return AssembliesMatch(assembly.GetName(), assemblyName);
+		}
+
+		private static bool AssembliesMatch(AssemblyName assemblyName1, AssemblyName assemblyName2)
+		{
+			return assemblyName1.Equals(assemblyName2) || AssemblyName.ReferenceMatchesDefinition(assemblyName1, assemblyName2)
+			       || assemblyName1.Name.Equals(assemblyName2.Name);
 		}
 
 		private static bool AssemblyResolverIsNeeded(Assembly assembly)
