@@ -189,11 +189,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public void SubscribeToSqlTraceEvent(object objectBeingTraced, EventInfo eventInfo, TextWriter sqlTranslationWriter)
 		{
 			_sqlTranslationWriter = sqlTranslationWriter;
-			EventHandler<EventArgs> handler = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(_sqlTranslationWriter, e);
+			//EventHandler<EventArgs> handler = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(_sqlTranslationWriter, e);
+			//var handler = new Action<object, EventArgs>((sender, e) => SQLTraceEventArgs.WriteSQLTranslation(_sqlTranslationWriter, e));
 			//var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, _sqlTranslationWriter, handler.Method);
 
 			var typedDelegate = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, HandlerSQLTraceEvent);
-			eventInfo.GetAddMethod().Invoke(objectBeingTraced, new[] {typedDelegate});
+			eventInfo.AddEventHandler(objectBeingTraced, typedDelegate);
 		}
 
 		private static readonly MethodInfo HandlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
