@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Data.Common;
 using System.Globalization;
 using System.Reflection;
 
@@ -76,7 +77,7 @@ namespace AW.Helper
 			                         BindingFlags.InvokeMethod |
 			                         BindingFlags.Static,
 			                         null, null, new[] {ApplicationName}, CultureInfo.CurrentUICulture);
-			//MetaDataHelper.AddSelfAssemblyResolverIfNeeded(interceptor);
+			MetaDataHelper.AddSelfAssemblyResolverIfNeeded(interceptor);
 			return true;
 		}
 
@@ -99,6 +100,13 @@ namespace AW.Helper
 		public static string ApplicationName
 		{
 			get { return AppDomain.CurrentDomain.FriendlyName; }
+		}
+
+		public static DbCommand GetWrappedCommand(DbCommand dbCommand)
+		{
+			var fieldInfo = dbCommand.GetType().GetField("_wrappedCommand", BindingFlags.NonPublic | BindingFlags.Instance);
+			if (fieldInfo != null) return fieldInfo.GetValue(dbCommand) as DbCommand;
+			return dbCommand;
 		}
 	}
 }
