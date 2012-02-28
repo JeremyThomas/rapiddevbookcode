@@ -21,17 +21,32 @@ namespace AW.Helper
 		private static readonly string[] ActionKeywords = new[] {"INSERT INTO", "DELETE"};
 		private static readonly string[] SelectKeywords = new[] {"SELECT DISTINCT", "SELECT"};
 
+		public enum TDbVendor : byte
+		{
+			DbVMssql,
+			DbVOracle,
+			DbVMysql,
+			DbVAccess,
+			DbVGeneric,
+			DbVDB2,
+			DbVSybase,
+			DbVInformix,
+			DbVPostgresql,
+			DbVfirebird,
+			DbVMdx,
+		}
+
 		public static void GetExecutableSQLFromActionCommand(StringBuilder sb, DbCommand dbCommand)
 		{
 			var text = dbCommand.CommandText;
 			text = DumpOrInlineParameters(sb, dbCommand, text);
-			text = FormatSQL(text, ActionKeywords);
+			text = FormatSQL(text, ActionKeywords, ProfilerHelper.GetWrappedCommand(dbCommand).GetType());
 			sb.AppendLine(text);
 		}
 
-		private static string FormatSQL(string text, string[] keywords)
+		private static string FormatSQL(string text, string[] keywords, Type commandType)
 		{
-			if (!FormatSQLUsingTGSqlParser(ref text))
+			if (!FormatSQLUsingTGSqlParser(ref text, DetermineTDbVendor(commandType)))
 			{
 				text = ReplaceAllWholeKeywords(text, "\r\n", "", keywords);
 				text = ReplaceAllWholeKeywords(text, "\r\n", "\r\n ", CommonKeywords);
@@ -46,13 +61,14 @@ namespace AW.Helper
 		/// var i = sqlparser.PrettyPrint();
 		/// </summary>
 		/// <param name="text">The text.</param>
+		/// <param name="dbVendor">The db vendor.</param>
 		/// <returns></returns>
-		private static bool FormatSQLUsingTGSqlParser(ref string text)
+		private static bool FormatSQLUsingTGSqlParser(ref string text, byte dbVendor)
 		{
 			var type = Type.GetType("gudusoft.gsqlparser.TGSqlParser, gudusoft.gsqlparser");
 			if (type == null)
 				return false;
-			var sqlparser = Activator.CreateInstance(type, Enum.ToObject(type.Assembly.GetType("gudusoft.gsqlparser.TDbVendor"), 0));
+			var sqlparser = Activator.CreateInstance(type, Enum.ToObject(type.Assembly.GetType("gudusoft.gsqlparser.TDbVendor"), dbVendor));
 			var sqlTextPropertyInfo = type.GetProperty("SqlText");
 			var sqlTextProperty = sqlTextPropertyInfo.GetValue(sqlparser, null);
 			var textPropertyInfo = sqlTextProperty.GetType().GetProperty("Text");
@@ -68,6 +84,82 @@ namespace AW.Helper
 				text = textPropertyInfo.GetValue(formattedSqlTextProperty, null) as string;
 				return true;
 			}
+		}
+
+		public static byte DetermineTDbVendor(Type commandType)
+		{
+			var databaseType = TDbVendor.DbVGeneric;
+			switch (commandType.Namespace)
+			{
+				case "IBM.Data.DB2":
+				case "DDTek.DB2":
+					databaseType = TDbVendor.DbVDB2;
+					break;
+				case "FirebirdSql.Data.FirebirdClient":
+					databaseType = TDbVendor.DbVfirebird;
+					break;
+				case "CoreLab.MySql":
+				case "Devart.Data.MySql":
+				case "MySql.Data.MySqlClient":
+					databaseType = TDbVendor.DbVMysql;
+					break;
+				//case "System.Data.OleDb":
+				//  databaseType = TDbVendor.;
+				//  break;
+				//case "System.Data.Odbc":
+				//  databaseType = TDbVendor.Odbc;
+				//  break;
+				case "System.Data.OracleClient":
+				case "Oracle.DataAccess.Client":
+				case "DDTek.Oracle":
+					databaseType = TDbVendor.DbVOracle;
+					break;
+				case "Npgsql":
+				case "Devart.Data.PostgreSql":
+					databaseType = TDbVendor.DbVPostgresql;
+					break;
+				//case "System.Data.SQLite":
+				//case "Devart.Data.SQLite":
+				//  databaseType = TDbVendor.SQLite;
+				//  break;
+				case "System.Data.SqlServerCe":
+				case "System.Data.SqlServerCe.3.5":
+				case "System.Data.SqlServerCe.4.0":
+				case "System.Data.SqlClient":
+				case "DDTek.SQLServer":
+				case "Devart.Data.SqlServer":
+				case "iAnywhere.Data.SQLAnywhere":
+					databaseType = TDbVendor.DbVMssql;
+					break;
+				case "Sybase.Data.AseClient":
+				case "DDTek.Sybase":
+					databaseType = TDbVendor.DbVSybase;
+					break;
+				//case "System.Data.VistaDB":
+				//  databaseType = TDbVendor.VistaDB;
+				//  break;
+			}
+			if (databaseType == TDbVendor.DbVGeneric)
+			{
+				var str = commandType.Name.ToLowerInvariant();
+				if (str.Contains("db2"))
+					databaseType = TDbVendor.DbVDB2;
+				else if (str.Contains("firebird"))
+					databaseType = TDbVendor.DbVfirebird;
+				else if (str.Contains("mysql"))
+					databaseType = TDbVendor.DbVMysql;
+				else if (str.Contains("oracle"))
+					databaseType = TDbVendor.DbVOracle;
+				else if (str.Contains("postgres"))
+					databaseType = TDbVendor.DbVPostgresql;
+				else if (str.Contains("sqlserver"))
+					databaseType = TDbVendor.DbVMssql;
+				else if (str.Contains("ianywhere"))
+					databaseType = TDbVendor.DbVSybase;
+				else if (str.Contains("sybasease"))
+					databaseType = TDbVendor.DbVSybase;
+			}
+			return (byte) databaseType;
 		}
 
 		public static void GetExecutableSQLFromQueryCommand(StringBuilder sb, DbCommand dbCommand)
@@ -97,7 +189,7 @@ namespace AW.Helper
 		private static void DumpSelectCommand(StringBuilder sb, DbCommand dbCommand)
 		{
 			var text = dbCommand.CommandText;
-			text = FormatSQL(text, SelectKeywords);
+			text = FormatSQL(text, SelectKeywords, ProfilerHelper.GetWrappedCommand(dbCommand).GetType());
 			text = DumpOrInlineParameters(sb, dbCommand, text);
 			sb.AppendLine(text);
 		}
@@ -110,7 +202,8 @@ namespace AW.Helper
 				foreach (IDbDataParameter param in dbCommand.Parameters)
 				{
 					var value = ParameterValueToString(param);
-					text = text.Replace(param.ParameterName, value);
+					text = text.Replace(param.ParameterName + " ", value + " ");
+					text = text.Replace(param.ParameterName + ",", value + ",");
 				}
 			return text;
 		}
