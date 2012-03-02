@@ -21,7 +21,12 @@ namespace AW.Helper
 		private static readonly string[] ActionKeywords = new[] {"INSERT INTO", "DELETE"};
 		private static readonly string[] SelectKeywords = new[] {"SELECT DISTINCT", "SELECT"};
 
+		/// <summary>
+		/// Copy of "gudusoft.gsqlparser.TDbVendor
+		/// </summary>
+// ReSharper disable InconsistentNaming
 		public enum TDbVendor : byte
+// ReSharper restore InconsistentNaming
 		{
 			DbVMssql,
 			DbVOracle,
@@ -34,19 +39,56 @@ namespace AW.Helper
 			DbVPostgresql,
 			DbVfirebird,
 			DbVMdx,
+		}		
+		
+		public static void GetExecutableSQLFromQueryCommand(StringBuilder sb, DbCommand dbCommand)
+		{
+			var wrappedCommand = ProfilerHelper.GetWrappedCommand(dbCommand);
+			if (wrappedCommand.CommandType == CommandType.StoredProcedure)
+				DumpStoredProcedureRetrievalQuery(sb, wrappedCommand);
+			else
+				DumpSelectCommand(sb, wrappedCommand);
 		}
 
 		public static void GetExecutableSQLFromActionCommand(StringBuilder sb, DbCommand dbCommand)
 		{
-			var text = dbCommand.CommandText;
-			text = DumpOrInlineParameters(sb, dbCommand, text);
-			text = FormatSQL(text, ActionKeywords, ProfilerHelper.GetWrappedCommand(dbCommand).GetType());
+			var wrappedCommand = ProfilerHelper.GetWrappedCommand(dbCommand);
+			var dbVendor = DetermineTDbVendor(wrappedCommand.GetType());
+			var text = wrappedCommand.CommandText;
+			text = DumpOrInlineParameters(sb, text, wrappedCommand, dbVendor);
+			text = FormatSQL(text, ActionKeywords, dbVendor);
 			sb.AppendLine(text);
 		}
 
-		private static string FormatSQL(string text, string[] keywords, Type commandType)
+		private static void DumpStoredProcedureRetrievalQuery(StringBuilder sb, DbCommand dbCommand)
 		{
-			if (!FormatSQLUsingTGSqlParser(ref text, DetermineTDbVendor(commandType)))
+			var dbVendor = DetermineTDbVendor(dbCommand.GetType());
+			var text = DumpOrInlineParameters(sb, dbCommand.CommandText, dbCommand, dbVendor);
+			sb.Append(text);
+			sb.Append("(");
+
+			for (var i = 0; i < dbCommand.Parameters.Count; i++)
+			{
+				if (i > 0)
+					sb.Append(", ");
+				sb.Append(((IDataParameter)dbCommand.Parameters[i]).ParameterName);
+			}
+
+			sb.AppendLine(")");
+		}
+
+		private static void DumpSelectCommand(StringBuilder sb, DbCommand dbCommand)
+		{
+			var text = dbCommand.CommandText;
+			var dbVendor = DetermineTDbVendor(dbCommand.GetType());
+			text = FormatSQL(text, SelectKeywords, dbVendor);
+			text = DumpOrInlineParameters(sb, text, dbCommand, dbVendor);
+			sb.AppendLine(text);
+		}
+
+		private static string FormatSQL(string text, string[] keywords, TDbVendor dbVendor)
+		{
+			if (!FormatSQLUsingTGSqlParser(ref text, dbVendor))
 			{
 				text = ReplaceAllWholeKeywords(text, "\r\n", "", keywords);
 				text = ReplaceAllWholeKeywords(text, "\r\n", "\r\n ", CommonKeywords);
@@ -63,12 +105,12 @@ namespace AW.Helper
 		/// <param name="text">The text.</param>
 		/// <param name="dbVendor">The db vendor.</param>
 		/// <returns></returns>
-		private static bool FormatSQLUsingTGSqlParser(ref string text, byte dbVendor)
+		private static bool FormatSQLUsingTGSqlParser(ref string text, TDbVendor dbVendor)
 		{
 			var type = Type.GetType("gudusoft.gsqlparser.TGSqlParser, gudusoft.gsqlparser");
 			if (type == null)
 				return false;
-			var sqlparser = Activator.CreateInstance(type, Enum.ToObject(type.Assembly.GetType("gudusoft.gsqlparser.TDbVendor"), dbVendor));
+			var sqlparser = Activator.CreateInstance(type, Enum.ToObject(type.Assembly.GetType("gudusoft.gsqlparser.TDbVendor"), (byte)dbVendor));
 			var sqlTextPropertyInfo = type.GetProperty("SqlText");
 			var sqlTextProperty = sqlTextPropertyInfo.GetValue(sqlparser, null);
 			var textPropertyInfo = sqlTextProperty.GetType().GetProperty("Text");
@@ -86,7 +128,7 @@ namespace AW.Helper
 			}
 		}
 
-		public static byte DetermineTDbVendor(Type commandType)
+		public static TDbVendor DetermineTDbVendor(Type commandType)
 		{
 			var databaseType = TDbVendor.DbVGeneric;
 			switch (commandType.Namespace)
@@ -103,12 +145,6 @@ namespace AW.Helper
 				case "MySql.Data.MySqlClient":
 					databaseType = TDbVendor.DbVMysql;
 					break;
-				//case "System.Data.OleDb":
-				//  databaseType = TDbVendor.;
-				//  break;
-				//case "System.Data.Odbc":
-				//  databaseType = TDbVendor.Odbc;
-				//  break;
 				case "System.Data.OracleClient":
 				case "Oracle.DataAccess.Client":
 				case "DDTek.Oracle":
@@ -118,10 +154,6 @@ namespace AW.Helper
 				case "Devart.Data.PostgreSql":
 					databaseType = TDbVendor.DbVPostgresql;
 					break;
-				//case "System.Data.SQLite":
-				//case "Devart.Data.SQLite":
-				//  databaseType = TDbVendor.SQLite;
-				//  break;
 				case "System.Data.SqlServerCe":
 				case "System.Data.SqlServerCe.3.5":
 				case "System.Data.SqlServerCe.4.0":
@@ -135,11 +167,8 @@ namespace AW.Helper
 				case "DDTek.Sybase":
 					databaseType = TDbVendor.DbVSybase;
 					break;
-				//case "System.Data.VistaDB":
-				//  databaseType = TDbVendor.VistaDB;
-				//  break;
-			}
-			if (databaseType == TDbVendor.DbVGeneric)
+				default:			
+					if (databaseType == TDbVendor.DbVGeneric)
 			{
 				var str = commandType.Name.ToLowerInvariant();
 				if (str.Contains("db2"))
@@ -159,47 +188,22 @@ namespace AW.Helper
 				else if (str.Contains("sybasease"))
 					databaseType = TDbVendor.DbVSybase;
 			}
-			return (byte) databaseType;
-		}
-
-		public static void GetExecutableSQLFromQueryCommand(StringBuilder sb, DbCommand dbCommand)
-		{
-			if (dbCommand.CommandType == CommandType.StoredProcedure)
-				DumpStoredProcedureRetrievalQuery(sb, dbCommand);
-			else
-				DumpSelectCommand(sb, dbCommand);
-		}
-
-		private static void DumpStoredProcedureRetrievalQuery(StringBuilder sb, DbCommand dbCommand)
-		{
-			var text = DumpOrInlineParameters(sb, dbCommand, dbCommand.CommandText);
-			sb.Append(text);
-			sb.Append("(");
-
-			for (var i = 0; i < dbCommand.Parameters.Count; i++)
-			{
-				if (i > 0)
-					sb.Append(", ");
-				sb.Append(((IDataParameter) dbCommand.Parameters[i]).ParameterName);
+					break;
 			}
-
-			sb.AppendLine(")");
+			return databaseType;
 		}
 
-		private static void DumpSelectCommand(StringBuilder sb, DbCommand dbCommand)
+		private static string DumpOrInlineParameters(StringBuilder sb, string text, DbCommand dbCommand, TDbVendor dbVendor)
 		{
-			var text = dbCommand.CommandText;
-			text = FormatSQL(text, SelectKeywords, ProfilerHelper.GetWrappedCommand(dbCommand).GetType());
-			text = DumpOrInlineParameters(sb, dbCommand, text);
-			sb.AppendLine(text);
+			return DumpOrInlineParameters(sb, text, dbVendor, dbCommand.Parameters);
 		}
 
-		private static string DumpOrInlineParameters(StringBuilder sb, DbCommand dbCommand, string text)
+		private static string DumpOrInlineParameters(StringBuilder sb, string text, TDbVendor dbVendor, DbParameterCollection dbParameterCollection)
 		{
-			if (dbCommand.Connection is SqlConnection)
-				DumpParameters(sb, (IEnumerable<IDbDataParameter>) dbCommand.Parameters);
+			if (dbVendor == TDbVendor.DbVMssql)
+				DumpParameters(sb, dbParameterCollection.AsEnumerable());
 			else
-				foreach (IDbDataParameter param in dbCommand.Parameters)
+				foreach (IDbDataParameter param in dbParameterCollection)
 				{
 					var value = ParameterValueToString(param);
 					text = text.Replace(param.ParameterName + " ", value + " ");
@@ -230,7 +234,7 @@ namespace AW.Helper
 			}
 			catch (Exception e)
 			{
-				Trace.WriteLine(e);
+				GeneralHelper.TraceOut(e.Message);
 			}
 			return type;
 		}

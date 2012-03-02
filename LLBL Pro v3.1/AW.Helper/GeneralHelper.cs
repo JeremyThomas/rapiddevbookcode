@@ -46,6 +46,13 @@ namespace AW.Helper
 			Debug.WriteLine(new StackTrace(false).GetFrame(1).GetMethod().Name + ": " + msg);
 		}
 
+		public static void TraceOut(Exception exception)
+		{
+			Trace.WriteLine(exception.Message);
+			if (exception.InnerException != null)
+				TraceOut(exception.InnerException);
+		}
+
 		#endregion
 
 		public static void ApplicationOutputLogLine(string lineToLog, string source, bool isVerboseMessage, bool appendNewLine)
@@ -374,11 +381,18 @@ namespace AW.Helper
 
 		#endregion
 
-		public static void ThrowInnerException(Exception invocationException)
+		public static void ThrowInnerException(Exception exception)
 		{
-			if (invocationException.InnerException != null)
-				ThrowInnerException(invocationException.InnerException);
-			throw invocationException;
+			if (exception.InnerException != null)
+				ThrowInnerException(exception.InnerException);
+			throw exception;
 		}
+
+		public static Exception GetInnerMostException(Exception exception)
+		{
+			return exception.InnerException == null ? exception : GetInnerMostException(exception.InnerException);
+		}
+
+
 	}
 }

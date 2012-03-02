@@ -301,6 +301,11 @@ namespace AW.Helper
 			return dataSet.Tables.AsEnumerable();
 		}
 
+		public static IEnumerable<IDbDataParameter> AsEnumerable(this DbParameterCollection dbParameterCollection)
+		{
+			return dbParameterCollection.Cast<IDbDataParameter>();
+		}
+
 		/// <summary>
 		/// Inserts the rows of the tables into the DB.
 		/// </summary>
