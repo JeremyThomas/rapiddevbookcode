@@ -101,7 +101,24 @@ namespace AW.Helper
 			if (AssemblyResolverIsNeeded(assembly))
 				AppDomain.CurrentDomain.AssemblyResolve += LoadedAssemblyResolver;
 		}
-	
+
+		public static void AddDirectoryAssemblyResolverIfNeeded(Assembly assembly)
+		{
+			var directoryName = Path.GetDirectoryName(assembly.Location);
+			if (AssemblyResolverIsNeeded(directoryName))
+			{
+				AppDomain.CurrentDomain.AssemblyResolve += LoadedAssemblyResolver;
+				AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => LoadFrom(directoryName, args.Name);
+			}
+		}
+
+		private static Assembly LoadFrom(string directoryName, string name)
+		{
+			var assemblyName = new AssemblyName(name);
+			var assemblyLocation = Path.Combine(directoryName, Path.ChangeExtension(assemblyName.Name, "dll"));
+			return File.Exists(assemblyLocation) ? Assembly.LoadFrom(assemblyLocation) : null;
+		}
+
 		/// <summary>
 		/// Adds the self assembly resolver if needed.
 		/// </summary>

@@ -135,7 +135,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 			}
 			catch (Exception e)
 			{
-				GeneralHelper.TraceOut(e.Message);
+				GeneralHelper.TraceOut(e);
 			}
 		}
 
@@ -149,13 +149,25 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		}
 
 		// Return the objects with which to populate the Schema Explorer by reflecting over customType.
-
 		// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
 		public override List<ExplorerItem> GetSchema(IConnectionInfo cxInfo, Type customType)
 		{
-			MetaDataHelper.AddLoadedAssemblyResolverIfNeeded(customType);
-			var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
-			return usefieldsElement != null && usefieldsElement.Value == true.ToString(CultureInfo.InvariantCulture) ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
+			try
+			{
+				MetaDataHelper.AddDirectoryAssemblyResolverIfNeeded(customType.Assembly);
+				var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameUseFields);
+				return usefieldsElement != null && usefieldsElement.Value == true.ToString(CultureInfo.InvariantCulture) ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
+			}
+			catch (Exception e)
+			{
+				GeneralHelper.TraceOut(e.Message);
+				var innerMostException = GeneralHelper.GetInnerMostException(e);
+				Application.OnThreadException(innerMostException);
+				if (e == innerMostException)
+					throw;
+				GeneralHelper.TraceOut(innerMostException.Message);
+				throw innerMostException;
+			}
 		}
 
 		#endregion
