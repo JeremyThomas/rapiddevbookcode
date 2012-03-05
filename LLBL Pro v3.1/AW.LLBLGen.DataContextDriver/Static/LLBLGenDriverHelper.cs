@@ -485,7 +485,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor)
 		{
-			var displayName = propertyDescriptor.DisplayName == propertyDescriptor.Name ? "" : propertyDescriptor.DisplayName;
+			var displayName = string.Empty;
+			try
+			{
+				displayName = propertyDescriptor.DisplayName;
+			}
+			catch (Exception e)
+			{
+				GeneralHelper.TraceOut(e);
+			}
+			displayName = displayName == propertyDescriptor.Name ? "" : displayName;
 			var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, displayName, propertyDescriptor.Description);
 			return toolTipText;
 		}
