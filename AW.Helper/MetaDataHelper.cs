@@ -469,8 +469,15 @@ namespace AW.Helper
 				foreach (var propertyDescriptor in descriptorsWithName)
 				{
 					result = propertyDescriptor;
-					if (result.Name != result.DisplayName)
-						return result;
+					try
+					{
+						if (result.Name != result.DisplayName) 
+							return result;
+					}
+					catch (Exception e)
+					{
+						GeneralHelper.TraceOut(e);
+					}
 				}
 			return result;
 		}
