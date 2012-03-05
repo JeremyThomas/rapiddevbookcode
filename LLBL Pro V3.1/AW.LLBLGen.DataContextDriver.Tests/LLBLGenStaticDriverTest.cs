@@ -17,7 +17,6 @@ using Northwind.DAL;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
-using CommonEntityBase = AW.Data.EntityClasses.CommonEntityBase;
 using CustomerEntity = AW.Data.EntityClasses.CustomerEntity;
 using ElementCreator = Northwind.DAL.FactoryClasses.ElementCreator;
 using EntityType = AW.Data.EntityType;
@@ -201,9 +200,23 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 				var explorerItem = actual[index];
 				index++;
 				var entityName = entityFactory.ForEntityName + " - " + explorerItem.Text;
-				Assert.AreEqual(fieldNames.Count(), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.Property), entityName + " - fieldNames");
-				Assert.AreEqual(navigatorProperties.Count(er => !EntityHelper.IsEntityCore(er)), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.CollectionLink), entityName + " - Many navigator");
-				Assert.AreEqual(navigatorProperties.Count(EntityHelper.IsEntityCore), explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink), entityName + " - single navigator");
+				var notCoreCount = navigatorProperties.Count(er => !EntityHelper.IsEntityCore(er));
+				var coreCount = navigatorProperties.Count(EntityHelper.IsEntityCore);
+				var propertyCount = explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.Property);
+				var collectionLinkCount = explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.CollectionLink);
+				var referenceLinkCount = explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink);
+				if (useFields)
+				{
+					Assert.AreEqual(fieldNames.Count(), propertyCount, entityName + " - fieldNames -" + fieldNames.JoinAsString());
+					Assert.AreEqual(notCoreCount, collectionLinkCount, entityName + " - Many navigator");
+					Assert.AreEqual(coreCount, referenceLinkCount, entityName + " - single navigator");
+				}
+				else
+				{
+					Assert.IsTrue(fieldNames.Count() <= propertyCount, entityName + " - fieldNames -" + fieldNames.JoinAsString());
+					Assert.IsTrue(notCoreCount <= collectionLinkCount, entityName + " - Many navigator");
+					Assert.IsTrue(coreCount <= referenceLinkCount, entityName + " - single navigator");
+				}
 			}
 			return actual;
 		}
@@ -290,7 +303,6 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			var marshalByRefClass = new MarshalByRefClass();
 			marshalByRefClass.GetFactoryAfterInterceptorCoreInitializeTest();
 		}
-
 	}
 
 	internal class MarshalByRefClass : MarshalByRefObject
@@ -316,14 +328,14 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 
 			TextWriter writer = null;
 			var handler2 = new Action<object, EventArgs>((sender, e) =>
-			{
-				if (e != null)
-				{
-					//var x = 1 + 2;
-					//SQLTraceEventHandler(sender, e);
-					SQLTraceEventArgs.WriteSQLTranslation(writer, null);
-				}
-			});
+			                                             	{
+			                                             		if (e != null)
+			                                             		{
+			                                             			//var x = 1 + 2;
+			                                             			//SQLTraceEventHandler(sender, e);
+			                                             			SQLTraceEventArgs.WriteSQLTranslation(writer, null);
+			                                             		}
+			                                             	});
 			Delegate.CreateDelegate(eventInfo.EventHandlerType, writer, handler2.Method);
 
 			EventHandler<EventArgs> handler3 = (sender, e) => SQLTraceEventArgs.WriteSQLTranslation(writer, e);
