@@ -16,10 +16,27 @@ namespace AW.LLBLGen.DataContextDriver
 	/// </summary>
 	internal class DomainIsolator : IDisposable
 	{
+		/// <summary>
+		/// LINQPadPath
+		/// </summary>
 		public const string LinqpadPath = "LINQPadPath";
-		public const string ProbePaths = "ProbePaths";
+
+		internal const string ProbePaths = "ProbePaths";
+
+		/// <summary>
+		/// SD.LLBLGen.Pro
+		/// </summary>
 		public const string LlblgenProNameSpace = "SD.LLBLGen.Pro";
+
+		/// <summary>
+		/// LINQPad
+		/// </summary>
 		private const string LinqpadAssemblyName = "LINQPad";
+
+		/// <summary>
+		/// linqpad,
+		/// </summary>
+		public static readonly string LinqpadAssemblyNameStart = LinqpadAssemblyName.ToLowerInvariant() + ",";
 
 		private readonly AppDomain _domain;
 
@@ -59,6 +76,13 @@ namespace AW.LLBLGen.DataContextDriver
 			_domain = domain;
 		}
 
+		public void AddProbePaths(params string[] assemblies)
+		{
+			var probePaths = new List<string>();
+			foreach (var directoryName in assemblies.Where(File.Exists).Select(Path.GetDirectoryName).Where(directoryName => !probePaths.Contains(directoryName)))
+				probePaths.Add(directoryName);
+			Domain.SetData(ProbePaths, probePaths);
+		}
 
 		public T GetInstance<T>() where T : MarshalByRefObject
 		{
@@ -86,26 +110,33 @@ namespace AW.LLBLGen.DataContextDriver
 				if (_linqPadAssemblyResolverAdded)
 					return;
 				_linqPadAssemblyResolverAdded = true;
-				AppDomain.CurrentDomain.AssemblyResolve += (ResolveEventHandler) ((sender, args) =>
-				                                                                  	{
-				                                                                  		if (args.Name.ToLowerInvariant().StartsWith("linqpad,"))
-				                                                                  		{
-																																								var linqpadPath = AppDomain.CurrentDomain.GetData(LinqpadPath) as string;
-				                                                                  			if (!String.IsNullOrEmpty(linqpadPath))
-				                                                                  				return Assembly.LoadFrom(linqpadPath);
-				                                                                  		}
-				                                                                  		var assemblyName = new AssemblyName(args.Name);
-				                                                                  		var shortAssemblyName = assemblyName.Name;
-				                                                                  		var probePaths = AppDomain.CurrentDomain.GetData(ProbePaths) as List<string>;
-				                                                                  		if (probePaths != null)
-				                                                                  			return (from probePath in probePaths where (shortAssemblyName.IndexOf(LlblgenProNameSpace) < 0 
-																																													|| assemblyName.Version.ToString().Contains(Constants.LLBLVersion)) 
-																																												select Path.Combine(probePath, shortAssemblyName) + ".dll" 
-																																												into path 
-																																												where File.Exists(path) 
-																																												select Assembly.LoadFrom(path)).FirstOrDefault();
-				                                                                  		return null;
-				                                                                  	});
+				AppDomain.CurrentDomain.AssemblyResolve += ResolveEventHandler;
+			}
+
+			private static Assembly ResolveEventHandler(object sender, ResolveEventArgs args)
+			{
+				if (args.Name.ToLowerInvariant().StartsWith(LinqpadAssemblyNameStart))
+				{
+					var linqpadPath = AppDomain.CurrentDomain.GetData(LinqpadPath) as string;
+					if (!String.IsNullOrEmpty(linqpadPath))
+						return Assembly.LoadFrom(linqpadPath);
+				}
+				var assemblyName = new AssemblyName(args.Name);
+				var probePaths = AppDomain.CurrentDomain.GetData(ProbePaths) as IEnumerable<string>;
+				if (probePaths != null)
+					return (from probePath in probePaths
+					        where IfLLBLVersionIsCorrect(assemblyName)
+					        select MetaDataHelper.GetAssemblyLocation(probePath, assemblyName.Name)
+					        into path
+					        where File.Exists(path)
+					        select Assembly.LoadFrom(path)).FirstOrDefault();
+				return null;
+			}
+
+			private static bool IfLLBLVersionIsCorrect(AssemblyName assemblyName)
+			{
+				return (assemblyName.Name.IndexOf(LlblgenProNameSpace) < 0
+				        || assemblyName.Version.ToString().Contains(Constants.LLBLVersion));
 			}
 
 			public void Go()

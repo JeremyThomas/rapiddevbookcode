@@ -4,8 +4,11 @@
 	{
 		public const string Author = "Jeremy Thomas";
 		public const string AssemblyCompany = Author;
+		/// <summary>
+		/// 3.1
+		/// </summary>
 		public const string LLBLVersion = "3.1";
-		public const string CopyrightYear = "2011";
+		public const string CopyrightYear = "2012";
 		public const string LLBLGenNameVersion = "LLBLGen Pro v" + LLBLVersion;
 		public const string DriverName = "AW " + LLBLGenNameVersion;
 		public const string Name = DriverName + " (v" + Version + ")";
