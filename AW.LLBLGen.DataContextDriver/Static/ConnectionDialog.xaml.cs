@@ -774,16 +774,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		private DomainIsolator CreateDomainIsolator()
 		{
 			var domainIsolator = new DomainIsolator("Inspect Custom Assembly");
-			var probePaths = new List<string>();
-			if (File.Exists(CxInfo.CustomTypeInfo.CustomAssemblyPath))
-				probePaths.Add(Path.GetDirectoryName(CxInfo.CustomTypeInfo.CustomAssemblyPath));
-			var factoryAssemblyPath = GetDriverDataValue(CxInfo, ElementNameFactoryAssembly);
-			if (!probePaths.Contains(factoryAssemblyPath) && File.Exists(factoryAssemblyPath))
-				probePaths.Add(Path.GetDirectoryName(factoryAssemblyPath));
-			var adapterAssemblyPath = GetDriverDataValue(CxInfo, ElementNameAdapterAssembly);
-			if (!probePaths.Contains(adapterAssemblyPath) && File.Exists(adapterAssemblyPath))
-				probePaths.Add(Path.GetDirectoryName(adapterAssemblyPath));
-			domainIsolator.Domain.SetData(DomainIsolator.ProbePaths, probePaths);
+			domainIsolator.AddProbePaths(CxInfo.CustomTypeInfo.CustomAssemblyPath, GetDriverDataValue(CxInfo, ElementNameFactoryAssembly), GetDriverDataValue(CxInfo, ElementNameAdapterAssembly));
 			return domainIsolator;
 		}
 
@@ -897,13 +888,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		private void AddORMProfiler(object sender, RoutedEventArgs e)
 		{
-			var ormProfilerPathAssemblies = new[] {ProfilerHelper.OrmProfilerAssemblyString+ ".dll", "SD.Tools.OrmProfiler.Shared.dll", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
+			var ormProfilerPathAssemblies = new[] {ProfilerHelper.OrmProfilerAssemblyString + ".dll", "SD.Tools.OrmProfiler.Shared.dll", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
 			var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 			var ormProfilerPath = Path.Combine(folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath);
 			if (Directory.Exists(ormProfilerPath))
 			{
 				if (AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies))
-				return;
+					return;
 			}
 			var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
 			if (programFilesPathx86 != null && !programFilesPathx86.Equals(folderPath))

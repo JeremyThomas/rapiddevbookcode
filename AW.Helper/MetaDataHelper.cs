@@ -115,8 +115,13 @@ namespace AW.Helper
 		private static Assembly LoadFrom(string directoryName, string name)
 		{
 			var assemblyName = new AssemblyName(name);
-			var assemblyLocation = Path.Combine(directoryName, Path.ChangeExtension(assemblyName.Name, "dll"));
+			var assemblyLocation = GetAssemblyLocation(directoryName, assemblyName.Name);
 			return File.Exists(assemblyLocation) ? Assembly.LoadFrom(assemblyLocation) : null;
+		}
+
+		public static string GetAssemblyLocation(string directoryName, string shortAssemblyName)
+		{
+			return Path.Combine(directoryName, shortAssemblyName + ".dll");
 		}
 
 		/// <summary>
