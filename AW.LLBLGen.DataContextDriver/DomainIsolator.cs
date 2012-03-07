@@ -68,7 +68,8 @@ namespace AW.LLBLGen.DataContextDriver
 			}
 			_domain.SetData(LinqpadPath, linqPadPath);
 			_domain.SetData(ProbePaths, AppDomain.CurrentDomain.GetData(ProbePaths));
-			((AddAssemblyResolver) _domain.CreateInstanceFromAndUnwrap(typeof (AddAssemblyResolver).Assembly.Location, typeof (AddAssemblyResolver).FullName)).Go();
+			var fullName = typeof (AddAssemblyResolver).FullName;
+			if (fullName != null) ((AddAssemblyResolver) _domain.CreateInstanceFromAndUnwrap(typeof (AddAssemblyResolver).Assembly.Location, fullName)).Go();
 		}
 
 		public DomainIsolator(AppDomain domain)
@@ -86,14 +87,17 @@ namespace AW.LLBLGen.DataContextDriver
 
 		public T GetInstance<T>() where T : MarshalByRefObject
 		{
+			var fullName = typeof (T).FullName;
+			if (fullName != null)
 			try
 			{
-				return (T) _domain.CreateInstanceFromAndUnwrap(typeof (T).Assembly.Location, typeof (T).FullName);
+				 return (T) _domain.CreateInstanceFromAndUnwrap(typeof (T).Assembly.Location, fullName);
 			}
 			catch (FileNotFoundException)
 			{
-				return (T) _domain.CreateInstanceAndUnwrap(typeof (T).Assembly.FullName, typeof (T).FullName);
+				return (T) _domain.CreateInstanceAndUnwrap(typeof (T).Assembly.FullName, fullName);
 			}
+			return null;
 		}
 
 		public void Dispose()
@@ -135,7 +139,7 @@ namespace AW.LLBLGen.DataContextDriver
 
 			private static bool IfLLBLVersionIsCorrect(AssemblyName assemblyName)
 			{
-				return (assemblyName.Name.IndexOf(LlblgenProNameSpace) < 0
+				return (assemblyName.Name.IndexOf(LlblgenProNameSpace, StringComparison.Ordinal) < 0
 				        || assemblyName.Version.ToString().Contains(Constants.LLBLVersion));
 			}
 
@@ -156,11 +160,11 @@ namespace AW.LLBLGen.DataContextDriver
 					AppDomain.Unload(d);
 					return;
 				}
-				catch (AppDomainUnloadedException ex)
+				catch (AppDomainUnloadedException)
 				{
 					return;
 				}
-				catch (CannotUnloadAppDomainException ex)
+				catch (CannotUnloadAppDomainException)
 				{
 				}
 			}
