@@ -115,6 +115,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Ancillary\AdventureWorksAssemblyInfo.cs">
+      <Link>AdventureWorksAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\Ancillary\GlobalAssemblyInfo.cs">
       <Link>GlobalAssemblyInfo.cs</Link>
     </Compile>
