@@ -6,7 +6,7 @@
 // associated with an assembly.
 //
 
-[assembly: AssemblyTitle("")]
+[assembly: AssemblyTitle(AdventureWorksAssemblyInfoConstants.AssemblyCompany + " Lower Level Business logic Layer")]
 [assembly: AssemblyDescription("")]
 
 //

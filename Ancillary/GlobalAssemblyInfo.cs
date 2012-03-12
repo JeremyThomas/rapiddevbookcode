@@ -1,28 +1,24 @@
 using System.Reflection;
-using System.Security;
 
-//
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-//
 
 [assembly: AssemblyConfiguration(AssemblyInfoConstants.AssemblyConfiguration)]
-[assembly: AssemblyCompany(AssemblyInfoConstants.AssemblyCompany)]
-[assembly: AssemblyCopyright(AssemblyInfoConstants.AssemblyCopyright)]
-[assembly: AssemblyProduct(AssemblyInfoConstants.AssemblyProduct)]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyInformationalVersion(AssemblyInfoConstants.AssemblyInformationalVersion)]
-//[assembly: AllowPartiallyTrustedCallers]
 
 internal static class AssemblyInfoConstants
 {
-	public const string AssemblyCompany = "Adventure Works Cycles";
-	public const string AssemblyCopyright = "Copyright © 2012 Adventure Works Cycles";
-	public const string AssemblyProduct = "Adventure Works Cycles LLBL Sample";
-	public const string AssemblyInformationalVersion = "1.0.0";
+	/// <summary>
+	/// 3.1.0
+	/// </summary>
+	public const string AssemblyInformationalVersion = "3.1.0";
 	public const string AssemblyRevision = "0";
+	/// <summary>
+	/// 3.1.0.0
+	/// </summary>
 	public const string AssemblyVersion = AssemblyInformationalVersion + "." + AssemblyRevision;
 	public const string ExecutableRevision = "0";
 	public const string ExecutableVersion = AssemblyInformationalVersion + "." + ExecutableRevision;
@@ -37,6 +33,8 @@ internal static class AssemblyInfoConstants
 #endif
 	public const string ConfigurationSuffix = "\r\nBuild: " + AssemblyConfiguration;
 }
+
+//[assembly: AllowPartiallyTrustedCallers]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
