@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Ancillary\AdventureWorks.snk = Ancillary\AdventureWorks.snk
 		Ancillary\AW.llblgenproj = Ancillary\AW.llblgenproj
 		Ancillary\AW.llblgenproj.layout = Ancillary\AW.llblgenproj.layout
-		AW1.vsmdi = AW1.vsmdi
+		AW.vsmdi = AW.vsmdi
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
@@ -233,7 +233,7 @@ Global
 		SccLocalPath20 = Northwind\\Dynamic\u0020Data
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = AW1.vsmdi
+		CategoryFile = AW.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU

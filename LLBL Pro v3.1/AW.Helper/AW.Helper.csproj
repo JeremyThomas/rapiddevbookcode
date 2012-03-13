@@ -69,8 +69,8 @@
     <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
       <Link>GlobalAssemblyVersion.cs</Link>
     </Compile>
-    <Compile Include="..\Ancillary\ToolsAssemblyConstants.cs">
-      <Link>ToolsAssemblyConstants.cs</Link>
+    <Compile Include="..\Ancillary\ToolsAssemblyInfo.cs">
+      <Link>ToolsAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="CommandToExecutableSQL.cs" />
     <Compile Include="DataHelper.cs" />

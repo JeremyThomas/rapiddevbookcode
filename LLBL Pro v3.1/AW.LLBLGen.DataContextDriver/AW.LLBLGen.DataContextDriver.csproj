@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>AW.LLBLGen.DataContextDriver.3.1.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>AW.LINQPad.LLBLGen.DataContextDriver.snk</AssemblyOriginatorKeyFile>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -155,7 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="AW.LLBLGen.DataContextDriver.3.1.snk" />
+    <None Include="AW.LINQPad.LLBLGen.DataContextDriver.snk" />
     <None Include="DevDeploy4.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

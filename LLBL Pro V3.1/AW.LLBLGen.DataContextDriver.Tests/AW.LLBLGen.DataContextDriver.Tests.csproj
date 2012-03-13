@@ -40,7 +40,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\AW.LLBLGen.DataContextDriver\AW.LLBLGen.DataContextDriver.3.1.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\AW.LLBLGen.DataContextDriver\AW.LINQPad.LLBLGen.DataContextDriver.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LINQPad, Version=1.0.0.0, Culture=neutral, PublicKeyToken=21353812cd2a2db5, processorArchitecture=MSIL">
@@ -85,6 +85,12 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Ancillary\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
+      <Link>GlobalAssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="LLBLGenStaticDriverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -123,8 +129,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\AW.LLBLGen.DataContextDriver\AW.LLBLGen.DataContextDriver.3.1.snk">
-      <Link>AW.LLBLGen.DataContextDriver.3.1.snk</Link>
+    <None Include="..\AW.LLBLGen.DataContextDriver\AW.LINQPad.LLBLGen.DataContextDriver.snk">
+      <Link>AW.LINQPad.LLBLGen.DataContextDriver.snk</Link>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

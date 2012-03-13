@@ -263,7 +263,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			Assert.IsFalse(String.IsNullOrEmpty(propertiesToShowInSchema.GetFieldPropertyDescriptor(OrderDetailFieldIndex.Quantity.ToString()).Description));
 		}
 
-		[TestMethod]
+		[TestMethod, TestCategory("UI")]
 		public void ConnectionDialogTest()
 		{
 			var mockedIConnectionInfo = MockedIConnectionInfo(true);

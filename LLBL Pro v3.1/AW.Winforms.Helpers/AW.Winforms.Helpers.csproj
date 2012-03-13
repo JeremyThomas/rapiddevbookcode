@@ -108,6 +108,9 @@
     <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
       <Link>GlobalAssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="..\Ancillary\ToolsAssemblyInfo.cs">
+      <Link>ToolsAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AWHelper.cs" />
     <Compile Include="ConnectionUI\DataConnectionConfiguration.cs" />
     <Compile Include="ConnectionUI\IDataConnectionConfiguration.cs" />
