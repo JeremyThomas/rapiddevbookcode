@@ -59,7 +59,7 @@ namespace AW.Tests
 		/// <summary>
 		///A test for LoadConfiguration
 		///</summary>
-		[TestMethod, Ignore]
+        [TestCategory("Not Implemented"), TestMethod, Ignore]
 		public void LoadConfigurationTest()
 		{
 			var dcd = new DataConnectionDialog();
@@ -71,7 +71,7 @@ namespace AW.Tests
 			Assert.AreEqual(systemDataSqlite, dataSource.Providers.First().Name);
 		}
 
-		[TestMethod, Ignore]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod, Ignore]
 		public void DataConnectionDialogTest()
 		{
 			var dcd = new DataConnectionDialog();
@@ -80,7 +80,7 @@ namespace AW.Tests
 			DataConnectionDialog.Show(dcd);
 		}
 
-		[TestMethod, Ignore]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod, Ignore]
 		public void VisualStudioDataConnectionDialogTest()
 		{
 			var dcs = new DataConnectionConfiguration(null);

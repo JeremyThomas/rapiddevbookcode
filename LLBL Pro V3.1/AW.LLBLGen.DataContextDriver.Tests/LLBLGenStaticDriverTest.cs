@@ -263,7 +263,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			Assert.IsFalse(String.IsNullOrEmpty(propertiesToShowInSchema.GetFieldPropertyDescriptor(OrderDetailFieldIndex.Quantity.ToString()).Description));
 		}
 
-		[TestMethod, TestCategory("UI")]
+        [TestCategory("Winforms"), TestMethod]
 		public void ConnectionDialogTest()
 		{
 			var mockedIConnectionInfo = MockedIConnectionInfo(true);
@@ -286,7 +286,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			domainIsolator.GetInstance<MarshalByRefClass>().SetSQLTranslationWriterTest();
 		}
 
-		[TestMethod]
+        [TestCategory("OrmProfiler"), TestMethod]
 		public void GetFactoryAfterInterceptorCoreInitializeDomainIsolatorTest()
 		{
 			var appDomainSetup = new AppDomainSetup
@@ -297,7 +297,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			domainIsolator.GetInstance<MarshalByRefClass>().GetFactoryAfterInterceptorCoreInitializeTest();
 		}
 
-		[TestMethod]
+        [TestCategory("OrmProfiler"), TestMethod]
 		public void GetFactoryAfterInterceptorCoreInitializeTest()
 		{
 			var marshalByRefClass = new MarshalByRefClass();
@@ -310,7 +310,9 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 		public void GetFactoryAfterInterceptorCoreInitializeTest()
 		{
 			var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)") ?? Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-			var interceptorAssembly = Assembly.LoadFrom(Path.Combine(Path.Combine(programFilesPathx86, ProfilerHelper.SolutionsDesignOrmProfilerPath), ProfilerHelper.OrmProfilerAssemblyFileName));
+            var ormProfilerAssemblyFilePath = Path.Combine(Path.Combine(programFilesPathx86, ProfilerHelper.SolutionsDesignOrmProfilerPath), ProfilerHelper.OrmProfilerAssemblyFileName);
+            Assert.IsTrue(File.Exists(ormProfilerAssemblyFilePath), ormProfilerAssemblyFilePath);
+			var interceptorAssembly = Assembly.LoadFrom(ormProfilerAssemblyFilePath);
 			var type = interceptorAssembly.GetType(ProfilerHelper.OrmProfilerInterceptorTypeName);
 			Assert.IsNotNull(type);
 			ProfilerHelper.InterceptorCoreInitialize(type);

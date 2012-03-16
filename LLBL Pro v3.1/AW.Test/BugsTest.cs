@@ -83,7 +83,7 @@ namespace AW.Tests
 			Bugs.SalesOrderHeader();
 		}
 
-		[TestMethod,
+        [TestCategory("Bug"), TestMethod,
 		 Description("Fails with: SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryConstructionException: A nested query relies on a correlation filter which refers to the field 'EmployeeID', however this field wasn't found in the projection of the entity..	")]
 		public void EmployeeAddressesEmployeeContactIndividualsTest()
 		{
@@ -104,7 +104,7 @@ namespace AW.Tests
 			query.ToList();
 		}
 
-		[TestMethod, Description("The multi-part identifier LPLA_2.ContactID could not be bound.")]
+        [TestCategory("Bug"), TestMethod, Description("The multi-part identifier LPLA_2.ContactID could not be bound.")]
 		public void EmployeeIndividualOuterJoinTest()
 		{
 			var queryableWithInnerJoin = from e in MetaSingletons.MetaData.Employee
@@ -126,7 +126,7 @@ namespace AW.Tests
 		}
 
 		///http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=18176
-		[TestMethod, Description("SQL exception on last line")]
+        [TestCategory("Bug"), TestMethod, Description("SQL exception on last line")]
 		public void NestedQueryOnTotheSameEntityTwiceTest()
 		{
 			var q = (from soh in MetaSingletons.MetaData.SalesOrderHeader
@@ -182,7 +182,7 @@ namespace AW.Tests
 			//SD.LLBLGen.Pro.ORMSupportClasses.ORMQueryExecutionException: An exception was caught during the execution of a retrieval query: The multi-part identifier "LPLA_6.CatalogDescription" could not be bound.
 		}
 
-		[TestMethod, Description("NullReferenceException in LLBLGenProProvider.ExecuteEntityProjection - Remove the 'where' or the '.Name' or enable the 'orderby' and there will be no exception")]
+        [TestCategory("Bug"), TestMethod, Description("NullReferenceException in LLBLGenProProvider.ExecuteEntityProjection - Remove the 'where' or the '.Name' or enable the 'orderby' and there will be no exception")]
 		public void NullExceptionTest()
 		{
 			var q = (from soh in MetaSingletons.MetaData.SalesOrderHeader
@@ -198,7 +198,7 @@ namespace AW.Tests
 			q.ToList(); //System.NullReferenceException: Object reference not set to an instance of an object.
 		}
 
-		[TestMethod, Description("The multi-part identifier LPLA_4.ContactID could not be bound when doing a nested query with a predicate involving an entity hop")]
+        [TestCategory("Bug"), TestMethod, Description("The multi-part identifier LPLA_4.ContactID could not be bound when doing a nested query with a predicate involving an entity hop")]
 		public void NestedQueryUsingFirst()
 		{
 			var k = from employeeAddress in MetaSingletons.MetaData.EmployeeAddress
@@ -253,7 +253,7 @@ namespace AW.Tests
 		/// Problem with projection with multiple ManyToOne navigations to any entity and further ManyToOne navigation from that entity.
 		/// http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=20148
 		/// </summary>
-		[TestMethod, Description("Tests entity A with multiple ManyToOne relations to entity B" +
+        [TestCategory("Bug"), TestMethod, Description("Tests entity A with multiple ManyToOne relations to entity B" +
 														 "(which itself has a ManyToOne relation to entity C) can navigate to C (via all the navigators to B) correctly")]
 		public void TestMultipleRelationsToTheSameTableWithHopToRelated()
 		{

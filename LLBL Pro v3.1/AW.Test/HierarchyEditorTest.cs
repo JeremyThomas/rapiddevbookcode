@@ -13,7 +13,7 @@ namespace AW.Tests
 	[TestClass]
 	public class HierarchyEditorTest
 	{
-		[TestMethod]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod]
 		public void TestShowInTree()
 		{
 			var employeeEntities = MetaSingletons.MetaData.Employee.ToEntityCollection();
@@ -21,7 +21,7 @@ namespace AW.Tests
 			TestShowInTree(employeeEntities, e => e.EmployeeID, e => e.ManagerID, e => e.EmployeeDisplayName);
 		}
 
-		[TestMethod]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod]
 		public void CanChangeParentInTree()
 		{
 			var employeeEntities = MetaSingletons.MetaData.Employee.ToEntityCollection();
@@ -31,7 +31,7 @@ namespace AW.Tests
 			Assert.AreNotEqual(danWilsonsManagerID, employeeEntitiesWithWilsonManagerChanged.Single(e => e.EmployeeID == danWilsonsID).ManagerID);
 		}
 
-		[TestMethod]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod]
 		public void TestShowSelfServicingInTree()
 		{
 			var employeeEntities = MetaSingletons.MetaData.Employee.ToEntityCollection();

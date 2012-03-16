@@ -164,7 +164,7 @@ namespace AW.Tests
 		/// <summary>
 		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
 		/// </summary>
-		[TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+        [TestCategory("Bug"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographic()
 		{
 			var queryable = from c in GetNorthwindLinqMetaData().Customer
@@ -192,7 +192,7 @@ namespace AW.Tests
 		/// <summary>
 		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
 		/// </summary>
-		[TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+        [TestCategory("Bug"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographicViaMany()
 		{
 			var queryable = from c in GetNorthwindLinqMetaData().Customer
@@ -294,7 +294,7 @@ namespace AW.Tests
 		/// <summary>
 		/// 	http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
 		/// </summary>
-		[TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+        [TestCategory("Bug"), TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
 		public void BiDirectionalManyToMany()
 		{
 			var metaData = GetNorthwindLinqMetaData();

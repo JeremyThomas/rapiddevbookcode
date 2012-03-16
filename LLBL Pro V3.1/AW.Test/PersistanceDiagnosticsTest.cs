@@ -73,7 +73,7 @@ namespace AW.Tests
 			Assert.AreEqual(0, errors.Length, errors.ToString());
 		}
 
-		[TestMethod, Ignore]
+        [TestCategory("Slow"), TestMethod, Ignore]
 		public void CheckAllAWEntitiesCanBeFetchedUsingLINQTest()
 		{
 			var errors = PersistanceDiagnostics.CheckAllEntitiesCanBeFetchedUsingLINQ<Data.EntityType>(MetaSingletons.MetaData, 1);
@@ -126,7 +126,7 @@ namespace AW.Tests
 		/// <summary>
 		///A test for ExecuteQueryAndReadEveryBindableProperty
 		///</summary>
-		[TestMethod, Ignore]
+        [TestCategory("Slow"), TestMethod, Ignore]
 		public void ExecuteQueryAndReadEveryBindablePropertyTest()
 		{
 			ILLBLGenProQuery query = null; // TODO: Initialize to an appropriate value
@@ -138,7 +138,7 @@ namespace AW.Tests
 		/// <summary>
 		///A test for ReadEveryBindableProperty
 		///</summary>
-		[TestMethod, Ignore]
+        [TestCategory("Inconclusive"), TestMethod, Ignore]
 		public void ReadEveryBindablePropertyTest()
 		{
 			IEntityCollection2 entityCollection = null; // TODO: Initialize to an appropriate value
@@ -150,7 +150,7 @@ namespace AW.Tests
 		/// <summary>
 		///A test for ReadEveryBindableProperty
 		///</summary>
-		[TestMethod, Ignore]
+        [TestCategory("Inconclusive"), TestMethod, Ignore]
 		public void ReadEveryBindablePropertyTest1()
 		{
 			IEntity2 entity = null; // TODO: Initialize to an appropriate value
