@@ -106,7 +106,7 @@ namespace AW.DebugVisualizers.Tests
 			TestSerialize(DataTableExtensions.CopyToDataTable(enumerableRowCollection));
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void SerializableQueryTest()
 		{
 			TestSerialize(MetaSingletons.MetaData.AddressType);
@@ -126,14 +126,14 @@ namespace AW.DebugVisualizers.Tests
 			TestShow(lookup, 1);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void EntityFieldsTest()
 		{
 			var addressType = MetaSingletons.MetaData.AddressType.First();
 			TestShow(addressType.Fields, TestData.NumFieldProperties);
 		}
 
-		[TestMethod, Timeout(10000)]
+        [TestCategory("Winforms"), TestMethod, Timeout(10000)]
 		public void LargeSerializableQueryTest()
 		{
 			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
@@ -142,7 +142,7 @@ namespace AW.DebugVisualizers.Tests
 			//	TestShow(MetaSingletons.MetaData.PurchaseOrderHeader);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void QueryWithRelatedFieldsTest()
 		{
 			TestShowTransported(MetaSingletons.MetaData.Address.Take(5), 9);
@@ -177,7 +177,7 @@ namespace AW.DebugVisualizers.Tests
 			TestShowTransported(collectionView, 4);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void SerializableEnumerableTest()
 		{
 			var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
@@ -188,7 +188,7 @@ namespace AW.DebugVisualizers.Tests
 			TestShowTransported(SerializableClass.GenerateList(), 8);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void NonSerializableEnumerationTest()
 		{
 			TestShowTransported(MetaSingletons.MetaData.AddressType, 4);
@@ -200,7 +200,7 @@ namespace AW.DebugVisualizers.Tests
 			TestShowTransported(addressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID), 4);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void NonSerializableItemTest()
 		{
 			var listofNonSerializableClasses = NonSerializableClass.GenerateList();
@@ -220,7 +220,7 @@ namespace AW.DebugVisualizers.Tests
 			TestSerialize(listofNonSerializableClasses.ToBindingListView());
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void StringArrayTest()
 		{
 			var enumerable = new[] {"s1", "s2", "s3"};
@@ -230,7 +230,7 @@ namespace AW.DebugVisualizers.Tests
 			TestShowTransported(stringEnumerable, 1);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void LinqtoSQLTest()
 		{
 			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
@@ -264,7 +264,7 @@ namespace AW.DebugVisualizers.Tests
 			TestShowTransported(dictionary.Keys, 1);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void Xml_test()
 		{
 			var xml = TestData.GetTestxmlString();

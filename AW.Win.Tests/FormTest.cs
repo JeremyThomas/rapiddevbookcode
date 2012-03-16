@@ -48,7 +48,7 @@ namespace AW.Win.Tests
 
 		#endregion
 
-		[TestMethod, Description("A test for FrmOrganizationStructure")]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod, Description("A test for FrmOrganizationStructure")]
 		public void FrmOrganizationStructureTest()
 		{
 			AWHelper.ShowDialog(typeof (FrmOrganizationStructure));

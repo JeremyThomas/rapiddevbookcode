@@ -61,7 +61,7 @@ namespace AW.Tests
 		/// <summary>
 		///A test for ShowEntitiesAndFields
 		///</summary>
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void ShowEntitiesAndFieldsTest()
 		{
 			if (EntityHelper.GetEntitiesTypes().Count() == EntityHelperTest.NumberOfEntities)

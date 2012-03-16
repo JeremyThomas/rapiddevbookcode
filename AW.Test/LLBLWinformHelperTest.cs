@@ -84,7 +84,7 @@ namespace AW.Tests
 			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void ShowSelfServicingInGridTest()
 		{
 			EditInDataGridViewTestHelper<AddressEntity>(20);
