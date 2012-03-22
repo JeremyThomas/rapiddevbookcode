@@ -281,6 +281,7 @@ Global
 		SccProjectName24 = AW\u0020Dynamic\u0020Data
 		SccLocalPath24 = AW\u0020Dynamic\u0020Data
 		SccProjectUniqueName25 = DynamicDataSupportClasses\\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj
+		SccProjectTopLevelParentUniqueName25 = AW\u0020with\u0020Everything.sln
 		SccProjectName25 = DynamicDataSupportClasses
 		SccLocalPath25 = DynamicDataSupportClasses
 		SccWebProject26 = true
@@ -645,6 +646,7 @@ Global
 		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
+		{64696470-5D05-4E00-95C4-C320F268E526} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 
