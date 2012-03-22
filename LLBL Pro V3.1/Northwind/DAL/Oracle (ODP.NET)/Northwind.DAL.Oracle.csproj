@@ -47,7 +47,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>Oracle (ODP.NET)\\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -69,7 +69,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>Oracle (ODP.NET)\\bin\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -120,15 +120,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-		<Compile Include="..\..\..\Ancillary\GlobalAssemblyInfo.cs">
-			<Link>GlobalAssemblyInfo.cs</Link>
-		</Compile>
-		<Compile Include="..\..\..\Ancillary\GlobalAssemblyVersion.cs">
-			<Link>GlobalAssemblyVersion.cs</Link>
-		</Compile>
-		<Compile Include="..\..\NorthwindAssemblyInfo.cs">
-			<Link>NorthwindAssemblyInfo.cs</Link>
-		</Compile>
+    <Compile Include="..\..\..\Ancillary\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\Ancillary\GlobalAssemblyVersion.cs">
+      <Link>GlobalAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="..\..\NorthwindAssemblyInfo.cs">
+      <Link>NorthwindAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
