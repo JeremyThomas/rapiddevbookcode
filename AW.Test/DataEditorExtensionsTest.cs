@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Xml;
@@ -11,6 +12,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LinqToSQL;
+using AW.Tests.Properties;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
@@ -24,7 +26,7 @@ namespace AW.Tests
 	///	to contain all DataEditorExtensionsTest Unit Tests
 	///</summary>
 	[TestClass]
-	public class DataEditorExtensionsTest
+	public class DataEditorExtensionsTest : GridDataEditorTestBase
 	{
 		///<summary>
 		///	Gets or sets the test context which provides
@@ -67,26 +69,34 @@ namespace AW.Tests
 		///<summary>
 		///	A test for ShowInGrid
 		///</summary>
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void EditPropertiesInDataGridViewTest()
 		{
-			TestShowInGrid(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType);
-			TestShowInGrid(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)));
+			TestShowInGrid(((IEntity) MetaSingletons.MetaData.AddressType.First()).CustomPropertiesOfType, 2);
+			TestShowInGrid(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity)), 14);
 		}
 
 		///<summary>
 		///	A test for ShowInGrid
 		///</summary>
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void EditInDataGridViewTest()
 		{
-			TestShowInGrid(NonSerializableClass.GenerateList());
-			TestShowInGrid(SerializableClass.GenerateList());
-			TestShowInGrid(SerializableClass.GenerateListWithBoth());
-			TestShowInGrid(SerializableBaseClass.GenerateList());
-			TestShowInGrid(SerializableBaseClass2.GenerateListWithBothSerializableClasses());
-			TestEditInDataGridView(null);
-			TestShowInGrid(Enumerable.Range(1, 100));
+			TestShowInGrid(NonSerializableClass.GenerateList(), NonSerializableClass.NumberOfNonSerializableClassProperties, NonSerializableClass.NumberOfNonSerializableClassProperties);
+			TestShowInGrid(NonSerializableClass.GenerateList(), NonSerializableClass.NumberOfNonSerializableClassProperties, NonSerializableClass.NumberOfNonSerializableClassProperties);
+			TestShowInGrid(SerializableClass.GenerateList(), 4, 4);
+			TestShowInGrid(SerializableClass.GenerateListWithBoth(), 3, 3);
+			TestShowInGrid(SerializableBaseClass.GenerateList(), 1, 1);
+			TestShowInGrid(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), 1, 1);
+		}
+
+		[TestMethod]
+		public void ShowDictionaryInGrid()
+		{
+			var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
+			TestShowInGrid(dictionary, 2);
+			TestShowInGrid(dictionary.Values, NonSerializableClass.NumberOfNonSerializableClassProperties, NonSerializableClass.NumberOfNonSerializableClassProperties);
+			TestShowInGrid(dictionary.Keys, 1);
 		}
 
 		private static FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
@@ -113,12 +123,12 @@ namespace AW.Tests
 		public void FieldsToPropertiesTypeDescriptionProviderTest()
 		{
 			var properties = MetaDataHelper.GetPropertiesToDisplay(typeof (NonSerializableClass));
-			Assert.AreEqual(3, properties.Count());
+			Assert.AreEqual(NonSerializableClass.NumberOfNonSerializableClassProperties, properties.Count());
 			AddFieldsToPropertiesTypeDescriptionProvider(typeof (NonSerializableClass));
 			try
 			{
 				properties = MetaDataHelper.GetPropertiesToDisplay(typeof (NonSerializableClass));
-				Assert.AreEqual(6, properties.Count());
+				Assert.AreEqual(NonSerializableClass.NumberOfNonSerializableClassProperties*2, properties.Count());
 			}
 			finally
 			{
@@ -126,11 +136,24 @@ namespace AW.Tests
 			}
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void ShowArrayListInGrid()
 		{
 			var arrayList = new ArrayList {1, 2, "3"};
-			TestEditInDataGridView(arrayList);
+			TestEditInDataGridView(arrayList, 1);
+		}
+
+		[TestMethod]
+		public void SettingsPropertyTest()
+		{
+			TestEditInDataGridView(Settings.Default.Properties, 9);
+			if (Settings.Default.PropertyValues.Count == 0)
+			{
+				var x = Settings.Default.StringSetting;
+			}
+			Assert.AreNotEqual(0, Settings.Default.PropertyValues.Count);
+			TestShowInGrid(Settings.Default.PropertyValues.Cast<SettingsPropertyValue>());
+			TestEditInDataGridView(Settings.Default.PropertyValues, 7);
 		}
 
 		[TestMethod]
@@ -145,46 +168,75 @@ namespace AW.Tests
 			gridDataEditor.BindEnumerable(arrayList, 1);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void ShowStringEnumerationInGridTest()
 		{
 			var enumerable = new[] {"s1", "s2", "s3"};
-			TestShowInGrid(enumerable);
+			TestShowInGrid(enumerable, 1);
 			enumerable = null;
-			TestShowInGrid(enumerable);
-			TestShowInGrid(new string[0]);
+			TestShowInGrid(enumerable, 1);
+			TestEditInDataGridView(new string[0], 1);
+			//TestShowInGrid(new string[0], 0);
 		}
 
 		[TestMethod]
+		public void ShowIntegerEnumerationInGridTest()
+		{
+			var enumerable = Enumerable.Range(1, 100);
+			TestShowInGrid(ValueTypeWrapper<int>.CreateWrapperForBinding(enumerable), 1);
+			TestShowInGrid(enumerable, 1);
+			enumerable = null;
+			TestShowInGrid(enumerable, 1);
+			TestEditInDataGridView(new int[0], 1);
+		}
+
+		[TestMethod]
+		public void NullInDataGridViewTest()
+		{
+			TestEditInDataGridView(null);
+		}
+
+        [TestCategory("Winforms"), TestMethod]
 		public void EditEmptyInDataGridViewTest()
 		{
-			TestShowInGrid(new SerializableClass[0]);
+			TestShowInGrid(new SerializableClass[0], 4, 4);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void EditPagedQueryInDataGridViewTest()
 		{
-			var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 15);
+			var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 40);
+			ModalFormHandler = Handler;
+			ExpectedColumnCount = 9;
 			addressEntities.ShowSelfServicingInGrid(20);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+			ModalFormHandler = Handler;
 			addressEntities.ShowSelfServicingInGrid(0);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void QueryInGridIsReadonlyTest()
 		{
 			TestShowInGrid(MetaSingletons.MetaData.Address);
 			TestShowInGrid(MetaSingletons.MetaData.AddressType);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void ShowSelfServicingInGridTest()
 		{
+			ModalFormHandler = Handler;
+			ExpectedColumnCount = 9;
 			MetaSingletons.MetaData.Address.ShowSelfServicingInGrid();
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+			ModalFormHandler = Handler;
+			ExpectedColumnCount = 4;
 			MetaSingletons.MetaData.AddressType.ShowSelfServicingInGrid();
-			TestShowInGrid(MetaSingletons.MetaData.Address);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+			TestShowInGrid(MetaSingletons.MetaData.Address, 9, 0, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void ShowEntityCollectionInGridTest()
 		{
 			TestShowInGrid(MetaSingletons.MetaData.Address.ToEntityCollection());
@@ -192,43 +244,37 @@ namespace AW.Tests
 			TestShowInGrid(addressTypeEntities);
 		}
 
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void EditLinqtoSQLInDataGridViewTest()
 		{
 			var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
 			//		awDataClassesDataContext. = DbUtils.ActualConnectionString;
 			//awDataClassesDataContext.Connection.ConnectionString
-			TestEditInDataGridView(awDataClassesDataContext.AddressTypes);
+			TestShowInGrid(awDataClassesDataContext.AddressTypes, 4);
 			var addressTypesQuery = awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID);
+			ModalFormHandler = Handler;
 			addressTypesQuery.ShowInGrid(awDataClassesDataContext);
-			//TestEditInDataGridView(awDataClassesDataContext.);
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+			ModalFormHandler = Handler;
+			addressTypesQuery.ShowInGrid();
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
+			ModalFormHandler = Handler;
 			var actual = awDataClassesDataContext.AddressTypes.ShowInGrid();
+			Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
 			Assert.AreEqual(awDataClassesDataContext.AddressTypes, actual);
 		}
 
-		private static void TestShowInGrid<T>(IEnumerable<T> enumerable)
-		{
-			var actual = enumerable.ShowInGrid((IDataEditorPersister)null);
-			Assert.AreEqual(enumerable, actual);
-		}
-
-		[TestMethod]
+        [TestCategory("Winforms"), TestMethod]
 		public void Xml_test()
 		{
 			var xml = TestData.GetTestxmlString();
 
 			var xElement = XElement.Parse(xml);
-			TestShowInGrid(xElement.Elements());
+			TestShowInGrid(xElement.Elements(), 15, 6);
 
 			var xmlDoc = new XmlDocument();
 			xmlDoc.LoadXml(xml);
-			TestEditInDataGridView(xmlDoc.FirstChild.ChildNodes);
-		}
-
-		private static void TestEditInDataGridView(IEnumerable enumerable)
-		{
-			var actual = enumerable.ShowInGrid(null);
-			Assert.AreEqual(enumerable, actual);
+			TestEditInDataGridView(xmlDoc.FirstChild.ChildNodes, 23, 1);
 		}
 	}
 }

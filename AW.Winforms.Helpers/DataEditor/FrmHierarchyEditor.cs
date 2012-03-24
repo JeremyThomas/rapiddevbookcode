@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
+using AW.Helper;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.Properties;
 
 namespace AW.Winforms.Helpers.DataEditor
 {
-	public partial class FrmHierarchyEditor : Form
+	public partial class FrmHierarchyEditor : FrmThreePanelBase
 	{
 		public FrmHierarchyEditor()
 		{
@@ -19,7 +22,8 @@ namespace AW.Winforms.Helpers.DataEditor
 			: this()
 		{
 			if (hierarchicalData == null) throw new ArgumentNullException("hierarchicalData");
-			bindingSourceHierarchicalData.DataSource = hierarchicalData;
+			bindingSourceHierarchicalData.BindEnumerable(hierarchicalData, false);
+			bindingNavigatorDeleteItem.Enabled = bindingSourceHierarchicalData.AllowRemove;
 			dataTreeView.IDColumn = iDPropertyName;
 			dataTreeView.ParentIDColumn = parentIDPropertyName;
 			dataTreeView.NameColumn = nameColumn;
@@ -30,6 +34,13 @@ namespace AW.Winforms.Helpers.DataEditor
 		{
 			gridDataEditor.DataEditorPersister = dataEditorPersister;
 			saveToolStripButton.Enabled = gridDataEditor.DataEditorPersister != null;
+			toolStripButtonCancelEdit.Enabled = saveToolStripButton.Enabled;
+		}
+
+		public static Form LaunchForm<T, TId, TParentId, TName>(IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+			Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression, IDataEditorPersister dataEditorPersister)
+		{
+			return LaunchForm(enumerable, MemberName.For(iDPropertyExpression), MemberName.For(parentIDPropertyExpression), MemberName.For(namePropertyExpression), dataEditorPersister);
 		}
 
 		public static Form LaunchForm(IEnumerable hierarchicalData, string iDPropertyName, string parentIDPropertyName, string nameColumn, IDataEditorPersister dataEditorPersister)
@@ -43,8 +54,8 @@ namespace AW.Winforms.Helpers.DataEditor
 		{
 			toolStripStatusLabelSelectePath.Text = ((dataTreeView).SelectedNode).FullPath;
 			propertyGrid1.SelectedObject = e.Node.Tag;
-			splitContainerNode.Panel2Collapsed = e.Node.Nodes.Count == 0;
-			if (splitContainerNode.Panel2Collapsed)
+			splitContainerHorizontal.Panel2Collapsed = e.Node.Nodes.Count == 0;
+			if (splitContainerHorizontal.Panel2Collapsed)
 				gridDataEditor.DataSource = null;
 			else
 				gridDataEditor.BindEnumerable(e.Node.Nodes.Cast<TreeNode>().Select(tn => tn.Tag).ToList());
@@ -71,5 +82,17 @@ namespace AW.Winforms.Helpers.DataEditor
 			if (gridDataEditor.DataEditorPersister != null)
 				gridDataEditor.DataEditorPersister.Save(bindingSourceHierarchicalData.DataSource);
 		}
+
+		private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
+		{
+			bindingSourceHierarchicalData.CancelEdit();
+			if (gridDataEditor.DataEditorPersister != null && gridDataEditor.DataEditorPersister.Undo(bindingSourceHierarchicalData.List))
+			{
+				bindingSourceHierarchicalData.ResetBindings(false);
+				//saveToolStripButton.Enabled = false;
+			}
+			//toolStripButtonCancelEdit.Enabled = false;
+		}
+
 	}
 }

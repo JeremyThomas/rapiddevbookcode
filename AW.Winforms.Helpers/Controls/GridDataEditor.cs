@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.DataEditor;
+using AW.Winforms.Helpers.EntityViewer;
 using DynamicTable;
 using JesseJohnston;
 
@@ -18,17 +19,42 @@ namespace AW.Winforms.Helpers.Controls
 	public partial class GridDataEditor : UserControl
 	{
 		private readonly ArrayList _deleteItems = new ArrayList();
-		private bool _binding = true;
+		protected bool IsBinding = true;
 		private bool _loaded;
 		private bool _canSave;
 		private IQueryable _superset;
 		public IDataEditorPersister DataEditorPersister;
-		private static FieldsToPropertiesTypeDescriptionProvider _fieldsToPropertiesTypeDescriptionProvider;
+		private static readonly Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider> FieldsToPropertiesTypeDescriptionProviders = new Dictionary<Type, FieldsToPropertiesTypeDescriptionProvider>();
 
 		public GridDataEditor()
 		{
 			InitializeComponent();
 			dataGridViewEnumerable.AutoGenerateColumns = true;
+		}
+		
+		/// <summary>
+		/// 	Initializes a new instance of the <see cref = "T:System.Windows.Forms.UserControl" /> class.
+		/// </summary>
+		public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly) : this()
+		{
+			if (ValueTypeWrapper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
+			{
+				enumerable = ValueTypeWrapper.CreateWrapperForBinding(enumerable);
+				readOnly = true;
+			}
+			InitialiseAndBindGridDataEditor(enumerable, dataEditorPersister, pageSize, readOnly);
+		}
+
+		public GridDataEditor(IEnumerable enumerable) : this(enumerable, null, DataEditorExtensions.DefaultPageSize, true)
+		{
+		}
+
+		public void InitialiseAndBindGridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister,
+		                                            ushort pageSize, bool readOnly)
+		{
+			DataEditorPersister = dataEditorPersister;
+			Readonly = readOnly;
+			BindEnumerable(enumerable, pageSize);
 		}
 
 		#region Properties
@@ -72,7 +98,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		public BindingNavigator BindingNavigator
 		{
-			get { return bindingNavigator1; }
+			get { return bindingNavigatorData; }
 		}
 
 		public BindingSource BindingSource
@@ -128,9 +154,10 @@ namespace AW.Winforms.Helpers.Controls
 			else
 				saveToolStripButton.Enabled = numSaved == 0 || !SupportsNotifyPropertyChanged;
 			toolStripButtonCancelEdit.Enabled = false;
+			bindingNavigatorPaging.Enabled = true;
 		}
 
-		private static void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
 		{
 		}
 
@@ -142,12 +169,16 @@ namespace AW.Winforms.Helpers.Controls
 				saveToolStripButton.Enabled = _canSave && !SupportsNotifyPropertyChanged;
 				copyToolStripButton.Enabled = true;
 				printToolStripButton.Enabled = true;
+				toolStripButtonObjectBrowser.Enabled = true;
 				toolStripButtonObjectListViewVisualizer.Enabled = IsObjectListView();
 				toolStripButtonObjectListViewVisualizer.Visible = toolStripButtonObjectListViewVisualizer.Enabled;
 			}
-
 			else
+			{
+				toolStripButtonObjectBrowser.Enabled = false;
 				saveToolStripButton.Enabled = false;
+				bindingNavigatorPaging.Enabled = true;
+			}
 			toolStripLabelSaveResult.Text = "";
 		}
 
@@ -183,7 +214,7 @@ namespace AW.Winforms.Helpers.Controls
 				firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
 
 			var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null));
-			_binding = false;
+			IsBinding = false;
 			return isEnumerable;
 		}
 
@@ -198,14 +229,14 @@ namespace AW.Winforms.Helpers.Controls
 				return Enumerable.Empty<int>();
 			try
 			{
-				if (enumerable is ArrayList || enumerable is Array || enumerable is DataView)
+				if (enumerable is ArrayList || enumerable is Array || enumerable is DataView || !enumerable.GetType().IsGenericType)
 				{
 					PageSize = 0;
 					return Enumerable.Empty<int>();
 				}
 				_superset = enumerable.AsQueryable();
-				if (_superset.ElementType == typeof (string))
-					_superset = ((IEnumerable<string>) enumerable).CreateStringWrapperForBinding().AsQueryable();
+				if (ValueTypeWrapper.TypeNeedsWrappingForBinding(_superset.ElementType))
+					_superset = ValueTypeWrapper.CreateWrapperForBinding(enumerable).AsQueryable();
 			}
 			catch (ArgumentException)
 			{
@@ -221,21 +252,26 @@ namespace AW.Winforms.Helpers.Controls
 			return GeneralHelper.GetPageCount(PageSize, SuperSetCount());
 		}
 
+		protected int? _superSetCount;
+
 		protected virtual int SuperSetCount()
 		{
-			return _superset.Count();
+			if (!_superSetCount.HasValue)
+			  _superSetCount = _superset.Count();
+			return _superSetCount.Value;
 		}
 
 		private void bindingSourcePaging_PositionChanged(object sender, EventArgs e)
 		{
-			BindPage();
+			if (bindingSourcePaging.Count != 0)
+				BindPage();
 		}
 
 		protected void BindPage()
 		{
 			try
 			{
-				_binding = true;
+				IsBinding = true;
 				if (GetPageIndex() > 0)
 					BindEnumerable();
 				else
@@ -244,7 +280,7 @@ namespace AW.Winforms.Helpers.Controls
 			}
 			finally
 			{
-				_binding = false;
+				IsBinding = false;
 			}
 		}
 
@@ -260,8 +296,9 @@ namespace AW.Winforms.Helpers.Controls
 
 		public bool BindEnumerable(IEnumerable enumerable, ushort pageSize)
 		{
-			_binding = true;
+			IsBinding = true;
 			SetItemType(enumerable);
+			bindingSourcePaging.DataSource = null;
 			bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
 			if (bindingSourcePaging.Count == 0)
 				return GetFirstPage(enumerable);
@@ -270,7 +307,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		private IEnumerable SkipTake()
 		{
-			return _superset.Skip((GetPageIndex())*PageSize).Take(PageSize);
+			return _superset.SkipTakeDynamic(GetPageIndex(), PageSize);
 		}
 
 		protected int GetPageIndex()
@@ -282,7 +319,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected virtual void SetRemovingItem()
 		{
-			if (_superset is IQueryable && SupportsNotifyPropertyChanged)
+			if (SupportsNotifyPropertyChanged)
 				saveToolStripButton.Enabled = false;
 			if (bindingSourceEnumerable.DataSource is ObjectListView)
 				((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
@@ -296,19 +333,20 @@ namespace AW.Winforms.Helpers.Controls
 
 		private static void AddFieldsToPropertiesTypeDescriptionProvider(Type typeToEdit)
 		{
-			if (_fieldsToPropertiesTypeDescriptionProvider == null && typeToEdit != null)
+			if (typeToEdit != null && !FieldsToPropertiesTypeDescriptionProviders.ContainsKey(typeToEdit))
 			{
-				_fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
-				TypeDescriptor.AddProvider(_fieldsToPropertiesTypeDescriptionProvider, typeToEdit);
+				var fieldsToPropertiesTypeDescriptionProvider = new FieldsToPropertiesTypeDescriptionProvider(typeToEdit, BindingFlags.Instance | BindingFlags.Public);
+				FieldsToPropertiesTypeDescriptionProviders.Add(typeToEdit, fieldsToPropertiesTypeDescriptionProvider);
+				TypeDescriptor.AddProvider(fieldsToPropertiesTypeDescriptionProvider, typeToEdit);
 			}
 		}
 
 		protected void TidyUp()
 		{
-			if (_fieldsToPropertiesTypeDescriptionProvider != null && ItemType != null)
+			if (ItemType != null && FieldsToPropertiesTypeDescriptionProviders.ContainsKey(ItemType))
 			{
-				TypeDescriptor.RemoveProvider(_fieldsToPropertiesTypeDescriptionProvider, ItemType);
-				_fieldsToPropertiesTypeDescriptionProvider = null;
+				TypeDescriptor.RemoveProvider(FieldsToPropertiesTypeDescriptionProviders[ItemType], ItemType);
+				FieldsToPropertiesTypeDescriptionProviders.Remove(ItemType);
 			}
 		}
 
@@ -331,6 +369,7 @@ namespace AW.Winforms.Helpers.Controls
 			}
 			set
 			{
+				if (_itemType == value) return;
 				_itemType = value;
 				OnSetItemType();
 			}
@@ -367,7 +406,7 @@ namespace AW.Winforms.Helpers.Controls
 		private void bindingSourceEnumerable_ListChanged(object sender, ListChangedEventArgs e)
 		{
 			toolStripLabelSaveResult.Text = "";
-			if (!_binding && _loaded)
+			if (!IsBinding && _loaded)
 				switch (e.ListChangedType)
 				{
 					case ListChangedType.ItemDeleted:
@@ -375,6 +414,7 @@ namespace AW.Winforms.Helpers.Controls
 					case ListChangedType.ItemAdded:
 						saveToolStripButton.Enabled = _canSave;
 						toolStripButtonCancelEdit.Enabled = true;
+						bindingNavigatorPaging.Enabled = false;
 						break;
 				}
 		}
@@ -382,12 +422,13 @@ namespace AW.Winforms.Helpers.Controls
 		private void toolStripButtonCancelEdit_Click(object sender, EventArgs e)
 		{
 			bindingSourceEnumerable.CancelEdit();
+			if (DataEditorPersister != null && DataEditorPersister.Undo(bindingSourceEnumerable.List))
+			{
+				bindingSourceEnumerable.ResetBindings(false);
+				saveToolStripButton.Enabled = false;
+			}
 			toolStripButtonCancelEdit.Enabled = false;
-		}
-
-		private void bindingSourceEnumerable_PositionChanged(object sender, EventArgs e)
-		{
-			toolStripButtonCancelEdit.Enabled = false;
+			bindingNavigatorPaging.Enabled = true;
 		}
 
 		private void toolStripButtonObjectListViewVisualizer_Click(object sender, EventArgs e)
@@ -395,6 +436,11 @@ namespace AW.Winforms.Helpers.Controls
 			var visualizerForm = ObjectListViewHelper.CreateVisualizerForm(bindingSourceEnumerable.List);
 			if (visualizerForm != null)
 				visualizerForm.ShowDialog();
+		}
+
+		private void toolStripButtonObjectBrowser_Click(object sender, EventArgs e)
+		{
+			FrmEntityViewer.LaunchAsChildForm(bindingSourceEnumerable.List, DataEditorPersister);
 		}
 	}
 }

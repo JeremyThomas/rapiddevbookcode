@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AW.Data;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.DataEditor;
@@ -11,14 +13,15 @@ namespace AW.Tests
 	[TestClass]
 	public class HierarchyEditorTest
 	{
-		[TestMethod]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod]
 		public void TestShowInTree()
 		{
 			var employeeEntities = MetaSingletons.MetaData.Employee.ToEntityCollection();
-			TestShowInTree(employeeEntities, EmployeeFieldIndex.EmployeeID.ToString(), EmployeeFieldIndex.ManagerID.ToString(), "EmployeeDisplayName");
+			//TestShowInTree(employeeEntities, EmployeeFieldIndex.EmployeeID.ToString(), EmployeeFieldIndex.ManagerID.ToString(), "EmployeeDisplayName");
+			TestShowInTree(employeeEntities, e => e.EmployeeID, e => e.ManagerID, e => e.EmployeeDisplayName);
 		}
 
-		[TestMethod]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod]
 		public void CanChangeParentInTree()
 		{
 			var employeeEntities = MetaSingletons.MetaData.Employee.ToEntityCollection();
@@ -28,7 +31,7 @@ namespace AW.Tests
 			Assert.AreNotEqual(danWilsonsManagerID, employeeEntitiesWithWilsonManagerChanged.Single(e => e.EmployeeID == danWilsonsID).ManagerID);
 		}
 
-		[TestMethod]
+        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod]
 		public void TestShowSelfServicingInTree()
 		{
 			var employeeEntities = MetaSingletons.MetaData.Employee.ToEntityCollection();
@@ -38,6 +41,15 @@ namespace AW.Tests
 		private static IEnumerable<T> TestShowInTree<T>(IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn)
 		{
 			var actual = enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn);
+			Assert.AreEqual(enumerable, actual);
+			CollectionAssert.AreEqual(enumerable.ToList(), actual.ToList());
+			return actual;
+		}
+
+		private static IEnumerable<T> TestShowInTree<T, TId, TParentId, TName>(IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+			Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
+		{
+			var actual = enumerable.ShowHierarchyInTree(iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression);
 			Assert.AreEqual(enumerable, actual);
 			CollectionAssert.AreEqual(enumerable.ToList(), actual.ToList());
 			return actual;

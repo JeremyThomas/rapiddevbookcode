@@ -1,6 +1,6 @@
 namespace AW.Win
 {
-    partial class frmStatusBar
+    partial class FrmStatusBar
     {
         /// <summary>
         /// Required designer variable.
@@ -60,7 +60,7 @@ namespace AW.Win
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.progressBar1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "frmStatusBar";
+            this.Name = "FrmStatusBar";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Working ...";

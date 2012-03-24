@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: ProductModel. </summary>
+	/// <summary>Implements the relations factory for the entity: ProductModel. </summary>
 	public partial class ProductModelRelations
 	{
 		/// <summary>CTor</summary>
@@ -33,8 +33,6 @@ namespace AW.Data.RelationClasses
 			toReturn.Add(this.ProductEntityUsingProductModelID);
 			toReturn.Add(this.ProductModelIllustrationEntityUsingProductModelID);
 			toReturn.Add(this.ProductModelProductDescriptionCultureEntityUsingProductModelID);
-
-
 			return toReturn;
 		}
 
@@ -47,7 +45,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Product" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "Products" , true);
 				relation.AddEntityFieldPair(ProductModelFields.ProductModelID, ProductFields.ProductModelID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductModelEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", false);
@@ -62,7 +60,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductModelIllustration" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductModelIllustrations" , true);
 				relation.AddEntityFieldPair(ProductModelFields.ProductModelID, ProductModelIllustrationFields.ProductModelID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductModelEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductModelIllustrationEntity", false);
@@ -77,7 +75,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductModelProductDescriptionCulture" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductModelProductDescriptionCultures" , true);
 				relation.AddEntityFieldPair(ProductModelFields.ProductModelID, ProductModelProductDescriptionCultureFields.ProductModelID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductModelEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductModelProductDescriptionCultureEntity", false);
@@ -86,16 +84,27 @@ namespace AW.Data.RelationClasses
 		}
 
 
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticProductModelRelations
+	{
+		internal static readonly IEntityRelation ProductEntityUsingProductModelIDStatic = new ProductModelRelations().ProductEntityUsingProductModelID;
+		internal static readonly IEntityRelation ProductModelIllustrationEntityUsingProductModelIDStatic = new ProductModelRelations().ProductModelIllustrationEntityUsingProductModelID;
+		internal static readonly IEntityRelation ProductModelProductDescriptionCultureEntityUsingProductModelIDStatic = new ProductModelRelations().ProductModelProductDescriptionCultureEntityUsingProductModelID;
+
+		/// <summary>CTor</summary>
+		static StaticProductModelRelations()
+		{
+		}
 	}
 }

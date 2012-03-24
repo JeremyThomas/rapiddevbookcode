@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: PurchaseOrderHeader. </summary>
+	/// <summary>Implements the relations factory for the entity: PurchaseOrderHeader. </summary>
 	public partial class PurchaseOrderHeaderRelations
 	{
 		/// <summary>CTor</summary>
@@ -31,7 +31,6 @@ namespace AW.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.PurchaseOrderDetailEntityUsingPurchaseOrderID);
-
 			toReturn.Add(this.EmployeeEntityUsingEmployeeID);
 			toReturn.Add(this.ShipMethodEntityUsingShipMethodID);
 			toReturn.Add(this.VendorEntityUsingVendorID);
@@ -47,7 +46,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderDetail" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderDetails" , true);
 				relation.AddEntityFieldPair(PurchaseOrderHeaderFields.PurchaseOrderID, PurchaseOrderDetailFields.PurchaseOrderID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHeaderEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderDetailEntity", false);
@@ -98,16 +97,28 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticPurchaseOrderHeaderRelations
+	{
+		internal static readonly IEntityRelation PurchaseOrderDetailEntityUsingPurchaseOrderIDStatic = new PurchaseOrderHeaderRelations().PurchaseOrderDetailEntityUsingPurchaseOrderID;
+		internal static readonly IEntityRelation EmployeeEntityUsingEmployeeIDStatic = new PurchaseOrderHeaderRelations().EmployeeEntityUsingEmployeeID;
+		internal static readonly IEntityRelation ShipMethodEntityUsingShipMethodIDStatic = new PurchaseOrderHeaderRelations().ShipMethodEntityUsingShipMethodID;
+		internal static readonly IEntityRelation VendorEntityUsingVendorIDStatic = new PurchaseOrderHeaderRelations().VendorEntityUsingVendorID;
+
+		/// <summary>CTor</summary>
+		static StaticPurchaseOrderHeaderRelations()
+		{
+		}
 	}
 }

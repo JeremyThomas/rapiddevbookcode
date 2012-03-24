@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: WorkOrder. </summary>
+	/// <summary>Implements the relations factory for the entity: WorkOrder. </summary>
 	public partial class WorkOrderRelations
 	{
 		/// <summary>CTor</summary>
@@ -31,7 +31,6 @@ namespace AW.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.WorkOrderRoutingEntityUsingWorkOrderID);
-
 			toReturn.Add(this.ProductEntityUsingProductID);
 			toReturn.Add(this.ScrapReasonEntityUsingScrapReasonID);
 			return toReturn;
@@ -46,7 +45,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "WorkOrderRouting" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "WorkOrderRoutings" , true);
 				relation.AddEntityFieldPair(WorkOrderFields.WorkOrderID, WorkOrderRoutingFields.WorkOrderID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderRoutingEntity", false);
@@ -83,16 +82,27 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticWorkOrderRelations
+	{
+		internal static readonly IEntityRelation WorkOrderRoutingEntityUsingWorkOrderIDStatic = new WorkOrderRelations().WorkOrderRoutingEntityUsingWorkOrderID;
+		internal static readonly IEntityRelation ProductEntityUsingProductIDStatic = new WorkOrderRelations().ProductEntityUsingProductID;
+		internal static readonly IEntityRelation ScrapReasonEntityUsingScrapReasonIDStatic = new WorkOrderRelations().ScrapReasonEntityUsingScrapReasonID;
+
+		/// <summary>CTor</summary>
+		static StaticWorkOrderRelations()
+		{
+		}
 	}
 }

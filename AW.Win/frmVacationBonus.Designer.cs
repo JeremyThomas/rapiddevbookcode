@@ -133,8 +133,6 @@ namespace AW.Win
           this.ShowInTaskbar = false;
           this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
           this.Text = "Vacation Bonus Utility";
-          this.Load += new System.EventHandler(this.frmVacationBonus_Load);
-          this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmVacationBonus_FormClosing);
           ((System.ComponentModel.ISupportInitialize)(this.nudUnsalariedHours)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.nudSalariedHours)).EndInit();
           this.ResumeLayout(false);

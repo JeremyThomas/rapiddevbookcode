@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.1
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: ShipMethod. </summary>
+	/// <summary>Implements the relations factory for the entity: ShipMethod. </summary>
 	public partial class ShipMethodRelations
 	{
 		/// <summary>CTor</summary>
@@ -32,8 +32,6 @@ namespace AW.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.PurchaseOrderHeaderEntityUsingShipMethodID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingShipMethodID);
-
-
 			return toReturn;
 		}
 
@@ -46,7 +44,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderHeader" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderHeaders" , true);
 				relation.AddEntityFieldPair(ShipMethodFields.ShipMethodID, PurchaseOrderHeaderFields.ShipMethodID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ShipMethodEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderHeaderEntity", false);
@@ -70,16 +68,26 @@ namespace AW.Data.RelationClasses
 		}
 
 
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticShipMethodRelations
+	{
+		internal static readonly IEntityRelation PurchaseOrderHeaderEntityUsingShipMethodIDStatic = new ShipMethodRelations().PurchaseOrderHeaderEntityUsingShipMethodID;
+		internal static readonly IEntityRelation SalesOrderHeaderEntityUsingShipMethodIDStatic = new ShipMethodRelations().SalesOrderHeaderEntityUsingShipMethodID;
+
+		/// <summary>CTor</summary>
+		static StaticShipMethodRelations()
+		{
+		}
 	}
 }

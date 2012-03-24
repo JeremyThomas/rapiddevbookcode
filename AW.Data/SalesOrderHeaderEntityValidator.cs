@@ -15,12 +15,14 @@ namespace AW.Data.EntityClasses
   {
     public const string PurchaseOrderError = "Purchase order number must be 4 - 8 characters.";
     public const string PurchaseOrderRegularExpression = "^.{4,8}$";
+		public const string PurchaseOrderNumberDescription = "Purchase Order Number Description";
 
     [Category("Sales")]
     [Description("You can use this page to find out what is happening with an order")]
     private interface ISalesOrderHeaderMetadata
     {
       [RegularExpression(PurchaseOrderRegularExpression, ErrorMessage = PurchaseOrderError)]
+			[Description(PurchaseOrderNumberDescription)]
       object PurchaseOrderNumber { get; set; }
     }
   }
