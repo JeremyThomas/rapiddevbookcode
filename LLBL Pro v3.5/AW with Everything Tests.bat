@@ -1,0 +1,1 @@
+mstest /testmetadata:"AW with Everything.vsmdi"
