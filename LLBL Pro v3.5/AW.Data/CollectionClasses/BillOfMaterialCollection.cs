@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -60,45 +60,45 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> Retrieves in this BillOfMaterialCollection object all BillOfMaterialEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity productComponentInstance, IEntity productAssemblyInstance, IEntity unitMeasureInstance)
+		public bool GetMultiManyToOne(IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance)
 		{
-			return GetMultiManyToOne(productComponentInstance, productAssemblyInstance, unitMeasureInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(productAssemblyInstance, productComponentInstance, unitMeasureInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this BillOfMaterialCollection object all BillOfMaterialEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity productComponentInstance, IEntity productAssemblyInstance, IEntity unitMeasureInstance, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(productComponentInstance, productAssemblyInstance, unitMeasureInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(productAssemblyInstance, productComponentInstance, unitMeasureInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this BillOfMaterialCollection object all BillOfMaterialEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
 		/// <param name="filter">Extra filter to limit the resultset. Predicate expression can be null, in which case it will be ignored.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public bool GetMultiManyToOne(IEntity productComponentInstance, IEntity productAssemblyInstance, IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
+		public bool GetMultiManyToOne(IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(productComponentInstance, productAssemblyInstance, unitMeasureInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
+			return GetMultiManyToOne(productAssemblyInstance, productComponentInstance, unitMeasureInstance, maxNumberOfItemsToReturn, sortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this BillOfMaterialCollection object all BillOfMaterialEntity objects which have data in common with the specified related Entities.
 		/// If one is omitted, that entity is not used as a filter. All current elements in the collection are removed from the collection.</summary>
-		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
 		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
@@ -106,11 +106,11 @@ namespace AW.Data.CollectionClasses
 		/// <param name="pageNumber">The page number to retrieve.</param>
 		/// <param name="pageSize">The page size of the page to retrieve.</param>
 		/// <returns>true if succeeded, false otherwise</returns>
-		public virtual bool GetMultiManyToOne(IEntity productComponentInstance, IEntity productAssemblyInstance, IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
+		public virtual bool GetMultiManyToOne(IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPredicateExpression filter, int pageNumber, int pageSize)
 		{
 			bool validParameters = false;
-			validParameters |= (productComponentInstance!=null);
 			validParameters |= (productAssemblyInstance!=null);
+			validParameters |= (productComponentInstance!=null);
 			validParameters |= (unitMeasureInstance!=null);
 			if(!validParameters)
 			{
@@ -120,30 +120,30 @@ namespace AW.Data.CollectionClasses
 			{
 				this.Clear();
 			}
-			return DAOFactory.CreateBillOfMaterialDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, productComponentInstance, productAssemblyInstance, unitMeasureInstance, pageNumber, pageSize);
+			return DAOFactory.CreateBillOfMaterialDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, productAssemblyInstance, productComponentInstance, unitMeasureInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all BillOfMaterial entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
 		/// <remarks>Runs directly on the persistent storage. It will not delete entity objects from the current collection.</remarks>
-		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int DeleteMultiManyToOne(IEntity productComponentInstance, IEntity productAssemblyInstance, IEntity unitMeasureInstance)
+		public int DeleteMultiManyToOne(IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance)
 		{
-			return DAOFactory.CreateBillOfMaterialDAO().DeleteMulti(this.Transaction, productComponentInstance, productAssemblyInstance, unitMeasureInstance);
+			return DAOFactory.CreateBillOfMaterialDAO().DeleteMulti(this.Transaction, productAssemblyInstance, productComponentInstance, unitMeasureInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all BillOfMaterial entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
 		/// Which fields are updated in those matching entities depends on which fields are <i>changed</i> in the passed in entity entityWithNewValues. The new values of these fields are read from entityWithNewValues. </summary>
 		/// <param name="entityWithNewValues">BillOfMaterialEntity instance which holds the new values for the matching entities to update. Only changed fields are taken into account</param>
-		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="productAssemblyInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
+		/// <param name="productComponentInstance">ProductEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <param name="unitMeasureInstance">UnitMeasureEntity instance to use as a filter for the BillOfMaterialEntity objects to return</param>
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
-		public int UpdateMultiManyToOne(BillOfMaterialEntity entityWithNewValues, IEntity productComponentInstance, IEntity productAssemblyInstance, IEntity unitMeasureInstance)
+		public int UpdateMultiManyToOne(BillOfMaterialEntity entityWithNewValues, IEntity productAssemblyInstance, IEntity productComponentInstance, IEntity unitMeasureInstance)
 		{
-			return DAOFactory.CreateBillOfMaterialDAO().UpdateMulti(entityWithNewValues, this.Transaction, productComponentInstance, productAssemblyInstance, unitMeasureInstance);
+			return DAOFactory.CreateBillOfMaterialDAO().UpdateMulti(entityWithNewValues, this.Transaction, productAssemblyInstance, productComponentInstance, unitMeasureInstance);
 		}
 
 

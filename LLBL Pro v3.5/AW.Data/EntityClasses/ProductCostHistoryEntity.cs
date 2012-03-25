@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -67,7 +67,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public ProductCostHistoryEntity() : base()
+		public ProductCostHistoryEntity() :base("ProductCostHistoryEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -75,7 +75,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="productID">PK value for ProductCostHistory which data should be fetched into this ProductCostHistory object</param>
 		/// <param name="startDate">PK value for ProductCostHistory which data should be fetched into this ProductCostHistory object</param>
-		public ProductCostHistoryEntity(System.Int32 productID, System.DateTime startDate)
+		public ProductCostHistoryEntity(System.Int32 productID, System.DateTime startDate):base("ProductCostHistoryEntity")
 		{
 			InitClassFetch(productID, startDate, null, null);
 		}
@@ -84,7 +84,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="productID">PK value for ProductCostHistory which data should be fetched into this ProductCostHistory object</param>
 		/// <param name="startDate">PK value for ProductCostHistory which data should be fetched into this ProductCostHistory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ProductCostHistoryEntity(System.Int32 productID, System.DateTime startDate, IPrefetchPath prefetchPathToUse)
+		public ProductCostHistoryEntity(System.Int32 productID, System.DateTime startDate, IPrefetchPath prefetchPathToUse):base("ProductCostHistoryEntity")
 		{
 			InitClassFetch(productID, startDate, null, prefetchPathToUse);
 		}
@@ -93,7 +93,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="productID">PK value for ProductCostHistory which data should be fetched into this ProductCostHistory object</param>
 		/// <param name="startDate">PK value for ProductCostHistory which data should be fetched into this ProductCostHistory object</param>
 		/// <param name="validator">The custom validator object for this ProductCostHistoryEntity</param>
-		public ProductCostHistoryEntity(System.Int32 productID, System.DateTime startDate, IValidator validator)
+		public ProductCostHistoryEntity(System.Int32 productID, System.DateTime startDate, IValidator validator):base("ProductCostHistoryEntity")
 		{
 			InitClassFetch(productID, startDate, validator, null);
 		}
@@ -134,7 +134,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedProduct = (_product != null);
 		}
@@ -187,7 +187,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -205,7 +205,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -222,7 +222,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -457,7 +457,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _product</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProduct(IEntity relatedEntity)
+		private void SetupSyncProduct(IEntityCore relatedEntity)
 		{
 			if(_product!=relatedEntity)
 			{		
@@ -539,12 +539,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("Product")[0], (int)AW.Data.EntityType.ProductCostHistoryEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "Product", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "ProductCostHistoryEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -570,7 +564,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndDate property of the Entity ProductCostHistory<br/><br/>
-		/// MS_Description: Product cost end date.<br/></summary>
+		/// MS_Description: Product cost end date.<br/>Product cost end date.</summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -581,7 +575,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductCostHistory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -592,7 +586,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity ProductCostHistory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -603,7 +597,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StandardCost property of the Entity ProductCostHistory<br/><br/>
-		/// MS_Description: Standard cost of the product.<br/></summary>
+		/// MS_Description: Standard cost of the product.<br/>Standard cost of the product.</summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."StandardCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -614,7 +608,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartDate property of the Entity ProductCostHistory<br/><br/>
-		/// MS_Description: Product cost start date.<br/></summary>
+		/// MS_Description: Product cost start date.<br/>Product cost start date.</summary>
 		/// <remarks>Mapped on  table field: "ProductCostHistory"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

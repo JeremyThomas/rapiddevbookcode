@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -75,7 +75,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public EmployeeDepartmentHistoryEntity() : base()
+		public EmployeeDepartmentHistoryEntity() :base("EmployeeDepartmentHistoryEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -85,7 +85,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="employeeID">PK value for EmployeeDepartmentHistory which data should be fetched into this EmployeeDepartmentHistory object</param>
 		/// <param name="shiftID">PK value for EmployeeDepartmentHistory which data should be fetched into this EmployeeDepartmentHistory object</param>
 		/// <param name="startDate">PK value for EmployeeDepartmentHistory which data should be fetched into this EmployeeDepartmentHistory object</param>
-		public EmployeeDepartmentHistoryEntity(System.Int16 departmentID, System.Int32 employeeID, System.Byte shiftID, System.DateTime startDate)
+		public EmployeeDepartmentHistoryEntity(System.Int16 departmentID, System.Int32 employeeID, System.Byte shiftID, System.DateTime startDate):base("EmployeeDepartmentHistoryEntity")
 		{
 			InitClassFetch(departmentID, employeeID, shiftID, startDate, null, null);
 		}
@@ -96,7 +96,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="shiftID">PK value for EmployeeDepartmentHistory which data should be fetched into this EmployeeDepartmentHistory object</param>
 		/// <param name="startDate">PK value for EmployeeDepartmentHistory which data should be fetched into this EmployeeDepartmentHistory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public EmployeeDepartmentHistoryEntity(System.Int16 departmentID, System.Int32 employeeID, System.Byte shiftID, System.DateTime startDate, IPrefetchPath prefetchPathToUse)
+		public EmployeeDepartmentHistoryEntity(System.Int16 departmentID, System.Int32 employeeID, System.Byte shiftID, System.DateTime startDate, IPrefetchPath prefetchPathToUse):base("EmployeeDepartmentHistoryEntity")
 		{
 			InitClassFetch(departmentID, employeeID, shiftID, startDate, null, prefetchPathToUse);
 		}
@@ -107,7 +107,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="shiftID">PK value for EmployeeDepartmentHistory which data should be fetched into this EmployeeDepartmentHistory object</param>
 		/// <param name="startDate">PK value for EmployeeDepartmentHistory which data should be fetched into this EmployeeDepartmentHistory object</param>
 		/// <param name="validator">The custom validator object for this EmployeeDepartmentHistoryEntity</param>
-		public EmployeeDepartmentHistoryEntity(System.Int16 departmentID, System.Int32 employeeID, System.Byte shiftID, System.DateTime startDate, IValidator validator)
+		public EmployeeDepartmentHistoryEntity(System.Int16 departmentID, System.Int32 employeeID, System.Byte shiftID, System.DateTime startDate, IValidator validator):base("EmployeeDepartmentHistoryEntity")
 		{
 			InitClassFetch(departmentID, employeeID, shiftID, startDate, validator, null);
 		}
@@ -174,7 +174,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedDepartment = (_department != null);
 			_alreadyFetchedEmployee = (_employee != null);
@@ -243,7 +243,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -269,7 +269,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -292,7 +292,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -640,7 +640,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _department</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncDepartment(IEntity relatedEntity)
+		private void SetupSyncDepartment(IEntityCore relatedEntity)
 		{
 			if(_department!=relatedEntity)
 			{		
@@ -673,7 +673,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _employee</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncEmployee(IEntity relatedEntity)
+		private void SetupSyncEmployee(IEntityCore relatedEntity)
 		{
 			if(_employee!=relatedEntity)
 			{		
@@ -706,7 +706,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _shift</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncShift(IEntity relatedEntity)
+		private void SetupSyncShift(IEntityCore relatedEntity)
 		{
 			if(_shift!=relatedEntity)
 			{		
@@ -806,12 +806,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ShiftCollection(), (IEntityRelation)GetRelationsForField("Shift")[0], (int)AW.Data.EntityType.EmployeeDepartmentHistoryEntity, (int)AW.Data.EntityType.ShiftEntity, 0, null, null, null, "Shift", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "EmployeeDepartmentHistoryEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -837,7 +831,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DepartmentID property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Department in which the employee worked including currently. Foreign key to Department.DepartmentID.<br/></summary>
+		/// MS_Description: Department in which the employee worked including currently. Foreign key to Department.DepartmentID.<br/>Department in which the employee worked including currently. Foreign key to Department.DepartmentID.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."DepartmentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -848,7 +842,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmployeeID property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -859,7 +853,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndDate property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Date the employee left the department. NULL = Current department.<br/></summary>
+		/// MS_Description: Date the employee left the department. NULL = Current department.<br/>Date the employee left the department. NULL = Current department.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -870,7 +864,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -881,7 +875,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShiftID property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."ShiftID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -892,7 +886,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartDate property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Date the employee started work in the department.<br/></summary>
+		/// MS_Description: Date the employee started work in the department.<br/>Date the employee started work in the department.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

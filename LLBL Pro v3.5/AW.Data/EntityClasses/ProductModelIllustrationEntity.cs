@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -71,7 +71,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public ProductModelIllustrationEntity() : base()
+		public ProductModelIllustrationEntity() :base("ProductModelIllustrationEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -79,7 +79,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="illustrationID">PK value for ProductModelIllustration which data should be fetched into this ProductModelIllustration object</param>
 		/// <param name="productModelID">PK value for ProductModelIllustration which data should be fetched into this ProductModelIllustration object</param>
-		public ProductModelIllustrationEntity(System.Int32 illustrationID, System.Int32 productModelID)
+		public ProductModelIllustrationEntity(System.Int32 illustrationID, System.Int32 productModelID):base("ProductModelIllustrationEntity")
 		{
 			InitClassFetch(illustrationID, productModelID, null, null);
 		}
@@ -88,7 +88,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="illustrationID">PK value for ProductModelIllustration which data should be fetched into this ProductModelIllustration object</param>
 		/// <param name="productModelID">PK value for ProductModelIllustration which data should be fetched into this ProductModelIllustration object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ProductModelIllustrationEntity(System.Int32 illustrationID, System.Int32 productModelID, IPrefetchPath prefetchPathToUse)
+		public ProductModelIllustrationEntity(System.Int32 illustrationID, System.Int32 productModelID, IPrefetchPath prefetchPathToUse):base("ProductModelIllustrationEntity")
 		{
 			InitClassFetch(illustrationID, productModelID, null, prefetchPathToUse);
 		}
@@ -97,7 +97,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="illustrationID">PK value for ProductModelIllustration which data should be fetched into this ProductModelIllustration object</param>
 		/// <param name="productModelID">PK value for ProductModelIllustration which data should be fetched into this ProductModelIllustration object</param>
 		/// <param name="validator">The custom validator object for this ProductModelIllustrationEntity</param>
-		public ProductModelIllustrationEntity(System.Int32 illustrationID, System.Int32 productModelID, IValidator validator)
+		public ProductModelIllustrationEntity(System.Int32 illustrationID, System.Int32 productModelID, IValidator validator):base("ProductModelIllustrationEntity")
 		{
 			InitClassFetch(illustrationID, productModelID, validator, null);
 		}
@@ -151,7 +151,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedIllustration = (_illustration != null);
 			_alreadyFetchedProductModel = (_productModel != null);
@@ -212,7 +212,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -234,7 +234,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -254,7 +254,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -533,7 +533,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _illustration</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncIllustration(IEntity relatedEntity)
+		private void SetupSyncIllustration(IEntityCore relatedEntity)
 		{
 			if(_illustration!=relatedEntity)
 			{		
@@ -566,7 +566,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _productModel</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProductModel(IEntity relatedEntity)
+		private void SetupSyncProductModel(IEntityCore relatedEntity)
 		{
 			if(_productModel!=relatedEntity)
 			{		
@@ -655,12 +655,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductModelCollection(), (IEntityRelation)GetRelationsForField("ProductModel")[0], (int)AW.Data.EntityType.ProductModelIllustrationEntity, (int)AW.Data.EntityType.ProductModelEntity, 0, null, null, null, "ProductModel", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "ProductModelIllustrationEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -686,7 +680,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The IllustrationID property of the Entity ProductModelIllustration<br/><br/>
-		/// MS_Description: Primary key. Foreign key to Illustration.IllustrationID.<br/></summary>
+		/// MS_Description: Primary key. Foreign key to Illustration.IllustrationID.<br/>Primary key. Foreign key to Illustration.IllustrationID.</summary>
 		/// <remarks>Mapped on  table field: "ProductModelIllustration"."IllustrationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -697,7 +691,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductModelIllustration<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductModelIllustration"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -708,7 +702,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductModelID property of the Entity ProductModelIllustration<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductModelIllustration"."ProductModelID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

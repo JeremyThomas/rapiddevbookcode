@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -38,7 +38,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		{
 			using(StoredProcedureCall call = CreateUspGetEmployeeManagersCall(new DataAccessCoreImpl(new CommonDaoBase(), transactionToUse), employeeId))
 			{
-				DataTable toReturn = call.FillDataTable();				
+				DataTable toReturn = call.FillDataTable();
 				return toReturn;
 			}
 		}
@@ -67,7 +67,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		{
 			using(StoredProcedureCall call = CreateUspGetManagerEmployeesCall(new DataAccessCoreImpl(new CommonDaoBase(), transactionToUse), managerId))
 			{
-				DataTable toReturn = call.FillDataTable();				
+				DataTable toReturn = call.FillDataTable();
 				return toReturn;
 			}
 		}
@@ -86,7 +86,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <returns>Ready to use StoredProcedureCall object</returns>
 		private static StoredProcedureCall CreateUspGetEmployeeManagersCall(IDataAccessCore dataAccessProvider, System.Int32 employeeId)
 		{
-			return new StoredProcedureCall(dataAccessProvider, "[AdventureWorks].[dbo].[uspGetEmployeeManagers]", "UspGetEmployeeManagers")
+			return new StoredProcedureCall(dataAccessProvider, @"[AdventureWorks].[dbo].[uspGetEmployeeManagers]", "UspGetEmployeeManagers")
 							.AddParameter("@EmployeeID", "Int", 0, ParameterDirection.Input, true, 0, 0, employeeId);
 		}
 
@@ -96,7 +96,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		/// <returns>Ready to use StoredProcedureCall object</returns>
 		private static StoredProcedureCall CreateUspGetManagerEmployeesCall(IDataAccessCore dataAccessProvider, System.Int32 managerId)
 		{
-			return new StoredProcedureCall(dataAccessProvider, "[AdventureWorks].[dbo].[uspGetManagerEmployees]", "UspGetManagerEmployees")
+			return new StoredProcedureCall(dataAccessProvider, @"[AdventureWorks].[dbo].[uspGetManagerEmployees]", "UspGetManagerEmployees")
 							.AddParameter("@ManagerID", "Int", 0, ParameterDirection.Input, true, 0, 0, managerId);
 		}
 

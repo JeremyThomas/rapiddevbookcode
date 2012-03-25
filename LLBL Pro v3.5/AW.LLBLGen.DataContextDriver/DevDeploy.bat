@@ -13,7 +13,7 @@ rem       Environment.GetFolderPath (Environment.SpecialFolder.CommonApplication
 rem       @"LINQPad\Drivers\DataContext\3.5\")   
 rem
 rem  The final part of the directory is the name of the assembly plus its public key token in brackets.
-echo 3.5 babb3d2489c6f9df
-xcopy /i/y *.dll "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\3.5\AW.LLBLGen.DataContextDriver (babb3d2489c6f9df)"
-xcopy /i/y *.pdb "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\3.5\AW.LLBLGen.DataContextDriver (babb3d2489c6f9df)"
+echo 3.5 ad9f95fa8af52daa
+xcopy /i/y *.dll "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\3.5\AW.LLBLGen.DataContextDriver (ad9f95fa8af52daa)"
+xcopy /i/y *.pdb "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\3.5\AW.LLBLGen.DataContextDriver (ad9f95fa8af52daa)"
 pause

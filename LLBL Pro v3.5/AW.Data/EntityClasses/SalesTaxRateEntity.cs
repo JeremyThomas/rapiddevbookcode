@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -67,14 +67,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public SalesTaxRateEntity() : base()
+		public SalesTaxRateEntity() :base("SalesTaxRateEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="salesTaxRateID">PK value for SalesTaxRate which data should be fetched into this SalesTaxRate object</param>
-		public SalesTaxRateEntity(System.Int32 salesTaxRateID)
+		public SalesTaxRateEntity(System.Int32 salesTaxRateID):base("SalesTaxRateEntity")
 		{
 			InitClassFetch(salesTaxRateID, null, null);
 		}
@@ -82,7 +82,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="salesTaxRateID">PK value for SalesTaxRate which data should be fetched into this SalesTaxRate object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesTaxRateEntity(System.Int32 salesTaxRateID, IPrefetchPath prefetchPathToUse)
+		public SalesTaxRateEntity(System.Int32 salesTaxRateID, IPrefetchPath prefetchPathToUse):base("SalesTaxRateEntity")
 		{
 			InitClassFetch(salesTaxRateID, null, prefetchPathToUse);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="salesTaxRateID">PK value for SalesTaxRate which data should be fetched into this SalesTaxRate object</param>
 		/// <param name="validator">The custom validator object for this SalesTaxRateEntity</param>
-		public SalesTaxRateEntity(System.Int32 salesTaxRateID, IValidator validator)
+		public SalesTaxRateEntity(System.Int32 salesTaxRateID, IValidator validator):base("SalesTaxRateEntity")
 		{
 			InitClassFetch(salesTaxRateID, validator, null);
 		}
@@ -131,7 +131,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedStateProvince = (_stateProvince != null);
 		}
@@ -184,7 +184,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -202,7 +202,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -219,7 +219,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -455,7 +455,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _stateProvince</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncStateProvince(IEntity relatedEntity)
+		private void SetupSyncStateProvince(IEntityCore relatedEntity)
 		{
 			if(_stateProvince!=relatedEntity)
 			{		
@@ -535,12 +535,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.StateProvinceCollection(), (IEntityRelation)GetRelationsForField("StateProvince")[0], (int)AW.Data.EntityType.SalesTaxRateEntity, (int)AW.Data.EntityType.StateProvinceEntity, 0, null, null, null, "StateProvince", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "SalesTaxRateEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -566,7 +560,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -577,7 +571,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Tax rate description.<br/></summary>
+		/// MS_Description: Tax rate description.<br/>Tax rate description.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -588,7 +582,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -599,7 +593,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesTaxRateID property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."SalesTaxRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -610,7 +604,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StateProvinceID property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: State, province, or country/region the sales tax applies to.<br/></summary>
+		/// MS_Description: State, province, or country/region the sales tax applies to.<br/>State, province, or country/region the sales tax applies to.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."StateProvinceID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -621,7 +615,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TaxRate property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Tax rate amount.<br/></summary>
+		/// MS_Description: Tax rate amount.<br/>Tax rate amount.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."TaxRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -632,7 +626,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TaxType property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/>Unique nonclustered index. Used to support replication samples.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."TaxType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

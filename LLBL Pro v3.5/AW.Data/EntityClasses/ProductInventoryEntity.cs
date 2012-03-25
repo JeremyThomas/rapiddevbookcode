@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -71,7 +71,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public ProductInventoryEntity() : base()
+		public ProductInventoryEntity() :base("ProductInventoryEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -79,7 +79,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="locationID">PK value for ProductInventory which data should be fetched into this ProductInventory object</param>
 		/// <param name="productID">PK value for ProductInventory which data should be fetched into this ProductInventory object</param>
-		public ProductInventoryEntity(System.Int16 locationID, System.Int32 productID)
+		public ProductInventoryEntity(System.Int16 locationID, System.Int32 productID):base("ProductInventoryEntity")
 		{
 			InitClassFetch(locationID, productID, null, null);
 		}
@@ -88,7 +88,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="locationID">PK value for ProductInventory which data should be fetched into this ProductInventory object</param>
 		/// <param name="productID">PK value for ProductInventory which data should be fetched into this ProductInventory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ProductInventoryEntity(System.Int16 locationID, System.Int32 productID, IPrefetchPath prefetchPathToUse)
+		public ProductInventoryEntity(System.Int16 locationID, System.Int32 productID, IPrefetchPath prefetchPathToUse):base("ProductInventoryEntity")
 		{
 			InitClassFetch(locationID, productID, null, prefetchPathToUse);
 		}
@@ -97,7 +97,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="locationID">PK value for ProductInventory which data should be fetched into this ProductInventory object</param>
 		/// <param name="productID">PK value for ProductInventory which data should be fetched into this ProductInventory object</param>
 		/// <param name="validator">The custom validator object for this ProductInventoryEntity</param>
-		public ProductInventoryEntity(System.Int16 locationID, System.Int32 productID, IValidator validator)
+		public ProductInventoryEntity(System.Int16 locationID, System.Int32 productID, IValidator validator):base("ProductInventoryEntity")
 		{
 			InitClassFetch(locationID, productID, validator, null);
 		}
@@ -151,7 +151,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedLocation = (_location != null);
 			_alreadyFetchedProduct = (_product != null);
@@ -212,7 +212,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -234,7 +234,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -254,7 +254,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -545,7 +545,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _location</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncLocation(IEntity relatedEntity)
+		private void SetupSyncLocation(IEntityCore relatedEntity)
 		{
 			if(_location!=relatedEntity)
 			{		
@@ -578,7 +578,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _product</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProduct(IEntity relatedEntity)
+		private void SetupSyncProduct(IEntityCore relatedEntity)
 		{
 			if(_product!=relatedEntity)
 			{		
@@ -667,12 +667,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("Product")[0], (int)AW.Data.EntityType.ProductInventoryEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "Product", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "ProductInventoryEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -698,7 +692,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Bin property of the Entity ProductInventory<br/><br/>
-		/// MS_Description: Storage container on a shelf in an inventory location.<br/></summary>
+		/// MS_Description: Storage container on a shelf in an inventory location.<br/>Storage container on a shelf in an inventory location.</summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."Bin"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -709,7 +703,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LocationID property of the Entity ProductInventory<br/><br/>
-		/// MS_Description: Inventory location identification number. Foreign key to Location.LocationID. <br/></summary>
+		/// MS_Description: Inventory location identification number. Foreign key to Location.LocationID. <br/>Inventory location identification number. Foreign key to Location.LocationID. </summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."LocationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -720,7 +714,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductInventory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -731,7 +725,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity ProductInventory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -742,7 +736,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Quantity property of the Entity ProductInventory<br/><br/>
-		/// MS_Description: Quantity of products in the inventory location.<br/></summary>
+		/// MS_Description: Quantity of products in the inventory location.<br/>Quantity of products in the inventory location.</summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."Quantity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -753,7 +747,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity ProductInventory<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -764,7 +758,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Shelf property of the Entity ProductInventory<br/><br/>
-		/// MS_Description: Storage compartment within an inventory location.<br/></summary>
+		/// MS_Description: Storage compartment within an inventory location.<br/>Storage compartment within an inventory location.</summary>
 		/// <remarks>Mapped on  table field: "ProductInventory"."Shelf"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 10<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

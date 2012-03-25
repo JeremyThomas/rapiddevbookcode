@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.QuerySpecTemplates
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET35
 // Templates vendor: Solutions Design.
 ////////////////////////////////////////////////////////////// 
 using System;
@@ -61,7 +61,6 @@ namespace Northwind.DAL.FactoryClasses
 		}
 
 		/// <summary>Creates a new field object with the name specified and of resulttype 'object'. Used for referring to aliased fields in another projection.</summary>
-		/// <typeparam name="TValue">The type of the value.</typeparam>
 		/// <param name="targetAlias">The alias of the table/query to target.</param>
 		/// <param name="fieldName">Name of the field.</param>
 		/// <returns>Ready to use field object</returns>
@@ -71,7 +70,7 @@ namespace Northwind.DAL.FactoryClasses
 		}
 
 		/// <summary>Creates a new field object with the name specified and of resulttype 'TValue'. Used for referring to aliased fields in another projection.</summary>
-		/// <typeparam name="TResult">The type of the value represented by the field.</typeparam>
+		/// <typeparam name="TValue">The type of the value represented by the field.</typeparam>
 		/// <param name="fieldName">Name of the field.</param>
 		/// <returns>Ready to use field object</returns>
 		public EntityField2 Field<TValue>(string fieldName)

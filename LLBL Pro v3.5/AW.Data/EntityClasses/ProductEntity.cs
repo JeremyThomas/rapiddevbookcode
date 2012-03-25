@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -42,10 +42,10 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private AW.Data.CollectionClasses.BillOfMaterialCollection	_billOfComponentMaterials;
-		private bool	_alwaysFetchBillOfComponentMaterials, _alreadyFetchedBillOfComponentMaterials;
 		private AW.Data.CollectionClasses.BillOfMaterialCollection	_billOfAssemblyMaterials;
 		private bool	_alwaysFetchBillOfAssemblyMaterials, _alreadyFetchedBillOfAssemblyMaterials;
+		private AW.Data.CollectionClasses.BillOfMaterialCollection	_billOfComponentMaterials;
+		private bool	_alwaysFetchBillOfComponentMaterials, _alreadyFetchedBillOfComponentMaterials;
 		private AW.Data.CollectionClasses.ProductCostHistoryCollection	_productCostHistories;
 		private bool	_alwaysFetchProductCostHistories, _alreadyFetchedProductCostHistories;
 		private AW.Data.CollectionClasses.ProductDocumentCollection	_productDocuments;
@@ -98,10 +98,10 @@ namespace AW.Data.EntityClasses
 			public static readonly string SizeUnitMeasure = "SizeUnitMeasure";
 			/// <summary>Member name WeightUnitMeasure</summary>
 			public static readonly string WeightUnitMeasure = "WeightUnitMeasure";
-			/// <summary>Member name BillOfComponentMaterials</summary>
-			public static readonly string BillOfComponentMaterials = "BillOfComponentMaterials";
 			/// <summary>Member name BillOfAssemblyMaterials</summary>
 			public static readonly string BillOfAssemblyMaterials = "BillOfAssemblyMaterials";
+			/// <summary>Member name BillOfComponentMaterials</summary>
+			public static readonly string BillOfComponentMaterials = "BillOfComponentMaterials";
 			/// <summary>Member name ProductCostHistories</summary>
 			public static readonly string ProductCostHistories = "ProductCostHistories";
 			/// <summary>Member name ProductDocuments</summary>
@@ -136,14 +136,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public ProductEntity() : base()
+		public ProductEntity() :base("ProductEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
-		public ProductEntity(System.Int32 productID)
+		public ProductEntity(System.Int32 productID):base("ProductEntity")
 		{
 			InitClassFetch(productID, null, null);
 		}
@@ -151,7 +151,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ProductEntity(System.Int32 productID, IPrefetchPath prefetchPathToUse)
+		public ProductEntity(System.Int32 productID, IPrefetchPath prefetchPathToUse):base("ProductEntity")
 		{
 			InitClassFetch(productID, null, prefetchPathToUse);
 		}
@@ -159,7 +159,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="productID">PK value for Product which data should be fetched into this Product object</param>
 		/// <param name="validator">The custom validator object for this ProductEntity</param>
-		public ProductEntity(System.Int32 productID, IValidator validator)
+		public ProductEntity(System.Int32 productID, IValidator validator):base("ProductEntity")
 		{
 			InitClassFetch(productID, validator, null);
 		}
@@ -169,13 +169,13 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected ProductEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_billOfComponentMaterials = (AW.Data.CollectionClasses.BillOfMaterialCollection)info.GetValue("_billOfComponentMaterials", typeof(AW.Data.CollectionClasses.BillOfMaterialCollection));
-			_alwaysFetchBillOfComponentMaterials = info.GetBoolean("_alwaysFetchBillOfComponentMaterials");
-			_alreadyFetchedBillOfComponentMaterials = info.GetBoolean("_alreadyFetchedBillOfComponentMaterials");
-
 			_billOfAssemblyMaterials = (AW.Data.CollectionClasses.BillOfMaterialCollection)info.GetValue("_billOfAssemblyMaterials", typeof(AW.Data.CollectionClasses.BillOfMaterialCollection));
 			_alwaysFetchBillOfAssemblyMaterials = info.GetBoolean("_alwaysFetchBillOfAssemblyMaterials");
 			_alreadyFetchedBillOfAssemblyMaterials = info.GetBoolean("_alreadyFetchedBillOfAssemblyMaterials");
+
+			_billOfComponentMaterials = (AW.Data.CollectionClasses.BillOfMaterialCollection)info.GetValue("_billOfComponentMaterials", typeof(AW.Data.CollectionClasses.BillOfMaterialCollection));
+			_alwaysFetchBillOfComponentMaterials = info.GetBoolean("_alwaysFetchBillOfComponentMaterials");
+			_alreadyFetchedBillOfComponentMaterials = info.GetBoolean("_alreadyFetchedBillOfComponentMaterials");
 
 			_productCostHistories = (AW.Data.CollectionClasses.ProductCostHistoryCollection)info.GetValue("_productCostHistories", typeof(AW.Data.CollectionClasses.ProductCostHistoryCollection));
 			_alwaysFetchProductCostHistories = info.GetBoolean("_alwaysFetchProductCostHistories");
@@ -294,10 +294,10 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
-			_alreadyFetchedBillOfComponentMaterials = (_billOfComponentMaterials.Count > 0);
 			_alreadyFetchedBillOfAssemblyMaterials = (_billOfAssemblyMaterials.Count > 0);
+			_alreadyFetchedBillOfComponentMaterials = (_billOfComponentMaterials.Count > 0);
 			_alreadyFetchedProductCostHistories = (_productCostHistories.Count > 0);
 			_alreadyFetchedProductDocuments = (_productDocuments.Count > 0);
 			_alreadyFetchedProductInventories = (_productInventories.Count > 0);
@@ -344,11 +344,11 @@ namespace AW.Data.EntityClasses
 				case "WeightUnitMeasure":
 					toReturn.Add(Relations.UnitMeasureEntityUsingWeightUnitMeasureCode);
 					break;
-				case "BillOfComponentMaterials":
-					toReturn.Add(Relations.BillOfMaterialEntityUsingComponentID);
-					break;
 				case "BillOfAssemblyMaterials":
 					toReturn.Add(Relations.BillOfMaterialEntityUsingProductAssemblyID);
+					break;
+				case "BillOfComponentMaterials":
+					toReturn.Add(Relations.BillOfMaterialEntityUsingComponentID);
 					break;
 				case "ProductCostHistories":
 					toReturn.Add(Relations.ProductCostHistoryEntityUsingProductID);
@@ -400,12 +400,12 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		protected override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_billOfComponentMaterials", (!this.MarkedForDeletion?_billOfComponentMaterials:null));
-			info.AddValue("_alwaysFetchBillOfComponentMaterials", _alwaysFetchBillOfComponentMaterials);
-			info.AddValue("_alreadyFetchedBillOfComponentMaterials", _alreadyFetchedBillOfComponentMaterials);
 			info.AddValue("_billOfAssemblyMaterials", (!this.MarkedForDeletion?_billOfAssemblyMaterials:null));
 			info.AddValue("_alwaysFetchBillOfAssemblyMaterials", _alwaysFetchBillOfAssemblyMaterials);
 			info.AddValue("_alreadyFetchedBillOfAssemblyMaterials", _alreadyFetchedBillOfAssemblyMaterials);
+			info.AddValue("_billOfComponentMaterials", (!this.MarkedForDeletion?_billOfComponentMaterials:null));
+			info.AddValue("_alwaysFetchBillOfComponentMaterials", _alwaysFetchBillOfComponentMaterials);
+			info.AddValue("_alreadyFetchedBillOfComponentMaterials", _alreadyFetchedBillOfComponentMaterials);
 			info.AddValue("_productCostHistories", (!this.MarkedForDeletion?_productCostHistories:null));
 			info.AddValue("_alwaysFetchProductCostHistories", _alwaysFetchProductCostHistories);
 			info.AddValue("_alreadyFetchedProductCostHistories", _alreadyFetchedProductCostHistories);
@@ -469,7 +469,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -489,18 +489,18 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedWeightUnitMeasure = true;
 					this.WeightUnitMeasure = (UnitMeasureEntity)entity;
 					break;
-				case "BillOfComponentMaterials":
-					_alreadyFetchedBillOfComponentMaterials = true;
-					if(entity!=null)
-					{
-						this.BillOfComponentMaterials.Add((BillOfMaterialEntity)entity);
-					}
-					break;
 				case "BillOfAssemblyMaterials":
 					_alreadyFetchedBillOfAssemblyMaterials = true;
 					if(entity!=null)
 					{
 						this.BillOfAssemblyMaterials.Add((BillOfMaterialEntity)entity);
+					}
+					break;
+				case "BillOfComponentMaterials":
+					_alreadyFetchedBillOfComponentMaterials = true;
+					if(entity!=null)
+					{
+						this.BillOfComponentMaterials.Add((BillOfMaterialEntity)entity);
 					}
 					break;
 				case "ProductCostHistories":
@@ -597,7 +597,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -613,11 +613,11 @@ namespace AW.Data.EntityClasses
 				case "WeightUnitMeasure":
 					SetupSyncWeightUnitMeasure(relatedEntity);
 					break;
-				case "BillOfComponentMaterials":
-					_billOfComponentMaterials.Add((BillOfMaterialEntity)relatedEntity);
-					break;
 				case "BillOfAssemblyMaterials":
 					_billOfAssemblyMaterials.Add((BillOfMaterialEntity)relatedEntity);
+					break;
+				case "BillOfComponentMaterials":
+					_billOfComponentMaterials.Add((BillOfMaterialEntity)relatedEntity);
 					break;
 				case "ProductCostHistories":
 					_productCostHistories.Add((ProductCostHistoryEntity)relatedEntity);
@@ -665,7 +665,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -681,11 +681,11 @@ namespace AW.Data.EntityClasses
 				case "WeightUnitMeasure":
 					DesetupSyncWeightUnitMeasure(false, true);
 					break;
-				case "BillOfComponentMaterials":
-					this.PerformRelatedEntityRemoval(_billOfComponentMaterials, relatedEntity, signalRelatedEntityManyToOne);
-					break;
 				case "BillOfAssemblyMaterials":
 					this.PerformRelatedEntityRemoval(_billOfAssemblyMaterials, relatedEntity, signalRelatedEntityManyToOne);
+					break;
+				case "BillOfComponentMaterials":
+					this.PerformRelatedEntityRemoval(_billOfComponentMaterials, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "ProductCostHistories":
 					this.PerformRelatedEntityRemoval(_productCostHistories, relatedEntity, signalRelatedEntityManyToOne);
@@ -765,8 +765,8 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntityCollection> GetMemberEntityCollections()
 		{
 			List<IEntityCollection> toReturn = new List<IEntityCollection>();
-			toReturn.Add(_billOfComponentMaterials);
 			toReturn.Add(_billOfAssemblyMaterials);
+			toReturn.Add(_billOfComponentMaterials);
 			toReturn.Add(_productCostHistories);
 			toReturn.Add(_productDocuments);
 			toReturn.Add(_productInventories);
@@ -843,61 +843,6 @@ namespace AW.Data.EntityClasses
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch)
-		{
-			return GetMultiBillOfComponentMaterials(forceFetch, _billOfComponentMaterials.EntityFactoryToUse, null);
-		}
-
-		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="filter">Extra filter to limit the resultset.</param>
-		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IPredicateExpression filter)
-		{
-			return GetMultiBillOfComponentMaterials(forceFetch, _billOfComponentMaterials.EntityFactoryToUse, filter);
-		}
-
-		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IEntityFactory entityFactoryToUse)
-		{
-			return GetMultiBillOfComponentMaterials(forceFetch, entityFactoryToUse, null);
-		}
-
-		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
-		/// <param name="filter">Extra filter to limit the resultset.</param>
-		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
-		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
-		{
- 			if( ( !_alreadyFetchedBillOfComponentMaterials || forceFetch || _alwaysFetchBillOfComponentMaterials) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
-			{
-				AddToTransactionIfNecessary(_billOfComponentMaterials);
-				_billOfComponentMaterials.SuppressClearInGetMulti=!forceFetch;
-				_billOfComponentMaterials.EntityFactoryToUse = entityFactoryToUse;
-				_billOfComponentMaterials.GetMultiManyToOne(this, null, null, filter);
-				_billOfComponentMaterials.SuppressClearInGetMulti=false;
-				_alreadyFetchedBillOfComponentMaterials = true;
-			}
-			return _billOfComponentMaterials;
-		}
-
-		/// <summary> Sets the collection parameters for the collection for 'BillOfComponentMaterials'. These settings will be taken into account
-		/// when the property BillOfComponentMaterials is requested or GetMultiBillOfComponentMaterials is called.</summary>
-		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
-		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
-		public virtual void SetCollectionParametersBillOfComponentMaterials(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
-		{
-			_billOfComponentMaterials.SortClauses=sortClauses;
-			_billOfComponentMaterials.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
-		}
-
-		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
-		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
 		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfAssemblyMaterials(bool forceFetch)
 		{
 			return GetMultiBillOfAssemblyMaterials(forceFetch, _billOfAssemblyMaterials.EntityFactoryToUse, null);
@@ -933,7 +878,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_billOfAssemblyMaterials);
 				_billOfAssemblyMaterials.SuppressClearInGetMulti=!forceFetch;
 				_billOfAssemblyMaterials.EntityFactoryToUse = entityFactoryToUse;
-				_billOfAssemblyMaterials.GetMultiManyToOne(null, this, null, filter);
+				_billOfAssemblyMaterials.GetMultiManyToOne(this, null, null, filter);
 				_billOfAssemblyMaterials.SuppressClearInGetMulti=false;
 				_alreadyFetchedBillOfAssemblyMaterials = true;
 			}
@@ -948,6 +893,61 @@ namespace AW.Data.EntityClasses
 		{
 			_billOfAssemblyMaterials.SortClauses=sortClauses;
 			_billOfAssemblyMaterials.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch)
+		{
+			return GetMultiBillOfComponentMaterials(forceFetch, _billOfComponentMaterials.EntityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of type 'BillOfMaterialEntity'</returns>
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IPredicateExpression filter)
+		{
+			return GetMultiBillOfComponentMaterials(forceFetch, _billOfComponentMaterials.EntityFactoryToUse, filter);
+		}
+
+		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+			return GetMultiBillOfComponentMaterials(forceFetch, entityFactoryToUse, null);
+		}
+
+		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToOne() routine.</param>
+		/// <param name="filter">Extra filter to limit the resultset.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection GetMultiBillOfComponentMaterials(bool forceFetch, IEntityFactory entityFactoryToUse, IPredicateExpression filter)
+		{
+ 			if( ( !_alreadyFetchedBillOfComponentMaterials || forceFetch || _alwaysFetchBillOfComponentMaterials) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_billOfComponentMaterials);
+				_billOfComponentMaterials.SuppressClearInGetMulti=!forceFetch;
+				_billOfComponentMaterials.EntityFactoryToUse = entityFactoryToUse;
+				_billOfComponentMaterials.GetMultiManyToOne(null, this, null, filter);
+				_billOfComponentMaterials.SuppressClearInGetMulti=false;
+				_alreadyFetchedBillOfComponentMaterials = true;
+			}
+			return _billOfComponentMaterials;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'BillOfComponentMaterials'. These settings will be taken into account
+		/// when the property BillOfComponentMaterials is requested or GetMultiBillOfComponentMaterials is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersBillOfComponentMaterials(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_billOfComponentMaterials.SortClauses=sortClauses;
+			_billOfComponentMaterials.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
 		/// <summary> Retrieves all related entities of type 'ProductCostHistoryEntity' using a relation of type '1:n'.</summary>
@@ -1783,8 +1783,8 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("ProductSubcategory", _productSubcategory);
 			toReturn.Add("SizeUnitMeasure", _sizeUnitMeasure);
 			toReturn.Add("WeightUnitMeasure", _weightUnitMeasure);
-			toReturn.Add("BillOfComponentMaterials", _billOfComponentMaterials);
 			toReturn.Add("BillOfAssemblyMaterials", _billOfAssemblyMaterials);
+			toReturn.Add("BillOfComponentMaterials", _billOfComponentMaterials);
 			toReturn.Add("ProductCostHistories", _productCostHistories);
 			toReturn.Add("ProductDocuments", _productDocuments);
 			toReturn.Add("ProductInventories", _productInventories);
@@ -1837,11 +1837,11 @@ namespace AW.Data.EntityClasses
 		private void InitClassMembers()
 		{
 
-			_billOfComponentMaterials = new AW.Data.CollectionClasses.BillOfMaterialCollection();
-			_billOfComponentMaterials.SetContainingEntityInfo(this, "ProductComponent");
-
 			_billOfAssemblyMaterials = new AW.Data.CollectionClasses.BillOfMaterialCollection();
 			_billOfAssemblyMaterials.SetContainingEntityInfo(this, "ProductAssembly");
+
+			_billOfComponentMaterials = new AW.Data.CollectionClasses.BillOfMaterialCollection();
+			_billOfComponentMaterials.SetContainingEntityInfo(this, "ProductComponent");
 
 			_productCostHistories = new AW.Data.CollectionClasses.ProductCostHistoryCollection();
 			_productCostHistories.SetContainingEntityInfo(this, "Product");
@@ -1986,7 +1986,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _productModel</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProductModel(IEntity relatedEntity)
+		private void SetupSyncProductModel(IEntityCore relatedEntity)
 		{
 			if(_productModel!=relatedEntity)
 			{		
@@ -2019,7 +2019,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _productSubcategory</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProductSubcategory(IEntity relatedEntity)
+		private void SetupSyncProductSubcategory(IEntityCore relatedEntity)
 		{
 			if(_productSubcategory!=relatedEntity)
 			{		
@@ -2052,7 +2052,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _sizeUnitMeasure</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSizeUnitMeasure(IEntity relatedEntity)
+		private void SetupSyncSizeUnitMeasure(IEntityCore relatedEntity)
 		{
 			if(_sizeUnitMeasure!=relatedEntity)
 			{		
@@ -2085,7 +2085,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _weightUnitMeasure</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncWeightUnitMeasure(IEntity relatedEntity)
+		private void SetupSyncWeightUnitMeasure(IEntityCore relatedEntity)
 		{
 			if(_weightUnitMeasure!=relatedEntity)
 			{		
@@ -2160,16 +2160,16 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'BillOfMaterial' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathBillOfComponentMaterials
+		public static IPrefetchPathElement PrefetchPathBillOfAssemblyMaterials
 		{
-			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.BillOfMaterialCollection(), (IEntityRelation)GetRelationsForField("BillOfComponentMaterials")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.BillOfMaterialEntity, 0, null, null, null, "BillOfComponentMaterials", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.BillOfMaterialCollection(), (IEntityRelation)GetRelationsForField("BillOfAssemblyMaterials")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.BillOfMaterialEntity, 0, null, null, null, "BillOfAssemblyMaterials", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'BillOfMaterial' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathBillOfAssemblyMaterials
+		public static IPrefetchPathElement PrefetchPathBillOfComponentMaterials
 		{
-			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.BillOfMaterialCollection(), (IEntityRelation)GetRelationsForField("BillOfAssemblyMaterials")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.BillOfMaterialEntity, 0, null, null, null, "BillOfAssemblyMaterials", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.BillOfMaterialCollection(), (IEntityRelation)GetRelationsForField("BillOfComponentMaterials")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.BillOfMaterialEntity, 0, null, null, null, "BillOfComponentMaterials", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductCostHistory' for this entity.</summary>
@@ -2284,12 +2284,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.UnitMeasureCollection(), (IEntityRelation)GetRelationsForField("WeightUnitMeasure")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.UnitMeasureEntity, 0, null, null, null, "WeightUnitMeasure", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "ProductEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -2315,7 +2309,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Class property of the Entity Product<br/><br/>
-		/// MS_Description: H = High, M = Medium, L = Low<br/></summary>
+		/// MS_Description: H = High, M = Medium, L = Low<br/>H = High, M = Medium, L = Low</summary>
 		/// <remarks>Mapped on  table field: "Product"."Class"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2326,7 +2320,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Color property of the Entity Product<br/><br/>
-		/// MS_Description: Product color.<br/></summary>
+		/// MS_Description: Product color.<br/>Product color.</summary>
 		/// <remarks>Mapped on  table field: "Product"."Color"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2337,7 +2331,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DaysToManufacture property of the Entity Product<br/><br/>
-		/// MS_Description: Number of days required to manufacture the product.<br/></summary>
+		/// MS_Description: Number of days required to manufacture the product.<br/>Number of days required to manufacture the product.</summary>
 		/// <remarks>Mapped on  table field: "Product"."DaysToManufacture"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2348,7 +2342,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DiscontinuedDate property of the Entity Product<br/><br/>
-		/// MS_Description: Date the product was discontinued.<br/></summary>
+		/// MS_Description: Date the product was discontinued.<br/>Date the product was discontinued.</summary>
 		/// <remarks>Mapped on  table field: "Product"."DiscontinuedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2359,7 +2353,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The FinishedGoodsFlag property of the Entity Product<br/><br/>
-		/// MS_Description: 0 = Product is not a salable item. 1 = Product is salable.<br/></summary>
+		/// MS_Description: 0 = Product is not a salable item. 1 = Product is salable.<br/>0 = Product is not a salable item. 1 = Product is salable.</summary>
 		/// <remarks>Mapped on  table field: "Product"."FinishedGoodsFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2370,7 +2364,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ListPrice property of the Entity Product<br/><br/>
-		/// MS_Description: Selling price.<br/></summary>
+		/// MS_Description: Selling price.<br/>Selling price.</summary>
 		/// <remarks>Mapped on  table field: "Product"."ListPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2381,7 +2375,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MakeFlag property of the Entity Product<br/><br/>
-		/// MS_Description: 0 = Product is purchased, 1 = Product is manufactured in-house.<br/></summary>
+		/// MS_Description: 0 = Product is purchased, 1 = Product is manufactured in-house.<br/>0 = Product is purchased, 1 = Product is manufactured in-house.</summary>
 		/// <remarks>Mapped on  table field: "Product"."MakeFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2392,7 +2386,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Product<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Product"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2403,7 +2397,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity Product<br/><br/>
-		/// MS_Description: Name of the product.<br/></summary>
+		/// MS_Description: Name of the product.<br/>Name of the product.</summary>
 		/// <remarks>Mapped on  table field: "Product"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2414,7 +2408,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity Product<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -2425,7 +2419,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductLine property of the Entity Product<br/><br/>
-		/// MS_Description: R = Road, M = Mountain, T = Touring, S = Standard<br/></summary>
+		/// MS_Description: R = Road, M = Mountain, T = Touring, S = Standard<br/>R = Road, M = Mountain, T = Touring, S = Standard</summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductLine"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2436,7 +2430,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductModelID property of the Entity Product<br/><br/>
-		/// MS_Description: Product is a member of this product model. Foreign key to ProductModel.ProductModelID.<br/></summary>
+		/// MS_Description: Product is a member of this product model. Foreign key to ProductModel.ProductModelID.<br/>Product is a member of this product model. Foreign key to ProductModel.ProductModelID.</summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductModelID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2447,7 +2441,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductNumber property of the Entity Product<br/><br/>
-		/// MS_Description: Unique nonclustered index.<br/></summary>
+		/// MS_Description: Unique nonclustered index.<br/>Unique nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2458,7 +2452,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductSubcategoryID property of the Entity Product<br/><br/>
-		/// MS_Description: Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID. <br/></summary>
+		/// MS_Description: Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID. <br/>Product is a member of this product subcategory. Foreign key to ProductSubCategory.ProductSubCategoryID. </summary>
 		/// <remarks>Mapped on  table field: "Product"."ProductSubcategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2469,7 +2463,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReorderPoint property of the Entity Product<br/><br/>
-		/// MS_Description: Inventory level that triggers a purchase order or work order. <br/></summary>
+		/// MS_Description: Inventory level that triggers a purchase order or work order. <br/>Inventory level that triggers a purchase order or work order. </summary>
 		/// <remarks>Mapped on  table field: "Product"."ReorderPoint"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2480,7 +2474,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity Product<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "Product"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2491,7 +2485,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SafetyStockLevel property of the Entity Product<br/><br/>
-		/// MS_Description: Minimum inventory quantity. <br/></summary>
+		/// MS_Description: Minimum inventory quantity. <br/>Minimum inventory quantity. </summary>
 		/// <remarks>Mapped on  table field: "Product"."SafetyStockLevel"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2502,7 +2496,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SellEndDate property of the Entity Product<br/><br/>
-		/// MS_Description: Date the product was no longer available for sale.<br/></summary>
+		/// MS_Description: Date the product was no longer available for sale.<br/>Date the product was no longer available for sale.</summary>
 		/// <remarks>Mapped on  table field: "Product"."SellEndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2513,7 +2507,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SellStartDate property of the Entity Product<br/><br/>
-		/// MS_Description: Date the product was available for sale.<br/></summary>
+		/// MS_Description: Date the product was available for sale.<br/>Date the product was available for sale.</summary>
 		/// <remarks>Mapped on  table field: "Product"."SellStartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2524,7 +2518,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Size property of the Entity Product<br/><br/>
-		/// MS_Description: Product size.<br/></summary>
+		/// MS_Description: Product size.<br/>Product size.</summary>
 		/// <remarks>Mapped on  table field: "Product"."Size"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 5<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2535,7 +2529,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SizeUnitMeasureCode property of the Entity Product<br/><br/>
-		/// MS_Description: Unit of measure for Size column.<br/></summary>
+		/// MS_Description: Unit of measure for Size column.<br/>Unit of measure for Size column.</summary>
 		/// <remarks>Mapped on  table field: "Product"."SizeUnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2546,7 +2540,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StandardCost property of the Entity Product<br/><br/>
-		/// MS_Description: Standard cost of the product.<br/></summary>
+		/// MS_Description: Standard cost of the product.<br/>Standard cost of the product.</summary>
 		/// <remarks>Mapped on  table field: "Product"."StandardCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2557,7 +2551,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Style property of the Entity Product<br/><br/>
-		/// MS_Description: W = Womens, M = Mens, U = Universal<br/></summary>
+		/// MS_Description: W = Womens, M = Mens, U = Universal<br/>W = Womens, M = Mens, U = Universal</summary>
 		/// <remarks>Mapped on  table field: "Product"."Style"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2568,7 +2562,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Weight property of the Entity Product<br/><br/>
-		/// MS_Description: Product weight.<br/></summary>
+		/// MS_Description: Product weight.<br/>Product weight.</summary>
 		/// <remarks>Mapped on  table field: "Product"."Weight"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2579,7 +2573,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The WeightUnitMeasureCode property of the Entity Product<br/><br/>
-		/// MS_Description: Unit of measure for Weight column.<br/></summary>
+		/// MS_Description: Unit of measure for Weight column.<br/>Unit of measure for Weight column.</summary>
 		/// <remarks>Mapped on  table field: "Product"."WeightUnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2589,39 +2583,6 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)ProductFieldIndex.WeightUnitMeasureCode, value, true); }
 		}
 
-		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiBillOfComponentMaterials()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
-		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection BillOfComponentMaterials
-		{
-			get	{ return GetMultiBillOfComponentMaterials(false); }
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for BillOfComponentMaterials. When set to true, BillOfComponentMaterials is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time BillOfComponentMaterials is accessed. You can always execute/ a forced fetch by calling GetMultiBillOfComponentMaterials(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchBillOfComponentMaterials
-		{
-			get	{ return _alwaysFetchBillOfComponentMaterials; }
-			set	{ _alwaysFetchBillOfComponentMaterials = value; }	
-		}		
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property BillOfComponentMaterials already has been fetched. Setting this property to false when BillOfComponentMaterials has been fetched
-		/// will clear the BillOfComponentMaterials collection well. Setting this property to true while BillOfComponentMaterials hasn't been fetched disables lazy loading for BillOfComponentMaterials</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedBillOfComponentMaterials
-		{
-			get { return _alreadyFetchedBillOfComponentMaterials;}
-			set 
-			{
-				if(_alreadyFetchedBillOfComponentMaterials && !value && (_billOfComponentMaterials != null))
-				{
-					_billOfComponentMaterials.Clear();
-				}
-				_alreadyFetchedBillOfComponentMaterials = value;
-			}
-		}
 		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.<br/><br/>
 		/// </summary>
 		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiBillOfAssemblyMaterials()', because 
@@ -2653,6 +2614,39 @@ namespace AW.Data.EntityClasses
 					_billOfAssemblyMaterials.Clear();
 				}
 				_alreadyFetchedBillOfAssemblyMaterials = value;
+			}
+		}
+		/// <summary> Retrieves all related entities of type 'BillOfMaterialEntity' using a relation of type '1:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiBillOfComponentMaterials()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.BillOfMaterialCollection BillOfComponentMaterials
+		{
+			get	{ return GetMultiBillOfComponentMaterials(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for BillOfComponentMaterials. When set to true, BillOfComponentMaterials is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time BillOfComponentMaterials is accessed. You can always execute/ a forced fetch by calling GetMultiBillOfComponentMaterials(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchBillOfComponentMaterials
+		{
+			get	{ return _alwaysFetchBillOfComponentMaterials; }
+			set	{ _alwaysFetchBillOfComponentMaterials = value; }	
+		}		
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property BillOfComponentMaterials already has been fetched. Setting this property to false when BillOfComponentMaterials has been fetched
+		/// will clear the BillOfComponentMaterials collection well. Setting this property to true while BillOfComponentMaterials hasn't been fetched disables lazy loading for BillOfComponentMaterials</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedBillOfComponentMaterials
+		{
+			get { return _alreadyFetchedBillOfComponentMaterials;}
+			set 
+			{
+				if(_alreadyFetchedBillOfComponentMaterials && !value && (_billOfComponentMaterials != null))
+				{
+					_billOfComponentMaterials.Clear();
+				}
+				_alreadyFetchedBillOfComponentMaterials = value;
 			}
 		}
 		/// <summary> Retrieves all related entities of type 'ProductCostHistoryEntity' using a relation of type '1:n'.<br/><br/>

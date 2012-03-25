@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -79,14 +79,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public VendorEntity() : base()
+		public VendorEntity() :base("VendorEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="vendorID">PK value for Vendor which data should be fetched into this Vendor object</param>
-		public VendorEntity(System.Int32 vendorID)
+		public VendorEntity(System.Int32 vendorID):base("VendorEntity")
 		{
 			InitClassFetch(vendorID, null, null);
 		}
@@ -94,7 +94,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="vendorID">PK value for Vendor which data should be fetched into this Vendor object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public VendorEntity(System.Int32 vendorID, IPrefetchPath prefetchPathToUse)
+		public VendorEntity(System.Int32 vendorID, IPrefetchPath prefetchPathToUse):base("VendorEntity")
 		{
 			InitClassFetch(vendorID, null, prefetchPathToUse);
 		}
@@ -102,7 +102,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="vendorID">PK value for Vendor which data should be fetched into this Vendor object</param>
 		/// <param name="validator">The custom validator object for this VendorEntity</param>
-		public VendorEntity(System.Int32 vendorID, IValidator validator)
+		public VendorEntity(System.Int32 vendorID, IValidator validator):base("VendorEntity")
 		{
 			InitClassFetch(vendorID, validator, null);
 		}
@@ -134,7 +134,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedProductVendors = (_productVendors.Count > 0);
 			_alreadyFetchedPurchaseOrderHeaders = (_purchaseOrderHeaders.Count > 0);
@@ -207,7 +207,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -249,7 +249,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -275,7 +275,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -784,12 +784,6 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.VendorContactCollection(), (IEntityRelation)GetRelationsForField("VendorContacts")[0], (int)AW.Data.EntityType.VendorEntity, (int)AW.Data.EntityType.VendorContactEntity, 0, null, null, null, "VendorContacts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "VendorEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -815,7 +809,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AccountNumber property of the Entity Vendor<br/><br/>
-		/// MS_Description: Vendor account (identification) number.<br/></summary>
+		/// MS_Description: Vendor account (identification) number.<br/>Vendor account (identification) number.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."AccountNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -826,7 +820,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ActiveFlag property of the Entity Vendor<br/><br/>
-		/// MS_Description: 0 = Vendor no longer used. 1 = Vendor is actively used.<br/></summary>
+		/// MS_Description: 0 = Vendor no longer used. 1 = Vendor is actively used.<br/>0 = Vendor no longer used. 1 = Vendor is actively used.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."ActiveFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -837,7 +831,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CreditRating property of the Entity Vendor<br/><br/>
-		/// MS_Description: 1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average<br/></summary>
+		/// MS_Description: 1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average<br/>1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."CreditRating"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -848,7 +842,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Vendor<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -859,7 +853,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity Vendor<br/><br/>
-		/// MS_Description: Company name.<br/></summary>
+		/// MS_Description: Company name.<br/>Company name.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -870,7 +864,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PreferredVendorStatus property of the Entity Vendor<br/><br/>
-		/// MS_Description: 0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.<br/></summary>
+		/// MS_Description: 0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.<br/>0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."PreferredVendorStatus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -881,7 +875,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PurchasingWebServiceUrl property of the Entity Vendor<br/><br/>
-		/// MS_Description: Vendor URL.<br/></summary>
+		/// MS_Description: Vendor URL.<br/>Vendor URL.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."PurchasingWebServiceURL"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 1024<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -892,7 +886,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VendorID property of the Entity Vendor<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

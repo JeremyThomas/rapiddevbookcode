@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -71,7 +71,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public SalesTerritoryHistoryEntity() : base()
+		public SalesTerritoryHistoryEntity() :base("SalesTerritoryHistoryEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -80,7 +80,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="salesPersonID">PK value for SalesTerritoryHistory which data should be fetched into this SalesTerritoryHistory object</param>
 		/// <param name="startDate">PK value for SalesTerritoryHistory which data should be fetched into this SalesTerritoryHistory object</param>
 		/// <param name="territoryID">PK value for SalesTerritoryHistory which data should be fetched into this SalesTerritoryHistory object</param>
-		public SalesTerritoryHistoryEntity(System.Int32 salesPersonID, System.DateTime startDate, System.Int32 territoryID)
+		public SalesTerritoryHistoryEntity(System.Int32 salesPersonID, System.DateTime startDate, System.Int32 territoryID):base("SalesTerritoryHistoryEntity")
 		{
 			InitClassFetch(salesPersonID, startDate, territoryID, null, null);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="startDate">PK value for SalesTerritoryHistory which data should be fetched into this SalesTerritoryHistory object</param>
 		/// <param name="territoryID">PK value for SalesTerritoryHistory which data should be fetched into this SalesTerritoryHistory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesTerritoryHistoryEntity(System.Int32 salesPersonID, System.DateTime startDate, System.Int32 territoryID, IPrefetchPath prefetchPathToUse)
+		public SalesTerritoryHistoryEntity(System.Int32 salesPersonID, System.DateTime startDate, System.Int32 territoryID, IPrefetchPath prefetchPathToUse):base("SalesTerritoryHistoryEntity")
 		{
 			InitClassFetch(salesPersonID, startDate, territoryID, null, prefetchPathToUse);
 		}
@@ -100,7 +100,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="startDate">PK value for SalesTerritoryHistory which data should be fetched into this SalesTerritoryHistory object</param>
 		/// <param name="territoryID">PK value for SalesTerritoryHistory which data should be fetched into this SalesTerritoryHistory object</param>
 		/// <param name="validator">The custom validator object for this SalesTerritoryHistoryEntity</param>
-		public SalesTerritoryHistoryEntity(System.Int32 salesPersonID, System.DateTime startDate, System.Int32 territoryID, IValidator validator)
+		public SalesTerritoryHistoryEntity(System.Int32 salesPersonID, System.DateTime startDate, System.Int32 territoryID, IValidator validator):base("SalesTerritoryHistoryEntity")
 		{
 			InitClassFetch(salesPersonID, startDate, territoryID, validator, null);
 		}
@@ -154,7 +154,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedSalesPerson = (_salesPerson != null);
 			_alreadyFetchedSalesTerritory = (_salesTerritory != null);
@@ -215,7 +215,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -237,7 +237,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -257,7 +257,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -550,7 +550,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _salesPerson</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSalesPerson(IEntity relatedEntity)
+		private void SetupSyncSalesPerson(IEntityCore relatedEntity)
 		{
 			if(_salesPerson!=relatedEntity)
 			{		
@@ -583,7 +583,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _salesTerritory</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSalesTerritory(IEntity relatedEntity)
+		private void SetupSyncSalesTerritory(IEntityCore relatedEntity)
 		{
 			if(_salesTerritory!=relatedEntity)
 			{		
@@ -674,12 +674,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryCollection(), (IEntityRelation)GetRelationsForField("SalesTerritory")[0], (int)AW.Data.EntityType.SalesTerritoryHistoryEntity, (int)AW.Data.EntityType.SalesTerritoryEntity, 0, null, null, null, "SalesTerritory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "SalesTerritoryHistoryEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -705,7 +699,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndDate property of the Entity SalesTerritoryHistory<br/><br/>
-		/// MS_Description: Date the sales representative left work in the territory.<br/></summary>
+		/// MS_Description: Date the sales representative left work in the territory.<br/>Date the sales representative left work in the territory.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -716,7 +710,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesTerritoryHistory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -727,7 +721,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity SalesTerritoryHistory<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -738,7 +732,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesPersonID property of the Entity SalesTerritoryHistory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."SalesPersonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -749,7 +743,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartDate property of the Entity SalesTerritoryHistory<br/><br/>
-		/// MS_Description: Date the sales representive started work in the territory.<br/></summary>
+		/// MS_Description: Date the sales representive started work in the territory.<br/>Date the sales representive started work in the territory.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -760,7 +754,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TerritoryID property of the Entity SalesTerritoryHistory<br/><br/>
-		/// MS_Description: Territory identification number. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
+		/// MS_Description: Territory identification number. Foreign key to SalesTerritory.SalesTerritoryID.<br/>Territory identification number. Foreign key to SalesTerritory.SalesTerritoryID.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritoryHistory"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

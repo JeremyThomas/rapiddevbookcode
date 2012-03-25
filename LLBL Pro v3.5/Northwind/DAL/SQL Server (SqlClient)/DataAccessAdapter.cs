@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -12,7 +12,6 @@ using System.Collections;
 using System.Data;
 using System.Data.Common;
 using System.Configuration;
-using System.EnterpriseServices;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.DQE.SqlServer;
 
@@ -92,14 +91,7 @@ namespace Northwind.DAL.SqlServer
 		{
 			InitClassPhase2(connectionString, keepConnectionOpen, CatalogNameUsage.Default, SchemaNameUsage.Default, string.Empty, string.Empty, catalogNameOverwrites, schemaNameOverwrites);
 		}
-		/// <summary>CTor</summary>
-		/// <param name="comPlusContextHost">the COM+ context host for this adapter instance.</param>
-		internal DataAccessAdapter(IComPlusAdapterContext comPlusContextHost) : base(comPlusContextHost, PersistenceInfoProviderSingleton.GetInstance())
-		{
-			InitClassPhase2(ReadConnectionStringFromConfig(), false, CatalogNameUsage.Default, SchemaNameUsage.Default, string.Empty, String.Empty, null, null);
-		}
 
-#if !CF
 		/// <summary>Sets the flag to signal the SqlServer DQE to generate SET ARITHABORT ON statements prior to INSERT, DELETE and UPDATE Queries.
 		/// Keep this flag to false in normal usage, but set it to true if you need to write into a table which is part of an indexed view.
 		/// It will not affect normal inserts/updates that much, leaving it on is not harmful. See Books online for details on SET ARITHABORT ON.
@@ -119,7 +111,7 @@ namespace Northwind.DAL.SqlServer
 		{
 			DynamicQueryEngine.DefaultCompatibilityLevel = compatibilityLevel;
 		}
-#endif 
+
 		/// <summary>Creates a new Dynamic Query engine object and passes in the defined catalog/schema overwrite hashtables.</summary>
 		protected override DynamicQueryEngineBase CreateDynamicQueryEngine()
 		{
@@ -214,15 +206,5 @@ namespace Northwind.DAL.SqlServer
 		#region Included Code
 
 		#endregion
-	}
-
-	/// <summary>ComPlusAdapterContext class which is used in Adapter for hosting a COM+ aware DataAccessAdapter class. Use the hosted DataAccessAdapter class to start a new COM+ transaction.</summary>
-	public partial class ComPlusAdapterContext : ComPlusAdapterContextBase
-	{
-		/// <summary>CTor</summary>
-		public ComPlusAdapterContext()
-		{
-			this.SetAdapter(new DataAccessAdapter(this));
-		}
 	}
 }

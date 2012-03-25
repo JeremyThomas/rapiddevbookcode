@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -67,14 +67,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		internal TransactionHistoryEntity() : base()
+		internal TransactionHistoryEntity() :base("TransactionHistoryEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
-		internal TransactionHistoryEntity(System.Int32 transactionID)
+		internal TransactionHistoryEntity(System.Int32 transactionID):base("TransactionHistoryEntity")
 		{
 			InitClassFetch(transactionID, null, null);
 		}
@@ -82,7 +82,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		internal TransactionHistoryEntity(System.Int32 transactionID, IPrefetchPath prefetchPathToUse)
+		internal TransactionHistoryEntity(System.Int32 transactionID, IPrefetchPath prefetchPathToUse):base("TransactionHistoryEntity")
 		{
 			InitClassFetch(transactionID, null, prefetchPathToUse);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="transactionID">PK value for TransactionHistory which data should be fetched into this TransactionHistory object</param>
 		/// <param name="validator">The custom validator object for this TransactionHistoryEntity</param>
-		internal TransactionHistoryEntity(System.Int32 transactionID, IValidator validator)
+		internal TransactionHistoryEntity(System.Int32 transactionID, IValidator validator):base("TransactionHistoryEntity")
 		{
 			InitClassFetch(transactionID, validator, null);
 		}
@@ -131,7 +131,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedProduct = (_product != null);
 		}
@@ -199,7 +199,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -217,7 +217,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -234,7 +234,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -515,7 +515,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _product</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProduct(IEntity relatedEntity)
+		private void SetupSyncProduct(IEntityCore relatedEntity)
 		{
 			if(_product!=relatedEntity)
 			{		
@@ -595,12 +595,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("Product")[0], (int)AW.Data.EntityType.TransactionHistoryEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "Product", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "TransactionHistoryEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -626,7 +620,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ActualCost property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: Product cost.<br/></summary>
+		/// MS_Description: Product cost.<br/>Product cost.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ActualCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -637,7 +631,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -648,7 +642,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/>Product identification number. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -659,7 +653,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Quantity property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: Product quantity.<br/></summary>
+		/// MS_Description: Product quantity.<br/>Product quantity.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."Quantity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -670,7 +664,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReferenceOrderID property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ReferenceOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -681,7 +675,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReferenceOrderLineID property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: Line number associated with the purchase order, sales order, or work order.<br/></summary>
+		/// MS_Description: Line number associated with the purchase order, sales order, or work order.<br/>Line number associated with the purchase order, sales order, or work order.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."ReferenceOrderLineID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -692,7 +686,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TransactionDate property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: Date and time of the transaction.<br/></summary>
+		/// MS_Description: Date and time of the transaction.<br/>Date and time of the transaction.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."TransactionDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -703,7 +697,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TransactionID property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."TransactionID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -714,7 +708,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TransactionType property of the Entity TransactionHistory<br/><br/>
-		/// MS_Description: W = WorkOrder, S = SalesOrder, P = PurchaseOrder<br/></summary>
+		/// MS_Description: W = WorkOrder, S = SalesOrder, P = PurchaseOrder<br/>W = WorkOrder, S = SalesOrder, P = PurchaseOrder</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistory"."TransactionType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

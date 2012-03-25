@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -67,14 +67,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public SalesReasonEntity() : base()
+		public SalesReasonEntity() :base("SalesReasonEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="salesReasonID">PK value for SalesReason which data should be fetched into this SalesReason object</param>
-		public SalesReasonEntity(System.Int32 salesReasonID)
+		public SalesReasonEntity(System.Int32 salesReasonID):base("SalesReasonEntity")
 		{
 			InitClassFetch(salesReasonID, null, null);
 		}
@@ -82,7 +82,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="salesReasonID">PK value for SalesReason which data should be fetched into this SalesReason object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesReasonEntity(System.Int32 salesReasonID, IPrefetchPath prefetchPathToUse)
+		public SalesReasonEntity(System.Int32 salesReasonID, IPrefetchPath prefetchPathToUse):base("SalesReasonEntity")
 		{
 			InitClassFetch(salesReasonID, null, prefetchPathToUse);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="salesReasonID">PK value for SalesReason which data should be fetched into this SalesReason object</param>
 		/// <param name="validator">The custom validator object for this SalesReasonEntity</param>
-		public SalesReasonEntity(System.Int32 salesReasonID, IValidator validator)
+		public SalesReasonEntity(System.Int32 salesReasonID, IValidator validator):base("SalesReasonEntity")
 		{
 			InitClassFetch(salesReasonID, validator, null);
 		}
@@ -110,7 +110,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedSalesOrderHeaderSalesReasons = (_salesOrderHeaderSalesReasons.Count > 0);
 		}
@@ -162,7 +162,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -183,7 +183,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -200,7 +200,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -487,12 +487,6 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderSalesReasonCollection(), (IEntityRelation)GetRelationsForField("SalesOrderHeaderSalesReasons")[0], (int)AW.Data.EntityType.SalesReasonEntity, (int)AW.Data.EntityType.SalesOrderHeaderSalesReasonEntity, 0, null, null, null, "SalesOrderHeaderSalesReasons", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "SalesReasonEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -518,7 +512,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesReason<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -529,7 +523,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity SalesReason<br/><br/>
-		/// MS_Description: Sales reason description.<br/></summary>
+		/// MS_Description: Sales reason description.<br/>Sales reason description.</summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -540,7 +534,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReasonType property of the Entity SalesReason<br/><br/>
-		/// MS_Description: Category the sales reason belongs to.<br/></summary>
+		/// MS_Description: Category the sales reason belongs to.<br/>Category the sales reason belongs to.</summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."ReasonType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -551,7 +545,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesReasonID property of the Entity SalesReason<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."SalesReasonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

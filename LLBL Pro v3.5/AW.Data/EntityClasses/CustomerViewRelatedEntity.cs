@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -67,14 +67,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public CustomerViewRelatedEntity() : base()
+		public CustomerViewRelatedEntity() :base("CustomerViewRelatedEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="customerId">PK value for CustomerViewRelated which data should be fetched into this CustomerViewRelated object</param>
-		public CustomerViewRelatedEntity(System.Int32 customerId)
+		public CustomerViewRelatedEntity(System.Int32 customerId):base("CustomerViewRelatedEntity")
 		{
 			InitClassFetch(customerId, null, null);
 		}
@@ -82,7 +82,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="customerId">PK value for CustomerViewRelated which data should be fetched into this CustomerViewRelated object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public CustomerViewRelatedEntity(System.Int32 customerId, IPrefetchPath prefetchPathToUse)
+		public CustomerViewRelatedEntity(System.Int32 customerId, IPrefetchPath prefetchPathToUse):base("CustomerViewRelatedEntity")
 		{
 			InitClassFetch(customerId, null, prefetchPathToUse);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="customerId">PK value for CustomerViewRelated which data should be fetched into this CustomerViewRelated object</param>
 		/// <param name="validator">The custom validator object for this CustomerViewRelatedEntity</param>
-		public CustomerViewRelatedEntity(System.Int32 customerId, IValidator validator)
+		public CustomerViewRelatedEntity(System.Int32 customerId, IValidator validator):base("CustomerViewRelatedEntity")
 		{
 			InitClassFetch(customerId, validator, null);
 		}
@@ -110,7 +110,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedSalesOrderHeader = (_salesOrderHeader.Count > 0);
 		}
@@ -162,7 +162,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -183,7 +183,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -200,7 +200,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -509,12 +509,6 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderCollection(), (IEntityRelation)GetRelationsForField("SalesOrderHeader")[0], (int)AW.Data.EntityType.CustomerViewRelatedEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, null, "SalesOrderHeader", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "CustomerViewRelatedEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>

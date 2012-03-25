@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -64,9 +64,10 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public SalesOrderHistoryEntity() : base()
+		public SalesOrderHistoryEntity() 
 		{
 			InitClassEmpty(null);
+			SetName("SalesOrderHistoryEntity");
 		}
 		
 		/// <summary>CTor</summary>
@@ -74,6 +75,7 @@ namespace AW.Data.EntityClasses
 		public SalesOrderHistoryEntity(System.Int32 transactionID):base(transactionID)
 		{
 			InitClassFetch(transactionID, null, null);
+			SetName("SalesOrderHistoryEntity");
 		}
 
 		/// <summary>CTor</summary>
@@ -82,6 +84,7 @@ namespace AW.Data.EntityClasses
 		public SalesOrderHistoryEntity(System.Int32 transactionID, IPrefetchPath prefetchPathToUse):base(transactionID, prefetchPathToUse)
 		{
 			InitClassFetch(transactionID, null, prefetchPathToUse);
+			SetName("SalesOrderHistoryEntity");
 		}
 
 		/// <summary>CTor</summary>
@@ -90,6 +93,7 @@ namespace AW.Data.EntityClasses
 		public SalesOrderHistoryEntity(System.Int32 transactionID, IValidator validator):base(transactionID, validator)
 		{
 			InitClassFetch(transactionID, validator, null);
+			SetName("SalesOrderHistoryEntity");
 		}
 
 		/// <summary>Private CTor for deserialization</summary>
@@ -104,7 +108,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 		}
 				
@@ -165,7 +169,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -179,7 +183,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -194,7 +198,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -361,12 +365,6 @@ namespace AW.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "SalesOrderHistoryEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
