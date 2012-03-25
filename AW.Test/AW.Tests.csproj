@@ -75,6 +75,7 @@
     </Reference>
     <Reference Include="SD.LLBLGen.Pro.QuerySpec, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
       <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="sliver.Windows.Forms.StateBrowser, Version=2.0.0.0, Culture=neutral, PublicKeyToken=34afe62596d00324, processorArchitecture=MSIL" />
     <Reference Include="System" />
