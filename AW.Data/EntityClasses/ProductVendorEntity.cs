@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -75,7 +75,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public ProductVendorEntity() : base()
+		public ProductVendorEntity() :base("ProductVendorEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -83,7 +83,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="productID">PK value for ProductVendor which data should be fetched into this ProductVendor object</param>
 		/// <param name="vendorID">PK value for ProductVendor which data should be fetched into this ProductVendor object</param>
-		public ProductVendorEntity(System.Int32 productID, System.Int32 vendorID)
+		public ProductVendorEntity(System.Int32 productID, System.Int32 vendorID):base("ProductVendorEntity")
 		{
 			InitClassFetch(productID, vendorID, null, null);
 		}
@@ -92,7 +92,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="productID">PK value for ProductVendor which data should be fetched into this ProductVendor object</param>
 		/// <param name="vendorID">PK value for ProductVendor which data should be fetched into this ProductVendor object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ProductVendorEntity(System.Int32 productID, System.Int32 vendorID, IPrefetchPath prefetchPathToUse)
+		public ProductVendorEntity(System.Int32 productID, System.Int32 vendorID, IPrefetchPath prefetchPathToUse):base("ProductVendorEntity")
 		{
 			InitClassFetch(productID, vendorID, null, prefetchPathToUse);
 		}
@@ -101,7 +101,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="productID">PK value for ProductVendor which data should be fetched into this ProductVendor object</param>
 		/// <param name="vendorID">PK value for ProductVendor which data should be fetched into this ProductVendor object</param>
 		/// <param name="validator">The custom validator object for this ProductVendorEntity</param>
-		public ProductVendorEntity(System.Int32 productID, System.Int32 vendorID, IValidator validator)
+		public ProductVendorEntity(System.Int32 productID, System.Int32 vendorID, IValidator validator):base("ProductVendorEntity")
 		{
 			InitClassFetch(productID, vendorID, validator, null);
 		}
@@ -168,7 +168,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedProduct = (_product != null);
 			_alreadyFetchedUnitMeasure = (_unitMeasure != null);
@@ -237,7 +237,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -263,7 +263,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -286,7 +286,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -639,7 +639,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _product</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProduct(IEntity relatedEntity)
+		private void SetupSyncProduct(IEntityCore relatedEntity)
 		{
 			if(_product!=relatedEntity)
 			{		
@@ -672,7 +672,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _unitMeasure</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncUnitMeasure(IEntity relatedEntity)
+		private void SetupSyncUnitMeasure(IEntityCore relatedEntity)
 		{
 			if(_unitMeasure!=relatedEntity)
 			{		
@@ -705,7 +705,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _vendor</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncVendor(IEntity relatedEntity)
+		private void SetupSyncVendor(IEntityCore relatedEntity)
 		{
 			if(_vendor!=relatedEntity)
 			{		
@@ -801,12 +801,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.VendorCollection(), (IEntityRelation)GetRelationsForField("Vendor")[0], (int)AW.Data.EntityType.ProductVendorEntity, (int)AW.Data.EntityType.VendorEntity, 0, null, null, null, "Vendor", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "ProductVendorEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -832,7 +826,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AverageLeadTime property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."AverageLeadTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -843,7 +837,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LastReceiptCost property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The selling price when last purchased.<br/></summary>
+		/// MS_Description: The selling price when last purchased.<br/>The selling price when last purchased.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."LastReceiptCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -854,7 +848,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LastReceiptDate property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Date the product was last received by the vendor.<br/></summary>
+		/// MS_Description: Date the product was last received by the vendor.<br/>Date the product was last received by the vendor.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."LastReceiptDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -865,7 +859,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MaxOrderQuantity property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The minimum quantity that should be ordered.<br/></summary>
+		/// MS_Description: The minimum quantity that should be ordered.<br/>The minimum quantity that should be ordered.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."MaxOrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -876,7 +870,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MinOrderQuantity property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The maximum quantity that should be ordered.<br/></summary>
+		/// MS_Description: The maximum quantity that should be ordered.<br/>The maximum quantity that should be ordered.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."MinOrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -887,7 +881,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -898,7 +892,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OnOrderQuantity property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The quantity currently on order.<br/></summary>
+		/// MS_Description: The quantity currently on order.<br/>The quantity currently on order.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."OnOrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -909,7 +903,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -920,7 +914,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StandardPrice property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The vendor's usual selling price.<br/></summary>
+		/// MS_Description: The vendor's usual selling price.<br/>The vendor's usual selling price.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."StandardPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -931,7 +925,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UnitMeasureCode property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The product's unit of measure.<br/></summary>
+		/// MS_Description: The product's unit of measure.<br/>The product's unit of measure.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."UnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -942,7 +936,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VendorID property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Primary key. Foreign key to Vendor.VendorID.<br/></summary>
+		/// MS_Description: Primary key. Foreign key to Vendor.VendorID.<br/>Primary key. Foreign key to Vendor.VendorID.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

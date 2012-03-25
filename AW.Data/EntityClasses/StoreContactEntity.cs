@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -75,7 +75,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public StoreContactEntity() : base()
+		public StoreContactEntity() :base("StoreContactEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -83,7 +83,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="contactID">PK value for StoreContact which data should be fetched into this StoreContact object</param>
 		/// <param name="customerID">PK value for StoreContact which data should be fetched into this StoreContact object</param>
-		public StoreContactEntity(System.Int32 contactID, System.Int32 customerID)
+		public StoreContactEntity(System.Int32 contactID, System.Int32 customerID):base("StoreContactEntity")
 		{
 			InitClassFetch(contactID, customerID, null, null);
 		}
@@ -92,7 +92,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="contactID">PK value for StoreContact which data should be fetched into this StoreContact object</param>
 		/// <param name="customerID">PK value for StoreContact which data should be fetched into this StoreContact object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public StoreContactEntity(System.Int32 contactID, System.Int32 customerID, IPrefetchPath prefetchPathToUse)
+		public StoreContactEntity(System.Int32 contactID, System.Int32 customerID, IPrefetchPath prefetchPathToUse):base("StoreContactEntity")
 		{
 			InitClassFetch(contactID, customerID, null, prefetchPathToUse);
 		}
@@ -101,7 +101,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="contactID">PK value for StoreContact which data should be fetched into this StoreContact object</param>
 		/// <param name="customerID">PK value for StoreContact which data should be fetched into this StoreContact object</param>
 		/// <param name="validator">The custom validator object for this StoreContactEntity</param>
-		public StoreContactEntity(System.Int32 contactID, System.Int32 customerID, IValidator validator)
+		public StoreContactEntity(System.Int32 contactID, System.Int32 customerID, IValidator validator):base("StoreContactEntity")
 		{
 			InitClassFetch(contactID, customerID, validator, null);
 		}
@@ -168,7 +168,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedContact = (_contact != null);
 			_alreadyFetchedContactType = (_contactType != null);
@@ -237,7 +237,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -263,7 +263,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -286,7 +286,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -621,7 +621,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _contact</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncContact(IEntity relatedEntity)
+		private void SetupSyncContact(IEntityCore relatedEntity)
 		{
 			if(_contact!=relatedEntity)
 			{		
@@ -654,7 +654,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _contactType</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncContactType(IEntity relatedEntity)
+		private void SetupSyncContactType(IEntityCore relatedEntity)
 		{
 			if(_contactType!=relatedEntity)
 			{		
@@ -687,7 +687,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _store</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncStore(IEntity relatedEntity)
+		private void SetupSyncStore(IEntityCore relatedEntity)
 		{
 			if(_store!=relatedEntity)
 			{		
@@ -783,12 +783,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.StoreCollection(), (IEntityRelation)GetRelationsForField("Store")[0], (int)AW.Data.EntityType.StoreContactEntity, (int)AW.Data.EntityType.StoreEntity, 0, null, null, null, "Store", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "StoreContactEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -814,7 +808,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ContactID property of the Entity StoreContact<br/><br/>
-		/// MS_Description: Contact (store employee) identification number. Foreign key to Contact.ContactID.<br/></summary>
+		/// MS_Description: Contact (store employee) identification number. Foreign key to Contact.ContactID.<br/>Contact (store employee) identification number. Foreign key to Contact.ContactID.</summary>
 		/// <remarks>Mapped on  table field: "StoreContact"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -825,7 +819,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ContactTypeID property of the Entity StoreContact<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "StoreContact"."ContactTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -836,7 +830,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CustomerID property of the Entity StoreContact<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "StoreContact"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -847,7 +841,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity StoreContact<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "StoreContact"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -858,7 +852,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity StoreContact<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "StoreContact"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

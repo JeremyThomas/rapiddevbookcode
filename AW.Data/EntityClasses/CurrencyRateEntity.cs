@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -75,14 +75,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public CurrencyRateEntity() : base()
+		public CurrencyRateEntity() :base("CurrencyRateEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
-		public CurrencyRateEntity(System.Int32 currencyRateID)
+		public CurrencyRateEntity(System.Int32 currencyRateID):base("CurrencyRateEntity")
 		{
 			InitClassFetch(currencyRateID, null, null);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public CurrencyRateEntity(System.Int32 currencyRateID, IPrefetchPath prefetchPathToUse)
+		public CurrencyRateEntity(System.Int32 currencyRateID, IPrefetchPath prefetchPathToUse):base("CurrencyRateEntity")
 		{
 			InitClassFetch(currencyRateID, null, prefetchPathToUse);
 		}
@@ -98,7 +98,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="currencyRateID">PK value for CurrencyRate which data should be fetched into this CurrencyRate object</param>
 		/// <param name="validator">The custom validator object for this CurrencyRateEntity</param>
-		public CurrencyRateEntity(System.Int32 currencyRateID, IValidator validator)
+		public CurrencyRateEntity(System.Int32 currencyRateID, IValidator validator):base("CurrencyRateEntity")
 		{
 			InitClassFetch(currencyRateID, validator, null);
 		}
@@ -155,7 +155,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
 			_alreadyFetchedCurrency = (_currency != null);
@@ -223,7 +223,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -252,7 +252,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -275,7 +275,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -623,7 +623,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _currency</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCurrency(IEntity relatedEntity)
+		private void SetupSyncCurrency(IEntityCore relatedEntity)
 		{
 			if(_currency!=relatedEntity)
 			{		
@@ -656,7 +656,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _currency_</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCurrency_(IEntity relatedEntity)
+		private void SetupSyncCurrency_(IEntityCore relatedEntity)
 		{
 			if(_currency_!=relatedEntity)
 			{		
@@ -750,12 +750,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.CurrencyCollection(), (IEntityRelation)GetRelationsForField("Currency_")[0], (int)AW.Data.EntityType.CurrencyRateEntity, (int)AW.Data.EntityType.CurrencyEntity, 0, null, null, null, "Currency_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "CurrencyRateEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -781,7 +775,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AverageRate property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Average exchange rate for the day.<br/></summary>
+		/// MS_Description: Average exchange rate for the day.<br/>Average exchange rate for the day.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."AverageRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -792,7 +786,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CurrencyRateDate property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Date and time the exchange rate was obtained.<br/></summary>
+		/// MS_Description: Date and time the exchange rate was obtained.<br/>Date and time the exchange rate was obtained.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."CurrencyRateDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -803,7 +797,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CurrencyRateID property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."CurrencyRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -814,7 +808,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndOfDayRate property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Final exchange rate for the day.<br/></summary>
+		/// MS_Description: Final exchange rate for the day.<br/>Final exchange rate for the day.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."EndOfDayRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -825,7 +819,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The FromCurrencyCode property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Exchange rate was converted from this currency code.<br/></summary>
+		/// MS_Description: Exchange rate was converted from this currency code.<br/>Exchange rate was converted from this currency code.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."FromCurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -836,7 +830,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -847,7 +841,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ToCurrencyCode property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Exchange rate was converted to this currency code.<br/></summary>
+		/// MS_Description: Exchange rate was converted to this currency code.<br/>Exchange rate was converted to this currency code.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."ToCurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

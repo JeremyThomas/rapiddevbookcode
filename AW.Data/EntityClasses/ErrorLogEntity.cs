@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -63,14 +63,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public ErrorLogEntity() : base()
+		public ErrorLogEntity() :base("ErrorLogEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="errorLogID">PK value for ErrorLog which data should be fetched into this ErrorLog object</param>
-		public ErrorLogEntity(System.Int32 errorLogID)
+		public ErrorLogEntity(System.Int32 errorLogID):base("ErrorLogEntity")
 		{
 			InitClassFetch(errorLogID, null, null);
 		}
@@ -78,7 +78,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="errorLogID">PK value for ErrorLog which data should be fetched into this ErrorLog object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ErrorLogEntity(System.Int32 errorLogID, IPrefetchPath prefetchPathToUse)
+		public ErrorLogEntity(System.Int32 errorLogID, IPrefetchPath prefetchPathToUse):base("ErrorLogEntity")
 		{
 			InitClassFetch(errorLogID, null, prefetchPathToUse);
 		}
@@ -86,7 +86,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="errorLogID">PK value for ErrorLog which data should be fetched into this ErrorLog object</param>
 		/// <param name="validator">The custom validator object for this ErrorLogEntity</param>
-		public ErrorLogEntity(System.Int32 errorLogID, IValidator validator)
+		public ErrorLogEntity(System.Int32 errorLogID, IValidator validator):base("ErrorLogEntity")
 		{
 			InitClassFetch(errorLogID, validator, null);
 		}
@@ -103,7 +103,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 		}
 				
@@ -148,7 +148,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -162,7 +162,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -176,7 +176,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -409,12 +409,6 @@ namespace AW.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "ErrorLogEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -440,7 +434,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorLine property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The line number at which the error occurred.<br/></summary>
+		/// MS_Description: The line number at which the error occurred.<br/>The line number at which the error occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorLine"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -451,7 +445,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorLogID property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorLogID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -462,7 +456,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorMessage property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The message text of the error that occurred.<br/></summary>
+		/// MS_Description: The message text of the error that occurred.<br/>The message text of the error that occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorMessage"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 4000<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -473,7 +467,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorNumber property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The error number of the error that occurred.<br/></summary>
+		/// MS_Description: The error number of the error that occurred.<br/>The error number of the error that occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -484,7 +478,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorProcedure property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The name of the stored procedure or trigger where the error occurred.<br/></summary>
+		/// MS_Description: The name of the stored procedure or trigger where the error occurred.<br/>The name of the stored procedure or trigger where the error occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorProcedure"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 126<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -495,7 +489,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorSeverity property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The severity of the error that occurred.<br/></summary>
+		/// MS_Description: The severity of the error that occurred.<br/>The severity of the error that occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorSeverity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -506,7 +500,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorState property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The state number of the error that occurred.<br/></summary>
+		/// MS_Description: The state number of the error that occurred.<br/>The state number of the error that occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorState"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -517,7 +511,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorTime property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The date and time at which the error occurred.<br/></summary>
+		/// MS_Description: The date and time at which the error occurred.<br/>The date and time at which the error occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -528,7 +522,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UserName property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The user who executed the batch in which the error occurred.<br/></summary>
+		/// MS_Description: The user who executed the batch in which the error occurred.<br/>The user who executed the batch in which the error occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."UserName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

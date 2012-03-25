@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -71,7 +71,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public SalesOrderDetailEntity() : base()
+		public SalesOrderDetailEntity() :base("SalesOrderDetailEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -79,7 +79,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
-		public SalesOrderDetailEntity(System.Int32 salesOrderDetailID, System.Int32 salesOrderID)
+		public SalesOrderDetailEntity(System.Int32 salesOrderDetailID, System.Int32 salesOrderID):base("SalesOrderDetailEntity")
 		{
 			InitClassFetch(salesOrderDetailID, salesOrderID, null, null);
 		}
@@ -88,7 +88,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesOrderDetailEntity(System.Int32 salesOrderDetailID, System.Int32 salesOrderID, IPrefetchPath prefetchPathToUse)
+		public SalesOrderDetailEntity(System.Int32 salesOrderDetailID, System.Int32 salesOrderID, IPrefetchPath prefetchPathToUse):base("SalesOrderDetailEntity")
 		{
 			InitClassFetch(salesOrderDetailID, salesOrderID, null, prefetchPathToUse);
 		}
@@ -97,7 +97,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="salesOrderDetailID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="salesOrderID">PK value for SalesOrderDetail which data should be fetched into this SalesOrderDetail object</param>
 		/// <param name="validator">The custom validator object for this SalesOrderDetailEntity</param>
-		public SalesOrderDetailEntity(System.Int32 salesOrderDetailID, System.Int32 salesOrderID, IValidator validator)
+		public SalesOrderDetailEntity(System.Int32 salesOrderDetailID, System.Int32 salesOrderID, IValidator validator):base("SalesOrderDetailEntity")
 		{
 			InitClassFetch(salesOrderDetailID, salesOrderID, validator, null);
 		}
@@ -155,7 +155,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedSalesOrderHeader = (_salesOrderHeader != null);
 			_alreadyFetchedSpecialOfferProduct = (_specialOfferProduct != null);
@@ -216,7 +216,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -238,7 +238,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -258,7 +258,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -561,7 +561,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _salesOrderHeader</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSalesOrderHeader(IEntity relatedEntity)
+		private void SetupSyncSalesOrderHeader(IEntityCore relatedEntity)
 		{
 			if(_salesOrderHeader!=relatedEntity)
 			{		
@@ -594,7 +594,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _specialOfferProduct</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSpecialOfferProduct(IEntity relatedEntity)
+		private void SetupSyncSpecialOfferProduct(IEntityCore relatedEntity)
 		{
 			if(_specialOfferProduct!=relatedEntity)
 			{		
@@ -683,12 +683,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.SpecialOfferProductCollection(), (IEntityRelation)GetRelationsForField("SpecialOfferProduct")[0], (int)AW.Data.EntityType.SalesOrderDetailEntity, (int)AW.Data.EntityType.SpecialOfferProductEntity, 0, null, null, null, "SpecialOfferProduct", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "SalesOrderDetailEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -714,7 +708,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CarrierTrackingNumber property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."CarrierTrackingNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -725,7 +719,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LineTotal property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.<br/></summary>
+		/// MS_Description: Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.<br/>Per product subtotal. Computed as UnitPrice * (1 - UnitPriceDiscount) * OrderQty.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."LineTotal"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 38, 6, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -736,7 +730,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -747,7 +741,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OrderQty property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Quantity ordered per product.<br/></summary>
+		/// MS_Description: Quantity ordered per product.<br/>Quantity ordered per product.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."OrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -758,7 +752,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Product sold to customer. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Product sold to customer. Foreign key to Product.ProductID.<br/>Product sold to customer. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -769,7 +763,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -780,7 +774,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesOrderDetailID property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Primary key. One incremental unique number per product sold.<br/></summary>
+		/// MS_Description: Primary key. One incremental unique number per product sold.<br/>Primary key. One incremental unique number per product sold.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SalesOrderDetailID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -791,7 +785,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesOrderID property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SalesOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -802,7 +796,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SpecialOfferID property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Promotional code. Foreign key to SpecialOffer.SpecialOfferID.<br/></summary>
+		/// MS_Description: Promotional code. Foreign key to SpecialOffer.SpecialOfferID.<br/>Promotional code. Foreign key to SpecialOffer.SpecialOfferID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."SpecialOfferID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -813,7 +807,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UnitPrice property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Selling price of a single product.<br/></summary>
+		/// MS_Description: Selling price of a single product.<br/>Selling price of a single product.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."UnitPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -824,7 +818,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UnitPriceDiscount property of the Entity SalesOrderDetail<br/><br/>
-		/// MS_Description: Discount amount.<br/></summary>
+		/// MS_Description: Discount amount.<br/>Discount amount.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderDetail"."UnitPriceDiscount"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

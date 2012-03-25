@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -75,14 +75,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public WorkOrderEntity() : base()
+		public WorkOrderEntity() :base("WorkOrderEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="workOrderID">PK value for WorkOrder which data should be fetched into this WorkOrder object</param>
-		public WorkOrderEntity(System.Int32 workOrderID)
+		public WorkOrderEntity(System.Int32 workOrderID):base("WorkOrderEntity")
 		{
 			InitClassFetch(workOrderID, null, null);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="workOrderID">PK value for WorkOrder which data should be fetched into this WorkOrder object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public WorkOrderEntity(System.Int32 workOrderID, IPrefetchPath prefetchPathToUse)
+		public WorkOrderEntity(System.Int32 workOrderID, IPrefetchPath prefetchPathToUse):base("WorkOrderEntity")
 		{
 			InitClassFetch(workOrderID, null, prefetchPathToUse);
 		}
@@ -98,7 +98,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="workOrderID">PK value for WorkOrder which data should be fetched into this WorkOrder object</param>
 		/// <param name="validator">The custom validator object for this WorkOrderEntity</param>
-		public WorkOrderEntity(System.Int32 workOrderID, IValidator validator)
+		public WorkOrderEntity(System.Int32 workOrderID, IValidator validator):base("WorkOrderEntity")
 		{
 			InitClassFetch(workOrderID, validator, null);
 		}
@@ -155,7 +155,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedWorkOrderRoutings = (_workOrderRoutings.Count > 0);
 			_alreadyFetchedProduct = (_product != null);
@@ -223,7 +223,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -252,7 +252,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -275,7 +275,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -632,7 +632,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _product</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProduct(IEntity relatedEntity)
+		private void SetupSyncProduct(IEntityCore relatedEntity)
 		{
 			if(_product!=relatedEntity)
 			{		
@@ -665,7 +665,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _scrapReason</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncScrapReason(IEntity relatedEntity)
+		private void SetupSyncScrapReason(IEntityCore relatedEntity)
 		{
 			if(_scrapReason!=relatedEntity)
 			{		
@@ -759,12 +759,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ScrapReasonCollection(), (IEntityRelation)GetRelationsForField("ScrapReason")[0], (int)AW.Data.EntityType.WorkOrderEntity, (int)AW.Data.EntityType.ScrapReasonEntity, 0, null, null, null, "ScrapReason", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "WorkOrderEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -790,7 +784,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DueDate property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Work order due date.<br/></summary>
+		/// MS_Description: Work order due date.<br/>Work order due date.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."DueDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -801,7 +795,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndDate property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Work order end date.<br/></summary>
+		/// MS_Description: Work order end date.<br/>Work order end date.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -812,7 +806,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -823,7 +817,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OrderQuantity property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."OrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -834,7 +828,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/>Product identification number. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -845,7 +839,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ScrappedQuantity property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Quantity that failed inspection.<br/></summary>
+		/// MS_Description: Quantity that failed inspection.<br/>Quantity that failed inspection.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."ScrappedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -856,7 +850,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ScrapReasonID property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Reason for inspection failure.<br/></summary>
+		/// MS_Description: Reason for inspection failure.<br/>Reason for inspection failure.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."ScrapReasonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -867,7 +861,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartDate property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Work order start date.<br/></summary>
+		/// MS_Description: Work order start date.<br/>Work order start date.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -878,7 +872,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StockedQuantity property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Quantity built and put in inventory.<br/></summary>
+		/// MS_Description: Quantity built and put in inventory.<br/>Quantity built and put in inventory.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."StockedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -889,7 +883,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The WorkOrderID property of the Entity WorkOrder<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrder"."WorkOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

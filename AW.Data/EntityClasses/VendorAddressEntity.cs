@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -75,7 +75,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public VendorAddressEntity() : base()
+		public VendorAddressEntity() :base("VendorAddressEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -83,7 +83,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="addressID">PK value for VendorAddress which data should be fetched into this VendorAddress object</param>
 		/// <param name="vendorID">PK value for VendorAddress which data should be fetched into this VendorAddress object</param>
-		public VendorAddressEntity(System.Int32 addressID, System.Int32 vendorID)
+		public VendorAddressEntity(System.Int32 addressID, System.Int32 vendorID):base("VendorAddressEntity")
 		{
 			InitClassFetch(addressID, vendorID, null, null);
 		}
@@ -92,7 +92,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="addressID">PK value for VendorAddress which data should be fetched into this VendorAddress object</param>
 		/// <param name="vendorID">PK value for VendorAddress which data should be fetched into this VendorAddress object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public VendorAddressEntity(System.Int32 addressID, System.Int32 vendorID, IPrefetchPath prefetchPathToUse)
+		public VendorAddressEntity(System.Int32 addressID, System.Int32 vendorID, IPrefetchPath prefetchPathToUse):base("VendorAddressEntity")
 		{
 			InitClassFetch(addressID, vendorID, null, prefetchPathToUse);
 		}
@@ -101,7 +101,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="addressID">PK value for VendorAddress which data should be fetched into this VendorAddress object</param>
 		/// <param name="vendorID">PK value for VendorAddress which data should be fetched into this VendorAddress object</param>
 		/// <param name="validator">The custom validator object for this VendorAddressEntity</param>
-		public VendorAddressEntity(System.Int32 addressID, System.Int32 vendorID, IValidator validator)
+		public VendorAddressEntity(System.Int32 addressID, System.Int32 vendorID, IValidator validator):base("VendorAddressEntity")
 		{
 			InitClassFetch(addressID, vendorID, validator, null);
 		}
@@ -168,7 +168,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedAddress = (_address != null);
 			_alreadyFetchedAddressType = (_addressType != null);
@@ -237,7 +237,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -263,7 +263,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -286,7 +286,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -618,7 +618,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _address</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncAddress(IEntity relatedEntity)
+		private void SetupSyncAddress(IEntityCore relatedEntity)
 		{
 			if(_address!=relatedEntity)
 			{		
@@ -651,7 +651,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _addressType</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncAddressType(IEntity relatedEntity)
+		private void SetupSyncAddressType(IEntityCore relatedEntity)
 		{
 			if(_addressType!=relatedEntity)
 			{		
@@ -684,7 +684,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _vendor</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncVendor(IEntity relatedEntity)
+		private void SetupSyncVendor(IEntityCore relatedEntity)
 		{
 			if(_vendor!=relatedEntity)
 			{		
@@ -780,12 +780,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.VendorCollection(), (IEntityRelation)GetRelationsForField("Vendor")[0], (int)AW.Data.EntityType.VendorAddressEntity, (int)AW.Data.EntityType.VendorEntity, 0, null, null, null, "Vendor", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "VendorAddressEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -811,7 +805,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AddressID property of the Entity VendorAddress<br/><br/>
-		/// MS_Description: Primary key. Foreign key to Address.AddressID.<br/></summary>
+		/// MS_Description: Primary key. Foreign key to Address.AddressID.<br/>Primary key. Foreign key to Address.AddressID.</summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."AddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -822,7 +816,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AddressTypeID property of the Entity VendorAddress<br/><br/>
-		/// MS_Description: Address type. Foreign key to AddressType.AddressTypeID.<br/></summary>
+		/// MS_Description: Address type. Foreign key to AddressType.AddressTypeID.<br/>Address type. Foreign key to AddressType.AddressTypeID.</summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."AddressTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -833,7 +827,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity VendorAddress<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -844,7 +838,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VendorID property of the Entity VendorAddress<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

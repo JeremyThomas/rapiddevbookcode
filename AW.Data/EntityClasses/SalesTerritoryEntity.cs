@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -83,14 +83,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public SalesTerritoryEntity() : base()
+		public SalesTerritoryEntity() :base("SalesTerritoryEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="territoryID">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
-		public SalesTerritoryEntity(System.Int32 territoryID)
+		public SalesTerritoryEntity(System.Int32 territoryID):base("SalesTerritoryEntity")
 		{
 			InitClassFetch(territoryID, null, null);
 		}
@@ -98,7 +98,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="territoryID">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesTerritoryEntity(System.Int32 territoryID, IPrefetchPath prefetchPathToUse)
+		public SalesTerritoryEntity(System.Int32 territoryID, IPrefetchPath prefetchPathToUse):base("SalesTerritoryEntity")
 		{
 			InitClassFetch(territoryID, null, prefetchPathToUse);
 		}
@@ -106,7 +106,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="territoryID">PK value for SalesTerritory which data should be fetched into this SalesTerritory object</param>
 		/// <param name="validator">The custom validator object for this SalesTerritoryEntity</param>
-		public SalesTerritoryEntity(System.Int32 territoryID, IValidator validator)
+		public SalesTerritoryEntity(System.Int32 territoryID, IValidator validator):base("SalesTerritoryEntity")
 		{
 			InitClassFetch(territoryID, validator, null);
 		}
@@ -142,7 +142,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedStateProvinces = (_stateProvinces.Count > 0);
 			_alreadyFetchedCustomers = (_customers.Count > 0);
@@ -222,7 +222,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -271,7 +271,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -300,7 +300,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -885,12 +885,6 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryHistoryCollection(), (IEntityRelation)GetRelationsForField("SalesTerritoryHistories")[0], (int)AW.Data.EntityType.SalesTerritoryEntity, (int)AW.Data.EntityType.SalesTerritoryHistoryEntity, 0, null, null, null, "SalesTerritoryHistories", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "SalesTerritoryEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -916,7 +910,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CostLastYear property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Business costs in the territory the previous year.<br/></summary>
+		/// MS_Description: Business costs in the territory the previous year.<br/>Business costs in the territory the previous year.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CostLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -927,7 +921,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CostYtd property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Business costs in the territory year to date.<br/></summary>
+		/// MS_Description: Business costs in the territory year to date.<br/>Business costs in the territory year to date.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CostYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -938,7 +932,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CountryRegionCode property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/>Unique nonclustered index. Used to support replication samples.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."CountryRegionCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -949,7 +943,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Group property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Geographic area to which the sales territory belong.<br/></summary>
+		/// MS_Description: Geographic area to which the sales territory belong.<br/>Geographic area to which the sales territory belong.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."Group"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -960,7 +954,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -971,7 +965,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Sales territory description<br/></summary>
+		/// MS_Description: Sales territory description<br/>Sales territory description</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -982,7 +976,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -993,7 +987,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesLastYear property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Sales in the territory the previous year.<br/></summary>
+		/// MS_Description: Sales in the territory the previous year.<br/>Sales in the territory the previous year.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."SalesLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1004,7 +998,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesYtd property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Sales in the territory year to date.<br/></summary>
+		/// MS_Description: Sales in the territory year to date.<br/>Sales in the territory year to date.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."SalesYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1015,7 +1009,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TerritoryID property of the Entity SalesTerritory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesTerritory"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

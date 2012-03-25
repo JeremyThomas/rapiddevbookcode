@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -91,14 +91,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public ContactEntity() : base()
+		public ContactEntity() :base("ContactEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="contactID">PK value for Contact which data should be fetched into this Contact object</param>
-		public ContactEntity(System.Int32 contactID)
+		public ContactEntity(System.Int32 contactID):base("ContactEntity")
 		{
 			InitClassFetch(contactID, null, null);
 		}
@@ -106,7 +106,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="contactID">PK value for Contact which data should be fetched into this Contact object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ContactEntity(System.Int32 contactID, IPrefetchPath prefetchPathToUse)
+		public ContactEntity(System.Int32 contactID, IPrefetchPath prefetchPathToUse):base("ContactEntity")
 		{
 			InitClassFetch(contactID, null, prefetchPathToUse);
 		}
@@ -114,7 +114,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="contactID">PK value for Contact which data should be fetched into this Contact object</param>
 		/// <param name="validator">The custom validator object for this ContactEntity</param>
-		public ContactEntity(System.Int32 contactID, IValidator validator)
+		public ContactEntity(System.Int32 contactID, IValidator validator):base("ContactEntity")
 		{
 			InitClassFetch(contactID, validator, null);
 		}
@@ -157,7 +157,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedEmployees = (_employees.Count > 0);
 			_alreadyFetchedVendorContacts = (_vendorContacts.Count > 0);
@@ -252,7 +252,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -315,7 +315,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -347,7 +347,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -1069,12 +1069,6 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "ContactEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -1100,7 +1094,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AdditionalContactInfo property of the Entity Contact<br/><br/>
-		/// MS_Description: Additional contact information about the person stored in xml format. <br/></summary>
+		/// MS_Description: Additional contact information about the person stored in xml format. <br/>Additional contact information about the person stored in xml format. </summary>
 		/// <remarks>Mapped on  table field: "Contact"."AdditionalContactInfo"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1111,7 +1105,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ContactID property of the Entity Contact<br/><br/>
-		/// MS_Description: Primary key for Contact records.<br/></summary>
+		/// MS_Description: Primary key for Contact records.<br/>Primary key for Contact records.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1122,7 +1116,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmailAddress property of the Entity Contact<br/><br/>
-		/// MS_Description: E-mail address for the person.<br/></summary>
+		/// MS_Description: E-mail address for the person.<br/>E-mail address for the person.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."EmailAddress"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1133,7 +1127,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmailPromotion property of the Entity Contact<br/><br/>
-		/// MS_Description: 0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. <br/></summary>
+		/// MS_Description: 0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. <br/>0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. </summary>
 		/// <remarks>Mapped on  table field: "Contact"."EmailPromotion"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1144,7 +1138,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The FirstName property of the Entity Contact<br/><br/>
-		/// MS_Description: First name of the person.<br/></summary>
+		/// MS_Description: First name of the person.<br/>First name of the person.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."FirstName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1155,7 +1149,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LastName property of the Entity Contact<br/><br/>
-		/// MS_Description: Last name of the person.<br/></summary>
+		/// MS_Description: Last name of the person.<br/>Last name of the person.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."LastName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1166,7 +1160,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MiddleName property of the Entity Contact<br/><br/>
-		/// MS_Description: Middle name or middle initial of the person.<br/></summary>
+		/// MS_Description: Middle name or middle initial of the person.<br/>Middle name or middle initial of the person.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."MiddleName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1177,7 +1171,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Contact<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1188,7 +1182,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The NameStyle property of the Entity Contact<br/><br/>
-		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/>Unique nonclustered index. Used to support replication samples.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."NameStyle"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1199,7 +1193,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PasswordHash property of the Entity Contact<br/><br/>
-		/// MS_Description: Password for the e-mail account.<br/></summary>
+		/// MS_Description: Password for the e-mail account.<br/>Password for the e-mail account.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."PasswordHash"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1210,7 +1204,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PasswordSalt property of the Entity Contact<br/><br/>
-		/// MS_Description: Random value concatenated with the password string before the password is hashed.<br/></summary>
+		/// MS_Description: Random value concatenated with the password string before the password is hashed.<br/>Random value concatenated with the password string before the password is hashed.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."PasswordSalt"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 10<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1221,7 +1215,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Phone property of the Entity Contact<br/><br/>
-		/// MS_Description: Phone number associated with the person.<br/></summary>
+		/// MS_Description: Phone number associated with the person.<br/>Phone number associated with the person.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."Phone"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1232,7 +1226,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity Contact<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1243,7 +1237,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Suffix property of the Entity Contact<br/><br/>
-		/// MS_Description: Surname suffix. For example, Sr. or Jr.<br/></summary>
+		/// MS_Description: Surname suffix. For example, Sr. or Jr.<br/>Surname suffix. For example, Sr. or Jr.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."Suffix"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 10<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1254,7 +1248,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Title property of the Entity Contact<br/><br/>
-		/// MS_Description: A courtesy title. For example, Mr. or Ms.<br/></summary>
+		/// MS_Description: A courtesy title. For example, Mr. or Ms.<br/>A courtesy title. For example, Mr. or Ms.</summary>
 		/// <remarks>Mapped on  table field: "Contact"."Title"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 8<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

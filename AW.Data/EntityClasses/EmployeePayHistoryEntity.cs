@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -67,7 +67,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public EmployeePayHistoryEntity() : base()
+		public EmployeePayHistoryEntity() :base("EmployeePayHistoryEntity")
 		{
 			InitClassEmpty(null);
 		}
@@ -75,7 +75,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="employeeID">PK value for EmployeePayHistory which data should be fetched into this EmployeePayHistory object</param>
 		/// <param name="rateChangeDate">PK value for EmployeePayHistory which data should be fetched into this EmployeePayHistory object</param>
-		public EmployeePayHistoryEntity(System.Int32 employeeID, System.DateTime rateChangeDate)
+		public EmployeePayHistoryEntity(System.Int32 employeeID, System.DateTime rateChangeDate):base("EmployeePayHistoryEntity")
 		{
 			InitClassFetch(employeeID, rateChangeDate, null, null);
 		}
@@ -84,7 +84,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="employeeID">PK value for EmployeePayHistory which data should be fetched into this EmployeePayHistory object</param>
 		/// <param name="rateChangeDate">PK value for EmployeePayHistory which data should be fetched into this EmployeePayHistory object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public EmployeePayHistoryEntity(System.Int32 employeeID, System.DateTime rateChangeDate, IPrefetchPath prefetchPathToUse)
+		public EmployeePayHistoryEntity(System.Int32 employeeID, System.DateTime rateChangeDate, IPrefetchPath prefetchPathToUse):base("EmployeePayHistoryEntity")
 		{
 			InitClassFetch(employeeID, rateChangeDate, null, prefetchPathToUse);
 		}
@@ -93,7 +93,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="employeeID">PK value for EmployeePayHistory which data should be fetched into this EmployeePayHistory object</param>
 		/// <param name="rateChangeDate">PK value for EmployeePayHistory which data should be fetched into this EmployeePayHistory object</param>
 		/// <param name="validator">The custom validator object for this EmployeePayHistoryEntity</param>
-		public EmployeePayHistoryEntity(System.Int32 employeeID, System.DateTime rateChangeDate, IValidator validator)
+		public EmployeePayHistoryEntity(System.Int32 employeeID, System.DateTime rateChangeDate, IValidator validator):base("EmployeePayHistoryEntity")
 		{
 			InitClassFetch(employeeID, rateChangeDate, validator, null);
 		}
@@ -134,7 +134,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedEmployee = (_employee != null);
 		}
@@ -187,7 +187,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -205,7 +205,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -222,7 +222,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -457,7 +457,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _employee</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncEmployee(IEntity relatedEntity)
+		private void SetupSyncEmployee(IEntityCore relatedEntity)
 		{
 			if(_employee!=relatedEntity)
 			{		
@@ -539,12 +539,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.EmployeeCollection(), (IEntityRelation)GetRelationsForField("Employee")[0], (int)AW.Data.EntityType.EmployeePayHistoryEntity, (int)AW.Data.EntityType.EmployeeEntity, 0, null, null, null, "Employee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "EmployeePayHistoryEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -570,7 +564,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmployeeID property of the Entity EmployeePayHistory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -581,7 +575,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity EmployeePayHistory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -592,7 +586,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PayFrequency property of the Entity EmployeePayHistory<br/><br/>
-		/// MS_Description: 1 = Salary received monthly, 2 = Salary received biweekly<br/></summary>
+		/// MS_Description: 1 = Salary received monthly, 2 = Salary received biweekly<br/>1 = Salary received monthly, 2 = Salary received biweekly</summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."PayFrequency"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -603,7 +597,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rate property of the Entity EmployeePayHistory<br/><br/>
-		/// MS_Description: Salary hourly rate.<br/></summary>
+		/// MS_Description: Salary hourly rate.<br/>Salary hourly rate.</summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."Rate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -614,7 +608,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The RateChangeDate property of the Entity EmployeePayHistory<br/><br/>
-		/// MS_Description: Date the change in pay is effective<br/></summary>
+		/// MS_Description: Date the change in pay is effective<br/>Date the change in pay is effective</summary>
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."RateChangeDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

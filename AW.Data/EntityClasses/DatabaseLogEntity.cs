@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -63,14 +63,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public DatabaseLogEntity() : base()
+		public DatabaseLogEntity() :base("DatabaseLogEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="databaseLogID">PK value for DatabaseLog which data should be fetched into this DatabaseLog object</param>
-		public DatabaseLogEntity(System.Int32 databaseLogID)
+		public DatabaseLogEntity(System.Int32 databaseLogID):base("DatabaseLogEntity")
 		{
 			InitClassFetch(databaseLogID, null, null);
 		}
@@ -78,7 +78,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="databaseLogID">PK value for DatabaseLog which data should be fetched into this DatabaseLog object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public DatabaseLogEntity(System.Int32 databaseLogID, IPrefetchPath prefetchPathToUse)
+		public DatabaseLogEntity(System.Int32 databaseLogID, IPrefetchPath prefetchPathToUse):base("DatabaseLogEntity")
 		{
 			InitClassFetch(databaseLogID, null, prefetchPathToUse);
 		}
@@ -86,7 +86,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="databaseLogID">PK value for DatabaseLog which data should be fetched into this DatabaseLog object</param>
 		/// <param name="validator">The custom validator object for this DatabaseLogEntity</param>
-		public DatabaseLogEntity(System.Int32 databaseLogID, IValidator validator)
+		public DatabaseLogEntity(System.Int32 databaseLogID, IValidator validator):base("DatabaseLogEntity")
 		{
 			InitClassFetch(databaseLogID, validator, null);
 		}
@@ -103,7 +103,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 		}
 				
@@ -148,7 +148,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -162,7 +162,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -176,7 +176,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -406,12 +406,6 @@ namespace AW.Data.EntityClasses
 			get { return _customProperties;}
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "DatabaseLogEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -437,7 +431,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DatabaseLogID property of the Entity DatabaseLog<br/><br/>
-		/// MS_Description: Primary key for DatabaseLog records.<br/></summary>
+		/// MS_Description: Primary key for DatabaseLog records.<br/>Primary key for DatabaseLog records.</summary>
 		/// <remarks>Mapped on  table field: "DatabaseLog"."DatabaseLogID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -448,7 +442,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DatabaseUser property of the Entity DatabaseLog<br/><br/>
-		/// MS_Description: The user who implemented the DDL change.<br/></summary>
+		/// MS_Description: The user who implemented the DDL change.<br/>The user who implemented the DDL change.</summary>
 		/// <remarks>Mapped on  table field: "DatabaseLog"."DatabaseUser"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -459,7 +453,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Event property of the Entity DatabaseLog<br/><br/>
-		/// MS_Description: The type of DDL statement that was executed.<br/></summary>
+		/// MS_Description: The type of DDL statement that was executed.<br/>The type of DDL statement that was executed.</summary>
 		/// <remarks>Mapped on  table field: "DatabaseLog"."Event"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -470,7 +464,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Object property of the Entity DatabaseLog<br/><br/>
-		/// MS_Description: The object that was changed by the DDL statment.<br/></summary>
+		/// MS_Description: The object that was changed by the DDL statment.<br/>The object that was changed by the DDL statment.</summary>
 		/// <remarks>Mapped on  table field: "DatabaseLog"."Object"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -481,7 +475,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PostTime property of the Entity DatabaseLog<br/><br/>
-		/// MS_Description: Nonclustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Nonclustered index created by a primary key constraint.<br/>Nonclustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "DatabaseLog"."PostTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -492,7 +486,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Schema property of the Entity DatabaseLog<br/><br/>
-		/// MS_Description: The schema to which the changed object belongs.<br/></summary>
+		/// MS_Description: The schema to which the changed object belongs.<br/>The schema to which the changed object belongs.</summary>
 		/// <remarks>Mapped on  table field: "DatabaseLog"."Schema"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -503,7 +497,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Tsql property of the Entity DatabaseLog<br/><br/>
-		/// MS_Description: The exact Transact-SQL statement that was executed.<br/></summary>
+		/// MS_Description: The exact Transact-SQL statement that was executed.<br/>The exact Transact-SQL statement that was executed.</summary>
 		/// <remarks>Mapped on  table field: "DatabaseLog"."TSQL"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -514,7 +508,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The XmlEvent property of the Entity DatabaseLog<br/><br/>
-		/// MS_Description: The raw XML data generated by database trigger.<br/></summary>
+		/// MS_Description: The raw XML data generated by database trigger.<br/>The raw XML data generated by database trigger.</summary>
 		/// <remarks>Mapped on  table field: "DatabaseLog"."XmlEvent"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

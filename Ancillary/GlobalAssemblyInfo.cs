@@ -14,10 +14,10 @@ internal static class AssemblyInfoConstants
 	/// <summary>
 	/// 3.1
 	/// </summary>
-	public const string AssemblyInformationalVersion = "3.1";
+	public const string AssemblyInformationalVersion = "3.5";
 	public const string AssemblyRevision = "0";
 	/// <summary>
-	/// 3.1.0.0
+	/// 3.5.0.0
 	/// </summary>
 	public const string AssemblyVersion = AssemblyInformationalVersion + ".0." + AssemblyRevision;
 	public const string ExecutableRevision = "0";

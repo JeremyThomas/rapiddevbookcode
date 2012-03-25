@@ -312,8 +312,9 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="FactoryClasses\PredicateFactory.cs" />
-    <Compile Include="FactoryClasses\PropertyDescriptorFactory.cs" />
-    <Compile Include="FactoryClasses\QueryFactory.cs" />
+    <Compile Include="FactoryClasses\QueryFactory.cs">
+      <GeneratedBy>LLBLGen Pro</GeneratedBy>
+    </Compile>
     <Compile Include="FactoryClasses\SortClauseFactory.cs" />
     <Compile Include="Filters\SalesOrderHeaderFilters.cs" />
     <Compile Include="HelperClasses\FieldInfoProvider.cs">
@@ -328,9 +329,6 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="HelperClasses\Transaction.cs">
-      <GeneratedBy>LLBLGen Pro</GeneratedBy>
-    </Compile>
-    <Compile Include="HelperClasses\TransactionComPlus.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="HelperClasses\TypeDefaultValue.cs">

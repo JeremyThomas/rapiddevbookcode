@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -71,14 +71,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public CreditCardEntity() : base()
+		public CreditCardEntity() :base("CreditCardEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="creditCardID">PK value for CreditCard which data should be fetched into this CreditCard object</param>
-		public CreditCardEntity(System.Int32 creditCardID)
+		public CreditCardEntity(System.Int32 creditCardID):base("CreditCardEntity")
 		{
 			InitClassFetch(creditCardID, null, null);
 		}
@@ -86,7 +86,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="creditCardID">PK value for CreditCard which data should be fetched into this CreditCard object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public CreditCardEntity(System.Int32 creditCardID, IPrefetchPath prefetchPathToUse)
+		public CreditCardEntity(System.Int32 creditCardID, IPrefetchPath prefetchPathToUse):base("CreditCardEntity")
 		{
 			InitClassFetch(creditCardID, null, prefetchPathToUse);
 		}
@@ -94,7 +94,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="creditCardID">PK value for CreditCard which data should be fetched into this CreditCard object</param>
 		/// <param name="validator">The custom validator object for this CreditCardEntity</param>
-		public CreditCardEntity(System.Int32 creditCardID, IValidator validator)
+		public CreditCardEntity(System.Int32 creditCardID, IValidator validator):base("CreditCardEntity")
 		{
 			InitClassFetch(creditCardID, validator, null);
 		}
@@ -118,7 +118,7 @@ namespace AW.Data.EntityClasses
 		
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedContactCreditCards = (_contactCreditCards.Count > 0);
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
@@ -177,7 +177,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -205,7 +205,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -225,7 +225,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -588,12 +588,6 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderCollection(), (IEntityRelation)GetRelationsForField("SalesOrderHeaders")[0], (int)AW.Data.EntityType.CreditCardEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, null, "SalesOrderHeaders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "CreditCardEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -619,7 +613,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CardNumber property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Credit card number.<br/></summary>
+		/// MS_Description: Credit card number.<br/>Credit card number.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."CardNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -630,7 +624,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CardType property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Credit card name.<br/></summary>
+		/// MS_Description: Credit card name.<br/>Credit card name.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."CardType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -641,7 +635,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CreditCardID property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."CreditCardID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -652,7 +646,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ExpMonth property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Credit card expiration month.<br/></summary>
+		/// MS_Description: Credit card expiration month.<br/>Credit card expiration month.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."ExpMonth"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -663,7 +657,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ExpYear property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Credit card expiration year.<br/></summary>
+		/// MS_Description: Credit card expiration year.<br/>Credit card expiration year.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."ExpYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -674,7 +668,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

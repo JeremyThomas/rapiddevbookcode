@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -41,10 +41,10 @@ namespace AW.Data.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private ProductEntity _productComponent;
-		private bool	_alwaysFetchProductComponent, _alreadyFetchedProductComponent, _productComponentReturnsNewIfNotFound;
 		private ProductEntity _productAssembly;
 		private bool	_alwaysFetchProductAssembly, _alreadyFetchedProductAssembly, _productAssemblyReturnsNewIfNotFound;
+		private ProductEntity _productComponent;
+		private bool	_alwaysFetchProductComponent, _alreadyFetchedProductComponent, _productComponentReturnsNewIfNotFound;
 		private UnitMeasureEntity _unitMeasure;
 		private bool	_alwaysFetchUnitMeasure, _alreadyFetchedUnitMeasure, _unitMeasureReturnsNewIfNotFound;
 
@@ -59,10 +59,10 @@ namespace AW.Data.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name ProductComponent</summary>
-			public static readonly string ProductComponent = "ProductComponent";
 			/// <summary>Member name ProductAssembly</summary>
 			public static readonly string ProductAssembly = "ProductAssembly";
+			/// <summary>Member name ProductComponent</summary>
+			public static readonly string ProductComponent = "ProductComponent";
 			/// <summary>Member name UnitMeasure</summary>
 			public static readonly string UnitMeasure = "UnitMeasure";
 		}
@@ -75,14 +75,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public BillOfMaterialEntity() : base()
+		public BillOfMaterialEntity() :base("BillOfMaterialEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="billOfMaterialsID">PK value for BillOfMaterial which data should be fetched into this BillOfMaterial object</param>
-		public BillOfMaterialEntity(System.Int32 billOfMaterialsID)
+		public BillOfMaterialEntity(System.Int32 billOfMaterialsID):base("BillOfMaterialEntity")
 		{
 			InitClassFetch(billOfMaterialsID, null, null);
 		}
@@ -90,7 +90,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="billOfMaterialsID">PK value for BillOfMaterial which data should be fetched into this BillOfMaterial object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public BillOfMaterialEntity(System.Int32 billOfMaterialsID, IPrefetchPath prefetchPathToUse)
+		public BillOfMaterialEntity(System.Int32 billOfMaterialsID, IPrefetchPath prefetchPathToUse):base("BillOfMaterialEntity")
 		{
 			InitClassFetch(billOfMaterialsID, null, prefetchPathToUse);
 		}
@@ -98,7 +98,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="billOfMaterialsID">PK value for BillOfMaterial which data should be fetched into this BillOfMaterial object</param>
 		/// <param name="validator">The custom validator object for this BillOfMaterialEntity</param>
-		public BillOfMaterialEntity(System.Int32 billOfMaterialsID, IValidator validator)
+		public BillOfMaterialEntity(System.Int32 billOfMaterialsID, IValidator validator):base("BillOfMaterialEntity")
 		{
 			InitClassFetch(billOfMaterialsID, validator, null);
 		}
@@ -108,15 +108,6 @@ namespace AW.Data.EntityClasses
 		/// <param name="context"></param>
 		protected BillOfMaterialEntity(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
-			_productComponent = (ProductEntity)info.GetValue("_productComponent", typeof(ProductEntity));
-			if(_productComponent!=null)
-			{
-				_productComponent.AfterSave+=new EventHandler(OnEntityAfterSave);
-			}
-			_productComponentReturnsNewIfNotFound = info.GetBoolean("_productComponentReturnsNewIfNotFound");
-			_alwaysFetchProductComponent = info.GetBoolean("_alwaysFetchProductComponent");
-			_alreadyFetchedProductComponent = info.GetBoolean("_alreadyFetchedProductComponent");
-
 			_productAssembly = (ProductEntity)info.GetValue("_productAssembly", typeof(ProductEntity));
 			if(_productAssembly!=null)
 			{
@@ -125,6 +116,15 @@ namespace AW.Data.EntityClasses
 			_productAssemblyReturnsNewIfNotFound = info.GetBoolean("_productAssemblyReturnsNewIfNotFound");
 			_alwaysFetchProductAssembly = info.GetBoolean("_alwaysFetchProductAssembly");
 			_alreadyFetchedProductAssembly = info.GetBoolean("_alreadyFetchedProductAssembly");
+
+			_productComponent = (ProductEntity)info.GetValue("_productComponent", typeof(ProductEntity));
+			if(_productComponent!=null)
+			{
+				_productComponent.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_productComponentReturnsNewIfNotFound = info.GetBoolean("_productComponentReturnsNewIfNotFound");
+			_alwaysFetchProductComponent = info.GetBoolean("_alwaysFetchProductComponent");
+			_alreadyFetchedProductComponent = info.GetBoolean("_alreadyFetchedProductComponent");
 
 			_unitMeasure = (UnitMeasureEntity)info.GetValue("_unitMeasure", typeof(UnitMeasureEntity));
 			if(_unitMeasure!=null)
@@ -165,10 +165,10 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
-			_alreadyFetchedProductComponent = (_productComponent != null);
 			_alreadyFetchedProductAssembly = (_productAssembly != null);
+			_alreadyFetchedProductComponent = (_productComponent != null);
 			_alreadyFetchedUnitMeasure = (_unitMeasure != null);
 		}
 				
@@ -188,11 +188,11 @@ namespace AW.Data.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "ProductComponent":
-					toReturn.Add(Relations.ProductEntityUsingComponentID);
-					break;
 				case "ProductAssembly":
 					toReturn.Add(Relations.ProductEntityUsingProductAssemblyID);
+					break;
+				case "ProductComponent":
+					toReturn.Add(Relations.ProductEntityUsingComponentID);
 					break;
 				case "UnitMeasure":
 					toReturn.Add(Relations.UnitMeasureEntityUsingUnitMeasureCode);
@@ -211,14 +211,14 @@ namespace AW.Data.EntityClasses
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		protected override void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			info.AddValue("_productComponent", (!this.MarkedForDeletion?_productComponent:null));
-			info.AddValue("_productComponentReturnsNewIfNotFound", _productComponentReturnsNewIfNotFound);
-			info.AddValue("_alwaysFetchProductComponent", _alwaysFetchProductComponent);
-			info.AddValue("_alreadyFetchedProductComponent", _alreadyFetchedProductComponent);
 			info.AddValue("_productAssembly", (!this.MarkedForDeletion?_productAssembly:null));
 			info.AddValue("_productAssemblyReturnsNewIfNotFound", _productAssemblyReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchProductAssembly", _alwaysFetchProductAssembly);
 			info.AddValue("_alreadyFetchedProductAssembly", _alreadyFetchedProductAssembly);
+			info.AddValue("_productComponent", (!this.MarkedForDeletion?_productComponent:null));
+			info.AddValue("_productComponentReturnsNewIfNotFound", _productComponentReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchProductComponent", _alwaysFetchProductComponent);
+			info.AddValue("_alreadyFetchedProductComponent", _alreadyFetchedProductComponent);
 			info.AddValue("_unitMeasure", (!this.MarkedForDeletion?_unitMeasure:null));
 			info.AddValue("_unitMeasureReturnsNewIfNotFound", _unitMeasureReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchUnitMeasure", _alwaysFetchUnitMeasure);
@@ -234,17 +234,17 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
-				case "ProductComponent":
-					_alreadyFetchedProductComponent = true;
-					this.ProductComponent = (ProductEntity)entity;
-					break;
 				case "ProductAssembly":
 					_alreadyFetchedProductAssembly = true;
 					this.ProductAssembly = (ProductEntity)entity;
+					break;
+				case "ProductComponent":
+					_alreadyFetchedProductComponent = true;
+					this.ProductComponent = (ProductEntity)entity;
 					break;
 				case "UnitMeasure":
 					_alreadyFetchedUnitMeasure = true;
@@ -260,15 +260,15 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
-				case "ProductComponent":
-					SetupSyncProductComponent(relatedEntity);
-					break;
 				case "ProductAssembly":
 					SetupSyncProductAssembly(relatedEntity);
+					break;
+				case "ProductComponent":
+					SetupSyncProductComponent(relatedEntity);
 					break;
 				case "UnitMeasure":
 					SetupSyncUnitMeasure(relatedEntity);
@@ -283,15 +283,15 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
-				case "ProductComponent":
-					DesetupSyncProductComponent(false, true);
-					break;
 				case "ProductAssembly":
 					DesetupSyncProductAssembly(false, true);
+					break;
+				case "ProductComponent":
+					DesetupSyncProductComponent(false, true);
 					break;
 				case "UnitMeasure":
 					DesetupSyncUnitMeasure(false, true);
@@ -314,13 +314,13 @@ namespace AW.Data.EntityClasses
 		protected override List<IEntity> GetDependentRelatedEntities()
 		{
 			List<IEntity> toReturn = new List<IEntity>();
-			if(_productComponent!=null)
-			{
-				toReturn.Add(_productComponent);
-			}
 			if(_productAssembly!=null)
 			{
 				toReturn.Add(_productAssembly);
+			}
+			if(_productComponent!=null)
+			{
+				toReturn.Add(_productComponent);
 			}
 			if(_unitMeasure!=null)
 			{
@@ -398,47 +398,6 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Retrieves the related entity of type 'ProductEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'ProductEntity' which is related to this entity.</returns>
-		public ProductEntity GetSingleProductComponent()
-		{
-			return GetSingleProductComponent(false);
-		}
-
-		/// <summary> Retrieves the related entity of type 'ProductEntity', using a relation of type 'n:1'</summary>
-		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
-		/// <returns>A fetched entity of type 'ProductEntity' which is related to this entity.</returns>
-		public virtual ProductEntity GetSingleProductComponent(bool forceFetch)
-		{
-			if( ( !_alreadyFetchedProductComponent || forceFetch || _alwaysFetchProductComponent) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
-			{
-				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.ProductEntityUsingComponentID);
-				ProductEntity newEntity = new ProductEntity();
-				bool fetchResult = false;
-				if(performLazyLoading)
-				{
-					AddToTransactionIfNecessary(newEntity);
-					fetchResult = newEntity.FetchUsingPK(this.ComponentID);
-				}
-				if(fetchResult)
-				{
-					newEntity = (ProductEntity)GetFromActiveContext(newEntity);
-				}
-				else
-				{
-					if(!_productComponentReturnsNewIfNotFound)
-					{
-						RemoveFromTransactionIfNecessary(newEntity);
-						newEntity = null;
-					}
-				}
-				this.ProductComponent = newEntity;
-				_alreadyFetchedProductComponent = fetchResult;
-			}
-			return _productComponent;
-		}
-
-
-		/// <summary> Retrieves the related entity of type 'ProductEntity', using a relation of type 'n:1'</summary>
-		/// <returns>A fetched entity of type 'ProductEntity' which is related to this entity.</returns>
 		public ProductEntity GetSingleProductAssembly()
 		{
 			return GetSingleProductAssembly(false);
@@ -475,6 +434,47 @@ namespace AW.Data.EntityClasses
 				_alreadyFetchedProductAssembly = fetchResult;
 			}
 			return _productAssembly;
+		}
+
+
+		/// <summary> Retrieves the related entity of type 'ProductEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'ProductEntity' which is related to this entity.</returns>
+		public ProductEntity GetSingleProductComponent()
+		{
+			return GetSingleProductComponent(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'ProductEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'ProductEntity' which is related to this entity.</returns>
+		public virtual ProductEntity GetSingleProductComponent(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedProductComponent || forceFetch || _alwaysFetchProductComponent) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.ProductEntityUsingComponentID);
+				ProductEntity newEntity = new ProductEntity();
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					AddToTransactionIfNecessary(newEntity);
+					fetchResult = newEntity.FetchUsingPK(this.ComponentID);
+				}
+				if(fetchResult)
+				{
+					newEntity = (ProductEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_productComponentReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.ProductComponent = newEntity;
+				_alreadyFetchedProductComponent = fetchResult;
+			}
+			return _productComponent;
 		}
 
 
@@ -524,8 +524,8 @@ namespace AW.Data.EntityClasses
 		protected override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("ProductComponent", _productComponent);
 			toReturn.Add("ProductAssembly", _productAssembly);
+			toReturn.Add("ProductComponent", _productComponent);
 			toReturn.Add("UnitMeasure", _unitMeasure);
 			return toReturn;
 		}
@@ -566,8 +566,8 @@ namespace AW.Data.EntityClasses
 		/// <summary> Initializes the class members</summary>
 		private void InitClassMembers()
 		{
-			_productComponentReturnsNewIfNotFound = true;
 			_productAssemblyReturnsNewIfNotFound = true;
+			_productComponentReturnsNewIfNotFound = true;
 			_unitMeasureReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
@@ -614,39 +614,6 @@ namespace AW.Data.EntityClasses
 		}
 		#endregion
 
-		/// <summary> Removes the sync logic for member _productComponent</summary>
-		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
-		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncProductComponent(bool signalRelatedEntity, bool resetFKFields)
-		{
-			this.PerformDesetupSyncRelatedEntity( _productComponent, new PropertyChangedEventHandler( OnProductComponentPropertyChanged ), "ProductComponent", AW.Data.RelationClasses.StaticBillOfMaterialRelations.ProductEntityUsingComponentIDStatic, true, signalRelatedEntity, "BillOfComponentMaterials", resetFKFields, new int[] { (int)BillOfMaterialFieldIndex.ComponentID } );		
-			_productComponent = null;
-		}
-		
-		/// <summary> setups the sync logic for member _productComponent</summary>
-		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProductComponent(IEntity relatedEntity)
-		{
-			if(_productComponent!=relatedEntity)
-			{		
-				DesetupSyncProductComponent(true, true);
-				_productComponent = (ProductEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _productComponent, new PropertyChangedEventHandler( OnProductComponentPropertyChanged ), "ProductComponent", AW.Data.RelationClasses.StaticBillOfMaterialRelations.ProductEntityUsingComponentIDStatic, true, ref _alreadyFetchedProductComponent, new string[] {  } );
-			}
-		}
-
-		/// <summary>Handles property change events of properties in a related entity.</summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void OnProductComponentPropertyChanged( object sender, PropertyChangedEventArgs e )
-		{
-			switch( e.PropertyName )
-			{
-				default:
-					break;
-			}
-		}
-
 		/// <summary> Removes the sync logic for member _productAssembly</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -658,7 +625,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _productAssembly</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncProductAssembly(IEntity relatedEntity)
+		private void SetupSyncProductAssembly(IEntityCore relatedEntity)
 		{
 			if(_productAssembly!=relatedEntity)
 			{		
@@ -680,6 +647,39 @@ namespace AW.Data.EntityClasses
 			}
 		}
 
+		/// <summary> Removes the sync logic for member _productComponent</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncProductComponent(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _productComponent, new PropertyChangedEventHandler( OnProductComponentPropertyChanged ), "ProductComponent", AW.Data.RelationClasses.StaticBillOfMaterialRelations.ProductEntityUsingComponentIDStatic, true, signalRelatedEntity, "BillOfComponentMaterials", resetFKFields, new int[] { (int)BillOfMaterialFieldIndex.ComponentID } );		
+			_productComponent = null;
+		}
+		
+		/// <summary> setups the sync logic for member _productComponent</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncProductComponent(IEntityCore relatedEntity)
+		{
+			if(_productComponent!=relatedEntity)
+			{		
+				DesetupSyncProductComponent(true, true);
+				_productComponent = (ProductEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _productComponent, new PropertyChangedEventHandler( OnProductComponentPropertyChanged ), "ProductComponent", AW.Data.RelationClasses.StaticBillOfMaterialRelations.ProductEntityUsingComponentIDStatic, true, ref _alreadyFetchedProductComponent, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnProductComponentPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				default:
+					break;
+			}
+		}
+
 		/// <summary> Removes the sync logic for member _unitMeasure</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
@@ -691,7 +691,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _unitMeasure</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncUnitMeasure(IEntity relatedEntity)
+		private void SetupSyncUnitMeasure(IEntityCore relatedEntity)
 		{
 			if(_unitMeasure!=relatedEntity)
 			{		
@@ -766,16 +766,16 @@ namespace AW.Data.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Product'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathProductComponent
+		public static IPrefetchPathElement PrefetchPathProductAssembly
 		{
-			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("ProductComponent")[0], (int)AW.Data.EntityType.BillOfMaterialEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "ProductComponent", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("ProductAssembly")[0], (int)AW.Data.EntityType.BillOfMaterialEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "ProductAssembly", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Product'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
-		public static IPrefetchPathElement PrefetchPathProductAssembly
+		public static IPrefetchPathElement PrefetchPathProductComponent
 		{
-			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("ProductAssembly")[0], (int)AW.Data.EntityType.BillOfMaterialEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "ProductAssembly", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("ProductComponent")[0], (int)AW.Data.EntityType.BillOfMaterialEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "ProductComponent", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'UnitMeasure'  for this entity.</summary>
@@ -785,12 +785,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.UnitMeasureCollection(), (IEntityRelation)GetRelationsForField("UnitMeasure")[0], (int)AW.Data.EntityType.BillOfMaterialEntity, (int)AW.Data.EntityType.UnitMeasureEntity, 0, null, null, null, "UnitMeasure", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "BillOfMaterialEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -816,7 +810,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The BillOfMaterialsID property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Clustered index.<br/></summary>
+		/// MS_Description: Clustered index.<br/>Clustered index.</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."BillOfMaterialsID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -827,7 +821,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Bomlevel property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Indicates the depth the component is from its parent (AssemblyID).<br/></summary>
+		/// MS_Description: Indicates the depth the component is from its parent (AssemblyID).<br/>Indicates the depth the component is from its parent (AssemblyID).</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."BOMLevel"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -838,7 +832,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ComponentID property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."ComponentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -849,7 +843,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndDate property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Date the component stopped being used in the assembly item.<br/></summary>
+		/// MS_Description: Date the component stopped being used in the assembly item.<br/>Date the component stopped being used in the assembly item.</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -860,7 +854,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -871,7 +865,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PerAssemblyQuantity property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Quantity of the component needed to create the assembly.<br/></summary>
+		/// MS_Description: Quantity of the component needed to create the assembly.<br/>Quantity of the component needed to create the assembly.</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."PerAssemblyQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -882,7 +876,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductAssemblyID property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Parent product identification number. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Parent product identification number. Foreign key to Product.ProductID.<br/>Parent product identification number. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."ProductAssemblyID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -893,7 +887,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartDate property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Date the component started being used in the assembly item.<br/></summary>
+		/// MS_Description: Date the component started being used in the assembly item.<br/>Date the component started being used in the assembly item.</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -904,7 +898,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UnitMeasureCode property of the Entity BillOfMaterial<br/><br/>
-		/// MS_Description: Standard code identifying the unit of measure for the quantity.<br/></summary>
+		/// MS_Description: Standard code identifying the unit of measure for the quantity.<br/>Standard code identifying the unit of measure for the quantity.</summary>
 		/// <remarks>Mapped on  table field: "BillOfMaterials"."UnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -914,65 +908,6 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)BillOfMaterialFieldIndex.UnitMeasureCode, value, true); }
 		}
 
-
-		/// <summary> Gets / sets related entity of type 'ProductEntity'. This property is not visible in databound grids.
-		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
-		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
-		/// </summary>
-		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleProductComponent()', because 
-		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
-		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
-		public virtual ProductEntity ProductComponent
-		{
-			get	{ return GetSingleProductComponent(false); }
-			set 
-			{ 
-				if(this.IsDeserializing)
-				{
-					SetupSyncProductComponent(value);
-				}
-				else
-				{
-					SetSingleRelatedEntityNavigator(value, "BillOfComponentMaterials", "ProductComponent", _productComponent, true); 
-				}
-			}
-		}
-
-		/// <summary> Gets / sets the lazy loading flag for ProductComponent. When set to true, ProductComponent is always refetched from the 
-		/// persistent storage. When set to false, the data is only fetched the first time ProductComponent is accessed. You can always execute a forced fetch by calling GetSingleProductComponent(true).</summary>
-		[Browsable(false)]
-		public bool AlwaysFetchProductComponent
-		{
-			get	{ return _alwaysFetchProductComponent; }
-			set	{ _alwaysFetchProductComponent = value; }	
-		}
-				
-		/// <summary>Gets / Sets the lazy loading flag if the property ProductComponent already has been fetched. Setting this property to false when ProductComponent has been fetched
-		/// will set ProductComponent to null as well. Setting this property to true while ProductComponent hasn't been fetched disables lazy loading for ProductComponent</summary>
-		[Browsable(false)]
-		public bool AlreadyFetchedProductComponent
-		{
-			get { return _alreadyFetchedProductComponent;}
-			set 
-			{
-				if(_alreadyFetchedProductComponent && !value)
-				{
-					this.ProductComponent = null;
-				}
-				_alreadyFetchedProductComponent = value;
-			}
-		}
-
-		/// <summary> Gets / sets the flag for what to do if the related entity available through the property ProductComponent is not found
-		/// in the database. When set to true, ProductComponent will return a new entity instance if the related entity is not found, otherwise 
-		/// null be returned if the related entity is not found. Default: true.</summary>
-		[Browsable(false)]
-		public bool ProductComponentReturnsNewIfNotFound
-		{
-			get	{ return _productComponentReturnsNewIfNotFound; }
-			set { _productComponentReturnsNewIfNotFound = value; }	
-		}
 
 		/// <summary> Gets / sets related entity of type 'ProductEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
@@ -1031,6 +966,65 @@ namespace AW.Data.EntityClasses
 		{
 			get	{ return _productAssemblyReturnsNewIfNotFound; }
 			set { _productAssemblyReturnsNewIfNotFound = value; }	
+		}
+
+		/// <summary> Gets / sets related entity of type 'ProductEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleProductComponent()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(true)]
+		public virtual ProductEntity ProductComponent
+		{
+			get	{ return GetSingleProductComponent(false); }
+			set 
+			{ 
+				if(this.IsDeserializing)
+				{
+					SetupSyncProductComponent(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "BillOfComponentMaterials", "ProductComponent", _productComponent, true); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for ProductComponent. When set to true, ProductComponent is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ProductComponent is accessed. You can always execute a forced fetch by calling GetSingleProductComponent(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchProductComponent
+		{
+			get	{ return _alwaysFetchProductComponent; }
+			set	{ _alwaysFetchProductComponent = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property ProductComponent already has been fetched. Setting this property to false when ProductComponent has been fetched
+		/// will set ProductComponent to null as well. Setting this property to true while ProductComponent hasn't been fetched disables lazy loading for ProductComponent</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedProductComponent
+		{
+			get { return _alreadyFetchedProductComponent;}
+			set 
+			{
+				if(_alreadyFetchedProductComponent && !value)
+				{
+					this.ProductComponent = null;
+				}
+				_alreadyFetchedProductComponent = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property ProductComponent is not found
+		/// in the database. When set to true, ProductComponent will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool ProductComponentReturnsNewIfNotFound
+		{
+			get	{ return _productComponentReturnsNewIfNotFound; }
+			set { _productComponentReturnsNewIfNotFound = value; }	
 		}
 
 		/// <summary> Gets / sets related entity of type 'UnitMeasureEntity'. This property is not visible in databound grids.

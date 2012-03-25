@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -161,7 +161,7 @@ namespace Northwind.DAL.EntityClasses
 		/// <param name="propertyName">Name of the property.</param>
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity2 entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -235,7 +235,7 @@ namespace Northwind.DAL.EntityClasses
 		/// <summary> Sets the internal parameter related to the fieldname passed to the instance relatedEntity. </summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
-		protected override void SetRelatedEntity(IEntity2 relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -260,7 +260,7 @@ namespace Northwind.DAL.EntityClasses
 		/// <param name="relatedEntity">Instance to unset as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
-		protected override void UnsetRelatedEntity(IEntity2 relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -503,7 +503,7 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> setups the sync logic for member _customer</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCustomer(IEntity2 relatedEntity)
+		private void SetupSyncCustomer(IEntityCore relatedEntity)
 		{
 			if(_customer!=relatedEntity)
 			{
@@ -536,7 +536,7 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> setups the sync logic for member _employee</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncEmployee(IEntity2 relatedEntity)
+		private void SetupSyncEmployee(IEntityCore relatedEntity)
 		{
 			if(_employee!=relatedEntity)
 			{
@@ -569,7 +569,7 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> setups the sync logic for member _shipper</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncShipper(IEntity2 relatedEntity)
+		private void SetupSyncShipper(IEntityCore relatedEntity)
 		{
 			if(_shipper!=relatedEntity)
 			{

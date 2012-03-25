@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -99,9 +99,10 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public SalesPersonEntity() : base()
+		public SalesPersonEntity() 
 		{
 			InitClassEmpty(null);
+			SetName("SalesPersonEntity");
 		}
 		
 		/// <summary>CTor</summary>
@@ -109,6 +110,7 @@ namespace AW.Data.EntityClasses
 		public SalesPersonEntity(System.Int32 employeeID):base(employeeID)
 		{
 			InitClassFetch(employeeID, null, null);
+			SetName("SalesPersonEntity");
 		}
 
 		/// <summary>CTor</summary>
@@ -117,6 +119,7 @@ namespace AW.Data.EntityClasses
 		public SalesPersonEntity(System.Int32 employeeID, IPrefetchPath prefetchPathToUse):base(employeeID, prefetchPathToUse)
 		{
 			InitClassFetch(employeeID, null, prefetchPathToUse);
+			SetName("SalesPersonEntity");
 		}
 
 		/// <summary>CTor</summary>
@@ -125,6 +128,7 @@ namespace AW.Data.EntityClasses
 		public SalesPersonEntity(System.Int32 employeeID, IValidator validator):base(employeeID, validator)
 		{
 			InitClassFetch(employeeID, validator, null);
+			SetName("SalesPersonEntity");
 		}
 
 		/// <summary>Private CTor for deserialization</summary>
@@ -178,7 +182,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
 			_alreadyFetchedSalesPersonQuotaHistories = (_salesPersonQuotaHistories.Count > 0);
@@ -275,7 +279,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -321,7 +325,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -351,7 +355,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -815,7 +819,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _salesTerritory</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSalesTerritory(IEntity relatedEntity)
+		private void SetupSyncSalesTerritory(IEntityCore relatedEntity)
 		{
 			if(_salesTerritory!=relatedEntity)
 			{		
@@ -900,12 +904,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryCollection(), (IEntityRelation)GetRelationsForField("SalesTerritory")[0], (int)AW.Data.EntityType.SalesPersonEntity, (int)AW.Data.EntityType.SalesTerritoryEntity, 0, null, null, null, "SalesTerritory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "SalesPersonEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -931,7 +929,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Bonus property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Bonus due if quota is met.<br/></summary>
+		/// MS_Description: Bonus due if quota is met.<br/>Bonus due if quota is met.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."Bonus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -942,7 +940,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CommissionPct property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Commision percent received per sale.<br/></summary>
+		/// MS_Description: Commision percent received per sale.<br/>Commision percent received per sale.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."CommissionPct"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -953,7 +951,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesLastYear property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Sales total of previous year.<br/></summary>
+		/// MS_Description: Sales total of previous year.<br/>Sales total of previous year.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -964,7 +962,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesQuota property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Projected yearly sales.<br/></summary>
+		/// MS_Description: Projected yearly sales.<br/>Projected yearly sales.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesQuota"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -975,7 +973,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesYtd property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Sales total year to date.<br/></summary>
+		/// MS_Description: Sales total year to date.<br/>Sales total year to date.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -986,7 +984,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TerritoryID property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
+		/// MS_Description: Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.<br/>Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

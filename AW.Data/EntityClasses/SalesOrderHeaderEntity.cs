@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -112,14 +112,14 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary>CTor</summary>
-		public SalesOrderHeaderEntity() : base()
+		public SalesOrderHeaderEntity() :base("SalesOrderHeaderEntity")
 		{
 			InitClassEmpty(null);
 		}
 		
 		/// <summary>CTor</summary>
 		/// <param name="salesOrderID">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
-		public SalesOrderHeaderEntity(System.Int32 salesOrderID)
+		public SalesOrderHeaderEntity(System.Int32 salesOrderID):base("SalesOrderHeaderEntity")
 		{
 			InitClassFetch(salesOrderID, null, null);
 		}
@@ -127,7 +127,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="salesOrderID">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public SalesOrderHeaderEntity(System.Int32 salesOrderID, IPrefetchPath prefetchPathToUse)
+		public SalesOrderHeaderEntity(System.Int32 salesOrderID, IPrefetchPath prefetchPathToUse):base("SalesOrderHeaderEntity")
 		{
 			InitClassFetch(salesOrderID, null, prefetchPathToUse);
 		}
@@ -135,7 +135,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="salesOrderID">PK value for SalesOrderHeader which data should be fetched into this SalesOrderHeader object</param>
 		/// <param name="validator">The custom validator object for this SalesOrderHeaderEntity</param>
-		public SalesOrderHeaderEntity(System.Int32 salesOrderID, IValidator validator)
+		public SalesOrderHeaderEntity(System.Int32 salesOrderID, IValidator validator):base("SalesOrderHeaderEntity")
 		{
 			InitClassFetch(salesOrderID, validator, null);
 		}
@@ -298,7 +298,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> Will perform post-ReadXml actions</summary>
-		protected override void PostReadXmlFixups()
+		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedSalesOrderDetails = (_salesOrderDetails.Count > 0);
 			_alreadyFetchedSalesOrderHeaderSalesReasons = (_salesOrderHeaderSalesReasons.Count > 0);
@@ -437,7 +437,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="entity">Entity to set as an related entity</param>
 		/// <remarks>Used by prefetch path logic.</remarks>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntityProperty(string propertyName, IEntity entity)
+		protected override void SetRelatedEntityProperty(string propertyName, IEntityCore entity)
 		{
 			switch(propertyName)
 			{
@@ -505,7 +505,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void SetRelatedEntity(IEntity relatedEntity, string fieldName)
+		protected override void SetRelatedEntity(IEntityCore relatedEntity, string fieldName)
 		{
 			switch(fieldName)
 			{
@@ -555,7 +555,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="fieldName">Name of field mapped onto the relation which resolves in the instance relatedEntity</param>
 		/// <param name="signalRelatedEntityManyToOne">if set to true it will notify the manytoone side, if applicable.</param>
 		[EditorBrowsable(EditorBrowsableState.Never)]
-		protected override void UnsetRelatedEntity(IEntity relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
+		protected override void UnsetRelatedEntity(IEntityCore relatedEntity, string fieldName, bool signalRelatedEntityManyToOne)
 		{
 			switch(fieldName)
 			{
@@ -1426,7 +1426,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _billingAddress</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncBillingAddress(IEntity relatedEntity)
+		private void SetupSyncBillingAddress(IEntityCore relatedEntity)
 		{
 			if(_billingAddress!=relatedEntity)
 			{		
@@ -1459,7 +1459,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _shippingAddress</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncShippingAddress(IEntity relatedEntity)
+		private void SetupSyncShippingAddress(IEntityCore relatedEntity)
 		{
 			if(_shippingAddress!=relatedEntity)
 			{		
@@ -1492,7 +1492,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _contact</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncContact(IEntity relatedEntity)
+		private void SetupSyncContact(IEntityCore relatedEntity)
 		{
 			if(_contact!=relatedEntity)
 			{		
@@ -1525,7 +1525,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _shipMethod</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncShipMethod(IEntity relatedEntity)
+		private void SetupSyncShipMethod(IEntityCore relatedEntity)
 		{
 			if(_shipMethod!=relatedEntity)
 			{		
@@ -1558,7 +1558,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _creditCard</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCreditCard(IEntity relatedEntity)
+		private void SetupSyncCreditCard(IEntityCore relatedEntity)
 		{
 			if(_creditCard!=relatedEntity)
 			{		
@@ -1591,7 +1591,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _currencyRate</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCurrencyRate(IEntity relatedEntity)
+		private void SetupSyncCurrencyRate(IEntityCore relatedEntity)
 		{
 			if(_currencyRate!=relatedEntity)
 			{		
@@ -1624,7 +1624,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _customer</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCustomer(IEntity relatedEntity)
+		private void SetupSyncCustomer(IEntityCore relatedEntity)
 		{
 			if(_customer!=relatedEntity)
 			{		
@@ -1657,7 +1657,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _customerViewRelated</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncCustomerViewRelated(IEntity relatedEntity)
+		private void SetupSyncCustomerViewRelated(IEntityCore relatedEntity)
 		{
 			if(_customerViewRelated!=relatedEntity)
 			{		
@@ -1690,7 +1690,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _salesPerson</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSalesPerson(IEntity relatedEntity)
+		private void SetupSyncSalesPerson(IEntityCore relatedEntity)
 		{
 			if(_salesPerson!=relatedEntity)
 			{		
@@ -1723,7 +1723,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary> setups the sync logic for member _salesTerritory</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncSalesTerritory(IEntity relatedEntity)
+		private void SetupSyncSalesTerritory(IEntityCore relatedEntity)
 		{
 			if(_salesTerritory!=relatedEntity)
 			{		
@@ -1880,12 +1880,6 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesTerritoryCollection(), (IEntityRelation)GetRelationsForField("SalesTerritory")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.SalesTerritoryEntity, 0, null, null, null, "SalesTerritory", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
-		/// <summary>Returns the full name for this entity, which is important for the DAO to find back persistence info for this entity.</summary>
-		[Browsable(false), XmlIgnore]
-		protected override string LLBLGenProEntityName
-		{
-			get { return "SalesOrderHeaderEntity";}
-		}
 
 		/// <summary> The custom properties for the type of this entity instance.</summary>
 		/// <remarks>The data returned from this property should be considered read-only: it is not thread safe to alter this data at runtime.</remarks>
@@ -1911,7 +1905,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AccountNumber property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Financial accounting number reference.<br/></summary>
+		/// MS_Description: Financial accounting number reference.<br/>Financial accounting number reference.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."AccountNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1922,7 +1916,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The BillToAddressID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Customer billing address. Foreign key to Address.AddressID.<br/></summary>
+		/// MS_Description: Customer billing address. Foreign key to Address.AddressID.<br/>Customer billing address. Foreign key to Address.AddressID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."BillToAddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1933,7 +1927,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Comment property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Sales representative comments.<br/></summary>
+		/// MS_Description: Sales representative comments.<br/>Sales representative comments.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Comment"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1944,7 +1938,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ContactID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Customer contact identification number. Foreign key to Contact.ContactID.<br/></summary>
+		/// MS_Description: Customer contact identification number. Foreign key to Contact.ContactID.<br/>Customer contact identification number. Foreign key to Contact.ContactID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1955,7 +1949,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CreditCardApprovalCode property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Approval code provided by the credit card company.<br/></summary>
+		/// MS_Description: Approval code provided by the credit card company.<br/>Approval code provided by the credit card company.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CreditCardApprovalCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1966,7 +1960,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CreditCardID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Credit card identification number. Foreign key to CreditCard.CreditCardID.<br/></summary>
+		/// MS_Description: Credit card identification number. Foreign key to CreditCard.CreditCardID.<br/>Credit card identification number. Foreign key to CreditCard.CreditCardID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CreditCardID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1977,7 +1971,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CurrencyRateID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Currency exchange rate used. Foreign key to CurrencyRate.CurrencyRateID.<br/></summary>
+		/// MS_Description: Currency exchange rate used. Foreign key to CurrencyRate.CurrencyRateID.<br/>Currency exchange rate used. Foreign key to CurrencyRate.CurrencyRateID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CurrencyRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1988,7 +1982,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CustomerID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Customer identification number. Foreign key to Customer.CustomerID.<br/></summary>
+		/// MS_Description: Customer identification number. Foreign key to Customer.CustomerID.<br/>Customer identification number. Foreign key to Customer.CustomerID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1999,7 +1993,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DueDate property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Date the order is due to the customer.<br/></summary>
+		/// MS_Description: Date the order is due to the customer.<br/>Date the order is due to the customer.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."DueDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2010,7 +2004,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Freight property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Shipping cost.<br/></summary>
+		/// MS_Description: Shipping cost.<br/>Shipping cost.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Freight"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2021,7 +2015,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2032,7 +2026,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OnlineOrderFlag property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: 0 = Order placed by sales person. 1 = Order placed online by customer.<br/></summary>
+		/// MS_Description: 0 = Order placed by sales person. 1 = Order placed online by customer.<br/>0 = Order placed by sales person. 1 = Order placed online by customer.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."OnlineOrderFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2043,7 +2037,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OrderDate property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Unique nonclustered index.<br/></summary>
+		/// MS_Description: Unique nonclustered index.<br/>Unique nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."OrderDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2054,7 +2048,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PurchaseOrderNumber property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Customer purchase order number reference. <br/></summary>
+		/// MS_Description: Customer purchase order number reference. <br/>Customer purchase order number reference. </summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."PurchaseOrderNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2065,7 +2059,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The RevisionNumber property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Incremental number to track changes to the sales order over time.<br/></summary>
+		/// MS_Description: Incremental number to track changes to the sales order over time.<br/>Incremental number to track changes to the sales order over time.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."RevisionNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2076,7 +2070,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2087,7 +2081,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesOrderID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -2098,7 +2092,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesOrderNumber property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Unique sales order identification number.<br/></summary>
+		/// MS_Description: Unique sales order identification number.<br/>Unique sales order identification number.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesOrderNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2109,7 +2103,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesPersonID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Sales person who created the sales order. Foreign key to SalesPerson.SalePersonID.<br/></summary>
+		/// MS_Description: Sales person who created the sales order. Foreign key to SalesPerson.SalePersonID.<br/>Sales person who created the sales order. Foreign key to SalesPerson.SalePersonID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SalesPersonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2120,7 +2114,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShipDate property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2131,7 +2125,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShipMethodID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Shipping method. Foreign key to ShipMethod.ShipMethodID.<br/></summary>
+		/// MS_Description: Shipping method. Foreign key to ShipMethod.ShipMethodID.<br/>Shipping method. Foreign key to ShipMethod.ShipMethodID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipMethodID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2142,7 +2136,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShipToAddressID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Customer shipping address. Foreign key to Address.AddressID.<br/></summary>
+		/// MS_Description: Customer shipping address. Foreign key to Address.AddressID.<br/>Customer shipping address. Foreign key to Address.AddressID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."ShipToAddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2153,7 +2147,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Status property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled<br/></summary>
+		/// MS_Description: Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled<br/>Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."Status"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2164,7 +2158,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SubTotal property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.<br/></summary>
+		/// MS_Description: Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.<br/>Sales subtotal. Computed as SUM(SalesOrderDetail.LineTotal)for the appropriate SalesOrderID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."SubTotal"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2175,7 +2169,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TaxAmt property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Tax amount.<br/></summary>
+		/// MS_Description: Tax amount.<br/>Tax amount.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TaxAmt"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -2186,7 +2180,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TerritoryID property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
+		/// MS_Description: Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.<br/>Territory in which the sale was made. Foreign key to SalesTerritory.SalesTerritoryID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -2197,7 +2191,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TotalDue property of the Entity SalesOrderHeader<br/><br/>
-		/// MS_Description: Total due from customer. Computed as Subtotal + TaxAmt + Freight.<br/></summary>
+		/// MS_Description: Total due from customer. Computed as Subtotal + TaxAmt + Freight.<br/>Total due from customer. Computed as Subtotal + TaxAmt + Freight.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."TotalDue"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

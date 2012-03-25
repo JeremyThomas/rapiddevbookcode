@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.1
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -11,10 +11,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.Collections;
-#if !CF
 using System.Runtime.Serialization;
-#endif
-
 using AW.Data;
 using AW.Data.HelperClasses;
 using AW.Data.DaoClasses;
@@ -22,17 +19,16 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
+
 namespace AW.Data.TypedViewClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	
 	/// <summary>Typed datatable for the view 'CustomerView'.<br/><br/></summary>
-#if !CF
 	[Serializable, System.ComponentModel.DesignerCategory("Code")]
 	[ToolboxItem(true)]
 	[DesignTimeVisible(true)]
-#endif
 	public partial class CustomerViewTypedView : TypedViewBase<CustomerViewRow>, ITypedView
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfacesView
 		// __LLBLGENPRO_USER_CODE_REGION_END	
@@ -81,7 +77,6 @@ namespace AW.Data.TypedViewClasses
 			InitClass();
 		}
 		
-#if !CF		
 		/// <summary>Protected constructor for deserialization.</summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
@@ -89,7 +84,6 @@ namespace AW.Data.TypedViewClasses
 		{
 			InitMembers();
 		}
-#endif
 
 		/// <summary> Fills itself with data. it builds a dynamic query and loads itself with that query. 
 		/// Will use no sort filter, no select filter, will allow duplicate rows and will not limit the amount of rows returned</summary>
