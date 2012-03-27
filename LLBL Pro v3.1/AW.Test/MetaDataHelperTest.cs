@@ -15,6 +15,10 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 using CommonEntityBase = Northwind.DAL.EntityClasses.CommonEntityBase;
 using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
 using EmployeeEntity = Northwind.DAL.EntityClasses.EmployeeEntity;
+using System.Collections.Generic;
+using AW.Data.CollectionClasses;
+using System.Collections;
+using Northwind.DAL.HelperClasses;
 
 namespace AW.Tests
 {
@@ -72,6 +76,17 @@ namespace AW.Tests
 			var xmlSchema = TestData.GetTestXmlSchema();
 			var actual = MetaDataHelper.GetEnumerableItemType(xmlSchema.Items);
 			Assert.AreEqual(typeof (XmlSchemaObject), actual);
+			Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType(new List<int>()));
+			Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType((new List<int> { 1, 2, 3, 4 }).Where(i => i > 2)));
+			Assert.AreEqual(typeof(AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(new AddressTypeCollection()));
+			Assert.AreEqual(typeof(AddressTypeEntity), MetaDataHelper.GetEnumerableItemType(MetaSingletons.MetaData.AddressType));
+			Assert.AreEqual(typeof(int), MetaDataHelper.GetEnumerableItemType(new ArrayList { 1, 2, 3 }));
+			Assert.AreEqual(typeof(object), MetaDataHelper.GetEnumerableItemType(new ArrayList()));
+
+			Assert.AreEqual(typeof(string), MetaDataHelper.GetEnumerableItemType(new string[0]));
+			var emptySerializableClasses = new SerializableClass[0];
+			Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses));
+			Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses.Take(30)));
 		}
 
 		/// <summary>
@@ -97,6 +112,36 @@ namespace AW.Tests
 			{
 				TypeDescriptor.RemoveProvider(fieldsToPropertiesTypeDescriptionProvider, xmlSchemaObjectType);
 			}
+		}
+
+		[TestMethod]
+		public void GetTypeParametersOfGenericTypeTest()
+		{
+			var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
+			var dictionaryType = dictionary.GetType();
+			var typeParametersOfGenericType = MetaDataHelper.GetTypeParametersOfGenericType(dictionaryType);
+			var expected = new[] { typeof(int), typeof(NonSerializableClass) };
+			CollectionAssert.AreEqual(expected, typeParametersOfGenericType);
+			Assert.IsTrue(dictionaryType.IsSerializable);
+			Assert.IsFalse(MetaDataHelper.IsSerializable(dictionaryType));
+
+			var itemType = MetaDataHelper.GetEnumerableItemType(dictionary);
+			typeParametersOfGenericType = MetaDataHelper.GetTypeParametersOfGenericType(itemType);
+			CollectionAssert.AreEqual(expected, typeParametersOfGenericType);
+			Assert.IsTrue(itemType.IsSerializable);
+			Assert.IsFalse(MetaDataHelper.IsSerializable(itemType));
+		}
+
+		[TestMethod]
+		public void IsSerializableTest()
+		{
+			Assert.IsTrue(MetaDataHelper.IsSerializable(typeof(List<SerializableClass>)));
+			Assert.IsFalse(MetaDataHelper.IsSerializable(typeof(List<NonSerializableClass>)));
+			Assert.IsTrue(MetaDataHelper.IsSerializable(typeof(int)));
+			Assert.IsTrue(MetaDataHelper.IsSerializable(typeof(CustomerEntity)));
+			Assert.IsTrue(MetaDataHelper.IsSerializable(typeof(AddressTypeEntity)));
+			Assert.IsTrue(MetaDataHelper.IsSerializable(typeof(EntityCollection<CustomerEntity>)));
+			//Assert.IsTrue(MetaDataHelper.IsSerializable(typeof(EntityCollection<AddressTypeEntity>)));
 		}
 
 		[TestMethod]
