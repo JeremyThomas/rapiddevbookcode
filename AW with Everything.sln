@@ -600,6 +600,7 @@ Global
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release - Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
