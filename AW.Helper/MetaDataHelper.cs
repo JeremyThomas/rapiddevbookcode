@@ -276,17 +276,17 @@ namespace AW.Helper
 
 		public static Type[] GetTypeParametersOfGenericType(Type type)
 		{
-			if (type == typeof (object))
+			if (type == typeof(object) || type == null)
 				return null;
 			return type.IsGenericType ? type.GetGenericArguments() : GetTypeParametersOfGenericType(type.BaseType);
 		}
 
 		public static bool IsSerializable(Type type)
 		{
-			if (type.IsSerializable)
+			if (type.IsSerializable || type.IsInterface)
 			{
 				var typeParametersOfGenericType = GetTypeParametersOfGenericType(type);
-				return typeParametersOfGenericType.IsNullOrEmpty() || typeParametersOfGenericType.All(t => t.IsSerializable);
+				return typeParametersOfGenericType.IsNullOrEmpty() || typeParametersOfGenericType.All(IsSerializable);
 			}
 			return false;
 		}

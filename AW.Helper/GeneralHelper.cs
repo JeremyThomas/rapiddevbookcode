@@ -5,8 +5,11 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AW.Helper
 {
@@ -393,6 +396,21 @@ namespace AW.Helper
 			return exception.InnerException == null ? exception : GetInnerMostException(exception.InnerException);
 		}
 
-
+		/// <summary>
+		/// Clones the object graph.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="graph">The graph.</param>
+		/// <returns></returns>
+		public static T CloneObject<T>(T graph)
+		{
+			var ms = new MemoryStream();
+			var bf = new BinaryFormatter(null, new StreamingContext(StreamingContextStates.Clone));
+			bf.Serialize(ms, graph);
+			ms.Seek(0, SeekOrigin.Begin);
+			var oOut = bf.Deserialize(ms);
+			ms.Close();
+			return (T)oOut;
+		}
 	}
 }
