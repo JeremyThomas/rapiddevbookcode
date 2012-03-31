@@ -393,6 +393,29 @@ namespace AW.Helper
 			return exception.InnerException == null ? exception : GetInnerMostException(exception.InnerException);
 		}
 
+		/// <summary>
+		/// Gets the OS architecture.
+		/// if .net 4 could use Environment.Is64BitOperatingSystem
+		/// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
+		/// </summary>
+		/// <returns>32 or 64</returns>
+		internal static int GetOSArchitecture()
+		{
+			var pa = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE");
+			return ((String.IsNullOrEmpty(pa) || String.Compare(pa, 0, "x86", 0, 3, true) == 0) ? 32 : 64);
+		}
 
+		/// <summary>
+		/// Gets a value indicating whether [is64 bit operating system].
+		/// if .net 4 could use Environment.Is64BitOperatingSystem
+		/// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
+		/// </summary>
+		/// <value>
+		/// 	<c>true</c> if [is64 bit operating system]; otherwise, <c>false</c>.
+		/// </value>
+		public static bool Is64BitOperatingSystem
+		{
+			get { return GetOSArchitecture() == 64; }
+		}
 	}
 }
