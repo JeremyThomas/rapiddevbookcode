@@ -6,6 +6,7 @@
 
 using System;
 using System.IO;
+using AW.Helper;
 using AW.Winforms.Helpers.Properties;
 using Microsoft.Data.ConnectionUI;
 using Microsoft.SqlServerCe.Client;
@@ -23,7 +24,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		{
 			get
 			{
-				var dataSource = this["Data Source"] as string;
+				var dataSource = this[DataHelper.DbPropDataSource] as string;
 				if (String.IsNullOrEmpty(dataSource))
 					return false;
 				// Ensure file extension: 
@@ -34,20 +35,19 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 
 		protected override string ToTestString()
 		{
-			var savedPooling = (bool) ConnectionStringBuilder["Pooling"];
-			var wasDefault = !ConnectionStringBuilder.ShouldSerialize("Pooling");
-			ConnectionStringBuilder["Pooling"] = false;
+			var savedPooling = (bool) ConnectionStringBuilder[DataHelper.DbPropPooling];
+			var wasDefault = !ConnectionStringBuilder.ShouldSerialize(DataHelper.DbPropPooling);
+			ConnectionStringBuilder[DataHelper.DbPropPooling] = false;
 			var testString = ConnectionStringBuilder.ConnectionString;
-			ConnectionStringBuilder["Pooling"] = savedPooling;
+			ConnectionStringBuilder[DataHelper.DbPropPooling] = savedPooling;
 			if (wasDefault)
-				ConnectionStringBuilder.Remove("Pooling");
+				ConnectionStringBuilder.Remove(DataHelper.DbPropPooling);
 			return testString;
 		}
 
 		public override void Test()
 		{
 			var testString = ToTestString();
-
 
 			// Create a connection object
 			var connection = new SqlCeConnection();
@@ -61,7 +61,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			catch (SqlCeException e)
 			{
 				// Customize the error message for upgrade required
-				if (e.Number == m_intDatabaseFileNeedsUpgrading)
+				if (e.Number == IntDatabaseFileNeedsUpgrading)
 					throw new InvalidOperationException(Resources.SqlCeConnectionProperties_FileNeedsUpgrading);
 				throw;
 			}
@@ -71,6 +71,6 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			}
 		}
 
-		private const int m_intDatabaseFileNeedsUpgrading = 25138;
+		private const int IntDatabaseFileNeedsUpgrading = 25138;
 	}
 }

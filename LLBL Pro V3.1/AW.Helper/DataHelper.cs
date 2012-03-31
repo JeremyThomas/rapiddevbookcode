@@ -117,6 +117,11 @@ namespace AW.Helper
 		public static string DbPropDataSource = "Data Source";
 
 		/// <summary>
+		/// Pooling
+		/// </summary>
+		public static string DbPropPooling = "Pooling";
+
+		/// <summary>
 		/// 	Returns a value indicating whether one of the contained strings occurs within aString.
 		/// 	Sames as aString.Contains(value) except it is case-insensitive
 		/// </summary>

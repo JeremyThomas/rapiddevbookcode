@@ -17,7 +17,7 @@ using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 {
 	/// <summary>
-	/// Represents the connection UI control for the SQL Server Compact provider.
+	/// 	Represents the connection UI control for the SQL Server Compact provider.
 	/// </summary>
 	internal partial class SqlCeConnectionUIControl : UserControl, IDataConnectionUIControl
 	{
@@ -58,7 +58,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			{
 				databaseTextBox.Text = _properties[DataHelper.DbPropDataSource] as string;
 				passwordTextBox.Text = _properties[DataHelper.DbpropAuthPassword] as string;
-				savePasswordCheckBox.Checked = (bool)_properties[DataHelper.DbpropAuthPersistSensitiveAuthinfo];
+				savePasswordCheckBox.Checked = (bool) _properties[DataHelper.DbpropAuthPersistSensitiveAuthinfo];
 			}
 			_loading = false;
 		}
@@ -136,18 +136,27 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		{
 			get
 			{
-				string path = null;
-				var sqlCEBaseRegKey = Registry.LocalMachine.OpenSubKey(
-					@"SOFTWARE\Microsoft\Microsoft SQL Server Compact Edition\v" + SqlCe.Version);
-				if (sqlCEBaseRegKey != null)
-					using (sqlCEBaseRegKey)
-					{
-						path = sqlCEBaseRegKey.GetValue("InstallDir") as string;
-						if (path != null)
-							path = Path.Combine(path, "Samples");
-					}
+				var path = GetPathToSamples("");
+				if (!Directory.Exists(path) && GeneralHelper.Is64BitOperatingSystem)
+					return GetPathToSamples(@"\Wow6432Node");
 				return path;
 			}
+		}
+
+		private static string GetPathToSamples(string wow6432Node)
+		{
+			string path = null;
+
+			var sqlCEBaseRegKey = Registry.LocalMachine.OpenSubKey(
+				"SOFTWARE" + wow6432Node + @"\Microsoft\Microsoft SQL Server Compact Edition\v" + SqlCe.Version);
+			if (sqlCEBaseRegKey != null)
+				using (sqlCEBaseRegKey)
+				{
+					path = sqlCEBaseRegKey.GetValue("InstallDir") as string;
+					if (path != null)
+						path = Path.Combine(path, "Samples");
+				}
+			return path;
 		}
 	}
 }
