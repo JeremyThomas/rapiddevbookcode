@@ -7,6 +7,7 @@
 using System;
 using System.IO;
 using System.Windows.Forms;
+using AW.Helper;
 using AW.Winforms.Helpers.Properties;
 using Microsoft.Data.ConnectionUI;
 using Microsoft.SqlServerCe.Client;
@@ -30,71 +31,37 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			RightToLeft = RightToLeft.Inherit;
 
 			// Disable the active sync radio button for standalone connection dialog.
-			this.activeSyncRadioButton.Enabled = false;
-			this.createButton.Enabled = false;
-		}
-
-		private string DataSourceProperty
-		{
-			get
-			{
-				return "Data Source";
-			}
+			activeSyncRadioButton.Enabled = false;
+			createButton.Enabled = false;
 		}
 
 		public static string MobileDevicePrefix
 		{
-			get
-			{
-				return ConStringUtil.MobileDevicePrefix + @"\";
-			}
+			get { return ConStringUtil.MobileDevicePrefix + @"\"; }
 		}
-
-		private string PasswordProperty
-		{
-			get
-			{
-				return "Password";
-			}
-		}
-
-
-		public string PersistSecurityInfoProperty
-		{
-			get
-			{
-				return "Persist Security Info";
-			}
-		}
-
 
 		public void Initialize(IDataConnectionProperties connectionProperties)
 		{
 			if (connectionProperties == null)
-			{
 				throw new ArgumentNullException("connectionProperties");
-			}
-			SqlCeConnectionProperties properties = connectionProperties as SqlCeConnectionProperties;
+			var properties = connectionProperties as SqlCeConnectionProperties;
 			if (properties == null)
-			{
 				throw new ArgumentException(Resources.SqlCeConnectionUIControl_InvalidConnectionProperties);
-			}
 			_properties = properties;
 		}
 
 		public void LoadProperties()
 		{
 			_loading = true;
-
-			string dataSource = _properties[DataSourceProperty] as string;
 			myComputerRadioButton.Checked = true;
-			databaseTextBox.Text = dataSource;
-			passwordTextBox.Text = _properties[PasswordProperty] as string;
-			savePasswordCheckBox.Checked = (bool)_properties[PersistSecurityInfoProperty];
-
+			if (_properties != null)
+			{
+				databaseTextBox.Text = _properties[DataHelper.DbPropDataSource] as string;
+				passwordTextBox.Text = _properties[DataHelper.DbpropAuthPassword] as string;
+				savePasswordCheckBox.Checked = (bool)_properties[DataHelper.DbpropAuthPersistSensitiveAuthinfo];
+			}
 			_loading = false;
 		}
-
 
 		private void myComputerRadioButton_CheckedChanged(object sender, EventArgs e)
 		{
@@ -110,16 +77,12 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		{
 			if (!_loading)
 			{
-				string dataSource = databaseTextBox.Text.Trim();
+				var dataSource = databaseTextBox.Text.Trim();
 				if (activeSyncRadioButton.Checked)
-				{
 					dataSource = Path.Combine(MobileDevicePrefix, dataSource);
-				}
 				if (dataSource.Length == 0)
-				{
 					dataSource = null;
-				}
-				_properties[DataSourceProperty] = dataSource;
+				_properties[DataHelper.DbPropDataSource] = dataSource;
 			}
 		}
 
@@ -130,20 +93,18 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 				//
 				// We're exploring the desktop, let's use an OpenFileDialog
 				//
-				using (OpenFileDialog fileDialog = new OpenFileDialog())
+				using (var fileDialog = new OpenFileDialog())
 				{
 					fileDialog.Title = Resources.SqlConnectionUIControl_BrowseFileTitle;
 					fileDialog.Multiselect = false;
-					if (String.IsNullOrEmpty(_properties[DataSourceProperty] as string))
-					{
+					if (_properties != null && String.IsNullOrEmpty(_properties[DataHelper.DbPropDataSource] as string))
 						fileDialog.InitialDirectory = InitialDirectory;
-					}
 					fileDialog.RestoreDirectory = true;
 					fileDialog.Filter = Resources.SqlConnectionUIControl_BrowseFileFilter;
 					fileDialog.DefaultExt = Resources.SqlConnectionUIControl_BrowseFileDefaultExt;
 					if (fileDialog.ShowDialog() == DialogResult.OK)
 					{
-						_properties[DataSourceProperty] = fileDialog.FileName.Trim();
+						if (_properties != null) _properties[DataHelper.DbPropDataSource] = fileDialog.FileName.Trim();
 						LoadProperties();
 					}
 				}
@@ -154,7 +115,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		{
 			if (!_loading)
 			{
-				_properties[PasswordProperty] = (passwordTextBox.Text.Length > 0) ? passwordTextBox.Text : null;
+				_properties[DataHelper.DbpropAuthPassword] = (passwordTextBox.Text.Length > 0) ? passwordTextBox.Text : null;
 				passwordTextBox.Text = passwordTextBox.Text; // forces reselection of all text
 			}
 		}
@@ -162,15 +123,13 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		private void savePasswordCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (!_loading)
-			{
-				_properties[PersistSecurityInfoProperty] = savePasswordCheckBox.Checked;
-			}
+				_properties[DataHelper.DbpropAuthPersistSensitiveAuthinfo] = savePasswordCheckBox.Checked;
 		}
 
 		private void TrimControlText(object sender, EventArgs e)
 		{
-			Control c = sender as Control;
-			c.Text = c.Text.Trim();
+			var c = sender as Control;
+			if (c != null) c.Text = c.Text.Trim();
 		}
 
 		private static string InitialDirectory
@@ -178,22 +137,17 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			get
 			{
 				string path = null;
-				RegistryKey sqlCEBaseRegKey = Registry.LocalMachine.OpenSubKey(
-					@"SOFTWARE\Microsoft\Microsoft SQL Server Compact Edition\v3.5");
+				var sqlCEBaseRegKey = Registry.LocalMachine.OpenSubKey(
+					@"SOFTWARE\Microsoft\Microsoft SQL Server Compact Edition\v" + SqlCe.Version);
 				if (sqlCEBaseRegKey != null)
-				{
 					using (sqlCEBaseRegKey)
 					{
 						path = sqlCEBaseRegKey.GetValue("InstallDir") as string;
 						if (path != null)
-						{
 							path = Path.Combine(path, "Samples");
-						}
 					}
-				}
 				return path;
 			}
 		}
-
 	}
 }

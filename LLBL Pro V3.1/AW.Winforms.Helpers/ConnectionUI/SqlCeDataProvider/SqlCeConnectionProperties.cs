@@ -12,7 +12,6 @@ using Microsoft.SqlServerCe.Client;
 
 namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 {
-
 	public class SqlCeConnectionProperties : AdoDotNetConnectionProperties
 	{
 		public SqlCeConnectionProperties()
@@ -20,54 +19,38 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		{
 		}
 
-		public override void Reset()
-		{
-			base.Reset();
-		}
-
 		public override bool IsComplete
 		{
 			get
 			{
-
-				string dataSource = this["Data Source"] as string;
-
+				var dataSource = this["Data Source"] as string;
 				if (String.IsNullOrEmpty(dataSource))
-				{
 					return false;
-				}
-
 				// Ensure file extension: 
-				if (!(Path.GetExtension(dataSource).Equals(".sdf", StringComparison.OrdinalIgnoreCase)))
-				{
-					return false;
-				}
-
-				return true;
+				var extension = Path.GetExtension(dataSource);
+				return extension == null || (extension.Equals(".sdf", StringComparison.OrdinalIgnoreCase));
 			}
 		}
 
 		protected override string ToTestString()
 		{
-			bool savedPooling = (bool)ConnectionStringBuilder["Pooling"];
-			bool wasDefault = !ConnectionStringBuilder.ShouldSerialize("Pooling");
+			var savedPooling = (bool) ConnectionStringBuilder["Pooling"];
+			var wasDefault = !ConnectionStringBuilder.ShouldSerialize("Pooling");
 			ConnectionStringBuilder["Pooling"] = false;
-			string testString = ConnectionStringBuilder.ConnectionString;
+			var testString = ConnectionStringBuilder.ConnectionString;
 			ConnectionStringBuilder["Pooling"] = savedPooling;
 			if (wasDefault)
-			{
 				ConnectionStringBuilder.Remove("Pooling");
-			}
 			return testString;
 		}
 
 		public override void Test()
 		{
-			string testString = ToTestString();
+			var testString = ToTestString();
 
 
 			// Create a connection object
-			SqlCeConnection connection = new SqlCeConnection();
+			var connection = new SqlCeConnection();
 
 			// Try to open it
 			try
@@ -79,9 +62,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			{
 				// Customize the error message for upgrade required
 				if (e.Number == m_intDatabaseFileNeedsUpgrading)
-				{
 					throw new InvalidOperationException(Resources.SqlCeConnectionProperties_FileNeedsUpgrading);
-				}
 				throw;
 			}
 			finally
@@ -91,7 +72,5 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		}
 
 		private const int m_intDatabaseFileNeedsUpgrading = 25138;
-
 	}
 }
-

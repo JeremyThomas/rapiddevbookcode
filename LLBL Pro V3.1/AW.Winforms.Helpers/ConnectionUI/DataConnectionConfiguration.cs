@@ -22,7 +22,26 @@ namespace AW.Winforms.Helpers.ConnectionUI
 	/// </summary>
 	public class DataConnectionConfiguration : IDataConnectionConfiguration
 	{
+		/// <summary>
+		/// DataConnection.xml
+		/// </summary>
 		private const string ConfigFileName = @"DataConnection.xml";
+
+		/// <summary>
+		/// DataSourceSelection
+		/// </summary>
+		private const string DatasourceSelectionElementName = "DataSourceSelection";
+
+		/// <summary>
+		/// SelectedSource
+		/// </summary>
+		private const string SelectedSourceElementName = "SelectedSource";
+
+		/// <summary>
+		/// SelectedProvider
+		/// </summary>
+		private const string SelectedProviderElementName = "SelectedProvider";
+
 		private readonly string _fullFilePath;
 		private readonly XDocument _xDoc;
 
@@ -45,13 +64,11 @@ namespace AW.Winforms.Helpers.ConnectionUI
 		{
 			_fullFilePath = !String.IsNullOrEmpty(path) ? Path.GetFullPath(Path.Combine(path, ConfigFileName)) : Path.Combine(Environment.CurrentDirectory, ConfigFileName);
 			if (!String.IsNullOrEmpty(_fullFilePath) && File.Exists(_fullFilePath))
-			{
 				_xDoc = XDocument.Load(_fullFilePath);
-			}
 			else
 			{
 				_xDoc = new XDocument();
-				_xDoc.Add(new XElement("ConnectionDialog", new XElement("DataSourceSelection")));
+				_xDoc.Add(new XElement("ConnectionDialog", new XElement(DatasourceSelectionElementName)));
 			}
 
 			RootElement = _xDoc.Root;
@@ -85,16 +102,12 @@ namespace AW.Winforms.Helpers.ConnectionUI
 			DataSource ds;
 			var dsName = GetSelectedSource();
 			if (!String.IsNullOrEmpty(dsName) && _dataSources.TryGetValue(dsName, out ds))
-			{
 				dialog.SelectedDataSource = ds;
-			}
 
 			DataProvider dp;
 			var dpName = GetSelectedProvider();
 			if (!String.IsNullOrEmpty(dpName) && _dataProviders.TryGetValue(dpName, out dp))
-			{
 				dialog.SelectedDataProvider = dp;
-			}
 		}
 
 		private static void AddDataSources(DataConnectionDialog dialog, DataSource dataSource)
@@ -106,18 +119,14 @@ namespace AW.Winforms.Helpers.ConnectionUI
 				{
 					dialog.DataSources.Add(dataSource);
 					foreach (var dataProvider in dataSource.Providers)
-					{
 						dialog.UnspecifiedDataSource.Providers.Add(dataProvider);
-					}
 				}
 				else
-				{
 					foreach (var dataProvider in dataSource.Providers)
 					{
 						existing.Providers.Add(dataProvider);
 						dialog.UnspecifiedDataSource.Providers.Add(dataProvider);
 					}
-				}
 			}
 		}
 
@@ -127,99 +136,92 @@ namespace AW.Winforms.Helpers.ConnectionUI
 			{
 				var ds = dcd.SelectedDataSource;
 				if (ds != null)
-				{
 					SaveSelectedSource(ds == dcd.UnspecifiedDataSource ? ds.DisplayName : ds.Name);
-				}
 				var dp = dcd.SelectedDataProvider;
 				if (dp != null)
-				{
 					SaveSelectedProvider(dp.Name);
-				}
-
 				_xDoc.Save(_fullFilePath);
 			}
 		}
 
-		public string GetSelectedSource()
+		private XElement DataSourceSelectionElement
 		{
-			try
+			get
 			{
-				var xElem = RootElement.Element("DataSourceSelection");
-				var sourceElem = xElem.Element("SelectedSource");
-				if (sourceElem != null)
+				try
 				{
-					return sourceElem.Value;
+					return RootElement.Element(DatasourceSelectionElementName);
+				}
+				catch
+				{
+					return null;
 				}
 			}
-			catch
-			{
-				return null;
-			}
+		}
+
+		private string GetDataSourceSelectionElement(string elementName)
+		{
+			var xElem = DataSourceSelectionElement;
+			if (xElem != null)
+				try
+				{
+					var sourceElem = xElem.Element(elementName);
+					if (sourceElem != null)
+						return sourceElem.Value;
+				}
+				catch
+				{
+					return null;
+				}
 			return null;
+		}
+
+		public string GetSelectedSource()
+		{
+			return GetDataSourceSelectionElement(SelectedSourceElementName);
 		}
 
 		public string GetSelectedProvider()
 		{
-			try
-			{
-				var xElem = RootElement.Element("DataSourceSelection");
-				var providerElem = xElem.Element("SelectedProvider");
-				if (providerElem != null)
-				{
-					return providerElem.Value;
-				}
-			}
-			catch
-			{
-				return null;
-			}
-			return null;
+			return GetDataSourceSelectionElement(SelectedProviderElementName);
+			;
 		}
 
 		public void SaveSelectedSource(string source)
 		{
 			if (!String.IsNullOrEmpty(source))
-			{
 				try
 				{
-					var xElem = RootElement.Element("DataSourceSelection");
-					var sourceElem = xElem.Element("SelectedSource");
-					if (sourceElem != null)
+					var xElem = DataSourceSelectionElement;
+					if (xElem != null)
 					{
-						sourceElem.Value = source;
-					}
-					else
-					{
-						xElem.Add(new XElement("SelectedSource", source));
+						var sourceElem = xElem.Element(SelectedSourceElementName);
+						if (sourceElem != null)
+							sourceElem.Value = source;
+						else
+							xElem.Add(new XElement(SelectedSourceElementName, source));
 					}
 				}
 				catch
 				{
 				}
-			}
 		}
 
 		public void SaveSelectedProvider(string provider)
 		{
 			if (!String.IsNullOrEmpty(provider))
-			{
 				try
 				{
-					var xElem = RootElement.Element("DataSourceSelection");
-					var sourceElem = xElem.Element("SelectedProvider");
+					var xElem = DataSourceSelectionElement;
+					var sourceElem = xElem.Element(SelectedProviderElementName);
 					if (sourceElem != null)
-					{
 						sourceElem.Value = provider;
-					}
 					else
-					{
-						xElem.Add(new XElement("SelectedProvider", provider));
-					}
+						xElem.Add(new XElement(SelectedProviderElementName, provider));
 				}
 				catch
 				{
 				}
-			}
 		}
 
 		//SQLite Data Provider .Net Framework Data Provider for SQLite System.Data.SQLite 
@@ -230,7 +232,7 @@ namespace AW.Winforms.Helpers.ConnectionUI
 		}
 
 		private static DataSource CreateDataSource(string providerInvariantName, string displayName, string shortDisplayName,
-		                                    string description, string designerAssemblyPath)
+		                                           string description, string designerAssemblyPath)
 		{
 			try
 			{
@@ -245,8 +247,8 @@ namespace AW.Winforms.Helpers.ConnectionUI
 
 					var assignable = types.FilterByImplements("IDataConnectionProperties").FirstOrDefault() ?? typeSqLiteConnectionProperties;
 
-				var dbProviderFactory = DbProviderFactories.GetFactory(providerInvariantName);
-				var dbConnection = dbProviderFactory.CreateConnection();
+					var dbProviderFactory = DbProviderFactories.GetFactory(providerInvariantName);
+					var dbConnection = dbProviderFactory.CreateConnection();
 					var dataSource2 = CreateDataSource(providerInvariantName, displayName, shortDisplayName,
 					                                   description, dbConnection.GetType(),
 					                                   assignable, dataConnectionUIControlType);

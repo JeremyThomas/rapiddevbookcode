@@ -112,6 +112,11 @@ namespace AW.Helper
 		public static string DbpropAuthUserid = "User ID";
 
 		/// <summary>
+		/// Data Source
+		/// </summary>
+		public static string DbPropDataSource = "Data Source";
+
+		/// <summary>
 		/// 	Returns a value indicating whether one of the contained strings occurs within aString.
 		/// 	Sames as aString.Contains(value) except it is case-insensitive
 		/// </summary>
@@ -343,6 +348,5 @@ namespace AW.Helper
 									}
 			return insertCount;
 		}
-
 	}
 }
