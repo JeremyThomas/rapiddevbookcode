@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using AW.Helper;
 using AW.Winforms.Helpers.Properties;
 using Microsoft.Data.ConnectionUI;
-using Microsoft.SqlServerCe.Client;
 using Microsoft.Win32;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
@@ -24,6 +23,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		private bool _loading;
 
 		private SqlCeConnectionProperties _properties;
+		private string _version;
 
 		public SqlCeConnectionUIControl()
 		{
@@ -37,7 +37,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 
 		public static string MobileDevicePrefix
 		{
-			get { return ConStringUtil.MobileDevicePrefix + @"\"; }
+			get { return  @"Mobile Device\"; }
 		}
 
 		public void Initialize(IDataConnectionProperties connectionProperties)
@@ -48,6 +48,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			if (properties == null)
 				throw new ArgumentException(Resources.SqlCeConnectionUIControl_InvalidConnectionProperties);
 			_properties = properties;
+			_version = _properties is SqlCeConnection40Properties ? SqlCe.Version40 : SqlCe.Version35;
 		}
 
 		public void LoadProperties()
@@ -95,12 +96,12 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 				//
 				using (var fileDialog = new OpenFileDialog())
 				{
-					fileDialog.Title = Resources.SqlConnectionUIControl_BrowseFileTitle;
+					fileDialog.Title = string.Format(Resources.SqlConnectionUIControl_BrowseFileTitle, _version);
 					fileDialog.Multiselect = false;
 					if (_properties != null && String.IsNullOrEmpty(_properties[DataHelper.DbPropDataSource] as string))
 						fileDialog.InitialDirectory = InitialDirectory;
 					fileDialog.RestoreDirectory = true;
-					fileDialog.Filter = Resources.SqlConnectionUIControl_BrowseFileFilter;
+					fileDialog.Filter = string.Format(Resources.SqlConnectionUIControl_BrowseFileFilter, _version);
 					fileDialog.DefaultExt = Resources.SqlConnectionUIControl_BrowseFileDefaultExt;
 					if (fileDialog.ShowDialog() == DialogResult.OK)
 					{
@@ -132,23 +133,23 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			if (c != null) c.Text = c.Text.Trim();
 		}
 
-		private static string InitialDirectory
+		private string InitialDirectory
 		{
 			get
 			{
-				var path = GetPathToSamples("");
+				var path = GetPathToSamples("", _version);
 				if (!Directory.Exists(path) && GeneralHelper.Is64BitOperatingSystem)
-					return GetPathToSamples(@"\Wow6432Node");
+					return GetPathToSamples(@"Wow6432Node\", _version);
 				return path;
 			}
 		}
 
-		private static string GetPathToSamples(string wow6432Node)
+		private static string GetPathToSamples(string wow6432Node, string version)
 		{
 			string path = null;
 
 			var sqlCEBaseRegKey = Registry.LocalMachine.OpenSubKey(
-				"SOFTWARE" + wow6432Node + @"\Microsoft\Microsoft SQL Server Compact Edition\v" + SqlCe.Version);
+				@"SOFTWARE\" + wow6432Node + @"Microsoft\Microsoft SQL Server Compact Edition\v" + version);
 			if (sqlCEBaseRegKey != null)
 				using (sqlCEBaseRegKey)
 				{

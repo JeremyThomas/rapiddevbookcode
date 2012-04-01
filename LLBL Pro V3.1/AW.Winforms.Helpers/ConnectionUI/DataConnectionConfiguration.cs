@@ -18,27 +18,27 @@ using Microsoft.Data.ConnectionUI;
 namespace AW.Winforms.Helpers.ConnectionUI
 {
 	/// <summary>
-	/// Provide a default implementation for the storage of DataConnection Dialog UI configuration.
+	/// 	Provide a default implementation for the storage of DataConnection Dialog UI configuration.
 	/// </summary>
 	public class DataConnectionConfiguration : IDataConnectionConfiguration
 	{
 		/// <summary>
-		/// DataConnection.xml
+		/// 	DataConnection.xml
 		/// </summary>
 		private const string ConfigFileName = @"DataConnection.xml";
 
 		/// <summary>
-		/// DataSourceSelection
+		/// 	DataSourceSelection
 		/// </summary>
 		private const string DatasourceSelectionElementName = "DataSourceSelection";
 
 		/// <summary>
-		/// SelectedSource
+		/// 	SelectedSource
 		/// </summary>
 		private const string SelectedSourceElementName = "SelectedSource";
 
 		/// <summary>
-		/// SelectedProvider
+		/// 	SelectedProvider
 		/// </summary>
 		private const string SelectedProviderElementName = "SelectedProvider";
 
@@ -57,9 +57,9 @@ namespace AW.Winforms.Helpers.ConnectionUI
 		//}
 
 		/// <summary>
-		/// Constructor
+		/// 	Constructor
 		/// </summary>
-		/// <param name="path">Configuration file path.</param>
+		/// <param name="path"> Configuration file path. </param>
 		public DataConnectionConfiguration(string path)
 		{
 			_fullFilePath = !String.IsNullOrEmpty(path) ? Path.GetFullPath(Path.Combine(path, ConfigFileName)) : Path.Combine(Environment.CurrentDirectory, ConfigFileName);
@@ -80,6 +80,9 @@ namespace AW.Winforms.Helpers.ConnectionUI
 		{
 			DataSource.AddStandardDataSources(dialog);
 			AddDataSources(dialog, SqlCe.SqlCeDataSource);
+			var sqlServerCe4ProviderFactory = DataHelper.GetFactoryIfExists(SqlCe.SqlserverCE40ProviderInvariantName);
+			if (sqlServerCe4ProviderFactory != null)
+				AddDataSources(dialog, SqlCe.SqlCeDataSource40);
 			//AddDataSources(dialog, CreateSQLiteDataSource());
 			////Oracle Data Provider for .NETOracle Data Provider for .NETOracle.DataAccess.Client
 

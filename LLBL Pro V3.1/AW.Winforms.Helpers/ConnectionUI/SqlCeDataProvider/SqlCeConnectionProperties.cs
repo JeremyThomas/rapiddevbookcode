@@ -5,11 +5,12 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Data.Common;
+using System.Data.SqlServerCe;
 using System.IO;
 using AW.Helper;
 using AW.Winforms.Helpers.Properties;
 using Microsoft.Data.ConnectionUI;
-using Microsoft.SqlServerCe.Client;
 
 namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 {
@@ -61,7 +62,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			catch (SqlCeException e)
 			{
 				// Customize the error message for upgrade required
-				if (e.Number == IntDatabaseFileNeedsUpgrading)
+				if (e.NativeError == IntDatabaseFileNeedsUpgrading)
 					throw new InvalidOperationException(Resources.SqlCeConnectionProperties_FileNeedsUpgrading);
 				throw;
 			}
@@ -72,5 +73,30 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		}
 
 		private const int IntDatabaseFileNeedsUpgrading = 25138;
+	}
+
+	class SqlCeConnection40Properties : SqlCeConnectionProperties
+	{
+		#region Overrides of SqlCeConnectionProperties
+
+		public override void Test()
+		{
+			var testString = ToTestString();
+
+			// Create a connection object
+			var connection = DbProviderFactories.GetFactory(SqlCe.SqlserverCE40ProviderInvariantName).CreateConnection();
+			// Try to open it
+			try
+			{
+				connection.ConnectionString = ToFullString();
+				connection.Open();
+			}
+			finally
+			{
+				connection.Dispose();
+			}
+		}
+
+		#endregion
 	}
 }
