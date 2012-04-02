@@ -6,7 +6,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Data.SqlServerCe;
+using AW.Helper;
 using AW.Winforms.Helpers.Properties;
 using Microsoft.Data.ConnectionUI;
 
@@ -52,12 +52,17 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		/// <summary>
 		/// 	System.Data.SqlCeClient
 		/// </summary>
-		internal const string Name = "System.Data." + ShortDisplayName;
+		internal const string Name = SystemData + ShortDisplayName;
 
 		/// <summary>
 		/// 	System.Data.SqlServerCe.4.0
 		/// </summary>
-		public const string SqlserverCE40ProviderInvariantName = "System.Data.SqlServerCe.4.0";
+		public const string SqlserverCE40ProviderInvariantName = SystemData + SqlServerCe + Version40;
+
+		public const string SqlserverCE35ProviderInvariantName = SystemData + SqlServerCe + Version35;
+
+		private const string SystemData = "System.Data.";
+		private const string SqlServerCe = "SqlServerCe.";
 
 		private static DataSource _sqlCeDataSource;
 
@@ -90,7 +95,7 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 						string.Format(Resources.DataProvider_SqlEverywhere, Version35),
 						ShortDisplayName,
 						dataProviderSqlEverywhereDescription,
-						typeof (SqlCeConnection),
+						null, //Not used
 						descriptions,
 						uiControls,
 						typeof (SqlCeConnectionProperties));
@@ -137,6 +142,18 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 				}
 				return _sqlCeDataProvider40;
 			}
+		}
+
+		public static List<DataSource> GetSqlserverCEDataSources()
+		{
+			var dataSources = new List<DataSource>();
+			var sqlServerCe35ProviderFactory = DataHelper.GetFactoryIfExists(SqlserverCE35ProviderInvariantName);
+			if (sqlServerCe35ProviderFactory != null)
+				dataSources.Add(SqlCeDataSource);
+			var sqlServerCe4ProviderFactory = DataHelper.GetFactoryIfExists(SqlserverCE40ProviderInvariantName);
+			if (sqlServerCe4ProviderFactory != null)
+				dataSources.Add(SqlCeDataSource40);
+			return dataSources;
 		}
 	}
 }

@@ -79,10 +79,9 @@ namespace AW.Winforms.Helpers.ConnectionUI
 		public void LoadConfiguration(DataConnectionDialog dialog)
 		{
 			DataSource.AddStandardDataSources(dialog);
-			AddDataSources(dialog, SqlCe.SqlCeDataSource);
-			var sqlServerCe4ProviderFactory = DataHelper.GetFactoryIfExists(SqlCe.SqlserverCE40ProviderInvariantName);
-			if (sqlServerCe4ProviderFactory != null)
-				AddDataSources(dialog, SqlCe.SqlCeDataSource40);
+			foreach (var sqlserverCEDataSource in SqlCe.GetSqlserverCEDataSources())
+				AddDataSources(dialog, sqlserverCEDataSource);
+
 			//AddDataSources(dialog, CreateSQLiteDataSource());
 			////Oracle Data Provider for .NETOracle Data Provider for .NETOracle.DataAccess.Client
 

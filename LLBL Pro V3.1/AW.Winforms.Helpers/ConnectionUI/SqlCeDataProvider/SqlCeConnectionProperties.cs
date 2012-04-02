@@ -6,10 +6,8 @@
 
 using System;
 using System.Data.Common;
-using System.Data.SqlServerCe;
 using System.IO;
 using AW.Helper;
-using AW.Winforms.Helpers.Properties;
 using Microsoft.Data.ConnectionUI;
 
 namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
@@ -48,23 +46,20 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 
 		public override void Test()
 		{
-			var testString = ToTestString();
+			DoTest(SqlCe.SqlserverCE35ProviderInvariantName);
+		}
 
+		internal void DoTest(string providerInvariantName)
+		{
+			var testString = ToTestString();			
 			// Create a connection object
-			var connection = new SqlCeConnection();
-
-			// Try to open it
+			var connection = DbProviderFactories.GetFactory(providerInvariantName).CreateConnection();
+			// Try to open it			
+			if (connection != null)
 			try
 			{
 				connection.ConnectionString = ToFullString();
 				connection.Open();
-			}
-			catch (SqlCeException e)
-			{
-				// Customize the error message for upgrade required
-				if (e.NativeError == IntDatabaseFileNeedsUpgrading)
-					throw new InvalidOperationException(Resources.SqlCeConnectionProperties_FileNeedsUpgrading);
-				throw;
 			}
 			finally
 			{
@@ -72,7 +67,6 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			}
 		}
 
-		private const int IntDatabaseFileNeedsUpgrading = 25138;
 	}
 
 	class SqlCeConnection40Properties : SqlCeConnectionProperties
@@ -81,20 +75,8 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 
 		public override void Test()
 		{
-			var testString = ToTestString();
-
-			// Create a connection object
-			var connection = DbProviderFactories.GetFactory(SqlCe.SqlserverCE40ProviderInvariantName).CreateConnection();
 			// Try to open it
-			try
-			{
-				connection.ConnectionString = ToFullString();
-				connection.Open();
-			}
-			finally
-			{
-				connection.Dispose();
-			}
+			DoTest(SqlCe.SqlserverCE40ProviderInvariantName);
 		}
 
 		#endregion
