@@ -1,6 +1,6 @@
 #pragma warning disable 1591	// Missing XML comment
 
-#if TEST
+
 using System;
 using System.ComponentModel;
 
@@ -213,4 +213,3 @@ namespace JesseJohnston.Tests
   }
 }
 
-#endif

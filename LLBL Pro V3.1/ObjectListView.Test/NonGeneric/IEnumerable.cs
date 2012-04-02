@@ -1,6 +1,6 @@
 #pragma warning disable 1591	// Missing XML comment
 
-#if TEST
+
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -74,4 +74,3 @@ namespace JesseJohnston.Tests
   }
 }
 
-#endif
