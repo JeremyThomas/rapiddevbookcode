@@ -178,7 +178,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor", "AW.WebDbE
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "53695"
+		VWDPort = "42230"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataSupportClasses", "DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj", "{64696470-5D05-4E00-95C4-C320F268E526}"

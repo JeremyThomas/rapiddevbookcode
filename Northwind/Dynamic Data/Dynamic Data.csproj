@@ -57,15 +57,11 @@
 			<HintPath>..\..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
@@ -275,10 +271,6 @@
     <ProjectReference Include="..\DAL\Northwind.DAL.csproj">
       <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
       <Name>Northwind.DAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DAL\Oracle %28ODP.NET%29\Northwind.DAL.Oracle.csproj">
-      <Project>{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}</Project>
-      <Name>Northwind.DAL.Oracle</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAL\SQL Server %28SqlClient%29\Northwind.DAL.SqlServer.csproj">
       <Project>{0AAD790B-15C7-4119-9987-3137A0BB20B9}</Project>

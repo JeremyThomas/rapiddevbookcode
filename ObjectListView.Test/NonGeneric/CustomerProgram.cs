@@ -1,7 +1,7 @@
 
 #pragma warning disable 1591	// Missing XML comment
 
-#if TEST
+
 
 namespace JesseJohnston.Tests
 {
@@ -14,4 +14,3 @@ namespace JesseJohnston.Tests
   }
 }
 
-#endif

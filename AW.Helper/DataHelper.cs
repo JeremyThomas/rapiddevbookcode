@@ -20,22 +20,22 @@ namespace AW.Helper
 	public static class DataHelper
 	{
 		/// <summary>
-		/// EXEC sp_MSforeachtable @command1 = 'ALTER TABLE ? {0} CONSTRAINT ALL'
+		/// 	EXEC sp_MSforeachtable @command1 = 'ALTER TABLE ? {0} CONSTRAINT ALL'
 		/// </summary>
 		private const string SQLAlterAllConstraints = "EXEC sp_MSforeachtable @command1 = 'ALTER TABLE ? {0} CONSTRAINT ALL'";
 
 		/// <summary>
-		/// EXEC sp_MSforeachtable @command1 = 'ALTER TABLE ? {0} TRIGGER ALL'
+		/// 	EXEC sp_MSforeachtable @command1 = 'ALTER TABLE ? {0} TRIGGER ALL'
 		/// </summary>
 		private const string SQLAlterAllTriggers = "EXEC sp_MSforeachtable @command1 = 'ALTER TABLE ? {0} TRIGGER ALL'";
 
 		/// <summary>
-		/// select * from
+		/// 	select * from
 		/// </summary>
 		public const string SQLSelectAllFrom = "select * from ";
 
 		/// <summary>
-		/// Delete from
+		/// 	Delete from
 		/// </summary>
 		public const string SQLDeleteFrom = "Delete from ";
 
@@ -62,64 +62,71 @@ namespace AW.Helper
 		private const string MSOracleDataAccessClientProviderName = "System.Data.OracleClient";
 
 		/// <summary>
-		/// Oracle.DataAccess.Client
+		/// 	Oracle.DataAccess.Client
 		/// </summary>
 		private const string OracleDataAccessClientProviderName = "Oracle.DataAccess.Client";
 
 		/// <summary>
-		/// System.Data.SqlClient
+		/// 	System.Data.SqlClient
 		/// </summary>
 		private const string SqlclientProviderName = "System.Data.SqlClient";
 
 		/// <summary>
-		/// Initial Catalog
+		/// 	Initial Catalog
 		/// </summary>
 		public const string DBPropInitialCatalog = "Initial Catalog";
 
 		/// <summary>
-		/// Initial File Name
+		/// 	Initial File Name
 		/// </summary>
 		public const string DBPropinitialFileName = "Initial File Name";
 
 		/// <summary>
-		/// Integrated Security"
+		/// 	Integrated Security"
 		/// </summary>
 		public const string DBPropIntegratedSecurity = "Integrated Security";
 
 		/// <summary>
-		/// Extended properties"
+		/// 	Extended properties"
 		/// </summary>
 		public const string DBPropExtendedProperties = "Extended Properties";
 
 		/// <summary>
-		/// Password
+		/// 	Password
 		/// </summary>
 		public static string DbpropAuthPassword = "Password";
 
 		/// <summary>
-		/// Persist Security Info
+		/// 	Persist Security Info
 		/// </summary>
 		public static string DbpropAuthPersistSensitiveAuthinfo = "Persist Security Info";
 
 		/// <summary>
-		/// Failover Partner
+		/// 	Failover Partner
 		/// </summary>
 		public static string DbpropFailoverPartner = "Failover Partner";
 
 		/// <summary>
-		/// User ID
+		/// 	User ID
 		/// </summary>
 		public static string DbpropAuthUserid = "User ID";
 
 		/// <summary>
-		/// 	Returns a value indicating whether one of the contained strings occurs within aString.
-		/// 	Sames as aString.Contains(value) except it is case-insensitive
+		/// 	Data Source
 		/// </summary>
-		/// <param name = "aString">A string.</param>
-		/// <param name = "contained">A list of possible substrings of to test for.</param>
-		/// <returns>
-		/// 	<c>true</c> if aString contains value; otherwise, <c>false</c>.
-		/// </returns>
+		public static string DbPropDataSource = "Data Source";
+
+		/// <summary>
+		/// 	Pooling
+		/// </summary>
+		public static string DbPropPooling = "Pooling";
+
+		/// <summary>
+		/// 	Returns a value indicating whether one of the contained strings occurs within aString. Sames as aString.Contains(value) except it is case-insensitive
+		/// </summary>
+		/// <param name="aString"> A string. </param>
+		/// <param name="contained"> A list of possible substrings of to test for. </param>
+		/// <returns> <c>true</c> if aString contains value; otherwise, <c>false</c> . </returns>
 		public static Boolean Contains(string aString, params string[] contained)
 		{
 			var found = false;
@@ -135,8 +142,8 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Guesses the database type from a DB connection string
 		/// </summary>
-		/// <param name = "sourceString">A connection string.</param>
-		/// <returns>The database type</returns>
+		/// <param name="sourceString"> A connection string. </param>
+		/// <returns> The database type </returns>
 		/// <remarks>
 		/// 	http://net-test2/mantis/view.php?id=5613
 		/// </remarks>
@@ -155,11 +162,11 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Converts the connection string builder from and OleDbConnectionStringBuilder to either a SqlConnectionStringBuilder or a OracleConnectionStringBuilder.
+		/// 	Converts the connection string builder from and OleDbConnectionStringBuilder to either a SqlConnectionStringBuilder or a OracleConnectionStringBuilder.
 		/// </summary>
-		/// <param name="oleConnectionStringBuilder">The OLEDB connection string builder.</param>
-		/// <param name="dbType">Type of the db.</param>
-		/// <returns></returns>
+		/// <param name="oleConnectionStringBuilder"> The OLEDB connection string builder. </param>
+		/// <param name="dbType"> Type of the db. </param>
+		/// <returns> </returns>
 		public static DbConnectionStringBuilder ConvertConnectionStringBuilder(OleDbConnectionStringBuilder oleConnectionStringBuilder, DBSourceType dbType)
 		{
 			switch (dbType)
@@ -182,28 +189,29 @@ namespace AW.Helper
 							ocsb["DATA SOURCE"] = oleConnectionStringBuilder.DataSource;
 							if (oleConnectionStringBuilder.ContainsKey(DbpropAuthUserid))
 							{
-								var userID = (string)oleConnectionStringBuilder[DbpropAuthUserid];
+								var userID = (string) oleConnectionStringBuilder[DbpropAuthUserid];
 								if (!String.IsNullOrEmpty(userID))
 									ocsb[DbpropAuthUserid] = userID;
 							}
 							if (oleConnectionStringBuilder.ContainsKey(DbpropAuthPassword))
 							{
-								var password = (string)oleConnectionStringBuilder[DbpropAuthPassword];
+								var password = (string) oleConnectionStringBuilder[DbpropAuthPassword];
 								if (!String.IsNullOrEmpty(password))
 									ocsb[DbpropAuthPassword] = password;
 							}
-						}	return ocsb;
+						}
+						return ocsb;
 					}
 				case DBSourceType.DBSqlserver:
 					{
-						var csb = new SqlConnectionStringBuilder { DataSource = oleConnectionStringBuilder.DataSource };
-						var initialCatalog = (string)oleConnectionStringBuilder[DBPropInitialCatalog];
+						var csb = new SqlConnectionStringBuilder {DataSource = oleConnectionStringBuilder.DataSource};
+						var initialCatalog = (string) oleConnectionStringBuilder[DBPropInitialCatalog];
 						if (!String.IsNullOrEmpty(initialCatalog))
 							csb.InitialCatalog = initialCatalog;
-						var attachDBFilename = (string)oleConnectionStringBuilder[DBPropinitialFileName];
+						var attachDBFilename = (string) oleConnectionStringBuilder[DBPropinitialFileName];
 						if (!String.IsNullOrEmpty(attachDBFilename))
 							csb.AttachDBFilename = attachDBFilename;
-						if ((string)oleConnectionStringBuilder[DBPropIntegratedSecurity] == "SSPI")
+						if ((string) oleConnectionStringBuilder[DBPropIntegratedSecurity] == "SSPI")
 							csb.IntegratedSecurity = true;
 						else
 						{
@@ -228,34 +236,65 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the name of the DB provider.
+		/// 	Gets the name of the DB provider.
 		/// </summary>
-		/// <param name="dBSourceType">Type of database source.</param>
-		/// <returns></returns>
+		/// <param name="dBSourceType"> Type of database source. </param>
+		/// <returns> </returns>
 		public static string GetDBProviderName(DBSourceType dBSourceType)
 		{
 			return DBIsOracle(dBSourceType) ? OracleDataAccessClientProviderName : SqlclientProviderName;
 		}
 
+		/// <summary>
+		/// 	Returns an instance of a DbProviderFactory if exists.
+		/// </summary>
+		/// <param name="providerInvariantName"> Name of the provider invariant. </param>
+		/// <returns> An instance of a DbProviderFactory for a specified provider name. </returns>
+		public static DbProviderFactory GetFactoryIfExists(string providerInvariantName)
+		{
+			var dataTable = DbProviderFactories.GetFactoryClasses();
+			var providerRow = dataTable.Rows.Find(providerInvariantName);
+			return providerRow == null ? null : GetFactoryIfExists(providerRow);
+		}
+
+		/// <summary>
+		/// Returns an instance of a DbProviderFactory if exists.
+		/// </summary>
+		/// <param name="providerRow">The provider row.</param>
+		/// <returns></returns>
+		public static DbProviderFactory GetFactoryIfExists(DataRow providerRow)
+		{
+			try
+			{
+				return DbProviderFactories.GetFactory(providerRow);
+			}
+			catch (Exception e)
+			{
+				GeneralHelper.TraceOut(e);
+				return null;
+			}
+		}
+
 		#region DbCommand
 
 		/// <summary>
-		/// Executes a SQL statement against a connection object.
-		/// </summary>.
-		/// <param name="dbConnection">The db connection.</param>
-		/// <param name="commandText">The command text.</param>
-		/// <returns>The number of rows affected.</returns>
+		/// 	Executes a SQL statement against a connection object.
+		/// </summary>
+		/// .
+		/// <param name="dbConnection"> The db connection. </param>
+		/// <param name="commandText"> The command text. </param>
+		/// <returns> The number of rows affected. </returns>
 		public static int ExecuteNonQuery(DbConnection dbConnection, string commandText)
 		{
 			return ExecuteNonQuery(dbConnection, commandText, CommandType.Text);
 		}
 
 		/// <summary>
-		/// Executes a SQL statement against a connection object.
+		/// 	Executes a SQL statement against a connection object.
 		/// </summary>
-		/// <param name="dbConnection">The db connection.</param>
-		/// <param name="commandText">The command text.</param>
-		/// <param name="commandType">Type of the command.</param>
+		/// <param name="dbConnection"> The db connection. </param>
+		/// <param name="commandText"> The command text. </param>
+		/// <param name="commandType"> Type of the command. </param>
 		public static int ExecuteNonQuery(DbConnection dbConnection, string commandText, CommandType commandType)
 		{
 			var sqlCommand = CreateDbCommand(dbConnection, commandText, commandType);
@@ -263,11 +302,11 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Creates and returns a System.Data.Common.DbCommand object associated with the supplied connection.
+		/// 	Creates and returns a System.Data.Common.DbCommand object associated with the supplied connection.
 		/// </summary>
-		/// <param name="dbConnection">The db connection.</param>
-		/// <param name="commandText">The command text.</param>
-		/// <returns></returns>
+		/// <param name="dbConnection"> The db connection. </param>
+		/// <param name="commandText"> The command text. </param>
+		/// <returns> </returns>
 		public static DbCommand CreateDbCommand(DbConnection dbConnection, string commandText)
 		{
 			var command = dbConnection.CreateCommand();
@@ -276,12 +315,12 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Creates and returns a System.Data.Common.DbCommand object associated with the supplied connection.
+		/// 	Creates and returns a System.Data.Common.DbCommand object associated with the supplied connection.
 		/// </summary>
-		/// <param name="dbConnection">The db connection.</param>
-		/// <param name="commandText">The command text.</param>
-		/// <param name="commandType">Type of the command.</param>
-		/// <returns></returns>
+		/// <param name="dbConnection"> The db connection. </param>
+		/// <param name="commandText"> The command text. </param>
+		/// <param name="commandType"> Type of the command. </param>
+		/// <returns> </returns>
 		public static DbCommand CreateDbCommand(DbConnection dbConnection, string commandText, CommandType commandType)
 		{
 			var command = CreateDbCommand(dbConnection, commandText);
@@ -307,12 +346,12 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Inserts the rows of the tables into the DB.
+		/// 	Inserts the rows of the tables into the DB.
 		/// </summary>
-		/// <param name="tablesForInsert">The tables for insert, the names of the tables must be the DB table names.</param>
-		/// <param name="dbConnection">The db connection.</param>
-		/// <param name="dbProviderFactory">The db provider factory.</param>
-		/// <returns></returns>
+		/// <param name="tablesForInsert"> The tables for insert, the names of the tables must be the DB table names. </param>
+		/// <param name="dbConnection"> The db connection. </param>
+		/// <param name="dbProviderFactory"> The db provider factory. </param>
+		/// <returns> </returns>
 		public static int InsertTables(DataSet tablesForInsert, DbConnection dbConnection, DbProviderFactory dbProviderFactory)
 		{
 			return InsertTables(tablesForInsert.AsEnumerable(), dbConnection, dbProviderFactory);
@@ -343,6 +382,5 @@ namespace AW.Helper
 									}
 			return insertCount;
 		}
-
 	}
 }

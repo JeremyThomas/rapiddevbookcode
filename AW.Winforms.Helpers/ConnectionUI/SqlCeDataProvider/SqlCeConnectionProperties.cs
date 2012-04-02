@@ -5,14 +5,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Data.Common;
 using System.IO;
-using AW.Winforms.Helpers.Properties;
+using AW.Helper;
 using Microsoft.Data.ConnectionUI;
-using Microsoft.SqlServerCe.Client;
 
 namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 {
-
 	public class SqlCeConnectionProperties : AdoDotNetConnectionProperties
 	{
 		public SqlCeConnectionProperties()
@@ -20,69 +19,47 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 		{
 		}
 
-		public override void Reset()
-		{
-			base.Reset();
-		}
-
 		public override bool IsComplete
 		{
 			get
 			{
-
-				string dataSource = this["Data Source"] as string;
-
+				var dataSource = this[DataHelper.DbPropDataSource] as string;
 				if (String.IsNullOrEmpty(dataSource))
-				{
 					return false;
-				}
-
 				// Ensure file extension: 
-				if (!(Path.GetExtension(dataSource).Equals(".sdf", StringComparison.OrdinalIgnoreCase)))
-				{
-					return false;
-				}
-
-				return true;
+				var extension = Path.GetExtension(dataSource);
+				return extension == null || (extension.Equals(".sdf", StringComparison.OrdinalIgnoreCase));
 			}
 		}
 
 		protected override string ToTestString()
 		{
-			bool savedPooling = (bool)ConnectionStringBuilder["Pooling"];
-			bool wasDefault = !ConnectionStringBuilder.ShouldSerialize("Pooling");
-			ConnectionStringBuilder["Pooling"] = false;
-			string testString = ConnectionStringBuilder.ConnectionString;
-			ConnectionStringBuilder["Pooling"] = savedPooling;
+			var savedPooling = (bool) ConnectionStringBuilder[DataHelper.DbPropPooling];
+			var wasDefault = !ConnectionStringBuilder.ShouldSerialize(DataHelper.DbPropPooling);
+			ConnectionStringBuilder[DataHelper.DbPropPooling] = false;
+			var testString = ConnectionStringBuilder.ConnectionString;
+			ConnectionStringBuilder[DataHelper.DbPropPooling] = savedPooling;
 			if (wasDefault)
-			{
-				ConnectionStringBuilder.Remove("Pooling");
-			}
+				ConnectionStringBuilder.Remove(DataHelper.DbPropPooling);
 			return testString;
 		}
 
 		public override void Test()
 		{
-			string testString = ToTestString();
+			DoTest(SqlCe.SqlserverCE35ProviderInvariantName);
+		}
 
-
+		internal void DoTest(string providerInvariantName)
+		{
+			var testString = ToTestString();			
 			// Create a connection object
-			SqlCeConnection connection = new SqlCeConnection();
-
-			// Try to open it
+			var connection = DbProviderFactories.GetFactory(providerInvariantName).CreateConnection();
+			// Try to open it			
+			if (connection != null)
 			try
 			{
 				connection.ConnectionString = ToFullString();
 				connection.Open();
-			}
-			catch (SqlCeException e)
-			{
-				// Customize the error message for upgrade required
-				if (e.Number == m_intDatabaseFileNeedsUpgrading)
-				{
-					throw new InvalidOperationException(Resources.SqlCeConnectionProperties_FileNeedsUpgrading);
-				}
-				throw;
 			}
 			finally
 			{
@@ -90,8 +67,18 @@ namespace AW.Winforms.Helpers.ConnectionUI.SqlCeDataProvider
 			}
 		}
 
-		private const int m_intDatabaseFileNeedsUpgrading = 25138;
+	}
 
+	class SqlCeConnection40Properties : SqlCeConnectionProperties
+	{
+		#region Overrides of SqlCeConnectionProperties
+
+		public override void Test()
+		{
+			// Try to open it
+			DoTest(SqlCe.SqlserverCE40ProviderInvariantName);
+		}
+
+		#endregion
 	}
 }
-

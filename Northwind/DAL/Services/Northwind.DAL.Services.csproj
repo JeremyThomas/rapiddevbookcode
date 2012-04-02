@@ -39,14 +39,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
     </Reference>
-    <Reference Include="SD.LLBLGen.Pro.TypeConverters, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
-      <HintPath>../../../Lib/LLBL/SD.LLBLGen.Pro.TypeConverters.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -67,10 +61,6 @@
     <ProjectReference Include="..\..\..\AW.Helper\AW.Helper.csproj">
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Northwind.DAL.csproj">
-      <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
-      <Name>Northwind.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Oracle %28ODP.NET%29\Northwind.DAL.Oracle.csproj">
       <Project>{D58E3608-5E8C-4CDD-96AB-621AB93B2D45}</Project>
