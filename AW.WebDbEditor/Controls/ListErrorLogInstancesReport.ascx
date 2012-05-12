@@ -1,7 +1,7 @@
 ﻿
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="ListErrorLogInstancesReport.ascx.cs" Inherits="Controls_ListErrorLogInstancesReport" %>
 <%@ Import Namespace="AW.Data"%>
-<%@ Register Assembly="Microsoft.ReportViewer.WebForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
+<%@ Register Assembly="Microsoft.ReportViewer.WebForms"
     Namespace="Microsoft.Reporting.WebForms" TagPrefix="rsweb" %>
 
 <asp:placeholder id="phHomeButton" runat="server" Visible="true">
