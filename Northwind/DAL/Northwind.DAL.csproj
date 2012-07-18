@@ -147,6 +147,7 @@
     <Compile Include="HelperClasses\InheritanceInfoProvider.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="Linq\Filters\Filters.cs" />
     <Compile Include="Linq\LinqMetaData.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>

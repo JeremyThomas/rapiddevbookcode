@@ -5,8 +5,11 @@ using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace AW.Helper
 {
@@ -34,7 +37,7 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Sends a msg to the Win32 debug output and prefixs it with the name off the method that called TraceOut
 		/// </summary>
-		/// <param name = "msg">The message.</param>
+		/// <param name="msg"> The message. </param>
 		public static void TraceOut(string msg)
 		{
 			//Debugger.Log(0, "Trace", msg);
@@ -66,9 +69,9 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Converts the string to the enum.
 		/// </summary>
-		/// <typeparam name = "T"></typeparam>
-		/// <param name = "strOfEnum">The string version of the enum.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="strOfEnum"> The string version of the enum. </param>
+		/// <returns> </returns>
 		public static T ToEnum<T>(this string strOfEnum)
 		{
 			return String.IsNullOrEmpty(strOfEnum) ? default(T) : strOfEnum.ToEnum<T>(EnumSpaceSubstitute);
@@ -77,10 +80,10 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Converts the string to the enum.
 		/// </summary>
-		/// <typeparam name = "T"></typeparam>
-		/// <param name = "strOfEnum">The string version of the enum.</param>
-		/// <param name = "spaceSubstitute">The space substitute.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="strOfEnum"> The string version of the enum. </param>
+		/// <param name="spaceSubstitute"> The space substitute. </param>
+		/// <returns> </returns>
 		public static T ToEnum<T>(this string strOfEnum, char spaceSubstitute)
 		{
 			var fixedString = strOfEnum.Replace(' ', spaceSubstitute);
@@ -97,9 +100,9 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Enums as an enumerable.
 		/// </summary>
-		/// <typeparam name = "TEnum">The type of the enum.</typeparam>
-		/// <see cref = "http://weblogs.asp.net/alnurismail/archive/2008/10/06/c-iterating-through-an-enum.aspx" />
-		/// <returns>Enums as enumerable</returns>
+		/// <typeparam name="TEnum"> The type of the enum. </typeparam>
+		/// <see cref="http://weblogs.asp.net/alnurismail/archive/2008/10/06/c-iterating-through-an-enum.aspx" />
+		/// <returns> Enums as enumerable </returns>
 		public static TEnum[] EnumAsEnumerable<TEnum>(params TEnum[] enumsToExclude)
 		{
 			var enumType = typeof (TEnum);
@@ -130,38 +133,38 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Joins an array of non empty strings together as one string with a separator between each non empty original string.
 		/// </summary>
-		/// <param name = "separator">The separator.</param>
-		/// <param name = "values">The values.</param>
-		/// <returns></returns>
+		/// <param name="separator"> The separator. </param>
+		/// <param name="values"> The values. </param>
+		/// <returns> </returns>
 		public static string Join(String separator, params String[] values)
 		{
 			return String.Join(separator, values.Where(s => !string.IsNullOrEmpty(s)).ToArray());
 		}
 
 		/// <summary>
-		/// Skips then takes.
+		/// 	Skips then takes.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <param name="pageIndex">Index of the page.</param>
-		/// <param name="pageSize">Size of the page.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <param name="pageIndex"> Index of the page. </param>
+		/// <param name="pageSize"> Size of the page. </param>
+		/// <returns> </returns>
 		public static IEnumerable<T> SkipTake<T>(this IEnumerable<T> enumerable, int pageIndex, int pageSize)
 		{
 			return enumerable.Skip(pageIndex*pageSize).Take(pageSize);
 		}
 
 		/// <summary>
-		/// Skips then takes.
+		/// 	Skips then takes.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="queryable">The query able.</param>
-		/// <param name="pageIndex">Index of the page.</param>
-		/// <param name="pageSize">Size of the page.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="queryable"> The query able. </param>
+		/// <param name="pageIndex"> Index of the page. </param>
+		/// <param name="pageSize"> Size of the page. </param>
+		/// <returns> </returns>
 		public static IQueryable<T> SkipTake<T>(this IQueryable<T> queryable, int pageIndex, int pageSize)
 		{
-			return queryable.Skip(pageIndex * pageSize).Take(pageSize);
+			return queryable.Skip(pageIndex*pageSize).Take(pageSize);
 		}
 
 		public static int GetPageCount(int pageSize, int totalItemCount)
@@ -198,10 +201,10 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Copies enumerable to a data table.
 		/// </summary>
-		/// <see cref = "http://msdn.microsoft.com/en-us/library/bb669096.aspx" />
-		/// <typeparam name = "T"></typeparam>
-		/// <param name = "source">The source.</param>
-		/// <returns></returns>
+		/// <see cref="http://msdn.microsoft.com/en-us/library/bb669096.aspx" />
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="source"> The source. </param>
+		/// <returns> </returns>
 		public static DataTable CopyToDataTable<T>(this IEnumerable<T> source)
 		{
 			return CopyToDataTable(source, null, null);
@@ -241,9 +244,9 @@ namespace AW.Helper
 		/// <summary>
 		/// 	returns null if empty.
 		/// </summary>
-		/// <see cref = "http://haacked.com/archive/2010/06/16/null-or-empty-coalescing.aspx" />
-		/// <param name = "items">The items.</param>
-		/// <returns></returns>
+		/// <see cref="http://haacked.com/archive/2010/06/16/null-or-empty-coalescing.aspx" />
+		/// <param name="items"> The items. </param>
+		/// <returns> </returns>
 		public static IEnumerable<T> AsNullIfEmpty<T>(this IEnumerable<T> items)
 		{
 			return items == null || !items.Any() ? null : items;
@@ -252,12 +255,10 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Determines whether the specified IEnumerable is null or empty.
 		/// </summary>
-		/// <see cref = "http://haacked.com/archive/2010/06/10/checking-for-empty-enumerations.aspx" />
-		/// <typeparam name = "T"></typeparam>
-		/// <param name = "items">The items.</param>
-		/// <returns>
-		/// 	<c>true</c> if specified IEnumerable is null or empty; otherwise, <c>false</c>.
-		/// </returns>
+		/// <see cref="http://haacked.com/archive/2010/06/10/checking-for-empty-enumerations.aspx" />
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="items"> The items. </param>
+		/// <returns> <c>true</c> if specified IEnumerable is null or empty; otherwise, <c>false</c> . </returns>
 		public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
 		{
 			return items is ICollection ? ((ICollection) items).Count == 0 : items.AsNullIfEmpty() == null;
@@ -271,8 +272,8 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Determines whether the specified enumerable has any items.
 		/// </summary>
-		/// <param name = "enumerable">The enumerable.</param>
-		/// <returns></returns>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <returns> </returns>
 		public static bool Any(IEnumerable enumerable)
 		{
 			return Any(enumerable, false);
@@ -286,9 +287,9 @@ namespace AW.Helper
 		/// <summary>
 		/// 	Determines whether the specified enumerable has any items.
 		/// </summary>
-		/// <param name = "enumerable">The enumerable.</param>
-		/// <param name = "reset">if set to <c>true</c> reset the enumerator if there are any items found.</param>
-		/// <returns></returns>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <param name="reset"> if set to <c>true</c> reset the enumerator if there are any items found. </param>
+		/// <returns> </returns>
 		public static bool Any(IEnumerable enumerable, bool reset)
 		{
 			var collection = enumerable as ICollection;
@@ -328,6 +329,60 @@ namespace AW.Helper
 		}
 
 		#region Settings
+
+		public static IEnumerable<string> GetStringCollection(SettingValueElement element)
+		{
+			if (element != null)
+			{
+				var xml = element.ValueXml.InnerXml;
+				var xs = new XmlSerializer(typeof(StringCollection));
+				return ((StringCollection)xs.Deserialize(new XmlTextReader(xml, XmlNodeType.Element, null))).AsEnumerable();
+			}
+			return null;
+		}
+
+		public static IEnumerable<string> GetStringCollection(string oldPathValue, string newPathValue, string settingName)
+		{
+			return GetStringCollection(GetUserSetting(oldPathValue, newPathValue, settingName));
+		}
+
+		public static Configuration GetExeConfiguration()
+		{
+			return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+		}
+
+		public static SettingValueElement GetUserSetting(string oldPathValue, string newPathValue, string settingName)
+		{
+			var configuration = GetExeConfiguration();
+			return GetUserSetting(configuration.FilePath.Replace(oldPathValue, newPathValue), settingName);
+		}
+
+		public static SettingValueElement GetUserSetting(string fileName, string settingName)
+		{
+			if (File.Exists(fileName))
+			{
+				var fileMap = new ConfigurationFileMap(fileName);
+				var configuration = ConfigurationManager.OpenMappedMachineConfiguration(fileMap);
+				var settingElement = GetUserSetting(configuration, settingName);
+				return settingElement == null ? null : settingElement.Value;
+			}
+			TraceOut(fileName);
+			return null;
+		}
+
+		public static SettingElement GetUserSetting(Configuration configuration, string settingName)
+		{
+			// find section group
+			if (configuration != null)
+			{
+				var group = configuration.SectionGroups[@"userSettings"];
+				if (@group == null) return null;
+				// find client section
+				var clientSection = @group.Sections[0] as ClientSettingsSection;
+				return clientSection == null ? null : clientSection.Settings.Get(settingName);
+			}
+			return null;
+		}
 
 		public static bool HasSetting(ApplicationSettingsBase applicationSettingsBase, string settingName)
 		{
@@ -370,11 +425,11 @@ namespace AW.Helper
 		public static void AddSettingsProperty(ApplicationSettingsBase applicationSettingsBase, string settingName, Type settingType)
 		{
 			var settingsProperty = new SettingsProperty(settingName)
-			                       	{
-			                       		PropertyType = settingType,
-			                       		Provider = applicationSettingsBase.Providers.Cast<SettingsProvider>().FirstOrDefault(),
-			                       		SerializeAs = SettingsSerializeAs.Xml
-			                       	};
+				{
+					PropertyType = settingType,
+					Provider = applicationSettingsBase.Providers.Cast<SettingsProvider>().FirstOrDefault(),
+					SerializeAs = SettingsSerializeAs.Xml
+				};
 			settingsProperty.Attributes.Add(typeof (UserScopedSettingAttribute), new UserScopedSettingAttribute());
 			applicationSettingsBase.Properties.Add(settingsProperty);
 		}
@@ -394,11 +449,11 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets the OS architecture.
-		/// if .net 4 could use Environment.Is64BitOperatingSystem
-		/// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
+		/// 	Gets the OS architecture.
+		/// 	if .net 4 could use Environment.Is64BitOperatingSystem
+		/// 	http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
 		/// </summary>
-		/// <returns>32 or 64</returns>
+		/// <returns> 32 or 64 </returns>
 		internal static int GetOSArchitecture()
 		{
 			var pa = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE");
@@ -406,13 +461,11 @@ namespace AW.Helper
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether [is64 bit operating system].
-		/// if .net 4 could use Environment.Is64BitOperatingSystem
-		/// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
+		/// 	Gets a value indicating whether [is64 bit operating system].
+		/// 	if .net 4 could use Environment.Is64BitOperatingSystem
+		/// 	http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
 		/// </summary>
-		/// <value>
-		/// 	<c>true</c> if [is64 bit operating system]; otherwise, <c>false</c>.
-		/// </value>
+		/// <value> <c>true</c> if [is64 bit operating system]; otherwise, <c>false</c> . </value>
 		public static bool Is64BitOperatingSystem
 		{
 			get { return GetOSArchitecture() == 64; }

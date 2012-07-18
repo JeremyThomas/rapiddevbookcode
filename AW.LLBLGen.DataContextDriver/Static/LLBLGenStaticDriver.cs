@@ -24,26 +24,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		#region Constants
 
 		public static readonly string[] AdditionalAssemblies = new[]
-		                                                       	{
-		                                                       		"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
-		                                                       		"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
-		                                                       		"AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
-		                                                       		"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
-		                                                       		"AW.LinqPadExtensions.dll"
-		                                                       	};
+			{
+				"SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
+				"SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
+				"AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
+				"AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
+				"AW.LinqPadExtensions.dll"
+			};
 
 		public static readonly string[] AdditionalNamespaces = new[]
-		                                                       	{
-		                                                       		"SD.LLBLGen.Pro.ORMSupportClasses",
-		                                                       		"SD.LLBLGen.Pro.LinqSupportClasses",
-		                                                       		"AW.Helper",
-		                                                       		"AW.Helper.LLBL",
-		                                                       		"AW.Winforms.Helpers.DataEditor",
-		                                                       		"AW.Winforms.Helpers.LLBL",
-		                                                       		"AW.LinqPadExtensions",
-		                                                       		"AW.LLBLGen.DataContextDriver",
-		                                                       		"AW.LLBLGen.DataContextDriver.Static"
-		                                                       	};
+			{
+				"SD.LLBLGen.Pro.ORMSupportClasses",
+				"SD.LLBLGen.Pro.LinqSupportClasses",
+				"AW.Helper",
+				"AW.Helper.LLBL",
+				"AW.Winforms.Helpers.DataEditor",
+				"AW.Winforms.Helpers.LLBL",
+				"AW.LinqPadExtensions",
+				"AW.LLBLGen.DataContextDriver",
+				"AW.LLBLGen.DataContextDriver.Static"
+			};
 
 		#endregion
 
@@ -87,13 +87,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
 		public override IEnumerable<string> GetAssembliesToAdd()
 		{
-			var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable();
+			var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable() ?? GeneralHelper.GetStringCollection(
+				"DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalAssemblies");
 			return globalAdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(globalAdditionalAssemblies);
 		}
 
 		public override IEnumerable<string> GetNamespacesToAdd()
 		{
-			var globalAdditionalNamespaces = Settings.Default.AdditionalNamespaces.AsEnumerable();
+			var globalAdditionalNamespaces = Settings.Default.AdditionalNamespaces.AsEnumerable() ?? GeneralHelper.GetStringCollection(
+				"DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalNamespaces");
 			return globalAdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(globalAdditionalNamespaces);
 		}
 
@@ -110,6 +112,38 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public override ICustomMemberProvider GetCustomDisplayMemberProvider(object objectToWrite)
 		{
 			return LLBLMemberProvider.CreateCustomDisplayMemberProviderIfNeeded(objectToWrite);
+		}
+
+		/// <summary>
+		/// 	Displays the object in grid.
+		/// </summary>
+		/// <param name="objectToDisplay"> The object to display. </param>
+		/// <param name="options"> The options. </param>
+		/// <remarks>
+		/// 	From http://llblgenlinqpad.codeplex.com
+		/// </remarks>
+		public override void DisplayObjectInGrid(object objectToDisplay, GridOptions options)
+		{
+			if (objectToDisplay != null)
+			{
+				var elementType = LinqUtils.DetermineSetElementType(objectToDisplay.GetType());
+				if (typeof (IEntityCore).IsAssignableFrom(elementType))
+				{
+					var membersToExclude = typeof (EntityBase).GetProperties().Select(p => p.Name)
+						.Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
+					if (typeof (IEntity).IsAssignableFrom(elementType))
+					{
+						// remove alwaysFetch/AlreadyFetched flag properties
+						membersToExclude = membersToExclude
+							.Union(elementType.GetProperties()
+								       .Where(p => p.PropertyType == typeof (bool) &&
+								                   (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch")))
+								       .Select(p => p.Name));
+					}
+					options.MembersToExclude = membersToExclude.Distinct().ToArray();
+				}
+			}
+			base.DisplayObjectInGrid(objectToDisplay, options);
 		}
 
 		public override void InitializeContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
