@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
@@ -117,6 +118,46 @@ namespace AW.Helper
         throw new ArgumentException("typeof(TEnum) == System.Enum", "TEnum");
       if (!(enumType.IsEnum))
         throw new ArgumentException(String.Format("typeof({0}).IsEnum == false", enumType), "TEnum");
+    }
+
+    /// <summary>
+    /// Converts the Enum to a string using the enum description if it has one else replacing 
+    /// any EnumSpaceSubstitute characters with a space character.
+    /// </summary>
+    /// <param name="e">The enum.</param>
+    /// <returns>
+    /// The string version of an enum with spaces in it as required.
+    /// </returns>
+    public static string EnumToString(this Enum e)
+    {
+      if (e == null) return null;
+      var description = GetDescription(e);
+      return String.IsNullOrEmpty(description) ? e.EnumToString(EnumSpaceSubstitute) : description;
+    }
+
+    /// <summary>
+    /// Converts the Enum to a string replacing any spaceSubstitute characters with a space character.
+    /// </summary>
+    /// <param name="e">The enum.</param>
+    /// <param name="spaceSubstitute">The space substitute.</param>
+    /// <returns>The string version of an enum with spaces in it as required</returns>
+    public static string EnumToString(this Enum e, char spaceSubstitute)
+    {
+      return e.ToString().Replace(spaceSubstitute, ' ');
+    }
+
+    /// <summary>
+    /// Gets the description of an object if it has one else returns null.
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns></returns>
+    public static string GetDescription(object value)
+    {
+      if (value == null) return null;
+      var fi = value.GetType().GetField(value.ToString());
+      if (fi == null) return null;
+      var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+      return (attributes.Length > 0) ? attributes[0].Description : null;
     }
 
     public static string JoinAsString<T>(this IEnumerable<T> input)
