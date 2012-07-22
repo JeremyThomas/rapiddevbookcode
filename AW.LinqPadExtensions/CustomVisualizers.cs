@@ -17,7 +17,7 @@ namespace AW.LinqPadExtensions
 		/// <summary>
 		/// 	10
 		/// </summary>
-		public const int DefaultPageSize = 10;
+    public const ushort DefaultPageSize = 10;
 
 		/// <summary>
 		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
@@ -26,10 +26,24 @@ namespace AW.LinqPadExtensions
 		/// <returns> </returns>
 		public static IEnumerable DisplayInGrid(this IEnumerable enumerable)
 		{
-			return DisplayInGrid(enumerable, DefaultPageSize);
+      if (enumerable != null)
+      {
+        var dataContext = GetDataContext(enumerable);
+        if (dataContext != null) 
+          return DisplayInGrid(enumerable, new DataEditorLinqtoSQLPersister(dataContext));
+      }
+		  return DisplayInGrid(enumerable, DefaultPageSize);
 		}
 
-		/// <summary>
+	  private static DataContext GetDataContext(object enumerable)
+	  {
+	    var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
+	    if (contextField != null)
+	      return contextField.GetValue(enumerable) as DataContext;
+	    return null;
+	  }
+
+	  /// <summary>
 		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
 		/// </summary>
 		/// <param name="enumerable"> The enumerable. </param>
@@ -79,16 +93,10 @@ namespace AW.LinqPadExtensions
 		{
 			if (enumerable != null)
 			{
-				var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
-				if (contextField != null)
-				{
-					var queryContext = contextField.GetValue(enumerable) as DataContext;
-					if (queryContext != null)
-						return DisplayInGrid(enumerable, queryContext);
-				}
-				return DisplayInGrid(enumerable, (IDataEditorPersister) null);
+			  var queryContext = GetDataContext(enumerable);
+			  return queryContext == null ? DisplayInGrid(enumerable, (IDataEditorPersister) null) : DisplayInGrid(enumerable, queryContext);
 			}
-			return Enumerable.Empty<T>();
+		  return Enumerable.Empty<T>();
 		}
 
 		/// <summary>

@@ -53,6 +53,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public const string ElementNameFactoryType = "FactoryType";
     public const string ElementNameFactoryAssembly = "FactoryAssembly";
     public const string ElementNameUseFields = "UseFields";
+    public const string ElementNameDisplayInGrid = "DisplayInGrid";
     public const string TitleChooseLLBLEntityAssembly = "Choose LLBL entity assembly";
     public const string TitleChooseCustomType = "Choose LinqMetaData or ElementCreatorCore Type";
     public const string TitleChooseDataAccessAdapterAssembly = "Choose Data Access Adapter assembly";
@@ -216,6 +217,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameFactoryAssembly, Settings.Default.DefaultDataAccessAdapterFactoryAssembly);
       CreateElementIfNeeded(cxInfo, ElementNameConnectionType, Settings.Default.DefaultConnectionType.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameUseFields, true.ToString());
+      CreateElementIfNeeded(cxInfo, ElementNameDisplayInGrid, DisplayInGrid.ExcludeEntityBaseProperties.ToString());
     }
 
     public static void UpGradeDriverDataElements(IConnectionInfo cxInfo)
@@ -240,6 +242,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.Adapter).ToString());
       }
       CreateElementIfNeeded(cxInfo, ElementNameUseFields, true.ToString());
+      CreateElementIfNeeded(cxInfo, ElementNameDisplayInGrid, DisplayInGrid.ExcludeEntityBaseProperties.ToString());
       cxInfo.CustomTypeInfo.CustomMetadataPath = null;
     }
 
