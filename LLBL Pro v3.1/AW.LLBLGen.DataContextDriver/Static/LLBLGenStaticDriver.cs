@@ -147,10 +147,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
             }
             break;
           case DisplayInGrid.UseEditableGrid:
+          case DisplayInGrid.UseEditableGridPaged:
             var toDisplay = objectToDisplay as IEnumerable;
             if (toDisplay != null)
             {
-              LinqPadExtensions.CustomVisualizers.DisplayInGrid(toDisplay);
+              CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LinqPadExtensions.CustomVisualizers.DefaultPageSize);
               return;
             }
             break;

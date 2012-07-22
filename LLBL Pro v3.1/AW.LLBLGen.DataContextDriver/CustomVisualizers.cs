@@ -3,17 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using AW.Helper.LLBL;
 using AW.LinqPadExtensions;
-using AW.Winforms.Helpers.DataEditor;
+using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.LLBL;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.LLBLGen.DataContextDriver
 {
 	public static class CustomVisualizers
 	{
+    /// <summary>
+    /// Displays the enumerable in a paged DataGridView Custom Visualizer.
+    /// If the enumerable contains LLBL entities it attempts to create a LLBL Persister
+    /// </summary>
+    /// <param name="enumerable">The enumerable.</param>
+    /// <param name="pageSize">Size of the page.</param>
+    /// <returns></returns>
+    public static IEnumerable DisplayInGrid(IEnumerable enumerable, ushort pageSize)
+    {
+      IDataEditorPersister dataEditorPersister = null;
+      if (enumerable != null)
+      {
+        var elementType = LinqUtils.DetermineSetElementType(enumerable.GetType());
+        if (typeof(EntityBase).IsAssignableFrom(elementType))
+          dataEditorPersister = new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister();
+        else
+          {
+            var dataAccessAdapter = EntityHelper.GetDataAccessAdapter(enumerable);
+            if (dataAccessAdapter != null) dataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter);
+          }
+      }
+      return enumerable.DisplayInGrid(dataEditorPersister, pageSize);
+    }
+
 		#region Self Servicing
 
 		public static IEnumerable<T> DisplaySelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase

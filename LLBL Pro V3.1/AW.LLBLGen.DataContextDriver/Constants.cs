@@ -30,6 +30,8 @@ namespace AW.LLBLGen.DataContextDriver
     [Description("Default Linqpad behaviour")]
     AllProperties,
     [Description("Use the Editable Data Grid included with the driver rather than the LinqPad one")]
-    UseEditableGrid
+    UseEditableGrid,
+    [Description("Use the Editable Data Grid with a page size of 10")]
+    UseEditableGridPaged
   }
 }
