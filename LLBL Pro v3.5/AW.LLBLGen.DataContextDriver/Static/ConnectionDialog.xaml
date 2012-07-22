@@ -18,8 +18,8 @@
 				Closing="Window_Closing"
 				d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
 																				 Type=Static:ConnectionDialog}"
-				d:DesignHeight="627"
-				d:DesignWidth="549"
+				d:DesignHeight="580"
+				d:DesignWidth="750"
 				Loaded="Window_Loaded"
 				SizeToContent="WidthAndHeight"
 				WindowStartupLocation="CenterScreen"
@@ -165,6 +165,11 @@
 					</StackPanel>
 
 					<StackPanel Orientation="Horizontal">
+<StackPanel.Resources>
+              <Style TargetType="ComboBox">
+                <Setter Property="Margin" Value="5,0,5,0" />
+              </Style>
+            </StackPanel.Resources>
 						<CheckBox Margin="1,0,0,5"
 											IsChecked="{Binding CxInfo.Persist}"
 											ToolTip="{Binding RelativeSource={RelativeSource Self},
@@ -176,7 +181,14 @@
 											ToolTip="If you choose to use entity information to create the schema tree more information will be shown in the tree nodes tooltips however only properties created by the designer are shown">
 							Use entity info rather then just reflection
 						</CheckBox>
-						<Button Name="btnSaveDefault"
+            <ComboBox Width="194"
+                      DisplayMemberPath="Description"
+                      SelectedValue="{Binding CxInfo.DriverData.Element[DisplayInGrid].Value}"
+								      SelectedValuePath="Value"
+                      ItemsSource="{Binding Source={local:Enumeration {x:Type DataContextDriver:DisplayInGrid}}}"
+                      ToolTip="Options to use when a query is run with 'Results to Data Grids'"
+                      />
+            <Button Name="btnSaveDefault"
 										MinWidth="60"
 										Margin="5,0,0,0"
 										HorizontalAlignment="Center"
@@ -187,7 +199,7 @@
 										Padding="8,2"
 										TabIndex="1"
 										VerticalContentAlignment="Center" ToolTip="Save this connection as the default for new connections, this enables cloning of a connection" />
-					</StackPanel>
+          </StackPanel>
 				</StackPanel>
 			</TabItem>
 			<TabItem DataContext="{Binding CxInfo}"

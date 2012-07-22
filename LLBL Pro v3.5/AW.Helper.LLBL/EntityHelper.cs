@@ -565,6 +565,12 @@ namespace AW.Helper.LLBL
 			return GetDataAccessAdapter(query.Provider);
 		}
 
+    public static IDataAccessAdapter GetDataAccessAdapter(IEnumerable enumerable)
+    {
+      var queryable = enumerable as IQueryable;
+      return queryable == null ? null : GetDataAccessAdapter(queryable);
+    }
+
 		/// <summary>
 		/// 	Gets the data access adapter from a LLBLGenProProvider2.
 		/// </summary>
