@@ -229,13 +229,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				{
 					var explorerItems = elementTypeLookup[entity.GetType().BaseType];
 					var baseItem = explorerItems.SingleOrDefault();
-					if (baseItem != null)
-						foreach (var explorerItem in baseItem.Children)
-						{
-							var item = table.Children.Single(c => c.Text == explorerItem.Text);
-							if (explorerItem.ToolTipText.Contains(item.ToolTipText))
-								item.ToolTipText = explorerItem.ToolTipText;
-						}
+          if (baseItem != null)
+          {
+            table.Text += string.Format(" (Sub-type of '{0}')", baseItem.DragText);
+            foreach (var explorerItem in baseItem.Children)
+            {
+              var item = table.Children.Single(c => c.Text == explorerItem.Text);
+              if (explorerItem.ToolTipText.Contains(item.ToolTipText))
+                item.ToolTipText = explorerItem.ToolTipText;
+              if (item.Icon == ExplorerIcon.Column)
+                item.Icon = ExplorerIcon.Inherited;
+            }
+          }
 				}
 			}
 
@@ -245,7 +250,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var entity = (IEntityCore)table.Tag;
 				try
 				{
-					var navigatorExplorerItems = EntityHelper.GetNavigatorProperties(entity).Select<PropertyDescriptor, ExplorerItem>(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup))
+					var navigatorExplorerItems = EntityHelper.GetNavigatorProperties(entity).Select(navigatorProperty => CreateNavigatorExplorerItem(entity, navigatorProperty, elementTypeLookup))
 						.Where(ei => ei != null).OrderBy(ei => ei.Icon).ThenBy(ei => ei.Text).ToList();
 					table.Children.AddRange(navigatorExplorerItems);
 				}
@@ -550,7 +555,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		{
 			if (fieldsToShowInSchema != null)
 				return fieldsToShowInSchema
-					.Select<PropertyDescriptor, ExplorerItem>(childProp => GetChildItem(elementTypeLookup, childProp))
+					.Select(childProp => GetChildItem(elementTypeLookup, childProp))
 					.OrderBy(childItem => childItem.Kind)
 					.ToList();
 			return null;
