@@ -88,7 +88,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
 			StringAssert.Contains(customerExplorerItem.ToolTipText, firstField.SourceCatalogName);
 			StringAssert.Contains(customerExplorerItem.ToolTipText, firstField.SourceSchemaName);
 
-			var individualExplorerItem = explorerItems.First(e => e.Text == EntityHelper.GetNameFromEntityEnum(EntityType.IndividualEntity));
+			var individualExplorerItem = explorerItems.First(e => e.Text.Contains(EntityHelper.GetNameFromEntityEnum(EntityType.IndividualEntity)));
 			foreach (var explorerItem in customerExplorerItem.Children)
 			{
 				var item = individualExplorerItem.Children.Single(c => c.Text == explorerItem.Text);
