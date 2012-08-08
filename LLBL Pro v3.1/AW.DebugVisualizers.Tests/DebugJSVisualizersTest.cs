@@ -189,8 +189,8 @@ namespace AW.DebugVisualizers.Tests
     public void SerializableEnumerableTest()
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-      Show(addressTypeEntityCollection);
       TestShowTransported(addressTypeEntityCollection, 4);
+      //Show(SerializableBaseClass.GenerateList());
       TestShowTransported(SerializableBaseClass.GenerateList(), 2);
       TestShowTransported(((IEntity) addressTypeEntityCollection.First()).CustomPropertiesOfType, 2);
       TestShowTransported(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), 2);
@@ -213,7 +213,6 @@ namespace AW.DebugVisualizers.Tests
     public void NonSerializableItemTest()
     {
       var listofNonSerializableClasses = NonSerializableClass.GenerateList();
-      Show(listofNonSerializableClasses);
       TestSerialize(listofNonSerializableClasses);
       listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString()});
       TestSerialize(listofNonSerializableClasses);

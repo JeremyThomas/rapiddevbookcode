@@ -6,10 +6,12 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Runtime.Serialization;
 using AW.Helper;
 using AW.Winforms.Helpers.DataEditor;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 //http://msdn.microsoft.com/en-us/library/aa991998(VS.100).aspx 'Use IVisualizerObjectProvider..::.GetData when the object is not serializable by .NET and requires custom serialization. 
@@ -41,21 +43,34 @@ namespace AW.DebugVisualizers
       if (_modalService == null)
         throw new NotSupportedException("This debugger does not support modal visualizers");
 
-      var enumerable = EnumerableJSVisualizerObjectSource.DeserializeJS(objectProvider.GetData());
-
-      if (enumerable != null)
+      var s2 = new StreamReader(objectProvider.GetData()).ReadToEnd();
+      DataTable dataTable = null;
+      try
       {
-       // var dataTableConverter = new DataTableConverter();
-        //dataTableConverter.ReadJson()
-        _firstJToken = enumerable.First();
-        if (_firstJToken != null)
-          _modalService.ShowDialog(FrmDataEditor.CreateDataViewForm(CopyToDataTable(enumerable).DefaultView));
+        dataTable = JsonConvert.DeserializeObject<DataTable>(s2, new DataTableConverter());
+      }
+      catch (Exception)
+      {
+        var jToken = JToken.Parse(s2);
+        if (jToken is JArray)
+          dataTable = CopyToDataTable(jToken as JArray);
+        else
+        {
+          ;
+        }
+      }
+
+
+      if (dataTable != null)
+      {
+        _modalService.ShowDialog(FrmDataEditor.CreateDataViewForm(dataTable.DefaultView));
       }
     }
 
     public DataTable CopyToDataTable(JArray source)
     {
-      return new ObjectShredder(GetPropertiesToSerialize).Shred(source, null, null);
+      _firstJToken = source.FirstOrDefault();
+      return _firstJToken == null ? new DataTable() : new ObjectShredder(GetPropertiesToSerialize).Shred(source, null, null);
     }
 
     public IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
@@ -68,7 +83,7 @@ namespace AW.DebugVisualizers
 
   public class EnumerableJSVisualizerObjectSource : VisualizerObjectSource
   {
-    private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
+    private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}; //, TypeNameHandling = TypeNameHandling.All
 
     #region Overrides of VisualizerObjectSource
 
@@ -94,20 +109,21 @@ namespace AW.DebugVisualizers
       var enumerable = target as IEnumerable;
       if (enumerable != null)
       {
-        //var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
+        var dataView = enumerable as DataView;
+        if (dataView != null)
+        {
+          SerializeJS(outgoingData, dataView.Table);
+          return;
+        }
+        var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
         var queryable = enumerable as IQueryable;
         if (queryable != null)
           enumerable = queryable.Take(100);
-        //  var enumerableType = enumerable.GetType();
-        //    if (MetaDataHelper.IsSerializable(enumerableType))
-        SerializeJS(outgoingData, enumerable);
-        //else
-        //{
-        //  var bindingListView = enumerable.ToBindingListView() ?? BindingListHelper.CreateObjectListView(enumerable, itemType);
-        //  SerializeJS(outgoingData, bindingListView);
-        //}
-
-        //TypeSerializer.SerializeToStream(enumerable, outgoingData);
+        var enumerableType = enumerable.GetType();
+        if (itemType.Implements(typeof (ISerializable)) || enumerableType.Implements(typeof (ISerializable)))
+          SerializeJS(outgoingData, enumerable.CopyToDataTable());
+        else
+          SerializeJS(outgoingData, enumerable);
       }
       else if (target is DataTable)
         SerializeJS(outgoingData, target);
@@ -127,11 +143,35 @@ namespace AW.DebugVisualizers
     public static JArray DeserializeJS(Stream serializationStream)
     {
       var s2 = new StreamReader(serializationStream).ReadToEnd();
-      var jsonObject = JArray.Parse(s2);
+      try
+      {
+        var jToken = JToken.Parse(s2);
+        if (jToken is JArray)
+        {
+          try
+          {
+          var deserializeObject = JsonConvert.DeserializeObject<DataTable>(s2, new DataTableConverter());
+          }
+          catch (Exception)
+          {
+          }
+          return jToken as JArray;
+        }
+        var jsonObject = JArray.Parse(s2);
+        var x1 = JsonConvert.DeserializeObject(s2);
+        var deserializeObject1 = JsonConvert.DeserializeObject<DataTable>(s2, new DataTableConverter());
+        return jsonObject;
+      }
+      catch (Exception e)
+      {
+        var jsonObject = JObject.Parse(s2);
+        var x = JsonConvert.DeserializeObject(s2);
+      }
+
       //if (jsonObject is JContainer)
       //  return jsonObject as JContainer;
       // return JsonConvert.DeserializeObject(s2, JsonSerializerSettings);
-      return jsonObject;
+      return null;
     }
   }
 }
