@@ -21,6 +21,7 @@ using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;
+using Newtonsoft.Json.Linq;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -31,13 +32,13 @@ namespace AW.DebugVisualizers.Tests
   ///   Summary description for DebugVisualizersTest
   /// </summary>
   [TestClass]
-  public class DebugVisualizersTest : NUnitFormMSTest
+  public class DebugJSVisualizersTest : NUnitFormMSTest
   {
     private static dynamic _enumerableVisualizer;
 
     private static dynamic EnumerableVisualizer
     {
-      get { return _enumerableVisualizer ?? (_enumerableVisualizer = new AccessPrivateWrapper(new EnumerableVisualizer())); }
+      get { return _enumerableVisualizer ?? (_enumerableVisualizer = new AccessPrivateWrapper(new EnumerableJSVisualizer())); }
     }
 
     private static DialogVisualizerServiceFake _dialogVisualizerServiceFake;
@@ -140,7 +141,7 @@ namespace AW.DebugVisualizers.Tests
       TestShow(addressType.Fields, TestData.NumFieldProperties);
     }
 
-    [TestCategory("Winforms"), TestMethod, Timeout(10000)]
+    [TestCategory("Winforms"), TestMethod, Timeout(10000), Ignore]
     public void LargeSerializableQueryTest()
     {
       var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
@@ -188,6 +189,7 @@ namespace AW.DebugVisualizers.Tests
     public void SerializableEnumerableTest()
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
+      Show(addressTypeEntityCollection);
       TestShowTransported(addressTypeEntityCollection, 4);
       TestShowTransported(SerializableBaseClass.GenerateList(), 2);
       TestShowTransported(((IEntity) addressTypeEntityCollection.First()).CustomPropertiesOfType, 2);
@@ -211,6 +213,7 @@ namespace AW.DebugVisualizers.Tests
     public void NonSerializableItemTest()
     {
       var listofNonSerializableClasses = NonSerializableClass.GenerateList();
+      Show(listofNonSerializableClasses);
       TestSerialize(listofNonSerializableClasses);
       listofNonSerializableClasses.Insert(0, new SerializableClass {DateTimeField = DateTime.Now, IntField = listofNonSerializableClasses.Count, StringField = listofNonSerializableClasses.Count.ToString()});
       TestSerialize(listofNonSerializableClasses);
@@ -237,7 +240,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(stringEnumerable, 1);
     }
 
-    [TestCategory("Winforms"), TestMethod]
+    [TestCategory("Winforms"), TestMethod, Ignore]
     public void LinqtoSQLTest()
     {
       var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
@@ -322,7 +325,7 @@ namespace AW.DebugVisualizers.Tests
     public static void TestSerialize(object enumerableOrDataTableToVisualize)
     {
       //Assert.IsInstanceOfType(enumerableToVisualize, typeof(IEnumerable));
-      AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize));
+      AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, JSVisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize));
     }
 
     /// <summary>
@@ -334,12 +337,12 @@ namespace AW.DebugVisualizers.Tests
     {
       if (!(transportedEnumerableOrDataTable is DataTableSurrogate) && !(transportedEnumerableOrDataTable is IListSource)
           && transportedEnumerableOrDataTable.GetType() != enumerableOrDataTableToVisualize.GetType())
-        Assert.IsInstanceOfType(transportedEnumerableOrDataTable, typeof (IBindingListView));
+        Assert.IsInstanceOfType(transportedEnumerableOrDataTable, typeof (JArray));
     }
 
     private static void Show(object enumerableOrDataTableToVisualize)
     {
-      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (EnumerableVisualizer), typeof (EnumerableVisualizerObjectSource));
+      var visualizerHost = new VisualizerDevelopmentHost(enumerableOrDataTableToVisualize, typeof (EnumerableJSVisualizer), typeof (EnumerableJSVisualizerObjectSource));
       visualizerHost.ShowVisualizer();
     }
 
@@ -351,9 +354,9 @@ namespace AW.DebugVisualizers.Tests
     public static void TestShow(object enumerableOrDataTableToVisualize, int expectedColumnCount)
     {
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is WeakReference);
-      var visualizerObjectProviderFake = new VisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
-      //AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, visualizerObjectProviderFake.GetObject());
-      EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
+      var JSVisualizerObjectProviderFake = new JSVisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
+      //AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, JSVisualizerObjectProviderFake.GetObject());
+      EnumerableVisualizer.Show(DialogVisualizerServiceFake, JSVisualizerObjectProviderFake);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
       Application.DoEvents();
@@ -368,7 +371,7 @@ namespace AW.DebugVisualizers.Tests
     public static void TestShowTransported(object enumerableOrDataTableToVisualize, int expectedColumnCount, int expectedTransportedColumnCount = -1)
     {
       TestShow(enumerableOrDataTableToVisualize, expectedColumnCount);
-      var transportedEnumerableOrDataTable = VisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize);
+      var transportedEnumerableOrDataTable = JSVisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize);
       AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, transportedEnumerableOrDataTable);
       if (expectedTransportedColumnCount == -1)
         expectedTransportedColumnCount = expectedColumnCount;
@@ -376,54 +379,29 @@ namespace AW.DebugVisualizers.Tests
     }
   }
 
-  internal class DialogVisualizerServiceFake : IDialogVisualizerService
-  {
-    public Form VisualizerForm { get; set; }
-
-    #region Implementation of IDialogVisualizerService
-
-    /// <returns> Displays a Windows Form. </returns>
-    /// <param name="form"> Any Windows Form object derived from System.Windows.Forms.Form. </param>
-    public DialogResult ShowDialog(Form form)
-    {
-      VisualizerForm = form;
-      //form.ShowDialog(); 
-      form.Show();
-      return DialogResult.None;
-    }
-
-    /// <param name="dialog"> Any dialog derived from System.Windows.Forms.CommonDialog. </param>
-    public DialogResult ShowDialog(CommonDialog dialog)
-    {
-      return DialogResult.None;
-    }
-
-    /// <param name="control"> Any control derived from System.Windows.Forms.Control. </param>
-    public DialogResult ShowDialog(Control control)
-    {
-      return DialogResult.None;
-    }
-
-    #endregion
-  }
-
-  internal class VisualizerObjectProviderFake : IVisualizerObjectProvider
+  internal class JSVisualizerObjectProviderFake : IVisualizerObjectProvider
   {
     private readonly object _enumerableOrDataTableToVisualize;
 
-    public VisualizerObjectProviderFake(object enumerableOrDataTableToVisualize)
+    public JSVisualizerObjectProviderFake(object enumerableOrDataTableToVisualize)
     {
       _enumerableOrDataTableToVisualize = enumerableOrDataTableToVisualize;
     }
 
     public static object SerializeDeserialize(object enumerableToVisualize)
     {
-      var enumerableVisualizerObjectSource = new EnumerableVisualizerObjectSource();
+      var memoryStream = Serialize(enumerableToVisualize);
+      return EnumerableJSVisualizerObjectSource.DeserializeJS(memoryStream);
+    }
+
+    private static MemoryStream Serialize(object enumerableToVisualize)
+    {
+      var enumerableVisualizerObjectSource = new EnumerableJSVisualizerObjectSource();
       var memoryStream = new MemoryStream();
       enumerableVisualizerObjectSource.GetData(enumerableToVisualize, memoryStream);
       memoryStream.Position = 0;
       Assert.AreNotEqual(0, memoryStream.Length);
-      return VisualizerObjectSource.Deserialize(memoryStream);
+      return memoryStream;
     }
 
     #region Implementation of IVisualizerObjectProvider
@@ -432,7 +410,7 @@ namespace AW.DebugVisualizers.Tests
     ///    cref="M:Microsoft.VisualStudio.DebuggerVisualizers.VisualizerObjectSource.GetData(System.Object,System.IO.Stream)" /> being called on the VisualizerObjectSource. The return value of that GetData call is then returned to the caller of this method. </returns>
     public Stream GetData()
     {
-      return null;
+      return Serialize(GetObject());
     }
 
     /// <returns> The data object being visualized. This is actually a debugger-side copy of the object you are visualizing in the debuggee. If you modify the contents of this object, the changes will not be reflected back in the debuggee unless you use the <see

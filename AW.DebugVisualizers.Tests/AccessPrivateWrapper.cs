@@ -3,7 +3,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
-namespace AQDPortal.UnitTestUtilities
+namespace AW.DebugVisualizers.Tests
 {
 	/// <summary>
 	/// A 10 minute wrapper to access private members, havn't tested in detail.
