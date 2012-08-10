@@ -21,7 +21,6 @@ using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.DebuggerVisualizers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Extensions.Forms;
-using Newtonsoft.Json.Linq;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -162,6 +161,7 @@ namespace AW.DebugVisualizers.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var customerList = northwindLinqMetaData.Customer.ToList();
       const int expectedColumnCount = 12;
+      //Show(customerList);
       TestShowTransported(customerList, expectedColumnCount);
       TestShowTransported(northwindLinqMetaData.Customer, expectedColumnCount);
       TestShowTransported(northwindLinqMetaData.Customer.ToEntityCollection2(), expectedColumnCount);
@@ -336,7 +336,8 @@ namespace AW.DebugVisualizers.Tests
     {
       if (!(transportedEnumerableOrDataTable is DataTableSurrogate) && !(transportedEnumerableOrDataTable is IListSource)
           && transportedEnumerableOrDataTable.GetType() != enumerableOrDataTableToVisualize.GetType())
-        Assert.IsInstanceOfType(transportedEnumerableOrDataTable, typeof (JArray));
+        //Assert.IsInstanceOfType(transportedEnumerableOrDataTable, typeof (JArray));
+      Assert.IsInstanceOfType(transportedEnumerableOrDataTable, typeof(IEnumerable));
     }
 
     private static void Show(object enumerableOrDataTableToVisualize)
@@ -371,7 +372,7 @@ namespace AW.DebugVisualizers.Tests
     {
       TestShow(enumerableOrDataTableToVisualize, expectedColumnCount);
       var transportedEnumerableOrDataTable = JSVisualizerObjectProviderFake.SerializeDeserialize(enumerableOrDataTableToVisualize);
-      AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, transportedEnumerableOrDataTable);
+     // AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, transportedEnumerableOrDataTable);
       if (expectedTransportedColumnCount == -1)
         expectedTransportedColumnCount = expectedColumnCount;
       TestShow(transportedEnumerableOrDataTable, expectedTransportedColumnCount);
@@ -390,7 +391,8 @@ namespace AW.DebugVisualizers.Tests
     public static object SerializeDeserialize(object enumerableToVisualize)
     {
       var memoryStream = Serialize(enumerableToVisualize);
-      return EnumerableJSVisualizerObjectSource.DeserializeJS(memoryStream);
+      var enumerableJSVisualizer = new EnumerableJSVisualizer();
+      return enumerableJSVisualizer.DeserializeJS(memoryStream);
     }
 
     private static MemoryStream Serialize(object enumerableToVisualize)
