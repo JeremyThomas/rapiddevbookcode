@@ -27,9 +27,9 @@ namespace AW.DebugVisualizers
     private JToken _firstJToken;
 
     /// <summary>
-    ///   Enumerable Visualizer
+    ///  Enumerable Visualizer with JSON Serializer
     /// </summary>
-    public const string Description = "Enumerable Visualizer";
+    public const string Description = "Enumerable Visualizer with JSON Serializer";
 
     /// <summary>
     ///   Shows the user interface for the visualizer
@@ -163,9 +163,11 @@ namespace AW.DebugVisualizers
       var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
       if (itemType.Implements(typeof (ISerializable)) || enumerableType.Implements(typeof (ISerializable)))
         StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable.CopyToDataTable(), JsonSerializerSettingsReferenceLoopHandlingIgnore));
-      else if (enumerable is DataRelationCollection || enumerableType.FullName.Contains("JesseJohnston.ObjectListView") || itemType.IsAssignableTo(typeof (SettingsProperty))
-               || itemType.IsAssignableTo(typeof (PropertyDescriptor)) || itemType.IsAssignableTo(typeof (DataRow)) || enumerable.GetType().Implements("SD.LLBLGen.Pro.ORMSupportClasses.IEntityFields"))
-        SerializeJSPlain(outgoingData, enumerable);
+      else if (enumerable is DataRelationCollection || enumerable is SettingsPropertyValueCollection || enumerableType.Name.Contains("ValuesCollection") || enumerableType.Name.Contains("ValueCollection")
+        || enumerableType.FullName.Contains("JesseJohnston.ObjectListView") || enumerableType.Name.Contains("KeyCollection") 
+        || itemType.IsAssignableTo(typeof(SettingsProperty))
+               || itemType.IsAssignableTo(typeof(PropertyDescriptor)) || itemType.IsAssignableTo(typeof(DataRow)) || enumerableType.Implements("SD.LLBLGen.Pro.ORMSupportClasses.IEntityFields"))
+       StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable, JsonSerializerSettingsReferenceLoopHandlingIgnore)); // SerializeJSPlain(outgoingData, enumerable); 
       else if (enumerable is XmlSchemaObjectCollection)
         StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable, JsonSerializerSettingsReferenceLoopHandlingIgnore));
       else

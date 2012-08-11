@@ -69,6 +69,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JSVisualizerRegistrations.cs" />
     <Compile Include="EnumerableJSVisualizer.cs" />
     <Compile Include="EnumerableVisualizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
