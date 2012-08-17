@@ -277,12 +277,13 @@ namespace AW.DebugVisualizers.Tests
       var xml = TestData.GetTestxmlString();
 
       var xElement = XElement.Parse(xml);
-      TestShow(xElement.Elements(), 21);
+      TestShowTransported(xElement.Elements(), 21, 7);
       //TestSerialize(xElement);
 
       var xmlDoc = new XmlDocument();
       xmlDoc.LoadXml(xml);
-      TestShow(xmlDoc.FirstChild.ChildNodes, 24);
+      //Show(xmlDoc.FirstChild.ChildNodes);
+      TestShowTransported(xmlDoc.FirstChild.ChildNodes, 24, 14);
     }
 
     [TestMethod]

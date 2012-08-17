@@ -8,6 +8,8 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL.Linq;
+using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using CustomerEntity = Northwind.DAL.EntityClasses.CustomerEntity;
@@ -79,7 +81,7 @@ namespace AW.Tests
     public void EditAdapterInDataGridViewTestHelper<T>(ushort pageSize, int numProperties = -1, int numFieldsToShow = 0) where T : EntityBase2
     {
       ModalFormHandler = Handler;
-      var enumerable = MetaSingletons.MetaData.GetQueryableForEntity<T>().AsEnumerable();
+      var enumerable = NorthwindTest.GetNorthwindLinqMetaData().GetQueryableForEntity<T>().AsEnumerable();
       var expected = enumerable;
       numProperties = GetNumberOfColumns<T>(numProperties, ref numFieldsToShow);
       var actual = enumerable.ShowInGrid(null, pageSize);
