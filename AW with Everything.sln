@@ -179,7 +179,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor", "AW.WebDbE
 		SccProjectName = "SAK"
 		SccProvider = "SAK"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		VWDPort = "42230"
+		VWDPort = "37973"
 	EndProjectSection
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
@@ -202,30 +202,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor", "AW.WebDbE
 		SccProjectName = "SAK"
 		SccProvider = "SAK"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		VWDPort = "42230"
-	EndProjectSection
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.VirtualPath = "/AW.WebDbEditor"
-		ProjectReferences = "{47F52527-A001-405B-9CEC-FCBF7FA10855}|AW.Data.dll;{FFC5B55E-9157-4CE6-81BD-E593E4C08422}|AW.Helper.dll;{7919C746-73F3-4279-A53B-CC6C08F42318}|AW.Helper.LLBL.dll;"
-		Release.AspNetCompiler.Debug = "False"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.VirtualPath = "/AW.WebDbEditor"
-		SccAuxPath = "SAK"
-		SccLocalPath = "SAK"
-		SccProjectName = "SAK"
-		SccProvider = "SAK"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		VWDPort = "42230"
+		VWDPort = "37973"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataSupportClasses", "DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj", "{64696470-5D05-4E00-95C4-C320F268E526}"
