@@ -15,12 +15,15 @@ using System.Diagnostics;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Schema;
 using AW.DebugVisualizers;
 using JesseJohnston;
 using Microsoft.VisualBasic;
 
 // type - Visualizer binding
+
+//http://joshsmithonwpf.wordpress.com/2008/01/20/the-rock-star-hack-of-2008/
+//http://code.google.com/p/linqpadvisualizer/
+[assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(System.WeakReference), Description = EnumerableVisualizer.Description)]
 
 //Serializable
 
@@ -182,6 +185,5 @@ using Microsoft.VisualBasic;
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Linq.Enumerable+WhereSelectEnumerableIterator`2, System.Core", Description = EnumerableVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Linq.Enumerable+WhereSelectListIterator`2, System.Core", Description = EnumerableVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), Target = typeof(NameObjectCollectionBase.KeysCollection), Description = EnumerableVisualizer.Description)]
-
 
 [assembly: DebuggerVisualizer(typeof(EnumerableVisualizer), typeof(EnumerableVisualizerObjectSource), TargetTypeName = "System.Web.Mvc.AssociatedMetadataProvider+<GetMetadataForPropertiesImpl>d__2, System.Web.Mvc", Description = EnumerableVisualizer.Description)]

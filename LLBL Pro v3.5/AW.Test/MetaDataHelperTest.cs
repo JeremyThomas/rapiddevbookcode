@@ -9,6 +9,7 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
+using AW.LinqToSQL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
@@ -90,6 +91,15 @@ namespace AW.Tests
 			Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses));
 			Assert.AreEqual(typeof(SerializableClass), MetaDataHelper.GetEnumerableItemType(emptySerializableClasses.Take(30)));
 		}
+
+    [TestMethod]
+    public void GetPropertiesToDisplayTest()
+    {
+      Assert.AreEqual(12, MetaDataHelper.GetPropertiesToDisplay(typeof(CustomerEntity)).Count());
+      Assert.AreEqual(12, MetaDataHelper.GetPropertiesToDisplay(typeof(List<CustomerEntity>)).Count());
+      Assert.AreEqual(4, MetaDataHelper.GetPropertiesToDisplay(typeof(AddressTypeEntity)).Count());
+      Assert.AreEqual(4, MetaDataHelper.GetPropertiesToDisplay(typeof(List<AddressTypeEntity>)).Count());
+   }
 
 		/// <summary>
 		///A test for GetPropertiesToSerialize
