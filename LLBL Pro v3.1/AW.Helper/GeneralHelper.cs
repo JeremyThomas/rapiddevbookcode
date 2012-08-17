@@ -217,10 +217,15 @@ namespace AW.Helper
 
     public static DataTable CopyToDataTable(this IEnumerable source)
     {
+      return CopyToDataTable(source, MetaDataHelper.GetPropertiesToSerialize);
+    }
+
+    public static DataTable CopyToDataTable(IEnumerable source, PropertyDescriptorGenerator propertyDescriptorGenerator)
+    {
       var dataView = source as DataView;
       if (dataView != null && dataView.Table != null)
         return dataView.Table;
-      return new ObjectShredder(MetaDataHelper.GetPropertiesToSerialize).Shred(source, null, null);
+      return new ObjectShredder(propertyDescriptorGenerator).Shred(source, null, null);
     }
 
     public static DataTable StripTypeColumns(this DataTable source)

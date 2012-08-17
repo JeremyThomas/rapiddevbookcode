@@ -7,6 +7,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Xml.Schema;
 using AW.Helper;
@@ -91,7 +92,14 @@ namespace AW.DebugVisualizers
     public DataTable CopyToDataTable(JArray source)
     {
       _firstJToken = source.FirstOrDefault();
-      return _firstJToken == null ? new DataTable() : new ObjectShredder(GetPropertiesToSerialize).Shred(source, null, null);
+      if (_firstJToken == null) return new DataTable();
+      if (!_firstJToken.HasValues)
+      {
+        _firstJToken = _firstJToken.Root;
+        return new DataTable();
+        //return new ObjectShredder(GetValueToSerialize).Shred(source, null, null);
+      }
+      return new ObjectShredder(GetPropertiesToSerialize).Shred(source, null, null);
     }
 
     public IEnumerable<PropertyDescriptor> GetPropertiesToSerialize(Type type)
@@ -99,6 +107,14 @@ namespace AW.DebugVisualizers
       return (from childToken in _firstJToken.OfType<JProperty>()
               select
                 new JPropertyDescriptor(childToken.Name, typeof (object))).Cast<PropertyDescriptor>();
+    }
+
+    public IEnumerable<PropertyDescriptor> GetValueToSerialize(Type type)
+    {
+      return new List<PropertyDescriptor>
+        {
+          new FieldsToPropertiesTypeDescriptionProvider.MyReflectedPropertyDescriptor(null)
+        };
     }
 
     public object DeserializeJS(Stream serializationStream)
@@ -162,7 +178,7 @@ namespace AW.DebugVisualizers
       var enumerableType = enumerable.GetType();
       var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
       if (itemType.Implements(typeof (ISerializable)) || enumerableType.Implements(typeof (ISerializable)))
-        StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable.CopyToDataTable(), JsonSerializerSettingsReferenceLoopHandlingIgnore));
+        StringToStream(outgoingData, JsonConvert.SerializeObject(GeneralHelper.CopyToDataTable(enumerable, MetaDataHelper.GetPropertiesToDisplay), JsonSerializerSettingsReferenceLoopHandlingIgnore));
       else if (enumerable is DataRelationCollection || enumerable is SettingsPropertyValueCollection || enumerableType.Name.Contains("ValuesCollection") || enumerableType.Name.Contains("ValueCollection")
         || enumerableType.FullName.Contains("JesseJohnston.ObjectListView") || enumerableType.Name.Contains("KeyCollection") 
         || itemType.IsAssignableTo(typeof(SettingsProperty))

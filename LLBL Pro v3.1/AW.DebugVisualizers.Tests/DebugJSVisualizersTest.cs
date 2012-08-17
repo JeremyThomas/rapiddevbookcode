@@ -137,7 +137,8 @@ namespace AW.DebugVisualizers.Tests
     public void EntityFieldsTest()
     {
       var addressType = MetaSingletons.MetaData.AddressType.First();
-      TestShow(addressType.Fields, TestData.NumFieldProperties);
+      //Show(addressType.Fields);
+      TestShow(addressType.Fields, TestData.NumFieldProperties + 1); //expression to appply
     }
 
     [TestCategory("Winforms"), TestMethod, Timeout(10000), Ignore]
@@ -267,9 +268,11 @@ namespace AW.DebugVisualizers.Tests
     public void DictionaryTest()
     {
       var dictionary = NonSerializableClass.GenerateList().ToDictionary(ns => ns.IntProperty, ns => ns);
-      TestShowTransported(dictionary, 2, 1);
+      //Show(dictionary);
+      TestShowTransported(dictionary, 2);
       var expectedColumnCount = NonSerializableClass.NumberOfNonSerializableClassProperties*2;
       TestShowTransported(dictionary.Values, expectedColumnCount);
+     // Show(dictionary.Keys);
       TestShowTransported(dictionary.Keys, 1);
     }
 
@@ -284,6 +287,7 @@ namespace AW.DebugVisualizers.Tests
 
       var xmlDoc = new XmlDocument();
       xmlDoc.LoadXml(xml);
+      Show(xmlDoc.FirstChild.ChildNodes);
       TestShow(xmlDoc.FirstChild.ChildNodes, 24);
     }
 
@@ -291,10 +295,10 @@ namespace AW.DebugVisualizers.Tests
     public void XmlSchemaTest()
     {
       var xmlSchema = TestData.GetTestXmlSchema();
-      TestShowTransported(xmlSchema.Items, 28, 23);
+      TestShowTransported(xmlSchema.Items, 30);
       TestShowTransported(xmlSchema.Attributes.Names, 0);
       TestShowTransported(xmlSchema.Elements.Names, 3);
-      TestShowTransported(xmlSchema.Elements.Values, 28, 23);
+      TestShowTransported(xmlSchema.Elements.Values, 30);
       TestShowTransported(xmlSchema.Groups.Values, 0);
       TestShowTransported(xmlSchema.SchemaTypes.Values, 0);
     }
@@ -312,13 +316,14 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void SettingsPropertyTest()
     {
-      TestShowTransported(Settings.Default.Properties, 9, 7);
+      TestShowTransported(Settings.Default.Properties, 9);
       if (Settings.Default.PropertyValues.Count == 0)
       {
         var x = Settings.Default.StringSetting;
       }
       Assert.AreNotEqual(0, Settings.Default.PropertyValues.Count);
-      TestShowTransported(Settings.Default.PropertyValues, 7, 6);
+     // Show(Settings.Default.PropertyValues);
+      TestShowTransported(Settings.Default.PropertyValues, 7);
     }
 
     public static void TestSerialize(object enumerableOrDataTableToVisualize)
@@ -358,7 +363,7 @@ namespace AW.DebugVisualizers.Tests
       //AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, JSVisualizerObjectProviderFake.GetObject());
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, JSVisualizerObjectProviderFake);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
-     // Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
+      Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
       Application.DoEvents();
     }
 
@@ -375,7 +380,7 @@ namespace AW.DebugVisualizers.Tests
      // AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, transportedEnumerableOrDataTable);
       if (expectedTransportedColumnCount == -1)
         expectedTransportedColumnCount = expectedColumnCount;
-     // TestShow(transportedEnumerableOrDataTable, expectedTransportedColumnCount);
+      TestShow(transportedEnumerableOrDataTable, expectedTransportedColumnCount);
     }
   }
 
