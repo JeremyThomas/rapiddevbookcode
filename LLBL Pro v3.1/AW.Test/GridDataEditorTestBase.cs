@@ -86,7 +86,7 @@ namespace AW.Tests
 
 		public static DataGridView GetDataGridViewFromGridDataEditor(Form form)
 		{
-			return ((DataGridView) ((GridDataEditor) form.Controls[0]).Controls[0]);
+			return ((DataGridView) form.Controls[0].Controls[0]);
 		}
 	}
 }

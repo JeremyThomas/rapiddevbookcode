@@ -7,8 +7,8 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Reflection;
 using System.Runtime.Serialization;
+using System.Xml;
 using System.Xml.Schema;
 using AW.Helper;
 using AW.Winforms.Helpers.DataEditor;
@@ -96,8 +96,7 @@ namespace AW.DebugVisualizers
       if (!_firstJToken.HasValues)
       {
         _firstJToken = _firstJToken.Root;
-        return new DataTable();
-        //return new ObjectShredder(GetValueToSerialize).Shred(source, null, null);
+        return ValueTypeWrapper.CreateWrapperForBinding(_firstJToken.Root).CopyToDataTable();
       }
       return new ObjectShredder(GetPropertiesToSerialize).Shred(source, null, null);
     }
@@ -176,16 +175,22 @@ namespace AW.DebugVisualizers
         return;
       }
       var enumerableType = enumerable.GetType();
+     // var x = enumerable as IQueryable;
       var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
-      if (itemType.Implements(typeof (ISerializable)) || enumerableType.Implements(typeof (ISerializable)))
+      var fullName = enumerableType.FullName;
+      if (fullName.Contains("System.Data.Linq"))
+        StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable.CopyToDataTable(), JsonSerializerSettingsReferenceLoopHandlingIgnore));
+      else if (itemType.Implements(typeof(ISerializable)) || enumerableType.Implements(typeof(ISerializable)) || enumerable is XmlNodeList)
         StringToStream(outgoingData, JsonConvert.SerializeObject(GeneralHelper.CopyToDataTable(enumerable, MetaDataHelper.GetPropertiesToDisplay), JsonSerializerSettingsReferenceLoopHandlingIgnore));
       else if (enumerable is DataRelationCollection || enumerable is SettingsPropertyValueCollection || enumerableType.Name.Contains("ValuesCollection") || enumerableType.Name.Contains("ValueCollection")
-        || enumerableType.FullName.Contains("JesseJohnston.ObjectListView") || enumerableType.Name.Contains("KeyCollection") 
+        || fullName.Contains("JesseJohnston.ObjectListView") || enumerableType.Name.Contains("KeyCollection") 
         || itemType.IsAssignableTo(typeof(SettingsProperty))
                || itemType.IsAssignableTo(typeof(PropertyDescriptor)) || itemType.IsAssignableTo(typeof(DataRow)) || enumerableType.Implements("SD.LLBLGen.Pro.ORMSupportClasses.IEntityFields"))
        StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable, JsonSerializerSettingsReferenceLoopHandlingIgnore)); // SerializeJSPlain(outgoingData, enumerable); 
       else if (enumerable is XmlSchemaObjectCollection)
         StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable, JsonSerializerSettingsReferenceLoopHandlingIgnore));
+      //else if (enumerableType.Implements(typeof(System.Data.Linq.ITable)) || enumerable is IQueryable)
+      //  SerializeJS(outgoingData, (object) enumerable);
       else
         SerializeJS(outgoingData, (object) enumerable);
     }

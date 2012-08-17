@@ -141,11 +141,11 @@ namespace AW.DebugVisualizers.Tests
       TestShow(addressType.Fields, TestData.NumFieldProperties + 1); //expression to appply
     }
 
-    [TestCategory("Winforms"), TestMethod, Timeout(10000), Ignore]
+    [TestCategory("Winforms"), TestMethod, Timeout(10000)]
     public void LargeSerializableQueryTest()
     {
       var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
-      TestShow(awDataClassesDataContext.Addresses, 9);
+      TestShow(awDataClassesDataContext.Addresses, 8);
       //	TestSerialize(MetaSingletons.MetaData.PurchaseOrderHeader);
       //	TestShow(MetaSingletons.MetaData.PurchaseOrderHeader);
     }
@@ -240,7 +240,7 @@ namespace AW.DebugVisualizers.Tests
       TestShowTransported(stringEnumerable, 1);
     }
 
-    [TestCategory("Winforms"), TestMethod, Ignore]
+    [TestCategory("Winforms"), TestMethod]
     public void LinqtoSQLTest()
     {
       var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
@@ -282,13 +282,13 @@ namespace AW.DebugVisualizers.Tests
       var xml = TestData.GetTestxmlString();
 
       var xElement = XElement.Parse(xml);
-      TestShow(xElement.Elements(), 21);
+      TestShowTransported(xElement.Elements(), 21);
       //TestSerialize(xElement);
 
       var xmlDoc = new XmlDocument();
       xmlDoc.LoadXml(xml);
-      Show(xmlDoc.FirstChild.ChildNodes);
-      TestShow(xmlDoc.FirstChild.ChildNodes, 24);
+      //Show(xmlDoc.FirstChild.ChildNodes);
+      TestShowTransported(xmlDoc.FirstChild.ChildNodes, 23);
     }
 
     [TestMethod]
