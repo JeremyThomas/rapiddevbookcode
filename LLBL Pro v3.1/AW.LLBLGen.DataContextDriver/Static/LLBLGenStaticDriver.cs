@@ -166,10 +166,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       try
       {
         LLBLWinformHelper.ForceInitialization();
-        var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameDisplayInGrid);
-        if (usefieldsElement != null)
-          _howToDisplayInGrid = usefieldsElement.Value.ToEnum<DisplayInGrid>();
-
+        _howToDisplayInGrid = ConnectionDialog.GetHowToDisplayInGrid(cxInfo).GetValueOrDefault(_howToDisplayInGrid);
         var baseType = context.GetType().BaseType;
         if (baseType != null)
         {
