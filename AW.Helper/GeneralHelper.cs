@@ -50,11 +50,18 @@ namespace AW.Helper
       Debug.WriteLine(new StackTrace(false).GetFrame(1).GetMethod().Name + ": " + msg);
     }
 
-    public static void TraceOut(Exception exception)
+    /// <summary>
+    /// Traces out the exception and the InnerMostException.
+    /// </summary>
+    /// <param name="exception">The exception.</param>
+    /// <returns>InnerMostException</returns>
+    public static Exception TraceOut(Exception exception)
     {
       Trace.WriteLine(exception.Message);
-      if (exception.InnerException != null)
-        TraceOut(exception.InnerException);
+      var innerMostException = GetInnerMostException(exception);
+      if (innerMostException != exception)
+        TraceOut(innerMostException);
+      return innerMostException;
     }
 
     #endregion

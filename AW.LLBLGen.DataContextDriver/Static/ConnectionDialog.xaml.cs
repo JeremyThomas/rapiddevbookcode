@@ -30,7 +30,7 @@ using Application = System.Windows.Forms.Application;
 namespace AW.LLBLGen.DataContextDriver.Static
 {
   /// <summary>
-  /// 	Interaction logic for ConnectionDialog.xaml
+  ///   Interaction logic for ConnectionDialog.xaml
   /// </summary>
   [Serializable]
   public partial class ConnectionDialog : INotifyPropertyChanged
@@ -38,14 +38,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
     #region Fields
 
     /// <summary>
-    /// 	AdapterType
+    ///   AdapterType
     /// </summary>
     public const string ElementNameAdaptertype = "AdapterType";
 
     public const string ElementNameAdapterAssembly = "AdapterAssembly";
 
     /// <summary>
-    /// 	AdditionalAssemblies
+    ///   AdditionalAssemblies
     /// </summary>
     public const string ElementNameAdditionalassemblies = "AdditionalAssemblies";
 
@@ -95,7 +95,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public IConnectionInfo CxInfo { get; private set; }
 
     /// <summary>
-    /// 	Gets the CustomTypeNameVisibility.
+    ///   Gets the CustomTypeNameVisibility.
     /// </summary>
     /// <value> The CustomTypeNameVisibility. </value>
     public Visibility CustomTypeNameVisibility
@@ -104,7 +104,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     }
 
     /// <summary>
-    /// 	Gets the ConnectionTypeVisibility.
+    ///   Gets the ConnectionTypeVisibility.
     /// </summary>
     /// <value> The ConnectionTypeVisibility. </value>
     public Visibility ConnectionTypeVisibility
@@ -154,10 +154,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private DisplayInGrid? HowToDisplayInGrid
     {
       get { return GetHowToDisplayInGrid(CxInfo); }
-      set
-      {
-        SetDriverDataValue(CxInfo, ElementNameDisplayInGrid, value.ToString());
-      }
+      set { SetDriverDataValue(CxInfo, ElementNameDisplayInGrid, value.ToString()); }
     }
 
     public ObservableCollection<ValueTypeWrapper<string>> AdditionalNamespaces { get; set; }
@@ -277,9 +274,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
     internal static void SetDriverDataValue(IConnectionInfo connectionInfo, string elementName, string value)
     {
       CreateElementIfNeeded(connectionInfo, elementName, null);
-// ReSharper disable PossibleNullReferenceException
+      // ReSharper disable PossibleNullReferenceException
       connectionInfo.DriverData.Element(elementName).Value = value;
-// ReSharper restore PossibleNullReferenceException
+      // ReSharper restore PossibleNullReferenceException
     }
 
     internal static string GetDriverDataValue(IConnectionInfo cxInfo, string elementName)
@@ -373,14 +370,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
         }
       Settings.Default.ConnectionDialogPlacement = this.GetPlacement();
       Settings.Default.Save();
-
     }
 
     private void ConnectionDialog_OnClosed(object sender, EventArgs e)
-    {      
+    {
       try
       {
-        SyncHowToDisplayInGrid();
+        SyncDisplayInGrid();
       }
       catch (Exception ex)
       {
@@ -388,20 +384,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
     }
 
-    private void SyncHowToDisplayInGrid()
+    /// <summary>
+    ///   Syncs the display in grid source with the target - because sometimes it isn't.
+    /// </summary>
+    private void SyncDisplayInGrid()
     {
-      var displayInGridCxInfo = HowToDisplayInGrid;
+      var displayInGridCxInfo = HowToDisplayInGrid.GetValueOrDefault();
       var displayInGridUI = (DisplayInGrid) ComboBoxDisplayInGrid.SelectedValue;
-      if (displayInGridCxInfo.HasValue && displayInGridCxInfo.Value != displayInGridUI)
+      if (displayInGridCxInfo != displayInGridUI)
       {
-        //ComboBoxDisplayInGrid.ItemsSource = null;
-        //HowToDisplayInGrid = displayInGridUI;
-        MessageBox.Show(displayInGridCxInfo.Value.ToString());
-        var bindingExpressionBase = BindingOperations.GetBindingExpressionBase(ComboBoxDisplayInGrid, Selector.SelectedValueProperty);
-        MessageBox.Show(bindingExpressionBase.Status.ToString());
-        bindingExpressionBase.UpdateSource();
-        bindingExpressionBase.UpdateTarget();
-        MessageBox.Show(HowToDisplayInGrid.GetValueOrDefault().ToString());
+        ComboBoxDisplayInGrid.ClearValue(Selector.SelectedValueProperty);
+        HowToDisplayInGrid = displayInGridUI;
       }
     }
 
@@ -1088,7 +1081,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
     }
 
     #endregion
-
   }
 
   public enum LLBLConnectionType

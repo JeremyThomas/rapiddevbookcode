@@ -105,24 +105,14 @@ namespace AW.DebugVisualizers
     {
       return (from childToken in _firstJToken.OfType<JProperty>()
               select
-                new JPropertyDescriptor(childToken.Name, typeof (object))).Cast<PropertyDescriptor>();
-    }
-
-    public IEnumerable<PropertyDescriptor> GetValueToSerialize(Type type)
-    {
-      return new List<PropertyDescriptor>
-        {
-          new FieldsToPropertiesTypeDescriptionProvider.MyReflectedPropertyDescriptor(null)
-        };
+                new JPropertyDescriptor(childToken.Name, typeof (object)));
     }
 
     public object DeserializeJS(Stream serializationStream)
     {
-      var s2 = new StreamReader(serializationStream).ReadToEnd();
-      var enumerable = JsonStringToEnumerable(s2);
-      if (enumerable != null)
-        return enumerable;
-      return JToken.Parse(s2);
+      var s = new StreamReader(serializationStream).ReadToEnd();
+      var enumerable = JsonStringToEnumerable(s);
+      return enumerable ?? JToken.Parse(s);
     }
   }
 

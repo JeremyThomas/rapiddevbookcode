@@ -210,12 +210,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e.Message);
-        var innerMostException = GeneralHelper.GetInnerMostException(e);
+        var innerMostException = GeneralHelper.TraceOut(e);
         Application.OnThreadException(innerMostException);
         if (e == innerMostException)
           throw;
-        GeneralHelper.TraceOut(innerMostException.Message);
         throw innerMostException;
       }
     }
