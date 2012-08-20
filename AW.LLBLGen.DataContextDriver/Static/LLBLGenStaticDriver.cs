@@ -166,10 +166,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       try
       {
         LLBLWinformHelper.ForceInitialization();
-        var usefieldsElement = cxInfo.DriverData.Element(ConnectionDialog.ElementNameDisplayInGrid);
-        if (usefieldsElement != null)
-          _howToDisplayInGrid = usefieldsElement.Value.ToEnum<DisplayInGrid>();
-
+        _howToDisplayInGrid = ConnectionDialog.GetHowToDisplayInGrid(cxInfo).GetValueOrDefault(_howToDisplayInGrid);
         var baseType = context.GetType().BaseType;
         if (baseType != null)
         {
@@ -213,12 +210,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e.Message);
-        var innerMostException = GeneralHelper.GetInnerMostException(e);
+        var innerMostException = GeneralHelper.TraceOut(e);
         Application.OnThreadException(innerMostException);
         if (e == innerMostException)
           throw;
-        GeneralHelper.TraceOut(innerMostException.Message);
         throw innerMostException;
       }
     }
