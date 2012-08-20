@@ -60,6 +60,8 @@ using Microsoft.VisualBasic;
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(Stack<>), Description = EnumerableJSVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(Dictionary<,>.KeyCollection), Description = EnumerableJSVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(Dictionary<,>.ValueCollection), Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(SortedSet<>), Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(HashSet<>), Description = EnumerableJSVisualizer.Description)]
 
 //-Winforms
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(BaseCollection), Description = EnumerableJSVisualizer.Description)]
