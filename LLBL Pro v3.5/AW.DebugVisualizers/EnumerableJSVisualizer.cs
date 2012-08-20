@@ -105,24 +105,14 @@ namespace AW.DebugVisualizers
     {
       return (from childToken in _firstJToken.OfType<JProperty>()
               select
-                new JPropertyDescriptor(childToken.Name, typeof (object))).Cast<PropertyDescriptor>();
-    }
-
-    public IEnumerable<PropertyDescriptor> GetValueToSerialize(Type type)
-    {
-      return new List<PropertyDescriptor>
-        {
-          new FieldsToPropertiesTypeDescriptionProvider.MyReflectedPropertyDescriptor(null)
-        };
+                new JPropertyDescriptor(childToken.Name, typeof (object)));
     }
 
     public object DeserializeJS(Stream serializationStream)
     {
-      var s2 = new StreamReader(serializationStream).ReadToEnd();
-      var enumerable = JsonStringToEnumerable(s2);
-      if (enumerable != null)
-        return enumerable;
-      return JToken.Parse(s2);
+      var s = new StreamReader(serializationStream).ReadToEnd();
+      var enumerable = JsonStringToEnumerable(s);
+      return enumerable ?? JToken.Parse(s);
     }
   }
 
@@ -171,7 +161,7 @@ namespace AW.DebugVisualizers
       var dataView = enumerable as DataView;
       if (dataView != null)
       {
-        SerializeJS(outgoingData, dataView.Table);
+        SerializeJSTypeNameHandlingAll(outgoingData, dataView.Table);
         return;
       }
       var enumerableType = enumerable.GetType();
@@ -179,20 +169,31 @@ namespace AW.DebugVisualizers
       var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
       var fullName = enumerableType.FullName;
       if (fullName.Contains("System.Data.Linq"))
-        StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable.CopyToDataTable(), JsonSerializerSettingsReferenceLoopHandlingIgnore));
+        SerializeJS(outgoingData, enumerable.CopyToDataTable(), JsonSerializerSettingsReferenceLoopHandlingIgnore);
       else if (itemType.Implements(typeof(ISerializable)) || enumerableType.Implements(typeof(ISerializable)) || enumerable is XmlNodeList)
-        StringToStream(outgoingData, JsonConvert.SerializeObject(GeneralHelper.CopyToDataTable(enumerable, MetaDataHelper.GetPropertiesToDisplay), JsonSerializerSettingsReferenceLoopHandlingIgnore));
+        SerializeJS(outgoingData, GeneralHelper.CopyToDataTable(enumerable, MetaDataHelper.GetPropertiesToDisplay), JsonSerializerSettingsReferenceLoopHandlingIgnore);
       else if (enumerable is DataRelationCollection || enumerable is SettingsPropertyValueCollection || enumerableType.Name.Contains("ValuesCollection") || enumerableType.Name.Contains("ValueCollection")
         || fullName.Contains("JesseJohnston.ObjectListView") || enumerableType.Name.Contains("KeyCollection") 
         || itemType.IsAssignableTo(typeof(SettingsProperty))
                || itemType.IsAssignableTo(typeof(PropertyDescriptor)) || itemType.IsAssignableTo(typeof(DataRow)) || enumerableType.Implements("SD.LLBLGen.Pro.ORMSupportClasses.IEntityFields"))
-       StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable, JsonSerializerSettingsReferenceLoopHandlingIgnore)); // SerializeJSPlain(outgoingData, enumerable); 
+        SerializeJS(outgoingData, enumerable, JsonSerializerSettingsReferenceLoopHandlingIgnore); 
       else if (enumerable is XmlSchemaObjectCollection)
-        StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable, JsonSerializerSettingsReferenceLoopHandlingIgnore));
-      //else if (enumerableType.Implements(typeof(System.Data.Linq.ITable)) || enumerable is IQueryable)
-      //  SerializeJS(outgoingData, (object) enumerable);
+        SerializeJS(outgoingData, enumerable, JsonSerializerSettingsReferenceLoopHandlingIgnore);
       else
-        SerializeJS(outgoingData, (object) enumerable);
+        SerializeJS(outgoingData, enumerable, itemType.Assembly.GlobalAssemblyCache, enumerableType.Assembly.GlobalAssemblyCache);
+    }
+
+    private static void SerializeJS(Stream outgoingData, IEnumerable enumerable, bool itemTypeinGac, bool enumerableTypeinGac)
+    {
+      if (itemTypeinGac)
+        if (enumerableTypeinGac)
+          SerializeJSTypeNameHandlingAll(outgoingData, enumerable);
+        else
+          SerializeJS(outgoingData, enumerable, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Objects});
+      else if (enumerableTypeinGac)
+        SerializeJS(outgoingData, enumerable, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Arrays});
+      else
+        SerializeJSPlain(outgoingData, enumerable);
     }
 
     private static void SerializeJSPlain(Stream outgoingData, object enumerable)
@@ -200,9 +201,14 @@ namespace AW.DebugVisualizers
       StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable));
     }
 
-    public static void SerializeJS(Stream outgoingData, object enumerable)
+    public static void SerializeJSTypeNameHandlingAll(Stream outgoingData, object enumerable)
     {
-      StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable, JsonSerializerSettingsTypeNameHandlingAll));
+      SerializeJS(outgoingData, enumerable, JsonSerializerSettingsTypeNameHandlingAll);
+    }
+
+    private static void SerializeJS(Stream outgoingData, object enumerable, JsonSerializerSettings jsonSerializerSettingsTypeNameHandlingAll)
+    {
+      StringToStream(outgoingData, JsonConvert.SerializeObject(enumerable, jsonSerializerSettingsTypeNameHandlingAll));
     }
 
     private static void StringToStream(Stream outgoingData, string s1)

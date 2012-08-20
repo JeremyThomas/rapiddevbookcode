@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Xml.Linq;
@@ -29,7 +30,7 @@ using Application = System.Windows.Forms.Application;
 namespace AW.LLBLGen.DataContextDriver.Static
 {
   /// <summary>
-  /// 	Interaction logic for ConnectionDialog.xaml
+  ///   Interaction logic for ConnectionDialog.xaml
   /// </summary>
   [Serializable]
   public partial class ConnectionDialog : INotifyPropertyChanged
@@ -37,14 +38,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
     #region Fields
 
     /// <summary>
-    /// 	AdapterType
+    ///   AdapterType
     /// </summary>
     public const string ElementNameAdaptertype = "AdapterType";
 
     public const string ElementNameAdapterAssembly = "AdapterAssembly";
 
     /// <summary>
-    /// 	AdditionalAssemblies
+    ///   AdditionalAssemblies
     /// </summary>
     public const string ElementNameAdditionalassemblies = "AdditionalAssemblies";
 
@@ -94,16 +95,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public IConnectionInfo CxInfo { get; private set; }
 
     /// <summary>
-    /// 	Gets the CustomTypeNameVisibility.
+    ///   Gets the CustomTypeNameVisibility.
     /// </summary>
     /// <value> The CustomTypeNameVisibility. </value>
     public Visibility CustomTypeNameVisibility
     {
-      get { return string.IsNullOrEmpty(txtAssemblyPath.Text) ? Visibility.Collapsed : Visibility.Visible; }
+      get { return String.IsNullOrEmpty(txtAssemblyPath.Text) ? Visibility.Collapsed : Visibility.Visible; }
     }
 
     /// <summary>
-    /// 	Gets the ConnectionTypeVisibility.
+    ///   Gets the ConnectionTypeVisibility.
     /// </summary>
     /// <value> The ConnectionTypeVisibility. </value>
     public Visibility ConnectionTypeVisibility
@@ -115,10 +116,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       get
       {
-        if (string.IsNullOrEmpty(CxInfo.CustomTypeInfo.CustomTypeName))
+        if (String.IsNullOrEmpty(CxInfo.CustomTypeInfo.CustomTypeName))
           return LLBLConnectionType = LLBLConnectionType.Unknown;
         int connectionTypeIndex;
-        if (int.TryParse(GetDriverDataValue(ElementNameConnectionType), out connectionTypeIndex))
+        if (Int32.TryParse(GetDriverDataValue(ElementNameConnectionType), out connectionTypeIndex))
           return (LLBLConnectionType) connectionTypeIndex;
         return LLBLConnectionType.Unknown;
       }
@@ -139,7 +140,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       set
       {
         if (CxInfo.DatabaseInfo.Provider != value ||
-            string.Equals(value, "System.Data.SqlClient", StringComparison.InvariantCultureIgnoreCase))
+            String.Equals(value, "System.Data.SqlClient", StringComparison.InvariantCultureIgnoreCase))
         {
           _providerHasBeenSet = value != "";
           CxInfo.DatabaseInfo.Provider = value;
@@ -149,6 +150,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
     }
 
     public IEnumerable<string> DbProviderFactoryNames { get; set; }
+
+    private DisplayInGrid? HowToDisplayInGrid
+    {
+      get { return GetHowToDisplayInGrid(CxInfo); }
+      set { SetDriverDataValue(CxInfo, ElementNameDisplayInGrid, value.ToString()); }
+    }
 
     public ObservableCollection<ValueTypeWrapper<string>> AdditionalNamespaces { get; set; }
 
@@ -197,6 +204,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
         else
         {
           UpGradeDriverDataElements(cxInfo);
+          if (HowToDisplayInGrid == null)
+            HowToDisplayInGrid = DisplayInGrid.AllProperties;
         }
       }
       catch (Exception e)
@@ -223,7 +232,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static void UpGradeDriverDataElements(IConnectionInfo cxInfo)
     {
       var adaptertypeName = GetDriverDataValue(cxInfo, ElementNameAdaptertype);
-      if (string.IsNullOrEmpty(adaptertypeName))
+      if (String.IsNullOrEmpty(adaptertypeName))
         CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.SelfServicing).ToString());
       else if (adaptertypeName == cxInfo.DatabaseInfo.DbVersion)
       {
@@ -233,7 +242,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.AdapterFactory).ToString());
         cxInfo.DatabaseInfo.Provider = null;
         cxInfo.DatabaseInfo.DbVersion = null;
-        cxInfo.DriverData.Element(ElementNameAdaptertype).Value = string.Empty;
+        cxInfo.DriverData.Element(ElementNameAdaptertype).Value = String.Empty;
       }
       else
       {
@@ -265,9 +274,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
     internal static void SetDriverDataValue(IConnectionInfo connectionInfo, string elementName, string value)
     {
       CreateElementIfNeeded(connectionInfo, elementName, null);
-// ReSharper disable PossibleNullReferenceException
+      // ReSharper disable PossibleNullReferenceException
       connectionInfo.DriverData.Element(elementName).Value = value;
-// ReSharper restore PossibleNullReferenceException
+      // ReSharper restore PossibleNullReferenceException
     }
 
     internal static string GetDriverDataValue(IConnectionInfo cxInfo, string elementName)
@@ -279,6 +288,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public string GetDriverDataValue(string elementName)
     {
       return GetDriverDataValue(CxInfo, elementName);
+    }
+
+    public static DisplayInGrid? GetHowToDisplayInGrid(IConnectionInfo cxInfo)
+    {
+      DisplayInGrid? howToDisplayInGrid = null;
+      var usefieldsElement = cxInfo.DriverData.Element(ElementNameDisplayInGrid);
+      if (usefieldsElement != null && !String.IsNullOrEmpty(usefieldsElement.Value))
+        howToDisplayInGrid = usefieldsElement.Value.ToEnum<DisplayInGrid>();
+      return howToDisplayInGrid;
     }
 
     protected override void OnSourceInitialized(EventArgs e)
@@ -328,7 +346,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       Settings.Default.DefaultAdapterType = GetDriverDataValue(ElementNameAdaptertype);
       Settings.Default.DefaultAdapterAssembly = GetDriverDataValue(ElementNameAdapterAssembly);
       int connectionTypeIndex;
-      if (int.TryParse(GetDriverDataValue(ElementNameConnectionType), out connectionTypeIndex))
+      if (Int32.TryParse(GetDriverDataValue(ElementNameConnectionType), out connectionTypeIndex))
         Settings.Default.DefaultConnectionType = connectionTypeIndex;
 
       Settings.Default.Save();
@@ -336,8 +354,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private void Window_Closing(object sender, CancelEventArgs e)
     {
-      if (DialogResult.GetValueOrDefault() && !string.IsNullOrEmpty(CxInfo.DatabaseInfo.CustomCxString) &&
-          string.IsNullOrEmpty(providerComboBox.Text))
+      if (DialogResult.GetValueOrDefault() && !String.IsNullOrEmpty(CxInfo.DatabaseInfo.CustomCxString) &&
+          String.IsNullOrEmpty(providerComboBox.Text))
         switch (MessageBox.Show("Database Provider has not been set!" + Environment.NewLine
                                 + "This is required to execute SQL" + Environment.NewLine
                                 + "Do you wish to close anyway?", "Do you wish to close?", MessageBoxButton.YesNo))
@@ -352,6 +370,32 @@ namespace AW.LLBLGen.DataContextDriver.Static
         }
       Settings.Default.ConnectionDialogPlacement = this.GetPlacement();
       Settings.Default.Save();
+    }
+
+    private void ConnectionDialog_OnClosed(object sender, EventArgs e)
+    {
+      try
+      {
+        SyncDisplayInGrid();
+      }
+      catch (Exception ex)
+      {
+        Application.OnThreadException(ex);
+      }
+    }
+
+    /// <summary>
+    ///   Syncs the display in grid source with the target - because sometimes it isn't.
+    /// </summary>
+    private void SyncDisplayInGrid()
+    {
+      var displayInGridCxInfo = HowToDisplayInGrid.GetValueOrDefault();
+      var displayInGridUI = (DisplayInGrid) ComboBoxDisplayInGrid.SelectedValue;
+      if (displayInGridCxInfo != displayInGridUI)
+      {
+        ComboBoxDisplayInGrid.ClearValue(Selector.SelectedValueProperty);
+        HowToDisplayInGrid = displayInGridUI;
+      }
     }
 
     private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -409,7 +453,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         if (!(IlinqMetaDataType.IsAssignableFrom(type) || IelementCreatorCoreType.IsAssignableFrom(type)))
         {
           var fullName = type.FullName.IndexOf("Linq") > -1 ? IlinqMetaDataType.FullName : IelementCreatorCoreType.FullName;
-          AppDomain.CurrentDomain.SetData("errorMessage", string.Format("An implementation of {0} was found <{1}>, but it was not for {2}", fullName,
+          AppDomain.CurrentDomain.SetData("errorMessage", String.Format("An implementation of {0} was found <{1}>, but it was not for {2}", fullName,
                                                                         type.FullName,
                                                                         Constants.LLBLGenNameVersion));
           AppDomain.CurrentDomain.SetData("customType", "");
@@ -420,7 +464,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         if (e.FileName.Contains(DomainIsolator.LlblgenProNameSpace) && !e.Message.Contains(Constants.LLBLVersion))
         {
           var assemblyName = new AssemblyName(e.FileName);
-          AppDomain.CurrentDomain.SetData("errorMessage", string.Format("An implementation of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
+          AppDomain.CurrentDomain.SetData("errorMessage", String.Format("An implementation of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
                                                                         IlinqMetaDataType.FullName, customType, Constants.LLBLGenNameVersion,
                                                                         assemblyName.Version));
           AppDomain.CurrentDomain.SetData("customType", "");
@@ -462,7 +506,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private void SetCustomTypeName(string customType)
     {
       CxInfo.CustomTypeInfo.CustomTypeName = customType;
-      if (string.IsNullOrEmpty(CxInfo.CustomTypeInfo.CustomTypeName))
+      if (String.IsNullOrEmpty(CxInfo.CustomTypeInfo.CustomTypeName))
         LLBLConnectionType = LLBLConnectionType.Unknown;
       else
         LLBLConnectionType = IsSelfServicing(CxInfo)
@@ -544,7 +588,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           domainIsolator.Domain.DoCallBack(CheckCustomAssemblyIsTheRightVersion);
           var errorMessage = (string) domainIsolator.Domain.GetData("errorMessage");
           customTypes[0] = (string) domainIsolator.Domain.GetData("customType");
-          if (!string.IsNullOrEmpty(errorMessage))
+          if (!String.IsNullOrEmpty(errorMessage))
           {
             MessageBox.Show(errorMessage);
           }
@@ -638,7 +682,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         var loaderException = ex.LoaderExceptions[0];
         if (loaderException.Message.Contains(DomainIsolator.LlblgenProNameSpace) && !loaderException.Message.Contains(Constants.LLBLVersion))
-          MessageBox.Show(string.Format("The assembly {0} is not for {1}", dataAccessAdapterAssembly.Location, Constants.LLBLGenNameVersion));
+          MessageBox.Show(String.Format("The assembly {0} is not for {1}", dataAccessAdapterAssembly.Location, Constants.LLBLGenNameVersion));
         else
           //Dialogs.PickFromList("An array of assemblies in this application domain.",
           //             AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
@@ -661,7 +705,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
           var assembly = implementer.GetInterface(IdataAccessAdapterType.FullName).Assembly;
           var assemblyName = new AssemblyName(assembly.FullName);
-          MessageBox.Show(string.Format("An implementation of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
+          MessageBox.Show(String.Format("An implementation of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
                                         IdataAccessAdapterType.FullName, implementer.FullName, Constants.LLBLGenNameVersion,
                                         assemblyName.Version));
           implementers = Enumerable.Empty<Type>();
@@ -709,7 +753,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           var errorMessage = (string) domainIsolator.Domain.GetData("errorMessage");
           var errorMessageTitle = (string) domainIsolator.Domain.GetData("errorMessageTitle");
           var customTypes = (string[]) domainIsolator.Domain.GetData("types");
-          if (!string.IsNullOrEmpty(errorMessage))
+          if (!String.IsNullOrEmpty(errorMessage))
           {
             MessageBox.Show(errorMessage, errorMessageTitle);
             return;
@@ -758,7 +802,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         var loaderException = ex.LoaderExceptions[0];
         if (loaderException.Message.Contains(DomainIsolator.LlblgenProNameSpace) && !loaderException.Message.Contains(Constants.LLBLVersion))
-          errorMessage = string.Format("The assembly {0} is not for {1}", assemPath, Constants.LLBLGenNameVersion);
+          errorMessage = String.Format("The assembly {0} is not for {1}", assemPath, Constants.LLBLGenNameVersion);
         else
           //Dialogs.PickFromList("An array of assemblies in this application domain.",
           //             AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.FullName).ToArray());
@@ -815,7 +859,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       try
       {
         var factoryTypeName = GetDriverDataValue(connectionInfo, ElementNameFactoryType);
-        if (!string.IsNullOrEmpty(factoryTypeName))
+        if (!String.IsNullOrEmpty(factoryTypeName))
         {
           var validMethods = GetMethodsFromFactoryAssembly(connectionInfo, factoryTypeName);
           var count = validMethods.Count();
@@ -831,7 +875,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
               var assembly = methodInfo.ReturnType.GetInterface(IdataAccessAdapterType.FullName).Assembly;
               var assemblyName = new AssemblyName(assembly.FullName);
               MessageBox.Show(
-                string.Format(
+                String.Format(
                   "A method with a return type of {0} was found <{1}>, but it was not for {2} instead it was for version {3}",
                   IdataAccessAdapterType.FullName, methodInfo.Name, Constants.LLBLGenNameVersion,
                   assemblyName.Version));
@@ -862,7 +906,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       if (factoryType == null)
       {
         factoryAdapterAssembly.GetTypes();
-        throw new ApplicationException(string.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName,
+        throw new ApplicationException(String.Format("Factory type: {0} could not be loaded from: {1}!", factoryTypeName,
                                                      factoryAssemblyPath));
       }
       var methodInfos = factoryType.GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
@@ -994,7 +1038,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private void GetConnectionString_Click(object sender, RoutedEventArgs e)
     {
-      if (string.IsNullOrEmpty(providerComboBox.Text))
+      if (String.IsNullOrEmpty(providerComboBox.Text))
         MessageBox.Show("Provider has not been set" + Environment.NewLine + "Choose from list.");
       else
         try

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -41,6 +42,7 @@ namespace AW.DebugVisualizers.Tests
     }
 
     private static DialogVisualizerServiceFake _dialogVisualizerServiceFake;
+    private static readonly EntityCollectionBase<AddressTypeEntity> _addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
 
     private static DialogVisualizerServiceFake DialogVisualizerServiceFake
     {
@@ -189,6 +191,7 @@ namespace AW.DebugVisualizers.Tests
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       TestShowTransported(addressTypeEntityCollection, 4);
+      TestShowTransported(new HashSet<AddressTypeEntity>(_addressTypeEntityCollection), 4);
       TestShowTransported(SerializableBaseClass.GenerateList(), 2);
       TestShowTransported(((IEntity) addressTypeEntityCollection.First()).CustomPropertiesOfType, 2);
       TestShowTransported(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), 2);
@@ -200,11 +203,10 @@ namespace AW.DebugVisualizers.Tests
     {
       TestShowTransported(MetaSingletons.MetaData.AddressType, 4);
       TestShowTransported(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > 2), 4);
-      var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-      TestShowTransported(addressTypeEntityCollection.DefaultView, 4);
-      TestShowTransported(new BindingSource(addressTypeEntityCollection, null), 4);
-      TestShowTransported(addressTypeEntityCollection.Where(at => at.AddressTypeID > 2), 4);
-      TestShowTransported(addressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID), 4);
+      TestShowTransported(_addressTypeEntityCollection.DefaultView, 4);
+      TestShowTransported(new BindingSource(_addressTypeEntityCollection, null), 4);
+      TestShowTransported(_addressTypeEntityCollection.Where(at => at.AddressTypeID > 2), 4);
+      TestShowTransported(_addressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID), 4);
     }
 
     [TestCategory("Winforms"), TestMethod]
@@ -235,6 +237,7 @@ namespace AW.DebugVisualizers.Tests
       var stringEnumerable = enumerable.Where(s => s.Length > 1);
       TestShow(stringEnumerable, 1);
       TestShowTransported(stringEnumerable, 1);
+      TestShowTransported(new SortedSet<string>(stringEnumerable), 1);
     }
 
     [TestCategory("Winforms"), TestMethod]
