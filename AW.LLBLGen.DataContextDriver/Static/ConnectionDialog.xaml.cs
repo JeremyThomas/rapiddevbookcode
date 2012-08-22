@@ -390,7 +390,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private void SyncDisplayInGrid()
     {
       var displayInGridCxInfo = HowToDisplayInGrid.GetValueOrDefault();
-      var displayInGridUI = (DisplayInGrid) ComboBoxDisplayInGrid.SelectedValue;
+      var displayInGridUI = ComboBoxDisplayInGrid.SelectedValue as DisplayInGrid?;
       if (displayInGridCxInfo != displayInGridUI)
       {
         ComboBoxDisplayInGrid.ClearValue(Selector.SelectedValueProperty);
