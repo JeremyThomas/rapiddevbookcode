@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Microsoft.Web.Administration.Application>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>@ViewBag.Message</h2>
+<table>
+    <tr>
+        <th>
+            ApplicationPoolName
+        </th>
+        <th>
+            EnabledProtocols
+        </th>
+        <th>
+            Path
+        </th>
+        <th>
+            ElementTagName
+        </th>
+        <th>
+            IsLocallyStored
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApplicationPoolName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnabledProtocols)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Path)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ElementTagName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsLocallyStored)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        </td>
+    </tr>
+}
+
+</table>
