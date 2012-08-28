@@ -6,7 +6,7 @@
     <Property Name="AdditionalTaskPerformerFolder" Value="" />
     <Property Name="AdditionalTasksFolder" Value="" />
     <Property Name="AdditionalTemplatesFolder" Value="" />
-    <Property Name="AdditionalTypeConverterFolder" Value="C:\Users\jeremy.thomas\Documents\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\LLBL Pro V3.1\AW.Helper.LLBL\bin\Debug" />
+    <Property Name="AdditionalTypeConverterFolder" Value="..\..\AW.Helper.LLBL\bin\Debug" />
     <Property Name="AddNewElementsAfterRefresh" Value="0" />
     <Property Name="AddNewFieldsAfterRefresh" Value="0" />
     <Property Name="AddNewViewsAsEntitiesAfterRefresh" Value="0" />

@@ -41,7 +41,7 @@ namespace Dynamic_Data
 			}
 			if (builder.Length > 0)
 			{
-				return FormatFieldValue(string.Format("View {0} ({1})", ForeignKeyColumn.Name, builder));
+        return FormatFieldValue(string.Format("View {0} ({1})", ForeignKeyColumn.DisplayName, builder));
 			}
 			else
 			{

@@ -278,6 +278,9 @@
     <None Include="..\..\Ancillary\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
     </None>
+    <None Include="Enums.typeimports">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Northwind.llblgenproj" />
   </ItemGroup>
   <ItemGroup>

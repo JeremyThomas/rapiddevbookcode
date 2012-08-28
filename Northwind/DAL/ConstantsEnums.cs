@@ -303,6 +303,19 @@ namespace Northwind.DAL
 	#region Custom ConstantsEnums Code
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
+
+  public enum Category : byte
+  {
+    Beverages = 1,
+    Condiments,
+    Confections,
+    Dairy,
+    Grains,
+    Meat,
+    Produce,
+    Seafood
+  }
+
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	#endregion
 

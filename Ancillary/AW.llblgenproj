@@ -6,7 +6,7 @@
       <Abbreviation Name="id" Value="ID" />
       <Abbreviation Name="Qty" Value="Quantity" />
     </Abbreviations>
-    <Property Name="AdditionalTaskPerformerFolder" Value="" />
+    <Property Name="AdditionalTaskPerformerFolder" Value="..\AW.Data\bin\Debug" />
     <Property Name="AdditionalTasksFolder" Value="" />
     <Property Name="AdditionalTemplatesFolder" Value="" />
     <Property Name="AdditionalTypeConverterFolder" Value="" />
@@ -99,11 +99,11 @@
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
     <TargetElement Type="256">
-      <Defaults>
+      <OutputSettingValues>
         <Attributes>
           <Attribute Value="Browsable($true)" />
         </Attributes>
-      </Defaults>
+      </OutputSettingValues>
     </TargetElement>
   </CodeGenerationMetaDataDefaults>
   <EntityModel>

@@ -1,0 +1,4 @@
+﻿<typeImports>
+	<typeImport typeName="AW.Data.ContactType" assemblyFile=".\AW.Data.dll"/>
+  <typeImport typeName="AW.Data.AddressType" assemblyFile=".\AW.Data.dll"/>
+</typeImports>

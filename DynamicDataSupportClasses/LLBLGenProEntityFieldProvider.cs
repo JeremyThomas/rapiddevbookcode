@@ -38,68 +38,70 @@
 // Contributers to the code:
 //		- Frans Bouma [FB]
 //////////////////////////////////////////////////////////////////////
+
 using System;
 using System.Web.DynamicData.ModelProviders;
 
 namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
 {
-	/// <summary>
-	/// Class which provides meta model information about a column (field) in DynamicData
-	/// </summary>
-	public class LLBLGenProEntityFieldProvider : ColumnProvider
-	{
-		#region Class Member Declarations
-		private LLBLGenProEntityRelationProvider _relationProvider;
-		#endregion
+  /// <summary>
+  ///   Class which provides meta model information about a column (field) in DynamicData
+  /// </summary>
+  public class LLBLGenProEntityFieldProvider : ColumnProvider
+  {
+    #region Class Member Declarations
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="LLBLGenProEntityFieldProvider"/> class.
-		/// </summary>
-		/// <param name="container">The container.</param>
-		/// <param name="fieldType">Type of the field.</param>
-		/// <param name="isCustomProperty">if set to <c>true</c> [is custom property].</param>
-		/// <param name="isForeignKey">if set to <c>true</c> [is foreign key].</param>
-		/// <param name="isPrimaryKey">if set to <c>true</c> [is primary key].</param>
-		/// <param name="isReadOnly">if set to <c>true</c> [is read only].</param>
-		/// <param name="size">The size.</param>
-		/// <param name="name">The name.</param>
-		/// <param name="isNullable">if set to <c>true</c> [is nullable].</param>
-		/// <param name="relationProvider">The relation provider.</param>
-		/// 
-		public LLBLGenProEntityFieldProvider(LLBLGenProEntityProvider container, Type fieldType, bool isCustomProperty, bool isForeignKey, 
-					bool isPrimaryKey, bool isReadOnly, int size, string name, bool isNullable, LLBLGenProEntityRelationProvider relationProvider)
-			: base(container)
-		{
-			this.ColumnType = fieldType;
-			this.IsCustomProperty = isCustomProperty;
-			this.IsForeignKeyComponent = isForeignKey;
-			this.IsGenerated = isReadOnly;
-			this.IsPrimaryKey = isPrimaryKey;
-			this.MaxLength = size;
-			this.Name = name;
-			this.Nullable = isNullable;
-			this.IsSortable = true;
-			_relationProvider = relationProvider;
-		}
+    private readonly LLBLGenProEntityRelationProvider _relationProvider;
+
+    #endregion
+
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="LLBLGenProEntityFieldProvider" /> class.
+    /// </summary>
+    /// <param name="container"> The container. </param>
+    /// <param name="fieldType"> Type of the field. </param>
+    /// <param name="isCustomProperty"> if set to <c>true</c> [is custom property]. </param>
+    /// <param name="isForeignKey"> if set to <c>true</c> [is foreign key]. </param>
+    /// <param name="isPrimaryKey"> if set to <c>true</c> [is primary key]. </param>
+    /// <param name="isReadOnly"> if set to <c>true</c> [is read only]. </param>
+    /// <param name="size"> The size. </param>
+    /// <param name="name"> The name. </param>
+    /// <param name="isNullable"> if set to <c>true</c> [is nullable]. </param>
+    /// <param name="relationProvider"> The relation provider. </param>
+    public LLBLGenProEntityFieldProvider(LLBLGenProEntityProvider container, Type fieldType, bool isCustomProperty, bool isForeignKey,
+                                         bool isPrimaryKey, bool isReadOnly, int size, string name, bool isNullable, LLBLGenProEntityRelationProvider relationProvider)
+      : base(container)
+    {
+      ColumnType = fieldType;
+      IsCustomProperty = isCustomProperty;
+      IsForeignKeyComponent = isForeignKey;
+      IsGenerated = isReadOnly;
+      IsPrimaryKey = isPrimaryKey;
+      MaxLength = size;
+      Name = name;
+      Nullable = isNullable;
+      IsSortable = true;
+      _relationProvider = relationProvider;
+    }
 
 
-		/// <summary>
-		/// Gets the association.
-		/// </summary>
-		public override AssociationProvider Association
-		{
-			get 
-			{
-				if(_relationProvider == null)
-				{
-					return null;
-				}
-				else
-				{
-					_relationProvider.BuildMetaData();
-					return _relationProvider;
-				}
-			}
-		}
-	}
+    /// <summary>
+    ///   Gets the association.
+    /// </summary>
+    public override AssociationProvider Association
+    {
+      get
+      {
+        if (_relationProvider == null)
+        {
+          return null;
+        }
+        else
+        {
+          _relationProvider.BuildMetaData();
+          return _relationProvider;
+        }
+      }
+    }
+  }
 }
