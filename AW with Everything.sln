@@ -185,9 +185,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{F605A711-54B7-4F96-A4A1-DE77C595C167}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListIISApps", "WebSites\ListIISApps\ListIISApps.csproj", "{53C14AAB-2D63-4063-92E3-CC43FA511696}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 27
+		SccNumberOfProjects = 28
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -292,6 +294,10 @@ Global
 		SccProjectName26 = AW.WebDbEditor
 		SccLocalPath26 = AW.WebDbEditor
 		SccProjectEnlistmentChoice26 = 2
+		SccProjectUniqueName27 = WebSites\\ListIISApps\\ListIISApps.csproj
+		SccProjectTopLevelParentUniqueName27 = AW\u0020with\u0020Everything.sln
+		SccProjectName27 = WebSites/ListIISApps
+		SccLocalPath27 = WebSites\\ListIISApps
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
@@ -617,6 +623,18 @@ Global
 		{64696470-5D05-4E00-95C4-C320F268E526}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64696470-5D05-4E00-95C4-C320F268E526}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64696470-5D05-4E00-95C4-C320F268E526}.Release|x86.ActiveCfg = Release|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release - Test|Any CPU.ActiveCfg = Release|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release - Test|Any CPU.Build.0 = Release|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release - Test|x86.ActiveCfg = Release|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -646,6 +664,7 @@ Global
 		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 		{64696470-5D05-4E00-95C4-C320F268E526} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
+		{53C14AAB-2D63-4063-92E3-CC43FA511696} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 
