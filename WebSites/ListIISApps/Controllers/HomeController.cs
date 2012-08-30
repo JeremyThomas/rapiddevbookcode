@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using ListIISApps.Models;
-using Microsoft.Web.Administration;
 
 namespace ListIISApps.Controllers
 {
@@ -13,8 +10,13 @@ namespace ListIISApps.Controllers
     public ActionResult Index()
     {
       ViewBag.Message = "List Of Applications on IIS";
-      var x = ServerManagerVM.GetServerManagerVms();
-      return View(x);
+      return View(ServerManagerVM.ServerManagerVms);
+    }
+
+    public ActionResult Details(string path)
+    {
+      var serverManagerVm = ServerManagerVM.ServerManagerVms.FirstOrDefault(s => s.Application.Path == path);
+      return View(serverManagerVm);
     }
   }
 }

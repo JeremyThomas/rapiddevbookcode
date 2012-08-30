@@ -36,10 +36,7 @@
       <td>
         @Html.DisplayFor(modelItem => item.Application.ApplicationPoolName)
       </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.Application.EnabledProtocols)
-      </td>
-      <td>
+ <td>
         @Html.DisplayFor(modelItem => item.PhysicalPath)
       </td>
       <td>
@@ -54,7 +51,7 @@
 
       </td>
       <td>
-        @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
+        @Html.ActionLink("Details", "Details", new { path=item.Application.Path })
       </td>
     </tr>
   }
