@@ -1,0 +1,47 @@
+﻿@model ListIISApps.Models.ServerManagerVM
+
+@{
+  ViewBag.Title = "title";
+}
+
+<h2>title</h2>
+<fieldset>
+    <legend>ServerManagerVM</legend>
+
+    <div class="display-label">PhysicalPath</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.PhysicalPath)
+  </div>
+  
+      <div class="display-label">Path</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.Application.Path)
+  </div>
+  
+      <div class="display-label">ApplicationPoolName</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.Application.ApplicationPoolName)
+  </div>
+  
+      <div class="display-label">EnabledProtocols</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.Application.EnabledProtocols)
+  </div>
+  
+      <div class="display-label">BuildNumber</div>
+  <div class="display-field">
+         @{
+          object value;
+
+          if (ViewData.Model.AppSettings != null && ViewData.Model.AppSettings.TryGetValue("BuildNumber", out value))
+          {
+            @value
+          }
+        }
+  </div>
+
+
+</fieldset>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

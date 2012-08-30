@@ -8,7 +8,8 @@ namespace ListIISApps.Models
   public class ServerManagerVM
   {
     private readonly Application _application;
-    private Configuration _webConfiguration;
+    private readonly Configuration _webConfiguration;
+    private static IEnumerable<ServerManagerVM> _serverManagerVms;
 
     public Application Application
     {
@@ -38,6 +39,13 @@ namespace ListIISApps.Models
       }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+    /// </summary>
+    public ServerManagerVM()
+    {
+    }
+
     public ServerManagerVM(Application application)
     {
       _application = application;
@@ -52,14 +60,18 @@ namespace ListIISApps.Models
       }
     }
 
+    public static IEnumerable<ServerManagerVM> ServerManagerVms
+    {
+      get { return _serverManagerVms ?? (_serverManagerVms = GetServerManagerVms()); }
+    }
+
     public static IEnumerable<ServerManagerVM> GetServerManagerVms()
     {
       var mgr = new ServerManager();
-      var x = from site in mgr.Sites
-              from application in site.Applications
-              let config = application.GetWebConfiguration()
-              select new ServerManagerVM(application);
-      return x;
+      return from site in mgr.Sites
+                          from application in site.Applications
+                          let config = application.GetWebConfiguration()
+                          select new ServerManagerVM(application);
     }
   }
 }
