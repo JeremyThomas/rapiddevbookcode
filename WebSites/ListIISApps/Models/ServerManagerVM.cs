@@ -1,102 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using Microsoft.Web.Administration;
-using Microsoft.Web.Administration.Interop;
 
 namespace ListIISApps.Models
 {
-  [DebuggerDisplay("Path = {Path}")]
-  public sealed class Application : ConfigurationElement
+  public class ServerManagerVM
   {
-    private VirtualDirectoryDefaults _virtualDirectoryDefaults;
-    private VirtualDirectoryCollection _virtualDirectories;
-    private Site _site;
-    private ServerManager _owner;
-   
+    private readonly Application _application;
+    private Configuration _webConfiguration;
 
-    public string ApplicationPoolName
+    public Application Application
     {
-      get
-      {
-        return (string)this["applicationPool"];
-      }
-      set
-      {
-        this["applicationPool"] = (object)value;
-      }
+      get { return _application; }
     }
 
-    public string EnabledProtocols
+    public string PhysicalPath
     {
-      get
-      {
-        return (string)this["enabledProtocols"];
-      }
-      set
-      {
-        this["enabledProtocols"] = (object)value;
-      }
+      get { return Application.VirtualDirectories.First().PhysicalPath; }
     }
 
-    public string Path
+    public Dictionary<string, object> AppSettings
     {
       get
       {
-
-        return null;
-      }
-      set
-      {
- 
-      }
-    }
-
-
-    internal Site Site
-    {
-      get
-      {
-        return this._site;
-      }
-    }
-
-    public VirtualDirectoryCollection VirtualDirectories
-    {
-      get
-      {
-        if (this._virtualDirectories == null)
+        if (_webConfiguration == null) return null;
+        try
         {
-          this._virtualDirectories = (VirtualDirectoryCollection)this.GetCollection(typeof(VirtualDirectoryCollection));
+          return _webConfiguration.GetSection("appSettings").GetCollection()
+            .ToDictionary(configurationElement => Convert.ToString(configurationElement.Attributes.First().Value), 
+            configurationElement => configurationElement.Attributes.Last().Value);
         }
-        return this._virtualDirectories;
+        catch (Exception)
+        {
+          return null;
+        }
       }
     }
 
-    public VirtualDirectoryDefaults VirtualDirectoryDefaults
+    public ServerManagerVM(Application application)
     {
-      get
+      _application = application;
+      _webConfiguration = application.GetWebConfiguration();
+      try
       {
-
-        return this._virtualDirectoryDefaults;
+        _webConfiguration.GetEffectiveSectionGroup();
+      }
+      catch (Exception)
+      {
+        _webConfiguration = null;
       }
     }
 
-    internal Application(ServerManager owner, Site site)
+    public static IEnumerable<ServerManagerVM> GetServerManagerVms()
     {
-      this._site = site;
-      this._owner = owner;
+      var mgr = new ServerManager();
+      var x = from site in mgr.Sites
+              from application in site.Applications
+              let config = application.GetWebConfiguration()
+              select new ServerManagerVM(application);
+      return x;
     }
-
-    public Configuration GetWebConfiguration()
-    {
-      return this._owner.GetWebConfiguration(this.Site.Name, this.Path);
-    }
-
-
   }
-
 }

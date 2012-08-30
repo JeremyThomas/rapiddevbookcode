@@ -1,51 +1,62 @@
-﻿@model IEnumerable<Microsoft.Web.Administration.Application>
+﻿@model IEnumerable<ListIISApps.Models.ServerManagerVM>
 
 @{
-    ViewBag.Title = "Home Page";
+  ViewBag.Title = "Applications on IIS";
 }
 
 <h2>@ViewBag.Message</h2>
 <table>
-    <tr>
-        <th>
-            ApplicationPoolName
-        </th>
-        <th>
-            EnabledProtocols
-        </th>
-        <th>
-            Path
-        </th>
-        <th>
-            ElementTagName
-        </th>
-        <th>
-            IsLocallyStored
-        </th>
-        <th></th>
-    </tr>
+  <tr>
 
-@foreach (var item in Model) {
+    <th>
+      Path
+    </th>        
+    <th>
+      ApplicationPoolName
+    </th>
+    <th>
+      EnabledProtocols
+    </th>
+    <th>
+      PhysicalPath
+    </th>
+    <th>
+      AppSettings
+    </th>
+    <th></th>
+  </tr>
+
+  @foreach (var item in Model)
+  {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationPoolName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EnabledProtocols)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Path)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ElementTagName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsLocallyStored)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-        </td>
+
+      <td>
+        <a href="@Html.DisplayFor(modelItem => item.Application.Path)" target="_blank">@Html.DisplayFor(modelItem => item.Application.Path)</a>
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Application.ApplicationPoolName)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.Application.EnabledProtocols)
+      </td>
+      <td>
+        @Html.DisplayFor(modelItem => item.PhysicalPath)
+      </td>
+      <td>
+        @{
+          object value;
+
+          if (item.AppSettings !=null && item.AppSettings.TryGetValue("BuildNumber", out value))
+          {
+            @value
+          }
+        }
+
+      </td>
+      <td>
+        @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
+      </td>
     </tr>
-}
+  }
 
 </table>
