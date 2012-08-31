@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using Microsoft.Web.Administration;
+using Configuration = Microsoft.Web.Administration.Configuration;
 
 namespace ListIISApps.Models
 {
@@ -10,6 +12,8 @@ namespace ListIISApps.Models
     private readonly Application _application;
     private readonly Configuration _webConfiguration;
     private static IEnumerable<ServerManagerVM> _serverManagerVms;
+    private Dictionary<string, object> _appSettingsDictionary;
+    private IEnumerable<ConnectionStringSettings> _connectionStrings;
 
     public Application Application
     {
@@ -28,9 +32,7 @@ namespace ListIISApps.Models
         if (_webConfiguration == null) return null;
         try
         {
-          return _webConfiguration.GetSection("appSettings").GetCollection()
-            .ToDictionary(configurationElement => Convert.ToString(configurationElement.Attributes.First().Value), 
-            configurationElement => configurationElement.Attributes.Last().Value);
+          return _appSettingsDictionary ?? (_appSettingsDictionary = GetAppSettings());
         }
         catch (Exception)
         {
@@ -39,8 +41,39 @@ namespace ListIISApps.Models
       }
     }
 
+    private Dictionary<string, object> GetAppSettings()
+    {
+      return _webConfiguration.GetSection("appSettings").GetCollection()
+        .ToDictionary(configurationElement => Convert.ToString(configurationElement.Attributes["key"].Value),
+                      configurationElement => configurationElement.Attributes["value"].Value);
+    }
+
+    public IEnumerable<ConnectionStringSettings> ConnectionStrings
+    {
+      get
+      {
+        if (_webConfiguration == null) return null;
+        try
+        {
+          return _connectionStrings ?? (_connectionStrings = GetConnectionStrings());
+        }
+        catch (Exception)
+        {
+          return null;
+        }
+      }
+    }
+
+    public IEnumerable<ConnectionStringSettings> GetConnectionStrings()
+    {
+      return _webConfiguration.GetSection("connectionStrings").GetCollection()
+        .Select(configurationElement => new ConnectionStringSettings(Convert.ToString(configurationElement.Attributes["Name"].Value),
+                                                                     Convert.ToString(configurationElement.Attributes["connectionString"].Value), 
+                                                                     Convert.ToString(configurationElement.Attributes["providerName"].Value)));
+    }
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+    ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
     /// </summary>
     public ServerManagerVM()
     {
@@ -69,9 +102,9 @@ namespace ListIISApps.Models
     {
       var mgr = new ServerManager();
       return from site in mgr.Sites
-                          from application in site.Applications
-                          let config = application.GetWebConfiguration()
-                          select new ServerManagerVM(application);
+             from application in site.Applications
+             let config = application.GetWebConfiguration()
+             select new ServerManagerVM(application);
     }
   }
 }
