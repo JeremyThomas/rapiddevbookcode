@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
+using System.Web.Configuration;
 using Microsoft.Web.Administration;
 using Configuration = Microsoft.Web.Administration.Configuration;
 
@@ -10,10 +12,11 @@ namespace ListIISApps.Models
   public class ServerManagerVM
   {
     private readonly Application _application;
-    private readonly Configuration _webConfiguration;
+    public Configuration WebConfiguration { get; private set; }
     private static IEnumerable<ServerManagerVM> _serverManagerVms;
-    private Dictionary<string, object> _appSettingsDictionary;
+    private NameValueCollection _appSettingsDictionary;
     private IEnumerable<ConnectionStringSettings> _connectionStrings;
+    private ConfigurationAttribute _authenticationMode;
 
     public Application Application
     {
@@ -25,14 +28,14 @@ namespace ListIISApps.Models
       get { return Application.VirtualDirectories.First().PhysicalPath; }
     }
 
-    public Dictionary<string, object> AppSettings
+    public NameValueCollection AppSettings
     {
       get
       {
-        if (_webConfiguration == null) return null;
+        if (WebConfiguration == null) return null;
         try
         {
-          return _appSettingsDictionary ?? (_appSettingsDictionary = GetAppSettings());
+          return _appSettingsDictionary ?? (_appSettingsDictionary = GetAppSettings(WebConfiguration));
         }
         catch (Exception)
         {
@@ -41,21 +44,22 @@ namespace ListIISApps.Models
       }
     }
 
-    private Dictionary<string, object> GetAppSettings()
+    private static NameValueCollection GetAppSettings(Configuration webConfiguration)
     {
-      return _webConfiguration.GetSection("appSettings").GetCollection()
-        .ToDictionary(configurationElement => Convert.ToString(configurationElement.Attributes["key"].Value),
-                      configurationElement => configurationElement.Attributes["value"].Value);
+      var dictionary = new NameValueCollection();
+      foreach (var element in webConfiguration.GetSection("appSettings").GetCollection())
+        dictionary.Add(Convert.ToString(element.Attributes["key"].Value), Convert.ToString(element.Attributes["value"].Value));
+      return dictionary;
     }
 
     public IEnumerable<ConnectionStringSettings> ConnectionStrings
     {
       get
       {
-        if (_webConfiguration == null) return null;
+        if (WebConfiguration == null) return null;
         try
         {
-          return _connectionStrings ?? (_connectionStrings = GetConnectionStrings());
+          return _connectionStrings ?? (_connectionStrings = GetConnectionStrings(WebConfiguration));
         }
         catch (Exception)
         {
@@ -64,12 +68,33 @@ namespace ListIISApps.Models
       }
     }
 
-    public IEnumerable<ConnectionStringSettings> GetConnectionStrings()
+    public static IEnumerable<ConnectionStringSettings> GetConnectionStrings(Configuration webConfiguration)
     {
-      return _webConfiguration.GetSection("connectionStrings").GetCollection()
+      return webConfiguration.GetSection("connectionStrings").GetCollection()
         .Select(configurationElement => new ConnectionStringSettings(Convert.ToString(configurationElement.Attributes["Name"].Value),
-                                                                     Convert.ToString(configurationElement.Attributes["connectionString"].Value), 
+                                                                     Convert.ToString(configurationElement.Attributes["connectionString"].Value),
                                                                      Convert.ToString(configurationElement.Attributes["providerName"].Value)));
+    }
+
+    public ConfigurationAttribute AuthenticationMode
+    {
+      get
+      {
+        if (WebConfiguration == null) return null;
+        try
+        {
+          return _authenticationMode ?? (_authenticationMode = GetAuthenticationMode(WebConfiguration));
+        }
+        catch (Exception)
+        {
+          return null;
+        }
+      }
+    }
+
+    public static ConfigurationAttribute GetAuthenticationMode(Configuration webConfiguration)
+    {
+      return webConfiguration.GetSection("system.web/authentication").GetAttribute("mode");
     }
 
     /// <summary>
@@ -82,14 +107,14 @@ namespace ListIISApps.Models
     public ServerManagerVM(Application application)
     {
       _application = application;
-      _webConfiguration = application.GetWebConfiguration();
+      WebConfiguration = application.GetWebConfiguration();
       try
       {
-        _webConfiguration.GetEffectiveSectionGroup();
+        WebConfiguration.GetEffectiveSectionGroup();
       }
       catch (Exception)
       {
-        _webConfiguration = null;
+        WebConfiguration = null;
       }
     }
 
