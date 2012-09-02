@@ -15,7 +15,15 @@ namespace ListIISApps.Controllers
 
     public ActionResult Details(string path)
     {
-      var serverManagerVm = ServerManagerVM.ServerManagerVms.FirstOrDefault(s => s.Application.Path == path);
+      ServerManagerVM serverManagerVm = null;
+      foreach (ServerManagerVM s in ServerManagerVM.ServerManagerVms)
+      {
+        if (s.Application.Path == path)
+        {
+          serverManagerVm = s;
+          break;
+        }
+      }
       return View(serverManagerVm);
     }
   }

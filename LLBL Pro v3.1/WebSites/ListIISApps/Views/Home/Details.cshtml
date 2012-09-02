@@ -1,77 +1,82 @@
 ﻿@model ListIISApps.Models.ServerManagerVM
 @{
-  ViewBag.Title = "Appication details";
+	ViewBag.Title = "Application details";
 }
 
-<h2>title</h2>
+<h2>@ViewBag.Title</h2>
 <fieldset>
-  <legend>ServerManagerVM</legend>
+	<legend>ServerManagerVM</legend>
 
-  <div class="display-label">PhysicalPath</div>
-  <div class="display-field">
-    @Html.DisplayFor(model => model.PhysicalPath)
-  </div>
+	<div class="display-label">PhysicalPath</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.PhysicalPath)
+	</div>
 
-  <div class="display-label">Path</div>
-  <div class="display-field">
-    @Html.DisplayFor(model => model.Application.Path)
-  </div>
+	<div class="display-label">Path</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Application.Path)
+	</div>
 
-  <div class="display-label">ApplicationPoolName</div>
-  <div class="display-field">
-    @Html.DisplayFor(model => model.Application.ApplicationPoolName)
-  </div>
+	<div class="display-label">ApplicationPoolName</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Application.ApplicationPoolName)
+	</div>
 
-  <div class="display-label">EnabledProtocols</div>
-  <div class="display-field">
-    @Html.DisplayFor(model => model.Application.EnabledProtocols)
-  </div>
+	<div class="display-label">EnabledProtocols</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.Application.EnabledProtocols)
+	</div>
+	
+		<div class="display-label">AuthenticationMode</div>
+	<div class="display-field">
+		@Html.DisplayFor(model => model.AuthenticationMode)
+	</div>
 </fieldset>
 
 <table style="width: 100%;">
-  <tr>
-    <th>Name</th>
-    <th>Value</th>
-  </tr>
-  @foreach (var setting in ViewData.Model.AppSettings.AllKeys)
-  {
-    <tr>
-      <td>@setting</td>
-      <td>@ViewData.Model.AppSettings[setting]</td>
-    </tr>
-  }
+	<tr>
+		<th>Name</th>
+		<th>Value</th>
+	</tr>
+	@foreach (var setting in ViewData.Model.AppSettings.AllKeys)
+	{
+		<tr>
+			<td>@setting</td>
+			<td>@ViewData.Model.AppSettings[setting]</td>
+		</tr>
+	}
 </table>
 
 <table style="width: 100%;">
-  <tr>
-    <th>Name</th>
-    <th>ConnectionString</th>
-    <th>ProviderName</th>
-  </tr>
-  
-  @foreach (var cs in ViewData.Model.ConnectionStrings)
-  {
-    <tr>
-      <td>@cs.Name</td>
-      <td>@cs.ConnectionString</td>
-      <td>@cs.ProviderName</td>
-    </tr>
-  }
+	<tr>
+		<th>Name</th>
+		<th>ConnectionString</th>
+		<th>ProviderName</th>
+	</tr>
+	
+	@foreach (var cs in ViewData.Model.ConnectionStrings)
+	{
+		<tr>
+			<td>@cs.Name</td>
+			<td>@cs.ConnectionString</td>
+			<td>@cs.ProviderName</td>
+		</tr>
+	}
 </table>
 
 <table style="width: 100%;">
-  <tr>
-    <th>Section</th>
-  </tr>
-  
-  @foreach (var cs in ViewData.Model.WebConfiguration.GetMetadata("availableSections").ToString().Split(','))
-  {
-    <tr>
-      <td>@cs</td>
-    </tr>
-  }
+	<tr>
+		<th>Section</th>
+	</tr>
+	
+	@foreach (var cs in ViewData.Model.Sections)
+	{
+		<tr>
+			<td>@cs.Name</td>
+		</tr>
+	}
 </table>
 
 <p>
-  @Html.ActionLink("Back to List", "Index")
+	@Html.ActionLink("Back to List", "Index")
 </p>
