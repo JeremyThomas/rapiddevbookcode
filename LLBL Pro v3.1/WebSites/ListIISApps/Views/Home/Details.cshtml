@@ -26,23 +26,20 @@
   <div class="display-field">
     @Html.DisplayFor(model => model.Application.EnabledProtocols)
   </div>
-
-
 </fieldset>
+
 <table style="width: 100%;">
   <tr>
     <th>Name</th>
     <th>Value</th>
   </tr>
-  @foreach (var setting in ViewData.Model.AppSettings)
+  @foreach (var setting in ViewData.Model.AppSettings.AllKeys)
   {
-
     <tr>
-      <td>@setting.Key</td>
-      <td>@setting.Value</td>
+      <td>@setting</td>
+      <td>@ViewData.Model.AppSettings[setting]</td>
     </tr>
   }
-
 </table>
 
 <table style="width: 100%;">
@@ -60,8 +57,21 @@
       <td>@cs.ProviderName</td>
     </tr>
   }
-
 </table>
+
+<table style="width: 100%;">
+  <tr>
+    <th>Section</th>
+  </tr>
+  
+  @foreach (var cs in ViewData.Model.WebConfiguration.GetMetadata("availableSections").ToString().Split(','))
+  {
+    <tr>
+      <td>@cs</td>
+    </tr>
+  }
+</table>
+
 <p>
   @Html.ActionLink("Back to List", "Index")
 </p>

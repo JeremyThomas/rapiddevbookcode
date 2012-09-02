@@ -1,5 +1,5 @@
-﻿@model IEnumerable<ListIISApps.Models.ServerManagerVM>
-
+﻿@using AW.Helper
+@model IEnumerable<ListIISApps.Models.ServerManagerVM>
 @{
   ViewBag.Title = "Applications on IIS";
 }
@@ -8,20 +8,13 @@
 <table>
   <tr>
 
-    <th>
-      Path
-    </th>        
-    <th>
-      ApplicationPoolName
+    <th>Path
     </th>
-    <th>
-      EnabledProtocols
+    <th>PhysicalPath
     </th>
-    <th>
-      PhysicalPath
+    <th>AppSetting
     </th>
-    <th>
-      AppSettings
+    <th>AuthenticationMode
     </th>
     <th></th>
   </tr>
@@ -34,24 +27,21 @@
         <a href="@Html.DisplayFor(modelItem => item.Application.Path)" target="_blank">@Html.DisplayFor(modelItem => item.Application.Path)</a>
       </td>
       <td>
-        @Html.DisplayFor(modelItem => item.Application.ApplicationPoolName)
-      </td>
- <td>
         @Html.DisplayFor(modelItem => item.PhysicalPath)
       </td>
       <td>
         @{
-          object value;
-
-          if (item.AppSettings !=null && item.AppSettings.TryGetValue("BuildNumber", out value))
+          if (!GeneralHelper.IsNullOrEmpty(item.AppSettings))
           {
-            @value
+            @item.AppSettings[0]
           }
         }
-
+      </td>
+          <td>
+        @Html.DisplayFor(modelItem => item.AuthenticationMode.Value)
       </td>
       <td>
-        @Html.ActionLink("Details", "Details", new { path=item.Application.Path })
+        @Html.ActionLink("Details", "Details", new {path = item.Application.Path})
       </td>
     </tr>
   }
