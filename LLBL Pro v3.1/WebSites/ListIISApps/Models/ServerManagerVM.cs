@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web.Configuration;
 using AW.Helper;
 using Microsoft.Web.Administration;
 using Configuration = Microsoft.Web.Administration.Configuration;
+using ConfigurationSection = System.Configuration.ConfigurationSection;
+using WebConfigurationManager = System.Web.Configuration.WebConfigurationManager;
 
 namespace ListIISApps.Models
 {
@@ -18,7 +21,9 @@ namespace ListIISApps.Models
     private NameValueCollection _appSettingsDictionary;
     private IEnumerable<ConnectionStringSettings> _connectionStrings;
     private AuthenticationMode _authenticationMode;
-    private IEnumerable<SectionGroup> _sectionGroups;
+    private IEnumerable<SectionGroup> _sectionGroupsDefinitions;
+    private System.Configuration.Configuration _webConfig;
+    private IEnumerable<ConfigurationSectionGroup> _sectionGroups;
 
     public Application Application
     {
@@ -28,6 +33,27 @@ namespace ListIISApps.Models
     public string PhysicalPath
     {
       get { return Application.VirtualDirectories.First().PhysicalPath; }
+    }
+
+    public System.Configuration.Configuration WebConfig
+    {
+      get
+      {
+        try
+        {
+          if (_webConfig != null) return _webConfig;
+          var configFile = new FileInfo(PhysicalPath);
+          var vdm = new VirtualDirectoryMapping(PhysicalPath, true, "web.config");
+          var wcfm = new WebConfigurationFileMap();
+          wcfm.VirtualDirectories.Add("/", vdm);
+          return WebConfigurationManager.OpenMappedWebConfiguration(wcfm, "/");
+          //return _webConfig ?? (_webConfig = WebConfigurationManager.OpenWebConfiguration(PhysicalPath));
+        }
+        catch (Exception)
+        {
+          return null;
+        }
+      }
     }
 
     public NameValueCollection AppSettings
@@ -78,14 +104,14 @@ namespace ListIISApps.Models
                                                                      Convert.ToString(configurationElement.Attributes["providerName"].Value)));
     }
 
-    public System.Web.Configuration.AuthenticationMode AuthenticationMode
+    public AuthenticationMode AuthenticationMode
     {
       get
       {
         if (WebConfiguration == null) return AuthenticationMode.None;
         try
         {
-          return _authenticationMode != AuthenticationMode.None ? _authenticationMode : (_authenticationMode = (AuthenticationMode)(int)GetAuthenticationMode(WebConfiguration).Value);
+          return _authenticationMode != AuthenticationMode.None ? _authenticationMode : (_authenticationMode = (AuthenticationMode) (int) GetAuthenticationMode(WebConfiguration).Value);
         }
         catch (Exception)
         {
@@ -99,14 +125,14 @@ namespace ListIISApps.Models
       return webConfiguration.GetSection("system.web/authentication").GetAttribute("mode");
     }
 
-    public IEnumerable<SectionGroup> SectionGroups
+    public IEnumerable<SectionGroup> SectionGroupsDefinitions
     {
       get
       {
         if (WebConfiguration == null) return null;
         try
         {
-          return _sectionGroups ?? (_sectionGroups = WebConfiguration.RootSectionGroup.DescendantsAndSelf(sg => sg.SectionGroups).ToList());
+          return _sectionGroupsDefinitions ?? (_sectionGroupsDefinitions = WebConfiguration.RootSectionGroup.DescendantsAndSelf(sg => sg.SectionGroups).ToList());
         }
         catch (Exception)
         {
@@ -115,14 +141,14 @@ namespace ListIISApps.Models
       }
     }
 
-    public IEnumerable<SectionDefinition> Sections
+    public IEnumerable<SectionDefinition> SectionsDefinitions
     {
       get
       {
         if (WebConfiguration == null) return null;
         try
         {
-          return from sg in SectionGroups
+          return from sg in SectionGroupsDefinitions
                  from s in sg.Sections
                  select s;
         }
@@ -130,6 +156,40 @@ namespace ListIISApps.Models
         {
           return null;
         }
+      }
+    }
+
+    public IEnumerable<ConfigurationSectionGroup> SectionGroups
+    {
+      get
+      {
+        if (WebConfig == null) return null;
+        try
+        {
+          return _sectionGroups ?? (_sectionGroups = WebConfig.RootSectionGroup.Descendants(sg => sg.SectionGroups.Cast<ConfigurationSectionGroup>()).ToList());
+        }
+        catch (Exception)
+        {
+          return null;
+        }
+      }
+    }
+
+    public IEnumerable<ConfigurationSection> Sections
+    {
+      get
+      {
+        var list = new List<ConfigurationSection>();
+        foreach (var sg in SectionGroups)
+          for (var i = 0; i < sg.Sections.Count - 1; i++)
+            try
+            {
+              list.Add(sg.Sections[i]);
+            }
+            catch (Exception)
+            {
+            }
+        return list;
       }
     }
 
