@@ -27,7 +27,7 @@
     @Html.DisplayFor(model => model.Application.EnabledProtocols)
   </div>
   
-    <div class="display-label">AuthenticationMode</div>
+  <div class="display-label">AuthenticationMode</div>
   <div class="display-field">
     @Html.DisplayFor(model => model.AuthenticationMode)
   </div>
@@ -38,12 +38,15 @@
     <th>Name</th>
     <th>Value</th>
   </tr>
-  @foreach (var setting in ViewData.Model.AppSettings.AllKeys)
+  @if (ViewData.Model.AppSettings != null)
   {
-    <tr>
-      <td>@setting</td>
-      <td>@ViewData.Model.AppSettings[setting]</td>
-    </tr>
+    foreach (var setting in ViewData.Model.AppSettings.AllKeys)
+    {
+      <tr>
+        <td>@setting</td>
+        <td>@ViewData.Model.AppSettings[setting]</td>
+      </tr>
+    }
   }
 </table>
 

@@ -1,49 +1,60 @@
 ﻿@using AW.Helper
 @model IEnumerable<ListIISApps.Models.ServerManagerVM>
 @{
-  ViewBag.Title = "Applications on IIS";
+	ViewBag.Title = "Applications on IIS";
 }
-
 <h2>@ViewBag.Message</h2>
 <table>
-  <tr>
-
-    <th>Path
-    </th>
-    <th>PhysicalPath
-    </th>
-    <th>AppSetting
-    </th>
-    <th>AuthenticationMode
-    </th>
-    <th></th>
-  </tr>
-
-  @foreach (var item in Model)
-  {
-    <tr>
-
-      <td>
-        <a href="@Html.DisplayFor(modelItem => item.Application.Path)" target="_blank">@Html.DisplayFor(modelItem => item.Application.Path)</a>
-      </td>
-      <td>
-        @Html.DisplayFor(modelItem => item.PhysicalPath)
-      </td>
-      <td>
-        @{
-          if (!GeneralHelper.IsNullOrEmpty(item.AppSettings))
-          {
-            @item.AppSettings[0]
-          }
-        }
-      </td>
-          <td>
-        @Html.DisplayFor(modelItem => item.AuthenticationMode)
-      </td>
-      <td>
-        @Html.ActionLink("Details", "Details", new {path = item.Application.Path})
-      </td>
-    </tr>
-  }
-
+	<tr>
+		<th>
+			Path
+		</th>
+		<th>
+			PhysicalPath
+		</th>
+		<th>
+			AppSetting
+		</th>
+		<th>
+			ConnectionString
+		</th>
+		<th>
+			AuthenticationMode
+		</th>
+		<th>
+		</th>
+	</tr>
+	@foreach (var item in Model)
+ {
+		<tr>
+			<td>
+				<a href="@Html.DisplayFor(modelItem => item.Application.Path)" target="_blank">@Html.DisplayFor(modelItem => item.Application.Path)</a>
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.PhysicalPath)
+			</td>
+			<td>
+				@{
+	 if (!GeneralHelper.IsNullOrEmpty(item.AppSettings))
+	 {
+					@item.AppSettings[0]
+	 }
+				}
+			</td>
+			<td>
+				@{
+	 if (!item.ConnectionStrings.IsNullOrEmpty())
+	 {
+					@item.ConnectionStrings.First().ConnectionString
+	 }
+				}
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.AuthenticationMode)
+			</td>
+			<td>
+				@Html.ActionLink("Details", "Details", new { path = item.Application.Path })
+			</td>
+		</tr>
+ }
 </table>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Web.Configuration;
 using AW.Helper;
@@ -16,7 +15,6 @@ namespace ListIISApps.Models
   public class ServerManagerVM
   {
     private readonly Application _application;
-    public Configuration WebConfiguration { get; private set; }
     private static IEnumerable<ServerManagerVM> _serverManagerVms;
     private NameValueCollection _appSettingsDictionary;
     private IEnumerable<ConnectionStringSettings> _connectionStrings;
@@ -24,6 +22,7 @@ namespace ListIISApps.Models
     private IEnumerable<SectionGroup> _sectionGroupsDefinitions;
     private System.Configuration.Configuration _webConfig;
     private IEnumerable<ConfigurationSectionGroup> _sectionGroups;
+    public Configuration WebConfiguration { get; private set; }
 
     public Application Application
     {
@@ -42,11 +41,10 @@ namespace ListIISApps.Models
         try
         {
           if (_webConfig != null) return _webConfig;
-          var configFile = new FileInfo(PhysicalPath);
           var vdm = new VirtualDirectoryMapping(PhysicalPath, true, "web.config");
           var wcfm = new WebConfigurationFileMap();
           wcfm.VirtualDirectories.Add("/", vdm);
-          return WebConfigurationManager.OpenMappedWebConfiguration(wcfm, "/");
+          return _webConfig = WebConfigurationManager.OpenMappedWebConfiguration(wcfm, "/");
           //return _webConfig ?? (_webConfig = WebConfigurationManager.OpenWebConfiguration(PhysicalPath));
         }
         catch (Exception)
@@ -212,6 +210,11 @@ namespace ListIISApps.Models
       {
         WebConfiguration = null;
       }
+    }
+
+    public static void Refresh()
+    {
+      _serverManagerVms = null;
     }
 
     public static IEnumerable<ServerManagerVM> ServerManagerVms
