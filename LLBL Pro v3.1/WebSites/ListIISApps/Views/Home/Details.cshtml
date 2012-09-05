@@ -4,6 +4,11 @@
 }
 
 <h2>@ViewBag.Title</h2>
+
+<p>
+  @Html.ActionLink("Back to List", "Index")
+</p>
+
 <fieldset>
   <legend>ServerManagerVM</legend>
 
@@ -69,7 +74,7 @@
 
 <table style="width: 100%;">
   <tr>
-    <th>Section</th>
+    <th>Sections</th>
   </tr>
   
   @foreach (var cs in ViewData.Model.Sections)
@@ -82,13 +87,26 @@
 
 <table style="width: 100%;">
   <tr>
-    <th>Section</th>
+    <th>SectionsDefinitions</th>
   </tr>
   
   @foreach (var cs in ViewData.Model.SectionsDefinitions)
   {
     <tr>
       <td>@cs.Name</td>
+    </tr>
+  }
+</table>
+
+<table style="width: 100%;">
+  <tr>
+    <th>Exceptions</th>
+  </tr>
+  
+  @foreach (var e in ViewData.Model.Exceptions)
+  {
+    <tr>
+      <td>@e.Message</td>
     </tr>
   }
 </table>

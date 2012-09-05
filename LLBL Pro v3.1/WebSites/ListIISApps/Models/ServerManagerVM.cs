@@ -47,8 +47,9 @@ namespace ListIISApps.Models
           return _webConfig = WebConfigurationManager.OpenMappedWebConfiguration(wcfm, "/");
           //return _webConfig ?? (_webConfig = WebConfigurationManager.OpenWebConfiguration(PhysicalPath));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+          Exceptions.Add(e);
           return null;
         }
       }
@@ -63,12 +64,17 @@ namespace ListIISApps.Models
         {
           return _appSettingsDictionary ?? (_appSettingsDictionary = GetAppSettings(WebConfiguration));
         }
-        catch (Exception)
+        catch (Exception e)
         {
+          Exceptions.Add(e);
           return null;
         }
       }
     }
+
+    public List<Exception> Exceptions
+    {
+      get; private set; }
 
     private static NameValueCollection GetAppSettings(Configuration webConfiguration)
     {
@@ -87,8 +93,9 @@ namespace ListIISApps.Models
         {
           return _connectionStrings ?? (_connectionStrings = GetConnectionStrings(WebConfiguration).ToList());
         }
-        catch (Exception)
+        catch (Exception e)
         {
+          Exceptions.Add(e);
           return null;
         }
       }
@@ -111,8 +118,9 @@ namespace ListIISApps.Models
         {
           return _authenticationMode != AuthenticationMode.None ? _authenticationMode : (_authenticationMode = (AuthenticationMode) (int) GetAuthenticationMode(WebConfiguration).Value);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+          Exceptions.Add(e);
           return AuthenticationMode.None;
         }
       }
@@ -132,8 +140,9 @@ namespace ListIISApps.Models
         {
           return _sectionGroupsDefinitions ?? (_sectionGroupsDefinitions = WebConfiguration.RootSectionGroup.DescendantsAndSelf(sg => sg.SectionGroups).ToList());
         }
-        catch (Exception)
+        catch (Exception e)
         {
+          Exceptions.Add(e);
           return null;
         }
       }
@@ -150,8 +159,9 @@ namespace ListIISApps.Models
                  from s in sg.Sections
                  select s;
         }
-        catch (Exception)
+        catch (Exception e)
         {
+          Exceptions.Add(e);
           return null;
         }
       }
@@ -166,8 +176,9 @@ namespace ListIISApps.Models
         {
           return _sectionGroups ?? (_sectionGroups = WebConfig.RootSectionGroup.Descendants(sg => sg.SectionGroups.Cast<ConfigurationSectionGroup>()).ToList());
         }
-        catch (Exception)
+        catch (Exception e)
         {
+          Exceptions.Add(e);
           return null;
         }
       }
@@ -184,8 +195,9 @@ namespace ListIISApps.Models
             {
               list.Add(sg.Sections[i]);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+              Exceptions.Add(e);
             }
         return list;
       }
@@ -201,13 +213,15 @@ namespace ListIISApps.Models
     public ServerManagerVM(Application application)
     {
       _application = application;
+      Exceptions = new List<Exception>();
       WebConfiguration = application.GetWebConfiguration();
       try
       {
         WebConfiguration.GetEffectiveSectionGroup();
       }
-      catch (Exception)
+      catch (Exception e)
       {
+        Exceptions.Add(e);
         WebConfiguration = null;
       }
     }

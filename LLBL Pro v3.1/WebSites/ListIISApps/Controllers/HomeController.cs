@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using ListIISApps.Models;
 
@@ -6,7 +7,15 @@ namespace ListIISApps.Controllers
 {
   public class HomeController : Controller
   {
-    private static string _previousUrl;
+
+    public string PreviousUrl
+    {
+      get
+      {
+        return HttpContext.Session == null ? null : Convert.ToString(HttpContext.Session["PreviousUrl"]);
+      }
+      set { if (HttpContext.Session != null) HttpContext.Session["PreviousUrl"] = value; }
+    }
 
     public ActionResult Index()
     {
@@ -22,10 +31,10 @@ namespace ListIISApps.Controllers
     /// </summary>
     private void HandleRefresh()
     {
-      if (_previousUrl == HttpContext.Request.RawUrl)
+      if (PreviousUrl == HttpContext.Request.RawUrl)
         ServerManagerVM.Refresh();
       else
-        _previousUrl = HttpContext.Request.RawUrl;
+        PreviousUrl = HttpContext.Request.RawUrl;
     }
 
     public ActionResult Details(string path)
