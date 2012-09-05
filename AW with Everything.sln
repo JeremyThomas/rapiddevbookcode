@@ -1,12 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
 		Ancillary\AdventureWorks.snk = Ancillary\AdventureWorks.snk
 		Ancillary\AdventureWorksAssemblyInfo.cs = Ancillary\AdventureWorksAssemblyInfo.cs
 		AW with Everything Tests.bat = AW with Everything Tests.bat
 		AW with Everything.vsmdi = AW with Everything.vsmdi
+		AW with Everything7.vsmdi = AW with Everything7.vsmdi
 		Ancillary\AW.llblgenproj = Ancillary\AW.llblgenproj
 		Ancillary\AW.llblgenproj.layout = Ancillary\AW.llblgenproj.layout
 		Ancillary\GlobalAssemblyInfo.cs = Ancillary\GlobalAssemblyInfo.cs
@@ -298,6 +299,9 @@ Global
 		SccProjectTopLevelParentUniqueName27 = AW\u0020with\u0020Everything.sln
 		SccProjectName27 = WebSites/ListIISApps
 		SccLocalPath27 = WebSites\\ListIISApps
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = AW with Everything7.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
