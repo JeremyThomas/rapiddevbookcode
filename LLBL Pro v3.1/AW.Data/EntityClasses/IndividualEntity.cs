@@ -531,7 +531,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ContactID property of the Entity Individual<br/><br/>
-		/// MS_Description: Identifies the customer in the Contact table. Foreign key to Contact.ContactID.<br/></summary>
+		/// MS_Description: Identifies the customer in the Contact table. Foreign key to Contact.ContactID.<br/>Identifies the customer in the Contact table. Foreign key to Contact.ContactID.</summary>
 		/// <remarks>Mapped on  table field: "Individual"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -542,7 +542,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Demographics property of the Entity Individual<br/><br/>
-		/// MS_Description: Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis.<br/></summary>
+		/// MS_Description: Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis.<br/>Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis.</summary>
 		/// <remarks>Mapped on  table field: "Individual"."Demographics"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

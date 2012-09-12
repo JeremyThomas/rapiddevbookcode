@@ -566,7 +566,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -577,7 +577,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Tax rate description.<br/></summary>
+		/// MS_Description: Tax rate description.<br/>Tax rate description.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -588,7 +588,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -599,7 +599,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesTaxRateID property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."SalesTaxRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -610,7 +610,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StateProvinceID property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: State, province, or country/region the sales tax applies to.<br/></summary>
+		/// MS_Description: State, province, or country/region the sales tax applies to.<br/>State, province, or country/region the sales tax applies to.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."StateProvinceID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -621,7 +621,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TaxRate property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Tax rate amount.<br/></summary>
+		/// MS_Description: Tax rate amount.<br/>Tax rate amount.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."TaxRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -632,7 +632,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TaxType property of the Entity SalesTaxRate<br/><br/>
-		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/>Unique nonclustered index. Used to support replication samples.</summary>
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."TaxType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

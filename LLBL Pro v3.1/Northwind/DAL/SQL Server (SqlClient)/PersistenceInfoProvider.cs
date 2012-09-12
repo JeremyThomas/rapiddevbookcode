@@ -9,6 +9,7 @@
 //////////////////////////////////////////////////////////////
 using System;
 using System.Collections;
+using System.Data;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.SqlServer

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AW.Helper.LLBL.TypeConverters
+namespace AW.Helper.TypeConverters
 {
 	/// <summary>
 	/// Converts a number into Decimal in Oracle

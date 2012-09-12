@@ -686,7 +686,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesOrderHeaderSalesReason<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeaderSalesReason"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -697,7 +697,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesOrderID property of the Entity SalesOrderHeaderSalesReason<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeaderSalesReason"."SalesOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -708,7 +708,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesReasonID property of the Entity SalesOrderHeaderSalesReason<br/><br/>
-		/// MS_Description: Primary key. Foreign key to SalesReason.SalesReasonID.<br/></summary>
+		/// MS_Description: Primary key. Foreign key to SalesReason.SalesReasonID.<br/>Primary key. Foreign key to SalesReason.SalesReasonID.</summary>
 		/// <remarks>Mapped on  table field: "SalesOrderHeaderSalesReason"."SalesReasonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

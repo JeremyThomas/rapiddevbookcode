@@ -38,7 +38,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		{
 			using(StoredProcedureCall call = CreateUspGetEmployeeManagersCall(new DataAccessCoreImpl(new CommonDaoBase(), transactionToUse), employeeId))
 			{
-				DataTable toReturn = call.FillDataTable();				
+				DataTable toReturn = call.FillDataTable();
 				return toReturn;
 			}
 		}
@@ -67,7 +67,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		{
 			using(StoredProcedureCall call = CreateUspGetManagerEmployeesCall(new DataAccessCoreImpl(new CommonDaoBase(), transactionToUse), managerId))
 			{
-				DataTable toReturn = call.FillDataTable();				
+				DataTable toReturn = call.FillDataTable();
 				return toReturn;
 			}
 		}

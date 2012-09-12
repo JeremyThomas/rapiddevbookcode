@@ -686,7 +686,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CountryRegionCode property of the Entity CountryRegionCurrency<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "CountryRegionCurrency"."CountryRegionCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -697,7 +697,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CurrencyCode property of the Entity CountryRegionCurrency<br/><br/>
-		/// MS_Description: ISO standard currency code. Foreign key to Currency.CurrencyCode.<br/></summary>
+		/// MS_Description: ISO standard currency code. Foreign key to Currency.CurrencyCode.<br/>ISO standard currency code. Foreign key to Currency.CurrencyCode.</summary>
 		/// <remarks>Mapped on  table field: "CountryRegionCurrency"."CurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -708,7 +708,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity CountryRegionCurrency<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "CountryRegionCurrency"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

@@ -524,7 +524,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LargePhoto property of the Entity ProductPhoto<br/><br/>
-		/// MS_Description: Large image of the product.<br/></summary>
+		/// MS_Description: Large image of the product.<br/>Large image of the product.</summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."LargePhoto"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -535,7 +535,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LargePhotoFileName property of the Entity ProductPhoto<br/><br/>
-		/// MS_Description: Large image file name.<br/></summary>
+		/// MS_Description: Large image file name.<br/>Large image file name.</summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."LargePhotoFileName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -546,7 +546,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductPhoto<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -557,7 +557,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductPhotoID property of the Entity ProductPhoto<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."ProductPhotoID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -568,7 +568,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ThumbNailPhoto property of the Entity ProductPhoto<br/><br/>
-		/// MS_Description: Small image of the product.<br/></summary>
+		/// MS_Description: Small image of the product.<br/>Small image of the product.</summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."ThumbNailPhoto"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -579,7 +579,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ThumbnailPhotoFileName property of the Entity ProductPhoto<br/><br/>
-		/// MS_Description: Small image file name.<br/></summary>
+		/// MS_Description: Small image file name.<br/>Small image file name.</summary>
 		/// <remarks>Mapped on  table field: "ProductPhoto"."ThumbnailPhotoFileName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

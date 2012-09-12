@@ -710,7 +710,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DueDate property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Date the product is expected to be received.<br/></summary>
+		/// MS_Description: Date the product is expected to be received.<br/>Date the product is expected to be received.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."DueDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -721,7 +721,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LineTotal property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Per product subtotal. Computed as OrderQty * UnitPrice.<br/></summary>
+		/// MS_Description: Per product subtotal. Computed as OrderQty * UnitPrice.<br/>Per product subtotal. Computed as OrderQty * UnitPrice.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."LineTotal"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -732,7 +732,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -743,7 +743,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OrderQuantity property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Quantity ordered.<br/></summary>
+		/// MS_Description: Quantity ordered.<br/>Quantity ordered.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."OrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -754,7 +754,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/>Product identification number. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -765,7 +765,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PurchaseOrderDetailID property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Primary key. One line number per purchased product.<br/></summary>
+		/// MS_Description: Primary key. One line number per purchased product.<br/>Primary key. One line number per purchased product.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."PurchaseOrderDetailID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -776,7 +776,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PurchaseOrderID property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."PurchaseOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -787,7 +787,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReceivedQuantity property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Quantity actually received from the vendor.<br/></summary>
+		/// MS_Description: Quantity actually received from the vendor.<br/>Quantity actually received from the vendor.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."ReceivedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -798,7 +798,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The RejectedQuantity property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Quantity rejected during inspection.<br/></summary>
+		/// MS_Description: Quantity rejected during inspection.<br/>Quantity rejected during inspection.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."RejectedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 8, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -809,7 +809,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StockedQuantity property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Quantity accepted into inventory. Computed as ReceivedQty - RejectedQty.<br/></summary>
+		/// MS_Description: Quantity accepted into inventory. Computed as ReceivedQty - RejectedQty.<br/>Quantity accepted into inventory. Computed as ReceivedQty - RejectedQty.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."StockedQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 9, 2, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -820,7 +820,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UnitPrice property of the Entity PurchaseOrderDetail<br/><br/>
-		/// MS_Description: Vendor's selling price of a single product.<br/></summary>
+		/// MS_Description: Vendor's selling price of a single product.<br/>Vendor's selling price of a single product.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderDetail"."UnitPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

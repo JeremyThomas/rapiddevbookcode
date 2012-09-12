@@ -536,7 +536,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ChangeNumber property of the Entity Document<br/><br/>
-		/// MS_Description: Engineering change approval number.<br/></summary>
+		/// MS_Description: Engineering change approval number.<br/>Engineering change approval number.</summary>
 		/// <remarks>Mapped on  table field: "Document"."ChangeNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -547,7 +547,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Document property of the Entity Document<br/><br/>
-		/// MS_Description: Complete document.<br/></summary>
+		/// MS_Description: Complete document.<br/>Complete document.</summary>
 		/// <remarks>Mapped on  table field: "Document"."Document"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarBinary, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -558,7 +558,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DocumentID property of the Entity Document<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Document"."DocumentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -569,7 +569,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DocumentSummary property of the Entity Document<br/><br/>
-		/// MS_Description: Document abstract.<br/></summary>
+		/// MS_Description: Document abstract.<br/>Document abstract.</summary>
 		/// <remarks>Mapped on  table field: "Document"."DocumentSummary"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -580,7 +580,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The FileExtension property of the Entity Document<br/><br/>
-		/// MS_Description: File extension indicating the document type. For example, .doc or .txt.<br/></summary>
+		/// MS_Description: File extension indicating the document type. For example, .doc or .txt.<br/>File extension indicating the document type. For example, .doc or .txt.</summary>
 		/// <remarks>Mapped on  table field: "Document"."FileExtension"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 8<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -591,7 +591,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The FileName property of the Entity Document<br/><br/>
-		/// MS_Description: Directory path and file name of the document<br/></summary>
+		/// MS_Description: Directory path and file name of the document<br/>Directory path and file name of the document</summary>
 		/// <remarks>Mapped on  table field: "Document"."FileName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 400<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -602,7 +602,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Document<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Document"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -613,7 +613,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Revision property of the Entity Document<br/><br/>
-		/// MS_Description: Revision number of the document. <br/></summary>
+		/// MS_Description: Revision number of the document. <br/>Revision number of the document. </summary>
 		/// <remarks>Mapped on  table field: "Document"."Revision"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 5<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -624,7 +624,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Status property of the Entity Document<br/><br/>
-		/// MS_Description: 1 = Pending approval, 2 = Approved, 3 = Obsolete<br/></summary>
+		/// MS_Description: 1 = Pending approval, 2 = Approved, 3 = Obsolete<br/>1 = Pending approval, 2 = Approved, 3 = Obsolete</summary>
 		/// <remarks>Mapped on  table field: "Document"."Status"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -635,7 +635,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Title property of the Entity Document<br/><br/>
-		/// MS_Description: Title of the document.<br/></summary>
+		/// MS_Description: Title of the document.<br/>Title of the document.</summary>
 		/// <remarks>Mapped on  table field: "Document"."Title"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

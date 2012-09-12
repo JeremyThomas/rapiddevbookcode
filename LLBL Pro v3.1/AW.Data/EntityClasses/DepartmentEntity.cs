@@ -518,7 +518,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DepartmentID property of the Entity Department<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Department"."DepartmentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -529,7 +529,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The GroupName property of the Entity Department<br/><br/>
-		/// MS_Description: Name of the group to which the department belongs.<br/></summary>
+		/// MS_Description: Name of the group to which the department belongs.<br/>Name of the group to which the department belongs.</summary>
 		/// <remarks>Mapped on  table field: "Department"."GroupName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -540,7 +540,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Department<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Department"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -551,7 +551,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity Department<br/><br/>
-		/// MS_Description: Name of the department.<br/></summary>
+		/// MS_Description: Name of the department.<br/>Name of the department.</summary>
 		/// <remarks>Mapped on  table field: "Department"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

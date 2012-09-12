@@ -701,7 +701,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Demographics property of the Entity Store<br/><br/>
-		/// MS_Description: Demographic informationg about the store such as the number of employees, annual sales and store type.<br/></summary>
+		/// MS_Description: Demographic informationg about the store such as the number of employees, annual sales and store type.<br/>Demographic informationg about the store such as the number of employees, annual sales and store type.</summary>
 		/// <remarks>Mapped on  table field: "Store"."Demographics"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -712,7 +712,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity Store<br/><br/>
-		/// MS_Description: Name of the store.<br/></summary>
+		/// MS_Description: Name of the store.<br/>Name of the store.</summary>
 		/// <remarks>Mapped on  table field: "Store"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -723,7 +723,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesPersonID property of the Entity Store<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "Store"."SalesPersonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

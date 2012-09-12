@@ -563,7 +563,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DateCreated property of the Entity ShoppingCartItem<br/><br/>
-		/// MS_Description: Date the time the record was created.<br/></summary>
+		/// MS_Description: Date the time the record was created.<br/>Date the time the record was created.</summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."DateCreated"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -574,7 +574,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ShoppingCartItem<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -585,7 +585,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity ShoppingCartItem<br/><br/>
-		/// MS_Description: Product ordered. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Product ordered. Foreign key to Product.ProductID.<br/>Product ordered. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -596,7 +596,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Quantity property of the Entity ShoppingCartItem<br/><br/>
-		/// MS_Description: Product quantity ordered.<br/></summary>
+		/// MS_Description: Product quantity ordered.<br/>Product quantity ordered.</summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."Quantity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -607,7 +607,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShoppingCartID property of the Entity ShoppingCartItem<br/><br/>
-		/// MS_Description: Shopping cart identification number.<br/></summary>
+		/// MS_Description: Shopping cart identification number.<br/>Shopping cart identification number.</summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."ShoppingCartID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -618,7 +618,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShoppingCartItemID property of the Entity ShoppingCartItem<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ShoppingCartItem"."ShoppingCartItemID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

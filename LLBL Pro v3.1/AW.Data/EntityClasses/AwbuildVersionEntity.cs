@@ -425,7 +425,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DatabaseVersion property of the Entity AwbuildVersion<br/><br/>
-		/// MS_Description: Version number of the database in 9.yy.mm.dd.00 format.<br/></summary>
+		/// MS_Description: Version number of the database in 9.yy.mm.dd.00 format.<br/>Version number of the database in 9.yy.mm.dd.00 format.</summary>
 		/// <remarks>Mapped on  table field: "AWBuildVersion"."Database Version"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -436,7 +436,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity AwbuildVersion<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "AWBuildVersion"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -447,7 +447,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SystemInformationID property of the Entity AwbuildVersion<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "AWBuildVersion"."SystemInformationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -458,7 +458,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VersionDate property of the Entity AwbuildVersion<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "AWBuildVersion"."VersionDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

@@ -620,7 +620,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ShipMethod<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -631,7 +631,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity ShipMethod<br/><br/>
-		/// MS_Description: Shipping company name.<br/></summary>
+		/// MS_Description: Shipping company name.<br/>Shipping company name.</summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -642,7 +642,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity ShipMethod<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -653,7 +653,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShipBase property of the Entity ShipMethod<br/><br/>
-		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/></summary>
+		/// MS_Description: Unique nonclustered index. Used to support replication samples.<br/>Unique nonclustered index. Used to support replication samples.</summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."ShipBase"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -664,7 +664,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShipMethodID property of the Entity ShipMethod<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."ShipMethodID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -675,7 +675,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShipRate property of the Entity ShipMethod<br/><br/>
-		/// MS_Description: Shipping charge per pound.<br/></summary>
+		/// MS_Description: Shipping charge per pound.<br/>Shipping charge per pound.</summary>
 		/// <remarks>Mapped on  table field: "ShipMethod"."ShipRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

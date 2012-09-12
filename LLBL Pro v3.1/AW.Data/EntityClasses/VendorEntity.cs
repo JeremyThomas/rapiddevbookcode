@@ -815,7 +815,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AccountNumber property of the Entity Vendor<br/><br/>
-		/// MS_Description: Vendor account (identification) number.<br/></summary>
+		/// MS_Description: Vendor account (identification) number.<br/>Vendor account (identification) number.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."AccountNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -826,7 +826,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ActiveFlag property of the Entity Vendor<br/><br/>
-		/// MS_Description: 0 = Vendor no longer used. 1 = Vendor is actively used.<br/></summary>
+		/// MS_Description: 0 = Vendor no longer used. 1 = Vendor is actively used.<br/>0 = Vendor no longer used. 1 = Vendor is actively used.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."ActiveFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -837,7 +837,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CreditRating property of the Entity Vendor<br/><br/>
-		/// MS_Description: 1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average<br/></summary>
+		/// MS_Description: 1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average<br/>1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."CreditRating"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -848,7 +848,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Vendor<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -859,7 +859,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity Vendor<br/><br/>
-		/// MS_Description: Company name.<br/></summary>
+		/// MS_Description: Company name.<br/>Company name.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -870,7 +870,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PreferredVendorStatus property of the Entity Vendor<br/><br/>
-		/// MS_Description: 0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.<br/></summary>
+		/// MS_Description: 0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.<br/>0 = Do not use if another vendor is available. 1 = Preferred over other vendors supplying the same product.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."PreferredVendorStatus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -881,7 +881,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PurchasingWebServiceUrl property of the Entity Vendor<br/><br/>
-		/// MS_Description: Vendor URL.<br/></summary>
+		/// MS_Description: Vendor URL.<br/>Vendor URL.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."PurchasingWebServiceURL"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 1024<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -892,7 +892,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VendorID property of the Entity Vendor<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Vendor"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

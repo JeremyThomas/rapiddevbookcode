@@ -880,7 +880,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CountryRegionCode property of the Entity StateProvince<br/><br/>
-		/// MS_Description: Unique nonclustered index.<br/></summary>
+		/// MS_Description: Unique nonclustered index.<br/>Unique nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."CountryRegionCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -891,7 +891,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The IsOnlyStateProvinceFlag property of the Entity StateProvince<br/><br/>
-		/// MS_Description: 0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.<br/></summary>
+		/// MS_Description: 0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.<br/>0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.</summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."IsOnlyStateProvinceFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -902,7 +902,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity StateProvince<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -913,7 +913,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity StateProvince<br/><br/>
-		/// MS_Description: State or province description.<br/></summary>
+		/// MS_Description: State or province description.<br/>State or province description.</summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -924,7 +924,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity StateProvince<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -935,7 +935,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StateProvinceCode property of the Entity StateProvince<br/><br/>
-		/// MS_Description: ISO standard state or province code.<br/></summary>
+		/// MS_Description: ISO standard state or province code.<br/>ISO standard state or province code.</summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."StateProvinceCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -946,7 +946,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StateProvinceID property of the Entity StateProvince<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."StateProvinceID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -957,7 +957,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TerritoryID property of the Entity StateProvince<br/><br/>
-		/// MS_Description: ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
+		/// MS_Description: ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID.<br/>ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID.</summary>
 		/// <remarks>Mapped on  table field: "StateProvince"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

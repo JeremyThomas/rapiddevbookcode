@@ -260,7 +260,7 @@ namespace AW.Data.HelperClasses
 		private void InitAddressTypeEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(AddressTypeFieldIndex), "AddressTypeEntity");
-			this.AddElementFieldInfo("AddressTypeEntity", "AddressTypeID", typeof(System.Int32), true, false, true, false,  (int)AddressTypeFieldIndex.AddressTypeID, 0, 0, 10);
+			this.AddElementFieldInfo("AddressTypeEntity", "AddressTypeID", typeof(AW.Data.AddressType), true, false, true, false,  (int)AddressTypeFieldIndex.AddressTypeID, 0, 0, 10);
 			this.AddElementFieldInfo("AddressTypeEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)AddressTypeFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("AddressTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)AddressTypeFieldIndex.Name, 50, 0, 0);
 			this.AddElementFieldInfo("AddressTypeEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)AddressTypeFieldIndex.Rowguid, 0, 0, 0);
@@ -289,7 +289,7 @@ namespace AW.Data.HelperClasses
 		private void InitContactTypeEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(ContactTypeFieldIndex), "ContactTypeEntity");
-			this.AddElementFieldInfo("ContactTypeEntity", "ContactTypeID", typeof(System.Int32), true, false, true, false,  (int)ContactTypeFieldIndex.ContactTypeID, 0, 0, 10);
+			this.AddElementFieldInfo("ContactTypeEntity", "ContactTypeID", typeof(AW.Data.ContactType), true, false, true, false,  (int)ContactTypeFieldIndex.ContactTypeID, 0, 0, 10);
 			this.AddElementFieldInfo("ContactTypeEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)ContactTypeFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("ContactTypeEntity", "Name", typeof(System.String), false, false, false, false,  (int)ContactTypeFieldIndex.Name, 50, 0, 0);
 		}
@@ -701,7 +701,7 @@ namespace AW.Data.HelperClasses
 		{
 			this.AddFieldIndexEnumForElementName(typeof(VendorAddressFieldIndex), "VendorAddressEntity");
 			this.AddElementFieldInfo("VendorAddressEntity", "AddressID", typeof(System.Int32), true, true, false, false,  (int)VendorAddressFieldIndex.AddressID, 0, 0, 10);
-			this.AddElementFieldInfo("VendorAddressEntity", "AddressTypeID", typeof(System.Int32), false, true, false, false,  (int)VendorAddressFieldIndex.AddressTypeID, 0, 0, 10);
+			this.AddElementFieldInfo("VendorAddressEntity", "AddressTypeID", typeof(AW.Data.AddressType), false, true, false, false,  (int)VendorAddressFieldIndex.AddressTypeID, 0, 0, 10);
 			this.AddElementFieldInfo("VendorAddressEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)VendorAddressFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("VendorAddressEntity", "VendorID", typeof(System.Int32), true, true, false, false,  (int)VendorAddressFieldIndex.VendorID, 0, 0, 10);
 		}
@@ -710,7 +710,7 @@ namespace AW.Data.HelperClasses
 		{
 			this.AddFieldIndexEnumForElementName(typeof(VendorContactFieldIndex), "VendorContactEntity");
 			this.AddElementFieldInfo("VendorContactEntity", "ContactID", typeof(System.Int32), true, true, false, false,  (int)VendorContactFieldIndex.ContactID, 0, 0, 10);
-			this.AddElementFieldInfo("VendorContactEntity", "ContactTypeID", typeof(System.Int32), false, true, false, false,  (int)VendorContactFieldIndex.ContactTypeID, 0, 0, 10);
+			this.AddElementFieldInfo("VendorContactEntity", "ContactTypeID", typeof(AW.Data.ContactType), false, true, false, false,  (int)VendorContactFieldIndex.ContactTypeID, 0, 0, 10);
 			this.AddElementFieldInfo("VendorContactEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)VendorContactFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("VendorContactEntity", "VendorID", typeof(System.Int32), true, true, false, false,  (int)VendorContactFieldIndex.VendorID, 0, 0, 10);
 		}
@@ -777,7 +777,7 @@ namespace AW.Data.HelperClasses
 		{
 			this.AddFieldIndexEnumForElementName(typeof(CustomerAddressFieldIndex), "CustomerAddressEntity");
 			this.AddElementFieldInfo("CustomerAddressEntity", "AddressID", typeof(System.Int32), true, true, false, false,  (int)CustomerAddressFieldIndex.AddressID, 0, 0, 10);
-			this.AddElementFieldInfo("CustomerAddressEntity", "AddressTypeID", typeof(System.Int32), false, true, false, false,  (int)CustomerAddressFieldIndex.AddressTypeID, 0, 0, 10);
+			this.AddElementFieldInfo("CustomerAddressEntity", "AddressTypeID", typeof(AW.Data.AddressType), false, true, false, false,  (int)CustomerAddressFieldIndex.AddressTypeID, 0, 0, 10);
 			this.AddElementFieldInfo("CustomerAddressEntity", "CustomerID", typeof(System.Int32), true, true, false, false,  (int)CustomerAddressFieldIndex.CustomerID, 0, 0, 10);
 			this.AddElementFieldInfo("CustomerAddressEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)CustomerAddressFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("CustomerAddressEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)CustomerAddressFieldIndex.Rowguid, 0, 0, 0);
@@ -987,7 +987,7 @@ namespace AW.Data.HelperClasses
 		{
 			this.AddFieldIndexEnumForElementName(typeof(StoreContactFieldIndex), "StoreContactEntity");
 			this.AddElementFieldInfo("StoreContactEntity", "ContactID", typeof(System.Int32), true, true, false, false,  (int)StoreContactFieldIndex.ContactID, 0, 0, 10);
-			this.AddElementFieldInfo("StoreContactEntity", "ContactTypeID", typeof(System.Int32), false, true, false, false,  (int)StoreContactFieldIndex.ContactTypeID, 0, 0, 10);
+			this.AddElementFieldInfo("StoreContactEntity", "ContactTypeID", typeof(AW.Data.ContactType), false, true, false, false,  (int)StoreContactFieldIndex.ContactTypeID, 0, 0, 10);
 			this.AddElementFieldInfo("StoreContactEntity", "CustomerID", typeof(System.Int32), true, true, false, false,  (int)StoreContactFieldIndex.CustomerID, 0, 0, 10);
 			this.AddElementFieldInfo("StoreContactEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)StoreContactFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("StoreContactEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)StoreContactFieldIndex.Rowguid, 0, 0, 0);

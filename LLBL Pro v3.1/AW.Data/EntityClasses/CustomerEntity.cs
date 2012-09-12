@@ -799,7 +799,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AccountNumber property of the Entity Customer<br/><br/>
-		/// MS_Description: Unique nonclustered index.<br/></summary>
+		/// MS_Description: Unique nonclustered index.<br/>Unique nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "Customer"."AccountNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): VarChar, 0, 0, 10<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -810,7 +810,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CustomerID property of the Entity Customer<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Customer"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -821,7 +821,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CustomerType property of the Entity Customer<br/><br/>
-		/// MS_Description: Customer type: I = Individual, S = Store<br/></summary>
+		/// MS_Description: Customer type: I = Individual, S = Store<br/>Customer type: I = Individual, S = Store</summary>
 		/// <remarks>Mapped on  table field: "Customer"."CustomerType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -832,7 +832,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Customer<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Customer"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -843,7 +843,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity Customer<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "Customer"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -854,7 +854,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TerritoryID property of the Entity Customer<br/><br/>
-		/// MS_Description: ID of the territory in which the customer is located. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
+		/// MS_Description: ID of the territory in which the customer is located. Foreign key to SalesTerritory.SalesTerritoryID.<br/>ID of the territory in which the customer is located. Foreign key to SalesTerritory.SalesTerritoryID.</summary>
 		/// <remarks>Mapped on  table field: "Customer"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

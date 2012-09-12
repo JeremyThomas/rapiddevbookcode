@@ -539,7 +539,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Category property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Group the discount applies to such as Reseller or Customer.<br/></summary>
+		/// MS_Description: Group the discount applies to such as Reseller or Customer.<br/>Group the discount applies to such as Reseller or Customer.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."Category"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -550,7 +550,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Description property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Discount description.<br/></summary>
+		/// MS_Description: Discount description.<br/>Discount description.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."Description"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 255<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -561,7 +561,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DiscountPct property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Discount precentage.<br/></summary>
+		/// MS_Description: Discount precentage.<br/>Discount precentage.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."DiscountPct"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -572,7 +572,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndDate property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Discount end date.<br/></summary>
+		/// MS_Description: Discount end date.<br/>Discount end date.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -583,7 +583,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MaxQty property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Maximum discount percent allowed.<br/></summary>
+		/// MS_Description: Maximum discount percent allowed.<br/>Maximum discount percent allowed.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."MaxQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -594,7 +594,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MinQty property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Minimum discount percent allowed.<br/></summary>
+		/// MS_Description: Minimum discount percent allowed.<br/>Minimum discount percent allowed.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."MinQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -605,7 +605,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -616,7 +616,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -627,7 +627,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SpecialOfferID property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."SpecialOfferID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -638,7 +638,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartDate property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Discount start date.<br/></summary>
+		/// MS_Description: Discount start date.<br/>Discount start date.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -649,7 +649,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Type property of the Entity SpecialOffer<br/><br/>
-		/// MS_Description: Discount type category.<br/></summary>
+		/// MS_Description: Discount type category.<br/>Discount type category.</summary>
 		/// <remarks>Mapped on  table field: "SpecialOffer"."Type"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

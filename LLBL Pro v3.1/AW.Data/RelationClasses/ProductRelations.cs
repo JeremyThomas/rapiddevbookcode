@@ -30,8 +30,8 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.BillOfMaterialEntityUsingComponentID);
 			toReturn.Add(this.BillOfMaterialEntityUsingProductAssemblyID);
+			toReturn.Add(this.BillOfMaterialEntityUsingComponentID);
 			toReturn.Add(this.ProductCostHistoryEntityUsingProductID);
 			toReturn.Add(this.ProductDocumentEntityUsingProductID);
 			toReturn.Add(this.ProductInventoryEntityUsingProductID);
@@ -54,21 +54,6 @@ namespace AW.Data.RelationClasses
 		#region Class Property Declarations
 
 		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialEntity over the 1:n relation they have, using the relation between the fields:
-		/// Product.ProductID - BillOfMaterial.ComponentID
-		/// </summary>
-		public virtual IEntityRelation BillOfMaterialEntityUsingComponentID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfComponentMaterials" , true);
-				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ComponentID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", false);
-				return relation;
-			}
-		}
-
-		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialEntity over the 1:n relation they have, using the relation between the fields:
 		/// Product.ProductID - BillOfMaterial.ProductAssemblyID
 		/// </summary>
 		public virtual IEntityRelation BillOfMaterialEntityUsingProductAssemblyID
@@ -77,6 +62,21 @@ namespace AW.Data.RelationClasses
 			{
 				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfAssemblyMaterials" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ProductAssemblyID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialEntity over the 1:n relation they have, using the relation between the fields:
+		/// Product.ProductID - BillOfMaterial.ComponentID
+		/// </summary>
+		public virtual IEntityRelation BillOfMaterialEntityUsingComponentID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfComponentMaterials" , true);
+				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ComponentID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", false);
 				return relation;
@@ -334,8 +334,8 @@ namespace AW.Data.RelationClasses
 	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
 	internal static class StaticProductRelations
 	{
-		internal static readonly IEntityRelation BillOfMaterialEntityUsingComponentIDStatic = new ProductRelations().BillOfMaterialEntityUsingComponentID;
 		internal static readonly IEntityRelation BillOfMaterialEntityUsingProductAssemblyIDStatic = new ProductRelations().BillOfMaterialEntityUsingProductAssemblyID;
+		internal static readonly IEntityRelation BillOfMaterialEntityUsingComponentIDStatic = new ProductRelations().BillOfMaterialEntityUsingComponentID;
 		internal static readonly IEntityRelation ProductCostHistoryEntityUsingProductIDStatic = new ProductRelations().ProductCostHistoryEntityUsingProductID;
 		internal static readonly IEntityRelation ProductDocumentEntityUsingProductIDStatic = new ProductRelations().ProductDocumentEntityUsingProductID;
 		internal static readonly IEntityRelation ProductInventoryEntityUsingProductIDStatic = new ProductRelations().ProductInventoryEntityUsingProductID;

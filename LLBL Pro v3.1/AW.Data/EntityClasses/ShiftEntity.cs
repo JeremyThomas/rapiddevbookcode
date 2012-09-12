@@ -521,7 +521,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndTime property of the Entity Shift<br/><br/>
-		/// MS_Description: Shift end time.<br/></summary>
+		/// MS_Description: Shift end time.<br/>Shift end time.</summary>
 		/// <remarks>Mapped on  table field: "Shift"."EndTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -532,7 +532,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Shift<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Shift"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -543,7 +543,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity Shift<br/><br/>
-		/// MS_Description: Shift description.<br/></summary>
+		/// MS_Description: Shift description.<br/>Shift description.</summary>
 		/// <remarks>Mapped on  table field: "Shift"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -554,7 +554,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShiftID property of the Entity Shift<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Shift"."ShiftID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -565,7 +565,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartTime property of the Entity Shift<br/><br/>
-		/// MS_Description: Unique nonclustered index.<br/></summary>
+		/// MS_Description: Unique nonclustered index.<br/>Unique nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "Shift"."StartTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

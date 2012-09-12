@@ -832,7 +832,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AverageLeadTime property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."AverageLeadTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -843,7 +843,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LastReceiptCost property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The selling price when last purchased.<br/></summary>
+		/// MS_Description: The selling price when last purchased.<br/>The selling price when last purchased.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."LastReceiptCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -854,7 +854,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LastReceiptDate property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Date the product was last received by the vendor.<br/></summary>
+		/// MS_Description: Date the product was last received by the vendor.<br/>Date the product was last received by the vendor.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."LastReceiptDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -865,7 +865,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MaxOrderQuantity property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The minimum quantity that should be ordered.<br/></summary>
+		/// MS_Description: The minimum quantity that should be ordered.<br/>The minimum quantity that should be ordered.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."MaxOrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -876,7 +876,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MinOrderQuantity property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The maximum quantity that should be ordered.<br/></summary>
+		/// MS_Description: The maximum quantity that should be ordered.<br/>The maximum quantity that should be ordered.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."MinOrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -887,7 +887,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -898,7 +898,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OnOrderQuantity property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The quantity currently on order.<br/></summary>
+		/// MS_Description: The quantity currently on order.<br/>The quantity currently on order.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."OnOrderQty"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -909,7 +909,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -920,7 +920,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StandardPrice property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The vendor's usual selling price.<br/></summary>
+		/// MS_Description: The vendor's usual selling price.<br/>The vendor's usual selling price.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."StandardPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -931,7 +931,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UnitMeasureCode property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: The product's unit of measure.<br/></summary>
+		/// MS_Description: The product's unit of measure.<br/>The product's unit of measure.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."UnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -942,7 +942,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VendorID property of the Entity ProductVendor<br/><br/>
-		/// MS_Description: Primary key. Foreign key to Vendor.VendorID.<br/></summary>
+		/// MS_Description: Primary key. Foreign key to Vendor.VendorID.<br/>Primary key. Foreign key to Vendor.VendorID.</summary>
 		/// <remarks>Mapped on  table field: "ProductVendor"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

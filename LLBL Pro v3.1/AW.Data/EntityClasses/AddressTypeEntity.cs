@@ -78,7 +78,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary>CTor</summary>
 		/// <param name="addressTypeID">PK value for AddressType which data should be fetched into this AddressType object</param>
-		public AddressTypeEntity(System.Int32 addressTypeID)
+		public AddressTypeEntity(AW.Data.AddressType addressTypeID)
 		{
 			InitClassFetch(addressTypeID, null, null);
 		}
@@ -86,7 +86,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="addressTypeID">PK value for AddressType which data should be fetched into this AddressType object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public AddressTypeEntity(System.Int32 addressTypeID, IPrefetchPath prefetchPathToUse)
+		public AddressTypeEntity(AW.Data.AddressType addressTypeID, IPrefetchPath prefetchPathToUse)
 		{
 			InitClassFetch(addressTypeID, null, prefetchPathToUse);
 		}
@@ -94,7 +94,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="addressTypeID">PK value for AddressType which data should be fetched into this AddressType object</param>
 		/// <param name="validator">The custom validator object for this AddressTypeEntity</param>
-		public AddressTypeEntity(System.Int32 addressTypeID, IValidator validator)
+		public AddressTypeEntity(AW.Data.AddressType addressTypeID, IValidator validator)
 		{
 			InitClassFetch(addressTypeID, validator, null);
 		}
@@ -271,7 +271,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
 		/// <param name="addressTypeID">PK value for AddressType which data should be fetched into this AddressType object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 addressTypeID)
+		public bool FetchUsingPK(AW.Data.AddressType addressTypeID)
 		{
 			return FetchUsingPK(addressTypeID, null, null, null);
 		}
@@ -280,7 +280,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="addressTypeID">PK value for AddressType which data should be fetched into this AddressType object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 addressTypeID, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(AW.Data.AddressType addressTypeID, IPrefetchPath prefetchPathToUse)
 		{
 			return FetchUsingPK(addressTypeID, prefetchPathToUse, null, null);
 		}
@@ -290,7 +290,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 addressTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(AW.Data.AddressType addressTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
 			return FetchUsingPK(addressTypeID, prefetchPathToUse, contextToUse, null);
 		}
@@ -303,7 +303,7 @@ namespace AW.Data.EntityClasses
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 addressTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(AW.Data.AddressType addressTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			return Fetch(addressTypeID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
@@ -464,7 +464,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="addressTypeID">PK value for AddressType which data should be fetched into this AddressType object</param>
 		/// <param name="validator">The validator object for this AddressTypeEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		private void InitClassFetch(System.Int32 addressTypeID, IValidator validator, IPrefetchPath prefetchPathToUse)
+		private void InitClassFetch(AW.Data.AddressType addressTypeID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			this.Validator = validator;
@@ -525,7 +525,7 @@ namespace AW.Data.EntityClasses
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 addressTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(AW.Data.AddressType addressTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
@@ -613,18 +613,18 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AddressTypeID property of the Entity AddressType<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "AddressType"."AddressTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 AddressTypeID
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual AW.Data.AddressType AddressTypeID
 		{
-			get { return (System.Int32)GetValue((int)AddressTypeFieldIndex.AddressTypeID, true); }
+			get { return (AW.Data.AddressType)GetValue((int)AddressTypeFieldIndex.AddressTypeID, true); }
 			set	{ SetValue((int)AddressTypeFieldIndex.AddressTypeID, value, true); }
 		}
 
 		/// <summary> The ModifiedDate property of the Entity AddressType<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "AddressType"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -635,7 +635,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity AddressType<br/><br/>
-		/// MS_Description: Address type description. For example, Billing, Home, or Shipping.<br/></summary>
+		/// MS_Description: Address type description. For example, Billing, Home, or Shipping.<br/>Address type description. For example, Billing, Home, or Shipping.</summary>
 		/// <remarks>Mapped on  table field: "AddressType"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -646,7 +646,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity AddressType<br/><br/>
-		/// MS_Description: Unique nonclustered index.<br/></summary>
+		/// MS_Description: Unique nonclustered index.<br/>Unique nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "AddressType"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

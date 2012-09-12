@@ -921,7 +921,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmployeeID property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Employee who created the purchase order. Foreign key to Employee.EmployeeID.<br/></summary>
+		/// MS_Description: Employee who created the purchase order. Foreign key to Employee.EmployeeID.<br/>Employee who created the purchase order. Foreign key to Employee.EmployeeID.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -932,7 +932,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Freight property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Shipping cost.<br/></summary>
+		/// MS_Description: Shipping cost.<br/>Shipping cost.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."Freight"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -943,7 +943,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -954,7 +954,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OrderDate property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Purchase order creation date.<br/></summary>
+		/// MS_Description: Purchase order creation date.<br/>Purchase order creation date.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."OrderDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -965,7 +965,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PurchaseOrderID property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."PurchaseOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -976,7 +976,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The RevisionNumber property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Incremental number to track changes to the purchase order over time.<br/></summary>
+		/// MS_Description: Incremental number to track changes to the purchase order over time.<br/>Incremental number to track changes to the purchase order over time.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."RevisionNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -987,7 +987,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShipDate property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Estimated shipment date from the vendor.<br/></summary>
+		/// MS_Description: Estimated shipment date from the vendor.<br/>Estimated shipment date from the vendor.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."ShipDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -998,7 +998,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShipMethodID property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Shipping method. Foreign key to ShipMethod.ShipMethodID.<br/></summary>
+		/// MS_Description: Shipping method. Foreign key to ShipMethod.ShipMethodID.<br/>Shipping method. Foreign key to ShipMethod.ShipMethodID.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."ShipMethodID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1009,7 +1009,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Status property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."Status"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1020,7 +1020,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SubTotal property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Purchase order subtotal. Computed as SUM(PurchaseOrderDetail.LineTotal)for the appropriate PurchaseOrderID.<br/></summary>
+		/// MS_Description: Purchase order subtotal. Computed as SUM(PurchaseOrderDetail.LineTotal)for the appropriate PurchaseOrderID.<br/>Purchase order subtotal. Computed as SUM(PurchaseOrderDetail.LineTotal)for the appropriate PurchaseOrderID.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."SubTotal"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1031,7 +1031,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TaxAmt property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Tax amount.<br/></summary>
+		/// MS_Description: Tax amount.<br/>Tax amount.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."TaxAmt"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1042,7 +1042,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TotalDue property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Total due to vendor. Computed as Subtotal + TaxAmt + Freight.<br/></summary>
+		/// MS_Description: Total due to vendor. Computed as Subtotal + TaxAmt + Freight.<br/>Total due to vendor. Computed as Subtotal + TaxAmt + Freight.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."TotalDue"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1053,7 +1053,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VendorID property of the Entity PurchaseOrderHeader<br/><br/>
-		/// MS_Description: Vendor with whom the purchase order is placed. Foreign key to Vendor.VendorID.<br/></summary>
+		/// MS_Description: Vendor with whom the purchase order is placed. Foreign key to Vendor.VendorID.<br/>Vendor with whom the purchase order is placed. Foreign key to Vendor.VendorID.</summary>
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

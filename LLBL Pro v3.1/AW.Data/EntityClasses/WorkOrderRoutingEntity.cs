@@ -723,7 +723,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ActualCost property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Actual manufacturing cost.<br/></summary>
+		/// MS_Description: Actual manufacturing cost.<br/>Actual manufacturing cost.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."ActualCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -734,7 +734,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ActualEndDate property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Actual end date.<br/></summary>
+		/// MS_Description: Actual end date.<br/>Actual end date.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."ActualEndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -745,7 +745,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ActualResourceHrs property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Number of manufacturing hours used.<br/></summary>
+		/// MS_Description: Number of manufacturing hours used.<br/>Number of manufacturing hours used.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."ActualResourceHrs"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Decimal, 9, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -756,7 +756,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ActualStartDate property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Actual start date.<br/></summary>
+		/// MS_Description: Actual start date.<br/>Actual start date.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."ActualStartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -767,7 +767,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LocationID property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Manufacturing location where the part is processed. Foreign key to Location.LocationID.<br/></summary>
+		/// MS_Description: Manufacturing location where the part is processed. Foreign key to Location.LocationID.<br/>Manufacturing location where the part is processed. Foreign key to Location.LocationID.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."LocationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -778,7 +778,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -789,7 +789,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The OperationSequence property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Primary key. Indicates the manufacturing process sequence.<br/></summary>
+		/// MS_Description: Primary key. Indicates the manufacturing process sequence.<br/>Primary key. Indicates the manufacturing process sequence.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."OperationSequence"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -800,7 +800,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PlannedCost property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Estimated manufacturing cost.<br/></summary>
+		/// MS_Description: Estimated manufacturing cost.<br/>Estimated manufacturing cost.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."PlannedCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -811,7 +811,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Primary key. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Primary key. Foreign key to Product.ProductID.<br/>Primary key. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -822,7 +822,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ScheduledEndDate property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Planned manufacturing end date.<br/></summary>
+		/// MS_Description: Planned manufacturing end date.<br/>Planned manufacturing end date.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."ScheduledEndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -833,7 +833,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ScheduledStartDate property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Planned manufacturing start date.<br/></summary>
+		/// MS_Description: Planned manufacturing start date.<br/>Planned manufacturing start date.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."ScheduledStartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -844,7 +844,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The WorkOrderID property of the Entity WorkOrderRouting<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "WorkOrderRouting"."WorkOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

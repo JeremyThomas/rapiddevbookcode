@@ -440,7 +440,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ActualCost property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: Product cost.<br/></summary>
+		/// MS_Description: Product cost.<br/>Product cost.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."ActualCost"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -451,7 +451,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -462,7 +462,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/>Product identification number. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -473,7 +473,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Quantity property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: Product quantity.<br/></summary>
+		/// MS_Description: Product quantity.<br/>Product quantity.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."Quantity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -484,7 +484,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReferenceOrderID property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."ReferenceOrderID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -495,7 +495,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReferenceOrderLineID property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: Line number associated with the purchase order, sales order, or work order.<br/></summary>
+		/// MS_Description: Line number associated with the purchase order, sales order, or work order.<br/>Line number associated with the purchase order, sales order, or work order.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."ReferenceOrderLineID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -506,7 +506,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TransactionDate property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: Date and time of the transaction.<br/></summary>
+		/// MS_Description: Date and time of the transaction.<br/>Date and time of the transaction.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."TransactionDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -517,7 +517,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TransactionID property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."TransactionID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -528,7 +528,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TransactionType property of the Entity TransactionHistoryArchive<br/><br/>
-		/// MS_Description: W = Work Order, S = Sales Order, P = Purchase Order<br/></summary>
+		/// MS_Description: W = Work Order, S = Sales Order, P = Purchase Order<br/>W = Work Order, S = Sales Order, P = Purchase Order</summary>
 		/// <remarks>Mapped on  table field: "TransactionHistoryArchive"."TransactionType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
