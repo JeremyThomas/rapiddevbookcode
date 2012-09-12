@@ -569,7 +569,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Comments property of the Entity ProductReview<br/><br/>
-		/// MS_Description: Reviewer's comments<br/></summary>
+		/// MS_Description: Reviewer's comments<br/>Reviewer's comments</summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."Comments"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 3850<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -580,7 +580,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmailAddress property of the Entity ProductReview<br/><br/>
-		/// MS_Description: Reviewer's e-mail address.<br/></summary>
+		/// MS_Description: Reviewer's e-mail address.<br/>Reviewer's e-mail address.</summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."EmailAddress"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -591,7 +591,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductReview<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -602,7 +602,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity ProductReview<br/><br/>
-		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/></summary>
+		/// MS_Description: Product identification number. Foreign key to Product.ProductID.<br/>Product identification number. Foreign key to Product.ProductID.</summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -613,7 +613,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductReviewID property of the Entity ProductReview<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ProductReviewID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -624,7 +624,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rating property of the Entity ProductReview<br/><br/>
-		/// MS_Description: Product rating given by the reviewer. Scale is 1 to 5 with 5 as the highest rating.<br/></summary>
+		/// MS_Description: Product rating given by the reviewer. Scale is 1 to 5 with 5 as the highest rating.<br/>Product rating given by the reviewer. Scale is 1 to 5 with 5 as the highest rating.</summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."Rating"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -635,7 +635,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReviewDate property of the Entity ProductReview<br/><br/>
-		/// MS_Description: Date review was submitted.<br/></summary>
+		/// MS_Description: Date review was submitted.<br/>Date review was submitted.</summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ReviewDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -646,7 +646,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReviewerName property of the Entity ProductReview<br/><br/>
-		/// MS_Description: Name of the reviewer.<br/></summary>
+		/// MS_Description: Name of the reviewer.<br/>Name of the reviewer.</summary>
 		/// <remarks>Mapped on  table field: "ProductReview"."ReviewerName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

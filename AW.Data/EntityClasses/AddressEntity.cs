@@ -1042,7 +1042,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AddressID property of the Entity Address<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Address"."AddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1053,7 +1053,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AddressLine1 property of the Entity Address<br/><br/>
-		/// MS_Description: First street address line.<br/></summary>
+		/// MS_Description: First street address line.<br/>First street address line.</summary>
 		/// <remarks>Mapped on  table field: "Address"."AddressLine1"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1064,7 +1064,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AddressLine2 property of the Entity Address<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "Address"."AddressLine2"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 60<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1075,7 +1075,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The City property of the Entity Address<br/><br/>
-		/// MS_Description: Name of the city.<br/></summary>
+		/// MS_Description: Name of the city.<br/>Name of the city.</summary>
 		/// <remarks>Mapped on  table field: "Address"."City"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 30<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1086,7 +1086,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Address<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Address"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1097,7 +1097,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The PostalCode property of the Entity Address<br/><br/>
-		/// MS_Description: Postal code for the street address.<br/></summary>
+		/// MS_Description: Postal code for the street address.<br/>Postal code for the street address.</summary>
 		/// <remarks>Mapped on  table field: "Address"."PostalCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1108,7 +1108,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity Address<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "Address"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1119,7 +1119,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StateProvinceID property of the Entity Address<br/><br/>
-		/// MS_Description: Unique identification number for the state or province. Foreign key to StateProvince table.<br/></summary>
+		/// MS_Description: Unique identification number for the state or province. Foreign key to StateProvince table.<br/>Unique identification number for the state or province. Foreign key to StateProvince table.</summary>
 		/// <remarks>Mapped on  table field: "Address"."StateProvinceID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

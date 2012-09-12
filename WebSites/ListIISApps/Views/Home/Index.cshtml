@@ -24,7 +24,8 @@
     <th>
     </th>
   </tr>
-  @foreach (var item in Model.Where(m => !GeneralHelper.IsNullOrEmpty(m.AppSettings)).OrderByDescending(m => m.AppSettings.OfType<Object>().FirstOrDefault()))
+  @*@foreach (var item in Model.Where(m => !GeneralHelper.IsNullOrEmpty(m.AppSettings)).OrderByDescending(m => m.AppSettings.OfType<Object>().FirstOrDefault()))*@
+  @foreach (var item in Model)
   {
     <tr>
       <td>

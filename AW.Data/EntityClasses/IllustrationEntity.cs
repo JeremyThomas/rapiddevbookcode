@@ -515,7 +515,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Diagram property of the Entity Illustration<br/><br/>
-		/// MS_Description: Illustrations used in manufacturing instructions. Stored as XML.<br/></summary>
+		/// MS_Description: Illustrations used in manufacturing instructions. Stored as XML.<br/>Illustrations used in manufacturing instructions. Stored as XML.</summary>
 		/// <remarks>Mapped on  table field: "Illustration"."Diagram"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -526,7 +526,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The IllustrationID property of the Entity Illustration<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Illustration"."IllustrationID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -537,7 +537,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Illustration<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Illustration"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

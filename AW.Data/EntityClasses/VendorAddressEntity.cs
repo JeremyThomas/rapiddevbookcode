@@ -811,7 +811,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AddressID property of the Entity VendorAddress<br/><br/>
-		/// MS_Description: Primary key. Foreign key to Address.AddressID.<br/></summary>
+		/// MS_Description: Primary key. Foreign key to Address.AddressID.<br/>Primary key. Foreign key to Address.AddressID.</summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."AddressID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -822,18 +822,18 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AddressTypeID property of the Entity VendorAddress<br/><br/>
-		/// MS_Description: Address type. Foreign key to AddressType.AddressTypeID.<br/></summary>
+		/// MS_Description: Address type. Foreign key to AddressType.AddressTypeID.<br/>Address type. Foreign key to AddressType.AddressTypeID.</summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."AddressTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 AddressTypeID
+		public virtual AW.Data.AddressType AddressTypeID
 		{
-			get { return (System.Int32)GetValue((int)VendorAddressFieldIndex.AddressTypeID, true); }
+			get { return (AW.Data.AddressType)GetValue((int)VendorAddressFieldIndex.AddressTypeID, true); }
 			set	{ SetValue((int)VendorAddressFieldIndex.AddressTypeID, value, true); }
 		}
 
 		/// <summary> The ModifiedDate property of the Entity VendorAddress<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -844,7 +844,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VendorID property of the Entity VendorAddress<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "VendorAddress"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

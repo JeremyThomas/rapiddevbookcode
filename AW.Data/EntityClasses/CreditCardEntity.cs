@@ -619,7 +619,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CardNumber property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Credit card number.<br/></summary>
+		/// MS_Description: Credit card number.<br/>Credit card number.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."CardNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 25<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -630,7 +630,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CardType property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Credit card name.<br/></summary>
+		/// MS_Description: Credit card name.<br/>Credit card name.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."CardType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -641,7 +641,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CreditCardID property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."CreditCardID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -652,7 +652,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ExpMonth property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Credit card expiration month.<br/></summary>
+		/// MS_Description: Credit card expiration month.<br/>Credit card expiration month.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."ExpMonth"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -663,7 +663,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ExpYear property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Credit card expiration year.<br/></summary>
+		/// MS_Description: Credit card expiration year.<br/>Credit card expiration year.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."ExpYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -674,7 +674,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity CreditCard<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "CreditCard"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

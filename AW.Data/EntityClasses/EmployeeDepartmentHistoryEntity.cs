@@ -837,7 +837,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The DepartmentID property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Department in which the employee worked including currently. Foreign key to Department.DepartmentID.<br/></summary>
+		/// MS_Description: Department in which the employee worked including currently. Foreign key to Department.DepartmentID.<br/>Department in which the employee worked including currently. Foreign key to Department.DepartmentID.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."DepartmentID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -848,7 +848,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmployeeID property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -859,7 +859,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndDate property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Date the employee left the department. NULL = Current department.<br/></summary>
+		/// MS_Description: Date the employee left the department. NULL = Current department.<br/>Date the employee left the department. NULL = Current department.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -870,7 +870,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -881,7 +881,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ShiftID property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."ShiftID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -892,7 +892,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartDate property of the Entity EmployeeDepartmentHistory<br/><br/>
-		/// MS_Description: Date the employee started work in the department.<br/></summary>
+		/// MS_Description: Date the employee started work in the department.<br/>Date the employee started work in the department.</summary>
 		/// <remarks>Mapped on  table field: "EmployeeDepartmentHistory"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

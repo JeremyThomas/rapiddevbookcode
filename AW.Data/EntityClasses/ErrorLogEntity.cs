@@ -440,7 +440,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorLine property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The line number at which the error occurred.<br/></summary>
+		/// MS_Description: The line number at which the error occurred.<br/>The line number at which the error occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorLine"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -451,7 +451,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorLogID property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorLogID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -462,7 +462,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorMessage property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The message text of the error that occurred.<br/></summary>
+		/// MS_Description: The message text of the error that occurred.<br/>The message text of the error that occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorMessage"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 4000<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -473,7 +473,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorNumber property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The error number of the error that occurred.<br/></summary>
+		/// MS_Description: The error number of the error that occurred.<br/>The error number of the error that occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -484,7 +484,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorProcedure property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The name of the stored procedure or trigger where the error occurred.<br/></summary>
+		/// MS_Description: The name of the stored procedure or trigger where the error occurred.<br/>The name of the stored procedure or trigger where the error occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorProcedure"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 126<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -495,7 +495,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorSeverity property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The severity of the error that occurred.<br/></summary>
+		/// MS_Description: The severity of the error that occurred.<br/>The severity of the error that occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorSeverity"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -506,7 +506,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorState property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The state number of the error that occurred.<br/></summary>
+		/// MS_Description: The state number of the error that occurred.<br/>The state number of the error that occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorState"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -517,7 +517,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ErrorTime property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The date and time at which the error occurred.<br/></summary>
+		/// MS_Description: The date and time at which the error occurred.<br/>The date and time at which the error occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."ErrorTime"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -528,7 +528,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UserName property of the Entity ErrorLog<br/><br/>
-		/// MS_Description: The user who executed the batch in which the error occurred.<br/></summary>
+		/// MS_Description: The user who executed the batch in which the error occurred.<br/>The user who executed the batch in which the error occurred.</summary>
 		/// <remarks>Mapped on  table field: "ErrorLog"."UserName"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 128<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

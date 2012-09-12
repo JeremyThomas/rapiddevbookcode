@@ -304,7 +304,7 @@ namespace Northwind.DAL
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
 
-  public enum Category : byte
+  public enum Category
   {
     Beverages = 1,
     Condiments,
@@ -314,6 +314,10 @@ namespace Northwind.DAL
     Meat,
     Produce,
     Seafood
+  }
+
+  public class CategoryConverter : AW.Helper.TypeConverters.EnumerationConverter<Category>
+  {
   }
 
 	// __LLBLGENPRO_USER_CODE_REGION_END

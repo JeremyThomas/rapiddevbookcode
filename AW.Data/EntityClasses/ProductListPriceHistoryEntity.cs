@@ -570,7 +570,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndDate property of the Entity ProductListPriceHistory<br/><br/>
-		/// MS_Description: List price end date<br/></summary>
+		/// MS_Description: List price end date<br/>List price end date</summary>
 		/// <remarks>Mapped on  table field: "ProductListPriceHistory"."EndDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -581,7 +581,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ListPrice property of the Entity ProductListPriceHistory<br/><br/>
-		/// MS_Description: Product list price.<br/></summary>
+		/// MS_Description: Product list price.<br/>Product list price.</summary>
 		/// <remarks>Mapped on  table field: "ProductListPriceHistory"."ListPrice"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -592,7 +592,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductListPriceHistory<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductListPriceHistory"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -603,7 +603,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductID property of the Entity ProductListPriceHistory<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductListPriceHistory"."ProductID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -614,7 +614,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The StartDate property of the Entity ProductListPriceHistory<br/><br/>
-		/// MS_Description: List price start date.<br/></summary>
+		/// MS_Description: List price start date.<br/>List price start date.</summary>
 		/// <remarks>Mapped on  table field: "ProductListPriceHistory"."StartDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

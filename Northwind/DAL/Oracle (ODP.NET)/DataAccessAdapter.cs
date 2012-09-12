@@ -9,6 +9,8 @@
 //////////////////////////////////////////////////////////////
 using System;
 using System.Collections;
+using System.Data;
+using System.Data.Common;
 using System.Configuration;
 using System.EnterpriseServices;
 using SD.LLBLGen.Pro.ORMSupportClasses;

@@ -518,7 +518,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity SalesReason<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -529,7 +529,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity SalesReason<br/><br/>
-		/// MS_Description: Sales reason description.<br/></summary>
+		/// MS_Description: Sales reason description.<br/>Sales reason description.</summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -540,7 +540,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ReasonType property of the Entity SalesReason<br/><br/>
-		/// MS_Description: Category the sales reason belongs to.<br/></summary>
+		/// MS_Description: Category the sales reason belongs to.<br/>Category the sales reason belongs to.</summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."ReasonType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -551,7 +551,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesReasonID property of the Entity SalesReason<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "SalesReason"."SalesReasonID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>

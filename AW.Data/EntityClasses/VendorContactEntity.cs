@@ -811,7 +811,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ContactID property of the Entity VendorContact<br/><br/>
-		/// MS_Description: Contact (Vendor employee) identification number. Foreign key to Contact.ContactID.<br/></summary>
+		/// MS_Description: Contact (Vendor employee) identification number. Foreign key to Contact.ContactID.<br/>Contact (Vendor employee) identification number. Foreign key to Contact.ContactID.</summary>
 		/// <remarks>Mapped on  table field: "VendorContact"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -822,18 +822,18 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ContactTypeID property of the Entity VendorContact<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "VendorContact"."ContactTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 ContactTypeID
+		public virtual AW.Data.ContactType ContactTypeID
 		{
-			get { return (System.Int32)GetValue((int)VendorContactFieldIndex.ContactTypeID, true); }
+			get { return (AW.Data.ContactType)GetValue((int)VendorContactFieldIndex.ContactTypeID, true); }
 			set	{ SetValue((int)VendorContactFieldIndex.ContactTypeID, value, true); }
 		}
 
 		/// <summary> The ModifiedDate property of the Entity VendorContact<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "VendorContact"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -844,7 +844,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VendorID property of the Entity VendorContact<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "VendorContact"."VendorID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

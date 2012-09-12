@@ -8,7 +8,6 @@
 // Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
-using System.ComponentModel;
 
 namespace AW.Data
 {
@@ -1787,7 +1786,7 @@ namespace AW.Data
 
 	#region Custom ConstantsEnums Code
 	
-	// __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
+  // __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
 
   public enum ContactType
   {
@@ -1818,14 +1817,14 @@ namespace AW.Data
   {
     Billing = 1,
     Home = 2,
-    [Description("Main Office")]
+    [System.ComponentModel.Description("Main Office")]
     Main_Office = 3,
     Primary = 4,
     Shipping = 5,
     Archive = 6
   };
 
-	// __LLBLGENPRO_USER_CODE_REGION_END
+  // __LLBLGENPRO_USER_CODE_REGION_END
 	#endregion
 
 	#region Included code

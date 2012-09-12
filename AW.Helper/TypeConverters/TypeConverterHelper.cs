@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AW.Helper.LLBL.TypeConverters
+namespace AW.Helper.TypeConverters
 {
 	public static class TypeConverterHelper
 	{

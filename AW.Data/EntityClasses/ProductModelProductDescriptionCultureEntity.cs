@@ -821,7 +821,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CultureID property of the Entity ProductModelProductDescriptionCulture<br/><br/>
-		/// MS_Description: Culture identification number. Foreign key to Culture.CultureID.<br/></summary>
+		/// MS_Description: Culture identification number. Foreign key to Culture.CultureID.<br/>Culture identification number. Foreign key to Culture.CultureID.</summary>
 		/// <remarks>Mapped on  table field: "ProductModelProductDescriptionCulture"."CultureID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 6<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -832,7 +832,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity ProductModelProductDescriptionCulture<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "ProductModelProductDescriptionCulture"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -843,7 +843,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductDescriptionID property of the Entity ProductModelProductDescriptionCulture<br/><br/>
-		/// MS_Description: Primary key. Foreign key to ProductDescription.ProductDescriptionID.<br/></summary>
+		/// MS_Description: Primary key. Foreign key to ProductDescription.ProductDescriptionID.<br/>Primary key. Foreign key to ProductDescription.ProductDescriptionID.</summary>
 		/// <remarks>Mapped on  table field: "ProductModelProductDescriptionCulture"."ProductDescriptionID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
@@ -854,7 +854,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ProductModelID property of the Entity ProductModelProductDescriptionCulture<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ProductModelProductDescriptionCulture"."ProductModelID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

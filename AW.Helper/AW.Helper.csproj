@@ -72,6 +72,7 @@
     <Compile Include="CommandToExecutableSQL.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DataSetSurrogate.cs" />
+    <Compile Include="TypeConverters\EnumerationConverter.cs" />
     <Compile Include="GeneralHelper.cs" />
     <Compile Include="HiearchicalQueryableExtensions.cs" />
     <Compile Include="MemberName.cs" />
@@ -80,6 +81,9 @@
     <Compile Include="ProfilerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticReflection.cs" />
+    <Compile Include="TypeConverters\BaseNumericConverter.cs" />
+    <Compile Include="TypeConverters\NumericConverters.cs" />
+    <Compile Include="TypeConverters\TypeConverterHelper.cs" />
     <Compile Include="ValueTypeWrapper.cs" />
   </ItemGroup>
   <ItemGroup>

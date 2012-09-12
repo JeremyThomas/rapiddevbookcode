@@ -931,7 +931,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Bonus property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Bonus due if quota is met.<br/></summary>
+		/// MS_Description: Bonus due if quota is met.<br/>Bonus due if quota is met.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."Bonus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -942,7 +942,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CommissionPct property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Commision percent received per sale.<br/></summary>
+		/// MS_Description: Commision percent received per sale.<br/>Commision percent received per sale.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."CommissionPct"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallMoney, 10, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -953,7 +953,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesLastYear property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Sales total of previous year.<br/></summary>
+		/// MS_Description: Sales total of previous year.<br/>Sales total of previous year.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesLastYear"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -964,7 +964,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesQuota property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Projected yearly sales.<br/></summary>
+		/// MS_Description: Projected yearly sales.<br/>Projected yearly sales.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesQuota"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -975,7 +975,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalesYtd property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Sales total year to date.<br/></summary>
+		/// MS_Description: Sales total year to date.<br/>Sales total year to date.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."SalesYTD"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -986,7 +986,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The TerritoryID property of the Entity SalesPerson<br/><br/>
-		/// MS_Description: Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.<br/></summary>
+		/// MS_Description: Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.<br/>Territory currently assigned to. Foreign key to SalesTerritory.SalesTerritoryID.</summary>
 		/// <remarks>Mapped on  table field: "SalesPerson"."TerritoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>

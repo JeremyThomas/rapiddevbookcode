@@ -781,7 +781,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The AverageRate property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Average exchange rate for the day.<br/></summary>
+		/// MS_Description: Average exchange rate for the day.<br/>Average exchange rate for the day.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."AverageRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -792,7 +792,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CurrencyRateDate property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Date and time the exchange rate was obtained.<br/></summary>
+		/// MS_Description: Date and time the exchange rate was obtained.<br/>Date and time the exchange rate was obtained.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."CurrencyRateDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -803,7 +803,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CurrencyRateID property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."CurrencyRateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -814,7 +814,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EndOfDayRate property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Final exchange rate for the day.<br/></summary>
+		/// MS_Description: Final exchange rate for the day.<br/>Final exchange rate for the day.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."EndOfDayRate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Money, 19, 4, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -825,7 +825,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The FromCurrencyCode property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Exchange rate was converted from this currency code.<br/></summary>
+		/// MS_Description: Exchange rate was converted from this currency code.<br/>Exchange rate was converted from this currency code.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."FromCurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -836,7 +836,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -847,7 +847,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ToCurrencyCode property of the Entity CurrencyRate<br/><br/>
-		/// MS_Description: Exchange rate was converted to this currency code.<br/></summary>
+		/// MS_Description: Exchange rate was converted to this currency code.<br/>Exchange rate was converted to this currency code.</summary>
 		/// <remarks>Mapped on  table field: "CurrencyRate"."ToCurrencyCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

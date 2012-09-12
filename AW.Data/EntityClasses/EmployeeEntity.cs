@@ -1332,7 +1332,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The BirthDate property of the Entity Employee<br/><br/>
-		/// MS_Description: Date of birth.<br/></summary>
+		/// MS_Description: Date of birth.<br/>Date of birth.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."BirthDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1343,7 +1343,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ContactID property of the Entity Employee<br/><br/>
-		/// MS_Description: Unique nonclustered index.<br/></summary>
+		/// MS_Description: Unique nonclustered index.<br/>Unique nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."ContactID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1354,7 +1354,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The CurrentFlag property of the Entity Employee<br/><br/>
-		/// MS_Description: 0 = Inactive, 1 = Active<br/></summary>
+		/// MS_Description: 0 = Inactive, 1 = Active<br/>0 = Inactive, 1 = Active</summary>
 		/// <remarks>Mapped on  table field: "Employee"."CurrentFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1365,7 +1365,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmployeeID property of the Entity Employee<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -1376,7 +1376,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Gender property of the Entity Employee<br/><br/>
-		/// MS_Description: M = Male, F = Female<br/></summary>
+		/// MS_Description: M = Male, F = Female<br/>M = Male, F = Female</summary>
 		/// <remarks>Mapped on  table field: "Employee"."Gender"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1387,7 +1387,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The HireDate property of the Entity Employee<br/><br/>
-		/// MS_Description: Employee hired on this date.<br/></summary>
+		/// MS_Description: Employee hired on this date.<br/>Employee hired on this date.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."HireDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1398,7 +1398,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The LoginID property of the Entity Employee<br/><br/>
-		/// MS_Description: Network login.<br/></summary>
+		/// MS_Description: Network login.<br/>Network login.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."LoginID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 256<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1409,7 +1409,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ManagerID property of the Entity Employee<br/><br/>
-		/// MS_Description: Nonclustered index.<br/></summary>
+		/// MS_Description: Nonclustered index.<br/>Nonclustered index.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."ManagerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -1420,7 +1420,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The MaritalStatus property of the Entity Employee<br/><br/>
-		/// MS_Description: M = Married, S = Single<br/></summary>
+		/// MS_Description: M = Married, S = Single<br/>M = Married, S = Single</summary>
 		/// <remarks>Mapped on  table field: "Employee"."MaritalStatus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1431,7 +1431,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity Employee<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1442,7 +1442,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The NationalIdnumber property of the Entity Employee<br/><br/>
-		/// MS_Description: Unique national identification number such as a social security number.<br/></summary>
+		/// MS_Description: Unique national identification number such as a social security number.<br/>Unique national identification number such as a social security number.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."NationalIDNumber"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 15<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1453,7 +1453,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Rowguid property of the Entity Employee<br/><br/>
-		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/></summary>
+		/// MS_Description: ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.<br/>ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."rowguid"<br/>
 		/// Table field type characteristics (type, precision, scale, length): UniqueIdentifier, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1464,7 +1464,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SalariedFlag property of the Entity Employee<br/><br/>
-		/// MS_Description: Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.<br/></summary>
+		/// MS_Description: Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.<br/>Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."SalariedFlag"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1475,7 +1475,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The SickLeaveHours property of the Entity Employee<br/><br/>
-		/// MS_Description: Number of available sick leave hours.<br/></summary>
+		/// MS_Description: Number of available sick leave hours.<br/>Number of available sick leave hours.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."SickLeaveHours"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1486,7 +1486,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Title property of the Entity Employee<br/><br/>
-		/// MS_Description: Work title such as Buyer or Sales Representative.<br/></summary>
+		/// MS_Description: Work title such as Buyer or Sales Representative.<br/>Work title such as Buyer or Sales Representative.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."Title"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -1497,7 +1497,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The VacationHours property of the Entity Employee<br/><br/>
-		/// MS_Description: Number of available vacation hours.<br/></summary>
+		/// MS_Description: Number of available vacation hours.<br/>Number of available vacation hours.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."VacationHours"<br/>
 		/// Table field type characteristics (type, precision, scale, length): SmallInt, 5, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>

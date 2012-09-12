@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 
-namespace AW.Helper.LLBL.TypeConverters
+namespace AW.Helper.TypeConverters
 {
 	/// <summary>
 	/// Base class for conversion between different representations of numbers, used for Oracle numeric data types

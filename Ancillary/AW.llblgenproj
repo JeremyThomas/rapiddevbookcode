@@ -6,10 +6,10 @@
       <Abbreviation Name="id" Value="ID" />
       <Abbreviation Name="Qty" Value="Quantity" />
     </Abbreviations>
-    <Property Name="AdditionalTaskPerformerFolder" Value="..\AW.Data\bin\Debug" />
+    <Property Name="AdditionalTaskPerformerFolder" Value="" />
     <Property Name="AdditionalTasksFolder" Value="" />
     <Property Name="AdditionalTemplatesFolder" Value="" />
-    <Property Name="AdditionalTypeConverterFolder" Value="" />
+    <Property Name="AdditionalTypeConverterFolder" Value="..\AW.Data\bin\Debug" />
     <Property Name="AddNewElementsAfterRefresh" Value="0" />
     <Property Name="AddNewFieldsAfterRefresh" Value="0" />
     <Property Name="AddNewViewsAsEntitiesAfterRefresh" Value="0" />
@@ -63,11 +63,14 @@
     <Property Name="UpdateCustomPropertiesAfterRefresh" Value="1" />
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
-  <TypeShortcuts />
+  <TypeShortcuts>
+    <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=3.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=3.1.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+  </TypeShortcuts>
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
       <LastUsedPreferences>
-        <DestinationRootFolder Value="..\" />
+        <DestinationRootFolder Value="..\AW.Data" />
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
         <PlatformName Value=".NET 3.5" />
@@ -75,7 +78,7 @@
         <RootNamespace Value="AW.Data" />
         <TemplateGroup Value="SelfServicing" />
         <TemplateBindings>
-          <Binding Name="SD.TemplateBindings.QuerySpecTemplates" />
+          <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET20" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific.NET20" />
@@ -99,11 +102,11 @@
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
     <TargetElement Type="256">
-      <OutputSettingValues>
+      <Defaults>
         <Attributes>
           <Attribute Value="Browsable($true)" />
         </Attributes>
-      </OutputSettingValues>
+      </Defaults>
     </TargetElement>
   </CodeGenerationMetaDataDefaults>
   <EntityModel>
@@ -794,7 +797,7 @@
       </EntityDefinition>
       <EntityDefinition Name="AddressType" GroupName="Person">
         <Fields>
-          <Field Name="AddressTypeID" Type="int" IsReadOnly="true" IsPrimaryKey="true">
+          <Field Name="AddressTypeID" Type="AddressType" IsReadOnly="true" IsPrimaryKey="true">
             <Description><![CDATA[Clustered index created by a primary key constraint.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -964,7 +967,7 @@
       </EntityDefinition>
       <EntityDefinition Name="ContactType" GroupName="Person">
         <Fields>
-          <Field Name="ContactTypeID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+          <Field Name="ContactTypeID" Type="ContactType" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
             <Description><![CDATA[Clustered index created by a primary key constraint.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -3096,7 +3099,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="AddressTypeID" Type="int">
+          <Field Name="AddressTypeID" Type="AddressType">
             <Description><![CDATA[Address type. Foreign key to AddressType.AddressTypeID.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -3137,7 +3140,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="ContactTypeID" Type="int" Precision="10">
+          <Field Name="ContactTypeID" Type="ContactType" Precision="10">
             <Description><![CDATA[Nonclustered index.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -3456,7 +3459,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="AddressTypeID" Type="int" IsAutoCreated="true">
+          <Field Name="AddressTypeID" Type="AddressType" IsAutoCreated="true">
             <Description><![CDATA[Address type. Foreign key to AddressType.AddressTypeID.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -4497,7 +4500,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="ContactTypeID" Type="int" Precision="10">
+          <Field Name="ContactTypeID" Type="ContactType" Precision="10">
             <Description><![CDATA[Nonclustered index.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -5910,7 +5913,7 @@
                 </Table>
                 <Table Name="AddressType">
                   <Fields>
-                    <Field Name="AddressTypeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_AddressType_AddressTypeID" DbType="8" Precision="10">
+                    <Field Name="AddressTypeID" Ordinal="1" TrackedChanges="8" IsPrimaryKey="true" PkConstraintName="PK_AddressType_AddressTypeID" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Clustered index created by a primary key constraint." />
                       </CustomProperties>
@@ -6019,7 +6022,7 @@
                 </Table>
                 <Table Name="ContactType">
                   <Fields>
-                    <Field Name="ContactTypeID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_ContactType_ContactTypeID" DbType="8" Precision="10">
+                    <Field Name="ContactTypeID" Ordinal="1" TrackedChanges="8" IsPrimaryKey="true" PkConstraintName="PK_ContactType_ContactTypeID" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Clustered index created by a primary key constraint." />
                       </CustomProperties>
@@ -9216,7 +9219,7 @@
         </EntityMapping>
         <EntityMapping EntityName="Person:AddressType" TargetName="AdventureWorks:Person:AddressType">
           <FieldMappings>
-            <FieldMapping FieldName="AddressTypeID" TargetFieldName="AddressTypeID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="AddressTypeID" TargetFieldName="AddressTypeID" />
             <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
             <FieldMapping FieldName="Name" TargetFieldName="Name" />
             <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
@@ -9243,7 +9246,7 @@
         </EntityMapping>
         <EntityMapping EntityName="Person:ContactType" TargetName="AdventureWorks:Person:ContactType">
           <FieldMappings>
-            <FieldMapping FieldName="ContactTypeID" TargetFieldName="ContactTypeID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="ContactTypeID" TargetFieldName="ContactTypeID" />
             <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
             <FieldMapping FieldName="Name" TargetFieldName="Name" />
           </FieldMappings>

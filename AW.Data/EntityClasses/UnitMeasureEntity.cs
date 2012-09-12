@@ -800,7 +800,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity UnitMeasure<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "UnitMeasure"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -811,7 +811,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Name property of the Entity UnitMeasure<br/><br/>
-		/// MS_Description: Unit of measure description.<br/></summary>
+		/// MS_Description: Unit of measure description.<br/>Unit of measure description.</summary>
 		/// <remarks>Mapped on  table field: "UnitMeasure"."Name"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 50<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -822,7 +822,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The UnitMeasureCode property of the Entity UnitMeasure<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "UnitMeasure"."UnitMeasureCode"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 3<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>

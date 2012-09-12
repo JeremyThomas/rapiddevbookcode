@@ -557,7 +557,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The EmployeeID property of the Entity JobCandidate<br/><br/>
-		/// MS_Description: Employee identification number if applicant was hired. Foreign key to Employee.EmployeeID.<br/></summary>
+		/// MS_Description: Employee identification number if applicant was hired. Foreign key to Employee.EmployeeID.<br/>Employee identification number if applicant was hired. Foreign key to Employee.EmployeeID.</summary>
 		/// <remarks>Mapped on  table field: "JobCandidate"."EmployeeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
@@ -568,7 +568,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The JobCandidateID property of the Entity JobCandidate<br/><br/>
-		/// MS_Description: Clustered index created by a primary key constraint.<br/></summary>
+		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "JobCandidate"."JobCandidateID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
@@ -579,7 +579,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The ModifiedDate property of the Entity JobCandidate<br/><br/>
-		/// MS_Description: Date and time the record was last updated.<br/></summary>
+		/// MS_Description: Date and time the record was last updated.<br/>Date and time the record was last updated.</summary>
 		/// <remarks>Mapped on  table field: "JobCandidate"."ModifiedDate"<br/>
 		/// Table field type characteristics (type, precision, scale, length): DateTime, 0, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
@@ -590,7 +590,7 @@ namespace AW.Data.EntityClasses
 		}
 
 		/// <summary> The Resume property of the Entity JobCandidate<br/><br/>
-		/// MS_Description: Résumé in XML format.<br/></summary>
+		/// MS_Description: Résumé in XML format.<br/>Résumé in XML format.</summary>
 		/// <remarks>Mapped on  table field: "JobCandidate"."Resume"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
