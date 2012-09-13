@@ -36,7 +36,7 @@ namespace AW.Data.EntityClasses
 	/// MS_Description: Lookup table containing standard ISO currencies.<br/>
 	/// </summary>
 	[Serializable]
-	public partial class CurrencyEntity : CommonEntityBase
+	public partial class CurrencyEntity : CommonEntityBase, IModifiedTracking
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{

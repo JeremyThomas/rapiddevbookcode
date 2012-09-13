@@ -3325,6 +3325,9 @@
           <CustomProperties>
             <CustomProperty Name="MS_Description" Value="Lookup table containing standard ISO currencies." />
           </CustomProperties>
+          <Interfaces>
+            <Interface Name="IModifiedTracking" />
+          </Interfaces>
         </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="CurrencyRate" GroupName="Sales">
@@ -3390,6 +3393,9 @@
           <CustomProperties>
             <CustomProperty Name="MS_Description" Value="Currency exchange rates." />
           </CustomProperties>
+          <Interfaces>
+            <Interface Name="IModifiedTracking" />
+          </Interfaces>
         </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="Customer" GroupName="Sales" InheritanceType="2">
@@ -3447,6 +3453,9 @@
           <CustomProperties>
             <CustomProperty Name="MS_Description" Value="Current customer information. Also see the Individual and Store tables." />
           </CustomProperties>
+          <Interfaces>
+            <Interface Name="IMergable" />
+          </Interfaces>
         </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="CustomerAddress" GroupName="Sales">
@@ -3496,6 +3505,9 @@
           <CustomProperties>
             <CustomProperty Name="MS_Description" Value="Cross-reference table mapping customers to their address(es)." />
           </CustomProperties>
+          <Interfaces>
+            <Interface Name="IMergable" />
+          </Interfaces>
         </OutputSettingValues>
       </EntityDefinition>
       <EntityDefinition Name="CustomerViewRelated" GroupName="Sales">
