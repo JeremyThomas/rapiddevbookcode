@@ -182,6 +182,10 @@
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Northwind.DAL.csproj">
+      <Project>{24FA312C-06E0-462D-97FA-709AC20D09EF}</Project>
+      <Name>Northwind.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>

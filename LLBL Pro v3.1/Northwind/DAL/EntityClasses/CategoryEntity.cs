@@ -80,7 +80,7 @@ namespace Northwind.DAL.EntityClasses
 		/// <summary> CTor</summary>
 		/// <param name="categoryId">PK value for Category which data should be fetched into this Category object</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public CategoryEntity(System.Int32 categoryId):base("CategoryEntity")
+		public CategoryEntity(Northwind.DAL.Category categoryId):base("CategoryEntity")
 		{
 			InitClassEmpty(null, null);
 			this.CategoryId = categoryId;
@@ -90,7 +90,7 @@ namespace Northwind.DAL.EntityClasses
 		/// <param name="categoryId">PK value for Category which data should be fetched into this Category object</param>
 		/// <param name="validator">The custom validator object for this CategoryEntity</param>
 		/// <remarks>The entity is not fetched by this constructor. Use a DataAccessAdapter for that.</remarks>
-		public CategoryEntity(System.Int32 categoryId, IValidator validator):base("CategoryEntity")
+		public CategoryEntity(Northwind.DAL.Category categoryId, IValidator validator):base("CategoryEntity")
 		{
 			InitClassEmpty(validator, null);
 			this.CategoryId = categoryId;
@@ -408,10 +408,10 @@ namespace Northwind.DAL.EntityClasses
 		/// MS_Description: Number automatically assigned to a new category.<br/></summary>
 		/// <remarks>Mapped on  table field: "Categories"."CategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 CategoryId
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual Northwind.DAL.Category CategoryId
 		{
-			get { return (System.Int32)GetValue((int)CategoryFieldIndex.CategoryId, true); }
+			get { return (Northwind.DAL.Category)GetValue((int)CategoryFieldIndex.CategoryId, true); }
 			set	{ SetValue((int)CategoryFieldIndex.CategoryId, value); }
 		}
 

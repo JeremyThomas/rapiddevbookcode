@@ -69,7 +69,7 @@ namespace Northwind.DAL.Oracle
 		private void InitCategoryEntityMappings()
 		{
 			this.AddElementMapping( "CategoryEntity", "//localhost/xe", @"DBO_NORTHWIND", "CATEGORIES", 4 );
-			this.AddElementFieldMapping( "CategoryEntity", "CategoryId", "CATEGORYID", false, "Decimal", 0, 0, 10, true, "DBO_NORTHWIND.CATEGORIES_CATEGORYID_SEQ",  new AW.Helper.TypeConverters.IntegerNumericConverter(), typeof(System.Int64), 0 );
+			this.AddElementFieldMapping( "CategoryEntity", "CategoryId", "CATEGORYID", false, "Decimal", 0, 0, 10, false, "",  new Northwind.DAL.CategoryConverter(), typeof(System.Int64), 0 );
 			this.AddElementFieldMapping( "CategoryEntity", "CategoryName", "CATEGORYNAME", false, "NVarchar2", 15, 0, 0, false, "", null, typeof(System.String), 1 );
 			this.AddElementFieldMapping( "CategoryEntity", "Description", "DESCRIPTION", true, "NClob", 2147483647, 0, 0, false, "", null, typeof(System.String), 2 );
 			this.AddElementFieldMapping( "CategoryEntity", "Picture", "PICTURE", true, "Blob", 2147483647, 0, 0, false, "", null, typeof(System.Byte[]), 3 );
@@ -167,7 +167,7 @@ namespace Northwind.DAL.Oracle
 		private void InitProductEntityMappings()
 		{
 			this.AddElementMapping( "ProductEntity", "//localhost/xe", @"DBO_NORTHWIND", "PRODUCTS", 10 );
-			this.AddElementFieldMapping( "ProductEntity", "CategoryId", "CATEGORYID", true, "Decimal", 0, 0, 10, false, "",  new AW.Helper.TypeConverters.IntegerNumericConverter(), typeof(System.Int64), 0 );
+			this.AddElementFieldMapping( "ProductEntity", "CategoryId", "CATEGORYID", true, "Decimal", 0, 0, 10, false, "",  new Northwind.DAL.CategoryConverter(), typeof(System.Int64), 0 );
 			this.AddElementFieldMapping( "ProductEntity", "Discontinued", "DISCONTINUED", false, "Decimal", 0, 0, 1, false, "",  new SD.LLBLGen.Pro.TypeConverters.BooleanNumericConverter(), typeof(System.Int16), 1 );
 			this.AddElementFieldMapping( "ProductEntity", "ProductId", "PRODUCTID", false, "Decimal", 0, 0, 10, true, "DBO_NORTHWIND.PRODUCTS_PRODUCTID_SEQ",  new AW.Helper.TypeConverters.IntegerNonNullNumericConverter(), typeof(System.Int64), 2 );
 			this.AddElementFieldMapping( "ProductEntity", "ProductName", "PRODUCTNAME", false, "NVarchar2", 40, 0, 0, false, "", null, typeof(System.String), 3 );
