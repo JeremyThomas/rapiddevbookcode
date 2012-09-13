@@ -36,7 +36,7 @@ namespace AW.Data.EntityClasses
 	/// MS_Description: Current customer information. Also see the Individual and Store tables.<br/>
 	/// </summary>
 	[Serializable]
-	public partial class CustomerEntity : CommonEntityBase
+	public partial class CustomerEntity : CommonEntityBase, IMergable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{

@@ -36,7 +36,7 @@ namespace AW.Data.EntityClasses
 	/// MS_Description: Cross-reference table mapping customers to their address(es).<br/>
 	/// </summary>
 	[Serializable]
-	public partial class CustomerAddressEntity : CommonEntityBase
+	public partial class CustomerAddressEntity : CommonEntityBase, IMergable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
