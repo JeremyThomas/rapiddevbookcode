@@ -71,7 +71,7 @@ namespace Northwind.DAL.HelperClasses
 		private void InitCategoryEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(CategoryFieldIndex), "CategoryEntity");
-			this.AddElementFieldInfo("CategoryEntity", "CategoryId", typeof(System.Int32), true, false, true, false,  (int)CategoryFieldIndex.CategoryId, 0, 0, 10);
+			this.AddElementFieldInfo("CategoryEntity", "CategoryId", typeof(Northwind.DAL.Category), true, false, true, false,  (int)CategoryFieldIndex.CategoryId, 0, 0, 10);
 			this.AddElementFieldInfo("CategoryEntity", "CategoryName", typeof(System.String), false, false, false, false,  (int)CategoryFieldIndex.CategoryName, 15, 0, 0);
 			this.AddElementFieldInfo("CategoryEntity", "Description", typeof(System.String), false, false, false, true,  (int)CategoryFieldIndex.Description, 1073741823, 0, 0);
 			this.AddElementFieldInfo("CategoryEntity", "Picture", typeof(System.Byte[]), false, false, false, true,  (int)CategoryFieldIndex.Picture, 2147483647, 0, 0);
@@ -169,7 +169,7 @@ namespace Northwind.DAL.HelperClasses
 		private void InitProductEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(ProductFieldIndex), "ProductEntity");
-			this.AddElementFieldInfo("ProductEntity", "CategoryId", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ProductFieldIndex.CategoryId, 0, 0, 10);
+			this.AddElementFieldInfo("ProductEntity", "CategoryId", typeof(Nullable<Northwind.DAL.Category>), false, true, false, true,  (int)ProductFieldIndex.CategoryId, 0, 0, 10);
 			this.AddElementFieldInfo("ProductEntity", "Discontinued", typeof(System.Boolean), false, false, false, false,  (int)ProductFieldIndex.Discontinued, 0, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "ProductId", typeof(System.Int32), true, false, true, false,  (int)ProductFieldIndex.ProductId, 0, 0, 10);
 			this.AddElementFieldInfo("ProductEntity", "ProductName", typeof(System.String), false, false, false, false,  (int)ProductFieldIndex.ProductName, 40, 0, 0);

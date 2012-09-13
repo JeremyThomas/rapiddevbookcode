@@ -74,7 +74,7 @@
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
-          <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
+          <Binding Name="SD.TemplateBindings.QuerySpecTemplates" />
           <Binding Name="SD.TemplateBindings.OracleODPNetSpecific.NET20" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific.NET20" />
@@ -107,7 +107,7 @@
     <EntityDefinitions>
       <EntityDefinition Name="Category">
         <Fields>
-          <Field Name="CategoryId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+          <Field Name="CategoryId" Type="Category" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
@@ -389,7 +389,7 @@
       </EntityDefinition>
       <EntityDefinition Name="Product">
         <Fields>
-          <Field Name="CategoryId" Type="int" IsOptional="true" Precision="10">
+          <Field Name="CategoryId" Type="Category" IsOptional="true" Precision="10">
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Same entry as in Categories table." />
@@ -625,7 +625,7 @@
               <Tables>
                 <Table Name="Categories">
                   <Fields>
-                    <Field Name="CategoryID" Ordinal="1" IsIdentity="true" TrackedChanges="8" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10">
+                    <Field Name="CategoryID" Ordinal="1" TrackedChanges="8" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
                       </CustomProperties>
@@ -1248,7 +1248,7 @@
       <EntityMappings>
         <EntityMapping EntityName=":Category" TargetName="Northwind:dbo:Categories">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CategoryID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CategoryID" />
             <FieldMapping FieldName="CategoryName" TargetFieldName="CategoryName" />
             <FieldMapping FieldName="Description" TargetFieldName="Description" />
             <FieldMapping FieldName="Picture" TargetFieldName="Picture" />
@@ -1397,7 +1397,7 @@
       <EntityMappings>
         <EntityMapping EntityName=":Category" TargetName="//localhost/xe:DBO_NORTHWIND:CATEGORIES">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:CATEGORIES_CATEGORYID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="Northwind.DAL.CategoryConverter" />
             <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
             <FieldMapping FieldName="Description" TargetFieldName="DESCRIPTION" />
             <FieldMapping FieldName="Picture" TargetFieldName="PICTURE" />
@@ -1487,7 +1487,7 @@
         </EntityMapping>
         <EntityMapping EntityName=":Product" TargetName="//localhost/xe:DBO_NORTHWIND:PRODUCTS">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="Northwind.DAL.CategoryConverter" />
             <FieldMapping FieldName="Discontinued" TargetFieldName="DISCONTINUED" TypeConverterToUse="SD.LLBLGen.Pro.TypeConverters.BooleanNumericConverter" />
             <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:PRODUCTS_PRODUCTID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
             <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
