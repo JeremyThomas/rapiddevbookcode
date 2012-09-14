@@ -6,7 +6,7 @@
     <Property Name="AdditionalTaskPerformerFolder" Value="" />
     <Property Name="AdditionalTasksFolder" Value="" />
     <Property Name="AdditionalTemplatesFolder" Value="" />
-    <Property Name="AdditionalTypeConverterFolder" Value="C:\Users\jeremy.thomas\Documents\Visual Studio 2010\Projects\Codeplex\RapidDevBookCode\LLBL Pro V3.1\AW.Helper.LLBL\bin\Debug" />
+    <Property Name="AdditionalTypeConverterFolder" Value="..\Dynamic Data\bin" />
     <Property Name="AddNewElementsAfterRefresh" Value="0" />
     <Property Name="AddNewFieldsAfterRefresh" Value="0" />
     <Property Name="AddNewViewsAsEntitiesAfterRefresh" Value="0" />
@@ -63,7 +63,9 @@
     <Property Name="UpdateCustomPropertiesAfterRefresh" Value="0" />
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
-  <TypeShortcuts />
+  <TypeShortcuts>
+    <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+  </TypeShortcuts>
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
       <LastUsedPreferences>
@@ -75,6 +77,7 @@
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
+          <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
           <Binding Name="SD.TemplateBindings.OracleODPNetSpecific.NET20" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific.NET20" />
@@ -107,7 +110,7 @@
     <EntityDefinitions>
       <EntityDefinition Name="Category">
         <Fields>
-          <Field Name="CategoryId" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
+          <Field Name="CategoryId" Type="Category" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
@@ -389,7 +392,7 @@
       </EntityDefinition>
       <EntityDefinition Name="Product">
         <Fields>
-          <Field Name="CategoryId" Type="int" IsOptional="true" Precision="10">
+          <Field Name="CategoryId" Type="Category" IsOptional="true" Precision="10">
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Same entry as in Categories table." />
@@ -625,7 +628,7 @@
               <Tables>
                 <Table Name="Categories">
                   <Fields>
-                    <Field Name="CategoryID" Ordinal="1" IsIdentity="true" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10">
+                    <Field Name="CategoryID" Ordinal="1" TrackedChanges="8" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
                       </CustomProperties>
@@ -1248,7 +1251,7 @@
       <EntityMappings>
         <EntityMapping EntityName=":Category" TargetName="Northwind:dbo:Categories">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CategoryID" SequenceToUse="SCOPE_IDENTITY()" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CategoryID" />
             <FieldMapping FieldName="CategoryName" TargetFieldName="CategoryName" />
             <FieldMapping FieldName="Description" TargetFieldName="Description" />
             <FieldMapping FieldName="Picture" TargetFieldName="Picture" />
@@ -1389,13 +1392,15 @@
       </EntityMappings>
       <TypedViewMappings />
       <SPCallMappings />
-      <TypeConversionDefinitions />
+      <TypeConversionDefinitions>
+        <TypeConversionDefinition TypeConverter="Northwind.DAL.CategoryConverter" DbDotNetType="System.Int32" />
+      </TypeConversionDefinitions>
     </MappingStore>
     <MappingStore Type="A8034CB0-319D-4cdd-BC7D-1E7CFDBA3B74">
       <EntityMappings>
         <EntityMapping EntityName=":Category" TargetName="//localhost/xe:DBO_NORTHWIND:CATEGORIES">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:CATEGORIES_CATEGORYID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="Northwind.DAL.CategoryConverter" />
             <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
             <FieldMapping FieldName="Description" TargetFieldName="DESCRIPTION" />
             <FieldMapping FieldName="Picture" TargetFieldName="PICTURE" />
@@ -1434,7 +1439,7 @@
             <FieldMapping FieldName="BirthDate" TargetFieldName="BIRTHDATE" />
             <FieldMapping FieldName="City" TargetFieldName="CITY" />
             <FieldMapping FieldName="Country" TargetFieldName="COUNTRY" />
-            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:EMPLOYEES_EMPLOYEEID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:EMPLOYEES_EMPLOYEEID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
             <FieldMapping FieldName="Extension" TargetFieldName="EXTENSION" />
             <FieldMapping FieldName="FirstName" TargetFieldName="FIRSTNAME" />
             <FieldMapping FieldName="HireDate" TargetFieldName="HIREDATE" />
@@ -1445,24 +1450,24 @@
             <FieldMapping FieldName="PhotoPath" TargetFieldName="PHOTOPATH" />
             <FieldMapping FieldName="PostalCode" TargetFieldName="POSTALCODE" />
             <FieldMapping FieldName="Region" TargetFieldName="REGION" />
-            <FieldMapping FieldName="ReportsTo" TargetFieldName="REPORTSTO" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="ReportsTo" TargetFieldName="REPORTSTO" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
             <FieldMapping FieldName="Title" TargetFieldName="TITLE" />
             <FieldMapping FieldName="TitleOfCourtesy" TargetFieldName="TITLEOFCOURTESY" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":EmployeeTerritory" TargetName="//localhost/xe:DBO_NORTHWIND:EMPLOYEETERRITORIES">
           <FieldMappings>
-            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
             <FieldMapping FieldName="TerritoryId" TargetFieldName="TERRITORYID" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Order" TargetName="//localhost/xe:DBO_NORTHWIND:ORDERS">
           <FieldMappings>
             <FieldMapping FieldName="CustomerId" TargetFieldName="CUSTOMERID" />
-            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="EmployeeId" TargetFieldName="EMPLOYEEID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
             <FieldMapping FieldName="Freight" TargetFieldName="FREIGHT" />
             <FieldMapping FieldName="OrderDate" TargetFieldName="ORDERDATE" />
-            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:ORDERS_ORDERID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:ORDERS_ORDERID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
             <FieldMapping FieldName="RequiredDate" TargetFieldName="REQUIREDDATE" />
             <FieldMapping FieldName="ShipAddress" TargetFieldName="SHIPADDRESS" />
             <FieldMapping FieldName="ShipCity" TargetFieldName="SHIPCITY" />
@@ -1471,43 +1476,43 @@
             <FieldMapping FieldName="ShippedDate" TargetFieldName="SHIPPEDDATE" />
             <FieldMapping FieldName="ShipPostalCode" TargetFieldName="SHIPPOSTALCODE" />
             <FieldMapping FieldName="ShipRegion" TargetFieldName="SHIPREGION" />
-            <FieldMapping FieldName="ShipVia" TargetFieldName="SHIPVIA" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="ShipVia" TargetFieldName="SHIPVIA" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":OrderDetail" TargetName="//localhost/xe:DBO_NORTHWIND:ORDER_DETAILS">
           <FieldMappings>
-            <FieldMapping FieldName="Discount" TargetFieldName="DISCOUNT" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SingleNumericConverter" />
-            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
-            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
-            <FieldMapping FieldName="Quantity" TargetFieldName="QUANTITY" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SmallIntegerNumericConverter" />
+            <FieldMapping FieldName="Discount" TargetFieldName="DISCOUNT" TypeConverterToUse="AW.Helper.TypeConverters.SingleNumericConverter" />
+            <FieldMapping FieldName="OrderId" TargetFieldName="ORDERID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="Quantity" TargetFieldName="QUANTITY" TypeConverterToUse="AW.Helper.TypeConverters.SmallIntegerNumericConverter" />
             <FieldMapping FieldName="UnitPrice" TargetFieldName="UNITPRICE" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Product" TargetName="//localhost/xe:DBO_NORTHWIND:PRODUCTS">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="Northwind.DAL.CategoryConverter" />
             <FieldMapping FieldName="Discontinued" TargetFieldName="DISCONTINUED" TypeConverterToUse="SD.LLBLGen.Pro.TypeConverters.BooleanNumericConverter" />
-            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:PRODUCTS_PRODUCTID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:PRODUCTS_PRODUCTID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
             <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />
             <FieldMapping FieldName="QuantityPerUnit" TargetFieldName="QUANTITYPERUNIT" />
-            <FieldMapping FieldName="ReorderLevel" TargetFieldName="REORDERLEVEL" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SmallIntegerNumericConverter" />
-            <FieldMapping FieldName="SupplierId" TargetFieldName="SUPPLIERID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="ReorderLevel" TargetFieldName="REORDERLEVEL" TypeConverterToUse="AW.Helper.TypeConverters.SmallIntegerNumericConverter" />
+            <FieldMapping FieldName="SupplierId" TargetFieldName="SUPPLIERID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
             <FieldMapping FieldName="UnitPrice" TargetFieldName="UNITPRICE" />
-            <FieldMapping FieldName="UnitsInStock" TargetFieldName="UNITSINSTOCK" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SmallIntegerNumericConverter" />
-            <FieldMapping FieldName="UnitsOnOrder" TargetFieldName="UNITSONORDER" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.SmallIntegerNumericConverter" />
+            <FieldMapping FieldName="UnitsInStock" TargetFieldName="UNITSINSTOCK" TypeConverterToUse="AW.Helper.TypeConverters.SmallIntegerNumericConverter" />
+            <FieldMapping FieldName="UnitsOnOrder" TargetFieldName="UNITSONORDER" TypeConverterToUse="AW.Helper.TypeConverters.SmallIntegerNumericConverter" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Region" TargetName="//localhost/xe:DBO_NORTHWIND:REGION">
           <FieldMappings>
             <FieldMapping FieldName="RegionDescription" TargetFieldName="REGIONDESCRIPTION" />
-            <FieldMapping FieldName="RegionId" TargetFieldName="REGIONID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="RegionId" TargetFieldName="REGIONID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Shipper" TargetName="//localhost/xe:DBO_NORTHWIND:SHIPPERS">
           <FieldMappings>
             <FieldMapping FieldName="CompanyName" TargetFieldName="COMPANYNAME" />
             <FieldMapping FieldName="Phone" TargetFieldName="PHONE" />
-            <FieldMapping FieldName="ShipperId" TargetFieldName="SHIPPERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:SHIPPERS_SHIPPERID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="ShipperId" TargetFieldName="SHIPPERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:SHIPPERS_SHIPPERID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Supplier" TargetName="//localhost/xe:DBO_NORTHWIND:SUPPLIERS">
@@ -1523,12 +1528,12 @@
             <FieldMapping FieldName="Phone" TargetFieldName="PHONE" />
             <FieldMapping FieldName="PostalCode" TargetFieldName="POSTALCODE" />
             <FieldMapping FieldName="Region" TargetFieldName="REGION" />
-            <FieldMapping FieldName="SupplierId" TargetFieldName="SUPPLIERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:SUPPLIERS_SUPPLIERID_SEQ" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNonNullNumericConverter" />
+            <FieldMapping FieldName="SupplierId" TargetFieldName="SUPPLIERID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:SUPPLIERS_SUPPLIERID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
           </FieldMappings>
         </EntityMapping>
         <EntityMapping EntityName=":Territory" TargetName="//localhost/xe:DBO_NORTHWIND:TERRITORIES">
           <FieldMappings>
-            <FieldMapping FieldName="RegionId" TargetFieldName="REGIONID" TypeConverterToUse="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" />
+            <FieldMapping FieldName="RegionId" TargetFieldName="REGIONID" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNumericConverter" />
             <FieldMapping FieldName="TerritoryDescription" TargetFieldName="TERRITORYDESCRIPTION" />
             <FieldMapping FieldName="TerritoryId" TargetFieldName="TERRITORYID" />
           </FieldMappings>
@@ -1537,7 +1542,8 @@
       <TypedViewMappings />
       <SPCallMappings />
       <TypeConversionDefinitions>
-        <TypeConversionDefinition TypeConverter="AW.Helper.LLBL.TypeConverters.IntegerNumericConverter" DbDotNetType="System.Int64" />
+        <TypeConversionDefinition TypeConverter="AW.Helper.TypeConverters.IntegerNumericConverter" DbDotNetType="System.Int64" />
+        <TypeConversionDefinition TypeConverter="Northwind.DAL.CategoryConverter" DbDotNetType="System.Int64" />
       </TypeConversionDefinitions>
     </MappingStore>
   </MappingStores>

@@ -36,7 +36,7 @@ namespace AW.Data.EntityClasses
 	/// MS_Description: Cross-reference table mapping customers to their address(es).<br/>
 	/// </summary>
 	[Serializable]
-	public partial class CustomerAddressEntity : CommonEntityBase
+	public partial class CustomerAddressEntity : CommonEntityBase, IMergable
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
@@ -823,9 +823,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "CustomerAddress"."AddressTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 AddressTypeID
+		public virtual AW.Data.AddressType AddressTypeID
 		{
-			get { return (System.Int32)GetValue((int)CustomerAddressFieldIndex.AddressTypeID, true); }
+			get { return (AW.Data.AddressType)GetValue((int)CustomerAddressFieldIndex.AddressTypeID, true); }
 			set	{ SetValue((int)CustomerAddressFieldIndex.AddressTypeID, value, true); }
 		}
 

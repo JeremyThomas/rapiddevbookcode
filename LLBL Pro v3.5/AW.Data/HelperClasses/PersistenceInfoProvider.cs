@@ -258,7 +258,7 @@ namespace AW.Data.HelperClasses
 		private void InitAddressTypeEntityMappings()
 		{
 			this.AddElementMapping( "AddressTypeEntity", @"AdventureWorks", @"Person", "AddressType", 4 );
-			this.AddElementFieldMapping( "AddressTypeEntity", "AddressTypeID", "AddressTypeID", false, "Int", 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			this.AddElementFieldMapping( "AddressTypeEntity", "AddressTypeID", "AddressTypeID", false, "Int", 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			this.AddElementFieldMapping( "AddressTypeEntity", "ModifiedDate", "ModifiedDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 1 );
 			this.AddElementFieldMapping( "AddressTypeEntity", "Name", "Name", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 2 );
 			this.AddElementFieldMapping( "AddressTypeEntity", "Rowguid", "rowguid", false, "UniqueIdentifier", 0, 0, 0, false, "", null, typeof(System.Guid), 3 );
@@ -287,7 +287,7 @@ namespace AW.Data.HelperClasses
 		private void InitContactTypeEntityMappings()
 		{
 			this.AddElementMapping( "ContactTypeEntity", @"AdventureWorks", @"Person", "ContactType", 3 );
-			this.AddElementFieldMapping( "ContactTypeEntity", "ContactTypeID", "ContactTypeID", false, "Int", 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			this.AddElementFieldMapping( "ContactTypeEntity", "ContactTypeID", "ContactTypeID", false, "Int", 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			this.AddElementFieldMapping( "ContactTypeEntity", "ModifiedDate", "ModifiedDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 1 );
 			this.AddElementFieldMapping( "ContactTypeEntity", "Name", "Name", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 2 );
 		}

@@ -9,6 +9,7 @@
 //////////////////////////////////////////////////////////////
 using System;
 using System.Collections;
+using System.Data;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.SqlServer
@@ -68,7 +69,7 @@ namespace Northwind.DAL.SqlServer
 		private void InitCategoryEntityMappings()
 		{
 			this.AddElementMapping( "CategoryEntity", @"Northwind", @"dbo", "Categories", 4 );
-			this.AddElementFieldMapping( "CategoryEntity", "CategoryId", "CategoryID", false, "Int", 0, 0, 10, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 0 );
+			this.AddElementFieldMapping( "CategoryEntity", "CategoryId", "CategoryID", false, "Int", 0, 0, 10, false, "", null, typeof(System.Int32), 0 );
 			this.AddElementFieldMapping( "CategoryEntity", "CategoryName", "CategoryName", false, "NVarChar", 15, 0, 0, false, "", null, typeof(System.String), 1 );
 			this.AddElementFieldMapping( "CategoryEntity", "Description", "Description", true, "NText", 1073741823, 0, 0, false, "", null, typeof(System.String), 2 );
 			this.AddElementFieldMapping( "CategoryEntity", "Picture", "Picture", true, "Image", 2147483647, 0, 0, false, "", null, typeof(System.Byte[]), 3 );

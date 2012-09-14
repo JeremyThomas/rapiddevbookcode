@@ -823,9 +823,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "StoreContact"."ContactTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 ContactTypeID
+		public virtual AW.Data.ContactType ContactTypeID
 		{
-			get { return (System.Int32)GetValue((int)StoreContactFieldIndex.ContactTypeID, true); }
+			get { return (AW.Data.ContactType)GetValue((int)StoreContactFieldIndex.ContactTypeID, true); }
 			set	{ SetValue((int)StoreContactFieldIndex.ContactTypeID, value, true); }
 		}
 

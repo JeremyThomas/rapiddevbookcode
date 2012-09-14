@@ -18,7 +18,7 @@ namespace Dynamic_Data
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			HyperLink1.Text = "View " + ChildrenColumn.ChildTable.DisplayName;
+      HyperLink1.Text = "View " + Column.DisplayName;
 		}
 
 		protected string GetChildrenPath()

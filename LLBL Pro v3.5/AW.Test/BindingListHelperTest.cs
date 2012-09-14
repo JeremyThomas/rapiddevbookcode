@@ -111,7 +111,7 @@ namespace AW.Tests
 		[TestMethod]
 		public void BindEmptyQueryTest()
 		{
-			TestBindEnumerable((IEnumerable) MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID == -1), false, 4);
+			TestBindEnumerable((IEnumerable) MetaSingletons.MetaData.AddressType.Where(at => at.Name == null), false, 4);
 		}
 
 		[TestMethod]
