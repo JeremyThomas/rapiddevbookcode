@@ -25,6 +25,7 @@ using NUnit.Extensions.Forms;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using AddressType = AW.Data.AddressType;
 
 namespace AW.DebugVisualizers.Tests
 {
@@ -202,10 +203,10 @@ namespace AW.DebugVisualizers.Tests
     public void NonSerializableEnumerationTest()
     {
       TestShowTransported(MetaSingletons.MetaData.AddressType, 4);
-      TestShowTransported(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > 2), 4);
+      TestShowTransported(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > AddressType.Home), 4);
       TestShowTransported(_addressTypeEntityCollection.DefaultView, 4);
       TestShowTransported(new BindingSource(_addressTypeEntityCollection, null), 4);
-      TestShowTransported(_addressTypeEntityCollection.Where(at => at.AddressTypeID > 2), 4);
+      TestShowTransported(_addressTypeEntityCollection.Where(at => at.AddressTypeID > AddressType.Home), 4);
       TestShowTransported(_addressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID), 4);
     }
 

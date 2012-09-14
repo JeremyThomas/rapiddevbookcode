@@ -592,9 +592,9 @@ namespace Northwind.DAL.EntityClasses
 		/// <remarks>Mapped on  table field: "Products"."CategoryID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual Nullable<System.Int32> CategoryId
+		public virtual Nullable<Northwind.DAL.Category> CategoryId
 		{
-			get { return (Nullable<System.Int32>)GetValue((int)ProductFieldIndex.CategoryId, false); }
+			get { return (Nullable<Northwind.DAL.Category>)GetValue((int)ProductFieldIndex.CategoryId, false); }
 			set	{ SetValue((int)ProductFieldIndex.CategoryId, value); }
 		}
 

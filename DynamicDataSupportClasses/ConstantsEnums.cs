@@ -38,18 +38,17 @@
 // Contributers to the code:
 //		- Frans Bouma [FB]
 //////////////////////////////////////////////////////////////////////
-using System;
 
 namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
 {
-	/// <summary>
-	/// Class for constants
-	/// </summary>
-	public static class Constants
-	{
-		/// <summary>
-		/// The key used to store the datamodel provider with in the Application object.
-		/// </summary>
-		public static readonly string DataModelProviderKey = "__DataModelProvider";
-	}
+  /// <summary>
+  ///   Class for constants
+  /// </summary>
+  public static class Constants
+  {
+    /// <summary>
+    ///   The key used to store the datamodel provider with in the Application object.
+    /// </summary>
+    public static readonly string DataModelProviderKey = "__DataModelProvider";
+  }
 }

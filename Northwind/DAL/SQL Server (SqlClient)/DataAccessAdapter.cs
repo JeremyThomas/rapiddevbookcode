@@ -9,6 +9,8 @@
 //////////////////////////////////////////////////////////////
 using System;
 using System.Collections;
+using System.Data;
+using System.Data.Common;
 using System.Configuration;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.DQE.SqlServer;

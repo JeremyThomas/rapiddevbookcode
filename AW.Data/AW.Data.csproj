@@ -321,6 +321,9 @@
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
     <Compile Include="HelperClasses\FactoryHelper.cs" />
+    <Compile Include="HelperClasses\Interfaces.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="HelperClasses\PersistenceInfoProvider.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
@@ -1128,6 +1131,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Enums.typeimports">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSHARP.Targets" />
   <PropertyGroup>

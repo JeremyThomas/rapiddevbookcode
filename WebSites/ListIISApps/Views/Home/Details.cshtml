@@ -1,0 +1,116 @@
+﻿@model ListIISApps.Models.ServerManagerVM
+@{
+  ViewBag.Title = "Application details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+  @Html.ActionLink("Back to List", "Index")
+</p>
+
+<fieldset>
+  <legend>ServerManagerVM</legend>
+
+  <div class="display-label">PhysicalPath</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.PhysicalPath)
+  </div>
+
+  <div class="display-label">Path</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.Application.Path)
+  </div>
+
+  <div class="display-label">ApplicationPoolName</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.Application.ApplicationPoolName)
+  </div>
+
+  <div class="display-label">EnabledProtocols</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.Application.EnabledProtocols)
+  </div>
+  
+  <div class="display-label">AuthenticationMode</div>
+  <div class="display-field">
+    @Html.DisplayFor(model => model.AuthenticationMode)
+  </div>
+</fieldset>
+
+<table style="width: 100%;">
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+  </tr>
+  @if (ViewData.Model.AppSettings != null)
+  {
+    foreach (var setting in ViewData.Model.AppSettings.AllKeys)
+    {
+      <tr>
+        <td>@setting</td>
+        <td>@ViewData.Model.AppSettings[setting]</td>
+      </tr>
+    }
+  }
+</table>
+
+<table style="width: 100%;">
+  <tr>
+    <th>Name</th>
+    <th>ConnectionString</th>
+    <th>ProviderName</th>
+  </tr>
+  
+  @foreach (var cs in ViewData.Model.ConnectionStrings)
+  {
+    <tr>
+      <td>@cs.Name</td>
+      <td>@cs.ConnectionString</td>
+      <td>@cs.ProviderName</td>
+    </tr>
+  }
+</table>
+
+<table style="width: 100%;">
+  <tr>
+    <th>Sections</th>
+  </tr>
+  
+  @foreach (var cs in ViewData.Model.Sections)
+  {
+    <tr>
+      <td>@cs</td>
+    </tr>
+  }
+</table>
+
+<table style="width: 100%;">
+  <tr>
+    <th>SectionsDefinitions</th>
+  </tr>
+  
+  @foreach (var cs in ViewData.Model.SectionsDefinitions)
+  {
+    <tr>
+      <td>@cs.Name</td>
+    </tr>
+  }
+</table>
+
+<table style="width: 100%;">
+  <tr>
+    <th>Exceptions</th>
+  </tr>
+  
+  @foreach (var e in ViewData.Model.Exceptions)
+  {
+    <tr>
+      <td>@e.Message</td>
+    </tr>
+  }
+</table>
+
+<p>
+  @Html.ActionLink("Back to List", "Index")
+</p>

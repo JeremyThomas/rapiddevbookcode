@@ -78,7 +78,7 @@ namespace AW.Data.EntityClasses
 		
 		/// <summary>CTor</summary>
 		/// <param name="contactTypeID">PK value for ContactType which data should be fetched into this ContactType object</param>
-		public ContactTypeEntity(System.Int32 contactTypeID):base("ContactTypeEntity")
+		public ContactTypeEntity(AW.Data.ContactType contactTypeID):base("ContactTypeEntity")
 		{
 			InitClassFetch(contactTypeID, null, null);
 		}
@@ -86,7 +86,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="contactTypeID">PK value for ContactType which data should be fetched into this ContactType object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		public ContactTypeEntity(System.Int32 contactTypeID, IPrefetchPath prefetchPathToUse):base("ContactTypeEntity")
+		public ContactTypeEntity(AW.Data.ContactType contactTypeID, IPrefetchPath prefetchPathToUse):base("ContactTypeEntity")
 		{
 			InitClassFetch(contactTypeID, null, prefetchPathToUse);
 		}
@@ -94,7 +94,7 @@ namespace AW.Data.EntityClasses
 		/// <summary>CTor</summary>
 		/// <param name="contactTypeID">PK value for ContactType which data should be fetched into this ContactType object</param>
 		/// <param name="validator">The custom validator object for this ContactTypeEntity</param>
-		public ContactTypeEntity(System.Int32 contactTypeID, IValidator validator):base("ContactTypeEntity")
+		public ContactTypeEntity(AW.Data.ContactType contactTypeID, IValidator validator):base("ContactTypeEntity")
 		{
 			InitClassFetch(contactTypeID, validator, null);
 		}
@@ -271,7 +271,7 @@ namespace AW.Data.EntityClasses
 		/// <summary> Fetches the contents of this entity from the persistent storage using the primary key.</summary>
 		/// <param name="contactTypeID">PK value for ContactType which data should be fetched into this ContactType object</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 contactTypeID)
+		public bool FetchUsingPK(AW.Data.ContactType contactTypeID)
 		{
 			return FetchUsingPK(contactTypeID, null, null, null);
 		}
@@ -280,7 +280,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="contactTypeID">PK value for ContactType which data should be fetched into this ContactType object</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 contactTypeID, IPrefetchPath prefetchPathToUse)
+		public bool FetchUsingPK(AW.Data.ContactType contactTypeID, IPrefetchPath prefetchPathToUse)
 		{
 			return FetchUsingPK(contactTypeID, prefetchPathToUse, null, null);
 		}
@@ -290,7 +290,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
 		/// <param name="contextToUse">The context to add the entity to if the fetch was succesful. </param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 contactTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse)
+		public bool FetchUsingPK(AW.Data.ContactType contactTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse)
 		{
 			return FetchUsingPK(contactTypeID, prefetchPathToUse, contextToUse, null);
 		}
@@ -303,7 +303,7 @@ namespace AW.Data.EntityClasses
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		public bool FetchUsingPK(System.Int32 contactTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		public bool FetchUsingPK(AW.Data.ContactType contactTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			return Fetch(contactTypeID, prefetchPathToUse, contextToUse, excludedIncludedFields);
 		}
@@ -464,7 +464,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="contactTypeID">PK value for ContactType which data should be fetched into this ContactType object</param>
 		/// <param name="validator">The validator object for this ContactTypeEntity</param>
 		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch as well</param>
-		private void InitClassFetch(System.Int32 contactTypeID, IValidator validator, IPrefetchPath prefetchPathToUse)
+		private void InitClassFetch(AW.Data.ContactType contactTypeID, IValidator validator, IPrefetchPath prefetchPathToUse)
 		{
 			OnInitializing();
 			this.Validator = validator;
@@ -522,7 +522,7 @@ namespace AW.Data.EntityClasses
 		/// If null or empty, all fields are fetched (default). If an instance of ExcludeIncludeFieldsList is passed in and its ExcludeContainedFields property
 		/// is set to false, the fields contained in excludedIncludedFields are kept in the query, the rest of the fields in the query are excluded.</param>
 		/// <returns>True if succeeded, false otherwise.</returns>
-		private bool Fetch(System.Int32 contactTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
+		private bool Fetch(AW.Data.ContactType contactTypeID, IPrefetchPath prefetchPathToUse, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			try
 			{
@@ -607,10 +607,10 @@ namespace AW.Data.EntityClasses
 		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "ContactType"."ContactTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, true</remarks>
-		public virtual System.Int32 ContactTypeID
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, true, false</remarks>
+		public virtual AW.Data.ContactType ContactTypeID
 		{
-			get { return (System.Int32)GetValue((int)ContactTypeFieldIndex.ContactTypeID, true); }
+			get { return (AW.Data.ContactType)GetValue((int)ContactTypeFieldIndex.ContactTypeID, true); }
 			set	{ SetValue((int)ContactTypeFieldIndex.ContactTypeID, value, true); }
 		}
 

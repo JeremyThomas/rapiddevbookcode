@@ -36,7 +36,7 @@ namespace AW.Data.EntityClasses
 	/// MS_Description: Currency exchange rates.<br/>
 	/// </summary>
 	[Serializable]
-	public partial class CurrencyRateEntity : CommonEntityBase
+	public partial class CurrencyRateEntity : CommonEntityBase, IModifiedTracking
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{

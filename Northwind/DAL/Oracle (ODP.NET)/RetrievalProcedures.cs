@@ -8,6 +8,7 @@
 // Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
+using System.Data;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.Oracle

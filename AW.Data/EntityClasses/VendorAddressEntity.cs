@@ -820,9 +820,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "VendorAddress"."AddressTypeID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 AddressTypeID
+		public virtual AW.Data.AddressType AddressTypeID
 		{
-			get { return (System.Int32)GetValue((int)VendorAddressFieldIndex.AddressTypeID, true); }
+			get { return (AW.Data.AddressType)GetValue((int)VendorAddressFieldIndex.AddressTypeID, true); }
 			set	{ SetValue((int)VendorAddressFieldIndex.AddressTypeID, value, true); }
 		}
 
