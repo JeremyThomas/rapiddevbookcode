@@ -44,17 +44,13 @@
       this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.employeeEntityBindingNavigatorSaveItem = new System.Windows.Forms.ToolStripButton();
-      this.employeeEntityDataGridView = new System.Windows.Forms.DataGridView();
-      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.toolStripButtonRevert = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonExpand = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonCollapse = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonRevert = new System.Windows.Forms.ToolStripButton();
-      this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-      this.dataTreeViewrOganizationStructure = new Chaliy.Windows.Forms.DataTreeView();
-      this.dataTreeViewrOganizationStructureEcho = new Chaliy.Windows.Forms.DataTreeView();
-      this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.employeeEntityDataGridView = new System.Windows.Forms.DataGridView();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,6 +68,10 @@
       this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+      this.dataTreeViewrOganizationStructure = new Chaliy.Windows.Forms.DataTreeView();
+      this.dataTreeViewrOganizationStructureEcho = new Chaliy.Windows.Forms.DataTreeView();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingNavigator)).BeginInit();
@@ -144,7 +144,7 @@
       // bindingNavigatorCountItem
       // 
       this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
+      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
       this.bindingNavigatorCountItem.Text = "of {0}";
       this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
       // 
@@ -217,6 +217,11 @@
       this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
       this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
       // 
+      // toolStripSeparator1
+      // 
+      this.toolStripSeparator1.Name = "toolStripSeparator1";
+      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+      // 
       // employeeEntityBindingNavigatorSaveItem
       // 
       this.employeeEntityBindingNavigatorSaveItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -226,6 +231,41 @@
       this.employeeEntityBindingNavigatorSaveItem.Size = new System.Drawing.Size(23, 22);
       this.employeeEntityBindingNavigatorSaveItem.Text = "Save Data";
       this.employeeEntityBindingNavigatorSaveItem.Click += new System.EventHandler(this.employeeEntityBindingNavigatorSaveItem_Click);
+      // 
+      // toolStripButtonRevert
+      // 
+      this.toolStripButtonRevert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripButtonRevert.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRevert.Image")));
+      this.toolStripButtonRevert.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonRevert.Name = "toolStripButtonRevert";
+      this.toolStripButtonRevert.Size = new System.Drawing.Size(23, 22);
+      this.toolStripButtonRevert.Text = "Revert";
+      this.toolStripButtonRevert.Click += new System.EventHandler(this.toolStripButtonRevert_Click);
+      // 
+      // toolStripSeparator2
+      // 
+      this.toolStripSeparator2.Name = "toolStripSeparator2";
+      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+      // 
+      // toolStripButtonExpand
+      // 
+      this.toolStripButtonExpand.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripButtonExpand.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExpand.Image")));
+      this.toolStripButtonExpand.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonExpand.Name = "toolStripButtonExpand";
+      this.toolStripButtonExpand.Size = new System.Drawing.Size(23, 22);
+      this.toolStripButtonExpand.Text = "Expand";
+      this.toolStripButtonExpand.Click += new System.EventHandler(this.toolStripButtonExpand_Click);
+      // 
+      // toolStripButtonCollapse
+      // 
+      this.toolStripButtonCollapse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.toolStripButtonCollapse.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCollapse.Image")));
+      this.toolStripButtonCollapse.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonCollapse.Name = "toolStripButtonCollapse";
+      this.toolStripButtonCollapse.Size = new System.Drawing.Size(23, 22);
+      this.toolStripButtonCollapse.Text = "Collapse";
+      this.toolStripButtonCollapse.Click += new System.EventHandler(this.toolStripButtonCollapse_Click);
       // 
       // employeeEntityDataGridView
       // 
@@ -257,124 +297,6 @@
       this.employeeEntityDataGridView.Size = new System.Drawing.Size(422, 266);
       this.employeeEntityDataGridView.TabIndex = 2;
       this.employeeEntityDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.employeeEntityDataGridView_DataError);
-      // 
-      // splitContainer1
-      // 
-      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-      this.splitContainer1.Name = "splitContainer1";
-      this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-      // 
-      // splitContainer1.Panel1
-      // 
-      this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
-      // 
-      // splitContainer1.Panel2
-      // 
-      this.splitContainer1.Panel2.Controls.Add(this.employeeEntityDataGridView);
-      this.splitContainer1.Panel2.Controls.Add(this.employeeEntityBindingNavigator);
-      this.splitContainer1.Size = new System.Drawing.Size(422, 541);
-      this.splitContainer1.SplitterDistance = 246;
-      this.splitContainer1.TabIndex = 3;
-      // 
-      // toolStripButtonExpand
-      // 
-      this.toolStripButtonExpand.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripButtonExpand.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonExpand.Image")));
-      this.toolStripButtonExpand.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonExpand.Name = "toolStripButtonExpand";
-      this.toolStripButtonExpand.Size = new System.Drawing.Size(23, 22);
-      this.toolStripButtonExpand.Text = "Expand";
-      this.toolStripButtonExpand.Click += new System.EventHandler(this.toolStripButtonExpand_Click);
-      // 
-      // toolStripButtonCollapse
-      // 
-      this.toolStripButtonCollapse.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripButtonCollapse.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCollapse.Image")));
-      this.toolStripButtonCollapse.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonCollapse.Name = "toolStripButtonCollapse";
-      this.toolStripButtonCollapse.Size = new System.Drawing.Size(23, 22);
-      this.toolStripButtonCollapse.Text = "Collapse";
-      this.toolStripButtonCollapse.Click += new System.EventHandler(this.toolStripButtonCollapse_Click);
-      // 
-      // toolStripButtonRevert
-      // 
-      this.toolStripButtonRevert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.toolStripButtonRevert.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRevert.Image")));
-      this.toolStripButtonRevert.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonRevert.Name = "toolStripButtonRevert";
-      this.toolStripButtonRevert.Size = new System.Drawing.Size(23, 22);
-      this.toolStripButtonRevert.Text = "Revert";
-      this.toolStripButtonRevert.Click += new System.EventHandler(this.toolStripButtonRevert_Click);
-      // 
-      // splitContainer2
-      // 
-      this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-      this.splitContainer2.Name = "splitContainer2";
-      // 
-      // splitContainer2.Panel1
-      // 
-      this.splitContainer2.Panel1.Controls.Add(this.dataTreeViewrOganizationStructure);
-      // 
-      // splitContainer2.Panel2
-      // 
-      this.splitContainer2.Panel2.Controls.Add(this.dataTreeViewrOganizationStructureEcho);
-      this.splitContainer2.Size = new System.Drawing.Size(422, 246);
-      this.splitContainer2.SplitterDistance = 200;
-      this.splitContainer2.TabIndex = 1;
-      // 
-      // dataTreeViewrOganizationStructure
-      // 
-      this.dataTreeViewrOganizationStructure.AllowDrop = true;
-      this.dataTreeViewrOganizationStructure.DataMember = "";
-      this.dataTreeViewrOganizationStructure.DataSource = this.employeeEntityBindingSource;
-      this.dataTreeViewrOganizationStructure.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataTreeViewrOganizationStructure.FullRowSelect = true;
-      this.dataTreeViewrOganizationStructure.HideSelection = false;
-      this.dataTreeViewrOganizationStructure.HotTracking = true;
-      this.dataTreeViewrOganizationStructure.IDColumn = "EmployeeID";
-      this.dataTreeViewrOganizationStructure.ImageIndex = 1;
-      this.dataTreeViewrOganizationStructure.ImageList = this.imageList1;
-      this.dataTreeViewrOganizationStructure.Location = new System.Drawing.Point(0, 0);
-      this.dataTreeViewrOganizationStructure.Name = "dataTreeViewrOganizationStructure";
-      this.dataTreeViewrOganizationStructure.NameColumn = "EmployeeDisplayName";
-      this.dataTreeViewrOganizationStructure.ParentIDColumn = "ManagerID";
-      this.dataTreeViewrOganizationStructure.SelectedImageIndex = 0;
-      this.dataTreeViewrOganizationStructure.ShowNodeToolTips = true;
-      this.dataTreeViewrOganizationStructure.Size = new System.Drawing.Size(200, 246);
-      this.dataTreeViewrOganizationStructure.TabIndex = 0;
-      // 
-      // dataTreeViewrOganizationStructureEcho
-      // 
-      this.dataTreeViewrOganizationStructureEcho.AllowDrop = true;
-      this.dataTreeViewrOganizationStructureEcho.DataMember = "";
-      this.dataTreeViewrOganizationStructureEcho.DataSource = this.employeeEntityBindingSource;
-      this.dataTreeViewrOganizationStructureEcho.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataTreeViewrOganizationStructureEcho.FullRowSelect = true;
-      this.dataTreeViewrOganizationStructureEcho.HideSelection = false;
-      this.dataTreeViewrOganizationStructureEcho.HotTracking = true;
-      this.dataTreeViewrOganizationStructureEcho.IDColumn = "EmployeeID";
-      this.dataTreeViewrOganizationStructureEcho.ImageIndex = 1;
-      this.dataTreeViewrOganizationStructureEcho.ImageList = this.imageList1;
-      this.dataTreeViewrOganizationStructureEcho.Location = new System.Drawing.Point(0, 0);
-      this.dataTreeViewrOganizationStructureEcho.Name = "dataTreeViewrOganizationStructureEcho";
-      this.dataTreeViewrOganizationStructureEcho.NameColumn = "EmployeeDisplayName";
-      this.dataTreeViewrOganizationStructureEcho.ParentIDColumn = "ManagerID";
-      this.dataTreeViewrOganizationStructureEcho.SelectedImageIndex = 0;
-      this.dataTreeViewrOganizationStructureEcho.ShowNodeToolTips = true;
-      this.dataTreeViewrOganizationStructureEcho.Size = new System.Drawing.Size(218, 246);
-      this.dataTreeViewrOganizationStructureEcho.TabIndex = 0;
-      // 
-      // toolStripSeparator1
-      // 
-      this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-      // 
-      // toolStripSeparator2
-      // 
-      this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
       // 
       // dataGridViewTextBoxColumn1
       // 
@@ -479,17 +401,98 @@
       this.dataGridViewTextBoxColumn15.HeaderText = "ModifiedDate";
       this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
       // 
+      // splitContainer1
+      // 
+      this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer1.Name = "splitContainer1";
+      this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+      // 
+      // splitContainer1.Panel1
+      // 
+      this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
+      // 
+      // splitContainer1.Panel2
+      // 
+      this.splitContainer1.Panel2.Controls.Add(this.employeeEntityDataGridView);
+      this.splitContainer1.Panel2.Controls.Add(this.employeeEntityBindingNavigator);
+      this.splitContainer1.Size = new System.Drawing.Size(422, 541);
+      this.splitContainer1.SplitterDistance = 246;
+      this.splitContainer1.TabIndex = 3;
+      // 
+      // splitContainer2
+      // 
+      this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+      this.splitContainer2.Name = "splitContainer2";
+      // 
+      // splitContainer2.Panel1
+      // 
+      this.splitContainer2.Panel1.Controls.Add(this.dataTreeViewrOganizationStructure);
+      // 
+      // splitContainer2.Panel2
+      // 
+      this.splitContainer2.Panel2.Controls.Add(this.dataTreeViewrOganizationStructureEcho);
+      this.splitContainer2.Size = new System.Drawing.Size(422, 246);
+      this.splitContainer2.SplitterDistance = 200;
+      this.splitContainer2.TabIndex = 1;
+      // 
+      // dataTreeViewrOganizationStructure
+      // 
+      this.dataTreeViewrOganizationStructure.AllowDrop = true;
+      this.dataTreeViewrOganizationStructure.DataMember = "";
+      this.dataTreeViewrOganizationStructure.DataSource = this.employeeEntityBindingSource;
+      this.dataTreeViewrOganizationStructure.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataTreeViewrOganizationStructure.FullRowSelect = true;
+      this.dataTreeViewrOganizationStructure.HideSelection = false;
+      this.dataTreeViewrOganizationStructure.HotTracking = true;
+      this.dataTreeViewrOganizationStructure.IDColumn = "EmployeeID";
+      this.dataTreeViewrOganizationStructure.IgnoreErrors = false;
+      this.dataTreeViewrOganizationStructure.ImageIndex = 1;
+      this.dataTreeViewrOganizationStructure.ImageList = this.imageList1;
+      this.dataTreeViewrOganizationStructure.Location = new System.Drawing.Point(0, 0);
+      this.dataTreeViewrOganizationStructure.Name = "dataTreeViewrOganizationStructure";
+      this.dataTreeViewrOganizationStructure.NameColumn = "EmployeeDisplayName";
+      this.dataTreeViewrOganizationStructure.ParentIDColumn = "ManagerID";
+      this.dataTreeViewrOganizationStructure.SelectedImageIndex = 0;
+      this.dataTreeViewrOganizationStructure.ShowNodeToolTips = true;
+      this.dataTreeViewrOganizationStructure.Size = new System.Drawing.Size(200, 246);
+      this.dataTreeViewrOganizationStructure.TabIndex = 0;
+      // 
+      // dataTreeViewrOganizationStructureEcho
+      // 
+      this.dataTreeViewrOganizationStructureEcho.AllowDrop = true;
+      this.dataTreeViewrOganizationStructureEcho.DataMember = "";
+      this.dataTreeViewrOganizationStructureEcho.DataSource = this.employeeEntityBindingSource;
+      this.dataTreeViewrOganizationStructureEcho.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataTreeViewrOganizationStructureEcho.FullRowSelect = true;
+      this.dataTreeViewrOganizationStructureEcho.HideSelection = false;
+      this.dataTreeViewrOganizationStructureEcho.HotTracking = true;
+      this.dataTreeViewrOganizationStructureEcho.IDColumn = "EmployeeID";
+      this.dataTreeViewrOganizationStructureEcho.IgnoreErrors = false;
+      this.dataTreeViewrOganizationStructureEcho.ImageIndex = 1;
+      this.dataTreeViewrOganizationStructureEcho.ImageList = this.imageList1;
+      this.dataTreeViewrOganizationStructureEcho.Location = new System.Drawing.Point(0, 0);
+      this.dataTreeViewrOganizationStructureEcho.Name = "dataTreeViewrOganizationStructureEcho";
+      this.dataTreeViewrOganizationStructureEcho.NameColumn = "EmployeeDisplayName";
+      this.dataTreeViewrOganizationStructureEcho.ParentIDColumn = "ManagerID";
+      this.dataTreeViewrOganizationStructureEcho.SelectedImageIndex = 0;
+      this.dataTreeViewrOganizationStructureEcho.ShowNodeToolTips = true;
+      this.dataTreeViewrOganizationStructureEcho.Size = new System.Drawing.Size(218, 246);
+      this.dataTreeViewrOganizationStructureEcho.TabIndex = 0;
+      // 
       // FrmOrganizationStructure
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(422, 541);
       this.Controls.Add(this.splitContainer1);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FrmOrganizationStructure";
       this.Tag = "True";
       this.Text = "Organization Structure";
-      this.Load += new System.EventHandler(this.FrmOrganizationStructureLoad);
       this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmOrganizationStructure_FormClosing);
+      this.Load += new System.EventHandler(this.FrmOrganizationStructureLoad);
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingSource)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.employeeEntityBindingNavigator)).EndInit();
       this.employeeEntityBindingNavigator.ResumeLayout(false);
