@@ -5,6 +5,7 @@ using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
+using Northwind.DAL.Linq.Filters;
 using Northwind.DAL.SqlServer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -208,7 +209,7 @@ namespace AW.Tests
 		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
 		public void CustomerLeftJoinCustomerDemographicLinqToObject()
 		{
-			var cus = GetNorthwindLinqMetaData().Customer.PrefetchCustomerCustomerDemoCustomerDemographic().ToEntityCollection2();
+			var cus = GetNorthwindLinqMetaData().Customer.PrefetchCustomerCustomerDemosCustomerDemographic().ToEntityCollection2();
 			var cusproj = from c in cus
 			              from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
 			              select
@@ -253,7 +254,7 @@ namespace AW.Tests
 
 		private static void AssertOneCustomerDemographicAfterPrefetch(LinqMetaData northwindLinqMetaData, string alfki)
 		{
-			var cus = northwindLinqMetaData.Customer.PrefetchCustomerCustomerDemographic().Single(c => c.CustomerId == alfki);
+			var cus = northwindLinqMetaData.Customer.PrefetchCustomerDemographics().Single(c => c.CustomerId == alfki);
 			Assert.AreEqual(alfki, cus.CustomerId);
 			Assert.AreEqual(1, cus.CustomerDemographics.Count());
 			if (northwindLinqMetaData.ContextToUse != null)
@@ -268,10 +269,10 @@ namespace AW.Tests
 			const string customerToSearch = "ALFKI";
 
 			// first time
-			var customer = (from c in metaData.Customer
+      var customer = (from c in metaData.Customer
 			                where c.CustomerId == customerToSearch
 			                select c)
-				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders))
+        .PrefetchEmployeesViaOrders()
 				.Single();
 			Assert.AreEqual(customerToSearch, customer.CustomerId);
 			var employeesCountToTest = customer.EmployeesViaOrders.Count;
@@ -285,7 +286,7 @@ namespace AW.Tests
 			customer = (from c in metaData.Customer
 			            where c.CustomerId == customerToSearch
 			            select c)
-				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders))
+        .PrefetchEmployeesViaOrders()
 				.Single();
 			Assert.AreEqual(customerToSearch, customer.CustomerId);
 			Assert.AreEqual(employeesCountToTest, customer.EmployeesViaOrders.Count);
@@ -298,21 +299,17 @@ namespace AW.Tests
 		public void BiDirectionalManyToMany()
 		{
 			var metaData = GetNorthwindLinqMetaData();
-			var customer = metaData.Customer
-				.WithPath(new PathEdge<EmployeeEntity>(CustomerEntity.PrefetchPathEmployeesViaOrders))
-				.First();
+			var customer = metaData.Customer.PrefetchEmployeesViaOrders().First();
 			Assert.AreNotEqual(0, customer.EmployeesViaOrders.Count);
 
 			Assert.AreEqual(1, customer.EmployeesViaOrders.First().CustomersViaOrders.Count); //Fails
 		}
 
-		[TestMethod, Description("After a prefetch of a  1:n intermediate m:1 relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+	  [TestMethod, Description("After a prefetch of a  1:n intermediate m:1 relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
 		public void BiDirectionalManyToManyInCode()
 		{
 			var metaData = GetNorthwindLinqMetaData();
-			var customer = metaData.Customer
-				.WithPath(new PathEdge<OrderEntity>(CustomerEntity.PrefetchPathOrders, new PathEdge<EmployeeEntity>(OrderEntity.PrefetchPathEmployee)))
-				.First();
+			var customer = metaData.Customer.PrefetchOrdersEmployee().First();
 			Assert.AreNotEqual(0, customer.Orders.Count);
 			Assert.AreNotEqual(0, customer.EmployeesViaOrdersInCode.Count());
 
@@ -324,15 +321,14 @@ namespace AW.Tests
 		public void BiDirectionalOneToMany()
 		{
 			var metaData = GetNorthwindLinqMetaData();
-			var customer = metaData.Customer
-				.WithPath(new PathEdge<OrderEntity>(CustomerEntity.PrefetchPathOrders))
-				.First();
+		  var customerEntities = metaData.Customer;
+		  var customer = customerEntities.PrefetchOrders().First();
 			Assert.AreNotEqual(0, customer.Orders.Count);
 
 			Assert.AreEqual(customer, customer.Orders.First().Customer);
 		}
 
-		/// <summary>
+	  /// <summary>
 		/// 	http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=20595
 		/// </summary>
 		[TestMethod, Description("SQL bind exception with two Where predicates with the same Entity")]
@@ -365,5 +361,16 @@ namespace AW.Tests
 			Assert.AreEqual(expected, employees.ToEntityCollection2().Count());
 			Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
 		}
+
+    [TestMethod]
+    public void PrefetchBeforeCriterea()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      //var productEntities = (from c in metaData.Product.PrefetchOrderDetailOrderCustomer()
+      //                       where c.Supplier.City == "xx" && c.UnitPrice == 100 
+      //                       select c);
+      metaData.Customer.FilterByEmployeeId(100).PrefetchCustomerDemographics().ToEntityCollection2();
+      metaData.Customer.PrefetchCustomerDemographics().FilterByEmployeeId(100).ToEntityCollection2();
+    }
 	}
 }
