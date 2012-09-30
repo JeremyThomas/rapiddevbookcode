@@ -81,6 +81,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

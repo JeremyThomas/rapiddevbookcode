@@ -9,5 +9,16 @@ namespace Northwind.DAL.Linq.Filters
 		{
 			return string.IsNullOrEmpty(country) ? customerQuery : customerQuery.Where(c => c.Country == country);
 		}
+
+    public static IQueryable<CustomerEntity> FilterByEmployeeId(this IQueryable<CustomerEntity> customerQuery, params int[] employees)
+    {
+      if (employees != null && employees.Length > 0)
+        customerQuery = from customerEntity in customerQuery
+                           from orderEntity in customerEntity.Orders
+                           where employees.Contains(orderEntity.EmployeeId.Value)
+                           select customerEntity;
+      return customerQuery;
+    }
+
 	}
 }

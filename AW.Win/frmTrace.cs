@@ -104,5 +104,10 @@ namespace AW.Win
 		{
 			_textBoxTraceListener.WriteLine(e.SQLTrace);
 		}
+
+    private void textBoxTrace_TextChanged(object sender, EventArgs e)
+    {
+
+    }
 	}
 }
