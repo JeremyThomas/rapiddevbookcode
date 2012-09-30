@@ -53,7 +53,7 @@ public partial class Controls_SearchAddressType : System.Web.UI.UserControl, ISe
 		valueFromQueryString = queryString["AddressTypeID"];
 		if(valueFromQueryString!=null)
 		{
-			toReturn.AddWithAnd(AddressTypeFields.AddressTypeID==Convert.ChangeType(valueFromQueryString, typeof(System.Int32)));
+      toReturn.AddWithAnd(AddressTypeFields.AddressTypeID == AW.Helper.GeneralHelper.ToEnum<AW.Data.AddressType>(valueFromQueryString));
 		}
 		return toReturn;
 	}
@@ -81,7 +81,7 @@ public partial class Controls_SearchAddressType : System.Web.UI.UserControl, ISe
 			return;
 		}
 		_filter = new PredicateExpression();
-		_filter.AddWithAnd(AddressTypeFields.AddressTypeID==Convert.ChangeType(tbxAddressTypeID.Text, typeof(System.Int32)));
+    _filter.AddWithAnd(AddressTypeFields.AddressTypeID == AW.Helper.GeneralHelper.ToEnum<AW.Data.AddressType>(tbxAddressTypeID.Text));
 		if((SearchClicked!=null) && (_filter.Count>0))
 		{
 			SearchClicked(this, new EventArgs());

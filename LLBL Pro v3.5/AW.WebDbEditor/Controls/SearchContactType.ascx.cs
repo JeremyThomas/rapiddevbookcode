@@ -53,7 +53,7 @@ public partial class Controls_SearchContactType : System.Web.UI.UserControl, ISe
 		valueFromQueryString = queryString["ContactTypeID"];
 		if(valueFromQueryString!=null)
 		{
-			toReturn.AddWithAnd(ContactTypeFields.ContactTypeID==Convert.ChangeType(valueFromQueryString, typeof(System.Int32)));
+      toReturn.AddWithAnd(ContactTypeFields.ContactTypeID == AW.Helper.GeneralHelper.ToEnum<AW.Data.ContactType>(valueFromQueryString));
 		}
 		return toReturn;
 	}
@@ -81,7 +81,7 @@ public partial class Controls_SearchContactType : System.Web.UI.UserControl, ISe
 			return;
 		}
 		_filter = new PredicateExpression();
-		_filter.AddWithAnd(ContactTypeFields.ContactTypeID==Convert.ChangeType(tbxContactTypeID.Text, typeof(System.Int32)));
+    _filter.AddWithAnd(ContactTypeFields.ContactTypeID == AW.Helper.GeneralHelper.ToEnum<AW.Data.ContactType>(tbxContactTypeID.Text));
 		if((SearchClicked!=null) && (_filter.Count>0))
 		{
 			SearchClicked(this, new EventArgs());

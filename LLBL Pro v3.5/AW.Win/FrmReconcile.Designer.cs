@@ -32,6 +32,10 @@
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmReconcile));
       this.entityFieldBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.entityFieldDataGridView = new System.Windows.Forms.DataGridView();
+      this.dataGridViewTextBoxColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumnCurrentValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewTextBoxColumnDbValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewCheckBoxColumnUseYourChanges = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       this.bindingNavigatorEntityField = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
       this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
@@ -49,10 +53,6 @@
       this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumnCurrentValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewTextBoxColumnDbValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewCheckBoxColumnUseYourChanges = new System.Windows.Forms.DataGridViewCheckBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.entityFieldDataGridView)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorEntityField)).BeginInit();
@@ -80,6 +80,38 @@
       this.entityFieldDataGridView.Name = "entityFieldDataGridView";
       this.entityFieldDataGridView.Size = new System.Drawing.Size(629, 334);
       this.entityFieldDataGridView.TabIndex = 0;
+      // 
+      // dataGridViewTextBoxColumnName
+      // 
+      this.dataGridViewTextBoxColumnName.DataPropertyName = "Name";
+      this.dataGridViewTextBoxColumnName.HeaderText = "Name";
+      this.dataGridViewTextBoxColumnName.Name = "dataGridViewTextBoxColumnName";
+      this.dataGridViewTextBoxColumnName.ReadOnly = true;
+      this.dataGridViewTextBoxColumnName.Width = 60;
+      // 
+      // dataGridViewTextBoxColumnCurrentValue
+      // 
+      this.dataGridViewTextBoxColumnCurrentValue.DataPropertyName = "CurrentValue";
+      this.dataGridViewTextBoxColumnCurrentValue.HeaderText = "CurrentValue";
+      this.dataGridViewTextBoxColumnCurrentValue.Name = "dataGridViewTextBoxColumnCurrentValue";
+      this.dataGridViewTextBoxColumnCurrentValue.Width = 93;
+      // 
+      // dataGridViewTextBoxColumnDbValue
+      // 
+      this.dataGridViewTextBoxColumnDbValue.DataPropertyName = "DbValue";
+      this.dataGridViewTextBoxColumnDbValue.HeaderText = "DbValue";
+      this.dataGridViewTextBoxColumnDbValue.Name = "dataGridViewTextBoxColumnDbValue";
+      this.dataGridViewTextBoxColumnDbValue.ReadOnly = true;
+      this.dataGridViewTextBoxColumnDbValue.Width = 73;
+      // 
+      // dataGridViewCheckBoxColumnUseYourChanges
+      // 
+      this.dataGridViewCheckBoxColumnUseYourChanges.DataPropertyName = "UseYourChanges";
+      this.dataGridViewCheckBoxColumnUseYourChanges.FalseValue = "";
+      this.dataGridViewCheckBoxColumnUseYourChanges.HeaderText = "Use Your Changes";
+      this.dataGridViewCheckBoxColumnUseYourChanges.Name = "dataGridViewCheckBoxColumnUseYourChanges";
+      this.dataGridViewCheckBoxColumnUseYourChanges.TrueValue = "";
+      this.dataGridViewCheckBoxColumnUseYourChanges.Width = 92;
       // 
       // bindingNavigatorEntityField
       // 
@@ -114,7 +146,7 @@
       // bindingNavigatorCountItem
       // 
       this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(36, 22);
+      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
       this.bindingNavigatorCountItem.Text = "of {0}";
       this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
       // 
@@ -183,7 +215,7 @@
       this.toolStripButtonToggleUseYourChanges.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonToggleUseYourChanges.Image")));
       this.toolStripButtonToggleUseYourChanges.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonToggleUseYourChanges.Name = "toolStripButtonToggleUseYourChanges";
-      this.toolStripButtonToggleUseYourChanges.Size = new System.Drawing.Size(141, 22);
+      this.toolStripButtonToggleUseYourChanges.Size = new System.Drawing.Size(154, 22);
       this.toolStripButtonToggleUseYourChanges.Text = "ToggleUseYourChanges";
       this.toolStripButtonToggleUseYourChanges.Click += new System.EventHandler(this.toolStripButtonToggleUseYourChanges_Click);
       // 
@@ -192,7 +224,7 @@
       this.toolStripButtonResolve.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonResolve.Image")));
       this.toolStripButtonResolve.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonResolve.Name = "toolStripButtonResolve";
-      this.toolStripButtonResolve.Size = new System.Drawing.Size(65, 22);
+      this.toolStripButtonResolve.Size = new System.Drawing.Size(67, 22);
       this.toolStripButtonResolve.Text = "Resolve";
       this.toolStripButtonResolve.Click += new System.EventHandler(this.toolStripButtonResolve_Click);
       // 
@@ -202,7 +234,7 @@
       this.toolStripButtonShowAllChanges.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowAllChanges.Image")));
       this.toolStripButtonShowAllChanges.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonShowAllChanges.Name = "toolStripButtonShowAllChanges";
-      this.toolStripButtonShowAllChanges.Size = new System.Drawing.Size(112, 22);
+      this.toolStripButtonShowAllChanges.Size = new System.Drawing.Size(122, 22);
       this.toolStripButtonShowAllChanges.Text = "Show All Changes";
       this.toolStripButtonShowAllChanges.Click += new System.EventHandler(this.toolStripButtonShowAllChanges_Click);
       // 
@@ -236,38 +268,6 @@
       this.dataGridViewTextBoxColumn4.ReadOnly = true;
       this.dataGridViewTextBoxColumn4.Width = 73;
       // 
-      // dataGridViewTextBoxColumnName
-      // 
-      this.dataGridViewTextBoxColumnName.DataPropertyName = "Name";
-      this.dataGridViewTextBoxColumnName.HeaderText = "Name";
-      this.dataGridViewTextBoxColumnName.Name = "dataGridViewTextBoxColumnName";
-      this.dataGridViewTextBoxColumnName.ReadOnly = true;
-      this.dataGridViewTextBoxColumnName.Width = 60;
-      // 
-      // dataGridViewTextBoxColumnCurrentValue
-      // 
-      this.dataGridViewTextBoxColumnCurrentValue.DataPropertyName = "CurrentValue";
-      this.dataGridViewTextBoxColumnCurrentValue.HeaderText = "CurrentValue";
-      this.dataGridViewTextBoxColumnCurrentValue.Name = "dataGridViewTextBoxColumnCurrentValue";
-      this.dataGridViewTextBoxColumnCurrentValue.Width = 93;
-      // 
-      // dataGridViewTextBoxColumnDbValue
-      // 
-      this.dataGridViewTextBoxColumnDbValue.DataPropertyName = "DbValue";
-      this.dataGridViewTextBoxColumnDbValue.HeaderText = "DbValue";
-      this.dataGridViewTextBoxColumnDbValue.Name = "dataGridViewTextBoxColumnDbValue";
-      this.dataGridViewTextBoxColumnDbValue.ReadOnly = true;
-      this.dataGridViewTextBoxColumnDbValue.Width = 73;
-      // 
-      // dataGridViewCheckBoxColumnUseYourChanges
-      // 
-      this.dataGridViewCheckBoxColumnUseYourChanges.DataPropertyName = "UseYourChanges";
-      this.dataGridViewCheckBoxColumnUseYourChanges.FalseValue = "";
-      this.dataGridViewCheckBoxColumnUseYourChanges.HeaderText = "Use Your Changes";
-      this.dataGridViewCheckBoxColumnUseYourChanges.Name = "dataGridViewCheckBoxColumnUseYourChanges";
-      this.dataGridViewCheckBoxColumnUseYourChanges.TrueValue = "";
-      this.dataGridViewCheckBoxColumnUseYourChanges.Width = 92;
-      // 
       // FrmReconcile
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,6 +275,7 @@
       this.ClientSize = new System.Drawing.Size(629, 359);
       this.Controls.Add(this.entityFieldDataGridView);
       this.Controls.Add(this.bindingNavigatorEntityField);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FrmReconcile";
       this.Text = "Reconcile Conflicts";
       ((System.ComponentModel.ISupportInitialize)(this.entityFieldBindingSource)).EndInit();
