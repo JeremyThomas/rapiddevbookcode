@@ -8,6 +8,7 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using AW.Data;
 using AW.Helper.LLBL;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
 {
@@ -16,6 +17,17 @@ namespace AW.Tests
     public const int NumFieldProperties = 38;
 
     public static readonly List<string> ThreeStrings = new List<string> {"s1", "s2", "s3"};
+
+    /// <summary>
+    /// from e in query select e
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="query">The query.</param>
+    /// <returns></returns>
+    public static IQueryable<T> EmptySelect<T>(this IQueryable<T> query) where T : IEntityCore
+    {
+      return from e in query select e;
+    }
 
     public static string GetTestxmlString()
     {
