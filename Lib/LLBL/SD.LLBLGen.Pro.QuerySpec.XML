@@ -101,6 +101,26 @@
             <param name="query">The query.</param>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.Adapter.AdapterExtensionMethods.FetchAsProjection(SD.LLBLGen.Pro.ORMSupportClasses.IDataAccessAdapter,SD.LLBLGen.Pro.QuerySpec.DynamicQuery,SD.LLBLGen.Pro.ORMSupportClasses.IGeneralDataProjector)">
+            <summary>
+            Fetches the query as a projection, using the projector specified.
+            </summary>
+            <param name="adapter">The adapter.</param>
+            <param name="query">The query.</param>
+            <param name="projector">The projector.</param>
+            <remarks>Will ignore nested queries. Use with queries without nested / hierarchical queries. The projector has to be setup and ready to
+            use when calling this method</remarks>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.Adapter.AdapterExtensionMethods.FetchAsDataReader(SD.LLBLGen.Pro.ORMSupportClasses.IDataAccessAdapter,SD.LLBLGen.Pro.QuerySpec.DynamicQuery,System.Data.CommandBehavior)">
+            <summary>
+            Fetches the query as an open data reader.
+            </summary>
+            <param name="adapter">The adapter.</param>
+            <param name="query">The query.</param>
+            <param name="behavior">The behavior.</param>
+            <remarks>Ignores nested queries and projection logic embedded in a lambda specification in the query. The DataReader returned will 
+            contain the resultset of the raw SQL query.</remarks>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.Adapter.AdapterExtensionMethods.FetchAsDataTable(SD.LLBLGen.Pro.ORMSupportClasses.IDataAccessAdapter,SD.LLBLGen.Pro.QuerySpec.DynamicQuery)">
             <summary>
             Fetches the specified query into a new DataTable specified and returns that datatable.
@@ -147,11 +167,20 @@
         </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.Adapter.AdapterExtensionMethods.FetchQueryAsProjection(SD.LLBLGen.Pro.ORMSupportClasses.IDataAccessAdapter,SD.LLBLGen.Pro.QuerySpec.DynamicQuery,SD.LLBLGen.Pro.ORMSupportClasses.IGeneralDataProjector)">
             <summary>
-            Fetches the query as projection, using the projector specified.
+            Fetches the query as a projection, using the projector specified.
             </summary>
             <param name="adapter">The adapter.</param>
             <param name="query">The query.</param>
             <param name="projector">The projector.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.Adapter.AdapterExtensionMethods.FetchQueryAsDataReader(SD.LLBLGen.Pro.ORMSupportClasses.IDataAccessAdapter,SD.LLBLGen.Pro.QuerySpec.DynamicQuery,System.Data.CommandBehavior)">
+            <summary>
+            Fetches the query as an open data reader.
+            </summary>
+            <param name="adapter">The adapter.</param>
+            <param name="query">The query.</param>
+            <param name="behavior">The command behavior.</param>
+            <returns>open and ready to use datareader</returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.Adapter.AdapterExtensionMethods.FetchQueryAsHierarchicalProjection(SD.LLBLGen.Pro.ORMSupportClasses.IDataAccessAdapter,SD.LLBLGen.Pro.QuerySpec.DynamicQuery)">
             <summary>
@@ -1714,6 +1743,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.EntityQuery`1.GetFactory">
+            <summary>
+            Gets the factory for the TEntity type.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.EntityQuery`1.GetQueryAsFullEntityName">
             <summary>
             Gets the name of the query as full entity.
@@ -1967,6 +2002,14 @@
             <param name="rightOperand">The right operand.</param>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.EntityRelationBasedJoin.FullJoin(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
+            <summary>
+            Specifies a full join over the relationship specified as right operand. The left side of 'rightOperand' should match with the
+            right operand of this element.
+            </summary>
+            <param name="rightOperand">The right operand.</param>
+            <returns></returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.EntityRelationBasedJoin.GetLeftSideAsFullEntityName">
             <summary>
             Gets the left side of the enclosed relationship as a FullEntityName.
@@ -2056,6 +2099,22 @@
         <member name="T:SD.LLBLGen.Pro.QuerySpec.FullProjectionPlaceHolder">
             <summary>
             Placeholder for the Projection.Full specification, so a Select() can deal with this. 
+            </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.FullProjectionPlaceHolder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SD.LLBLGen.Pro.QuerySpec.FullProjectionPlaceHolder"/> class.
+            </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.FullProjectionPlaceHolder.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SD.LLBLGen.Pro.QuerySpec.FullProjectionPlaceHolder"/> class.
+            </summary>
+            <param name="includeSubTypes">if set to <c>true</c> [include sub types].</param>
+        </member>
+        <member name="P:SD.LLBLGen.Pro.QuerySpec.FullProjectionPlaceHolder.IncludeSubTypes">
+            <summary>
+            Gets or sets a value indicating whether subtypes should be included. By default, this is set to true.
             </summary>
         </member>
         <member name="T:SD.LLBLGen.Pro.QuerySpec.FunctionMappingExpression">
@@ -3339,6 +3398,22 @@
             <param name="aliasEndEntity">The alias of the end entity.</param>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.Joins.Full(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
+            <summary>
+            Defines the join specified by the relationship as a full join
+            </summary>
+            <param name="relationship">The relationship.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.Joins.Full(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation,System.String,System.String)">
+            <summary>
+            Defines the join specified by the relationship as a full join
+            </summary>
+            <param name="relationship">The relationship.</param>
+            <param name="aliasStartEntity">The alias of the start entity.</param>
+            <param name="aliasEndEntity">The alias of the end entity.</param>
+            <returns></returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.Joins.Left(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
             <summary>
             Defines the join specified by the relationship as a left join
@@ -3631,6 +3706,11 @@
             Defines a full projection placeholder
             </summary>
         </member>
+        <member name="P:SD.LLBLGen.Pro.QuerySpec.Projection.FullNoSubTypes">
+            <summary>
+            Defines a full projection placeholder, but orders the projection not to include fields of subtypes
+            </summary>
+        </member>
         <member name="P:SD.LLBLGen.Pro.QuerySpec.Projection.Count">
             <summary>
             Gets the count.
@@ -3639,6 +3719,33 @@
         <member name="P:SD.LLBLGen.Pro.QuerySpec.Projection.NestedQueries">
             <summary>
             Gets the nested queries.
+            </summary>
+        </member>
+        <member name="T:SD.LLBLGen.Pro.QuerySpec.Projection.ProjectionLiteral">
+            <summary>
+            Simple class which is used to emit a literal value into the projection. It subclasses dbfunctioncall as that's the class to
+            use to emit a custom SQL fragment into the query, however we need to specialize it to avoid the () suffix for a function call. 
+            </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.Projection.ProjectionLiteral.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SD.LLBLGen.Pro.QuerySpec.Projection.ProjectionLiteral"/> class.
+            </summary>
+            <param name="literalAsString">The literal as string.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.Projection.ProjectionLiteral.ToQueryText(System.Boolean)">
+            <summary>
+            Retrieves a ready to use text representation of the contained function call
+            </summary>
+            <param name="inHavingClause">if set to true, it will allow aggregate functions to be applied to fields.</param>
+            <returns>
+            The contained function call in textual format.
+            </returns>
+            <exception cref="T:System.ApplicationException">When IDbFunctionCall.DatabaseSpecificCreator is not set to a valid value.</exception>
+        </member>
+        <member name="P:SD.LLBLGen.Pro.QuerySpec.Projection.ProjectionLiteral.AliasToUse">
+            <summary>
+            Gets or sets the alias to use. This is the alias of the element it represents when that element is a nested query. Null otherwise.
             </summary>
         </member>
         <member name="T:SD.LLBLGen.Pro.QuerySpec.ProjectionRow">
@@ -3724,6 +3831,13 @@
             <param name="rightOperand">The element to join with.</param>
             <returns>the created join object</returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.QueryTarget.FullJoin(SD.LLBLGen.Pro.QuerySpec.IJoinOperand)">
+            <summary>
+            Creates a new join of type FULL JOIN between the EntityQuery which From() class the QueryTarget is used on and the specified right operand. 
+            </summary>
+            <param name="rightOperand">The element to join with.</param>
+            <returns>the created join object</returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.QueryTarget.LeftJoin(SD.LLBLGen.Pro.QuerySpec.IJoinOperand)">
             <summary>
             Creates a new join of type LEFT JOIN between the EntityQuery which From() class the QueryTarget is used on and the specified right operand. 
@@ -3752,6 +3866,13 @@
             <param name="rightOperand">The relationship to join over</param>
             <returns>the created join object</returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.QueryTarget.FullJoin(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
+            <summary>
+            Creates a new join of type FULL JOIN between the EntityQuery which From() class the QueryTarget is used by using the entity relation specified
+            </summary>
+            <param name="rightOperand">The relationship to join over</param>
+            <returns>the created join object</returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.QueryTarget.LeftJoin(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
             <summary>
             Creates a new join of type LEFT JOIN between the EntityQuery which From() class the QueryTarget is used by using the entity relation specified
@@ -3776,6 +3897,15 @@
         <member name="M:SD.LLBLGen.Pro.QuerySpec.QueryTarget.InnerJoin(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation,System.String,System.String)">
             <summary>
             Creates a new join of type INNER JOIN between the EntityQuery which From() class the QueryTarget is used by using the entity relation specified
+            </summary>
+            <param name="rightOperand">The relationship to join over</param>
+            <param name="aliasStartEntity">The alias of the start entity in rightOperand.</param>
+            <param name="aliasEndEntity">The alias of the end entity in rightOperand.</param>
+            <returns>the created join object</returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.QueryTarget.FullJoin(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation,System.String,System.String)">
+            <summary>
+            Creates a new join of type FULL JOIN between the EntityQuery which From() class the QueryTarget is used by using the entity relation specified
             </summary>
             <param name="rightOperand">The relationship to join over</param>
             <param name="aliasStartEntity">The alias of the start entity in rightOperand.</param>
@@ -4014,6 +4144,15 @@
             <summary>
             A general class which contains extension methods which couldn't be placed anywhere else
             </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.MiscellaneousExtensionMethods.ToScalarValue``1(System.Collections.Generic.List{System.Object[]})">
+            <summary>
+            Converts the passed in list of object arrays to a scalar value, as the source is the result of a query. It picks the first value
+            of the first row in source or null if empty.
+            </summary>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <param name="source">The source.</param>
+            <returns></returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.MiscellaneousExtensionMethods.IsEnumerableType(System.Type)">
             <summary>
@@ -4874,6 +5013,24 @@
             <param name="aliasEndEntity">The alias of the end entity in rightOperand.</param>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.HybridJoin.FullJoin(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
+            <summary>
+            Specifies a full join over the relationship specified as right operand. The left side of 'rightOperand' should match with the
+            right operand of this element.
+            </summary>
+            <param name="rightOperand">The right operand.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.HybridJoin.FullJoin(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation,System.String,System.String)">
+            <summary>
+            Specifies a full join over the relationship specified as right operand. The left side of 'rightOperand' should match with the
+            right operand of this element.
+            </summary>
+            <param name="rightOperand">The right operand.</param>
+            <param name="aliasStartEntity">The alias of the start entity in rightOperand.</param>
+            <param name="aliasEndEntity">The alias of the end entity in rightOperand.</param>
+            <returns></returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.HybridJoin.LeftJoin(SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
             <summary>
             Specifies a left join over the relationship specified as right operand. The left side of 'rightOperand' should match with the
@@ -5060,6 +5217,14 @@
             <param name="rightOperand">The element to join with.</param>
             <returns>the created join object</returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.JoinOperandExtensionMethods.FullJoin(SD.LLBLGen.Pro.QuerySpec.IJoinOperand,SD.LLBLGen.Pro.QuerySpec.IJoinOperand)">
+            <summary>
+            Creates a new join of type FULL JOIN between the left operand the method is called on and the specified right operand.
+            </summary>
+            <param name="leftOperand">The left operand.</param>
+            <param name="rightOperand">The element to join with.</param>
+            <returns>the created join object</returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.JoinOperandExtensionMethods.LeftJoin(SD.LLBLGen.Pro.QuerySpec.IJoinOperand,SD.LLBLGen.Pro.QuerySpec.IJoinOperand)">
             <summary>
             Creates a new join of type LEFT JOIN between the left operand the method is called on and the specified right operand.
@@ -5087,6 +5252,15 @@
         <member name="M:SD.LLBLGen.Pro.QuerySpec.JoinOperandExtensionMethods.InnerJoin(SD.LLBLGen.Pro.QuerySpec.IJoinOperand,SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
             <summary>
             Creates a new join of type INNER JOIN between the left operand the method is called on and the right operand of the specified relationship,
+            over the relationship specified
+            </summary>
+            <param name="leftOperand">The left operand.</param>
+            <param name="rightOperand">The relationship to join over</param>
+            <returns>the created join object</returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.JoinOperandExtensionMethods.FullJoin(SD.LLBLGen.Pro.QuerySpec.IJoinOperand,SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation)">
+            <summary>
+            Creates a new join of type FULL JOIN between the left operand the method is called on and the right operand of the specified relationship,
             over the relationship specified
             </summary>
             <param name="leftOperand">The left operand.</param>
@@ -5123,6 +5297,17 @@
         <member name="M:SD.LLBLGen.Pro.QuerySpec.JoinOperandExtensionMethods.InnerJoin(SD.LLBLGen.Pro.QuerySpec.IJoinOperand,SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation,System.String,System.String)">
             <summary>
             Creates a new join of type INNER JOIN between the left operand the method is called on and the right operand of the specified relationship,
+            over the relationship specified
+            </summary>
+            <param name="leftOperand">The left operand.</param>
+            <param name="rightOperand">The relationship to join over</param>
+            <param name="aliasStartEntity">The alias of the start entity in rightOperand.</param>
+            <param name="aliasEndEntity">The alias of the end entity in rightOperand.</param>
+            <returns>the created join object</returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.JoinOperandExtensionMethods.FullJoin(SD.LLBLGen.Pro.QuerySpec.IJoinOperand,SD.LLBLGen.Pro.ORMSupportClasses.IEntityRelation,System.String,System.String)">
+            <summary>
+            Creates a new join of type FULL JOIN between the left operand the method is called on and the right operand of the specified relationship,
             over the relationship specified
             </summary>
             <param name="leftOperand">The left operand.</param>
@@ -6575,6 +6760,28 @@
             <param name="transaction">The transaction.</param>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.SelfServicing.SelfServicingExtensionMethods.FetchAsProjection(SD.LLBLGen.Pro.ORMSupportClasses.IDao,SD.LLBLGen.Pro.ORMSupportClasses.ITransaction,SD.LLBLGen.Pro.QuerySpec.DynamicQuery,SD.LLBLGen.Pro.ORMSupportClasses.IGeneralDataProjector)">
+            <summary>
+            Fetches the query as a projection, using the projector specified.
+            </summary>
+            <param name="dao">The DAO instance.</param>
+            <param name="transactionToUse">The transaction to use.</param>
+            <param name="query">The query.</param>
+            <param name="projector">The projector.</param>
+            <remarks>Will ignore nested queries. Use with queries without nested / hierarchical queries. The projector has to be setup and ready to
+            use when calling this method</remarks>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.SelfServicing.SelfServicingExtensionMethods.FetchAsDataReader(SD.LLBLGen.Pro.ORMSupportClasses.IDao,SD.LLBLGen.Pro.ORMSupportClasses.ITransaction,SD.LLBLGen.Pro.QuerySpec.DynamicQuery,System.Data.CommandBehavior)">
+            <summary>
+            Fetches the query as an open data reader.
+            </summary>
+            <param name="dao">The DAO instance.</param>
+            <param name="transactionToUse">The transaction to use.</param>
+            <param name="query">The query.</param>
+            <param name="behavior">The behavior.</param>
+            <remarks>Ignores nested queries and projection logic embedded in a lambda specification in the query. The DataReader returned will 
+            contain the resultset of the raw SQL query.</remarks>
+        </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.SelfServicing.SelfServicingExtensionMethods.FetchAsDataTable(SD.LLBLGen.Pro.ORMSupportClasses.IDao,SD.LLBLGen.Pro.QuerySpec.DynamicQuery)">
             <summary>
             Fetches the specified query into a new DataTable specified and returns that datatable.
@@ -6627,12 +6834,22 @@
         </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.SelfServicing.SelfServicingExtensionMethods.FetchQueryAsProjection(SD.LLBLGen.Pro.ORMSupportClasses.IDao,SD.LLBLGen.Pro.ORMSupportClasses.ITransaction,SD.LLBLGen.Pro.QuerySpec.DynamicQuery,SD.LLBLGen.Pro.ORMSupportClasses.IGeneralDataProjector)">
             <summary>
-            Fetches the query as projection, using the projector specified.
+            Fetches the query as a projection, using the projector specified.
             </summary>
             <param name="dao">The DAO instance.</param>
             <param name="transactionToUse">The transaction to use.</param>
             <param name="query">The query.</param>
             <param name="projector">The projector.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.QuerySpec.SelfServicing.SelfServicingExtensionMethods.FetchQueryAsDataReader(SD.LLBLGen.Pro.ORMSupportClasses.IDao,SD.LLBLGen.Pro.ORMSupportClasses.ITransaction,SD.LLBLGen.Pro.QuerySpec.DynamicQuery,System.Data.CommandBehavior)">
+            <summary>
+            Fetches the query as an open data reader.
+            </summary>
+            <param name="dao">The DAO instance.</param>
+            <param name="transactionToUse">The transaction to use.</param>
+            <param name="query">The query.</param>
+            <param name="behavior">The command behavior.</param>
+            <returns>open and ready to use datareader</returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.QuerySpec.SelfServicing.SelfServicingExtensionMethods.FetchQueryAsHierarchicalProjection(SD.LLBLGen.Pro.ORMSupportClasses.IDao,SD.LLBLGen.Pro.ORMSupportClasses.ITransaction,SD.LLBLGen.Pro.QuerySpec.DynamicQuery)">
             <summary>

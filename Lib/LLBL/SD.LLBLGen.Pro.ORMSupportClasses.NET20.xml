@@ -17196,7 +17196,7 @@
             <param name="currentValue">Current value.</param>
             <param name="typeConverterToUse">Type converter to use.</param>
             <param name="actualDotNetType">The actual type the value should have</param>
-            <param name="valueIsEnumTyped">if set to <c>true</c>, the currentValue is assumed to be an enum typed value.</param>
+            <param name="targetIsEnumtyped">if set to <c>true</c>, the currentValue is assumed to be an enum typed value.</param>
             <returns>
             the currentValue converted by the typeConverterToUse, or if it's an enum value and no typeConverter is specified, to actualDotNetType
             </returns>
@@ -30816,7 +30816,7 @@
             <param name="actualContainingObjectName">Name of the actual containing object.</param>
             <returns> the artificial object alias to use for the field calling this method</returns>
         </member>
-        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.FieldUtilities.CorrectScale(System.Object,System.Int32,SD.LLBLGen.Pro.ORMSupportClasses.ScaleOverflowCorrectionAction)">
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.FieldUtilities.CorrectScale(System.Object,System.Int32,SD.LLBLGen.Pro.ORMSupportClasses.ScaleOverflowCorrectionAction,System.Object@)">
             <summary>
             Corrects the scale of the value passed in (can be decimal, single or double) and returns the new value with the scale corrected according to
             the scale passed in and the action specified.
@@ -30824,7 +30824,10 @@
             <param name="valueToCorrect">The value to correct.</param>
             <param name="scale">The scale.</param>
             <param name="action">The action.</param>
-            <returns>returns the new value with the scale corrected according to the scale passed in and the action specified.</returns>
+            <param name="absoluteValueAfterCorrection">The absolute value of the value returned, after correction.</param>
+            <returns>
+            returns the new value with the scale corrected according to the scale passed in and the action specified.
+            </returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.FieldUtilities.RemoveExcludedFieldsPersistenceInfos(SD.LLBLGen.Pro.ORMSupportClasses.IFieldPersistenceInfo[])">
             <summary>
@@ -40477,6 +40480,16 @@
             Adds the auditor passed in to the set of auditors to get audit entities from at commit. 
             </summary>
             <param name="toAdd">To add.</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.TransactionBase.OnBeforeCommit">
+            <summary>
+            Called right before the physical transaction is committed. 
+            </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.TransactionBase.OnBeforeRollback">
+            <summary>
+            Called right before the physical transaction is rolled back. 
+            </summary>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.TransactionBase.Dispose(System.Boolean)">
             <summary>

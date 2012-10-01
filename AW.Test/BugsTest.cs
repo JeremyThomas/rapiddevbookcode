@@ -276,12 +276,15 @@ namespace AW.Tests
                       firstBillOfMaterialProjectionProjection.ProductAssemblySubcategoryIDViaNav, "ProductAssemblySubcategoryID"); //Fails
     }
 
-    [TestMethod]
+    /// <summary>
+    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21371
+    /// </summary>
+    [TestMethod, Description("LINQ - Invalid SQL when prefetch comes before criteria")]
     public void TestPrefetchBeforeCriterea()
     {
-      MetaSingletons.MetaData.Customer.FilterBySalesPersonID(100).PrefetchCustomerAddresses().EmptySelect().ToEntityCollection();
-      MetaSingletons.MetaData.Customer.PrefetchCustomerAddresses().FilterBySalesPersonID(100).ToEntityCollection();
-      MetaSingletons.MetaData.Customer.EmptySelect().PrefetchCustomerAddresses().FilterBySalesPersonID(100).ToEntityCollection();
+      MetaSingletons.MetaData.Customer.FilterBySalesPersonID(100).PrefetchCustomerAddresses().EmptySelect().ToEntityCollection(); //OK
+      MetaSingletons.MetaData.Customer.PrefetchCustomerAddresses().FilterBySalesPersonID(100).ToEntityCollection();               //OK
+      MetaSingletons.MetaData.Customer.EmptySelect().PrefetchCustomerAddresses().FilterBySalesPersonID(100).ToEntityCollection(); //This one fails
     }
   }
 }
