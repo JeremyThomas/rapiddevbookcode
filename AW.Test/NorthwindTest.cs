@@ -369,8 +369,9 @@ namespace AW.Tests
       //var productEntities = (from c in metaData.Product.PrefetchOrderDetailOrderCustomer()
       //                       where c.Supplier.City == "xx" && c.UnitPrice == 100 
       //                       select c);
-      metaData.Customer.FilterByEmployeeId(100).PrefetchCustomerDemographics().ToEntityCollection2();
-      metaData.Customer.PrefetchCustomerDemographics().FilterByEmployeeId(100).ToEntityCollection2();
+      metaData.Customer.FilterByCountry("NZ").FilterByEmployeeId(100).EmptySelect().PrefetchCustomerDemographics().ToEntityCollection2();
+      metaData.Customer.PrefetchCustomerDemographics().FilterByEmployeeId(100).FilterByCountry("NZ").ToEntityCollection2();
+      metaData.Customer.EmptySelect().PrefetchCustomerDemographics().FilterByEmployeeId(100).FilterByCountry("NZ").ToEntityCollection2();
     }
 	}
 }

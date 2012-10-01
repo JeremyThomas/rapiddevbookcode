@@ -5,6 +5,7 @@ using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.Filters;
 using AW.Data.HelperClasses;
+using AW.Data.Linq;
 using AW.Helper.LLBL;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -59,7 +60,7 @@ namespace AW.Data.Queries
       var predicate = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(FromDate, ToDate, FirstName, LastName, CityName, StateName, CountryName, Zip, OrderID, OrderNumber);
 
       if (prefetch)
-        predicate = predicate.WithPath(p => p.Prefetch(c => c.CustomerViewRelated));
+        predicate = predicate.PrefetchCustomerViewRelated();
       if (maxNumberOfItemsToReturn > 0)
         predicate = predicate.Take(maxNumberOfItemsToReturn);
       //return ((ILLBLGenProQuery)predicate).Execute<SalesOrderHeaderCollection>();
