@@ -282,9 +282,9 @@ namespace AW.Tests
     [TestMethod, Description("LINQ - Invalid SQL when prefetch comes before criteria")]
     public void TestPrefetchBeforeCriterea()
     {
-      MetaSingletons.MetaData.Customer.FilterBySalesPersonID(100).PrefetchCustomerAddresses().EmptySelect().ToEntityCollection(); //OK
-      MetaSingletons.MetaData.Customer.PrefetchCustomerAddresses().FilterBySalesPersonID(100).ToEntityCollection();               //OK
-      MetaSingletons.MetaData.Customer.EmptySelect().PrefetchCustomerAddresses().FilterBySalesPersonID(100).ToEntityCollection(); //This one fails
+      MetaSingletons.MetaData.Customer.FilterBySalesPersonID(275).PrefetchCustomerAddresses().EmptySelect().ToEntityCollection(); //OK with prefetch
+      MetaSingletons.MetaData.Customer.PrefetchCustomerAddresses().FilterBySalesPersonID(275).ToEntityCollection();               //OK but prefetch ignored
+      MetaSingletons.MetaData.Customer.EmptySelect().PrefetchCustomerAddresses().FilterBySalesPersonID(275).ToEntityCollection(); //This one fails
     }
   }
 }

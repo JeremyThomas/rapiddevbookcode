@@ -372,5 +372,24 @@ namespace AW.Tests
       metaData.Customer.FilterByEmployeeId(100).PrefetchCustomerDemographics().ToEntityCollection2();
       metaData.Customer.PrefetchCustomerDemographics().FilterByEmployeeId(100).ToEntityCollection2();
     }
+
+    [TestMethod]
+    public void TestFilterByDiscontinued()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      metaData.Product.FilterByDiscontinued(true).ToEntityCollection2();
+      metaData.Product.FilterByDiscontinued(false).ToEntityCollection2();
+      metaData.Product.FilterByDiscontinuedP(true).ToEntityCollection2();
+      metaData.Product.FilterByDiscontinuedP(false).ToEntityCollection2();
+      metaData.Product.FilterByDiscontinuedG(true).ToEntityCollection2();
+      metaData.Product.FilterByDiscontinuedG(false).ToEntityCollection2();
+    }
+
+    [TestMethod]
+    public void TestFilterByProductName()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      metaData.Product.FilterByProductName("FilterByProductName").ToEntityCollection2();
+    }
 	}
 }
