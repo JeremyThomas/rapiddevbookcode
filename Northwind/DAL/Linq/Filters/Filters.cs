@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Northwind.DAL.EntityClasses;
+using Northwind.DAL.HelperClasses;
 
 namespace Northwind.DAL.Linq.Filters
 {
@@ -20,5 +21,30 @@ namespace Northwind.DAL.Linq.Filters
       return customerQuery;
     }
 
+    public static IQueryable<T> FilterByDiscontinuedG<T>(this IQueryable<T> products, bool? discontinued) where T : IProduct
+    {
+      if (discontinued.HasValue)
+        return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
+      return products;
+    }
+
+    public static IQueryable<T> FilterByDiscontinuedP<T>(this IQueryable<T> products, bool? discontinued) where T : ProductEntity
+    {
+      if (discontinued.HasValue)
+        return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
+      return products;
+    }
+
+    public static IQueryable<ProductEntity> FilterByDiscontinued(this IQueryable<ProductEntity> products, bool? discontinued)
+    {
+      if (discontinued.HasValue)
+        return discontinued.Value ? products.Where(r => r.Discontinued) : products.Where(r => r.Discontinued);
+      return products;
+    }
+
+    public static IQueryable<T> FilterByProductName<T>(this IQueryable<T> products, string productName) where T : IProduct
+    {
+      return string.IsNullOrEmpty(productName) ? products : products.Where(r => productName.Equals(r.ProductName));
+    }
 	}
 }
