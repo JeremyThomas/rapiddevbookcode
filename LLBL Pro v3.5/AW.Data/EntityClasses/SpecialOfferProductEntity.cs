@@ -22,7 +22,7 @@ using AW.Data.DaoClasses;
 using AW.Data.RelationClasses;
 using AW.Data.HelperClasses;
 using AW.Data.CollectionClasses;
-
+using System.ComponentModel.DataAnnotations;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
@@ -43,6 +43,8 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.SalesOrderDetailCollection	_salesOrderDetails;
 		private bool	_alwaysFetchSalesOrderDetails, _alreadyFetchedSalesOrderDetails;
+		private AW.Data.CollectionClasses.SalesOrderHeaderCollection _salesOrders;
+		private bool	_alwaysFetchSalesOrders, _alreadyFetchedSalesOrders;
 		private ProductEntity _product;
 		private bool	_alwaysFetchProduct, _alreadyFetchedProduct, _productReturnsNewIfNotFound;
 		private SpecialOfferEntity _specialOffer;
@@ -65,6 +67,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string SpecialOffer = "SpecialOffer";
 			/// <summary>Member name SalesOrderDetails</summary>
 			public static readonly string SalesOrderDetails = "SalesOrderDetails";
+			/// <summary>Member name SalesOrders</summary>
+			public static readonly string SalesOrders = "SalesOrders";
 		}
 		#endregion
 		
@@ -114,6 +118,9 @@ namespace AW.Data.EntityClasses
 			_salesOrderDetails = (AW.Data.CollectionClasses.SalesOrderDetailCollection)info.GetValue("_salesOrderDetails", typeof(AW.Data.CollectionClasses.SalesOrderDetailCollection));
 			_alwaysFetchSalesOrderDetails = info.GetBoolean("_alwaysFetchSalesOrderDetails");
 			_alreadyFetchedSalesOrderDetails = info.GetBoolean("_alreadyFetchedSalesOrderDetails");
+			_salesOrders = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrders", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
+			_alwaysFetchSalesOrders = info.GetBoolean("_alwaysFetchSalesOrders");
+			_alreadyFetchedSalesOrders = info.GetBoolean("_alreadyFetchedSalesOrders");
 			_product = (ProductEntity)info.GetValue("_product", typeof(ProductEntity));
 			if(_product!=null)
 			{
@@ -161,6 +168,7 @@ namespace AW.Data.EntityClasses
 		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedSalesOrderDetails = (_salesOrderDetails.Count > 0);
+			_alreadyFetchedSalesOrders = (_salesOrders.Count > 0);
 			_alreadyFetchedProduct = (_product != null);
 			_alreadyFetchedSpecialOffer = (_specialOffer != null);
 		}
@@ -190,6 +198,10 @@ namespace AW.Data.EntityClasses
 				case "SalesOrderDetails":
 					toReturn.Add(Relations.SalesOrderDetailEntityUsingProductIDSpecialOfferID);
 					break;
+				case "SalesOrders":
+					toReturn.Add(Relations.SalesOrderDetailEntityUsingProductIDSpecialOfferID, "SpecialOfferProductEntity__", "SalesOrderDetail_", JoinHint.None);
+					toReturn.Add(SalesOrderDetailEntity.Relations.SalesOrderHeaderEntityUsingSalesOrderID, "SalesOrderDetail_", string.Empty, JoinHint.None);
+					break;
 				default:
 					break;				
 			}
@@ -207,6 +219,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_salesOrderDetails", (!this.MarkedForDeletion?_salesOrderDetails:null));
 			info.AddValue("_alwaysFetchSalesOrderDetails", _alwaysFetchSalesOrderDetails);
 			info.AddValue("_alreadyFetchedSalesOrderDetails", _alreadyFetchedSalesOrderDetails);
+			info.AddValue("_salesOrders", (!this.MarkedForDeletion?_salesOrders:null));
+			info.AddValue("_alwaysFetchSalesOrders", _alwaysFetchSalesOrders);
+			info.AddValue("_alreadyFetchedSalesOrders", _alreadyFetchedSalesOrders);
 			info.AddValue("_product", (!this.MarkedForDeletion?_product:null));
 			info.AddValue("_productReturnsNewIfNotFound", _productReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchProduct", _alwaysFetchProduct);
@@ -243,6 +258,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.SalesOrderDetails.Add((SalesOrderDetailEntity)entity);
+					}
+					break;
+				case "SalesOrders":
+					_alreadyFetchedSalesOrders = true;
+					if(entity!=null)
+					{
+						this.SalesOrders.Add((SalesOrderHeaderEntity)entity);
 					}
 					break;
 				default:
@@ -446,6 +468,45 @@ namespace AW.Data.EntityClasses
 			_salesOrderDetails.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'SalesOrderHeaderEntity'</returns>
+		public AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrders(bool forceFetch)
+		{
+			return GetMultiSalesOrders(forceFetch, _salesOrders.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.SalesOrderHeaderCollection GetMultiSalesOrders(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedSalesOrders || forceFetch || _alwaysFetchSalesOrders) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_salesOrders);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(SpecialOfferProductFields.ProductID, ComparisonOperator.Equal, this.ProductID, "SpecialOfferProductEntity__"));
+				filter.Add(new FieldCompareValuePredicate(SpecialOfferProductFields.SpecialOfferID, ComparisonOperator.Equal, this.SpecialOfferID, "SpecialOfferProductEntity__"));
+				_salesOrders.SuppressClearInGetMulti=!forceFetch;
+				_salesOrders.EntityFactoryToUse = entityFactoryToUse;
+				_salesOrders.GetMulti(filter, GetRelationsForField("SalesOrders"));
+				_salesOrders.SuppressClearInGetMulti=false;
+				_alreadyFetchedSalesOrders = true;
+			}
+			return _salesOrders;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'SalesOrders'. These settings will be taken into account
+		/// when the property SalesOrders is requested or GetMultiSalesOrders is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersSalesOrders(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_salesOrders.SortClauses=sortClauses;
+			_salesOrders.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves the related entity of type 'ProductEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'ProductEntity' which is related to this entity.</returns>
 		public ProductEntity GetSingleProduct()
@@ -536,6 +597,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("Product", _product);
 			toReturn.Add("SpecialOffer", _specialOffer);
 			toReturn.Add("SalesOrderDetails", _salesOrderDetails);
+			toReturn.Add("SalesOrders", _salesOrders);
 			return toReturn;
 		}
 	
@@ -579,6 +641,7 @@ namespace AW.Data.EntityClasses
 
 			_salesOrderDetails = new AW.Data.CollectionClasses.SalesOrderDetailCollection();
 			_salesOrderDetails.SetContainingEntityInfo(this, "SpecialOfferProduct");
+			_salesOrders = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
 			_productReturnsNewIfNotFound = true;
 			_specialOfferReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
@@ -737,6 +800,18 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderDetailCollection(), (IEntityRelation)GetRelationsForField("SalesOrderDetails")[0], (int)AW.Data.EntityType.SpecialOfferProductEntity, (int)AW.Data.EntityType.SalesOrderDetailEntity, 0, null, null, null, "SalesOrderDetails", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesOrderHeader'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSalesOrders
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.SalesOrderDetailEntityUsingProductIDSpecialOfferID;
+				intermediateRelation.SetAliases(string.Empty, "SalesOrderDetail_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderCollection(), intermediateRelation,	(int)AW.Data.EntityType.SpecialOfferProductEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, GetRelationsForField("SalesOrders"), "SalesOrders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Product'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathProduct
@@ -850,6 +925,40 @@ namespace AW.Data.EntityClasses
 					_salesOrderDetails.Clear();
 				}
 				_alreadyFetchedSalesOrderDetails = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'SalesOrderHeaderEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSalesOrders()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.SalesOrderHeaderCollection SalesOrders
+		{
+			get { return GetMultiSalesOrders(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for SalesOrders. When set to true, SalesOrders is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time SalesOrders is accessed. You can always execute a forced fetch by calling GetMultiSalesOrders(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSalesOrders
+		{
+			get	{ return _alwaysFetchSalesOrders; }
+			set	{ _alwaysFetchSalesOrders = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property SalesOrders already has been fetched. Setting this property to false when SalesOrders has been fetched
+		/// will clear the SalesOrders collection well. Setting this property to true while SalesOrders hasn't been fetched disables lazy loading for SalesOrders</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSalesOrders
+		{
+			get { return _alreadyFetchedSalesOrders;}
+			set 
+			{
+				if(_alreadyFetchedSalesOrders && !value && (_salesOrders != null))
+				{
+					_salesOrders.Clear();
+				}
+				_alreadyFetchedSalesOrders = value;
 			}
 		}
 

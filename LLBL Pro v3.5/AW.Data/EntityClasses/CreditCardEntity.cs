@@ -22,7 +22,7 @@ using AW.Data.DaoClasses;
 using AW.Data.RelationClasses;
 using AW.Data.HelperClasses;
 using AW.Data.CollectionClasses;
-
+using System.ComponentModel.DataAnnotations;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
@@ -45,6 +45,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchContactCreditCards, _alreadyFetchedContactCreditCards;
 		private AW.Data.CollectionClasses.SalesOrderHeaderCollection	_salesOrderHeaders;
 		private bool	_alwaysFetchSalesOrderHeaders, _alreadyFetchedSalesOrderHeaders;
+		private AW.Data.CollectionClasses.ContactCollection _contactCollectionViaContactCreditCard;
+		private bool	_alwaysFetchContactCollectionViaContactCreditCard, _alreadyFetchedContactCollectionViaContactCreditCard;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -61,6 +63,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string ContactCreditCards = "ContactCreditCards";
 			/// <summary>Member name SalesOrderHeaders</summary>
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
+			/// <summary>Member name ContactCollectionViaContactCreditCard</summary>
+			public static readonly string ContactCollectionViaContactCreditCard = "ContactCollectionViaContactCreditCard";
 		}
 		#endregion
 		
@@ -111,6 +115,9 @@ namespace AW.Data.EntityClasses
 			_salesOrderHeaders = (AW.Data.CollectionClasses.SalesOrderHeaderCollection)info.GetValue("_salesOrderHeaders", typeof(AW.Data.CollectionClasses.SalesOrderHeaderCollection));
 			_alwaysFetchSalesOrderHeaders = info.GetBoolean("_alwaysFetchSalesOrderHeaders");
 			_alreadyFetchedSalesOrderHeaders = info.GetBoolean("_alreadyFetchedSalesOrderHeaders");
+			_contactCollectionViaContactCreditCard = (AW.Data.CollectionClasses.ContactCollection)info.GetValue("_contactCollectionViaContactCreditCard", typeof(AW.Data.CollectionClasses.ContactCollection));
+			_alwaysFetchContactCollectionViaContactCreditCard = info.GetBoolean("_alwaysFetchContactCollectionViaContactCreditCard");
+			_alreadyFetchedContactCollectionViaContactCreditCard = info.GetBoolean("_alreadyFetchedContactCollectionViaContactCreditCard");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -122,6 +129,7 @@ namespace AW.Data.EntityClasses
 		{
 			_alreadyFetchedContactCreditCards = (_contactCreditCards.Count > 0);
 			_alreadyFetchedSalesOrderHeaders = (_salesOrderHeaders.Count > 0);
+			_alreadyFetchedContactCollectionViaContactCreditCard = (_contactCollectionViaContactCreditCard.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -146,6 +154,10 @@ namespace AW.Data.EntityClasses
 				case "SalesOrderHeaders":
 					toReturn.Add(Relations.SalesOrderHeaderEntityUsingCreditCardID);
 					break;
+				case "ContactCollectionViaContactCreditCard":
+					toReturn.Add(Relations.ContactCreditCardEntityUsingCreditCardID, "CreditCardEntity__", "ContactCreditCard_", JoinHint.None);
+					toReturn.Add(ContactCreditCardEntity.Relations.ContactEntityUsingContactID, "ContactCreditCard_", string.Empty, JoinHint.None);
+					break;
 				default:
 					break;				
 			}
@@ -166,6 +178,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_salesOrderHeaders", (!this.MarkedForDeletion?_salesOrderHeaders:null));
 			info.AddValue("_alwaysFetchSalesOrderHeaders", _alwaysFetchSalesOrderHeaders);
 			info.AddValue("_alreadyFetchedSalesOrderHeaders", _alreadyFetchedSalesOrderHeaders);
+			info.AddValue("_contactCollectionViaContactCreditCard", (!this.MarkedForDeletion?_contactCollectionViaContactCreditCard:null));
+			info.AddValue("_alwaysFetchContactCollectionViaContactCreditCard", _alwaysFetchContactCollectionViaContactCreditCard);
+			info.AddValue("_alreadyFetchedContactCollectionViaContactCreditCard", _alreadyFetchedContactCollectionViaContactCreditCard);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -193,6 +208,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.SalesOrderHeaders.Add((SalesOrderHeaderEntity)entity);
+					}
+					break;
+				case "ContactCollectionViaContactCreditCard":
+					_alreadyFetchedContactCollectionViaContactCreditCard = true;
+					if(entity!=null)
+					{
+						this.ContactCollectionViaContactCreditCard.Add((ContactEntity)entity);
 					}
 					break;
 				default:
@@ -434,6 +456,44 @@ namespace AW.Data.EntityClasses
 			_salesOrderHeaders.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ContactEntity'</returns>
+		public AW.Data.CollectionClasses.ContactCollection GetMultiContactCollectionViaContactCreditCard(bool forceFetch)
+		{
+			return GetMultiContactCollectionViaContactCreditCard(forceFetch, _contactCollectionViaContactCreditCard.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ContactCollection GetMultiContactCollectionViaContactCreditCard(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedContactCollectionViaContactCreditCard || forceFetch || _alwaysFetchContactCollectionViaContactCreditCard) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_contactCollectionViaContactCreditCard);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(CreditCardFields.CreditCardID, ComparisonOperator.Equal, this.CreditCardID, "CreditCardEntity__"));
+				_contactCollectionViaContactCreditCard.SuppressClearInGetMulti=!forceFetch;
+				_contactCollectionViaContactCreditCard.EntityFactoryToUse = entityFactoryToUse;
+				_contactCollectionViaContactCreditCard.GetMulti(filter, GetRelationsForField("ContactCollectionViaContactCreditCard"));
+				_contactCollectionViaContactCreditCard.SuppressClearInGetMulti=false;
+				_alreadyFetchedContactCollectionViaContactCreditCard = true;
+			}
+			return _contactCollectionViaContactCreditCard;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'ContactCollectionViaContactCreditCard'. These settings will be taken into account
+		/// when the property ContactCollectionViaContactCreditCard is requested or GetMultiContactCollectionViaContactCreditCard is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersContactCollectionViaContactCreditCard(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_contactCollectionViaContactCreditCard.SortClauses=sortClauses;
+			_contactCollectionViaContactCreditCard.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -442,6 +502,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("ContactCreditCards", _contactCreditCards);
 			toReturn.Add("SalesOrderHeaders", _salesOrderHeaders);
+			toReturn.Add("ContactCollectionViaContactCreditCard", _contactCollectionViaContactCreditCard);
 			return toReturn;
 		}
 	
@@ -487,6 +548,7 @@ namespace AW.Data.EntityClasses
 
 			_salesOrderHeaders = new AW.Data.CollectionClasses.SalesOrderHeaderCollection();
 			_salesOrderHeaders.SetContainingEntityInfo(this, "CreditCard");
+			_contactCollectionViaContactCreditCard = new AW.Data.CollectionClasses.ContactCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -586,6 +648,18 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathSalesOrderHeaders
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SalesOrderHeaderCollection(), (IEntityRelation)GetRelationsForField("SalesOrderHeaders")[0], (int)AW.Data.EntityType.CreditCardEntity, (int)AW.Data.EntityType.SalesOrderHeaderEntity, 0, null, null, null, "SalesOrderHeaders", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Contact'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathContactCollectionViaContactCreditCard
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.ContactCreditCardEntityUsingCreditCardID;
+				intermediateRelation.SetAliases(string.Empty, "ContactCreditCard_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ContactCollection(), intermediateRelation,	(int)AW.Data.EntityType.CreditCardEntity, (int)AW.Data.EntityType.ContactEntity, 0, null, null, GetRelationsForField("ContactCollectionViaContactCreditCard"), "ContactCollectionViaContactCreditCard", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
 		}
 
 
@@ -742,6 +816,40 @@ namespace AW.Data.EntityClasses
 					_salesOrderHeaders.Clear();
 				}
 				_alreadyFetchedSalesOrderHeaders = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'ContactEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiContactCollectionViaContactCreditCard()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ContactCollection ContactCollectionViaContactCreditCard
+		{
+			get { return GetMultiContactCollectionViaContactCreditCard(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for ContactCollectionViaContactCreditCard. When set to true, ContactCollectionViaContactCreditCard is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ContactCollectionViaContactCreditCard is accessed. You can always execute a forced fetch by calling GetMultiContactCollectionViaContactCreditCard(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchContactCollectionViaContactCreditCard
+		{
+			get	{ return _alwaysFetchContactCollectionViaContactCreditCard; }
+			set	{ _alwaysFetchContactCollectionViaContactCreditCard = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property ContactCollectionViaContactCreditCard already has been fetched. Setting this property to false when ContactCollectionViaContactCreditCard has been fetched
+		/// will clear the ContactCollectionViaContactCreditCard collection well. Setting this property to true while ContactCollectionViaContactCreditCard hasn't been fetched disables lazy loading for ContactCollectionViaContactCreditCard</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedContactCollectionViaContactCreditCard
+		{
+			get { return _alreadyFetchedContactCollectionViaContactCreditCard;}
+			set 
+			{
+				if(_alreadyFetchedContactCollectionViaContactCreditCard && !value && (_contactCollectionViaContactCreditCard != null))
+				{
+					_contactCollectionViaContactCreditCard.Clear();
+				}
+				_alreadyFetchedContactCollectionViaContactCreditCard = value;
 			}
 		}
 

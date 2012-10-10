@@ -152,6 +152,9 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
         case RelationType.OneToOne:
           Direction = AssociationDirection.OneToOne;
           break;
+        case RelationType.ManyToMany:
+          Direction = AssociationDirection.ManyToMany;
+          break;
       }
       _metaDataBuild = true;
       _foreignKeyNames = new ReadOnlyCollection<string>((from f in fkFields select f.Name).ToList());

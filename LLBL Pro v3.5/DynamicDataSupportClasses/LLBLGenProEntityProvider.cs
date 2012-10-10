@@ -171,12 +171,12 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
       var allRelations = dummy.GetAllRelations();
       foreach (var relation in allRelations)
       {
-        if ((relation.TypeOfRelation == RelationType.ManyToMany) || (relation.TypeOfRelation == RelationType.OneToOne) ||
-            relation.IsHierarchyRelation)
+        if (relation.IsHierarchyRelation)
         {
-          // DynamicData doesn't support m:n or 1:1
+          // DynamicData doesn't support HierarchyRelation
           continue;
         }
+
         PropertyDescriptor descriptor = null;
         if (!unusedPropertyDescriptorPerName.TryGetValue(relation.MappedFieldName, out descriptor))
         {
@@ -243,6 +243,12 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
             break;
           case RelationType.OneToMany:
             if (candidate.TypeOfRelation != RelationType.ManyToOne)
+            {
+              continue;
+            }
+            break;
+          case RelationType.ManyToMany:
+            if (candidate.TypeOfRelation != RelationType.ManyToMany)
             {
               continue;
             }

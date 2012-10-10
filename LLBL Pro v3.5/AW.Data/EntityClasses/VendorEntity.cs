@@ -22,7 +22,7 @@ using AW.Data.DaoClasses;
 using AW.Data.RelationClasses;
 using AW.Data.HelperClasses;
 using AW.Data.CollectionClasses;
-
+using System.ComponentModel.DataAnnotations;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
@@ -879,6 +879,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "Vendor"."PurchasingWebServiceURL"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NVarChar, 0, 0, 1024<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
+		[DataType(DataType.Url)]
 		public virtual System.String PurchasingWebServiceUrl
 		{
 			get { return (System.String)GetValue((int)VendorFieldIndex.PurchasingWebServiceUrl, true); }
