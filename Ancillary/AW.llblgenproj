@@ -104,6 +104,13 @@
     </SettingValues>
   </OutputSettingValues>
   <CodeGenerationMetaDataDefaults>
+    <TargetElement Type="2">
+      <Defaults>
+        <Namespaces>
+          <Namespace Name="System.ComponentModel.DataAnnotations" />
+        </Namespaces>
+      </Defaults>
+    </TargetElement>
     <TargetElement Type="256">
       <Defaults>
         <Attributes>
@@ -863,6 +870,9 @@
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="E-mail address for the person." />
               </CustomProperties>
+              <Attributes>
+                <Attribute Value="DataType(DataType.EmailAddress)" />
+              </Attributes>
             </OutputSettingValues>
           </Field>
           <Field Name="EmailPromotion" Type="int">
@@ -2124,6 +2134,9 @@
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Reviewer's e-mail address." />
               </CustomProperties>
+              <Attributes>
+                <Attribute Value="DataType(DataType.EmailAddress)" />
+              </Attributes>
             </OutputSettingValues>
           </Field>
           <Field Name="ModifiedDate" Type="datetime">
@@ -3075,6 +3088,9 @@
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Vendor URL." />
               </CustomProperties>
+              <Attributes>
+                <Attribute Value="DataType(DataType.Url)" />
+              </Attributes>
             </OutputSettingValues>
           </Field>
           <Field Name="VendorID" Type="int" IsReadOnly="true" Precision="10" IsPrimaryKey="true">
@@ -5008,6 +5024,11 @@
         </FieldRelationships>
       </NormalRelationship>
       <IndirectRelationship Start="Person:Contact" End="Sales:Store" StartNavigator="Stores" EndNavigator="Contacts" Relationship1="Sales.StoreContact.Contact-Person.Contact.StoreContacts" Relationship2="Sales.StoreContact.Store-Sales.Store.StoreContacts" />
+      <IndirectRelationship Start="Sales:CreditCard" End="Person:Contact" StartNavigator="ContactCollectionViaContactCreditCard" EndNavigator="CreditCards" Relationship1="Sales.ContactCreditCard.CreditCard-Sales.CreditCard.ContactCreditCards" Relationship2="Sales.ContactCreditCard.Contact-Person.Contact.ContactCreditCards" />
+      <IndirectRelationship Start="Sales:Currency" End="Person:CountryRegion" StartNavigator="CountryRegions" EndNavigator="Currencies" Relationship1="Sales.CountryRegionCurrency.Currency-Sales.Currency.CountryRegionCurrencies" Relationship2="Sales.CountryRegionCurrency.CountryRegion-Person.CountryRegion.CountryRegionCurrencies" />
+      <IndirectRelationship Start="Sales:SalesOrderHeader" End="Sales:SpecialOfferProduct" StartNavigator="SpecialOffers" EndNavigator="SalesOrders" Relationship1="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" Relationship2="Sales.SalesOrderDetail.SpecialOfferProduct-Sales.SpecialOfferProduct.SalesOrderDetails" />
+      <IndirectRelationship Start="Sales:SalesReason" End="Sales:SalesOrderHeader" StartNavigator="SalesOrders" EndNavigator="SalesReasons" Relationship1="Sales.SalesOrderHeaderSalesReason.SalesReason-Sales.SalesReason.SalesOrderHeaderSalesReasons" Relationship2="Sales.SalesOrderHeaderSalesReason.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderHeaderSalesReasons" />
+      <IndirectRelationship Start="Sales:SpecialOffer" End="Production:Product" StartNavigator="Products" EndNavigator="SpecialOffers" Relationship1="Sales.SpecialOfferProduct.SpecialOffer-Sales.SpecialOffer.SpecialOfferProducts" Relationship2="Sales.SpecialOfferProduct.Product-Production.Product.SpecialOfferProducts" />
     </Relationships>
     <InheritanceHierarchies>
       <InheritanceHierarchy SuperType="Production:TransactionHistory" SubType="Production:PurchaseOrderHistory" />
@@ -9954,6 +9975,24 @@
       <EntityDefinitions>
         <Entity Name="HumanResources:Employee" />
         <Entity Name="Sales:SalesPerson" />
+      </EntityDefinitions>
+      <Documentation><![CDATA[]]></Documentation>
+    </ModelView>
+    <ModelView Name="Sales">
+      <EntityDefinitions>
+        <Entity Name="Person:Contact" />
+        <Entity Name="Person:CountryRegion" />
+        <Entity Name="Production:Product" />
+        <Entity Name="Sales:ContactCreditCard" />
+        <Entity Name="Sales:CountryRegionCurrency" />
+        <Entity Name="Sales:CreditCard" />
+        <Entity Name="Sales:Currency" />
+        <Entity Name="Sales:SalesOrderDetail" />
+        <Entity Name="Sales:SalesOrderHeader" />
+        <Entity Name="Sales:SalesOrderHeaderSalesReason" />
+        <Entity Name="Sales:SalesReason" />
+        <Entity Name="Sales:SpecialOffer" />
+        <Entity Name="Sales:SpecialOfferProduct" />
       </EntityDefinitions>
       <Documentation><![CDATA[]]></Documentation>
     </ModelView>

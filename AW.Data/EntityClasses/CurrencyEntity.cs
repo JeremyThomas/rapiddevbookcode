@@ -22,7 +22,7 @@ using AW.Data.DaoClasses;
 using AW.Data.RelationClasses;
 using AW.Data.HelperClasses;
 using AW.Data.CollectionClasses;
-
+using System.ComponentModel.DataAnnotations;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.EntityClasses
@@ -47,6 +47,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchCurrencyRates, _alreadyFetchedCurrencyRates;
 		private AW.Data.CollectionClasses.CurrencyRateCollection	_currencyRates_;
 		private bool	_alwaysFetchCurrencyRates_, _alreadyFetchedCurrencyRates_;
+		private AW.Data.CollectionClasses.CountryRegionCollection _countryRegions;
+		private bool	_alwaysFetchCountryRegions, _alreadyFetchedCountryRegions;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -65,6 +67,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string CurrencyRates = "CurrencyRates";
 			/// <summary>Member name CurrencyRates_</summary>
 			public static readonly string CurrencyRates_ = "CurrencyRates_";
+			/// <summary>Member name CountryRegions</summary>
+			public static readonly string CountryRegions = "CountryRegions";
 		}
 		#endregion
 		
@@ -119,6 +123,9 @@ namespace AW.Data.EntityClasses
 			_currencyRates_ = (AW.Data.CollectionClasses.CurrencyRateCollection)info.GetValue("_currencyRates_", typeof(AW.Data.CollectionClasses.CurrencyRateCollection));
 			_alwaysFetchCurrencyRates_ = info.GetBoolean("_alwaysFetchCurrencyRates_");
 			_alreadyFetchedCurrencyRates_ = info.GetBoolean("_alreadyFetchedCurrencyRates_");
+			_countryRegions = (AW.Data.CollectionClasses.CountryRegionCollection)info.GetValue("_countryRegions", typeof(AW.Data.CollectionClasses.CountryRegionCollection));
+			_alwaysFetchCountryRegions = info.GetBoolean("_alwaysFetchCountryRegions");
+			_alreadyFetchedCountryRegions = info.GetBoolean("_alreadyFetchedCountryRegions");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -131,6 +138,7 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedCountryRegionCurrencies = (_countryRegionCurrencies.Count > 0);
 			_alreadyFetchedCurrencyRates = (_currencyRates.Count > 0);
 			_alreadyFetchedCurrencyRates_ = (_currencyRates_.Count > 0);
+			_alreadyFetchedCountryRegions = (_countryRegions.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -158,6 +166,10 @@ namespace AW.Data.EntityClasses
 				case "CurrencyRates_":
 					toReturn.Add(Relations.CurrencyRateEntityUsingToCurrencyCode);
 					break;
+				case "CountryRegions":
+					toReturn.Add(Relations.CountryRegionCurrencyEntityUsingCurrencyCode, "CurrencyEntity__", "CountryRegionCurrency_", JoinHint.None);
+					toReturn.Add(CountryRegionCurrencyEntity.Relations.CountryRegionEntityUsingCountryRegionCode, "CountryRegionCurrency_", string.Empty, JoinHint.None);
+					break;
 				default:
 					break;				
 			}
@@ -181,6 +193,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_currencyRates_", (!this.MarkedForDeletion?_currencyRates_:null));
 			info.AddValue("_alwaysFetchCurrencyRates_", _alwaysFetchCurrencyRates_);
 			info.AddValue("_alreadyFetchedCurrencyRates_", _alreadyFetchedCurrencyRates_);
+			info.AddValue("_countryRegions", (!this.MarkedForDeletion?_countryRegions:null));
+			info.AddValue("_alwaysFetchCountryRegions", _alwaysFetchCountryRegions);
+			info.AddValue("_alreadyFetchedCountryRegions", _alreadyFetchedCountryRegions);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -215,6 +230,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.CurrencyRates_.Add((CurrencyRateEntity)entity);
+					}
+					break;
+				case "CountryRegions":
+					_alreadyFetchedCountryRegions = true;
+					if(entity!=null)
+					{
+						this.CountryRegions.Add((CountryRegionEntity)entity);
 					}
 					break;
 				default:
@@ -518,6 +540,44 @@ namespace AW.Data.EntityClasses
 			_currencyRates_.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'CountryRegionEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'CountryRegionEntity'</returns>
+		public AW.Data.CollectionClasses.CountryRegionCollection GetMultiCountryRegions(bool forceFetch)
+		{
+			return GetMultiCountryRegions(forceFetch, _countryRegions.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'CountryRegionEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.CountryRegionCollection GetMultiCountryRegions(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedCountryRegions || forceFetch || _alwaysFetchCountryRegions) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_countryRegions);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(CurrencyFields.CurrencyCode, ComparisonOperator.Equal, this.CurrencyCode, "CurrencyEntity__"));
+				_countryRegions.SuppressClearInGetMulti=!forceFetch;
+				_countryRegions.EntityFactoryToUse = entityFactoryToUse;
+				_countryRegions.GetMulti(filter, GetRelationsForField("CountryRegions"));
+				_countryRegions.SuppressClearInGetMulti=false;
+				_alreadyFetchedCountryRegions = true;
+			}
+			return _countryRegions;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'CountryRegions'. These settings will be taken into account
+		/// when the property CountryRegions is requested or GetMultiCountryRegions is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersCountryRegions(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_countryRegions.SortClauses=sortClauses;
+			_countryRegions.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -527,6 +587,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("CountryRegionCurrencies", _countryRegionCurrencies);
 			toReturn.Add("CurrencyRates", _currencyRates);
 			toReturn.Add("CurrencyRates_", _currencyRates_);
+			toReturn.Add("CountryRegions", _countryRegions);
 			return toReturn;
 		}
 	
@@ -575,6 +636,7 @@ namespace AW.Data.EntityClasses
 
 			_currencyRates_ = new AW.Data.CollectionClasses.CurrencyRateCollection();
 			_currencyRates_.SetContainingEntityInfo(this, "Currency_");
+			_countryRegions = new AW.Data.CollectionClasses.CountryRegionCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -672,6 +734,18 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathCurrencyRates_
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.CurrencyRateCollection(), (IEntityRelation)GetRelationsForField("CurrencyRates_")[0], (int)AW.Data.EntityType.CurrencyEntity, (int)AW.Data.EntityType.CurrencyRateEntity, 0, null, null, null, "CurrencyRates_", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'CountryRegion'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathCountryRegions
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.CountryRegionCurrencyEntityUsingCurrencyCode;
+				intermediateRelation.SetAliases(string.Empty, "CountryRegionCurrency_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.CountryRegionCollection(), intermediateRelation,	(int)AW.Data.EntityType.CurrencyEntity, (int)AW.Data.EntityType.CountryRegionEntity, 0, null, null, GetRelationsForField("CountryRegions"), "CountryRegions", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
 		}
 
 
@@ -828,6 +902,40 @@ namespace AW.Data.EntityClasses
 					_currencyRates_.Clear();
 				}
 				_alreadyFetchedCurrencyRates_ = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'CountryRegionEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiCountryRegions()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.CountryRegionCollection CountryRegions
+		{
+			get { return GetMultiCountryRegions(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for CountryRegions. When set to true, CountryRegions is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time CountryRegions is accessed. You can always execute a forced fetch by calling GetMultiCountryRegions(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchCountryRegions
+		{
+			get	{ return _alwaysFetchCountryRegions; }
+			set	{ _alwaysFetchCountryRegions = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property CountryRegions already has been fetched. Setting this property to false when CountryRegions has been fetched
+		/// will clear the CountryRegions collection well. Setting this property to true while CountryRegions hasn't been fetched disables lazy loading for CountryRegions</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedCountryRegions
+		{
+			get { return _alreadyFetchedCountryRegions;}
+			set 
+			{
+				if(_alreadyFetchedCountryRegions && !value && (_countryRegions != null))
+				{
+					_countryRegions.Clear();
+				}
+				_alreadyFetchedCountryRegions = value;
 			}
 		}
 
