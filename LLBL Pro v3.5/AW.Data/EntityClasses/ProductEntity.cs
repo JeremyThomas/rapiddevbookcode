@@ -70,6 +70,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchShoppingCartItems, _alreadyFetchedShoppingCartItems;
 		private AW.Data.CollectionClasses.SpecialOfferProductCollection	_specialOfferProducts;
 		private bool	_alwaysFetchSpecialOfferProducts, _alreadyFetchedSpecialOfferProducts;
+		private AW.Data.CollectionClasses.ProductPhotoCollection _photos;
+		private bool	_alwaysFetchPhotos, _alreadyFetchedPhotos;
 		private AW.Data.CollectionClasses.SpecialOfferCollection _specialOffers;
 		private bool	_alwaysFetchSpecialOffers, _alreadyFetchedSpecialOffers;
 		private ProductModelEntity _productModel;
@@ -128,6 +130,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string ShoppingCartItems = "ShoppingCartItems";
 			/// <summary>Member name SpecialOfferProducts</summary>
 			public static readonly string SpecialOfferProducts = "SpecialOfferProducts";
+			/// <summary>Member name Photos</summary>
+			public static readonly string Photos = "Photos";
 			/// <summary>Member name SpecialOffers</summary>
 			public static readonly string SpecialOffers = "SpecialOffers";
 		}
@@ -228,6 +232,10 @@ namespace AW.Data.EntityClasses
 			_specialOfferProducts = (AW.Data.CollectionClasses.SpecialOfferProductCollection)info.GetValue("_specialOfferProducts", typeof(AW.Data.CollectionClasses.SpecialOfferProductCollection));
 			_alwaysFetchSpecialOfferProducts = info.GetBoolean("_alwaysFetchSpecialOfferProducts");
 			_alreadyFetchedSpecialOfferProducts = info.GetBoolean("_alreadyFetchedSpecialOfferProducts");
+			_photos = (AW.Data.CollectionClasses.ProductPhotoCollection)info.GetValue("_photos", typeof(AW.Data.CollectionClasses.ProductPhotoCollection));
+			_alwaysFetchPhotos = info.GetBoolean("_alwaysFetchPhotos");
+			_alreadyFetchedPhotos = info.GetBoolean("_alreadyFetchedPhotos");
+
 			_specialOffers = (AW.Data.CollectionClasses.SpecialOfferCollection)info.GetValue("_specialOffers", typeof(AW.Data.CollectionClasses.SpecialOfferCollection));
 			_alwaysFetchSpecialOffers = info.GetBoolean("_alwaysFetchSpecialOffers");
 			_alreadyFetchedSpecialOffers = info.GetBoolean("_alreadyFetchedSpecialOffers");
@@ -317,6 +325,7 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedPurchaseOrderDetails = (_purchaseOrderDetails.Count > 0);
 			_alreadyFetchedShoppingCartItems = (_shoppingCartItems.Count > 0);
 			_alreadyFetchedSpecialOfferProducts = (_specialOfferProducts.Count > 0);
+			_alreadyFetchedPhotos = (_photos.Count > 0);
 			_alreadyFetchedSpecialOffers = (_specialOffers.Count > 0);
 			_alreadyFetchedProductModel = (_productModel != null);
 			_alreadyFetchedProductSubcategory = (_productSubcategory != null);
@@ -394,6 +403,10 @@ namespace AW.Data.EntityClasses
 				case "SpecialOfferProducts":
 					toReturn.Add(Relations.SpecialOfferProductEntityUsingProductID);
 					break;
+				case "Photos":
+					toReturn.Add(Relations.ProductProductPhotoEntityUsingProductID, "ProductEntity__", "ProductProductPhoto_", JoinHint.None);
+					toReturn.Add(ProductProductPhotoEntity.Relations.ProductPhotoEntityUsingProductPhotoID, "ProductProductPhoto_", string.Empty, JoinHint.None);
+					break;
 				case "SpecialOffers":
 					toReturn.Add(Relations.SpecialOfferProductEntityUsingProductID, "ProductEntity__", "SpecialOfferProduct_", JoinHint.None);
 					toReturn.Add(SpecialOfferProductEntity.Relations.SpecialOfferEntityUsingSpecialOfferID, "SpecialOfferProduct_", string.Empty, JoinHint.None);
@@ -454,6 +467,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_specialOfferProducts", (!this.MarkedForDeletion?_specialOfferProducts:null));
 			info.AddValue("_alwaysFetchSpecialOfferProducts", _alwaysFetchSpecialOfferProducts);
 			info.AddValue("_alreadyFetchedSpecialOfferProducts", _alreadyFetchedSpecialOfferProducts);
+			info.AddValue("_photos", (!this.MarkedForDeletion?_photos:null));
+			info.AddValue("_alwaysFetchPhotos", _alwaysFetchPhotos);
+			info.AddValue("_alreadyFetchedPhotos", _alreadyFetchedPhotos);
 			info.AddValue("_specialOffers", (!this.MarkedForDeletion?_specialOffers:null));
 			info.AddValue("_alwaysFetchSpecialOffers", _alwaysFetchSpecialOffers);
 			info.AddValue("_alreadyFetchedSpecialOffers", _alreadyFetchedSpecialOffers);
@@ -600,6 +616,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.SpecialOfferProducts.Add((SpecialOfferProductEntity)entity);
+					}
+					break;
+				case "Photos":
+					_alreadyFetchedPhotos = true;
+					if(entity!=null)
+					{
+						this.Photos.Add((ProductPhotoEntity)entity);
 					}
 					break;
 				case "SpecialOffers":
@@ -1632,6 +1655,44 @@ namespace AW.Data.EntityClasses
 			_specialOfferProducts.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'ProductPhotoEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ProductPhotoEntity'</returns>
+		public AW.Data.CollectionClasses.ProductPhotoCollection GetMultiPhotos(bool forceFetch)
+		{
+			return GetMultiPhotos(forceFetch, _photos.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductPhotoEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ProductPhotoCollection GetMultiPhotos(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedPhotos || forceFetch || _alwaysFetchPhotos) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_photos);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(ProductFields.ProductID, ComparisonOperator.Equal, this.ProductID, "ProductEntity__"));
+				_photos.SuppressClearInGetMulti=!forceFetch;
+				_photos.EntityFactoryToUse = entityFactoryToUse;
+				_photos.GetMulti(filter, GetRelationsForField("Photos"));
+				_photos.SuppressClearInGetMulti=false;
+				_alreadyFetchedPhotos = true;
+			}
+			return _photos;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'Photos'. These settings will be taken into account
+		/// when the property Photos is requested or GetMultiPhotos is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersPhotos(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_photos.SortClauses=sortClauses;
+			_photos.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves all related entities of type 'SpecialOfferEntity' using a relation of type 'm:n'.</summary>
 		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
 		/// <returns>Filled collection with all related entities of type 'SpecialOfferEntity'</returns>
@@ -1857,6 +1918,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("PurchaseOrderDetails", _purchaseOrderDetails);
 			toReturn.Add("ShoppingCartItems", _shoppingCartItems);
 			toReturn.Add("SpecialOfferProducts", _specialOfferProducts);
+			toReturn.Add("Photos", _photos);
 			toReturn.Add("SpecialOffers", _specialOffers);
 			return toReturn;
 		}
@@ -1939,6 +2001,7 @@ namespace AW.Data.EntityClasses
 
 			_specialOfferProducts = new AW.Data.CollectionClasses.SpecialOfferProductCollection();
 			_specialOfferProducts.SetContainingEntityInfo(this, "Product");
+			_photos = new AW.Data.CollectionClasses.ProductPhotoCollection();
 			_specialOffers = new AW.Data.CollectionClasses.SpecialOfferCollection();
 			_productModelReturnsNewIfNotFound = true;
 			_productSubcategoryReturnsNewIfNotFound = true;
@@ -2316,6 +2379,18 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathSpecialOfferProducts
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.SpecialOfferProductCollection(), (IEntityRelation)GetRelationsForField("SpecialOfferProducts")[0], (int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.SpecialOfferProductEntity, 0, null, null, null, "SpecialOfferProducts", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductPhoto'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathPhotos
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.ProductProductPhotoEntityUsingProductID;
+				intermediateRelation.SetAliases(string.Empty, "ProductProductPhoto_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductPhotoCollection(), intermediateRelation,	(int)AW.Data.EntityType.ProductEntity, (int)AW.Data.EntityType.ProductPhotoEntity, 0, null, null, GetRelationsForField("Photos"), "Photos", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SpecialOffer'  for this entity.</summary>
@@ -3117,6 +3192,40 @@ namespace AW.Data.EntityClasses
 					_specialOfferProducts.Clear();
 				}
 				_alreadyFetchedSpecialOfferProducts = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductPhotoEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiPhotos()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ProductPhotoCollection Photos
+		{
+			get { return GetMultiPhotos(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Photos. When set to true, Photos is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Photos is accessed. You can always execute a forced fetch by calling GetMultiPhotos(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchPhotos
+		{
+			get	{ return _alwaysFetchPhotos; }
+			set	{ _alwaysFetchPhotos = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Photos already has been fetched. Setting this property to false when Photos has been fetched
+		/// will clear the Photos collection well. Setting this property to true while Photos hasn't been fetched disables lazy loading for Photos</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedPhotos
+		{
+			get { return _alreadyFetchedPhotos;}
+			set 
+			{
+				if(_alreadyFetchedPhotos && !value && (_photos != null))
+				{
+					_photos.Clear();
+				}
+				_alreadyFetchedPhotos = value;
 			}
 		}
 

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AW_Dynamic_Data {
+namespace Dynamic_Data {
     
     
     public partial class ManyToManyField {

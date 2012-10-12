@@ -40,6 +40,7 @@
 //////////////////////////////////////////////////////////////////////
 
 using System;
+using System.Reflection;
 using System.Web.DynamicData.ModelProviders;
 
 namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
@@ -68,8 +69,10 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
     /// <param name="name"> The name. </param>
     /// <param name="isNullable"> if set to <c>true</c> [is nullable]. </param>
     /// <param name="relationProvider"> The relation provider. </param>
+    /// <param name="entityTypeProperty"> </param>
     public LLBLGenProEntityFieldProvider(LLBLGenProEntityProvider container, Type fieldType, bool isCustomProperty, bool isForeignKey,
-                                         bool isPrimaryKey, bool isReadOnly, int size, string name, bool isNullable, LLBLGenProEntityRelationProvider relationProvider)
+                                         bool isPrimaryKey, bool isReadOnly, int size, string name, bool isNullable, 
+      LLBLGenProEntityRelationProvider relationProvider, PropertyInfo entityTypeProperty = null)
       : base(container)
     {
       ColumnType = fieldType;
@@ -82,6 +85,7 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
       Nullable = isNullable;
       IsSortable = true;
       _relationProvider = relationProvider;
+      EntityTypeProperty = entityTypeProperty;
     }
 
 

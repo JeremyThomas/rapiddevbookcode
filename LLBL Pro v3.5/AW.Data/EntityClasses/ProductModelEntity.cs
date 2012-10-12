@@ -47,6 +47,12 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchProductModelIllustrations, _alreadyFetchedProductModelIllustrations;
 		private AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection	_productModelProductDescriptionCultures;
 		private bool	_alwaysFetchProductModelProductDescriptionCultures, _alreadyFetchedProductModelProductDescriptionCultures;
+		private AW.Data.CollectionClasses.IllustrationCollection _illustrations;
+		private bool	_alwaysFetchIllustrations, _alreadyFetchedIllustrations;
+		private AW.Data.CollectionClasses.ProductDescriptionCollection _descriptions;
+		private bool	_alwaysFetchDescriptions, _alreadyFetchedDescriptions;
+		private AW.Data.CollectionClasses.ProductSubcategoryCollection _subcategories;
+		private bool	_alwaysFetchSubcategories, _alreadyFetchedSubcategories;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -65,6 +71,12 @@ namespace AW.Data.EntityClasses
 			public static readonly string ProductModelIllustrations = "ProductModelIllustrations";
 			/// <summary>Member name ProductModelProductDescriptionCultures</summary>
 			public static readonly string ProductModelProductDescriptionCultures = "ProductModelProductDescriptionCultures";
+			/// <summary>Member name Illustrations</summary>
+			public static readonly string Illustrations = "Illustrations";
+			/// <summary>Member name Descriptions</summary>
+			public static readonly string Descriptions = "Descriptions";
+			/// <summary>Member name Subcategories</summary>
+			public static readonly string Subcategories = "Subcategories";
 		}
 		#endregion
 		
@@ -119,6 +131,17 @@ namespace AW.Data.EntityClasses
 			_productModelProductDescriptionCultures = (AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection)info.GetValue("_productModelProductDescriptionCultures", typeof(AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection));
 			_alwaysFetchProductModelProductDescriptionCultures = info.GetBoolean("_alwaysFetchProductModelProductDescriptionCultures");
 			_alreadyFetchedProductModelProductDescriptionCultures = info.GetBoolean("_alreadyFetchedProductModelProductDescriptionCultures");
+			_illustrations = (AW.Data.CollectionClasses.IllustrationCollection)info.GetValue("_illustrations", typeof(AW.Data.CollectionClasses.IllustrationCollection));
+			_alwaysFetchIllustrations = info.GetBoolean("_alwaysFetchIllustrations");
+			_alreadyFetchedIllustrations = info.GetBoolean("_alreadyFetchedIllustrations");
+
+			_descriptions = (AW.Data.CollectionClasses.ProductDescriptionCollection)info.GetValue("_descriptions", typeof(AW.Data.CollectionClasses.ProductDescriptionCollection));
+			_alwaysFetchDescriptions = info.GetBoolean("_alwaysFetchDescriptions");
+			_alreadyFetchedDescriptions = info.GetBoolean("_alreadyFetchedDescriptions");
+
+			_subcategories = (AW.Data.CollectionClasses.ProductSubcategoryCollection)info.GetValue("_subcategories", typeof(AW.Data.CollectionClasses.ProductSubcategoryCollection));
+			_alwaysFetchSubcategories = info.GetBoolean("_alwaysFetchSubcategories");
+			_alreadyFetchedSubcategories = info.GetBoolean("_alreadyFetchedSubcategories");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -131,6 +154,9 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedProducts = (_products.Count > 0);
 			_alreadyFetchedProductModelIllustrations = (_productModelIllustrations.Count > 0);
 			_alreadyFetchedProductModelProductDescriptionCultures = (_productModelProductDescriptionCultures.Count > 0);
+			_alreadyFetchedIllustrations = (_illustrations.Count > 0);
+			_alreadyFetchedDescriptions = (_descriptions.Count > 0);
+			_alreadyFetchedSubcategories = (_subcategories.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -158,6 +184,18 @@ namespace AW.Data.EntityClasses
 				case "ProductModelProductDescriptionCultures":
 					toReturn.Add(Relations.ProductModelProductDescriptionCultureEntityUsingProductModelID);
 					break;
+				case "Illustrations":
+					toReturn.Add(Relations.ProductModelIllustrationEntityUsingProductModelID, "ProductModelEntity__", "ProductModelIllustration_", JoinHint.None);
+					toReturn.Add(ProductModelIllustrationEntity.Relations.IllustrationEntityUsingIllustrationID, "ProductModelIllustration_", string.Empty, JoinHint.None);
+					break;
+				case "Descriptions":
+					toReturn.Add(Relations.ProductModelProductDescriptionCultureEntityUsingProductModelID, "ProductModelEntity__", "ProductModelProductDescriptionCulture_", JoinHint.None);
+					toReturn.Add(ProductModelProductDescriptionCultureEntity.Relations.ProductDescriptionEntityUsingProductDescriptionID, "ProductModelProductDescriptionCulture_", string.Empty, JoinHint.None);
+					break;
+				case "Subcategories":
+					toReturn.Add(Relations.ProductEntityUsingProductModelID, "ProductModelEntity__", "Product_", JoinHint.None);
+					toReturn.Add(ProductEntity.Relations.ProductSubcategoryEntityUsingProductSubcategoryID, "Product_", string.Empty, JoinHint.None);
+					break;
 				default:
 					break;				
 			}
@@ -181,6 +219,15 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_productModelProductDescriptionCultures", (!this.MarkedForDeletion?_productModelProductDescriptionCultures:null));
 			info.AddValue("_alwaysFetchProductModelProductDescriptionCultures", _alwaysFetchProductModelProductDescriptionCultures);
 			info.AddValue("_alreadyFetchedProductModelProductDescriptionCultures", _alreadyFetchedProductModelProductDescriptionCultures);
+			info.AddValue("_illustrations", (!this.MarkedForDeletion?_illustrations:null));
+			info.AddValue("_alwaysFetchIllustrations", _alwaysFetchIllustrations);
+			info.AddValue("_alreadyFetchedIllustrations", _alreadyFetchedIllustrations);
+			info.AddValue("_descriptions", (!this.MarkedForDeletion?_descriptions:null));
+			info.AddValue("_alwaysFetchDescriptions", _alwaysFetchDescriptions);
+			info.AddValue("_alreadyFetchedDescriptions", _alreadyFetchedDescriptions);
+			info.AddValue("_subcategories", (!this.MarkedForDeletion?_subcategories:null));
+			info.AddValue("_alwaysFetchSubcategories", _alwaysFetchSubcategories);
+			info.AddValue("_alreadyFetchedSubcategories", _alreadyFetchedSubcategories);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -215,6 +262,27 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.ProductModelProductDescriptionCultures.Add((ProductModelProductDescriptionCultureEntity)entity);
+					}
+					break;
+				case "Illustrations":
+					_alreadyFetchedIllustrations = true;
+					if(entity!=null)
+					{
+						this.Illustrations.Add((IllustrationEntity)entity);
+					}
+					break;
+				case "Descriptions":
+					_alreadyFetchedDescriptions = true;
+					if(entity!=null)
+					{
+						this.Descriptions.Add((ProductDescriptionEntity)entity);
+					}
+					break;
+				case "Subcategories":
+					_alreadyFetchedSubcategories = true;
+					if(entity!=null)
+					{
+						this.Subcategories.Add((ProductSubcategoryEntity)entity);
 					}
 					break;
 				default:
@@ -518,6 +586,120 @@ namespace AW.Data.EntityClasses
 			_productModelProductDescriptionCultures.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'IllustrationEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'IllustrationEntity'</returns>
+		public AW.Data.CollectionClasses.IllustrationCollection GetMultiIllustrations(bool forceFetch)
+		{
+			return GetMultiIllustrations(forceFetch, _illustrations.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'IllustrationEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.IllustrationCollection GetMultiIllustrations(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedIllustrations || forceFetch || _alwaysFetchIllustrations) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_illustrations);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(ProductModelFields.ProductModelID, ComparisonOperator.Equal, this.ProductModelID, "ProductModelEntity__"));
+				_illustrations.SuppressClearInGetMulti=!forceFetch;
+				_illustrations.EntityFactoryToUse = entityFactoryToUse;
+				_illustrations.GetMulti(filter, GetRelationsForField("Illustrations"));
+				_illustrations.SuppressClearInGetMulti=false;
+				_alreadyFetchedIllustrations = true;
+			}
+			return _illustrations;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'Illustrations'. These settings will be taken into account
+		/// when the property Illustrations is requested or GetMultiIllustrations is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersIllustrations(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_illustrations.SortClauses=sortClauses;
+			_illustrations.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductDescriptionEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ProductDescriptionEntity'</returns>
+		public AW.Data.CollectionClasses.ProductDescriptionCollection GetMultiDescriptions(bool forceFetch)
+		{
+			return GetMultiDescriptions(forceFetch, _descriptions.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductDescriptionEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ProductDescriptionCollection GetMultiDescriptions(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedDescriptions || forceFetch || _alwaysFetchDescriptions) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_descriptions);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(ProductModelFields.ProductModelID, ComparisonOperator.Equal, this.ProductModelID, "ProductModelEntity__"));
+				_descriptions.SuppressClearInGetMulti=!forceFetch;
+				_descriptions.EntityFactoryToUse = entityFactoryToUse;
+				_descriptions.GetMulti(filter, GetRelationsForField("Descriptions"));
+				_descriptions.SuppressClearInGetMulti=false;
+				_alreadyFetchedDescriptions = true;
+			}
+			return _descriptions;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'Descriptions'. These settings will be taken into account
+		/// when the property Descriptions is requested or GetMultiDescriptions is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersDescriptions(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_descriptions.SortClauses=sortClauses;
+			_descriptions.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductSubcategoryEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ProductSubcategoryEntity'</returns>
+		public AW.Data.CollectionClasses.ProductSubcategoryCollection GetMultiSubcategories(bool forceFetch)
+		{
+			return GetMultiSubcategories(forceFetch, _subcategories.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductSubcategoryEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ProductSubcategoryCollection GetMultiSubcategories(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedSubcategories || forceFetch || _alwaysFetchSubcategories) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_subcategories);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(ProductModelFields.ProductModelID, ComparisonOperator.Equal, this.ProductModelID, "ProductModelEntity__"));
+				_subcategories.SuppressClearInGetMulti=!forceFetch;
+				_subcategories.EntityFactoryToUse = entityFactoryToUse;
+				_subcategories.GetMulti(filter, GetRelationsForField("Subcategories"));
+				_subcategories.SuppressClearInGetMulti=false;
+				_alreadyFetchedSubcategories = true;
+			}
+			return _subcategories;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'Subcategories'. These settings will be taken into account
+		/// when the property Subcategories is requested or GetMultiSubcategories is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersSubcategories(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_subcategories.SortClauses=sortClauses;
+			_subcategories.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -527,6 +709,9 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("Products", _products);
 			toReturn.Add("ProductModelIllustrations", _productModelIllustrations);
 			toReturn.Add("ProductModelProductDescriptionCultures", _productModelProductDescriptionCultures);
+			toReturn.Add("Illustrations", _illustrations);
+			toReturn.Add("Descriptions", _descriptions);
+			toReturn.Add("Subcategories", _subcategories);
 			return toReturn;
 		}
 	
@@ -575,6 +760,9 @@ namespace AW.Data.EntityClasses
 
 			_productModelProductDescriptionCultures = new AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection();
 			_productModelProductDescriptionCultures.SetContainingEntityInfo(this, "ProductModel");
+			_illustrations = new AW.Data.CollectionClasses.IllustrationCollection();
+			_descriptions = new AW.Data.CollectionClasses.ProductDescriptionCollection();
+			_subcategories = new AW.Data.CollectionClasses.ProductSubcategoryCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -681,6 +869,42 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathProductModelProductDescriptionCultures
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection(), (IEntityRelation)GetRelationsForField("ProductModelProductDescriptionCultures")[0], (int)AW.Data.EntityType.ProductModelEntity, (int)AW.Data.EntityType.ProductModelProductDescriptionCultureEntity, 0, null, null, null, "ProductModelProductDescriptionCultures", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Illustration'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathIllustrations
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.ProductModelIllustrationEntityUsingProductModelID;
+				intermediateRelation.SetAliases(string.Empty, "ProductModelIllustration_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.IllustrationCollection(), intermediateRelation,	(int)AW.Data.EntityType.ProductModelEntity, (int)AW.Data.EntityType.IllustrationEntity, 0, null, null, GetRelationsForField("Illustrations"), "Illustrations", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductDescription'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathDescriptions
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.ProductModelProductDescriptionCultureEntityUsingProductModelID;
+				intermediateRelation.SetAliases(string.Empty, "ProductModelProductDescriptionCulture_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductDescriptionCollection(), intermediateRelation,	(int)AW.Data.EntityType.ProductModelEntity, (int)AW.Data.EntityType.ProductDescriptionEntity, 0, null, null, GetRelationsForField("Descriptions"), "Descriptions", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductSubcategory'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathSubcategories
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.ProductEntityUsingProductModelID;
+				intermediateRelation.SetAliases(string.Empty, "Product_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductSubcategoryCollection(), intermediateRelation,	(int)AW.Data.EntityType.ProductModelEntity, (int)AW.Data.EntityType.ProductSubcategoryEntity, 0, null, null, GetRelationsForField("Subcategories"), "Subcategories", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
 		}
 
 
@@ -870,6 +1094,108 @@ namespace AW.Data.EntityClasses
 					_productModelProductDescriptionCultures.Clear();
 				}
 				_alreadyFetchedProductModelProductDescriptionCultures = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'IllustrationEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiIllustrations()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.IllustrationCollection Illustrations
+		{
+			get { return GetMultiIllustrations(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Illustrations. When set to true, Illustrations is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Illustrations is accessed. You can always execute a forced fetch by calling GetMultiIllustrations(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchIllustrations
+		{
+			get	{ return _alwaysFetchIllustrations; }
+			set	{ _alwaysFetchIllustrations = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Illustrations already has been fetched. Setting this property to false when Illustrations has been fetched
+		/// will clear the Illustrations collection well. Setting this property to true while Illustrations hasn't been fetched disables lazy loading for Illustrations</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedIllustrations
+		{
+			get { return _alreadyFetchedIllustrations;}
+			set 
+			{
+				if(_alreadyFetchedIllustrations && !value && (_illustrations != null))
+				{
+					_illustrations.Clear();
+				}
+				_alreadyFetchedIllustrations = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductDescriptionEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiDescriptions()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ProductDescriptionCollection Descriptions
+		{
+			get { return GetMultiDescriptions(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Descriptions. When set to true, Descriptions is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Descriptions is accessed. You can always execute a forced fetch by calling GetMultiDescriptions(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchDescriptions
+		{
+			get	{ return _alwaysFetchDescriptions; }
+			set	{ _alwaysFetchDescriptions = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Descriptions already has been fetched. Setting this property to false when Descriptions has been fetched
+		/// will clear the Descriptions collection well. Setting this property to true while Descriptions hasn't been fetched disables lazy loading for Descriptions</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedDescriptions
+		{
+			get { return _alreadyFetchedDescriptions;}
+			set 
+			{
+				if(_alreadyFetchedDescriptions && !value && (_descriptions != null))
+				{
+					_descriptions.Clear();
+				}
+				_alreadyFetchedDescriptions = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductSubcategoryEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiSubcategories()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ProductSubcategoryCollection Subcategories
+		{
+			get { return GetMultiSubcategories(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Subcategories. When set to true, Subcategories is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Subcategories is accessed. You can always execute a forced fetch by calling GetMultiSubcategories(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchSubcategories
+		{
+			get	{ return _alwaysFetchSubcategories; }
+			set	{ _alwaysFetchSubcategories = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Subcategories already has been fetched. Setting this property to false when Subcategories has been fetched
+		/// will clear the Subcategories collection well. Setting this property to true while Subcategories hasn't been fetched disables lazy loading for Subcategories</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedSubcategories
+		{
+			get { return _alreadyFetchedSubcategories;}
+			set 
+			{
+				if(_alreadyFetchedSubcategories && !value && (_subcategories != null))
+				{
+					_subcategories.Clear();
+				}
+				_alreadyFetchedSubcategories = value;
 			}
 		}
 

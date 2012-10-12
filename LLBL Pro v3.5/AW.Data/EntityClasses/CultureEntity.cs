@@ -43,6 +43,8 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection	_productModelProductDescriptionCultures;
 		private bool	_alwaysFetchProductModelProductDescriptionCultures, _alreadyFetchedProductModelProductDescriptionCultures;
+		private AW.Data.CollectionClasses.ProductDescriptionCollection _productDescriptions;
+		private bool	_alwaysFetchProductDescriptions, _alreadyFetchedProductDescriptions;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -57,6 +59,8 @@ namespace AW.Data.EntityClasses
 		{
 			/// <summary>Member name ProductModelProductDescriptionCultures</summary>
 			public static readonly string ProductModelProductDescriptionCultures = "ProductModelProductDescriptionCultures";
+			/// <summary>Member name ProductDescriptions</summary>
+			public static readonly string ProductDescriptions = "ProductDescriptions";
 		}
 		#endregion
 		
@@ -103,6 +107,9 @@ namespace AW.Data.EntityClasses
 			_productModelProductDescriptionCultures = (AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection)info.GetValue("_productModelProductDescriptionCultures", typeof(AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection));
 			_alwaysFetchProductModelProductDescriptionCultures = info.GetBoolean("_alwaysFetchProductModelProductDescriptionCultures");
 			_alreadyFetchedProductModelProductDescriptionCultures = info.GetBoolean("_alreadyFetchedProductModelProductDescriptionCultures");
+			_productDescriptions = (AW.Data.CollectionClasses.ProductDescriptionCollection)info.GetValue("_productDescriptions", typeof(AW.Data.CollectionClasses.ProductDescriptionCollection));
+			_alwaysFetchProductDescriptions = info.GetBoolean("_alwaysFetchProductDescriptions");
+			_alreadyFetchedProductDescriptions = info.GetBoolean("_alreadyFetchedProductDescriptions");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -113,6 +120,7 @@ namespace AW.Data.EntityClasses
 		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedProductModelProductDescriptionCultures = (_productModelProductDescriptionCultures.Count > 0);
+			_alreadyFetchedProductDescriptions = (_productDescriptions.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -134,6 +142,10 @@ namespace AW.Data.EntityClasses
 				case "ProductModelProductDescriptionCultures":
 					toReturn.Add(Relations.ProductModelProductDescriptionCultureEntityUsingCultureID);
 					break;
+				case "ProductDescriptions":
+					toReturn.Add(Relations.ProductModelProductDescriptionCultureEntityUsingCultureID, "CultureEntity__", "ProductModelProductDescriptionCulture_", JoinHint.None);
+					toReturn.Add(ProductModelProductDescriptionCultureEntity.Relations.ProductDescriptionEntityUsingProductDescriptionID, "ProductModelProductDescriptionCulture_", string.Empty, JoinHint.None);
+					break;
 				default:
 					break;				
 			}
@@ -151,6 +163,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_productModelProductDescriptionCultures", (!this.MarkedForDeletion?_productModelProductDescriptionCultures:null));
 			info.AddValue("_alwaysFetchProductModelProductDescriptionCultures", _alwaysFetchProductModelProductDescriptionCultures);
 			info.AddValue("_alreadyFetchedProductModelProductDescriptionCultures", _alreadyFetchedProductModelProductDescriptionCultures);
+			info.AddValue("_productDescriptions", (!this.MarkedForDeletion?_productDescriptions:null));
+			info.AddValue("_alwaysFetchProductDescriptions", _alwaysFetchProductDescriptions);
+			info.AddValue("_alreadyFetchedProductDescriptions", _alreadyFetchedProductDescriptions);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -171,6 +186,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.ProductModelProductDescriptionCultures.Add((ProductModelProductDescriptionCultureEntity)entity);
+					}
+					break;
+				case "ProductDescriptions":
+					_alreadyFetchedProductDescriptions = true;
+					if(entity!=null)
+					{
+						this.ProductDescriptions.Add((ProductDescriptionEntity)entity);
 					}
 					break;
 				default:
@@ -350,6 +372,44 @@ namespace AW.Data.EntityClasses
 			_productModelProductDescriptionCultures.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'ProductDescriptionEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ProductDescriptionEntity'</returns>
+		public AW.Data.CollectionClasses.ProductDescriptionCollection GetMultiProductDescriptions(bool forceFetch)
+		{
+			return GetMultiProductDescriptions(forceFetch, _productDescriptions.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductDescriptionEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ProductDescriptionCollection GetMultiProductDescriptions(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedProductDescriptions || forceFetch || _alwaysFetchProductDescriptions) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_productDescriptions);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(CultureFields.CultureID, ComparisonOperator.Equal, this.CultureID, "CultureEntity__"));
+				_productDescriptions.SuppressClearInGetMulti=!forceFetch;
+				_productDescriptions.EntityFactoryToUse = entityFactoryToUse;
+				_productDescriptions.GetMulti(filter, GetRelationsForField("ProductDescriptions"));
+				_productDescriptions.SuppressClearInGetMulti=false;
+				_alreadyFetchedProductDescriptions = true;
+			}
+			return _productDescriptions;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'ProductDescriptions'. These settings will be taken into account
+		/// when the property ProductDescriptions is requested or GetMultiProductDescriptions is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersProductDescriptions(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_productDescriptions.SortClauses=sortClauses;
+			_productDescriptions.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -357,6 +417,7 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("ProductModelProductDescriptionCultures", _productModelProductDescriptionCultures);
+			toReturn.Add("ProductDescriptions", _productDescriptions);
 			return toReturn;
 		}
 	
@@ -399,6 +460,7 @@ namespace AW.Data.EntityClasses
 
 			_productModelProductDescriptionCultures = new AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection();
 			_productModelProductDescriptionCultures.SetContainingEntityInfo(this, "Culture");
+			_productDescriptions = new AW.Data.CollectionClasses.ProductDescriptionCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -482,6 +544,18 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathProductModelProductDescriptionCultures
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductModelProductDescriptionCultureCollection(), (IEntityRelation)GetRelationsForField("ProductModelProductDescriptionCultures")[0], (int)AW.Data.EntityType.CultureEntity, (int)AW.Data.EntityType.ProductModelProductDescriptionCultureEntity, 0, null, null, null, "ProductModelProductDescriptionCultures", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductDescription'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathProductDescriptions
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.ProductModelProductDescriptionCultureEntityUsingCultureID;
+				intermediateRelation.SetAliases(string.Empty, "ProductModelProductDescriptionCulture_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductDescriptionCollection(), intermediateRelation,	(int)AW.Data.EntityType.CultureEntity, (int)AW.Data.EntityType.ProductDescriptionEntity, 0, null, null, GetRelationsForField("ProductDescriptions"), "ProductDescriptions", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
 		}
 
 
@@ -572,6 +646,40 @@ namespace AW.Data.EntityClasses
 					_productModelProductDescriptionCultures.Clear();
 				}
 				_alreadyFetchedProductModelProductDescriptionCultures = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductDescriptionEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiProductDescriptions()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ProductDescriptionCollection ProductDescriptions
+		{
+			get { return GetMultiProductDescriptions(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for ProductDescriptions. When set to true, ProductDescriptions is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time ProductDescriptions is accessed. You can always execute a forced fetch by calling GetMultiProductDescriptions(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchProductDescriptions
+		{
+			get	{ return _alwaysFetchProductDescriptions; }
+			set	{ _alwaysFetchProductDescriptions = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property ProductDescriptions already has been fetched. Setting this property to false when ProductDescriptions has been fetched
+		/// will clear the ProductDescriptions collection well. Setting this property to true while ProductDescriptions hasn't been fetched disables lazy loading for ProductDescriptions</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedProductDescriptions
+		{
+			get { return _alreadyFetchedProductDescriptions;}
+			set 
+			{
+				if(_alreadyFetchedProductDescriptions && !value && (_productDescriptions != null))
+				{
+					_productDescriptions.Clear();
+				}
+				_alreadyFetchedProductDescriptions = value;
 			}
 		}
 

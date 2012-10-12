@@ -58,7 +58,6 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
     private readonly IEntityRelation _entityRelation;
     private readonly IEntityRelation _oppositeRelation;
     private readonly LLBLGenProEntityProvider _container;
-    private PropertyDescriptor _descriptor;
     private List<LLBLGenProEntityFieldProvider> _fromFieldProviders;
     private bool _metaDataBuild;
     private ReadOnlyCollection<string> _foreignKeyNames;
@@ -76,16 +75,18 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
                                             IEntityRelation oppositeRelation, PropertyDescriptor descriptor)
     {
       _container = container;
-      _descriptor = descriptor;
       _entityRelation = entityRelation;
       _oppositeRelation = oppositeRelation;
     }
 
+    protected LLBLGenProEntityRelationProvider()
+    {
+    }
 
     /// <summary>
     ///   Builds the meta data.
     /// </summary>
-    internal void BuildMetaData()
+    internal virtual void BuildMetaData()
     {
       if (_metaDataBuild)
       {
@@ -127,19 +128,13 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
         throw new ORMGeneralOperationException(string.Format("Model error: name '{0}' not found in entity '{1}'. Dynamic Data can't deal with relations which are hidden on one side. Please map a field onto the relation '{1}' - '{2}'.",
                                                              _entityRelation.MappedFieldName, fromEntityField.ActualContainingObjectName, toEntityField.ActualContainingObjectName));
       }
-      else
-      {
-        FromColumn = fieldProvider;
-      }
+      FromColumn = fieldProvider;
       if (!toContainer.FieldNameToEntityFieldProvider.TryGetValue(_oppositeRelation.MappedFieldName, out fieldProvider))
       {
         throw new ORMGeneralOperationException(string.Format("Model error: name '{0}' not found in entity '{1}'. Dynamic Data can't deal with relations which are hidden on one side. Please map a field onto the relation '{1}' - '{2}'.",
                                                              _oppositeRelation.MappedFieldName, toEntityField.ActualContainingObjectName, fromEntityField.ActualContainingObjectName));
       }
-      else
-      {
-        ToColumn = fieldProvider;
-      }
+      ToColumn = fieldProvider;
       IsPrimaryKeyInThisTable = false;
       switch (_entityRelation.TypeOfRelation)
       {
@@ -166,6 +161,115 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
     {
       get { return _entityRelation; }
     }
+
+    /// <summary>
+    ///   Gets the foreign key names.
+    /// </summary>
+    public override ReadOnlyCollection<string> ForeignKeyNames
+    {
+      get { return _foreignKeyNames; }
+    }
+
+    #endregion
+  }
+
+  /// <summary>
+  ///   Class which provides meta model information about an association in DynamicData
+  /// </summary>
+  public class LLBLGenProEntityManyToManyRelationProvider : LLBLGenProEntityRelationProvider
+  {
+    #region Class Member Declarations
+
+    private readonly RelationCollection _entityRelation;
+    private readonly RelationCollection _oppositeRelation;
+    private readonly LLBLGenProEntityProvider _container;
+    private List<LLBLGenProEntityFieldProvider> _fromFieldProviders;
+    private bool _metaDataBuild;
+    private ReadOnlyCollection<string> _foreignKeyNames;
+    private readonly PropertyDescriptor _descriptor;
+    private readonly PropertyDescriptor _oppositedescriptor;
+
+    #endregion
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="LLBLGenProEntityRelationProvider" /> class.
+    /// </summary>
+    /// <param name="container">The container.</param>
+    /// <param name="entityRelation">The entity relation.</param>
+    /// <param name="oppositeRelation">The opposite relation.</param>
+    /// <param name="descriptor">The descriptor.</param>
+    /// <param name="oppositedescriptor">The oppositedescriptor.</param>
+    public LLBLGenProEntityManyToManyRelationProvider(LLBLGenProEntityProvider container, RelationCollection entityRelation,
+                                                      RelationCollection oppositeRelation, PropertyDescriptor descriptor, 
+      PropertyDescriptor oppositedescriptor)
+    {
+      _container = container;
+      _entityRelation = entityRelation;
+      _oppositeRelation = oppositeRelation;
+      _descriptor = descriptor;
+      _oppositedescriptor = oppositedescriptor;
+    }
+
+
+    /// <summary>
+    ///   Builds the meta data.
+    /// </summary>
+    internal override void BuildMetaData()
+    {
+      if (_metaDataBuild)
+      {
+        return;
+      }
+      var entityRelationStart = _entityRelation[0] as IEntityRelation;
+      var entityRelationEnd = _entityRelation[1] as IEntityRelation;
+      string mappedFieldName = null;
+      if (_oppositeRelation != null)
+      {
+        var oppositeRelationStart = _oppositeRelation[0] as IEntityRelation;
+        mappedFieldName = oppositeRelationStart.MappedFieldName;
+      }
+      var fkFields = entityRelationEnd.GetAllPKEntityFieldCoreObjects();
+      var pkFields = entityRelationStart.GetAllPKEntityFieldCoreObjects();
+      IEntityFieldCore fromEntityField = null;
+      IEntityFieldCore toEntityField = null;
+      List<IEntityFieldCore> fromFields = null;
+
+        fromEntityField = pkFields[0];
+        toEntityField = fkFields[0];
+        fromFields = pkFields;
+
+      var fromContainer =
+        ((LLBLGenProDataModelProvider) _container.DataModel).EntityNameToEntityProvider[fromEntityField.ActualContainingObjectName];
+      var toContainer =
+        ((LLBLGenProDataModelProvider) _container.DataModel).EntityNameToEntityProvider[toEntityField.ActualContainingObjectName];
+
+      _fromFieldProviders = new List<LLBLGenProEntityFieldProvider>();
+      foreach (var field in fromFields)
+      {
+        _fromFieldProviders.Add(fromContainer.FieldNameToEntityFieldProvider[field.Name]);
+      }
+
+      LLBLGenProEntityFieldProvider fieldProvider = null;
+      if (!fromContainer.FieldNameToEntityFieldProvider.TryGetValue(_descriptor.Name, out fieldProvider))
+      {
+        throw new ORMGeneralOperationException(string.Format("Model error: name '{0}' not found in entity '{1}'. Dynamic Data can't deal with relations which are hidden on one side. Please map a field onto the relation '{1}' - '{2}'.",
+                                                             entityRelationStart.MappedFieldName, fromEntityField.ActualContainingObjectName, toEntityField.ActualContainingObjectName));
+      }
+      FromColumn = fieldProvider;
+      if (!toContainer.FieldNameToEntityFieldProvider.TryGetValue(_oppositedescriptor.Name, out fieldProvider))
+      {
+        throw new ORMGeneralOperationException(string.Format("Model error: name '{0}' not found in entity '{1}'. Dynamic Data can't deal with relations which are hidden on one side. Please map a field onto the relation '{1}' - '{2}'.",
+                                                             mappedFieldName, toEntityField.ActualContainingObjectName, fromEntityField.ActualContainingObjectName));
+      }
+      ToColumn = fieldProvider;
+      IsPrimaryKeyInThisTable = false;
+
+      Direction = AssociationDirection.ManyToMany;
+      _metaDataBuild = true;
+      _foreignKeyNames = new ReadOnlyCollection<string>((from f in fkFields select f.Name).ToList());
+    }
+
+    #region Class Property Declarations
 
     /// <summary>
     ///   Gets the foreign key names.

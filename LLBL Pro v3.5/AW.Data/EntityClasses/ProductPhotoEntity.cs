@@ -43,6 +43,8 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.ProductProductPhotoCollection	_productProductPhotos;
 		private bool	_alwaysFetchProductProductPhotos, _alreadyFetchedProductProductPhotos;
+		private AW.Data.CollectionClasses.ProductCollection _products;
+		private bool	_alwaysFetchProducts, _alreadyFetchedProducts;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -57,6 +59,8 @@ namespace AW.Data.EntityClasses
 		{
 			/// <summary>Member name ProductProductPhotos</summary>
 			public static readonly string ProductProductPhotos = "ProductProductPhotos";
+			/// <summary>Member name Products</summary>
+			public static readonly string Products = "Products";
 		}
 		#endregion
 		
@@ -103,6 +107,9 @@ namespace AW.Data.EntityClasses
 			_productProductPhotos = (AW.Data.CollectionClasses.ProductProductPhotoCollection)info.GetValue("_productProductPhotos", typeof(AW.Data.CollectionClasses.ProductProductPhotoCollection));
 			_alwaysFetchProductProductPhotos = info.GetBoolean("_alwaysFetchProductProductPhotos");
 			_alreadyFetchedProductProductPhotos = info.GetBoolean("_alreadyFetchedProductProductPhotos");
+			_products = (AW.Data.CollectionClasses.ProductCollection)info.GetValue("_products", typeof(AW.Data.CollectionClasses.ProductCollection));
+			_alwaysFetchProducts = info.GetBoolean("_alwaysFetchProducts");
+			_alreadyFetchedProducts = info.GetBoolean("_alreadyFetchedProducts");
 			this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance(), PersistenceInfoProviderSingleton.GetInstance());
 			// __LLBLGENPRO_USER_CODE_REGION_START DeserializationConstructor
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -113,6 +120,7 @@ namespace AW.Data.EntityClasses
 		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedProductProductPhotos = (_productProductPhotos.Count > 0);
+			_alreadyFetchedProducts = (_products.Count > 0);
 		}
 				
 		/// <summary>Gets the relation objects which represent the relation the fieldName specified is mapped on. </summary>
@@ -134,6 +142,10 @@ namespace AW.Data.EntityClasses
 				case "ProductProductPhotos":
 					toReturn.Add(Relations.ProductProductPhotoEntityUsingProductPhotoID);
 					break;
+				case "Products":
+					toReturn.Add(Relations.ProductProductPhotoEntityUsingProductPhotoID, "ProductPhotoEntity__", "ProductProductPhoto_", JoinHint.None);
+					toReturn.Add(ProductProductPhotoEntity.Relations.ProductEntityUsingProductID, "ProductProductPhoto_", string.Empty, JoinHint.None);
+					break;
 				default:
 					break;				
 			}
@@ -151,6 +163,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_productProductPhotos", (!this.MarkedForDeletion?_productProductPhotos:null));
 			info.AddValue("_alwaysFetchProductProductPhotos", _alwaysFetchProductProductPhotos);
 			info.AddValue("_alreadyFetchedProductProductPhotos", _alreadyFetchedProductProductPhotos);
+			info.AddValue("_products", (!this.MarkedForDeletion?_products:null));
+			info.AddValue("_alwaysFetchProducts", _alwaysFetchProducts);
+			info.AddValue("_alreadyFetchedProducts", _alreadyFetchedProducts);
 
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -171,6 +186,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.ProductProductPhotos.Add((ProductProductPhotoEntity)entity);
+					}
+					break;
+				case "Products":
+					_alreadyFetchedProducts = true;
+					if(entity!=null)
+					{
+						this.Products.Add((ProductEntity)entity);
 					}
 					break;
 				default:
@@ -350,6 +372,44 @@ namespace AW.Data.EntityClasses
 			_productProductPhotos.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ProductEntity'</returns>
+		public AW.Data.CollectionClasses.ProductCollection GetMultiProducts(bool forceFetch)
+		{
+			return GetMultiProducts(forceFetch, _products.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ProductCollection GetMultiProducts(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedProducts || forceFetch || _alwaysFetchProducts) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_products);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(ProductPhotoFields.ProductPhotoID, ComparisonOperator.Equal, this.ProductPhotoID, "ProductPhotoEntity__"));
+				_products.SuppressClearInGetMulti=!forceFetch;
+				_products.EntityFactoryToUse = entityFactoryToUse;
+				_products.GetMulti(filter, GetRelationsForField("Products"));
+				_products.SuppressClearInGetMulti=false;
+				_alreadyFetchedProducts = true;
+			}
+			return _products;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'Products'. These settings will be taken into account
+		/// when the property Products is requested or GetMultiProducts is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersProducts(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_products.SortClauses=sortClauses;
+			_products.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 
 		/// <summary>Gets all related data objects, stored by name. The name is the field name mapped onto the relation for that particular data element.</summary>
 		/// <returns>Dictionary with per name the related referenced data element, which can be an entity collection or an entity or null</returns>
@@ -357,6 +417,7 @@ namespace AW.Data.EntityClasses
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("ProductProductPhotos", _productProductPhotos);
+			toReturn.Add("Products", _products);
 			return toReturn;
 		}
 	
@@ -399,6 +460,7 @@ namespace AW.Data.EntityClasses
 
 			_productProductPhotos = new AW.Data.CollectionClasses.ProductProductPhotoCollection();
 			_productProductPhotos.SetContainingEntityInfo(this, "ProductPhoto");
+			_products = new AW.Data.CollectionClasses.ProductCollection();
 			PerformDependencyInjection();
 
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassMembers
@@ -491,6 +553,18 @@ namespace AW.Data.EntityClasses
 		public static IPrefetchPathElement PrefetchPathProductProductPhotos
 		{
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductProductPhotoCollection(), (IEntityRelation)GetRelationsForField("ProductProductPhotos")[0], (int)AW.Data.EntityType.ProductPhotoEntity, (int)AW.Data.EntityType.ProductProductPhotoEntity, 0, null, null, null, "ProductProductPhotos", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
+		}
+
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Product'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathProducts
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.ProductProductPhotoEntityUsingProductPhotoID;
+				intermediateRelation.SetAliases(string.Empty, "ProductProductPhoto_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), intermediateRelation,	(int)AW.Data.EntityType.ProductPhotoEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, GetRelationsForField("Products"), "Products", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
 		}
 
 
@@ -614,6 +688,40 @@ namespace AW.Data.EntityClasses
 					_productProductPhotos.Clear();
 				}
 				_alreadyFetchedProductProductPhotos = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiProducts()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ProductCollection Products
+		{
+			get { return GetMultiProducts(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Products. When set to true, Products is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Products is accessed. You can always execute a forced fetch by calling GetMultiProducts(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchProducts
+		{
+			get	{ return _alwaysFetchProducts; }
+			set	{ _alwaysFetchProducts = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Products already has been fetched. Setting this property to false when Products has been fetched
+		/// will clear the Products collection well. Setting this property to true while Products hasn't been fetched disables lazy loading for Products</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedProducts
+		{
+			get { return _alreadyFetchedProducts;}
+			set 
+			{
+				if(_alreadyFetchedProducts && !value && (_products != null))
+				{
+					_products.Clear();
+				}
+				_alreadyFetchedProducts = value;
 			}
 		}
 
