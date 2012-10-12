@@ -5024,6 +5024,11 @@
         </FieldRelationships>
       </NormalRelationship>
       <IndirectRelationship Start="Person:Contact" End="Sales:Store" StartNavigator="Stores" EndNavigator="Contacts" Relationship1="Sales.StoreContact.Contact-Person.Contact.StoreContacts" Relationship2="Sales.StoreContact.Store-Sales.Store.StoreContacts" />
+      <IndirectRelationship Start="Production:Illustration" End="Production:ProductModel" StartNavigator="Models" EndNavigator="Illustrations" Relationship1="Production.ProductModelIllustration.Illustration-Production.Illustration.ProductModelIllustrations" Relationship2="Production.ProductModelIllustration.ProductModel-Production.ProductModel.ProductModelIllustrations" />
+      <IndirectRelationship Start="Production:ProductDescription" End="Production:Culture" StartNavigator="CultureCollectionViaProductModelProductDescriptionCulture" EndNavigator="ProductDescriptions" Relationship1="Production.ProductModelProductDescriptionCulture.ProductDescription-Production.ProductDescription.ProductModelProductDescriptionCultures" Relationship2="Production.ProductModelProductDescriptionCulture.Culture-Production.Culture.ProductModelProductDescriptionCultures" />
+      <IndirectRelationship Start="Production:ProductDescription" End="Production:ProductModel" StartNavigator="Models" EndNavigator="Descriptions" Relationship1="Production.ProductModelProductDescriptionCulture.ProductDescription-Production.ProductDescription.ProductModelProductDescriptionCultures" Relationship2="Production.ProductModelProductDescriptionCulture.ProductModel-Production.ProductModel.ProductModelProductDescriptionCultures" />
+      <IndirectRelationship Start="Production:ProductModel" End="Production:ProductSubcategory" StartNavigator="Subcategories" EndNavigator="Models" Relationship1="Production.Product.ProductModel-Production.ProductModel.Products" Relationship2="Production.Product.ProductSubcategory-Production.ProductSubcategory.Products" />
+      <IndirectRelationship Start="Production:ProductPhoto" End="Production:Product" StartNavigator="Products" EndNavigator="Photos" Relationship1="Production.ProductProductPhoto.ProductPhoto-Production.ProductPhoto.ProductProductPhotos" Relationship2="Production.ProductProductPhoto.Product-Production.Product.ProductProductPhotos" />
       <IndirectRelationship Start="Sales:CreditCard" End="Person:Contact" StartNavigator="ContactCollectionViaContactCreditCard" EndNavigator="CreditCards" Relationship1="Sales.ContactCreditCard.CreditCard-Sales.CreditCard.ContactCreditCards" Relationship2="Sales.ContactCreditCard.Contact-Person.Contact.ContactCreditCards" />
       <IndirectRelationship Start="Sales:Currency" End="Person:CountryRegion" StartNavigator="CountryRegions" EndNavigator="Currencies" Relationship1="Sales.CountryRegionCurrency.Currency-Sales.Currency.CountryRegionCurrencies" Relationship2="Sales.CountryRegionCurrency.CountryRegion-Person.CountryRegion.CountryRegionCurrencies" />
       <IndirectRelationship Start="Sales:SalesOrderHeader" End="Sales:SpecialOfferProduct" StartNavigator="SpecialOffers" EndNavigator="SalesOrders" Relationship1="Sales.SalesOrderDetail.SalesOrderHeader-Sales.SalesOrderHeader.SalesOrderDetails" Relationship2="Sales.SalesOrderDetail.SpecialOfferProduct-Sales.SpecialOfferProduct.SalesOrderDetails" />
@@ -9975,6 +9980,31 @@
       <EntityDefinitions>
         <Entity Name="HumanResources:Employee" />
         <Entity Name="Sales:SalesPerson" />
+      </EntityDefinitions>
+      <Documentation><![CDATA[]]></Documentation>
+    </ModelView>
+    <ModelView Name="Person">
+      <EntityDefinitions>
+        <Entity Name=":AwbuildVersion" />
+        <Entity Name="Person:Address" />
+        <Entity Name="Person:AddressType" />
+        <Entity Name="Person:Contact" />
+        <Entity Name="Person:ContactType" />
+        <Entity Name="Person:CountryRegion" />
+        <Entity Name="Person:StateProvince" />
+      </EntityDefinitions>
+      <Documentation><![CDATA[]]></Documentation>
+    </ModelView>
+    <ModelView Name="Product">
+      <EntityDefinitions>
+        <Entity Name="Production:Illustration" />
+        <Entity Name="Production:Product" />
+        <Entity Name="Production:ProductDescription" />
+        <Entity Name="Production:ProductModel" />
+        <Entity Name="Production:ProductModelIllustration" />
+        <Entity Name="Production:ProductModelProductDescriptionCulture" />
+        <Entity Name="Production:ProductPhoto" />
+        <Entity Name="Production:ProductProductPhoto" />
       </EntityDefinitions>
       <Documentation><![CDATA[]]></Documentation>
     </ModelView>

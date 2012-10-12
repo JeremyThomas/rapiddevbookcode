@@ -59,6 +59,179 @@ namespace AW.Data.CollectionClasses
 
 
 
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  Relation of type 'm:n' with the passed in IllustrationEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="illustrationInstance">IllustrationEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingIllustrations(IEntity illustrationInstance)
+		{
+			return GetMultiManyToManyUsingIllustrations(illustrationInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in IllustrationEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="illustrationInstance">IllustrationEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingIllustrations(IEntity illustrationInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingIllustrations(illustrationInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a Relation of type 'm:n' with the passed in IllustrationEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="illustrationInstance">IllustrationEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingIllustrations(IEntity illustrationInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingIllustrations(illustrationInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in IllustrationEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="illustrationInstance">IllustrationEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingIllustrations(IEntity illustrationInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateProductModelDAO().GetMultiUsingIllustrations(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, illustrationInstance, null, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in IllustrationEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="illustrationInstance">IllustrationEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingIllustrations(IEntity illustrationInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateProductModelDAO().GetMultiUsingIllustrations(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, illustrationInstance, prefetchPathToUse, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  Relation of type 'm:n' with the passed in ProductDescriptionEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productDescriptionInstance">ProductDescriptionEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingDescriptions(IEntity productDescriptionInstance)
+		{
+			return GetMultiManyToManyUsingDescriptions(productDescriptionInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in ProductDescriptionEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productDescriptionInstance">ProductDescriptionEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingDescriptions(IEntity productDescriptionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingDescriptions(productDescriptionInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a Relation of type 'm:n' with the passed in ProductDescriptionEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productDescriptionInstance">ProductDescriptionEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingDescriptions(IEntity productDescriptionInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingDescriptions(productDescriptionInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in ProductDescriptionEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productDescriptionInstance">ProductDescriptionEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingDescriptions(IEntity productDescriptionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateProductModelDAO().GetMultiUsingDescriptions(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, productDescriptionInstance, null, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in ProductDescriptionEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productDescriptionInstance">ProductDescriptionEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingDescriptions(IEntity productDescriptionInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateProductModelDAO().GetMultiUsingDescriptions(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, productDescriptionInstance, prefetchPathToUse, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  Relation of type 'm:n' with the passed in ProductSubcategoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity object to be used as a filter in the m:n relation</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSubcategories(IEntity productSubcategoryInstance)
+		{
+			return GetMultiManyToManyUsingSubcategories(productSubcategoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, 0, 0);
+		}
+		
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in ProductSubcategoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSubcategories(IEntity productSubcategoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			return GetMultiManyToManyUsingSubcategories(productSubcategoryInstance, maxNumberOfItemsToReturn, sortClauses, 0, 0);
+		}
+
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a Relation of type 'm:n' with the passed in ProductSubcategoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSubcategories(IEntity productSubcategoryInstance, IPrefetchPath prefetchPathToUse)
+		{
+			return GetMultiManyToManyUsingSubcategories(productSubcategoryInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, prefetchPathToUse);
+		}
+		
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in ProductSubcategoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="pageNumber">The page number to retrieve.</param>
+		/// <param name="pageSize">The page size of the page to retrieve.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public virtual bool GetMultiManyToManyUsingSubcategories(IEntity productSubcategoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, int pageNumber, int pageSize)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateProductModelDAO().GetMultiUsingSubcategories(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, productSubcategoryInstance, null, pageNumber, pageSize);
+		}
+
+		/// <summary> Retrieves in this ProductModelCollection object all ProductModelEntity objects which are related via a  relation of type 'm:n' with the passed in ProductSubcategoryEntity. All current elements in the collection are removed from the collection.</summary>
+		/// <param name="productSubcategoryInstance">ProductSubcategoryEntity object to be used as a filter in the m:n relation</param>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return with this retrieval query.</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified, no sorting is applied.</param>
+		/// <param name="prefetchPathToUse">the PrefetchPath which defines the graph of objects to fetch.</param>
+		/// <returns>true if the retrieval succeeded, false otherwise</returns>
+		public bool GetMultiManyToManyUsingSubcategories(IEntity productSubcategoryInstance, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IPrefetchPath prefetchPathToUse)
+		{
+			if(!this.SuppressClearInGetMulti)
+			{
+				this.Clear();
+			}
+			return DAOFactory.CreateProductModelDAO().GetMultiUsingSubcategories(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, productSubcategoryInstance, prefetchPathToUse, 0, 0);
+		}
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
 		/// <param name="selectFilter">A predicate or predicate expression which should be used as filter for the entities to retrieve.</param>

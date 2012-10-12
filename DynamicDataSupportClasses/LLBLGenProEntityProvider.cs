@@ -167,6 +167,26 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
         .Where(descriptor => !namesAdded.Contains(descriptor.Name) && (descriptor.IsBrowsable || typeof (IEntityCore).IsAssignableFrom(descriptor.PropertyType)))
         .ToDictionary(descriptor => descriptor.Name);
 
+      foreach (var propertyDescriptor in unusedPropertyDescriptorPerName)
+      {
+        var relationCollection = dummy.GetRelationsForFieldOfType(propertyDescriptor.Key);
+        if (relationCollection.Count > 1)
+        {
+          var oppositeRelation = FindOppositeRelation(relationCollection);
+          if (oppositeRelation == null)
+          {
+            // opposite is hidden, ignore this one
+            continue;
+          }
+          var relationProvider = new LLBLGenProEntityManyToManyRelationProvider(this, relationCollection, oppositeRelation.Item2, propertyDescriptor.Value, oppositeRelation.Item1);
+          var toAdd = new LLBLGenProEntityFieldProvider(this, propertyDescriptor.Value.PropertyType, false, false, false, false, 0,
+                                                        propertyDescriptor.Key, true, relationProvider, dummy.GetType().GetProperty(propertyDescriptor.Key));
+          entityFieldProviders.Add(toAdd);
+          _fieldNameToEntityFieldProvider.Add(toAdd.Name, toAdd);
+          namesAdded.Add(toAdd.Name);
+        }
+      }
+
       // relations 
       var allRelations = dummy.GetAllRelations();
       foreach (var relation in allRelations)
@@ -282,6 +302,37 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
       }
 
       return toReturn;
+    }
+
+    private Tuple<PropertyDescriptor,RelationCollection> FindOppositeRelation(RelationCollection entityRelation)
+    {
+      var relation = entityRelation.Last() as IEntityRelation;
+      var modelProvider = (LLBLGenProDataModelProvider)DataModel;
+      var oppositeEntityName = relation.StartEntityIsPkSide ? relation.GetFKEntityFieldCore(0).ActualContainingObjectName : relation.GetPKEntityFieldCore(0).ActualContainingObjectName;
+
+      IEntityRelation toReturn = null;
+      LLBLGenProEntityProvider oppositeEntityProvider = null;
+      if (!modelProvider.EntityNameToEntityProvider.TryGetValue(oppositeEntityName, out oppositeEntityProvider))
+      {
+        return null;
+      }
+      var namesAdded = new HashSet<string>();
+      var dummy = oppositeEntityProvider.EntityFactoryToUse.Create();
+      var propertyDescriptors = TypeDescriptor.GetProperties(dummy);
+      var unusedPropertyDescriptorPerName = propertyDescriptors.Cast<PropertyDescriptor>()
+        .Where(descriptor => !namesAdded.Contains(descriptor.Name) && (descriptor.IsBrowsable || typeof(IEntityCore).IsAssignableFrom(descriptor.PropertyType)))
+        .ToDictionary(descriptor => descriptor.Name);
+
+      foreach (var propertyDescriptor in unusedPropertyDescriptorPerName)
+      {
+        var relationCollection = dummy.GetRelationsForFieldOfType(propertyDescriptor.Key);
+        if (relationCollection.Count > 1)
+        {
+          return new Tuple<PropertyDescriptor, RelationCollection>(propertyDescriptor.Value,relationCollection);
+        }
+      }
+
+      return null;
     }
 
     /// <summary>

@@ -43,6 +43,8 @@ namespace AW.Data.EntityClasses
 		#region Class Member Declarations
 		private AW.Data.CollectionClasses.ProductCollection	_products;
 		private bool	_alwaysFetchProducts, _alreadyFetchedProducts;
+		private AW.Data.CollectionClasses.ProductModelCollection _models;
+		private bool	_alwaysFetchModels, _alreadyFetchedModels;
 		private ProductCategoryEntity _productCategory;
 		private bool	_alwaysFetchProductCategory, _alreadyFetchedProductCategory, _productCategoryReturnsNewIfNotFound;
 
@@ -61,6 +63,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string ProductCategory = "ProductCategory";
 			/// <summary>Member name Products</summary>
 			public static readonly string Products = "Products";
+			/// <summary>Member name Models</summary>
+			public static readonly string Models = "Models";
 		}
 		#endregion
 		
@@ -107,6 +111,9 @@ namespace AW.Data.EntityClasses
 			_products = (AW.Data.CollectionClasses.ProductCollection)info.GetValue("_products", typeof(AW.Data.CollectionClasses.ProductCollection));
 			_alwaysFetchProducts = info.GetBoolean("_alwaysFetchProducts");
 			_alreadyFetchedProducts = info.GetBoolean("_alreadyFetchedProducts");
+			_models = (AW.Data.CollectionClasses.ProductModelCollection)info.GetValue("_models", typeof(AW.Data.CollectionClasses.ProductModelCollection));
+			_alwaysFetchModels = info.GetBoolean("_alwaysFetchModels");
+			_alreadyFetchedModels = info.GetBoolean("_alreadyFetchedModels");
 			_productCategory = (ProductCategoryEntity)info.GetValue("_productCategory", typeof(ProductCategoryEntity));
 			if(_productCategory!=null)
 			{
@@ -141,6 +148,7 @@ namespace AW.Data.EntityClasses
 		protected override void PerformPostReadXmlFixups()
 		{
 			_alreadyFetchedProducts = (_products.Count > 0);
+			_alreadyFetchedModels = (_models.Count > 0);
 			_alreadyFetchedProductCategory = (_productCategory != null);
 		}
 				
@@ -166,6 +174,10 @@ namespace AW.Data.EntityClasses
 				case "Products":
 					toReturn.Add(Relations.ProductEntityUsingProductSubcategoryID);
 					break;
+				case "Models":
+					toReturn.Add(Relations.ProductEntityUsingProductSubcategoryID, "ProductSubcategoryEntity__", "Product_", JoinHint.None);
+					toReturn.Add(ProductEntity.Relations.ProductModelEntityUsingProductModelID, "Product_", string.Empty, JoinHint.None);
+					break;
 				default:
 					break;				
 			}
@@ -183,6 +195,9 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_products", (!this.MarkedForDeletion?_products:null));
 			info.AddValue("_alwaysFetchProducts", _alwaysFetchProducts);
 			info.AddValue("_alreadyFetchedProducts", _alreadyFetchedProducts);
+			info.AddValue("_models", (!this.MarkedForDeletion?_models:null));
+			info.AddValue("_alwaysFetchModels", _alwaysFetchModels);
+			info.AddValue("_alreadyFetchedModels", _alreadyFetchedModels);
 			info.AddValue("_productCategory", (!this.MarkedForDeletion?_productCategory:null));
 			info.AddValue("_productCategoryReturnsNewIfNotFound", _productCategoryReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchProductCategory", _alwaysFetchProductCategory);
@@ -211,6 +226,13 @@ namespace AW.Data.EntityClasses
 					if(entity!=null)
 					{
 						this.Products.Add((ProductEntity)entity);
+					}
+					break;
+				case "Models":
+					_alreadyFetchedModels = true;
+					if(entity!=null)
+					{
+						this.Models.Add((ProductModelEntity)entity);
 					}
 					break;
 				default:
@@ -400,6 +422,44 @@ namespace AW.Data.EntityClasses
 			_products.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
 		}
 
+		/// <summary> Retrieves all related entities of type 'ProductModelEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <returns>Filled collection with all related entities of type 'ProductModelEntity'</returns>
+		public AW.Data.CollectionClasses.ProductModelCollection GetMultiModels(bool forceFetch)
+		{
+			return GetMultiModels(forceFetch, _models.EntityFactoryToUse);
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductModelEntity' using a relation of type 'm:n'.</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the collection and will rerun the complete query instead</param>
+		/// <param name="entityFactoryToUse">The entity factory to use for the GetMultiManyToMany() routine.</param>
+		/// <returns>Filled collection with all related entities of the type constructed by the passed in entity factory</returns>
+		public AW.Data.CollectionClasses.ProductModelCollection GetMultiModels(bool forceFetch, IEntityFactory entityFactoryToUse)
+		{
+ 			if( ( !_alreadyFetchedModels || forceFetch || _alwaysFetchModels) && !this.IsSerializing && !this.IsDeserializing && !this.InDesignMode)
+			{
+				AddToTransactionIfNecessary(_models);
+				IPredicateExpression filter = new PredicateExpression();
+				filter.Add(new FieldCompareValuePredicate(ProductSubcategoryFields.ProductSubcategoryID, ComparisonOperator.Equal, this.ProductSubcategoryID, "ProductSubcategoryEntity__"));
+				_models.SuppressClearInGetMulti=!forceFetch;
+				_models.EntityFactoryToUse = entityFactoryToUse;
+				_models.GetMulti(filter, GetRelationsForField("Models"));
+				_models.SuppressClearInGetMulti=false;
+				_alreadyFetchedModels = true;
+			}
+			return _models;
+		}
+
+		/// <summary> Sets the collection parameters for the collection for 'Models'. These settings will be taken into account
+		/// when the property Models is requested or GetMultiModels is called.</summary>
+		/// <param name="maxNumberOfItemsToReturn"> The maximum number of items to return. When set to 0, this parameter is ignored</param>
+		/// <param name="sortClauses">The order by specifications for the sorting of the resultset. When not specified (null), no sorting is applied.</param>
+		public virtual void SetCollectionParametersModels(long maxNumberOfItemsToReturn, ISortExpression sortClauses)
+		{
+			_models.SortClauses=sortClauses;
+			_models.MaxNumberOfItemsToReturn=maxNumberOfItemsToReturn;
+		}
+
 		/// <summary> Retrieves the related entity of type 'ProductCategoryEntity', using a relation of type 'n:1'</summary>
 		/// <returns>A fetched entity of type 'ProductCategoryEntity' which is related to this entity.</returns>
 		public ProductCategoryEntity GetSingleProductCategory()
@@ -448,6 +508,7 @@ namespace AW.Data.EntityClasses
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
 			toReturn.Add("ProductCategory", _productCategory);
 			toReturn.Add("Products", _products);
+			toReturn.Add("Models", _models);
 			return toReturn;
 		}
 	
@@ -490,6 +551,7 @@ namespace AW.Data.EntityClasses
 
 			_products = new AW.Data.CollectionClasses.ProductCollection();
 			_products.SetContainingEntityInfo(this, "ProductSubcategory");
+			_models = new AW.Data.CollectionClasses.ProductModelCollection();
 			_productCategoryReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
 
@@ -615,6 +677,18 @@ namespace AW.Data.EntityClasses
 			get { return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductCollection(), (IEntityRelation)GetRelationsForField("Products")[0], (int)AW.Data.EntityType.ProductSubcategoryEntity, (int)AW.Data.EntityType.ProductEntity, 0, null, null, null, "Products", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany); }
 		}
 
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductModel'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathModels
+		{
+			get
+			{
+				IEntityRelation intermediateRelation = Relations.ProductEntityUsingProductSubcategoryID;
+				intermediateRelation.SetAliases(string.Empty, "Product_");
+				return new PrefetchPathElement(new AW.Data.CollectionClasses.ProductModelCollection(), intermediateRelation,	(int)AW.Data.EntityType.ProductSubcategoryEntity, (int)AW.Data.EntityType.ProductModelEntity, 0, null, null, GetRelationsForField("Models"), "Models", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToMany);
+			}
+		}
+
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'ProductCategory'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathProductCategory
@@ -732,6 +806,40 @@ namespace AW.Data.EntityClasses
 					_products.Clear();
 				}
 				_alreadyFetchedProducts = value;
+			}
+		}
+
+		/// <summary> Retrieves all related entities of type 'ProductModelEntity' using a relation of type 'm:n'.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for databinding conveniance, however it is recommeded to use the method 'GetMultiModels()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the same scope.</remarks>
+		public virtual AW.Data.CollectionClasses.ProductModelCollection Models
+		{
+			get { return GetMultiModels(false); }
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Models. When set to true, Models is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Models is accessed. You can always execute a forced fetch by calling GetMultiModels(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchModels
+		{
+			get	{ return _alwaysFetchModels; }
+			set	{ _alwaysFetchModels = value; }
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Models already has been fetched. Setting this property to false when Models has been fetched
+		/// will clear the Models collection well. Setting this property to true while Models hasn't been fetched disables lazy loading for Models</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedModels
+		{
+			get { return _alreadyFetchedModels;}
+			set 
+			{
+				if(_alreadyFetchedModels && !value && (_models != null))
+				{
+					_models.Clear();
+				}
+				_alreadyFetchedModels = value;
 			}
 		}
 
