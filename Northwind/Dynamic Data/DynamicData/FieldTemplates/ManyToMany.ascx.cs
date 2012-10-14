@@ -1,10 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Web;
 using System.Web.DynamicData;
 using System.Web.UI;
 using Northwind.DAL.SqlServer;
-using SD.LLBLGen.Pro.DynamicDataSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Dynamic_Data
@@ -40,6 +38,17 @@ namespace Dynamic_Data
         var dataAccessAdapter = new DataAccessAdapter();
         IRelationPredicateBucket bucket = new RelationPredicateBucket();
         bucket.Relations.AddRange(entity.GetRelationsForFieldOfType(Column.EntityTypeProperty.Name));
+        foreach (var primaryKeyColumn in Column.Table.PrimaryKeyColumns)
+        {
+          var entityField2 = entity.Fields[primaryKeyColumn.Name];
+          bucket.PredicateExpression.Add(new FieldCompareValuePredicate(entityField2, null, ComparisonOperator.Equal, entityField2.CurrentValue, entity.LLBLGenProEntityName + "__"));
+        }
+
+        //(new System.Collections.Generic.Mscorlib_CollectionDebugView<System.Web.DynamicData.MetaColumn>(((System.Web.DynamicData.MetaChildrenColumn)(((System.Web.DynamicData.MetaChildrenColumn)(Column)).ColumnInOtherTable)).ChildTable.PrimaryKeyColumns)).Items[0].DisplayName
+        //var y = Column.Table.ForeignKeyColumnsNames;
+        //var x = (((System.Web.DynamicData.MetaChildrenColumn) (Column)).ColumnInOtherTable).Table.ForeignKeyColumnsNames;
+        //var entityField2 = entity.Fields[x];
+        //bucket.PredicateExpression.Add(new FieldCompareValuePredicate(entityField2, null, ComparisonOperator.Equal, entityField2.CurrentValue, "CustomerEntity__"));
         dataAccessAdapter.FetchEntityCollection(entityCollection, bucket);
         //if (!entityCollection.IsLoaded) {
         //    entityCollection.Load();
