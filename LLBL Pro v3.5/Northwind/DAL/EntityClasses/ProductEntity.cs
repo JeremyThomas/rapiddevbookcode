@@ -27,7 +27,8 @@ namespace Northwind.DAL.EntityClasses
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Entity class which represents the entity 'Product'.<br/><br/></summary>
 	[Serializable]
-	public partial class ProductEntity : CommonEntityBase // __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
+	public partial class ProductEntity : CommonEntityBase
+ // __LLBLGENPRO_USER_CODE_REGION_START AdditionalInterfaces
     , IProduct
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
@@ -380,7 +381,7 @@ namespace Northwind.DAL.EntityClasses
 		
 		/// <summary>Creates the member entity collections queue.</summary>
 		/// <param name="collectionsQueue">The collections queue.</param>
-		/// <param name="requiredQueue">The discontinued queue.</param>
+		/// <param name="requiredQueue">The required queue.</param>
 		protected override void CreateMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue, Queue<bool> requiredQueue) 
 		{
 			base.CreateMemberEntityCollectionsQueue(collectionsQueue, requiredQueue);

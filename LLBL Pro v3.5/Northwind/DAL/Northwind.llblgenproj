@@ -77,12 +77,28 @@
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
-          <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
           <Binding Name="SD.TemplateBindings.OracleODPNetSpecific.NET20" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates.NET20" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
           <Binding Name="SD.TemplateBindings.SqlServerSpecific.NET20" />
-          <Binding Name="SD.TemplateBindings.SharedTemplates.NET20" />
+          <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
           <Binding Name="SD.TemplateBindings.General" />
+        </TemplateBindings>
+      </LastUsedPreferences>
+    </OutputType>
+    <OutputType Value="2">
+      <LastUsedPreferences>
+        <DestinationRootFolder Value="C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v3.5\Northwind" />
+        <FrameworkName Value="DDL SQL" />
+        <LanguageName Value="SQL" />
+        <PlatformName Value="RDBMS" />
+        <PresetName Value="SD.Presets.DDLSQL.UpdateScript" />
+        <RootNamespace Value="" />
+        <TemplateGroup Value="Update DDL SQL" />
+        <TemplateBindings>
+          <Binding Name="SD.TemplateBindings.SqlServerSpecific.DDLSQL" />
+          <Binding Name="SD.TemplateBindings.OracleSpecific.DDLSQL" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates.DDLSQL" />
         </TemplateBindings>
       </LastUsedPreferences>
     </OutputType>
@@ -605,6 +621,7 @@
       </NormalRelationship>
       <IndirectRelationship Start=":Customer" End=":CustomerDemographic" StartNavigator="CustomerDemographics" EndNavigator="Customers" Relationship1="CustomerCustomerDemo.Customer-Customer.CustomerCustomerDemos" Relationship2="CustomerCustomerDemo.CustomerDemographic-CustomerDemographic.CustomerCustomerDemos" />
       <IndirectRelationship Start=":Customer" End=":Employee" StartNavigator="EmployeesViaOrders" EndNavigator="CustomersViaOrders" Relationship1="Order.Customer-Customer.Orders" Relationship2="Order.Employee-Employee.Orders" />
+      <IndirectRelationship Start=":Territory" End=":Employee" StartNavigator="Employees" EndNavigator="Territories" Relationship1="EmployeeTerritory.Territory-Territory.EmployeeTerritories" Relationship2="EmployeeTerritory.Employee-Employee.EmployeeTerritories" />
     </Relationships>
     <InheritanceHierarchies />
   </EntityModel>
@@ -628,7 +645,7 @@
               <Tables>
                 <Table Name="Categories">
                   <Fields>
-                    <Field Name="CategoryID" Ordinal="1" TrackedChanges="8" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10">
+                    <Field Name="CategoryID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_Categories" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Number automatically assigned to a new category." />
                       </CustomProperties>
