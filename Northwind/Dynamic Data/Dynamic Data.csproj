@@ -305,6 +305,10 @@
     <Folder Include="DynamicData\CustomPages\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
+      <Project>{7919C746-73F3-4279-A53B-CC6C08F42318}</Project>
+      <Name>AW.Helper.LLBL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj">
       <Project>{64696470-5D05-4E00-95C4-C320F268E526}</Project>
       <Name>SD.LLBLGen.Pro.DynamicDataSupportClasses</Name>
