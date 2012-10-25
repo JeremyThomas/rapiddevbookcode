@@ -127,6 +127,8 @@
     <Compile Include="..\NorthwindAssemblyInfo.cs">
       <Link>NorthwindAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="DTO\CustomerVM.cs" />
+    <Compile Include="DTO\ProductViewDto.cs" />
     <Compile Include="HelperClasses\Interfaces.cs" />
     <Compile Include="EntityClasses\Metadata.cs" />
     <Compile Include="FactoryClasses\QueryFactory.cs">

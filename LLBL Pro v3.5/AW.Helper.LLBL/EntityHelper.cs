@@ -651,7 +651,25 @@ namespace AW.Helper.LLBL
 			return entityCollection == null ? null : entityCollection.DefaultView as IBindingListView;
 		}
 
-		#endregion
+	  public static IRelationPredicateBucket GetRelationInfo(IEntity2 entity, string fieldName, IEnumerable<string> primaryKeyColumnNames)
+	  {
+	    var bucket = new RelationPredicateBucket();
+	    bucket.Relations.AddRange(entity.GetRelationsForFieldOfType(fieldName));
+	    foreach (var entityField2 in primaryKeyColumnNames.Select(primaryKeyColumn => entity.Fields[primaryKeyColumn]))
+	      bucket.PredicateExpression.Add(new FieldCompareValuePredicate(entityField2, null, ComparisonOperator.Equal, entityField2.CurrentValue, entity.LLBLGenProEntityName + "__"));
+	    return bucket;
+	  }
+
+    public static IRelationPredicateBucket GetRelationInfo(IEntity2 entity, string fieldName)
+    {
+      var bucket = new RelationPredicateBucket();
+      bucket.Relations.AddRange(entity.GetRelationsForFieldOfType(fieldName));
+      foreach (var entityField2 in entity.PrimaryKeyFields)
+        bucket.PredicateExpression.Add(new FieldCompareValuePredicate(entityField2, null, ComparisonOperator.Equal, entityField2.CurrentValue, entity.LLBLGenProEntityName + "__"));
+      return bucket;
+    }
+
+	  #endregion
 
 		/// <summary>
 		/// Gets the properties of type entity since sometimes these properties are not browsable so they need to be handled as a special case.
