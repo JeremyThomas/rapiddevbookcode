@@ -57,7 +57,8 @@ namespace Northwind.DAL.DTO
 
     public static IQueryable<CustomerVM> CustomerVmFactoryConstructor(IQueryable<CustomerEntity> customerEntities)
     {
-      return from c in customerEntities select new CustomerVM(c.Address, c.City, c.CompanyName, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region);
+      return from c in customerEntities select new CustomerVM(c.Address, c.City, c.CompanyName, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, 
+        c.Fax, c.Phone, c.PostalCode, c.Region);
     }
 
     public override string ToString()
