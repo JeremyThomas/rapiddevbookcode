@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.DTO;
@@ -75,7 +74,7 @@ namespace AW.Tests
       Assert.IsNotNull(queryable.ToList());
     }
 
-    [TestMethod, Description("tests whether you can ")]
+    [TestMethod, Description("tests whether you can OrderBy after a Projection with Entity Instance")]
     public void CustomerVMProjectionConstructor()
     {
       var queryable = CustomerVM.CustomerVmFactoryConstructor(GetNorthwindLinqMetaData().Customer).OrderBy(c => c.City);
@@ -323,6 +322,20 @@ namespace AW.Tests
       Assert.IsNotNull(queryable.ToList());
 
       queryable = ProductViewDto.ProductViewDtoFactoryEntityInstance(GetNorthwindLinqMetaData().Product).OrderBy(p => p.UnitPrice);
+      Assert.IsNotNull(queryable.ToList());
+    }
+
+    [TestMethod, Description("tests whether you can OrderBy after a projection when the field has a different name")]
+    public void TestEmployeeViewDto()
+    {
+      var employeeEntities = GetNorthwindLinqMetaData().Employee;
+      var queryable = EmployeeViewDto.EmployeeViewDtoFactoryPropertyProjection(employeeEntities).OrderBy(e=>e.FirstName);
+      Assert.IsNotNull(queryable.ToList());
+
+      queryable = EmployeeViewDto.EmployeeViewDtoFactoryPropertiesViaConstructor(employeeEntities).OrderBy(e => e.FirstName);
+      Assert.IsNotNull(queryable.ToList());
+
+      queryable = EmployeeViewDto.EmployeeViewDtoFactoryEntityInstance(employeeEntities).OrderBy(e => e.FirstName);
       Assert.IsNotNull(queryable.ToList());
     }
 	}

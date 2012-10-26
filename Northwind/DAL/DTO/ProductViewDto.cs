@@ -87,7 +87,8 @@ namespace Northwind.DAL.DTO
     {
     }
 
-    private ProductViewDto(Category? categoryId, bool discontinued, int productId, string productName, string quantityPerUnit, short? reorderLevelZzz, int? supplierId, decimal? unitPrice, short? unitsInStock, short? unitsOnOrder)
+    private ProductViewDto(Category? categoryId, bool discontinued, int productId, string productName, string quantityPerUnit, short? reorderLevelZzz, 
+      int? supplierId, decimal? unitPrice, short? unitsInStock, short? unitsOnOrder)
     {
       CategoryId = categoryId;
       Discontinued = discontinued;
@@ -101,9 +102,9 @@ namespace Northwind.DAL.DTO
       UnitsOnOrder = unitsOnOrder;
     }
 
-    public static IQueryable<ProductViewDto> ProductViewDtoFactoryEntityInstance(IQueryable<ProductEntity> customerEntities)
+    public static IQueryable<ProductViewDto> ProductViewDtoFactoryEntityInstance(IQueryable<ProductEntity> productEntities)
     {
-      return from c in customerEntities select new ProductViewDto(c);
+      return from c in productEntities select new ProductViewDto(c);
     }
 
     public static IQueryable<ProductViewDto> ProductViewDtoFactoryPropertyProjection(IQueryable<ProductEntity> productEntities)
