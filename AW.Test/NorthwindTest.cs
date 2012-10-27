@@ -12,65 +12,65 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 namespace AW.Tests
 {
   /// <summary>
-	/// 	Summary description for NorthwindTest
-	/// </summary>
-	[TestClass]
-	public class NorthwindTest
-	{
-		///<summary>
-		///	Gets or sets the test context which provides information about and functionality for the current test run.
-		///</summary>
-		public TestContext TestContext { get; set; }
+  ///   Summary description for NorthwindTest
+  /// </summary>
+  [TestClass]
+  public class NorthwindTest
+  {
+    /// <summary>
+    ///   Gets or sets the test context which provides information about and functionality for the current test run.
+    /// </summary>
+    public TestContext TestContext { get; set; }
 
-		#region Additional test attributes
+    #region Additional test attributes
 
-		//
-		// You can use the following additional attributes as you write your tests:
-		//
-		// Use ClassInitialize to run code before running the first test in the class
-		// [ClassInitialize()]
-		// public static void MyClassInitialize(TestContext testContext) { }
-		//
-		// Use ClassCleanup to run code after all tests in a class have run
-		// [ClassCleanup()]
-		// public static void MyClassCleanup() { }
-		//
-		// Use TestInitialize to run code before running each test 
-		// [TestInitialize()]
-		// public void MyTestInitialize() { }
-		//
-		// Use TestCleanup to run code after each test has run
-		// [TestCleanup()]
-		// public void MyTestCleanup() { }
-		//
+    //
+    // You can use the following additional attributes as you write your tests:
+    //
+    // Use ClassInitialize to run code before running the first test in the class
+    // [ClassInitialize()]
+    // public static void MyClassInitialize(TestContext testContext) { }
+    //
+    // Use ClassCleanup to run code after all tests in a class have run
+    // [ClassCleanup()]
+    // public static void MyClassCleanup() { }
+    //
+    // Use TestInitialize to run code before running each test 
+    // [TestInitialize()]
+    // public void MyTestInitialize() { }
+    //
+    // Use TestCleanup to run code after each test has run
+    // [TestCleanup()]
+    // public void MyTestCleanup() { }
+    //
 
-		#endregion
+    #endregion
 
-		public static LinqMetaData GetNorthwindLinqMetaData()
-		{
-			return new LinqMetaData {AdapterToUse = new DataAccessAdapter()};
-		}
+    public static LinqMetaData GetNorthwindLinqMetaData()
+    {
+      return new LinqMetaData {AdapterToUse = new DataAccessAdapter()};
+    }
 
-		[TestMethod, Description("tests whether you can have a typed null field in a anonymous projection")]
-		public void CustomerAnonProjection()
-		{
-			var queryable = from c in GetNorthwindLinqMetaData().Customer
-			                select new {c.Address, c.City, CompanyName = (string) null, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region};
-			queryable.ToList();
-		}
+    [TestMethod, Description("tests whether you can have a typed null field in a anonymous projection")]
+    public void CustomerAnonProjection()
+    {
+      var queryable = from c in GetNorthwindLinqMetaData().Customer
+                      select new {c.Address, c.City, CompanyName = (string) null, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region};
+      Assert.IsNotNull(queryable.ToList());
+    }
 
-		[TestMethod, Description("tests whether you can pass a null parameter to a constructor in a projection")]
-		public void CustomerVMProjection()
-		{
+    [TestMethod, Description("tests whether you can pass a null parameter to a constructor in a projection")]
+    public void CustomerVMProjection()
+    {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
                       select new CustomerVM(c.Address, c.City, null, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region);
-      queryable.ToList();
-		}
+      Assert.IsNotNull(queryable.ToList());
+    }
 
     [TestMethod, Description("tests whether you can OrderBy after a Projection with Entity Instance")]
     public void CustomerVMProjectionEntityInstance()
     {
-      var queryable = CustomerVM.CustomerVmFactoryEntityInstance(GetNorthwindLinqMetaData().Customer).OrderBy(c=>c.City);
+      var queryable = CustomerVM.CustomerVmFactoryEntityInstance(GetNorthwindLinqMetaData().Customer).OrderBy(c => c.City);
       Assert.IsNotNull(queryable.ToList());
     }
 
@@ -82,204 +82,204 @@ namespace AW.Tests
     }
 
     /// <summary>
-		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
-		/// </summary>
-        [TestCategory("Bug"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
-		public void CustomerLeftJoinCustomerDemographic()
-		{
-			var queryable = from c in GetNorthwindLinqMetaData().Customer
-			                from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
-			                select new {c.ContactName, ccd.CustomerId, ccd.CustomerDemographic.CustomerDesc};
-			var result = queryable.ToList();
-			Assert.AreEqual(1, result.Count);
-		}
+    ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
+    /// </summary>
+    [TestCategory("Bug"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+    public void CustomerLeftJoinCustomerDemographic()
+    {
+      var queryable = from c in GetNorthwindLinqMetaData().Customer
+                      from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+                      select new {c.ContactName, ccd.CustomerId, ccd.CustomerDemographic.CustomerDesc};
+      var result = queryable.ToList();
+      Assert.AreEqual(1, result.Count);
+    }
 
-		/// <summary>
-		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
-		/// </summary>
-		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
-		public void CustomerExpicitLeftJoinCustomerDemographic()
-		{
-			var queryable = from c in GetNorthwindLinqMetaData().Customer
-			                from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
-			                join cd in GetNorthwindLinqMetaData().CustomerDemographic on ccd.CustomerTypeId equals cd.CustomerTypeId into customerDemographics
-			                from cd in customerDemographics.DefaultIfEmpty()
-			                select new {c.ContactName, ccd.CustomerId, cd.CustomerDesc};
-			var result = queryable.ToList();
-			Assert.AreEqual(91, result.Count);
-		}
+    /// <summary>
+    ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
+    /// </summary>
+    [TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+    public void CustomerExpicitLeftJoinCustomerDemographic()
+    {
+      var queryable = from c in GetNorthwindLinqMetaData().Customer
+                      from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+                      join cd in GetNorthwindLinqMetaData().CustomerDemographic on ccd.CustomerTypeId equals cd.CustomerTypeId into customerDemographics
+                      from cd in customerDemographics.DefaultIfEmpty()
+                      select new {c.ContactName, ccd.CustomerId, cd.CustomerDesc};
+      var result = queryable.ToList();
+      Assert.AreEqual(91, result.Count);
+    }
 
-		/// <summary>
-		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
-		/// </summary>
-        [TestCategory("Bug"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
-		public void CustomerLeftJoinCustomerDemographicViaMany()
-		{
-			var queryable = from c in GetNorthwindLinqMetaData().Customer
-			                from cd in c.CustomerDemographics.DefaultIfEmpty()
-			                select new {c.ContactName, c.CustomerId, cd.CustomerDesc};
-			var result = queryable.ToList();
-			Assert.AreEqual(1, result.Count);
-		}
+    /// <summary>
+    ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
+    /// </summary>
+    [TestCategory("Bug"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+    public void CustomerLeftJoinCustomerDemographicViaMany()
+    {
+      var queryable = from c in GetNorthwindLinqMetaData().Customer
+                      from cd in c.CustomerDemographics.DefaultIfEmpty()
+                      select new {c.ContactName, c.CustomerId, cd.CustomerDesc};
+      var result = queryable.ToList();
+      Assert.AreEqual(1, result.Count);
+    }
 
-		/// <summary>
-		/// 	<see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
-		/// </summary>
-		[TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
-		public void CustomerLeftJoinCustomerDemographicLinqToObject()
-		{
-			var cus = GetNorthwindLinqMetaData().Customer.PrefetchCustomerCustomerDemosCustomerDemographic().ToEntityCollection2();
-			var cusproj = from c in cus
-			              from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
-			              select
-			              	new
-			              		{
-			              			c.ContactName,
-			              			CustomerId = ccd == null ? null : ccd.CustomerId,
-			              			CustomerDesc = ccd == null ? null : ccd.CustomerDemographic.CustomerDesc
-			              		};
-			Assert.AreEqual(91, cusproj.Count());
-		}
+    /// <summary>
+    ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
+    /// </summary>
+    [TestMethod, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+    public void CustomerLeftJoinCustomerDemographicLinqToObject()
+    {
+      var cus = GetNorthwindLinqMetaData().Customer.PrefetchCustomerCustomerDemosCustomerDemographic().ToEntityCollection2();
+      var cusproj = from c in cus
+                    from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+                    select
+                      new
+                        {
+                          c.ContactName,
+                          CustomerId = ccd == null ? null : ccd.CustomerId,
+                          CustomerDesc = ccd == null ? null : ccd.CustomerDemographic.CustomerDesc
+                        };
+      Assert.AreEqual(91, cusproj.Count());
+    }
 
-		/// <summary>
-		/// 	Tests whether a second m:n prefetch results in duplicate
-		/// </summary>
-		[TestMethod]
-		public void ManyToManyPrefetchContextBugTest()
-		{
-			AssertOneCustomerDemographicAfterSecondPrefetch(null); //Passes
-			AssertOneCustomerDemographicAfterSecondPrefetch(new Context()); //Fails
-		}
+    /// <summary>
+    ///   Tests whether a second m:n prefetch results in duplicate
+    /// </summary>
+    [TestMethod]
+    public void ManyToManyPrefetchContextBugTest()
+    {
+      AssertOneCustomerDemographicAfterSecondPrefetch(null); //Passes
+      AssertOneCustomerDemographicAfterSecondPrefetch(new Context()); //Fails
+    }
 
-		/// <summary>
-		/// 	Tests that there is only one CustomerDemographic after a second prefetch CustomerCustomerDemo Table has 1 row: ALFKI 1 CustomerDemographic Table has 1 row: xxx 1
-		/// </summary>
-		/// <param name="contextToUse"> The context to use. </param>
-		private static void AssertOneCustomerDemographicAfterSecondPrefetch(Context contextToUse)
-		{
-			var northwindLinqMetaData = GetNorthwindLinqMetaData();
-			northwindLinqMetaData.ContextToUse = contextToUse;
-			const string alfki = "ALFKI";
-			if (!northwindLinqMetaData.CustomerDemographic.Any())
-			{
-				var customerDemographicEntity = new CustomerDemographicEntity("1") {CustomerDesc = "CustomerDesc"};
-				var customerCustomerDemos = customerDemographicEntity.CustomerCustomerDemos.AddNew();
-				customerCustomerDemos.CustomerId = alfki;
-				northwindLinqMetaData.AdapterToUse.SaveEntity(customerDemographicEntity);
-			}
-			AssertOneCustomerDemographicAfterPrefetch(northwindLinqMetaData, alfki);
-			AssertOneCustomerDemographicAfterPrefetch(northwindLinqMetaData, alfki);
-		}
+    /// <summary>
+    ///   Tests that there is only one CustomerDemographic after a second prefetch CustomerCustomerDemo Table has 1 row: ALFKI 1 CustomerDemographic Table has 1 row: xxx 1
+    /// </summary>
+    /// <param name="contextToUse"> The context to use. </param>
+    private static void AssertOneCustomerDemographicAfterSecondPrefetch(Context contextToUse)
+    {
+      var northwindLinqMetaData = GetNorthwindLinqMetaData();
+      northwindLinqMetaData.ContextToUse = contextToUse;
+      const string alfki = "ALFKI";
+      if (!northwindLinqMetaData.CustomerDemographic.Any())
+      {
+        var customerDemographicEntity = new CustomerDemographicEntity("1") {CustomerDesc = "CustomerDesc"};
+        var customerCustomerDemos = customerDemographicEntity.CustomerCustomerDemos.AddNew();
+        customerCustomerDemos.CustomerId = alfki;
+        northwindLinqMetaData.AdapterToUse.SaveEntity(customerDemographicEntity);
+      }
+      AssertOneCustomerDemographicAfterPrefetch(northwindLinqMetaData, alfki);
+      AssertOneCustomerDemographicAfterPrefetch(northwindLinqMetaData, alfki);
+    }
 
-		private static void AssertOneCustomerDemographicAfterPrefetch(LinqMetaData northwindLinqMetaData, string alfki)
-		{
-			var cus = northwindLinqMetaData.Customer.PrefetchCustomerDemographics().Single(c => c.CustomerId == alfki);
-			Assert.AreEqual(alfki, cus.CustomerId);
-			Assert.AreEqual(1, cus.CustomerDemographics.Count());
-			if (northwindLinqMetaData.ContextToUse != null)
-				northwindLinqMetaData.ContextToUse.Add(cus.CustomerDemographics);
-		}
+    private static void AssertOneCustomerDemographicAfterPrefetch(LinqMetaData northwindLinqMetaData, string alfki)
+    {
+      var cus = northwindLinqMetaData.Customer.PrefetchCustomerDemographics().Single(c => c.CustomerId == alfki);
+      Assert.AreEqual(alfki, cus.CustomerId);
+      Assert.AreEqual(1, cus.CustomerDemographics.Count());
+      if (northwindLinqMetaData.ContextToUse != null)
+        northwindLinqMetaData.ContextToUse.Add(cus.CustomerDemographics);
+    }
 
-		[TestMethod]
-		public void PrefetchWithContext()
-		{
-			var metaData = GetNorthwindLinqMetaData();
-			metaData.ContextToUse = new Context();
-			const string customerToSearch = "ALFKI";
+    [TestMethod]
+    public void PrefetchWithContext()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      metaData.ContextToUse = new Context();
+      const string customerToSearch = "ALFKI";
 
-			// first time
+      // first time
       var customer = (from c in metaData.Customer
-			                where c.CustomerId == customerToSearch
-			                select c)
+                      where c.CustomerId == customerToSearch
+                      select c)
         .PrefetchEmployeesViaOrders()
-				.Single();
-			Assert.AreEqual(customerToSearch, customer.CustomerId);
-			var employeesCountToTest = customer.EmployeesViaOrders.Count;
+        .Single();
+      Assert.AreEqual(customerToSearch, customer.CustomerId);
+      var employeesCountToTest = customer.EmployeesViaOrders.Count;
 
-			// add the related collection to the context
-			metaData.ContextToUse.Add(customer.EmployeesViaOrders);
+      // add the related collection to the context
+      metaData.ContextToUse.Add(customer.EmployeesViaOrders);
 
-			//Assert.AreEqual(1, customer.EmployeesViaOrders.First().CustomersViaOrders);
+      //Assert.AreEqual(1, customer.EmployeesViaOrders.First().CustomersViaOrders);
 
-			// second time
-			customer = (from c in metaData.Customer
-			            where c.CustomerId == customerToSearch
-			            select c)
+      // second time
+      customer = (from c in metaData.Customer
+                  where c.CustomerId == customerToSearch
+                  select c)
         .PrefetchEmployeesViaOrders()
-				.Single();
-			Assert.AreEqual(customerToSearch, customer.CustomerId);
-			Assert.AreEqual(employeesCountToTest, customer.EmployeesViaOrders.Count);
-		}
+        .Single();
+      Assert.AreEqual(customerToSearch, customer.CustomerId);
+      Assert.AreEqual(employeesCountToTest, customer.EmployeesViaOrders.Count);
+    }
 
-		/// <summary>
-		/// 	http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
-		/// </summary>
-        [TestCategory("Bug"), TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
-		public void BiDirectionalManyToMany()
-		{
-			var metaData = GetNorthwindLinqMetaData();
-			var customer = metaData.Customer.PrefetchEmployeesViaOrders().First();
-			Assert.AreNotEqual(0, customer.EmployeesViaOrders.Count);
+    /// <summary>
+    ///   http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
+    /// </summary>
+    [TestCategory("Bug"), TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+    public void BiDirectionalManyToMany()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      var customer = metaData.Customer.PrefetchEmployeesViaOrders().First();
+      Assert.AreNotEqual(0, customer.EmployeesViaOrders.Count);
 
-			Assert.AreEqual(1, customer.EmployeesViaOrders.First().CustomersViaOrders.Count); //Fails
-		}
+      Assert.AreEqual(1, customer.EmployeesViaOrders.First().CustomersViaOrders.Count); //Fails
+    }
 
-	  [TestMethod, Description("After a prefetch of a  1:n intermediate m:1 relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
-		public void BiDirectionalManyToManyInCode()
-		{
-			var metaData = GetNorthwindLinqMetaData();
-			var customer = metaData.Customer.PrefetchOrdersEmployee().First();
-			Assert.AreNotEqual(0, customer.Orders.Count);
-			Assert.AreNotEqual(0, customer.EmployeesViaOrdersInCode.Count());
+    [TestMethod, Description("After a prefetch of a  1:n intermediate m:1 relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+    public void BiDirectionalManyToManyInCode()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      var customer = metaData.Customer.PrefetchOrdersEmployee().First();
+      Assert.AreNotEqual(0, customer.Orders.Count);
+      Assert.AreNotEqual(0, customer.EmployeesViaOrdersInCode.Count());
 
-			Assert.AreEqual(1, customer.EmployeesViaOrdersInCode.First().CustomersViaOrdersInCode.Count());
-			Assert.AreEqual(customer, customer.EmployeesViaOrdersInCode.First().CustomersViaOrdersInCode.Single());
-		}
+      Assert.AreEqual(1, customer.EmployeesViaOrdersInCode.First().CustomersViaOrdersInCode.Count());
+      Assert.AreEqual(customer, customer.EmployeesViaOrdersInCode.First().CustomersViaOrdersInCode.Single());
+    }
 
-		[TestMethod]
-		public void BiDirectionalOneToMany()
-		{
-			var metaData = GetNorthwindLinqMetaData();
-		  var customerEntities = metaData.Customer;
-		  var customer = customerEntities.PrefetchOrders().First();
-			Assert.AreNotEqual(0, customer.Orders.Count);
+    [TestMethod]
+    public void BiDirectionalOneToMany()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      var customerEntities = metaData.Customer;
+      var customer = customerEntities.PrefetchOrders().First();
+      Assert.AreNotEqual(0, customer.Orders.Count);
 
-			Assert.AreEqual(customer, customer.Orders.First().Customer);
-		}
+      Assert.AreEqual(customer, customer.Orders.First().Customer);
+    }
 
-	  /// <summary>
-		/// 	http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=20595
-		/// </summary>
-		[TestMethod, Description("SQL bind exception with two Where predicates with the same Entity")]
-		public void SQLBindExceptionWithTwoWherePredicatesWithTheSameEntity()
-		{
-			var metaData = GetNorthwindLinqMetaData();
-			var employees = from e in metaData.Employee
-			                where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
-			                select e;
+    /// <summary>
+    ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=20595
+    /// </summary>
+    [TestMethod, Description("SQL bind exception with two Where predicates with the same Entity")]
+    public void SQLBindExceptionWithTwoWherePredicatesWithTheSameEntity()
+    {
+      var metaData = GetNorthwindLinqMetaData();
+      var employees = from e in metaData.Employee
+                      where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+                      select e;
 
-			const int expected = 7;
-			Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //This is ok
-			Assert.AreEqual(expected, employees.Count());
+      const int expected = 7;
+      Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //This is ok
+      Assert.AreEqual(expected, employees.Count());
 
-			employees = from e in metaData.Employee
-			            from order in e.Orders
-			            from et in e.EmployeeTerritories
-			            where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
-			            select e;
+      employees = from e in metaData.Employee
+                  from order in e.Orders
+                  from et in e.EmployeeTerritories
+                  where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+                  select e;
 
-			Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //So is this
-			Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
+      Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //So is this
+      Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
 
-			// This one throws 'The multi-part identifier "LPLA_4.EmployeeID" could not be bound.'
-			employees = from e in metaData.Employee
-			            from et in e.EmployeeTerritories
-			            where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
-			            select e;
+      // This one throws 'The multi-part identifier "LPLA_4.EmployeeID" could not be bound.'
+      employees = from e in metaData.Employee
+                  from et in e.EmployeeTerritories
+                  where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+                  select e;
 
-			Assert.AreEqual(expected, employees.ToEntityCollection2().Count());
-			Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
-		}
+      Assert.AreEqual(expected, employees.ToEntityCollection2().Count());
+      Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
+    }
 
     [TestMethod]
     public void PrefetchBeforeCriterea()
@@ -321,22 +321,21 @@ namespace AW.Tests
       queryable = ProductViewDto.ProductViewDtoFactoryPropertiesViaConstructor(GetNorthwindLinqMetaData().Product).OrderBy(p => p.ReorderLevelZzz);
       Assert.IsNotNull(queryable.ToList());
 
-      queryable = ProductViewDto.ProductViewDtoFactoryEntityInstance(GetNorthwindLinqMetaData().Product).OrderBy(p => p.UnitPrice);
-      Assert.IsNotNull(queryable.ToList());
+      var pagedQueryable = ProductViewDto.ProductViewDtoFactoryEntityInstance(GetNorthwindLinqMetaData().Product).OrderBy(p => p.UnitPrice).TakePage(2, 10);
+      Assert.IsNotNull(pagedQueryable.ToList());
     }
 
-    [TestMethod, Description("tests whether you can OrderBy after a projection when the field has a different name")]
+    [TestMethod, Description("tests whether you can OrderBy after a projection")]
     public void TestEmployeeViewDto()
     {
       var employeeEntities = GetNorthwindLinqMetaData().Employee;
-      var queryable = EmployeeViewDto.EmployeeViewDtoFactoryPropertyProjection(employeeEntities).OrderBy(e=>e.FirstName);
+      var queryable = EmployeeViewDto.EmployeeViewDtoFactoryPropertyProjection(employeeEntities).OrderBy(e => e.FirstName);
       Assert.IsNotNull(queryable.ToList());
 
       queryable = EmployeeViewDto.EmployeeViewDtoFactoryPropertiesViaConstructor(employeeEntities).OrderBy(e => e.FirstName);
       Assert.IsNotNull(queryable.ToList());
 
-      queryable = EmployeeViewDto.EmployeeViewDtoFactoryEntityInstance(employeeEntities).OrderBy(e => e.FirstName);
-      Assert.IsNotNull(queryable.ToList());
+      Assert.IsNotNull(EmployeeViewDto.EmployeeViewDtoFactoryEntityInstance(employeeEntities).OrderBy(e => e.FirstName).TakePage(2, 10));
     }
-	}
+  }
 }
