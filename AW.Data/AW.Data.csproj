@@ -439,6 +439,7 @@
     <Compile Include="ConstantsEnums.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <Compile Include="ViewModels\TransactionHistoryDto.cs" />
     <None Include="..\Ancillary\AdventureWorks.snk">
       <Link>AdventureWorks.snk</Link>
     </None>

@@ -3,7 +3,7 @@ using AW.Data.EntityClasses;
 
 namespace AW.Data.ViewModels
 {
-	public class CustomerListLinqedTypedList
+  public class CustomerListLinqedTypedList
 	{
 		private readonly string _addressLine1;
 		private readonly string _addressLine2;
