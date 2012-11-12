@@ -12846,6 +12846,17 @@
             Array list with the <see cref="T:SD.LLBLGen.Pro.ORMSupportClasses.IParameterFieldRelation"/> instances for the relations between IEntityFields and output parameters.
             </summary>
         </member>
+        <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.ITraceable">
+            <summary>
+            Interface for elements which have to emit different information based on the verbose flag.
+            </summary>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.ITraceable.ToString(System.Boolean)">
+            <summary>
+            Emits the traceable object as text to the output
+            </summary>
+            <param name="verbose">if set to <c>true</c> it will emit verbose information, otherwise it will only emit info-level information.</param>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Query.#ctor(System.Data.Common.DbCommand)">
             <summary>
             CTor
@@ -12870,8 +12881,16 @@
             <summary>
             Overloaded ToString implementation
             </summary>
-            <returns>Returns a complete textual representation of the command stored. The textual representation
-            will not include parameter values, but will list their names and types.</returns>
+            <returns>Returns a complete textual representation of the command stored. </returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Query.ToString(System.Boolean)">
+            <summary>
+            Overloaded ToString implementation
+            </summary>
+            <param name="verbose">if set to <c>true</c> it will return the query including parameter values. If false, it will only emit the SQL statement.</param>
+            <returns>
+            Returns a complete textual representation of the command stored. 
+            </returns>
         </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Query.AddParameter(System.Data.Common.DbParameter)">
             <summary>
@@ -12931,6 +12950,12 @@
             </summary>
             <param name="ex">The ex.</param>
             <returns></returns>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.Query.SD#LLBLGen#Pro#ORMSupportClasses#ITraceable#ToString(System.Boolean)">
+            <summary>
+            Emits the traceable object as text to the output
+            </summary>
+            <param name="verbose">if set to <c>true</c> it will emit verbose information, otherwise it will only emit info-level information.</param>
         </member>
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.Query.Connection">
             <summary>
@@ -40093,6 +40118,15 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.SequenceRetrievalQuery.ToString(System.Boolean)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="verbose">if set to <c>true</c> [verbose].</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.SequenceRetrievalQuery.AddSequenceParameter(System.Data.Common.DbParameter)">
             <summary>
             Adds the sequence parameter.
@@ -40120,6 +40154,12 @@
             Performs the dispose action.
             </summary>
             <param name="isDisposing">Flag which signals this routine if a dispose action should take place (true) or not (false)</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.SequenceRetrievalQuery.SD#LLBLGen#Pro#ORMSupportClasses#ITraceable#ToString(System.Boolean)">
+            <summary>
+            Emits the traceable object as text to the output
+            </summary>
+            <param name="verbose">if set to <c>true</c> it will emit verbose information, otherwise it will only emit info-level information.</param>
         </member>
         <member name="P:SD.LLBLGen.Pro.ORMSupportClasses.SequenceRetrievalQuery.SequenceRetrievalCommand">
             <summary>
@@ -40338,6 +40378,11 @@
             Switch which is used by entity / other data persistence logic execution code in the ORM Support classes
             </summary>
         </member>
+        <member name="F:SD.LLBLGen.Pro.ORMSupportClasses.TraceHelper.QueryExecutionSwitch">
+            <summary>
+            Switch which is used by the query objects in the ORM support classes.
+            </summary>
+        </member>
         <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.TraceHelper.WriteLineIf(System.Boolean,System.Object)">
             <summary>
             Writes the value with no category specified to the trace output with a newline, if condition is true.
@@ -40397,6 +40442,13 @@
             <param name="condition">Condition to test if the message has to be written (true) or not (false)</param>
             <param name="message">Message to write to the trace output</param>
             <param name="category">Category to specify with the message</param>
+        </member>
+        <member name="M:SD.LLBLGen.Pro.ORMSupportClasses.TraceHelper.WriteExecutedSqlQuery(SD.LLBLGen.Pro.ORMSupportClasses.ITraceable,System.String)">
+            <summary>
+            Writes the information about the executed passed in SQL query to the tracers which should get this information.
+            </summary>
+            <param name="toEmit">To emit.</param>
+            <param name="message">The message.</param>
         </member>
         <member name="T:SD.LLBLGen.Pro.ORMSupportClasses.TransactionBase">
             <summary>

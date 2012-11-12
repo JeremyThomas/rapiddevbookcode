@@ -2,9 +2,11 @@ using System.Linq;
 using System.Linq.Dynamic;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.Filters;
 using AW.Data.Linq;
 using AW.Data.Linq.Filters;
 using AW.Data.Queries;
+using AW.Data.ViewModels;
 using AW.Helper;
 using AW.Helper.LLBL;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -12,16 +14,16 @@ using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Tests
 {
-  ///<summary>
-  ///  This is a test class to execute Queries that demonstrate some bugs found in the LLBL LINQ provider
-  ///</summary>
+  /// <summary>
+  ///   This is a test class to execute Queries that demonstrate some bugs found in the LLBL LINQ provider
+  /// </summary>
   [TestClass]
   public class BugsTest
   {
-    ///<summary>
-    ///  Gets or sets the test context which provides
-    ///  information about and functionality for the current test run.
-    ///</summary>
+    /// <summary>
+    ///   Gets or sets the test context which provides
+    ///   information about and functionality for the current test run.
+    /// </summary>
     public TestContext TestContext { get; set; }
 
     #region Additional test attributes
@@ -124,7 +126,7 @@ namespace AW.Tests
       queryableWithAliasException.ToList();
     }
 
-    ///http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=18176
+    /// http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=18176
     [TestCategory("Bug"), TestMethod, Description("SQL exception on last line")]
     public void NestedQueryOnTotheSameEntityTwiceTest()
     {
@@ -277,14 +279,81 @@ namespace AW.Tests
     }
 
     /// <summary>
-    /// http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21371
+    ///   http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21371
     /// </summary>
     [TestMethod, Description("LINQ - Invalid SQL when prefetch comes before criteria")]
     public void TestPrefetchBeforeCriterea()
     {
       MetaSingletons.MetaData.Customer.FilterBySalesPersonID(275).PrefetchCustomerAddresses().EmptySelect().ToEntityCollection(); //OK with prefetch
-      MetaSingletons.MetaData.Customer.PrefetchCustomerAddresses().FilterBySalesPersonID(275).ToEntityCollection();               //OK but prefetch ignored
+      MetaSingletons.MetaData.Customer.PrefetchCustomerAddresses().FilterBySalesPersonID(275).ToEntityCollection(); //OK but prefetch ignored
       MetaSingletons.MetaData.Customer.EmptySelect().PrefetchCustomerAddresses().FilterBySalesPersonID(275).ToEntityCollection(); //This one fails
+    }
+
+    [TestMethod, Description("LINQ -  let followed by a projection followed by an ordering")]
+    public void TestLetProjectionOrdering()
+    {
+      const int productID = 1;
+      var queryable = from t in MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID)
+                      select new TransactionHistoryDto
+                        {
+                          ActualCost = t.ActualCost, ModifiedDate = t.ModifiedDate,
+                          ProductID = t.ProductID, Quantity = t.Quantity, ReferenceOrderID = t.ReferenceOrderID,
+                          ReferenceOrderLineID = t.ReferenceOrderLineID, TransactionDate = t.TransactionDate,
+                          TransactionID = t.TransactionID, TransactionType = t.TransactionType
+                        };
+      queryable.OrderBy(th => th.ModifiedDate).ToList(); //Works
+
+      queryable = from t in MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID)
+                  select new TransactionHistoryDto(t.ActualCost, t.ModifiedDate, t.ProductID, t.Quantity, t.ReferenceOrderID, t.ReferenceOrderLineID, t.TransactionDate, t.TransactionID, t.TransactionType);
+      queryable.OrderBy(th => th.ModifiedDate).ToList(); //Doesn't
+
+      queryable = from t in MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID)
+                  select new TransactionHistoryDto(t);
+      queryable.OrderBy(th => th.ModifiedDate).ToList(); //Doesn't
+    }
+
+    [TestMethod]
+    public void TestLetProjectionEntityInstance()
+    {
+      const int productID = 1;
+      var queryable = from t in MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID)
+                  select new TransactionHistoryDto(t);
+      queryable.ToList();
+
+      queryable = from t in MetaSingletons.MetaData.SalesOrderHistory//.FilterByProductID(productID)
+                      select new TransactionHistoryDto(t);
+      queryable.ToList(); 
+    }
+
+    [TestMethod, Description("LINQ -  let followed by a projection followed by an ordering")]
+    public void TestInheritanceCounts()
+    {
+      const int productID = 1;
+      var transactionHistoryCount = MetaSingletons.MetaData.TransactionHistory.Count();
+      Assert.AreEqual(transactionHistoryCount, MetaSingletons.MetaData.WorkOrderHistory.Count()
+                                               + MetaSingletons.MetaData.SalesOrderHistory.Count()
+                                               + MetaSingletons.MetaData.PurchaseOrderHistory.Count());
+      var queryable = MetaSingletons.MetaData.TransactionHistory.FilterByProductID(productID);
+      var expectedCount = queryable.ToEntityCollection().Count;
+      Assert.AreEqual(expectedCount, queryable.Count());
+      Assert.AreEqual(expectedCount, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductID(productID).Count()
+                                     + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductID(productID).Count()
+                                     + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductID(productID).Count());
+
+      var queryableLet = MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID);
+      var expectedCountLet = queryableLet.ToEntityCollection().Count;
+      Assert.AreEqual(expectedCountLet, queryableLet.Count());
+      Assert.AreEqual(expectedCountLet, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductIDWithLet(productID).Count()
+                                     + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductIDWithLet(productID).Count()
+                                     + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductIDWithLet(productID).Count());
+
+      const string productNumber = "AR-5381";
+      var queryableProductNumberLet = MetaSingletons.MetaData.TransactionHistory.FilterByProductNumberWithLet(productNumber);
+      var expectedCountProductNumberLet = queryableProductNumberLet.ToEntityCollection().Count;
+      Assert.AreEqual(expectedCountProductNumberLet, queryableProductNumberLet.Count());
+      Assert.AreEqual(expectedCountProductNumberLet, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductNumberWithLet(productNumber).Count()
+                                     + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductNumberWithLet(productNumber).Count()
+                                     + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductNumberWithLet(productNumber).Count());
     }
   }
 }

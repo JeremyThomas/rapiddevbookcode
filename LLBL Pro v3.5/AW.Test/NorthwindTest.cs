@@ -335,7 +335,10 @@ namespace AW.Tests
       queryable = EmployeeViewDto.EmployeeViewDtoFactoryPropertiesViaConstructor(employeeEntities).OrderBy(e => e.FirstName);
       Assert.IsNotNull(queryable.ToList());
 
-      Assert.IsNotNull(EmployeeViewDto.EmployeeViewDtoFactoryEntityInstance(employeeEntities).OrderBy(e => e.FirstName).TakePage(2, 10));
+      Assert.IsNotNull(EmployeeViewDto.EmployeeViewDtoFactoryEntityInstance(employeeEntities).OrderBy(e => e.FirstName).TakePage(2, 10).ToList());
+
+      Assert.IsNotNull(EmployeeViewDto.EmployeeViewDtoFactoryPropertiesViaConstructor(employeeEntities.Where(e => e.City != "x").Where(e => e.City != "x")).OrderBy(e => e.FirstName).ToList());
+      Assert.IsNotNull(EmployeeViewDto.EmployeeViewDtoFactoryEntityInstance(employeeEntities.EmptySelect().EmptySelect()).OrderBy(e => e.FirstName).TakePage(2, 10).ToList());
     }
   }
 }
