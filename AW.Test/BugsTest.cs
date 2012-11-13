@@ -292,40 +292,33 @@ namespace AW.Tests
     [TestMethod, Description("LINQ -  let followed by a projection followed by an ordering")]
     public void TestLetProjectionOrdering()
     {
-      const int productID = 1;
-      var queryable = from t in MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID)
-                      select new TransactionHistoryDto
-                        {
-                          ActualCost = t.ActualCost, ModifiedDate = t.ModifiedDate,
-                          ProductID = t.ProductID, Quantity = t.Quantity, ReferenceOrderID = t.ReferenceOrderID,
-                          ReferenceOrderLineID = t.ReferenceOrderLineID, TransactionDate = t.TransactionDate,
-                          TransactionID = t.TransactionID, TransactionType = t.TransactionType
-                        };
+      var transactionHistoryEntities = MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(1);
+      var queryable = TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(transactionHistoryEntities);
       queryable.OrderBy(th => th.ModifiedDate).ToList(); //Works
 
-      queryable = from t in MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID)
-                  select new TransactionHistoryDto(t.ActualCost, t.ModifiedDate, t.ProductID, t.Quantity, t.ReferenceOrderID, t.ReferenceOrderLineID, t.TransactionDate, t.TransactionID, t.TransactionType);
+      queryable = TransactionHistoryDto.TransactionHistoryDtoFactoryPropertiesViaConstructor(transactionHistoryEntities);
       queryable.OrderBy(th => th.ModifiedDate).ToList(); //Doesn't
 
-      queryable = from t in MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID)
-                  select new TransactionHistoryDto(t);
+      queryable = TransactionHistoryDto.TransactionHistoryDtoFactoryEntityInstance(transactionHistoryEntities);
       queryable.OrderBy(th => th.ModifiedDate).ToList(); //Doesn't
     }
 
     [TestMethod]
-    public void TestLetProjectionEntityInstance()
+    //http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21502
+    public void TestInheritanceProjectionEntityInstance()
     {
-      const int productID = 1;
-      var queryable = from t in MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID)
-                  select new TransactionHistoryDto(t);
-      queryable.ToList();
+      var queryable = TransactionHistoryDto.TransactionHistoryDtoFactoryEntityInstance(MetaSingletons.MetaData.TransactionHistory);
+      queryable.ToList(); //Works
 
-      queryable = from t in MetaSingletons.MetaData.SalesOrderHistory//.FilterByProductID(productID)
-                      select new TransactionHistoryDto(t);
-      queryable.ToList(); 
+      queryable = TransactionHistoryDto.TransactionHistoryDtoFactoryEntityInstance(MetaSingletons.MetaData.SalesOrderHistory);
+      queryable.ToList(); //no type filter
+
+      queryable = from t in MetaSingletons.MetaData.SalesOrderHistory
+                  select new TransactionHistoryDto(t);
+      queryable.ToList(); //System.InvalidCastException: Unable to cast object of type 'AW.Data.EntityClasses.WorkOrderHistoryEntity' to type 'AW.Data.EntityClasses.SalesOrderHistoryEntity'.
     }
 
-    [TestMethod, Description("LINQ -  let followed by a projection followed by an ordering")]
+    [TestMethod, Description("LINQ - Inheritance projection followed by a count")]
     public void TestInheritanceCounts()
     {
       const int productID = 1;
@@ -333,12 +326,10 @@ namespace AW.Tests
       Assert.AreEqual(transactionHistoryCount, MetaSingletons.MetaData.WorkOrderHistory.Count()
                                                + MetaSingletons.MetaData.SalesOrderHistory.Count()
                                                + MetaSingletons.MetaData.PurchaseOrderHistory.Count());
-      var queryable = MetaSingletons.MetaData.TransactionHistory.FilterByProductID(productID);
-      var expectedCount = queryable.ToEntityCollection().Count;
-      Assert.AreEqual(expectedCount, queryable.Count());
-      Assert.AreEqual(expectedCount, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductID(productID).Count()
-                                     + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductID(productID).Count()
-                                     + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductID(productID).Count());
+
+      Assert.AreEqual(transactionHistoryCount, TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.WorkOrderHistory).Count()
+                                     + TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.SalesOrderHistory).Count()
+                                     + TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.PurchaseOrderHistory).Count());
 
       var queryableLet = MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID);
       var expectedCountLet = queryableLet.ToEntityCollection().Count;

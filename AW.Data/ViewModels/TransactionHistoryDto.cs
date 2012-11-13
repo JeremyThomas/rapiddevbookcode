@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using AW.Data.EntityClasses;
 
@@ -39,6 +40,34 @@ namespace AW.Data.ViewModels
       transactionHistoryEntity.Quantity, transactionHistoryEntity.ReferenceOrderID, transactionHistoryEntity.ReferenceOrderLineID, 
       transactionHistoryEntity.TransactionDate, transactionHistoryEntity.TransactionID, transactionHistoryEntity.TransactionType)
     {
+    }
+
+    public static IQueryable<TransactionHistoryDto> TransactionHistoryDtoFactoryPropertiesViaConstructor(IQueryable<TransactionHistoryEntity> transactionHistoryEntities)
+    {
+      return from t in transactionHistoryEntities
+             select new TransactionHistoryDto(t.ActualCost, t.ModifiedDate, t.ProductID, t.Quantity, t.ReferenceOrderID, t.ReferenceOrderLineID, t.TransactionDate, t.TransactionID, t.TransactionType);
+    }
+
+    public static IQueryable<TransactionHistoryDto> TransactionHistoryDtoFactoryEntityInstance(IQueryable<TransactionHistoryEntity> transactionHistoryEntities)
+    {
+      return from t in transactionHistoryEntities select new TransactionHistoryDto(t);
+    }
+
+    public static IQueryable<TransactionHistoryDto> TransactionHistoryDtoFactoryPropertyProjection(IQueryable<TransactionHistoryEntity> transactionHistoryEntities)
+    {
+      return from t in transactionHistoryEntities
+             select new TransactionHistoryDto
+               {
+                 ActualCost = t.ActualCost,
+                 ModifiedDate = t.ModifiedDate,
+                 ProductID = t.ProductID,
+                 Quantity = t.Quantity,
+                 ReferenceOrderID = t.ReferenceOrderID,
+                 ReferenceOrderLineID = t.ReferenceOrderLineID,
+                 TransactionDate = t.TransactionDate,
+                 TransactionID = t.TransactionID,
+                 TransactionType = t.TransactionType
+               };
     }
 
     public override string ToString()
