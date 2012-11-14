@@ -340,5 +340,12 @@ namespace AW.Tests
       Assert.IsNotNull(EmployeeViewDto.EmployeeViewDtoFactoryPropertiesViaConstructor(employeeEntities.Where(e => e.City != "x").Where(e => e.City != "x")).OrderBy(e => e.FirstName).ToList());
       Assert.IsNotNull(EmployeeViewDto.EmployeeViewDtoFactoryEntityInstance(employeeEntities.EmptySelect().EmptySelect()).OrderBy(e => e.FirstName).TakePage(2, 10).ToList());
     }
+
+    [TestMethod, Description("tests FilterByCustomerTypeId().FilterByManagersOrder(1)")]
+    public void TestFilterByCustomerTypeIdFilterByManagersOrder()
+    {
+      var employeeEntities = GetNorthwindLinqMetaData().Employee;
+      employeeEntities.FilterByCustomerTypeId("ALFKI").FilterByManagersOrder(1).ToEntityCollection2();
+    }
   }
 }

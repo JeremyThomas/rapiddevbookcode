@@ -558,7 +558,7 @@
           <FieldFieldRelationship FkField="CustomerTypeId" PkField="CustomerTypeId" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Employee.Employee-Employee.Employees" Start=":Employee" End=":Employee" StartNavigator="Employee" EndNavigator="Employees" Type="4">
+      <NormalRelationship Name="Employee.Manager-Employee.Staff" Start=":Employee" End=":Employee" StartNavigator="Manager" EndNavigator="Staff" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="ReportsTo" PkField="EmployeeId" />
         </FieldRelationships>

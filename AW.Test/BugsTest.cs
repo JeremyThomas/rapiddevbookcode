@@ -313,7 +313,7 @@ namespace AW.Tests
       queryable = TransactionHistoryDto.TransactionHistoryDtoFactoryEntityInstance(MetaSingletons.MetaData.SalesOrderHistory);
       queryable.ToList(); //no type filter
 
-      queryable = from t in MetaSingletons.MetaData.SalesOrderHistory
+      queryable = from t in MetaSingletons.MetaData.SalesOrderHistoryTs
                   select new TransactionHistoryDto(t);
       queryable.ToList(); //System.InvalidCastException: Unable to cast object of type 'AW.Data.EntityClasses.WorkOrderHistoryEntity' to type 'AW.Data.EntityClasses.SalesOrderHistoryEntity'.
     }
@@ -327,16 +327,16 @@ namespace AW.Tests
                                                + MetaSingletons.MetaData.SalesOrderHistory.Count()
                                                + MetaSingletons.MetaData.PurchaseOrderHistory.Count());
 
-      Assert.AreEqual(transactionHistoryCount, TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.WorkOrderHistory).Count()
-                                     + TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.SalesOrderHistory).Count()
-                                     + TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.PurchaseOrderHistory).Count());
+      Assert.AreEqual(transactionHistoryCount, TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.WorkOrderHistoryTs).Count()
+                                     + TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.SalesOrderHistoryTs).Count()
+                                     + TransactionHistoryDto.TransactionHistoryDtoFactoryPropertyProjection(MetaSingletons.MetaData.PurchaseOrderHistoryTs).Count());
 
       var queryableLet = MetaSingletons.MetaData.TransactionHistory.FilterByProductIDWithLet(productID);
       var expectedCountLet = queryableLet.ToEntityCollection().Count;
       Assert.AreEqual(expectedCountLet, queryableLet.Count());
-      Assert.AreEqual(expectedCountLet, MetaSingletons.MetaData.WorkOrderHistory.FilterByProductIDWithLet(productID).Count()
-                                     + MetaSingletons.MetaData.SalesOrderHistory.FilterByProductIDWithLet(productID).Count()
-                                     + MetaSingletons.MetaData.PurchaseOrderHistory.FilterByProductIDWithLet(productID).Count());
+      Assert.AreEqual(expectedCountLet, MetaSingletons.MetaData.WorkOrderHistoryTs.FilterByProductIDWithLet(productID).Count()
+                                     + MetaSingletons.MetaData.SalesOrderHistoryTs.FilterByProductIDWithLet(productID).Count()
+                                     + MetaSingletons.MetaData.PurchaseOrderHistoryTs.FilterByProductIDWithLet(productID).Count());
 
       const string productNumber = "AR-5381";
       var queryableProductNumberLet = MetaSingletons.MetaData.TransactionHistory.FilterByProductNumberWithLet(productNumber);

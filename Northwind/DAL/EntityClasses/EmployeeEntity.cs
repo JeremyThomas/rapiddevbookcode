@@ -35,12 +35,12 @@ namespace Northwind.DAL.EntityClasses
 		// __LLBLGENPRO_USER_CODE_REGION_END	
 	{
 		#region Class Member Declarations
-		private EntityCollection<EmployeeEntity> _employees;
+		private EntityCollection<EmployeeEntity> _staff;
 		private EntityCollection<EmployeeTerritoryEntity> _employeeTerritories;
 		private EntityCollection<OrderEntity> _orders;
 		private EntityCollection<CustomerEntity> _customersViaOrders;
 		private EntityCollection<TerritoryEntity> _territories;
-		private EmployeeEntity _employee;
+		private EmployeeEntity _manager;
 
 		// __LLBLGENPRO_USER_CODE_REGION_START PrivateMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
@@ -53,10 +53,10 @@ namespace Northwind.DAL.EntityClasses
 		/// <summary>All names of fields mapped onto a relation. Usable for in-memory filtering</summary>
 		public static partial class MemberNames
 		{
-			/// <summary>Member name Employee</summary>
-			public static readonly string Employee = "Employee";
-			/// <summary>Member name Employees</summary>
-			public static readonly string Employees = "Employees";
+			/// <summary>Member name Manager</summary>
+			public static readonly string Manager = "Manager";
+			/// <summary>Member name Staff</summary>
+			public static readonly string Staff = "Staff";
 			/// <summary>Member name EmployeeTerritories</summary>
 			public static readonly string EmployeeTerritories = "EmployeeTerritories";
 			/// <summary>Member name Orders</summary>
@@ -122,15 +122,15 @@ namespace Northwind.DAL.EntityClasses
 		{
 			if(SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				_employees = (EntityCollection<EmployeeEntity>)info.GetValue("_employees", typeof(EntityCollection<EmployeeEntity>));
+				_staff = (EntityCollection<EmployeeEntity>)info.GetValue("_staff", typeof(EntityCollection<EmployeeEntity>));
 				_employeeTerritories = (EntityCollection<EmployeeTerritoryEntity>)info.GetValue("_employeeTerritories", typeof(EntityCollection<EmployeeTerritoryEntity>));
 				_orders = (EntityCollection<OrderEntity>)info.GetValue("_orders", typeof(EntityCollection<OrderEntity>));
 				_customersViaOrders = (EntityCollection<CustomerEntity>)info.GetValue("_customersViaOrders", typeof(EntityCollection<CustomerEntity>));
 				_territories = (EntityCollection<TerritoryEntity>)info.GetValue("_territories", typeof(EntityCollection<TerritoryEntity>));
-				_employee = (EmployeeEntity)info.GetValue("_employee", typeof(EmployeeEntity));
-				if(_employee!=null)
+				_manager = (EmployeeEntity)info.GetValue("_manager", typeof(EmployeeEntity));
+				if(_manager!=null)
 				{
-					_employee.AfterSave+=new EventHandler(OnEntityAfterSave);
+					_manager.AfterSave+=new EventHandler(OnEntityAfterSave);
 				}
 				this.FixupDeserialization(FieldInfoProviderSingleton.GetInstance());
 			}
@@ -146,7 +146,7 @@ namespace Northwind.DAL.EntityClasses
 			switch((EmployeeFieldIndex)fieldIndex)
 			{
 				case EmployeeFieldIndex.ReportsTo:
-					DesetupSyncEmployee(true, false);
+					DesetupSyncManager(true, false);
 					break;
 				default:
 					base.PerformDesyncSetupFKFieldChange(fieldIndex);
@@ -162,11 +162,11 @@ namespace Northwind.DAL.EntityClasses
 		{
 			switch(propertyName)
 			{
-				case "Employee":
-					this.Employee = (EmployeeEntity)entity;
+				case "Manager":
+					this.Manager = (EmployeeEntity)entity;
 					break;
-				case "Employees":
-					this.Employees.Add((EmployeeEntity)entity);
+				case "Staff":
+					this.Staff.Add((EmployeeEntity)entity);
 					break;
 				case "EmployeeTerritories":
 					this.EmployeeTerritories.Add((EmployeeTerritoryEntity)entity);
@@ -206,10 +206,10 @@ namespace Northwind.DAL.EntityClasses
 			RelationCollection toReturn = new RelationCollection();
 			switch(fieldName)
 			{
-				case "Employee":
+				case "Manager":
 					toReturn.Add(Relations.EmployeeEntityUsingEmployeeIdReportsTo);
 					break;
-				case "Employees":
+				case "Staff":
 					toReturn.Add(Relations.EmployeeEntityUsingReportsTo);
 					break;
 				case "EmployeeTerritories":
@@ -254,11 +254,11 @@ namespace Northwind.DAL.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Employee":
-					SetupSyncEmployee(relatedEntity);
+				case "Manager":
+					SetupSyncManager(relatedEntity);
 					break;
-				case "Employees":
-					this.Employees.Add((EmployeeEntity)relatedEntity);
+				case "Staff":
+					this.Staff.Add((EmployeeEntity)relatedEntity);
 					break;
 				case "EmployeeTerritories":
 					this.EmployeeTerritories.Add((EmployeeTerritoryEntity)relatedEntity);
@@ -279,11 +279,11 @@ namespace Northwind.DAL.EntityClasses
 		{
 			switch(fieldName)
 			{
-				case "Employee":
-					DesetupSyncEmployee(false, true);
+				case "Manager":
+					DesetupSyncManager(false, true);
 					break;
-				case "Employees":
-					this.PerformRelatedEntityRemoval(this.Employees, relatedEntity, signalRelatedEntityManyToOne);
+				case "Staff":
+					this.PerformRelatedEntityRemoval(this.Staff, relatedEntity, signalRelatedEntityManyToOne);
 					break;
 				case "EmployeeTerritories":
 					this.PerformRelatedEntityRemoval(this.EmployeeTerritories, relatedEntity, signalRelatedEntityManyToOne);
@@ -310,9 +310,9 @@ namespace Northwind.DAL.EntityClasses
 		protected override List<IEntity2> GetDependentRelatedEntities()
 		{
 			List<IEntity2> toReturn = new List<IEntity2>();
-			if(_employee!=null)
+			if(_manager!=null)
 			{
-				toReturn.Add(_employee);
+				toReturn.Add(_manager);
 			}
 			return toReturn;
 		}
@@ -322,7 +322,7 @@ namespace Northwind.DAL.EntityClasses
 		protected override List<IEntityCollection2> GetMemberEntityCollections()
 		{
 			List<IEntityCollection2> toReturn = new List<IEntityCollection2>();
-			toReturn.Add(this.Employees);
+			toReturn.Add(this.Staff);
 			toReturn.Add(this.EmployeeTerritories);
 			toReturn.Add(this.Orders);
 			return toReturn;
@@ -336,12 +336,12 @@ namespace Northwind.DAL.EntityClasses
 		{
 			if (SerializationHelper.Optimization != SerializationOptimization.Fast) 
 			{
-				info.AddValue("_employees", ((_employees!=null) && (_employees.Count>0) && !this.MarkedForDeletion)?_employees:null);
+				info.AddValue("_staff", ((_staff!=null) && (_staff.Count>0) && !this.MarkedForDeletion)?_staff:null);
 				info.AddValue("_employeeTerritories", ((_employeeTerritories!=null) && (_employeeTerritories.Count>0) && !this.MarkedForDeletion)?_employeeTerritories:null);
 				info.AddValue("_orders", ((_orders!=null) && (_orders.Count>0) && !this.MarkedForDeletion)?_orders:null);
 				info.AddValue("_customersViaOrders", ((_customersViaOrders!=null) && (_customersViaOrders.Count>0) && !this.MarkedForDeletion)?_customersViaOrders:null);
 				info.AddValue("_territories", ((_territories!=null) && (_territories.Count>0) && !this.MarkedForDeletion)?_territories:null);
-				info.AddValue("_employee", (!this.MarkedForDeletion?_employee:null));
+				info.AddValue("_manager", (!this.MarkedForDeletion?_manager:null));
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START GetObjectInfo
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -359,7 +359,7 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entities of type 'Employee' to this entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoEmployees()
+		public virtual IRelationPredicateBucket GetRelationInfoStaff()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(EmployeeFields.ReportsTo, null, ComparisonOperator.Equal, this.EmployeeId));
@@ -406,7 +406,7 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> Creates a new IRelationPredicateBucket object which contains the predicate expression and relation collection to fetch the related entity of type 'Employee' to this entity.</summary>
 		/// <returns></returns>
-		public virtual IRelationPredicateBucket GetRelationInfoEmployee()
+		public virtual IRelationPredicateBucket GetRelationInfoManager()
 		{
 			IRelationPredicateBucket bucket = new RelationPredicateBucket();
 			bucket.PredicateExpression.Add(new FieldCompareValuePredicate(EmployeeFields.EmployeeId, null, ComparisonOperator.Equal, this.ReportsTo));
@@ -425,7 +425,7 @@ namespace Northwind.DAL.EntityClasses
 		protected override void AddToMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue) 
 		{
 			base.AddToMemberEntityCollectionsQueue(collectionsQueue);
-			collectionsQueue.Enqueue(this._employees);
+			collectionsQueue.Enqueue(this._staff);
 			collectionsQueue.Enqueue(this._employeeTerritories);
 			collectionsQueue.Enqueue(this._orders);
 			collectionsQueue.Enqueue(this._customersViaOrders);
@@ -437,7 +437,7 @@ namespace Northwind.DAL.EntityClasses
 		protected override void GetFromMemberEntityCollectionsQueue(Queue<IEntityCollection2> collectionsQueue)
 		{
 			base.GetFromMemberEntityCollectionsQueue(collectionsQueue);
-			this._employees = (EntityCollection<EmployeeEntity>) collectionsQueue.Dequeue();
+			this._staff = (EntityCollection<EmployeeEntity>) collectionsQueue.Dequeue();
 			this._employeeTerritories = (EntityCollection<EmployeeTerritoryEntity>) collectionsQueue.Dequeue();
 			this._orders = (EntityCollection<OrderEntity>) collectionsQueue.Dequeue();
 			this._customersViaOrders = (EntityCollection<CustomerEntity>) collectionsQueue.Dequeue();
@@ -450,7 +450,7 @@ namespace Northwind.DAL.EntityClasses
 		protected override bool HasPopulatedMemberEntityCollections()
 		{
 			bool toReturn = false;
-			toReturn |=(this._employees != null);
+			toReturn |=(this._staff != null);
 			toReturn |=(this._employeeTerritories != null);
 			toReturn |=(this._orders != null);
 			toReturn |= (this._customersViaOrders != null);
@@ -476,8 +476,8 @@ namespace Northwind.DAL.EntityClasses
 		protected override Dictionary<string, object> GetRelatedData()
 		{
 			Dictionary<string, object> toReturn = new Dictionary<string, object>();
-			toReturn.Add("Employee", _employee);
-			toReturn.Add("Employees", _employees);
+			toReturn.Add("Manager", _manager);
+			toReturn.Add("Staff", _staff);
 			toReturn.Add("EmployeeTerritories", _employeeTerritories);
 			toReturn.Add("Orders", _orders);
 			toReturn.Add("CustomersViaOrders", _customersViaOrders);
@@ -552,31 +552,31 @@ namespace Northwind.DAL.EntityClasses
 		}
 		#endregion
 
-		/// <summary> Removes the sync logic for member _employee</summary>
+		/// <summary> Removes the sync logic for member _manager</summary>
 		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
-		private void DesetupSyncEmployee(bool signalRelatedEntity, bool resetFKFields)
+		private void DesetupSyncManager(bool signalRelatedEntity, bool resetFKFields)
 		{
-			this.PerformDesetupSyncRelatedEntity( _employee, new PropertyChangedEventHandler( OnEmployeePropertyChanged ), "Employee", Northwind.DAL.RelationClasses.StaticEmployeeRelations.EmployeeEntityUsingEmployeeIdReportsToStatic, true, signalRelatedEntity, "Employees", resetFKFields, new int[] { (int)EmployeeFieldIndex.ReportsTo } );
-			_employee = null;
+			this.PerformDesetupSyncRelatedEntity( _manager, new PropertyChangedEventHandler( OnManagerPropertyChanged ), "Manager", Northwind.DAL.RelationClasses.StaticEmployeeRelations.EmployeeEntityUsingEmployeeIdReportsToStatic, true, signalRelatedEntity, "Staff", resetFKFields, new int[] { (int)EmployeeFieldIndex.ReportsTo } );
+			_manager = null;
 		}
 
-		/// <summary> setups the sync logic for member _employee</summary>
+		/// <summary> setups the sync logic for member _manager</summary>
 		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
-		private void SetupSyncEmployee(IEntityCore relatedEntity)
+		private void SetupSyncManager(IEntityCore relatedEntity)
 		{
-			if(_employee!=relatedEntity)
+			if(_manager!=relatedEntity)
 			{
-				DesetupSyncEmployee(true, true);
-				_employee = (EmployeeEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _employee, new PropertyChangedEventHandler( OnEmployeePropertyChanged ), "Employee", Northwind.DAL.RelationClasses.StaticEmployeeRelations.EmployeeEntityUsingEmployeeIdReportsToStatic, true, new string[] {  } );
+				DesetupSyncManager(true, true);
+				_manager = (EmployeeEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _manager, new PropertyChangedEventHandler( OnManagerPropertyChanged ), "Manager", Northwind.DAL.RelationClasses.StaticEmployeeRelations.EmployeeEntityUsingEmployeeIdReportsToStatic, true, new string[] {  } );
 			}
 		}
 		
 		/// <summary>Handles property change events of properties in a related entity.</summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnEmployeePropertyChanged( object sender, PropertyChangedEventArgs e )
+		private void OnManagerPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -618,9 +618,9 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Employee' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathEmployees
+		public static IPrefetchPathElement2 PrefetchPathStaff
 		{
-			get	{ return new PrefetchPathElement2( new EntityCollection<EmployeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployeeEntityFactory))), (IEntityRelation)GetRelationsForField("Employees")[0], (int)Northwind.DAL.EntityType.EmployeeEntity, (int)Northwind.DAL.EntityType.EmployeeEntity, 0, null, null, null, null, "Employees", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
+			get	{ return new PrefetchPathElement2( new EntityCollection<EmployeeEntity>(EntityFactoryCache2.GetEntityFactory(typeof(EmployeeEntityFactory))), (IEntityRelation)GetRelationsForField("Staff")[0], (int)Northwind.DAL.EntityType.EmployeeEntity, (int)Northwind.DAL.EntityType.EmployeeEntity, 0, null, null, null, null, "Staff", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany);	}
 		}
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'EmployeeTerritory' for this entity.</summary>
@@ -665,9 +665,9 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> Creates a new PrefetchPathElement2 object which contains all the information to prefetch the related entities of type 'Employee' for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement2 implementation.</returns>
-		public static IPrefetchPathElement2 PrefetchPathEmployee
+		public static IPrefetchPathElement2 PrefetchPathManager
 		{
-			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(EmployeeEntityFactory))),	(IEntityRelation)GetRelationsForField("Employee")[0], (int)Northwind.DAL.EntityType.EmployeeEntity, (int)Northwind.DAL.EntityType.EmployeeEntity, 0, null, null, null, null, "Employee", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+			get	{ return new PrefetchPathElement2(new EntityCollection(EntityFactoryCache2.GetEntityFactory(typeof(EmployeeEntityFactory))),	(IEntityRelation)GetRelationsForField("Manager")[0], (int)Northwind.DAL.EntityType.EmployeeEntity, (int)Northwind.DAL.EntityType.EmployeeEntity, 0, null, null, null, null, "Manager", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
 
@@ -886,9 +886,9 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'EmployeeEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
 		[TypeContainedAttribute(typeof(EmployeeEntity))]
-		public virtual EntityCollection<EmployeeEntity> Employees
+		public virtual EntityCollection<EmployeeEntity> Staff
 		{
-			get { return GetOrCreateEntityCollection<EmployeeEntity, EmployeeEntityFactory>("Employee", true, false, ref _employees);	}
+			get { return GetOrCreateEntityCollection<EmployeeEntity, EmployeeEntityFactory>("Manager", true, false, ref _staff);	}
 		}
 
 		/// <summary> Gets the EntityCollection with the related entities of type 'EmployeeTerritoryEntity' which are related to this entity via a relation of type '1:n'. If the EntityCollection hasn't been fetched yet, the collection returned will be empty.<br/><br/></summary>
@@ -921,18 +921,18 @@ namespace Northwind.DAL.EntityClasses
 
 		/// <summary> Gets / sets related entity of type 'EmployeeEntity' which has to be set using a fetch action earlier. If no related entity is set for this property, null is returned..<br/><br/></summary>
 		[Browsable(false)]
-		public virtual EmployeeEntity Employee
+		public virtual EmployeeEntity Manager
 		{
-			get	{ return _employee; }
+			get	{ return _manager; }
 			set
 			{
 				if(this.IsDeserializing)
 				{
-					SetupSyncEmployee(value);
+					SetupSyncManager(value);
 				}
 				else
 				{
-					SetSingleRelatedEntityNavigator(value, "Employees", "Employee", _employee, true); 
+					SetSingleRelatedEntityNavigator(value, "Staff", "Manager", _manager, true); 
 				}
 			}
 		}
