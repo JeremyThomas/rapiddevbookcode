@@ -346,6 +346,8 @@ namespace AW.Tests
     {
       var employeeEntities = GetNorthwindLinqMetaData().Employee;
       employeeEntities.FilterByCustomerTypeId("ALFKI").FilterByManagersOrder(1).ToEntityCollection2();
+      employeeEntities.FilterByCustomerTypeIdViaOrders("ALFKI").FilterByOrder(1).ToEntityCollection2();
+      employeeEntities.FilterByOrder(1).FilterByCustomerTypeIdViaOrders("ALFKI").ToEntityCollection2();
     }
   }
 }
