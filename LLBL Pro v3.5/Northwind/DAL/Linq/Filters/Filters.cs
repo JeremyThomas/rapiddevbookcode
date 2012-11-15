@@ -48,11 +48,20 @@ namespace Northwind.DAL.Linq.Filters
       return string.IsNullOrEmpty(productName) ? products : products.Where(r => productName.Equals(r.ProductName));
     }
 
-    public static IQueryable<EmployeeEntity> FilterByCustomerTypeId(this IQueryable<EmployeeEntity> employees, string customerTypeId)
+    public static IQueryable<EmployeeEntity> FilterByCustomerTypeIdViaOrders(this IQueryable<EmployeeEntity> employees, string customerTypeId)
     {
       return from e in employees
              from c in e.CustomersViaOrders
              from ccd in c.CustomerCustomerDemos
+             where ccd.CustomerTypeId == customerTypeId
+             select e;
+    }
+
+    public static IQueryable<EmployeeEntity> FilterByCustomerTypeId(this IQueryable<EmployeeEntity> employees, string customerTypeId)
+    {
+      return from e in employees
+             from o in e.Orders
+             from ccd in o.Customer.CustomerCustomerDemos
              where ccd.CustomerTypeId == customerTypeId
              select e;
     }
@@ -62,6 +71,14 @@ namespace Northwind.DAL.Linq.Filters
       return from e in employees
              from mo in e.Manager.Orders
              where mo.OrderId == orderId
+             select e;
+    }
+
+    public static IQueryable<EmployeeEntity> FilterByOrder(this IQueryable<EmployeeEntity> employees, int orderId)
+    {
+      return from e in employees
+             from o in e.Orders
+             where o.OrderId == orderId
              select e;
     }
 
