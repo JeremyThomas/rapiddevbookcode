@@ -136,6 +136,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 				var factoryAdapterAssembly = LoadAssembly(factoryAssemblyPath);
 				if (factoryAdapterAssembly == null)
 					throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
+        if (string.IsNullOrEmpty(factoryTypeName))
+          throw new ApplicationException(String.Format("Adapter type was not specfied!"));
 				var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
 				if (factoryType == null)
 					throw new ApplicationException(String.Format("Adapter type: {0} could not be loaded from: {1}!", factoryTypeName, factoryAssemblyPath));
