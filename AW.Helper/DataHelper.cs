@@ -208,10 +208,14 @@ namespace AW.Helper
 						var initialCatalog = (string) oleConnectionStringBuilder[DBPropInitialCatalog];
 						if (!String.IsNullOrEmpty(initialCatalog))
 							csb.InitialCatalog = initialCatalog;
-						var attachDBFilename = (string) oleConnectionStringBuilder[DBPropinitialFileName];
-						if (!String.IsNullOrEmpty(attachDBFilename))
-							csb.AttachDBFilename = attachDBFilename;
-						if ((string) oleConnectionStringBuilder[DBPropIntegratedSecurity] == "SSPI")
+					  if (oleConnectionStringBuilder.ContainsKey(DBPropinitialFileName))
+					  {
+					    var attachDBFilename = (string) oleConnectionStringBuilder[DBPropinitialFileName];
+					    if (!String.IsNullOrEmpty(attachDBFilename))
+					      csb.AttachDBFilename = attachDBFilename;
+					  }
+            var integratedSecurity = (string)oleConnectionStringBuilder[DBPropIntegratedSecurity];
+            if (integratedSecurity.Equals("SSPI", StringComparison.OrdinalIgnoreCase) || integratedSecurity.Equals(Boolean.TrueString, StringComparison.OrdinalIgnoreCase))
 							csb.IntegratedSecurity = true;
 						else
 						{

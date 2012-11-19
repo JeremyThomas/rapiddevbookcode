@@ -86,21 +86,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
     //  return base.AreRepositoriesEquivalent(c1, c2);
     //}
 
-    public override IEnumerable<string> GetAssembliesToAdd()
+    public override IEnumerable<string> GetAssembliesToAdd(IConnectionInfo cxInfo)
     {
       var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable() ?? GeneralHelper.GetStringCollection(
         "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalAssemblies");
       return globalAdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(globalAdditionalAssemblies);
     }
 
-    public override IEnumerable<string> GetNamespacesToAdd()
+    /// <summary>
+    /// Gets the namespaces to add.
+    /// </summary>
+    /// <param name="cxInfo">The cx info.</param>
+    /// <returns></returns>
+    public override IEnumerable<string> GetNamespacesToAdd(IConnectionInfo cxInfo)
     {
       var globalAdditionalNamespaces = Settings.Default.AdditionalNamespaces.AsEnumerable() ?? GeneralHelper.GetStringCollection(
         "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalNamespaces");
       return globalAdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(globalAdditionalNamespaces);
     }
 
-    public override IEnumerable<string> GetNamespacesToRemove()
+    public override IEnumerable<string> GetNamespacesToRemove(IConnectionInfo cxInfo)
     {
       return new[] {"System.Data.Linq"};
     }
