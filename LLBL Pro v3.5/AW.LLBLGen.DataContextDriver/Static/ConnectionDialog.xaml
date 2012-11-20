@@ -640,16 +640,15 @@
                                   NotifyOnValidationError=true}" />
         </Grid>
       </TabItem>
-      <TabItem Header="Additional Assemblies and Namespaces" >
-        <WrapPanel d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type static:ConnectionDialog}}"
-      		DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}"
-      		Orientation="Horizontal">
-          <StackPanel>
+      <TabItem Header="Additional Assemblies and Namespaces" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type static:ConnectionDialog}}"
+               DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}">
+        <StackPanel d:DesignHeight="100">
           <wpfToolkit:DataGrid x:Name="AdditionalAssembliesDataGridCnxt"
       			MinWidth="200"
+            d:DesignHeight="100"
       			AutoGenerateColumns="False"
       			ItemsSource="{Binding AdditionalAssembliesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-      			ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTip}">
+      			ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTipCnxt}">
             <wpfToolkit:DataGrid.Columns>
               <wpfToolkit:DataGridTextColumn Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
                 <wpfToolkit:DataGridTextColumn.Header>
@@ -664,12 +663,13 @@
       			MinWidth="200"
       			AutoGenerateColumns="False"
       			ItemsSource="{Binding AdditionalNamespacesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-      			ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTip}">
+      			ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTipCnxt}">
             <wpfToolkit:DataGrid.Columns>
               <wpfToolkit:DataGridTextColumn Binding="{Binding Value}" Header="Additional Namespaces" />
             </wpfToolkit:DataGrid.Columns>
           </wpfToolkit:DataGrid>
-          </StackPanel>
+          <WrapPanel Orientation="Horizontal">
+
           <Button x:Name="buttonClearAdditionalCnxt"
       			Margin="5,0,0,0"
       			VerticalAlignment="Center"
@@ -692,6 +692,7 @@
       			Content="Add ORM Profiler"
       			ToolTip="Add ORM Profiler assemblies" />
         </WrapPanel>
+        </StackPanel>
       </TabItem>
       <TabItem Name="DriverTab"
                DataContext="{StaticResource settingsViewSource}"
