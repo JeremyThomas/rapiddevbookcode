@@ -65,17 +65,22 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public const string TitleChooseExtraAssembly = "Choose extra assembly";
     public const string TitleChooseFactoryMethod = "Choose factory method";
 
+    public static readonly string AdditionalAssembliesToolTipF = "The {0} adds these assemblies to the ones LINQPad provides"
+                                                            + Environment.NewLine +
+                                                            LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
+                                                            + Environment.NewLine +
+                                                            "If you want any additional assemblies add them in here, with or with out a path.";
 
-    public static readonly string AdditionalAssembliesToolTip = "The driver adds these assemblies to the ones LINQPad provides"
-                                                                + Environment.NewLine +
-                                                                LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
-                                                                + Environment.NewLine +
-                                                                "If you want any additional assemblies add them in here, with or with out a path.";
+    public static readonly string AdditionalAssembliesToolTip = string.Format(AdditionalAssembliesToolTipF, "driver");
+    public static readonly string AdditionalAssembliesToolTipCnxt = string.Format(AdditionalAssembliesToolTipF, "connection");
 
-    public static readonly string AdditionalNamespacesToolTip = "The driver adds these namespaces to the ones LINQPad provides"
+    public static readonly string AdditionalNamespacesToolTipF = "The {0} adds these namespaces to the ones LINQPad provides"
                                                                 + Environment.NewLine +
                                                                 LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
                                                                 + "If you want any additional namespaces add them in here.";
+
+    public static readonly string AdditionalNamespacesToolTip = string.Format(AdditionalNamespacesToolTipF, "driver");
+    public static readonly string AdditionalNamespacesToolTipCnxt = string.Format(AdditionalNamespacesToolTipF, "connection");
 
     private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[]
       {
@@ -806,8 +811,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
             if (result != null)
             {
               CxInfo.DriverData.SetElementValue(targetName, result);
+              //GetAdapterFactoryMethod(domainIsolator);
               domainIsolator.Domain.SetData("CxInfo", CxInfo);
               domainIsolator.Domain.DoCallBack(GetAdapterFactoryMethod);
+              var factoryMethodName = domainIsolator.Domain.GetData(ElementNameFactoryMethod);
+              CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, factoryMethodName);
             }
           }
         }
@@ -865,24 +873,27 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         return Assembly.LoadFrom(assemPath);
       }
-    }
-
-    private void ChooseAdapterFactoryMethod(object sender, RoutedEventArgs e)
-    {
-      using (var domainIsolator = CreateDomainIsolator())
-      {
-        domainIsolator.Domain.SetData("CxInfo", CxInfo);
-        domainIsolator.Domain.DoCallBack(GetAdapterFactoryMethod);
-        var factoryMethodName = domainIsolator.Domain.GetData(ElementNameFactoryMethod);
-        CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, factoryMethodName);
-      }
-    }
-
+    }    
+    
     private DomainIsolator CreateDomainIsolator()
     {
       var domainIsolator = new DomainIsolator("Inspect Custom Assembly");
       domainIsolator.AddProbePaths(CxInfo.CustomTypeInfo.CustomAssemblyPath, GetDriverDataValue(CxInfo, ElementNameFactoryAssembly), GetDriverDataValue(CxInfo, ElementNameAdapterAssembly));
       return domainIsolator;
+    }
+
+    private void ChooseAdapterFactoryMethod(object sender, RoutedEventArgs e)
+    {
+      using (var domainIsolator = CreateDomainIsolator())
+        GetAdapterFactoryMethod(domainIsolator);
+    }
+
+    private void GetAdapterFactoryMethod(DomainIsolator domainIsolator)
+    {
+      domainIsolator.Domain.SetData("CxInfo", CxInfo);
+      domainIsolator.Domain.DoCallBack(GetAdapterFactoryMethod);
+      var factoryMethodName = domainIsolator.Domain.GetData(ElementNameFactoryMethod);
+      CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, factoryMethodName);
     }
 
     private static void GetAdapterFactoryMethod()
