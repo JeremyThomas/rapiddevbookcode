@@ -89,8 +89,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public override IEnumerable<string> GetAssembliesToAdd(IConnectionInfo cxInfo)
     {
       var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable() ?? GeneralHelper.GetStringCollection(
-        "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalAssemblies");
-      return globalAdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(globalAdditionalAssemblies);
+        "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalAssemblies") ?? Enumerable.Empty<string>();
+      var cnxtAdditionalAssemblies = ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameAdditionalAssemblies);  
+      return AdditionalAssemblies.Union(globalAdditionalAssemblies).Union(cnxtAdditionalAssemblies);
     }
 
     /// <summary>
@@ -100,9 +101,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
     /// <returns></returns>
     public override IEnumerable<string> GetNamespacesToAdd(IConnectionInfo cxInfo)
     {
-      var globalAdditionalNamespaces = Settings.Default.AdditionalNamespaces.AsEnumerable() ?? GeneralHelper.GetStringCollection(
-        "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalNamespaces");
-      return globalAdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(globalAdditionalNamespaces);
+      var globalAdditionalNamespaces = (Settings.Default.AdditionalNamespaces.AsEnumerable() ?? GeneralHelper.GetStringCollection(
+        "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalNamespaces")) ?? Enumerable.Empty<string>();
+
+      var cnxtAdditionalNamespaces = ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameAdditionalNamespaces);     
+      return AdditionalNamespaces.Union(globalAdditionalNamespaces).Union(cnxtAdditionalNamespaces);
     }
 
     public override IEnumerable<string> GetNamespacesToRemove(IConnectionInfo cxInfo)
