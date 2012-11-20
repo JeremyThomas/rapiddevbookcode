@@ -47,7 +47,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
     /// <summary>
     ///   AdditionalAssemblies
     /// </summary>
-    public const string ElementNameAdditionalassemblies = "AdditionalAssemblies";
+    public const string ElementNameAdditionalAssemblies = "AdditionalAssemblies";
+
+    public const string ElementNameAdditionalNamespaces = "AdditionalNamespaces";
 
     public const string ElementNameConnectionType = "ConnectionType";
     public const string ElementNameFactoryMethod = "FactoryMethod";
@@ -170,6 +172,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
     }
 
+    public ObservableCollection<ValueTypeWrapper<string>> AdditionalNamespacesCnxt { get; set; }
+
+    public ObservableCollection<ValueTypeWrapper<string>> AdditionalAssembliesCnxt
+    {
+      get;
+      set;
+    }
+
     #endregion
 
     #region General
@@ -186,10 +196,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
       try
       {
         DbProviderFactoryNames = (new[] {""}).Union(DbProviderFactories.GetFactoryClasses().Rows.OfType<DataRow>().Select(r => r["InvariantName"])).
-          Cast<string>().ToList();
+                                              Cast<string>().ToList();
 
-        AdditionalNamespaces =
-          new ObservableCollection<ValueTypeWrapper<string>>(Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding());
+        AdditionalNamespaces = new ObservableCollection<ValueTypeWrapper<string>>(Settings.Default.AdditionalNamespaces.CreateStringWrapperForBinding());
         if (isNewConnection)
         {
           CreateDriverDataElements(cxInfo);
@@ -207,6 +216,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
           if (HowToDisplayInGrid == null)
             HowToDisplayInGrid = DisplayInGrid.AllProperties;
         }
+        AdditionalNamespacesCnxt = new ObservableCollection<ValueTypeWrapper<string>>(GetDriverDataStringValues(cxInfo, ElementNameAdditionalNamespaces).CreateStringWrapperForBinding());
+        AdditionalAssembliesCnxt = new ObservableCollection<ValueTypeWrapper<string>>(GetDriverDataStringValues(cxInfo, ElementNameAdditionalAssemblies).CreateStringWrapperForBinding());
       }
       catch (Exception e)
       {
@@ -227,6 +238,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameConnectionType, Settings.Default.DefaultConnectionType.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameUseFields, true.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameDisplayInGrid, DisplayInGrid.ExcludeEntityBaseProperties.ToString());
+      CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies, null);
+      CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces, null);
     }
 
     public static void UpGradeDriverDataElements(IConnectionInfo cxInfo)
@@ -253,6 +266,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameUseFields, true.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameDisplayInGrid, DisplayInGrid.ExcludeEntityBaseProperties.ToString());
       cxInfo.CustomTypeInfo.CustomMetadataPath = null;
+      CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies, null);
+      CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces, null);
     }
 
     private static void CreateElementIfNeeded(IConnectionInfo cxInfo, string elementName, string defaultValue)
@@ -283,6 +298,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       var xElement = cxInfo.DriverData.Element(elementName);
       return xElement != null ? xElement.Value : null;
+    }
+
+    internal static IEnumerable<string> GetDriverDataStringValues(IConnectionInfo cxInfo, string elementName)
+    {
+      var xElement = cxInfo.DriverData.Element(elementName);
+      return xElement != null ? xElement.Elements().Select(xe => xe.Value) : Enumerable.Empty<string>();
     }
 
     public string GetDriverDataValue(string elementName)
@@ -414,6 +435,21 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         Settings.Default.AdditionalNamespaces = new StringCollection();
         Settings.Default.AdditionalNamespaces.AddRange(AdditionalNamespaces.UnWrap().ToArray());
+      }
+      var additionalAssembliesElement = CxInfo.DriverData.Element(ElementNameAdditionalAssemblies);
+      if (additionalAssembliesElement != null)
+      {
+        additionalAssembliesElement.RemoveAll();
+        foreach (var assembly in AdditionalAssembliesCnxt.UnWrap().Distinct())
+          additionalAssembliesElement.Add(new XElement("Assembly", assembly));
+      }
+
+      var additionalNamespacesElement = CxInfo.DriverData.Element(ElementNameAdditionalNamespaces);
+      if (additionalNamespacesElement != null)
+      {
+        additionalNamespacesElement.RemoveAll();
+        foreach (var assembly in AdditionalNamespacesCnxt.UnWrap().Distinct())
+          additionalNamespacesElement.Add(new XElement("Namespace", assembly));
       }
 
       try
@@ -931,6 +967,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private void ChooseAssemblies(object sender, RoutedEventArgs e)
     {
+      ChooseAdditionalAssemblies(AdditionalAssemblies);
+    }
+
+    private void ChooseAssembliesCnxt(object sender, RoutedEventArgs e)
+    {
+      ChooseAdditionalAssemblies(AdditionalAssembliesCnxt);
+    }
+
+    private static void ChooseAdditionalAssemblies(ICollection<ValueTypeWrapper<string>> additionalAssemblies)
+    {
       var dialog = new OpenFileDialog
         {
           Title = TitleChooseExtraAssembly,
@@ -940,51 +986,74 @@ namespace AW.LLBLGen.DataContextDriver.Static
         };
 
       if (dialog.ShowDialog() == true)
+      {
         foreach (var fileName in dialog.FileNames
-          .Where(fileName => !LLBLGenStaticDriver.AdditionalAssemblies.Contains(Path.GetFileName(fileName))).
-          CreateStringWrapperForBinding()
-          .Where(fileName => !AdditionalAssemblies.Contains(fileName))
+                                       .Where(fileName => !LLBLGenStaticDriver.AdditionalAssemblies.Contains(Path.GetFileName(fileName))).
+                                        CreateStringWrapperForBinding()
+                                       .Where(fileName => !additionalAssemblies.Contains(fileName))
           )
-        {
-          AdditionalAssemblies.Add(fileName);
-        }
+          additionalAssemblies.Add(fileName);
+      }
     }
 
     private void AddQuerySpec(object sender, RoutedEventArgs e)
     {
-      ValueTypeWrapper<string>.Add(AdditionalAssemblies, "SD.LLBLGen.Pro.QuerySpec.dll");
-      ValueTypeWrapper<string>.Add(AdditionalNamespaces, "SD.LLBLGen.Pro.QuerySpec",
+      AddQuerySpec(AdditionalAssemblies, AdditionalNamespaces);
+    }
+
+    private void AddQuerySpecCnxt(object sender, RoutedEventArgs e)
+    {
+      AddQuerySpec(AdditionalAssembliesCnxt, AdditionalNamespacesCnxt);
+    }
+
+    private static void AddQuerySpec(ICollection<ValueTypeWrapper<string>> additionalAssemblies, ICollection<ValueTypeWrapper<string>> additionalNamespaces)
+    {
+      ValueTypeWrapper<string>.Add(additionalAssemblies, "SD.LLBLGen.Pro.QuerySpec.dll");
+      ValueTypeWrapper<string>.Add(additionalNamespaces, "SD.LLBLGen.Pro.QuerySpec",
                                    "SD.LLBLGen.Pro.QuerySpec.SelfServicing", "SD.LLBLGen.Pro.QuerySpec.Adapter");
     }
 
     private void AddORMProfiler(object sender, RoutedEventArgs e)
+    {
+      AddORMProfiler(AdditionalAssemblies);
+    }
+
+    private void AddORMProfilerCnxt(object sender, RoutedEventArgs e)
+    {
+      AddORMProfiler(AdditionalAssembliesCnxt);
+    }
+
+    private static void AddORMProfiler(ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies)
     {
       var ormProfilerPathAssemblies = new[] {ProfilerHelper.OrmProfilerAssemblyString + ".dll", "SD.Tools.OrmProfiler.Shared.dll", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
       var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
       var ormProfilerPath = Path.Combine(folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath);
       if (Directory.Exists(ormProfilerPath))
       {
-        if (AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies))
+        if (AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies, additionalAssemblies))
           return;
       }
       var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
       if (programFilesPathx86 != null && !programFilesPathx86.Equals(folderPath))
       {
         ormProfilerPath = Path.Combine(programFilesPathx86, ProfilerHelper.SolutionsDesignOrmProfilerPath);
-        if (Directory.Exists(ormProfilerPath) && AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies))
+        if (Directory.Exists(ormProfilerPath) && AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies, additionalAssemblies))
           return;
       }
-      ValueTypeWrapper<string>.Add(AdditionalAssemblies, ormProfilerPathAssemblies);
+
+      ValueTypeWrapper<string>.Add(additionalAssemblies, ormProfilerPathAssemblies);
     }
 
-    private bool AddormProfilerPathAssemblies(string folderPath, IEnumerable<string> ormProfilerPathAssemblies)
+    private static bool AddormProfilerPathAssemblies(string folderPath, IEnumerable<string> ormProfilerPathAssemblies, ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies)
     {
       var result = false;
       foreach (var ormProfilerPathAssemblyPath in ormProfilerPathAssemblies.Select(ormProfilerPathAssembly => Path.Combine(folderPath, ormProfilerPathAssembly)))
       {
         result = File.Exists(ormProfilerPathAssemblyPath);
         if (result)
-          ValueTypeWrapper<string>.Add(AdditionalAssemblies, ormProfilerPathAssemblyPath);
+        {
+          ValueTypeWrapper<string>.Add(additionalAssemblies, ormProfilerPathAssemblyPath);
+        }
         else
           return false;
       }
@@ -1024,6 +1093,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       AdditionalNamespaces.Clear();
       AdditionalAssemblies.Clear();
+    }
+
+    private void buttonClearAdditionalCnxtClick(object sender, RoutedEventArgs e)
+    {
+      AdditionalNamespacesCnxt.Clear();
+      AdditionalAssembliesCnxt.Clear();
     }
 
     private void txtAssemblyPath_TextChanged(object sender, TextChangedEventArgs e)

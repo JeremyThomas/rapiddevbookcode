@@ -2,23 +2,20 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:DataContextDriver="clr-namespace:AW.LLBLGen.DataContextDriver"
-        xmlns:LINQPad="LINQPad.Extensibility.DataContext"
+        xmlns:dataContextDriver="clr-namespace:AW.LLBLGen.DataContextDriver"
         xmlns:local="clr-namespace:AW.Winforms.Helpers.WPF;assembly=AW.Winforms.Helpers"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:my="clr-namespace:LINQPad.Extensibility.DataContext;assembly=LINQPad"
-        xmlns:Properties="clr-namespace:AW.LLBLGen.DataContextDriver.Properties"
-        xmlns:Static="clr-namespace:AW.LLBLGen.DataContextDriver.Static"
-        xmlns:System="clr-namespace:System;assembly=mscorlib"
-        xmlns:WpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
-        Title="{x:Static DataContextDriver:Constants.Name}"
+        xmlns:properties="clr-namespace:AW.LLBLGen.DataContextDriver.Properties"
+        xmlns:static="clr-namespace:AW.LLBLGen.DataContextDriver.Static"
+        xmlns:wpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
+        Title="{x:Static dataContextDriver:Constants.Name}"
         MinWidth="300"
         MinHeight="300"
         Background="{x:Static SystemColors.ControlBrush}"
         Closing="Window_Closing"
 				Closed="ConnectionDialog_OnClosed"
         d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
-                                         Type=Static:ConnectionDialog}"
+                                         Type=static:ConnectionDialog}"
         d:DesignHeight="580"
         d:DesignWidth="750"
         Loaded="Window_Loaded"
@@ -26,12 +23,12 @@
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
   <Window.Resources>
-    <Static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterToVisibility" LLBLConnectionType="Adapter" />
-    <Static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterFactoryToVisibility" LLBLConnectionType="AdapterFactory" />
-    <Static:LLBLConnectionTypeToVisibilityConverter x:Key="NotSelfServicingToVisibility"
+    <static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterToVisibility" LLBLConnectionType="Adapter" />
+    <static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterFactoryToVisibility" LLBLConnectionType="AdapterFactory" />
+    <static:LLBLConnectionTypeToVisibilityConverter x:Key="NotSelfServicingToVisibility"
                                                     Invert="True"
                                                     LLBLConnectionType="SelfServicing" />
-    <CollectionViewSource x:Key="settingsViewSource" d:DesignSource="{d:DesignInstance Properties:Settings, CreateList=True}" />
+    <CollectionViewSource x:Key="settingsViewSource" d:DesignSource="{d:DesignInstance properties:Settings, CreateList=True}" />
 
     <local:NullToBoolConverter x:Key="cnvNullToBool" />
     <local:BoolToVisibilityConverter x:Key="cnvBoolToVisibilityConverter"
@@ -47,7 +44,7 @@
           <DockPanel>
             <Label DockPanel.Dock="Right"
                    Padding="1"
-                   ToolTip="{x:Static Static:ConnectionDialog.TitleChooseLLBLEntityAssembly}">
+                   ToolTip="{x:Static static:ConnectionDialog.TitleChooseLLBLEntityAssembly}">
               <Hyperlink Click="BrowseAssembly">Browse...</Hyperlink>
             </Label>
             <Label Name="lblAssemblyPath"
@@ -68,7 +65,7 @@
           <DockPanel Name="DockPanelTypeName" Visibility="{Binding Path=CustomTypeNameVisibility}">
             <Label DockPanel.Dock="Right"
                    Padding="1"
-                   ToolTip="{x:Static Static:ConnectionDialog.TitleChooseCustomType}">
+                   ToolTip="{x:Static static:ConnectionDialog.TitleChooseCustomType}">
               <Hyperlink Click="ChooseType">Choose...</Hyperlink>
             </Label>
             <Label Name="lblLinqMetaDataType"
@@ -90,7 +87,7 @@
           <DockPanel>
             <Label DockPanel.Dock="Right"
                    Padding="1"
-                   ToolTip="{x:Static Static:ConnectionDialog.TitleChooseApplicationConfigFile}">
+                   ToolTip="{x:Static static:ConnectionDialog.TitleChooseApplicationConfigFile}">
               <Hyperlink Click="BrowseAppConfig">Browse...</Hyperlink>
             </Label>
             <Label Name="lblAppConfigPath"
@@ -155,12 +152,12 @@
                            Content="Adapter"
                            IsChecked="{Binding Path=LLBLConnectionType,
                                                Converter={StaticResource EnumToBooleanConverter},
-                                               ConverterParameter={x:Static Static:LLBLConnectionType.Adapter}}" />
+                                               ConverterParameter={x:Static static:LLBLConnectionType.Adapter}}" />
               <RadioButton Margin="0,0,5,0"
                            Content="Adapter Factory"
                            IsChecked="{Binding Path=LLBLConnectionType,
                                                Converter={StaticResource EnumToBooleanConverter},
-                                               ConverterParameter={x:Static Static:LLBLConnectionType.AdapterFactory}}" />
+                                               ConverterParameter={x:Static static:LLBLConnectionType.AdapterFactory}}" />
             </StackPanel>
           </GroupBox>
 
@@ -168,10 +165,10 @@
             <DockPanel>
               <Label DockPanel.Dock="Right"
                      Padding="1"
-                     ToolTip="{x:Static Static:ConnectionDialog.TitleChooseDataAccessAdapterAssembly}">
+                     ToolTip="{x:Static static:ConnectionDialog.TitleChooseDataAccessAdapterAssembly}">
                 <Hyperlink Click="BrowseDataAccessAdapterAssembly"
-                           ToolTip="{x:Static Static:ConnectionDialog.TitleChooseFactoryAssembly}"
-                           TargetName="{x:Static Static:ConnectionDialog.ElementNameFactoryAssembly}">
+                           ToolTip="{x:Static static:ConnectionDialog.TitleChooseFactoryAssembly}"
+                           TargetName="{x:Static static:ConnectionDialog.ElementNameFactoryAssembly}">
                   Browse...
                 </Hyperlink>
               </Label>
@@ -209,7 +206,7 @@
               <Label Name="lblChooseAdapterFactoryMethod"
                      DockPanel.Dock="Right"
                      Padding="1"
-                     ToolTip="{x:Static Static:ConnectionDialog.TitleChooseFactoryMethod}">
+                     ToolTip="{x:Static static:ConnectionDialog.TitleChooseFactoryMethod}">
                 <Hyperlink Click="ChooseAdapterFactoryMethod">Choose...</Hyperlink>
               </Label>
               <Label Name="lblAdapterFactoryMethod"
@@ -226,8 +223,8 @@
             <DockPanel>
               <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Click="BrowseDataAccessAdapterAssembly"
-                           ToolTip="{x:Static Static:ConnectionDialog.TitleChooseDataAccessAdapterAssembly}"
-                           TargetName="{x:Static Static:ConnectionDialog.ElementNameAdapterAssembly}">
+                           ToolTip="{x:Static static:ConnectionDialog.TitleChooseDataAccessAdapterAssembly}"
+                           TargetName="{x:Static static:ConnectionDialog.ElementNameAdapterAssembly}">
                   Browse...
                 </Hyperlink>
               </Label>
@@ -247,7 +244,7 @@
                 <Hyperlink Click="ChooseAdapterOrFactoryClass"
                            ToolTip="{Binding RelativeSource={RelativeSource Self},
                                              Path=TargetName}"
-                           TargetName="{x:Static Static:ConnectionDialog.ElementNameAdaptertype}">
+                           TargetName="{x:Static static:ConnectionDialog.ElementNameAdaptertype}">
                   Choose...
                 </Hyperlink>
               </Label>
@@ -284,7 +281,7 @@
             <ComboBox Name="ComboBoxDisplayInGrid"
                       Width="194"
                       DisplayMemberPath="Description"
-                      ItemsSource="{Binding Source={local:Enumeration {x:Type DataContextDriver:DisplayInGrid}}}"
+                      ItemsSource="{Binding Source={local:Enumeration {x:Type dataContextDriver:DisplayInGrid}}}"
                       SelectedValue="{Binding Path=CxInfo.DriverData.Element[DisplayInGrid].Value, Mode=TwoWay}"
                       SelectedValuePath="Value"
                       ToolTip="Options to use when a query is run with 'Results to Data Grids'" />
@@ -531,7 +528,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
-                                                     Type=Static:ConnectionDialog}"
+                                                     Type=static:ConnectionDialog}"
                     ItemsSource="{Binding Path=DbProviderFactoryNames,
                                           RelativeSource={RelativeSource Mode=FindAncestor,
                                                                          AncestorType={x:Type Window}}}"
@@ -642,6 +639,59 @@
                                   ValidatesOnExceptions=true,
                                   NotifyOnValidationError=true}" />
         </Grid>
+      </TabItem>
+      <TabItem Header="Additional Assemblies and Namespaces" >
+        <WrapPanel d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type static:ConnectionDialog}}"
+      		DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}"
+      		Orientation="Horizontal">
+          <StackPanel>
+          <wpfToolkit:DataGrid x:Name="AdditionalAssembliesDataGridCnxt"
+      			MinWidth="200"
+      			AutoGenerateColumns="False"
+      			ItemsSource="{Binding AdditionalAssembliesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+      			ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTip}">
+            <wpfToolkit:DataGrid.Columns>
+              <wpfToolkit:DataGridTextColumn Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
+                <wpfToolkit:DataGridTextColumn.Header>
+                  <Hyperlink Click="ChooseAssembliesCnxt">
+                    <Run Text="Additional Assemblies"/>
+                  </Hyperlink>
+                </wpfToolkit:DataGridTextColumn.Header>
+              </wpfToolkit:DataGridTextColumn>
+            </wpfToolkit:DataGrid.Columns>
+          </wpfToolkit:DataGrid>
+          <wpfToolkit:DataGrid x:Name="AdditionalNamespacesDataGridCnxt"
+      			MinWidth="200"
+      			AutoGenerateColumns="False"
+      			ItemsSource="{Binding AdditionalNamespacesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+      			ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTip}">
+            <wpfToolkit:DataGrid.Columns>
+              <wpfToolkit:DataGridTextColumn Binding="{Binding Value}" Header="Additional Namespaces" />
+            </wpfToolkit:DataGrid.Columns>
+          </wpfToolkit:DataGrid>
+          </StackPanel>
+          <Button x:Name="buttonClearAdditionalCnxt"
+      			Margin="5,0,0,0"
+      			VerticalAlignment="Center"
+      			Click="buttonClearAdditionalCnxtClick"
+      			Content="Clear additional"
+      			ToolTip="Clear additional Assemblies and Namespaces" />
+          <Button Margin="5,0,0,0"
+      			VerticalAlignment="Center"
+      			Click="ChooseAssembliesCnxt"
+      			Content="Add Assemblies..."
+      			ToolTip="Browse for Additional Assemblies" />
+          <Button Margin="5,0,0,0"
+      			VerticalAlignment="Center"
+      			Click="AddQuerySpecCnxt"
+      			Content="Add QuerySpec"
+      			ToolTip="Add QuerySpec assembly and namespaces" />
+          <Button Margin="5,0,0,0"
+      			VerticalAlignment="Center"
+      			Click="AddORMProfilerCnxt"
+      			Content="Add ORM Profiler"
+      			ToolTip="Add ORM Profiler assemblies" />
+        </WrapPanel>
       </TabItem>
       <TabItem Name="DriverTab"
                DataContext="{StaticResource settingsViewSource}"
@@ -998,40 +1048,40 @@
 
 
           <WrapPanel d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True,
-                                                      Type=Static:ConnectionDialog}"
+                                                      Type=static:ConnectionDialog}"
                      DataContext="{Binding RelativeSource={RelativeSource FindAncestor,
                                                                           AncestorType=Window,
                                                                           AncestorLevel=1},
                                            Path=DataContext}"
                      Orientation="Horizontal">
-            <WpfToolkit:DataGrid Name="AdditionalAssembliesDataGrid"
+            <wpfToolkit:DataGrid Name="AdditionalAssembliesDataGrid"
                                  MinWidth="100"
                                  AutoGenerateColumns="False"
                                  d:DesignHeight="100"
                                  ItemsSource="{Binding Path=AdditionalAssemblies,
                                                        ValidatesOnExceptions=true,
                                                        NotifyOnValidationError=true}"
-                                 ToolTip="{x:Static Static:ConnectionDialog.AdditionalAssembliesToolTip}">
-              <WpfToolkit:DataGrid.Columns>
-                <WpfToolkit:DataGridTextColumn Binding="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}">
-                  <WpfToolkit:DataGridTextColumn.Header>
+                                 ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTip}">
+              <wpfToolkit:DataGrid.Columns>
+                <wpfToolkit:DataGridTextColumn Binding="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}">
+                  <wpfToolkit:DataGridTextColumn.Header>
                     <Hyperlink Click="ChooseAssemblies">Additional Assemblies</Hyperlink>
-                  </WpfToolkit:DataGridTextColumn.Header>
-                </WpfToolkit:DataGridTextColumn>
-              </WpfToolkit:DataGrid.Columns>
-            </WpfToolkit:DataGrid>
-            <WpfToolkit:DataGrid Name="AdditionalNamespacesDataGrid"
+                  </wpfToolkit:DataGridTextColumn.Header>
+                </wpfToolkit:DataGridTextColumn>
+              </wpfToolkit:DataGrid.Columns>
+            </wpfToolkit:DataGrid>
+            <wpfToolkit:DataGrid Name="AdditionalNamespacesDataGrid"
                                  MinWidth="100"
                                  AutoGenerateColumns="False"
                                  d:DesignHeight="100"
                                  ItemsSource="{Binding Path=AdditionalNamespaces,
                                                        ValidatesOnExceptions=true,
                                                        NotifyOnValidationError=true}"
-                                 ToolTip="{x:Static Static:ConnectionDialog.AdditionalNamespacesToolTip}">
-              <WpfToolkit:DataGrid.Columns>
-                <WpfToolkit:DataGridTextColumn Binding="{Binding Path=Value}" Header="Additional Namespaces" />
-              </WpfToolkit:DataGrid.Columns>
-            </WpfToolkit:DataGrid>
+                                 ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTip}">
+              <wpfToolkit:DataGrid.Columns>
+                <wpfToolkit:DataGridTextColumn Binding="{Binding Path=Value}" Header="Additional Namespaces" />
+              </wpfToolkit:DataGrid.Columns>
+            </wpfToolkit:DataGrid>
 
             <Button Name="buttonClearAdditional"
                     Margin="5,0,0,0"

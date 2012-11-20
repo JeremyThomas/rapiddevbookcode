@@ -33,9 +33,9 @@ namespace AW.Helper
 		/// </summary>
 		public const string OrmProfilerAppSettingsName = "ORMProfiler";
 		/// <summary>
-		/// Solutions Design\ORM Profiler v1.0
+		/// Solutions Design\ORM Profiler v1.1
 		/// </summary>
-		public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.0";
+		public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.1";
 
 		/// <summary>
 		/// 	Initializes the ORM profiler if enabled with the AppSetting ORM Profiler in the config file and the assemblies: 
