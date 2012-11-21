@@ -980,6 +980,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     }
 
     //http://www.codeproject.com/Tips/246855/An-alternate-implementation-to-Paste-data-into-the
+    //http://blogs.msdn.com/b/vinsibal/archive/2008/09/25/pasting-content-to-new-rows-on-the-wpf-datagrid.aspx
     private static void OnExecutedPaste(object sender, ExecutedRoutedEventArgs e)
     {
       var dataGrid = ((DataGrid) sender);
@@ -993,36 +994,51 @@ namespace AW.LLBLGen.DataContextDriver.Static
                                                                            cell.Substring(0, cell.Length - 1) : cell).ToArray())
                                                       .Where(a => a.Any(b => b.Length > 0)).ToArray();
 
-      // the index of the first DataGridRow
-      var startRow = dataGrid.ItemContainerGenerator.IndexFromContainer(
-        dataGrid.ItemContainerGenerator.ContainerFromItem
-          (dataGrid.CurrentCell.Item));
+      var hasAddedNewRow = false;
 
-      // the destination rows 
-      //  (from startRow to either end or length of clipboard rows)
-      var rows =
-        Enumerable.Range(
-          startRow, Math.Min(dataGrid.Items.Count, clipboardData.Length))
-                  .Select(rowIndex =>
-                          dataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as DataGridRow)
-                  .Where(a => a != null).ToArray();
-
-      // the destination columns 
-      //  (from selected row to either end or max. length of clipboard colums)
-      var columns =
-        dataGrid.Columns.OrderBy(column => column.DisplayIndex)
-                .SkipWhile(column => column != dataGrid.CurrentCell.Column)
-                .Take(clipboardData.Max(row => row.Length)).ToArray();
-
-      for (var rowIndex = 0; rowIndex < rows.Length; rowIndex++)
+      // call OnPastingCellClipboardContent for each cell
+      var minRowIndex = dataGrid.Items.IndexOf(dataGrid.CurrentItem);
+      var maxRowIndex = dataGrid.Items.Count - 1;
+      var minColumnDisplayIndex = (dataGrid.SelectionUnit != DataGridSelectionUnit.FullRow) ? dataGrid.Columns.IndexOf(dataGrid.CurrentColumn) : 0;
+      var maxColumnDisplayIndex = dataGrid.Columns.Count - 1;
+      var rowDataIndex = 0;
+      for (var i = minRowIndex; i <= maxRowIndex && rowDataIndex < clipboardData.Count(); i++, rowDataIndex++)
       {
-        var rowContent = clipboardData[rowIndex];
-        for (var colIndex = 0; colIndex < columns.Length; colIndex++)
+        dataGrid.CurrentItem = dataGrid.Items[i];
+
+        DataGrid.BeginEditCommand.Execute(null, dataGrid);
+
+        var columnDataIndex = 0;
+        for (var j = minColumnDisplayIndex; j <= maxColumnDisplayIndex && columnDataIndex < clipboardData[rowDataIndex].Length; j++, columnDataIndex++)
         {
-          var cellContent =
-            colIndex >= rowContent.Length ? "" : rowContent[colIndex];
-          columns[colIndex].OnPastingCellClipboardContent(
-            rows[rowIndex].Item, cellContent);
+          var column = dataGrid.ColumnFromDisplayIndex(j);
+          column.OnPastingCellClipboardContent(dataGrid.Items[i], clipboardData[rowDataIndex][columnDataIndex]);
+        }
+
+        DataGrid.CommitEditCommand.Execute(dataGrid, dataGrid);
+        if (i == maxRowIndex)
+        {
+          maxRowIndex++;
+          hasAddedNewRow = true;
+        }
+      }
+
+      // update selection
+      if (hasAddedNewRow)
+      {
+        dataGrid.UnselectAll();
+        dataGrid.UnselectAllCells();
+
+        dataGrid.CurrentItem = dataGrid.Items[minRowIndex];
+
+        if (dataGrid.SelectionUnit == DataGridSelectionUnit.FullRow)
+        {
+          dataGrid.SelectedItem = dataGrid.Items[minRowIndex];
+        }
+        else if (dataGrid.SelectionUnit == DataGridSelectionUnit.CellOrRowHeader ||
+                 dataGrid.SelectionUnit == DataGridSelectionUnit.Cell)
+        {
+          dataGrid.SelectedCells.Add(new DataGridCellInfo(dataGrid.Items[minRowIndex], dataGrid.Columns[minColumnDisplayIndex]));
         }
       }
     }
