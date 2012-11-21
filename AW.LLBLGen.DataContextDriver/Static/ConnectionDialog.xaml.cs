@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Xml.Linq;
 using AW.Helper;
 using AW.LLBLGen.DataContextDriver.Properties;
@@ -23,6 +24,7 @@ using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Data.ConnectionUI;
 using Microsoft.Win32;
+using Microsoft.Windows.Controls;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using Application = System.Windows.Forms.Application;
@@ -66,18 +68,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public const string TitleChooseFactoryMethod = "Choose factory method";
 
     public static readonly string AdditionalAssembliesToolTipF = "The {0} adds these assemblies to the ones LINQPad provides"
-                                                            + Environment.NewLine +
-                                                            LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
-                                                            + Environment.NewLine +
-                                                            "If you want any additional assemblies add them in here, with or with out a path.";
+                                                                 + Environment.NewLine +
+                                                                 LLBLGenStaticDriver.AdditionalAssemblies.JoinAsString()
+                                                                 + Environment.NewLine +
+                                                                 "If you want any additional assemblies add them in here, with or with out a path.";
 
     public static readonly string AdditionalAssembliesToolTip = string.Format(AdditionalAssembliesToolTipF, "driver");
     public static readonly string AdditionalAssembliesToolTipCnxt = string.Format(AdditionalAssembliesToolTipF, "connection");
 
     public static readonly string AdditionalNamespacesToolTipF = "The {0} adds these namespaces to the ones LINQPad provides"
-                                                                + Environment.NewLine +
-                                                                LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
-                                                                + "If you want any additional namespaces add them in here.";
+                                                                 + Environment.NewLine +
+                                                                 LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
+                                                                 + "If you want any additional namespaces add them in here.";
 
     public static readonly string AdditionalNamespacesToolTip = string.Format(AdditionalNamespacesToolTipF, "driver");
     public static readonly string AdditionalNamespacesToolTipCnxt = string.Format(AdditionalNamespacesToolTipF, "connection");
@@ -179,15 +181,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     public ObservableCollection<ValueTypeWrapper<string>> AdditionalNamespacesCnxt { get; set; }
 
-    public ObservableCollection<ValueTypeWrapper<string>> AdditionalAssembliesCnxt
-    {
-      get;
-      set;
-    }
+    public ObservableCollection<ValueTypeWrapper<string>> AdditionalAssembliesCnxt { get; set; }
 
     #endregion
 
     #region General
+
+    static ConnectionDialog()
+    {
+      CommandManager.RegisterClassCommandBinding(typeof (DataGrid), new CommandBinding(ApplicationCommands.Paste, OnExecutedPaste));
+    }
 
     public ConnectionDialog()
     {
@@ -873,8 +876,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         return Assembly.LoadFrom(assemPath);
       }
-    }    
-    
+    }
+
     private DomainIsolator CreateDomainIsolator()
     {
       var domainIsolator = new DomainIsolator("Inspect Custom Assembly");
@@ -974,6 +977,54 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private static void BreakIntoDebugger()
     {
       Debugger.Break();
+    }
+
+    //http://www.codeproject.com/Tips/246855/An-alternate-implementation-to-Paste-data-into-the
+    private static void OnExecutedPaste(object sender, ExecutedRoutedEventArgs e)
+    {
+      var dataGrid = ((DataGrid) sender);
+      // 2-dim array containing clipboard data
+      var clipboardData =
+        ((string) Clipboard.GetData(DataFormats.Text)).Split('\n')
+                                                      .Select(row =>
+                                                              row.Split('\t')
+                                                                 .Select(cell =>
+                                                                         cell.Length > 0 && cell[cell.Length - 1] == '\r' ?
+                                                                           cell.Substring(0, cell.Length - 1) : cell).ToArray())
+                                                      .Where(a => a.Any(b => b.Length > 0)).ToArray();
+
+      // the index of the first DataGridRow
+      var startRow = dataGrid.ItemContainerGenerator.IndexFromContainer(
+        dataGrid.ItemContainerGenerator.ContainerFromItem
+          (dataGrid.CurrentCell.Item));
+
+      // the destination rows 
+      //  (from startRow to either end or length of clipboard rows)
+      var rows =
+        Enumerable.Range(
+          startRow, Math.Min(dataGrid.Items.Count, clipboardData.Length))
+                  .Select(rowIndex =>
+                          dataGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex) as DataGridRow)
+                  .Where(a => a != null).ToArray();
+
+      // the destination columns 
+      //  (from selected row to either end or max. length of clipboard colums)
+      var columns =
+        dataGrid.Columns.OrderBy(column => column.DisplayIndex)
+                .SkipWhile(column => column != dataGrid.CurrentCell.Column)
+                .Take(clipboardData.Max(row => row.Length)).ToArray();
+
+      for (var rowIndex = 0; rowIndex < rows.Length; rowIndex++)
+      {
+        var rowContent = clipboardData[rowIndex];
+        for (var colIndex = 0; colIndex < columns.Length; colIndex++)
+        {
+          var cellContent =
+            colIndex >= rowContent.Length ? "" : rowContent[colIndex];
+          columns[colIndex].OnPastingCellClipboardContent(
+            rows[rowIndex].Item, cellContent);
+        }
+      }
     }
 
     private void ChooseAssemblies(object sender, RoutedEventArgs e)
