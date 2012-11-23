@@ -662,7 +662,7 @@
           <wpfToolkit:DataGrid x:Name="AdditionalNamespacesDataGridCnxt"
       			MinWidth="200"
       			AutoGenerateColumns="False"
-      			ItemsSource="{Binding AdditionalNamespacesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+      			ItemsSource="{Binding AdditionalNamespacesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true,  UpdateSourceTrigger=PropertyChanged}"
       			ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTipCnxt}">
             <wpfToolkit:DataGrid.Columns>
               <wpfToolkit:DataGridTextColumn Binding="{Binding Value}" Header="Additional Namespaces" />
