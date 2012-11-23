@@ -496,7 +496,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         var type = customAssembly.GetType(customType);
         if (!(IlinqMetaDataType.IsAssignableFrom(type) || IelementCreatorCoreType.IsAssignableFrom(type)))
         {
-          var fullName = type.FullName.IndexOf("Linq") > -1 ? IlinqMetaDataType.FullName : IelementCreatorCoreType.FullName;
+          var fullName = type.FullName.IndexOf("Linq", StringComparison.Ordinal) > -1 ? IlinqMetaDataType.FullName : IelementCreatorCoreType.FullName;
           AppDomain.CurrentDomain.SetData("errorMessage", String.Format("An implementation of {0} was found <{1}>, but it was not for {2}", fullName,
                                                                         type.FullName,
                                                                         Constants.LLBLGenNameVersion));
@@ -981,20 +981,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     //http://www.codeproject.com/Tips/246855/An-alternate-implementation-to-Paste-data-into-the
     //http://blogs.msdn.com/b/vinsibal/archive/2008/09/25/pasting-content-to-new-rows-on-the-wpf-datagrid.aspx
+    //http://stackoverflow.com/questions/4118617/wpf-datagrid-pasting
     private static void OnExecutedPaste(object sender, ExecutedRoutedEventArgs e)
     {
       var dataGrid = ((DataGrid) sender);
       // 2-dim array containing clipboard data
-      var clipboardData =
-        ((string) Clipboard.GetData(DataFormats.Text)).Split('\n')
-                                                      .Select(row =>
-                                                              row.Split('\t')
-                                                                 .Select(cell =>
-                                                                         cell.Length > 0 && cell[cell.Length - 1] == '\r' ?
-                                                                           cell.Substring(0, cell.Length - 1) : cell).ToArray())
-                                                      .Where(a => a.Any(b => b.Length > 0)).ToArray();
-
-      var hasAddedNewRow = false;
+      var clipboardData = ((string) Clipboard.GetData(DataFormats.Text)).Split('\n')
+                                                                        .Select(row =>
+                                                                                row.Split('\t')
+                                                                                   .Select(cell =>
+                                                                                           cell.Length > 0 && cell[cell.Length - 1] == '\r' ?
+                                                                                             cell.Substring(0, cell.Length - 1) : cell).ToArray())
+                                                                        .Where(a => a.Any(b => b.Length > 0)).ToArray();
 
       // call OnPastingCellClipboardContent for each cell
       var minRowIndex = dataGrid.Items.IndexOf(dataGrid.CurrentItem);
@@ -1004,9 +1002,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
       var rowDataIndex = 0;
       for (var i = minRowIndex; i <= maxRowIndex && rowDataIndex < clipboardData.Count(); i++, rowDataIndex++)
       {
-        dataGrid.CurrentItem = dataGrid.Items[i];
-
+        // dataGrid.CurrentItem = dataGrid.Items[i];
         DataGrid.BeginEditCommand.Execute(null, dataGrid);
+        if (dataGrid.CanUserAddRows && i == maxRowIndex)
+        {
+          // add a new row to be pasted to
+          var cv = CollectionViewSource.GetDefaultView(dataGrid.Items);
+          var iecv = cv as IEditableCollectionView;
+          if (iecv != null)
+          {
+            iecv.AddNew();
+            if (rowDataIndex + 1 < clipboardData.Count())
+            {
+              // still has more items to paste, update the maxRowIndex
+              maxRowIndex = dataGrid.Items.Count - 1;
+            }
+          }
+        }
 
         var columnDataIndex = 0;
         for (var j = minColumnDisplayIndex; j <= maxColumnDisplayIndex && columnDataIndex < clipboardData[rowDataIndex].Length; j++, columnDataIndex++)
@@ -1017,29 +1029,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
         DataGrid.CommitEditCommand.Execute(dataGrid, dataGrid);
         if (i == maxRowIndex)
-        {
           maxRowIndex++;
-          hasAddedNewRow = true;
-        }
-      }
-
-      // update selection
-      if (hasAddedNewRow)
-      {
-        dataGrid.UnselectAll();
-        dataGrid.UnselectAllCells();
-
-        dataGrid.CurrentItem = dataGrid.Items[minRowIndex];
-
-        if (dataGrid.SelectionUnit == DataGridSelectionUnit.FullRow)
-        {
-          dataGrid.SelectedItem = dataGrid.Items[minRowIndex];
-        }
-        else if (dataGrid.SelectionUnit == DataGridSelectionUnit.CellOrRowHeader ||
-                 dataGrid.SelectionUnit == DataGridSelectionUnit.Cell)
-        {
-          dataGrid.SelectedCells.Add(new DataGridCellInfo(dataGrid.Items[minRowIndex], dataGrid.Columns[minColumnDisplayIndex]));
-        }
       }
     }
 

@@ -1,15 +1,27 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using AW.Helper.Annotations;
 
 namespace AW.Helper
 {
-	public class ValueTypeWrapper<T> : IEquatable<ValueTypeWrapper<T>>
+  public class ValueTypeWrapper<T> : IEquatable<ValueTypeWrapper<T>>, INotifyPropertyChanged
 	{
-		public T Value { get; set; }
+    private T _value;
+    public T Value
+    {
+      get { return _value; }
+      set
+      {
+        if (Equals(value, _value)) return;
+        _value = value;
+        OnPropertyChanged("Value");
+      }
+    }
 
-		public static IEnumerable<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
+    public static IEnumerable<ValueTypeWrapper<T>> CreateWrapperForBinding(IEnumerable<T> values)
 		{
 			return values == null ? Enumerable.Empty<ValueTypeWrapper<T>>() : values.Select(data => new ValueTypeWrapper<T> { Value = data });
 		}
@@ -37,7 +49,12 @@ namespace AW.Helper
 				Add(wrappedValues, wrappedValue);
 		}
 
-		/// <summary>
+	  public override string ToString()
+	  {
+	    return Convert.ToString(Value);
+	  }
+
+	  /// <summary>
 		/// Indicates whether the current object is equal to another object of the same type.
 		/// </summary>
 		/// <returns>
@@ -103,6 +120,14 @@ namespace AW.Helper
 			return ValueTypeWrapper.TypeNeedsWrappingForBinding(typeof(T));
 		}
 
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    [NotifyPropertyChangedInvocator]
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+      var handler = PropertyChanged;
+      if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+    }
 	}
 
 	public class ReadonlyValueTypeWrapper<T>
