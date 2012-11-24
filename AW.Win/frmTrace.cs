@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using AW.Data.DaoClasses;
+using AW.Helper;
+using AW.Helper.Annotations;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
@@ -11,25 +14,27 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
-	public partial class FrmTrace : FrmPersistantLocation
+	public partial class FrmTrace : FrmPersistantLocation, INotifyPropertyChanged
 	{
 		private int _textBoxTraceListenerIndex;
 		private TextBoxTraceListener _textBoxTraceListener;
+    private readonly TraceLevel[] _traceLevelEnumerable = GeneralHelper.EnumAsEnumerable(TraceLevel.Error, TraceLevel.Warning);
 
-		public FrmTrace()
+	  public FrmTrace()
 		{
 			InitializeComponent();
 			var dummy = DynamicQueryEngine.ArithAbortOn;
-			comboBoxDQETraceLevel.DataSource = Enum.GetValues(typeof (TraceLevel));
-			comboBoxLinqTraceLevel.DataSource = Enum.GetValues(typeof (TraceLevel));
-			comboBoxDQETraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "TraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
-			comboBoxLinqTraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "LinqTraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
+	    frmTraceBindingSource.DataSource = this;
+		//	comboBoxDQETraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "TraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
+	//		comboBoxLinqTraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "LinqTraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
+      //comboBoxLinqTraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "QueryExecutionTraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
 		}
 
 		private void FrmTrace_Load(object sender, EventArgs e)
 		{
 			DQETraceLevel = Settings.Default.TraceLevel;
 			LinqTraceLevel = Settings.Default.LinqTraceLevel;
+      QueryExecutionTraceLevel = Settings.Default.QueryExecutionTraceLevel;
 			checkBoxSQLTrace_CheckedChanged(checkBoxSQLTrace, e);
 		}
 
@@ -39,13 +44,12 @@ namespace AW.Win
 			_textBoxTraceListenerIndex = Trace.Listeners.Add(_textBoxTraceListener);
 		}
 
-		private void frmTrace_FormClosing(object sender, FormClosingEventArgs e)
-		{
-		}
-
-		private void frmTrace_FormClosed(object sender, FormClosedEventArgs e)
+	  private void frmTrace_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Trace.Listeners.RemoveAt(_textBoxTraceListenerIndex);
+      Settings.Default.QueryExecutionTraceLevel = QueryExecutionTraceLevel;
+      Settings.Default.LinqTraceLevel = LinqTraceLevel;
+      Settings.Default.TraceLevel = DQETraceLevel;
 		}
 
 		public TraceLevel DQETraceLevel
@@ -59,12 +63,6 @@ namespace AW.Win
 			}
 		}
 
-		private void comboBoxTraceLevel_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (comboBoxDQETraceLevel.SelectedItem != null && CanFocus)
-				DQETraceLevel = (TraceLevel) comboBoxDQETraceLevel.SelectedItem;
-		}
-
 		public TraceLevel LinqTraceLevel
 		{
 			get { return GenericExpressionHandler.Switch.Level; }
@@ -76,11 +74,20 @@ namespace AW.Win
 			}
 		}
 
-		private void comboBoxLinqTraceLevel_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (comboBoxLinqTraceLevel.SelectedItem != null && CanFocus)
-				LinqTraceLevel = (TraceLevel) comboBoxLinqTraceLevel.SelectedItem;
-		}
+    public TraceLevel QueryExecutionTraceLevel
+    {
+      get { return TraceHelper.QueryExecutionSwitch.Level; }
+      set
+      {
+        TraceHelper.QueryExecutionSwitch.Level = value;
+        OnPropertyChanged("QueryExecutionTraceLevel");
+      }
+    }
+
+	  public TraceLevel[] TraceLevelEnumerable
+	  {
+	    get { return _traceLevelEnumerable; }
+	  }
 
 		private void buttonClearTrace_Click(object sender, EventArgs e)
 		{
@@ -105,9 +112,13 @@ namespace AW.Win
 			_textBoxTraceListener.WriteLine(e.SQLTrace);
 		}
 
-    private void textBoxTrace_TextChanged(object sender, EventArgs e)
-    {
+	  public event PropertyChangedEventHandler PropertyChanged;
 
-    }
+	  [NotifyPropertyChangedInvocator]
+	  protected virtual void OnPropertyChanged(string propertyName)
+	  {
+	    var handler = PropertyChanged;
+	    if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+	  }
 	}
 }
