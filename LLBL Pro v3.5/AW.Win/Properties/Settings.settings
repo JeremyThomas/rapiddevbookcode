@@ -110,5 +110,8 @@
     <Setting Name="SQLTrace" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="QueryExecutionTraceLevel" Type="System.Diagnostics.TraceLevel" Scope="User">
+      <Value Profile="(Default)">Off</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -219,6 +219,7 @@
     <None Include="Properties\DataSources\AW.Data.CollectionClasses.SalesOrderHeaderCollection.datasource" />
     <None Include="Properties\DataSources\AW.Data.EntityClasses.EmployeeEntity.datasource" />
     <None Include="Properties\DataSources\AW.Data.EntityClasses.SalesOrderHeaderEntity.datasource" />
+    <None Include="Properties\DataSources\FrmTrace.datasource" />
     <None Include="Properties\DataSources\SD.LLBLGen.Pro.ORMSupportClasses.EntityField.datasource" />
     <None Include="Properties\DataSources\SD.LLBLGen.Pro.ORMSupportClasses.EntityFields.datasource" />
     <None Include="Properties\Settings.settings">
