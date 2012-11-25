@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -90,12 +91,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable() ?? GeneralHelper.GetStringCollection(
         "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalAssemblies") ?? Enumerable.Empty<string>();
-      var cnxtAdditionalAssemblies = ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameAdditionalAssemblies);  
-      return AdditionalAssemblies.Union(globalAdditionalAssemblies).Union(cnxtAdditionalAssemblies);
+      var cnxtAdditionalAssemblies = ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameAdditionalAssemblies);
+      return AdditionalAssemblies.Union(globalAdditionalAssemblies).Union(cnxtAdditionalAssemblies).Union(ConnectionDialog.GetAdapterAssemblies(cxInfo));
     }
 
     /// <summary>
-    /// Gets the namespaces to add.
+    ///   Gets the namespaces to add.
     /// </summary>
     /// <param name="cxInfo">The cx info.</param>
     /// <returns></returns>
@@ -104,13 +105,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
       var globalAdditionalNamespaces = (Settings.Default.AdditionalNamespaces.AsEnumerable() ?? GeneralHelper.GetStringCollection(
         "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalNamespaces")) ?? Enumerable.Empty<string>();
 
-      var cnxtAdditionalNamespaces = ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameAdditionalNamespaces);     
+      var cnxtAdditionalNamespaces = ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameAdditionalNamespaces);
       return AdditionalNamespaces.Union(globalAdditionalNamespaces).Union(cnxtAdditionalNamespaces);
     }
 
     public override IEnumerable<string> GetNamespacesToRemove(IConnectionInfo cxInfo)
     {
-      return new[] {"System.Data.Linq"};
+      return new[] { "System.Data.Linq", "System.Data.SqlClient", "System.Data.Linq.SqlClient" };
     }
 
     /// <summary>
@@ -141,15 +142,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
             if (typeof (IEntityCore).IsAssignableFrom(elementType))
             {
               var membersToExclude = typeof (EntityBase).GetProperties().Select(p => p.Name)
-                .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
+                                                        .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
               if (typeof (IEntity).IsAssignableFrom(elementType))
               {
                 // remove alwaysFetch/AlreadyFetched flag properties
                 membersToExclude = membersToExclude
                   .Union(elementType.GetProperties()
-                           .Where(p => p.PropertyType == typeof (bool) &&
-                                       (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch")))
-                           .Select(p => p.Name));
+                                    .Where(p => p.PropertyType == typeof (bool) &&
+                                                (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch")))
+                                    .Select(p => p.Name));
               }
               options.MembersToExclude = membersToExclude.Distinct().ToArray();
             }
@@ -242,16 +243,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
     {
-      var eventInfo = typeBeingTraced.GetEvent(SQLTraceEventArgs.SqlTraceEventName);
-      if (eventInfo != null && executionManager != null)
-        try
+      if (executionManager != null)
+      {      
+        var eventInfo = typeBeingTraced.GetEvent(SQLTraceEventArgs.SqlTraceEventName);
+        if (eventInfo == null)
         {
-          SubscribeToSqlTraceEvent(objectBeingTraced, eventInfo, executionManager.SqlTranslationWriter);
+          var tracer = new ORMPersistenceExecutionListener(executionManager);
+          Trace.Listeners.Clear();
+          Trace.Listeners.Add(tracer);
+          TraceHelper.QueryExecutionSwitch.Level = TraceLevel.Verbose;
         }
-        catch (Exception e)
-        {
-          GeneralHelper.TraceOut(e.Message);
-        }
+        else
+          try
+          {
+            SubscribeToSqlTraceEvent(objectBeingTraced, eventInfo, executionManager.SqlTranslationWriter);
+          }
+          catch (Exception e)
+          {
+            GeneralHelper.TraceOut(e.Message);
+          }
+      }
     }
 
     public void SubscribeToSqlTraceEvent(object objectBeingTraced, EventInfo eventInfo, TextWriter sqlTranslationWriter)

@@ -25,9 +25,6 @@ namespace AW.Win
 			InitializeComponent();
 			var dummy = DynamicQueryEngine.ArithAbortOn;
 	    frmTraceBindingSource.DataSource = this;
-		//	comboBoxDQETraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "TraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
-	//		comboBoxLinqTraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "LinqTraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
-      //comboBoxLinqTraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "QueryExecutionTraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
 		}
 
 		private void FrmTrace_Load(object sender, EventArgs e)
@@ -35,6 +32,7 @@ namespace AW.Win
 			DQETraceLevel = Settings.Default.TraceLevel;
 			LinqTraceLevel = Settings.Default.LinqTraceLevel;
       QueryExecutionTraceLevel = Settings.Default.QueryExecutionTraceLevel;
+      PersistenceExecutionTraceLevel = Settings.Default.PersistenceExecutionTraceLevel;
 			checkBoxSQLTrace_CheckedChanged(checkBoxSQLTrace, e);
 		}
 
@@ -50,6 +48,7 @@ namespace AW.Win
       Settings.Default.QueryExecutionTraceLevel = QueryExecutionTraceLevel;
       Settings.Default.LinqTraceLevel = LinqTraceLevel;
       Settings.Default.TraceLevel = DQETraceLevel;
+      Settings.Default.PersistenceExecutionTraceLevel = PersistenceExecutionTraceLevel;
 		}
 
 		public TraceLevel DQETraceLevel
@@ -58,8 +57,7 @@ namespace AW.Win
 			set
 			{
 				DynamicQueryEngineBase.Switch.Level = value;
-				if (!value.Equals(comboBoxDQETraceLevel.SelectedItem))
-					comboBoxDQETraceLevel.SelectedItem = value;
+        OnPropertyChanged("DQETraceLevel");
 			}
 		}
 
@@ -69,8 +67,7 @@ namespace AW.Win
 			set
 			{
 				GenericExpressionHandler.Switch.Level = value;
-				if (!value.Equals(comboBoxLinqTraceLevel.SelectedItem))
-					comboBoxLinqTraceLevel.SelectedItem = value;
+        OnPropertyChanged("LinqTraceLevel");
 			}
 		}
 
@@ -81,6 +78,16 @@ namespace AW.Win
       {
         TraceHelper.QueryExecutionSwitch.Level = value;
         OnPropertyChanged("QueryExecutionTraceLevel");
+      }
+    }
+
+    public TraceLevel PersistenceExecutionTraceLevel
+    {
+      get { return TraceHelper.PersistenceExecutionSwitch.Level; }
+      set
+      {
+        TraceHelper.PersistenceExecutionSwitch.Level = value;
+        OnPropertyChanged("PersistenceExecutionTraceLevel");
       }
     }
 
@@ -101,10 +108,10 @@ namespace AW.Win
 
 		private void SetSQLTrace(bool traceON)
 		{
-			if (traceON)
-				CommonDaoBase.SQLTraceEvent += CommonDaoBase_SQLTraceEvent;
-			else
-				CommonDaoBase.SQLTraceEvent -= CommonDaoBase_SQLTraceEvent;
+      if (traceON)
+        CommonDaoBase.SQLTraceEvent += CommonDaoBase_SQLTraceEvent;
+      else
+        CommonDaoBase.SQLTraceEvent -= CommonDaoBase_SQLTraceEvent;
 		}
 
 		private void CommonDaoBase_SQLTraceEvent(object sender, SQLTraceEventArgs e)

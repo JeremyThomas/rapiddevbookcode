@@ -188,7 +188,7 @@ namespace AW.Helper
     /// <returns> </returns>
     public static string Join(String separator, params String[] values)
     {
-      return String.Join(separator, values.Where(s => !string.IsNullOrEmpty(s)).ToArray());
+      return String.Join(separator, values.Where(s => !String.IsNullOrEmpty(s)).ToArray());
     }
 
     /// <summary>
@@ -540,6 +540,11 @@ namespace AW.Helper
     public static bool Is64BitOperatingSystem
     {
       get { return GetOSArchitecture() == 64; }
+    }
+
+    public static IEnumerable<string> FilterByFileExists(params string[] filePaths)
+    {
+      return filePaths.Where(File.Exists);
     }
   }
 }

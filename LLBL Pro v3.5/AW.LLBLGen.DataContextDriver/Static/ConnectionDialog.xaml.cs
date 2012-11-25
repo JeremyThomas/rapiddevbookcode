@@ -17,6 +17,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Xml.Linq;
 using AW.Helper;
+using AW.Helper.Annotations;
 using AW.LLBLGen.DataContextDriver.Properties;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.ConnectionUI;
@@ -317,6 +318,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public string GetDriverDataValue(string elementName)
     {
       return GetDriverDataValue(CxInfo, elementName);
+    }
+
+    internal static IEnumerable<string> GetAdapterAssemblies(IConnectionInfo cxInfo)
+    {
+      return GeneralHelper.FilterByFileExists(GetDriverDataValue(cxInfo, ElementNameAdapterAssembly),
+                                              GetDriverDataValue(cxInfo, ElementNameFactoryAssembly));
     }
 
     public static DisplayInGrid? GetHowToDisplayInGrid(IConnectionInfo cxInfo)
@@ -1169,6 +1176,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
       AdditionalAssembliesCnxt.Clear();
     }
 
+    private void AddNamespacesFromAssemblies(object sender, RoutedEventArgs e)
+    {
+      foreach (var selectedItem in AdditionalAssembliesDataGridCnxt.SelectedItems.OfType<ValueTypeWrapper<string>>())
+        ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, MetaDataHelper.GetNamespaces(selectedItem.Value));
+      ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, MetaDataHelper.GetNamespaces(GetAdapterAssemblies(CxInfo)));
+      ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, MetaDataHelper.GetNamespaces(GetAdapterAssemblies(CxInfo)));
+    }
+
     private void txtAssemblyPath_TextChanged(object sender, TextChangedEventArgs e)
     {
       OnPropertyChanged("CustomTypeNameVisibility");
@@ -1215,6 +1230,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     public event PropertyChangedEventHandler PropertyChanged;
 
+    [NotifyPropertyChangedInvocator]
     protected void OnPropertyChanged(string propertyName)
     {
       if (PropertyChanged != null)
