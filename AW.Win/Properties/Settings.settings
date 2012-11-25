@@ -113,5 +113,8 @@
     <Setting Name="QueryExecutionTraceLevel" Type="System.Diagnostics.TraceLevel" Scope="User">
       <Value Profile="(Default)">Off</Value>
     </Setting>
+    <Setting Name="PersistenceExecutionTraceLevel" Type="System.Diagnostics.TraceLevel" Scope="User">
+      <Value Profile="(Default)">Off</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

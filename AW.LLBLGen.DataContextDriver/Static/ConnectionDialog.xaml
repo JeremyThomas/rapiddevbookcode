@@ -691,7 +691,12 @@
       			Click="AddORMProfilerCnxt"
       			Content="Add ORM Profiler"
       			ToolTip="Add ORM Profiler assemblies" />
-        </WrapPanel>
+            <Button Margin="5,0,0,0"
+      			VerticalAlignment="Center"
+      			Click="AddNamespacesFromAssemblies"
+      			Content="Add namespaces from selected assemblies"
+      			ToolTip="Add namespaces from selected assemblies and the assemblies defined in the driver" />
+          </WrapPanel>
         </StackPanel>
       </TabItem>
       <TabItem Name="DriverTab"
