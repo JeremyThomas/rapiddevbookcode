@@ -40,13 +40,14 @@
 
 using System.Diagnostics;
 using LINQPad.Extensibility.DataContext;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.LLBLGen.DataContextDriver
 {
   /// <summary>
   ///   Simple trace listener which is bound to the ORMPersistenceExecution trace and emits the executed query messages to the Linq pad output.
   /// </summary>
-  public class ORMPersistenceExecutionListener : TraceListener
+  public class ORMQueryExecutionListener : TraceListener
   {
     #region Class Member Declarations
 
@@ -54,11 +55,19 @@ namespace AW.LLBLGen.DataContextDriver
 
     #endregion
 
+    public static void AddORMQueryExecutionListener(QueryExecutionManager executionManager)
+    {
+      var tracer = new ORMQueryExecutionListener(executionManager);
+      Trace.Listeners.Clear();
+      Trace.Listeners.Add(tracer);
+      TraceHelper.QueryExecutionSwitch.Level = TraceLevel.Verbose;
+    }
+
     /// <summary>
-    ///   Initializes a new instance of the <see cref="ORMPersistenceExecutionListener" /> class.
+    ///   Initializes a new instance of the <see cref="ORMQueryExecutionListener" /> class.
     /// </summary>
     /// <param name="executionManager">The execution manager.</param>
-    public ORMPersistenceExecutionListener(QueryExecutionManager executionManager)
+    public ORMQueryExecutionListener(QueryExecutionManager executionManager)
     {
       _executionManager = executionManager;
     }

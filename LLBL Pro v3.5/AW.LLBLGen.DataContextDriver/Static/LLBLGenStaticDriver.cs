@@ -247,12 +247,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {      
         var eventInfo = typeBeingTraced.GetEvent(SQLTraceEventArgs.SqlTraceEventName);
         if (eventInfo == null)
-        {
-          var tracer = new ORMPersistenceExecutionListener(executionManager);
-          Trace.Listeners.Clear();
-          Trace.Listeners.Add(tracer);
-          TraceHelper.QueryExecutionSwitch.Level = TraceLevel.Verbose;
-        }
+          ORMQueryExecutionListener.AddORMQueryExecutionListener(executionManager);
         else
           try
           {
