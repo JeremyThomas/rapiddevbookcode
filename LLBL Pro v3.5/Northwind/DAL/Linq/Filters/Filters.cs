@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using AW.Helper;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.HelperClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -9,7 +10,7 @@ namespace Northwind.DAL.Linq.Filters
 	{
 		public static IQueryable<CustomerEntity> FilterByCountry(this IQueryable<CustomerEntity> customerQuery, string country = null)
 		{
-			return string.IsNullOrEmpty(country) ? customerQuery : customerQuery.Where(c => c.Country == country);
+      return string.IsNullOrEmpty(country) ? customerQuery : customerQuery.Where(c => c.Country.EqualsIgnoreCase(country));
 		}
 
     public static IQueryable<CustomerEntity> FilterByEmployeeId(this IQueryable<CustomerEntity> customerQuery, params int[] employees)
@@ -45,7 +46,7 @@ namespace Northwind.DAL.Linq.Filters
 
     public static IQueryable<T> FilterByProductName<T>(this IQueryable<T> products, string productName) where T : EntityBase2, IProduct
     {
-      return string.IsNullOrEmpty(productName) ? products : products.Where(r => productName.Equals(r.ProductName));
+      return string.IsNullOrEmpty(productName) ? products : products.Where(r => productName.EqualsIgnoreCase(r.ProductName));
     }
 
     public static IQueryable<EmployeeEntity> FilterByCustomerTypeIdViaOrders(this IQueryable<EmployeeEntity> employees, string customerTypeId)
