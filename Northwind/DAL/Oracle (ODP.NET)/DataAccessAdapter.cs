@@ -12,6 +12,7 @@ using System.Collections;
 using System.Data;
 using System.Data.Common;
 using System.Configuration;
+using AW.Helper;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.DQE.Oracle;
 
@@ -161,7 +162,17 @@ namespace Northwind.DAL.Oracle
 			return query;
 		}
 
-		// __LLBLGENPRO_USER_CODE_REGION_END
+    static DataAccessAdapter()
+    {
+      StaticCustomFunctionMappings = new FunctionMappingStore();
+      StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(string), "IsNullOrEmpty", 1, "{0} IS NULL"));
+      StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(GeneralHelper), "ContainsIgnoreCase", 2, "REGEXP_LIKE({0},{1},'i')"));
+      StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(GeneralHelper), "EqualsIgnoreCase", 2, "UPPER({0}) = UPPER({1})"));
+    }
+
+    static readonly FunctionMappingStore StaticCustomFunctionMappings;
+
+	  // __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 		
 		#region Included Code

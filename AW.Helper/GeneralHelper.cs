@@ -546,5 +546,40 @@ namespace AW.Helper
     {
       return filePaths.Where(File.Exists);
     }
+
+    public static bool Contains(this string source, string value, StringComparison comp)
+    {
+      if (String.IsNullOrEmpty(value) || String.IsNullOrEmpty(source)) return false;
+      return source.IndexOf(value, comp) >= 0;
+    }
+
+    /// <summary>
+    ///  Returns a value indicating whether the specified System.String object occurs
+    ///  within this string - case-insensitive.
+    ///  This is mapped to SQL so can be used in Linq-To-DB, see Northwind.DAL.Oracle.DataAccessAdapter
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="value">The string to seek.</param>
+    /// <returns>
+    ///  true if the value parameter occurs within this string, or if value is the
+    ///  empty string (""); otherwise, false.
+    /// </returns>
+    public static bool ContainsIgnoreCase(this string source, string value)
+    {
+      return source.Contains(value, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Determines whether this string and a specified System.String object have the same value - case-insensitive.
+    /// This is mapped to SQL so can be used in Linq-To-DB, see Northwind.DAL.Oracle.DataAccessAdapter
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="value">The value.</param>
+    /// <returns>true if the value of the value parameter is the same as this string; otherwise, false.</returns>
+    /// <exception cref="System.NullReferenceException">This string is null.</exception>
+    public static bool EqualsIgnoreCase(this string source, string value)
+    {
+      return source.Equals(value, StringComparison.OrdinalIgnoreCase);
+    }
   }
 }

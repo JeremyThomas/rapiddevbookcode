@@ -9,6 +9,7 @@
 //////////////////////////////////////////////////////////////
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Configuration;
@@ -21,6 +22,7 @@ namespace Northwind.DAL.SqlServer
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	using AW.Helper.LLBL;
+  using AW.Helper;
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Data access adapter class, which controls the complete database interaction with the database for all objects.</summary>
 	/// <remarks>Use a DataAccessAdapter object solely per thread, and per connection. A DataAccessAdapter object contains 1 active connection 
@@ -200,7 +202,17 @@ namespace Northwind.DAL.SqlServer
 			return query;
 		}
 
-		// __LLBLGENPRO_USER_CODE_REGION_END
+    static DataAccessAdapter()
+    {
+      StaticCustomFunctionMappings = new FunctionMappingStore();
+      StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(string), "IsNullOrEmpty", 1, "{0} IS NULL OR LEN({0}) = 0"));
+      StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(GeneralHelper), "ContainsIgnoreCase", 2, "{0} LIKE '%' + {1} + '%'"));
+      StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(GeneralHelper), "EqualsIgnoreCase", 2, "{0} = {1}"));
+    }
+
+    static readonly FunctionMappingStore StaticCustomFunctionMappings;
+
+	  // __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 		
 		#region Included Code
