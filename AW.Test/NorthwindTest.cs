@@ -349,5 +349,28 @@ namespace AW.Tests
       employeeEntities.FilterByCustomerTypeIdViaOrders("ALFKI").FilterByOrder(1).ToEntityCollection2();
       employeeEntities.FilterByOrder(1).FilterByCustomerTypeIdViaOrders("ALFKI").ToEntityCollection2();
     }
+
+    [TestMethod, Description("http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=21560")]
+    public void TestFirstInWhereAndProjection()
+    {
+      var linqMetaData = GetNorthwindLinqMetaData();
+      var orders = from o in linqMetaData.Order
+                   select new
+                   {
+                     o.CustomerId,
+                     o.OrderId,
+                   };
+
+      var customers = from c in linqMetaData.Customer
+                      where c.CustomerId == orders.First().CustomerId
+                      select new
+                      {
+                        orders.First().OrderId,
+                        c.Address,
+                        c.City,
+                        c.CompanyName
+                      };
+      customers.First();
+    }
   }
 }
