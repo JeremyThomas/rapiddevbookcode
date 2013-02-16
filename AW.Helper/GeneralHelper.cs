@@ -441,11 +441,25 @@ namespace AW.Helper
     {
       var configuration = GetExeConfiguration();
       if (configuration.HasFile)
+        return GetUserSetting(configuration, settingName);
+      return GetUserSettingCopyIfNeed(configuration.FilePath, configuration.FilePath.Replace(oldPathValue, newPathValue), settingName);
+    }
+
+    public static SettingValueElement GetUserSettingCopyIfNeed(string oldFilePath, string newFilePath, string settingName)
+    {
+      var configuration = OpenMappedMachineConfiguration(newFilePath);
+      if (configuration == null)
       {
-        var settingElement = GetUserSetting(configuration, settingName);
-        return settingElement == null ? null : settingElement.Value;
+        TraceOut(newFilePath);
+        return null;
       }
-      return GetUserSetting(configuration.FilePath.Replace(oldPathValue, newPathValue), settingName);
+      var userSettingsGroup = configuration.SectionGroups[@"userSettings"];
+      if (userSettingsGroup == null)
+      {
+        File.Copy(newFilePath, oldFilePath);
+        return null; //But will work next time
+      }
+      return GetSetting(userSettingsGroup, settingName);
     }
 
     public static SettingValueElement GetUserSetting(string fileName, string settingName)
@@ -456,43 +470,28 @@ namespace AW.Helper
         TraceOut(fileName);
         return null;
       }
-      var settingElement = GetUserSetting(configuration, settingName);
+      return GetUserSetting(configuration, settingName);
+    }
+
+    private static SettingValueElement GetUserSetting(Configuration configuration, string settingName)
+    {
+      var configurationSectionGroup = configuration.SectionGroups[@"userSettings"];
+      return GetSetting(configurationSectionGroup, settingName);
+    }
+
+    private static SettingValueElement GetSetting(ConfigurationSectionGroup configurationSectionGroup, string settingName)
+    {
+      var settingElement = GetSettingElement(configurationSectionGroup, settingName);
       return settingElement == null ? null : settingElement.Value;
     }
 
-    public static SettingElement GetUserSetting(Configuration configuration, string settingName)
+    private static SettingElement GetSettingElement(ConfigurationSectionGroup @group, string settingName)
     {
-      if (configuration != null)
-        if (configuration.SectionGroups.Count == 0)
-        {
-          //configuration.SectionGroups.Add(@"userSettings", new ConfigurationSectionGroup());
- 
-          var clientSection = configuration.GetSection(@"userSettings") as DefaultSection;
-          if (clientSection == null) return null;
-          var readableSectionRawXml = clientSection.SectionInformation.GetRawXml();
-          //Need code to get setting from raw XML
-          //var readableSectionRawXmlDocument = new XmlDocument();
-          //readableSectionRawXmlDocument.Load(new StringReader(readableSectionRawXml));
-          //var readableSectionHandler = new NameValueSectionHandler();
-          //var result = (Hashtable) readableSectionHandler.Create(null, null, readableSectionRawXmlDocument.DocumentElement);
-          //foreach (string item in result.Keys)
-          //{
-          //  Console.WriteLine("{0}\t=\t{1}", item, result[item]);
-          //}
-        }
-        else
-        {
-          // find section group
-          var group = configuration.SectionGroups[@"userSettings"];
-          if (@group == null)
-            configuration.SectionGroups.Add(@"userSettings", new ConfigurationSectionGroup());
-          if (@group == null)
-           return null;
-          // find client section
-          var clientSection = @group.Sections[0] as ClientSettingsSection;
-          return clientSection == null ? null : clientSection.Settings.Get(settingName);
-        }
-      return null;
+      if (@group == null)
+        return null;
+      // find client section
+      var clientSection = @group.Sections[0] as ClientSettingsSection;
+      return clientSection == null ? null : clientSection.Settings.Get(settingName);
     }
 
     public static bool HasSetting(ApplicationSettingsBase applicationSettingsBase, string settingName)
