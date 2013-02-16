@@ -163,7 +163,7 @@ namespace AW.Helper
       if (value == null) return null;
       var fi = value.GetType().GetField(value.ToString());
       if (fi == null) return null;
-      var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+      var attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof (DescriptionAttribute), false);
       return (attributes.Length > 0) ? attributes[0].Description : null;
     }
 
@@ -388,8 +388,8 @@ namespace AW.Helper
       if (element != null)
       {
         var xml = element.ValueXml.InnerXml;
-        var xs = new XmlSerializer(typeof(StringCollection));
-        return ((StringCollection)xs.Deserialize(new XmlTextReader(xml, XmlNodeType.Element, null))).AsEnumerable();
+        var xs = new XmlSerializer(typeof (StringCollection));
+        return ((StringCollection) xs.Deserialize(new XmlTextReader(xml, XmlNodeType.Element, null))).AsEnumerable();
       }
       return null;
     }
@@ -404,36 +404,94 @@ namespace AW.Helper
       return ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
     }
 
-    public static SettingValueElement GetUserSetting(string oldPathValue, string newPathValue, string settingName)
+    public static Configuration GetExeConfiguration(string fileName)
     {
-      var configuration = GetExeConfiguration();
-      return GetUserSetting(configuration.FilePath.Replace(oldPathValue, newPathValue), settingName);
+      return File.Exists(fileName) ? ConfigurationManager.OpenExeConfiguration(fileName) : null;
     }
 
-    public static SettingValueElement GetUserSetting(string fileName, string settingName)
+    public static Configuration OpenMappedMachineConfiguration(string fileName)
     {
       if (File.Exists(fileName))
       {
         var fileMap = new ConfigurationFileMap(fileName);
         var configuration = ConfigurationManager.OpenMappedMachineConfiguration(fileMap);
+        return configuration;
+      }
+      return null;
+    }
+
+    public static Configuration OpenMappedExeConfiguration(string fileName)
+    {
+      if (File.Exists(fileName))
+      {
+        var fileMap = new ExeConfigurationFileMap
+          {
+            LocalUserConfigFilename = fileName,
+            ExeConfigFilename = fileName,
+            MachineConfigFilename = fileName,
+            RoamingUserConfigFilename = fileName
+          };
+        var configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
+        return configuration;
+      }
+      return null;
+    }
+
+    public static SettingValueElement GetUserSetting(string oldPathValue, string newPathValue, string settingName)
+    {
+      var configuration = GetExeConfiguration();
+      if (configuration.HasFile)
+      {
         var settingElement = GetUserSetting(configuration, settingName);
         return settingElement == null ? null : settingElement.Value;
       }
-      TraceOut(fileName);
-      return null;
+      return GetUserSetting(configuration.FilePath.Replace(oldPathValue, newPathValue), settingName);
+    }
+
+    public static SettingValueElement GetUserSetting(string fileName, string settingName)
+    {
+      var configuration = OpenMappedMachineConfiguration(fileName);
+      if (configuration == null)
+      {
+        TraceOut(fileName);
+        return null;
+      }
+      var settingElement = GetUserSetting(configuration, settingName);
+      return settingElement == null ? null : settingElement.Value;
     }
 
     public static SettingElement GetUserSetting(Configuration configuration, string settingName)
     {
-      // find section group
-      if (configuration != null && configuration.SectionGroups.Count > 0)
-      {
-        var group = configuration.SectionGroups[@"userSettings"];
-        if (@group == null) return null;
-        // find client section
-        var clientSection = @group.Sections[0] as ClientSettingsSection;
-        return clientSection == null ? null : clientSection.Settings.Get(settingName);
-      }
+      if (configuration != null)
+        if (configuration.SectionGroups.Count == 0)
+        {
+          //configuration.SectionGroups.Add(@"userSettings", new ConfigurationSectionGroup());
+ 
+          var clientSection = configuration.GetSection(@"userSettings") as DefaultSection;
+          if (clientSection == null) return null;
+          var readableSectionRawXml = clientSection.SectionInformation.GetRawXml();
+          //Need code to get setting from raw XML
+          //var readableSectionRawXmlDocument = new XmlDocument();
+          //readableSectionRawXmlDocument.Load(new StringReader(readableSectionRawXml));
+          //var readableSectionHandler = new NameValueSectionHandler();
+          //var result = (Hashtable) readableSectionHandler.Create(null, null, readableSectionRawXmlDocument.DocumentElement);
+          //foreach (string item in result.Keys)
+          //{
+          //  Console.WriteLine("{0}\t=\t{1}", item, result[item]);
+          //}
+        }
+        else
+        {
+          // find section group
+          var group = configuration.SectionGroups[@"userSettings"];
+          if (@group == null)
+            configuration.SectionGroups.Add(@"userSettings", new ConfigurationSectionGroup());
+          if (@group == null)
+           return null;
+          // find client section
+          var clientSection = @group.Sections[0] as ClientSettingsSection;
+          return clientSection == null ? null : clientSection.Settings.Get(settingName);
+        }
       return null;
     }
 
