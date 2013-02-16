@@ -351,20 +351,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
         Settings.Default.DefaultConnectionType = connectionTypeIndex;
 
       Settings.Default.Save();
-
-      var conf = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
-      Console.WriteLine(conf.FilePath);
-
-      var mappedExeConfiguration = GeneralHelper.GetExeConfiguration(conf.FilePath);
-      if (mappedExeConfiguration.SectionGroups.Count == 0 || mappedExeConfiguration.SectionGroups[@"userSettings"]==null)
-      {
-        // Get the wanted section
-        var sectionGroup = new ConfigurationSectionGroup();
-        // Make sure the section really is saved later on
-        sectionGroup.ForceDeclaration();
-        mappedExeConfiguration.SectionGroups.Add(@"userSettings", sectionGroup);
-        mappedExeConfiguration.Save();
-      }
     }
 
     private void Window_Closing(object sender, CancelEventArgs e)
