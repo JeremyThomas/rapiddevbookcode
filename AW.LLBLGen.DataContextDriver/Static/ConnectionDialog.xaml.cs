@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
@@ -350,6 +351,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
         Settings.Default.DefaultConnectionType = connectionTypeIndex;
 
       Settings.Default.Save();
+
+      var conf = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+      Console.WriteLine(conf.FilePath);
+
+      var mappedExeConfiguration = GeneralHelper.GetExeConfiguration(conf.FilePath);
+      if (mappedExeConfiguration.SectionGroups.Count == 0 || mappedExeConfiguration.SectionGroups[@"userSettings"]==null)
+      {
+        // Get the wanted section
+        var sectionGroup = new ConfigurationSectionGroup();
+        // Make sure the section really is saved later on
+        sectionGroup.ForceDeclaration();
+        mappedExeConfiguration.SectionGroups.Add(@"userSettings", sectionGroup);
+        mappedExeConfiguration.Save();
+      }
     }
 
     private void Window_Closing(object sender, CancelEventArgs e)
@@ -391,7 +406,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       var displayInGridCxInfo = HowToDisplayInGrid.GetValueOrDefault();
       var displayInGridUI = ComboBoxDisplayInGrid.SelectedValue as DisplayInGrid?;
-      if (displayInGridCxInfo != displayInGridUI)
+      if (displayInGridUI != null && displayInGridCxInfo != displayInGridUI)
       {
         ComboBoxDisplayInGrid.ClearValue(Selector.SelectedValueProperty);
         HowToDisplayInGrid = displayInGridUI;
