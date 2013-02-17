@@ -291,6 +291,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
       return GetDriverDataValue(CxInfo, elementName);
     }
 
+    internal static IEnumerable<string> GetAdapterAssemblies(IConnectionInfo cxInfo)
+    {
+      return GeneralHelper.FilterByFileExists(GetDriverDataValue(cxInfo, ElementNameAdapterAssembly),
+                                              GetDriverDataValue(cxInfo, ElementNameFactoryAssembly));
+    }
+
     public static DisplayInGrid? GetHowToDisplayInGrid(IConnectionInfo cxInfo)
     {
       DisplayInGrid? howToDisplayInGrid = null;

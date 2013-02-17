@@ -212,7 +212,28 @@ namespace AW.Helper
 			}
 		}
 
-		/// <summary>
+	  public static IEnumerable<string> GetNamespaces(Assembly assembly)
+    {
+      return (assembly.GetTypes().Select(t => t.Namespace)
+              .Where(n => !String.IsNullOrEmpty(n))
+              .Distinct());
+    }
+
+    public static IEnumerable<string> GetNamespaces(params string[] assemblyPaths)
+    {
+      return GetNamespaces((IEnumerable<string>)assemblyPaths);
+    }
+
+    public static IEnumerable<string> GetNamespaces(IEnumerable<string> assemblyPaths)
+	  {
+	    var namespaces = new List<string>();
+      foreach (var assembly in assemblyPaths.Where(File.Exists).Select(Assembly.LoadFrom))
+	      namespaces.AddRange(GetNamespaces(assembly));
+	    return namespaces;
+	  }
+
+
+	  /// <summary>
 		/// 	Gets the public concrete descendants of a type from a list of types.
 		/// </summary>
 		/// <param name="ancestorType"> Type of the ancestor. </param>
@@ -276,17 +297,17 @@ namespace AW.Helper
 
 		public static Type[] GetTypeParametersOfGenericType(Type type)
 		{
-			if (type == typeof (object))
+			if (type == typeof(object) || type == null)
 				return null;
 			return type.IsGenericType ? type.GetGenericArguments() : GetTypeParametersOfGenericType(type.BaseType);
 		}
 
 		public static bool IsSerializable(Type type)
 		{
-			if (type.IsSerializable)
+			if (type.IsSerializable || type.IsInterface)
 			{
 				var typeParametersOfGenericType = GetTypeParametersOfGenericType(type);
-				return typeParametersOfGenericType.IsNullOrEmpty() || typeParametersOfGenericType.All(t => t.IsSerializable);
+				return typeParametersOfGenericType.IsNullOrEmpty() || typeParametersOfGenericType.All(IsSerializable);
 			}
 			return false;
 		}

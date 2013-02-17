@@ -86,11 +86,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
     //  return base.AreRepositoriesEquivalent(c1, c2);
     //}
 
-    public override IEnumerable<string> GetAssembliesToAdd()
+    public override IEnumerable<string> GetAssembliesToAdd(IConnectionInfo cxInfo)
     {
       var globalAdditionalAssemblies = Settings.Default.AdditionalAssemblies.AsEnumerable() ?? GeneralHelper.GetStringCollection(
-        "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalAssemblies");
-      return globalAdditionalAssemblies == null ? AdditionalAssemblies : AdditionalAssemblies.Union(globalAdditionalAssemblies);
+        "DataContextDriver__AW.LLB_", "ShowConnectionDialog_for__", "AdditionalAssemblies") ?? Enumerable.Empty<string>();
+      return AdditionalAssemblies.Union(globalAdditionalAssemblies).Union(ConnectionDialog.GetAdapterAssemblies(cxInfo));
     }
 
     public override IEnumerable<string> GetNamespacesToAdd()
@@ -100,9 +100,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
       return globalAdditionalNamespaces == null ? AdditionalNamespaces : AdditionalNamespaces.Union(globalAdditionalNamespaces);
     }
 
-    public override IEnumerable<string> GetNamespacesToRemove()
+    public override IEnumerable<string> GetNamespacesToRemove(IConnectionInfo cxInfo)
     {
-      return new[] {"System.Data.Linq"};
+      return new[] { "System.Data.Linq", "System.Data.SqlClient", "System.Data.Linq.SqlClient" };
     }
 
     /// <summary>
