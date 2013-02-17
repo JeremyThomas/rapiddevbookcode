@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -11,6 +11,8 @@ using System.Linq;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace AW.Helper
 {
@@ -186,7 +188,7 @@ namespace AW.Helper
     /// <returns> </returns>
     public static string Join(String separator, params String[] values)
     {
-      return String.Join(separator, values.Where(s => !string.IsNullOrEmpty(s)).ToArray());
+      return String.Join(separator, values.Where(s => !String.IsNullOrEmpty(s)).ToArray());
     }
 
     /// <summary>
@@ -559,9 +561,25 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Gets the OS architecture.
-    /// 	if .net 4 could use Environment.Is64BitOperatingSystem
-    /// 	http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
+		/// Clones the object graph.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="graph">The graph.</param>
+		/// <returns></returns>
+		public static T CloneObject<T>(T graph)
+		{
+			var ms = new MemoryStream();
+			var bf = new BinaryFormatter(null, new StreamingContext(StreamingContextStates.Clone));
+			bf.Serialize(ms, graph);
+			ms.Seek(0, SeekOrigin.Begin);
+			var oOut = bf.Deserialize(ms);
+			ms.Close();
+			return (T)oOut;
+		}
+		/// <summary>
+		/// Gets the OS architecture.
+		/// if .net 4 could use Environment.Is64BitOperatingSystem
+		/// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
     /// </summary>
     /// <returns> 32 or 64 </returns>
     internal static int GetOSArchitecture()
@@ -579,6 +597,46 @@ namespace AW.Helper
     public static bool Is64BitOperatingSystem
     {
       get { return GetOSArchitecture() == 64; }
+    }
+
+    public static IEnumerable<string> FilterByFileExists(params string[] filePaths)
+    {
+      return filePaths.Where(File.Exists);
+    }
+
+    public static bool Contains(this string source, string value, StringComparison comp)
+    {
+      if (String.IsNullOrEmpty(value) || String.IsNullOrEmpty(source)) return false;
+      return source.IndexOf(value, comp) >= 0;
+    }
+
+    /// <summary>
+    ///  Returns a value indicating whether the specified System.String object occurs
+    ///  within this string - case-insensitive.
+    ///  This is mapped to SQL so can be used in Linq-To-DB, see Northwind.DAL.Oracle.DataAccessAdapter
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="value">The string to seek.</param>
+    /// <returns>
+    ///  true if the value parameter occurs within this string, or if value is the
+    ///  empty string (""); otherwise, false.
+    /// </returns>
+    public static bool ContainsIgnoreCase(this string source, string value)
+    {
+      return source.Contains(value, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Determines whether this string and a specified System.String object have the same value - case-insensitive.
+    /// This is mapped to SQL so can be used in Linq-To-DB, see Northwind.DAL.Oracle.DataAccessAdapter
+    /// </summary>
+    /// <param name="source">The source.</param>
+    /// <param name="value">The value.</param>
+    /// <returns>true if the value of the value parameter is the same as this string; otherwise, false.</returns>
+    /// <exception cref="System.NullReferenceException">This string is null.</exception>
+    public static bool EqualsIgnoreCase(this string source, string value)
+    {
+      return source.Equals(value, StringComparison.OrdinalIgnoreCase);
     }
   }
 }
