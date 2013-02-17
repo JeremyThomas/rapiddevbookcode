@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
@@ -427,7 +428,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       var displayInGridCxInfo = HowToDisplayInGrid.GetValueOrDefault();
       var displayInGridUI = ComboBoxDisplayInGrid.SelectedValue as DisplayInGrid?;
-      if (displayInGridCxInfo != displayInGridUI)
+      if (displayInGridUI != null && displayInGridCxInfo != displayInGridUI)
       {
         ComboBoxDisplayInGrid.ClearValue(Selector.SelectedValueProperty);
         HowToDisplayInGrid = displayInGridUI;
