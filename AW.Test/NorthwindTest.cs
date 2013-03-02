@@ -84,7 +84,7 @@ namespace AW.Tests
     /// <summary>
     ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
     /// </summary>
-    [TestCategory("Bug"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+    [TestProperty("Bug", "UnFixed"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
     public void CustomerLeftJoinCustomerDemographic()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
@@ -112,7 +112,7 @@ namespace AW.Tests
     /// <summary>
     ///   <see cref="http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19256" />
     /// </summary>
-    [TestCategory("Bug"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
+    [TestProperty("Bug", "UnFixed"), TestMethod, Ignore, Description("tests whether you Left Join from Customer to CustomerDemographic")]
     public void CustomerLeftJoinCustomerDemographicViaMany()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
@@ -214,7 +214,7 @@ namespace AW.Tests
     /// <summary>
     ///   http://www.llblgen.com/tinyforum/Messages.aspx?ThreadID=19954
     /// </summary>
-    [TestCategory("Bug"), TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
+    [TestProperty("Bug", "UnFixed"), TestMethod, Ignore, Description("After a prefetch of a ManyToMany relationship can I navigate to an entity at the end of that relationship then navigate back to the root entity")]
     public void BiDirectionalManyToMany()
     {
       var metaData = GetNorthwindLinqMetaData();
@@ -281,7 +281,7 @@ namespace AW.Tests
       Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
     }
 
-    [TestMethod]
+    [TestMethod, TestProperty("Bug", "UnFixed"), Ignore]
     public void PrefetchBeforeCriterea()
     {
       var metaData = GetNorthwindLinqMetaData();
@@ -305,7 +305,7 @@ namespace AW.Tests
       metaData.Product.FilterByDiscontinuedG(false).ToEntityCollection2();
     }
 
-    [TestMethod]
+    [TestMethod, TestProperty("Bug", "UnFixed"), Ignore]
     public void TestFilterByProductName()
     {
       var metaData = GetNorthwindLinqMetaData();

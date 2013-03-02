@@ -221,7 +221,7 @@ namespace AW.Tests
 
 			var employeeEntity = new Northwind.DAL.EntityClasses.EmployeeEntity();
 			properties = EntityHelper.GetNavigatorProperties(employeeEntity);
-			Assert.AreEqual(5, properties.Count());
+			Assert.AreEqual(6, properties.Count());
 
 			var orderDetailEntity = new Northwind.DAL.EntityClasses.OrderDetailEntity();
 			properties = EntityHelper.GetNavigatorProperties(orderDetailEntity);

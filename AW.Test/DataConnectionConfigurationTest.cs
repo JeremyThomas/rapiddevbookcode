@@ -71,7 +71,7 @@ namespace AW.Tests
 			Assert.AreEqual(systemDataSqlite, dataSource.Providers.First().Name);
 		}
 
-        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod, Ignore]
+        [TestProperty("Winforms", "Interactive"), TestMethod, Ignore]
 		public void DataConnectionDialogTest()
 		{
 			var dcd = new DataConnectionDialog();
@@ -80,7 +80,7 @@ namespace AW.Tests
 			DataConnectionDialog.Show(dcd);
 		}
 
-        [TestCategory("Interactive"), TestCategory("Winforms"), TestMethod, Ignore]
+        [TestProperty("Winforms", "Interactive"), TestMethod, Ignore]
 		public void VisualStudioDataConnectionDialogTest()
 		{
 			var dcs = new DataConnectionConfiguration(null);
