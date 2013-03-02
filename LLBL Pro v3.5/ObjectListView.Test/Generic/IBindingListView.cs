@@ -543,7 +543,7 @@ namespace JesseJohnston.Tests.Generic
       Assert.AreEqual(5, view[2].IntegerValue);
     }
 
-    [Test]
+    [Test, Ignore, NUnit.Framework.Category("Date")]
     public void FilterEqualsDate()
     {
       var factory = ViewFactory<SimpleClass>.IList();
@@ -564,7 +564,7 @@ namespace JesseJohnston.Tests.Generic
       Assert.AreEqual(4, view[1].IntegerValue);
     }
 
-    [Test]
+    [Test, Ignore, NUnit.Framework.Category("Date")]
     public void FilterNotEqualsDate()
     {
       var factory = ViewFactory<SimpleClass>.IList();
@@ -586,7 +586,7 @@ namespace JesseJohnston.Tests.Generic
       Assert.AreEqual(5, view[2].IntegerValue);
     }
 
-    [Test]
+    [Test, Ignore, NUnit.Framework.Category("Date")]
     public void FilterNotEqualsDateAlternateOp()
     {
       var factory = ViewFactory<SimpleClass>.IList();
@@ -608,7 +608,7 @@ namespace JesseJohnston.Tests.Generic
       Assert.AreEqual(5, view[2].IntegerValue);
     }
 
-    [Test]
+    [Test, Ignore, NUnit.Framework.Category("Date")]
     public void FilterLessThanDate()
     {
       var factory = ViewFactory<SimpleClass>.IList();
@@ -676,7 +676,7 @@ namespace JesseJohnston.Tests.Generic
       Assert.AreEqual(5, view[3].IntegerValue);
     }
 
-    [Test]
+    [Test, Ignore, NUnit.Framework.Category("Date")]
     public void FilterGreaterThanEqualDate()
     {
       var factory = ViewFactory<SimpleClass>.IList();
