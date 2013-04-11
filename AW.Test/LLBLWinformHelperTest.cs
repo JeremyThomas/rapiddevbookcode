@@ -7,6 +7,7 @@ using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.LLBL;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
@@ -163,9 +164,9 @@ namespace AW.Tests
     {
       EntityTreeView.Nodes.Clear();
       LLBLWinformHelper.PopulateTreeViewWithSchema(EntityTreeView.Nodes, MetaSingletons.MetaData.GetType());
-      Assert.AreEqual(EntityHelperTest.NumberOfEntities, EntityTreeView.Nodes.Count);
+      EntityHelperTest.NumberOfEntities.Should().BeLessOrEqualTo(EntityTreeView.Nodes.Count);
       var treeNodes = EntityTreeView.Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).ToList();
-      Assert.AreEqual(NumSchemaObjects, treeNodes.Count());
+      NumSchemaObjects.Should().BeLessOrEqualTo(treeNodes.Count());
     }
 
     private static IEnumerable<Type> GetEntitiesTypes(Type baseType, ILinqMetaData linqMetaData)
