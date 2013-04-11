@@ -103,7 +103,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
     public void GetAWSchemaPropertiesTest()
     {
       var customType = typeof (LinqMetaData);
-      GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, false);
+      GetSchemaTest<EntityType>(customType, EntityFactoryFactory.GetFactory, false, 3);
     }
 
     /// <summary>
@@ -181,24 +181,28 @@ namespace AW.LLBLGen.DataContextDriver.Tests
       TestNorthWindToolTips(explorerItems, false);
     }
 
-    private static List<ExplorerItem> GetSchemaTest<TEnum>(Type customType, Func<TEnum, IEntityFactoryCore> entityFactoryFactory, bool useFields)
+    private static List<ExplorerItem> GetSchemaTest<TEnum>(Type customType, Func<TEnum, IEntityFactoryCore> entityFactoryFactory, bool useFields, byte additionalLinqMetaDataProperties = 0)
     {
       var entityTypes = GeneralHelper.EnumAsEnumerable<TEnum>();
       var target = new LLBLGenStaticDriver();
       var mockedIConnectionInfo = MockedIConnectionInfo(useFields);
 
       var actual = target.GetSchema(mockedIConnectionInfo.Object, customType);
-      Assert.AreEqual(entityTypes.Length, actual.Count);
+      Assert.AreEqual(entityTypes.Length + additionalLinqMetaDataProperties, actual.Count);
       var orderedEnumerable = entityTypes.OrderBy(et => EntityHelper.GetNameFromEntityName(et.ToString()));
       var index = 0;
       foreach (var entityType in orderedEnumerable)
       {
         var entityFactory = entityFactoryFactory(entityType);
         var entity = entityFactory.Create();
-        var fieldNames = entity.Fields.Cast<IEntityFieldCore>().Select(f => f.Name).Distinct();
+        var fieldNames = entity.Fields.Select(f => f.Name).Distinct();
         var navigatorProperties = useFields ? EntityHelper.GetNavigatorProperties(entity) : MetaDataHelper.GetPropertyDescriptors(entity.GetType()).FilterByIsEnumerable(typeof (IEntityCore));
-        var explorerItem = actual[index];
-        index++;
+        ExplorerItem explorerItem;
+        do
+        {
+          explorerItem = actual[index];
+          index++;
+        } while (explorerItem.Tag != null && (Type) explorerItem.Tag != entity.GetType());
         var entityName = entityFactory.ForEntityName + " - " + explorerItem.Text;
         var notCoreCount = navigatorProperties.Count(er => !EntityHelper.IsEntityCore(er));
         var coreCount = navigatorProperties.Count(EntityHelper.IsEntityCore);
