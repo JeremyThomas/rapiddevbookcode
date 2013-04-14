@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E779CBD7-1CCE-4796-AE12-00AB56A8A815}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NUnit.Extensions.Forms.TestApplications</RootNamespace>
+    <AssemblyName>NUnitForms.Test</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>NUnitForms.Test.xml</DocumentationFile>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>1591</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>NUnitForms.Test.xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NMock2, Version=2.0.0.44, Culture=neutral, PublicKeyToken=37d3be0adc87c2b7, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Lib\Test\NMock2.dll</HintPath>
+    </Reference>
+    <Reference Include="NMock3">
+      <HintPath>..\..\..\packages\NMock3.3.5.44\lib\net40\NMock3.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.2.12296, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataGridViewTest.cs" />
+    <Compile Include="GetMessageHookTest.cs" />
+    <Compile Include="KeyboardControllerTest.cs" />
+    <Compile Include="MockingTestFixture.cs" />
+    <Compile Include="OpenFileDialogTestOld.cs" />
+    <Compile Include="OuterTestTest.cs" />
+    <Compile Include="SendKeysParserTest.cs" />
+    <Compile Include="SendKeysTests.cs" />
+    <Compile Include="TestForms\DataGridViewTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\DataGridViewTestForm.Designer.cs">
+      <DependentUpon>DataGridViewTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\UnderscoreNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\UnderscoreNameForm.Designer.cs">
+      <DependentUpon>UnderscoreNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolStripContainerTest.cs" />
+    <Compile Include="DialogWithNoHandlerTest.cs" />
+    <Compile Include="ButtonTest.cs" />
+    <Compile Include="CheckBoxTest.cs" />
+    <Compile Include="CheckedListBoxTest.cs" />
+    <Compile Include="ComboBoxTest.cs" />
+    <Compile Include="ContextMenuTest.cs" />
+    <Compile Include="ControlTest.cs" />
+    <Compile Include="ControNamelTest.cs" />
+    <Compile Include="CustomTesters\ButtonControlTester.cs" />
+    <Compile Include="DatabindingTest.cs" />
+    <Compile Include="DynamicControlsTest.cs" />
+    <Compile Include="FormFinderTest.cs" />
+    <Compile Include="FormTest.cs" />
+    <Compile Include="LabelTest.cs" />
+    <Compile Include="LinkLabelTest.cs" />
+    <Compile Include="ListBoxTest.cs" />
+    <Compile Include="ListViewTest.cs" />
+    <Compile Include="MainMenuTest.cs" />
+    <Compile Include="ModalDialogsTest.cs" />
+    <Compile Include="ModalFormsTest.cs" />
+    <Compile Include="ModalFormsTestWithoutBaseClassTest.cs" />
+    <Compile Include="MouseControllerTest.cs" />
+    <Compile Include="MultipleFormsTest.cs" />
+    <Compile Include="OpenFileDialogTest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadioButtonTest.cs" />
+    <Compile Include="RichTextBoxTest.cs" />
+    <Compile Include="SaveFileDialogTest.cs" />
+    <Compile Include="SimpleAPIKeyboardTest.cs" />
+    <Compile Include="SimpleAPIMouseTest.cs" />
+    <Compile Include="SupportedAPI\SupportAssertExtensionTest.cs" />
+    <Compile Include="SupportedAPI\SupportAssertionExtensionTest.cs" />
+    <Compile Include="SupportedAPI\SupportFormSpecification.cs" />
+    <Compile Include="TabControlTest.cs" />
+    <Compile Include="TestForms\AmbiguousNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\AmbiguousNameForm.Designer.cs">
+      <DependentUpon>AmbiguousNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ButtonControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestForms\ButtonControl.Designer.cs">
+      <DependentUpon>ButtonControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ButtonTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\CheckBoxDataSetBindingTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\CheckBoxTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\CheckedListBoxTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ComboBoxTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ContextMenuTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\DialogWithNoHandlersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\DialogWithNoHandlersForm.Designer.cs">
+      <DependentUpon>DialogWithNoHandlersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\DynamicControlsTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\LabelTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\LinkLabelTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ListBoxTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ListViewTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\MainMenuTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ModalMultiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\MultiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\OpenFileDialogTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\OpenFileDialogTestForm.Designer.cs">
+      <DependentUpon>OpenFileDialogTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\RadioButtonTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\RichTextBoxDataSetBindingTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\RichTextBoxDataSetBindingTestForm.Designer.cs">
+      <DependentUpon>RichTextBoxDataSetBindingTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\RichTextBoxTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\RichTextBoxTestForm.Designer.cs">
+      <DependentUpon>RichTextBoxTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\SaveFileDialogTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\SaveFileDialogTestForm.Designer.cs">
+      <DependentUpon>SaveFileDialogTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ScriptDemoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\TabControlTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\TextBoxDataSetBindingTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\TextBoxTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToborTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToborTestForm.Designer.cs">
+      <DependentUpon>ToborTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ToolbarTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToolStripComboBoxTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToolStripComboBoxTestForm.Designer.cs">
+      <DependentUpon>ToolStripComboBoxTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ToolStripContainerTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToolStripContainerTestForm.Designer.cs">
+      <DependentUpon>ToolStripContainerTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ToolStripDropDownButtonTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToolStripDropDownButtonTestForm.Designer.cs">
+      <DependentUpon>ToolStripDropDownButtonTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ToolStripSplitButtonTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToolStripSplitButtonTestForm.Designer.cs">
+      <DependentUpon>ToolStripSplitButtonTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ToolStripTextBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToolStripTextBoxForm.Designer.cs">
+      <DependentUpon>ToolStripTextBoxForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToborTest.cs" />
+    <Compile Include="ToolStripButtonTest.cs" />
+    <Compile Include="TestForms\ToolStripButtonTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToolStripButtonTestForm.Designer.cs">
+      <DependentUpon>ToolStripButtonTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\ToolStripMenuTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestForms\ToolStripMenuTestForm.Designer.cs">
+      <DependentUpon>ToolStripMenuTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestForms\TreeViewTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextBoxTest.cs" />
+    <Compile Include="ToolbarTest.cs" />
+    <Compile Include="ToolStripComboBoxTest.cs" />
+    <Compile Include="ToolStripDropDownButtonTest.cs" />
+    <Compile Include="ToolStripMenuTest.cs" />
+    <Compile Include="ToolStripSplitButtonTest.cs" />
+    <Compile Include="ToolStripTextBoxTest.cs" />
+    <Compile Include="TreeViewTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestForms\AmbiguousNameForm.resx">
+      <DependentUpon>AmbiguousNameForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ButtonControl.resx">
+      <DependentUpon>ButtonControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ButtonTestForm.resx">
+      <DependentUpon>ButtonTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\CheckBoxDataSetBindingTestForm.resx">
+      <DependentUpon>CheckBoxDataSetBindingTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\CheckBoxTestForm.resx">
+      <DependentUpon>CheckBoxTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\CheckedListBoxTestForm.resx">
+      <DependentUpon>CheckedListBoxTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ComboBoxTestForm.resx">
+      <DependentUpon>ComboBoxTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ContextMenuTestForm.resx">
+      <DependentUpon>ContextMenuTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\DataGridViewTestForm.resx">
+      <DependentUpon>DataGridViewTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\DialogWithNoHandlersForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DialogWithNoHandlersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\DynamicControlsTestForm.resx">
+      <DependentUpon>DynamicControlsTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\LabelTestForm.resx">
+      <DependentUpon>LabelTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\LinkLabelTestForm.resx">
+      <DependentUpon>LinkLabelTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ListBoxTestForm.resx">
+      <DependentUpon>ListBoxTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ListViewTestForm.resx">
+      <DependentUpon>ListViewTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\MainMenuTestForm.resx">
+      <DependentUpon>MainMenuTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ModalMultiForm.resx">
+      <DependentUpon>ModalMultiForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\MultiForm.resx">
+      <DependentUpon>MultiForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\OpenFileDialogTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OpenFileDialogTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\RadioButtonTestForm.resx">
+      <DependentUpon>RadioButtonTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\RichTextBoxDataSetBindingTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>RichTextBoxDataSetBindingTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\RichTextBoxTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>RichTextBoxTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\SaveFileDialogTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SaveFileDialogTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ScriptDemoForm.resx">
+      <DependentUpon>ScriptDemoForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\TabControlTestForm.resx">
+      <DependentUpon>TabControlTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\TextBoxDataSetBindingTestForm.resx">
+      <DependentUpon>TextBoxDataSetBindingTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\TextBoxTestForm.resx">
+      <DependentUpon>TextBoxTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToborTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToborTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToolbarTestForm.resx">
+      <DependentUpon>ToolbarTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToolStripButtonTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolStripButtonTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToolStripComboBoxTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolStripComboBoxTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToolStripContainerTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolStripContainerTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToolStripDropDownButtonTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolStripDropDownButtonTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToolStripMenuTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolStripMenuTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToolStripSplitButtonTestForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolStripSplitButtonTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\ToolStripTextBoxForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolStripTextBoxForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\TreeViewTestForm.resx">
+      <DependentUpon>TreeViewTestForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestForms\UnderscoreNameForm.resx">
+      <DependentUpon>UnderscoreNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Ancillary\AdventureWorks.snk">
+      <Link>AdventureWorks.snk</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NUnitForms\NUnitForms.csproj">
+      <Project>{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B}</Project>
+      <Name>NUnitForms</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>

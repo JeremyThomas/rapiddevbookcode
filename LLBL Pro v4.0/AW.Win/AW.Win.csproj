@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AW.Win</RootNamespace>
+    <AssemblyName>AW.Win</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
+    <SignManifests>false</SignManifests>
+    <ManifestCertificateThumbprint>A52A1B242DFC58D05C553BFD37E77E9D4D89711F</ManifestCertificateThumbprint>
+    <ManifestKeyFile>AW.Win_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <PublishUrl>http://localhost/AW.Win/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Adventure Works Cycle Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SD.LLBLGen.Pro.DQE.SqlServer.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.LinqSupportClasses.NET35, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</HintPath>
+    </Reference>
+    <Reference Include="SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Ancillary\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Ancillary\GlobalAssemblyVersion.cs">
+      <Link>GlobalAssemblyVersion.cs</Link>
+    </Compile>
+    <Compile Include="frmOrderSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrderSearch.Designer.cs">
+      <DependentUpon>frmOrderSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrderSearch2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrderSearch2.Designer.cs">
+      <DependentUpon>frmOrderSearch2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrganizationStructure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrganizationStructure.Designer.cs">
+      <DependentUpon>frmOrganizationStructure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmReconcile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReconcile.Designer.cs">
+      <DependentUpon>FrmReconcile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTrace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTrace.Designer.cs">
+      <DependentUpon>frmTrace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCustomers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCustomers.Designer.cs">
+      <DependentUpon>frmCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrderEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrderEdit.Designer.cs">
+      <DependentUpon>frmOrderEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrganization.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrganization.Designer.cs">
+      <DependentUpon>frmOrganization.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStatusBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStatusBar.Designer.cs">
+      <DependentUpon>frmStatusBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmVacationBonus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmVacationBonus.Designer.cs">
+      <DependentUpon>frmVacationBonus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OrganizationHelper.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmOrderSearch.resx">
+      <DependentUpon>frmOrderSearch.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrderSearch2.resx">
+      <DependentUpon>frmOrderSearch2.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrganizationStructure.resx">
+      <DependentUpon>frmOrganizationStructure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmReconcile.resx">
+      <DependentUpon>FrmReconcile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTrace.resx">
+      <DependentUpon>frmTrace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCustomers.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrderEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmOrderEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOrganization.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmOrganization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStatusBar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmStatusBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmVacationBonus.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmVacationBonus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="..\Ancillary\AdventureWorks.snk">
+      <Link>AdventureWorks.snk</Link>
+    </None>
+    <None Include="App.config" />
+    <None Include="Properties\DataSources\AW.Data.CollectionClasses.SalesOrderHeaderCollection.datasource" />
+    <None Include="Properties\DataSources\AW.Data.EntityClasses.EmployeeEntity.datasource" />
+    <None Include="Properties\DataSources\AW.Data.EntityClasses.SalesOrderHeaderEntity.datasource" />
+    <None Include="Properties\DataSources\FrmTrace.datasource" />
+    <None Include="Properties\DataSources\SD.LLBLGen.Pro.ORMSupportClasses.EntityField.datasource" />
+    <None Include="Properties\DataSources\SD.LLBLGen.Pro.ORMSupportClasses.EntityFields.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AW.Data\AW.Data.csproj">
+      <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
+      <Name>AW.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">
+      <Project>{7919C746-73F3-4279-A53B-CC6C08F42318}</Project>
+      <Name>AW.Helper.LLBL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">
+      <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Winforms.Helpers.LLBL\AW.Winforms.Helpers.LLBL.csproj">
+      <Project>{A67A2102-BA0E-48B3-9EF8-831F72B47160}</Project>
+      <Name>AW.Winforms.Helpers.LLBL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
+      <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
+      <Name>AW.Winforms.Helpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Adventure Works Cycle Icon.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
