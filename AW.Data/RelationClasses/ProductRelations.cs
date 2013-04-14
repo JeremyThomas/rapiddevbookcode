@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: Product. </summary>
+	/// <summary>Implements the relations factory for the entity: Product. </summary>
 	public partial class ProductRelations
 	{
 		/// <summary>CTor</summary>
@@ -30,21 +30,20 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-			toReturn.Add(this.BillOfMaterialsEntityUsingComponentID);
-			toReturn.Add(this.BillOfMaterialsEntityUsingProductAssemblyID);
+			toReturn.Add(this.BillOfMaterialEntityUsingProductAssemblyID);
+			toReturn.Add(this.BillOfMaterialEntityUsingComponentID);
 			toReturn.Add(this.ProductCostHistoryEntityUsingProductID);
 			toReturn.Add(this.ProductDocumentEntityUsingProductID);
 			toReturn.Add(this.ProductInventoryEntityUsingProductID);
 			toReturn.Add(this.ProductListPriceHistoryEntityUsingProductID);
 			toReturn.Add(this.ProductProductPhotoEntityUsingProductID);
 			toReturn.Add(this.ProductReviewEntityUsingProductID);
+			toReturn.Add(this.TransactionHistoryEntityUsingProductID);
+			toReturn.Add(this.WorkOrderEntityUsingProductID);
 			toReturn.Add(this.ProductVendorEntityUsingProductID);
 			toReturn.Add(this.PurchaseOrderDetailEntityUsingProductID);
 			toReturn.Add(this.ShoppingCartItemEntityUsingProductID);
 			toReturn.Add(this.SpecialOfferProductEntityUsingProductID);
-			toReturn.Add(this.TransactionHistoryEntityUsingProductID);
-			toReturn.Add(this.WorkOrderEntityUsingProductID);
-
 			toReturn.Add(this.ProductModelEntityUsingProductModelID);
 			toReturn.Add(this.ProductSubcategoryEntityUsingProductSubcategoryID);
 			toReturn.Add(this.UnitMeasureEntityUsingSizeUnitMeasureCode);
@@ -54,32 +53,32 @@ namespace AW.Data.RelationClasses
 
 		#region Class Property Declarations
 
-		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialsEntity over the 1:n relation they have, using the relation between the fields:
-		/// Product.ProductID - BillOfMaterials.ComponentID
+		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialEntity over the 1:n relation they have, using the relation between the fields:
+		/// Product.ProductID - BillOfMaterial.ProductAssemblyID
 		/// </summary>
-		public virtual IEntityRelation BillOfMaterialsEntityUsingComponentID
+		public virtual IEntityRelation BillOfMaterialEntityUsingProductAssemblyID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfMaterials" , true);
-				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialsFields.ComponentID);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfAssemblyMaterials" , true);
+				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ProductAssemblyID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialsEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", false);
 				return relation;
 			}
 		}
 
-		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialsEntity over the 1:n relation they have, using the relation between the fields:
-		/// Product.ProductID - BillOfMaterials.ProductAssemblyID
+		/// <summary>Returns a new IEntityRelation object, between ProductEntity and BillOfMaterialEntity over the 1:n relation they have, using the relation between the fields:
+		/// Product.ProductID - BillOfMaterial.ComponentID
 		/// </summary>
-		public virtual IEntityRelation BillOfMaterialsEntityUsingProductAssemblyID
+		public virtual IEntityRelation BillOfMaterialEntityUsingComponentID
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfMaterials_" , true);
-				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialsFields.ProductAssemblyID);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "BillOfComponentMaterials" , true);
+				relation.AddEntityFieldPair(ProductFields.ProductID, BillOfMaterialFields.ComponentID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialsEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("BillOfMaterialEntity", false);
 				return relation;
 			}
 		}
@@ -91,7 +90,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductCostHistory" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductCostHistories" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, ProductCostHistoryFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductCostHistoryEntity", false);
@@ -106,7 +105,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductDocument" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductDocuments" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, ProductDocumentFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductDocumentEntity", false);
@@ -121,7 +120,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductInventory" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductInventories" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, ProductInventoryFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductInventoryEntity", false);
@@ -136,7 +135,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductListPriceHistory" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductListPriceHistories" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, ProductListPriceHistoryFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductListPriceHistoryEntity", false);
@@ -151,7 +150,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductProductPhoto" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductProductPhotos" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, ProductProductPhotoFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductProductPhotoEntity", false);
@@ -166,10 +165,40 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductReview" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductReviews" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, ProductReviewFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductReviewEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ProductEntity and TransactionHistoryEntity over the 1:n relation they have, using the relation between the fields:
+		/// Product.ProductID - TransactionHistory.ProductID
+		/// </summary>
+		public virtual IEntityRelation TransactionHistoryEntityUsingProductID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "TransactionHistories" , true);
+				relation.AddEntityFieldPair(ProductFields.ProductID, TransactionHistoryFields.ProductID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("TransactionHistoryEntity", false);
+				return relation;
+			}
+		}
+
+		/// <summary>Returns a new IEntityRelation object, between ProductEntity and WorkOrderEntity over the 1:n relation they have, using the relation between the fields:
+		/// Product.ProductID - WorkOrder.ProductID
+		/// </summary>
+		public virtual IEntityRelation WorkOrderEntityUsingProductID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "WorkOrders" , true);
+				relation.AddEntityFieldPair(ProductFields.ProductID, WorkOrderFields.ProductID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderEntity", false);
 				return relation;
 			}
 		}
@@ -181,7 +210,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductVendor" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductVendors" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, ProductVendorFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductVendorEntity", false);
@@ -196,7 +225,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderDetail" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "PurchaseOrderDetails" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, PurchaseOrderDetailFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("PurchaseOrderDetailEntity", false);
@@ -211,7 +240,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ShoppingCartItem" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ShoppingCartItems" , true);
 				relation.AddEntityFieldPair(ProductFields.ProductID, ShoppingCartItemFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ShoppingCartItemEntity", false);
@@ -230,36 +259,6 @@ namespace AW.Data.RelationClasses
 				relation.AddEntityFieldPair(ProductFields.ProductID, SpecialOfferProductFields.ProductID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SpecialOfferProductEntity", false);
-				return relation;
-			}
-		}
-
-		/// <summary>Returns a new IEntityRelation object, between ProductEntity and TransactionHistoryEntity over the 1:n relation they have, using the relation between the fields:
-		/// Product.ProductID - TransactionHistory.ProductID
-		/// </summary>
-		public virtual IEntityRelation TransactionHistoryEntityUsingProductID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "TransactionHistory" , true);
-				relation.AddEntityFieldPair(ProductFields.ProductID, TransactionHistoryFields.ProductID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("TransactionHistoryEntity", false);
-				return relation;
-			}
-		}
-
-		/// <summary>Returns a new IEntityRelation object, between ProductEntity and WorkOrderEntity over the 1:n relation they have, using the relation between the fields:
-		/// Product.ProductID - WorkOrder.ProductID
-		/// </summary>
-		public virtual IEntityRelation WorkOrderEntityUsingProductID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "WorkOrder" , true);
-				relation.AddEntityFieldPair(ProductFields.ProductID, WorkOrderFields.ProductID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderEntity", false);
 				return relation;
 			}
 		}
@@ -300,7 +299,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "UnitMeasure", false);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "SizeUnitMeasure", false);
 				relation.AddEntityFieldPair(UnitMeasureFields.UnitMeasureCode, ProductFields.SizeUnitMeasureCode);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UnitMeasureEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
@@ -314,23 +313,49 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "UnitMeasure_", false);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "WeightUnitMeasure", false);
 				relation.AddEntityFieldPair(UnitMeasureFields.UnitMeasureCode, ProductFields.WeightUnitMeasureCode);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("UnitMeasureEntity", false);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductEntity", true);
 				return relation;
 			}
 		}
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticProductRelations
+	{
+		internal static readonly IEntityRelation BillOfMaterialEntityUsingProductAssemblyIDStatic = new ProductRelations().BillOfMaterialEntityUsingProductAssemblyID;
+		internal static readonly IEntityRelation BillOfMaterialEntityUsingComponentIDStatic = new ProductRelations().BillOfMaterialEntityUsingComponentID;
+		internal static readonly IEntityRelation ProductCostHistoryEntityUsingProductIDStatic = new ProductRelations().ProductCostHistoryEntityUsingProductID;
+		internal static readonly IEntityRelation ProductDocumentEntityUsingProductIDStatic = new ProductRelations().ProductDocumentEntityUsingProductID;
+		internal static readonly IEntityRelation ProductInventoryEntityUsingProductIDStatic = new ProductRelations().ProductInventoryEntityUsingProductID;
+		internal static readonly IEntityRelation ProductListPriceHistoryEntityUsingProductIDStatic = new ProductRelations().ProductListPriceHistoryEntityUsingProductID;
+		internal static readonly IEntityRelation ProductProductPhotoEntityUsingProductIDStatic = new ProductRelations().ProductProductPhotoEntityUsingProductID;
+		internal static readonly IEntityRelation ProductReviewEntityUsingProductIDStatic = new ProductRelations().ProductReviewEntityUsingProductID;
+		internal static readonly IEntityRelation TransactionHistoryEntityUsingProductIDStatic = new ProductRelations().TransactionHistoryEntityUsingProductID;
+		internal static readonly IEntityRelation WorkOrderEntityUsingProductIDStatic = new ProductRelations().WorkOrderEntityUsingProductID;
+		internal static readonly IEntityRelation ProductVendorEntityUsingProductIDStatic = new ProductRelations().ProductVendorEntityUsingProductID;
+		internal static readonly IEntityRelation PurchaseOrderDetailEntityUsingProductIDStatic = new ProductRelations().PurchaseOrderDetailEntityUsingProductID;
+		internal static readonly IEntityRelation ShoppingCartItemEntityUsingProductIDStatic = new ProductRelations().ShoppingCartItemEntityUsingProductID;
+		internal static readonly IEntityRelation SpecialOfferProductEntityUsingProductIDStatic = new ProductRelations().SpecialOfferProductEntityUsingProductID;
+		internal static readonly IEntityRelation ProductModelEntityUsingProductModelIDStatic = new ProductRelations().ProductModelEntityUsingProductModelID;
+		internal static readonly IEntityRelation ProductSubcategoryEntityUsingProductSubcategoryIDStatic = new ProductRelations().ProductSubcategoryEntityUsingProductSubcategoryID;
+		internal static readonly IEntityRelation UnitMeasureEntityUsingSizeUnitMeasureCodeStatic = new ProductRelations().UnitMeasureEntityUsingSizeUnitMeasureCode;
+		internal static readonly IEntityRelation UnitMeasureEntityUsingWeightUnitMeasureCodeStatic = new ProductRelations().UnitMeasureEntityUsingWeightUnitMeasureCode;
+
+		/// <summary>CTor</summary>
+		static StaticProductRelations()
+		{
+		}
 	}
 }

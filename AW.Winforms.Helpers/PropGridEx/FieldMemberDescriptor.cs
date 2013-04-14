@@ -5,166 +5,167 @@ using System.ComponentModel;
 using System.Reflection;
 
 //http://www.codeproject.com/KB/grid/PropertyGridExWinForms.aspx
+
 namespace AW.Winforms.Helpers.PropGridEx
 {
-  /// <summary>
-  /// Custom PropertyDescriptor for Fields
-  /// </summary>
-  internal class FieldMemberDescriptor : PropertyDescriptor
-  {
-    private readonly FieldInfo m_FieldInfo;
+	/// <summary>
+	/// Custom PropertyDescriptor for Fields
+	/// </summary>
+	internal class FieldMemberDescriptor : PropertyDescriptor
+	{
+		private readonly FieldInfo m_FieldInfo;
 
-    internal FieldMemberDescriptor(FieldInfo field)
-      : base(String.Concat(field.DeclaringType.Name, ".", field.Name), (Attribute[])field.GetCustomAttributes(typeof(Attribute), true))
-    {
-      m_FieldInfo = field;
-    }
-
-
-    public override bool CanResetValue(object component)
-    {
-      return false;
-    }
-
-    public override Type ComponentType
-    {
-      get { return m_FieldInfo.FieldType; }
-    }
-
-    public override object GetValue(object component)
-    {
-      if (component == null)
-        return null;
-      // can be used for static fields too 
-      if (m_FieldInfo.IsStatic)
-        return m_FieldInfo.GetValue(null);
-      var value = m_FieldInfo.GetValue(component);
-      if (value is Delegate)
-      {
-        var m = ((Delegate)value).Method;
-        return m.DeclaringType.FullName + "." + m.Name;
-      }
-        return m_FieldInfo.GetValue(component);
-    }
+		internal FieldMemberDescriptor(FieldInfo field)
+			: base(String.Concat(field.DeclaringType.Name, ".", field.Name), (Attribute[]) field.GetCustomAttributes(typeof (Attribute), true))
+		{
+			m_FieldInfo = field;
+		}
 
 
-    /// <summary>
-    /// Create an AttributeCollection that ensures an ExpandableObjectConverter
-    /// and add Description and Category attributes
-    /// </summary>
-    public override AttributeCollection Attributes
-    {
-      get
-      {
-        var hasExpandebleTypeConverter = false;
-        var baseAttribs = base.Attributes;
-        var attributes = new List<Attribute>(baseAttribs.Count);
-        foreach (Attribute baseAttribute in baseAttribs)
-        {
-          var tca = baseAttribute as TypeConverterAttribute;
+		public override bool CanResetValue(object component)
+		{
+			return false;
+		}
 
-          if ((tca != null) && (Type.GetType(tca.ConverterTypeName).IsSubclassOf(typeof (ExpandableObjectConverter))))
-          {
-            attributes.Add(baseAttribute);
-            hasExpandebleTypeConverter = true;
-          }
-          else
-          {
-            attributes.Add(baseAttribute);
-          }
-        }
+		public override Type ComponentType
+		{
+			get { return m_FieldInfo.FieldType; }
+		}
 
-
-        var category = "";
-        if (m_FieldInfo.IsPublic)
-          category = "public";
-        else if (m_FieldInfo.IsPrivate)
-          category = "private";
-        else if (m_FieldInfo.IsFamily)
-          category = "protected";
-        else if (m_FieldInfo.IsFamilyAndAssembly)
-          category = "protected internal";
-        else if (m_FieldInfo.IsAssembly)
-          category = "internal";
+		public override object GetValue(object component)
+		{
+			if (component == null)
+				return null;
+			// can be used for static fields too 
+			if (m_FieldInfo.IsStatic)
+				return m_FieldInfo.GetValue(null);
+			var value = m_FieldInfo.GetValue(component);
+			if (value is Delegate)
+			{
+				var m = ((Delegate) value).Method;
+				return m.DeclaringType.FullName + "." + m.Name;
+			}
+			return m_FieldInfo.GetValue(component);
+		}
 
 
-        attributes.Add(new CategoryAttribute(category));
+		/// <summary>
+		/// Create an AttributeCollection that ensures an ExpandableObjectConverter
+		/// and add Description and Category attributes
+		/// </summary>
+		public override AttributeCollection Attributes
+		{
+			get
+			{
+				var hasExpandebleTypeConverter = false;
+				var baseAttribs = base.Attributes;
+				var attributes = new List<Attribute>(baseAttribs.Count);
+				foreach (Attribute baseAttribute in baseAttribs)
+				{
+					var tca = baseAttribute as TypeConverterAttribute;
 
-        attributes.Add(new DescriptionAttribute(String.Format("{0} {1} {2}\n\rDefined in class {3}", category, m_FieldInfo.FieldType, m_FieldInfo.Name, m_FieldInfo.DeclaringType.FullName)));
+					if ((tca != null) && (Type.GetType(tca.ConverterTypeName).IsSubclassOf(typeof (ExpandableObjectConverter))))
+					{
+						attributes.Add(baseAttribute);
+						hasExpandebleTypeConverter = true;
+					}
+					else
+					{
+						attributes.Add(baseAttribute);
+					}
+				}
 
 
-        // add expandable type conv?
-        if ((!hasExpandebleTypeConverter) && (!m_FieldInfo.FieldType.IsValueType) && (m_FieldInfo.FieldType != typeof (string)))
-        {
-          attributes.Add(new TypeConverterAttribute(typeof (ExpandableObjectConverter)));
-        }
+				var category = "";
+				if (m_FieldInfo.IsPublic)
+					category = "public";
+				else if (m_FieldInfo.IsPrivate)
+					category = "private";
+				else if (m_FieldInfo.IsFamily)
+					category = "protected";
+				else if (m_FieldInfo.IsFamilyAndAssembly)
+					category = "protected internal";
+				else if (m_FieldInfo.IsAssembly)
+					category = "internal";
 
-        var result = new AttributeCollection(attributes.ToArray());
+
+				attributes.Add(new CategoryAttribute(category));
+
+				attributes.Add(new DescriptionAttribute(String.Format("{0} {1} {2}\n\rDefined in class {3}", category, m_FieldInfo.FieldType, m_FieldInfo.Name, m_FieldInfo.DeclaringType.FullName)));
 
 
-        return result;
-      }
-    }
+				// add expandable type conv?
+				if ((!hasExpandebleTypeConverter) && (!m_FieldInfo.FieldType.IsValueType) && (m_FieldInfo.FieldType != typeof (string)))
+				{
+					attributes.Add(new TypeConverterAttribute(typeof (ExpandableObjectConverter)));
+				}
 
-    public override bool IsReadOnly
-    {
-      get { return false; }
-    }
+				var result = new AttributeCollection(attributes.ToArray());
 
-    public override Type PropertyType
-    {
-      get { return m_FieldInfo.FieldType; }
-    }
 
-    public FieldInfo FieldInfo
-    {
-      get { return m_FieldInfo; }
-    }
+				return result;
+			}
+		}
 
-    public override void ResetValue(object component)
-    {
-      throw new Exception("The method or operation is not implemented.");
-    }
+		public override bool IsReadOnly
+		{
+			get { return false; }
+		}
 
-    public override void SetValue(object component, object value)
-    {
-      if (component == null)
-        return;
-      m_FieldInfo.SetValue(component, value);
-    }
+		public override Type PropertyType
+		{
+			get { return m_FieldInfo.FieldType; }
+		}
 
-    public override bool ShouldSerializeValue(object component)
-    {
-      return false;
-    }
+		public FieldInfo FieldInfo
+		{
+			get { return m_FieldInfo; }
+		}
 
-    public override PropertyDescriptorCollection GetChildProperties(object instance, Attribute[] filter)
-    {
-      // get default child properties
-      var props = base.GetChildProperties(instance, filter);
+		public override void ResetValue(object component)
+		{
+			throw new Exception("The method or operation is not implemented.");
+		}
 
-      // if it is an IList
-      var list = instance as IList;
-      if (list != null)
-      {
-        // add special property Descriptors for the items
-        for (var i = 0; i < list.Count; i++)
-        {
-          props.Add(new ListItemMemberDescriptor(list, i));
-        }
-      }
+		public override void SetValue(object component, object value)
+		{
+			if (component == null)
+				return;
+			m_FieldInfo.SetValue(component, value);
+		}
 
-      // if it is an IDictionary
-      var dict = instance as IDictionary;
-      if (dict != null)
-      {
-        foreach (var key in dict.Keys)
-        {
-          // add special property Descriptors for the values
-          props.Add(new DictionaryItemMemberDescriptor(dict, key));
-        }
-      }
-      return props;
-    }
-  }
+		public override bool ShouldSerializeValue(object component)
+		{
+			return false;
+		}
+
+		public override PropertyDescriptorCollection GetChildProperties(object instance, Attribute[] filter)
+		{
+			// get default child properties
+			var props = base.GetChildProperties(instance, filter);
+
+			// if it is an IList
+			var list = instance as IList;
+			if (list != null)
+			{
+				// add special property Descriptors for the items
+				for (var i = 0; i < list.Count; i++)
+				{
+					props.Add(new ListItemMemberDescriptor(list, i));
+				}
+			}
+
+			// if it is an IDictionary
+			var dict = instance as IDictionary;
+			if (dict != null)
+			{
+				foreach (var key in dict.Keys)
+				{
+					// add special property Descriptors for the values
+					props.Add(new DictionaryItemMemberDescriptor(dict, key));
+				}
+			}
+			return props;
+		}
+	}
 }

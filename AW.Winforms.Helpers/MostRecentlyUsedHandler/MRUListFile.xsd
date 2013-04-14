@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <xs:schema id="MRUListFile" targetNamespace="http://mruhandler/MRUListFile.xsd" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns="http://mruhandler/MRUListFile.xsd" xmlns:mstns="http://mruhandler/MRUListFile.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
 	<xs:element name="MRUListFile" msdata:IsDataSet="true">
 		<xs:complexType>

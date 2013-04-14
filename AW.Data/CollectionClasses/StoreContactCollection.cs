@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -28,7 +27,6 @@ namespace AW.Data.CollectionClasses
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
 
 	/// <summary>Collection class for storing and retrieving collections of StoreContactEntity objects. </summary>
 	[Serializable]
@@ -41,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public StoreContactCollection(IList<StoreContactEntity> initialContents):base(new StoreContactEntityFactory())
+		public StoreContactCollection(IEnumerable<StoreContactEntity> initialContents):base(new StoreContactEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -68,7 +66,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiManyToOne(IEntity contactInstance, IEntity contactTypeInstance, IEntity storeInstance)
 		{
-			return GetMultiManyToOne(contactInstance, contactTypeInstance, storeInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(contactInstance, contactTypeInstance, storeInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this StoreContactCollection object all StoreContactEntity objects which have data in common with the specified related Entities.
@@ -80,7 +78,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiManyToOne(IEntity contactInstance, IEntity contactTypeInstance, IEntity storeInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(contactInstance, contactTypeInstance, storeInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(contactInstance, contactTypeInstance, storeInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this StoreContactCollection object all StoreContactEntity objects which have data in common with the specified related Entities.
@@ -118,12 +116,11 @@ namespace AW.Data.CollectionClasses
 			{
 				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
 			}
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			StoreContactDAO dao = DAOFactory.CreateStoreContactDAO();
-			return dao.GetMulti(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, filter, contactInstance, contactTypeInstance, storeInstance, pageNumber, pageSize);
+			return DAOFactory.CreateStoreContactDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, contactInstance, contactTypeInstance, storeInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all StoreContact entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
@@ -134,8 +131,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
 		public int DeleteMultiManyToOne(IEntity contactInstance, IEntity contactTypeInstance, IEntity storeInstance)
 		{
-			StoreContactDAO dao = DAOFactory.CreateStoreContactDAO();
-			return dao.DeleteMulti(base.Transaction, contactInstance, contactTypeInstance, storeInstance);
+			return DAOFactory.CreateStoreContactDAO().DeleteMulti(this.Transaction, contactInstance, contactTypeInstance, storeInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all StoreContact entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
@@ -147,10 +143,8 @@ namespace AW.Data.CollectionClasses
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
 		public int UpdateMultiManyToOne(StoreContactEntity entityWithNewValues, IEntity contactInstance, IEntity contactTypeInstance, IEntity storeInstance)
 		{
-			StoreContactDAO dao = DAOFactory.CreateStoreContactDAO();
-			return dao.UpdateMulti(entityWithNewValues, base.Transaction, contactInstance, contactTypeInstance, storeInstance);
+			return DAOFactory.CreateStoreContactDAO().UpdateMulti(entityWithNewValues, this.Transaction, contactInstance, contactTypeInstance, storeInstance);
 		}
-
 
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
@@ -209,8 +203,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -253,8 +246,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			StoreContactDAO dao = DAOFactory.CreateStoreContactDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateStoreContactDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -271,12 +263,10 @@ namespace AW.Data.CollectionClasses
 			return new Transaction(levelOfIsolation, name);
 		}
 
-
 		#region Custom EntityCollection code
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCollectionCode
 		// __LLBLGENPRO_USER_CODE_REGION_END
-		
 		#endregion
 		
 		#region Included Code

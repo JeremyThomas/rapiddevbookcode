@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -28,109 +28,25 @@ namespace AW.Data.FactoryClasses
 		{
 		}
 
-		/// <summary>Creates a new AddressDAO object</summary>
-		/// <returns>the new DAO object ready to use for Address Entities</returns>
-		public static AddressDAO CreateAddressDAO()
+		/// <summary>Creates a new AwbuildVersionDAO object</summary>
+		/// <returns>the new DAO object ready to use for AwbuildVersion Entities</returns>
+		public static AwbuildVersionDAO CreateAwbuildVersionDAO()
 		{
-			return new AddressDAO();
+			return new AwbuildVersionDAO();
 		}
 
-		/// <summary>Creates a new AddressTypeDAO object</summary>
-		/// <returns>the new DAO object ready to use for AddressType Entities</returns>
-		public static AddressTypeDAO CreateAddressTypeDAO()
+		/// <summary>Creates a new DatabaseLogDAO object</summary>
+		/// <returns>the new DAO object ready to use for DatabaseLog Entities</returns>
+		public static DatabaseLogDAO CreateDatabaseLogDAO()
 		{
-			return new AddressTypeDAO();
+			return new DatabaseLogDAO();
 		}
 
-		/// <summary>Creates a new BillOfMaterialsDAO object</summary>
-		/// <returns>the new DAO object ready to use for BillOfMaterials Entities</returns>
-		public static BillOfMaterialsDAO CreateBillOfMaterialsDAO()
+		/// <summary>Creates a new ErrorLogDAO object</summary>
+		/// <returns>the new DAO object ready to use for ErrorLog Entities</returns>
+		public static ErrorLogDAO CreateErrorLogDAO()
 		{
-			return new BillOfMaterialsDAO();
-		}
-
-		/// <summary>Creates a new ContactDAO object</summary>
-		/// <returns>the new DAO object ready to use for Contact Entities</returns>
-		public static ContactDAO CreateContactDAO()
-		{
-			return new ContactDAO();
-		}
-
-		/// <summary>Creates a new ContactCreditCardDAO object</summary>
-		/// <returns>the new DAO object ready to use for ContactCreditCard Entities</returns>
-		public static ContactCreditCardDAO CreateContactCreditCardDAO()
-		{
-			return new ContactCreditCardDAO();
-		}
-
-		/// <summary>Creates a new ContactTypeDAO object</summary>
-		/// <returns>the new DAO object ready to use for ContactType Entities</returns>
-		public static ContactTypeDAO CreateContactTypeDAO()
-		{
-			return new ContactTypeDAO();
-		}
-
-		/// <summary>Creates a new CountryRegionDAO object</summary>
-		/// <returns>the new DAO object ready to use for CountryRegion Entities</returns>
-		public static CountryRegionDAO CreateCountryRegionDAO()
-		{
-			return new CountryRegionDAO();
-		}
-
-		/// <summary>Creates a new CountryRegionCurrencyDAO object</summary>
-		/// <returns>the new DAO object ready to use for CountryRegionCurrency Entities</returns>
-		public static CountryRegionCurrencyDAO CreateCountryRegionCurrencyDAO()
-		{
-			return new CountryRegionCurrencyDAO();
-		}
-
-		/// <summary>Creates a new CreditCardDAO object</summary>
-		/// <returns>the new DAO object ready to use for CreditCard Entities</returns>
-		public static CreditCardDAO CreateCreditCardDAO()
-		{
-			return new CreditCardDAO();
-		}
-
-		/// <summary>Creates a new CultureDAO object</summary>
-		/// <returns>the new DAO object ready to use for Culture Entities</returns>
-		public static CultureDAO CreateCultureDAO()
-		{
-			return new CultureDAO();
-		}
-
-		/// <summary>Creates a new CurrencyDAO object</summary>
-		/// <returns>the new DAO object ready to use for Currency Entities</returns>
-		public static CurrencyDAO CreateCurrencyDAO()
-		{
-			return new CurrencyDAO();
-		}
-
-		/// <summary>Creates a new CurrencyRateDAO object</summary>
-		/// <returns>the new DAO object ready to use for CurrencyRate Entities</returns>
-		public static CurrencyRateDAO CreateCurrencyRateDAO()
-		{
-			return new CurrencyRateDAO();
-		}
-
-		/// <summary>Creates a new CustomerDAO object</summary>
-		/// <returns>the new DAO object ready to use for Customer Entities</returns>
-		public static CustomerDAO CreateCustomerDAO()
-		{
-			return new CustomerDAO();
-		}
-
-		/// <summary>Creates a new CustomerAddressDAO object</summary>
-		/// <returns>the new DAO object ready to use for CustomerAddress Entities</returns>
-		public static CustomerAddressDAO CreateCustomerAddressDAO()
-		{
-			return new CustomerAddressDAO();
-		}
-
-		/// <summary>Creates a new CustomerViewRelatedDAO object</summary>
-		/// <returns>the new DAO object ready to use for CustomerViewRelated Entities</returns>
-		public static CustomerViewRelatedDAO CreateCustomerViewRelatedDAO()
-		{
-			return new CustomerViewRelatedDAO();
+			return new ErrorLogDAO();
 		}
 
 		/// <summary>Creates a new DepartmentDAO object</summary>
@@ -138,13 +54,6 @@ namespace AW.Data.FactoryClasses
 		public static DepartmentDAO CreateDepartmentDAO()
 		{
 			return new DepartmentDAO();
-		}
-
-		/// <summary>Creates a new DocumentDAO object</summary>
-		/// <returns>the new DAO object ready to use for Document Entities</returns>
-		public static DocumentDAO CreateDocumentDAO()
-		{
-			return new DocumentDAO();
 		}
 
 		/// <summary>Creates a new EmployeeDAO object</summary>
@@ -175,25 +84,88 @@ namespace AW.Data.FactoryClasses
 			return new EmployeePayHistoryDAO();
 		}
 
-		/// <summary>Creates a new IllustrationDAO object</summary>
-		/// <returns>the new DAO object ready to use for Illustration Entities</returns>
-		public static IllustrationDAO CreateIllustrationDAO()
-		{
-			return new IllustrationDAO();
-		}
-
-		/// <summary>Creates a new IndividualDAO object</summary>
-		/// <returns>the new DAO object ready to use for Individual Entities</returns>
-		public static IndividualDAO CreateIndividualDAO()
-		{
-			return new IndividualDAO();
-		}
-
 		/// <summary>Creates a new JobCandidateDAO object</summary>
 		/// <returns>the new DAO object ready to use for JobCandidate Entities</returns>
 		public static JobCandidateDAO CreateJobCandidateDAO()
 		{
 			return new JobCandidateDAO();
+		}
+
+		/// <summary>Creates a new ShiftDAO object</summary>
+		/// <returns>the new DAO object ready to use for Shift Entities</returns>
+		public static ShiftDAO CreateShiftDAO()
+		{
+			return new ShiftDAO();
+		}
+
+		/// <summary>Creates a new AddressDAO object</summary>
+		/// <returns>the new DAO object ready to use for Address Entities</returns>
+		public static AddressDAO CreateAddressDAO()
+		{
+			return new AddressDAO();
+		}
+
+		/// <summary>Creates a new AddressTypeDAO object</summary>
+		/// <returns>the new DAO object ready to use for AddressType Entities</returns>
+		public static AddressTypeDAO CreateAddressTypeDAO()
+		{
+			return new AddressTypeDAO();
+		}
+
+		/// <summary>Creates a new ContactDAO object</summary>
+		/// <returns>the new DAO object ready to use for Contact Entities</returns>
+		public static ContactDAO CreateContactDAO()
+		{
+			return new ContactDAO();
+		}
+
+		/// <summary>Creates a new ContactTypeDAO object</summary>
+		/// <returns>the new DAO object ready to use for ContactType Entities</returns>
+		public static ContactTypeDAO CreateContactTypeDAO()
+		{
+			return new ContactTypeDAO();
+		}
+
+		/// <summary>Creates a new CountryRegionDAO object</summary>
+		/// <returns>the new DAO object ready to use for CountryRegion Entities</returns>
+		public static CountryRegionDAO CreateCountryRegionDAO()
+		{
+			return new CountryRegionDAO();
+		}
+
+		/// <summary>Creates a new StateProvinceDAO object</summary>
+		/// <returns>the new DAO object ready to use for StateProvince Entities</returns>
+		public static StateProvinceDAO CreateStateProvinceDAO()
+		{
+			return new StateProvinceDAO();
+		}
+
+		/// <summary>Creates a new BillOfMaterialDAO object</summary>
+		/// <returns>the new DAO object ready to use for BillOfMaterial Entities</returns>
+		public static BillOfMaterialDAO CreateBillOfMaterialDAO()
+		{
+			return new BillOfMaterialDAO();
+		}
+
+		/// <summary>Creates a new CultureDAO object</summary>
+		/// <returns>the new DAO object ready to use for Culture Entities</returns>
+		public static CultureDAO CreateCultureDAO()
+		{
+			return new CultureDAO();
+		}
+
+		/// <summary>Creates a new DocumentDAO object</summary>
+		/// <returns>the new DAO object ready to use for Document Entities</returns>
+		public static DocumentDAO CreateDocumentDAO()
+		{
+			return new DocumentDAO();
+		}
+
+		/// <summary>Creates a new IllustrationDAO object</summary>
+		/// <returns>the new DAO object ready to use for Illustration Entities</returns>
+		public static IllustrationDAO CreateIllustrationDAO()
+		{
+			return new IllustrationDAO();
 		}
 
 		/// <summary>Creates a new LocationDAO object</summary>
@@ -301,6 +273,69 @@ namespace AW.Data.FactoryClasses
 			return new ProductSubcategoryDAO();
 		}
 
+		/// <summary>Creates a new PurchaseOrderHistoryDAO object</summary>
+		/// <returns>the new DAO object ready to use for PurchaseOrderHistory Entities</returns>
+		public static PurchaseOrderHistoryDAO CreatePurchaseOrderHistoryDAO()
+		{
+			return new PurchaseOrderHistoryDAO();
+		}
+
+		/// <summary>Creates a new SalesOrderHistoryDAO object</summary>
+		/// <returns>the new DAO object ready to use for SalesOrderHistory Entities</returns>
+		public static SalesOrderHistoryDAO CreateSalesOrderHistoryDAO()
+		{
+			return new SalesOrderHistoryDAO();
+		}
+
+		/// <summary>Creates a new ScrapReasonDAO object</summary>
+		/// <returns>the new DAO object ready to use for ScrapReason Entities</returns>
+		public static ScrapReasonDAO CreateScrapReasonDAO()
+		{
+			return new ScrapReasonDAO();
+		}
+
+		/// <summary>Creates a new TransactionHistoryDAO object</summary>
+		/// <returns>the new DAO object ready to use for TransactionHistory Entities</returns>
+		public static TransactionHistoryDAO CreateTransactionHistoryDAO()
+		{
+			return new TransactionHistoryDAO();
+		}
+
+		/// <summary>Creates a new TransactionHistoryArchiveDAO object</summary>
+		/// <returns>the new DAO object ready to use for TransactionHistoryArchive Entities</returns>
+		public static TransactionHistoryArchiveDAO CreateTransactionHistoryArchiveDAO()
+		{
+			return new TransactionHistoryArchiveDAO();
+		}
+
+		/// <summary>Creates a new UnitMeasureDAO object</summary>
+		/// <returns>the new DAO object ready to use for UnitMeasure Entities</returns>
+		public static UnitMeasureDAO CreateUnitMeasureDAO()
+		{
+			return new UnitMeasureDAO();
+		}
+
+		/// <summary>Creates a new WorkOrderDAO object</summary>
+		/// <returns>the new DAO object ready to use for WorkOrder Entities</returns>
+		public static WorkOrderDAO CreateWorkOrderDAO()
+		{
+			return new WorkOrderDAO();
+		}
+
+		/// <summary>Creates a new WorkOrderHistoryDAO object</summary>
+		/// <returns>the new DAO object ready to use for WorkOrderHistory Entities</returns>
+		public static WorkOrderHistoryDAO CreateWorkOrderHistoryDAO()
+		{
+			return new WorkOrderHistoryDAO();
+		}
+
+		/// <summary>Creates a new WorkOrderRoutingDAO object</summary>
+		/// <returns>the new DAO object ready to use for WorkOrderRouting Entities</returns>
+		public static WorkOrderRoutingDAO CreateWorkOrderRoutingDAO()
+		{
+			return new WorkOrderRoutingDAO();
+		}
+
 		/// <summary>Creates a new ProductVendorDAO object</summary>
 		/// <returns>the new DAO object ready to use for ProductVendor Entities</returns>
 		public static ProductVendorDAO CreateProductVendorDAO()
@@ -320,6 +355,97 @@ namespace AW.Data.FactoryClasses
 		public static PurchaseOrderHeaderDAO CreatePurchaseOrderHeaderDAO()
 		{
 			return new PurchaseOrderHeaderDAO();
+		}
+
+		/// <summary>Creates a new ShipMethodDAO object</summary>
+		/// <returns>the new DAO object ready to use for ShipMethod Entities</returns>
+		public static ShipMethodDAO CreateShipMethodDAO()
+		{
+			return new ShipMethodDAO();
+		}
+
+		/// <summary>Creates a new VendorDAO object</summary>
+		/// <returns>the new DAO object ready to use for Vendor Entities</returns>
+		public static VendorDAO CreateVendorDAO()
+		{
+			return new VendorDAO();
+		}
+
+		/// <summary>Creates a new VendorAddressDAO object</summary>
+		/// <returns>the new DAO object ready to use for VendorAddress Entities</returns>
+		public static VendorAddressDAO CreateVendorAddressDAO()
+		{
+			return new VendorAddressDAO();
+		}
+
+		/// <summary>Creates a new VendorContactDAO object</summary>
+		/// <returns>the new DAO object ready to use for VendorContact Entities</returns>
+		public static VendorContactDAO CreateVendorContactDAO()
+		{
+			return new VendorContactDAO();
+		}
+
+		/// <summary>Creates a new ContactCreditCardDAO object</summary>
+		/// <returns>the new DAO object ready to use for ContactCreditCard Entities</returns>
+		public static ContactCreditCardDAO CreateContactCreditCardDAO()
+		{
+			return new ContactCreditCardDAO();
+		}
+
+		/// <summary>Creates a new CountryRegionCurrencyDAO object</summary>
+		/// <returns>the new DAO object ready to use for CountryRegionCurrency Entities</returns>
+		public static CountryRegionCurrencyDAO CreateCountryRegionCurrencyDAO()
+		{
+			return new CountryRegionCurrencyDAO();
+		}
+
+		/// <summary>Creates a new CreditCardDAO object</summary>
+		/// <returns>the new DAO object ready to use for CreditCard Entities</returns>
+		public static CreditCardDAO CreateCreditCardDAO()
+		{
+			return new CreditCardDAO();
+		}
+
+		/// <summary>Creates a new CurrencyDAO object</summary>
+		/// <returns>the new DAO object ready to use for Currency Entities</returns>
+		public static CurrencyDAO CreateCurrencyDAO()
+		{
+			return new CurrencyDAO();
+		}
+
+		/// <summary>Creates a new CurrencyRateDAO object</summary>
+		/// <returns>the new DAO object ready to use for CurrencyRate Entities</returns>
+		public static CurrencyRateDAO CreateCurrencyRateDAO()
+		{
+			return new CurrencyRateDAO();
+		}
+
+		/// <summary>Creates a new CustomerDAO object</summary>
+		/// <returns>the new DAO object ready to use for Customer Entities</returns>
+		public static CustomerDAO CreateCustomerDAO()
+		{
+			return new CustomerDAO();
+		}
+
+		/// <summary>Creates a new CustomerAddressDAO object</summary>
+		/// <returns>the new DAO object ready to use for CustomerAddress Entities</returns>
+		public static CustomerAddressDAO CreateCustomerAddressDAO()
+		{
+			return new CustomerAddressDAO();
+		}
+
+		/// <summary>Creates a new CustomerViewRelatedDAO object</summary>
+		/// <returns>the new DAO object ready to use for CustomerViewRelated Entities</returns>
+		public static CustomerViewRelatedDAO CreateCustomerViewRelatedDAO()
+		{
+			return new CustomerViewRelatedDAO();
+		}
+
+		/// <summary>Creates a new IndividualDAO object</summary>
+		/// <returns>the new DAO object ready to use for Individual Entities</returns>
+		public static IndividualDAO CreateIndividualDAO()
+		{
+			return new IndividualDAO();
 		}
 
 		/// <summary>Creates a new SalesOrderDetailDAO object</summary>
@@ -385,27 +511,6 @@ namespace AW.Data.FactoryClasses
 			return new SalesTerritoryHistoryDAO();
 		}
 
-		/// <summary>Creates a new ScrapReasonDAO object</summary>
-		/// <returns>the new DAO object ready to use for ScrapReason Entities</returns>
-		public static ScrapReasonDAO CreateScrapReasonDAO()
-		{
-			return new ScrapReasonDAO();
-		}
-
-		/// <summary>Creates a new ShiftDAO object</summary>
-		/// <returns>the new DAO object ready to use for Shift Entities</returns>
-		public static ShiftDAO CreateShiftDAO()
-		{
-			return new ShiftDAO();
-		}
-
-		/// <summary>Creates a new ShipMethodDAO object</summary>
-		/// <returns>the new DAO object ready to use for ShipMethod Entities</returns>
-		public static ShipMethodDAO CreateShipMethodDAO()
-		{
-			return new ShipMethodDAO();
-		}
-
 		/// <summary>Creates a new ShoppingCartItemDAO object</summary>
 		/// <returns>the new DAO object ready to use for ShoppingCartItem Entities</returns>
 		public static ShoppingCartItemDAO CreateShoppingCartItemDAO()
@@ -427,13 +532,6 @@ namespace AW.Data.FactoryClasses
 			return new SpecialOfferProductDAO();
 		}
 
-		/// <summary>Creates a new StateProvinceDAO object</summary>
-		/// <returns>the new DAO object ready to use for StateProvince Entities</returns>
-		public static StateProvinceDAO CreateStateProvinceDAO()
-		{
-			return new StateProvinceDAO();
-		}
-
 		/// <summary>Creates a new StoreDAO object</summary>
 		/// <returns>the new DAO object ready to use for Store Entities</returns>
 		public static StoreDAO CreateStoreDAO()
@@ -446,62 +544,6 @@ namespace AW.Data.FactoryClasses
 		public static StoreContactDAO CreateStoreContactDAO()
 		{
 			return new StoreContactDAO();
-		}
-
-		/// <summary>Creates a new TransactionHistoryDAO object</summary>
-		/// <returns>the new DAO object ready to use for TransactionHistory Entities</returns>
-		public static TransactionHistoryDAO CreateTransactionHistoryDAO()
-		{
-			return new TransactionHistoryDAO();
-		}
-
-		/// <summary>Creates a new TransactionHistoryArchiveDAO object</summary>
-		/// <returns>the new DAO object ready to use for TransactionHistoryArchive Entities</returns>
-		public static TransactionHistoryArchiveDAO CreateTransactionHistoryArchiveDAO()
-		{
-			return new TransactionHistoryArchiveDAO();
-		}
-
-		/// <summary>Creates a new UnitMeasureDAO object</summary>
-		/// <returns>the new DAO object ready to use for UnitMeasure Entities</returns>
-		public static UnitMeasureDAO CreateUnitMeasureDAO()
-		{
-			return new UnitMeasureDAO();
-		}
-
-		/// <summary>Creates a new VendorDAO object</summary>
-		/// <returns>the new DAO object ready to use for Vendor Entities</returns>
-		public static VendorDAO CreateVendorDAO()
-		{
-			return new VendorDAO();
-		}
-
-		/// <summary>Creates a new VendorAddressDAO object</summary>
-		/// <returns>the new DAO object ready to use for VendorAddress Entities</returns>
-		public static VendorAddressDAO CreateVendorAddressDAO()
-		{
-			return new VendorAddressDAO();
-		}
-
-		/// <summary>Creates a new VendorContactDAO object</summary>
-		/// <returns>the new DAO object ready to use for VendorContact Entities</returns>
-		public static VendorContactDAO CreateVendorContactDAO()
-		{
-			return new VendorContactDAO();
-		}
-
-		/// <summary>Creates a new WorkOrderDAO object</summary>
-		/// <returns>the new DAO object ready to use for WorkOrder Entities</returns>
-		public static WorkOrderDAO CreateWorkOrderDAO()
-		{
-			return new WorkOrderDAO();
-		}
-
-		/// <summary>Creates a new WorkOrderRoutingDAO object</summary>
-		/// <returns>the new DAO object ready to use for WorkOrderRouting Entities</returns>
-		public static WorkOrderRoutingDAO CreateWorkOrderRoutingDAO()
-		{
-			return new WorkOrderRoutingDAO();
 		}
 
 		/// <summary>Creates a new TypedListDAO object</summary>

@@ -120,7 +120,7 @@
   <metadata name="bindingSourceEnumerable.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>159, 17</value>
   </metadata>
-  <metadata name="bindingNavigator1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="bindingNavigatorData.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
@@ -193,6 +193,20 @@
         x8MAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="toolStripButtonCancelEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHbSURBVDhPY2CgJZi05VvMxI1fd8zZ/fnRsgNfjqzY/2XK
+        siNfpYiys3fD1x09Gz7/6V739Xnjik+P6xd/uTN35+fHKw58/YTVkO5Vr/4vOfnFAGR619ovy/rXf/md
+        MuHNG5e8E78tU7f/MU3Y9N217O7HmVu/vll14MtNFFesPPaPs3HJy//z9n+9Wr/8a0Pfpi9/4rqe/nMt
+        OP7fLmPnL5PYVced8rc+NI9f+ies483PxQc+38fwRvHM5/+zZn3+Xzjny//IrvcvrBK3/DWLX/fDJHpl
+        Pkixb/0OFcOwhS9cy2++r1/6ZQ+GAUl9z/57N735H937+X/ZnDf/NbwmrTaKWuEIVxgaymyTcei3a9md
+        1/UrvxzCMCCo+el/s+L7/z2bXoFdktjz6H/twreWMIXGxmmsdukH/nrUPfvWtOLzFgwDnCoe/3couvbf
+        KvP4f5P4bf8No9b+1/CZ+h+m0CRxjZJt5v5/fi0v/+ZPe1RKMCpBAYusSN17srtz2c0/aRPf/qtf9Z+N
+        oAHoCixS9l0MaXv3L6zubC5JmhP7PijZ552P8W9698+n8so3Bob/jCQZ4FH5xNm36cMvt6LzP40jV3iR
+        pBmkOKLnc6RzydVGg8SVoiRrposGAEPz9lTNLZmpAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="saveToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -239,7 +253,7 @@
         1Taa0ZztoeZUF9UnO5XmDg4du1t5zff1mQ566A8dAOcMIXbZrQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="toolStripButtonCancelEdit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolStripButtonObjectBrowser.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIISURBVDhPpZP7S1NxGMbPPxKaXVUkMEq8IpKUCoY/hGgI

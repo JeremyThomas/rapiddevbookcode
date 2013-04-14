@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 3.5
 // Code is generated on: 
 // Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
 // Templates vendor: Solutions Design.
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: EmployeeAddress. </summary>
+	/// <summary>Implements the relations factory for the entity: EmployeeAddress. </summary>
 	public partial class EmployeeAddressRelations
 	{
 		/// <summary>CTor</summary>
@@ -30,10 +30,8 @@ namespace AW.Data.RelationClasses
 		public virtual List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
-
-
-			toReturn.Add(this.AddressEntityUsingAddressID);
 			toReturn.Add(this.EmployeeEntityUsingEmployeeID);
+			toReturn.Add(this.AddressEntityUsingAddressID);
 			return toReturn;
 		}
 
@@ -41,20 +39,6 @@ namespace AW.Data.RelationClasses
 
 
 
-		/// <summary>Returns a new IEntityRelation object, between EmployeeAddressEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
-		/// EmployeeAddress.AddressID - Address.AddressID
-		/// </summary>
-		public virtual IEntityRelation AddressEntityUsingAddressID
-		{
-			get
-			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
-				relation.AddEntityFieldPair(AddressFields.AddressID, EmployeeAddressFields.AddressID);
-				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
-				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeAddressEntity", true);
-				return relation;
-			}
-		}
 		/// <summary>Returns a new IEntityRelation object, between EmployeeAddressEntity and EmployeeEntity over the m:1 relation they have, using the relation between the fields:
 		/// EmployeeAddress.EmployeeID - Employee.EmployeeID
 		/// </summary>
@@ -69,16 +53,40 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
-
+		/// <summary>Returns a new IEntityRelation object, between EmployeeAddressEntity and AddressEntity over the m:1 relation they have, using the relation between the fields:
+		/// EmployeeAddress.AddressID - Address.AddressID
+		/// </summary>
+		public virtual IEntityRelation AddressEntityUsingAddressID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Address", false);
+				relation.AddEntityFieldPair(AddressFields.AddressID, EmployeeAddressFields.AddressID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("AddressEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("EmployeeAddressEntity", true);
+				return relation;
+			}
+		}
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticEmployeeAddressRelations
+	{
+		internal static readonly IEntityRelation EmployeeEntityUsingEmployeeIDStatic = new EmployeeAddressRelations().EmployeeEntityUsingEmployeeID;
+		internal static readonly IEntityRelation AddressEntityUsingAddressIDStatic = new EmployeeAddressRelations().AddressEntityUsingAddressID;
+
+		/// <summary>CTor</summary>
+		static StaticEmployeeAddressRelations()
+		{
+		}
 	}
 }

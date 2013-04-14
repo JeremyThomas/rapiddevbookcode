@@ -117,8 +117,107 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Members" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Members.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SqlCeConnectionUIControl_InvalidConnectionProperties" xml:space="preserve">
+    <value>The connection properties object must be of type SqlCeConnectionProperties.</value>
+  </data>
+  <data name="Reg_NotifyService" xml:space="preserve">
+    <value>PlatformService:          {0}</value>
+  </data>
+  <data name="SqlConnectionProperties_DataSource" xml:space="preserve">
+    <value>The file path and name of the SQL Server Compact database.</value>
+  </data>
+  <data name="SqlConnectionProperties_Password" xml:space="preserve">
+    <value>The database password, which can be up to 40 characters in length.</value>
+  </data>
+  <data name="SqlConnectionProperties_Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="SqlConnectionProperties_Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="SqlConnectionSupport_UnrecognizedProviderObject" xml:space="preserve">
+    <value>The specified provider object is not a System.Data.SqlClient.SqlConnection.</value>
+  </data>
+  <data name="SqlConnectionUIControl_BrowseFileTitle" xml:space="preserve">
+    <value>Select SQL Server Compact {0} Database File</value>
+  </data>
+  <data name="SqlConnectionUIControl_BrowseFileFilter" xml:space="preserve">
+    <value>SQL Server Compact {0} Databases (*.sdf)|*.sdf|All Files (*.*)|*.*</value>
+  </data>
+  <data name="SqlConnectionUIControl_BrowseFileDefaultExt" xml:space="preserve">
+    <value>sdf;</value>
+  </data>
+  <data name="SqlConnectionUIControl_ConnectionFailed" xml:space="preserve">
+    <value>Connection Failed</value>
+  </data>
+  <data name="SqlDataParameter_ParseNotImplemented" xml:space="preserve">
+    <value>Parsing values of SqlDbType {0} is not implemented.</value>
+  </data>
+  <data name="BadSite" xml:space="preserve">
+    <value>The {0} object was incorrectly sited.</value>
+  </data>
+  <data name="SqlCeConnectionProperties_FileNeedsUpgrading" xml:space="preserve">
+    <value>The selected database was created with an earlier version of SQL Server Compact and needs to be upgraded to SQL Server Compact 3.5 before the connection can be opened or tested.  Upgrade the database by creating a new data connection and completing the Add Connection dialog box.</value>
+  </data>
+  <data name="SqlCeConnectionProperties_FileNeedsRepair" xml:space="preserve">
+    <value>The selected database file may be corrupted. Run the repair ultility to check the database or repair the database by creating a new data connection and completing the Add Connection dialog box.</value>
+  </data>
+  <data name="SqlCeConnectionProperties_MustSpecifyDataSource" xml:space="preserve">
+    <value>This connection cannot be tested because no database file has been specified.</value>
+  </data>
+  <data name="SqlCeConnectionProperties_DeviceNotSupported" xml:space="preserve">
+    <value>This version of Visual Studio does not support creating connection to the database files on a mobile device.</value>
+  </data>
+  <data name="SqlCeConnectionProperties_DatabaseCorruptNeedsRepair" xml:space="preserve">
+    <value>The specified file is either not a valid SQL Server Compact file or it is corrupted. Would you like to repair it?</value>
+  </data>
+  <data name="SqlCeConnectionProperties_DatabaseCorruptNeedsRepairTitle" xml:space="preserve">
+    <value>Repair SQL Server Compact Database</value>
+  </data>
+  <data name="SqlCeObjectEnumerator_InvalidParameters" xml:space="preserve">
+    <value>The parameters to EnumerateObjects are invalid.</value>
+  </data>
+  <data name="SqlCeDataObjectIdentifierConverter_InvalidIdentifier" xml:space="preserve">
+    <value>The specified identifier is in an invalid format.</value>
+  </data>
+  <data name="SqlCeDataObjectIdentifierConverter_InvalidType" xml:space="preserve">
+    <value>The type "{0}" was not found.</value>
+  </data>
+  <data name="DataProvider_SqlEverywhere" xml:space="preserve">
+    <value>.NET Framework Data Provider for Microsoft SQL Server Compact {0}</value>
+  </data>
+  <data name="DataProvider_SqlEverywhere_Description" xml:space="preserve">
+    <value>Use this data provider to connect to a Microsoft SQL Server Compact {0} database file.</value>
+  </data>
+  <data name="SqlConnectionProperties_PersistSecurityInfo" xml:space="preserve">
+    <value>Returns security-sensitive information like password as part of the connection (Default is false).</value>
+  </data>
+  <data name="SqlConnectionProperties_MaxDatabaseSize" xml:space="preserve">
+    <value>The maximum size of the database, in MB (Default 128).</value>
+  </data>
+  <data name="SqlConnectionProperties_Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="SqlConnectionProperties_Initialization" xml:space="preserve">
+    <value>Initialization</value>
+  </data>
+  <data name="SqlConnectionProperties_EncryptionMode" xml:space="preserve">
+    <value>Specifies the encryption of the database file (Default mode is platform default).</value>
+  </data>
+  <data name="SqlConnectionProperties_AutoshrinkThreshold" xml:space="preserve">
+    <value>The percent of free space in the database file that is allowed before autoshrink begins (Default is 60).</value>
+  </data>
+  <data name="SqlConnectionProperties_DefaultLockEscalation" xml:space="preserve">
+    <value>The number of locks a transaction will acquire before attempting escalation from row to page, or from page to table (Default is 100).</value>
+  </data>
+  <data name="SqlConnectionProperties_LocaleIdentifier" xml:space="preserve">
+    <value>The locale ID (LCID) to use with the database.</value>
+  </data>
+  <data name="SqlConnectionProperties_TempFileDirectory" xml:space="preserve">
+    <value>The location of the temporary database.</value>
   </data>
 </root>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Helper.LLBL
@@ -63,9 +64,8 @@ namespace AW.Helper.LLBL
 		private static bool ValidateFieldValue(IEntityCore involvedEntity, string fieldName, IEnumerable<ValidationAttribute> validationAttributes, object value)
 		{
 			involvedEntity.SetEntityFieldError(fieldName, String.Empty, false);
-			foreach (var validationAttribute in validationAttributes)
-				if (!validationAttribute.IsValid(value))
-					involvedEntity.SetEntityFieldError(fieldName, validationAttribute.ErrorMessage, true);
+			foreach (var validationAttribute in validationAttributes.Where(validationAttribute => !validationAttribute.IsValid(value)))
+				involvedEntity.SetEntityFieldError(fieldName, string.IsNullOrEmpty(validationAttribute.ErrorMessage) ? validationAttribute.FormatErrorMessage(fieldName) : validationAttribute.ErrorMessage, true);
 			return String.IsNullOrEmpty(((IDataErrorInfo) involvedEntity)[fieldName]);
 		}
 	}

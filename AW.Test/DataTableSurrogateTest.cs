@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -68,6 +69,26 @@ namespace AW.Tests
 			TestDataTableSurrogateSerializeDeserialize(dt.Tables[0]);
 			TestDataTableSurrogateSerializeDeserialize(GeneralHelper.CopyToDataTable(MetaDataHelper.GetPropertiesToDisplay(typeof (AddressTypeEntity))));
 			//TestDataTableSurrogateSerializeDeserialize(GeneralHelper.CopyToDataTable(MetaSingletons.MetaData.AddressType));
+		}
+
+		///<summary>
+		///	A test for DataTableSurrogate Constructor
+		///</summary>
+		[TestMethod]
+		public void DataTableSurrogateSerializeDeserializexmlSchemaTest()
+		{
+			var xmlSchema = TestData.GetTestXmlSchema();
+			TestDataTableSurrogateSerializeDeserialize(xmlSchema.Items.CopyToDataTable());
+		}
+
+		[TestMethod]
+		public void DataTableSurrogateSerializeDeserializeStringTest()
+		{
+			var enumerable = new[] { "s1", "s2", "s3" };
+			var stringEnumerable = enumerable.Where(s => s.Length > 1);
+			var datatable = GeneralHelper.CopyToDataTable(stringEnumerable);
+			Assert.AreEqual(enumerable[0], datatable.Rows[0][0].ToString());
+			TestDataTableSurrogateSerializeDeserialize(datatable);
 		}
 
 		private static void TestDataTableSurrogateSerializeDeserialize(DataTable datatable)

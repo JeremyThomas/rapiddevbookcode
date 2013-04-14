@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
 using AW.Data.DaoClasses;
+using AW.Helper;
+using AW.Helper.Annotations;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
@@ -11,26 +14,25 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
-	public partial class FrmTrace : Form
+	public partial class FrmTrace : FrmPersistantLocation, INotifyPropertyChanged
 	{
 		private int _textBoxTraceListenerIndex;
 		private TextBoxTraceListener _textBoxTraceListener;
+    private readonly TraceLevel[] _traceLevelEnumerable = GeneralHelper.EnumAsEnumerable(TraceLevel.Error, TraceLevel.Warning);
 
-		public FrmTrace()
+	  public FrmTrace()
 		{
 			InitializeComponent();
 			var dummy = DynamicQueryEngine.ArithAbortOn;
-			comboBoxDQETraceLevel.DataSource = Enum.GetValues(typeof (TraceLevel));
-			comboBoxLinqTraceLevel.DataSource = Enum.GetValues(typeof (TraceLevel));
-			comboBoxDQETraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "TraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
-			comboBoxLinqTraceLevel.DataBindings.Add(new Binding("SelectedValue", Settings.Default, "LinqTraceLevel", true, DataSourceUpdateMode.OnPropertyChanged));
+	    frmTraceBindingSource.DataSource = this;
 		}
 
 		private void FrmTrace_Load(object sender, EventArgs e)
 		{
 			DQETraceLevel = Settings.Default.TraceLevel;
 			LinqTraceLevel = Settings.Default.LinqTraceLevel;
-			AWHelper.SetWindowSizeAndLocation(this, Settings.Default.TraceWindowSizeLocation);
+      QueryExecutionTraceLevel = Settings.Default.QueryExecutionTraceLevel;
+      PersistenceExecutionTraceLevel = Settings.Default.PersistenceExecutionTraceLevel;
 			checkBoxSQLTrace_CheckedChanged(checkBoxSQLTrace, e);
 		}
 
@@ -40,14 +42,13 @@ namespace AW.Win
 			_textBoxTraceListenerIndex = Trace.Listeners.Add(_textBoxTraceListener);
 		}
 
-		private void frmTrace_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			Settings.Default.TraceWindowSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-		}
-
-		private void frmTrace_FormClosed(object sender, FormClosedEventArgs e)
+	  private void frmTrace_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Trace.Listeners.RemoveAt(_textBoxTraceListenerIndex);
+      Settings.Default.QueryExecutionTraceLevel = QueryExecutionTraceLevel;
+      Settings.Default.LinqTraceLevel = LinqTraceLevel;
+      Settings.Default.TraceLevel = DQETraceLevel;
+      Settings.Default.PersistenceExecutionTraceLevel = PersistenceExecutionTraceLevel;
 		}
 
 		public TraceLevel DQETraceLevel
@@ -56,15 +57,8 @@ namespace AW.Win
 			set
 			{
 				DynamicQueryEngineBase.Switch.Level = value;
-				if (!value.Equals(comboBoxDQETraceLevel.SelectedItem))
-					comboBoxDQETraceLevel.SelectedItem = value;
+        OnPropertyChanged("DQETraceLevel");
 			}
-		}
-
-		private void comboBoxTraceLevel_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (comboBoxDQETraceLevel.SelectedItem != null && CanFocus)
-				DQETraceLevel = (TraceLevel) comboBoxDQETraceLevel.SelectedItem;
 		}
 
 		public TraceLevel LinqTraceLevel
@@ -73,16 +67,34 @@ namespace AW.Win
 			set
 			{
 				GenericExpressionHandler.Switch.Level = value;
-				if (!value.Equals(comboBoxLinqTraceLevel.SelectedItem))
-					comboBoxLinqTraceLevel.SelectedItem = value;
+        OnPropertyChanged("LinqTraceLevel");
 			}
 		}
 
-		private void comboBoxLinqTraceLevel_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (comboBoxLinqTraceLevel.SelectedItem != null && CanFocus)
-				LinqTraceLevel = (TraceLevel) comboBoxLinqTraceLevel.SelectedItem;
-		}
+    public TraceLevel QueryExecutionTraceLevel
+    {
+      get { return TraceHelper.QueryExecutionSwitch.Level; }
+      set
+      {
+        TraceHelper.QueryExecutionSwitch.Level = value;
+        OnPropertyChanged("QueryExecutionTraceLevel");
+      }
+    }
+
+    public TraceLevel PersistenceExecutionTraceLevel
+    {
+      get { return TraceHelper.PersistenceExecutionSwitch.Level; }
+      set
+      {
+        TraceHelper.PersistenceExecutionSwitch.Level = value;
+        OnPropertyChanged("PersistenceExecutionTraceLevel");
+      }
+    }
+
+	  public TraceLevel[] TraceLevelEnumerable
+	  {
+	    get { return _traceLevelEnumerable; }
+	  }
 
 		private void buttonClearTrace_Click(object sender, EventArgs e)
 		{
@@ -96,15 +108,24 @@ namespace AW.Win
 
 		private void SetSQLTrace(bool traceON)
 		{
-			//if (traceON)
-			//  CommonDaoBase.SQLTraceEvent += CommonDaoBase_SQLTraceEvent;
-			//else
-			//  CommonDaoBase.SQLTraceEvent -= CommonDaoBase_SQLTraceEvent;
+      if (traceON)
+        CommonDaoBase.SQLTraceEvent += CommonDaoBase_SQLTraceEvent;
+      else
+        CommonDaoBase.SQLTraceEvent -= CommonDaoBase_SQLTraceEvent;
 		}
 
 		private void CommonDaoBase_SQLTraceEvent(object sender, SQLTraceEventArgs e)
 		{
 			_textBoxTraceListener.WriteLine(e.SQLTrace);
 		}
+
+	  public event PropertyChangedEventHandler PropertyChanged;
+
+	  [NotifyPropertyChangedInvocator]
+	  protected virtual void OnPropertyChanged(string propertyName)
+	  {
+	    var handler = PropertyChanged;
+	    if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+	  }
 	}
 }
