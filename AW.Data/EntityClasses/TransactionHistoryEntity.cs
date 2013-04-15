@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.5
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -299,7 +299,7 @@ namespace AW.Data.EntityClasses
 		public static  TransactionHistoryEntity FetchPolymorphic(ITransaction transactionToUse, System.Int32 transactionID, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.TransactionHistoryEntity);
-			fields[(int)TransactionHistoryFieldIndex.TransactionID].ForcedCurrentValueWrite(transactionID);
+			fields.ForcedValueWrite((int)TransactionHistoryFieldIndex.TransactionID, transactionID);
 			return (TransactionHistoryEntity)new TransactionHistoryDAO().FetchExistingPolymorphic(transactionToUse, fields, contextToUse, excludedIncludedFields);
 		}
 
@@ -426,7 +426,7 @@ namespace AW.Data.EntityClasses
 			InitClassMembers();
 			if(this.Fields.State==EntityState.New)
 			{
-				this.Fields[(int)TransactionHistoryFieldIndex.TransactionType].ForcedCurrentValueWrite("A");
+				this.Fields.ForcedValueWrite((int)TransactionHistoryFieldIndex.TransactionType, "A");
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -447,7 +447,7 @@ namespace AW.Data.EntityClasses
 			Fetch(transactionID, prefetchPathToUse, null, null);
 			if(this.Fields.State==EntityState.New)
 			{
-				this.Fields[(int)TransactionHistoryFieldIndex.TransactionType].ForcedCurrentValueWrite("A");
+				this.Fields.ForcedValueWrite((int)TransactionHistoryFieldIndex.TransactionType, "A");
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END

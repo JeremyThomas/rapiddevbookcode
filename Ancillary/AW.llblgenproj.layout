@@ -17,23 +17,6 @@
         <Entity Name="HumanResources:Employee" X="-35.4998779" Y="-116.623566" />
       </EntityDefinitions>
     </ModelView>
-    <ModelView Name="Sales">
-      <EntityDefinitions>
-        <Entity Name="Sales:SpecialOfferProduct" X="114.56424" Y="16.2520447" />
-        <Entity Name="Sales:SpecialOffer" X="408.56427" Y="26.2523041" />
-        <Entity Name="Production:Product" X="357.482422" Y="338.914154" />
-        <Entity Name="Sales:SalesOrderDetail" X="107.5018" Y="580.438843" />
-        <Entity Name="Sales:ContactCreditCard" X="726.001343" Y="36.33661" />
-        <Entity Name="Person:Contact" X="607.667236" Y="289.50177" />
-        <Entity Name="Sales:CreditCard" X="1037.58459" Y="16.4078522" />
-        <Entity Name="Sales:SalesOrderHeaderSalesReason" X="1225.00012" Y="414.335571" />
-        <Entity Name="Sales:SalesOrderHeader" X="944.666748" Y="278.334656" />
-        <Entity Name="Sales:SalesReason" X="1290.62524" Y="609.4082" />
-        <Entity Name="Sales:CountryRegionCurrency" X="1587.667" Y="24.1229858" />
-        <Entity Name="Person:CountryRegion" X="1766.667" Y="256.122467" />
-        <Entity Name="Sales:Currency" X="1344.72107" Y="231.078232" />
-      </EntityDefinitions>
-    </ModelView>
     <ModelView Name="Person">
       <EntityDefinitions>
         <Entity Name="Person:Address" X="0.5005493" Y="0.5002141" />
@@ -55,6 +38,23 @@
         <Entity Name="Production:ProductProductPhoto" X="598.605164" Y="665.567261" />
         <Entity Name="Production:ProductPhoto" X="238.639954" Y="697.5107" />
         <Entity Name="Production:Product" X="414.61676" Y="122.728638" />
+      </EntityDefinitions>
+    </ModelView>
+    <ModelView Name="Sales">
+      <EntityDefinitions>
+        <Entity Name="Sales:SpecialOfferProduct" X="114.56424" Y="16.2520447" />
+        <Entity Name="Sales:SpecialOffer" X="408.56427" Y="26.2523041" />
+        <Entity Name="Production:Product" X="357.482422" Y="338.914154" />
+        <Entity Name="Sales:SalesOrderDetail" X="107.5018" Y="580.438843" />
+        <Entity Name="Sales:ContactCreditCard" X="726.001343" Y="36.33661" />
+        <Entity Name="Person:Contact" X="607.667236" Y="289.50177" />
+        <Entity Name="Sales:CreditCard" X="1037.58459" Y="16.4078522" />
+        <Entity Name="Sales:SalesOrderHeaderSalesReason" X="1225.00012" Y="414.335571" />
+        <Entity Name="Sales:SalesOrderHeader" X="944.666748" Y="278.334656" />
+        <Entity Name="Sales:SalesReason" X="1290.62524" Y="609.4082" />
+        <Entity Name="Sales:CountryRegionCurrency" X="1587.667" Y="24.1229858" />
+        <Entity Name="Person:CountryRegion" X="1766.667" Y="256.122467" />
+        <Entity Name="Sales:Currency" X="1344.72107" Y="231.078232" />
       </EntityDefinitions>
     </ModelView>
   </ModelViews>

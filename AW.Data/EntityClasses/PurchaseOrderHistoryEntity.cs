@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.5
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -259,7 +259,7 @@ namespace AW.Data.EntityClasses
 		public static new PurchaseOrderHistoryEntity FetchPolymorphic(ITransaction transactionToUse, System.Int32 transactionID, Context contextToUse, ExcludeIncludeFieldsList excludedIncludedFields)
 		{
 			IEntityFields fields = EntityFieldsFactory.CreateEntityFieldsObject(AW.Data.EntityType.PurchaseOrderHistoryEntity);
-			fields[(int)PurchaseOrderHistoryFieldIndex.TransactionID].ForcedCurrentValueWrite(transactionID);
+			fields.ForcedValueWrite((int)PurchaseOrderHistoryFieldIndex.TransactionID, transactionID);
 			return (PurchaseOrderHistoryEntity)new PurchaseOrderHistoryDAO().FetchExistingPolymorphic(transactionToUse, fields, contextToUse, excludedIncludedFields);
 		}
 
@@ -296,7 +296,7 @@ namespace AW.Data.EntityClasses
 			InitClassMembers();
 			if(this.Fields.State==EntityState.New)
 			{
-				this.Fields[(int)PurchaseOrderHistoryFieldIndex.TransactionType].ForcedCurrentValueWrite("P");
+				this.Fields.ForcedValueWrite((int)PurchaseOrderHistoryFieldIndex.TransactionType, "P");
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassEmpty
 			// __LLBLGENPRO_USER_CODE_REGION_END
@@ -312,7 +312,7 @@ namespace AW.Data.EntityClasses
 			InitClassMembers();	
 			if(this.Fields.State==EntityState.New)
 			{
-				this.Fields[(int)PurchaseOrderHistoryFieldIndex.TransactionType].ForcedCurrentValueWrite("P");
+				this.Fields.ForcedValueWrite((int)PurchaseOrderHistoryFieldIndex.TransactionType, "P");
 			}
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClassFetch
 			// __LLBLGENPRO_USER_CODE_REGION_END

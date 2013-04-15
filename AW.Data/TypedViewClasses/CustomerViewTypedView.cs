@@ -1,11 +1,10 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.5
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
-// Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.ComponentModel;
@@ -19,13 +18,11 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
-
 namespace AW.Data.TypedViewClasses
 {
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
 	// __LLBLGENPRO_USER_CODE_REGION_END
-	
-	/// <summary>Typed datatable for the view 'CustomerView'.<br/><br/></summary>
+	/// <summary>Typed datatable for the view 'CustomerView'.</summary>
 	[Serializable, System.ComponentModel.DesignerCategory("Code")]
 	[ToolboxItem(true)]
 	[DesignTimeVisible(true)]
@@ -51,7 +48,6 @@ namespace AW.Data.TypedViewClasses
 		private DataColumn _columnPostalCode;
 		private DataColumn _columnCountryRegionName;
 		private DataColumn _columnDemographics;
-		
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalMembers
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		private static Hashtable	_customProperties;
@@ -59,9 +55,6 @@ namespace AW.Data.TypedViewClasses
 		#endregion
 
 		#region Class Constants
-		/// <summary>
-		/// The amount of fields in the resultset.
-		/// </summary>
 		private const int AmountOfFields = 17;
 		#endregion
 
@@ -170,13 +163,6 @@ namespace AW.Data.TypedViewClasses
 			return DAOFactory.CreateTypedListDAO().GetMultiAsDataTable(fieldsInResultset, this, maxNumberOfItemsToReturn, sortClauses, selectFilter, null, allowDuplicates, groupByClause, transactionToUse, pageNumber, pageSize);
 		}
 
-		/// <summary>Gets the fields of this typed view</summary>
-		/// <returns>IEntityFields object</returns>
-		public virtual IEntityFields GetFields()
-		{
-			return EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.CustomerViewTypedView);
-		}
-		
 		/// <summary>Gets the amount of rows in the database for this typed view, not skipping duplicates</summary>
 		/// <returns>the number of rows in the set defined by the passed in query elements</returns>
 		public int GetDbCount()
@@ -208,8 +194,16 @@ namespace AW.Data.TypedViewClasses
 		/// <returns>the number of rows in the set defined by the passed in query elements</returns>
 		public virtual int GetDbCount(bool allowDuplicates, IPredicateExpression filter, GroupByCollection groupByClause)
 		{
-			IEntityFields fieldsInResultset = EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.CustomerViewTypedView);
+			IEntityFields fieldsInResultset = EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.
+CustomerViewTypedView);
 			return DAOFactory.CreateTypedListDAO().GetDbCount(fieldsInResultset, null, filter, null, groupByClause, allowDuplicates);
+		}
+
+		/// <summary>Gets the fields of this typed view</summary>
+		/// <returns>IEntityFields object</returns>
+		public virtual IEntityFields GetFields()
+		{
+			return EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.CustomerViewTypedView);
 		}
 
 		/// <summary>Creates a new typed row during the build of the datatable during a Fill session by a dataadapter.</summary>
@@ -265,7 +259,7 @@ namespace AW.Data.TypedViewClasses
 		/// <summary>Initialize the datastructures.</summary>
 		protected override void InitClass()
 		{
-			TableName = "CustomerView";		
+			TableName = "CustomerView";
 			_columnCustomerId = GeneralUtils.CreateTypedDataTableColumn("CustomerId", @"CustomerId", typeof(System.Int32), this.Columns);
 			_columnTitle = GeneralUtils.CreateTypedDataTableColumn("Title", @"Title", typeof(System.String), this.Columns);
 			_columnFirstName = GeneralUtils.CreateTypedDataTableColumn("FirstName", @"FirstName", typeof(System.String), this.Columns);
@@ -283,7 +277,6 @@ namespace AW.Data.TypedViewClasses
 			_columnPostalCode = GeneralUtils.CreateTypedDataTableColumn("PostalCode", @"PostalCode", typeof(System.String), this.Columns);
 			_columnCountryRegionName = GeneralUtils.CreateTypedDataTableColumn("CountryRegionName", @"CountryRegionName", typeof(System.String), this.Columns);
 			_columnDemographics = GeneralUtils.CreateTypedDataTableColumn("Demographics", @"Demographics", typeof(System.String), this.Columns);
-
 			// __LLBLGENPRO_USER_CODE_REGION_START InitClass
 			// __LLBLGENPRO_USER_CODE_REGION_END
 			OnInitialized();
@@ -321,14 +314,13 @@ namespace AW.Data.TypedViewClasses
 			cloneToReturn.InitMembers();
 			return cloneToReturn;
 		}
-#if !CF
+
 		/// <summary>Creates a new instance of the DataTable class.</summary>
 		/// <returns>a new instance of a datatable with this schema.</returns>
 		protected override DataTable CreateInstance() 
 		{
 			return new CustomerViewTypedView();
 		}
-#endif
 
 		#region Class Property Declarations
 		/// <summary>The custom properties for this TypedView type.</summary>
@@ -360,117 +352,99 @@ namespace AW.Data.TypedViewClasses
 		{
 			get { return CustomerViewTypedView.FieldsCustomProperties;}
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field CustomerId</summary>
+		
+		/// <summary>Returns the column object belonging to the TypedView field 'CustomerId'</summary>
 		internal DataColumn CustomerIdColumn 
 		{
 			get { return _columnCustomerId; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field Title</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'Title'</summary>
 		internal DataColumn TitleColumn 
 		{
 			get { return _columnTitle; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field FirstName</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'FirstName'</summary>
 		internal DataColumn FirstNameColumn 
 		{
 			get { return _columnFirstName; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field MiddleName</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'MiddleName'</summary>
 		internal DataColumn MiddleNameColumn 
 		{
 			get { return _columnMiddleName; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field LastName</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'LastName'</summary>
 		internal DataColumn LastNameColumn 
 		{
 			get { return _columnLastName; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field Suffix</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'Suffix'</summary>
 		internal DataColumn SuffixColumn 
 		{
 			get { return _columnSuffix; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field Phone</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'Phone'</summary>
 		internal DataColumn PhoneColumn 
 		{
 			get { return _columnPhone; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field EmailAddress</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'EmailAddress'</summary>
 		internal DataColumn EmailAddressColumn 
 		{
 			get { return _columnEmailAddress; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field EmailPromotion</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'EmailPromotion'</summary>
 		internal DataColumn EmailPromotionColumn 
 		{
 			get { return _columnEmailPromotion; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field AddressType</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'AddressType'</summary>
 		internal DataColumn AddressTypeColumn 
 		{
 			get { return _columnAddressType; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field AddressLine1</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'AddressLine1'</summary>
 		internal DataColumn AddressLine1Column 
 		{
 			get { return _columnAddressLine1; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field AddressLine2</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'AddressLine2'</summary>
 		internal DataColumn AddressLine2Column 
 		{
 			get { return _columnAddressLine2; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field City</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'City'</summary>
 		internal DataColumn CityColumn 
 		{
 			get { return _columnCity; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field StateProvinceName</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'StateProvinceName'</summary>
 		internal DataColumn StateProvinceNameColumn 
 		{
 			get { return _columnStateProvinceName; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field PostalCode</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'PostalCode'</summary>
 		internal DataColumn PostalCodeColumn 
 		{
 			get { return _columnPostalCode; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field CountryRegionName</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'CountryRegionName'</summary>
 		internal DataColumn CountryRegionNameColumn 
 		{
 			get { return _columnCountryRegionName; }
 		}
-
-		/// <summary>Returns the column object belonging to the TypedView field Demographics</summary>
+		/// <summary>Returns the column object belonging to the TypedView field 'Demographics'</summary>
 		internal DataColumn DemographicsColumn 
 		{
 			get { return _columnDemographics; }
 		}
-
 		// __LLBLGENPRO_USER_CODE_REGION_START AdditionalColumnProperties
 		// __LLBLGENPRO_USER_CODE_REGION_END
  		#endregion
 		
 		#region Custom Typed View code
-		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomTypedViewCode
-		// __LLBLGENPRO_USER_CODE_REGION_END
+		// __LLBLGENPRO_USER_CODE_REGION_END		
 		#endregion
 
 		#region Included Code
@@ -496,11 +470,10 @@ namespace AW.Data.TypedViewClasses
 		}
 
 		#region Class Property Declarations
-
-		/// <summary>Gets / sets the value of the TypedView field CustomerId<br/><br/></summary>
+		/// <summary>Gets / sets the value of the TypedView field CustomerId</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."CustomerID"<br/>
 		/// View field characteristics (type, precision, scale, length): Int, 10, 0, 0</remarks>
-		public System.Int32 CustomerId 
+		public System.Int32 CustomerId
 		{
 			get { return IsCustomerIdNull() ? (System.Int32)TypeDefaultValue.GetDefaultValue(typeof(System.Int32)) : (System.Int32)this[_parent.CustomerIdColumn]; }
 			set { this[_parent.CustomerIdColumn] = value; }
@@ -517,11 +490,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.CustomerIdColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field Title<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field Title</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."Title"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 8</remarks>
-		public System.String Title 
+		public System.String Title
 		{
 			get { return IsTitleNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.TitleColumn]; }
 			set { this[_parent.TitleColumn] = value; }
@@ -538,11 +511,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.TitleColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field FirstName<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field FirstName</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."FirstName"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String FirstName 
+		public System.String FirstName
 		{
 			get { return IsFirstNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.FirstNameColumn]; }
 			set { this[_parent.FirstNameColumn] = value; }
@@ -559,11 +532,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.FirstNameColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field MiddleName<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field MiddleName</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."MiddleName"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String MiddleName 
+		public System.String MiddleName
 		{
 			get { return IsMiddleNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.MiddleNameColumn]; }
 			set { this[_parent.MiddleNameColumn] = value; }
@@ -580,11 +553,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.MiddleNameColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field LastName<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field LastName</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."LastName"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String LastName 
+		public System.String LastName
 		{
 			get { return IsLastNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.LastNameColumn]; }
 			set { this[_parent.LastNameColumn] = value; }
@@ -601,11 +574,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.LastNameColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field Suffix<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field Suffix</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."Suffix"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 10</remarks>
-		public System.String Suffix 
+		public System.String Suffix
 		{
 			get { return IsSuffixNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.SuffixColumn]; }
 			set { this[_parent.SuffixColumn] = value; }
@@ -622,11 +595,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.SuffixColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field Phone<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field Phone</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."Phone"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 25</remarks>
-		public System.String Phone 
+		public System.String Phone
 		{
 			get { return IsPhoneNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.PhoneColumn]; }
 			set { this[_parent.PhoneColumn] = value; }
@@ -643,11 +616,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.PhoneColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field EmailAddress<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field EmailAddress</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."EmailAddress"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String EmailAddress 
+		public System.String EmailAddress
 		{
 			get { return IsEmailAddressNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.EmailAddressColumn]; }
 			set { this[_parent.EmailAddressColumn] = value; }
@@ -664,11 +637,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.EmailAddressColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field EmailPromotion<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field EmailPromotion</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."EmailPromotion"<br/>
 		/// View field characteristics (type, precision, scale, length): Int, 10, 0, 0</remarks>
-		public System.Int32 EmailPromotion 
+		public System.Int32 EmailPromotion
 		{
 			get { return IsEmailPromotionNull() ? (System.Int32)TypeDefaultValue.GetDefaultValue(typeof(System.Int32)) : (System.Int32)this[_parent.EmailPromotionColumn]; }
 			set { this[_parent.EmailPromotionColumn] = value; }
@@ -685,11 +658,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.EmailPromotionColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field AddressType<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field AddressType</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressType"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String AddressType 
+		public System.String AddressType
 		{
 			get { return IsAddressTypeNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressTypeColumn]; }
 			set { this[_parent.AddressTypeColumn] = value; }
@@ -706,11 +679,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.AddressTypeColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field AddressLine1<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field AddressLine1</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressLine1"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 60</remarks>
-		public System.String AddressLine1 
+		public System.String AddressLine1
 		{
 			get { return IsAddressLine1Null() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressLine1Column]; }
 			set { this[_parent.AddressLine1Column] = value; }
@@ -727,11 +700,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.AddressLine1Column] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field AddressLine2<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field AddressLine2</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."AddressLine2"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 60</remarks>
-		public System.String AddressLine2 
+		public System.String AddressLine2
 		{
 			get { return IsAddressLine2Null() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.AddressLine2Column]; }
 			set { this[_parent.AddressLine2Column] = value; }
@@ -748,11 +721,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.AddressLine2Column] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field City<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field City</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."City"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 30</remarks>
-		public System.String City 
+		public System.String City
 		{
 			get { return IsCityNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.CityColumn]; }
 			set { this[_parent.CityColumn] = value; }
@@ -769,11 +742,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.CityColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field StateProvinceName<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field StateProvinceName</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."StateProvinceName"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String StateProvinceName 
+		public System.String StateProvinceName
 		{
 			get { return IsStateProvinceNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.StateProvinceNameColumn]; }
 			set { this[_parent.StateProvinceNameColumn] = value; }
@@ -790,11 +763,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.StateProvinceNameColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field PostalCode<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field PostalCode</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."PostalCode"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 15</remarks>
-		public System.String PostalCode 
+		public System.String PostalCode
 		{
 			get { return IsPostalCodeNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.PostalCodeColumn]; }
 			set { this[_parent.PostalCodeColumn] = value; }
@@ -811,11 +784,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.PostalCodeColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field CountryRegionName<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field CountryRegionName</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."CountryRegionName"<br/>
 		/// View field characteristics (type, precision, scale, length): NVarChar, 0, 0, 50</remarks>
-		public System.String CountryRegionName 
+		public System.String CountryRegionName
 		{
 			get { return IsCountryRegionNameNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.CountryRegionNameColumn]; }
 			set { this[_parent.CountryRegionNameColumn] = value; }
@@ -832,11 +805,11 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.CountryRegionNameColumn] = System.Convert.DBNull;
 		}
-
-		/// <summary>Gets / sets the value of the TypedView field Demographics<br/><br/></summary>
+		
+		/// <summary>Gets / sets the value of the TypedView field Demographics</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."Demographics"<br/>
 		/// View field characteristics (type, precision, scale, length): Xml, 0, 0, 2147483647</remarks>
-		public System.String Demographics 
+		public System.String Demographics
 		{
 			get { return IsDemographicsNull() ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : (System.String)this[_parent.DemographicsColumn]; }
 			set { this[_parent.DemographicsColumn] = value; }
@@ -853,12 +826,12 @@ namespace AW.Data.TypedViewClasses
 		{
 			this[_parent.DemographicsColumn] = System.Convert.DBNull;
 		}
+		
 		#endregion
 		
 		#region Custom Typed View Row Code
-		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomTypedViewRowCode
-		// __LLBLGENPRO_USER_CODE_REGION_END
+		// __LLBLGENPRO_USER_CODE_REGION_END		
 		#endregion
 		
 		#region Included Row Code

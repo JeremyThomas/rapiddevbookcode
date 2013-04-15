@@ -1,19 +1,19 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.5
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
 using AW.Data.HelperClasses;
-
-using AW.Data.EntityClasses;
 using AW.Data.RelationClasses;
 using AW.Data.DaoClasses;
+
+using AW.Data.EntityClasses;
 using AW.Data.CollectionClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -2171,15 +2171,6 @@ namespace AW.Data.FactoryClasses
 	[Serializable]
 	public static class EntityFactoryFactory
 	{
-#if CF
-		/// <summary>Gets the factory of the entity with the AW.Data.EntityType specified</summary>
-		/// <param name="typeOfEntity">The type of entity.</param>
-		/// <returns>factory to use or null if not found</returns>
-		public static IEntityFactory GetFactory(AW.Data.EntityType typeOfEntity)
-		{
-			return GeneralEntityFactory.Create(typeOfEntity).GetEntityFactory();
-		}
-#else
 		private static readonly Dictionary<Type, IEntityFactory> _factoryPerType = new Dictionary<Type, IEntityFactory>();
 
 		/// <summary>Initializes the <see cref="EntityFactoryFactory"/> class.</summary>
@@ -2210,7 +2201,6 @@ namespace AW.Data.FactoryClasses
 		{
 			return GetFactory(GeneralEntityFactory.Create(typeOfEntity).GetType());
 		}
-#endif
 	}
 	
 	/// <summary>Element creator for creating project elements from somewhere else, like inside Linq providers.</summary>
@@ -2265,6 +2255,13 @@ namespace AW.Data.FactoryClasses
 		{
 			return new DynamicRelation(leftOperand, joinType, rightOperand, onClause);
 		}
+		
+		/// <summary>Obtains the inheritance info provider instance from the singleton </summary>
+		/// <returns>The singleton instance of the inheritance info provider</returns>
+		public override IInheritanceInfoProvider ObtainInheritanceInfoProviderInstance()
+		{
+			return InheritanceInfoProviderSingleton.GetInstance();
+		}
 
 		/// <summary>Creates a new dynamic relation instance</summary>
 		/// <param name="leftOperand">The left operand.</param>
@@ -2290,13 +2287,6 @@ namespace AW.Data.FactoryClasses
 		{
 			return new DynamicRelation((AW.Data.EntityType)Enum.Parse(typeof(AW.Data.EntityType), leftOperandEntityName, false), joinType, (AW.Data.EntityType)Enum.Parse(typeof(AW.Data.EntityType), rightOperandEntityName, false), aliasLeftOperand, aliasRightOperand, onClause);
 		}
-				
-		/// <summary>Obtains the inheritance info provider instance from the singleton </summary>
-		/// <returns>The singleton instance of the inheritance info provider</returns>
-		public override IInheritanceInfoProvider ObtainInheritanceInfoProviderInstance()
-		{
-			return InheritanceInfoProviderSingleton.GetInstance();
-		}
 
 		/// <summary>Implementation of the routine which gets the factory of the Entity type with the AW.Data.EntityType value passed in</summary>
 		/// <param name="entityTypeValue">The entity type value.</param>
@@ -2305,7 +2295,7 @@ namespace AW.Data.FactoryClasses
 		{
 			return EntityFactoryFactory.GetFactory((AW.Data.EntityType)entityTypeValue);
 		}
-#if !CF		
+	
 		/// <summary>Implementation of the routine which gets the factory of the Entity type with the .NET type passed in</summary>
 		/// <param name="typeOfEntity">The type of entity.</param>
 		/// <returns>the entity factory of the entity type or null if not found</returns>
@@ -2313,6 +2303,6 @@ namespace AW.Data.FactoryClasses
 		{
 			return EntityFactoryFactory.GetFactory(typeOfEntity);
 		}
-#endif
+
 	}
 }
