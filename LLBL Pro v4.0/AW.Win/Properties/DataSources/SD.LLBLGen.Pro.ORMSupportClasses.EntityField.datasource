@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="EntityField" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>SD.LLBLGen.Pro.ORMSupportClasses.EntityField, SD.LLBLGen.Pro.ORMSupportClasses.NET20, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27</TypeInfo>
+   <TypeInfo>SD.LLBLGen.Pro.ORMSupportClasses.EntityField, SD.LLBLGen.Pro.ORMSupportClasses, Version=2.6.0.0, Culture=neutral, PublicKeyToken=ca73b74ba4e3ff27</TypeInfo>
 </GenericObjectDataSource>

@@ -1,15 +1,14 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.5
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Configuration;
@@ -148,6 +147,7 @@ namespace Northwind.DAL.SqlServer
 			set { _compatibilityLevel = value; }
 		}
 
+
 		#region Custom DataAccessAdapter code.
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomDataAccessAdapterCode
@@ -178,29 +178,17 @@ namespace Northwind.DAL.SqlServer
 			return base.ExecuteActionQuery(queryToExecute);
 		}
 
-		/// <summary>
-		/// 	Creates a new Select DQ for the fields passed in using the parameters specified.
-		/// </summary>
-		/// <param name = "fieldsToFetch">fields to fetch using the select</param>
-		/// <param name = "persistenceInfoObjects">persistence info objects for the fields</param>
-		/// <param name = "filter">filter to use for the where clause</param>
-		/// <param name = "maxNumberOfItemsToReturn">max. amount of rows to return</param>
-		/// <param name = "sortClauses">sort clause specifications to use</param>
-		/// <param name = "relationsToWalk">relations to walk to build the FROM clause</param>
-		/// <param name = "allowDuplicates">flag to specify if duplicates should be returned</param>
-		/// <param name = "groupByClause">group by clause to embed in the query</param>
-		/// <param name = "pageNumber">The page number to retrieve</param>
-		/// <param name = "pageSize">the page size to retrieve</param>
-		/// <returns>ready to use query to use.</returns>
-		protected override IRetrievalQuery CreateSelectDQ(IEntityFields2 fieldsToFetch, IFieldPersistenceInfo[] persistenceInfoObjects,
-																											IPredicateExpression filter, long maxNumberOfItemsToReturn, ISortExpression sortClauses, IRelationCollection relationsToWalk,
-																											bool allowDuplicates, IGroupByCollection groupByClause, int pageNumber, int pageSize)
-		{
-			var query = base.CreateSelectDQ(fieldsToFetch, persistenceInfoObjects, filter, maxNumberOfItemsToReturn, sortClauses, relationsToWalk,
-																			allowDuplicates, groupByClause, pageNumber, pageSize);
-			OnExecuteQuery(query);
-			return query;
-		}
+    /// <summary>
+    /// Creates a new Select DQ for the fields passed in using the parameters specified.
+    /// </summary>
+    /// <param name="parameters">The parameters.</param>
+    /// <returns></returns>
+	  protected override IRetrievalQuery CreateSelectDQ(QueryParameters parameters)
+	  {
+      var query = base.CreateSelectDQ(parameters);
+      OnExecuteQuery(query);
+      return query;
+	  }
 
     static DataAccessAdapter()
     {

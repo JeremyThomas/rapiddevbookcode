@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.5
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 //////////////////////////////////////////////////////////////
 using System;
@@ -14,7 +14,6 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.DAL.RelationClasses
 {
-
 	/// <summary>Class to define dynamic relations for queries.</summary>
 	/// <remarks>Dynamic relations are only supported in ansi joins so if you're using Oracle on 8i, you can't use Dynamic Relations. </remarks>
 	[Serializable]
@@ -39,6 +38,7 @@ namespace Northwind.DAL.RelationClasses
 			this.InitClass(joinType, string.Empty, string.Empty, onClause, leftOperand, rightOperand);
 		}
 	
+
 		/// <summary>Initializes a new instance of the <see cref="DynamicRelation"/> class.</summary>
 		/// <param name="leftOperand">The left operand.</param>
 		/// <param name="joinType">Type of the join. If None is specified, Inner is assumed.</param>
@@ -61,6 +61,7 @@ namespace Northwind.DAL.RelationClasses
 		{
 			this.InitClass(joinType, aliasLeftOperand, aliasRightOperand, onClause, GeneralEntityFactory.Create(leftOperand), GeneralEntityFactory.Create(rightOperand));
 		}
+
 		
 		/// <summary>Gets the inheritance provider for inheritance info retrieval for entity operands</summary>
 		/// <returns>The inheritance info provider</returns>
@@ -69,5 +70,4 @@ namespace Northwind.DAL.RelationClasses
 			return InheritanceInfoProviderSingleton.GetInstance();
 		}
 	}
-
 }

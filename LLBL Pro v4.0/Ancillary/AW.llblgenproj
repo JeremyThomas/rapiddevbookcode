@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!--LLBLGen Pro v3.5 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
-<Project Version="3.5" TargetFrameworkName="LLBLGen Pro Runtime Framework">
+<!--LLBLGen Pro v4.0 project file. Do not manually edit this file. Incorrect references could lead to an unloadable project file.-->
+<Project Version="4.0" TargetFrameworkName="LLBLGen Pro Runtime Framework">
   <Properties>
     <Abbreviations>
       <Abbreviation Name="id" Value="ID" />
@@ -18,6 +18,8 @@
     <Property Name="AutoAssignTypeConverterToFieldMapping" Value="false" />
     <Property Name="CleanUpVsNetProjects" Value="false" />
     <Property Name="ConnectionStringKeyNamePattern" Value="Main.ConnectionString" />
+    <Property Name="DefaultDeleteRuleAction" Value="1" />
+    <Property Name="DefaultUpdateRuleAction" Value="0" />
     <Property Name="EncodingToUse" Value="0" />
     <Property Name="EnforcePascalCasingAlways" Value="true" />
     <Property Name="EntityFieldNameStripPattern" Value="{}{}" />
@@ -59,8 +61,10 @@
     <Property Name="SyncMappedElementNamesAfterRefresh" Value="0" />
     <Property Name="SyncRelationalModelDataElementNameAfterRename" Value="0" />
     <Property Name="SyncRenamedMappedElementNamesAfterRefresh" Value="0" />
+    <Property Name="TableValuedFunctionNameStripPattern" Value="{fn_, pr_, sp_}{}" />
     <Property Name="TargetPerEntityEdgesRequireBackingFkConstraint" Value="true" />
     <Property Name="TypedViewFieldNameStripPattern" Value="{}{}" />
+    <Property Name="TypedViewMappedOnResultsetPattern" Value="{$ProcFunctionName}{$ResultsetName}Result" />
     <Property Name="TypedViewNameStripPattern" Value="{vw_}{}" />
     <Property Name="UniqueConstraintsFollowDBUniqueConstraints" Value="0" />
     <Property Name="UpdateCustomPropertiesAfterRefresh" Value="1" />
@@ -77,14 +81,14 @@
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
         <PlatformName Value=".NET 3.5" />
-        <PresetName Value="SD.Presets.SelfServicing.General2008" />
+        <PresetName Value="SD.Presets.SelfServicing.General" />
         <RootNamespace Value="AW.Data" />
         <TemplateGroup Value="SelfServicing" />
         <TemplateBindings>
+          <Binding Name="SD.TemplateBindings.SqlServerSpecific" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates" />
           <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
-          <Binding Name="SD.TemplateBindings.SharedTemplates.NET20" />
-          <Binding Name="SD.TemplateBindings.SqlServerSpecific.NET20" />
           <Binding Name="SD.TemplateBindings.General" />
         </TemplateBindings>
       </LastUsedPreferences>
@@ -8992,7 +8996,7 @@
                 <FieldPair PkField="Person:Contact:ContactID" FkField="Sales:Individual:ContactID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:Individual:FK_Individual_Customer_CustomerID">
+            <ForeignKeyConstraint Name="Sales:Individual:FK_Individual_Customer_CustomerID" UpdateRuleAction="1" DeleteRuleAction="1" TrackedChanges="24">
               <FieldPairs>
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Individual:CustomerID" />
               </FieldPairs>
@@ -9063,7 +9067,7 @@
                 <FieldPair PkField="Sales:SalesReason:SalesReasonID" FkField="Sales:SalesOrderHeaderSalesReason:SalesReasonID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesPerson:FK_SalesPerson_Employee_SalesPersonID">
+            <ForeignKeyConstraint Name="Sales:SalesPerson:FK_SalesPerson_Employee_SalesPersonID" UpdateRuleAction="1" DeleteRuleAction="1" TrackedChanges="24">
               <FieldPairs>
                 <FieldPair PkField="HumanResources:Employee:EmployeeID" FkField="Sales:SalesPerson:SalesPersonID" />
               </FieldPairs>
@@ -9108,7 +9112,7 @@
                 <FieldPair PkField="Sales:SpecialOffer:SpecialOfferID" FkField="Sales:SpecialOfferProduct:SpecialOfferID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:Store:FK_Store_Customer_CustomerID">
+            <ForeignKeyConstraint Name="Sales:Store:FK_Store_Customer_CustomerID" UpdateRuleAction="1" DeleteRuleAction="1" TrackedChanges="24">
               <FieldPairs>
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Store:CustomerID" />
               </FieldPairs>
@@ -9961,6 +9965,7 @@
           </FieldMappings>
         </SPCallMapping>
       </SPCallMappings>
+      <TvfCallMappings />
       <TypeConversionDefinitions />
     </MappingStore>
   </MappingStores>

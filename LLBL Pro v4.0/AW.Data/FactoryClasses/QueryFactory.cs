@@ -1,12 +1,13 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 3.5
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET35
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 ////////////////////////////////////////////////////////////// 
 using System;
+using System.Linq;
 using AW.Data.EntityClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.QuerySpec;
@@ -31,6 +32,14 @@ namespace AW.Data.FactoryClasses
 		public DynamicQuery Create(string alias)
 		{
 			return new DynamicQuery(new ElementCreator(), alias, this.GetNextAliasCounterValue());
+		}
+
+		/// <summary>Creates a new DynamicQuery which wraps the specified TableValuedFunction call</summary>
+		/// <param name="toWrap">The table valued function call to wrap.</param>
+		/// <returns>toWrap wrapped in a DynamicQuery.</returns>
+		public DynamicQuery Create(TableValuedFunctionCall toWrap)
+		{
+			return this.Create().From(new TvfCallWrapper(toWrap)).Select(toWrap.GetFieldsAsArray().Select(f => this.Field(toWrap.Alias, f.Alias)).ToArray());
 		}
 
 		/// <summary>Creates a new EntityQuery for the entity of the type specified with no alias set.</summary>
@@ -95,6 +104,7 @@ namespace AW.Data.FactoryClasses
 			return _aliasCounter;
 		}
 		
+
 		/// <summary>Creates and returns a new EntityQuery for the AwbuildVersion entity</summary>
 		public EntityQuery<AwbuildVersionEntity> AwbuildVersion
 		{
@@ -538,6 +548,8 @@ namespace AW.Data.FactoryClasses
 		{
 			get { return Create<StoreContactEntity>(); }
 		}
+
+ 
 
 	}
 }

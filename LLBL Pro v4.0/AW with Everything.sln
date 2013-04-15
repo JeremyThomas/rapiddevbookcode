@@ -53,20 +53,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleQueryFiles", "SampleQ
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E5E0-4B67-A97C-464F8697A452}"
 	ProjectSection(SolutionItems) = preProject
-		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.dll
-		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.NET20.pdb
-		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.dll
-		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.NET20.xml
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.dll
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.pdb = Lib\LLBL\SD.LLBLGen.Pro.DQE.OracleODPNet.pdb
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.dll = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.dll
+		Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.xml = Lib\LLBL\SD.LLBLGen.Pro.DQE.SqlServer.xml
 		Lib\LLBL\SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.DynamicDataSupportClasses.NET35.dll
-		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll
-		Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML = Lib\LLBL\SD.LLBLGen.Pro.LinqSupportClasses.NET35.XML
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.pdb
-		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.NET20.xml
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.dll
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.pdb
 		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.dll
 		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.pdb = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.Web.pdb
-		Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.dll = Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.dll
-		Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.XML = Lib\LLBL\SD.LLBLGen.Pro.QuerySpec.XML
+		Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.xml = Lib\LLBL\SD.LLBLGen.Pro.ORMSupportClasses.xml
 		Lib\LLBL\SD.LLBLGen.Pro.TypeConverters.dll = Lib\LLBL\SD.LLBLGen.Pro.TypeConverters.dll
 	EndProjectSection
 EndProject
@@ -301,16 +297,16 @@ Global
 		SccProjectTopLevelParentUniqueName25 = AW\u0020with\u0020Everything.sln
 		SccProjectName25 = DynamicDataSupportClasses
 		SccLocalPath25 = DynamicDataSupportClasses
-		SccWebProject26 = true
-		SccProjectUniqueName26 = AW.WebDbEditor
+		SccProjectUniqueName26 = WebSites\\ListIISApps\\ListIISApps.csproj
 		SccProjectTopLevelParentUniqueName26 = AW\u0020with\u0020Everything.sln
-		SccProjectName26 = AW.WebDbEditor
-		SccLocalPath26 = AW.WebDbEditor
-		SccProjectEnlistmentChoice26 = 2
-		SccProjectUniqueName27 = WebSites\\ListIISApps\\ListIISApps.csproj
+		SccProjectName26 = WebSites/ListIISApps
+		SccLocalPath26 = WebSites\\ListIISApps
+		SccWebProject27 = true
+		SccProjectUniqueName27 = AW.WebDbEditor
 		SccProjectTopLevelParentUniqueName27 = AW\u0020with\u0020Everything.sln
-		SccProjectName27 = WebSites/ListIISApps
-		SccLocalPath27 = WebSites\\ListIISApps
+		SccProjectName27 = AW.WebDbEditor
+		SccLocalPath27 = AW.WebDbEditor
+		SccProjectEnlistmentChoice27 = 2
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AW with Everything.vsmdi

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="textBoxScript.Text" xml:space="preserve">
-    <value>//css_ref SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll;
+    <value>//css_ref SD.LLBLGen.Pro.ORMSupportClasses.dll;
 //css_ref SD.LLBLGen.Pro.LinqSupportClasses.NET35;
 using System;
 using System.Collections;

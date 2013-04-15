@@ -113,8 +113,8 @@ using Microsoft.VisualBasic;
 //-LLBL
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = EnumerableJSVisualizer.Description)]
 
-[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityCollectionBase`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = EnumerableJSVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityCollectionBase2`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityCollectionBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityCollectionBase2`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
 
 //Not serializable
 
@@ -148,9 +148,9 @@ using Microsoft.VisualBasic;
 //[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSource`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = EnumerableJSVisualizer.Name)]
 
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = EnumerableJSVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = EnumerableJSVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFields, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = EnumerableJSVisualizer.Description)]
-[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFields2, SD.LLBLGen.Pro.ORMSupportClasses.NET20", Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFields, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFields2, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
 
 // Nested classes - seem to work in VS2010 but not in earlier versions
 

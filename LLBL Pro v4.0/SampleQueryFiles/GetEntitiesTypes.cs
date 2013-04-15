@@ -1,4 +1,4 @@
-//css_ref SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll;
+//css_ref SD.LLBLGen.Pro.ORMSupportClasses.dll;
 //css_ref SD.LLBLGen.Pro.LinqSupportClasses.NET35;
 //css_ref AW.Winforms.Helpers.LLBL.dll;
 using System;
