@@ -28,7 +28,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static readonly string[] AdditionalAssemblies = new[]
       {
         "SD.LLBLGen.Pro.ORMSupportClasses.dll",
-        "SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
         "AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
         "AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
         "AW.LinqPadExtensions.dll"
@@ -37,7 +36,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static readonly string[] AdditionalNamespaces = new[]
       {
         "SD.LLBLGen.Pro.ORMSupportClasses",
-        "SD.LLBLGen.Pro.LinqSupportClasses",
         "AW.Helper",
         "AW.Helper.LLBL",
         "AW.Winforms.Helpers.DataEditor",
