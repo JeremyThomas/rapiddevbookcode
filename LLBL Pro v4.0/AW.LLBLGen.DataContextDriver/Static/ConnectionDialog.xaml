@@ -681,12 +681,7 @@
       			Click="ChooseAssembliesCnxt"
       			Content="Add Assemblies..."
       			ToolTip="Browse for Additional Assemblies" />
-          <Button Margin="5,0,0,0"
-      			VerticalAlignment="Center"
-      			Click="AddQuerySpecCnxt"
-      			Content="Add QuerySpec"
-      			ToolTip="Add QuerySpec assembly and namespaces" />
-          <Button Margin="5,0,0,0"
+            <Button Margin="5,0,0,0"
       			VerticalAlignment="Center"
       			Click="AddORMProfilerCnxt"
       			Content="Add ORM Profiler"
@@ -1100,11 +1095,6 @@
                     Click="ChooseAssemblies"
                     Content="Add Assemblies..."
                     ToolTip="Browse for Additional Assemblies" />
-            <Button Margin="5,0,0,0"
-                    VerticalAlignment="Center"
-                    Click="AddQuerySpec"
-                    Content="Add QuerySpec"
-                    ToolTip="Add QuerySpec assembly and namespaces" />
             <Button Margin="5,0,0,0"
                     VerticalAlignment="Center"
                     Click="AddORMProfiler"

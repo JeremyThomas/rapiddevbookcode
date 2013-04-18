@@ -1072,23 +1072,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
     }
 
-    private void AddQuerySpec(object sender, RoutedEventArgs e)
-    {
-      AddQuerySpec(AdditionalAssemblies, AdditionalNamespaces);
-    }
-
-    private void AddQuerySpecCnxt(object sender, RoutedEventArgs e)
-    {
-      AddQuerySpec(AdditionalAssembliesCnxt, AdditionalNamespacesCnxt);
-    }
-
-    private static void AddQuerySpec(ICollection<ValueTypeWrapper<string>> additionalAssemblies, ICollection<ValueTypeWrapper<string>> additionalNamespaces)
-    {
-      ValueTypeWrapper<string>.Add(additionalAssemblies, "SD.LLBLGen.Pro.QuerySpec.dll");
-      ValueTypeWrapper<string>.Add(additionalNamespaces, "SD.LLBLGen.Pro.QuerySpec",
-                                   "SD.LLBLGen.Pro.QuerySpec.SelfServicing", "SD.LLBLGen.Pro.QuerySpec.Adapter");
-    }
-
     private void AddORMProfiler(object sender, RoutedEventArgs e)
     {
       AddORMProfiler(AdditionalAssemblies);
