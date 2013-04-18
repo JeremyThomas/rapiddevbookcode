@@ -1182,7 +1182,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       foreach (var selectedItem in AdditionalAssembliesDataGridCnxt.SelectedItems.OfType<ValueTypeWrapper<string>>())
         ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, MetaDataHelper.GetNamespaces(selectedItem.Value));
       ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, MetaDataHelper.GetNamespaces(CxInfo.CustomTypeInfo.CustomAssemblyPath));
-      ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, MetaDataHelper.GetNamespaces(GetAdapterAssemblies(CxInfo)));
+      if (LLBLConnectionType != LLBLConnectionType.SelfServicing)
+        ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, MetaDataHelper.GetNamespaces(GetAdapterAssemblies(CxInfo)));
     }
 
     private void txtAssemblyPath_TextChanged(object sender, TextChangedEventArgs e)
