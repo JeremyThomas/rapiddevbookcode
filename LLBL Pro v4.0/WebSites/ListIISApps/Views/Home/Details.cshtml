@@ -56,18 +56,31 @@
 </table>
 
 <table style="width: 100%;">
+    <tr>
+        <th>Name</th>
+        <th>ConnectionString</th>
+        <th>ProviderName</th>
+    </tr>
+  
+    @foreach (var cs in ViewData.Model.ConnectionStrings)
+    {
+        <tr>
+            <td>@cs.Name</td>
+            <td>@cs.ConnectionString</td>
+            <td>@cs.ProviderName</td>
+        </tr>
+    }
+</table>
+
+<table style="width: 100%;">
   <tr>
-    <th>Name</th>
-    <th>ConnectionString</th>
-    <th>ProviderName</th>
+    <th>Assemblies</th>
   </tr>
   
-  @foreach (var cs in ViewData.Model.ConnectionStrings)
+  @foreach (var cs in ViewData.Model.AssembliesInfo)
   {
     <tr>
-      <td>@cs.Name</td>
-      <td>@cs.ConnectionString</td>
-      <td>@cs.ProviderName</td>
+      <td>@cs</td>
     </tr>
   }
 </table>
