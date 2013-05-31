@@ -2,16 +2,56 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web.Configuration;
 using AW.Helper;
 using Microsoft.Web.Administration;
-using Configuration = Microsoft.Web.Administration.Configuration;
+using Configuration = System.Configuration.Configuration;
 using ConfigurationSection = System.Configuration.ConfigurationSection;
 using WebConfigurationManager = System.Web.Configuration.WebConfigurationManager;
 
 namespace ListIISApps.Models
 {
+  public class AssemblyInfo
+  {
+    public string Name { get; private set; }
+
+    public string Title { get; private set; }
+
+    public string Description { get; private set; }
+
+    public string Version { get; private set; }
+
+    public string InformationalVersion { get; private set; }
+
+    public AssemblyInfo(string name, string title, string description, string version, string informationalVersion)
+    {
+      Name = name;
+      Title = title;
+      Description = description;
+      Version = version;
+      InformationalVersion = informationalVersion;
+    }
+
+    #region Overrides of Object
+
+    /// <summary>
+    /// Returns a string that represents the current object.
+    /// </summary>
+    /// <returns>
+    /// A string that represents the current object.
+    /// </returns>
+    public override string ToString()
+    {
+      return string.Format("{0}, {1}, {2}, {3}, {4}", Name, Title, Description, InformationalVersion, Version);
+    }
+
+    #endregion
+  }
+
   public class ServerManagerVM
   {
     private readonly Application _application;
@@ -20,9 +60,9 @@ namespace ListIISApps.Models
     private IEnumerable<ConnectionStringSettings> _connectionStrings;
     private AuthenticationMode _authenticationMode;
     private IEnumerable<SectionGroup> _sectionGroupsDefinitions;
-    private System.Configuration.Configuration _webConfig;
+    private Configuration _webConfig;
     private IEnumerable<ConfigurationSectionGroup> _sectionGroups;
-    public Configuration WebConfiguration { get; private set; }
+    public Microsoft.Web.Administration.Configuration WebConfiguration { get; private set; }
 
     public Application Application
     {
@@ -34,7 +74,7 @@ namespace ListIISApps.Models
       get { return Application.VirtualDirectories.First().PhysicalPath; }
     }
 
-    public System.Configuration.Configuration WebConfig
+    public Configuration WebConfig
     {
       get
       {
@@ -72,11 +112,9 @@ namespace ListIISApps.Models
       }
     }
 
-    public List<Exception> Exceptions
-    {
-      get; private set; }
+    public List<Exception> Exceptions { get; private set; }
 
-    private static NameValueCollection GetAppSettings(Configuration webConfiguration)
+    private static NameValueCollection GetAppSettings(Microsoft.Web.Administration.Configuration webConfiguration)
     {
       var dictionary = new NameValueCollection();
       foreach (var element in webConfiguration.GetSection("appSettings").GetCollection())
@@ -101,12 +139,12 @@ namespace ListIISApps.Models
       }
     }
 
-    public static IEnumerable<ConnectionStringSettings> GetConnectionStrings(Configuration webConfiguration)
+    public static IEnumerable<ConnectionStringSettings> GetConnectionStrings(Microsoft.Web.Administration.Configuration webConfiguration)
     {
       return webConfiguration.GetSection("connectionStrings").GetCollection()
-        .Select(configurationElement => new ConnectionStringSettings(Convert.ToString(configurationElement.Attributes["Name"].Value),
-                                                                     Convert.ToString(configurationElement.Attributes["connectionString"].Value),
-                                                                     Convert.ToString(configurationElement.Attributes["providerName"].Value)));
+                             .Select(configurationElement => new ConnectionStringSettings(Convert.ToString(configurationElement.Attributes["Name"].Value),
+                                                                                          Convert.ToString(configurationElement.Attributes["connectionString"].Value),
+                                                                                          Convert.ToString(configurationElement.Attributes["providerName"].Value)));
     }
 
     public AuthenticationMode AuthenticationMode
@@ -126,7 +164,7 @@ namespace ListIISApps.Models
       }
     }
 
-    public static ConfigurationAttribute GetAuthenticationMode(Configuration webConfiguration)
+    public static ConfigurationAttribute GetAuthenticationMode(Microsoft.Web.Administration.Configuration webConfiguration)
     {
       return webConfiguration.GetSection("system.web/authentication").GetAttribute("mode");
     }
@@ -200,6 +238,35 @@ namespace ListIISApps.Models
               Exceptions.Add(e);
             }
         return list;
+      }
+    }
+
+    public IEnumerable<Assembly> Assemblies
+    {
+      get
+      {
+        var binDir = Path.Combine(PhysicalPath, "Bin");
+        var allAssemblies = new List<Assembly>(); 
+        foreach (var dll in Directory.GetFiles(binDir, "*.dll"))
+          try
+          {
+            allAssemblies.Add(Assembly.LoadFrom(dll));
+            //allAssemblies.Add(Assembly.ReflectionOnlyLoadFrom(dll));
+          }
+          catch (Exception e)
+          {
+            Exceptions.Add(e);
+          }
+        return allAssemblies;
+      }
+    }
+
+    public IEnumerable<AssemblyInfo> AssembliesInfo
+    {
+      get
+      {
+        return from a in Assemblies
+                select new AssemblyInfo(a.GetName().Name, a.GetTitle(), a. GetDescription(), a.GetVersion(), a.GetInformationalVersionAttribute());
       }
     }
 
