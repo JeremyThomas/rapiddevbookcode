@@ -191,6 +191,11 @@ namespace AW.Helper
       return String.Join(separator, values.Where(s => !String.IsNullOrEmpty(s)).ToArray());
     }
 
+    public static string JoinDistinct(String separator, params String[] values)
+    {
+      return Join(separator, values.Distinct().ToArray());
+    }
+
     /// <summary>
     /// 	Skips then takes.
     /// </summary>
@@ -561,25 +566,25 @@ namespace AW.Helper
     }
 
     /// <summary>
-		/// Clones the object graph.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="graph">The graph.</param>
-		/// <returns></returns>
-		public static T CloneObject<T>(T graph)
-		{
-			var ms = new MemoryStream();
-			var bf = new BinaryFormatter(null, new StreamingContext(StreamingContextStates.Clone));
-			bf.Serialize(ms, graph);
-			ms.Seek(0, SeekOrigin.Begin);
-			var oOut = bf.Deserialize(ms);
-			ms.Close();
-			return (T)oOut;
-		}
-		/// <summary>
-		/// Gets the OS architecture.
-		/// if .net 4 could use Environment.Is64BitOperatingSystem
-		/// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
+    /// Clones the object graph.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="graph">The graph.</param>
+    /// <returns></returns>
+    public static T CloneObject<T>(T graph)
+    {
+      var ms = new MemoryStream();
+      var bf = new BinaryFormatter(null, new StreamingContext(StreamingContextStates.Clone));
+      bf.Serialize(ms, graph);
+      ms.Seek(0, SeekOrigin.Begin);
+      var oOut = bf.Deserialize(ms);
+      ms.Close();
+      return (T)oOut;
+    }
+    /// <summary>
+    /// Gets the OS architecture.
+    /// if .net 4 could use Environment.Is64BitOperatingSystem
+    /// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
     /// </summary>
     /// <returns> 32 or 64 </returns>
     internal static int GetOSArchitecture()
