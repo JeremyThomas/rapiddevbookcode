@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Configuration;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,43 +14,6 @@ using WebConfigurationManager = System.Web.Configuration.WebConfigurationManager
 
 namespace ListIISApps.Models
 {
-  public class AssemblyInfo
-  {
-    public string Name { get; private set; }
-
-    public string Title { get; private set; }
-
-    public string Description { get; private set; }
-
-    public string Version { get; private set; }
-
-    public string InformationalVersion { get; private set; }
-
-    public AssemblyInfo(string name, string title, string description, string version, string informationalVersion)
-    {
-      Name = name;
-      Title = title;
-      Description = description;
-      Version = version;
-      InformationalVersion = informationalVersion;
-    }
-
-    #region Overrides of Object
-
-    /// <summary>
-    /// Returns a string that represents the current object.
-    /// </summary>
-    /// <returns>
-    /// A string that represents the current object.
-    /// </returns>
-    public override string ToString()
-    {
-      return string.Format("{0}, {1}, {2}, {3}, {4}", Name, Title, Description, InformationalVersion, Version);
-    }
-
-    #endregion
-  }
-
   public class ServerManagerVM
   {
     private readonly Application _application;
@@ -72,6 +34,15 @@ namespace ListIISApps.Models
     public string PhysicalPath
     {
       get { return Application.VirtualDirectories.First().PhysicalPath; }
+    }
+
+    private string BinPath
+    {
+      get
+      {
+        var binDir = Path.Combine(PhysicalPath, "Bin");
+        return Directory.Exists(binDir) ? binDir : null;
+      }
     }
 
     public Configuration WebConfig
@@ -209,7 +180,7 @@ namespace ListIISApps.Models
     {
       get
       {
-        if (WebConfig == null) return null;
+        if (WebConfig == null) return Enumerable.Empty<ConfigurationSectionGroup>();
         try
         {
           return _sectionGroups ?? (_sectionGroups = WebConfig.RootSectionGroup.Descendants(sg => sg.SectionGroups.Cast<ConfigurationSectionGroup>()).ToList());
@@ -226,6 +197,7 @@ namespace ListIISApps.Models
     {
       get
       {
+        if (SectionGroups == null) return Enumerable.Empty<ConfigurationSection>();
         var list = new List<ConfigurationSection>();
         foreach (var sg in SectionGroups)
           for (var i = 0; i < sg.Sections.Count - 1; i++)
@@ -245,13 +217,15 @@ namespace ListIISApps.Models
     {
       get
       {
-        var binDir = Path.Combine(PhysicalPath, "Bin");
-        var allAssemblies = new List<Assembly>(); 
-        foreach (var dll in Directory.GetFiles(binDir, "*.dll"))
+        var binDir = BinPath;
+        if (binDir == null)
+          return null;
+        var allAssemblies = new List<Assembly>();
+        var assemblyFileNames = Directory.GetFiles(binDir, "*.dll");
+        foreach (var dll in assemblyFileNames)
           try
           {
             allAssemblies.Add(Assembly.LoadFrom(dll));
-            //allAssemblies.Add(Assembly.ReflectionOnlyLoadFrom(dll));
           }
           catch (Exception e)
           {
@@ -261,13 +235,9 @@ namespace ListIISApps.Models
       }
     }
 
-    public IEnumerable<AssemblyInfo> AssembliesInfo
+    public IEnumerable<AssemblyFileInfo> AssembliesInfo
     {
-      get
-      {
-        return from a in Assemblies
-                select new AssemblyInfo(a.GetName().Name, a.GetTitle(), a. GetDescription(), a.GetVersion(), a.GetInformationalVersionAttribute());
-      }
+      get { return AssemblyFileInfo.AssemblyInfoFactory(BinPath); }
     }
 
     /// <summary>

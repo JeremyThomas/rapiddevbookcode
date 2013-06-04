@@ -705,6 +705,12 @@ namespace AW.Helper
       return ((T)assembly.GetCustomAttributes(typeof(T), false).SingleOrDefault());
     }
 
+    //public static CustomAttributeData GetCustomAttributeReflectionOnly<T>(this Assembly assembly) where T : Attribute
+    //{
+    //  var customAttributes = CustomAttributeData.GetCustomAttributes(assembly);
+    //  return customAttributes.SingleOrDefault(ca=>ca.AttributeType==typeof(T));
+    //}
+
     public static MethodInfo GetMethodInfo<T>(Expression<Action<T>> expression)
     {
       var methodCallExpression = expression.Body as MethodCallExpression;
