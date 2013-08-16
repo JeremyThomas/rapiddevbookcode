@@ -64,6 +64,7 @@ namespace AW.Win
       this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
       this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
+      this.easyQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
       this.SuspendLayout();
@@ -195,7 +196,8 @@ namespace AW.Win
             this.traceToolStripMenuItem,
             this.adHocLINQQueryRunnerToolStripMenuItem,
             this.viewMetadataToolStripMenuItem,
-            this.viewEntitiesAndFieldsToolStripMenuItem});
+            this.viewEntitiesAndFieldsToolStripMenuItem,
+            this.easyQueryToolStripMenuItem});
       this.utilitiesToolStripMenuItem.Name = "utilitiesToolStripMenuItem";
       this.utilitiesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
       this.utilitiesToolStripMenuItem.Text = "&Utilities";
@@ -319,7 +321,9 @@ namespace AW.Win
       settings1.OrderSearchSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.OrganizationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.OrganizationStructureSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+      settings1.PersistenceExecutionTraceLevel = System.Diagnostics.TraceLevel.Off;
       settings1.Prefetch = true;
+      settings1.QueryExecutionTraceLevel = System.Diagnostics.TraceLevel.Off;
       settings1.QueryFilesToReopen = null;
       settings1.ReopenWindows = false;
       settings1.SettingQueryRunnerSizeAndLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
@@ -350,6 +354,13 @@ namespace AW.Win
       this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
       this.mruHandlerProject.StorageName = "mru";
       this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
+      // 
+      // easyQueryToolStripMenuItem
+      // 
+      this.easyQueryToolStripMenuItem.Name = "easyQueryToolStripMenuItem";
+      this.easyQueryToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      this.easyQueryToolStripMenuItem.Text = "Easy Query";
+      this.easyQueryToolStripMenuItem.Click += new System.EventHandler(this.easyQueryToolStripMenuItem_Click);
       // 
       // FrmMain
       // 
@@ -413,5 +424,6 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripMenuItem viewEntitiesAndFieldsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem organizationStructureToolStripMenuItem;
 				private System.Windows.Forms.ToolStripMenuItem organizationStructureEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem easyQueryToolStripMenuItem;
     }
 }
