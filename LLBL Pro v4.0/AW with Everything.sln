@@ -196,6 +196,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D84335
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KorzhEasyQuery", "KorzhEasyQuery", "{23799F0F-BB39-4943-92D9-5356321F4A53}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.Db.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.Db.NET45.dll
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.Mvc4.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.Mvc4.NET45.dll
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.NET45.dll
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.WebControls.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.WebControls.NET45.dll
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.WinControls.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.WinControls.NET45.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 28
@@ -655,6 +664,7 @@ Global
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{9E62DAD6-C73A-49CA-9906-14E28325549C} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
+		{23799F0F-BB39-4943-92D9-5356321F4A53} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{7919C746-73F3-4279-A53B-CC6C08F42318} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{A67A2102-BA0E-48B3-9EF8-831F72B47160} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
