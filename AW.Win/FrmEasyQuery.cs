@@ -1,15 +1,24 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using AW.Data;
+using AW.Data.Linq;
+using AW.Helper;
 using Korzh.EasyQuery;
 using Korzh.EasyQuery.Db;
 using Korzh.EasyQuery.WinControls;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using Expression = System.Linq.Expressions.Expression;
 using Path = System.IO.Path;
 
 namespace AW.Win
@@ -78,14 +87,12 @@ namespace AW.Win
       InitializeComponent();
       query1.Model = dataModel1;
       QPanel.Query = query1;
-      query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
       QPanel.Activate();
       QCPanel.Activate();
       SCPanel.Activate();
       EntPanel.UpdateModelInfo();
       comboBoxDbType.SelectedIndex = 0;
       countryAttr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
-      query1.Formats.UseSchema = true;
     }
 
     private void CheckConnection()
@@ -684,6 +691,12 @@ namespace AW.Win
           dataGrid1.DataSource = ResultDS.Tables[0].DefaultView;
           sqlCon.Close();
         }
+        else
+        {
+          var expression = GetLinqExpression();
+          var dynamicInvoke = System.Linq.Expressions.Expression.Lambda(expression).Compile().DynamicInvoke() as IEnumerable;
+          dataGrid1.DataSource = dynamicInvoke.CopyToDataTable();
+        }
       }
       catch (Exception error)
       {
@@ -692,17 +705,32 @@ namespace AW.Win
       }
     }
 
+    private static HashSet<EntityAttr> usedAttributes = new HashSet<EntityAttr>();
+
     private void BuildSQL()
     {
       teSQL.Clear();
       try
       {
-        var builder = new SqlQueryBuilder(query1);
-        if (builder.CanBuild)
+        if (dbMode == 0)
         {
-          builder.BuildSQL();
-          var sql = builder.Result.SQL;
-          teSQL.Text = sql;
+          var builder = new SqlQueryBuilder(query1);
+          if (builder.CanBuild)
+          {
+            builder.BuildSQL();
+            var sql = builder.Result.SQL;
+            teSQL.Text = sql;
+          }
+        }
+        else if (query1.Columns.Count>0)
+        {
+          //foreach (Column column in (Collection<Column>)query1.Columns)
+          //  usedAttributes.Add(column.BaseAttr);
+          //List<Entity> list1 = Enumerable.ToList<Entity>(Enumerable.Distinct<Entity>(Enumerable.Select<EntityAttr, Entity>((IEnumerable<EntityAttr>)usedAttributes, (Func<EntityAttr, Entity>)(a => a.Entity))));
+          //IEnumerable<Type> usedTypes = Enumerable.Select<Entity, Type>((IEnumerable<Entity>)list1, (Func<Entity, Type>)(e => e.Info["type"] as Type));
+          //Type vertex = Enumerable.First<Type>(usedTypes);
+          var expression = GetLinqExpression();
+          teSQL.Text = expression.ToString();
         }
       }
       catch
@@ -711,18 +739,30 @@ namespace AW.Win
       }
     }
 
+    private Expression GetLinqExpression()
+    {
+      var linqQueryBuilder = new LinqQueryBuilder(query1, MetaSingletons.MetaData);
+      var expression = linqQueryBuilder.Build();
+      return expression;
+    }
+
     private void QPanel_SqlExecute(object sender, SqlExecuteEventArgs e)
     {
-      CheckConnection();
+      CheckConnection(); 
+      var strWriter = new StringWriter();
       var tempDS = new DataSet();
       if (dbMode == 0)
       {
         var tempDA = new SqlDataAdapter(e.SQL, sqlCon);
-
-        tempDA.Fill(tempDS, "Temp");
-      }
-      var strWriter = new StringWriter();
+        tempDA.Fill(tempDS, "Temp");     
       tempDS.WriteXml(strWriter);
+      }
+      else
+      {
+        var expression = GetLinqExpression();
+        IEnumerable queryResult = System.Linq.Expressions.Expression.Lambda(expression).Compile().DynamicInvoke() as IEnumerable;
+        queryResult.CopyToDataTable();
+      }
       e.ResultXml = strWriter.ToString();
     }
 
@@ -896,12 +936,14 @@ namespace AW.Win
       if (dbMode == 0)
       {
         query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
+        query1.Formats.UseSchema = true;
         query1.Model.LoadFromFile(Path.Combine(dataFolder, "AdventureWorks.xml"));
       }
       else
       {
         query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
-        (query1.Model as DbModel).LoadFromEdmx("App_Data\\AdventureWorks.edmx");
+        query1.Model.Clear();
+        query1.Model.LoadFromCollectionContainer(typeof(LinqMetaData), typeof(DataSource<>));
       }
       QPanel.UpdateModelInfo();
       QCPanel.UpdateModelInfo();
