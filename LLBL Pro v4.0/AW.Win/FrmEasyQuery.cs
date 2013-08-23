@@ -1,148 +1,134 @@
 using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
+using System.ComponentModel;
 using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 using Korzh.EasyQuery;
 using Korzh.EasyQuery.Db;
 using Korzh.EasyQuery.WinControls;
-using System.Data.SqlClient;
-using System.Data.OleDb;
+using SD.LLBLGen.Pro.ORMSupportClasses;
+using Path = System.IO.Path;
 
 namespace AW.Win
 {
   /// <summary>
   /// Summary description for Form1.
   /// </summary>
-  public class FrmEasyQuery : System.Windows.Forms.Form
+  public class FrmEasyQuery : Form
   {
     /// <summary>
     /// Required designer variable.
     /// </summary>
-    private System.ComponentModel.Container components = null;
+    private Container components = null;
+
     private DbModel dataModel1;
     private DbQuery query1;
-    private System.Windows.Forms.OpenFileDialog openFileDlg;
-        private System.Windows.Forms.SaveFileDialog saveFileDlg;
-    private System.Data.DataSet ResultDS;
-    private System.Data.DataTable ResultDataTable;
-    private System.Windows.Forms.ContextMenu contextMenu1;
-    private System.Windows.Forms.MenuItem menuItemAddConditions;
-    private System.Windows.Forms.MenuItem menuItemFillDataModel;
-    private System.Windows.Forms.Panel panelBottom;
-    private System.Windows.Forms.GroupBox groupBoxSQL;
-    private System.Windows.Forms.Splitter splitter1;
-    private System.Windows.Forms.GroupBox groupBoxResultSet;
-    private System.Windows.Forms.TextBox teSQL;
-    private System.Windows.Forms.DataGrid dataGrid1;
-    private System.Windows.Forms.Splitter splitter2;
-    private System.Windows.Forms.Panel panelBG;
-    private System.Windows.Forms.Panel panelButtons;
-    private System.Windows.Forms.Button btCodeSamples;
-    private System.Windows.Forms.Button btClear;
-    private System.Windows.Forms.Button btLoad;
-    private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.Button btExecute;
-        private System.Windows.Forms.GroupBox groupBoxConditions;
-        private System.Windows.Forms.Panel panelQuery;
-        private MenuItem menuItemResetDataModel;
-        private Panel panelColumns;
-        private Splitter splitter4;
-        private GroupBox groupBoxSorting;
-        private SortColumnsPanel SCPanel;
-        private GroupBox groupBoxColumns;
-        private QueryColumnsPanel QCPanel;
-        private QueryPanel QPanel;
-        private GroupBox groupBoxEntities;
-        private EntitiesPanel EntPanel;
-        private Splitter splitter3;
-        private ComboBox comboBoxDbType;
-        private Label labelDbTypeHint;
-        private Label label1;
+    private OpenFileDialog openFileDlg;
+    private SaveFileDialog saveFileDlg;
+    private DataSet ResultDS;
+    private DataTable ResultDataTable;
+    private ContextMenu contextMenu1;
+    private MenuItem menuItemAddConditions;
+    private MenuItem menuItemFillDataModel;
+    private Panel panelBottom;
+    private GroupBox groupBoxSQL;
+    private Splitter splitter1;
+    private GroupBox groupBoxResultSet;
+    private TextBox teSQL;
+    private DataGrid dataGrid1;
+    private Splitter splitter2;
+    private Panel panelBG;
+    private Panel panelButtons;
+    private Button btCodeSamples;
+    private Button btClear;
+    private Button btLoad;
+    private Button btSave;
+    private Button btExecute;
+    private GroupBox groupBoxConditions;
+    private Panel panelQuery;
+    private MenuItem menuItemResetDataModel;
+    private Panel panelColumns;
+    private Splitter splitter4;
+    private GroupBox groupBoxSorting;
+    private SortColumnsPanel SCPanel;
+    private GroupBox groupBoxColumns;
+    private QueryColumnsPanel QCPanel;
+    private QueryPanel QPanel;
+    private GroupBox groupBoxEntities;
+    private EntitiesPanel EntPanel;
+    private Splitter splitter3;
+    private ComboBox comboBoxDbType;
+    private Label labelDbTypeHint;
+    private Label label1;
 
+    private string dataFolder = "";
 
-    private string dataFolder = "App_Data";
+    private string appDirectory;
 
-        string appDirectory;
+    private SqlConnection sqlCon;
 
-        OleDbConnection oledbCon;
-        SqlConnection sqlCon;
-    public FrmEasyQuery() {
-            appDirectory = System.IO.Directory.GetCurrentDirectory();
-            dataFolder = appDirectory;
+    public FrmEasyQuery()
+    {
+      appDirectory = Directory.GetCurrentDirectory();
+      dataFolder = appDirectory;
 
       InitializeComponent();
-            query1.Model = dataModel1;
-            this.QPanel.Query = this.query1;
-          this.query1.Formats.SetDefaultFormats(FormatType.MsAccess);
-            QPanel.Activate();
-            QCPanel.Activate();
-            SCPanel.Activate();
-            EntPanel.UpdateModelInfo();
-            comboBoxDbType.SelectedIndex = 0;
-            countryAttr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
+      query1.Model = dataModel1;
+      QPanel.Query = query1;
+      query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
+      QPanel.Activate();
+      QCPanel.Activate();
+      SCPanel.Activate();
+      EntPanel.UpdateModelInfo();
+      comboBoxDbType.SelectedIndex = 0;
+      countryAttr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
       query1.Formats.UseSchema = true;
-      query1.Formats.UseDbName = true;
     }
 
-        private void CheckConnection() { 
-            if (dbMode == 0)
-                CheckOleDbConnection();
-            else if (dbMode == 1)
-                CheckSqlConnection();
+    private void CheckConnection()
+    {
+      if (dbMode == 0)
+        CheckSqlConnection();
+    }
+
+    private void CheckSqlConnection()
+    {
+      if (sqlCon == null)
+        sqlCon = new SqlConnection(ConfigFileHelper.ReadConnectionStringFromConfig("Main.ConnectionString"));
+      if (sqlCon.State != ConnectionState.Open)
+      {
+        try
+        {
+          sqlCon.Open();
         }
-
-
-        private void CheckSqlConnection() { 
-            if (sqlCon == null)                
-                sqlCon = new SqlConnection(@"data source=(local)\sqlexpress;initial catalog=AdventureWorks;integrated security=SSPI");
-                //sqlCon = new SqlConnection(@"Data Source=.\SQLEXPRESS;AttachDbFilename=C:\Projects\eqn\trunk\src\samples\data\NWind\NORTHWND_new.MDF;Integrated Security=True;Connect Timeout=30;User Instance=True");
-                //sqlCon = new SqlConnection("Data Source=.\\SQLEXPRESS;Initial Catalog=NORTHWND_new.mdf;Integrated Security=True;");
-            if (sqlCon.State != ConnectionState.Open) {
-                try {
-                    sqlCon.Open();
-                }
-                catch (Exception ex) {
-                    MessageBox.Show(ex.Message);
-                }
-            }
+        catch (Exception ex)
+        {
+          MessageBox.Show(ex.Message);
         }
-
-        private void CheckOleDbConnection() {
-            if (oledbCon == null) {
-                oledbCon = new OleDbConnection();
-            }
-
-            if (oledbCon.State != ConnectionState.Open) {
-                try {
-                    oledbCon.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + System.IO.Path.Combine(appDirectory, "App_Data\\NWind.mdb") + ";Persist Security Info=False";
-                    oledbCon.Open();
-                }
-                catch (Exception ex) {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-
-        }
-
+      }
+    }
 
     /// <summary>
     /// Clean up any resources being used.
     /// </summary>
-    protected override void Dispose( bool disposing )
+    protected override void Dispose(bool disposing)
     {
-      if( disposing )
+      if (disposing)
       {
-        if (components != null) 
+        if (components != null)
         {
           components.Dispose();
         }
       }
-            CloseConnections();
-      base.Dispose( disposing );
+      CloseConnections();
+      base.Dispose(disposing);
     }
 
     #region Windows Form Designer generated code
+
     /// <summary>
     /// Required method for Designer support - do not modify
     /// the contents of this method with the code editor.
@@ -221,6 +207,7 @@ namespace AW.Win
       this.query1.FilePath = "";
       this.query1.Formats.EscapeSymbol = "";
       this.query1.Formats.QuoteColumnAlias = false;
+      this.query1.Formats.UseTableAlias = false;
       this.query1.Formats.WildSymbol = '%';
       this.query1.Model = this.dataModel1;
       this.query1.NoPathResolution = Korzh.EasyQuery.NoPathResolution.ThrowException;
@@ -386,9 +373,8 @@ namespace AW.Win
       this.comboBoxDbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.comboBoxDbType.FormattingEnabled = true;
       this.comboBoxDbType.Items.AddRange(new object[] {
-            "MS Access (OLE DB)",
             "SQL Server",
-            "Entity Framework"});
+            "LLBL"});
       this.comboBoxDbType.Location = new System.Drawing.Point(87, 6);
       this.comboBoxDbType.Name = "comboBoxDbType";
       this.comboBoxDbType.Size = new System.Drawing.Size(134, 21);
@@ -630,7 +616,7 @@ namespace AW.Win
       this.btExecute.Text = "Execute Query";
       this.btExecute.Click += new System.EventHandler(this.btExecute_Click);
       // 
-      // frmEasyQuery
+      // FrmEasyQuery
       // 
       this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
       this.ClientSize = new System.Drawing.Size(838, 548);
@@ -659,192 +645,201 @@ namespace AW.Win
       this.ResumeLayout(false);
 
     }
+
     #endregion
 
-    private void btClear_Click(object sender, System.EventArgs e) {
+    private void btClear_Click(object sender, EventArgs e)
+    {
       QPanel.Query.Clear();
     }
 
-        private int dbMode = 0;
+    private int dbMode = 0;
 
-    private void btLoad_Click(object sender, System.EventArgs e) {
-      openFileDlg.FileName = System.IO.Path.Combine(dataFolder, "queries\\query1.xml");
+    private void btLoad_Click(object sender, EventArgs e)
+    {
+      openFileDlg.FileName = Path.Combine(dataFolder, "query1.xml");
       if (openFileDlg.ShowDialog() == DialogResult.OK)
         QPanel.Query.LoadFromFile(openFileDlg.FileName);
     }
 
-    private void btSave_Click(object sender, System.EventArgs e) {
-            saveFileDlg.FileName = System.IO.Path.Combine(dataFolder, "queries\\query1.xml");
+    private void btSave_Click(object sender, EventArgs e)
+    {
+      saveFileDlg.FileName = Path.Combine(dataFolder, "query1.xml");
       if (saveFileDlg.ShowDialog() == DialogResult.OK)
         QPanel.Query.SaveToFile(saveFileDlg.FileName);
     }
- 
-    private void btExecute_Click(object sender, System.EventArgs e) {
-            try {
-                ResultDS.Reset();
-                //BuildSQL();
-                string sql = teSQL.Text;
-                CheckConnection();
-                if (dbMode == 2) {
 
-                    }
-                
-                else if (dbMode == 1) {
-                    SqlDataAdapter resultDA = new SqlDataAdapter(sql, sqlCon);
-                    resultDA.Fill(ResultDS, "Result");
-                    dataGrid1.DataSource = ResultDS.Tables[0].DefaultView;
-                    sqlCon.Close();
-                }
-                else {
-                    OleDbDataAdapter resultDA = new OleDbDataAdapter(sql, oledbCon);
-                    resultDA.Fill(ResultDS, "Result");
-                    dataGrid1.DataSource = ResultDS.Tables[0].DefaultView;
-                }
-            }
-            catch (Exception error) {
-                //if some error occurs just show the error message 
-                MessageBox.Show(error.Message);
-            }
+    private void btExecute_Click(object sender, EventArgs e)
+    {
+      try
+      {
+        ResultDS.Reset();
+        //BuildSQL();
+        var sql = teSQL.Text;
+        CheckConnection();
+        if (dbMode == 0)
+        {
+          var resultDA = new SqlDataAdapter(sql, sqlCon);
+          resultDA.Fill(ResultDS, "Result");
+          dataGrid1.DataSource = ResultDS.Tables[0].DefaultView;
+          sqlCon.Close();
+        }
+      }
+      catch (Exception error)
+      {
+        //if some error occurs just show the error message 
+        MessageBox.Show(error.Message);
+      }
     }
 
-        private void BuildSQL() {
-            teSQL.Clear();
-            try {
-                SqlQueryBuilder builder = new SqlQueryBuilder(query1);
-                if (builder.CanBuild) {
-                    builder.BuildSQL();
-                    string sql = builder.Result.SQL;
-                    teSQL.Text = sql;
-                }
-            }
-            catch {
-                //Simply ignore any possible exception
-            }
+    private void BuildSQL()
+    {
+      teSQL.Clear();
+      try
+      {
+        var builder = new SqlQueryBuilder(query1);
+        if (builder.CanBuild)
+        {
+          builder.BuildSQL();
+          var sql = builder.Result.SQL;
+          teSQL.Text = sql;
         }
+      }
+      catch
+      {
+        //Simply ignore any possible exception
+      }
+    }
 
-    private void QPanel_SqlExecute(object sender, Korzh.EasyQuery.WinControls.SqlExecuteEventArgs e) {
-            CheckConnection();
-            DataSet tempDS = new DataSet();
-            if (dbMode == 0) {
-                OleDbDataAdapter tempDA = new OleDbDataAdapter(e.SQL, oledbCon);
-                tempDA.Fill(tempDS, "Temp");
-            }
-            else {
-                SqlDataAdapter tempDA = new SqlDataAdapter(e.SQL, sqlCon);
+    private void QPanel_SqlExecute(object sender, SqlExecuteEventArgs e)
+    {
+      CheckConnection();
+      var tempDS = new DataSet();
+      if (dbMode == 0)
+      {
+        var tempDA = new SqlDataAdapter(e.SQL, sqlCon);
 
-                tempDA.Fill(tempDS, "Temp");
-            }
-      StringWriter strWriter = new StringWriter();
+        tempDA.Fill(tempDS, "Temp");
+      }
+      var strWriter = new StringWriter();
       tempDS.WriteXml(strWriter);
       e.ResultXml = strWriter.ToString();
     }
 
-        private EntityAttr countryAttr = null;
+    private EntityAttr countryAttr = null;
 
-        private void QPanel_ListRequest(object sender, ListRequestEventArgs e) {
-            if (e.ListName == "RegionList") {
-                e.ListItems.Clear();
-                string country = query1.GetOneValueForAttr(countryAttr);
+    private void QPanel_ListRequest(object sender, ListRequestEventArgs e)
+    {
+      if (e.ListName == "RegionList")
+      {
+        e.ListItems.Clear();
+        var country = query1.GetOneValueForAttr(countryAttr);
 
-                if (country == "Canada") {
-                    e.ListItems.Add("British Columbia", "BC");
-                    e.ListItems.Add("Quebec", "Quebec");
-                }
-                else if (country == "USA") {
-                    e.ListItems.Add("California", "CA");
-                    e.ListItems.Add("Colorado", "CO");
-                    e.ListItems.Add("Oregon", "OR");
-                    e.ListItems.Add("Washington", "WA");
-                }
-            }
-
+        if (country == "Canada")
+        {
+          e.ListItems.Add("British Columbia", "BC");
+          e.ListItems.Add("Quebec", "Quebec");
         }
-
-        private void query1_ColumnsChanged(object sender, ColumnsChangeEventArgs e) {
-            BuildSQL();
-            ResultDS.Reset();
+        else if (country == "USA")
+        {
+          e.ListItems.Add("California", "CA");
+          e.ListItems.Add("Colorado", "CO");
+          e.ListItems.Add("Oregon", "OR");
+          e.ListItems.Add("Washington", "WA");
         }
+      }
+    }
 
-        private void query1_ConditionsChanged(object sender, ConditionsChangeEventArgs e) {
-            EntityAttr baseAttr = null;
-            if (e.Condition != null)
-                baseAttr = e.Condition.BaseAttr;
-             
-            if (baseAttr != null && baseAttr == countryAttr) {
-                QPanel.RefreshList("RegionList");
-            }
+    private void query1_ColumnsChanged(object sender, ColumnsChangeEventArgs e)
+    {
+      BuildSQL();
+      ResultDS.Reset();
+    }
 
-            BuildSQL();
-            ResultDS.Reset();
-        }
+    private void query1_ConditionsChanged(object sender, ConditionsChangeEventArgs e)
+    {
+      EntityAttr baseAttr = null;
+      if (e.Condition != null)
+        baseAttr = e.Condition.BaseAttr;
 
-        private void ResetDataModel() {
-            query1.Clear();
-            dataModel1.LoadFromFile(System.IO.Path.Combine(dataFolder, "NWind.xml"));
-            QPanel.UpdateModelInfo();
-        }
+      if (baseAttr != null && baseAttr == countryAttr)
+      {
+        QPanel.RefreshList("RegionList");
+      }
+
+      BuildSQL();
+      ResultDS.Reset();
+    }
+
+    private void ResetDataModel()
+    {
+      query1.Clear();
+      dataModel1.LoadFromFile(Path.Combine(dataFolder, "AdventureWorks.xml"));
+      QPanel.UpdateModelInfo();
+    }
 
 
-        private void menuItemResetDataModel_Click(object sender, EventArgs e) {
-            ResetDataModel();
-        }
+    private void menuItemResetDataModel_Click(object sender, EventArgs e)
+    {
+      ResetDataModel();
+    }
 
-        private void menuItemFillDataModel_Click(object sender, System.EventArgs e) {
-            DataSet tempDS = new DataSet();
+    private void menuItemFillDataModel_Click(object sender, EventArgs e)
+    {
+      var tempDS = new DataSet();
 
-            CheckConnection();
+      CheckConnection();
 
-            if (dbMode == 0) {
-                OleDbDataAdapter tempDA = new OleDbDataAdapter("SELECT * FROM CUSTOMERS", oledbCon);
+      if (dbMode == 0)
+      {
+        var tempDA = new SqlDataAdapter("SELECT * FROM HumanResources.Employee AS Employee WHERE(Employee.Title LIKE 'M%' )", sqlCon);
+        tempDA.Fill(tempDS, "HumanResources.Employee");
+      }
 
-                tempDA.Fill(tempDS, "Customers");
-            }
-            else {
-                SqlDataAdapter tempDA = new SqlDataAdapter("SELECT * FROM CUSTOMERS", sqlCon);
+      var custTable = tempDS.Tables["HumanResources.Employee"];
 
-                tempDA.Fill(tempDS, "Customers");
-            }
+      query1.Model = null;
 
-            DataTable custTable = tempDS.Tables["Customers"];
+      dataModel1.Clear();
+      dataModel1.AddDefaultOperators();
+      dataModel1.FillByDataTable(custTable, false);
 
-            query1.Model = null;
+      //AddAttrAutoFill(dataModel1.EntityRoot);
 
-            dataModel1.Clear();
-            dataModel1.AddDefaultOperators();
-            dataModel1.FillByDataTable(custTable, false);
+      query1.Model = dataModel1;
 
-            //AddAttrAutoFill(dataModel1.EntityRoot);
+      QPanel.UpdateModelInfo();
+      QPanel.Activate();
 
-            query1.Model = dataModel1;
+      QCPanel.UpdateModelInfo();
+    }
 
-            QPanel.UpdateModelInfo();
-            QPanel.Activate();
+    private void AddAttrAutoFill(Entity entity)
+    {
+      SqlListValueEditor valEditor;
 
-            QCPanel.UpdateModelInfo();
-        }
+      foreach (var attr in entity.Attributes)
+      {
+        attr.Operations.Clear();
+        attr.Operations.AddByIDs(dataModel1, "Equal,NotEqual,InList,NotInList");
+        valEditor = new SqlListValueEditor();
+        valEditor.SQL = string.Format("SELECT DISTINCT {0}, {0} FROM {1}", attr.Expr, ((DbEntityAttr) attr).Tables[0].Alias);
+        attr.DefaultEditor = valEditor;
+      }
+    }
 
-        private void AddAttrAutoFill(Entity entity) {
-            SqlListValueEditor valEditor;
-
-            foreach (EntityAttr attr in entity.Attributes) {
-                attr.Operations.Clear();
-                attr.Operations.AddByIDs(dataModel1, "Equal,NotEqual,InList,NotInList");
-                valEditor = new SqlListValueEditor();
-                valEditor.SQL = string.Format("SELECT DISTINCT {0}, {0} FROM {1}", attr.Expr, ((DbEntityAttr)attr).Tables[0].Alias);
-                attr.DefaultEditor = valEditor;
-            }        
-        }
-
-        private void menuItemAddConditions_Click(object sender, System.EventArgs e) {
-            if (dbMode == 2) {
-                MessageBox.Show("Not implemented for EntityFramework mode");
-                return;
-            }
-            ResetDataModel();
+    private void menuItemAddConditions_Click(object sender, EventArgs e)
+    {
+      if (dbMode == 1)
+      {
+        MessageBox.Show("Not implemented for EntityFramework mode");
+        return;
+      }
+      ResetDataModel();
       query1.Clear();
 
       EntityAttr attr;
-      attr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression , "Customers.Country");
+      attr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
 
       //create columns
       Column col;
@@ -872,51 +867,45 @@ namespace AW.Win
 
       //finally we set the rigth side expression which is some constant value in our case.
       cond.SetValueExpr(1, new ConstExpr(DataType.Date, "2005-01-01"));
-            cond.ReadOnly = true;
-      
+      cond.ReadOnly = true;
+
       //when all parts of our condition are ready - we add it to query
       query1.Root.Conditions.Add(cond);
-  
     }
-
-
-    private void btCodeSamples_Click(object sender, System.EventArgs e) {
+    
+    private void btCodeSamples_Click(object sender, EventArgs e)
+    {
       contextMenu1.Show(btCodeSamples, new Point(0, btCodeSamples.Height + 1));
     }
 
-        private void QPanel_ValueRequest(object sender, ValueRequestEventArgs e) {
-            MessageBox.Show(e.Data);
-        }
+    private void QPanel_ValueRequest(object sender, ValueRequestEventArgs e)
+    {
+      MessageBox.Show(e.Data);
+    }
 
-        private void CloseConnections() {
-            if (sqlCon != null) sqlCon.Close();
-            if (oledbCon != null) oledbCon.Close();
-        }
+    private void CloseConnections()
+    {
+      if (sqlCon != null) sqlCon.Close();
+    }
 
-        private void comboBoxDbType_SelectedValueChanged(object sender, EventArgs e) {
-            CloseConnections();
-            dbMode = comboBoxDbType.SelectedIndex;
-            query1.Clear();
-            if (dbMode == 0) {
-                query1.Formats.SetDefaultFormats(FormatType.MsAccess);
-                query1.Model.LoadFromFile(System.IO.Path.Combine(dataFolder, "AdventureWorks.xml"));
-            }
-            else if (dbMode == 1) {
-                query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
-                query1.Model.LoadFromFile(System.IO.Path.Combine(dataFolder, "AdventureWorks.xml"));
-            }
-            else {
-                query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
-                (query1.Model as DbModel).LoadFromEdmx("App_Data\\Nwind.edmx");
-            }
-            QPanel.UpdateModelInfo();
-            QCPanel.UpdateModelInfo();
-            EntPanel.UpdateModelInfo();
-
-        }
-
-
-
-
+    private void comboBoxDbType_SelectedValueChanged(object sender, EventArgs e)
+    {
+      CloseConnections();
+      dbMode = comboBoxDbType.SelectedIndex;
+      query1.Clear();
+      if (dbMode == 0)
+      {
+        query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
+        query1.Model.LoadFromFile(Path.Combine(dataFolder, "AdventureWorks.xml"));
+      }
+      else
+      {
+        query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
+        (query1.Model as DbModel).LoadFromEdmx("App_Data\\AdventureWorks.edmx");
+      }
+      QPanel.UpdateModelInfo();
+      QCPanel.UpdateModelInfo();
+      EntPanel.UpdateModelInfo();
+    }
   }
 }
