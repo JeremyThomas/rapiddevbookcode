@@ -11,27 +11,30 @@ using System.Reflection;
 
 internal static class AssemblyInfoConstants
 {
-	/// <summary>
-	/// 3.1
-	/// </summary>
-	public const string AssemblyInformationalVersion = "3.5";
-	public const string AssemblyRevision = "0";
-	/// <summary>
-	/// 3.5.0.0
-	/// </summary>
-	public const string AssemblyVersion = AssemblyInformationalVersion + ".0." + AssemblyRevision;
-	public const string ExecutableRevision = "0";
-	public const string ExecutableVersion = AssemblyInformationalVersion + ".0." + ExecutableRevision;
-	// Compile a Debug or Release flag into the assembly.
+  /// <summary>
+  ///   4.0
+  /// </summary>
+  public const string AssemblyInformationalVersion = "4.0";
+
+  public const string AssemblyRevision = "0";
+
+  /// <summary>
+  ///   4.0.0.0
+  /// </summary>
+  public const string AssemblyVersion = AssemblyInformationalVersion + ".0." + AssemblyRevision;
+
+  public const string ExecutableRevision = "0";
+  public const string ExecutableVersion = AssemblyInformationalVersion + ".0." + ExecutableRevision;
+  // Compile a Debug or Release flag into the assembly.
 #if DEBUG
-	/// <summary>
-	/// Debug
-	/// </summary>
-	public const string AssemblyConfiguration = "Debug";
+  /// <summary>
+  ///   Debug
+  /// </summary>
+  public const string AssemblyConfiguration = "Debug";
 #else
-	public const string AssemblyConfiguration = "Release";
+  public const string AssemblyConfiguration = "Release";
 #endif
-	public const string ConfigurationSuffix = "\r\nBuild: " + AssemblyConfiguration;
+  public const string ConfigurationSuffix = "\r\nBuild: " + AssemblyConfiguration;
 }
 
 //[assembly: AllowPartiallyTrustedCallers]
