@@ -54,6 +54,7 @@ namespace AW.Win
       this.adHocLINQQueryRunnerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.viewMetadataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.viewEntitiesAndFieldsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.easyQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.windowsMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.cascadeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.tileVerticalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,7 +65,6 @@ namespace AW.Win
       this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
       this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
-      this.easyQueryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
       this.SuspendLayout();
@@ -237,6 +237,13 @@ namespace AW.Win
       this.viewEntitiesAndFieldsToolStripMenuItem.Text = "View Entities and Fields";
       this.viewEntitiesAndFieldsToolStripMenuItem.Click += new System.EventHandler(this.viewEntitiesAndFieldsToolStripMenuItem_Click);
       // 
+      // easyQueryToolStripMenuItem
+      // 
+      this.easyQueryToolStripMenuItem.Name = "easyQueryToolStripMenuItem";
+      this.easyQueryToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      this.easyQueryToolStripMenuItem.Text = "Easy Query";
+      this.easyQueryToolStripMenuItem.Click += new System.EventHandler(this.easyQueryToolStripMenuItem_Click);
+      // 
       // windowsMenu
       // 
       this.windowsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -344,7 +351,7 @@ namespace AW.Win
       // 
       // openFileDialogProject
       // 
-      this.openFileDialogProject.Filter = "C# files|*.cs|Text files (*.txt)|*.txt|All files (*.*)|*.*";
+      this.openFileDialogProject.Filter = "C# files|*.cs|XML files|*.xml|Text files (*.txt)|*.txt|All files (*.*)|*.*";
       this.openFileDialogProject.Multiselect = true;
       this.openFileDialogProject.Title = "Open query script files";
       // 
@@ -354,13 +361,6 @@ namespace AW.Win
       this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
       this.mruHandlerProject.StorageName = "mru";
       this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
-      // 
-      // easyQueryToolStripMenuItem
-      // 
-      this.easyQueryToolStripMenuItem.Name = "easyQueryToolStripMenuItem";
-      this.easyQueryToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-      this.easyQueryToolStripMenuItem.Text = "Easy Query";
-      this.easyQueryToolStripMenuItem.Click += new System.EventHandler(this.easyQueryToolStripMenuItem_Click);
       // 
       // FrmMain
       // 

@@ -123,9 +123,20 @@ namespace AW.Win
 
     private void DoFileOpen(string fileName)
     {
-      var frmQueryRunner = LaunchQueryRunner();
-      if (frmQueryRunner != null) frmQueryRunner.DoFileOpen(fileName);
-
+      if (".XML".Equals(Path.GetExtension(fileName), StringComparison.OrdinalIgnoreCase))
+      {
+        var frmEasyQuery = LaunchEasyQuery();
+        if (frmEasyQuery != null)
+        {
+          frmEasyQuery.DBMode = 1;
+          frmEasyQuery.LoadFromFile(fileName);
+        }
+      }
+      else
+      {
+        var frmQueryRunner = LaunchQueryRunner();
+        if (frmQueryRunner != null) frmQueryRunner.DoFileOpen(fileName);
+      }
       openFileDialogProject.InitialDirectory = Path.GetDirectoryName(fileName);
       mruHandlerProject.AddRecentlyUsedFile(fileName);
     }
@@ -200,7 +211,12 @@ namespace AW.Win
 
     private void easyQueryToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof(FrmEasyQuery));
+      LaunchEasyQuery();
+    }
+
+    private FrmEasyQuery LaunchEasyQuery()
+    {
+      return (FrmEasyQuery) LaunchChildForm(typeof (FrmEasyQuery));
     }
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
@@ -228,6 +244,5 @@ namespace AW.Win
     {
       MetaSingletons.MetaData.Employee.ShowSelfServicingHierarchyInTree("EmployeeID", "ManagerID", "EmployeeDisplayName");
     }
-
   }
 }

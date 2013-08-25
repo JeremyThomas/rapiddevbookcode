@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
@@ -54,11 +55,11 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
 
 		public static Form Show(ILinqMetaData linqMetaData)
 		{
-			var adapter = EntityHelper.GetDataAccessAdapter(linqMetaData.GetQueryableForEntity(0).Provider);
+			var adapter = EntityHelper.GetDataAccessAdapter(linqMetaData);
 			return adapter == null ? Show((object) linqMetaData) : Show(linqMetaData, new LLBLWinformHelper.DataEditorLLBLAdapterPersister(adapter));
 		}
 
-		public static Form Show(object entity, IDataEditorPersister dataEditorPersister)
+	  public static Form Show(object entity, IDataEditorPersister dataEditorPersister)
 		{
 			var frm = new FrmLLBLEntityViewer(entity, dataEditorPersister);
 			AWHelper.ShowForm(frm);

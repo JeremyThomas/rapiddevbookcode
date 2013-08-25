@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.Linq;
 using AW.Helper;
+using AW.Helper.LLBL;
+using AW.Winforms.Helpers;
 using Korzh.EasyQuery;
 using Korzh.EasyQuery.Db;
 using Korzh.EasyQuery.WinControls;
@@ -20,12 +22,12 @@ using Path = System.IO.Path;
 namespace AW.Win
 {
   /// <summary>
-  /// Summary description for Form1.
+  ///   Summary description for Form1.
   /// </summary>
-  public class FrmEasyQuery : Form
+  public class FrmEasyQuery : FrmPersistantLocation
   {
     /// <summary>
-    /// Required designer variable.
+    ///   Required designer variable.
     /// </summary>
     private Container components = null;
 
@@ -69,7 +71,7 @@ namespace AW.Win
     private Label labelDbTypeHint;
     private Label label1;
 
-    private string dataFolder = "";
+    private string _dataFolder = "";
 
     private string appDirectory;
 
@@ -78,7 +80,7 @@ namespace AW.Win
     public FrmEasyQuery()
     {
       appDirectory = Directory.GetCurrentDirectory();
-      dataFolder = appDirectory;
+      _dataFolder = appDirectory;
 
       InitializeComponent();
       query1.Model = dataModel1;
@@ -91,9 +93,36 @@ namespace AW.Win
       countryAttr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
     }
 
+    public int DBMode
+    {
+      get { return comboBoxDbType.SelectedIndex; }
+      set
+      {
+        if (comboBoxDbType.SelectedIndex == value) return;
+        comboBoxDbType.SelectedIndex = value;
+        CloseConnections();
+        query1.Clear();
+        if (DBMode == 0)
+        {
+          query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
+          query1.Formats.UseSchema = true;
+          query1.Model.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
+        }
+        else
+        {
+          query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
+          query1.Model.Clear();
+          query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
+        }
+        QPanel.UpdateModelInfo();
+        QCPanel.UpdateModelInfo();
+        EntPanel.UpdateModelInfo();
+      }
+    }
+
     private void CheckConnection()
     {
-      if (dbMode == 0)
+      if (DBMode == 0)
         CheckSqlConnection();
     }
 
@@ -115,7 +144,7 @@ namespace AW.Win
     }
 
     /// <summary>
-    /// Clean up any resources being used.
+    ///   Clean up any resources being used.
     /// </summary>
     protected override void Dispose(bool disposing)
     {
@@ -133,8 +162,8 @@ namespace AW.Win
     #region Windows Form Designer generated code
 
     /// <summary>
-    /// Required method for Designer support - do not modify
-    /// the contents of this method with the code editor.
+    ///   Required method for Designer support - do not modify
+    ///   the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent()
     {
@@ -661,18 +690,21 @@ namespace AW.Win
       QPanel.Query.Clear();
     }
 
-    private int dbMode = 0;
-
     private void btLoad_Click(object sender, EventArgs e)
     {
-      openFileDlg.FileName = Path.Combine(dataFolder, "query1.xml");
+      openFileDlg.FileName = Path.Combine(_dataFolder, "query1.xml");
       if (openFileDlg.ShowDialog() == DialogResult.OK)
-        QPanel.Query.LoadFromFile(openFileDlg.FileName);
+        LoadFromFile(openFileDlg.FileName);
+    }
+
+    public void LoadFromFile(string fileName)
+    {
+      QPanel.Query.LoadFromFile(fileName);
     }
 
     private void btSave_Click(object sender, EventArgs e)
     {
-      saveFileDlg.FileName = Path.Combine(dataFolder, "query1.xml");
+      saveFileDlg.FileName = Path.Combine(_dataFolder, "query1.xml");
       if (saveFileDlg.ShowDialog() == DialogResult.OK)
         QPanel.Query.SaveToFile(saveFileDlg.FileName);
     }
@@ -685,7 +717,7 @@ namespace AW.Win
         //BuildSQL();
         var sql = teSQL.Text;
         CheckConnection();
-        if (dbMode == 0)
+        if (DBMode == 0)
         {
           var resultDA = new SqlDataAdapter(sql, sqlCon);
           resultDA.Fill(ResultDS, "Result");
@@ -694,7 +726,7 @@ namespace AW.Win
         }
         else
         {
-          dataGrid1.DataSource = ExcuteToDataTable(); 
+          dataGrid1.DataSource = ExecuteToEnumerable();
         }
       }
       catch (Exception error)
@@ -709,7 +741,7 @@ namespace AW.Win
       teSQL.Clear();
       try
       {
-        if (dbMode == 0)
+        if (DBMode == 0)
         {
           var builder = new SqlQueryBuilder(query1);
           if (builder.CanBuild)
@@ -719,7 +751,7 @@ namespace AW.Win
             teSQL.Text = sql;
           }
         }
-        else if (query1.Columns.Count > 0)
+        else if (query1.Columns.Count > 0 || query1.Root.Conditions.Count > 0)
         {
           var expression = GetLinqExpression();
           teSQL.Text = expression.ToString();
@@ -743,7 +775,7 @@ namespace AW.Win
       CheckConnection();
       var strWriter = new StringWriter();
       var tempDS = new DataSet();
-      if (dbMode == 0)
+      if (DBMode == 0)
       {
         var tempDA = new SqlDataAdapter(e.SQL, sqlCon);
         tempDA.Fill(tempDS, "Temp");
@@ -758,13 +790,19 @@ namespace AW.Win
 
     private DataTable ExcuteToDataTable()
     {
-      var expression = GetLinqExpression();
-      var queryResult = MetaSingletons.MetaData.Address.Provider.Execute(expression) as IEnumerable;
+      var queryResult = ExecuteToEnumerable();
       //          var dynamicInvoke = Expression.Lambda(expression).Compile().DynamicInvoke() as IEnumerable;
       return queryResult.CopyToDataTable();
     }
 
-    private EntityAttr countryAttr = null;
+    private IEnumerable ExecuteToEnumerable()
+    {
+      var expression = GetLinqExpression();
+      var queryResult = EntityHelper.GetProvider(MetaSingletons.MetaData).Execute(expression) as IEnumerable;
+      return queryResult;
+    }
+
+    private EntityAttr countryAttr;
 
     private void QPanel_ListRequest(object sender, ListRequestEventArgs e)
     {
@@ -812,7 +850,7 @@ namespace AW.Win
     private void ResetDataModel()
     {
       query1.Clear();
-      dataModel1.LoadFromFile(Path.Combine(dataFolder, "AdventureWorks.xml"));
+      dataModel1.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
       QPanel.UpdateModelInfo();
     }
 
@@ -828,7 +866,7 @@ namespace AW.Win
 
       CheckConnection();
 
-      if (dbMode == 0)
+      if (DBMode == 0)
       {
         var tempDA = new SqlDataAdapter("SELECT * FROM HumanResources.Employee AS Employee WHERE(Employee.Title LIKE 'M%' )", sqlCon);
         tempDA.Fill(tempDS, "HumanResources.Employee");
@@ -854,21 +892,18 @@ namespace AW.Win
 
     private void AddAttrAutoFill(Entity entity)
     {
-      SqlListValueEditor valEditor;
-
       foreach (var attr in entity.Attributes)
       {
         attr.Operations.Clear();
         attr.Operations.AddByIDs(dataModel1, "Equal,NotEqual,InList,NotInList");
-        valEditor = new SqlListValueEditor();
-        valEditor.SQL = string.Format("SELECT DISTINCT {0}, {0} FROM {1}", attr.Expr, ((DbEntityAttr) attr).Tables[0].Alias);
+        var valEditor = new SqlListValueEditor {SQL = string.Format("SELECT DISTINCT {0}, {0} FROM {1}", attr.Expr, ((DbEntityAttr) attr).Tables[0].Alias)};
         attr.DefaultEditor = valEditor;
       }
     }
 
     private void menuItemAddConditions_Click(object sender, EventArgs e)
     {
-      if (dbMode == 1)
+      if (DBMode == 1)
       {
         MessageBox.Show("Not implemented for EntityFramework mode");
         return;
@@ -876,18 +911,14 @@ namespace AW.Win
       ResetDataModel();
       query1.Clear();
 
-      EntityAttr attr;
-      attr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
+      var attr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
 
       //create columns
-      Column col;
-      col = new DbColumn("Country", SortDirection.Ascending);
-      col.Expr = new DbEntityAttrExpr(dataModel1, attr);
+      Column col = new DbColumn("Country", SortDirection.Ascending) {Expr = new DbEntityAttrExpr(dataModel1, attr)};
       query1.Columns.Add(col);
 
       attr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Orders.Freight");
-      col = new DbColumn("Total sum", SortDirection.None);
-      col.Expr = new DbAggrFuncExpr(dataModel1, "SUM", new DbEntityAttrExpr(dataModel1, attr));
+      col = new DbColumn("Total sum", SortDirection.None) {Expr = new DbAggrFuncExpr(dataModel1, "SUM", new DbEntityAttrExpr(dataModel1, attr))};
       query1.Columns.Add(col);
 
       //create conditions
@@ -928,24 +959,7 @@ namespace AW.Win
 
     private void comboBoxDbType_SelectedValueChanged(object sender, EventArgs e)
     {
-      CloseConnections();
-      dbMode = comboBoxDbType.SelectedIndex;
-      query1.Clear();
-      if (dbMode == 0)
-      {
-        query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
-        query1.Formats.UseSchema = true;
-        query1.Model.LoadFromFile(Path.Combine(dataFolder, "AdventureWorks.xml"));
-      }
-      else
-      {
-        query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
-        query1.Model.Clear();
-        query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
-      }
-      QPanel.UpdateModelInfo();
-      QCPanel.UpdateModelInfo();
-      EntPanel.UpdateModelInfo();
+      DBMode = comboBoxDbType.SelectedIndex;
     }
   }
 }
