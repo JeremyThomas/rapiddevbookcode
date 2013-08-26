@@ -43,10 +43,10 @@ namespace AW.Win
         if (subEntity.UseInConditions)
           foreach (var entityAttr in subEntity.Attributes)
           {
-            if (entityAttr.DataType == DataType.Bool && entityAttr.Caption.StartsWith("AlreadyFetched") 
-              || entityAttr.Caption.StartsWith("AlwaysFetch")
-              || entityAttr.Caption.EndsWith("ReturnsNewIfNotFound")
-              || entityAttr.Caption == "IsNew" || entityAttr.Caption == "IsDirty")
+            if (entityAttr.DataType == DataType.Bool && entityAttr.Caption.StartsWith("AlreadyFetched")
+                || entityAttr.Caption.StartsWith("AlwaysFetch")
+                || entityAttr.Caption.EndsWith("ReturnsNewIfNotFound")
+                || entityAttr.Caption == "IsNew" || entityAttr.Caption == "IsDirty")
               entityAttr.UseInConditions = false;
           }
       }
@@ -74,10 +74,14 @@ namespace AW.Win
       if (Settings.Default.Countries != null && listBoxCountry.Items.Count > 0)
         foreach (var selectedRow in Settings.Default.Countries)
           listBoxCountry.SelectedIndices.Add(Convert.ToInt32(selectedRow));
+
+      if (!String.IsNullOrWhiteSpace(Settings.Default.FrmOrderSearchPredicate))
+        query1.LoadFromString(Settings.Default.FrmOrderSearchPredicate);
     }
 
     private void frmOrderSearch_FormClosed(object sender, FormClosedEventArgs e)
     {
+      Settings.Default.FrmOrderSearchPredicate = query1.SaveToString();
     }
 
     private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
@@ -156,8 +160,17 @@ namespace AW.Win
     {
       var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();
       predicate = predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(_fromDate, _toDate, _firstName, _lastName, _orderID, _orderName, _cityName, _state, _zip, _countries);
-      //   var exp = FrmEasyQuery.GetLinqExpression(query1);
+      var exp = FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression;
       // predicate.And((Expression<Func<SalesOrderHeaderEntity, bool>>) exp);
+      foreach (var expArg in exp.Arguments)
+      {
+        if (expArg.NodeType == ExpressionType.Lambda)
+        {
+          var x = expArg as Expression<Func<SalesOrderHeaderEntity, bool>>;
+          predicate = predicate.And(x);
+        }
+        //
+      }
 
       var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.Where(predicate);
       if (MaxNumberOfItemsToReturn > 0)

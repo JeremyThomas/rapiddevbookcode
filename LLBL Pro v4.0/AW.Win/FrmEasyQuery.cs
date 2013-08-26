@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.Linq;
@@ -114,6 +115,17 @@ namespace AW.Win
           query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
           query1.Model.Clear();
           query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
+          foreach (var entityAttr in from subEntity in query1.Model.EntityRoot.SubEntities
+            from entityAttr in subEntity.Attributes
+            where entityAttr.DataType == DataType.Bool &&
+                  entityAttr.Caption.StartsWith("AlreadyFetched")
+                  || entityAttr.Caption.StartsWith("AlwaysFetch")
+                  || entityAttr.Caption.EndsWith("ReturnsNewIfNotFound")
+                  || entityAttr.Caption == "IsNew" || entityAttr.Caption == "IsDirty"
+            select entityAttr)
+          {
+            entityAttr.UseInConditions = false;
+          }
         }
         QPanel.UpdateModelInfo();
         QCPanel.UpdateModelInfo();
