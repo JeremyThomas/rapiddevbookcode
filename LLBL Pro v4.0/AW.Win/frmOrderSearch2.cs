@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.Filters;
+using AW.Data.Linq;
 using AW.Data.Queries;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
+using Korzh.EasyQuery;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Win
 {
@@ -31,6 +36,21 @@ namespace AW.Win
     public FrmOrderSearch2()
     {
       InitializeComponent();
+      query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
+      foreach (var subEntity in query1.Model.EntityRoot.SubEntities)
+      {
+        subEntity.UseInConditions = subEntity.Info.Values.Contains(typeof (SalesOrderHeaderEntity));
+        if (subEntity.UseInConditions)
+          foreach (var entityAttr in subEntity.Attributes)
+          {
+            if (entityAttr.DataType == DataType.Bool && entityAttr.Caption.StartsWith("AlreadyFetched") 
+              || entityAttr.Caption.StartsWith("AlwaysFetch")
+              || entityAttr.Caption.EndsWith("ReturnsNewIfNotFound")
+              || entityAttr.Caption == "IsNew" || entityAttr.Caption == "IsDirty")
+              entityAttr.UseInConditions = false;
+          }
+      }
+      QPanel.Activate();
     }
 
     private void frmOrderSearch_Load(object sender, EventArgs e)
@@ -134,16 +154,15 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs" /> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      _results = SalesOrderQueries.DoSalesOrderHeaderLinqQuery(_fromDate,
-        _toDate,
-        _firstName,
-        _lastName,
-        _orderID,
-        _orderName,
-        _cityName,
-        _state,
-        _countries,
-        _zip, MaxNumberOfItemsToReturn).ToEntityCollection();
+      var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();
+      predicate = predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(_fromDate, _toDate, _firstName, _lastName, _orderID, _orderName, _cityName, _state, _zip, _countries);
+      //   var exp = FrmEasyQuery.GetLinqExpression(query1);
+      // predicate.And((Expression<Func<SalesOrderHeaderEntity, bool>>) exp);
+
+      var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.Where(predicate);
+      if (MaxNumberOfItemsToReturn > 0)
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Take(MaxNumberOfItemsToReturn);
+      _results = salesOrderHeaderQuery.ToEntityCollection();
     }
 
     public int MaxNumberOfItemsToReturn

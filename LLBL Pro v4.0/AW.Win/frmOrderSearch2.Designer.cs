@@ -58,6 +58,24 @@ namespace AW.Win
       this.listBoxCountry = new System.Windows.Forms.ListBox();
       this.buttonClearCountries = new System.Windows.Forms.Button();
       this.salesOrderHeaderEntityDataGridView = new System.Windows.Forms.DataGridView();
+      this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.searchWorker = new System.ComponentModel.BackgroundWorker();
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.salesOrderHeaderEntityBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+      this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+      this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
+      this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
+      this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.panel2 = new System.Windows.Forms.Panel();
+      this.query1 = new Korzh.EasyQuery.Db.DbQuery();
+      this.dataModel1 = new Korzh.EasyQuery.Db.DbModel();
+      this.QPanel = new Korzh.EasyQuery.WinControls.QueryPanel();
       this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -75,28 +93,15 @@ namespace AW.Win
       this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.searchWorker = new System.ComponentModel.BackgroundWorker();
-      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.salesOrderHeaderEntityBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-      this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-      this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-      this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-      this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.tableLayoutPanel2.SuspendLayout();
       this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
       this.contextMenuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingNavigator)).BeginInit();
       this.salesOrderHeaderEntityBindingNavigator.SuspendLayout();
+      this.panel2.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // tableLayoutPanel2
@@ -135,8 +140,9 @@ namespace AW.Win
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
       this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 13F));
-      this.tableLayoutPanel2.Size = new System.Drawing.Size(694, 170);
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+      this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel2.Size = new System.Drawing.Size(694, 176);
       this.tableLayoutPanel2.TabIndex = 0;
       // 
       // label9
@@ -288,7 +294,7 @@ namespace AW.Win
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(72, 135);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(271, 32);
+      this.panel1.Size = new System.Drawing.Size(271, 38);
       this.panel1.TabIndex = 22;
       // 
       // buttonClear
@@ -360,7 +366,7 @@ namespace AW.Win
       this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
       this.label5.Location = new System.Drawing.Point(349, 132);
       this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(63, 38);
+      this.label5.Size = new System.Drawing.Size(63, 44);
       this.label5.TabIndex = 6;
       this.label5.Text = "State:";
       this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -429,7 +435,7 @@ namespace AW.Win
       dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
       this.salesOrderHeaderEntityDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
       this.salesOrderHeaderEntityDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.salesOrderHeaderEntityDataGridView.Location = new System.Drawing.Point(0, 170);
+      this.salesOrderHeaderEntityDataGridView.Location = new System.Drawing.Point(0, 271);
       this.salesOrderHeaderEntityDataGridView.Name = "salesOrderHeaderEntityDataGridView";
       this.salesOrderHeaderEntityDataGridView.ReadOnly = true;
       dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -440,9 +446,180 @@ namespace AW.Win
       dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
       dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
       this.salesOrderHeaderEntityDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-      this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(694, 398);
+      this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(694, 297);
       this.salesOrderHeaderEntityDataGridView.TabIndex = 2;
       this.salesOrderHeaderEntityDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
+      // 
+      // contextMenuStrip1
+      // 
+      this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newOrderToolStripMenuItem});
+      this.contextMenuStrip1.Name = "contextMenuStrip1";
+      this.contextMenuStrip1.Size = new System.Drawing.Size(132, 26);
+      // 
+      // newOrderToolStripMenuItem
+      // 
+      this.newOrderToolStripMenuItem.Name = "newOrderToolStripMenuItem";
+      this.newOrderToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+      this.newOrderToolStripMenuItem.Text = "New Order";
+      this.newOrderToolStripMenuItem.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
+      // 
+      // searchWorker
+      // 
+      this.searchWorker.WorkerSupportsCancellation = true;
+      this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
+      this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
+      // 
+      // salesOrderHeaderEntityBindingNavigator
+      // 
+      this.salesOrderHeaderEntityBindingNavigator.AddNewItem = null;
+      this.salesOrderHeaderEntityBindingNavigator.BindingSource = this.salesOrderHeaderEntityBindingSource;
+      this.salesOrderHeaderEntityBindingNavigator.CountItem = this.bindingNavigatorCountItem;
+      this.salesOrderHeaderEntityBindingNavigator.DeleteItem = null;
+      this.salesOrderHeaderEntityBindingNavigator.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.salesOrderHeaderEntityBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.bindingNavigatorMoveFirstItem,
+            this.bindingNavigatorMovePreviousItem,
+            this.bindingNavigatorSeparator,
+            this.bindingNavigatorPositionItem,
+            this.bindingNavigatorCountItem,
+            this.bindingNavigatorSeparator1,
+            this.bindingNavigatorMoveNextItem,
+            this.bindingNavigatorMoveLastItem,
+            this.bindingNavigatorSeparator2});
+      this.salesOrderHeaderEntityBindingNavigator.Location = new System.Drawing.Point(0, 568);
+      this.salesOrderHeaderEntityBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
+      this.salesOrderHeaderEntityBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
+      this.salesOrderHeaderEntityBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
+      this.salesOrderHeaderEntityBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
+      this.salesOrderHeaderEntityBindingNavigator.Name = "salesOrderHeaderEntityBindingNavigator";
+      this.salesOrderHeaderEntityBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
+      this.salesOrderHeaderEntityBindingNavigator.Size = new System.Drawing.Size(694, 25);
+      this.salesOrderHeaderEntityBindingNavigator.TabIndex = 1;
+      this.salesOrderHeaderEntityBindingNavigator.Text = "bindingNavigator1";
+      // 
+      // bindingNavigatorCountItem
+      // 
+      this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
+      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
+      this.bindingNavigatorCountItem.Text = "of {0}";
+      this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
+      // 
+      // bindingNavigatorMoveFirstItem
+      // 
+      this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
+      this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
+      this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveFirstItem.Text = "Move first";
+      // 
+      // bindingNavigatorMovePreviousItem
+      // 
+      this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
+      this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
+      this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMovePreviousItem.Text = "Move previous";
+      // 
+      // bindingNavigatorSeparator
+      // 
+      this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
+      this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
+      // 
+      // bindingNavigatorPositionItem
+      // 
+      this.bindingNavigatorPositionItem.AccessibleName = "Position";
+      this.bindingNavigatorPositionItem.AutoSize = false;
+      this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
+      this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 21);
+      this.bindingNavigatorPositionItem.Text = "0";
+      this.bindingNavigatorPositionItem.ToolTipText = "Current position";
+      // 
+      // bindingNavigatorSeparator1
+      // 
+      this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
+      this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
+      // 
+      // bindingNavigatorMoveNextItem
+      // 
+      this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
+      this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
+      this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveNextItem.Text = "Move next";
+      // 
+      // bindingNavigatorMoveLastItem
+      // 
+      this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+      this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
+      this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
+      this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
+      this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveLastItem.Text = "Move last";
+      // 
+      // bindingNavigatorSeparator2
+      // 
+      this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
+      this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
+      // 
+      // panel2
+      // 
+      this.panel2.Controls.Add(this.QPanel);
+      this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panel2.Location = new System.Drawing.Point(0, 176);
+      this.panel2.Name = "panel2";
+      this.panel2.Size = new System.Drawing.Size(694, 95);
+      this.panel2.TabIndex = 3;
+      // 
+      // query1
+      // 
+      this.query1.ExtraColumns = "";
+      this.query1.FilePath = "";
+      this.query1.Formats.EscapeSymbol = "";
+      this.query1.Formats.QuoteColumnAlias = false;
+      this.query1.Formats.UseTableAlias = false;
+      this.query1.Formats.WildSymbol = '%';
+      this.query1.Model = this.dataModel1;
+      this.query1.NoPathResolution = Korzh.EasyQuery.NoPathResolution.ThrowException;
+      this.query1.QueryName = "SampleQuery";
+      this.query1.SyncColSortOrder = true;
+      // 
+      // dataModel1
+      // 
+      this.dataModel1.CustomInfo = "";
+      this.dataModel1.DefQueryFilePath = "";
+      this.dataModel1.Description = null;
+      this.dataModel1.ID = "25704bf3-5f67-4ad8-8be8-bb1b47a3073e";
+      this.dataModel1.IsLoadedFromDbContext = false;
+      this.dataModel1.ModelName = null;
+      this.dataModel1.StoreDbParams = false;
+      // 
+      // QPanel
+      // 
+      this.QPanel.Active = false;
+      this.QPanel.ActiveRowIndex = -1;
+      this.QPanel.Appearance.ActiveBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(225)))), ((int)(((byte)(190)))));
+      this.QPanel.Appearance.ActiveForeColor = System.Drawing.SystemColors.HighlightText;
+      this.QPanel.Appearance.AdditionRowColor = System.Drawing.Color.DarkGreen;
+      this.QPanel.Appearance.ButtonForeColor = System.Drawing.SystemColors.ControlText;
+      this.QPanel.Appearance.ButtonMacStyle = false;
+      this.QPanel.Appearance.ExprColor = System.Drawing.Color.Indigo;
+      this.QPanel.Appearance.FocusBorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.QPanel.Appearance.OperatorColor = System.Drawing.Color.MediumBlue;
+      this.QPanel.Appearance.ShowRootRow = true;
+      this.QPanel.BackColor = System.Drawing.Color.White;
+      this.QPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.QPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.QPanel.ForeColor = System.Drawing.SystemColors.ControlText;
+      this.QPanel.Location = new System.Drawing.Point(0, 0);
+      this.QPanel.Name = "QPanel";
+      this.QPanel.Query = this.query1;
+      this.QPanel.Size = new System.Drawing.Size(694, 95);
+      this.QPanel.TabIndex = 28;
+      this.QPanel.TabStop = true;
       // 
       // dataGridViewTextBoxColumn8
       // 
@@ -561,127 +738,13 @@ namespace AW.Win
       this.salesOrderHeaderEntityBindingSource.AllowNew = false;
       this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
       // 
-      // contextMenuStrip1
-      // 
-      this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newOrderToolStripMenuItem});
-      this.contextMenuStrip1.Name = "contextMenuStrip1";
-      this.contextMenuStrip1.Size = new System.Drawing.Size(132, 26);
-      // 
-      // newOrderToolStripMenuItem
-      // 
-      this.newOrderToolStripMenuItem.Name = "newOrderToolStripMenuItem";
-      this.newOrderToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
-      this.newOrderToolStripMenuItem.Text = "New Order";
-      this.newOrderToolStripMenuItem.Click += new System.EventHandler(this.newOrderToolStripMenuItem_Click);
-      // 
-      // searchWorker
-      // 
-      this.searchWorker.WorkerSupportsCancellation = true;
-      this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
-      this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
-      // 
-      // salesOrderHeaderEntityBindingNavigator
-      // 
-      this.salesOrderHeaderEntityBindingNavigator.AddNewItem = null;
-      this.salesOrderHeaderEntityBindingNavigator.BindingSource = this.salesOrderHeaderEntityBindingSource;
-      this.salesOrderHeaderEntityBindingNavigator.CountItem = this.bindingNavigatorCountItem;
-      this.salesOrderHeaderEntityBindingNavigator.DeleteItem = null;
-      this.salesOrderHeaderEntityBindingNavigator.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.salesOrderHeaderEntityBindingNavigator.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bindingNavigatorMoveFirstItem,
-            this.bindingNavigatorMovePreviousItem,
-            this.bindingNavigatorSeparator,
-            this.bindingNavigatorPositionItem,
-            this.bindingNavigatorCountItem,
-            this.bindingNavigatorSeparator1,
-            this.bindingNavigatorMoveNextItem,
-            this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2});
-      this.salesOrderHeaderEntityBindingNavigator.Location = new System.Drawing.Point(0, 568);
-      this.salesOrderHeaderEntityBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
-      this.salesOrderHeaderEntityBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
-      this.salesOrderHeaderEntityBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
-      this.salesOrderHeaderEntityBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
-      this.salesOrderHeaderEntityBindingNavigator.Name = "salesOrderHeaderEntityBindingNavigator";
-      this.salesOrderHeaderEntityBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-      this.salesOrderHeaderEntityBindingNavigator.Size = new System.Drawing.Size(694, 25);
-      this.salesOrderHeaderEntityBindingNavigator.TabIndex = 1;
-      this.salesOrderHeaderEntityBindingNavigator.Text = "bindingNavigator1";
-      // 
-      // bindingNavigatorCountItem
-      // 
-      this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
-      this.bindingNavigatorCountItem.Text = "of {0}";
-      this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
-      // 
-      // bindingNavigatorMoveFirstItem
-      // 
-      this.bindingNavigatorMoveFirstItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
-      this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
-      this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
-      this.bindingNavigatorMoveFirstItem.Text = "Move first";
-      // 
-      // bindingNavigatorMovePreviousItem
-      // 
-      this.bindingNavigatorMovePreviousItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
-      this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
-      this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
-      this.bindingNavigatorMovePreviousItem.Text = "Move previous";
-      // 
-      // bindingNavigatorSeparator
-      // 
-      this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-      this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
-      // 
-      // bindingNavigatorPositionItem
-      // 
-      this.bindingNavigatorPositionItem.AccessibleName = "Position";
-      this.bindingNavigatorPositionItem.AutoSize = false;
-      this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-      this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 21);
-      this.bindingNavigatorPositionItem.Text = "0";
-      this.bindingNavigatorPositionItem.ToolTipText = "Current position";
-      // 
-      // bindingNavigatorSeparator1
-      // 
-      this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-      this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
-      // 
-      // bindingNavigatorMoveNextItem
-      // 
-      this.bindingNavigatorMoveNextItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
-      this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
-      this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
-      this.bindingNavigatorMoveNextItem.Text = "Move next";
-      // 
-      // bindingNavigatorMoveLastItem
-      // 
-      this.bindingNavigatorMoveLastItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-      this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
-      this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
-      this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
-      this.bindingNavigatorMoveLastItem.Text = "Move last";
-      // 
-      // bindingNavigatorSeparator2
-      // 
-      this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-      this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
-      // 
       // FrmOrderSearch2
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(694, 593);
       this.Controls.Add(this.salesOrderHeaderEntityDataGridView);
+      this.Controls.Add(this.panel2);
       this.Controls.Add(this.tableLayoutPanel2);
       this.Controls.Add(this.salesOrderHeaderEntityBindingNavigator);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
@@ -698,11 +761,12 @@ namespace AW.Win
       this.panel1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
       this.contextMenuStrip1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingNavigator)).EndInit();
       this.salesOrderHeaderEntityBindingNavigator.ResumeLayout(false);
       this.salesOrderHeaderEntityBindingNavigator.PerformLayout();
+      this.panel2.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -767,5 +831,9 @@ namespace AW.Win
 				private System.Windows.Forms.Button buttonClear;
 				private System.Windows.Forms.ListBox listBoxCountry;
 				private System.Windows.Forms.Button buttonClearCountries;
+        private System.Windows.Forms.Panel panel2;
+        private Korzh.EasyQuery.Db.DbQuery query1;
+        private Korzh.EasyQuery.Db.DbModel dataModel1;
+        private Korzh.EasyQuery.WinControls.QueryPanel QPanel;
 		}
 }

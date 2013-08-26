@@ -57,7 +57,7 @@ namespace AW.Data.Queries
       bool prefetch
       )
     {
-      var predicate = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(FromDate, ToDate, FirstName, LastName, CityName, StateName, CountryName, Zip, OrderID, OrderNumber);
+      var predicate = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(FromDate, ToDate, FirstName, LastName, OrderID, CityName, StateName, CountryName, Zip, OrderNumber);
 
       if (prefetch)
         predicate = predicate.PrefetchCustomerViewRelated();

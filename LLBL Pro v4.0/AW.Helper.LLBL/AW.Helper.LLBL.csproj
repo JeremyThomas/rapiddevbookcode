@@ -74,6 +74,7 @@
       <Link>ToolsAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="PersistanceDiagnostics.cs" />
+    <Compile Include="PredicateBuilder.cs" />
     <Compile Include="QueryToSQL.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
