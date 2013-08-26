@@ -18,6 +18,7 @@ using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using Expression = System.Linq.Expressions.Expression;
 using Path = System.IO.Path;
+using Query = Korzh.EasyQuery.Query;
 
 namespace AW.Win
 {
@@ -89,7 +90,7 @@ namespace AW.Win
       QCPanel.Activate();
       SCPanel.Activate();
       EntPanel.UpdateModelInfo();
-      comboBoxDbType.SelectedIndex = 0;
+      DBMode = 0;
       countryAttr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
     }
 
@@ -765,7 +766,12 @@ namespace AW.Win
 
     private Expression GetLinqExpression()
     {
-      var linqQueryBuilder = new LinqQueryBuilder(query1, MetaSingletons.MetaData);
+      return GetLinqExpression(query1);
+    }
+
+    public static Expression GetLinqExpression(Query query)
+    {
+      var linqQueryBuilder = new LinqQueryBuilder(query, MetaSingletons.MetaData);
       var expression = linqQueryBuilder.Build();
       return expression;
     }

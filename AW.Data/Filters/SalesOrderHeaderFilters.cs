@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AW.Data.EntityClasses;
 using AW.Data.HelperClasses;
+using AW.Helper.LLBL;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.Filters
@@ -32,7 +34,7 @@ namespace AW.Data.Filters
         salesOrderHeaderQuery = from soh in salesOrderHeaderQuery
                                 where soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.Name == stateName)
                                 select soh;
-      if (countries.Count() > 0)
+      if (countries.Any())
         salesOrderHeaderQuery = from soh in salesOrderHeaderQuery
                                 where soh.Customer.CustomerAddresses.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
                                 select soh;
@@ -50,9 +52,9 @@ namespace AW.Data.Filters
     }
 
     public static IQueryable<SalesOrderHeaderEntity> FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(this IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery,
-                                                                                                             DateTime fromDate, DateTime toDate, string firstName,
-                                                                                                             string lastName, string cityName, string stateName, string countryName,
-                                                                                                             string zip, int orderID, string orderNumber)
+                                                                                                             DateTime fromDate, DateTime toDate, string firstName, 
+                                                                                                             string lastName,int orderID,  string cityName, string stateName, string countryName,
+                                                                                                             string zip, string orderNumber)
     {
       if (fromDate != DateTime.MinValue)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.OrderDate >= fromDate);
@@ -78,6 +80,34 @@ namespace AW.Data.Filters
 
       salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       return salesOrderHeaderQuery;
+    }
+
+    public static Expression<Func<SalesOrderHeaderEntity, bool>> FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(this Expression<Func<SalesOrderHeaderEntity, bool>> salesOrderHeaderPredicate,
+      DateTime fromDate, DateTime toDate, string firstName, string lastName, int orderID, string cityName, string stateName, string zip, string orderNumber, IEnumerable<string> countries)
+    {
+      if (fromDate != DateTime.MinValue)
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.OrderDate >= fromDate);
+      if (toDate != DateTime.MinValue)
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.OrderDate <= toDate);
+      if (firstName != "")
+        //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => ((IndividualEntity)soh.Customer).Contact.FirstName.Contains(firstName));
+      if (lastName != "")
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => ((IndividualEntity)soh.Customer).Contact.LastName.Contains(lastName));
+      if (cityName != "")
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == cityName));
+      if (stateName != "")
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.Name == stateName));
+      var countriesList = countries as IList<string> ?? countries.ToList();
+      if (countriesList.Any())
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.Customer.CustomerAddresses.Any(ca => countriesList.Contains(ca.Address.StateProvince.CountryRegion.Name)));
+      if (zip != "")
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.PostalCode == zip));
+      if (orderID != 0)
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.SalesOrderID == orderID);
+      if (orderNumber != "")
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.SalesOrderNumber == orderNumber);
+      return salesOrderHeaderPredicate;
     }
 
     public static IPredicateExpression FilterByDateOrderIDOrderNumberCustomerNameAddress(IRelationCollection relations, DateTime fromDate, DateTime toDate, int orderID,

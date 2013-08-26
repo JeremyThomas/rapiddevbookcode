@@ -31,6 +31,7 @@ namespace AW.Win
       this.components = new System.ComponentModel.Container();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmOrderSearch));
       this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
       this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
       this.label9 = new System.Windows.Forms.Label();
@@ -525,7 +526,7 @@ namespace AW.Win
       this.salesOrderHeaderCollection1.Capacity = 0;
       this.salesOrderHeaderCollection1.ConcurrencyPredicateFactoryToUse = null;
       this.salesOrderHeaderCollection1.DoNotPerformAddIfPresent = true;
-      this.salesOrderHeaderCollection1.EntityFactoryToUse = new AW.Data.FactoryClasses.SalesOrderHeaderEntityFactory();
+      this.salesOrderHeaderCollection1.EntityFactoryToUse = ((SD.LLBLGen.Pro.ORMSupportClasses.IEntityFactory)(resources.GetObject("salesOrderHeaderCollection1.EntityFactoryToUse")));
       this.salesOrderHeaderCollection1.IsReadOnly = false;
       this.salesOrderHeaderCollection1.MaxNumberOfItemsToReturn = ((long)(0));
       this.salesOrderHeaderCollection1.RemovedEntitiesTracker = null;
