@@ -6,8 +6,8 @@ using AW.Data.EntityClasses;
 using AW.Data.Filters;
 using AW.Data.HelperClasses;
 using AW.Data.Linq;
+using AW.Data.ViewModels;
 using AW.Helper.LLBL;
-using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.Queries
@@ -16,48 +16,30 @@ namespace AW.Data.Queries
   {
     public static SalesOrderHeaderCollection GetSalesOrderHeaderCollection
       (
-      DateTime FromDate,
-      DateTime ToDate,
-      string FirstName,
-      string LastName,
-      int OrderID,
-      string OrderNumber,
-      string CityName,
-      string StateName,
-      string CountryName,
-      string Zip,
+      OrderSearchCriteria orderSearchCriteria,
       int maxNumberOfItemsToReturn,
       bool prefetch
       )
     {
       var relations = new RelationCollection();
-      var Filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(relations, FromDate, ToDate, OrderID, OrderNumber, FirstName, LastName, CityName, StateName, CountryName, Zip);
-      ISortExpression Sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
-      var Orders = new SalesOrderHeaderCollection();
+      var filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(relations, orderSearchCriteria);
+      ISortExpression sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
+      var orders = new SalesOrderHeaderCollection();
       //note      Orders.SupportsSorting = true;
 
-      IPrefetchPath Prefetch = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated} : null;
-      Orders.GetMulti(Filter, maxNumberOfItemsToReturn, Sort, relations, Prefetch);
-      return Orders;
+      IPrefetchPath prefetchPath = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated} : null;
+      orders.GetMulti(filter, maxNumberOfItemsToReturn, sort, relations, prefetchPath);
+      return orders;
     }
 
     public static CollectionCore<SalesOrderHeaderEntity> GetSalesOrderHeaderCollectionWithLinq
       (
-      DateTime FromDate,
-      DateTime ToDate,
-      string FirstName,
-      string LastName,
-      int OrderID,
-      string OrderNumber,
-      string CityName,
-      string StateName,
-      string CountryName,
-      string Zip,
+      OrderSearchCriteria orderSearchCriteria,
       int maxNumberOfItemsToReturn,
       bool prefetch
       )
     {
-      var predicate = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(FromDate, ToDate, FirstName, LastName, OrderID, CityName, StateName, CountryName, Zip, OrderNumber);
+      var predicate = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(orderSearchCriteria);
 
       if (prefetch)
         predicate = predicate.PrefetchCustomerViewRelated();
@@ -69,20 +51,11 @@ namespace AW.Data.Queries
 
     public static IQueryable<SalesOrderHeaderEntity> DoSalesOrderHeaderLinqQuery
       (
-      DateTime fromDate,
-      DateTime toDate,
-      string firstName,
-      string lastName,
-      int orderID,
-      string orderNumber,
-      string cityName,
-      string stateName,
-      IEnumerable<string> countries,
-      string zip,
+       OrderSearchCriteria orderSearchCriteria,
       int maxNumberOfItemsToReturn
       )
     {
-      var query = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(fromDate, toDate, orderID, orderNumber, firstName, lastName, cityName, stateName, zip, countries);
+      var query = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
 
       if (maxNumberOfItemsToReturn > 0)
         query = query.Take(maxNumberOfItemsToReturn);

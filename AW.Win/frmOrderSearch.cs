@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
+using AW.Data.ViewModels;
 using AW.Helper;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
@@ -13,16 +14,7 @@ namespace AW.Win
   public partial class FrmOrderSearch : FrmPersistantLocation
   {
     private FrmStatusBar _frmStatusBar;
-    private DateTime _fromDate;
-    private DateTime _toDate;
-    private string _firstName;
-    private string _lastName;
-    private int _orderID;
-    private string _orderName;
-    private string _cityName;
-    private string _state;
-    private string _country;
-    private string _zip;
+    private OrderSearchCriteria _orderSearchCriteria;
     private int _maxNumberOfItemsToReturn;
     private bool _prefetch;
 
@@ -59,29 +51,26 @@ namespace AW.Win
 
     private void btnSearch_Click(object sender, EventArgs e)
     {
-      _fromDate = DateTime.MinValue;
+      _orderSearchCriteria = new OrderSearchCriteria();
       if (dtpDateFrom.Checked)
-        _fromDate = dtpDateFrom.Value;
-      _toDate = DateTime.MinValue;
+        _orderSearchCriteria.FromDate = dtpDateFrom.Value;
       if (dtpDateTo.Checked)
-        _toDate = dtpDateTo.Value;
-      _orderID = 0;
-      _orderName = "";
+        _orderSearchCriteria.ToDate = dtpDateTo.Value;
       if (tbOrderID.Text != "")
         try
         {
-          _orderID = Convert.ToInt32(tbOrderID.Text);
+          _orderSearchCriteria.OrderID = Convert.ToInt32(tbOrderID.Text);
         }
         catch
         {
-          _orderName = tbOrderID.Text;
+          _orderSearchCriteria.OrderNumber = tbOrderID.Text;
         }
-      _firstName = tbFirstName.Text;
-      _lastName = tbLastName.Text;
-      _cityName = tbCity.Text;
-      _state = cbState.Text;
-      _country = cbCountry.Text;
-      _zip = tbZip.Text;
+      _orderSearchCriteria.FirstName = tbFirstName.Text;
+      _orderSearchCriteria.LastName = tbLastName.Text;
+      _orderSearchCriteria.CityName = tbCity.Text;
+      _orderSearchCriteria.StateName = cbState.Text;
+      _orderSearchCriteria.Zip = tbZip.Text;
+      _orderSearchCriteria.CountryName = cbCountry.Text;
       _maxNumberOfItemsToReturn = Convert.ToInt32(numericUpDownNumRows.Value);
       _prefetch = checkBoxPrefetch.Checked;
       btnSearch.Enabled = false;
@@ -118,30 +107,12 @@ namespace AW.Win
     {
       e.Result = checkBoxUseLinq.Checked
         ? SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(
-          _fromDate,
-          _toDate,
-          _firstName,
-          _lastName,
-          _orderID,
-          _orderName,
-          _cityName,
-          _state,
-          _country,
-          _zip,
+          _orderSearchCriteria,
           _maxNumberOfItemsToReturn,
           _prefetch
           )
         : SalesOrderQueries.GetSalesOrderHeaderCollection(
-          _fromDate,
-          _toDate,
-          _firstName,
-          _lastName,
-          _orderID,
-          _orderName,
-          _cityName,
-          _state,
-          _country,
-          _zip,
+          _orderSearchCriteria,
           _maxNumberOfItemsToReturn,
           _prefetch);
       // Do not access the form's BackgroundWorker reference directly.

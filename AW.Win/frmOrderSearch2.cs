@@ -10,6 +10,7 @@ using AW.Data.EntityClasses;
 using AW.Data.Filters;
 using AW.Data.Linq;
 using AW.Data.Queries;
+using AW.Data.ViewModels;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
@@ -21,16 +22,7 @@ namespace AW.Win
   public partial class FrmOrderSearch2 : FrmPersistantLocation
   {
     private FrmStatusBar _frmStatusBar;
-    private DateTime _fromDate;
-    private DateTime _toDate;
-    private string _firstName;
-    private string _lastName;
-    private int _orderID;
-    private string _orderName;
-    private string _cityName;
-    private string _state;
-    private IEnumerable<string> _countries;
-    private string _zip;
+    private OrderSearchCriteria _orderSearchCriteria;
     private object _results;
 
     public FrmOrderSearch2()
@@ -102,29 +94,26 @@ namespace AW.Win
 
     private void btnSearch_Click(object sender, EventArgs e)
     {
-      _fromDate = DateTime.MinValue;
+      _orderSearchCriteria = new OrderSearchCriteria ();
       if (dtpDateFrom.Checked)
-        _fromDate = dtpDateFrom.Value;
-      _toDate = DateTime.MinValue;
+        _orderSearchCriteria.FromDate = dtpDateFrom.Value;
       if (dtpDateTo.Checked)
-        _toDate = dtpDateTo.Value;
-      _orderID = 0;
-      _orderName = "";
+        _orderSearchCriteria.ToDate = dtpDateTo.Value;
       if (tbOrderID.Text != "")
         try
         {
-          _orderID = Convert.ToInt32(tbOrderID.Text);
+          _orderSearchCriteria.OrderID = Convert.ToInt32(tbOrderID.Text);
         }
         catch
         {
-          _orderName = tbOrderID.Text;
+          _orderSearchCriteria.OrderNumber = tbOrderID.Text;
         }
-      _firstName = tbFirstName.Text;
-      _lastName = tbLastName.Text;
-      _cityName = tbCity.Text;
-      _state = cbState.Text;
-      _countries = from country in listBoxCountry.SelectedItems.OfType<CountryRegionEntity>() select country.Name;
-      _zip = tbZip.Text;
+      _orderSearchCriteria.FirstName = tbFirstName.Text;
+      _orderSearchCriteria.LastName = tbLastName.Text;
+      _orderSearchCriteria.CityName = tbCity.Text;
+      _orderSearchCriteria.StateName = cbState.Text;
+      _orderSearchCriteria.Countries = from country in listBoxCountry.SelectedItems.OfType<CountryRegionEntity>() select country.Name;
+      _orderSearchCriteria.Zip = tbZip.Text;
 
       btnSearch.Enabled = false;
       _frmStatusBar = new FrmStatusBar();
@@ -159,7 +148,7 @@ namespace AW.Win
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
       var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();
-      predicate = predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(_fromDate, _toDate, _firstName, _lastName, _orderID, _orderName, _cityName, _state, _zip, _countries);
+      predicate = predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(_orderSearchCriteria);
       var exp = FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression;
       // predicate.And((Expression<Func<SalesOrderHeaderEntity, bool>>) exp);
       foreach (var expArg in exp.Arguments)

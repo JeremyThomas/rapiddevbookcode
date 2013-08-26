@@ -58,24 +58,6 @@ namespace AW.Win
       this.listBoxCountry = new System.Windows.Forms.ListBox();
       this.buttonClearCountries = new System.Windows.Forms.Button();
       this.salesOrderHeaderEntityDataGridView = new System.Windows.Forms.DataGridView();
-      this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.searchWorker = new System.ComponentModel.BackgroundWorker();
-      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.salesOrderHeaderEntityBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
-      this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
-      this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
-      this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
-      this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
-      this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-      this.panel2 = new System.Windows.Forms.Panel();
-      this.query1 = new Korzh.EasyQuery.Db.DbQuery();
-      this.dataModel1 = new Korzh.EasyQuery.Db.DbModel();
-      this.QPanel = new Korzh.EasyQuery.WinControls.QueryPanel();
       this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -93,15 +75,33 @@ namespace AW.Win
       this.dataGridViewTextBoxColumn30 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.searchWorker = new System.ComponentModel.BackgroundWorker();
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.salesOrderHeaderEntityBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
+      this.bindingNavigatorCountItem = new System.Windows.Forms.ToolStripLabel();
+      this.bindingNavigatorMoveFirstItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorMovePreviousItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorSeparator = new System.Windows.Forms.ToolStripSeparator();
+      this.bindingNavigatorPositionItem = new System.Windows.Forms.ToolStripTextBox();
+      this.bindingNavigatorSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+      this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
+      this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.panel2 = new System.Windows.Forms.Panel();
+      this.QPanel = new Korzh.EasyQuery.WinControls.QueryPanel();
+      this.query1 = new Korzh.EasyQuery.Db.DbQuery();
+      this.dataModel1 = new Korzh.EasyQuery.Db.DbModel();
       this.tableLayoutPanel2.SuspendLayout();
       this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
       this.contextMenuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingNavigator)).BeginInit();
       this.salesOrderHeaderEntityBindingNavigator.SuspendLayout();
       this.panel2.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
       this.SuspendLayout();
       // 
       // tableLayoutPanel2
@@ -450,6 +450,123 @@ namespace AW.Win
       this.salesOrderHeaderEntityDataGridView.TabIndex = 2;
       this.salesOrderHeaderEntityDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
       // 
+      // dataGridViewTextBoxColumn8
+      // 
+      this.dataGridViewTextBoxColumn8.DataPropertyName = "RevisionNumber";
+      this.dataGridViewTextBoxColumn8.HeaderText = "RevisionNumber";
+      this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+      this.dataGridViewTextBoxColumn8.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn9
+      // 
+      this.dataGridViewTextBoxColumn9.DataPropertyName = "OrderDate";
+      this.dataGridViewTextBoxColumn9.HeaderText = "OrderDate";
+      this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+      this.dataGridViewTextBoxColumn9.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn10
+      // 
+      this.dataGridViewTextBoxColumn10.DataPropertyName = "DueDate";
+      this.dataGridViewTextBoxColumn10.HeaderText = "DueDate";
+      this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+      this.dataGridViewTextBoxColumn10.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn11
+      // 
+      this.dataGridViewTextBoxColumn11.DataPropertyName = "ShipDate";
+      this.dataGridViewTextBoxColumn11.HeaderText = "ShipDate";
+      this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+      this.dataGridViewTextBoxColumn11.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn12
+      // 
+      this.dataGridViewTextBoxColumn12.DataPropertyName = "Status";
+      this.dataGridViewTextBoxColumn12.HeaderText = "Status";
+      this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+      this.dataGridViewTextBoxColumn12.ReadOnly = true;
+      // 
+      // dataGridViewCheckBoxColumn1
+      // 
+      this.dataGridViewCheckBoxColumn1.DataPropertyName = "OnlineOrderFlag";
+      this.dataGridViewCheckBoxColumn1.HeaderText = "OnlineOrderFlag";
+      this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+      this.dataGridViewCheckBoxColumn1.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn13
+      // 
+      this.dataGridViewTextBoxColumn13.DataPropertyName = "SalesOrderNumber";
+      this.dataGridViewTextBoxColumn13.HeaderText = "SalesOrderNumber";
+      this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+      this.dataGridViewTextBoxColumn13.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn14
+      // 
+      this.dataGridViewTextBoxColumn14.DataPropertyName = "PurchaseOrderNumber";
+      this.dataGridViewTextBoxColumn14.HeaderText = "PurchaseOrderNumber";
+      this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+      this.dataGridViewTextBoxColumn14.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn15
+      // 
+      this.dataGridViewTextBoxColumn15.DataPropertyName = "AccountNumber";
+      this.dataGridViewTextBoxColumn15.HeaderText = "AccountNumber";
+      this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+      this.dataGridViewTextBoxColumn15.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn24
+      // 
+      this.dataGridViewTextBoxColumn24.DataPropertyName = "CreditCardApprovalCode";
+      this.dataGridViewTextBoxColumn24.HeaderText = "CreditCardApprovalCode";
+      this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
+      this.dataGridViewTextBoxColumn24.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn26
+      // 
+      this.dataGridViewTextBoxColumn26.DataPropertyName = "SubTotal";
+      this.dataGridViewTextBoxColumn26.HeaderText = "SubTotal";
+      this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
+      this.dataGridViewTextBoxColumn26.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn27
+      // 
+      this.dataGridViewTextBoxColumn27.DataPropertyName = "TaxAmt";
+      this.dataGridViewTextBoxColumn27.HeaderText = "TaxAmt";
+      this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
+      this.dataGridViewTextBoxColumn27.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn28
+      // 
+      this.dataGridViewTextBoxColumn28.DataPropertyName = "Freight";
+      this.dataGridViewTextBoxColumn28.HeaderText = "Freight";
+      this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
+      this.dataGridViewTextBoxColumn28.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn29
+      // 
+      this.dataGridViewTextBoxColumn29.DataPropertyName = "TotalDue";
+      this.dataGridViewTextBoxColumn29.HeaderText = "TotalDue";
+      this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
+      this.dataGridViewTextBoxColumn29.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn30
+      // 
+      this.dataGridViewTextBoxColumn30.DataPropertyName = "Comment";
+      this.dataGridViewTextBoxColumn30.HeaderText = "Comment";
+      this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
+      this.dataGridViewTextBoxColumn30.ReadOnly = true;
+      // 
+      // dataGridViewTextBoxColumn32
+      // 
+      this.dataGridViewTextBoxColumn32.DataPropertyName = "ModifiedDate";
+      this.dataGridViewTextBoxColumn32.HeaderText = "ModifiedDate";
+      this.dataGridViewTextBoxColumn32.Name = "dataGridViewTextBoxColumn32";
+      this.dataGridViewTextBoxColumn32.ReadOnly = true;
+      // 
+      // salesOrderHeaderEntityBindingSource
+      // 
+      this.salesOrderHeaderEntityBindingSource.AllowNew = false;
+      this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
+      // 
       // contextMenuStrip1
       // 
       this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -574,29 +691,6 @@ namespace AW.Win
       this.panel2.Size = new System.Drawing.Size(694, 95);
       this.panel2.TabIndex = 3;
       // 
-      // query1
-      // 
-      this.query1.ExtraColumns = "";
-      this.query1.FilePath = "";
-      this.query1.Formats.EscapeSymbol = "";
-      this.query1.Formats.QuoteColumnAlias = false;
-      this.query1.Formats.UseTableAlias = false;
-      this.query1.Formats.WildSymbol = '%';
-      this.query1.Model = this.dataModel1;
-      this.query1.NoPathResolution = Korzh.EasyQuery.NoPathResolution.ThrowException;
-      this.query1.QueryName = "SampleQuery";
-      this.query1.SyncColSortOrder = true;
-      // 
-      // dataModel1
-      // 
-      this.dataModel1.CustomInfo = "";
-      this.dataModel1.DefQueryFilePath = "";
-      this.dataModel1.Description = null;
-      this.dataModel1.ID = "25704bf3-5f67-4ad8-8be8-bb1b47a3073e";
-      this.dataModel1.IsLoadedFromDbContext = false;
-      this.dataModel1.ModelName = null;
-      this.dataModel1.StoreDbParams = false;
-      // 
       // QPanel
       // 
       this.QPanel.Active = false;
@@ -621,122 +715,28 @@ namespace AW.Win
       this.QPanel.TabIndex = 28;
       this.QPanel.TabStop = true;
       // 
-      // dataGridViewTextBoxColumn8
+      // query1
       // 
-      this.dataGridViewTextBoxColumn8.DataPropertyName = "RevisionNumber";
-      this.dataGridViewTextBoxColumn8.HeaderText = "RevisionNumber";
-      this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-      this.dataGridViewTextBoxColumn8.ReadOnly = true;
+      this.query1.ExtraColumns = "";
+      this.query1.FilePath = "";
+      this.query1.Formats.EscapeSymbol = "";
+      this.query1.Formats.QuoteColumnAlias = false;
+      this.query1.Formats.UseTableAlias = false;
+      this.query1.Formats.WildSymbol = '%';
+      this.query1.Model = this.dataModel1;
+      this.query1.NoPathResolution = Korzh.EasyQuery.NoPathResolution.ThrowException;
+      this.query1.QueryName = "SampleQuery";
+      this.query1.SyncColSortOrder = true;
       // 
-      // dataGridViewTextBoxColumn9
+      // dataModel1
       // 
-      this.dataGridViewTextBoxColumn9.DataPropertyName = "OrderDate";
-      this.dataGridViewTextBoxColumn9.HeaderText = "OrderDate";
-      this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-      this.dataGridViewTextBoxColumn9.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn10
-      // 
-      this.dataGridViewTextBoxColumn10.DataPropertyName = "DueDate";
-      this.dataGridViewTextBoxColumn10.HeaderText = "DueDate";
-      this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
-      this.dataGridViewTextBoxColumn10.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn11
-      // 
-      this.dataGridViewTextBoxColumn11.DataPropertyName = "ShipDate";
-      this.dataGridViewTextBoxColumn11.HeaderText = "ShipDate";
-      this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
-      this.dataGridViewTextBoxColumn11.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn12
-      // 
-      this.dataGridViewTextBoxColumn12.DataPropertyName = "Status";
-      this.dataGridViewTextBoxColumn12.HeaderText = "Status";
-      this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
-      this.dataGridViewTextBoxColumn12.ReadOnly = true;
-      // 
-      // dataGridViewCheckBoxColumn1
-      // 
-      this.dataGridViewCheckBoxColumn1.DataPropertyName = "OnlineOrderFlag";
-      this.dataGridViewCheckBoxColumn1.HeaderText = "OnlineOrderFlag";
-      this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-      this.dataGridViewCheckBoxColumn1.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn13
-      // 
-      this.dataGridViewTextBoxColumn13.DataPropertyName = "SalesOrderNumber";
-      this.dataGridViewTextBoxColumn13.HeaderText = "SalesOrderNumber";
-      this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
-      this.dataGridViewTextBoxColumn13.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn14
-      // 
-      this.dataGridViewTextBoxColumn14.DataPropertyName = "PurchaseOrderNumber";
-      this.dataGridViewTextBoxColumn14.HeaderText = "PurchaseOrderNumber";
-      this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
-      this.dataGridViewTextBoxColumn14.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn15
-      // 
-      this.dataGridViewTextBoxColumn15.DataPropertyName = "AccountNumber";
-      this.dataGridViewTextBoxColumn15.HeaderText = "AccountNumber";
-      this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
-      this.dataGridViewTextBoxColumn15.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn24
-      // 
-      this.dataGridViewTextBoxColumn24.DataPropertyName = "CreditCardApprovalCode";
-      this.dataGridViewTextBoxColumn24.HeaderText = "CreditCardApprovalCode";
-      this.dataGridViewTextBoxColumn24.Name = "dataGridViewTextBoxColumn24";
-      this.dataGridViewTextBoxColumn24.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn26
-      // 
-      this.dataGridViewTextBoxColumn26.DataPropertyName = "SubTotal";
-      this.dataGridViewTextBoxColumn26.HeaderText = "SubTotal";
-      this.dataGridViewTextBoxColumn26.Name = "dataGridViewTextBoxColumn26";
-      this.dataGridViewTextBoxColumn26.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn27
-      // 
-      this.dataGridViewTextBoxColumn27.DataPropertyName = "TaxAmt";
-      this.dataGridViewTextBoxColumn27.HeaderText = "TaxAmt";
-      this.dataGridViewTextBoxColumn27.Name = "dataGridViewTextBoxColumn27";
-      this.dataGridViewTextBoxColumn27.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn28
-      // 
-      this.dataGridViewTextBoxColumn28.DataPropertyName = "Freight";
-      this.dataGridViewTextBoxColumn28.HeaderText = "Freight";
-      this.dataGridViewTextBoxColumn28.Name = "dataGridViewTextBoxColumn28";
-      this.dataGridViewTextBoxColumn28.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn29
-      // 
-      this.dataGridViewTextBoxColumn29.DataPropertyName = "TotalDue";
-      this.dataGridViewTextBoxColumn29.HeaderText = "TotalDue";
-      this.dataGridViewTextBoxColumn29.Name = "dataGridViewTextBoxColumn29";
-      this.dataGridViewTextBoxColumn29.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn30
-      // 
-      this.dataGridViewTextBoxColumn30.DataPropertyName = "Comment";
-      this.dataGridViewTextBoxColumn30.HeaderText = "Comment";
-      this.dataGridViewTextBoxColumn30.Name = "dataGridViewTextBoxColumn30";
-      this.dataGridViewTextBoxColumn30.ReadOnly = true;
-      // 
-      // dataGridViewTextBoxColumn32
-      // 
-      this.dataGridViewTextBoxColumn32.DataPropertyName = "ModifiedDate";
-      this.dataGridViewTextBoxColumn32.HeaderText = "ModifiedDate";
-      this.dataGridViewTextBoxColumn32.Name = "dataGridViewTextBoxColumn32";
-      this.dataGridViewTextBoxColumn32.ReadOnly = true;
-      // 
-      // salesOrderHeaderEntityBindingSource
-      // 
-      this.salesOrderHeaderEntityBindingSource.AllowNew = false;
-      this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
+      this.dataModel1.CustomInfo = "";
+      this.dataModel1.DefQueryFilePath = "";
+      this.dataModel1.Description = null;
+      this.dataModel1.ID = "25704bf3-5f67-4ad8-8be8-bb1b47a3073e";
+      this.dataModel1.IsLoadedFromDbContext = false;
+      this.dataModel1.ModelName = null;
+      this.dataModel1.StoreDbParams = false;
       // 
       // FrmOrderSearch2
       // 
@@ -761,12 +761,12 @@ namespace AW.Win
       this.panel1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
       this.contextMenuStrip1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingNavigator)).EndInit();
       this.salesOrderHeaderEntityBindingNavigator.ResumeLayout(false);
       this.salesOrderHeaderEntityBindingNavigator.PerformLayout();
       this.panel2.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
