@@ -474,5 +474,17 @@ namespace AW.Win.Properties {
                 this["PersistenceExecutionTraceLevel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string FrmOrderSearchPredicate {
+            get {
+                return ((string)(this["FrmOrderSearchPredicate"]));
+            }
+            set {
+                this["FrmOrderSearchPredicate"] = value;
+            }
+        }
     }
 }
