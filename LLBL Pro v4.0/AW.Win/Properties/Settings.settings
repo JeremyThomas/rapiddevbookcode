@@ -12,7 +12,7 @@
       <Value Profile="(Default)">0, 0, 0, 0</Value>
     </Setting>
     <Setting Name="NumRows" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="DateFrom" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">08/24/2008 21:34:01</Value>
@@ -118,6 +118,9 @@
     </Setting>
     <Setting Name="FrmOrderSearchPredicate" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UsePredicate" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -61,7 +61,7 @@ namespace AW.Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public decimal NumRows {
             get {
                 return ((decimal)(this["NumRows"]));
@@ -484,6 +484,18 @@ namespace AW.Win.Properties {
             }
             set {
                 this["FrmOrderSearchPredicate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UsePredicate {
+            get {
+                return ((bool)(this["UsePredicate"]));
+            }
+            set {
+                this["UsePredicate"] = value;
             }
         }
     }

@@ -93,6 +93,7 @@ namespace AW.Win
       this.QPanel = new Korzh.EasyQuery.WinControls.QueryPanel();
       this.query1 = new Korzh.EasyQuery.Db.DbQuery();
       this.dataModel1 = new Korzh.EasyQuery.Db.DbModel();
+      this.checkBoxUsePredicate = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel2.SuspendLayout();
       this.panel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
@@ -288,6 +289,7 @@ namespace AW.Win
       // 
       // panel1
       // 
+      this.panel1.Controls.Add(this.checkBoxUsePredicate);
       this.panel1.Controls.Add(this.buttonClear);
       this.panel1.Controls.Add(this.btnSearch);
       this.panel1.Controls.Add(this.numericUpDownNumRows);
@@ -299,7 +301,7 @@ namespace AW.Win
       // 
       // buttonClear
       // 
-      this.buttonClear.Location = new System.Drawing.Point(63, 4);
+      this.buttonClear.Location = new System.Drawing.Point(163, 4);
       this.buttonClear.Name = "buttonClear";
       this.buttonClear.Size = new System.Drawing.Size(54, 23);
       this.buttonClear.TabIndex = 26;
@@ -320,9 +322,9 @@ namespace AW.Win
       // numericUpDownNumRows
       // 
       this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(123, 7);
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(227, 7);
       this.numericUpDownNumRows.Name = "numericUpDownNumRows";
-      this.numericUpDownNumRows.Size = new System.Drawing.Size(63, 20);
+      this.numericUpDownNumRows.Size = new System.Drawing.Size(41, 20);
       this.numericUpDownNumRows.TabIndex = 23;
       this.toolTip1.SetToolTip(this.numericUpDownNumRows, "max Number Of Items To Return");
       this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
@@ -738,6 +740,19 @@ namespace AW.Win
       this.dataModel1.ModelName = null;
       this.dataModel1.StoreDbParams = false;
       // 
+      // checkBoxUsePredicate
+      // 
+      this.checkBoxUsePredicate.AutoSize = true;
+      this.checkBoxUsePredicate.Checked = global::AW.Win.Properties.Settings.Default.UsePredicate;
+      this.checkBoxUsePredicate.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxUsePredicate.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "UsePredicate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxUsePredicate.Location = new System.Drawing.Point(64, 7);
+      this.checkBoxUsePredicate.Name = "checkBoxUsePredicate";
+      this.checkBoxUsePredicate.Size = new System.Drawing.Size(93, 17);
+      this.checkBoxUsePredicate.TabIndex = 27;
+      this.checkBoxUsePredicate.Text = "Use Predicate";
+      this.checkBoxUsePredicate.UseVisualStyleBackColor = true;
+      // 
       // FrmOrderSearch2
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -759,6 +774,7 @@ namespace AW.Win
       this.tableLayoutPanel2.ResumeLayout(false);
       this.tableLayoutPanel2.PerformLayout();
       this.panel1.ResumeLayout(false);
+      this.panel1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
@@ -835,5 +851,6 @@ namespace AW.Win
         private Korzh.EasyQuery.Db.DbQuery query1;
         private Korzh.EasyQuery.Db.DbModel dataModel1;
         private Korzh.EasyQuery.WinControls.QueryPanel QPanel;
+        private System.Windows.Forms.CheckBox checkBoxUsePredicate;
 		}
 }
