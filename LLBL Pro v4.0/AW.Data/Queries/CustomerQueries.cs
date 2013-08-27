@@ -40,124 +40,66 @@ namespace AW.Data.Queries
 			return customers;
 		}
 
-		/// <summary>
-		/// Gets the related customer view of SalesOrder 46117. Example 5.27 pg63.
-		/// </summary>
-		/// <returns></returns>
-		/// <remarks>
-		/// SELECT [SALES].[SALESORDERHEADER].[SALESORDERID]           AS [SALESORDERID],
-		/// [SALES].[SALESORDERHEADER].[REVISIONNUMBER],
-		/// [SALES].[SALESORDERHEADER].[ORDERDATE],
-		/// [SALES].[SALESORDERHEADER].[DUEDATE],
-		/// [SALES].[SALESORDERHEADER].[SHIPDATE],
-		/// [SALES].[SALESORDERHEADER].[STATUS],
-		/// [SALES].[SALESORDERHEADER].[ONLINEORDERFLAG],
-		/// [SALES].[SALESORDERHEADER].[SALESORDERNUMBER],
-		/// [SALES].[SALESORDERHEADER].[PURCHASEORDERNUMBER],
-		/// [SALES].[SALESORDERHEADER].[ACCOUNTNUMBER],
-		/// [SALES].[SALESORDERHEADER].[CustomerID]             AS [CustomerID],
-		/// [SALES].[SALESORDERHEADER].[CONTACTID]              AS [CONTACTID],
-		/// [SALES].[SALESORDERHEADER].[SALESPERSONID]          AS [SALESPERSONID],
-		/// [SALES].[SALESORDERHEADER].[TERRITORYID]            AS [TERRITORYID],
-		/// [SALES].[SALESORDERHEADER].[BILLTOADDRESSID]        AS [BILLTOADDRESSID],
-		/// [SALES].[SALESORDERHEADER].[SHIPTOADDRESSID]        AS [SHIPTOADDRESSID],
-		/// [SALES].[SALESORDERHEADER].[SHIPMETHODID]           AS [SHIPMETHODID],
-		/// [SALES].[SALESORDERHEADER].[CREDITCARDID]           AS [CREDITCARDID],
-		/// [SALES].[SALESORDERHEADER].[CREDITCARDAPPROVALCODE],
-		/// [SALES].[SALESORDERHEADER].[CURRENCYRATEID]         AS [CURRENCYRATEID],
-		/// [SALES].[SALESORDERHEADER].[SUBTOTAL],
-		/// [SALES].[SALESORDERHEADER].[TAXAMT],
-		/// [SALES].[SALESORDERHEADER].[FREIGHT],
-		/// [SALES].[SALESORDERHEADER].[TOTALDUE],
-		/// [SALES].[SALESORDERHEADER].[COMMENT],
-		/// [SALES].[SALESORDERHEADER].[ROWGUID]                AS [ROWGUID],
-		/// [SALES].[SALESORDERHEADER].[MODIFIEDDATE]
-		/// FROM   [SALES].[SALESORDERHEADER]
-		/// WHERE  (([SALES].[SALESORDERHEADER].[SALESORDERID] = @SalesOrderId1))
-		/// .
-		/// SELECT [SALES].[VINDIVIDUALCUSTOMER].[CustomerID]        AS [CustomerID],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[TITLE],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[FIRSTNAME],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[MIDDLENAME],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[LASTNAME],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[SUFFIX],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[PHONE],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[EMAILADDRESS],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[EMAILPROMOTION],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[ADDRESSTYPE],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[ADDRESSLINE1],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[ADDRESSLINE2],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[CITY],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[STATEPROVINCENAME],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[POSTALCODE],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[COUNTRYREGIONNAME],
-		/// [SALES].[VINDIVIDUALCUSTOMER].[DEMOGRAPHICS]
-		/// FROM   [SALES].[VINDIVIDUALCUSTOMER]
-		/// WHERE  (([SALES].[VINDIVIDUALCUSTOMER].[CustomerID] = @CustomerID1))
-		/// </remarks>
-		public static CustomerViewRelatedEntity GetCustomerViewRelatedCollection()
+	  /// <summary>
+	  /// Gets the related customer view of SalesOrder 46117. Example 5.27 pg63.
+	  /// </summary>
+	  /// <param name="salesOrderID"></param>
+	  /// <returns></returns>
+	  /// <remarks>
+	  /// SELECT [SALES].[SALESORDERHEADER].[SALESORDERID]           AS [SALESORDERID],
+	  /// [SALES].[SALESORDERHEADER].[REVISIONNUMBER],
+	  /// [SALES].[SALESORDERHEADER].[ORDERDATE],
+	  /// [SALES].[SALESORDERHEADER].[DUEDATE],
+	  /// [SALES].[SALESORDERHEADER].[SHIPDATE],
+	  /// [SALES].[SALESORDERHEADER].[STATUS],
+	  /// [SALES].[SALESORDERHEADER].[ONLINEORDERFLAG],
+	  /// [SALES].[SALESORDERHEADER].[SALESORDERNUMBER],
+	  /// [SALES].[SALESORDERHEADER].[PURCHASEORDERNUMBER],
+	  /// [SALES].[SALESORDERHEADER].[ACCOUNTNUMBER],
+	  /// [SALES].[SALESORDERHEADER].[CustomerID]             AS [CustomerID],
+	  /// [SALES].[SALESORDERHEADER].[CONTACTID]              AS [CONTACTID],
+	  /// [SALES].[SALESORDERHEADER].[SALESPERSONID]          AS [SALESPERSONID],
+	  /// [SALES].[SALESORDERHEADER].[TERRITORYID]            AS [TERRITORYID],
+	  /// [SALES].[SALESORDERHEADER].[BILLTOADDRESSID]        AS [BILLTOADDRESSID],
+	  /// [SALES].[SALESORDERHEADER].[SHIPTOADDRESSID]        AS [SHIPTOADDRESSID],
+	  /// [SALES].[SALESORDERHEADER].[SHIPMETHODID]           AS [SHIPMETHODID],
+	  /// [SALES].[SALESORDERHEADER].[CREDITCARDID]           AS [CREDITCARDID],
+	  /// [SALES].[SALESORDERHEADER].[CREDITCARDAPPROVALCODE],
+	  /// [SALES].[SALESORDERHEADER].[CURRENCYRATEID]         AS [CURRENCYRATEID],
+	  /// [SALES].[SALESORDERHEADER].[SUBTOTAL],
+	  /// [SALES].[SALESORDERHEADER].[TAXAMT],
+	  /// [SALES].[SALESORDERHEADER].[FREIGHT],
+	  /// [SALES].[SALESORDERHEADER].[TOTALDUE],
+	  /// [SALES].[SALESORDERHEADER].[COMMENT],
+	  /// [SALES].[SALESORDERHEADER].[ROWGUID]                AS [ROWGUID],
+	  /// [SALES].[SALESORDERHEADER].[MODIFIEDDATE]
+	  /// FROM   [SALES].[SALESORDERHEADER]
+	  /// WHERE  (([SALES].[SALESORDERHEADER].[SALESORDERID] = @SalesOrderId1))
+	  /// .
+	  /// SELECT [SALES].[VINDIVIDUALCUSTOMER].[CustomerID]        AS [CustomerID],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[TITLE],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[FIRSTNAME],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[MIDDLENAME],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[LASTNAME],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[SUFFIX],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[PHONE],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[EMAILADDRESS],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[EMAILPROMOTION],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[ADDRESSTYPE],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[ADDRESSLINE1],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[ADDRESSLINE2],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[CITY],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[STATEPROVINCENAME],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[POSTALCODE],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[COUNTRYREGIONNAME],
+	  /// [SALES].[VINDIVIDUALCUSTOMER].[DEMOGRAPHICS]
+	  /// FROM   [SALES].[VINDIVIDUALCUSTOMER]
+	  /// WHERE  (([SALES].[VINDIVIDUALCUSTOMER].[CustomerID] = @CustomerID1))
+	  /// </remarks>
+	  public static CustomerViewRelatedEntity GetCustomerViewRelatedCollection(int salesOrderID = 46117)
 		{
-			var order = new SalesOrderHeaderEntity(46117);
+			var order = new SalesOrderHeaderEntity(salesOrderID);
 			return order.CustomerViewRelated;
-		}
-
-		/// <summary>
-		/// Gets the related customer view of SalesOrder 46117 with linq. Example 5.27 pg63.
-		/// </summary>
-		/// <returns></returns>
-		/// <remarks>
-		/// SELECT TOP 1 [LPLA_1].[SalesOrderID] AS [SalesOrderId],
-		///       [LPLA_1].[RevisionNumber]                      ,
-		///       [LPLA_1].[OrderDate]                           ,
-		///       [LPLA_1].[DueDate]                             ,
-		///       [LPLA_1].[ShipDate]                            ,
-		///       [LPLA_1].[Status]                              ,
-		///       [LPLA_1].[OnlineOrderFlag]                     ,
-		///       [LPLA_1].[SalesOrderNumber]                    ,
-		///       [LPLA_1].[PurchaseOrderNumber]                 ,
-		///       [LPLA_1].[AccountNumber]                       ,
-		///       [LPLA_1].[CustomerID]      AS [CustomerID]          ,
-		///       [LPLA_1].[ContactID]       AS [ContactId]           ,
-		///       [LPLA_1].[SalesPersonID]   AS [SalesPersonId]       ,
-		///       [LPLA_1].[TerritoryID]     AS [TerritoryId]         ,
-		///       [LPLA_1].[BillToAddressID] AS [BillToAddressId]     ,
-		///       [LPLA_1].[ShipToAddressID] AS [ShipToAddressId]     ,
-		///       [LPLA_1].[ShipMethodID]    AS [ShipMethodId]        ,
-		///       [LPLA_1].[CreditCardID]    AS [CreditCardId]        ,
-		///       [LPLA_1].[CreditCardApprovalCode]                   ,
-		///       [LPLA_1].[CurrencyRateID] AS [CurrencyRateId]       ,
-		///       [LPLA_1].[SubTotal]                                 ,
-		///       [LPLA_1].[TaxAmt]                                   ,
-		///       [LPLA_1].[Freight]                                  ,
-		///       [LPLA_1].[TotalDue]                                 ,
-		///       [LPLA_1].[Comment]                                  ,
-		///       [LPLA_1].[rowguid] AS [Rowguid]                     ,
-		///       [LPLA_1].[ModifiedDate]
-		///FROM   [AdventureWorks].[Sales].[SalesOrderHeader] [LPLA_1]
-		///WHERE ( ( ( ( [LPLA_1].[SalesOrderID] = @SalesOrderId1))))
-		/// .
-		///SELECT [AdventureWorks].[Sales].[vIndividualCustomer].[CustomerID] AS [CustomerID],
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[Title]                     ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[FirstName]                 ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[MiddleName]                ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[LastName]                  ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[Suffix]                    ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[Phone]                     ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[EmailAddress]              ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[EmailPromotion]            ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[AddressType]               ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[AddressLine1]              ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[AddressLine2]              ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[City]                      ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[StateProvinceName]         ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[PostalCode]                ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[CountryRegionName]         ,
-		///       [AdventureWorks].[Sales].[vIndividualCustomer].[Demographics]
-		///FROM   [AdventureWorks].[Sales].[vIndividualCustomer]
-		///WHERE ( ( [AdventureWorks].[Sales].[vIndividualCustomer].[CustomerID] = @CustomerID1)) </remarks>
-		public static CustomerViewRelatedEntity GetCustomerViewRelatedLinq()
-		{
-			return MetaSingletons.MetaData.SalesOrderHeader.First(soh => soh.SalesOrderID == 46117).CustomerViewRelated;
 		}
 
 		/// <summary>

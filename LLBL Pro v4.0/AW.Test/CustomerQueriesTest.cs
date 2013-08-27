@@ -59,13 +59,6 @@ namespace AW.Tests
 			Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
 		}
 
-		[TestMethod, Description("A test for GetCustomerViewRelatedLinq. Gets the related customer view of SalesOrder 46117 with linq. Example 5.27 pg63.")]
-		public void GetCustomerViewRelatedLinqTest()
-		{
-			var actual = CustomerQueries.GetCustomerViewRelatedLinq();
-			Assert.AreEqual(46117, actual.SalesOrderHeader[0].SalesOrderID);
-		}
-
 		[TestMethod, Description("A test for GetCustomerViewRelatedCollection. Gets the related customer view of SalesOrder 46117. Example 5.27 pg63.")]
 		public void GetCustomerViewRelatedCollectionTest()
 		{
