@@ -1,6 +1,9 @@
 using System;
+using System.Linq;
 using System.Windows.Forms;
+using AW.Data;
 using AW.Data.Queries;
+using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.EntityViewer;
 
@@ -80,7 +83,7 @@ namespace AW.Win
 
     private void toolStripButtonViewAsEntityLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewRelatedLinq();
+      bindingSourceCustomerList.DataSource = MetaSingletons.MetaData.CustomerViewRelated.Take(MaxNumberOfItemsToReturn).ToEntityCollection();
     }
 
     private void View()
