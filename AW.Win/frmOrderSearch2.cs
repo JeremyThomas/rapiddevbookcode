@@ -147,20 +147,23 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs" /> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();
-      predicate = predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(_orderSearchCriteria);
-      var exp = FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression;
-      // predicate.And((Expression<Func<SalesOrderHeaderEntity, bool>>) exp);
-      foreach (var expArg in exp.Arguments)
-      {
-        if (expArg.NodeType == ExpressionType.Lambda)
+      var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();        
+      try
         {
-          var x = expArg as Expression<Func<SalesOrderHeaderEntity, bool>>;
-          predicate = predicate.And(x);
+          predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
         }
-        //
+        catch (Exception)
+        {
+        }
+      if (Settings.Default.UsePredicate)
+      {
+        predicate = predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(_orderSearchCriteria);
       }
-
+      else
+      {
+        var salesOrderHeaderQueryDummy = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
+        predicate = predicate.AddMethodCallExpression(salesOrderHeaderQueryDummy.Expression as MethodCallExpression);
+      }
       var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.Where(predicate);
       if (MaxNumberOfItemsToReturn > 0)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Take(MaxNumberOfItemsToReturn);

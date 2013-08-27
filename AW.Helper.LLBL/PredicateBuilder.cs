@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers;
 using LinqExpression = System.Linq.Expressions.Expression;
@@ -36,8 +37,7 @@ namespace AW.Helper.LLBL
       var replacer = new ExpressionReplacer(CreateFromToReplaceSet(expr2.Parameters, expr1.Parameters), null, null, null, null);
       var rightExpression = (LambdaExpression) replacer.HandleExpression(expr2);
 
-      return Expression.Lambda<Func<T, bool>>
-        (Expression.OrElse(expr1.Body, rightExpression.Body), expr1.Parameters);
+      return Expression.Lambda<Func<T, bool>>(Expression.OrElse(expr1.Body, rightExpression.Body), expr1.Parameters);
     }
 
     public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> expr1, Expression<Func<T, bool>> expr2)
@@ -46,15 +46,20 @@ namespace AW.Helper.LLBL
         return expr2;
       var replacer = new ExpressionReplacer(CreateFromToReplaceSet(expr2.Parameters, expr1.Parameters), null, null, null, null);
       var rightExpression = (LambdaExpression) replacer.HandleExpression(expr2);
-      return Expression.Lambda<Func<T, bool>>
-        (Expression.AndAlso(expr1.Body, rightExpression.Body), expr1.Parameters);
+      return Expression.Lambda<Func<T, bool>>(Expression.AndAlso(expr1.Body, rightExpression.Body), expr1.Parameters);
     }
 
-    private static Dictionary<LinqExpression, LinqExpression> CreateFromToReplaceSet(IList<ParameterExpression> from, IList<ParameterExpression> to)
+    public static Expression<Func<T, bool>> AddMethodCallExpression<T>(this Expression<Func<T, bool>> predicate, MethodCallExpression methodCallExpression)
     {
-      var toReturn = new Dictionary<LinqExpression, LinqExpression>();
-      for (var i = 0; i < from.Count; i++)
-        toReturn.Add(from[i], to[i]);
+      return methodCallExpression.Arguments.Where(expArg => expArg.NodeType == ExpressionType.Lambda).OfType<Expression<Func<T, bool>>>()
+        .Aggregate(predicate, (current, exp) => current.And(exp));
+    }
+
+    private static Dictionary<Expression, Expression> CreateFromToReplaceSet(IList<ParameterExpression> from, IList<ParameterExpression> to)
+    {
+      var toReturn = new Dictionary<Expression, Expression>();
+      for (var i = 0; i < @from.Count; i++)
+        toReturn.Add(@from[i], to[i]);
       return toReturn;
     }
   }

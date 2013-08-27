@@ -760,8 +760,7 @@ namespace AW.Win
           if (builder.CanBuild)
           {
             builder.BuildSQL();
-            var sql = builder.Result.SQL;
-            teSQL.Text = sql;
+            teSQL.Text = builder.Result.SQL;
           }
         }
         else if (query1.Columns.Count > 0 || query1.Root.Conditions.Count > 0)
