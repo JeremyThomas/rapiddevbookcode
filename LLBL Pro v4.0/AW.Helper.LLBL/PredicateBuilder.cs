@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using SD.LLBLGen.Pro.LinqSupportClasses.ExpressionHandlers;
 using LinqExpression = System.Linq.Expressions.Expression;
@@ -51,8 +50,22 @@ namespace AW.Helper.LLBL
 
     public static Expression<Func<T, bool>> AddMethodCallExpression<T>(this Expression<Func<T, bool>> predicate, MethodCallExpression methodCallExpression)
     {
-      return methodCallExpression.Arguments.Where(expArg => expArg.NodeType == ExpressionType.Lambda).OfType<Expression<Func<T, bool>>>()
-        .Aggregate(predicate, (current, exp) => current.And(exp));
+      foreach (var expArg in methodCallExpression.Arguments)
+      {
+        var exp = expArg as Expression<Func<T, bool>>;
+        if (exp == null)
+        {
+          var callExpression = expArg as MethodCallExpression;
+          if (callExpression == null)
+            continue;
+          predicate = predicate.AddMethodCallExpression(callExpression);
+        }
+        else
+          predicate = predicate.And(exp);
+      }
+      return predicate;
+      //return methodCallExpression.Arguments.Where(expArg => expArg.NodeType == ExpressionType.Lambda).OfType<Expression<Func<T, bool>>>()
+      //  .Aggregate(predicate, (current, exp) => current.And(exp));
     }
 
     private static Dictionary<Expression, Expression> CreateFromToReplaceSet(IList<ParameterExpression> from, IList<ParameterExpression> to)

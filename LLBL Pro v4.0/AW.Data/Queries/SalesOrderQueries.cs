@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.Filters;
@@ -39,27 +37,30 @@ namespace AW.Data.Queries
       bool prefetch
       )
     {
-      var predicate = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(orderSearchCriteria);
+      var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(orderSearchCriteria);
 
       if (prefetch)
-        predicate = predicate.PrefetchCustomerViewRelated();
+        salesOrderHeaderQuery = salesOrderHeaderQuery.PrefetchCustomerViewRelated();
+      salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       if (maxNumberOfItemsToReturn > 0)
-        predicate = predicate.Take(maxNumberOfItemsToReturn);
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Take(maxNumberOfItemsToReturn);
       //return ((ILLBLGenProQuery)predicate).Execute<SalesOrderHeaderCollection>();
-      return predicate.ToEntityCollection();
+      return salesOrderHeaderQuery.ToEntityCollection();
     }
 
     public static IQueryable<SalesOrderHeaderEntity> DoSalesOrderHeaderLinqQuery
       (
-       OrderSearchCriteria orderSearchCriteria,
+      OrderSearchCriteria orderSearchCriteria,
       int maxNumberOfItemsToReturn
       )
     {
-      var query = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
+      var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
+
+      salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
 
       if (maxNumberOfItemsToReturn > 0)
-        query = query.Take(maxNumberOfItemsToReturn);
-      return query;
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Take(maxNumberOfItemsToReturn);
+      return salesOrderHeaderQuery;
     }
   }
 }
