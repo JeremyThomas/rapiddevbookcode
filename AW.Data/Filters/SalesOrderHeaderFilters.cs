@@ -54,7 +54,6 @@ namespace AW.Data.Filters
       if (!string.IsNullOrEmpty(orderNumber))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(q => q.SalesOrderNumber == orderNumber);
 
-      salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       return salesOrderHeaderQuery;
     }
 
@@ -83,7 +82,6 @@ namespace AW.Data.Filters
       if (!string.IsNullOrEmpty(orderSearchCriteria.OrderNumber))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.SalesOrderNumber == orderSearchCriteria.OrderNumber);
 
-      salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       return salesOrderHeaderQuery;
     }
 

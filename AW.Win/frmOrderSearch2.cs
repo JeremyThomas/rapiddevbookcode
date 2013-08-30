@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -31,7 +30,9 @@ namespace AW.Win
       query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
       foreach (var subEntity in query1.Model.EntityRoot.SubEntities)
       {
-        subEntity.UseInConditions = subEntity.Info.Values.Contains(typeof (SalesOrderHeaderEntity));
+        subEntity.UseInConditions = subEntity.Info.Values.Contains(typeof(SalesOrderHeaderEntity)) || subEntity.Info.Values.Contains(typeof(CustomerEntity))
+          || subEntity.Info.Values.Contains(typeof(CustomerAddressEntity))
+          || subEntity.Info.Values.Contains(typeof(ContactEntity));
         if (subEntity.UseInConditions)
           foreach (var entityAttr in subEntity.Attributes)
           {
@@ -94,7 +95,7 @@ namespace AW.Win
 
     private void btnSearch_Click(object sender, EventArgs e)
     {
-      _orderSearchCriteria = new OrderSearchCriteria ();
+      _orderSearchCriteria = new OrderSearchCriteria();
       if (dtpDateFrom.Checked)
         _orderSearchCriteria.FromDate = dtpDateFrom.Value;
       if (dtpDateTo.Checked)
@@ -147,24 +148,25 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs" /> instance containing the event data.</param>
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();        
+      var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();
+      IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader;
       try
-        {
-          predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
-        }
-        catch (Exception)
-        {
-        }
+      {
+        predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
+      }
+      catch (Exception)
+      {
+      }
       if (Settings.Default.UsePredicate)
       {
         predicate = predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(_orderSearchCriteria);
       }
       else
       {
-        var salesOrderHeaderQueryDummy = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
-        predicate = predicate.AddMethodCallExpression(salesOrderHeaderQueryDummy.Expression as MethodCallExpression);
+        salesOrderHeaderQuery = salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
+        salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       }
-      var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.Where(predicate);
+      salesOrderHeaderQuery = salesOrderHeaderQuery.Where(predicate);
       if (MaxNumberOfItemsToReturn > 0)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Take(MaxNumberOfItemsToReturn);
       _results = salesOrderHeaderQuery.ToEntityCollection();

@@ -100,37 +100,40 @@ namespace AW.Win
       get { return comboBoxDbType.SelectedIndex; }
       set
       {
-        if (comboBoxDbType.SelectedIndex == value) return;
         comboBoxDbType.SelectedIndex = value;
-        CloseConnections();
-        query1.Clear();
-        if (DBMode == 0)
-        {
-          query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
-          query1.Formats.UseSchema = true;
-          query1.Model.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
-        }
-        else
-        {
-          query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
-          query1.Model.Clear();
-          query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
-          foreach (var entityAttr in from subEntity in query1.Model.EntityRoot.SubEntities
-            from entityAttr in subEntity.Attributes
-            where entityAttr.DataType == DataType.Bool &&
-                  entityAttr.Caption.StartsWith("AlreadyFetched")
-                  || entityAttr.Caption.StartsWith("AlwaysFetch")
-                  || entityAttr.Caption.EndsWith("ReturnsNewIfNotFound")
-                  || entityAttr.Caption == "IsNew" || entityAttr.Caption == "IsDirty"
-            select entityAttr)
-          {
-            entityAttr.UseInConditions = false;
-          }
-        }
-        QPanel.UpdateModelInfo();
-        QCPanel.UpdateModelInfo();
-        EntPanel.UpdateModelInfo();
       }
+    }
+
+    private void OnDBModeChange()
+    {
+      CloseConnections();
+      query1.Clear();
+      if (DBMode == 0)
+      {
+        query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
+        query1.Formats.UseSchema = true;
+        query1.Model.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
+      }
+      else
+      {
+        query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
+        query1.Model.Clear();
+        query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
+        foreach (var entityAttr in from subEntity in query1.Model.EntityRoot.SubEntities
+          from entityAttr in subEntity.Attributes
+          where entityAttr.DataType == DataType.Bool &&
+                entityAttr.Caption.StartsWith("AlreadyFetched")
+                || entityAttr.Caption.StartsWith("AlwaysFetch")
+                || entityAttr.Caption.EndsWith("ReturnsNewIfNotFound")
+                || entityAttr.Caption == "IsNew" || entityAttr.Caption == "IsDirty"
+          select entityAttr)
+        {
+          entityAttr.UseInConditions = false;
+        }
+      }
+      QPanel.UpdateModelInfo();
+      QCPanel.UpdateModelInfo();
+      EntPanel.UpdateModelInfo();
     }
 
     private void CheckConnection()
@@ -976,7 +979,7 @@ namespace AW.Win
 
     private void comboBoxDbType_SelectedValueChanged(object sender, EventArgs e)
     {
-      DBMode = comboBoxDbType.SelectedIndex;
+      OnDBModeChange();
     }
   }
 }

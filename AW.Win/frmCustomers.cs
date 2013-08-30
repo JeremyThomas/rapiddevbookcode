@@ -41,6 +41,11 @@ namespace AW.Win
       bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedView(MaxNumberOfItemsToReturn);
     }
 
+    private void toolStripButtonTypedViewQuerySpec_Click(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedViewQuerySpec(MaxNumberOfItemsToReturn);
+    }
+
     /// <summary>
     ///   Handles the Click event of the toolStripButtonViewAsEntity control. Example 5.27 pg63.
     /// </summary>
@@ -59,6 +64,11 @@ namespace AW.Win
     private void toolStripButtonTypedList_Click(object sender, EventArgs e)
     {
       bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListTypedList(MaxNumberOfItemsToReturn);
+    }
+
+    private void toolStripButtonTypedListQuerySpec_Click(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListTypedListQuerySpec(MaxNumberOfItemsToReturn);
     }
 
     /// <summary>
@@ -100,5 +110,7 @@ namespace AW.Win
     {
       View();
     }
+
+
   }
 }

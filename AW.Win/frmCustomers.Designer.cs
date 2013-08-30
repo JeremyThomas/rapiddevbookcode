@@ -49,15 +49,17 @@ namespace AW.Win
       this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonPlaintypedview = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonTypedViewQuerySpec = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-      this.toolStripButtonViewAsEntity = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonViewAsEntityLinq = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonViewAsEntity = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonTypedList = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinq = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonLinqAnonymous = new System.Windows.Forms.ToolStripButton();
       this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.toolStripButtonTypedListQuerySpec = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).BeginInit();
@@ -78,9 +80,9 @@ namespace AW.Win
             this.CountryRegionName});
       this.dgvResults.DataSource = this.bindingSourceCustomerList;
       this.dgvResults.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dgvResults.Location = new System.Drawing.Point(0, 25);
+      this.dgvResults.Location = new System.Drawing.Point(0, 46);
       this.dgvResults.Name = "dgvResults";
-      this.dgvResults.Size = new System.Drawing.Size(926, 353);
+      this.dgvResults.Size = new System.Drawing.Size(876, 332);
       this.dgvResults.TabIndex = 0;
       this.dgvResults.Tag = "True";
       this.toolTip1.SetToolTip(this.dgvResults, "Double click to view");
@@ -148,6 +150,7 @@ namespace AW.Win
       // 
       this.bindingNavigatorCustomerList.AddNewItem = null;
       this.bindingNavigatorCustomerList.BindingSource = this.bindingSourceCustomerList;
+      this.bindingNavigatorCustomerList.CanOverflow = false;
       this.bindingNavigatorCustomerList.CountItem = this.bindingNavigatorCountItem;
       this.bindingNavigatorCustomerList.DeleteItem = null;
       this.bindingNavigatorCustomerList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -161,13 +164,16 @@ namespace AW.Win
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2,
             this.toolStripButtonPlaintypedview,
+            this.toolStripButtonTypedViewQuerySpec,
             this.toolStripSeparator1,
             this.toolStripButtonViewAsEntityLinq,
             this.toolStripButtonViewAsEntity,
             this.toolStripSeparator2,
             this.toolStripButtonTypedList,
+            this.toolStripButtonTypedListQuerySpec,
             this.toolStripButtonLinq,
             this.toolStripButtonLinqAnonymous});
+      this.bindingNavigatorCustomerList.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
       this.bindingNavigatorCustomerList.Location = new System.Drawing.Point(0, 0);
       this.bindingNavigatorCustomerList.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
       this.bindingNavigatorCustomerList.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -175,14 +181,14 @@ namespace AW.Win
       this.bindingNavigatorCustomerList.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
       this.bindingNavigatorCustomerList.Name = "bindingNavigatorCustomerList";
       this.bindingNavigatorCustomerList.PositionItem = this.bindingNavigatorPositionItem;
-      this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(926, 25);
+      this.bindingNavigatorCustomerList.Size = new System.Drawing.Size(876, 46);
       this.bindingNavigatorCustomerList.TabIndex = 1;
       this.bindingNavigatorCustomerList.Text = "bindingNavigator1";
       // 
       // bindingNavigatorCountItem
       // 
       this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
+      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 15);
       this.bindingNavigatorCountItem.Text = "of {0}";
       this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
       // 
@@ -192,7 +198,7 @@ namespace AW.Win
       this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
       this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
       this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 20);
       this.bindingNavigatorMoveFirstItem.Text = "Move first";
       // 
       // bindingNavigatorMovePreviousItem
@@ -201,13 +207,13 @@ namespace AW.Win
       this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
       this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
       this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 20);
       this.bindingNavigatorMovePreviousItem.Text = "Move previous";
       // 
       // bindingNavigatorSeparator
       // 
       this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-      this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
+      this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 23);
       // 
       // bindingNavigatorPositionItem
       // 
@@ -221,7 +227,7 @@ namespace AW.Win
       // bindingNavigatorSeparator1
       // 
       this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-      this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
+      this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 23);
       // 
       // bindingNavigatorMoveNextItem
       // 
@@ -229,7 +235,7 @@ namespace AW.Win
       this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
       this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
       this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 20);
       this.bindingNavigatorMoveNextItem.Text = "Move next";
       // 
       // bindingNavigatorMoveLastItem
@@ -238,63 +244,74 @@ namespace AW.Win
       this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
       this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
       this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 20);
       this.bindingNavigatorMoveLastItem.Text = "Move last";
       // 
       // bindingNavigatorSeparator2
       // 
       this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-      this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
+      this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 23);
       // 
       // toolStripButtonPlaintypedview
       // 
       this.toolStripButtonPlaintypedview.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPlaintypedview.Image")));
       this.toolStripButtonPlaintypedview.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonPlaintypedview.Name = "toolStripButtonPlaintypedview";
-      this.toolStripButtonPlaintypedview.Size = new System.Drawing.Size(87, 22);
-      this.toolStripButtonPlaintypedview.Text = "Typed view";
+      this.toolStripButtonPlaintypedview.Size = new System.Drawing.Size(88, 20);
+      this.toolStripButtonPlaintypedview.Text = "Typed View";
       this.toolStripButtonPlaintypedview.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. Example 5.18. p" +
     "g59";
       this.toolStripButtonPlaintypedview.Click += new System.EventHandler(this.toolStripButtonPlaintypedview_Click);
       // 
+      // toolStripButtonTypedViewQuerySpec
+      // 
+      this.toolStripButtonTypedViewQuerySpec.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedViewQuerySpec.Image")));
+      this.toolStripButtonTypedViewQuerySpec.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonTypedViewQuerySpec.Name = "toolStripButtonTypedViewQuerySpec";
+      this.toolStripButtonTypedViewQuerySpec.Size = new System.Drawing.Size(148, 20);
+      this.toolStripButtonTypedViewQuerySpec.Text = "Typed View QuerySpec";
+      this.toolStripButtonTypedViewQuerySpec.ToolTipText = "vIndividualCustomer exposed via Typed view CustomerViewTypedView. Example 5.18. p" +
+    "g59";
+      this.toolStripButtonTypedViewQuerySpec.Click += new System.EventHandler(this.toolStripButtonTypedViewQuerySpec_Click);
+      // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
-      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-      // 
-      // toolStripButtonViewAsEntity
-      // 
-      this.toolStripButtonViewAsEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsEntity.Image")));
-      this.toolStripButtonViewAsEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonViewAsEntity.Name = "toolStripButtonViewAsEntity";
-      this.toolStripButtonViewAsEntity.Size = new System.Drawing.Size(99, 22);
-      this.toolStripButtonViewAsEntity.Text = "View as entity";
-      this.toolStripButtonViewAsEntity.ToolTipText = "Gets the related customer view (CustomerViewRelated) of SalesOrder 46117. Example" +
-    " 5.27 pg63";
-      this.toolStripButtonViewAsEntity.Click += new System.EventHandler(this.toolStripButtonViewAsEntity_Click);
+      this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
       // 
       // toolStripButtonViewAsEntityLinq
       // 
       this.toolStripButtonViewAsEntityLinq.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsEntityLinq.Image")));
       this.toolStripButtonViewAsEntityLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonViewAsEntityLinq.Name = "toolStripButtonViewAsEntityLinq";
-      this.toolStripButtonViewAsEntityLinq.Size = new System.Drawing.Size(118, 22);
+      this.toolStripButtonViewAsEntityLinq.Size = new System.Drawing.Size(118, 20);
       this.toolStripButtonViewAsEntityLinq.Text = "View As Entity All";
       this.toolStripButtonViewAsEntityLinq.ToolTipText = "Gets all vIndividualCustomer exposed via entity CustomerViewRelated";
       this.toolStripButtonViewAsEntityLinq.Click += new System.EventHandler(this.toolStripButtonViewAsEntityLinq_Click);
       // 
+      // toolStripButtonViewAsEntity
+      // 
+      this.toolStripButtonViewAsEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsEntity.Image")));
+      this.toolStripButtonViewAsEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonViewAsEntity.Name = "toolStripButtonViewAsEntity";
+      this.toolStripButtonViewAsEntity.Size = new System.Drawing.Size(99, 20);
+      this.toolStripButtonViewAsEntity.Text = "View as entity";
+      this.toolStripButtonViewAsEntity.ToolTipText = "Gets the related customer view (CustomerViewRelated) of SalesOrder 46117. Example" +
+    " 5.27 pg63";
+      this.toolStripButtonViewAsEntity.Click += new System.EventHandler(this.toolStripButtonViewAsEntity_Click);
+      // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+      this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
       // 
       // toolStripButtonTypedList
       // 
       this.toolStripButtonTypedList.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedList.Image")));
       this.toolStripButtonTypedList.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonTypedList.Name = "toolStripButtonTypedList";
-      this.toolStripButtonTypedList.Size = new System.Drawing.Size(78, 22);
-      this.toolStripButtonTypedList.Text = "TypedList";
+      this.toolStripButtonTypedList.Size = new System.Drawing.Size(81, 20);
+      this.toolStripButtonTypedList.Text = "Typed List";
       this.toolStripButtonTypedList.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. Example" +
     " 5.29. pg64.";
       this.toolStripButtonTypedList.Click += new System.EventHandler(this.toolStripButtonTypedList_Click);
@@ -304,7 +321,7 @@ namespace AW.Win
       this.toolStripButtonLinq.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinq.Image")));
       this.toolStripButtonLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonLinq.Name = "toolStripButtonLinq";
-      this.toolStripButtonLinq.Size = new System.Drawing.Size(131, 22);
+      this.toolStripButtonLinq.Size = new System.Drawing.Size(131, 20);
       this.toolStripButtonLinq.Text = "Linq Concrete Class";
       this.toolStripButtonLinq.ToolTipText = "Linq version of CustomerListTypedList projected on to  CustomerListLinqedTypedLis" +
     "t";
@@ -315,7 +332,7 @@ namespace AW.Win
       this.toolStripButtonLinqAnonymous.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqAnonymous.Image")));
       this.toolStripButtonLinqAnonymous.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonLinqAnonymous.Name = "toolStripButtonLinqAnonymous";
-      this.toolStripButtonLinqAnonymous.Size = new System.Drawing.Size(118, 22);
+      this.toolStripButtonLinqAnonymous.Size = new System.Drawing.Size(118, 20);
       this.toolStripButtonLinqAnonymous.Text = "Linq Anonymous";
       this.toolStripButtonLinqAnonymous.ToolTipText = "Linq version of CustomerListTypedList projected on to an anonymous type";
       this.toolStripButtonLinqAnonymous.Click += new System.EventHandler(this.toolStripButtonLinqBarf_Click);
@@ -328,18 +345,29 @@ namespace AW.Win
             0,
             0,
             0});
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(861, 5);
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(816, 20);
       this.numericUpDownNumRows.Name = "numericUpDownNumRows";
       this.numericUpDownNumRows.Size = new System.Drawing.Size(42, 20);
       this.numericUpDownNumRows.TabIndex = 2;
       this.toolTip1.SetToolTip(this.numericUpDownNumRows, "Set the number or rows to return");
       this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
       // 
+      // toolStripButtonTypedListQuerySpec
+      // 
+      this.toolStripButtonTypedListQuerySpec.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTypedListQuerySpec.Image")));
+      this.toolStripButtonTypedListQuerySpec.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonTypedListQuerySpec.Name = "toolStripButtonTypedListQuerySpec";
+      this.toolStripButtonTypedListQuerySpec.Size = new System.Drawing.Size(141, 20);
+      this.toolStripButtonTypedListQuerySpec.Text = "Typed List QuerySpec";
+      this.toolStripButtonTypedListQuerySpec.ToolTipText = "CustomerListTypedList -Recreation of vIndividualCustomer as a Typed List. Example" +
+    " 5.29. pg64.";
+      this.toolStripButtonTypedListQuerySpec.Click += new System.EventHandler(this.toolStripButtonTypedListQuerySpec_Click);
+      // 
       // FrmCustomers
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(926, 378);
+      this.ClientSize = new System.Drawing.Size(876, 378);
       this.Controls.Add(this.numericUpDownNumRows);
       this.Controls.Add(this.dgvResults);
       this.Controls.Add(this.bindingNavigatorCustomerList);
@@ -392,6 +420,8 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsEntityLinq;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTypedViewQuerySpec;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTypedListQuerySpec;
 
     }
 }
