@@ -31,18 +31,19 @@ namespace AW.Win
     private void frmMain_Load(object sender, EventArgs e)
     {
       MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
+      reOpenWindowsToolStripMenuItem.Checked = Settings.Default.ReopenWindows;
     }
 
     private void frmMain_Shown(object sender, EventArgs e)
     {
-      if (Settings.Default.ReopenWindows && Settings.Default.OpenWindows != null)
-        foreach (var formName in Settings.Default.OpenWindows)
-        {
-          var frm = LaunchChildForm(formName);
-          if (frm is FrmQueryRunner)
-            ((FrmQueryRunner) frm).OpenFiles(Settings.Default.QueryFilesToReopen);
-          Application.DoEvents();
-        }
+      if (!Settings.Default.ReopenWindows || Settings.Default.OpenWindows == null) return;
+      foreach (var runner in from string formName in Settings.Default.OpenWindows
+        select LaunchChildForm(formName) as FrmQueryRunner)
+      {
+        if (runner != null)
+          runner.OpenFiles(Settings.Default.QueryFilesToReopen);
+        Application.DoEvents();
+      }
     }
 
     private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -57,13 +58,14 @@ namespace AW.Win
         Settings.Default.OpenWindows = new StringCollection();
       else
         Settings.Default.OpenWindows.Clear();
-      if (Settings.Default.ReopenWindows && MdiChildren.Length > 0)
-        foreach (var myForm in MdiChildren.Where(myForm => Convert.ToBoolean(myForm.Tag)))
-        {
-          Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
-          if (myForm is FrmQueryRunner)
-            Settings.Default.QueryFilesToReopen = ((FrmQueryRunner) myForm).GetOpenFiles();
-        }
+      if (!Settings.Default.ReopenWindows || MdiChildren.Length <= 0) return;
+      foreach (var myForm in MdiChildren.Where(myForm => Convert.ToBoolean(myForm.Tag)))
+      {
+        Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
+        var form = myForm as FrmQueryRunner;
+        if (form != null)
+          Settings.Default.QueryFilesToReopen = form.GetOpenFiles();
+      }
     }
 
     public Form LaunchChildForm(string formName)

@@ -21,7 +21,7 @@ namespace AW.Win
   public partial class FrmOrderSearch2 : FrmPersistantLocation
   {
     private FrmStatusBar _frmStatusBar;
-    private OrderSearchCriteria _orderSearchCriteria;
+    private Data.ViewModels.OrderSearchCriteria _orderSearchCriteria;
     private object _results;
 
     public FrmOrderSearch2()
@@ -48,26 +48,6 @@ namespace AW.Win
 
     private void frmOrderSearch_Load(object sender, EventArgs e)
     {
-      var previousState = Settings.Default.State;
-
-      listBoxCountry.DataSource = LookUpQueries.GetCountryRegionCollection();
-      listBoxCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
-      listBoxCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
-
-      cbState.DataSource = LookUpQueries.GetStateProvinceCollection();
-      cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
-      cbState.ValueMember = StateProvinceFieldIndex.StateProvinceID.ToString();
-
-      dtpDateFrom.Checked = Settings.Default.FilterOnFromDate;
-      dtpDateTo.Checked = Settings.Default.FilterOnToDate;
-
-      cbState.Text = previousState;
-
-      buttonClearCountries_Click(sender, e);
-      if (Settings.Default.Countries != null && listBoxCountry.Items.Count > 0)
-        foreach (var selectedRow in Settings.Default.Countries)
-          listBoxCountry.SelectedIndices.Add(Convert.ToInt32(selectedRow));
-
       if (!String.IsNullOrWhiteSpace(Settings.Default.FrmOrderSearchPredicate))
         query1.LoadFromString(Settings.Default.FrmOrderSearchPredicate);
     }
@@ -79,42 +59,12 @@ namespace AW.Win
 
     private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
     {
-      Settings.Default.FilterOnFromDate = dtpDateFrom.Checked;
-      Settings.Default.FilterOnToDate = dtpDateTo.Checked;
-
-      if (listBoxCountry.Items.Count > 0)
-      {
-        if (Settings.Default.Countries == null)
-          Settings.Default.Countries = new StringCollection();
-        else
-          Settings.Default.Countries.Clear();
-        foreach (var selectedRow in listBoxCountry.SelectedIndices)
-          Settings.Default.Countries.Add(selectedRow.ToString());
-      }
+      orderSearchCriteria1.OrderSearchCriteriaOnClosing();
     }
 
     private void btnSearch_Click(object sender, EventArgs e)
     {
-      _orderSearchCriteria = new OrderSearchCriteria();
-      if (dtpDateFrom.Checked)
-        _orderSearchCriteria.FromDate = dtpDateFrom.Value;
-      if (dtpDateTo.Checked)
-        _orderSearchCriteria.ToDate = dtpDateTo.Value;
-      if (tbOrderID.Text != "")
-        try
-        {
-          _orderSearchCriteria.OrderID = Convert.ToInt32(tbOrderID.Text);
-        }
-        catch
-        {
-          _orderSearchCriteria.OrderNumber = tbOrderID.Text;
-        }
-      _orderSearchCriteria.FirstName = tbFirstName.Text;
-      _orderSearchCriteria.LastName = tbLastName.Text;
-      _orderSearchCriteria.CityName = tbCity.Text;
-      _orderSearchCriteria.StateName = cbState.Text;
-      _orderSearchCriteria.Countries = from country in listBoxCountry.SelectedItems.OfType<CountryRegionEntity>() select country.Name;
-      _orderSearchCriteria.Zip = tbZip.Text;
+      _orderSearchCriteria = orderSearchCriteria1.GetCriteria();
 
       btnSearch.Enabled = false;
       _frmStatusBar = new FrmStatusBar();
@@ -188,26 +138,5 @@ namespace AW.Win
       salesOrderHeaderEntityBindingSource.DataSource = _results;
     }
 
-    private void buttonClear_Click(object sender, EventArgs e)
-    {
-      dtpDateFrom.Checked = false;
-      dtpDateFrom.Checked = false;
-
-      //tableLayoutPanel2.c
-      var q = from ctl in tableLayoutPanel2.Controls.OfType<TextBox>() select ctl;
-      foreach (var textbox in q)
-        textbox.Text = String.Empty;
-
-      var x = from ctl in tableLayoutPanel2.Controls.OfType<ComboBox>() select ctl;
-      foreach (var comboBox in x)
-        comboBox.Text = String.Empty;
-
-      buttonClearCountries_Click(sender, e);
-    }
-
-    private void buttonClearCountries_Click(object sender, EventArgs e)
-    {
-      listBoxCountry.SelectedItems.Clear();
-    }
   }
 }
