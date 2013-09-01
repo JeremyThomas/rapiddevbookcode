@@ -1,11 +1,11 @@
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
-using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
-using AW.Data.ViewModels;
 using AW.Helper;
+using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
 
@@ -14,63 +14,36 @@ namespace AW.Win
   public partial class FrmOrderSearch : FrmPersistantLocation
   {
     private FrmStatusBar _frmStatusBar;
-    private OrderSearchCriteria _orderSearchCriteria;
+    private Data.ViewModels.OrderSearchCriteria _orderSearchCriteria;
     private int _maxNumberOfItemsToReturn;
     private bool _prefetch;
 
     public FrmOrderSearch()
     {
       InitializeComponent();
+      foreach (var rb in groupBoxLLBLQueryType.Controls.OfType<RadioButton>())
+      {
+        var llblQueryType = (LLBLQueryType) rb.TabIndex;
+        rb.Tag = llblQueryType;
+        if (Settings.Default.LLBLQueryType == llblQueryType)
+          rb.Checked = true;
+        rb.Text = rb.Tag.ToString();
+      }
+      
     }
 
     private void frmOrderSearch_Load(object sender, EventArgs e)
     {
-      var previousState = Settings.Default.State;
-      var previousCountry = Settings.Default.Country;
-
-      cbCountry.DataSource = LookUpQueries.GetCountryRegionCollection();
-      cbCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
-      cbCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
-
-      cbState.DataSource = LookUpQueries.GetStateProvinceCollection();
-      cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
-      cbState.ValueMember = StateProvinceFieldIndex.StateProvinceID.ToString();
-
-      dtpDateFrom.Checked = Settings.Default.FilterOnFromDate;
-      dtpDateTo.Checked = Settings.Default.FilterOnToDate;
-
-      cbState.Text = previousState;
-      cbCountry.Text = previousCountry;
     }
 
     private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
     {
-      Settings.Default.FilterOnFromDate = dtpDateFrom.Checked;
-      Settings.Default.FilterOnToDate = dtpDateTo.Checked;
+      orderSearchCriteria1.OrderSearchCriteriaOnClosing();
     }
 
     private void btnSearch_Click(object sender, EventArgs e)
     {
-      _orderSearchCriteria = new OrderSearchCriteria();
-      if (dtpDateFrom.Checked)
-        _orderSearchCriteria.FromDate = dtpDateFrom.Value;
-      if (dtpDateTo.Checked)
-        _orderSearchCriteria.ToDate = dtpDateTo.Value;
-      if (tbOrderID.Text != "")
-        try
-        {
-          _orderSearchCriteria.OrderID = Convert.ToInt32(tbOrderID.Text);
-        }
-        catch
-        {
-          _orderSearchCriteria.OrderNumber = tbOrderID.Text;
-        }
-      _orderSearchCriteria.FirstName = tbFirstName.Text;
-      _orderSearchCriteria.LastName = tbLastName.Text;
-      _orderSearchCriteria.CityName = tbCity.Text;
-      _orderSearchCriteria.StateName = cbState.Text;
-      _orderSearchCriteria.Zip = tbZip.Text;
-      _orderSearchCriteria.CountryName = cbCountry.Text;
+      _orderSearchCriteria = orderSearchCriteria1.GetCriteria();
       _maxNumberOfItemsToReturn = Convert.ToInt32(numericUpDownNumRows.Value);
       _prefetch = checkBoxPrefetch.Checked;
       btnSearch.Enabled = false;
@@ -105,16 +78,28 @@ namespace AW.Win
 
     private void searchWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-      e.Result = checkBoxUseLinq.Checked
-        ? SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(
-          _orderSearchCriteria,
-          _maxNumberOfItemsToReturn,
-          _prefetch
-          )
-        : SalesOrderQueries.GetSalesOrderHeaderCollection(
-          _orderSearchCriteria,
-          _maxNumberOfItemsToReturn,
-          _prefetch);
+      switch (Settings.Default.LLBLQueryType)
+      {
+        case LLBLQueryType.Native:
+          e.Result = SalesOrderQueries.GetSalesOrderHeaderCollection(
+            _orderSearchCriteria,
+            _maxNumberOfItemsToReturn,
+            _prefetch);
+          break;
+        case LLBLQueryType.QuerySpec:
+          e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionQuerySpec(
+            _orderSearchCriteria,
+            _maxNumberOfItemsToReturn,
+            _prefetch);
+          break;
+        case LLBLQueryType.Linq:
+          e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(
+            _orderSearchCriteria,
+            _maxNumberOfItemsToReturn,
+            _prefetch
+            );
+          break;
+      }
       // Do not access the form's BackgroundWorker reference directly.
       // Instead, use the reference provided by the sender parameter.
       var bw = sender as BackgroundWorker;
@@ -144,6 +129,14 @@ namespace AW.Win
     private void dgResults_DataError(object sender, DataGridViewDataErrorEventArgs e)
     {
       GeneralHelper.TraceOut(e.Exception.Message);
+    }
+
+    private void radioButtonLLBLQueryType_CheckedChanged(object sender, EventArgs e)
+    {
+      var rb = sender as RadioButton;
+      if (rb == null || !rb.Checked) return;
+      if (rb.Tag is LLBLQueryType)
+        Settings.Default.LLBLQueryType = (LLBLQueryType) rb.Tag;
     }
   }
 }

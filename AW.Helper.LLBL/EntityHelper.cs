@@ -796,4 +796,11 @@ namespace AW.Helper.LLBL
              select entityRelation.MappedFieldName;
     }
   }
+
+  public enum LLBLQueryType
+  {
+    Native,
+    QuerySpec,
+    Linq
+  }
 }

@@ -72,10 +72,10 @@
       <Value Profile="(Default)">Off</Value>
     </Setting>
     <Setting Name="OpenTraceWindosOnStart" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ReopenWindows" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="OpenWindows" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
@@ -121,6 +121,9 @@
     </Setting>
     <Setting Name="UsePredicate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LLBLQueryType" Type="AW.Helper.LLBL.LLBLQueryType" Scope="User">
+      <Value Profile="(Default)">Native</Value>
     </Setting>
   </Settings>
 </SettingsFile>
