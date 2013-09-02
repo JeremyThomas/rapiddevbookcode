@@ -36,5 +36,17 @@ namespace AW.Data.ViewModels
     public IEnumerable<string> Countries { get; set; }
     public string Zip { get; set; }
     public string CountryName { get; set; }
+
+    public bool HasCustomerViewRelatedCriteria()
+    {
+      return (!String.IsNullOrEmpty(this.FirstName)) ||
+             (!String.IsNullOrEmpty(this.LastName)) ||
+             (!String.IsNullOrEmpty(this.CityName)) ||
+             (!String.IsNullOrEmpty(this.StateName)) ||
+             (!String.IsNullOrEmpty(this.CountryName)) ||
+             (!String.IsNullOrEmpty(this.Zip));
+    }
   }
+
+
 }

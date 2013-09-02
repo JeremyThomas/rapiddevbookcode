@@ -23,12 +23,14 @@ namespace AW.Data.Queries
       )
     {
       var relations = new RelationCollection();
-      var filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(relations, orderSearchCriteria);
+      var filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
       ISortExpression sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
       var orders = new SalesOrderHeaderCollection();
       //note      Orders.SupportsSorting = true;
 
       IPrefetchPath prefetchPath = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated} : null;
+      if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
+        relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID);
       orders.GetMulti(filter, maxNumberOfItemsToReturn, sort, relations, prefetchPath);
       return orders;
     }
@@ -40,8 +42,7 @@ namespace AW.Data.Queries
       bool prefetch
       )
     {
-      var relations = new RelationCollection();
-      var filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(relations, orderSearchCriteria);
+      var filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
       var qf = new QueryFactory();
       var q = qf.SalesOrderHeader.Where(filter);
       q.OrderBy(SalesOrderHeaderFields.OrderDate | SortOperator.Ascending).Page(1, maxNumberOfItemsToReturn); ;

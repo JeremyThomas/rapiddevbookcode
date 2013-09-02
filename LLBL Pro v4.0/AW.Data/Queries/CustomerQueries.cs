@@ -1,11 +1,14 @@
 using System.Linq;
+using AW.Data.CollectionClasses;
 using AW.Data.DaoClasses;
 using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
+using AW.Data.Filters;
 using AW.Data.HelperClasses;
 using AW.Data.TypedListClasses;
 using AW.Data.TypedViewClasses;
 using AW.Data.ViewModels;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.QuerySpec;
 using SD.LLBLGen.Pro.QuerySpec.SelfServicing;
 
@@ -38,10 +41,14 @@ namespace AW.Data.Queries
     ///   [SALES].[VINDIVIDUALCUSTOMER].[DEMOGRAPHICS]
     ///   FROM   [SALES].[VINDIVIDUALCUSTOMER]
     /// </remarks>
-    public static CustomerViewTypedView GetCustomerViewTypedView(int maxNumberOfItemsToReturn)
+    public static CustomerViewTypedView GetCustomerViewTypedView(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var customers = new CustomerViewTypedView();
-      customers.Fill(maxNumberOfItemsToReturn, null, false);
+      var relations = new RelationCollection();
+      var filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
+      if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
+        relations.Add(CustomerViewRelatedEntity.Relations.SalesOrderHeaderEntityUsingCustomerID);
+      customers.Fill(maxNumberOfItemsToReturn, null, false,filter);
       return customers;
     }
 

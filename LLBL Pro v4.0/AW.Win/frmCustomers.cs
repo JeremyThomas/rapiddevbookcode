@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.Linq.Filters;
 using AW.Data.Queries;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
@@ -38,7 +39,7 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonPlaintypedview_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedView(MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedView(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
     private void toolStripButtonTypedViewQuerySpec_Click(object sender, EventArgs e)
@@ -78,7 +79,7 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedList(MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedList(MaxNumberOfItemsToReturn).FilterByDateCustomerNameAddress(orderSearchCriteria1.GetCriteria());
     }
 
     /// <summary>
@@ -93,7 +94,9 @@ namespace AW.Win
 
     private void toolStripButtonViewAsEntityLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = MetaSingletons.MetaData.CustomerViewRelated.Take(MaxNumberOfItemsToReturn).ToEntityCollection();
+      bindingSourceCustomerList.DataSource = MetaSingletons.MetaData.CustomerViewRelated
+        .FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria1.GetCriteria())
+        .Take(MaxNumberOfItemsToReturn).ToEntityCollection();
     }
 
     private void View()
@@ -110,7 +113,5 @@ namespace AW.Win
     {
       View();
     }
-
-
   }
 }
