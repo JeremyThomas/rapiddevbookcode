@@ -27,17 +27,17 @@ namespace AW.Data.Filters
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(q => q.OrderDate >= fromDate);
       if (toDate != DateTime.MinValue)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(q => q.OrderDate <= toDate);
-      if (firstName != "")
+      if (!string.IsNullOrEmpty(firstName))
         // query = query.Where(q => System.Data.Linq.SqlClient.SqlMethods.Like(q.soh.Customer.Individual.Contact.FirstName, firstName));
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(q => ((IndividualEntity) q.Customer).Contact.FirstName.Contains(firstName));
-      if (lastName != "")
+      if (!string.IsNullOrEmpty(lastName))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(q => ((IndividualEntity) q.Customer).Contact.LastName.Contains(lastName));
 
-      if (cityName != "")
+      if (!string.IsNullOrEmpty(cityName))
         salesOrderHeaderQuery = from soh in salesOrderHeaderQuery
           where soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == cityName)
           select soh;
-      if (stateName != "")
+      if (!string.IsNullOrEmpty(stateName))
         salesOrderHeaderQuery = from soh in salesOrderHeaderQuery
           where soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.Name == stateName)
           select soh;
@@ -45,7 +45,7 @@ namespace AW.Data.Filters
         salesOrderHeaderQuery = from soh in salesOrderHeaderQuery
           where soh.Customer.CustomerAddresses.Any(ca => countries.Contains(ca.Address.StateProvince.CountryRegion.Name))
           select soh;
-      if (zip != "")
+      if (!string.IsNullOrEmpty(zip))
         salesOrderHeaderQuery = from soh in salesOrderHeaderQuery
           where soh.Customer.CustomerAddresses.Any(ca => ca.Address.PostalCode == zip)
           select soh;
@@ -64,20 +64,20 @@ namespace AW.Data.Filters
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.OrderDate >= orderSearchCriteria.FromDate);
       if (orderSearchCriteria.ToDate != DateTime.MinValue)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.OrderDate <= orderSearchCriteria.ToDate);
-      if (orderSearchCriteria.FirstName != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
         //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => ((IndividualEntity) soh.Customer).Contact.FirstName.Contains(orderSearchCriteria.FirstName));
-      if (orderSearchCriteria.LastName != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => ((IndividualEntity) soh.Customer).Contact.LastName.Contains(orderSearchCriteria.LastName));
-      if (orderSearchCriteria.CityName != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == orderSearchCriteria.CityName));
-      if (orderSearchCriteria.StateName != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.Name == orderSearchCriteria.StateName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.CountryName))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.CountryRegion.Name == orderSearchCriteria.CountryName));
       if (orderSearchCriteria.Countries.Any())
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Customer.CustomerAddresses.Any(ca => orderSearchCriteria.Countries.Contains(ca.Address.StateProvince.CountryRegion.Name)));
-      if (orderSearchCriteria.Zip != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.Zip))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.PostalCode == orderSearchCriteria.Zip));
       if (orderSearchCriteria.OrderID != 0)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.SalesOrderID == orderSearchCriteria.OrderID);
@@ -94,19 +94,20 @@ namespace AW.Data.Filters
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.OrderDate >= orderSearchCriteria.FromDate);
       if (orderSearchCriteria.ToDate != DateTime.MinValue)
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.OrderDate <= orderSearchCriteria.ToDate);
-      if (orderSearchCriteria.FirstName != "")
+
+      if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
         //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => ((IndividualEntity) soh.Customer).Contact.FirstName.Contains(orderSearchCriteria.FirstName));
-      if (orderSearchCriteria.LastName != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => ((IndividualEntity) soh.Customer).Contact.LastName.Contains(orderSearchCriteria.LastName));
-      if (orderSearchCriteria.CityName != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == orderSearchCriteria.CityName));
-      if (orderSearchCriteria.StateName != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.StateProvince.Name == orderSearchCriteria.StateName));
       var countriesList = orderSearchCriteria.Countries as IList<string> ?? orderSearchCriteria.Countries.ToList();
       if (countriesList.Any())
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.Customer.CustomerAddresses.Any(ca => countriesList.Contains(ca.Address.StateProvince.CountryRegion.Name)));
-      if (orderSearchCriteria.Zip != "")
+      if (!string.IsNullOrEmpty(orderSearchCriteria.Zip))
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.PostalCode == orderSearchCriteria.Zip));
       if (orderSearchCriteria.OrderID != 0)
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.SalesOrderID == orderSearchCriteria.OrderID);
@@ -115,45 +116,29 @@ namespace AW.Data.Filters
       return salesOrderHeaderPredicate;
     }
 
-    public static IPredicateExpression FilterByDateOrderIDOrderNumberCustomerNameAddress(IRelationCollection relations, OrderSearchCriteria orderSearchCriteria)
-    {
-      return FilterByDateOrderIDOrderNumberCustomerNameAddress(relations, orderSearchCriteria.FromDate, orderSearchCriteria.ToDate, orderSearchCriteria.OrderID,
-        orderSearchCriteria.OrderNumber, orderSearchCriteria.FirstName, orderSearchCriteria.LastName, orderSearchCriteria.CityName, orderSearchCriteria.StateName, orderSearchCriteria.CountryName, orderSearchCriteria.Zip);
-    }
-
-    public static IPredicateExpression FilterByDateOrderIDOrderNumberCustomerNameAddress(IRelationCollection relations, DateTime fromDate, DateTime toDate, int orderID,
-      string orderNumber, string firstName, string lastName, string cityName, string stateName, string countryName, string zip)
+    public static IPredicateExpression FilterByDateOrderIDOrderNumberCustomerNameAddress(OrderSearchCriteria orderSearchCriteria)
     {
       var filter = new PredicateExpression();
-      if (
-        (!string.IsNullOrEmpty(firstName)) ||
-        (!string.IsNullOrEmpty(lastName)) ||
-        (!string.IsNullOrEmpty(cityName)) ||
-        (!string.IsNullOrEmpty(stateName)) ||
-        (!string.IsNullOrEmpty(countryName)) ||
-        (!string.IsNullOrEmpty(zip))
-        )
-        relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID);
-      if (fromDate != DateTime.MinValue)
-        filter.Add(SalesOrderHeaderFields.OrderDate >= fromDate);
-      if (toDate != DateTime.MinValue)
-        filter.Add(SalesOrderHeaderFields.OrderDate <= toDate);
-      if (firstName != "")
-        filter.Add(CustomerViewRelatedFields.FirstName%firstName);
-      if (lastName != "")
-        filter.Add(CustomerViewRelatedFields.LastName%lastName);
-      if (cityName != "")
-        filter.Add(CustomerViewRelatedFields.City%cityName);
-      if (stateName != "")
-        filter.Add(CustomerViewRelatedFields.StateProvinceName == stateName);
-      if (!string.IsNullOrEmpty(countryName))
-        filter.Add(CustomerViewRelatedFields.CountryRegionName == countryName);
-      if (zip != "")
-        filter.Add(CustomerViewRelatedFields.PostalCode == zip);
-      if (orderID != 0)
-        filter.Add(SalesOrderHeaderFields.SalesOrderID == orderID);
-      if (!string.IsNullOrEmpty(orderNumber))
-        filter.Add(SalesOrderHeaderFields.SalesOrderNumber == orderNumber);
+      if (orderSearchCriteria.FromDate != DateTime.MinValue)
+        filter.Add(SalesOrderHeaderFields.OrderDate >= orderSearchCriteria.FromDate);
+      if (orderSearchCriteria.ToDate != DateTime.MinValue)
+        filter.Add(SalesOrderHeaderFields.OrderDate <= orderSearchCriteria.ToDate);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
+        filter.Add(CustomerViewRelatedFields.FirstName % orderSearchCriteria.FirstName);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
+        filter.Add(CustomerViewRelatedFields.LastName % orderSearchCriteria.LastName);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
+        filter.Add(CustomerViewRelatedFields.City % orderSearchCriteria.CityName);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
+        filter.Add(CustomerViewRelatedFields.StateProvinceName == orderSearchCriteria.StateName);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.CountryName))
+        filter.Add(CustomerViewRelatedFields.CountryRegionName == orderSearchCriteria.CountryName);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.Zip))
+        filter.Add(CustomerViewRelatedFields.PostalCode == orderSearchCriteria.Zip);
+      if (orderSearchCriteria.OrderID != 0)
+        filter.Add(SalesOrderHeaderFields.SalesOrderID == orderSearchCriteria.OrderID);
+      if (!string.IsNullOrEmpty(orderSearchCriteria.OrderNumber))
+        filter.Add(SalesOrderHeaderFields.SalesOrderNumber == orderSearchCriteria.OrderNumber);
       return filter;
     }
 
