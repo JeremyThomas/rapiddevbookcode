@@ -44,7 +44,7 @@ namespace AW.Win
 
     private void toolStripButtonTypedViewQuerySpec_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedViewQuerySpec(MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewTypedViewQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
     /// <summary>
@@ -57,6 +57,16 @@ namespace AW.Win
       bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewRelatedCollection();
     }
 
+    private void toolStripButtonViewAsEntity_Click_1(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewViaEntity(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+    }
+
+    private void toolStripButtonViewAsEntityQuerySpec_Click(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerViewViaEntityQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+    }
+
     /// <summary>
     ///   Handles the Click event of the toolStripButtonTypedList control. Example 5.29. pg64.
     /// </summary>
@@ -64,12 +74,12 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonTypedList_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListTypedList(MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
     private void toolStripButtonTypedListQuerySpec_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListTypedListQuerySpec(MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListTypedListQuerySpec(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
     /// <summary>
@@ -79,7 +89,7 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedList(MaxNumberOfItemsToReturn).FilterByDateCustomerNameAddress(orderSearchCriteria1.GetCriteria());
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedList(orderSearchCriteria1.GetCriteria(),MaxNumberOfItemsToReturn);
     }
 
     /// <summary>
@@ -113,5 +123,9 @@ namespace AW.Win
     {
       View();
     }
+
+
+
+
   }
 }

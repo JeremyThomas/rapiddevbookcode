@@ -22,15 +22,14 @@ namespace AW.Data.Queries
       bool prefetch
       )
     {
-      var relations = new RelationCollection();
-      var filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
-      ISortExpression sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
-      var orders = new SalesOrderHeaderCollection();
       //note      Orders.SupportsSorting = true;
-
       IPrefetchPath prefetchPath = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated} : null;
+      var relations = new RelationCollection();
       if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
-        relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID);
+        relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID);      
+      var orders = new SalesOrderHeaderCollection();
+      var filter = orderSearchCriteria.GetPredicateExpressionCustomerView();
+      ISortExpression sort = new SortExpression { SalesOrderHeaderFields.OrderDate | SortOperator.Ascending };
       orders.GetMulti(filter, maxNumberOfItemsToReturn, sort, relations, prefetchPath);
       return orders;
     }
@@ -42,10 +41,12 @@ namespace AW.Data.Queries
       bool prefetch
       )
     {
-      var filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
+      var filter = orderSearchCriteria.GetPredicateExpressionCustomerView();
       var qf = new QueryFactory();
       var q = qf.SalesOrderHeader.Where(filter);
-      q.OrderBy(SalesOrderHeaderFields.OrderDate | SortOperator.Ascending).Page(1, maxNumberOfItemsToReturn); ;
+      q.OrderBy(SalesOrderHeaderFields.OrderDate | SortOperator.Ascending).Page(1, maxNumberOfItemsToReturn);
+      if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
+        q.From(QueryTarget.InnerJoin(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID));  
       if (prefetch)
         q.WithPath(SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated);
       var orders = new SalesOrderHeaderCollection();
