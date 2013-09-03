@@ -12,6 +12,7 @@ using AW.Data.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers;
+using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using Korzh.EasyQuery;
 using Korzh.EasyQuery.Db;
 using Korzh.EasyQuery.WinControls;
@@ -92,17 +93,15 @@ namespace AW.Win
       SCPanel.Activate();
       EntPanel.UpdateModelInfo();
       DBMode = 0;
-      countryAttr = dataModel1.EntityRoot.FindAttribute(EntityAttrProp.Expression, "Customers.Country");
     }
 
     public int DBMode
     {
       get { return comboBoxDbType.SelectedIndex; }
-      set
-      {
-        comboBoxDbType.SelectedIndex = value;
-      }
+      set { comboBoxDbType.SelectedIndex = value; }
     }
+
+    public MRUHandler MRUHandlerProject { get; set; }
 
     private void OnDBModeChange()
     {
@@ -267,6 +266,14 @@ namespace AW.Win
       // ResultDataTable
       // 
       this.ResultDataTable.TableName = "Result";
+      // 
+      // openFileDlg
+      // 
+      this.openFileDlg.Filter = "XML files|*.xml|All files (*.*)|*.*";
+      // 
+      // saveFileDlg
+      // 
+      this.saveFileDlg.Filter = "XML files|*.xml|All files (*.*)|*.*";
       // 
       // ResultDS
       // 
@@ -543,7 +550,6 @@ namespace AW.Win
       this.QPanel.TabIndex = 27;
       this.QPanel.TabStop = true;
       this.QPanel.SqlExecute += new Korzh.EasyQuery.WinControls.SqlExecuteEventHandler(this.QPanel_SqlExecute);
-      this.QPanel.ListRequest += new Korzh.EasyQuery.WinControls.ListRequestEventHandler(this.QPanel_ListRequest);
       this.QPanel.ValueRequest += new Korzh.EasyQuery.WinControls.ValueRequestEventHandler(this.QPanel_ValueRequest);
       // 
       // splitter3
@@ -672,7 +678,7 @@ namespace AW.Win
       // 
       // FrmEasyQuery
       // 
-      this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.ClientSize = new System.Drawing.Size(838, 548);
       this.Controls.Add(this.panelBG);
       this.Controls.Add(this.splitter2);
@@ -703,26 +709,43 @@ namespace AW.Win
 
     private void btClear_Click(object sender, EventArgs e)
     {
-      QPanel.Query.Clear();
+      try
+      {
+        _clearing = true;
+        QPanel.Query.Clear();
+      }
+      finally
+      {
+        _clearing = false;
+      }
     }
 
     private void btLoad_Click(object sender, EventArgs e)
     {
-      openFileDlg.FileName = Path.Combine(_dataFolder, "query1.xml");
+      openFileDlg.FileName = Path.IsPathRooted(lastFileName) ? lastFileName : Path.Combine(_dataFolder, lastFileName);
       if (openFileDlg.ShowDialog() == DialogResult.OK)
+      {
         LoadFromFile(openFileDlg.FileName);
+        if (MRUHandlerProject != null) MRUHandlerProject.AddRecentlyUsedFile(openFileDlg.FileName);
+      }
     }
 
     public void LoadFromFile(string fileName)
     {
+      QPanel.Query.Clear();
       QPanel.Query.LoadFromFile(fileName);
+      lastFileName = fileName;
     }
 
     private void btSave_Click(object sender, EventArgs e)
     {
-      saveFileDlg.FileName = Path.Combine(_dataFolder, "query1.xml");
+      saveFileDlg.FileName = Path.Combine(_dataFolder, lastFileName);
       if (saveFileDlg.ShowDialog() == DialogResult.OK)
+      {
         QPanel.Query.SaveToFile(saveFileDlg.FileName);
+        lastFileName = saveFileDlg.FileName;
+        if (MRUHandlerProject != null) MRUHandlerProject.AddRecentlyUsedFile(lastFileName);
+      }
     }
 
     private void btExecute_Click(object sender, EventArgs e)
@@ -766,6 +789,8 @@ namespace AW.Win
             teSQL.Text = builder.Result.SQL;
           }
         }
+        else if (_clearing)
+          teSQL.Text = "";
         else if (query1.Columns.Count > 0 || query1.Root.Conditions.Count > 0)
         {
           var expression = GetLinqExpression();
@@ -822,49 +847,19 @@ namespace AW.Win
       return queryResult;
     }
 
-    private EntityAttr countryAttr;
-
-    private void QPanel_ListRequest(object sender, ListRequestEventArgs e)
-    {
-      if (e.ListName == "RegionList")
-      {
-        e.ListItems.Clear();
-        var country = query1.GetOneValueForAttr(countryAttr);
-
-        if (country == "Canada")
-        {
-          e.ListItems.Add("British Columbia", "BC");
-          e.ListItems.Add("Quebec", "Quebec");
-        }
-        else if (country == "USA")
-        {
-          e.ListItems.Add("California", "CA");
-          e.ListItems.Add("Colorado", "CO");
-          e.ListItems.Add("Oregon", "OR");
-          e.ListItems.Add("Washington", "WA");
-        }
-      }
-    }
+    private string lastFileName = "query1.xml";
+    private bool _clearing;
 
     private void query1_ColumnsChanged(object sender, ColumnsChangeEventArgs e)
     {
-      BuildSQL();
       ResultDS.Reset();
+      BuildSQL();
     }
 
     private void query1_ConditionsChanged(object sender, ConditionsChangeEventArgs e)
     {
-      EntityAttr baseAttr = null;
-      if (e.Condition != null)
-        baseAttr = e.Condition.BaseAttr;
-
-      if (baseAttr != null && baseAttr == countryAttr)
-      {
-        QPanel.RefreshList("RegionList");
-      }
-
-      BuildSQL();
       ResultDS.Reset();
+      BuildSQL();
     }
 
     private void ResetDataModel()
@@ -873,7 +868,6 @@ namespace AW.Win
       dataModel1.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
       QPanel.UpdateModelInfo();
     }
-
 
     private void menuItemResetDataModel_Click(object sender, EventArgs e)
     {

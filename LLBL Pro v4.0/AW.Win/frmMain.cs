@@ -85,6 +85,11 @@ namespace AW.Win
       return formType == null ? null : AWHelper.LaunchChildForm(this, formType, args);
     }
 
+    public T LaunchChildFormGeneric<T>(params Object[] args) where T : Form
+    {
+      return (T) LaunchChildForm(typeof (T), args);
+    }
+
     private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
     {
       LaunchChildForm(typeof (FrmOrderSearch));
@@ -187,7 +192,7 @@ namespace AW.Win
 
     private FrmQueryRunner LaunchQueryRunner()
     {
-      var qr = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
+      var qr = LaunchChildFormGeneric<FrmQueryRunner>();
       if (qr != null)
       {
         qr.SaveFunction += EntityHelper.Save;
@@ -218,7 +223,9 @@ namespace AW.Win
 
     private FrmEasyQuery LaunchEasyQuery()
     {
-      return (FrmEasyQuery) LaunchChildForm(typeof (FrmEasyQuery));
+      var frmEasyQuery = LaunchChildFormGeneric<FrmEasyQuery>();
+      frmEasyQuery.MRUHandlerProject = mruHandlerProject;
+      return frmEasyQuery;
     }
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
