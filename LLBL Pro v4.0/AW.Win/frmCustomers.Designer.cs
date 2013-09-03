@@ -61,6 +61,8 @@ namespace AW.Win
       this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
+      this.toolStripButtonViewAsRelatedEntity = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonViewAsEntityQuerySpec = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).BeginInit();
@@ -168,6 +170,8 @@ namespace AW.Win
             this.toolStripButtonTypedViewQuerySpec,
             this.toolStripSeparator1,
             this.toolStripButtonViewAsEntityLinq,
+            this.toolStripButtonViewAsRelatedEntity,
+            this.toolStripButtonViewAsEntityQuerySpec,
             this.toolStripButtonViewAsEntity,
             this.toolStripSeparator2,
             this.toolStripButtonTypedList,
@@ -285,8 +289,8 @@ namespace AW.Win
       this.toolStripButtonViewAsEntityLinq.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsEntityLinq.Image")));
       this.toolStripButtonViewAsEntityLinq.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonViewAsEntityLinq.Name = "toolStripButtonViewAsEntityLinq";
-      this.toolStripButtonViewAsEntityLinq.Size = new System.Drawing.Size(118, 20);
-      this.toolStripButtonViewAsEntityLinq.Text = "View As Entity All";
+      this.toolStripButtonViewAsEntityLinq.Size = new System.Drawing.Size(127, 20);
+      this.toolStripButtonViewAsEntityLinq.Text = "View As Entity Linq";
       this.toolStripButtonViewAsEntityLinq.ToolTipText = "Gets all vIndividualCustomer exposed via entity CustomerViewRelated";
       this.toolStripButtonViewAsEntityLinq.Click += new System.EventHandler(this.toolStripButtonViewAsEntityLinq_Click);
       // 
@@ -297,9 +301,7 @@ namespace AW.Win
       this.toolStripButtonViewAsEntity.Name = "toolStripButtonViewAsEntity";
       this.toolStripButtonViewAsEntity.Size = new System.Drawing.Size(99, 20);
       this.toolStripButtonViewAsEntity.Text = "View as entity";
-      this.toolStripButtonViewAsEntity.ToolTipText = "Gets the related customer view (CustomerViewRelated) of SalesOrder 46117. Example" +
-    " 5.27 pg63";
-      this.toolStripButtonViewAsEntity.Click += new System.EventHandler(this.toolStripButtonViewAsEntity_Click);
+      this.toolStripButtonViewAsEntity.Click += new System.EventHandler(this.toolStripButtonViewAsEntity_Click_1);
       // 
       // toolStripSeparator2
       // 
@@ -372,6 +374,26 @@ namespace AW.Win
       this.orderSearchCriteria1.Size = new System.Drawing.Size(876, 169);
       this.orderSearchCriteria1.TabIndex = 3;
       // 
+      // toolStripButtonViewAsRelatedEntity
+      // 
+      this.toolStripButtonViewAsRelatedEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsRelatedEntity.Image")));
+      this.toolStripButtonViewAsRelatedEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonViewAsRelatedEntity.Name = "toolStripButtonViewAsRelatedEntity";
+      this.toolStripButtonViewAsRelatedEntity.Size = new System.Drawing.Size(138, 20);
+      this.toolStripButtonViewAsRelatedEntity.Text = "View as related entity";
+      this.toolStripButtonViewAsRelatedEntity.ToolTipText = "Gets the related customer view (CustomerViewRelated) of SalesOrder 46117. Example" +
+    " 5.27 pg63";
+      this.toolStripButtonViewAsRelatedEntity.Click += new System.EventHandler(this.toolStripButtonViewAsEntity_Click);
+      // 
+      // toolStripButtonViewAsEntityQuerySpec
+      // 
+      this.toolStripButtonViewAsEntityQuerySpec.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonViewAsEntityQuerySpec.Image")));
+      this.toolStripButtonViewAsEntityQuerySpec.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonViewAsEntityQuerySpec.Name = "toolStripButtonViewAsEntityQuerySpec";
+      this.toolStripButtonViewAsEntityQuerySpec.Size = new System.Drawing.Size(159, 20);
+      this.toolStripButtonViewAsEntityQuerySpec.Text = "View as entity QuerySpec";
+      this.toolStripButtonViewAsEntityQuerySpec.Click += new System.EventHandler(this.toolStripButtonViewAsEntityQuerySpec_Click);
+      // 
       // FrmCustomers
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -433,6 +455,8 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedViewQuerySpec;
         private System.Windows.Forms.ToolStripButton toolStripButtonTypedListQuerySpec;
         private OrderSearchCriteria orderSearchCriteria1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonViewAsRelatedEntity;
+        private System.Windows.Forms.ToolStripButton toolStripButtonViewAsEntityQuerySpec;
 
     }
 }

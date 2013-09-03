@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Linq.Dynamic;
 using AW.Data.Queries;
+using AW.Data.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
@@ -55,7 +56,7 @@ namespace AW.Tests
 		[TestMethod, Description("A test for GetCustomerViewTypedView. Example 5.18. pg59 maxNumberOfItemsToReturn does not result in a SQL TOP command")]
 		public void GetCustomerViewTypedViewTest()
 		{
-			var actual = CustomerQueries.GetCustomerViewTypedView(MaxNumberOfItemsToReturn);
+			var actual = CustomerQueries.GetCustomerViewTypedView(new OrderSearchCriteria(),  MaxNumberOfItemsToReturn);
 			Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count);
 		}
 

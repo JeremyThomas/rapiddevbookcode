@@ -90,7 +90,7 @@ namespace AW.Win
     private void buttonClear_Click(object sender, EventArgs e)
     {
       dtpDateFrom.Checked = false;
-      dtpDateFrom.Checked = false;
+      dtpDateTo.Checked = false;
 
       //tableLayoutPanel2.c
       var q = from ctl in tableLayoutPanelOrderSearchCriteria.Controls.OfType<TextBox>() select ctl;

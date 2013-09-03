@@ -116,31 +116,6 @@ namespace AW.Data.Filters
       return salesOrderHeaderPredicate;
     }
 
-    public static IPredicateExpression FilterByDateOrderIDOrderNumberCustomerNameAddress(OrderSearchCriteria orderSearchCriteria)
-    {
-      var filter = new PredicateExpression();
-      if (orderSearchCriteria.FromDate != DateTime.MinValue)
-        filter.Add(SalesOrderHeaderFields.OrderDate >= orderSearchCriteria.FromDate);
-      if (orderSearchCriteria.ToDate != DateTime.MinValue)
-        filter.Add(SalesOrderHeaderFields.OrderDate <= orderSearchCriteria.ToDate);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
-        filter.Add(CustomerViewRelatedFields.FirstName % orderSearchCriteria.FirstName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
-        filter.Add(CustomerViewRelatedFields.LastName % orderSearchCriteria.LastName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
-        filter.Add(CustomerViewRelatedFields.City % orderSearchCriteria.CityName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
-        filter.Add(CustomerViewRelatedFields.StateProvinceName == orderSearchCriteria.StateName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.CountryName))
-        filter.Add(CustomerViewRelatedFields.CountryRegionName == orderSearchCriteria.CountryName);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.Zip))
-        filter.Add(CustomerViewRelatedFields.PostalCode == orderSearchCriteria.Zip);
-      if (orderSearchCriteria.OrderID != 0)
-        filter.Add(SalesOrderHeaderFields.SalesOrderID == orderSearchCriteria.OrderID);
-      if (!string.IsNullOrEmpty(orderSearchCriteria.OrderNumber))
-        filter.Add(SalesOrderHeaderFields.SalesOrderNumber == orderSearchCriteria.OrderNumber);
-      return filter;
-    }
 
     public static IQueryable<T> FilterByProductID<T>(this IQueryable<T> transactionHistoryEntities, int productID) where T : TransactionHistoryEntity
     {
