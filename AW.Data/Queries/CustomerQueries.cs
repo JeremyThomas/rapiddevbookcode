@@ -219,12 +219,10 @@ namespace AW.Data.Queries
     public static CustomerListTypedList GetCustomerListTypedListQuerySpec(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
       var customers = new CustomerListTypedList();
-      var filter = orderSearchCriteria.GetPredicateExpression();
+      var filter = orderSearchCriteria.GetPredicateExpression(false);
       var q = customers.GetQuerySpecQuery(new QueryFactory())
         .Where(filter)
         .Page(1, maxNumberOfItemsToReturn);
-      if (orderSearchCriteria.HasSalesOrderRelatedCriteria())
-        q.From(QueryTarget.InnerJoin(CustomerEntity.Relations.SalesOrderHeaderEntityUsingCustomerID));
       new TypedListDAO().FetchAsDataTable(q, customers);
       return customers;
     }
@@ -275,6 +273,12 @@ namespace AW.Data.Queries
       return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).FilterByDateCustomerNameAddress(orderSearchCriteria).Distinct().Take(maxNumberOfItemsToReturn);
     }
 
+    public static IQueryable<CustomerListLinqedTypedList> GetCustomerListLinqedTypedListFilterFirst(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
+    {
+      var individuals = MetaSingletons.MetaData.Individual.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
+      return CustomerListLinqedTypedList.GetCustomerListQuery(individuals).Distinct().Take(maxNumberOfItemsToReturn);
+    }
+
     /// <summary>
     ///   Gets the customer list with an anonymous linq projection.
     /// </summary>
@@ -313,9 +317,9 @@ namespace AW.Data.Queries
     ///   INNER JOIN [ADVENTUREWORKS].[PERSON].[COUNTRYREGION] [LPA_L8]
     ///   ON [LPA_L8].[COUNTRYREGIONCODE] = [LPA_L7].[COUNTRYREGIONCODE])
     /// </remarks>
-    public static IQueryable GetCustomerListAnonymousLinq(int maxNumberOfItemsToReturn)
+    public static IQueryable GetCustomerListAnonymousLinq(OrderSearchCriteria orderSearchCriteria, int maxNumberOfItemsToReturn)
     {
-      var customerlist = from individual in MetaSingletons.MetaData.Individual
+      var customerlist = from individual in MetaSingletons.MetaData.Individual.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria)
         from customerAddress in individual.CustomerAddresses
         select new
         {

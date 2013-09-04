@@ -29,7 +29,6 @@ namespace AW.Win
           rb.Checked = true;
         rb.Text = rb.Tag.ToString();
       }
-      
     }
 
     private void frmOrderSearch_Load(object sender, EventArgs e)
@@ -93,11 +92,18 @@ namespace AW.Win
             _prefetch);
           break;
         case LLBLQueryType.Linq:
-          e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(
-            _orderSearchCriteria,
-            _maxNumberOfItemsToReturn,
-            _prefetch
-            );
+          if (Settings.Default.FilterUsingCustomerViewRelated)
+            e.Result = SalesOrderQueries.DoSalesOrderHeaderLinqQuery(
+              _orderSearchCriteria,
+              _maxNumberOfItemsToReturn,
+              _prefetch
+              );
+          else
+            e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(
+              _orderSearchCriteria,
+              _maxNumberOfItemsToReturn,
+              _prefetch
+              );
           break;
       }
       // Do not access the form's BackgroundWorker reference directly.

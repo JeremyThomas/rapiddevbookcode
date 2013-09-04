@@ -57,6 +57,7 @@ namespace AW.Win
       this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
       this.searchWorker = new System.ComponentModel.BackgroundWorker();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.checkBoxFilterUsingCustomerViewRelated = new System.Windows.Forms.CheckBox();
       this.tableLayoutPanel1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.groupBoxLLBLQueryType.SuspendLayout();
@@ -85,6 +86,7 @@ namespace AW.Win
       // 
       // panel1
       // 
+      this.panel1.Controls.Add(this.checkBoxFilterUsingCustomerViewRelated);
       this.panel1.Controls.Add(this.groupBoxLLBLQueryType);
       this.panel1.Controls.Add(this.checkBoxPrefetch);
       this.panel1.Controls.Add(this.numericUpDownNumRows);
@@ -335,6 +337,19 @@ namespace AW.Win
       this.searchWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.searchWorker_DoWork);
       this.searchWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.searchWorker_RunWorkerCompleted);
       // 
+      // checkBoxFilterUsingCustomerViewRelated
+      // 
+      this.checkBoxFilterUsingCustomerViewRelated.AutoSize = true;
+      this.checkBoxFilterUsingCustomerViewRelated.Checked = global::AW.Win.Properties.Settings.Default.FilterUsingCustomerViewRelated;
+      this.checkBoxFilterUsingCustomerViewRelated.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxFilterUsingCustomerViewRelated.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "FilterUsingCustomerViewRelated", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxFilterUsingCustomerViewRelated.Location = new System.Drawing.Point(441, 22);
+      this.checkBoxFilterUsingCustomerViewRelated.Name = "checkBoxFilterUsingCustomerViewRelated";
+      this.checkBoxFilterUsingCustomerViewRelated.Size = new System.Drawing.Size(185, 17);
+      this.checkBoxFilterUsingCustomerViewRelated.TabIndex = 26;
+      this.checkBoxFilterUsingCustomerViewRelated.Text = "Filter Using CustomerViewRelated";
+      this.checkBoxFilterUsingCustomerViewRelated.UseVisualStyleBackColor = true;
+      // 
       // FrmOrderSearch
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -389,5 +404,6 @@ namespace AW.Win
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.RadioButton radioButtonQuerySpec;
         private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.CheckBox checkBoxFilterUsingCustomerViewRelated;
     }
 }

@@ -99,6 +99,7 @@
       <Link>AdventureWorks.snk</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="ExcludeAll.codeclonesettings" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ObjectListView\ObjectListView.csproj">

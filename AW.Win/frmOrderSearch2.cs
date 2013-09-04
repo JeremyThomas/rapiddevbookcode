@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
@@ -8,8 +7,6 @@ using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Filters;
 using AW.Data.Linq;
-using AW.Data.Queries;
-using AW.Data.ViewModels;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
@@ -30,9 +27,9 @@ namespace AW.Win
       query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
       foreach (var subEntity in query1.Model.EntityRoot.SubEntities)
       {
-        subEntity.UseInConditions = subEntity.Info.Values.Contains(typeof(SalesOrderHeaderEntity)) || subEntity.Info.Values.Contains(typeof(CustomerEntity))
-          || subEntity.Info.Values.Contains(typeof(CustomerAddressEntity))
-          || subEntity.Info.Values.Contains(typeof(ContactEntity));
+        subEntity.UseInConditions = subEntity.Info.Values.Contains(typeof (SalesOrderHeaderEntity)) || subEntity.Info.Values.Contains(typeof (CustomerEntity))
+                                    || subEntity.Info.Values.Contains(typeof (CustomerAddressEntity))
+                                    || subEntity.Info.Values.Contains(typeof (ContactEntity));
         if (subEntity.UseInConditions)
           foreach (var entityAttr in subEntity.Attributes)
           {
@@ -109,10 +106,15 @@ namespace AW.Win
       }
       if (Settings.Default.UsePredicate)
       {
-        predicate = predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressPredicateBuilder(_orderSearchCriteria);
+        predicate = Settings.Default.FilterUsingCustomerViewRelated ?
+          predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressCustomerViewRelated(_orderSearchCriteria)
+          : predicate.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
       }
       else
       {
+        salesOrderHeaderQuery = Settings.Default.FilterUsingCustomerViewRelated
+          ? salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria)
+          : salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(_orderSearchCriteria);
         salesOrderHeaderQuery = salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
         salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       }
@@ -137,6 +139,5 @@ namespace AW.Win
       btnSearch.Enabled = true;
       salesOrderHeaderEntityBindingSource.DataSource = _results;
     }
-
   }
 }

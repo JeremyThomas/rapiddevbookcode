@@ -279,6 +279,7 @@
     <None Include="Enums.typeimports">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="ExcludeGenerated.codeclonesettings" />
     <None Include="Northwind.llblgenproj" />
   </ItemGroup>
   <ItemGroup>
