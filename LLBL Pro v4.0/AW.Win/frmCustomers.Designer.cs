@@ -60,9 +60,10 @@ namespace AW.Win
       this.toolStripButtonLinqAnonymous = new System.Windows.Forms.ToolStripButton();
       this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
       this.toolStripButtonViewAsRelatedEntity = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonViewAsEntityQuerySpec = new System.Windows.Forms.ToolStripButton();
+      this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
+      this.toolStripButtonLinqFilterFirst = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.dgvResults)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCustomerList)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorCustomerList)).BeginInit();
@@ -176,6 +177,7 @@ namespace AW.Win
             this.toolStripSeparator2,
             this.toolStripButtonTypedList,
             this.toolStripButtonTypedListQuerySpec,
+            this.toolStripButtonLinqFilterFirst,
             this.toolStripButtonLinq,
             this.toolStripButtonLinqAnonymous});
       this.bindingNavigatorCustomerList.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
@@ -359,20 +361,12 @@ namespace AW.Win
             0,
             0,
             0});
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(661, 195);
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(745, 195);
       this.numericUpDownNumRows.Name = "numericUpDownNumRows";
       this.numericUpDownNumRows.Size = new System.Drawing.Size(42, 20);
       this.numericUpDownNumRows.TabIndex = 2;
       this.toolTip1.SetToolTip(this.numericUpDownNumRows, "Set the number or rows to return");
       this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
-      // 
-      // orderSearchCriteria1
-      // 
-      this.orderSearchCriteria1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.orderSearchCriteria1.Location = new System.Drawing.Point(0, 0);
-      this.orderSearchCriteria1.Name = "orderSearchCriteria1";
-      this.orderSearchCriteria1.Size = new System.Drawing.Size(876, 169);
-      this.orderSearchCriteria1.TabIndex = 3;
       // 
       // toolStripButtonViewAsRelatedEntity
       // 
@@ -393,6 +387,25 @@ namespace AW.Win
       this.toolStripButtonViewAsEntityQuerySpec.Size = new System.Drawing.Size(159, 20);
       this.toolStripButtonViewAsEntityQuerySpec.Text = "View as entity QuerySpec";
       this.toolStripButtonViewAsEntityQuerySpec.Click += new System.EventHandler(this.toolStripButtonViewAsEntityQuerySpec_Click);
+      // 
+      // orderSearchCriteria1
+      // 
+      this.orderSearchCriteria1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.orderSearchCriteria1.Location = new System.Drawing.Point(0, 0);
+      this.orderSearchCriteria1.Name = "orderSearchCriteria1";
+      this.orderSearchCriteria1.Size = new System.Drawing.Size(876, 169);
+      this.orderSearchCriteria1.TabIndex = 3;
+      // 
+      // toolStripButtonLinqFilterFirst
+      // 
+      this.toolStripButtonLinqFilterFirst.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonLinqFilterFirst.Image")));
+      this.toolStripButtonLinqFilterFirst.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonLinqFilterFirst.Name = "toolStripButtonLinqFilterFirst";
+      this.toolStripButtonLinqFilterFirst.Size = new System.Drawing.Size(104, 20);
+      this.toolStripButtonLinqFilterFirst.Text = "Linq Filter First";
+      this.toolStripButtonLinqFilterFirst.ToolTipText = "Linq version of CustomerListTypedList projected on to  CustomerListLinqedTypedLis" +
+    "t with the Filtering done first";
+      this.toolStripButtonLinqFilterFirst.Click += new System.EventHandler(this.toolStripButtonLinqFilterFirst_Click);
       // 
       // FrmCustomers
       // 
@@ -457,6 +470,7 @@ namespace AW.Win
         private OrderSearchCriteria orderSearchCriteria1;
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsRelatedEntity;
         private System.Windows.Forms.ToolStripButton toolStripButtonViewAsEntityQuerySpec;
+        private System.Windows.Forms.ToolStripButton toolStripButtonLinqFilterFirst;
 
     }
 }

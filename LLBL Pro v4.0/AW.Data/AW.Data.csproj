@@ -1114,6 +1114,7 @@
     <Compile Include="DaoClasses\WorkOrderHistoryDAO.cs">
       <GeneratedBy>LLBLGen Pro</GeneratedBy>
     </Compile>
+    <None Include="ExcludeGenerated.codeclonesettings" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AW.Helper.LLBL\AW.Helper.LLBL.csproj">

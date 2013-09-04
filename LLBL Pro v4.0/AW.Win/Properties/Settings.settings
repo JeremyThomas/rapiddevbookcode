@@ -125,5 +125,8 @@
     <Setting Name="LLBLQueryType" Type="AW.Helper.LLBL.LLBLQueryType" Scope="User">
       <Value Profile="(Default)">Native</Value>
     </Setting>
+    <Setting Name="FilterUsingCustomerViewRelated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -63,19 +63,19 @@ namespace AW.Data.Queries
     {
       var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(orderSearchCriteria);
 
-      if (prefetch)
-        salesOrderHeaderQuery = salesOrderHeaderQuery.PrefetchCustomerViewRelated();
       salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       if (maxNumberOfItemsToReturn > 0)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Take(maxNumberOfItemsToReturn);
-      //return ((ILLBLGenProQuery)predicate).Execute<SalesOrderHeaderCollection>();
+      if (prefetch)
+        salesOrderHeaderQuery = salesOrderHeaderQuery.PrefetchCustomerViewRelated();
       return salesOrderHeaderQuery.ToEntityCollection();
     }
 
     public static IQueryable<SalesOrderHeaderEntity> DoSalesOrderHeaderLinqQuery
       (
       OrderSearchCriteria orderSearchCriteria,
-      int maxNumberOfItemsToReturn
+      int maxNumberOfItemsToReturn,
+      bool prefetch = false
       )
     {
       var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
@@ -84,6 +84,9 @@ namespace AW.Data.Queries
 
       if (maxNumberOfItemsToReturn > 0)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Take(maxNumberOfItemsToReturn);
+
+      if (prefetch)
+        salesOrderHeaderQuery = salesOrderHeaderQuery.PrefetchCustomerViewRelated();
       return salesOrderHeaderQuery;
     }
   }

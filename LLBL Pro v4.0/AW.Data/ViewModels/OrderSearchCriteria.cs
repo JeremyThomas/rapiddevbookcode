@@ -62,60 +62,54 @@ namespace AW.Data.ViewModels
 
     public IPredicateExpression GetPredicateExpressionCustomerView(bool includeSalesOrderHeader = true)
     {
-      var filter = new PredicateExpression();
+      var predicate = new PredicateExpression();
       if (includeSalesOrderHeader)
-      {
-        if (FromDate != DateTime.MinValue)
-          filter.Add(SalesOrderHeaderFields.OrderDate >= FromDate);
-        if (ToDate != DateTime.MinValue)
-          filter.Add(SalesOrderHeaderFields.OrderDate <= ToDate);
-        if (OrderID != 0)
-          filter.Add(SalesOrderHeaderFields.SalesOrderID == OrderID);
-        if (!String.IsNullOrEmpty(OrderNumber))
-          filter.Add(SalesOrderHeaderFields.SalesOrderNumber == OrderNumber);
-      }
+        AddSalesOrderHeaderFieldsPredicateExpressions(predicate);
       if (!String.IsNullOrEmpty(FirstName))
-        filter.Add(CustomerViewRelatedFields.FirstName%FirstName);
+        predicate.Add(CustomerViewRelatedFields.FirstName%FirstName);
       if (!String.IsNullOrEmpty(LastName))
-        filter.Add(CustomerViewRelatedFields.LastName%LastName);
+        predicate.Add(CustomerViewRelatedFields.LastName%LastName);
       if (!String.IsNullOrEmpty(CityName))
-        filter.Add(CustomerViewRelatedFields.City%CityName);
+        predicate.Add(CustomerViewRelatedFields.City%CityName);
       if (!String.IsNullOrEmpty(StateName))
-        filter.Add(CustomerViewRelatedFields.StateProvinceName == StateName);
+        predicate.Add(CustomerViewRelatedFields.StateProvinceName == StateName);
       if (!String.IsNullOrEmpty(CountryName))
-        filter.Add(CustomerViewRelatedFields.CountryRegionName == CountryName);
+        predicate.Add(CustomerViewRelatedFields.CountryRegionName == CountryName);
       if (!String.IsNullOrEmpty(Zip))
-        filter.Add(CustomerViewRelatedFields.PostalCode == Zip);
-      return filter;
+        predicate.Add(CustomerViewRelatedFields.PostalCode == Zip);
+      return predicate;
+    }
+
+    private void AddSalesOrderHeaderFieldsPredicateExpressions(IPredicateExpression predicate)
+    {
+      if (FromDate != DateTime.MinValue)
+        predicate.Add(SalesOrderHeaderFields.OrderDate >= FromDate);
+      if (ToDate != DateTime.MinValue)
+        predicate.Add(SalesOrderHeaderFields.OrderDate <= ToDate);
+      if (OrderID != 0)
+        predicate.Add(SalesOrderHeaderFields.SalesOrderID == OrderID);
+      if (!String.IsNullOrEmpty(OrderNumber))
+        predicate.Add(SalesOrderHeaderFields.SalesOrderNumber == OrderNumber);
     }
 
     public IPredicateExpression GetPredicateExpression(bool includeSalesOrderHeader = true)
     {
-      var filter = new PredicateExpression();
+      var predicate = new PredicateExpression();
       if (includeSalesOrderHeader)
-      {
-        if (FromDate != DateTime.MinValue)
-          filter.Add(SalesOrderHeaderFields.OrderDate >= FromDate);
-        if (ToDate != DateTime.MinValue)
-          filter.Add(SalesOrderHeaderFields.OrderDate <= ToDate);
-        if (OrderID != 0)
-          filter.Add(SalesOrderHeaderFields.SalesOrderID == OrderID);
-        if (!String.IsNullOrEmpty(OrderNumber))
-          filter.Add(SalesOrderHeaderFields.SalesOrderNumber == OrderNumber);
-      }
+        AddSalesOrderHeaderFieldsPredicateExpressions(predicate);
       if (!String.IsNullOrEmpty(FirstName))
-        filter.Add(ContactFields.FirstName % FirstName);
+        predicate.Add(ContactFields.FirstName%FirstName);
       if (!String.IsNullOrEmpty(LastName))
-        filter.Add(ContactFields.LastName % LastName);
+        predicate.Add(ContactFields.LastName%LastName);
       if (!String.IsNullOrEmpty(CityName))
-        filter.Add(AddressFields.City % CityName);
+        predicate.Add(AddressFields.City%CityName);
       if (!String.IsNullOrEmpty(StateName))
-        filter.Add(StateProvinceFields.Name == StateName);
+        predicate.Add(StateProvinceFields.Name == StateName);
       if (!String.IsNullOrEmpty(CountryName))
-        filter.Add(CountryRegionFields.Name == CountryName);
+        predicate.Add(CountryRegionFields.Name == CountryName);
       if (!String.IsNullOrEmpty(Zip))
-        filter.Add(AddressFields.PostalCode == Zip);
-      return filter;
+        predicate.Add(AddressFields.PostalCode == Zip);
+      return predicate;
     }
   }
 }

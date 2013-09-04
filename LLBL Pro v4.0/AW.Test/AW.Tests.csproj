@@ -177,6 +177,7 @@
       <Link>AdventureWorks.snk</Link>
     </None>
     <None Include="app.config" />
+    <None Include="ExcludeAll.codeclonesettings" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

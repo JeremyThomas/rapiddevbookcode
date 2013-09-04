@@ -89,7 +89,12 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonLinq_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedList(orderSearchCriteria1.GetCriteria(),MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedList(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
+    }
+
+    private void toolStripButtonLinqFilterFirst_Click(object sender, EventArgs e)
+    {
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListLinqedTypedListFilterFirst(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
     /// <summary>
@@ -99,7 +104,7 @@ namespace AW.Win
     /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
     private void toolStripButtonLinqBarf_Click(object sender, EventArgs e)
     {
-      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListAnonymousLinq(MaxNumberOfItemsToReturn);
+      bindingSourceCustomerList.DataSource = CustomerQueries.GetCustomerListAnonymousLinq(orderSearchCriteria1.GetCriteria(), MaxNumberOfItemsToReturn);
     }
 
     private void toolStripButtonViewAsEntityLinq_Click(object sender, EventArgs e)
@@ -123,8 +128,6 @@ namespace AW.Win
     {
       View();
     }
-
-
 
 
   }

@@ -74,6 +74,7 @@ namespace AW.Win
       this.query1 = new Korzh.EasyQuery.Db.DbQuery();
       this.dataModel1 = new Korzh.EasyQuery.Db.DbModel();
       this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
+      this.checkBoxFilterUsingCustomerViewRelated = new System.Windows.Forms.CheckBox();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
@@ -110,7 +111,7 @@ namespace AW.Win
       // numericUpDownNumRows
       // 
       this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(236, 9);
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(188, 6);
       this.numericUpDownNumRows.Name = "numericUpDownNumRows";
       this.numericUpDownNumRows.Size = new System.Drawing.Size(41, 20);
       this.numericUpDownNumRows.TabIndex = 23;
@@ -417,6 +418,7 @@ namespace AW.Win
       // 
       // panel3
       // 
+      this.panel3.Controls.Add(this.checkBoxFilterUsingCustomerViewRelated);
       this.panel3.Controls.Add(this.checkBoxUsePredicate);
       this.panel3.Controls.Add(this.btnSearch);
       this.panel3.Controls.Add(this.numericUpDownNumRows);
@@ -480,6 +482,19 @@ namespace AW.Win
       this.orderSearchCriteria1.Name = "orderSearchCriteria1";
       this.orderSearchCriteria1.Size = new System.Drawing.Size(694, 169);
       this.orderSearchCriteria1.TabIndex = 1;
+      // 
+      // checkBoxFilterUsingCustomerViewRelated
+      // 
+      this.checkBoxFilterUsingCustomerViewRelated.AutoSize = true;
+      this.checkBoxFilterUsingCustomerViewRelated.Checked = global::AW.Win.Properties.Settings.Default.FilterUsingCustomerViewRelated;
+      this.checkBoxFilterUsingCustomerViewRelated.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxFilterUsingCustomerViewRelated.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "FilterUsingCustomerViewRelated", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxFilterUsingCustomerViewRelated.Location = new System.Drawing.Point(253, 9);
+      this.checkBoxFilterUsingCustomerViewRelated.Name = "checkBoxFilterUsingCustomerViewRelated";
+      this.checkBoxFilterUsingCustomerViewRelated.Size = new System.Drawing.Size(185, 17);
+      this.checkBoxFilterUsingCustomerViewRelated.TabIndex = 28;
+      this.checkBoxFilterUsingCustomerViewRelated.Text = "Filter Using CustomerViewRelated";
+      this.checkBoxFilterUsingCustomerViewRelated.UseVisualStyleBackColor = true;
       // 
       // FrmOrderSearch2
       // 
@@ -558,5 +573,6 @@ namespace AW.Win
         private System.Windows.Forms.CheckBox checkBoxUsePredicate;
         private System.Windows.Forms.Panel panel3;
         private OrderSearchCriteria orderSearchCriteria1;
+        private System.Windows.Forms.CheckBox checkBoxFilterUsingCustomerViewRelated;
 		}
 }

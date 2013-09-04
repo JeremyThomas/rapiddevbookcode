@@ -510,5 +510,17 @@ namespace AW.Win.Properties {
                 this["LLBLQueryType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FilterUsingCustomerViewRelated {
+            get {
+                return ((bool)(this["FilterUsingCustomerViewRelated"]));
+            }
+            set {
+                this["FilterUsingCustomerViewRelated"] = value;
+            }
+        }
     }
 }

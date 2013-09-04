@@ -495,6 +495,7 @@
       <Link>AdventureWorks.snk</Link>
     </None>
     <None Include="app.config" />
+    <None Include="ExcludeAll.codeclonesettings" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
