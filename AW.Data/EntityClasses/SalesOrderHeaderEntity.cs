@@ -66,6 +66,8 @@ namespace AW.Data.EntityClasses
 		private bool	_alwaysFetchCustomer, _alreadyFetchedCustomer, _customerReturnsNewIfNotFound;
 		private CustomerViewRelatedEntity _customerViewRelated;
 		private bool	_alwaysFetchCustomerViewRelated, _alreadyFetchedCustomerViewRelated, _customerViewRelatedReturnsNewIfNotFound;
+		private IndividualEntity _individual;
+		private bool	_alwaysFetchIndividual, _alreadyFetchedIndividual, _individualReturnsNewIfNotFound;
 		private SalesPersonEntity _salesPerson;
 		private bool	_alwaysFetchSalesPerson, _alreadyFetchedSalesPerson, _salesPersonReturnsNewIfNotFound;
 		private SalesTerritoryEntity _salesTerritory;
@@ -98,6 +100,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string Customer = "Customer";
 			/// <summary>Member name CustomerViewRelated</summary>
 			public static readonly string CustomerViewRelated = "CustomerViewRelated";
+			/// <summary>Member name Individual</summary>
+			public static readonly string Individual = "Individual";
 			/// <summary>Member name SalesPerson</summary>
 			public static readonly string SalesPerson = "SalesPerson";
 			/// <summary>Member name SalesTerritory</summary>
@@ -239,6 +243,15 @@ namespace AW.Data.EntityClasses
 			_alwaysFetchCustomerViewRelated = info.GetBoolean("_alwaysFetchCustomerViewRelated");
 			_alreadyFetchedCustomerViewRelated = info.GetBoolean("_alreadyFetchedCustomerViewRelated");
 
+			_individual = (IndividualEntity)info.GetValue("_individual", typeof(IndividualEntity));
+			if(_individual!=null)
+			{
+				_individual.AfterSave+=new EventHandler(OnEntityAfterSave);
+			}
+			_individualReturnsNewIfNotFound = info.GetBoolean("_individualReturnsNewIfNotFound");
+			_alwaysFetchIndividual = info.GetBoolean("_alwaysFetchIndividual");
+			_alreadyFetchedIndividual = info.GetBoolean("_alreadyFetchedIndividual");
+
 			_salesPerson = (SalesPersonEntity)info.GetValue("_salesPerson", typeof(SalesPersonEntity));
 			if(_salesPerson!=null)
 			{
@@ -289,6 +302,8 @@ namespace AW.Data.EntityClasses
 					_alreadyFetchedCustomer = false;
 					DesetupSyncCustomerViewRelated(true, false);
 					_alreadyFetchedCustomerViewRelated = false;
+					DesetupSyncIndividual(true, false);
+					_alreadyFetchedIndividual = false;
 					break;
 				case SalesOrderHeaderFieldIndex.SalesPersonID:
 					DesetupSyncSalesPerson(true, false);
@@ -327,6 +342,7 @@ namespace AW.Data.EntityClasses
 			_alreadyFetchedCurrencyRate = (_currencyRate != null);
 			_alreadyFetchedCustomer = (_customer != null);
 			_alreadyFetchedCustomerViewRelated = (_customerViewRelated != null);
+			_alreadyFetchedIndividual = (_individual != null);
 			_alreadyFetchedSalesPerson = (_salesPerson != null);
 			_alreadyFetchedSalesTerritory = (_salesTerritory != null);
 		}
@@ -370,6 +386,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "CustomerViewRelated":
 					toReturn.Add(Relations.CustomerViewRelatedEntityUsingCustomerID);
+					break;
+				case "Individual":
+					toReturn.Add(Relations.IndividualEntityUsingCustomerID);
 					break;
 				case "SalesPerson":
 					toReturn.Add(Relations.SalesPersonEntityUsingSalesPersonID);
@@ -449,6 +468,10 @@ namespace AW.Data.EntityClasses
 			info.AddValue("_customerViewRelatedReturnsNewIfNotFound", _customerViewRelatedReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchCustomerViewRelated", _alwaysFetchCustomerViewRelated);
 			info.AddValue("_alreadyFetchedCustomerViewRelated", _alreadyFetchedCustomerViewRelated);
+			info.AddValue("_individual", (!this.MarkedForDeletion?_individual:null));
+			info.AddValue("_individualReturnsNewIfNotFound", _individualReturnsNewIfNotFound);
+			info.AddValue("_alwaysFetchIndividual", _alwaysFetchIndividual);
+			info.AddValue("_alreadyFetchedIndividual", _alreadyFetchedIndividual);
 			info.AddValue("_salesPerson", (!this.MarkedForDeletion?_salesPerson:null));
 			info.AddValue("_salesPersonReturnsNewIfNotFound", _salesPersonReturnsNewIfNotFound);
 			info.AddValue("_alwaysFetchSalesPerson", _alwaysFetchSalesPerson);
@@ -503,6 +526,10 @@ namespace AW.Data.EntityClasses
 				case "CustomerViewRelated":
 					_alreadyFetchedCustomerViewRelated = true;
 					this.CustomerViewRelated = (CustomerViewRelatedEntity)entity;
+					break;
+				case "Individual":
+					_alreadyFetchedIndividual = true;
+					this.Individual = (IndividualEntity)entity;
 					break;
 				case "SalesPerson":
 					_alreadyFetchedSalesPerson = true;
@@ -578,6 +605,9 @@ namespace AW.Data.EntityClasses
 				case "CustomerViewRelated":
 					SetupSyncCustomerViewRelated(relatedEntity);
 					break;
+				case "Individual":
+					SetupSyncIndividual(relatedEntity);
+					break;
 				case "SalesPerson":
 					SetupSyncSalesPerson(relatedEntity);
 					break;
@@ -627,6 +657,9 @@ namespace AW.Data.EntityClasses
 					break;
 				case "CustomerViewRelated":
 					DesetupSyncCustomerViewRelated(false, true);
+					break;
+				case "Individual":
+					DesetupSyncIndividual(false, true);
 					break;
 				case "SalesPerson":
 					DesetupSyncSalesPerson(false, true);
@@ -689,6 +722,10 @@ namespace AW.Data.EntityClasses
 			if(_customerViewRelated!=null)
 			{
 				toReturn.Add(_customerViewRelated);
+			}
+			if(_individual!=null)
+			{
+				toReturn.Add(_individual);
 			}
 			if(_salesPerson!=null)
 			{
@@ -1220,7 +1257,7 @@ namespace AW.Data.EntityClasses
 				bool fetchResult = false;
 				if(performLazyLoading)
 				{
-					newEntity = CustomerEntity.FetchPolymorphic(this.Transaction, this.CustomerID, this.ActiveContext);
+					newEntity = CustomerEntity.FetchPolymorphic(this.Transaction, this.CustomerID.GetValueOrDefault(), this.ActiveContext);
 					fetchResult = (newEntity.Fields.State==EntityState.Fetched);
 				}
 				if(fetchResult)
@@ -1262,7 +1299,7 @@ namespace AW.Data.EntityClasses
 				if(performLazyLoading)
 				{
 					AddToTransactionIfNecessary(newEntity);
-					fetchResult = newEntity.FetchUsingPK(this.CustomerID);
+					fetchResult = newEntity.FetchUsingPK(this.CustomerID.GetValueOrDefault());
 				}
 				if(fetchResult)
 				{
@@ -1280,6 +1317,47 @@ namespace AW.Data.EntityClasses
 				_alreadyFetchedCustomerViewRelated = fetchResult;
 			}
 			return _customerViewRelated;
+		}
+
+
+		/// <summary> Retrieves the related entity of type 'IndividualEntity', using a relation of type 'n:1'</summary>
+		/// <returns>A fetched entity of type 'IndividualEntity' which is related to this entity.</returns>
+		public IndividualEntity GetSingleIndividual()
+		{
+			return GetSingleIndividual(false);
+		}
+
+		/// <summary> Retrieves the related entity of type 'IndividualEntity', using a relation of type 'n:1'</summary>
+		/// <param name="forceFetch">if true, it will discard any changes currently in the currently loaded related entity and will refetch the entity from the persistent storage</param>
+		/// <returns>A fetched entity of type 'IndividualEntity' which is related to this entity.</returns>
+		public virtual IndividualEntity GetSingleIndividual(bool forceFetch)
+		{
+			if( ( !_alreadyFetchedIndividual || forceFetch || _alwaysFetchIndividual) && !this.IsSerializing && !this.IsDeserializing  && !this.InDesignMode)			
+			{
+				bool performLazyLoading = this.CheckIfLazyLoadingShouldOccur(Relations.IndividualEntityUsingCustomerID);
+				IndividualEntity newEntity = (IndividualEntity)GeneralEntityFactory.Create(AW.Data.EntityType.IndividualEntity);
+				bool fetchResult = false;
+				if(performLazyLoading)
+				{
+					newEntity = IndividualEntity.FetchPolymorphic(this.Transaction, this.CustomerID.GetValueOrDefault(), this.ActiveContext);
+					fetchResult = (newEntity.Fields.State==EntityState.Fetched);
+				}
+				if(fetchResult)
+				{
+					newEntity = (IndividualEntity)GetFromActiveContext(newEntity);
+				}
+				else
+				{
+					if(!_individualReturnsNewIfNotFound)
+					{
+						RemoveFromTransactionIfNecessary(newEntity);
+						newEntity = null;
+					}
+				}
+				this.Individual = newEntity;
+				_alreadyFetchedIndividual = fetchResult;
+			}
+			return _individual;
 		}
 
 
@@ -1378,6 +1456,7 @@ namespace AW.Data.EntityClasses
 			toReturn.Add("CurrencyRate", _currencyRate);
 			toReturn.Add("Customer", _customer);
 			toReturn.Add("CustomerViewRelated", _customerViewRelated);
+			toReturn.Add("Individual", _individual);
 			toReturn.Add("SalesPerson", _salesPerson);
 			toReturn.Add("SalesTerritory", _salesTerritory);
 			toReturn.Add("SalesOrderDetails", _salesOrderDetails);
@@ -1439,6 +1518,7 @@ namespace AW.Data.EntityClasses
 			_currencyRateReturnsNewIfNotFound = true;
 			_customerReturnsNewIfNotFound = true;
 			_customerViewRelatedReturnsNewIfNotFound = true;
+			_individualReturnsNewIfNotFound = true;
 			_salesPersonReturnsNewIfNotFound = true;
 			_salesTerritoryReturnsNewIfNotFound = true;
 			PerformDependencyInjection();
@@ -1788,7 +1868,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncCustomerViewRelated(true, true);
 				_customerViewRelated = (CustomerViewRelatedEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _customerViewRelated, new PropertyChangedEventHandler( OnCustomerViewRelatedPropertyChanged ), "CustomerViewRelated", AW.Data.RelationClasses.StaticSalesOrderHeaderRelations.CustomerViewRelatedEntityUsingCustomerIDStatic, true, ref _alreadyFetchedCustomerViewRelated, new string[] {  } );
+				this.PerformSetupSyncRelatedEntity( _customerViewRelated, new PropertyChangedEventHandler( OnCustomerViewRelatedPropertyChanged ), "CustomerViewRelated", AW.Data.RelationClasses.StaticSalesOrderHeaderRelations.CustomerViewRelatedEntityUsingCustomerIDStatic, true, ref _alreadyFetchedCustomerViewRelated, new string[] { "CustomerCity", "CustomerCountry", "CustomerFirstName", "CustomerLastName", "CustomerZip", "CustomerState" } );
 			}
 		}
 
@@ -1796,6 +1876,57 @@ namespace AW.Data.EntityClasses
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void OnCustomerViewRelatedPropertyChanged( object sender, PropertyChangedEventArgs e )
+		{
+			switch( e.PropertyName )
+			{
+				case "City":
+					this.OnPropertyChanged("CustomerCity");
+					break;
+				case "CountryRegionName":
+					this.OnPropertyChanged("CustomerCountry");
+					break;
+				case "FirstName":
+					this.OnPropertyChanged("CustomerFirstName");
+					break;
+				case "LastName":
+					this.OnPropertyChanged("CustomerLastName");
+					break;
+				case "PostalCode":
+					this.OnPropertyChanged("CustomerZip");
+					break;
+				case "StateProvinceName":
+					this.OnPropertyChanged("CustomerState");
+					break;
+				default:
+					break;
+			}
+		}
+
+		/// <summary> Removes the sync logic for member _individual</summary>
+		/// <param name="signalRelatedEntity">If set to true, it will call the related entity's UnsetRelatedEntity method</param>
+		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
+		private void DesetupSyncIndividual(bool signalRelatedEntity, bool resetFKFields)
+		{
+			this.PerformDesetupSyncRelatedEntity( _individual, new PropertyChangedEventHandler( OnIndividualPropertyChanged ), "Individual", AW.Data.RelationClasses.StaticSalesOrderHeaderRelations.IndividualEntityUsingCustomerIDStatic, true, signalRelatedEntity, "", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.CustomerID } );		
+			_individual = null;
+		}
+		
+		/// <summary> setups the sync logic for member _individual</summary>
+		/// <param name="relatedEntity">Instance to set as the related entity of type entityType</param>
+		private void SetupSyncIndividual(IEntityCore relatedEntity)
+		{
+			if(_individual!=relatedEntity)
+			{		
+				DesetupSyncIndividual(true, true);
+				_individual = (IndividualEntity)relatedEntity;
+				this.PerformSetupSyncRelatedEntity( _individual, new PropertyChangedEventHandler( OnIndividualPropertyChanged ), "Individual", AW.Data.RelationClasses.StaticSalesOrderHeaderRelations.IndividualEntityUsingCustomerIDStatic, true, ref _alreadyFetchedIndividual, new string[] {  } );
+			}
+		}
+
+		/// <summary>Handles property change events of properties in a related entity.</summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void OnIndividualPropertyChanged( object sender, PropertyChangedEventArgs e )
 		{
 			switch( e.PropertyName )
 			{
@@ -2015,6 +2146,13 @@ namespace AW.Data.EntityClasses
 			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.CustomerViewRelatedCollection(), (IEntityRelation)GetRelationsForField("CustomerViewRelated")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.CustomerViewRelatedEntity, 0, null, null, null, "CustomerViewRelated", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
 		}
 
+		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'Individual'  for this entity.</summary>
+		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
+		public static IPrefetchPathElement PrefetchPathIndividual
+		{
+			get	{ return new PrefetchPathElement(new AW.Data.CollectionClasses.IndividualCollection(), (IEntityRelation)GetRelationsForField("Individual")[0], (int)AW.Data.EntityType.SalesOrderHeaderEntity, (int)AW.Data.EntityType.IndividualEntity, 0, null, null, null, "Individual", SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne); }
+		}
+
 		/// <summary> Creates a new PrefetchPathElement object which contains all the information to prefetch the related entities of type 'SalesPerson'  for this entity.</summary>
 		/// <returns>Ready to use IPrefetchPathElement implementation.</returns>
 		public static IPrefetchPathElement PrefetchPathSalesPerson
@@ -2135,9 +2273,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "SalesOrderHeader"."CustomerID"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 CustomerID
+		public virtual Nullable<System.Int32> CustomerID
 		{
-			get { return (System.Int32)GetValue((int)SalesOrderHeaderFieldIndex.CustomerID, true); }
+			get { return (Nullable<System.Int32>)GetValue((int)SalesOrderHeaderFieldIndex.CustomerID, false); }
 			set	{ SetValue((int)SalesOrderHeaderFieldIndex.CustomerID, value, true); }
 		}
 
@@ -2957,6 +3095,65 @@ namespace AW.Data.EntityClasses
 			set { _customerViewRelatedReturnsNewIfNotFound = value; }	
 		}
 
+		/// <summary> Gets / sets related entity of type 'IndividualEntity'. This property is not visible in databound grids.
+		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
+		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
+		/// </summary>
+		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleIndividual()', because 
+		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
+		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
+		[Browsable(true)]
+		public virtual IndividualEntity Individual
+		{
+			get	{ return GetSingleIndividual(false); }
+			set 
+			{ 
+				if(this.IsDeserializing)
+				{
+					SetupSyncIndividual(value);
+				}
+				else
+				{
+					SetSingleRelatedEntityNavigator(value, "", "Individual", _individual, false); 
+				}
+			}
+		}
+
+		/// <summary> Gets / sets the lazy loading flag for Individual. When set to true, Individual is always refetched from the 
+		/// persistent storage. When set to false, the data is only fetched the first time Individual is accessed. You can always execute a forced fetch by calling GetSingleIndividual(true).</summary>
+		[Browsable(false)]
+		public bool AlwaysFetchIndividual
+		{
+			get	{ return _alwaysFetchIndividual; }
+			set	{ _alwaysFetchIndividual = value; }	
+		}
+				
+		/// <summary>Gets / Sets the lazy loading flag if the property Individual already has been fetched. Setting this property to false when Individual has been fetched
+		/// will set Individual to null as well. Setting this property to true while Individual hasn't been fetched disables lazy loading for Individual</summary>
+		[Browsable(false)]
+		public bool AlreadyFetchedIndividual
+		{
+			get { return _alreadyFetchedIndividual;}
+			set 
+			{
+				if(_alreadyFetchedIndividual && !value)
+				{
+					this.Individual = null;
+				}
+				_alreadyFetchedIndividual = value;
+			}
+		}
+
+		/// <summary> Gets / sets the flag for what to do if the related entity available through the property Individual is not found
+		/// in the database. When set to true, Individual will return a new entity instance if the related entity is not found, otherwise 
+		/// null be returned if the related entity is not found. Default: true.</summary>
+		[Browsable(false)]
+		public bool IndividualReturnsNewIfNotFound
+		{
+			get	{ return _individualReturnsNewIfNotFound; }
+			set { _individualReturnsNewIfNotFound = value; }	
+		}
+
 		/// <summary> Gets / sets related entity of type 'SalesPersonEntity'. This property is not visible in databound grids.
 		/// Setting this property to a new object will make the load-on-demand feature to stop fetching data from the database, until you set this
 		/// property to null. Setting this property to an entity will make sure that FK-PK relations are synchronized when appropriate.<br/><br/>
@@ -3075,6 +3272,114 @@ namespace AW.Data.EntityClasses
 			set { _salesTerritoryReturnsNewIfNotFound = value; }	
 		}
 
+ 
+		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.City.<br/><br/></summary>
+		public virtual System.String CustomerCity
+		{
+			get
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				return relatedEntity==null ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : relatedEntity.City;
+			}
+			set
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				if(relatedEntity!=null)
+				{
+					relatedEntity.City = value;
+				}				
+			}
+		}
+ 
+		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.CountryRegionName.<br/><br/></summary>
+		public virtual System.String CustomerCountry
+		{
+			get
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				return relatedEntity==null ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : relatedEntity.CountryRegionName;
+			}
+			set
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				if(relatedEntity!=null)
+				{
+					relatedEntity.CountryRegionName = value;
+				}				
+			}
+		}
+ 
+		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.FirstName.<br/><br/></summary>
+		public virtual System.String CustomerFirstName
+		{
+			get
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				return relatedEntity==null ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : relatedEntity.FirstName;
+			}
+			set
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				if(relatedEntity!=null)
+				{
+					relatedEntity.FirstName = value;
+				}				
+			}
+		}
+ 
+		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.LastName.<br/><br/></summary>
+		public virtual System.String CustomerLastName
+		{
+			get
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				return relatedEntity==null ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : relatedEntity.LastName;
+			}
+			set
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				if(relatedEntity!=null)
+				{
+					relatedEntity.LastName = value;
+				}				
+			}
+		}
+ 
+		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.PostalCode.<br/><br/></summary>
+		public virtual System.String CustomerZip
+		{
+			get
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				return relatedEntity==null ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : relatedEntity.PostalCode;
+			}
+			set
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				if(relatedEntity!=null)
+				{
+					relatedEntity.PostalCode = value;
+				}				
+			}
+		}
+ 
+		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.StateProvinceName.<br/><br/></summary>
+		public virtual System.String CustomerState
+		{
+			get
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				return relatedEntity==null ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : relatedEntity.StateProvinceName;
+			}
+			set
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				if(relatedEntity!=null)
+				{
+					relatedEntity.StateProvinceName = value;
+				}				
+			}
+		}
 
 		/// <summary> Gets or sets a value indicating whether this entity is a subtype</summary>
 		protected override bool LLBLGenProIsSubType
@@ -3103,36 +3408,6 @@ namespace AW.Data.EntityClasses
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
 
-    public string CustomerLastName
-    {
-      //CustomerViewRelated will be null if the customer is not an individual 
-      get { return CustomerViewRelated == null ? null : CustomerViewRelated.LastName; }
-    }
-
-    public string CustomerFirstName
-    {
-      get { return CustomerViewRelated == null ? null : CustomerViewRelated.FirstName; }
-    }
-
-    public string CustomerCity
-    {
-      get { return CustomerViewRelated == null ? null : CustomerViewRelated.City; }
-    }
-
-    public string CustomerState
-    {
-      get { return CustomerViewRelated == null ? null : CustomerViewRelated.StateProvinceName; }
-    }
-
-    public string CustomerCountry
-    {
-      get { return CustomerViewRelated == null ? null : CustomerViewRelated.CountryRegionName; }
-    }
-
-    public string CustomerZip
-    {
-      get { return CustomerViewRelated == null ? null : CustomerViewRelated.PostalCode; }
-    }
 
     /// <summary>
     /// Called at the end of the initialization routine. Raises Initialized event.

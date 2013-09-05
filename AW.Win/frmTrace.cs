@@ -20,10 +20,14 @@ namespace AW.Win
     private TextBoxTraceListener _textBoxTraceListener;
     private readonly TraceLevel[] _traceLevelEnumerable = GeneralHelper.EnumAsEnumerable(TraceLevel.Error, TraceLevel.Warning);
 
+    static FrmTrace()
+    {
+      var dummy = DynamicQueryEngine.ArithAbortOn;
+    }
+
     public FrmTrace()
     {
       InitializeComponent();
-      var dummy = DynamicQueryEngine.ArithAbortOn;
       frmTraceBindingSource.DataSource = this;
     }
 
@@ -33,7 +37,8 @@ namespace AW.Win
       LinqTraceLevel = Settings.Default.LinqTraceLevel;
       QueryExecutionTraceLevel = Settings.Default.QueryExecutionTraceLevel;
       PersistenceExecutionTraceLevel = Settings.Default.PersistenceExecutionTraceLevel;
-      checkBoxSQLTrace_CheckedChanged(checkBoxSQLTrace, e);
+      checkBoxSQLTrace.Checked = Settings.Default.SQLTrace;
+      //checkBoxSQLTrace_CheckedChanged(checkBoxSQLTrace, e);
     }
 
     private void frmTrace_Shown(object sender, EventArgs e)
@@ -49,6 +54,7 @@ namespace AW.Win
       Settings.Default.LinqTraceLevel = LinqTraceLevel;
       Settings.Default.TraceLevel = DQETraceLevel;
       Settings.Default.PersistenceExecutionTraceLevel = PersistenceExecutionTraceLevel;
+      Settings.Default.SQLTrace = checkBoxSQLTrace.Checked;
     }
 
     public TraceLevel DQETraceLevel

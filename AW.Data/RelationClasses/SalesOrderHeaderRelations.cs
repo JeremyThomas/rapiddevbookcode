@@ -40,6 +40,7 @@ namespace AW.Data.RelationClasses
 			toReturn.Add(this.CurrencyRateEntityUsingCurrencyRateID);
 			toReturn.Add(this.CustomerEntityUsingCustomerID);
 			toReturn.Add(this.CustomerViewRelatedEntityUsingCustomerID);
+			toReturn.Add(this.IndividualEntityUsingCustomerID);
 			toReturn.Add(this.SalesPersonEntityUsingSalesPersonID);
 			toReturn.Add(this.SalesTerritoryEntityUsingTerritoryID);
 			return toReturn;
@@ -190,6 +191,20 @@ namespace AW.Data.RelationClasses
 				return relation;
 			}
 		}
+		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and IndividualEntity over the m:1 relation they have, using the relation between the fields:
+		/// SalesOrderHeader.CustomerID - Individual.CustomerID
+		/// </summary>
+		public virtual IEntityRelation IndividualEntityUsingCustomerID
+		{
+			get
+			{
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.ManyToOne, "Individual", false);
+				relation.AddEntityFieldPair(IndividualFields.CustomerID, SalesOrderHeaderFields.CustomerID);
+				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("IndividualEntity", false);
+				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("SalesOrderHeaderEntity", true);
+				return relation;
+			}
+		}
 		/// <summary>Returns a new IEntityRelation object, between SalesOrderHeaderEntity and SalesPersonEntity over the m:1 relation they have, using the relation between the fields:
 		/// SalesOrderHeader.SalesPersonID - SalesPerson.EmployeeID
 		/// </summary>
@@ -242,6 +257,7 @@ namespace AW.Data.RelationClasses
 		internal static readonly IEntityRelation CurrencyRateEntityUsingCurrencyRateIDStatic = new SalesOrderHeaderRelations().CurrencyRateEntityUsingCurrencyRateID;
 		internal static readonly IEntityRelation CustomerEntityUsingCustomerIDStatic = new SalesOrderHeaderRelations().CustomerEntityUsingCustomerID;
 		internal static readonly IEntityRelation CustomerViewRelatedEntityUsingCustomerIDStatic = new SalesOrderHeaderRelations().CustomerViewRelatedEntityUsingCustomerID;
+		internal static readonly IEntityRelation IndividualEntityUsingCustomerIDStatic = new SalesOrderHeaderRelations().IndividualEntityUsingCustomerID;
 		internal static readonly IEntityRelation SalesPersonEntityUsingSalesPersonIDStatic = new SalesOrderHeaderRelations().SalesPersonEntityUsingSalesPersonID;
 		internal static readonly IEntityRelation SalesTerritoryEntityUsingTerritoryIDStatic = new SalesOrderHeaderRelations().SalesTerritoryEntityUsingTerritoryID;
 

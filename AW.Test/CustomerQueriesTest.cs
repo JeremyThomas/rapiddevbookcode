@@ -70,14 +70,14 @@ namespace AW.Tests
 		[TestMethod, Description("A test for GetCustomerListAnonymousLinq.")]
 		public void GetCustomerListAnonymousLinqTest()
 		{
-			var customerListAnonymousLinq = CustomerQueries.GetCustomerListAnonymousLinq(MaxNumberOfItemsToReturn);
+      var customerListAnonymousLinq = CustomerQueries.GetCustomerListAnonymousLinq(new OrderSearchCriteria(), MaxNumberOfItemsToReturn);
 			Assert.AreEqual(MaxNumberOfItemsToReturn, customerListAnonymousLinq.Count());
 		}
 
 		[TestMethod, Description("A test for GetCustomerListLinqedTypedList")]
 		public void GetCustomerListLinqedTypedListTest()
 		{
-			var actual = CustomerQueries.GetCustomerListLinqedTypedList(MaxNumberOfItemsToReturn);
+      var actual = CustomerQueries.GetCustomerListLinqedTypedList(new OrderSearchCriteria(), MaxNumberOfItemsToReturn);
 			Assert.AreEqual(MaxNumberOfItemsToReturn, actual.ToList().Count());
 			Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
 		}
@@ -85,7 +85,7 @@ namespace AW.Tests
 		[TestMethod, Description("A test for GetCustomerListTypedList. Example 5.29. pg64.")]
 		public void GetCustomerListTypedListTest()
 		{
-			var actual = CustomerQueries.GetCustomerListTypedList(MaxNumberOfItemsToReturn);
+      var actual = CustomerQueries.GetCustomerListTypedList(new OrderSearchCriteria(), MaxNumberOfItemsToReturn);
 			Assert.AreEqual(MaxNumberOfItemsToReturn, actual.ToList().Count());
 			Assert.AreEqual(MaxNumberOfItemsToReturn, actual.Count());
 		}

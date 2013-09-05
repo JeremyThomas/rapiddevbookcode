@@ -98,9 +98,6 @@
     <Setting Name="OrganizationStructureSizeLocation" Type="System.Drawing.Rectangle" Scope="User">
       <Value Profile="(Default)">0, 0, 0, 0</Value>
     </Setting>
-    <Setting Name="SQLTrace" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="QueryExecutionTraceLevel" Type="System.Diagnostics.TraceLevel" Scope="User">
       <Value Profile="(Default)">Off</Value>
     </Setting>
@@ -120,16 +117,19 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="NumRows" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="OpenTraceWindosOnStart" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ReopenWindows" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EasyQueryDBMode" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="SQLTrace" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -113,9 +113,8 @@ namespace AW.Win
       else
       {
         salesOrderHeaderQuery = Settings.Default.FilterUsingCustomerViewRelated
-          ? salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria)
-          : salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(_orderSearchCriteria);
-        salesOrderHeaderQuery = salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
+          ? salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddressCustomerViewRelated(_orderSearchCriteria)
+          : salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
         salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       }
       salesOrderHeaderQuery = salesOrderHeaderQuery.Where(predicate);

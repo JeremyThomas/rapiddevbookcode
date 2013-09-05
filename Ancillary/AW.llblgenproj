@@ -71,8 +71,8 @@
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts>
-    <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
-    <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
@@ -3739,7 +3739,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="CustomerID" Type="int" IsAutoCreated="true">
+          <Field Name="CustomerID" Type="int" IsOptional="true" IsAutoCreated="true">
             <Description><![CDATA[Customer identification number. Foreign key to Customer.CustomerID.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -3900,6 +3900,14 @@
             </OutputSettingValues>
           </Field>
         </Fields>
+        <Forfs>
+          <Forf Name="CustomerCity" MappedField="Sales:CustomerViewRelated:City" RelationshipName="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" ViaStartNavigator="true" />
+          <Forf Name="CustomerCountry" MappedField="Sales:CustomerViewRelated:CountryRegionName" RelationshipName="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" ViaStartNavigator="true" />
+          <Forf Name="CustomerFirstName" MappedField="Sales:CustomerViewRelated:FirstName" RelationshipName="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" ViaStartNavigator="true" />
+          <Forf Name="CustomerLastName" MappedField="Sales:CustomerViewRelated:LastName" RelationshipName="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" ViaStartNavigator="true" />
+          <Forf Name="CustomerState" MappedField="Sales:CustomerViewRelated:StateProvinceName" RelationshipName="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" ViaStartNavigator="true" />
+          <Forf Name="CustomerZip" MappedField="Sales:CustomerViewRelated:PostalCode" RelationshipName="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" ViaStartNavigator="true" />
+        </Forfs>
         <OutputSettingValues>
           <CustomProperties>
             <CustomProperty Name="MS_Description" Value="General sales order information." />
@@ -4927,14 +4935,19 @@
           <FieldFieldRelationship FkField="CurrencyRateID" PkField="CurrencyRateID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderHeader.Customer-Sales.Customer.SalesOrderHeaders" Start="Sales:SalesOrderHeader" End="Sales:Customer" StartNavigator="Customer" EndNavigator="SalesOrderHeaders" Type="4">
+      <NormalRelationship Name="Sales.SalesOrderHeader.Customer-Sales.Customer.SalesOrderHeaders" Start="Sales:SalesOrderHeader" End="Sales:Customer" StartNavigator="Customer" EndNavigator="SalesOrderHeaders" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
         </FieldRelationships>
       </NormalRelationship>
-      <NormalRelationship Name="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" Start="Sales:SalesOrderHeader" End="Sales:CustomerViewRelated" StartNavigator="CustomerViewRelated" EndNavigator="SalesOrderHeader" Type="4">
+      <NormalRelationship Name="Sales.SalesOrderHeader.CustomerViewRelated-Sales.CustomerViewRelated.SalesOrderHeader" Start="Sales:SalesOrderHeader" End="Sales:CustomerViewRelated" StartNavigator="CustomerViewRelated" EndNavigator="SalesOrderHeader" Type="4" EndIsOptional="true">
         <FieldRelationships>
           <FieldFieldRelationship FkField="CustomerID" PkField="CustomerId" />
+        </FieldRelationships>
+      </NormalRelationship>
+      <NormalRelationship Name="Sales.SalesOrderHeader.Individual-Sales.Individual." Start="Sales:SalesOrderHeader" End="Sales:Individual" StartNavigator="Individual" Type="4" EndIsOptional="true" ModelOnly="true" DeleteRuleAction="1">
+        <FieldRelationships>
+          <FieldFieldRelationship FkField="CustomerID" PkField="CustomerID" />
         </FieldRelationships>
       </NormalRelationship>
       <NormalRelationship Name="Sales.SalesOrderHeader.SalesPerson-Sales.SalesPerson.SalesOrderHeaders" Start="Sales:SalesOrderHeader" End="Sales:SalesPerson" StartNavigator="SalesPerson" EndNavigator="SalesOrderHeaders" Type="4">

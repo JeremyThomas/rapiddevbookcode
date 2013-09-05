@@ -30,6 +30,7 @@ namespace AW.Data.RelationClasses
 		public override List<IEntityRelation> GetAllRelations()
 		{
 			List<IEntityRelation> toReturn = base.GetAllRelations();
+			toReturn.Add(this.SalesOrderHeaderEntityUsingCustomerID);
 			toReturn.Add(this.ContactEntityUsingContactID);
 			return toReturn;
 		}
