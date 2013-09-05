@@ -178,7 +178,7 @@ namespace AW.Data.TypedViewClasses
 			return GetDbCount(allowDuplicates, null);
 		}
 		
-		/// <summary>Gets the amount of rows in the database for this typed list.</summary>
+		/// <summary>Gets the amount of rows in the database for this typed view.</summary>
 		/// <param name="allowDuplicates">Flag to allow duplicate rows (true) or not (false)</param>
 		/// <param name="filter">The filter to apply for the count retrieval</param>
 		/// <returns>the number of rows in the set defined by the passed in query elements</returns>
@@ -187,15 +187,14 @@ namespace AW.Data.TypedViewClasses
 			return GetDbCount(allowDuplicates, filter, null);
 		}
 
-		/// <summary>Gets the amount of rows in the database for this typed list.</summary>
+		/// <summary>Gets the amount of rows in the database for this typed view.</summary>
 		/// <param name="allowDuplicates">Flag to allow duplicate rows (true) or not (false)</param>
 		/// <param name="filter">The filter to apply for the count retrieval</param>
 		/// <param name="groupByClause">group by clause to embed in the query</param>
 		/// <returns>the number of rows in the set defined by the passed in query elements</returns>
 		public virtual int GetDbCount(bool allowDuplicates, IPredicateExpression filter, GroupByCollection groupByClause)
 		{
-			IEntityFields fieldsInResultset = EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.
-CustomerViewTypedView);
+			IEntityFields fieldsInResultset = EntityFieldsFactory.CreateTypedViewEntityFieldsObject(TypedViewType.CustomerViewTypedView);
 			return DAOFactory.CreateTypedListDAO().GetDbCount(fieldsInResultset, null, filter, null, groupByClause, allowDuplicates);
 		}
 

@@ -80,12 +80,24 @@ namespace AW.Win
       switch (Settings.Default.LLBLQueryType)
       {
         case LLBLQueryType.Native:
-          e.Result = SalesOrderQueries.GetSalesOrderHeaderCollection(
-            _orderSearchCriteria,
-            _maxNumberOfItemsToReturn,
-            _prefetch);
+          if (Settings.Default.FilterUsingCustomerViewRelated)
+            e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionCustomerViewRelated(
+              _orderSearchCriteria,
+              _maxNumberOfItemsToReturn,
+              _prefetch);
+          else
+            e.Result = SalesOrderQueries.GetSalesOrderHeaderCollection(
+              _orderSearchCriteria,
+              _maxNumberOfItemsToReturn,
+              _prefetch);
           break;
         case LLBLQueryType.QuerySpec:
+          if (Settings.Default.FilterUsingCustomerViewRelated)
+            e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionQuerySpecCustomerViewRelated(
+              _orderSearchCriteria,
+              _maxNumberOfItemsToReturn,
+              _prefetch);
+          else
           e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionQuerySpec(
             _orderSearchCriteria,
             _maxNumberOfItemsToReturn,
@@ -93,11 +105,11 @@ namespace AW.Win
           break;
         case LLBLQueryType.Linq:
           if (Settings.Default.FilterUsingCustomerViewRelated)
-            e.Result = SalesOrderQueries.DoSalesOrderHeaderLinqQuery(
+            e.Result = SalesOrderQueries.DoSalesOrderHeaderLinqQueryCustomerViewRelated(
               _orderSearchCriteria,
               _maxNumberOfItemsToReturn,
               _prefetch
-              );
+              ).ToEntityCollection();
           else
             e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(
               _orderSearchCriteria,

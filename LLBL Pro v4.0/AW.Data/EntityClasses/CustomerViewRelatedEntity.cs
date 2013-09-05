@@ -333,7 +333,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeader);
 				_salesOrderHeader.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeader.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeader.GetMultiManyToOne(null, null, null, null, null, null, null, this, null, null, filter);
+				_salesOrderHeader.GetMultiManyToOne(null, null, null, null, null, null, null, this, null, null, null, filter);
 				_salesOrderHeader.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeader = true;
 			}

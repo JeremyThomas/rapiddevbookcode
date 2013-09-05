@@ -664,7 +664,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeaders);
 				_salesOrderHeaders.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeaders.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeaders.GetMultiManyToOne(this, null, null, null, null, null, null, null, null, null, filter);
+				_salesOrderHeaders.GetMultiManyToOne(this, null, null, null, null, null, null, null, null, null, null, filter);
 				_salesOrderHeaders.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeaders = true;
 			}
@@ -719,7 +719,7 @@ namespace AW.Data.EntityClasses
 				AddToTransactionIfNecessary(_salesOrderHeaders_);
 				_salesOrderHeaders_.SuppressClearInGetMulti=!forceFetch;
 				_salesOrderHeaders_.EntityFactoryToUse = entityFactoryToUse;
-				_salesOrderHeaders_.GetMultiManyToOne(null, this, null, null, null, null, null, null, null, null, filter);
+				_salesOrderHeaders_.GetMultiManyToOne(null, this, null, null, null, null, null, null, null, null, null, filter);
 				_salesOrderHeaders_.SuppressClearInGetMulti=false;
 				_alreadyFetchedSalesOrderHeaders_ = true;
 			}

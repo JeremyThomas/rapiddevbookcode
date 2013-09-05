@@ -77,12 +77,12 @@ namespace AW.Tests
     }
 
     /// <summary>
-    ///   A test for DoSalesOrderHeaderLinqQuery
+    ///   A test for DoSalesOrderHeaderLinqQueryCustomerViewRelated
     /// </summary>
     [TestMethod]
     public void DoSalesOrderHeaderLinqQueryTest()
     {
-      var actual = SalesOrderQueries.DoSalesOrderHeaderLinqQuery(OrderSearchCriteria, MaxNumberOfItemsToReturn);
+      var actual = SalesOrderQueries.DoSalesOrderHeaderLinqQueryCustomerViewRelated(OrderSearchCriteria, MaxNumberOfItemsToReturn);
       Assert.AreEqual(MaxNumberOfItemsToReturn, actual.ToList().Count());
     }
   }

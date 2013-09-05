@@ -10,13 +10,13 @@ namespace AW.Data.Filters
 {
   public static class SalesOrderHeaderFilters
   {
-    public static IQueryable<SalesOrderHeaderEntity> FilterByDateOrderIDOrderNumberCustomerNameAddress(this IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery, OrderSearchCriteria orderSearchCriteria)
+    public static IQueryable<SalesOrderHeaderEntity> FilterByDateOrderIDOrderNumberCustomerNameAddressCustomerViewRelated(this IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery, OrderSearchCriteria orderSearchCriteria)
     {
-      return FilterByDateOrderIDOrderNumberCustomerNameAddress(salesOrderHeaderQuery, orderSearchCriteria.FromDate, orderSearchCriteria.ToDate, orderSearchCriteria.OrderID,
+      return FilterByDateOrderIDOrderNumberCustomerNameAddressCustomerViewRelated(salesOrderHeaderQuery, orderSearchCriteria.FromDate, orderSearchCriteria.ToDate, orderSearchCriteria.OrderID,
         orderSearchCriteria.OrderNumber, orderSearchCriteria.FirstName, orderSearchCriteria.LastName, orderSearchCriteria.CityName, orderSearchCriteria.StateName, orderSearchCriteria.Zip, orderSearchCriteria.Countries);
     }
 
-    public static IQueryable<SalesOrderHeaderEntity> FilterByDateOrderIDOrderNumberCustomerNameAddress(this IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery,
+    private static IQueryable<SalesOrderHeaderEntity> FilterByDateOrderIDOrderNumberCustomerNameAddressCustomerViewRelated(this IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery,
       DateTime fromDate, DateTime toDate, int orderID, string orderNumber,
       string firstName, string lastName, string cityName, string stateName, string zip,
       IEnumerable<string> countries)
@@ -54,7 +54,7 @@ namespace AW.Data.Filters
       return salesOrderHeaderQuery;
     }
 
-    public static IQueryable<SalesOrderHeaderEntity> FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(this IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery,
+    public static IQueryable<SalesOrderHeaderEntity> FilterByDateOrderIDOrderNumberCustomerNameAddress(this IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery,
       OrderSearchCriteria orderSearchCriteria)
     {
       if (orderSearchCriteria.FromDate != DateTime.MinValue)
@@ -62,10 +62,9 @@ namespace AW.Data.Filters
       if (orderSearchCriteria.ToDate != DateTime.MinValue)
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.OrderDate <= orderSearchCriteria.ToDate);
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
-        //predicate = predicate.Where(System.Data.Linq.SqlClient.SqlMethods.Like("FirstName"", "L_n%"));
-        salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => ((IndividualEntity) soh.Customer).Contact.FirstName.Contains(orderSearchCriteria.FirstName));
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Individual.Contact.FirstName.Contains(orderSearchCriteria.FirstName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
-        salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => ((IndividualEntity) soh.Customer).Contact.LastName.Contains(orderSearchCriteria.LastName));
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Individual.Contact.LastName.Contains(orderSearchCriteria.LastName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
         salesOrderHeaderQuery = salesOrderHeaderQuery.Where(soh => soh.Customer.CustomerAddresses.Any(ca => ca.Address.City == orderSearchCriteria.CityName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
