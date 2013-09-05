@@ -11,9 +11,6 @@
     <Setting Name="TraceWindowSizeLocation" Type="System.Drawing.Rectangle" Scope="User">
       <Value Profile="(Default)">0, 0, 0, 0</Value>
     </Setting>
-    <Setting Name="NumRows" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">10</Value>
-    </Setting>
     <Setting Name="DateFrom" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)">08/24/2008 21:34:01</Value>
     </Setting>
@@ -71,12 +68,6 @@
     <Setting Name="LinqTraceLevel" Type="System.Diagnostics.TraceLevel" Scope="User">
       <Value Profile="(Default)">Off</Value>
     </Setting>
-    <Setting Name="OpenTraceWindosOnStart" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="ReopenWindows" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="OpenWindows" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -108,7 +99,7 @@
       <Value Profile="(Default)">0, 0, 0, 0</Value>
     </Setting>
     <Setting Name="SQLTrace" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="QueryExecutionTraceLevel" Type="System.Diagnostics.TraceLevel" Scope="User">
       <Value Profile="(Default)">Off</Value>
@@ -127,6 +118,18 @@
     </Setting>
     <Setting Name="FilterUsingCustomerViewRelated" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="NumRows" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="OpenTraceWindosOnStart" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ReopenWindows" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EasyQueryDBMode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>
