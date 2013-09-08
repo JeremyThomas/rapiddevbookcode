@@ -93,6 +93,21 @@
         </TemplateBindings>
       </LastUsedPreferences>
     </OutputType>
+    <OutputType Value="2">
+      <LastUsedPreferences>
+        <DestinationRootFolder Value=".\" />
+        <FrameworkName Value="DDL SQL" />
+        <LanguageName Value="SQL" />
+        <PlatformName Value="RDBMS" />
+        <PresetName Value="SD.Presets.DDLSQL.UpdateScript" />
+        <RootNamespace Value="" />
+        <TemplateGroup Value="Update DDL SQL" />
+        <TemplateBindings>
+          <Binding Name="SD.TemplateBindings.SqlServerSpecific.DDLSQL" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates.DDLSQL" />
+        </TemplateBindings>
+      </LastUsedPreferences>
+    </OutputType>
   </CodeGenerationCyclePreferences>
   <OutputSettingValues>
     <SettingValues>
@@ -5301,8 +5316,8 @@
                         <Field Name="ComponentID" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
                         <Field Name="ComponentDesc" Ordinal="3" IsOptional="true" DbType="12" Length="50" />
                         <Field Name="TotalQuantity" Ordinal="4" IsOptional="true" DbType="5" Precision="38" Scale="2" />
-                        <Field Name="StandardCost" Ordinal="5" IsOptional="true" DbType="5" Precision="19" Scale="255" />
-                        <Field Name="ListPrice" Ordinal="6" IsOptional="true" DbType="5" Precision="19" Scale="255" />
+                        <Field Name="StandardCost" Ordinal="5" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                        <Field Name="ListPrice" Ordinal="6" IsOptional="true" DbType="9" Precision="19" Scale="4" />
                         <Field Name="BOMLevel" Ordinal="7" IsOptional="true" DbType="16" Precision="5" />
                         <Field Name="RecursionLevel" Ordinal="8" IsOptional="true" DbType="8" Precision="10" />
                       </Fields>
@@ -5382,8 +5397,8 @@
                         <Field Name="ComponentID" Ordinal="2" IsOptional="true" DbType="8" Precision="10" />
                         <Field Name="ComponentDesc" Ordinal="3" IsOptional="true" DbType="12" Length="50" />
                         <Field Name="TotalQuantity" Ordinal="4" IsOptional="true" DbType="5" Precision="38" Scale="2" />
-                        <Field Name="StandardCost" Ordinal="5" IsOptional="true" DbType="5" Precision="19" Scale="255" />
-                        <Field Name="ListPrice" Ordinal="6" IsOptional="true" DbType="5" Precision="19" Scale="255" />
+                        <Field Name="StandardCost" Ordinal="5" IsOptional="true" DbType="9" Precision="19" Scale="4" />
+                        <Field Name="ListPrice" Ordinal="6" IsOptional="true" DbType="9" Precision="19" Scale="4" />
                         <Field Name="BOMLevel" Ordinal="7" IsOptional="true" DbType="16" Precision="5" />
                         <Field Name="RecursionLevel" Ordinal="8" IsOptional="true" DbType="8" Precision="10" />
                       </Fields>
@@ -9009,12 +9024,12 @@
                 <FieldPair PkField="Person:Contact:ContactID" FkField="Sales:Individual:ContactID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:Individual:FK_Individual_Customer_CustomerID" UpdateRuleAction="1" DeleteRuleAction="1" TrackedChanges="24">
+            <ForeignKeyConstraint Name="Sales:Individual:FK_Individual_Customer_CustomerID">
               <FieldPairs>
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Individual:CustomerID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID">
+            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID" DeleteRuleAction="1">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderDetail:SalesOrderID" />
               </FieldPairs>
@@ -9070,7 +9085,7 @@
                 <FieldPair PkField="Purchasing:ShipMethod:ShipMethodID" FkField="Sales:SalesOrderHeader:ShipMethodID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID">
+            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID" DeleteRuleAction="1">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderHeaderSalesReason:SalesOrderID" />
               </FieldPairs>
@@ -9080,7 +9095,7 @@
                 <FieldPair PkField="Sales:SalesReason:SalesReasonID" FkField="Sales:SalesOrderHeaderSalesReason:SalesReasonID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesPerson:FK_SalesPerson_Employee_SalesPersonID" UpdateRuleAction="1" DeleteRuleAction="1" TrackedChanges="24">
+            <ForeignKeyConstraint Name="Sales:SalesPerson:FK_SalesPerson_Employee_SalesPersonID">
               <FieldPairs>
                 <FieldPair PkField="HumanResources:Employee:EmployeeID" FkField="Sales:SalesPerson:SalesPersonID" />
               </FieldPairs>
@@ -9125,7 +9140,7 @@
                 <FieldPair PkField="Sales:SpecialOffer:SpecialOfferID" FkField="Sales:SpecialOfferProduct:SpecialOfferID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:Store:FK_Store_Customer_CustomerID" UpdateRuleAction="1" DeleteRuleAction="1" TrackedChanges="24">
+            <ForeignKeyConstraint Name="Sales:Store:FK_Store_Customer_CustomerID">
               <FieldPairs>
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Store:CustomerID" />
               </FieldPairs>

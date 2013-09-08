@@ -70,11 +70,11 @@ namespace AW.Win
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.panel2 = new System.Windows.Forms.Panel();
       this.panel3 = new System.Windows.Forms.Panel();
+      this.checkBoxFilterUsingCustomerViewRelated = new System.Windows.Forms.CheckBox();
       this.QPanel = new Korzh.EasyQuery.WinControls.QueryPanel();
       this.query1 = new Korzh.EasyQuery.Db.DbQuery();
       this.dataModel1 = new Korzh.EasyQuery.Db.DbModel();
       this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
-      this.checkBoxFilterUsingCustomerViewRelated = new System.Windows.Forms.CheckBox();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityDataGridView)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
@@ -158,7 +158,6 @@ namespace AW.Win
       dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
       dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
       this.salesOrderHeaderEntityDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-      this.salesOrderHeaderEntityDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
       this.salesOrderHeaderEntityDataGridView.Location = new System.Drawing.Point(0, 303);
       this.salesOrderHeaderEntityDataGridView.Name = "salesOrderHeaderEntityDataGridView";
       this.salesOrderHeaderEntityDataGridView.ReadOnly = true;
@@ -170,7 +169,7 @@ namespace AW.Win
       dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
       dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
       this.salesOrderHeaderEntityDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-      this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(694, 265);
+      this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(694, 106);
       this.salesOrderHeaderEntityDataGridView.TabIndex = 2;
       this.salesOrderHeaderEntityDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
       // 
@@ -428,6 +427,19 @@ namespace AW.Win
       this.panel3.Size = new System.Drawing.Size(694, 36);
       this.panel3.TabIndex = 1;
       // 
+      // checkBoxFilterUsingCustomerViewRelated
+      // 
+      this.checkBoxFilterUsingCustomerViewRelated.AutoSize = true;
+      this.checkBoxFilterUsingCustomerViewRelated.Checked = global::AW.Win.Properties.Settings.Default.FilterUsingCustomerViewRelated;
+      this.checkBoxFilterUsingCustomerViewRelated.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxFilterUsingCustomerViewRelated.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "FilterUsingCustomerViewRelated", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxFilterUsingCustomerViewRelated.Location = new System.Drawing.Point(253, 9);
+      this.checkBoxFilterUsingCustomerViewRelated.Name = "checkBoxFilterUsingCustomerViewRelated";
+      this.checkBoxFilterUsingCustomerViewRelated.Size = new System.Drawing.Size(185, 17);
+      this.checkBoxFilterUsingCustomerViewRelated.TabIndex = 28;
+      this.checkBoxFilterUsingCustomerViewRelated.Text = "Filter Using CustomerViewRelated";
+      this.checkBoxFilterUsingCustomerViewRelated.UseVisualStyleBackColor = true;
+      // 
       // QPanel
       // 
       this.QPanel.Active = false;
@@ -482,19 +494,6 @@ namespace AW.Win
       this.orderSearchCriteria1.Name = "orderSearchCriteria1";
       this.orderSearchCriteria1.Size = new System.Drawing.Size(694, 169);
       this.orderSearchCriteria1.TabIndex = 1;
-      // 
-      // checkBoxFilterUsingCustomerViewRelated
-      // 
-      this.checkBoxFilterUsingCustomerViewRelated.AutoSize = true;
-      this.checkBoxFilterUsingCustomerViewRelated.Checked = global::AW.Win.Properties.Settings.Default.FilterUsingCustomerViewRelated;
-      this.checkBoxFilterUsingCustomerViewRelated.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBoxFilterUsingCustomerViewRelated.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "FilterUsingCustomerViewRelated", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxFilterUsingCustomerViewRelated.Location = new System.Drawing.Point(253, 9);
-      this.checkBoxFilterUsingCustomerViewRelated.Name = "checkBoxFilterUsingCustomerViewRelated";
-      this.checkBoxFilterUsingCustomerViewRelated.Size = new System.Drawing.Size(185, 17);
-      this.checkBoxFilterUsingCustomerViewRelated.TabIndex = 28;
-      this.checkBoxFilterUsingCustomerViewRelated.Text = "Filter Using CustomerViewRelated";
-      this.checkBoxFilterUsingCustomerViewRelated.UseVisualStyleBackColor = true;
       // 
       // FrmOrderSearch2
       // 

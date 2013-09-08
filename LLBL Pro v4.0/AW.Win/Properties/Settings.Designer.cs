@@ -477,7 +477,7 @@ namespace AW.Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public decimal NumRows {
             get {
                 return ((decimal)(this["NumRows"]));
@@ -532,6 +532,30 @@ namespace AW.Win.Properties {
             }
             set {
                 this["SQLTrace"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowCustomerViewRelatedFields {
+            get {
+                return ((bool)(this["ShowCustomerViewRelatedFields"]));
+            }
+            set {
+                this["ShowCustomerViewRelatedFields"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseEasyQuery {
+            get {
+                return ((bool)(this["UseEasyQuery"]));
+            }
+            set {
+                this["UseEasyQuery"] = value;
             }
         }
     }

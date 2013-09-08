@@ -1868,7 +1868,7 @@ namespace AW.Data.EntityClasses
 			{		
 				DesetupSyncCustomerViewRelated(true, true);
 				_customerViewRelated = (CustomerViewRelatedEntity)relatedEntity;
-				this.PerformSetupSyncRelatedEntity( _customerViewRelated, new PropertyChangedEventHandler( OnCustomerViewRelatedPropertyChanged ), "CustomerViewRelated", AW.Data.RelationClasses.StaticSalesOrderHeaderRelations.CustomerViewRelatedEntityUsingCustomerIDStatic, true, ref _alreadyFetchedCustomerViewRelated, new string[] { "CustomerCity", "CustomerCountry", "CustomerFirstName", "CustomerLastName", "CustomerZip", "CustomerState" } );
+				this.PerformSetupSyncRelatedEntity( _customerViewRelated, new PropertyChangedEventHandler( OnCustomerViewRelatedPropertyChanged ), "CustomerViewRelated", AW.Data.RelationClasses.StaticSalesOrderHeaderRelations.CustomerViewRelatedEntityUsingCustomerIDStatic, true, ref _alreadyFetchedCustomerViewRelated, new string[] { "CustomerCity", "CustomerCountry", "CustomerFirstName", "CustomerLastName", "CustomerState", "CustomerZip" } );
 			}
 		}
 
@@ -1891,11 +1891,11 @@ namespace AW.Data.EntityClasses
 				case "LastName":
 					this.OnPropertyChanged("CustomerLastName");
 					break;
-				case "PostalCode":
-					this.OnPropertyChanged("CustomerZip");
-					break;
 				case "StateProvinceName":
 					this.OnPropertyChanged("CustomerState");
+					break;
+				case "PostalCode":
+					this.OnPropertyChanged("CustomerZip");
 					break;
 				default:
 					break;
@@ -3345,24 +3345,6 @@ namespace AW.Data.EntityClasses
 			}
 		}
  
-		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.PostalCode.<br/><br/></summary>
-		public virtual System.String CustomerZip
-		{
-			get
-			{
-				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
-				return relatedEntity==null ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : relatedEntity.PostalCode;
-			}
-			set
-			{
-				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
-				if(relatedEntity!=null)
-				{
-					relatedEntity.PostalCode = value;
-				}				
-			}
-		}
- 
 		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.StateProvinceName.<br/><br/></summary>
 		public virtual System.String CustomerState
 		{
@@ -3377,6 +3359,24 @@ namespace AW.Data.EntityClasses
 				if(relatedEntity!=null)
 				{
 					relatedEntity.StateProvinceName = value;
+				}				
+			}
+		}
+ 
+		/// <summary> Gets / Sets the value of the related field this.CustomerViewRelated.PostalCode.<br/><br/></summary>
+		public virtual System.String CustomerZip
+		{
+			get
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				return relatedEntity==null ? (System.String)TypeDefaultValue.GetDefaultValue(typeof(System.String)) : relatedEntity.PostalCode;
+			}
+			set
+			{
+				CustomerViewRelatedEntity relatedEntity = this.CustomerViewRelated;
+				if(relatedEntity!=null)
+				{
+					relatedEntity.PostalCode = value;
 				}				
 			}
 		}

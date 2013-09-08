@@ -141,7 +141,31 @@ namespace AW.Win
       }
       btnSearch.Enabled = true;
       if (!e.Cancelled)
-        dgResults.DataSource = e.Result;
+        if (Settings.Default.ShowCustomerViewRelatedFields)
+        {
+          dgResults.Visible = true;
+          HideGrid(salesOrderHeaderEntityDataGridView);
+          salesOrderHeaderEntityBindingSource.DataSource = e.Result;
+          dgResults.DataSource = salesOrderHeaderEntityBindingSource;
+          dgResults.Dock = DockStyle.Fill;
+        }
+        else
+        {
+          HideGrid(dgResults);
+          salesOrderHeaderEntityDataGridView.Visible = true;
+          salesOrderHeaderEntityBindingSource.DataSource = e.Result;
+          salesOrderHeaderEntityDataGridView.DataSource = salesOrderHeaderEntityBindingSource;
+          salesOrderHeaderEntityDataGridView.Dock = DockStyle.Fill;
+        }
+        
+    }
+
+    private static void HideGrid(DataGridView dataGridView)
+    {
+      dataGridView.Visible = false;
+      dataGridView.Height = 0;
+      dataGridView.Dock = DockStyle.None;
+      dataGridView.DataSource = null;
     }
 
     private void dgResults_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -155,6 +179,13 @@ namespace AW.Win
       if (rb == null || !rb.Checked) return;
       if (rb.Tag is LLBLQueryType)
         Settings.Default.LLBLQueryType = (LLBLQueryType) rb.Tag;
+      checkBoxUsePredicate.Enabled = Settings.Default.LLBLQueryType == LLBLQueryType.Linq;
+      checkBoxUseEasyQuery.Enabled = checkBoxUsePredicate.Enabled;
+    }
+
+    private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+    {
+
     }
   }
 }
