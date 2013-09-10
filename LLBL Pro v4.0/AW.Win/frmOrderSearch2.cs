@@ -24,21 +24,12 @@ namespace AW.Win
     public FrmOrderSearch2()
     {
       InitializeComponent();
-      query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
+      FrmEasyQuery.LoadFromLinqMetaData(query1);
       foreach (var subEntity in query1.Model.EntityRoot.SubEntities)
       {
         subEntity.UseInConditions = subEntity.Info.Values.Contains(typeof (SalesOrderHeaderEntity)) || subEntity.Info.Values.Contains(typeof (CustomerEntity))
                                     || subEntity.Info.Values.Contains(typeof (CustomerAddressEntity))
                                     || subEntity.Info.Values.Contains(typeof (ContactEntity));
-        if (subEntity.UseInConditions)
-          foreach (var entityAttr in subEntity.Attributes)
-          {
-            if (entityAttr.DataType == DataType.Bool && entityAttr.Caption.StartsWith("AlreadyFetched")
-                || entityAttr.Caption.StartsWith("AlwaysFetch")
-                || entityAttr.Caption.EndsWith("ReturnsNewIfNotFound")
-                || entityAttr.Caption == "IsNew" || entityAttr.Caption == "IsDirty")
-              entityAttr.UseInConditions = false;
-          }
       }
       QPanel.Activate();
     }

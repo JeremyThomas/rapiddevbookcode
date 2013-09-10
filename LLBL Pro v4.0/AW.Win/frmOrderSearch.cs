@@ -1,8 +1,11 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
+using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.Filters;
 using AW.Data.Queries;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -29,15 +32,33 @@ namespace AW.Win
           rb.Checked = true;
         rb.Text = rb.Tag.ToString();
       }
+      FrmEasyQuery.LoadFromLinqMetaData(query1);
+      foreach (var subEntity in query1.Model.EntityRoot.SubEntities)
+      {
+        subEntity.UseInConditions = subEntity.Info.Values.Contains(typeof (SalesOrderHeaderEntity))
+                                    || subEntity.Info.Values.Contains(typeof (CustomerEntity))
+                                    || subEntity.Info.Values.Contains(typeof (CustomerAddressEntity))
+                                    || subEntity.Info.Values.Contains(typeof (CustomerViewRelatedEntity))
+                                    || subEntity.Info.Values.Contains(typeof (ContactEntity));
+      }
+      OnLLBLQueryTypeChange();
     }
 
     private void frmOrderSearch_Load(object sender, EventArgs e)
     {
+      if (!String.IsNullOrWhiteSpace(Settings.Default.FrmOrderSearchPredicate))
+        query1.LoadFromString(Settings.Default.FrmOrderSearchPredicate);
+      QPanel.Activate();
     }
 
     private void frmOrderSearch_FormClosing(object sender, FormClosingEventArgs e)
     {
       orderSearchCriteria1.OrderSearchCriteriaOnClosing();
+    }
+
+    private void FrmOrderSearch_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      Settings.Default.FrmOrderSearchPredicate = query1.SaveToString();
     }
 
     private void btnSearch_Click(object sender, EventArgs e)
@@ -98,24 +119,38 @@ namespace AW.Win
               _maxNumberOfItemsToReturn,
               _prefetch);
           else
-          e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionQuerySpec(
-            _orderSearchCriteria,
-            _maxNumberOfItemsToReturn,
-            _prefetch);
+            e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionQuerySpec(
+              _orderSearchCriteria,
+              _maxNumberOfItemsToReturn,
+              _prefetch);
           break;
         case LLBLQueryType.Linq:
-          if (Settings.Default.FilterUsingCustomerViewRelated)
-            e.Result = SalesOrderQueries.DoSalesOrderHeaderLinqQueryCustomerViewRelated(
-              _orderSearchCriteria,
-              _maxNumberOfItemsToReturn,
-              _prefetch
-              ).ToEntityCollection();
+          var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();
+          IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader;
+          try
+          {
+            predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
+          }
+          catch (Exception)
+          {
+          }
+          if (Settings.Default.UsePredicate)
+          {
+            predicate = Settings.Default.FilterUsingCustomerViewRelated
+              ? predicate.FilterByDateOrderIDOrderNumberCustomerNameAddressCustomerViewRelated(_orderSearchCriteria)
+              : predicate.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
+          }
           else
-            e.Result = SalesOrderQueries.GetSalesOrderHeaderCollectionWithLinq(
-              _orderSearchCriteria,
-              _maxNumberOfItemsToReturn,
-              _prefetch
-              );
+          {
+            salesOrderHeaderQuery = Settings.Default.FilterUsingCustomerViewRelated
+              ? salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddressCustomerViewRelated(_orderSearchCriteria)
+              : salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
+            salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
+          }
+          salesOrderHeaderQuery = salesOrderHeaderQuery.Where(predicate);
+          if (_maxNumberOfItemsToReturn > 0)
+            salesOrderHeaderQuery = salesOrderHeaderQuery.Take(_maxNumberOfItemsToReturn);
+          e.Result = salesOrderHeaderQuery.ToEntityCollection();
           break;
       }
       // Do not access the form's BackgroundWorker reference directly.
@@ -140,30 +175,22 @@ namespace AW.Win
         _frmStatusBar.Close();
       }
       btnSearch.Enabled = true;
-      if (!e.Cancelled)
-        if (Settings.Default.ShowCustomerViewRelatedFields)
-        {
-          dgResults.Visible = true;
-          HideGrid(salesOrderHeaderEntityDataGridView);
-          salesOrderHeaderEntityBindingSource.DataSource = e.Result;
-          dgResults.DataSource = salesOrderHeaderEntityBindingSource;
-          dgResults.Dock = DockStyle.Fill;
-        }
-        else
-        {
-          HideGrid(dgResults);
-          salesOrderHeaderEntityDataGridView.Visible = true;
-          salesOrderHeaderEntityBindingSource.DataSource = e.Result;
-          salesOrderHeaderEntityDataGridView.DataSource = salesOrderHeaderEntityBindingSource;
-          salesOrderHeaderEntityDataGridView.Dock = DockStyle.Fill;
-        }
-        
+      if (e.Cancelled) return;
+      if (Settings.Default.ShowCustomerViewRelatedFields)
+      {
+        dgResults.DataSource = salesOrderHeaderEntityBindingSource;
+      }
+      else
+      {
+        salesOrderHeaderEntityDataGridView.DataSource = salesOrderHeaderEntityBindingSource;
+      }
+      salesOrderHeaderEntityBindingSource.DataSource = e.Result;
     }
 
     private static void HideGrid(DataGridView dataGridView)
     {
       dataGridView.Visible = false;
-      dataGridView.Height = 0;
+      //  dataGridView.Height = 0;
       dataGridView.Dock = DockStyle.None;
       dataGridView.DataSource = null;
     }
@@ -179,13 +206,36 @@ namespace AW.Win
       if (rb == null || !rb.Checked) return;
       if (rb.Tag is LLBLQueryType)
         Settings.Default.LLBLQueryType = (LLBLQueryType) rb.Tag;
+      OnLLBLQueryTypeChange();
+    }
+
+    private void OnLLBLQueryTypeChange()
+    {
       checkBoxUsePredicate.Enabled = Settings.Default.LLBLQueryType == LLBLQueryType.Linq;
       checkBoxUseEasyQuery.Enabled = checkBoxUsePredicate.Enabled;
+      QPanel.Visible = checkBoxUsePredicate.Enabled;
     }
 
     private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
     {
+    }
 
+    private void checkBoxShowCustomerViewRelatedFields_CheckedChanged(object sender, EventArgs e)
+    {
+      //checkBoxPrefetch.Checked = Settings.Default.ShowCustomerViewRelatedFields;
+      // var x = Settings.Default.ShowCustomerViewRelatedFields;
+      if (checkBoxShowCustomerViewRelatedFields.Checked)
+      {
+        HideGrid(salesOrderHeaderEntityDataGridView);
+        dgResults.Visible = true;
+        dgResults.Dock = DockStyle.Fill;
+      }
+      else
+      {
+        HideGrid(dgResults);
+        salesOrderHeaderEntityDataGridView.Visible = true;
+        salesOrderHeaderEntityDataGridView.Dock = DockStyle.Fill;
+      }
     }
   }
 }

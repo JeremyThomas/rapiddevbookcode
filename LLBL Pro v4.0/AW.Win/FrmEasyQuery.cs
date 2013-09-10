@@ -108,42 +108,52 @@ namespace AW.Win
     private void OnDBModeChange()
     {
       CloseConnections();
-      query1.Clear();
+      var dbQuery = query1;
+      dbQuery.Clear();
       if (DBMode == 0)
       {
-        query1.Formats.SetDefaultFormats(FormatType.MsSqlServer);
-        query1.Formats.UseSchema = true;
-        query1.Model.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
+        dbQuery.Formats.SetDefaultFormats(FormatType.MsSqlServer);
+        dbQuery.Formats.UseSchema = true;
+        dbQuery.Model.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
       }
       else
       {
-        query1.Formats.SetDefaultFormats(FormatType.EntityFramework);
-        query1.Model.Clear();
-        query1.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
-        foreach (var subEntity in query1.Model.EntityRoot.SubEntities)
-        {
-          for (var i = subEntity.Attributes.Count - 1; i >= 0; i--)
-          {
-            if (ShouldBeExcluded(subEntity.Attributes[i]))
-              subEntity.Attributes.RemoveAt(i);
-          }
-          var dbTable = new DbTable() { DBName = subEntity.Name};
-          dbTable.Alias = dbTable.DBName;
-          dataModel1.Tables.Add(dbTable);
-        }
-
-        var table1 = dataModel1.Tables.FirstOrDefault(t => t.DBName == "Address");
-        var tableLink = new TableLink {
-          Table1 = table1, 
-          Table2 = dataModel1.Tables.FirstOrDefault(t => t.DBName == "StateProvince")
-        };
-        tableLink.AddCondition(LinkCondType.FieldField, "StateProvinceID", "StateProvinceID", "=");
-        dataModel1.Links.Add(tableLink);
+        LoadFromLinqMetaData(dbQuery);
       }
       QPanel.UpdateModelInfo();
       QCPanel.UpdateModelInfo();
       EntPanel.UpdateModelInfo();
       Settings.Default.EasyQueryDBMode = DBMode;
+    }
+
+    public static void LoadFromLinqMetaData(DbQuery dbQuery)
+    {
+      dbQuery.Formats.SetDefaultFormats(FormatType.EntityFramework);
+      dbQuery.Model.Clear();
+      dbQuery.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));    
+      var dbModel = dbQuery.Model as DbModel;
+      if (dbModel == null) return;
+      foreach (var subEntity in dbModel.EntityRoot.SubEntities)
+      {
+        for (var i = subEntity.Attributes.Count - 1; i >= 0; i--)
+        {
+          if (ShouldBeExcluded(subEntity.Attributes[i]))
+            subEntity.Attributes.RemoveAt(i);
+        }
+        var dbTable = new DbTable() {DBName = subEntity.Name};
+        dbTable.Alias = dbTable.DBName;
+    
+        dbModel.Tables.Add(dbTable);
+      }
+
+      var table1 = dbModel.Tables.FirstOrDefault(t => t.DBName == "Address");
+      var tableLink = new TableLink
+      {
+        Table1 = table1,
+        Table2 = dbModel.Tables.FirstOrDefault(t => t.DBName == "StateProvince")
+      };
+      tableLink.AddCondition(LinkCondType.FieldField, "StateProvinceID", "StateProvinceID", "=");
+      dbModel.Links.Add(tableLink);
     }
 
     public static bool ShouldBeExcluded(EntityAttr entityAttr)

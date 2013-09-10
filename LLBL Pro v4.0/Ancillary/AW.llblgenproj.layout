@@ -1,13 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LayoutInfo>
   <ModelViews>
+    <ModelView Name="Contact">
+      <EntityDefinitions>
+        <Entity Name="Person:Contact" X="0.500061035" Y="0.520874" />
+        <Entity Name="Person:ContactType" X="343.5001" Y="308.3542" />
+        <Entity Name="Purchasing:VendorContact" X="19.5001221" Y="333.9376" />
+        <Entity Name="Sales:StoreContact" X="343.500122" Y="65.77085" />
+      </EntityDefinitions>
+    </ModelView>
     <ModelView Name="Customer">
       <EntityDefinitions>
         <Entity Name="Sales:Customer" X="-159.555237" Y="-34.37555" />
         <Entity Name="Sales:Store" X="-243.472168" Y="279.562836" />
         <Entity Name="Sales:Individual" X="0.48614502" Y="281.603" />
         <Entity Name="Sales:CustomerAddress" X="-485" Y="-7.99999952" />
-        <Entity Name="Sales:SalesOrderDetail" X="585" Y="74.9999847" />
+        <Entity Name="Sales:SalesOrderDetail" X="585" Y="75" />
         <Entity Name="Sales:SalesOrderHeader" X="239" Y="-41" />
       </EntityDefinitions>
     </ModelView>
@@ -19,13 +27,12 @@
     </ModelView>
     <ModelView Name="Person">
       <EntityDefinitions>
-        <Entity Name="Person:Address" X="0.5005493" Y="0.5002141" />
-        <Entity Name="Person:AddressType" X="0.5005493" Y="185.83429" />
-        <Entity Name="Person:Contact" X="0.500579834" Y="312.5015" />
-        <Entity Name="Person:CountryRegion" X="0.5003052" Y="600.333557" />
-        <Entity Name=":AwbuildVersion" X="261.5005" Y="0.5001526" />
-        <Entity Name="Person:ContactType" X="261.500336" Y="127.166794" />
-        <Entity Name="Person:StateProvince" X="261.500183" Y="239.166779" />
+        <Entity Name="Person:Address" X="-21.6571045" Y="194.3916" />
+        <Entity Name="Person:AddressType" X="337.343018" Y="502.9029" />
+        <Entity Name="Person:CountryRegion" X="411.342651" Y="-37.59634" />
+        <Entity Name="Purchasing:VendorAddress" X="-15.6575317" Y="502.9009" />
+        <Entity Name="Person:StateProvince" X="-19.65747" Y="-63.4130821" />
+        <Entity Name="Sales:CustomerAddress" X="367.358521" Y="262.847717" />
       </EntityDefinitions>
     </ModelView>
     <ModelView Name="Product">
