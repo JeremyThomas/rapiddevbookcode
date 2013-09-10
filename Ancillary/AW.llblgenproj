@@ -67,7 +67,7 @@
     <Property Name="TypedViewMappedOnResultsetPattern" Value="{$ProcFunctionName}{$ResultsetName}Result" />
     <Property Name="TypedViewNameStripPattern" Value="{vw_}{}" />
     <Property Name="UniqueConstraintsFollowDBUniqueConstraints" Value="0" />
-    <Property Name="UpdateCustomPropertiesAfterRefresh" Value="1" />
+    <Property Name="UpdateCustomPropertiesAfterRefresh" Value="0" />
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts>
@@ -5986,7 +5986,7 @@
                 </Table>
                 <Table Name="AddressType">
                   <Fields>
-                    <Field Name="AddressTypeID" Ordinal="1" TrackedChanges="8" IsPrimaryKey="true" PkConstraintName="PK_AddressType_AddressTypeID" DbType="8" Precision="10">
+                    <Field Name="AddressTypeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_AddressType_AddressTypeID" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Clustered index created by a primary key constraint." />
                       </CustomProperties>
@@ -6095,7 +6095,7 @@
                 </Table>
                 <Table Name="ContactType">
                   <Fields>
-                    <Field Name="ContactTypeID" Ordinal="1" TrackedChanges="8" IsPrimaryKey="true" PkConstraintName="PK_ContactType_ContactTypeID" DbType="8" Precision="10">
+                    <Field Name="ContactTypeID" Ordinal="1" IsPrimaryKey="true" PkConstraintName="PK_ContactType_ContactTypeID" DbType="8" Precision="10">
                       <CustomProperties>
                         <CustomProperty Name="MS_Description" Value="Clustered index created by a primary key constraint." />
                       </CustomProperties>
@@ -9998,6 +9998,15 @@
     </MappingStore>
   </MappingStores>
   <ModelViews>
+    <ModelView Name="Contact">
+      <EntityDefinitions>
+        <Entity Name="Person:Contact" />
+        <Entity Name="Person:ContactType" />
+        <Entity Name="Purchasing:VendorContact" />
+        <Entity Name="Sales:StoreContact" />
+      </EntityDefinitions>
+      <Documentation><![CDATA[]]></Documentation>
+    </ModelView>
     <ModelView Name="Customer">
       <EntityDefinitions>
         <Entity Name="Sales:Customer" />
@@ -10018,13 +10027,12 @@
     </ModelView>
     <ModelView Name="Person">
       <EntityDefinitions>
-        <Entity Name=":AwbuildVersion" />
         <Entity Name="Person:Address" />
         <Entity Name="Person:AddressType" />
-        <Entity Name="Person:Contact" />
-        <Entity Name="Person:ContactType" />
         <Entity Name="Person:CountryRegion" />
         <Entity Name="Person:StateProvince" />
+        <Entity Name="Purchasing:VendorAddress" />
+        <Entity Name="Sales:CustomerAddress" />
       </EntityDefinitions>
       <Documentation><![CDATA[]]></Documentation>
     </ModelView>
