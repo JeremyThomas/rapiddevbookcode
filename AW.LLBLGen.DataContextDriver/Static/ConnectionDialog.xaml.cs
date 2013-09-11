@@ -1084,23 +1084,31 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static void AddORMProfiler(ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies)
     {
-      var ormProfilerPathAssemblies = new[] {ProfilerHelper.OrmProfilerAssemblyString + ".dll", "SD.Tools.OrmProfiler.Shared.dll", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
+      var ormProfilerPathAssemblies = new[] { ProfilerHelper.OrmProfilerAssemblyFileName, ProfilerHelper.OrmProfilerAssemblyFileName45, "SD.Tools.OrmProfiler.Shared.dll", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll" };
       var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-      var ormProfilerPath = Path.Combine(folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath);
+      if (AddORMProfiler(additionalAssemblies, folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath15, ormProfilerPathAssemblies)) 
+        return;
+      if (AddORMProfiler(additionalAssemblies, folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath, ormProfilerPathAssemblies))
+        return;
+      ValueTypeWrapper<string>.Add(additionalAssemblies, ormProfilerPathAssemblies);
+    }
+
+    private static bool AddORMProfiler(ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies, string folderPath, string solutionsDesignOrmProfilerPath, string[] ormProfilerPathAssemblies)
+    {
+      var ormProfilerPath = Path.Combine(folderPath, solutionsDesignOrmProfilerPath);
       if (Directory.Exists(ormProfilerPath))
       {
         if (AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies, additionalAssemblies))
-          return;
+          return true;
       }
       var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
       if (programFilesPathx86 != null && !programFilesPathx86.Equals(folderPath))
       {
-        ormProfilerPath = Path.Combine(programFilesPathx86, ProfilerHelper.SolutionsDesignOrmProfilerPath);
+        ormProfilerPath = Path.Combine(programFilesPathx86, solutionsDesignOrmProfilerPath);
         if (Directory.Exists(ormProfilerPath) && AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies, additionalAssemblies))
-          return;
+          return true;
       }
-
-      ValueTypeWrapper<string>.Add(additionalAssemblies, ormProfilerPathAssemblies);
+      return false;
     }
 
     private static bool AddormProfilerPathAssemblies(string folderPath, IEnumerable<string> ormProfilerPathAssemblies, ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies)

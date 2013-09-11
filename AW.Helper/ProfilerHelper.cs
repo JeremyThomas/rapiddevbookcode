@@ -15,15 +15,25 @@ namespace AW.Helper
 		/// SD.Tools.OrmProfiler.Interceptor
 		/// </summary>
 		public const string OrmProfilerAssemblyString = "SD.Tools.OrmProfiler.Interceptor";
+    /// <summary>
+    /// SD.Tools.OrmProfiler.Interceptor.NET45
+    /// </summary>
+    public const string OrmProfilerAssemblyString45 = OrmProfilerAssemblyString + ".NET45";
 		public const string OrmProfilerAssemblyFileName = OrmProfilerAssemblyString + ".dll";
+    public const string OrmProfilerAssemblyFileName45 = OrmProfilerAssemblyString45 + ".dll";
 		/// <summary>
 		/// SD.Tools.OrmProfiler.Interceptor.InterceptorCore
 		/// </summary>
 		public const string OrmProfilerInterceptorTypeName = OrmProfilerAssemblyString + ".InterceptorCore";
+
 		/// <summary>
 		/// SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.dll
 		/// </summary>
 		public const string OrmProfilerInterceptorAssemblyQualifiedTypeName = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyString;
+    /// <summary>
+    /// SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.NET45.dll
+    /// </summary>
+    public const string OrmProfilerInterceptorAssemblyQualifiedTypeName45 = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyString45;
 		/// <summary>
 		/// Initialize
 		/// </summary>
@@ -36,6 +46,10 @@ namespace AW.Helper
 		/// Solutions Design\ORM Profiler v1.1
 		/// </summary>
 		public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.1";
+    /// <summary>
+    /// Solutions Design\ORM Profiler v1.5
+    /// </summary>
+    public const string SolutionsDesignOrmProfilerPath15 = @"Solutions Design\ORM Profiler v1.5";
 
 		/// <summary>
 		/// 	Initializes the ORM profiler if enabled with the AppSetting ORM Profiler in the config file and the assemblies: 
@@ -55,7 +69,7 @@ namespace AW.Helper
 		{
 			try
 			{
-				return InterceptorCoreInitialize(Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName));
+				return InterceptorCoreInitialize(GetInterceptorType());
 			}
 			catch (Exception e)
 			{
@@ -64,20 +78,28 @@ namespace AW.Helper
 			}
 		}
 
-		/// <summary>
+	  private static Type GetInterceptorType()
+	  {
+	    Type interceptorType = null;
+      if (Environment.Version.Major == 4 && Environment.Version.Revision >= 18051) //.NET45 installed
+        interceptorType = Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName45);
+	    return interceptorType ?? (Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName));
+	  }
+
+	  /// <summary>
 		/// 	Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
 		/// </summary>
-		/// <param name="interceptor"> The interceptor type. </param>
-		public static bool InterceptorCoreInitialize(Type interceptor)
+		/// <param name="interceptorType"> The interceptorType type. </param>
+		public static bool InterceptorCoreInitialize(Type interceptorType)
 		{
-			if (interceptor == null)
+			if (interceptorType == null)
 				return false;
-			interceptor.InvokeMember(InitializeMethodName,
+			interceptorType.InvokeMember(InitializeMethodName,
 			                         BindingFlags.Public |
 			                         BindingFlags.InvokeMethod |
 			                         BindingFlags.Static,
-			                         null, null, new[] {ApplicationName}, CultureInfo.CurrentUICulture);
-			MetaDataHelper.AddSelfAssemblyResolverIfNeeded(interceptor);
+			                         null, null, new object[] {ApplicationName}, CultureInfo.CurrentUICulture);
+			MetaDataHelper.AddSelfAssemblyResolverIfNeeded(interceptorType);
 			return true;
 		}
 
