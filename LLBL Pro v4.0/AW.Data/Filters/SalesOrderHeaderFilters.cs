@@ -117,7 +117,7 @@ namespace AW.Data.Filters
       if (!string.IsNullOrEmpty(orderSearchCriteria.FirstName))
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.CustomerViewRelated.FirstName.Contains(orderSearchCriteria.FirstName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.LastName))
-        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.CustomerViewRelated.FirstName.Contains(orderSearchCriteria.LastName));
+        salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.CustomerViewRelated.LastName.Contains(orderSearchCriteria.LastName));
       if (!string.IsNullOrEmpty(orderSearchCriteria.CityName))
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.CustomerViewRelated.City == orderSearchCriteria.CityName);
       if (!string.IsNullOrEmpty(orderSearchCriteria.StateName))
@@ -138,7 +138,6 @@ namespace AW.Data.Filters
         salesOrderHeaderPredicate = salesOrderHeaderPredicate.And(soh => soh.SalesOrderNumber == orderSearchCriteria.OrderNumber);
       return salesOrderHeaderPredicate;
     }
-
 
     public static IQueryable<T> FilterByProductID<T>(this IQueryable<T> transactionHistoryEntities, int productID) where T : TransactionHistoryEntity
     {

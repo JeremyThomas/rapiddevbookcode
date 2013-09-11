@@ -125,11 +125,12 @@ namespace AW.Win
               _prefetch);
           break;
         case LLBLQueryType.Linq:
-          var predicate = PredicateBuilder.True<SalesOrderHeaderEntity>();
+          var predicate = PredicateBuilder.Null<SalesOrderHeaderEntity>();
           IQueryable<SalesOrderHeaderEntity> salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader;
           try
           {
-            predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
+            if (Settings.Default.UseEasyQuery)
+              predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
           }
           catch (Exception)
           {
@@ -147,7 +148,7 @@ namespace AW.Win
               : salesOrderHeaderQuery.FilterByDateOrderIDOrderNumberCustomerNameAddress(_orderSearchCriteria);
             salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
           }
-          salesOrderHeaderQuery = salesOrderHeaderQuery.Where(predicate);
+          if (predicate != null) salesOrderHeaderQuery = salesOrderHeaderQuery.Where(predicate);
           if (_maxNumberOfItemsToReturn > 0)
             salesOrderHeaderQuery = salesOrderHeaderQuery.Take(_maxNumberOfItemsToReturn);
           e.Result = salesOrderHeaderQuery.ToEntityCollection();
@@ -216,10 +217,6 @@ namespace AW.Win
       QPanel.Visible = checkBoxUsePredicate.Enabled;
     }
 
-    private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-    {
-    }
-
     private void checkBoxShowCustomerViewRelatedFields_CheckedChanged(object sender, EventArgs e)
     {
       //checkBoxPrefetch.Checked = Settings.Default.ShowCustomerViewRelatedFields;
@@ -236,6 +233,16 @@ namespace AW.Win
         salesOrderHeaderEntityDataGridView.Visible = true;
         salesOrderHeaderEntityDataGridView.Dock = DockStyle.Fill;
       }
+    }
+
+    private void checkBoxUseEasyQuery_CheckedChanged(object sender, EventArgs e)
+    {
+      QPanel.Enabled = checkBoxUseEasyQuery.Checked;
+    }
+
+    private void QPanel_DoubleClick(object sender, EventArgs e)
+    {
+      MessageBox.Show(FrmEasyQuery.GetLinqExpression(query1).ToString(), "Linq Expression");
     }
   }
 }
