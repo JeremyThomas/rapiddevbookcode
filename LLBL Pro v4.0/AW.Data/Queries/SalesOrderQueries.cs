@@ -79,11 +79,11 @@ namespace AW.Data.Queries
     }
 
     public static SalesOrderHeaderCollection GetSalesOrderHeaderCollectionQuerySpecCustomerViewRelated
-  (
-  OrderSearchCriteria orderSearchCriteria,
-  int maxNumberOfItemsToReturn,
-  bool prefetch
-  )
+      (
+      OrderSearchCriteria orderSearchCriteria,
+      int maxNumberOfItemsToReturn,
+      bool prefetch
+      )
     {
       var filter = orderSearchCriteria.GetPredicateExpressionCustomerView();
       var qf = new QueryFactory();

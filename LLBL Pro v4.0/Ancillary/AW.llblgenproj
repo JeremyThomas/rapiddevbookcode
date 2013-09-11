@@ -73,6 +73,12 @@
   <TypeShortcuts>
     <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Current" Type="AW.Data.Current, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="EmailPromotion" Type="AW.Data.EmailPromotion, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Gender" Type="AW.Data.Gender, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="MaritalStatus" Type="AW.Data.MaritalStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="OrderStatus" Type="AW.Data.OrderStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="PayFrequency" Type="AW.Data.PayFrequency, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
