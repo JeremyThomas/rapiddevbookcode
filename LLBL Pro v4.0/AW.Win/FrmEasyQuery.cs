@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.Linq;
@@ -248,13 +249,13 @@ namespace AW.Win
       this.groupBoxSorting = new System.Windows.Forms.GroupBox();
       this.SCPanel = new Korzh.EasyQuery.WinControls.SortColumnsPanel();
       this.panelButtons = new System.Windows.Forms.Panel();
+      this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.buttonSaveModel = new System.Windows.Forms.Button();
       this.btCodeSamples = new System.Windows.Forms.Button();
       this.btClear = new System.Windows.Forms.Button();
       this.btLoad = new System.Windows.Forms.Button();
       this.btSave = new System.Windows.Forms.Button();
       this.btExecute = new System.Windows.Forms.Button();
-      this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       ((System.ComponentModel.ISupportInitialize)(this.ResultDataTable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.ResultDS)).BeginInit();
       this.panelBottom.SuspendLayout();
@@ -659,6 +660,16 @@ namespace AW.Win
       this.panelButtons.Size = new System.Drawing.Size(78, 311);
       this.panelButtons.TabIndex = 22;
       // 
+      // numericUpDownNumRows
+      // 
+      this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(8, 280);
+      this.numericUpDownNumRows.Name = "numericUpDownNumRows";
+      this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
+      this.numericUpDownNumRows.TabIndex = 24;
+      this.numericUpDownNumRows.Tag = "True";
+      this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
+      // 
       // buttonSaveModel
       // 
       this.buttonSaveModel.Location = new System.Drawing.Point(8, 143);
@@ -712,15 +723,6 @@ namespace AW.Win
       this.btExecute.TabIndex = 9;
       this.btExecute.Text = "Execute Query";
       this.btExecute.Click += new System.EventHandler(this.btExecute_Click);
-      // 
-      // numericUpDownNumRows
-      // 
-      this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(8, 280);
-      this.numericUpDownNumRows.Name = "numericUpDownNumRows";
-      this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
-      this.numericUpDownNumRows.TabIndex = 24;
-      this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
       // 
       // FrmEasyQuery
       // 
@@ -812,6 +814,7 @@ namespace AW.Win
         }
         else
         {
+          // dataGrid1.BindEnumerable(GetQuery(), Convert.ToUInt16(numericUpDownNumRows.Value));ExecuteToEnumerable
           dataGrid1.BindEnumerable(ExecuteToEnumerable(), Convert.ToUInt16(numericUpDownNumRows.Value));
         }
       }
@@ -891,6 +894,16 @@ namespace AW.Win
     {
       var expression = GetLinqExpression();
       var queryResult = EntityHelper.GetProvider(MetaSingletons.MetaData).Execute(expression) as IEnumerable;
+      return queryResult;
+    }
+
+    private IQueryable GetQuery()
+    {
+      var expression = GetLinqExpression();
+      MethodInfo mi = typeof(Queryable).GetMethod("AsQueryable", BindingFlags.Static | BindingFlags.Public, null, new [] { typeof(IEnumerable) }, null);
+      Expression buff = Expression.Call(mi, new[] { expression });
+      Expression final = Expression.Convert(buff, typeof(IQueryable));
+      var queryResult = EntityHelper.GetProvider(MetaSingletons.MetaData).CreateQuery(final);
       return queryResult;
     }
 
