@@ -56,16 +56,10 @@ namespace AW.Win
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.newOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panel1 = new System.Windows.Forms.Panel();
-      this.checkBoxUseEasyQuery = new System.Windows.Forms.CheckBox();
-      this.checkBoxUsePredicate = new System.Windows.Forms.CheckBox();
-      this.checkBoxShowCustomerViewRelatedFields = new System.Windows.Forms.CheckBox();
-      this.checkBoxFilterUsingCustomerViewRelated = new System.Windows.Forms.CheckBox();
       this.groupBoxLLBLQueryType = new System.Windows.Forms.GroupBox();
       this.radioButton3 = new System.Windows.Forms.RadioButton();
       this.radioButtonQuerySpec = new System.Windows.Forms.RadioButton();
       this.radioButton1 = new System.Windows.Forms.RadioButton();
-      this.checkBoxPrefetch = new System.Windows.Forms.CheckBox();
-      this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.btnSearch = new System.Windows.Forms.Button();
       this.searchWorker = new System.ComponentModel.BackgroundWorker();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -158,7 +152,6 @@ namespace AW.Win
       this.customerStateDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.customerZipDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.salesOrderHeaderEntityBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
       this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -184,6 +177,13 @@ namespace AW.Win
       this.customerZipDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.customerCountryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.totalDueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.checkBoxUseEasyQuery = new System.Windows.Forms.CheckBox();
+      this.checkBoxUsePredicate = new System.Windows.Forms.CheckBox();
+      this.checkBoxShowCustomerViewRelatedFields = new System.Windows.Forms.CheckBox();
+      this.checkBoxFilterUsingCustomerViewRelated = new System.Windows.Forms.CheckBox();
+      this.checkBoxPrefetch = new System.Windows.Forms.CheckBox();
+      this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
+      this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
       this.tableLayoutPanel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingNavigator)).BeginInit();
       this.salesOrderHeaderEntityBindingNavigator.SuspendLayout();
@@ -193,8 +193,8 @@ namespace AW.Win
       this.contextMenuStrip1.SuspendLayout();
       this.panel1.SuspendLayout();
       this.groupBoxLLBLQueryType.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       this.SuspendLayout();
       // 
       // tableLayoutPanel1
@@ -238,21 +238,21 @@ namespace AW.Win
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
             this.bindingNavigatorSeparator2});
-      this.salesOrderHeaderEntityBindingNavigator.Location = new System.Drawing.Point(2, 566);
+      this.salesOrderHeaderEntityBindingNavigator.Location = new System.Drawing.Point(2, 623);
       this.salesOrderHeaderEntityBindingNavigator.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
       this.salesOrderHeaderEntityBindingNavigator.MoveLastItem = this.bindingNavigatorMoveLastItem;
       this.salesOrderHeaderEntityBindingNavigator.MoveNextItem = this.bindingNavigatorMoveNextItem;
       this.salesOrderHeaderEntityBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
       this.salesOrderHeaderEntityBindingNavigator.Name = "salesOrderHeaderEntityBindingNavigator";
       this.salesOrderHeaderEntityBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-      this.salesOrderHeaderEntityBindingNavigator.Size = new System.Drawing.Size(771, 25);
+      this.salesOrderHeaderEntityBindingNavigator.Size = new System.Drawing.Size(771, 20);
       this.salesOrderHeaderEntityBindingNavigator.TabIndex = 24;
       this.salesOrderHeaderEntityBindingNavigator.Text = "bindingNavigator1";
       // 
       // bindingNavigatorCountItem
       // 
       this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
+      this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 17);
       this.bindingNavigatorCountItem.Text = "of {0}";
       this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
       // 
@@ -262,7 +262,7 @@ namespace AW.Win
       this.bindingNavigatorMoveFirstItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveFirstItem.Image")));
       this.bindingNavigatorMoveFirstItem.Name = "bindingNavigatorMoveFirstItem";
       this.bindingNavigatorMoveFirstItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveFirstItem.Size = new System.Drawing.Size(23, 17);
       this.bindingNavigatorMoveFirstItem.Text = "Move first";
       // 
       // bindingNavigatorMovePreviousItem
@@ -271,13 +271,13 @@ namespace AW.Win
       this.bindingNavigatorMovePreviousItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMovePreviousItem.Image")));
       this.bindingNavigatorMovePreviousItem.Name = "bindingNavigatorMovePreviousItem";
       this.bindingNavigatorMovePreviousItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMovePreviousItem.Size = new System.Drawing.Size(23, 17);
       this.bindingNavigatorMovePreviousItem.Text = "Move previous";
       // 
       // bindingNavigatorSeparator
       // 
       this.bindingNavigatorSeparator.Name = "bindingNavigatorSeparator";
-      this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 25);
+      this.bindingNavigatorSeparator.Size = new System.Drawing.Size(6, 20);
       // 
       // bindingNavigatorPositionItem
       // 
@@ -291,7 +291,7 @@ namespace AW.Win
       // bindingNavigatorSeparator1
       // 
       this.bindingNavigatorSeparator1.Name = "bindingNavigatorSeparator1";
-      this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 25);
+      this.bindingNavigatorSeparator1.Size = new System.Drawing.Size(6, 20);
       // 
       // bindingNavigatorMoveNextItem
       // 
@@ -299,7 +299,7 @@ namespace AW.Win
       this.bindingNavigatorMoveNextItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveNextItem.Image")));
       this.bindingNavigatorMoveNextItem.Name = "bindingNavigatorMoveNextItem";
       this.bindingNavigatorMoveNextItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveNextItem.Size = new System.Drawing.Size(23, 17);
       this.bindingNavigatorMoveNextItem.Text = "Move next";
       // 
       // bindingNavigatorMoveLastItem
@@ -308,13 +308,13 @@ namespace AW.Win
       this.bindingNavigatorMoveLastItem.Image = ((System.Drawing.Image)(resources.GetObject("bindingNavigatorMoveLastItem.Image")));
       this.bindingNavigatorMoveLastItem.Name = "bindingNavigatorMoveLastItem";
       this.bindingNavigatorMoveLastItem.RightToLeftAutoMirrorImage = true;
-      this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 22);
+      this.bindingNavigatorMoveLastItem.Size = new System.Drawing.Size(23, 17);
       this.bindingNavigatorMoveLastItem.Text = "Move last";
       // 
       // bindingNavigatorSeparator2
       // 
       this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
-      this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
+      this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 20);
       // 
       // QPanel
       // 
@@ -333,7 +333,7 @@ namespace AW.Win
       this.QPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.QPanel.Dock = System.Windows.Forms.DockStyle.Top;
       this.QPanel.ForeColor = System.Drawing.SystemColors.ControlText;
-      this.QPanel.Location = new System.Drawing.Point(5, 182);
+      this.QPanel.Location = new System.Drawing.Point(5, 240);
       this.QPanel.Name = "QPanel";
       this.QPanel.Query = this.query1;
       this.QPanel.Size = new System.Drawing.Size(765, 78);
@@ -370,7 +370,7 @@ namespace AW.Win
       this.panel2.Controls.Add(this.salesOrderHeaderEntityDataGridView);
       this.panel2.Controls.Add(this.dgResults);
       this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel2.Location = new System.Drawing.Point(5, 326);
+      this.panel2.Location = new System.Drawing.Point(5, 384);
       this.panel2.Name = "panel2";
       this.panel2.Size = new System.Drawing.Size(765, 234);
       this.panel2.TabIndex = 29;
@@ -489,64 +489,10 @@ namespace AW.Win
       this.panel1.Controls.Add(this.numericUpDownNumRows);
       this.panel1.Controls.Add(this.btnSearch);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.panel1.Location = new System.Drawing.Point(5, 268);
+      this.panel1.Location = new System.Drawing.Point(5, 326);
       this.panel1.Name = "panel1";
       this.panel1.Size = new System.Drawing.Size(765, 50);
       this.panel1.TabIndex = 22;
-      // 
-      // checkBoxUseEasyQuery
-      // 
-      this.checkBoxUseEasyQuery.AutoSize = true;
-      this.checkBoxUseEasyQuery.Checked = global::AW.Win.Properties.Settings.Default.UseEasyQuery;
-      this.checkBoxUseEasyQuery.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBoxUseEasyQuery.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "UseEasyQuery", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxUseEasyQuery.Location = new System.Drawing.Point(572, 27);
-      this.checkBoxUseEasyQuery.Name = "checkBoxUseEasyQuery";
-      this.checkBoxUseEasyQuery.Size = new System.Drawing.Size(99, 17);
-      this.checkBoxUseEasyQuery.TabIndex = 29;
-      this.checkBoxUseEasyQuery.Text = "Use EasyQuery";
-      this.checkBoxUseEasyQuery.UseVisualStyleBackColor = true;
-      this.checkBoxUseEasyQuery.CheckedChanged += new System.EventHandler(this.checkBoxUseEasyQuery_CheckedChanged);
-      // 
-      // checkBoxUsePredicate
-      // 
-      this.checkBoxUsePredicate.AutoSize = true;
-      this.checkBoxUsePredicate.Checked = global::AW.Win.Properties.Settings.Default.UsePredicate;
-      this.checkBoxUsePredicate.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBoxUsePredicate.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "UsePredicate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxUsePredicate.Location = new System.Drawing.Point(476, 6);
-      this.checkBoxUsePredicate.Name = "checkBoxUsePredicate";
-      this.checkBoxUsePredicate.Size = new System.Drawing.Size(93, 17);
-      this.checkBoxUsePredicate.TabIndex = 28;
-      this.checkBoxUsePredicate.Text = "Use Predicate";
-      this.checkBoxUsePredicate.UseVisualStyleBackColor = true;
-      // 
-      // checkBoxShowCustomerViewRelatedFields
-      // 
-      this.checkBoxShowCustomerViewRelatedFields.AutoSize = true;
-      this.checkBoxShowCustomerViewRelatedFields.Checked = global::AW.Win.Properties.Settings.Default.ShowCustomerViewRelatedFields;
-      this.checkBoxShowCustomerViewRelatedFields.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBoxShowCustomerViewRelatedFields.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "ShowCustomerViewRelatedFields", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxShowCustomerViewRelatedFields.Location = new System.Drawing.Point(280, 29);
-      this.checkBoxShowCustomerViewRelatedFields.Name = "checkBoxShowCustomerViewRelatedFields";
-      this.checkBoxShowCustomerViewRelatedFields.Size = new System.Drawing.Size(190, 17);
-      this.checkBoxShowCustomerViewRelatedFields.TabIndex = 27;
-      this.checkBoxShowCustomerViewRelatedFields.Text = "Show CustomerViewRelated Fields";
-      this.checkBoxShowCustomerViewRelatedFields.UseVisualStyleBackColor = true;
-      this.checkBoxShowCustomerViewRelatedFields.CheckedChanged += new System.EventHandler(this.checkBoxShowCustomerViewRelatedFields_CheckedChanged);
-      // 
-      // checkBoxFilterUsingCustomerViewRelated
-      // 
-      this.checkBoxFilterUsingCustomerViewRelated.AutoSize = true;
-      this.checkBoxFilterUsingCustomerViewRelated.Checked = global::AW.Win.Properties.Settings.Default.FilterUsingCustomerViewRelated;
-      this.checkBoxFilterUsingCustomerViewRelated.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBoxFilterUsingCustomerViewRelated.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "FilterUsingCustomerViewRelated", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxFilterUsingCustomerViewRelated.Location = new System.Drawing.Point(280, 6);
-      this.checkBoxFilterUsingCustomerViewRelated.Name = "checkBoxFilterUsingCustomerViewRelated";
-      this.checkBoxFilterUsingCustomerViewRelated.Size = new System.Drawing.Size(185, 17);
-      this.checkBoxFilterUsingCustomerViewRelated.TabIndex = 26;
-      this.checkBoxFilterUsingCustomerViewRelated.Text = "Filter Using CustomerViewRelated";
-      this.checkBoxFilterUsingCustomerViewRelated.UseVisualStyleBackColor = true;
       // 
       // groupBoxLLBLQueryType
       // 
@@ -597,29 +543,6 @@ namespace AW.Win
       this.radioButton1.Text = "Native";
       this.radioButton1.UseVisualStyleBackColor = true;
       this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButtonLLBLQueryType_CheckedChanged);
-      // 
-      // checkBoxPrefetch
-      // 
-      this.checkBoxPrefetch.AutoSize = true;
-      this.checkBoxPrefetch.Checked = global::AW.Win.Properties.Settings.Default.Prefetch;
-      this.checkBoxPrefetch.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBoxPrefetch.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "Prefetch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.checkBoxPrefetch.Location = new System.Drawing.Point(476, 29);
-      this.checkBoxPrefetch.Name = "checkBoxPrefetch";
-      this.checkBoxPrefetch.Size = new System.Drawing.Size(66, 17);
-      this.checkBoxPrefetch.TabIndex = 24;
-      this.checkBoxPrefetch.Text = "Prefetch";
-      this.checkBoxPrefetch.UseVisualStyleBackColor = true;
-      // 
-      // numericUpDownNumRows
-      // 
-      this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(7, 27);
-      this.numericUpDownNumRows.Name = "numericUpDownNumRows";
-      this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
-      this.numericUpDownNumRows.TabIndex = 23;
-      this.toolTip1.SetToolTip(this.numericUpDownNumRows, "max Number Of Items To Return");
-      this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
       // 
       // btnSearch
       // 
@@ -1174,14 +1097,6 @@ namespace AW.Win
       this.salesOrderHeaderEntityBindingSource.AllowNew = false;
       this.salesOrderHeaderEntityBindingSource.DataSource = typeof(AW.Data.EntityClasses.SalesOrderHeaderEntity);
       // 
-      // orderSearchCriteria1
-      // 
-      this.orderSearchCriteria1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.orderSearchCriteria1.Location = new System.Drawing.Point(5, 5);
-      this.orderSearchCriteria1.Name = "orderSearchCriteria1";
-      this.orderSearchCriteria1.Size = new System.Drawing.Size(765, 169);
-      this.orderSearchCriteria1.TabIndex = 23;
-      // 
       // dataGridViewTextBoxColumn15
       // 
       this.dataGridViewTextBoxColumn15.DataPropertyName = "AccountNumber";
@@ -1379,6 +1294,93 @@ namespace AW.Win
       this.totalDueDataGridViewTextBoxColumn.Name = "totalDueDataGridViewTextBoxColumn";
       this.totalDueDataGridViewTextBoxColumn.ReadOnly = true;
       // 
+      // checkBoxUseEasyQuery
+      // 
+      this.checkBoxUseEasyQuery.AutoSize = true;
+      this.checkBoxUseEasyQuery.Checked = global::AW.Win.Properties.Settings.Default.UseEasyQuery;
+      this.checkBoxUseEasyQuery.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxUseEasyQuery.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "UseEasyQuery", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxUseEasyQuery.Location = new System.Drawing.Point(572, 27);
+      this.checkBoxUseEasyQuery.Name = "checkBoxUseEasyQuery";
+      this.checkBoxUseEasyQuery.Size = new System.Drawing.Size(99, 17);
+      this.checkBoxUseEasyQuery.TabIndex = 29;
+      this.checkBoxUseEasyQuery.Text = "Use EasyQuery";
+      this.checkBoxUseEasyQuery.UseVisualStyleBackColor = true;
+      this.checkBoxUseEasyQuery.CheckedChanged += new System.EventHandler(this.checkBoxUseEasyQuery_CheckedChanged);
+      // 
+      // checkBoxUsePredicate
+      // 
+      this.checkBoxUsePredicate.AutoSize = true;
+      this.checkBoxUsePredicate.Checked = global::AW.Win.Properties.Settings.Default.UsePredicate;
+      this.checkBoxUsePredicate.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxUsePredicate.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "UsePredicate", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxUsePredicate.Location = new System.Drawing.Point(476, 6);
+      this.checkBoxUsePredicate.Name = "checkBoxUsePredicate";
+      this.checkBoxUsePredicate.Size = new System.Drawing.Size(93, 17);
+      this.checkBoxUsePredicate.TabIndex = 28;
+      this.checkBoxUsePredicate.Text = "Use Predicate";
+      this.checkBoxUsePredicate.UseVisualStyleBackColor = true;
+      // 
+      // checkBoxShowCustomerViewRelatedFields
+      // 
+      this.checkBoxShowCustomerViewRelatedFields.AutoCheck = false;
+      this.checkBoxShowCustomerViewRelatedFields.AutoSize = true;
+      this.checkBoxShowCustomerViewRelatedFields.Checked = global::AW.Win.Properties.Settings.Default.ShowCustomerViewRelatedFields;
+      this.checkBoxShowCustomerViewRelatedFields.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxShowCustomerViewRelatedFields.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "ShowCustomerViewRelatedFields", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxShowCustomerViewRelatedFields.Location = new System.Drawing.Point(280, 29);
+      this.checkBoxShowCustomerViewRelatedFields.Name = "checkBoxShowCustomerViewRelatedFields";
+      this.checkBoxShowCustomerViewRelatedFields.Size = new System.Drawing.Size(190, 17);
+      this.checkBoxShowCustomerViewRelatedFields.TabIndex = 27;
+      this.checkBoxShowCustomerViewRelatedFields.Text = "Show CustomerViewRelated Fields";
+      this.checkBoxShowCustomerViewRelatedFields.UseVisualStyleBackColor = true;
+      this.checkBoxShowCustomerViewRelatedFields.CheckedChanged += new System.EventHandler(this.checkBoxShowCustomerViewRelatedFields_CheckedChanged);
+      this.checkBoxShowCustomerViewRelatedFields.Click += new System.EventHandler(this.checkBoxShowCustomerViewRelatedFields_Click);
+      // 
+      // checkBoxFilterUsingCustomerViewRelated
+      // 
+      this.checkBoxFilterUsingCustomerViewRelated.AutoSize = true;
+      this.checkBoxFilterUsingCustomerViewRelated.Checked = global::AW.Win.Properties.Settings.Default.FilterUsingCustomerViewRelated;
+      this.checkBoxFilterUsingCustomerViewRelated.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxFilterUsingCustomerViewRelated.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "FilterUsingCustomerViewRelated", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxFilterUsingCustomerViewRelated.Location = new System.Drawing.Point(280, 6);
+      this.checkBoxFilterUsingCustomerViewRelated.Name = "checkBoxFilterUsingCustomerViewRelated";
+      this.checkBoxFilterUsingCustomerViewRelated.Size = new System.Drawing.Size(185, 17);
+      this.checkBoxFilterUsingCustomerViewRelated.TabIndex = 26;
+      this.checkBoxFilterUsingCustomerViewRelated.Text = "Filter Using CustomerViewRelated";
+      this.checkBoxFilterUsingCustomerViewRelated.UseVisualStyleBackColor = true;
+      // 
+      // checkBoxPrefetch
+      // 
+      this.checkBoxPrefetch.AutoSize = true;
+      this.checkBoxPrefetch.Checked = global::AW.Win.Properties.Settings.Default.Prefetch;
+      this.checkBoxPrefetch.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBoxPrefetch.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "Prefetch", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxPrefetch.Location = new System.Drawing.Point(476, 29);
+      this.checkBoxPrefetch.Name = "checkBoxPrefetch";
+      this.checkBoxPrefetch.Size = new System.Drawing.Size(66, 17);
+      this.checkBoxPrefetch.TabIndex = 24;
+      this.checkBoxPrefetch.Text = "Prefetch";
+      this.checkBoxPrefetch.UseVisualStyleBackColor = true;
+      // 
+      // numericUpDownNumRows
+      // 
+      this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(7, 27);
+      this.numericUpDownNumRows.Name = "numericUpDownNumRows";
+      this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
+      this.numericUpDownNumRows.TabIndex = 23;
+      this.toolTip1.SetToolTip(this.numericUpDownNumRows, "max Number Of Items To Return");
+      this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
+      // 
+      // orderSearchCriteria1
+      // 
+      this.orderSearchCriteria1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.orderSearchCriteria1.Location = new System.Drawing.Point(5, 5);
+      this.orderSearchCriteria1.Name = "orderSearchCriteria1";
+      this.orderSearchCriteria1.Size = new System.Drawing.Size(765, 227);
+      this.orderSearchCriteria1.TabIndex = 23;
+      // 
       // FrmOrderSearch
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1407,8 +1409,8 @@ namespace AW.Win
       this.panel1.PerformLayout();
       this.groupBoxLLBLQueryType.ResumeLayout(false);
       this.groupBoxLLBLQueryType.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       this.ResumeLayout(false);
 
         }

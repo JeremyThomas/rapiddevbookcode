@@ -39,6 +39,8 @@ namespace AW.Data.ViewModels
     public IEnumerable<string> Countries { get; set; }
     public string Zip { get; set; }
     public string CountryName { get; set; }
+    public OrderStatus? OrderStatus { get; set; }
+    public bool? IsOnlineOrder { get; set; }
 
     public bool HasCustomerViewRelatedCriteria()
     {
@@ -90,6 +92,10 @@ namespace AW.Data.ViewModels
         predicate.Add(SalesOrderHeaderFields.SalesOrderID == OrderID);
       if (!String.IsNullOrEmpty(OrderNumber))
         predicate.Add(SalesOrderHeaderFields.SalesOrderNumber == OrderNumber);
+      if (OrderStatus.HasValue)
+        predicate.Add(SalesOrderHeaderFields.Status == OrderStatus);
+      if (IsOnlineOrder.HasValue)
+        predicate.Add(SalesOrderHeaderFields.OnlineOrderFlag == IsOnlineOrder);
     }
 
     public IPredicateExpression GetPredicateExpression(bool includeSalesOrderHeader = true)

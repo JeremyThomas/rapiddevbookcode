@@ -219,8 +219,6 @@ namespace AW.Win
 
     private void checkBoxShowCustomerViewRelatedFields_CheckedChanged(object sender, EventArgs e)
     {
-      //checkBoxPrefetch.Checked = Settings.Default.ShowCustomerViewRelatedFields;
-      // var x = Settings.Default.ShowCustomerViewRelatedFields;
       if (checkBoxShowCustomerViewRelatedFields.Checked)
       {
         HideGrid(salesOrderHeaderEntityDataGridView);
@@ -235,6 +233,12 @@ namespace AW.Win
       }
     }
 
+    private void checkBoxShowCustomerViewRelatedFields_Click(object sender, EventArgs e)
+    {
+      checkBoxShowCustomerViewRelatedFields.Checked = !checkBoxShowCustomerViewRelatedFields.Checked;
+      checkBoxPrefetch.Checked = checkBoxShowCustomerViewRelatedFields.Checked;
+    }
+
     private void checkBoxUseEasyQuery_CheckedChanged(object sender, EventArgs e)
     {
       QPanel.Enabled = checkBoxUseEasyQuery.Checked;
@@ -244,5 +248,6 @@ namespace AW.Win
     {
       MessageBox.Show(FrmEasyQuery.GetLinqExpression(query1).ToString(), "Linq Expression");
     }
+
   }
 }
