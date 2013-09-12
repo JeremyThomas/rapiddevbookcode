@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
 using AW.Helper;
@@ -21,30 +23,7 @@ namespace AW.Win
     {
       if (DesignMode)
         return;
-      var previousState = Settings.Default.State;
-
-      listBoxCountry.DataSource = LookUpQueries.GetCountryRegionCollection();
-      listBoxCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
-      listBoxCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
-
-      cbState.DataSource = LookUpQueries.GetStateProvinceCollection();
-      cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
-      cbState.ValueMember = StateProvinceFieldIndex.StateProvinceID.ToString();
-
-      dtpDateFrom.Checked = Settings.Default.FilterOnFromDate;
-      dtpDateTo.Checked = Settings.Default.FilterOnToDate;
-
-      cbState.Text = previousState;
-
-      comboBoxStatus.DataSource = GeneralHelper.EnumAsEnumerable<OrderStatus>();
-
-      buttonClearCountries_Click(sender, e);
-      if (Settings.Default.Countries != null && listBoxCountry.Items.Count > 0)
-        foreach (var selectedRow in Settings.Default.Countries)
-          listBoxCountry.SelectedIndices.Add(Convert.ToInt32(selectedRow));
-
-      comboBoxStatus.SelectedItem = Settings.Default.OrderStatus;
-      checkBoxOnline.CheckState = Settings.Default.IsOnline;
+      backgroundWorkerLookUps.RunWorkerAsync();
     }
 
     public void OrderSearchCriteriaOnClosing()
@@ -122,6 +101,42 @@ namespace AW.Win
 
       buttonClearCountries_Click(sender, e);
       checkBoxOnline.CheckState = CheckState.Indeterminate;
+    }
+
+    private void backgroundWorkerLookUps_DoWork(object sender, DoWorkEventArgs e)
+    {
+      e.Result = new Tuple<CountryRegionCollection, StateProvinceCollection>(LookUpQueries.GetCountryRegionCollection(), LookUpQueries.GetStateProvinceCollection());
+    }
+
+    private void backgroundWorkerLookUps_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+    {
+      var lu = e.Result as Tuple<CountryRegionCollection, StateProvinceCollection>;
+
+      var previousState = Settings.Default.State;
+      listBoxCountry.DisplayMember = CountryRegionFieldIndex.Name.ToString();
+      listBoxCountry.ValueMember = CountryRegionFieldIndex.CountryRegionCode.ToString();
+      if (lu != null)
+      {
+        listBoxCountry.DataSource = lu.Item1;
+        cbState.DataSource = lu.Item2;
+      }
+      cbState.DisplayMember = StateProvinceFieldIndex.Name.ToString();
+      cbState.ValueMember = StateProvinceFieldIndex.StateProvinceID.ToString();
+
+      dtpDateFrom.Checked = Settings.Default.FilterOnFromDate;
+      dtpDateTo.Checked = Settings.Default.FilterOnToDate;
+
+      cbState.Text = previousState;
+
+      comboBoxStatus.DataSource = GeneralHelper.EnumAsEnumerable<OrderStatus>();
+
+      buttonClearCountries_Click(sender, e);
+      if (Settings.Default.Countries != null && listBoxCountry.Items.Count > 0)
+        foreach (var selectedRow in Settings.Default.Countries)
+          listBoxCountry.SelectedIndices.Add(Convert.ToInt32(selectedRow));
+
+      comboBoxStatus.SelectedItem = Settings.Default.OrderStatus;
+      checkBoxOnline.CheckState = Settings.Default.IsOnline;
     }
   }
 }

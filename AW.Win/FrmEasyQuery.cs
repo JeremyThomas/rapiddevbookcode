@@ -49,7 +49,6 @@ namespace AW.Win
     private Splitter splitter1;
     private GroupBox groupBoxResultSet;
     private TextBox teSQL;
-    private DataGrid dataGrid1;
     private Splitter splitter2;
     private Panel panelBG;
     private Panel panelButtons;
@@ -75,10 +74,12 @@ namespace AW.Win
     private Label labelDbTypeHint;
     private Label label1;
 
-    private string _dataFolder = "";
+    private readonly string _dataFolder = "";
 
     private string appDirectory;
     private Button buttonSaveModel;
+    private Winforms.Helpers.Controls.GridDataEditor dataGrid1;
+    private NumericUpDown numericUpDownNumRows;
 
     private SqlConnection sqlCon;
 
@@ -225,7 +226,7 @@ namespace AW.Win
       this.menuItemAddConditions = new System.Windows.Forms.MenuItem();
       this.panelBottom = new System.Windows.Forms.Panel();
       this.groupBoxResultSet = new System.Windows.Forms.GroupBox();
-      this.dataGrid1 = new System.Windows.Forms.DataGrid();
+      this.dataGrid1 = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.splitter1 = new System.Windows.Forms.Splitter();
       this.groupBoxSQL = new System.Windows.Forms.GroupBox();
       this.teSQL = new System.Windows.Forms.TextBox();
@@ -247,17 +248,17 @@ namespace AW.Win
       this.groupBoxSorting = new System.Windows.Forms.GroupBox();
       this.SCPanel = new Korzh.EasyQuery.WinControls.SortColumnsPanel();
       this.panelButtons = new System.Windows.Forms.Panel();
+      this.buttonSaveModel = new System.Windows.Forms.Button();
       this.btCodeSamples = new System.Windows.Forms.Button();
       this.btClear = new System.Windows.Forms.Button();
       this.btLoad = new System.Windows.Forms.Button();
       this.btSave = new System.Windows.Forms.Button();
       this.btExecute = new System.Windows.Forms.Button();
-      this.buttonSaveModel = new System.Windows.Forms.Button();
+      this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       ((System.ComponentModel.ISupportInitialize)(this.ResultDataTable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.ResultDS)).BeginInit();
       this.panelBottom.SuspendLayout();
       this.groupBoxResultSet.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
       this.groupBoxSQL.SuspendLayout();
       this.panelBG.SuspendLayout();
       this.groupBoxEntities.SuspendLayout();
@@ -267,6 +268,7 @@ namespace AW.Win
       this.panelColumns.SuspendLayout();
       this.groupBoxSorting.SuspendLayout();
       this.panelButtons.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       this.SuspendLayout();
       // 
       // dataModel1
@@ -362,16 +364,15 @@ namespace AW.Win
       // 
       // dataGrid1
       // 
-      this.dataGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
       this.dataGrid1.DataMember = "";
-      this.dataGrid1.DataSource = this.ResultDataTable;
-      this.dataGrid1.HeaderForeColor = System.Drawing.SystemColors.ControlText;
-      this.dataGrid1.Location = new System.Drawing.Point(8, 16);
+      this.dataGrid1.DataSource = null;
+      this.dataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGrid1.Location = new System.Drawing.Point(3, 16);
       this.dataGrid1.Name = "dataGrid1";
-      this.dataGrid1.Size = new System.Drawing.Size(463, 154);
-      this.dataGrid1.TabIndex = 1;
+      this.dataGrid1.PageSize = ((ushort)(0));
+      this.dataGrid1.Readonly = false;
+      this.dataGrid1.Size = new System.Drawing.Size(470, 159);
+      this.dataGrid1.TabIndex = 0;
       // 
       // splitter1
       // 
@@ -646,6 +647,7 @@ namespace AW.Win
       // panelButtons
       // 
       this.panelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.panelButtons.Controls.Add(this.numericUpDownNumRows);
       this.panelButtons.Controls.Add(this.buttonSaveModel);
       this.panelButtons.Controls.Add(this.btCodeSamples);
       this.panelButtons.Controls.Add(this.btClear);
@@ -657,9 +659,18 @@ namespace AW.Win
       this.panelButtons.Size = new System.Drawing.Size(78, 311);
       this.panelButtons.TabIndex = 22;
       // 
+      // buttonSaveModel
+      // 
+      this.buttonSaveModel.Location = new System.Drawing.Point(8, 143);
+      this.buttonSaveModel.Name = "buttonSaveModel";
+      this.buttonSaveModel.Size = new System.Drawing.Size(62, 35);
+      this.buttonSaveModel.TabIndex = 14;
+      this.buttonSaveModel.Text = "Save Model";
+      this.buttonSaveModel.Click += new System.EventHandler(this.buttonSaveModel_Click);
+      // 
       // btCodeSamples
       // 
-      this.btCodeSamples.Location = new System.Drawing.Point(8, 262);
+      this.btCodeSamples.Location = new System.Drawing.Point(8, 238);
       this.btCodeSamples.Name = "btCodeSamples";
       this.btCodeSamples.Size = new System.Drawing.Size(62, 36);
       this.btCodeSamples.TabIndex = 13;
@@ -702,14 +713,14 @@ namespace AW.Win
       this.btExecute.Text = "Execute Query";
       this.btExecute.Click += new System.EventHandler(this.btExecute_Click);
       // 
-      // buttonSaveModel
+      // numericUpDownNumRows
       // 
-      this.buttonSaveModel.Location = new System.Drawing.Point(8, 143);
-      this.buttonSaveModel.Name = "buttonSaveModel";
-      this.buttonSaveModel.Size = new System.Drawing.Size(62, 35);
-      this.buttonSaveModel.TabIndex = 14;
-      this.buttonSaveModel.Text = "Save Model";
-      this.buttonSaveModel.Click += new System.EventHandler(this.buttonSaveModel_Click);
+      this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(8, 280);
+      this.numericUpDownNumRows.Name = "numericUpDownNumRows";
+      this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
+      this.numericUpDownNumRows.TabIndex = 24;
+      this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
       // 
       // FrmEasyQuery
       // 
@@ -725,7 +736,6 @@ namespace AW.Win
       ((System.ComponentModel.ISupportInitialize)(this.ResultDS)).EndInit();
       this.panelBottom.ResumeLayout(false);
       this.groupBoxResultSet.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
       this.groupBoxSQL.ResumeLayout(false);
       this.groupBoxSQL.PerformLayout();
       this.panelBG.ResumeLayout(false);
@@ -737,6 +747,7 @@ namespace AW.Win
       this.panelColumns.ResumeLayout(false);
       this.groupBoxSorting.ResumeLayout(false);
       this.panelButtons.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -801,7 +812,7 @@ namespace AW.Win
         }
         else
         {
-          dataGrid1.DataSource = ExecuteToEnumerable();
+          dataGrid1.BindEnumerable(ExecuteToEnumerable(), Convert.ToUInt16(numericUpDownNumRows.Value));
         }
       }
       catch (Exception error)
@@ -864,12 +875,12 @@ namespace AW.Win
       }
       else
       {
-        ExcuteToDataTable();
+        ExecuteToDataTable();
       }
       e.ResultXml = strWriter.ToString();
     }
 
-    private DataTable ExcuteToDataTable()
+    private DataTable ExecuteToDataTable()
     {
       var queryResult = ExecuteToEnumerable();
       //          var dynamicInvoke = Expression.Lambda(expression).Compile().DynamicInvoke() as IEnumerable;

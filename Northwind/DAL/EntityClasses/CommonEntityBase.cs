@@ -105,6 +105,7 @@ namespace Northwind.DAL.EntityClasses
 		{
 			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof(CommonEntityBase));
       ProfilerHelper.InitializeOrmProfiler();
+      CacheController.RegisterCache("", new ResultsetCache()); 
 			MarkSavedEntitiesAsFetched = true;
 		}
 

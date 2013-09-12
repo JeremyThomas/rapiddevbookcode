@@ -54,6 +54,7 @@
       this.label10 = new System.Windows.Forms.Label();
       this.comboBoxStatus = new System.Windows.Forms.ComboBox();
       this.checkBoxOnline = new System.Windows.Forms.CheckBox();
+      this.backgroundWorkerLookUps = new System.ComponentModel.BackgroundWorker();
       this.tableLayoutPanelOrderSearchCriteria.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -375,6 +376,11 @@
       this.checkBoxOnline.ThreeState = true;
       this.checkBoxOnline.UseVisualStyleBackColor = true;
       // 
+      // backgroundWorkerLookUps
+      // 
+      this.backgroundWorkerLookUps.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerLookUps_DoWork);
+      this.backgroundWorkerLookUps.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerLookUps_RunWorkerCompleted);
+      // 
       // OrderSearchCriteria
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -417,5 +423,6 @@
     private System.Windows.Forms.Label label11;
     private System.Windows.Forms.ComboBox comboBoxStatus;
     private System.Windows.Forms.CheckBox checkBoxOnline;
+    private System.ComponentModel.BackgroundWorker backgroundWorkerLookUps;
   }
 }

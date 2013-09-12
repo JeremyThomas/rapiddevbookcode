@@ -47,6 +47,7 @@ namespace AW.Win
       this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
       this.QPanel = new Korzh.EasyQuery.WinControls.QueryPanel();
       this.query1 = new Korzh.EasyQuery.Db.DbQuery();
       this.dataModel1 = new Korzh.EasyQuery.Db.DbModel();
@@ -183,7 +184,6 @@ namespace AW.Win
       this.customerLastNameDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.customerStateDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.customerZipDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.orderSearchCriteria1 = new AW.Win.OrderSearchCriteria();
       this.tableLayoutPanel1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.salesOrderHeaderEntityBindingNavigator)).BeginInit();
       this.salesOrderHeaderEntityBindingNavigator.SuspendLayout();
@@ -321,6 +321,14 @@ namespace AW.Win
       this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
       this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 20);
       // 
+      // orderSearchCriteria1
+      // 
+      this.orderSearchCriteria1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.orderSearchCriteria1.Location = new System.Drawing.Point(5, 5);
+      this.orderSearchCriteria1.Name = "orderSearchCriteria1";
+      this.orderSearchCriteria1.Size = new System.Drawing.Size(765, 227);
+      this.orderSearchCriteria1.TabIndex = 23;
+      // 
       // QPanel
       // 
       this.QPanel.Active = false;
@@ -434,6 +442,7 @@ namespace AW.Win
       this.salesOrderHeaderEntityDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
       this.salesOrderHeaderEntityDataGridView.Size = new System.Drawing.Size(684, 106);
       this.salesOrderHeaderEntityDataGridView.TabIndex = 25;
+      this.salesOrderHeaderEntityDataGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgResults_CellContentDoubleClick);
       // 
       // dataGridViewTextBoxColumn15
       // 
@@ -1373,14 +1382,6 @@ namespace AW.Win
       this.customerZipDataGridViewTextBoxColumn2.DataPropertyName = "CustomerZip";
       this.customerZipDataGridViewTextBoxColumn2.HeaderText = "CustomerZip";
       this.customerZipDataGridViewTextBoxColumn2.Name = "customerZipDataGridViewTextBoxColumn2";
-      // 
-      // orderSearchCriteria1
-      // 
-      this.orderSearchCriteria1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.orderSearchCriteria1.Location = new System.Drawing.Point(5, 5);
-      this.orderSearchCriteria1.Name = "orderSearchCriteria1";
-      this.orderSearchCriteria1.Size = new System.Drawing.Size(765, 227);
-      this.orderSearchCriteria1.TabIndex = 23;
       // 
       // FrmOrderSearch
       // 
