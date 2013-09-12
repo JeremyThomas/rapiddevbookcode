@@ -128,8 +128,11 @@
     <Setting Name="UseEasyQuery" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="SQLTrace" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="OrderStatus" Type="AW.Data.OrderStatus" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="IsOnline" Type="System.Windows.Forms.CheckState" Scope="User">
+      <Value Profile="(Default)">Indeterminate</Value>
     </Setting>
     <Setting Name="OpenTraceWindosOnStart" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -137,11 +140,8 @@
     <Setting Name="ReopenWindows" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="OrderStatus" Type="AW.Data.OrderStatus" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="IsOnline" Type="System.Windows.Forms.CheckState" Scope="User">
-      <Value Profile="(Default)">Indeterminate</Value>
+    <Setting Name="SQLTrace" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
