@@ -51,7 +51,9 @@ namespace AW.Win
     {
       Settings.Default.FilterOnFromDate = dtpDateFrom.Checked;
       Settings.Default.FilterOnToDate = dtpDateTo.Checked;
-      if (!string.IsNullOrWhiteSpace(comboBoxStatus.Text))
+      if (string.IsNullOrWhiteSpace(comboBoxStatus.Text))
+        Settings.Default.OrderStatus = null;
+      else
         Settings.Default.OrderStatus = comboBoxStatus.SelectedItem as OrderStatus?;
       Settings.Default.IsOnline = checkBoxOnline.CheckState;
 
