@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
+using AW.Helper;
 using AW.Win.Properties;
 
 namespace AW.Win
@@ -35,16 +36,24 @@ namespace AW.Win
 
       cbState.Text = previousState;
 
+      comboBoxStatus.DataSource = GeneralHelper.EnumAsEnumerable<OrderStatus>();
+
       buttonClearCountries_Click(sender, e);
       if (Settings.Default.Countries != null && listBoxCountry.Items.Count > 0)
         foreach (var selectedRow in Settings.Default.Countries)
           listBoxCountry.SelectedIndices.Add(Convert.ToInt32(selectedRow));
+
+      comboBoxStatus.SelectedItem = Settings.Default.OrderStatus;
+      checkBoxOnline.CheckState = Settings.Default.IsOnline;
     }
 
     public void OrderSearchCriteriaOnClosing()
     {
       Settings.Default.FilterOnFromDate = dtpDateFrom.Checked;
       Settings.Default.FilterOnToDate = dtpDateTo.Checked;
+      if (!string.IsNullOrWhiteSpace(comboBoxStatus.Text))
+        Settings.Default.OrderStatus = comboBoxStatus.SelectedItem as OrderStatus?;
+      Settings.Default.IsOnline = checkBoxOnline.CheckState;
 
       if (listBoxCountry.Items.Count > 0)
       {
@@ -78,6 +87,14 @@ namespace AW.Win
         {
           orderSearchCriteria.OrderNumber = tbOrderID.Text;
         }
+      if (string.IsNullOrWhiteSpace(comboBoxStatus.Text))
+        orderSearchCriteria.OrderStatus = null;
+      else
+        orderSearchCriteria.OrderStatus = comboBoxStatus.SelectedItem as OrderStatus?;
+      if (checkBoxOnline.CheckState == CheckState.Indeterminate)
+        orderSearchCriteria.IsOnlineOrder = null;
+      else
+        orderSearchCriteria.IsOnlineOrder = checkBoxOnline.Checked;
       orderSearchCriteria.FirstName = tbFirstName.Text;
       orderSearchCriteria.LastName = tbLastName.Text;
       orderSearchCriteria.CityName = tbCity.Text;
@@ -102,6 +119,7 @@ namespace AW.Win
         comboBox.Text = String.Empty;
 
       buttonClearCountries_Click(sender, e);
+      checkBoxOnline.CheckState = CheckState.Indeterminate;
     }
   }
 }
