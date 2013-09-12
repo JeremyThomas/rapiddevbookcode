@@ -617,9 +617,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  view field: "vIndividualCustomer"."EmailPromotion"<br/>
 		/// View field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// View field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 EmailPromotion
+		public virtual AW.Data.EmailPromotion EmailPromotion
 		{
-			get { return (System.Int32)GetValue((int)CustomerViewRelatedFieldIndex.EmailPromotion, true); }
+			get { return (AW.Data.EmailPromotion)GetValue((int)CustomerViewRelatedFieldIndex.EmailPromotion, true); }
 			set	{ SetValue((int)CustomerViewRelatedFieldIndex.EmailPromotion, value, true); }
 		}
 

@@ -590,9 +590,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "EmployeePayHistory"."PayFrequency"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Byte PayFrequency
+		public virtual AW.Data.PayFrequency PayFrequency
 		{
-			get { return (System.Byte)GetValue((int)EmployeePayHistoryFieldIndex.PayFrequency, true); }
+			get { return (AW.Data.PayFrequency)GetValue((int)EmployeePayHistoryFieldIndex.PayFrequency, true); }
 			set	{ SetValue((int)EmployeePayHistoryFieldIndex.PayFrequency, value, true); }
 		}
 

@@ -220,7 +220,7 @@ namespace AW.Data.HelperClasses
 			this.AddFieldIndexEnumForElementName(typeof(EmployeePayHistoryFieldIndex), "EmployeePayHistoryEntity");
 			this.AddElementFieldInfo("EmployeePayHistoryEntity", "EmployeeID", typeof(System.Int32), true, true, false, false,  (int)EmployeePayHistoryFieldIndex.EmployeeID, 0, 0, 10);
 			this.AddElementFieldInfo("EmployeePayHistoryEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)EmployeePayHistoryFieldIndex.ModifiedDate, 0, 0, 0);
-			this.AddElementFieldInfo("EmployeePayHistoryEntity", "PayFrequency", typeof(System.Byte), false, false, false, false,  (int)EmployeePayHistoryFieldIndex.PayFrequency, 0, 0, 3);
+			this.AddElementFieldInfo("EmployeePayHistoryEntity", "PayFrequency", typeof(AW.Data.PayFrequency), false, false, false, false,  (int)EmployeePayHistoryFieldIndex.PayFrequency, 0, 0, 3);
 			this.AddElementFieldInfo("EmployeePayHistoryEntity", "Rate", typeof(System.Decimal), false, false, false, false,  (int)EmployeePayHistoryFieldIndex.Rate, 0, 4, 19);
 			this.AddElementFieldInfo("EmployeePayHistoryEntity", "RateChangeDate", typeof(System.DateTime), true, false, false, false,  (int)EmployeePayHistoryFieldIndex.RateChangeDate, 0, 0, 0);
 		}
@@ -272,7 +272,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("ContactEntity", "AdditionalContactInfo", typeof(System.String), false, false, false, true,  (int)ContactFieldIndex.AdditionalContactInfo, 2147483647, 0, 0);
 			this.AddElementFieldInfo("ContactEntity", "ContactID", typeof(System.Int32), true, false, true, false,  (int)ContactFieldIndex.ContactID, 0, 0, 10);
 			this.AddElementFieldInfo("ContactEntity", "EmailAddress", typeof(System.String), false, false, false, true,  (int)ContactFieldIndex.EmailAddress, 50, 0, 0);
-			this.AddElementFieldInfo("ContactEntity", "EmailPromotion", typeof(System.Int32), false, false, false, false,  (int)ContactFieldIndex.EmailPromotion, 0, 0, 10);
+			this.AddElementFieldInfo("ContactEntity", "EmailPromotion", typeof(AW.Data.EmailPromotion), false, false, false, false,  (int)ContactFieldIndex.EmailPromotion, 0, 0, 10);
 			this.AddElementFieldInfo("ContactEntity", "FirstName", typeof(System.String), false, false, false, false,  (int)ContactFieldIndex.FirstName, 50, 0, 0);
 			this.AddElementFieldInfo("ContactEntity", "LastName", typeof(System.String), false, false, false, false,  (int)ContactFieldIndex.LastName, 50, 0, 0);
 			this.AddElementFieldInfo("ContactEntity", "MiddleName", typeof(System.String), false, false, false, true,  (int)ContactFieldIndex.MiddleName, 50, 0, 0);
@@ -666,7 +666,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("PurchaseOrderHeaderEntity", "RevisionNumber", typeof(System.Byte), false, false, false, false,  (int)PurchaseOrderHeaderFieldIndex.RevisionNumber, 0, 0, 3);
 			this.AddElementFieldInfo("PurchaseOrderHeaderEntity", "ShipDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)PurchaseOrderHeaderFieldIndex.ShipDate, 0, 0, 0);
 			this.AddElementFieldInfo("PurchaseOrderHeaderEntity", "ShipMethodID", typeof(System.Int32), false, true, false, false,  (int)PurchaseOrderHeaderFieldIndex.ShipMethodID, 0, 0, 10);
-			this.AddElementFieldInfo("PurchaseOrderHeaderEntity", "Status", typeof(System.Byte), false, false, false, false,  (int)PurchaseOrderHeaderFieldIndex.Status, 0, 0, 3);
+			this.AddElementFieldInfo("PurchaseOrderHeaderEntity", "Status", typeof(AW.Data.PurchaseOrderStatus), false, false, false, false,  (int)PurchaseOrderHeaderFieldIndex.Status, 0, 0, 3);
 			this.AddElementFieldInfo("PurchaseOrderHeaderEntity", "SubTotal", typeof(System.Decimal), false, false, false, false,  (int)PurchaseOrderHeaderFieldIndex.SubTotal, 0, 4, 19);
 			this.AddElementFieldInfo("PurchaseOrderHeaderEntity", "TaxAmt", typeof(System.Decimal), false, false, false, false,  (int)PurchaseOrderHeaderFieldIndex.TaxAmt, 0, 4, 19);
 			this.AddElementFieldInfo("PurchaseOrderHeaderEntity", "TotalDue", typeof(System.Decimal), false, false, true, false,  (int)PurchaseOrderHeaderFieldIndex.TotalDue, 0, 4, 19);
@@ -689,7 +689,7 @@ namespace AW.Data.HelperClasses
 			this.AddFieldIndexEnumForElementName(typeof(VendorFieldIndex), "VendorEntity");
 			this.AddElementFieldInfo("VendorEntity", "AccountNumber", typeof(System.String), false, false, false, false,  (int)VendorFieldIndex.AccountNumber, 15, 0, 0);
 			this.AddElementFieldInfo("VendorEntity", "ActiveFlag", typeof(System.Boolean), false, false, false, false,  (int)VendorFieldIndex.ActiveFlag, 0, 0, 0);
-			this.AddElementFieldInfo("VendorEntity", "CreditRating", typeof(System.Byte), false, false, false, false,  (int)VendorFieldIndex.CreditRating, 0, 0, 3);
+			this.AddElementFieldInfo("VendorEntity", "CreditRating", typeof(AW.Data.CreditRating), false, false, false, false,  (int)VendorFieldIndex.CreditRating, 0, 0, 3);
 			this.AddElementFieldInfo("VendorEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)VendorFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("VendorEntity", "Name", typeof(System.String), false, false, false, false,  (int)VendorFieldIndex.Name, 50, 0, 0);
 			this.AddElementFieldInfo("VendorEntity", "PreferredVendorStatus", typeof(System.Boolean), false, false, false, false,  (int)VendorFieldIndex.PreferredVendorStatus, 0, 0, 0);
@@ -794,7 +794,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "CustomerId", typeof(System.Int32), true, false, true, false,  (int)CustomerViewRelatedFieldIndex.CustomerId, 0, 0, 10);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "Demographics", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.Demographics, 2147483647, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "EmailAddress", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.EmailAddress, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewRelatedEntity", "EmailPromotion", typeof(System.Int32), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.EmailPromotion, 0, 0, 10);
+			this.AddElementFieldInfo("CustomerViewRelatedEntity", "EmailPromotion", typeof(AW.Data.EmailPromotion), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.EmailPromotion, 0, 0, 10);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "FirstName", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.FirstName, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "LastName", typeof(System.String), false, false, false, false,  (int)CustomerViewRelatedFieldIndex.LastName, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewRelatedEntity", "MiddleName", typeof(System.String), false, false, false, true,  (int)CustomerViewRelatedFieldIndex.MiddleName, 50, 0, 0);
@@ -854,7 +854,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "ShipDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)SalesOrderHeaderFieldIndex.ShipDate, 0, 0, 0);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "ShipMethodID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.ShipMethodID, 0, 0, 10);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "ShipToAddressID", typeof(System.Int32), false, true, false, false,  (int)SalesOrderHeaderFieldIndex.ShipToAddressID, 0, 0, 10);
-			this.AddElementFieldInfo("SalesOrderHeaderEntity", "Status", typeof(System.Byte), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.Status, 0, 0, 3);
+			this.AddElementFieldInfo("SalesOrderHeaderEntity", "Status", typeof(AW.Data.OrderStatus), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.Status, 0, 0, 3);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "SubTotal", typeof(System.Decimal), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.SubTotal, 0, 4, 19);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "TaxAmt", typeof(System.Decimal), false, false, false, false,  (int)SalesOrderHeaderFieldIndex.TaxAmt, 0, 4, 19);
 			this.AddElementFieldInfo("SalesOrderHeaderEntity", "TerritoryID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)SalesOrderHeaderFieldIndex.TerritoryID, 0, 0, 10);
@@ -909,7 +909,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("SalesTaxRateEntity", "SalesTaxRateID", typeof(System.Int32), true, false, true, false,  (int)SalesTaxRateFieldIndex.SalesTaxRateID, 0, 0, 10);
 			this.AddElementFieldInfo("SalesTaxRateEntity", "StateProvinceID", typeof(System.Int32), false, true, false, false,  (int)SalesTaxRateFieldIndex.StateProvinceID, 0, 0, 10);
 			this.AddElementFieldInfo("SalesTaxRateEntity", "TaxRate", typeof(System.Decimal), false, false, false, false,  (int)SalesTaxRateFieldIndex.TaxRate, 0, 4, 10);
-			this.AddElementFieldInfo("SalesTaxRateEntity", "TaxType", typeof(System.Byte), false, false, false, false,  (int)SalesTaxRateFieldIndex.TaxType, 0, 0, 3);
+			this.AddElementFieldInfo("SalesTaxRateEntity", "TaxType", typeof(AW.Data.TaxApplication), false, false, false, false,  (int)SalesTaxRateFieldIndex.TaxType, 0, 0, 3);
 		}
 		/// <summary>Inits SalesTerritoryEntity's FieldInfo objects</summary>
 		private void InitSalesTerritoryEntityInfos()
@@ -1005,7 +1005,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("CustomerViewTypedView", "Suffix", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Suffix, 10, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "Phone", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.Phone, 25, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "EmailAddress", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.EmailAddress, 50, 0, 0);
-			this.AddElementFieldInfo("CustomerViewTypedView", "EmailPromotion", typeof(System.Int32), false, false, true, false, (int)CustomerViewFieldIndex.EmailPromotion, 0, 0, 10);
+			this.AddElementFieldInfo("CustomerViewTypedView", "EmailPromotion", typeof(AW.Data.EmailPromotion), false, false, true, false, (int)CustomerViewFieldIndex.EmailPromotion, 0, 0, 10);
 			this.AddElementFieldInfo("CustomerViewTypedView", "AddressType", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressType, 50, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "AddressLine1", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressLine1, 60, 0, 0);
 			this.AddElementFieldInfo("CustomerViewTypedView", "AddressLine2", typeof(System.String), false, false, true, false, (int)CustomerViewFieldIndex.AddressLine2, 60, 0, 0);

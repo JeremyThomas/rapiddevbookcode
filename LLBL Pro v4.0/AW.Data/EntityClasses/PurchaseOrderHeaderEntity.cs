@@ -1007,9 +1007,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "PurchaseOrderHeader"."Status"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Byte Status
+		public virtual AW.Data.PurchaseOrderStatus Status
 		{
-			get { return (System.Byte)GetValue((int)PurchaseOrderHeaderFieldIndex.Status, true); }
+			get { return (AW.Data.PurchaseOrderStatus)GetValue((int)PurchaseOrderHeaderFieldIndex.Status, true); }
 			set	{ SetValue((int)PurchaseOrderHeaderFieldIndex.Status, value, true); }
 		}
 

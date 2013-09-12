@@ -1207,9 +1207,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "Contact"."EmailPromotion"<br/>
 		/// Table field type characteristics (type, precision, scale, length): Int, 10, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Int32 EmailPromotion
+		public virtual AW.Data.EmailPromotion EmailPromotion
 		{
-			get { return (System.Int32)GetValue((int)ContactFieldIndex.EmailPromotion, true); }
+			get { return (AW.Data.EmailPromotion)GetValue((int)ContactFieldIndex.EmailPromotion, true); }
 			set	{ SetValue((int)ContactFieldIndex.EmailPromotion, value, true); }
 		}
 
