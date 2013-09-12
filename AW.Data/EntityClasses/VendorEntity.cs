@@ -835,9 +835,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "Vendor"."CreditRating"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Byte CreditRating
+		public virtual AW.Data.CreditRating CreditRating
 		{
-			get { return (System.Byte)GetValue((int)VendorFieldIndex.CreditRating, true); }
+			get { return (AW.Data.CreditRating)GetValue((int)VendorFieldIndex.CreditRating, true); }
 			set	{ SetValue((int)VendorFieldIndex.CreditRating, value, true); }
 		}
 

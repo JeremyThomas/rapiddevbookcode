@@ -212,7 +212,7 @@ namespace AW.Data.TypedListClasses
 			_columnLastName = GeneralUtils.CreateTypedDataTableColumn("LastName", @"LastName", typeof(System.String), this.Columns);
 			_columnSuffix = GeneralUtils.CreateTypedDataTableColumn("Suffix", @"Suffix", typeof(System.String), this.Columns);
 			_columnEmailAddress = GeneralUtils.CreateTypedDataTableColumn("EmailAddress", @"EmailAddress", typeof(System.String), this.Columns);
-			_columnEmailPromotion = GeneralUtils.CreateTypedDataTableColumn("EmailPromotion", @"EmailPromotion", typeof(System.Int32), this.Columns);
+			_columnEmailPromotion = GeneralUtils.CreateTypedDataTableColumn("EmailPromotion", @"EmailPromotion", typeof(AW.Data.EmailPromotion), this.Columns);
 			_columnCountryRegionName = GeneralUtils.CreateTypedDataTableColumn("CountryRegionName", @"CountryRegionName", typeof(System.String), this.Columns);
 			_columnStateProvinceName = GeneralUtils.CreateTypedDataTableColumn("StateProvinceName", @"StateProvinceName", typeof(System.String), this.Columns);
 			_columnCustomerId = GeneralUtils.CreateTypedDataTableColumn("CustomerId", @"CustomerId", typeof(System.Int32), this.Columns);
@@ -603,9 +603,9 @@ namespace AW.Data.TypedListClasses
 		/// <summary>Gets / sets the value of the TypedList field EmailPromotion<br/><br/>
 		/// </summary>
 		/// <remarks>Mapped on: Contact.EmailPromotion</remarks>
-		public System.Int32 EmailPromotion 
+		public AW.Data.EmailPromotion EmailPromotion 
 		{
-			get { return IsEmailPromotionNull() ? (System.Int32)TypeDefaultValue.GetDefaultValue(typeof(System.Int32)) : (System.Int32)this[_parent.EmailPromotionColumn]; }
+			get { return IsEmailPromotionNull() ? (AW.Data.EmailPromotion)TypeDefaultValue.GetDefaultValue(typeof(AW.Data.EmailPromotion)) : (AW.Data.EmailPromotion)this[_parent.EmailPromotionColumn]; }
 			set { this[_parent.EmailPromotionColumn] = value; }
 		}
 

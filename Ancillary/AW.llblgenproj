@@ -73,12 +73,20 @@
   <TypeShortcuts>
     <TypeShortcut Shortcut="AddressType" Type="AW.Data.AddressType, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="ContactType" Type="AW.Data.ContactType, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="CreditRating" Type="AW.Data.CreditRating, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="Current" Type="AW.Data.Current, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="EmailPromotion" Type="AW.Data.EmailPromotion, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="Gender" Type="AW.Data.Gender, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="MaritalStatus" Type="AW.Data.MaritalStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="OrderPlacesBy" Type="AW.Data.OrderPlacesBy, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="OrderStatus" Type="AW.Data.OrderStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="PayFrequency" Type="AW.Data.PayFrequency, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductFinished" Type="AW.Data.ProductFinished, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductMaintenanceDocumentStatus" Type="AW.Data.ProductMaintenanceDocumentStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductMake" Type="AW.Data.ProductMake, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="PurchaseOrderStatus" Type="AW.Data.PurchaseOrderStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="StateProvinceCodeExistence" Type="AW.Data.StateProvinceCodeExistence, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="TaxApplication" Type="AW.Data.TaxApplication, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
@@ -93,7 +101,6 @@
         <TemplateBindings>
           <Binding Name="SD.TemplateBindings.SqlServerSpecific" />
           <Binding Name="SD.TemplateBindings.SharedTemplates" />
-          <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
           <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
           <Binding Name="SD.TemplateBindings.General" />
         </TemplateBindings>
@@ -636,7 +643,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="PayFrequency" Type="byte" Precision="3">
+          <Field Name="PayFrequency" Type="PayFrequency" Precision="3">
             <Description><![CDATA[1 = Salary received monthly, 2 = Salary received biweekly]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -900,7 +907,7 @@
               </Attributes>
             </OutputSettingValues>
           </Field>
-          <Field Name="EmailPromotion" Type="int">
+          <Field Name="EmailPromotion" Type="EmailPromotion">
             <Description><![CDATA[0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. ]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -2953,7 +2960,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="Status" Type="byte" Precision="3">
+          <Field Name="Status" Type="PurchaseOrderStatus" Precision="3">
             <Description><![CDATA[Nonclustered index.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -3075,7 +3082,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="CreditRating" Type="byte" Precision="3">
+          <Field Name="CreditRating" Type="CreditRating" Precision="3">
             <Description><![CDATA[1 = Superior, 2 = Excellent, 3 = Above average, 4 = Average, 5 = Below average]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -3564,7 +3571,7 @@
           <Field Name="CustomerId" Type="int" IsReadOnly="true" IsPrimaryKey="true" />
           <Field Name="Demographics" Type="string" IsOptional="true" MaxLength="2147483647" />
           <Field Name="EmailAddress" Type="string" IsOptional="true" MaxLength="50" />
-          <Field Name="EmailPromotion" Type="int" />
+          <Field Name="EmailPromotion" Type="EmailPromotion" />
           <Field Name="FirstName" Type="string" MaxLength="50" />
           <Field Name="LastName" Type="string" MaxLength="50" />
           <Field Name="MiddleName" Type="string" IsOptional="true" MaxLength="50" />
@@ -3880,7 +3887,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="Status" Type="byte">
+          <Field Name="Status" Type="OrderStatus">
             <Description><![CDATA[Order current status. 1 = In process; 2 = Approved; 3 = Backordered; 4 = Rejected; 5 = Shipped; 6 = Cancelled]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -4165,7 +4172,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="TaxType" Type="byte" Precision="3">
+          <Field Name="TaxType" Type="TaxApplication" Precision="3">
             <Description><![CDATA[Unique nonclustered index. Used to support replication samples.]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -5132,7 +5139,7 @@
         <Field Name="CustomerId" Type="int" />
         <Field Name="Demographics" Type="string" IsOptional="true" MaxLength="2147483647" />
         <Field Name="EmailAddress" Type="string" IsOptional="true" MaxLength="50" />
-        <Field Name="EmailPromotion" Type="int" />
+        <Field Name="EmailPromotion" Type="EmailPromotion" />
         <Field Name="FirstName" Type="string" MaxLength="50" />
         <Field Name="LastName" Type="string" MaxLength="50" />
         <Field Name="MiddleName" Type="string" IsOptional="true" MaxLength="50" />
@@ -9035,7 +9042,7 @@
                 <FieldPair PkField="Sales:Customer:CustomerID" FkField="Sales:Individual:CustomerID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID" DeleteRuleAction="1">
+            <ForeignKeyConstraint Name="Sales:SalesOrderDetail:FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID" TrackedChanges="16">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderDetail:SalesOrderID" />
               </FieldPairs>
@@ -9091,7 +9098,7 @@
                 <FieldPair PkField="Purchasing:ShipMethod:ShipMethodID" FkField="Sales:SalesOrderHeader:ShipMethodID" />
               </FieldPairs>
             </ForeignKeyConstraint>
-            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID" DeleteRuleAction="1">
+            <ForeignKeyConstraint Name="Sales:SalesOrderHeaderSalesReason:FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID" TrackedChanges="16">
               <FieldPairs>
                 <FieldPair PkField="Sales:SalesOrderHeader:SalesOrderID" FkField="Sales:SalesOrderHeaderSalesReason:SalesOrderID" />
               </FieldPairs>

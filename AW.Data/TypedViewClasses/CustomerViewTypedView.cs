@@ -267,7 +267,7 @@ namespace AW.Data.TypedViewClasses
 			_columnSuffix = GeneralUtils.CreateTypedDataTableColumn("Suffix", @"Suffix", typeof(System.String), this.Columns);
 			_columnPhone = GeneralUtils.CreateTypedDataTableColumn("Phone", @"Phone", typeof(System.String), this.Columns);
 			_columnEmailAddress = GeneralUtils.CreateTypedDataTableColumn("EmailAddress", @"EmailAddress", typeof(System.String), this.Columns);
-			_columnEmailPromotion = GeneralUtils.CreateTypedDataTableColumn("EmailPromotion", @"EmailPromotion", typeof(System.Int32), this.Columns);
+			_columnEmailPromotion = GeneralUtils.CreateTypedDataTableColumn("EmailPromotion", @"EmailPromotion", typeof(AW.Data.EmailPromotion), this.Columns);
 			_columnAddressType = GeneralUtils.CreateTypedDataTableColumn("AddressType", @"AddressType", typeof(System.String), this.Columns);
 			_columnAddressLine1 = GeneralUtils.CreateTypedDataTableColumn("AddressLine1", @"AddressLine1", typeof(System.String), this.Columns);
 			_columnAddressLine2 = GeneralUtils.CreateTypedDataTableColumn("AddressLine2", @"AddressLine2", typeof(System.String), this.Columns);
@@ -640,9 +640,9 @@ namespace AW.Data.TypedViewClasses
 		/// <summary>Gets / sets the value of the TypedView field EmailPromotion</summary>
 		/// <remarks>Mapped on view field: "vIndividualCustomer"."EmailPromotion"<br/>
 		/// View field characteristics (type, precision, scale, length): Int, 10, 0, 0</remarks>
-		public System.Int32 EmailPromotion
+		public AW.Data.EmailPromotion EmailPromotion
 		{
-			get { return IsEmailPromotionNull() ? (System.Int32)TypeDefaultValue.GetDefaultValue(typeof(System.Int32)) : (System.Int32)this[_parent.EmailPromotionColumn]; }
+			get { return IsEmailPromotionNull() ? (AW.Data.EmailPromotion)TypeDefaultValue.GetDefaultValue(typeof(AW.Data.EmailPromotion)) : (AW.Data.EmailPromotion)this[_parent.EmailPromotionColumn]; }
 			set { this[_parent.EmailPromotionColumn] = value; }
 		}
 

@@ -15,7 +15,7 @@ namespace AW.Data.EntityClasses
 		static CommonEntityBase()
 		{
 			MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
-			ProfilerHelper.InitializeOrmProfilerIfEnabled();
+      ProfilerHelper.InitializeOrmProfiler();
 		}
 
 		public static void Initialize()

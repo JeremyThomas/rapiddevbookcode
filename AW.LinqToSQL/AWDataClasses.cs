@@ -6,7 +6,7 @@ namespace AW.LinqToSQL
 	{
 		static AWDataClassesDataContext()
 		{
-			ProfilerHelper.InitializeOrmProfilerIfEnabled();
+      ProfilerHelper.InitializeOrmProfiler();
 		}
 
 		public static AWDataClassesDataContext GetNew()

@@ -630,9 +630,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "SalesTaxRate"."TaxType"<br/>
 		/// Table field type characteristics (type, precision, scale, length): TinyInt, 3, 0, 0<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Byte TaxType
+		public virtual AW.Data.TaxApplication TaxType
 		{
-			get { return (System.Byte)GetValue((int)SalesTaxRateFieldIndex.TaxType, true); }
+			get { return (AW.Data.TaxApplication)GetValue((int)SalesTaxRateFieldIndex.TaxType, true); }
 			set	{ SetValue((int)SalesTaxRateFieldIndex.TaxType, value, true); }
 		}
 
