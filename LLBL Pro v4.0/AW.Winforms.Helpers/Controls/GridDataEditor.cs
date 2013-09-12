@@ -229,7 +229,7 @@ namespace AW.Winforms.Helpers.Controls
 				return Enumerable.Empty<int>();
 			try
 			{
-				if (enumerable is ArrayList || enumerable is Array || enumerable is DataView || !enumerable.GetType().IsGenericType)
+        if (enumerable is ArrayList || enumerable is Array || enumerable is DataView || !(IsGenericType(enumerable)))
 				{
 					PageSize = 0;
 					return Enumerable.Empty<int>();
@@ -247,7 +247,13 @@ namespace AW.Winforms.Helpers.Controls
 			return Enumerable.Range(1, GetPageCount());
 		}
 
-		protected int GetPageCount()
+	  private static bool IsGenericType(IEnumerable enumerable)
+	  {
+	    var type = enumerable.GetType();
+      return type.IsGenericType || (type.BaseType !=null && type.BaseType.IsGenericType);
+	  }
+
+	  protected int GetPageCount()
 		{
 			return GeneralHelper.GetPageCount(PageSize, SuperSetCount());
 		}

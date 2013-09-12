@@ -839,14 +839,20 @@ namespace AW.Data.EntityClasses
 		#region Custom Entity code
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
-        public static CountryRegionCollection GetCountryRegionCollection()
-        {
-            ISortExpression Sort = new SortExpression();
-            Sort.Add(CountryRegionFields.Name | SortOperator.Ascending);
-            CountryRegionCollection Countries = new CountryRegionCollection();
-            Countries.GetMulti(null, 0, Sort);
-            return Countries;
-        }
+	  public static CountryRegionCollection GetCountryRegionCollection()
+	  {
+	    ISortExpression sort = new SortExpression();
+	    sort.Add(CountryRegionFields.Name | SortOperator.Ascending);
+	    var countries = new CountryRegionCollection();
+	    var parameters = new QueryParameters()
+	    {
+	      SorterToUse = sort,
+	      CacheResultset = true,
+	      CacheDuration = new TimeSpan(1, 0, 0)
+	    };
+	    countries.PerformGetMulti(parameters);
+	    return countries;
+	  }
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 

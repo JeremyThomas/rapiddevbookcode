@@ -135,6 +135,10 @@
   <metadata name="contextMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>234, 17</value>
   </metadata>
+  <data name="labelDbTypeHint.Text" xml:space="preserve">
+    <value>EasyQuery can work with different databases and SQL syntax formats.  Change "Database type" to switch between different types of models. Please note: Entity SQL will be generated for "Entity Framework" database type.
+</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="EntPanel.ImageAddColumns" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -189,10 +193,6 @@
         kEGO1Z4bpeH5LfJF3glQS3mOrxebnYyLyWQymPTchjHk+UyByiGt6HyrpPce/1DvJV431Mik/MqNB5Bc
         iJFiq3HFc/mLy9pf052Zb4T1+HFl72ppJKHHXGRSGXyJ8qkClLa9JI/HE+Z+wnEL66Pkdrvvx3Ktx1xi
         hNwoBg6Hg/viih8rXsvrxJ70aNJkYgyTgTH8f8g6ArQguKlVgut+AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="labelDbTypeHint.Text" xml:space="preserve">
-    <value>EasyQuery can work with different databases and SQL syntax formats.  Change "Database type" to switch between different types of models. Please note: Entity SQL will be generated for "Entity Framework" database type.
 </value>
   </data>
 </root>

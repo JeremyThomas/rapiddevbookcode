@@ -1173,14 +1173,20 @@ namespace AW.Data.EntityClasses
 		#region Custom Entity code
 		
 		// __LLBLGENPRO_USER_CODE_REGION_START CustomEntityCode
-        public static StateProvinceCollection GetStateProvinceCollection()
-        {
-            ISortExpression Sort = new SortExpression();
-            Sort.Add(StateProvinceFields.Name | SortOperator.Ascending);
-            StateProvinceCollection States = new StateProvinceCollection();
-            States.GetMulti(null, 0, Sort);
-            return States;
-        }
+	  public static StateProvinceCollection GetStateProvinceCollection()
+	  {
+	    ISortExpression sort = new SortExpression();
+	    sort.Add(StateProvinceFields.Name | SortOperator.Ascending);
+	    var states = new StateProvinceCollection();
+	    var parameters = new QueryParameters()
+	    {
+	      SorterToUse = sort,
+	      CacheResultset = true,
+	      CacheDuration = new TimeSpan(1, 0, 0)
+	    };
+	    states.PerformGetMulti(parameters);
+	    return states;
+	  }
 		// __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion
 

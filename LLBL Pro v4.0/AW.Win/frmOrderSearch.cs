@@ -12,6 +12,8 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
+using Korzh.EasyQuery.WinControls;
+using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
@@ -20,7 +22,6 @@ namespace AW.Win
     private FrmStatusBar _frmStatusBar;
     private Data.ViewModels.OrderSearchCriteria _orderSearchCriteria;
     private int _maxNumberOfItemsToReturn;
-    private bool _prefetch;
 
     public FrmOrderSearch()
     {
@@ -111,10 +112,10 @@ namespace AW.Win
 
     private void dgResults_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
-      EditOrder(dgResults.Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity);
+      EditOrder(((DataGridView)(sender)).Rows[e.RowIndex].DataBoundItem as SalesOrderHeaderEntity);
     }
 
-    private void EditOrder(SalesOrderHeaderEntity order)
+    private void EditOrder(ITransactionalElement order)
     {
       ((FrmMain) MdiParent).LaunchChildForm(typeof (FrmOrderEdit), order);
     }
@@ -167,7 +168,7 @@ namespace AW.Win
       var predicate = PredicateBuilder.Null<SalesOrderHeaderEntity>();
       try
       {
-        if (Settings.Default.UseEasyQuery)
+        if (Settings.Default.UseEasyQuery && QPanel.Rows.Any(r => r.Enabled && !(r is QueryPanel.PredicateRow)))
           predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
       }
       catch (Exception)
