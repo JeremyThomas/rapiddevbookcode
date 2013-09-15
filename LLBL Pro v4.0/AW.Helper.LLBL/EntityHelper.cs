@@ -7,13 +7,14 @@ using System.Reflection;
 using System.Windows.Forms;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using Expression = System.Linq.Expressions.Expression;
 
 namespace AW.Helper.LLBL
 {
   public static class EntityHelper
   {
     /// <summary>
-    /// returns the DataSource to use in a Linq query for the entity type specified
+    ///   returns the DataSource to use in a Linq query for the entity type specified
     /// </summary>
     /// <typeparam name="T">the type of the entity to get the DataSource for</typeparam>
     /// <param name="entity">The entity.</param>
@@ -78,7 +79,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Creates the entity from the .NET type specified. 
+    ///   Creates the entity from the .NET type specified.
     /// </summary>
     /// <param name="typeOfEntity">The type of entity.</param>
     /// <returns>An instance of the type.</returns>
@@ -100,8 +101,8 @@ namespace AW.Helper.LLBL
     public static IElementCreatorCore CreateElementCreator(Type typeInTheSameAssemblyAsElementCreator)
     {
       return typeof (IElementCreatorCore).IsAssignableFrom(typeInTheSameAssemblyAsElementCreator)
-              ? CreateElementCreatorFromType(typeInTheSameAssemblyAsElementCreator)
-              : CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
+        ? CreateElementCreatorFromType(typeInTheSameAssemblyAsElementCreator)
+        : CreateElementCreator(typeInTheSameAssemblyAsElementCreator.Assembly.GetExportedTypes());
     }
 
     public static IElementCreatorCore CreateElementCreator(IEnumerable<Type> types)
@@ -116,7 +117,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Creates the entity from the .NET type specified. 
+    ///   Creates the entity from the .NET type specified.
     /// </summary>
     /// <typeparam name="T">The type of entity.</typeparam>
     /// <returns>An instance of the type.</returns>
@@ -139,7 +140,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets the factory of the entity with the .NET type specified
+    ///   Gets the factory of the entity with the .NET type specified
     /// </summary>
     /// <typeparam name="T">The type of entity.</typeparam>
     /// <returns>factory to use or null if not found</returns>
@@ -159,7 +160,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets the EntityType value as integer for the entity type passed in
+    ///   Gets the EntityType value as integer for the entity type passed in
     /// </summary>
     /// <param name="typeOfEntity">The type of entity.</param>
     /// <returns>the EntityType value as integer for the entity type passed in</returns>
@@ -194,11 +195,31 @@ namespace AW.Helper.LLBL
       return linqMetaData.GetQueryableForEntity(0).Provider;
     }
 
+    public static IQueryable CreateLLBLGenProQueryFromEnumerableExpression(IQueryProvider provider, Expression expression)
+    {
+      var elementType = expression.Type;
+      if (expression.Type.IsGenericType)
+      {
+        elementType = expression.Type.GetGenericArguments()[0];
+      }
+      var queryableType = typeof (IQueryable<>).MakeGenericType(new[] {elementType});
+      if (queryableType.IsAssignableFrom(expression.Type))
+      {
+        provider.CreateQuery(expression);
+      }
+      var enumerableType = typeof (IEnumerable<>).MakeGenericType(new[] {elementType});
+      if (!enumerableType.IsAssignableFrom(expression.Type))
+      {
+        throw new ArgumentException("expression isn't enumerable");
+      }
+      return (IQueryable) Activator.CreateInstance(typeof (LLBLGenProQuery<>).MakeGenericType(new Type[] {elementType}), new object[] {provider, expression});
+    }
+
     #region Self Servicing
 
     /// <summary>
-    /// Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes 
-    /// the query this object represents and returns its results in its native container - an entity collection.
+    ///   Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes
+    ///   the query this object represents and returns its results in its native container - an entity collection.
     /// </summary>
     /// <typeparam name="T">EntityBase2</typeparam>
     /// <param name="enumerable">The enumerable.</param>
@@ -255,7 +276,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets the entity field from the name of the field.
+    ///   Gets the entity field from the name of the field.
     /// </summary>
     /// <param name="entity">The entity.</param>
     /// <param name="fieldName">Name of the field.</param>
@@ -271,7 +292,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets a entity field enumeration from entity fields.
+    ///   Gets a entity field enumeration from entity fields.
     /// </summary>
     /// <param name="entityFields">The entity fields.</param>
     /// <returns>entity field enumeration</returns>
@@ -281,7 +302,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets a entity field enumeration from entity fields.
+    ///   Gets a entity field enumeration from entity fields.
     /// </summary>
     /// <param name="entityFields">The entity fields.</param>
     /// <returns>entity field enumeration</returns>
@@ -377,17 +398,17 @@ namespace AW.Helper.LLBL
       }
     }
 
-    /// <summary>
-    /// Gets the factory of the entity with the .NET type specified
-    /// </summary>
-    /// <typeparam name="T">The type of entity.</typeparam>
-    /// <returns>factory to use or null if not found</returns>
     //public static IEntityFactory GetFactory<T>() where T : EntityBase
     //{
     //  return ((IEntity) CreateEntity<T>()).GetEntityFactory();
     //}
     /// <summary>
-    /// Deletes the entities.
+    ///   Gets the factory of the entity with the .NET type specified
+    /// </summary>
+    /// <typeparam name="T">The type of entity.</typeparam>
+    /// <returns>factory to use or null if not found</returns>
+    /// <summary>
+    ///   Deletes the entities.
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <returns></returns>
@@ -399,7 +420,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Deletes the specified data from the DB.
+    ///   Deletes the specified data from the DB.
     /// </summary>
     /// <param name="dataToDelete">The data to delete.</param>
     /// <returns></returns>
@@ -415,7 +436,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Saves all dirty objects inside the enumeration passed to the persistent storage.
+    ///   Saves all dirty objects inside the enumeration passed to the persistent storage.
     /// </summary>
     /// <param name="entitiesToSave">The entities to save.</param>
     /// <returns>the amount of persisted entities</returns>
@@ -435,7 +456,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Saves any changes to the specified data to the DB.
+    ///   Saves any changes to the specified data to the DB.
     /// </summary>
     /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
     /// <returns>The number of persisted entities.</returns>
@@ -455,7 +476,7 @@ namespace AW.Helper.LLBL
     #region Adapter
 
     /// <summary>
-    /// Saves all dirty objects inside the enumeration passed to the persistent storage.
+    ///   Saves all dirty objects inside the enumeration passed to the persistent storage.
     /// </summary>
     /// <param name="entitiesToSave">The entities to save.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
@@ -476,7 +497,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Saves all dirty objects inside the enumeration passed to the persistent storage.
+    ///   Saves all dirty objects inside the enumeration passed to the persistent storage.
     /// </summary>
     /// <param name="entitiesToSave">The entities to save.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
@@ -487,7 +508,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Saves any changes to the specified data to the DB.
+    ///   Saves any changes to the specified data to the DB.
     /// </summary>
     /// <param name="dataToSave">The data to save, must be a CommonEntityBase or a list of CommonEntityBase's.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
@@ -504,7 +525,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Deletes all entities inside the enumeration passed from the DB.
+    ///   Deletes all entities inside the enumeration passed from the DB.
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
@@ -515,7 +536,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Deletes the entities.
+    ///   Deletes the entities.
     /// </summary>
     /// <param name="entitiesToDelete">The entities to delete.</param>
     /// <param name="dataAccessAdapter">The data access adapter.</param>
@@ -539,7 +560,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets the data access adapter from a ILinqMetaData.
+    ///   Gets the data access adapter from a ILinqMetaData.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="linqMetaData">The linq meta data.</param>
@@ -550,10 +571,10 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// 	Gets the data access adapter from a DataSource2.
+    ///   Gets the data access adapter from a DataSource2.
     /// </summary>
-    /// <typeparam name = "T"></typeparam>
-    /// <param name = "query">The query.</param>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="query">The query.</param>
     /// <returns></returns>
     public static IDataAccessAdapter GetDataAccessAdapter<T>(DataSource2<T> query) where T : EntityBase2
     {
@@ -561,7 +582,7 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Gets the data access adapter from a query.
+    ///   Gets the data access adapter from a query.
     /// </summary>
     /// <param name="query">The query.</param>
     /// <returns></returns>
@@ -577,9 +598,9 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// 	Gets the data access adapter from a LLBLGenProProvider2.
+    ///   Gets the data access adapter from a LLBLGenProProvider2.
     /// </summary>
-    /// <param name = "provider">The provider.</param>
+    /// <param name="provider">The provider.</param>
     /// <returns></returns>
     public static IDataAccessAdapter GetDataAccessAdapter(IQueryProvider provider)
     {
@@ -593,13 +614,13 @@ namespace AW.Helper.LLBL
     }
 
     /// <summary>
-    /// Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes 
-    /// the query this object represents and returns its results in its native container - an entity collection.
+    ///   Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes
+    ///   the query this object represents and returns its results in its native container - an entity collection.
     /// </summary>
     /// <typeparam name="T">EntityBase2</typeparam>
     /// <param name="enumerable">The enumerable.</param>
     /// <returns>
-    /// Results of the query in an entity collection.
+    ///   Results of the query in an entity collection.
     /// </returns>
     public static EntityCollectionBase2<T> ToEntityCollection2<T>(this IEnumerable<T> enumerable) where T : EntityBase2
     {
@@ -682,7 +703,8 @@ namespace AW.Helper.LLBL
     #endregion
 
     /// <summary>
-    /// Gets the properties of type entity since sometimes these properties are not browsable so they need to be handled as a special case.
+    ///   Gets the properties of type entity since sometimes these properties are not browsable so they need to be handled as a
+    ///   special case.
     /// </summary>
     /// <param name="type">The type.</param>
     /// <returns></returns>
@@ -778,22 +800,22 @@ namespace AW.Helper.LLBL
     public static IEnumerable<string> GetFieldsCustomProperties(IEntityCore entity, string fieldName)
     {
       return entity.FieldsCustomPropertiesOfType.ContainsKey(fieldName)
-              ? entity.FieldsCustomPropertiesOfType[fieldName].Values
-              : Enumerable.Empty<string>();
+        ? entity.FieldsCustomPropertiesOfType[fieldName].Values
+        : Enumerable.Empty<string>();
     }
 
     /// <summary>
-    /// Gets the navigator name(s) for a foreign key field.
+    ///   Gets the navigator name(s) for a foreign key field.
     /// </summary>
     /// <param name="entity">The entity.</param>
     /// <param name="fieldName">Name of the field.</param>
     /// <returns></returns>
     public static IEnumerable<string> GetNavigatorNames(IEntityCore entity, string fieldName)
     {
-      return from entityRelation in entity.GetAllRelations().Where(r => !r.StartEntityIsPkSide) 
-             from fkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects() 
-             where fkEntityFieldCoreObject.Name.Equals(fieldName) 
-             select entityRelation.MappedFieldName;
+      return from entityRelation in entity.GetAllRelations().Where(r => !r.StartEntityIsPkSide)
+        from fkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects()
+        where fkEntityFieldCoreObject.Name.Equals(fieldName)
+        select entityRelation.MappedFieldName;
     }
   }
 
