@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Helper;
 
@@ -260,6 +261,18 @@ namespace AW.Winforms.Helpers
 		{
 			return queryable.Skip(pageIndex * pageSize).Take(pageSize);
 		}
+
+    public static IQueryable WhereDynamic(this IQueryable source, Expression lambdaExpression)
+	  {     
+      if (source == null)
+        throw new ArgumentNullException("source");
+      if (lambdaExpression == null)
+        throw new ArgumentNullException("lambdaExpression");
+	    return source.Provider.CreateQuery(Expression.Call(typeof (Queryable), "Where", new[]
+	    {
+	      source.ElementType
+	    }, source.Expression, (Expression) Expression.Quote(lambdaExpression)));
+	  }
 	}
 
 	public class WindowWrapper : IWin32Window

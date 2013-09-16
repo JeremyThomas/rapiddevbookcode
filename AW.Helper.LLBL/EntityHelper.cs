@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -212,7 +213,35 @@ namespace AW.Helper.LLBL
       {
         throw new ArgumentException("expression isn't enumerable");
       }
-      return (IQueryable) Activator.CreateInstance(typeof (LLBLGenProQuery<>).MakeGenericType(new Type[] {elementType}), new object[] {provider, expression});
+      return (IQueryable) Activator.CreateInstance(typeof (LLBLGenProQuery<>).MakeGenericType(new[] {elementType}), new object[] {provider, expression});
+    }
+
+    public static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(MethodCallExpression methodCallExpression)
+    {
+      return GetMethodCallExpressionParts(new Tuple<Expression, Expression, Expression>(null, null, null), methodCallExpression);
+    }
+
+    private static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(Tuple<Expression, Expression, Expression> result
+      , Expression expression)
+    {
+      var methodCallExpression = expression as MethodCallExpression;
+      if (methodCallExpression != null)
+      {
+        if (methodCallExpression.Method.Name == "Where")
+          result = new Tuple<Expression, Expression, Expression>(result.Item1, methodCallExpression.Arguments.Last(), result.Item3);
+        if (methodCallExpression.Method.Name == "OrderBy")
+          result = new Tuple<Expression, Expression, Expression>(result.Item1, result.Item2, methodCallExpression.Arguments.Last());
+        foreach (var expArg in methodCallExpression.Arguments)
+        {
+          result = GetMethodCallExpressionParts(result, expArg);
+        }
+      }
+      else
+      {
+        if (expression.NodeType == ExpressionType.Constant)
+          result = new Tuple<Expression, Expression, Expression>(expression, result.Item2, result.Item3);
+      }
+      return result;
     }
 
     #region Self Servicing

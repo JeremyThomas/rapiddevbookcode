@@ -26,6 +26,8 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 using Expression = System.Linq.Expressions.Expression;
 using Path = System.IO.Path;
 using Query = Korzh.EasyQuery.Query;
+using System.Linq.Dynamic;
+
 
 namespace AW.Win
 {
@@ -914,27 +916,10 @@ namespace AW.Win
       var queryProvider = EntityHelper.GetProvider(MetaSingletons.MetaData);
       if (methodCallExpression != null)
       {
-        var elementType = methodCallExpression.Type;
-        if (methodCallExpression.Type.IsGenericType)
-          elementType = methodCallExpression.Type.GetGenericArguments()[0];
-        //var enumerableType = typeof (IEnumerable<>).MakeGenericType(new[] {elementType});
-        //var queryableType = typeof (IQueryable<>).MakeGenericType(new[] {elementType});
-
-        //var mi = typeof (Queryable).GetMethod("AsQueryable", BindingFlags.Static | BindingFlags.Public, null, new[] {enumerableType}, null);
-        //Expression buff = Expression.Call(mi, new[] {expression});
-        //Expression final = Expression.Convert(buff, queryableType);
-
-        var queryResult = EntityHelper.CreateLLBLGenProQueryFromEnumerableExpression(queryProvider,expression);
-        var x = queryResult as IQueryable<ContactEntity>;
-        if (x != null)
-        {
-          var y = x.Count();
-        }
-        return queryResult;
-        //return queryProvider.CreateQuery(Expression.Call(typeof (Queryable), "Where", new Type[1]
-        //{
-        //  elementType
-        //}, methodCallExpression.Arguments.First(), (Expression) Expression.Quote(methodCallExpression.Arguments.Last())));
+        var expressionParts = EntityHelper.GetMethodCallExpressionParts(methodCallExpression);
+        var queryable = queryProvider.CreateQuery(expressionParts.Item1);
+        queryable = queryable.WhereDynamic(expressionParts.Item2);
+        return queryable;
       }
       return queryProvider.CreateQuery(expression);
     }
