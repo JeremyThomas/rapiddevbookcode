@@ -222,7 +222,7 @@ namespace AW.Win
     /// </summary>
     private void InitializeComponent()
     {
-      var resources = new System.ComponentModel.ComponentResourceManager(typeof (FrmEasyQuery));
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEasyQuery));
       this.dataModel1 = new Korzh.EasyQuery.Db.DbModel();
       this.query1 = new Korzh.EasyQuery.Db.DbQuery();
       this.ResultDataTable = new System.Data.DataTable();
@@ -247,11 +247,11 @@ namespace AW.Win
       this.labelDbTypeHint = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.panelQuery = new System.Windows.Forms.Panel();
+      this.splitter3 = new System.Windows.Forms.Splitter();
       this.groupBoxColumns = new System.Windows.Forms.GroupBox();
       this.QCPanel = new Korzh.EasyQuery.WinControls.QueryColumnsPanel();
       this.groupBoxConditions = new System.Windows.Forms.GroupBox();
       this.QPanel = new Korzh.EasyQuery.WinControls.QueryPanel();
-      this.splitter3 = new System.Windows.Forms.Splitter();
       this.panelColumns = new System.Windows.Forms.Panel();
       this.splitter4 = new System.Windows.Forms.Splitter();
       this.groupBoxSorting = new System.Windows.Forms.GroupBox();
@@ -264,8 +264,8 @@ namespace AW.Win
       this.btLoad = new System.Windows.Forms.Button();
       this.btSave = new System.Windows.Forms.Button();
       this.btExecute = new System.Windows.Forms.Button();
-      ((System.ComponentModel.ISupportInitialize) (this.ResultDataTable)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize) (this.ResultDS)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.ResultDataTable)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.ResultDS)).BeginInit();
       this.panelBottom.SuspendLayout();
       this.groupBoxResultSet.SuspendLayout();
       this.groupBoxSQL.SuspendLayout();
@@ -277,7 +277,7 @@ namespace AW.Win
       this.panelColumns.SuspendLayout();
       this.groupBoxSorting.SuspendLayout();
       this.panelButtons.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize) (this.numericUpDownNumRows)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).BeginInit();
       this.SuspendLayout();
       // 
       // dataModel1
@@ -321,19 +321,15 @@ namespace AW.Win
       // 
       this.ResultDS.DataSetName = "ResultDataSet";
       this.ResultDS.Locale = new System.Globalization.CultureInfo("en");
-      this.ResultDS.Tables.AddRange(new System.Data.DataTable[]
-      {
-        this.ResultDataTable
-      });
+      this.ResultDS.Tables.AddRange(new System.Data.DataTable[] {
+            this.ResultDataTable});
       // 
       // contextMenu1
       // 
-      this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[]
-      {
-        this.menuItemResetDataModel,
-        this.menuItemFillDataModel,
-        this.menuItemAddConditions
-      });
+      this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemResetDataModel,
+            this.menuItemFillDataModel,
+            this.menuItemAddConditions});
       // 
       // menuItemResetDataModel
       // 
@@ -359,18 +355,18 @@ namespace AW.Win
       this.panelBottom.Controls.Add(this.splitter1);
       this.panelBottom.Controls.Add(this.groupBoxSQL);
       this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.panelBottom.Location = new System.Drawing.Point(0, 370);
+      this.panelBottom.Location = new System.Drawing.Point(0, 355);
       this.panelBottom.Name = "panelBottom";
-      this.panelBottom.Size = new System.Drawing.Size(838, 178);
+      this.panelBottom.Size = new System.Drawing.Size(838, 210);
       this.panelBottom.TabIndex = 23;
       // 
       // groupBoxResultSet
       // 
       this.groupBoxResultSet.Controls.Add(this.dataGrid1);
       this.groupBoxResultSet.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBoxResultSet.Location = new System.Drawing.Point(362, 0);
+      this.groupBoxResultSet.Location = new System.Drawing.Point(0, 65);
       this.groupBoxResultSet.Name = "groupBoxResultSet";
-      this.groupBoxResultSet.Size = new System.Drawing.Size(476, 178);
+      this.groupBoxResultSet.Size = new System.Drawing.Size(838, 145);
       this.groupBoxResultSet.TabIndex = 2;
       this.groupBoxResultSet.TabStop = false;
       this.groupBoxResultSet.Text = "Result set";
@@ -382,46 +378,45 @@ namespace AW.Win
       this.dataGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGrid1.Location = new System.Drawing.Point(3, 16);
       this.dataGrid1.Name = "dataGrid1";
-      this.dataGrid1.PageSize = ((ushort) (0));
+      this.dataGrid1.PageSize = ((ushort)(0));
       this.dataGrid1.Readonly = false;
-      this.dataGrid1.Size = new System.Drawing.Size(470, 159);
+      this.dataGrid1.Size = new System.Drawing.Size(832, 126);
       this.dataGrid1.TabIndex = 0;
       // 
       // splitter1
       // 
-      this.splitter1.Location = new System.Drawing.Point(359, 0);
+      this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
+      this.splitter1.Location = new System.Drawing.Point(0, 62);
       this.splitter1.Name = "splitter1";
-      this.splitter1.Size = new System.Drawing.Size(3, 178);
+      this.splitter1.Size = new System.Drawing.Size(838, 3);
       this.splitter1.TabIndex = 1;
       this.splitter1.TabStop = false;
       // 
       // groupBoxSQL
       // 
       this.groupBoxSQL.Controls.Add(this.teSQL);
-      this.groupBoxSQL.Dock = System.Windows.Forms.DockStyle.Left;
+      this.groupBoxSQL.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBoxSQL.Location = new System.Drawing.Point(0, 0);
       this.groupBoxSQL.Name = "groupBoxSQL";
-      this.groupBoxSQL.Size = new System.Drawing.Size(359, 178);
+      this.groupBoxSQL.Size = new System.Drawing.Size(838, 62);
       this.groupBoxSQL.TabIndex = 0;
       this.groupBoxSQL.TabStop = false;
       this.groupBoxSQL.Text = "SQL";
       // 
       // teSQL
       // 
-      this.teSQL.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                  | System.Windows.Forms.AnchorStyles.Left)
-                                                                 | System.Windows.Forms.AnchorStyles.Right)));
-      this.teSQL.Location = new System.Drawing.Point(8, 16);
+      this.teSQL.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.teSQL.Location = new System.Drawing.Point(3, 16);
       this.teSQL.Multiline = true;
       this.teSQL.Name = "teSQL";
       this.teSQL.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-      this.teSQL.Size = new System.Drawing.Size(343, 154);
+      this.teSQL.Size = new System.Drawing.Size(832, 43);
       this.teSQL.TabIndex = 9;
       // 
       // splitter2
       // 
       this.splitter2.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.splitter2.Location = new System.Drawing.Point(0, 367);
+      this.splitter2.Location = new System.Drawing.Point(0, 352);
       this.splitter2.Name = "splitter2";
       this.splitter2.Size = new System.Drawing.Size(838, 3);
       this.splitter2.TabIndex = 24;
@@ -438,45 +433,43 @@ namespace AW.Win
       this.panelBG.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panelBG.Location = new System.Drawing.Point(0, 0);
       this.panelBG.Name = "panelBG";
-      this.panelBG.Size = new System.Drawing.Size(838, 367);
+      this.panelBG.Size = new System.Drawing.Size(838, 352);
       this.panelBG.TabIndex = 25;
       // 
       // groupBoxEntities
       // 
-      this.groupBoxEntities.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                            | System.Windows.Forms.AnchorStyles.Left)));
+      this.groupBoxEntities.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
       this.groupBoxEntities.Controls.Add(this.EntPanel);
       this.groupBoxEntities.Location = new System.Drawing.Point(3, 44);
       this.groupBoxEntities.Name = "groupBoxEntities";
-      this.groupBoxEntities.Size = new System.Drawing.Size(179, 323);
+      this.groupBoxEntities.Size = new System.Drawing.Size(179, 308);
       this.groupBoxEntities.TabIndex = 29;
       this.groupBoxEntities.TabStop = false;
       this.groupBoxEntities.Text = "Objects and their attributes";
       // 
       // EntPanel
       // 
-      this.EntPanel.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                    | System.Windows.Forms.AnchorStyles.Left)));
+      this.EntPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
       this.EntPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-      this.EntPanel.ImageAddColumns = ((System.Drawing.Image) (resources.GetObject("EntPanel.ImageAddColumns")));
-      this.EntPanel.ImageAddConditions = ((System.Drawing.Image) (resources.GetObject("EntPanel.ImageAddConditions")));
-      this.EntPanel.ImageSelectAll = ((System.Drawing.Image) (resources.GetObject("EntPanel.ImageSelectAll")));
-      this.EntPanel.ImageSelectNone = ((System.Drawing.Image) (resources.GetObject("EntPanel.ImageSelectNone")));
+      this.EntPanel.ImageAddColumns = ((System.Drawing.Image)(resources.GetObject("EntPanel.ImageAddColumns")));
+      this.EntPanel.ImageAddConditions = ((System.Drawing.Image)(resources.GetObject("EntPanel.ImageAddConditions")));
+      this.EntPanel.ImageSelectAll = ((System.Drawing.Image)(resources.GetObject("EntPanel.ImageSelectAll")));
+      this.EntPanel.ImageSelectNone = ((System.Drawing.Image)(resources.GetObject("EntPanel.ImageSelectNone")));
       this.EntPanel.Location = new System.Drawing.Point(3, 19);
       this.EntPanel.Name = "EntPanel";
       this.EntPanel.Query = this.query1;
-      this.EntPanel.Size = new System.Drawing.Size(173, 298);
+      this.EntPanel.Size = new System.Drawing.Size(173, 283);
       this.EntPanel.TabIndex = 29;
       // 
       // comboBoxDbType
       // 
       this.comboBoxDbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.comboBoxDbType.FormattingEnabled = true;
-      this.comboBoxDbType.Items.AddRange(new object[]
-      {
-        "SQL Server",
-        "LLBL"
-      });
+      this.comboBoxDbType.Items.AddRange(new object[] {
+            "SQL Server",
+            "LLBL"});
       this.comboBoxDbType.Location = new System.Drawing.Point(87, 6);
       this.comboBoxDbType.Name = "comboBoxDbType";
       this.comboBoxDbType.Size = new System.Drawing.Size(134, 21);
@@ -502,24 +495,33 @@ namespace AW.Win
       // 
       // panelQuery
       // 
-      this.panelQuery.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                       | System.Windows.Forms.AnchorStyles.Left)
-                                                                      | System.Windows.Forms.AnchorStyles.Right)));
+      this.panelQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.panelQuery.Controls.Add(this.splitter3);
       this.panelQuery.Controls.Add(this.groupBoxColumns);
       this.panelQuery.Controls.Add(this.groupBoxConditions);
-      this.panelQuery.Controls.Add(this.splitter3);
       this.panelQuery.Controls.Add(this.panelColumns);
       this.panelQuery.Location = new System.Drawing.Point(185, 41);
       this.panelQuery.Name = "panelQuery";
-      this.panelQuery.Size = new System.Drawing.Size(569, 326);
+      this.panelQuery.Size = new System.Drawing.Size(569, 311);
       this.panelQuery.TabIndex = 23;
+      // 
+      // splitter3
+      // 
+      this.splitter3.Dock = System.Windows.Forms.DockStyle.Top;
+      this.splitter3.Location = new System.Drawing.Point(0, 0);
+      this.splitter3.Name = "splitter3";
+      this.splitter3.Size = new System.Drawing.Size(569, 3);
+      this.splitter3.TabIndex = 5;
+      this.splitter3.TabStop = false;
       // 
       // groupBoxColumns
       // 
-      this.groupBoxColumns.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                                                                           | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBoxColumns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBoxColumns.Controls.Add(this.QCPanel);
-      this.groupBoxColumns.Location = new System.Drawing.Point(0, 3);
+      this.groupBoxColumns.Location = new System.Drawing.Point(0, 0);
       this.groupBoxColumns.Name = "groupBoxColumns";
       this.groupBoxColumns.Size = new System.Drawing.Size(332, 142);
       this.groupBoxColumns.TabIndex = 33;
@@ -530,10 +532,10 @@ namespace AW.Win
       // 
       this.QCPanel.Active = false;
       this.QCPanel.ActiveRowIndex = -1;
-      this.QCPanel.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                    | System.Windows.Forms.AnchorStyles.Left)
-                                                                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.QCPanel.Appearance.ActiveBackColor = System.Drawing.Color.FromArgb(((int) (((byte) (190)))), ((int) (((byte) (225)))), ((int) (((byte) (190)))));
+      this.QCPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.QCPanel.Appearance.ActiveBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(225)))), ((int)(((byte)(190)))));
       this.QCPanel.Appearance.ActiveForeColor = System.Drawing.SystemColors.HighlightText;
       this.QCPanel.Appearance.AdditionRowColor = System.Drawing.Color.DarkGreen;
       this.QCPanel.Appearance.AttrElementFormat = "{entity} {attr}";
@@ -554,13 +556,13 @@ namespace AW.Win
       // 
       // groupBoxConditions
       // 
-      this.groupBoxConditions.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                               | System.Windows.Forms.AnchorStyles.Left)
-                                                                              | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBoxConditions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBoxConditions.Controls.Add(this.QPanel);
       this.groupBoxConditions.Location = new System.Drawing.Point(0, 145);
       this.groupBoxConditions.Name = "groupBoxConditions";
-      this.groupBoxConditions.Size = new System.Drawing.Size(566, 181);
+      this.groupBoxConditions.Size = new System.Drawing.Size(566, 166);
       this.groupBoxConditions.TabIndex = 2;
       this.groupBoxConditions.TabStop = false;
       this.groupBoxConditions.Text = "Query Conditions";
@@ -569,10 +571,10 @@ namespace AW.Win
       // 
       this.QPanel.Active = false;
       this.QPanel.ActiveRowIndex = -1;
-      this.QPanel.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                   | System.Windows.Forms.AnchorStyles.Left)
-                                                                  | System.Windows.Forms.AnchorStyles.Right)));
-      this.QPanel.Appearance.ActiveBackColor = System.Drawing.Color.FromArgb(((int) (((byte) (190)))), ((int) (((byte) (225)))), ((int) (((byte) (190)))));
+      this.QPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.QPanel.Appearance.ActiveBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(225)))), ((int)(((byte)(190)))));
       this.QPanel.Appearance.ActiveForeColor = System.Drawing.SystemColors.HighlightText;
       this.QPanel.Appearance.AdditionRowColor = System.Drawing.Color.DarkGreen;
       this.QPanel.Appearance.ButtonForeColor = System.Drawing.SystemColors.ControlText;
@@ -587,25 +589,16 @@ namespace AW.Win
       this.QPanel.Location = new System.Drawing.Point(7, 14);
       this.QPanel.Name = "QPanel";
       this.QPanel.Query = this.query1;
-      this.QPanel.Size = new System.Drawing.Size(553, 164);
+      this.QPanel.Size = new System.Drawing.Size(553, 149);
       this.QPanel.TabIndex = 27;
       this.QPanel.TabStop = true;
       this.QPanel.SqlExecute += new Korzh.EasyQuery.WinControls.SqlExecuteEventHandler(this.QPanel_SqlExecute);
       this.QPanel.ValueRequest += new Korzh.EasyQuery.WinControls.ValueRequestEventHandler(this.QPanel_ValueRequest);
       // 
-      // splitter3
-      // 
-      this.splitter3.Dock = System.Windows.Forms.DockStyle.Top;
-      this.splitter3.Location = new System.Drawing.Point(0, 0);
-      this.splitter3.Name = "splitter3";
-      this.splitter3.Size = new System.Drawing.Size(569, 3);
-      this.splitter3.TabIndex = 5;
-      this.splitter3.TabStop = false;
-      // 
       // panelColumns
       // 
-      this.panelColumns.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                                                                        | System.Windows.Forms.AnchorStyles.Right)));
+      this.panelColumns.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.panelColumns.Controls.Add(this.splitter4);
       this.panelColumns.Controls.Add(this.groupBoxSorting);
       this.panelColumns.Location = new System.Drawing.Point(4, 3);
@@ -623,7 +616,7 @@ namespace AW.Win
       // 
       // groupBoxSorting
       // 
-      this.groupBoxSorting.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.groupBoxSorting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.groupBoxSorting.Controls.Add(this.SCPanel);
       this.groupBoxSorting.Location = new System.Drawing.Point(328, 0);
       this.groupBoxSorting.Name = "groupBoxSorting";
@@ -636,10 +629,10 @@ namespace AW.Win
       // 
       this.SCPanel.Active = false;
       this.SCPanel.ActiveRowIndex = -1;
-      this.SCPanel.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                                                                    | System.Windows.Forms.AnchorStyles.Left)
-                                                                   | System.Windows.Forms.AnchorStyles.Right)));
-      this.SCPanel.Appearance.ActiveBackColor = System.Drawing.Color.FromArgb(((int) (((byte) (190)))), ((int) (((byte) (225)))), ((int) (((byte) (190)))));
+      this.SCPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.SCPanel.Appearance.ActiveBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(225)))), ((int)(((byte)(190)))));
       this.SCPanel.Appearance.ActiveForeColor = System.Drawing.SystemColors.HighlightText;
       this.SCPanel.Appearance.AdditionRowColor = System.Drawing.Color.DarkGreen;
       this.SCPanel.Appearance.AttrElementFormat = "{entity} {attr}";
@@ -661,7 +654,7 @@ namespace AW.Win
       // 
       // panelButtons
       // 
-      this.panelButtons.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.panelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
       this.panelButtons.Controls.Add(this.numericUpDownNumRows);
       this.panelButtons.Controls.Add(this.buttonSaveModel);
       this.panelButtons.Controls.Add(this.btCodeSamples);
@@ -686,7 +679,7 @@ namespace AW.Win
       // 
       // buttonSaveModel
       // 
-      this.buttonSaveModel.Location = new System.Drawing.Point(8, 143);
+      this.buttonSaveModel.Location = new System.Drawing.Point(8, 148);
       this.buttonSaveModel.Name = "buttonSaveModel";
       this.buttonSaveModel.Size = new System.Drawing.Size(62, 35);
       this.buttonSaveModel.TabIndex = 14;
@@ -741,7 +734,7 @@ namespace AW.Win
       // FrmEasyQuery
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.ClientSize = new System.Drawing.Size(838, 548);
+      this.ClientSize = new System.Drawing.Size(838, 565);
       this.Controls.Add(this.panelBG);
       this.Controls.Add(this.splitter2);
       this.Controls.Add(this.panelBottom);
@@ -750,8 +743,8 @@ namespace AW.Win
       this.Tag = "True";
       this.Text = "Easy Query.NET WinForms demo";
       this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEasyQuery_FormClosed);
-      ((System.ComponentModel.ISupportInitialize) (this.ResultDataTable)).EndInit();
-      ((System.ComponentModel.ISupportInitialize) (this.ResultDS)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.ResultDataTable)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.ResultDS)).EndInit();
       this.panelBottom.ResumeLayout(false);
       this.groupBoxResultSet.ResumeLayout(false);
       this.groupBoxSQL.ResumeLayout(false);
@@ -765,8 +758,9 @@ namespace AW.Win
       this.panelColumns.ResumeLayout(false);
       this.groupBoxSorting.ResumeLayout(false);
       this.panelButtons.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize) (this.numericUpDownNumRows)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       this.ResumeLayout(false);
+
     }
 
     #endregion
