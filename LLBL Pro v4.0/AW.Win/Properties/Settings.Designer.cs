@@ -513,7 +513,6 @@ namespace AW.Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Shipped")]
         public global::System.Nullable<AW.Data.OrderStatus> OrderStatus {
             get {
                 return ((global::System.Nullable<AW.Data.OrderStatus>)(this["OrderStatus"]));
@@ -537,7 +536,7 @@ namespace AW.Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
         public decimal NumRows {
             get {
                 return ((decimal)(this["NumRows"]));
@@ -549,7 +548,7 @@ namespace AW.Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool SQLTrace {
             get {
                 return ((bool)(this["SQLTrace"]));
@@ -561,7 +560,7 @@ namespace AW.Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool OpenTraceWindosOnStart {
             get {
                 return ((bool)(this["OpenTraceWindosOnStart"]));
@@ -573,7 +572,7 @@ namespace AW.Win.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ReopenWindows {
             get {
                 return ((bool)(this["ReopenWindows"]));

@@ -126,22 +126,22 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="OrderStatus" Type="System.Nullable&lt;AW.Data.OrderStatus&gt;" Scope="User">
-      <Value Profile="(Default)">Shipped</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="IsOnline" Type="System.Windows.Forms.CheckState" Scope="User">
       <Value Profile="(Default)">Indeterminate</Value>
     </Setting>
     <Setting Name="NumRows" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">100</Value>
     </Setting>
     <Setting Name="SQLTrace" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="OpenTraceWindosOnStart" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ReopenWindows" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

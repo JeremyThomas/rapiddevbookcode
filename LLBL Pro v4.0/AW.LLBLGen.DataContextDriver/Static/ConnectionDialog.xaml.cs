@@ -26,7 +26,6 @@ using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Data.ConnectionUI;
 using Microsoft.Win32;
-using Microsoft.Windows.Controls;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using Application = System.Windows.Forms.Application;

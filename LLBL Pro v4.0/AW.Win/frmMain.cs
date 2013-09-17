@@ -221,6 +221,7 @@ namespace AW.Win
       var frmEasyQuery = LaunchChildFormGeneric<FrmEasyQuery>();
       frmEasyQuery.MRUHandlerProject = mruHandlerProject;
       frmEasyQuery.DBMode = 1;
+      Application.DoEvents();
       frmEasyQuery.LoadFromFile(fileName);
     }
 
