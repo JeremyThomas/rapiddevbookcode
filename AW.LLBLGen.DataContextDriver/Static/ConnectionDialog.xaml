@@ -7,7 +7,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:properties="clr-namespace:AW.LLBLGen.DataContextDriver.Properties"
         xmlns:static="clr-namespace:AW.LLBLGen.DataContextDriver.Static"
-        xmlns:wpfToolkit="http://schemas.microsoft.com/wpf/2008/toolkit"
         Title="{x:Static dataContextDriver:Constants.Name}"
         MinWidth="300"
         MinHeight="300"
@@ -643,31 +642,31 @@
       <TabItem Header="Additional Assemblies and Namespaces" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type static:ConnectionDialog}}"
                DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}">
         <StackPanel d:DesignHeight="100">
-          <wpfToolkit:DataGrid x:Name="AdditionalAssembliesDataGridCnxt"
+          <DataGrid x:Name="AdditionalAssembliesDataGridCnxt"
       			MinWidth="200"
             d:DesignHeight="100"
       			AutoGenerateColumns="False"
       			ItemsSource="{Binding AdditionalAssembliesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
       			ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTipCnxt}">
-            <wpfToolkit:DataGrid.Columns>
-              <wpfToolkit:DataGridTextColumn Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
-                <wpfToolkit:DataGridTextColumn.Header>
+            <DataGrid.Columns>
+              <DataGridTextColumn Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
+                <DataGridTextColumn.Header>
                   <Hyperlink Click="ChooseAssembliesCnxt">
                     <Run Text="Additional Assemblies"/>
                   </Hyperlink>
-                </wpfToolkit:DataGridTextColumn.Header>
-              </wpfToolkit:DataGridTextColumn>
-            </wpfToolkit:DataGrid.Columns>
-          </wpfToolkit:DataGrid>
-          <wpfToolkit:DataGrid x:Name="AdditionalNamespacesDataGridCnxt"
+                </DataGridTextColumn.Header>
+              </DataGridTextColumn>
+            </DataGrid.Columns>
+          </DataGrid>
+          <DataGrid x:Name="AdditionalNamespacesDataGridCnxt"
       			MinWidth="200"
       			AutoGenerateColumns="False"
       			ItemsSource="{Binding AdditionalNamespacesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true,  UpdateSourceTrigger=PropertyChanged}"
       			ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTipCnxt}">
-            <wpfToolkit:DataGrid.Columns>
-              <wpfToolkit:DataGridTextColumn Binding="{Binding Value}" Header="Additional Namespaces" />
-            </wpfToolkit:DataGrid.Columns>
-          </wpfToolkit:DataGrid>
+            <DataGrid.Columns>
+              <DataGridTextColumn Binding="{Binding Value}" Header="Additional Namespaces" />
+            </DataGrid.Columns>
+          </DataGrid>
           <WrapPanel Orientation="Horizontal">
 
           <Button x:Name="buttonClearAdditionalCnxt"
@@ -1055,7 +1054,7 @@
                                                                           AncestorLevel=1},
                                            Path=DataContext}"
                      Orientation="Horizontal">
-            <wpfToolkit:DataGrid Name="AdditionalAssembliesDataGrid"
+            <DataGrid Name="AdditionalAssembliesDataGrid"
                                  MinWidth="100"
                                  AutoGenerateColumns="False"
                                  d:DesignHeight="100"
@@ -1063,15 +1062,15 @@
                                                        ValidatesOnExceptions=true,
                                                        NotifyOnValidationError=true}"
                                  ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTip}">
-              <wpfToolkit:DataGrid.Columns>
-                <wpfToolkit:DataGridTextColumn Binding="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}">
-                  <wpfToolkit:DataGridTextColumn.Header>
+              <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}">
+                  <DataGridTextColumn.Header>
                     <Hyperlink Click="ChooseAssemblies">Additional Assemblies</Hyperlink>
-                  </wpfToolkit:DataGridTextColumn.Header>
-                </wpfToolkit:DataGridTextColumn>
-              </wpfToolkit:DataGrid.Columns>
-            </wpfToolkit:DataGrid>
-            <wpfToolkit:DataGrid Name="AdditionalNamespacesDataGrid"
+                  </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+              </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid Name="AdditionalNamespacesDataGrid"
                                  MinWidth="100"
                                  AutoGenerateColumns="False"
                                  d:DesignHeight="100"
@@ -1079,10 +1078,10 @@
                                                        ValidatesOnExceptions=true,
                                                        NotifyOnValidationError=true}"
                                  ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTip}">
-              <wpfToolkit:DataGrid.Columns>
-                <wpfToolkit:DataGridTextColumn Binding="{Binding Path=Value}" Header="Additional Namespaces" />
-              </wpfToolkit:DataGrid.Columns>
-            </wpfToolkit:DataGrid>
+              <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Value}" Header="Additional Namespaces" />
+              </DataGrid.Columns>
+            </DataGrid>
 
             <Button Name="buttonClearAdditional"
                     Margin="5,0,0,0"
