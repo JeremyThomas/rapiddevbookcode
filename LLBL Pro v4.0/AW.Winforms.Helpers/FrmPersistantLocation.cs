@@ -88,7 +88,7 @@ namespace AW.Winforms.Helpers
 
     protected virtual void RestoreWindowSettings()
     {
-      if (WindowSettings != null)
+      if (!DesignMode && WindowSettings != null)
         WindowSettings.Restore(this, Splitters);
     }
 

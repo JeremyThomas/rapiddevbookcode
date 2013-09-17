@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,7 +9,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Data;
-using AW.Data.EntityClasses;
 using AW.Data.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -26,8 +24,6 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 using Expression = System.Linq.Expressions.Expression;
 using Path = System.IO.Path;
 using Query = Korzh.EasyQuery.Query;
-using System.Linq.Dynamic;
-
 
 namespace AW.Win
 {
@@ -36,6 +32,8 @@ namespace AW.Win
   /// </summary>
   public class FrmEasyQuery : FrmPersistantLocation
   {
+    private const string DefaultFileName = "lastquery.xml";
+
     /// <summary>
     ///   Required designer variable.
     /// </summary>
@@ -147,7 +145,7 @@ namespace AW.Win
           if (ShouldBeExcluded(subEntity.Attributes[i]))
             subEntity.Attributes.RemoveAt(i);
         }
-        var dbTable = new DbTable() {DBName = subEntity.Name};
+        var dbTable = new DbTable {DBName = subEntity.Name};
         dbTable.Alias = dbTable.DBName;
 
         dbModel.Tables.Add(dbTable);
@@ -193,6 +191,11 @@ namespace AW.Win
           MessageBox.Show(ex.Message);
         }
       }
+    }
+
+    private void FrmEasyQuery_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      QPanel.Query.SaveToFile(GetFileNameWithPath(DefaultFileName));
     }
 
     /// <summary>
@@ -746,6 +749,7 @@ namespace AW.Win
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Tag = "True";
       this.Text = "Easy Query.NET WinForms demo";
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmEasyQuery_FormClosed);
       ((System.ComponentModel.ISupportInitialize) (this.ResultDataTable)).EndInit();
       ((System.ComponentModel.ISupportInitialize) (this.ResultDS)).EndInit();
       this.panelBottom.ResumeLayout(false);
@@ -782,7 +786,7 @@ namespace AW.Win
 
     private void btLoad_Click(object sender, EventArgs e)
     {
-      openFileDlg.FileName = Path.IsPathRooted(lastFileName) ? lastFileName : Path.Combine(_dataFolder, lastFileName);
+      openFileDlg.FileName = GetFileNameWithPath(_lastFileName);
       if (openFileDlg.ShowDialog() == DialogResult.OK)
       {
         LoadFromFile(openFileDlg.FileName);
@@ -790,21 +794,31 @@ namespace AW.Win
       }
     }
 
-    public void LoadFromFile(string fileName)
+    public void LoadFromFile(string fileName = null)
     {
       QPanel.Query.Clear();
-      QPanel.Query.LoadFromFile(fileName);
-      lastFileName = fileName;
+      if (fileName == null)
+        fileName = DefaultFileName;
+      var fullFileName = GetFileNameWithPath(fileName);
+      if (!File.Exists(fullFileName)) return;
+      QPanel.Query.LoadFromFile(fullFileName);
+      if (fileName != DefaultFileName)
+        _lastFileName = fileName;
+    }
+
+    private string GetFileNameWithPath(string fileName)
+    {
+      return Path.IsPathRooted(fileName) ? fileName : Path.Combine(_dataFolder, fileName);
     }
 
     private void btSave_Click(object sender, EventArgs e)
     {
-      saveFileDlg.FileName = Path.Combine(_dataFolder, lastFileName);
+      saveFileDlg.FileName = Path.Combine(_dataFolder, _lastFileName);
       if (saveFileDlg.ShowDialog() == DialogResult.OK)
       {
         QPanel.Query.SaveToFile(saveFileDlg.FileName);
-        lastFileName = saveFileDlg.FileName;
-        if (MRUHandlerProject != null) MRUHandlerProject.AddRecentlyUsedFile(lastFileName);
+        _lastFileName = saveFileDlg.FileName;
+        if (MRUHandlerProject != null) MRUHandlerProject.AddRecentlyUsedFile(_lastFileName);
       }
     }
 
@@ -912,19 +926,20 @@ namespace AW.Win
     private IQueryable GetQuery()
     {
       var expression = GetLinqExpression();
-      var methodCallExpression = expression as MethodCallExpression;  
+      var methodCallExpression = expression as MethodCallExpression;
       var queryProvider = EntityHelper.GetProvider(MetaSingletons.MetaData);
       if (methodCallExpression != null)
       {
         var expressionParts = EntityHelper.GetMethodCallExpressionParts(methodCallExpression);
         var queryable = queryProvider.CreateQuery(expressionParts.Item1);
         queryable = queryable.WhereDynamic(expressionParts.Item2);
+        //queryable = queryable.OrderByDynamic(expressionParts.Item3);
         return queryable;
       }
       return queryProvider.CreateQuery(expression);
     }
 
-    private string lastFileName = "query1.xml";
+    private string _lastFileName = DefaultFileName;
     private bool _clearing;
 
     private void query1_ColumnsChanged(object sender, ColumnsChangeEventArgs e)
