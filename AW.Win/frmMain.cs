@@ -72,12 +72,8 @@ namespace AW.Win
     {
       var formType = Type.GetType(formName);
       if (formType == null)
-      {
-        if (formName == typeof (FrmQueryRunner).FullName)
-          return LaunchChildForm(typeof (FrmQueryRunner));
-        return null;
-      }
-      return LaunchChildForm(formType);
+        return formName == typeof (FrmQueryRunner).FullName ? LaunchChildForm(typeof (FrmQueryRunner)) : null;
+      return formType == typeof(FrmEasyQuery) ? LaunchEasyQuery() : LaunchChildForm(formType);
     }
 
     public Form LaunchChildForm(Type formType, params Object[] args)
@@ -88,6 +84,27 @@ namespace AW.Win
     public T LaunchChildFormGeneric<T>(params Object[] args) where T : Form
     {
       return (T) LaunchChildForm(typeof (T), args);
+    }
+
+    private FrmQueryRunner LaunchQueryRunner()
+    {
+      var qr = LaunchChildFormGeneric<FrmQueryRunner>();
+      if (qr != null)
+      {
+        qr.SaveFunction += EntityHelper.Save;
+        qr.DeleteFunction += EntityHelper.Delete;
+      }
+      return qr;
+    }
+
+    private FrmEasyQuery LaunchEasyQuery(string fileName = null)
+    {
+      var frmEasyQuery = LaunchChildFormGeneric<FrmEasyQuery>();
+      frmEasyQuery.MRUHandlerProject = mruHandlerProject;
+      frmEasyQuery.DBMode = 1;
+      Application.DoEvents();
+      frmEasyQuery.LoadFromFile(fileName);
+      return frmEasyQuery;
     }
 
     private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -185,16 +202,6 @@ namespace AW.Win
       LaunchQueryRunner();
     }
 
-    private FrmQueryRunner LaunchQueryRunner()
-    {
-      var qr = LaunchChildFormGeneric<FrmQueryRunner>();
-      if (qr != null)
-      {
-        qr.SaveFunction += EntityHelper.Save;
-        qr.DeleteFunction += EntityHelper.Delete;
-      }
-      return qr;
-    }
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -214,15 +221,6 @@ namespace AW.Win
     private void easyQueryToolStripMenuItem_Click(object sender, EventArgs e)
     {
       LaunchEasyQuery();
-    }
-
-    private void LaunchEasyQuery(string fileName = null)
-    {
-      var frmEasyQuery = LaunchChildFormGeneric<FrmEasyQuery>();
-      frmEasyQuery.MRUHandlerProject = mruHandlerProject;
-      frmEasyQuery.DBMode = 1;
-      Application.DoEvents();
-      frmEasyQuery.LoadFromFile(fileName);
     }
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
