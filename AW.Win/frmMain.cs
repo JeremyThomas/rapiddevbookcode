@@ -132,12 +132,7 @@ namespace AW.Win
     {
       if (".XML".Equals(Path.GetExtension(fileName), StringComparison.OrdinalIgnoreCase))
       {
-        var frmEasyQuery = LaunchEasyQuery();
-        if (frmEasyQuery != null)
-        {
-          frmEasyQuery.DBMode = 1;
-          frmEasyQuery.LoadFromFile(fileName);
-        }
+        LaunchEasyQuery(fileName: fileName);
       }
       else
       {
@@ -221,11 +216,12 @@ namespace AW.Win
       LaunchEasyQuery();
     }
 
-    private FrmEasyQuery LaunchEasyQuery()
+    private void LaunchEasyQuery(string fileName = null)
     {
       var frmEasyQuery = LaunchChildFormGeneric<FrmEasyQuery>();
       frmEasyQuery.MRUHandlerProject = mruHandlerProject;
-      return frmEasyQuery;
+      frmEasyQuery.DBMode = 1;
+      frmEasyQuery.LoadFromFile(fileName);
     }
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
