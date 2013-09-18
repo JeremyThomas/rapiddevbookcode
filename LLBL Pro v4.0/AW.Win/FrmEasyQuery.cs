@@ -1156,12 +1156,11 @@ namespace AW.Win
   {
     public LinqToObjectsContext()
     {
-      Addresses = MetaSingletons.MetaData.Address.Take(100).PrefetchStateProvinceCountryRegionCustomer().ToEntityCollection();
+      Addresses = MetaSingletons.MetaData.Address.Take(10).PrefetchStateProvinceCountryRegionCustomer().ToEntityCollection();
       StateProvinces = (from s in Addresses select s.StateProvince).ToEntityCollection();
       CountryRegions = (from sp in StateProvinces select sp.CountryRegion).ToEntityCollection();
-      Customers =(from s in Addresses
-      from ca in s.CustomerAddresses
-      select ca.Customer).ToEntityCollection();
+      CustomerAddresses = (from s in Addresses from ca in s.CustomerAddresses select ca).ToEntityCollection();
+      Customers = (from ca in CustomerAddresses select ca.Customer).ToEntityCollection();
     }
 
     public EntityCollectionBase<CustomerEntity> Customers { get; set; }
@@ -1171,5 +1170,7 @@ namespace AW.Win
     public EntityCollectionBase<StateProvinceEntity> StateProvinces { get; private set; }
 
     public EntityCollectionBase<AddressEntity> Addresses { get; private set; }
+
+    public EntityCollectionBase<CustomerAddressEntity> CustomerAddresses { get; set; }
   }
 }
