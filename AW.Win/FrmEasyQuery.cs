@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.EntityClasses;
 using AW.Data.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -84,6 +85,7 @@ namespace AW.Win
     private Button buttonSaveModel;
     private GridDataEditor dataGrid1;
     private NumericUpDown numericUpDownNumRows;
+    private CheckBox checkBoxIQueryable;
 
     private SqlConnection sqlCon;
 
@@ -135,7 +137,7 @@ namespace AW.Win
     {
       dbQuery.Formats.SetDefaultFormats(FormatType.EntityFramework);
       dbQuery.Model.Clear();
-      dbQuery.Model.LoadFromCollectionContainer(typeof (LinqMetaData), typeof (DataSource<>));
+      dbQuery.Model.LoadFromContext(typeof (LinqMetaData), typeof (DataSource<>));
       var dbModel = dbQuery.Model as DbModel;
       if (dbModel == null) return;
       foreach (var subEntity in dbModel.EntityRoot.SubEntities)
@@ -145,20 +147,9 @@ namespace AW.Win
           if (ShouldBeExcluded(subEntity.Attributes[i]))
             subEntity.Attributes.RemoveAt(i);
         }
-        var dbTable = new DbTable {DBName = subEntity.Name};
-        dbTable.Alias = dbTable.DBName;
-
-        dbModel.Tables.Add(dbTable);
       }
-
-      var table1 = dbModel.Tables.FirstOrDefault(t => t.DBName == "Address");
-      var tableLink = new TableLink
-      {
-        Table1 = table1,
-        Table2 = dbModel.Tables.FirstOrDefault(t => t.DBName == "StateProvince")
-      };
-      tableLink.AddCondition(LinkCondType.FieldField, "StateProvinceID", "StateProvinceID", "=");
-      dbModel.Links.Add(tableLink);
+      //dbModel.UpdateEntityJoinInfo(typeof(AddressEntity), typeof(StateProvinceEntity), "StateProvinceID", "StateProvinceID");
+      //dbModel.UpdateEntityJoinInfo(typeof(SalesOrderHeaderEntity), typeof(CustomerViewRelatedEntity), "CustomerID", "CustomerID");
     }
 
     public static bool ShouldBeExcluded(EntityAttr entityAttr)
@@ -257,13 +248,14 @@ namespace AW.Win
       this.groupBoxSorting = new System.Windows.Forms.GroupBox();
       this.SCPanel = new Korzh.EasyQuery.WinControls.SortColumnsPanel();
       this.panelButtons = new System.Windows.Forms.Panel();
-      this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       this.buttonSaveModel = new System.Windows.Forms.Button();
       this.btCodeSamples = new System.Windows.Forms.Button();
       this.btClear = new System.Windows.Forms.Button();
       this.btLoad = new System.Windows.Forms.Button();
       this.btSave = new System.Windows.Forms.Button();
       this.btExecute = new System.Windows.Forms.Button();
+      this.checkBoxIQueryable = new System.Windows.Forms.CheckBox();
+      this.numericUpDownNumRows = new System.Windows.Forms.NumericUpDown();
       ((System.ComponentModel.ISupportInitialize)(this.ResultDataTable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.ResultDS)).BeginInit();
       this.panelBottom.SuspendLayout();
@@ -655,6 +647,7 @@ namespace AW.Win
       // panelButtons
       // 
       this.panelButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.panelButtons.Controls.Add(this.checkBoxIQueryable);
       this.panelButtons.Controls.Add(this.numericUpDownNumRows);
       this.panelButtons.Controls.Add(this.buttonSaveModel);
       this.panelButtons.Controls.Add(this.btCodeSamples);
@@ -667,19 +660,9 @@ namespace AW.Win
       this.panelButtons.Size = new System.Drawing.Size(78, 311);
       this.panelButtons.TabIndex = 22;
       // 
-      // numericUpDownNumRows
-      // 
-      this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-      this.numericUpDownNumRows.Location = new System.Drawing.Point(8, 280);
-      this.numericUpDownNumRows.Name = "numericUpDownNumRows";
-      this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
-      this.numericUpDownNumRows.TabIndex = 24;
-      this.numericUpDownNumRows.Tag = "True";
-      this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
-      // 
       // buttonSaveModel
       // 
-      this.buttonSaveModel.Location = new System.Drawing.Point(8, 148);
+      this.buttonSaveModel.Location = new System.Drawing.Point(8, 128);
       this.buttonSaveModel.Name = "buttonSaveModel";
       this.buttonSaveModel.Size = new System.Drawing.Size(62, 35);
       this.buttonSaveModel.TabIndex = 14;
@@ -688,7 +671,7 @@ namespace AW.Win
       // 
       // btCodeSamples
       // 
-      this.btCodeSamples.Location = new System.Drawing.Point(8, 238);
+      this.btCodeSamples.Location = new System.Drawing.Point(8, 214);
       this.btCodeSamples.Name = "btCodeSamples";
       this.btCodeSamples.Size = new System.Drawing.Size(62, 36);
       this.btCodeSamples.TabIndex = 13;
@@ -697,7 +680,7 @@ namespace AW.Win
       // 
       // btClear
       // 
-      this.btClear.Location = new System.Drawing.Point(8, 16);
+      this.btClear.Location = new System.Drawing.Point(8, 6);
       this.btClear.Name = "btClear";
       this.btClear.Size = new System.Drawing.Size(62, 24);
       this.btClear.TabIndex = 12;
@@ -706,7 +689,7 @@ namespace AW.Win
       // 
       // btLoad
       // 
-      this.btLoad.Location = new System.Drawing.Point(8, 56);
+      this.btLoad.Location = new System.Drawing.Point(8, 36);
       this.btLoad.Name = "btLoad";
       this.btLoad.Size = new System.Drawing.Size(62, 24);
       this.btLoad.TabIndex = 11;
@@ -715,7 +698,7 @@ namespace AW.Win
       // 
       // btSave
       // 
-      this.btSave.Location = new System.Drawing.Point(8, 88);
+      this.btSave.Location = new System.Drawing.Point(8, 66);
       this.btSave.Name = "btSave";
       this.btSave.Size = new System.Drawing.Size(62, 24);
       this.btSave.TabIndex = 10;
@@ -724,12 +707,34 @@ namespace AW.Win
       // 
       // btExecute
       // 
-      this.btExecute.Location = new System.Drawing.Point(8, 193);
+      this.btExecute.Location = new System.Drawing.Point(8, 169);
       this.btExecute.Name = "btExecute";
       this.btExecute.Size = new System.Drawing.Size(62, 39);
       this.btExecute.TabIndex = 9;
       this.btExecute.Text = "Execute Query";
       this.btExecute.Click += new System.EventHandler(this.btExecute_Click);
+      // 
+      // checkBoxIQueryable
+      // 
+      this.checkBoxIQueryable.AutoSize = true;
+      this.checkBoxIQueryable.Checked = global::AW.Win.Properties.Settings.Default.IQueryable;
+      this.checkBoxIQueryable.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::AW.Win.Properties.Settings.Default, "IQueryable", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.checkBoxIQueryable.Location = new System.Drawing.Point(8, 283);
+      this.checkBoxIQueryable.Name = "checkBoxIQueryable";
+      this.checkBoxIQueryable.Size = new System.Drawing.Size(77, 17);
+      this.checkBoxIQueryable.TabIndex = 25;
+      this.checkBoxIQueryable.Text = "IQueryable";
+      this.checkBoxIQueryable.UseVisualStyleBackColor = true;
+      // 
+      // numericUpDownNumRows
+      // 
+      this.numericUpDownNumRows.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::AW.Win.Properties.Settings.Default, "NumRows", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+      this.numericUpDownNumRows.Location = new System.Drawing.Point(8, 256);
+      this.numericUpDownNumRows.Name = "numericUpDownNumRows";
+      this.numericUpDownNumRows.Size = new System.Drawing.Size(48, 20);
+      this.numericUpDownNumRows.TabIndex = 24;
+      this.numericUpDownNumRows.Tag = "True";
+      this.numericUpDownNumRows.Value = global::AW.Win.Properties.Settings.Default.NumRows;
       // 
       // FrmEasyQuery
       // 
@@ -758,6 +763,7 @@ namespace AW.Win
       this.panelColumns.ResumeLayout(false);
       this.groupBoxSorting.ResumeLayout(false);
       this.panelButtons.ResumeLayout(false);
+      this.panelButtons.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNumRows)).EndInit();
       this.ResumeLayout(false);
 
@@ -833,9 +839,11 @@ namespace AW.Win
         }
         else
         {
+          if (Settings.Default.IQueryable)
           //dataGrid1.DataSource = GetQuery();
-          dataGrid1.BindEnumerable(GetQuery(), Convert.ToUInt16(numericUpDownNumRows.Value));
-          //dataGrid1.BindEnumerable(ExecuteToEnumerable(), Convert.ToUInt16(numericUpDownNumRows.Value));
+            dataGrid1.BindEnumerable(GetQuery(), Convert.ToUInt16(numericUpDownNumRows.Value));
+          else
+            dataGrid1.BindEnumerable(ExecuteToEnumerable(), Convert.ToUInt16(numericUpDownNumRows.Value));
         }
       }
       catch (Exception error)
