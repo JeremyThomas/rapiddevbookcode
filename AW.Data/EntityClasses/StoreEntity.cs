@@ -69,6 +69,8 @@ namespace AW.Data.EntityClasses
 			public static readonly string SalesOrderHeaders = "SalesOrderHeaders";
 			/// <summary>Member name StoreContacts</summary>
 			public static readonly string StoreContacts = "StoreContacts";
+			/// <summary>Member name AddressCollectionViaCustomerAddress</summary>
+			public static readonly string AddressCollectionViaCustomerAddress = "AddressCollectionViaCustomerAddress";
 			/// <summary>Member name Contacts</summary>
 			public static readonly string Contacts = "Contacts";
 		}
@@ -806,7 +808,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesPerson()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual SalesPersonEntity SalesPerson
 		{
 			get	{ return GetSingleSalesPerson(false); }

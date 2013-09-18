@@ -1658,7 +1658,7 @@ namespace AW.Data.EntityClasses
 		/// <param name="resetFKFields">if set to true it will also reset the FK fields pointing to the related entity</param>
 		private void DesetupSyncShippingAddress(bool signalRelatedEntity, bool resetFKFields)
 		{
-			this.PerformDesetupSyncRelatedEntity( _shippingAddress, new PropertyChangedEventHandler( OnShippingAddressPropertyChanged ), "ShippingAddress", AW.Data.RelationClasses.StaticSalesOrderHeaderRelations.AddressEntityUsingShipToAddressIDStatic, true, signalRelatedEntity, "SalesOrderHeaders_", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.ShipToAddressID } );		
+			this.PerformDesetupSyncRelatedEntity( _shippingAddress, new PropertyChangedEventHandler( OnShippingAddressPropertyChanged ), "ShippingAddress", AW.Data.RelationClasses.StaticSalesOrderHeaderRelations.AddressEntityUsingShipToAddressIDStatic, true, signalRelatedEntity, "SalesOrderHeadersShipped", resetFKFields, new int[] { (int)SalesOrderHeaderFieldIndex.ShipToAddressID } );		
 			_shippingAddress = null;
 		}
 		
@@ -2630,7 +2630,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleBillingAddress()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual AddressEntity BillingAddress
 		{
 			get	{ return GetSingleBillingAddress(false); }
@@ -2689,7 +2689,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleShippingAddress()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual AddressEntity ShippingAddress
 		{
 			get	{ return GetSingleShippingAddress(false); }
@@ -2701,7 +2701,7 @@ namespace AW.Data.EntityClasses
 				}
 				else
 				{
-					SetSingleRelatedEntityNavigator(value, "SalesOrderHeaders_", "ShippingAddress", _shippingAddress, true); 
+					SetSingleRelatedEntityNavigator(value, "SalesOrderHeadersShipped", "ShippingAddress", _shippingAddress, true); 
 				}
 			}
 		}
@@ -2748,7 +2748,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleContact()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual ContactEntity Contact
 		{
 			get	{ return GetSingleContact(false); }
@@ -2807,7 +2807,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleShipMethod()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual ShipMethodEntity ShipMethod
 		{
 			get	{ return GetSingleShipMethod(false); }
@@ -2866,7 +2866,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCreditCard()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual CreditCardEntity CreditCard
 		{
 			get	{ return GetSingleCreditCard(false); }
@@ -2925,7 +2925,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCurrencyRate()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual CurrencyRateEntity CurrencyRate
 		{
 			get	{ return GetSingleCurrencyRate(false); }
@@ -2984,7 +2984,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCustomer()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual CustomerEntity Customer
 		{
 			get	{ return GetSingleCustomer(false); }
@@ -3043,7 +3043,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleCustomerViewRelated()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual CustomerViewRelatedEntity CustomerViewRelated
 		{
 			get	{ return GetSingleCustomerViewRelated(false); }
@@ -3102,7 +3102,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleIndividual()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual IndividualEntity Individual
 		{
 			get	{ return GetSingleIndividual(false); }
@@ -3161,7 +3161,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesPerson()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual SalesPersonEntity SalesPerson
 		{
 			get	{ return GetSingleSalesPerson(false); }
@@ -3220,7 +3220,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleSalesTerritory()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual SalesTerritoryEntity SalesTerritory
 		{
 			get	{ return GetSingleSalesTerritory(false); }

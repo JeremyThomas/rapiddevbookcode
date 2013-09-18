@@ -916,7 +916,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleProductAssembly()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual ProductEntity ProductAssembly
 		{
 			get	{ return GetSingleProductAssembly(false); }
@@ -975,7 +975,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleProductComponent()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual ProductEntity ProductComponent
 		{
 			get	{ return GetSingleProductComponent(false); }
@@ -1034,7 +1034,7 @@ namespace AW.Data.EntityClasses
 		/// <remarks>This property is added for conveniance, however it is recommeded to use the method 'GetSingleUnitMeasure()', because 
 		/// this property is rather expensive and a method tells the user to cache the result when it has to be used more than once in the
 		/// same scope. The property is marked non-browsable to make it hidden in bound controls, f.e. datagrids.</remarks>
-		[Browsable(true)]
+		[Browsable(false)]
 		public virtual UnitMeasureEntity UnitMeasure
 		{
 			get	{ return GetSingleUnitMeasure(false); }
