@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -112,20 +113,36 @@ namespace AW.Win
 
     public MRUHandler MRUHandlerProject { get; set; }
 
+    private static LinqToObjectsContext _linqToObjectsContext;
+
+    public static LinqToObjectsContext LINQToObjectsContext
+    {
+      get
+      {
+        if (_linqToObjectsContext ==null)
+          _linqToObjectsContext = new LinqToObjectsContext();
+        return _linqToObjectsContext;
+      }
+    }
+
     private void OnDBModeChange()
     {
       CloseConnections();
       var dbQuery = query1;
       dbQuery.Clear();
-      if (DBMode == 0)
+      switch (DBMode)
       {
-        dbQuery.Formats.SetDefaultFormats(FormatType.MsSqlServer);
-        dbQuery.Formats.UseSchema = true;
-        dbQuery.Model.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
-      }
-      else
-      {
-        LoadFromLinqMetaData(dbQuery);
+        case 0:
+          dbQuery.Formats.SetDefaultFormats(FormatType.MsSqlServer);
+          dbQuery.Formats.UseSchema = true;
+          dbQuery.Model.LoadFromFile(Path.Combine(_dataFolder, "AdventureWorks.xml"));
+          break;
+        case 2:
+          LoadFromLinqToObjectsMetaData(dbQuery);
+          break;
+        default:
+          LoadFromLinqMetaData(dbQuery);
+          break;
       }
       QPanel.UpdateModelInfo();
       QCPanel.UpdateModelInfo();
@@ -137,6 +154,7 @@ namespace AW.Win
     {
       dbQuery.Formats.SetDefaultFormats(FormatType.EntityFramework);
       dbQuery.Model.Clear();
+      //dbQuery.Model.EntityGraph.
       dbQuery.Model.LoadFromContext(typeof (LinqMetaData), typeof (DataSource<>));
       var dbModel = dbQuery.Model as DbModel;
       if (dbModel == null) return;
@@ -150,6 +168,23 @@ namespace AW.Win
       }
       //dbModel.UpdateEntityJoinInfo(typeof(AddressEntity), typeof(StateProvinceEntity), "StateProvinceID", "StateProvinceID");
       //dbModel.UpdateEntityJoinInfo(typeof(SalesOrderHeaderEntity), typeof(CustomerViewRelatedEntity), "CustomerID", "CustomerID");
+    }
+
+    public static void LoadFromLinqToObjectsMetaData(DbQuery dbQuery)
+    {
+      dbQuery.Formats.SetDefaultFormats(FormatType.EntityFramework);
+      dbQuery.Model.Clear();
+      dbQuery.Model.LoadFromContext(typeof(LinqToObjectsContext), typeof(EntityCollectionBase<>));
+      var dbModel = dbQuery.Model as DbModel;
+      if (dbModel == null) return;
+      foreach (var subEntity in dbModel.EntityRoot.SubEntities)
+      {
+        for (var i = subEntity.Attributes.Count - 1; i >= 0; i--)
+        {
+          if (ShouldBeExcluded(subEntity.Attributes[i]))
+            subEntity.Attributes.RemoveAt(i);
+        }
+      }
     }
 
     public static bool ShouldBeExcluded(EntityAttr entityAttr)
@@ -461,7 +496,8 @@ namespace AW.Win
       this.comboBoxDbType.FormattingEnabled = true;
       this.comboBoxDbType.Items.AddRange(new object[] {
             "SQL Server",
-            "LLBL"});
+            "LLBL",
+            "LinqToObjects"});
       this.comboBoxDbType.Location = new System.Drawing.Point(87, 6);
       this.comboBoxDbType.Name = "comboBoxDbType";
       this.comboBoxDbType.Size = new System.Drawing.Size(134, 21);
@@ -830,20 +866,26 @@ namespace AW.Win
         //BuildSQL();
         var sql = teSQL.Text;
         CheckConnection();
-        if (DBMode == 0)
+        switch (DBMode)
         {
-          var resultDA = new SqlDataAdapter(sql, sqlCon);
-          resultDA.Fill(ResultDS, "Result");
-          dataGrid1.DataSource = ResultDS.Tables[0].DefaultView;
-          sqlCon.Close();
-        }
-        else
-        {
-          if (Settings.Default.IQueryable)
-          //dataGrid1.DataSource = GetQuery();
-            dataGrid1.BindEnumerable(GetQuery(), Convert.ToUInt16(numericUpDownNumRows.Value));
-          else
-            dataGrid1.BindEnumerable(ExecuteToEnumerable(), Convert.ToUInt16(numericUpDownNumRows.Value));
+          case 0:
+          {
+            var resultDA = new SqlDataAdapter(sql, sqlCon);
+            resultDA.Fill(ResultDS, "Result");
+            dataGrid1.DataSource = ResultDS.Tables[0].DefaultView;
+            sqlCon.Close();
+          }
+            break;
+          case 2:
+            dataGrid1.BindEnumerable(ExecuteLinqToObjectsExpressionToEnumerable(), Convert.ToUInt16(numericUpDownNumRows.Value));
+            break;
+          default:
+            if (Settings.Default.IQueryable)
+              //dataGrid1.DataSource = GetQuery();
+              dataGrid1.BindEnumerable(GetQuery(), Convert.ToUInt16(numericUpDownNumRows.Value));
+            else
+              dataGrid1.BindEnumerable(ExecuteToEnumerable(), Convert.ToUInt16(numericUpDownNumRows.Value));
+            break;
         }
       }
       catch (Exception error)
@@ -858,21 +900,36 @@ namespace AW.Win
       teSQL.Clear();
       try
       {
-        if (DBMode == 0)
+        switch (DBMode)
         {
-          var builder = new SqlQueryBuilder(query1);
-          if (builder.CanBuild)
+          case 0:
           {
-            builder.BuildSQL();
-            teSQL.Text = builder.Result.SQL;
+            var builder = new SqlQueryBuilder(query1);
+            if (builder.CanBuild)
+            {
+              builder.BuildSQL();
+              teSQL.Text = builder.Result.SQL;
+            }
           }
-        }
-        else if (_clearing)
-          teSQL.Text = "";
-        else if (query1.Columns.Count > 0 || query1.Root.Conditions.Count > 0)
-        {
-          var expression = GetLinqExpression();
-          teSQL.Text = expression.ToString();
+            break;
+          case 1:
+            if (_clearing)
+              teSQL.Text = "";
+            else if (query1.Columns.Count > 0 || query1.Root.Conditions.Count > 0)
+            {
+              var expression = GetLinqExpression();
+              teSQL.Text = expression.ToString();
+            }
+            break;
+          default:
+            if (_clearing)
+              teSQL.Text = "";
+            else if (query1.Columns.Count > 0 || query1.Root.Conditions.Count > 0)
+            {
+              var expression = GetLinqToObjectsExpression();
+              teSQL.Text = expression.ToString();
+            }
+            break;
         }
       }
       catch
@@ -889,6 +946,18 @@ namespace AW.Win
     public static Expression GetLinqExpression(Query query)
     {
       var linqQueryBuilder = new LinqQueryBuilder(query, MetaSingletons.MetaData);
+      var expression = linqQueryBuilder.Build();
+      return expression;
+    }
+
+    private Expression GetLinqToObjectsExpression()
+    {
+      return GetLinqToObjectsExpression(query1);
+    }
+
+    public static Expression GetLinqToObjectsExpression(Query query)
+    {
+      var linqQueryBuilder = new LinqQueryBuilder(query, LINQToObjectsContext);
       var expression = linqQueryBuilder.Build();
       return expression;
     }
@@ -922,6 +991,13 @@ namespace AW.Win
     {
       var expression = GetLinqExpression();
       var queryResult = EntityHelper.GetProvider(MetaSingletons.MetaData).Execute(expression) as IEnumerable;
+      return queryResult;
+    }
+
+    private IEnumerable ExecuteLinqToObjectsExpressionToEnumerable()
+    {
+      var expression = GetLinqToObjectsExpression();
+      var queryResult = Expression.Lambda(expression).Compile().DynamicInvoke() as IEnumerable;
       return queryResult;
     }
 
@@ -1074,5 +1150,26 @@ namespace AW.Win
     {
       query1.Model.SaveToFile(Path.Combine(_dataFolder, (DBMode == 0 ? "AWSQLModel" : "AWLLBLModel") + ".xml"));
     }
+  }
+
+  public class LinqToObjectsContext
+  {
+    public LinqToObjectsContext()
+    {
+      Addresses = MetaSingletons.MetaData.Address.Take(100).PrefetchStateProvinceCountryRegionCustomer().ToEntityCollection();
+      StateProvinces = (from s in Addresses select s.StateProvince).ToEntityCollection();
+      CountryRegions = (from sp in StateProvinces select sp.CountryRegion).ToEntityCollection();
+      Customers =(from s in Addresses
+      from ca in s.CustomerAddresses
+      select ca.Customer).ToEntityCollection();
+    }
+
+    public EntityCollectionBase<CustomerEntity> Customers { get; set; }
+
+    public EntityCollectionBase<CountryRegionEntity> CountryRegions { get; set; }
+
+    public EntityCollectionBase<StateProvinceEntity> StateProvinces { get; private set; }
+
+    public EntityCollectionBase<AddressEntity> Addresses { get; private set; }
   }
 }
