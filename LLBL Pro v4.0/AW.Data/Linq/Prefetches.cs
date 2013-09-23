@@ -19,13 +19,13 @@ namespace AW.Data.Linq
     
     public static IQueryable<AddressEntity> PrefetchStateProvinceCountryRegionCustomer(this IQueryable<AddressEntity> predicate)
     {
-      return predicate.WithPath(p => p.Prefetch<StateProvinceEntity>(a=>a.StateProvince).SubPath(sp=>sp.Prefetch(s=>s.CountryRegion)).
-        Prefetch<CustomerAddressEntity>(a => a.CustomerAddresses).SubPath(sp => sp.Prefetch(s => s.Customer)));
+      //return predicate.WithPath(p => p.Prefetch<StateProvinceEntity>(a=>a.StateProvince).SubPath(sp=>sp.Prefetch(s=>s.CountryRegion)).
+      //  Prefetch<CustomerAddressEntity>(a => a.CustomerAddresses).SubPath(sp => sp.Prefetch(s => s.Customer)));
 
-      //    return predicate.With(p => p.StateProvince
-      //.With(sp => sp.CountryRegion))
-      //.With(sp => sp.CustomerAddresses
-      //.With(ca => ca.Customer));
+      return predicate.With(
+        a => a.StateProvince.With(sp => sp.CountryRegion), 
+        a => a.CustomerAddresses.With(ca => ca.Customer)
+        );
     }
   }
 }

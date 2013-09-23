@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
+using AW.Data.FactoryClasses;
 using AW.Data.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -158,16 +159,29 @@ namespace AW.Win
       dbQuery.Model.LoadFromContext(typeof (LinqMetaData), typeof (DataSource<>));
       var dbModel = dbQuery.Model as DbModel;
       if (dbModel == null) return;
+
+      dbModel.UpdateEntityJoinInfo(typeof(AddressEntity), typeof(StateProvinceEntity), "StateProvinceID", "StateProvinceID");
+      dbModel.UpdateEntityJoinInfo(typeof(CountryRegionEntity), typeof(StateProvinceEntity), "CountryRegionCode", "CountryRegionCode");
+      dbModel.UpdateEntityJoinInfo(typeof(SalesOrderHeaderEntity), typeof(CustomerViewRelatedEntity), "CustomerID", "CustomerID");
+      dbModel.UpdateEntityJoinInfo(typeof(ProductEntity), typeof(ProductModelEntity), "ProductModelID", "ProductModelID");
+
       foreach (var subEntity in dbModel.EntityRoot.SubEntities)
       {
+        //var entityType = (subEntity.Name + "Entity").ToEnum<AW.Data.EntityType>();
+        //var entity = GeneralEntityFactory.Create(entityType);
+        //foreach (IEntityRelation entityRelation in entity.GetAllRelations())
+        //{
+        //  foreach (IEntityFieldCore allFkEntityFieldCoreObject in entityRelation.GetAllFKEntityFieldCoreObjects())
+        //  {
+        //    dbModel.UpdateEntityJoinInfo(typeof(ProductEntity), typeof(ProductModelEntity), allFkEntityFieldCoreObject.ContainingObjectName, "ProductModelID");
+        //  }
+        //}
         for (var i = subEntity.Attributes.Count - 1; i >= 0; i--)
         {
           if (ShouldBeExcluded(subEntity.Attributes[i]))
             subEntity.Attributes.RemoveAt(i);
         }
       }
-      //dbModel.UpdateEntityJoinInfo(typeof(AddressEntity), typeof(StateProvinceEntity), "StateProvinceID", "StateProvinceID");
-      //dbModel.UpdateEntityJoinInfo(typeof(SalesOrderHeaderEntity), typeof(CustomerViewRelatedEntity), "CustomerID", "CustomerID");
     }
 
     public static void LoadFromLinqToObjectsMetaData(DbQuery dbQuery)
@@ -214,7 +228,7 @@ namespace AW.Win
         }
         catch (Exception ex)
         {
-          MessageBox.Show(ex.Message);
+          Application.OnThreadException(ex);
         }
       }
     }
@@ -882,7 +896,7 @@ namespace AW.Win
           default:
             if (Settings.Default.IQueryable)
               //dataGrid1.DataSource = GetQuery();
-              dataGrid1.BindEnumerable(GetQuery(), Convert.ToUInt16(numericUpDownNumRows.Value));
+              dataGrid1.BindEnumerable(GetLinqQueryable(), Convert.ToUInt16(numericUpDownNumRows.Value));
             else
               dataGrid1.BindEnumerable(ExecuteToEnumerable(), Convert.ToUInt16(numericUpDownNumRows.Value));
             break;
@@ -890,8 +904,8 @@ namespace AW.Win
       }
       catch (Exception error)
       {
+        Application.OnThreadException(error);
         //if some error occurs just show the error message 
-        MessageBox.Show(error.Message);
       }
     }
 
@@ -917,8 +931,8 @@ namespace AW.Win
               teSQL.Text = "";
             else if (query1.Columns.Count > 0 || query1.Root.Conditions.Count > 0)
             {
-              var expression = GetLinqExpression();
-              teSQL.Text = expression.ToString();
+              var linqQueryable = GetLinqQueryable();
+              teSQL.Text = linqQueryable + Environment.NewLine + linqQueryable.Expression;
             }
             break;
           default:
@@ -932,18 +946,25 @@ namespace AW.Win
             break;
         }
       }
-      catch
+      catch (Exception error)
       {
+        GeneralHelper.TraceOut(error);
         //Simply ignore any possible exception
       }
     }
 
-    private Expression GetLinqExpression()
+    private IQueryable GetLinqQueryable()
     {
-      return GetLinqExpression(query1);
+      return GetLinqQueryable(query1);
     }
 
     public static Expression GetLinqExpression(Query query)
+    {
+      var expression = GetLinqQueryable(query);
+      return expression.Expression;
+    }
+
+    public static IQueryable GetLinqQueryable(Query query)
     {
       var linqQueryBuilder = new LinqQueryBuilder(query, MetaSingletons.MetaData);
       var expression = linqQueryBuilder.Build();
@@ -959,7 +980,7 @@ namespace AW.Win
     {
       var linqQueryBuilder = new LinqQueryBuilder(query, LINQToObjectsContext);
       var expression = linqQueryBuilder.Build();
-      return expression;
+      return expression.Expression;
     }
 
     private void QPanel_SqlExecute(object sender, SqlExecuteEventArgs e)
@@ -989,8 +1010,8 @@ namespace AW.Win
 
     private IEnumerable ExecuteToEnumerable()
     {
-      var expression = GetLinqExpression();
-      var queryResult = EntityHelper.GetProvider(MetaSingletons.MetaData).Execute(expression) as IEnumerable;
+      var expression = GetLinqQueryable();
+      var queryResult = EntityHelper.GetProvider(MetaSingletons.MetaData).Execute(expression.Expression) as IEnumerable;
       return queryResult;
     }
 
@@ -1001,21 +1022,21 @@ namespace AW.Win
       return queryResult;
     }
 
-    private IQueryable GetQuery()
-    {
-      var expression = GetLinqExpression();
-      var methodCallExpression = expression as MethodCallExpression;
-      var queryProvider = EntityHelper.GetProvider(MetaSingletons.MetaData);
-      if (methodCallExpression != null)
-      {
-        var expressionParts = EntityHelper.GetMethodCallExpressionParts(methodCallExpression);
-        var queryable = queryProvider.CreateQuery(expressionParts.Item1);
-        queryable = queryable.WhereDynamic(expressionParts.Item2);
-        //queryable = queryable.OrderByDynamic(expressionParts.Item3);
-        return queryable;
-      }
-      return queryProvider.CreateQuery(expression);
-    }
+    //private IQueryable GetQuery()
+    //{
+    //  var expression = GetLinqExpression();
+    //  var methodCallExpression = expression as MethodCallExpression;
+    //  var queryProvider = EntityHelper.GetProvider(MetaSingletons.MetaData);
+    //  if (methodCallExpression != null)
+    //  {
+    //    var expressionParts = EntityHelper.GetMethodCallExpressionParts(methodCallExpression);
+    //    var queryable = queryProvider.CreateQuery(expressionParts.Item1);
+    //    queryable = queryable.WhereDynamic(expressionParts.Item2);
+    //    //queryable = queryable.OrderByDynamic(expressionParts.Item3);
+    //    return queryable;
+    //  }
+    //  return queryProvider.CreateQuery(expression);
+    //}
 
     private string _lastFileName = DefaultFileName;
     private bool _clearing;
