@@ -169,7 +169,14 @@ namespace AW.Win
       try
       {
         if (Settings.Default.UseEasyQuery && QPanel.Rows.Any(r => r.Enabled && !(r is QueryPanel.PredicateRow)))
-          predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
+        {
+          var linqQueryable = FrmEasyQuery.GetLinqQueryable(query1);
+          var salesOrderHeaderQueryFromEasyQuery = linqQueryable as IQueryable<SalesOrderHeaderEntity>;
+          if (salesOrderHeaderQueryFromEasyQuery == null)
+            predicate = predicate.AddMethodCallExpression(FrmEasyQuery.GetLinqExpression(query1) as MethodCallExpression);
+          else
+            salesOrderHeaderQuery = salesOrderHeaderQueryFromEasyQuery;
+        }
       }
       catch (Exception)
       {
