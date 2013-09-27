@@ -156,14 +156,14 @@ namespace AW.Win
       dbQuery.Formats.SetDefaultFormats(FormatType.EntityFramework);
       dbQuery.Model.Clear();
       //dbQuery.Model.EntityGraph.
-      dbQuery.Model.LoadFromContext(typeof (LinqMetaData), typeof (DataSource<>));
+      dbQuery.Model.LoadFromContext(typeof (LinqMetaData), DataModel.ContextOptions.JoinUsingPrimitiveTypes, typeof (DataSource<>));
       var dbModel = dbQuery.Model as DbModel;
       if (dbModel == null) return;
 
-      dbModel.UpdateEntityJoinInfo(typeof(AddressEntity), typeof(StateProvinceEntity), "StateProvinceID", "StateProvinceID");
-      dbModel.UpdateEntityJoinInfo(typeof(CountryRegionEntity), typeof(StateProvinceEntity), "CountryRegionCode", "CountryRegionCode");
-      dbModel.UpdateEntityJoinInfo(typeof(SalesOrderHeaderEntity), typeof(CustomerViewRelatedEntity), "CustomerID", "CustomerID");
-      dbModel.UpdateEntityJoinInfo(typeof(ProductEntity), typeof(ProductModelEntity), "ProductModelID", "ProductModelID");
+      //dbModel.UpdateEntityJoinInfo(typeof(AddressEntity), typeof(StateProvinceEntity), "StateProvinceID", "StateProvinceID");
+      //dbModel.UpdateEntityJoinInfo(typeof(CountryRegionEntity), typeof(StateProvinceEntity), "CountryRegionCode", "CountryRegionCode");
+      //dbModel.UpdateEntityJoinInfo(typeof(SalesOrderHeaderEntity), typeof(CustomerViewRelatedEntity), "CustomerID", "CustomerID");
+      //dbModel.UpdateEntityJoinInfo(typeof(ProductEntity), typeof(ProductModelEntity), "ProductModelID", "ProductModelID");
 
       foreach (var subEntity in dbModel.EntityRoot.SubEntities)
       {
