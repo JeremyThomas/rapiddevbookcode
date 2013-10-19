@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
 		Ancillary\Adventure Works Cycle company logo.gif = Ancillary\Adventure Works Cycle company logo.gif
@@ -87,6 +89,46 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hawkeye", "Hawkeye", "{A951
 		Lib\ACorns.PropertyGridExtender.dll = Lib\ACorns.PropertyGridExtender.dll
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9E62DAD6-C73A-49CA-9906-14E28325549C}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\Test\NMock2.dll = Lib\Test\NMock2.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{E041D28F-1794-4FD2-8CB5-034464537EAF}"
+	ProjectSection(SolutionItems) = preProject
+		packages\repositories.config = packages\repositories.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NorthWind", "NorthWind", "{EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}"
+	ProjectSection(SolutionItems) = preProject
+		Northwind\Northwind form icon.ico = Northwind\Northwind form icon.ico
+		Northwind\Northwind Traders company logo.jpg = Northwind\Northwind Traders company logo.jpg
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd Party", "3rd Party", "{7434E18C-A1AD-41F6-BF37-328A289B29CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{0A1DF75C-9F0C-4B2E-BD03-316671ED8146}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{79351B3D-6F22-43FC-B6E3-84403C789513}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{F605A711-54B7-4F96-A4A1-DE77C595C167}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D8433560-562E-4E96-8B8B-E055A2B2EDBA}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KorzhEasyQuery", "KorzhEasyQuery", "{23799F0F-BB39-4943-92D9-5356321F4A53}"
+	ProjectSection(SolutionItems) = preProject
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.Db.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.Db.NET45.dll
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.Mvc4.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.Mvc4.NET45.dll
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.NET45.dll
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.WebControls.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.WebControls.NET45.dll
+		Lib\KorzhEasyQuery\Korzh.EasyQuery.WinControls.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.WinControls.NET45.dll
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Win", "AW.Win\AW.Win.csproj", "{C3B6A2C2-7333-4250-9384-ECB7CE06FE21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.Data", "AW.Data\AW.Data.csproj", "{47F52527-A001-405B-9CEC-FCBF7FA10855}"
@@ -119,29 +161,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitForms.Test", "nunitfor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL", "Northwind\DAL\Northwind.DAL.csproj", "{24FA312C-06E0-462D-97FA-709AC20D09EF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9E62DAD6-C73A-49CA-9906-14E28325549C}"
-	ProjectSection(SolutionItems) = preProject
-		Lib\Test\NMock2.dll = Lib\Test\NMock2.dll
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW.LLBLGen.DataContextDriver.Tests", "AW.LLBLGen.DataContextDriver.Tests\AW.LLBLGen.DataContextDriver.Tests.csproj", "{C7514B66-375D-4EA3-B211-711DA2EB450A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{E041D28F-1794-4FD2-8CB5-034464537EAF}"
-	ProjectSection(SolutionItems) = preProject
-		packages\repositories.config = packages\repositories.config
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NorthWind", "NorthWind", "{EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}"
-	ProjectSection(SolutionItems) = preProject
-		Northwind\Northwind form icon.ico = Northwind\Northwind form icon.ico
-		Northwind\Northwind Traders company logo.jpg = Northwind\Northwind Traders company logo.jpg
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rd Party", "3rd Party", "{7434E18C-A1AD-41F6-BF37-328A289B29CE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{0A1DF75C-9F0C-4B2E-BD03-316671ED8146}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{79351B3D-6F22-43FC-B6E3-84403C789513}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DAL.SqlServer", "Northwind\DAL\SQL Server (SqlClient)\Northwind.DAL.SqlServer.csproj", "{0AAD790B-15C7-4119-9987-3137A0BB20B9}"
 EndProject
@@ -157,52 +177,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamic Data", "Northwind\D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AW Dynamic Data", "AW Dynamic Data\AW Dynamic Data.csproj", "{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor", "AW.WebDbEditor", "{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataSupportClasses", "DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj", "{64696470-5D05-4E00-95C4-C320F268E526}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListIISApps", "WebSites\ListIISApps\ListIISApps.csproj", "{53C14AAB-2D63-4063-92E3-CC43FA511696}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AW.WebDbEditor 4.0", "http://localhost/AW.WebDbEditor 4.0", "{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}"
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = "SAK"
 		SccAuxPath = "SAK"
 		SccLocalPath = "SAK"
 		SccProvider = "SAK"
+		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{47F52527-A001-405B-9CEC-FCBF7FA10855}|AW.Data.dll;{FFC5B55E-9157-4CE6-81BD-E593E4C08422}|AW.Helper.dll;{7919C746-73F3-4279-A53B-CC6C08F42318}|AW.Helper.LLBL.dll;"
-		Debug.AspNetCompiler.VirtualPath = "/AW.WebDbEditor"
+		Debug.AspNetCompiler.VirtualPath = "/AW.WebDbEditor 4.0"
 		Debug.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor 4.0\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/AW.WebDbEditor"
+		Release.AspNetCompiler.VirtualPath = "/AW.WebDbEditor 4.0"
 		Release.AspNetCompiler.PhysicalPath = "AW.WebDbEditor\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\AW.WebDbEditor 4.0\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "37973"
-		StartServerOnDebug = "false"
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SD.LLBLGen.Pro.DynamicDataSupportClasses", "DynamicDataSupportClasses\SD.LLBLGen.Pro.DynamicDataSupportClasses.csproj", "{64696470-5D05-4E00-95C4-C320F268E526}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{F605A711-54B7-4F96-A4A1-DE77C595C167}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListIISApps", "WebSites\ListIISApps\ListIISApps.csproj", "{53C14AAB-2D63-4063-92E3-CC43FA511696}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D8433560-562E-4E96-8B8B-E055A2B2EDBA}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KorzhEasyQuery", "KorzhEasyQuery", "{23799F0F-BB39-4943-92D9-5356321F4A53}"
-	ProjectSection(SolutionItems) = preProject
-		Lib\KorzhEasyQuery\Korzh.EasyQuery.Db.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.Db.NET45.dll
-		Lib\KorzhEasyQuery\Korzh.EasyQuery.Mvc4.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.Mvc4.NET45.dll
-		Lib\KorzhEasyQuery\Korzh.EasyQuery.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.NET45.dll
-		Lib\KorzhEasyQuery\Korzh.EasyQuery.WebControls.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.WebControls.NET45.dll
-		Lib\KorzhEasyQuery\Korzh.EasyQuery.WinControls.NET45.dll = Lib\KorzhEasyQuery\Korzh.EasyQuery.WinControls.NET45.dll
+		SlnRelativePath = "AW.WebDbEditor\"
 	EndProjectSection
 EndProject
 Global
@@ -311,14 +312,11 @@ Global
 		SccProjectName26 = WebSites/ListIISApps
 		SccLocalPath26 = WebSites\\ListIISApps
 		SccWebProject27 = true
-		SccProjectUniqueName27 = AW.WebDbEditor
+		SccProjectUniqueName27 = http://localhost/AW.WebDbEditor\u00204.0
 		SccProjectTopLevelParentUniqueName27 = AW\u0020with\u0020Everything.sln
 		SccProjectName27 = AW.WebDbEditor
 		SccLocalPath27 = AW.WebDbEditor
 		SccProjectEnlistmentChoice27 = 2
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = AW with Everything.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug no unit tests|Any CPU = Debug no unit tests|Any CPU
@@ -620,18 +618,6 @@ Global
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312}.Release|x86.ActiveCfg = Release|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release - Test|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release - Test|x86.ActiveCfg = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F}.Release|x86.ActiveCfg = Debug|Any CPU
 		{64696470-5D05-4E00-95C4-C320F268E526}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{64696470-5D05-4E00-95C4-C320F268E526}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{64696470-5D05-4E00-95C4-C320F268E526}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
@@ -656,6 +642,18 @@ Global
 		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release|Any CPU.Build.0 = Release|Any CPU
 		{53C14AAB-2D63-4063-92E3-CC43FA511696}.Release|x86.ActiveCfg = Release|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|Any CPU.ActiveCfg = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|x86.ActiveCfg = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -665,28 +663,31 @@ Global
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{9E62DAD6-C73A-49CA-9906-14E28325549C} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{23799F0F-BB39-4943-92D9-5356321F4A53} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
-		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
-		{7919C746-73F3-4279-A53B-CC6C08F42318} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
-		{A67A2102-BA0E-48B3-9EF8-831F72B47160} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
-		{FFC5B55E-9157-4CE6-81BD-E593E4C08422} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
-		{701547DC-CA90-46EF-83E6-AC0ED4335715} = {79351B3D-6F22-43FC-B6E3-84403C789513}
-		{E19E19F1-71EE-4C76-BF94-350A46075BED} = {79351B3D-6F22-43FC-B6E3-84403C789513}
-		{C7514B66-375D-4EA3-B211-711DA2EB450A} = {79351B3D-6F22-43FC-B6E3-84403C789513}
-		{2661F1B5-62FB-4783-A1A0-57445F397F9E} = {79351B3D-6F22-43FC-B6E3-84403C789513}
-		{BBD8CAD5-6A28-494F-A6B0-A5280EC6F92E} = {79351B3D-6F22-43FC-B6E3-84403C789513}
-		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
-		{E779CBD7-1CCE-4796-AE12-00AB56A8A815} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
-		{3A62F36D-4E53-4532-B9EF-3B303A578B5E} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
-		{D978DA92-C5B6-4670-98E4-17390BBCCF08} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
 		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{D58E3608-5E8C-4CDD-96AB-621AB93B2D45} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{D2CBE87C-3EFC-40FA-AE82-1ED67C226AE5} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
 		{F704FF2C-33E0-4E7C-A733-9D4351B0FE4F} = {EB83CFB5-9FB1-45BC-B391-DE9E215A02C9}
-		{DC407283-3B3E-4B39-BD0D-9CB6F2F90F2F} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
-		{64696470-5D05-4E00-95C4-C320F268E526} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
+		{3A62F36D-4E53-4532-B9EF-3B303A578B5E} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
+		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
+		{E779CBD7-1CCE-4796-AE12-00AB56A8A815} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
+		{D978DA92-C5B6-4670-98E4-17390BBCCF08} = {7434E18C-A1AD-41F6-BF37-328A289B29CE}
+		{FFC5B55E-9157-4CE6-81BD-E593E4C08422} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
+		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
+		{7919C746-73F3-4279-A53B-CC6C08F42318} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
+		{A67A2102-BA0E-48B3-9EF8-831F72B47160} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
+		{2661F1B5-62FB-4783-A1A0-57445F397F9E} = {79351B3D-6F22-43FC-B6E3-84403C789513}
+		{701547DC-CA90-46EF-83E6-AC0ED4335715} = {79351B3D-6F22-43FC-B6E3-84403C789513}
+		{E19E19F1-71EE-4C76-BF94-350A46075BED} = {79351B3D-6F22-43FC-B6E3-84403C789513}
+		{C7514B66-375D-4EA3-B211-711DA2EB450A} = {79351B3D-6F22-43FC-B6E3-84403C789513}
+		{BBD8CAD5-6A28-494F-A6B0-A5280EC6F92E} = {79351B3D-6F22-43FC-B6E3-84403C789513}
 		{DDEF92A0-8E35-4F65-8CBD-584BA9D2D312} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
+		{64696470-5D05-4E00-95C4-C320F268E526} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
 		{53C14AAB-2D63-4063-92E3-CC43FA511696} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
+		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1} = {F605A711-54B7-4F96-A4A1-DE77C595C167}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = AW with Everything.vsmdi
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 

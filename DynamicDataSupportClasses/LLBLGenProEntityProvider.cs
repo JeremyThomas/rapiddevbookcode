@@ -218,7 +218,7 @@ namespace SD.LLBLGen.Pro.DynamicDataSupportClasses
         var toAdd = new LLBLGenProEntityFieldProvider(this, descriptor.PropertyType, false, false, false, false, 0,
                                                       descriptor.Name, isOptional, relationProvider);
         entityFieldProviders.Add(toAdd);
-        _fieldNameToEntityFieldProvider.Add(toAdd.Name, toAdd);
+        _fieldNameToEntityFieldProvider[toAdd.Name] = toAdd;
         namesAdded.Add(toAdd.Name);
       }
 
