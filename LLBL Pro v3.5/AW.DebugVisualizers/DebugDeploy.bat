@@ -1,14 +1,25 @@
 @echo off
+
+setlocal EnableDelayedExpansion 
+
+IF EXIST "%USERPROFILE%\My Documents" (
+    echo Windows XP
+) ELSE (
+IF EXIST "!USERPROFILE!\Documents" (
+    echo Vista
+) 
+)
+
 set VisualizersDir= %USERPROFILE%\My Documents\Visual Studio 2012\Visualizers
-IF EXIST %VisualizersDir% (
-  echo using 1 %VisualizersDir%
+IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2012\Visualizers" (
+  echo using 1 !VisualizersDir!
 ) else (
-    echo %VisualizersDir% not found 1
-    set VisualizersDir= "%USERPROFILE%\Documents\Visual Studio 2012\Visualizers" 
-    IF EXIST %VisualizersDir% (
-      echo using 2 %VisualizersDir%
+    echo !VisualizersDir! not found 1
+    set VisualizersDir= "%USERPROFILE%\Documents\Visual Studio 2012\Visualizers"
+    IF EXIST "%USERPROFILE%\Documents\Visual Studio 2012\Visualizers" (
+      echo using 2 !VisualizersDir!
       ) else (
-      echo %VisualizersDir% not found 2
+      echo !VisualizersDir! not found 2
       goto:eof
     )
  )
