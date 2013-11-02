@@ -362,6 +362,7 @@ namespace AW.DebugVisualizers.Tests
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is WeakReference);
       var JSVisualizerObjectProviderFake = new JSVisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
       //AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, JSVisualizerObjectProviderFake.GetObject());
+      
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, JSVisualizerObjectProviderFake);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());

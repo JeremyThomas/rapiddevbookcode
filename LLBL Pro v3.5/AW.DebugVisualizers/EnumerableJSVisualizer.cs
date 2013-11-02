@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -16,9 +17,9 @@ using Microsoft.VisualStudio.DebuggerVisualizers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-
 //http://msdn.microsoft.com/en-us/library/aa991998(VS.100).aspx 'Use IVisualizerObjectProvider..::.GetData when the object is not serializable by .NET and requires custom serialization. 
 // In that case, you must also override the VisualizerObjectSource..::.Serialize method.'
+using Newtonsoft.Json.Serialization;
 
 namespace AW.DebugVisualizers
 {
@@ -118,8 +119,9 @@ namespace AW.DebugVisualizers
 
   public class EnumerableJSVisualizerObjectSource : VisualizerObjectSource
   {
-    public static readonly JsonSerializerSettings JsonSerializerSettingsTypeNameHandlingAll = new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore, TypeNameHandling = TypeNameHandling.All}; //
-    public static readonly JsonSerializerSettings JsonSerializerSettingsReferenceLoopHandlingIgnore = new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
+    static readonly ITraceWriter TraceWriter = new MemoryTraceWriter();
+    public static readonly JsonSerializerSettings JsonSerializerSettingsTypeNameHandlingAll = new JsonSerializerSettings { TraceWriter = TraceWriter, ReferenceLoopHandling = ReferenceLoopHandling.Ignore, TypeNameHandling = TypeNameHandling.All }; //
+    public static readonly JsonSerializerSettings JsonSerializerSettingsReferenceLoopHandlingIgnore = new JsonSerializerSettings { TraceWriter = TraceWriter, ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
 
     #region Overrides of VisualizerObjectSource
 
@@ -185,13 +187,14 @@ namespace AW.DebugVisualizers
 
     private static void SerializeJS(Stream outgoingData, IEnumerable enumerable, bool itemTypeinGac, bool enumerableTypeinGac)
     {
+      Debug.Write(enumerable.GetType());
       if (itemTypeinGac)
         if (enumerableTypeinGac)
           SerializeJSTypeNameHandlingAll(outgoingData, enumerable);
         else
-          SerializeJS(outgoingData, enumerable, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Objects});
+          SerializeJS(outgoingData, enumerable, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects, TraceWriter = TraceWriter, });
       else if (enumerableTypeinGac)
-        SerializeJS(outgoingData, enumerable, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Arrays});
+        SerializeJS(outgoingData, enumerable, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Arrays, TraceWriter = TraceWriter});
       else
         SerializeJSPlain(outgoingData, enumerable);
     }
@@ -213,6 +216,7 @@ namespace AW.DebugVisualizers
 
     private static void StringToStream(Stream outgoingData, string s1)
     {
+      Debug.Write(TraceWriter);
       var writer = new StreamWriter(outgoingData);
       writer.Write(s1);
       writer.Flush();
