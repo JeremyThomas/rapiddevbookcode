@@ -170,14 +170,9 @@ namespace AW.Winforms.Helpers
 			return objectListView;
 		}
 
-		public static IList CreateList(Type type)
-		{
-			return (IList) MetaDataHelper.CreateGeneric(typeof (List<>), type);
-		}
-
 		public static IBindingListView CreateObjectListViewGeneric(Type type)
 		{
-			return (IBindingListView) MetaDataHelper.CreateGeneric(typeof (ObjectListView<>), type, CreateList(type));
+			return (IBindingListView) MetaDataHelper.CreateGeneric(typeof (ObjectListView<>), type, MetaDataHelper.CreateList(type));
 		}
 
 		public static IBindingListView CreateObjectListView(Type type)

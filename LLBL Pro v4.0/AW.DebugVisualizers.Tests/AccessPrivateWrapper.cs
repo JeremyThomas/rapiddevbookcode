@@ -72,9 +72,36 @@ namespace AW.DebugVisualizers.Tests
 		private static MethodInfo GetMethod(Type type, string name, params Type[] types)
 		{
 			var fld = type.GetMethod(name, Flags, null, types, null);
-			if (fld == null && type.BaseType != null)
-				fld = GetMethod(type.BaseType, name, types);
-			return fld;
+		  if (fld == null && type.BaseType != null)
+		  {
+		    fld = GetMethod(type.BaseType, name, types);
+		  }
+		  if (fld != null) return fld;
+		  var method = type.GetMethod(name, Flags);
+		  if (method == null) return fld;
+		  var parameterInfos = method.GetParameters();
+		  if (parameterInfos.Count() == types.Length)
+		  {
+		    var paramsMatch = false;
+		    for (int index = 0; index < parameterInfos.Length; index++)
+		    {
+		      var parameterInfo = parameterInfos[index];
+		      var type1 = types[index];
+		      paramsMatch = parameterInfo.ParameterType.IsAssignableFrom(type1);
+          if (!paramsMatch && parameterInfo.ParameterType.IsInterface)
+          {
+            var theInterface = type1.GetInterface(parameterInfo.ParameterType.Name);
+            if (theInterface != null && theInterface.Assembly!=parameterInfo.ParameterType.Assembly)
+              throw new ArgumentException(string.Format("Parameter {0} to {1} is from a different assembly: {2}", parameterInfo.ParameterType.AssemblyQualifiedName,
+                name, theInterface.AssemblyQualifiedName));
+          }
+		      if (!paramsMatch)
+		        break;
+		    }
+		    if (paramsMatch)
+		      fld = method;
+		  }
+		  return fld;
 		}
 
 		/// <summary>
