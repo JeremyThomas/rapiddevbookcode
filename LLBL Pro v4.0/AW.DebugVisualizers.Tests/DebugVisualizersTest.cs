@@ -140,11 +140,10 @@ namespace AW.DebugVisualizers.Tests
     public void EntityFieldsTest()
     {
       var addressType = MetaSingletons.MetaData.AddressType.First();
-      //Show(addressType.Fields);
       TestShow(addressType.Fields, TestData.NumFieldProperties);
     }
 
-    [TestCategory("Winforms"), TestMethod, Timeout(10000)]
+    [TestCategory("Winforms"), TestMethod, Timeout(20000)]
     public void LargeSerializableQueryTest()
     {
       var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
