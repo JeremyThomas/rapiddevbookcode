@@ -363,7 +363,33 @@ namespace AW.Helper
 			return Activator.CreateInstance(specificType, args);
 		}
 
-		/// <summary>
+    public static IList CreateList(Type type, params object[] args)
+	  {
+      return (IList)CreateGeneric(typeof(List<>), type, args);
+	  }
+
+	  public static IList ConvertToList(IEnumerable enumerable)
+	  {
+	    var list = enumerable as IList;
+	    return list ?? CreateList(GetEnumerableItemType(enumerable), enumerable);
+	  }
+
+    public static Array ConvertToArray(IEnumerable enumerable)
+    {
+      var collection = enumerable as ICollection;
+      return ConvertToArray(collection ?? ConvertToList(enumerable));
+    }
+
+	  private static Array ConvertToArray(ICollection collection)
+	  {
+      var array = collection as Array;
+      if (array != null) return array;
+	    array = Array.CreateInstance(GetEnumerableItemType(collection), collection.Count);
+	    collection.CopyTo(array, 0);
+      return array; 
+	  }
+
+	  /// <summary>
 		/// 	Returns the data type of the items in the specified list.
 		/// </summary>
 		/// <param name="enumerable"> The enumerable to be examined for type information. </param>

@@ -130,6 +130,7 @@ namespace AW.DebugVisualizers.Tests
     public void LookupTest()
     {
       var lookup = MetaSingletons.MetaData.AddressType.ToLookup(at => at.Name);
+      TestSerialize(lookup);
       //Show(lookup);
       TestShow(lookup, 1);
     }
