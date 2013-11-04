@@ -112,11 +112,11 @@ namespace AW.DebugVisualizers.Tests
     {
       TestSerialize(MetaSingletons.MetaData.AddressType);
       var addressTypeQueryable = MetaSingletons.MetaData.AddressType.Distinct();
-      TestShowTransported(addressTypeQueryable, 4);
+      TestShowTransported(addressTypeQueryable, TestData.BrowseableAddressTypeProperties);
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       var addressTypeEntityCollectionQueryable = addressTypeEntityCollection.AsQueryable();
       TestSerialize(addressTypeEntityCollectionQueryable);
-      TestShowTransported(MetaSingletons.MetaData.AddressType, 4);
+      TestShowTransported(MetaSingletons.MetaData.AddressType, TestData.BrowseableAddressTypeProperties);
     }
 
     [TestCategory("Winforms"), TestMethod]
@@ -125,7 +125,7 @@ namespace AW.DebugVisualizers.Tests
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
       var weakReference = new WeakReference(addressTypeEntityCollection);
       TestSerialize(weakReference);
-      TestShowTransported(weakReference, 4);
+      TestShowTransported(weakReference, TestData.BrowseableAddressTypeProperties);
     }
 
     [TestMethod]
@@ -147,7 +147,7 @@ namespace AW.DebugVisualizers.Tests
     public void LargeSerializableQueryTest()
     {
       var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
-      TestShow(awDataClassesDataContext.Addresses, 9);
+      TestShow(awDataClassesDataContext.Addresses, TestData.BrowseableAddressProperties);
       //	TestSerialize(MetaSingletons.MetaData.PurchaseOrderHeader);
       //	TestShow(MetaSingletons.MetaData.PurchaseOrderHeader);
     }
@@ -155,7 +155,8 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void QueryWithRelatedFieldsTest()
     {
-      TestShowTransported(MetaSingletons.MetaData.Address.Take(5), 9);
+      Show(MetaSingletons.MetaData.Address);
+      TestShowTransported(MetaSingletons.MetaData.Address.Take(5), TestData.BrowseableAddressProperties);
     }
 
     [TestMethod]
@@ -177,22 +178,22 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void SerializableObservableCollectionTest()
     {
-      TestShowTransported(new ObservableCollection<AddressTypeEntity>(MetaSingletons.MetaData.AddressType.ToEntityCollection()), 4);
+      TestShowTransported(new ObservableCollection<AddressTypeEntity>(MetaSingletons.MetaData.AddressType.ToEntityCollection()), TestData.BrowseableAddressTypeProperties);
     }
 
     [TestMethod]
     public void SerializableCollectionViewTest()
     {
       var collectionView = (new CollectionViewSource {Source = MetaSingletons.MetaData.AddressType.ToEntityCollection()}).View;
-      TestShowTransported(collectionView, 4);
+      TestShowTransported(collectionView, TestData.BrowseableAddressTypeProperties);
     }
 
     [TestCategory("Winforms"), TestMethod]
     public void SerializableEnumerableTest()
     {
       var addressTypeEntityCollection = MetaSingletons.MetaData.AddressType.ToEntityCollection();
-      TestShowTransported(addressTypeEntityCollection, 4);
-      TestShowTransported(new HashSet<AddressTypeEntity>(_addressTypeEntityCollection), 4);
+      TestShowTransported(addressTypeEntityCollection, TestData.BrowseableAddressTypeProperties);
+      TestShowTransported(new HashSet<AddressTypeEntity>(_addressTypeEntityCollection), TestData.BrowseableAddressTypeProperties);
       TestShowTransported(SerializableBaseClass.GenerateList(), 2);
       TestShowTransported(((IEntity) addressTypeEntityCollection.First()).CustomPropertiesOfType, 2);
       TestShowTransported(SerializableBaseClass2.GenerateListWithBothSerializableClasses(), 2);
@@ -202,12 +203,12 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void NonSerializableEnumerationTest()
     {
-      TestShowTransported(MetaSingletons.MetaData.AddressType, 4);
-      TestShowTransported(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > AddressType.Home), 4);
-      TestShowTransported(_addressTypeEntityCollection.DefaultView, 4);
-      TestShowTransported(new BindingSource(_addressTypeEntityCollection, null), 4);
-      TestShowTransported(_addressTypeEntityCollection.Where(at => at.AddressTypeID > AddressType.Home), 4);
-      TestShowTransported(_addressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID), 4);
+      TestShowTransported(MetaSingletons.MetaData.AddressType, TestData.BrowseableAddressTypeProperties);
+      TestShowTransported(MetaSingletons.MetaData.AddressType.Where(at => at.AddressTypeID > AddressType.Home), TestData.BrowseableAddressTypeProperties);
+      TestShowTransported(_addressTypeEntityCollection.DefaultView, TestData.BrowseableAddressTypeProperties);
+      TestShowTransported(new BindingSource(_addressTypeEntityCollection, null), TestData.BrowseableAddressTypeProperties);
+      TestShowTransported(_addressTypeEntityCollection.Where(at => at.AddressTypeID > AddressType.Home), TestData.BrowseableAddressTypeProperties);
+      TestShowTransported(_addressTypeEntityCollection.AsQueryable().OrderByDescending(at => at.AddressTypeID), TestData.BrowseableAddressTypeProperties);
     }
 
     [TestCategory("Winforms"), TestMethod]
@@ -245,8 +246,8 @@ namespace AW.DebugVisualizers.Tests
     public void LinqtoSQLTest()
     {
       var awDataClassesDataContext = AWDataClassesDataContext.GetNew();
-      TestShowTransported(awDataClassesDataContext.AddressTypes, 4);
-      TestShowTransported(awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID), 4);
+      TestShowTransported(awDataClassesDataContext.AddressTypes, TestData.BrowseableAddressTypeProperties);
+      TestShowTransported(awDataClassesDataContext.AddressTypes.OrderByDescending(at => at.AddressTypeID), TestData.BrowseableAddressTypeProperties);
     }
 
     [TestMethod]
@@ -315,7 +316,7 @@ namespace AW.DebugVisualizers.Tests
     [TestMethod]
     public void SettingsPropertyTest()
     {
-      TestShowTransported(Settings.Default.Properties, 9, 7);
+      TestShowTransported(Settings.Default.Properties, TestData.BrowseableAddressProperties, 7);
       if (Settings.Default.PropertyValues.Count == 0)
       {
         var x = Settings.Default.StringSetting;
