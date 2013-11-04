@@ -14,7 +14,11 @@ namespace AW.Tests
 {
   public static class TestData
   {
-    public const int NumFieldProperties = 38;
+    /// <summary>
+    /// 37 - The number of field properties.
+    /// No LinkedSubTypeFields or LinkedSuperTypeField in LLBL 4
+    /// </summary>
+    public const int NumFieldProperties = 37;
 
     public static readonly List<string> ThreeStrings = new List<string> {"s1", "s2", "s3"};
 

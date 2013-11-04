@@ -1,6 +1,6 @@
 rem "%PROGRAMFILES%\Microsoft\ILMerge\ILMerge.exe" /out:bin\release\AW.EnumerableVisualizer.dll bin\release\AW.DebugVisualizers.dll bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\CSScriptLibrary.dll
-rem xcopy /y bin\release\AW.EnumerableVisualizer.dll "%userprofile%\My Documents\Visual Studio 2012\Visualizers" 
+rem xcopy /y bin\release\AW.EnumerableVisualizer.dll "%userprofile%\My Documents\Visual Studio 2013\Visualizers" 
 rem /targetplatform:v4,"%FrameworkDir%%FrameworkVersion%"
 "%PROGRAMFILES(X86)%\Microsoft\ILMerge\ILMerge.exe" /targetplatform:v4,"%ProgramFiles%\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client" /out:bin\release\AW.EnumerableVisualizer.dll bin\release\AW.DebugVisualizers.dll bin\release\AW.Helper.dll bin\release\AW.Winforms.Helpers.dll bin\release\Dynamic.dll bin\release\ObjectListView.dll bin\release\sliver.Windows.Forms.StateBrowser.dll bin\release\Newtonsoft.Json.dll
-rem xcopy /y bin\release\AW.EnumerableVisualizer.dll "%userprofile%\My Documents\Visual Studio 2012\Visualizers" 
+rem xcopy /y bin\release\AW.EnumerableVisualizer.dll "%userprofile%\My Documents\Visual Studio 2013\Visualizers" 
 pause

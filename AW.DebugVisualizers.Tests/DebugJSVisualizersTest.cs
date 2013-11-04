@@ -139,7 +139,7 @@ namespace AW.DebugVisualizers.Tests
     {
       var addressType = MetaSingletons.MetaData.AddressType.First();
       //Show(addressType.Fields);
-      TestShow(addressType.Fields, TestData.NumFieldProperties + 1); //expression to appply
+      TestShow(addressType.Fields, TestData.NumFieldProperties); //expression to apply
     }
 
     [TestCategory("Winforms"), TestMethod, Timeout(10000)]
@@ -362,6 +362,7 @@ namespace AW.DebugVisualizers.Tests
       Assert.IsTrue(enumerableOrDataTableToVisualize is IEnumerable || enumerableOrDataTableToVisualize is DataTableSurrogate || enumerableOrDataTableToVisualize is WeakReference);
       var JSVisualizerObjectProviderFake = new JSVisualizerObjectProviderFake(enumerableOrDataTableToVisualize);
       //AssertNewContanerIsBindingListView(enumerableOrDataTableToVisualize, JSVisualizerObjectProviderFake.GetObject());
+      
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, JSVisualizerObjectProviderFake);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());

@@ -140,6 +140,7 @@ namespace AW.DebugVisualizers.Tests
     public void EntityFieldsTest()
     {
       var addressType = MetaSingletons.MetaData.AddressType.First();
+      //Show(addressType.Fields);
       TestShow(addressType.Fields, TestData.NumFieldProperties);
     }
 
