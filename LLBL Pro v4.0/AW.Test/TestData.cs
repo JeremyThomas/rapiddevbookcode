@@ -20,10 +20,20 @@ namespace AW.Tests
     /// </summary>
     public const int NumFieldProperties = 37;
 
+    /// <summary>
+    ///   8 browseable address properties
+    /// </summary>
+    public const int BrowseableAddressProperties = 8;
+
+    /// <summary>
+    ///   4 browseable address type properties
+    /// </summary>
+    public const int BrowseableAddressTypeProperties = 4;
+
     public static readonly List<string> ThreeStrings = new List<string> {"s1", "s2", "s3"};
 
     /// <summary>
-    /// from e in query select e
+    ///   from e in query select e
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="query">The query.</param>

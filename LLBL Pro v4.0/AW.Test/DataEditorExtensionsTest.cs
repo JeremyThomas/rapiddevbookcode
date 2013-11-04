@@ -206,7 +206,7 @@ namespace AW.Tests
     {
       var addressEntities = MetaSingletons.MetaData.Address.SkipTake(1, 40);
       ModalFormHandler = Handler;
-      ExpectedColumnCount = 9;
+      ExpectedColumnCount = TestData.BrowseableAddressProperties;
       addressEntities.ShowSelfServicingInGrid(20);
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
       ModalFormHandler = Handler;
@@ -225,14 +225,14 @@ namespace AW.Tests
     public void ShowSelfServicingInGridTest()
     {
       ModalFormHandler = Handler;
-      ExpectedColumnCount = 9;
+      ExpectedColumnCount = TestData.BrowseableAddressProperties;
       MetaSingletons.MetaData.Address.ShowSelfServicingInGrid();
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
       ModalFormHandler = Handler;
       ExpectedColumnCount = 4;
       MetaSingletons.MetaData.AddressType.ShowSelfServicingInGrid();
       Assert.AreEqual(ExpectedColumnCount, ActualColumnCount);
-      TestShowInGrid(MetaSingletons.MetaData.Address, 9, 0, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
+      TestShowInGrid(MetaSingletons.MetaData.Address, TestData.BrowseableAddressProperties, 0, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
     }
 
     [TestCategory("Winforms"), TestMethod]
