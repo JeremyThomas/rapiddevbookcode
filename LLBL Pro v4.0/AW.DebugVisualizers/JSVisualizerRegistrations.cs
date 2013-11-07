@@ -111,8 +111,6 @@ using Microsoft.VisualBasic;
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(ConfigurationElementCollection), Description = EnumerableJSVisualizer.Description)]
 
 //-LLBL
-[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = EnumerableJSVisualizer.Description)]
-
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityCollectionBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityCollectionBase2`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
 
@@ -140,15 +138,17 @@ using Microsoft.VisualBasic;
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "Microsoft.Data.ConnectionUI.DataConnectionDialog+DataSourceCollection, Microsoft.Data.ConnectionUI.Dialog", Description = EnumerableJSVisualizer.Description)]
 
 //LLBL
-//[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase<>), Description = EnumerableJSVisualizer.Name)]
-//[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery<>), Description = EnumerableJSVisualizer.Name)]
-//[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), Target = typeof(SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase<>), Description = EnumerableJSVisualizer.Name)]
-
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = EnumerableJSVisualizer.Description)]
-//[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSource`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = EnumerableJSVisualizer.Name)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase2`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.DataSourceBase2`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
 
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.LinqSupportClasses.LLBLGenProQuery`1, SD.LLBLGen.Pro.LinqSupportClasses.NET35", Description = EnumerableJSVisualizer.Description)]
+
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
+[assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityViewBase2`1, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
+
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFields, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
 [assembly: DebuggerVisualizer(typeof(EnumerableJSVisualizer), typeof(EnumerableJSVisualizerObjectSource), TargetTypeName = "SD.LLBLGen.Pro.ORMSupportClasses.EntityFields2, SD.LLBLGen.Pro.ORMSupportClasses", Description = EnumerableJSVisualizer.Description)]
 
