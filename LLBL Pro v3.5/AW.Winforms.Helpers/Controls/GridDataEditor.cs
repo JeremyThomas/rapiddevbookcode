@@ -172,6 +172,7 @@ namespace AW.Winforms.Helpers.Controls
 				toolStripButtonObjectBrowser.Enabled = true;
 				toolStripButtonObjectListViewVisualizer.Enabled = IsObjectListView();
 				toolStripButtonObjectListViewVisualizer.Visible = toolStripButtonObjectListViewVisualizer.Enabled;
+			  BindGrids();
 			}
 			else
 			{
@@ -212,7 +213,7 @@ namespace AW.Winforms.Helpers.Controls
 			var firstPageEnumerable = enumerable;
 			if (Paging())
 				firstPageEnumerable = firstPageEnumerable.AsQueryable().Take(PageSize);
-
+		  UnBindGrids();
 			var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null));
 			IsBinding = false;
 			return isEnumerable;
@@ -286,6 +287,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		protected virtual void BindEnumerable()
 		{
+      UnBindGrids();
 			bindingSourceEnumerable.BindEnumerable(SkipTake(), false);
 		}
 
@@ -442,5 +444,37 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			FrmEntityViewer.LaunchAsChildForm(bindingSourceEnumerable.List, DataEditorPersister);
 		}
+
+    private void tabControlGrids_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      BindGrids(true);
+    }
+
+	  private void BindGrids(bool fromUser = false)
+	  {
+	    if (tabControlGrids.SelectedTab == tabPageDataGrid)
+	    {
+	      dataGridEnumerable.DataSource = bindingSourceEnumerable;
+        if (!fromUser)
+	        dataGridViewEnumerable.DataSource = null;
+	    }
+	    else
+	    {
+        if (!fromUser)
+	        dataGridEnumerable.DataSource = null;
+	      dataGridViewEnumerable.DataSource = bindingSourceEnumerable;
+	    }
+	  }
+    private void UnBindGrids()
+    {
+      if (tabControlGrids.SelectedTab == tabPageDataGrid)
+      {
+          dataGridViewEnumerable.DataSource = null;
+      }
+      else
+      {
+          dataGridEnumerable.DataSource = null;
+      }
+    }
 	}
 }
