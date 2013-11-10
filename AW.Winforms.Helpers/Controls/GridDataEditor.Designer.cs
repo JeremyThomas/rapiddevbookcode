@@ -321,8 +321,10 @@
       // dataGridViewEnumerable
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
+      this.dataGridViewEnumerable.AutoGenerateColumns = false;
       this.dataGridViewEnumerable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
       this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";

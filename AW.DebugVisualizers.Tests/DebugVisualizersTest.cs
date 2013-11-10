@@ -155,7 +155,7 @@ namespace AW.DebugVisualizers.Tests
     [TestCategory("Winforms"), TestMethod]
     public void QueryWithRelatedFieldsTest()
     {
-      Show(MetaSingletons.MetaData.Address);
+      //Show(MetaSingletons.MetaData.Address);
       TestShowTransported(MetaSingletons.MetaData.Address.Take(5), TestData.BrowseableAddressProperties);
     }
 
