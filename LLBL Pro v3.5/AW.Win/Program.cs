@@ -19,7 +19,8 @@ namespace AW.Win
 			using (var dialog = new ThreadExceptionDialog(e.Exception))
 			{
 				GeneralHelper.TraceOut(e.Exception.ToString());
-				dialog.ShowDialog();
+        if (!e.Exception.StackTrace.Contains("System.Windows.Forms.DataGridTextBoxColumn.GetText(Object value)")) //As DataGrid doesn't have DataError event
+				  dialog.ShowDialog();
 			}
 		}
 

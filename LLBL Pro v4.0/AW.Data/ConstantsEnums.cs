@@ -1867,7 +1867,7 @@ namespace AW.Data
 
   public enum PayFrequency
   {
-    Monthly,
+    Monthly = 1,
     BiWeekly
   }
 
