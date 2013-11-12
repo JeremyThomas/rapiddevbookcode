@@ -10,7 +10,7 @@ IF EXIST "!USERPROFILE!\Documents" (
 ) 
 )
 
-set VisualizersDir= %USERPROFILE%\My Documents\Visual Studio 2012\Visualizers
+set VisualizersDir= "%USERPROFILE%\My Documents\Visual Studio 2012\Visualizers"
 IF EXIST "%USERPROFILE%\My Documents\Visual Studio 2012\Visualizers" (
   echo using 1 !VisualizersDir!
 ) else (
