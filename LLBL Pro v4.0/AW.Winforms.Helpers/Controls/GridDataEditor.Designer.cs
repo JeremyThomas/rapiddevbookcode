@@ -330,6 +330,8 @@
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
       this.dataGridViewEnumerable.Size = new System.Drawing.Size(877, 516);
       this.dataGridViewEnumerable.TabIndex = 4;
+      this.dataGridViewEnumerable.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewEnumerable_CellFormatting);
+      this.dataGridViewEnumerable.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridViewEnumerable_ColumnAdded);
       this.dataGridViewEnumerable.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewEnumerable_DataError);
       // 
       // bindingNavigatorPaging
@@ -440,6 +442,8 @@
       this.dataGridEnumerable.Name = "dataGridEnumerable";
       this.dataGridEnumerable.Size = new System.Drawing.Size(877, 516);
       this.dataGridEnumerable.TabIndex = 6;
+      this.dataGridEnumerable.DataSourceChanged += new System.EventHandler(this.dataGridEnumerable_DataSourceChanged);
+      this.dataGridEnumerable.Navigate += new System.Windows.Forms.NavigateEventHandler(this.dataGridEnumerable_Navigate);
       // 
       // tabControlGrids
       // 
