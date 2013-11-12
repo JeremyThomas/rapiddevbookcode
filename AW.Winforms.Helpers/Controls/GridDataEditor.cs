@@ -33,7 +33,7 @@ namespace AW.Winforms.Helpers.Controls
 		}
 		
 		/// <summary>
-		/// 	Initializes a new instance of the <see cref = "T:System.Windows.Forms.UserControl" /> class.
+    ///   Initializes a new instance of the <see cref="T:System.Windows.Forms.UserControl" /> class.
 		/// </summary>
 		public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly) : this()
 		{
@@ -54,6 +54,7 @@ namespace AW.Winforms.Helpers.Controls
 		{
 			DataEditorPersister = dataEditorPersister;
 			Readonly = readOnly;
+      tabControlGrids.SelectedTab = tabPageDataGridView;
 			BindEnumerable(enumerable, pageSize);
 		}
 
@@ -159,6 +160,7 @@ namespace AW.Winforms.Helpers.Controls
 
 		private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
 		{
+      GeneralHelper.TraceOut(e.Exception.ToString());
 		}
 
 		private void bindingSourceEnumerable_DataSourceChanged(object sender, EventArgs e)
@@ -254,7 +256,7 @@ namespace AW.Winforms.Helpers.Controls
       return type.IsGenericType || (type.BaseType !=null && type.BaseType.IsGenericType);
 	  }
 
-	  protected int GetPageCount()
+		protected int GetPageCount()
 		{
 			return GeneralHelper.GetPageCount(PageSize, SuperSetCount());
 		}
@@ -461,8 +463,6 @@ namespace AW.Winforms.Helpers.Controls
 	    if (tabControlGrids.SelectedTab == tabPageDataGrid)
 	    {
 	      dataGridEnumerable.DataSource = bindingSourceEnumerable;
-        if (!fromUser)
-	        dataGridViewEnumerable.DataSource = null;
 	    }
 	    else
 	    {
@@ -471,16 +471,11 @@ namespace AW.Winforms.Helpers.Controls
 	      dataGridViewEnumerable.DataSource = bindingSourceEnumerable;
 	    }
 	  }
+
     private void UnBindGrids()
     {
-      if (tabControlGrids.SelectedTab == tabPageDataGrid)
-      {
-          dataGridViewEnumerable.DataSource = null;
-      }
-      else
-      {
+    //  dataGridViewEnumerable.DataSource = null;
           dataGridEnumerable.DataSource = null;
       }
     }
 	}
-}

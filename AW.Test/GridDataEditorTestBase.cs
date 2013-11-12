@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -86,7 +87,7 @@ namespace AW.Tests
 
 		public static DataGridView GetDataGridViewFromGridDataEditor(Form form)
 		{
-			return ((DataGridView) form.Controls[0].Controls[0]);
+      return ((DataGridView)form.Controls.All().FirstOrDefault(c => c is DataGridView));
 		}
 	}
 }
