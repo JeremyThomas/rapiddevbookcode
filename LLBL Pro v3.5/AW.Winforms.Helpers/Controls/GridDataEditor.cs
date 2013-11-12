@@ -471,5 +471,35 @@ namespace AW.Winforms.Helpers.Controls
     //  dataGridViewEnumerable.DataSource = null;
       dataGridEnumerable.DataSource = null;
     }
+
+    private void dataGridViewEnumerable_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
+    {
+      if (e.Column.ValueType != null && e.Column.ValueType.IsEnum && !(e.Column is DataGridViewComboBoxColumn))
+      {
+        var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
+        {
+          HeaderText = e.Column.HeaderText, ValueType = e.Column.ValueType, ValueMember = "Value",
+          DisplayMember = "Value",
+          DataSource = ValueTypeWrapper.CreateWrapperForBinding(Enum.GetValues(e.Column.ValueType)).ToList(),
+          DataPropertyName = e.Column.DataPropertyName
+        };
+        e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
+        e.Column.DataGridView.Columns.Remove(e.Column);
+      }
+    }
+
+    private void dataGridViewEnumerable_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    {
+      var valueType = dataGridViewEnumerable.Columns[e.ColumnIndex].ValueType;
+      if (valueType != null && valueType.IsEnum)
+      {
+        if (e.Value == null)
+        {
+          e.Value = "";
+           e.FormattingApplied = true;
+        }//e.Value = e.Value.ToString();
+       
+      }
+    }
   }
 }
