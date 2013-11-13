@@ -497,12 +497,13 @@ namespace AW.Winforms.Helpers.Controls
             HeaderText = e.Column.HeaderText,
             ValueType = e.Column.ValueType,
             DataSource = Enum.GetValues(e.Column.ValueType),
-            DataPropertyName = e.Column.DataPropertyName
+            DataPropertyName = e.Column.DataPropertyName,
           };
 
           e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn2);
 
           e.Column.DataGridView.Columns.Remove(e.Column);
+
         }
     }
 
@@ -532,6 +533,15 @@ namespace AW.Winforms.Helpers.Controls
     private void dataGridEnumerable_DataSourceChanged(object sender, EventArgs e)
     {
       var count = dataGridEnumerable.TableStyles.Count;
+    }
+
+    private void dataGridViewEnumerable_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+    {
+      if (dataGridViewEnumerable.Columns.Count > 0 && dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Any(c => !c.IsDataBound))
+      {
+        dataGridViewEnumerable.AutoGenerateColumns = false;
+        dataGridViewEnumerable.AutoGenerateColumns = true;
+      }
     }
   }
 }
