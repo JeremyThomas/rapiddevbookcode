@@ -481,7 +481,9 @@ namespace AW.Winforms.Helpers.Controls
     private void dataGridViewEnumerable_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
     {
       if (!Readonly)
-        if (e.Column.ValueType != null && e.Column.ValueType.IsEnum && !(e.Column is DataGridViewComboBoxColumn))
+      {
+        var coreType = MetaDataHelper.GetCoreType(e.Column.ValueType);
+        if (e.Column.ValueType != null && coreType.IsEnum && !(e.Column is DataGridViewComboBoxColumn))
         {
           //var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
           //{
@@ -496,7 +498,7 @@ namespace AW.Winforms.Helpers.Controls
           {
             HeaderText = e.Column.HeaderText,
             ValueType = e.Column.ValueType,
-            DataSource = Enum.GetValues(e.Column.ValueType),
+            DataSource = GeneralHelper.EnumsGetAsNullableValues(coreType),
             DataPropertyName = e.Column.DataPropertyName,
           };
 
@@ -505,6 +507,7 @@ namespace AW.Winforms.Helpers.Controls
           e.Column.DataGridView.Columns.Remove(e.Column);
 
         }
+      }
     }
 
     private void dataGridViewEnumerable_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

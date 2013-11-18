@@ -368,6 +368,11 @@ namespace AW.Helper
       return (IList)CreateGeneric(typeof(List<>), type, args);
 	  }
 
+    public static Type CreateNullableType(Type innerType)
+    {
+      return typeof(Nullable<>).MakeGenericType(new[] {innerType});
+    }
+
 	  public static IList ConvertToList(IEnumerable enumerable)
 	  {
 	    var list = enumerable as IList;

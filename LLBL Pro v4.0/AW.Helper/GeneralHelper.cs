@@ -155,6 +155,22 @@ namespace AW.Helper
       return e.ToString().Replace(spaceSubstitute, ' ');
     }
 
+    public static IList EnumsGetAsNullableValues(Type enumType)
+    {
+      CheckIsEnum(enumType);
+      var enumAsEnumerable = Enum.GetValues(enumType);
+      var nullableType = MetaDataHelper.CreateNullableType(enumType);
+      var list = MetaDataHelper.CreateList(nullableType);
+      foreach (var item in enumAsEnumerable)
+      {
+        list.Add(item);
+      }
+      //var nulledEnum = Activator.CreateInstance(nullableType);
+      //nulledEnum = 3;
+      //list.Add(nulledEnum);
+      return list;
+    }
+
     /// <summary>
     /// Gets the description of an object if it has one else returns null.
     /// </summary>
@@ -386,6 +402,29 @@ namespace AW.Helper
     public static IEnumerable<T> UnWrap<T>(this IEnumerable<ValueTypeWrapper<T>> values)
     {
       return ValueTypeWrapper<T>.UnWrap(values);
+    }
+
+    /// <summary>
+    /// Adds an item to the specified array.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="array">The array.</param>
+    /// <param name="item">The item.</param>
+    /// <returns>The array with the item added</returns>
+    public static T[] Add<T>(this T[] array, T item)
+    {
+      var list = array.ToList();
+      list.Add(item);
+      return list.ToArray();
+    }
+
+    public static Array Add(Array array, object item)
+    {
+      var list = MetaDataHelper.ConvertToList(array);
+      if (list.IsFixedSize)
+        list = MetaDataHelper.CreateList(MetaDataHelper.GetEnumerableItemType(array), array);
+      list.Add(item);
+      return MetaDataHelper.ConvertToArray(list);
     }
 
     #region Settings
