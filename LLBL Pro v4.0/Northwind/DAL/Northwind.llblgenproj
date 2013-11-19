@@ -68,7 +68,7 @@
     <Property Name="UseCustomFieldOrderingOnNewElements" Value="false" />
   </Properties>
   <TypeShortcuts>
-    <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="Category" Type="Northwind.DAL.Category, Northwind.DAL, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
   </TypeShortcuts>
   <CodeGenerationCyclePreferences>
     <OutputType Value="3">
@@ -76,16 +76,16 @@
         <DestinationRootFolder Value="." />
         <FrameworkName Value="LLBLGen Pro Runtime Framework" />
         <LanguageName Value="C#" />
-        <PlatformName Value=".NET 3.5" />
+        <PlatformName Value=".NET 4.0" />
         <PresetName Value="SD.Presets.Adapter.General" />
         <RootNamespace Value="Northwind.DAL" />
         <TemplateGroup Value="Adapter" />
         <TemplateBindings>
-          <Binding Name="SD.TemplateBindings.SqlServerSpecific" />
           <Binding Name="SD.TemplateBindings.SharedTemplates" />
-          <Binding Name="SD.TemplateBindings.OracleODPNetSpecific" />
-          <Binding Name="SD.TemplateBindings.SharedTemplates.NET35" />
+          <Binding Name="SD.TemplateBindings.SqlServerSpecific" />
           <Binding Name="SD.AdditionalTemplates.DbEditor.Net2.0 v3.x" />
+          <Binding Name="SD.TemplateBindings.SharedTemplates.NET4x" />
+          <Binding Name="SD.TemplateBindings.OracleODPNetSpecific" />
           <Binding Name="SD.TemplateBindings.General" />
         </TemplateBindings>
       </LastUsedPreferences>
@@ -1422,7 +1422,7 @@
       <EntityMappings>
         <EntityMapping EntityName=":Category" TargetName="//localhost/xe:DBO_NORTHWIND:CATEGORIES">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="Northwind.DAL.CategoryConverter" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" />
             <FieldMapping FieldName="CategoryName" TargetFieldName="CATEGORYNAME" />
             <FieldMapping FieldName="Description" TargetFieldName="DESCRIPTION" />
             <FieldMapping FieldName="Picture" TargetFieldName="PICTURE" />
@@ -1512,7 +1512,7 @@
         </EntityMapping>
         <EntityMapping EntityName=":Product" TargetName="//localhost/xe:DBO_NORTHWIND:PRODUCTS">
           <FieldMappings>
-            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" TypeConverterToUse="Northwind.DAL.CategoryConverter" />
+            <FieldMapping FieldName="CategoryId" TargetFieldName="CATEGORYID" />
             <FieldMapping FieldName="Discontinued" TargetFieldName="DISCONTINUED" TypeConverterToUse="SD.LLBLGen.Pro.TypeConverters.BooleanNumericConverter" />
             <FieldMapping FieldName="ProductId" TargetFieldName="PRODUCTID" SequenceToUse="//localhost/xe:DBO_NORTHWIND:PRODUCTS_PRODUCTID_SEQ" TypeConverterToUse="AW.Helper.TypeConverters.IntegerNonNullNumericConverter" />
             <FieldMapping FieldName="ProductName" TargetFieldName="PRODUCTNAME" />

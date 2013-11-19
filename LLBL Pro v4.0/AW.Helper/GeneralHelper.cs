@@ -13,6 +13,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using Humanizer;
 
 namespace AW.Helper
 {
@@ -107,6 +108,52 @@ namespace AW.Helper
       return (T) Enum.Parse(typeof (T), fixedString, true);
     }
 
+    public static object StringToEnum(Type enumType, string strOfEnum)
+    {
+      return StringToEnum(enumType, strOfEnum, EnumSpaceSubstitute);
+    }
+
+    private static object StringToEnum(Type enumType, string strOfEnum, char spaceSubstitute)
+    {
+      if (Enum.IsDefined(enumType, strOfEnum))
+        return Enum.Parse(MetaDataHelper.GetCoreType(enumType), strOfEnum, true);
+      var fixedString = strOfEnum.Replace(' ', spaceSubstitute);
+      if (Char.IsDigit(fixedString, 0))
+      {
+        int enumindex;
+        if (Int32.TryParse(fixedString, out enumindex))
+          return Enum.ToObject(enumType, enumindex);
+        fixedString = EnumNumberPrefix + fixedString;
+      }
+      if (Enum.IsDefined(enumType, fixedString))
+        return Enum.Parse(MetaDataHelper.GetCoreType(enumType), fixedString, true);
+      var value = DehumanizeTo(strOfEnum, enumType);
+      return value ?? Enum.Parse(MetaDataHelper.GetCoreType(enumType), strOfEnum, true); //Throw exception if null
+    }
+
+    /// <summary>
+    /// Dehumanizes a string into the Enum it was originally Humanized from!
+    /// </summary>
+    /// <param name="input">The string to be converted</param>
+    /// <param name="enumType">Type of the enum.</param>
+    /// <returns></returns>
+    private static Enum DehumanizeTo(string input, Type enumType)
+    {
+      var values = Enum.GetValues(enumType);
+
+      foreach (var value in values)
+      {
+        var enumValue = value as Enum;
+        if (enumValue == null)
+          return null;
+
+        if (string.Equals(enumValue.Humanize(), input, StringComparison.OrdinalIgnoreCase))
+          return enumValue;
+      }
+
+      return null;
+    }
+
     /// <summary>
     /// 	Enums as an enumerable.
     /// </summary>
@@ -165,9 +212,8 @@ namespace AW.Helper
       {
         list.Add(item);
       }
-      //var nulledEnum = Activator.CreateInstance(nullableType);
-      //nulledEnum = 3;
-      //list.Add(nulledEnum);
+      var nulledEnum = Enum.ToObject(enumType, list.Count+1);
+      list.Add(nulledEnum);
       return list;
     }
 
