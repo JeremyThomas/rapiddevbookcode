@@ -12,7 +12,6 @@ using System.Collections;
 using System.Data;
 using System.Data.Common;
 using System.Configuration;
-using AW.Helper;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using SD.LLBLGen.Pro.DQE.Oracle;
 
@@ -20,6 +19,7 @@ namespace Northwind.DAL.Oracle
 {
 	
 	// __LLBLGENPRO_USER_CODE_REGION_START AdditionalNamespaces
+  using AW.Helper;
 	using AW.Helper.LLBL;
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	/// <summary>Data access adapter class, which controls the complete database interaction with the database for all objects.</summary>

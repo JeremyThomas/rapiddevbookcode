@@ -316,10 +316,6 @@ namespace Northwind.DAL
     Seafood
   }
 
-  public class CategoryConverter : AW.Helper.TypeConverters.EnumerationConverter<Category>
-  {
-  }
-
 	// __LLBLGENPRO_USER_CODE_REGION_END
 	#endregion
 

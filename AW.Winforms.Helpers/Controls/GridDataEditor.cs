@@ -500,6 +500,7 @@ namespace AW.Winforms.Helpers.Controls
             ValueType = e.Column.ValueType,
             DataSource = GeneralHelper.EnumsGetAsNullableValues(coreType),
             DataPropertyName = e.Column.DataPropertyName,
+            SortMode = e.Column.SortMode
           };
 
           e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn2);
@@ -512,10 +513,10 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
     {
-      var valueType = dataGridViewEnumerable.Columns[e.ColumnIndex].ValueType;
+      var valueType = MetaDataHelper.GetCoreType(dataGridViewEnumerable.Columns[e.ColumnIndex].ValueType);
       if (valueType != null && valueType.IsEnum)
       {
-        if (e.Value == null || e.Value.GetType().IsEnum && !Enum.IsDefined(valueType, e.Value))
+        if (e.Value == null || MetaDataHelper.GetCoreType(e.Value.GetType()).IsEnum && !Enum.IsDefined(valueType, e.Value))
         {
           e.Value = "";
           e.FormattingApplied = true;

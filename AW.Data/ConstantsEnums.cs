@@ -8,6 +8,8 @@
 // Templates version: 
 //////////////////////////////////////////////////////////////
 using System;
+using System.ComponentModel;
+using AW.Helper.TypeConverters;
 
 namespace AW.Data
 {
@@ -1812,6 +1814,7 @@ namespace AW.Data
     SalesRepresentative = 20,
   }
 
+  [TypeConverter(typeof(EnumerationConverter))]
   public enum AddressType
   {
     Billing = 1,
