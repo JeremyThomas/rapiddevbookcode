@@ -301,7 +301,9 @@ namespace AW.Helper.LLBL
     public static IBindingListView CreateEntityView(IEnumerable enumerable, Type itemType)
     {
       var entityCollection = ToEntityCollection(enumerable, itemType);
-      return entityCollection == null ? null : entityCollection.DefaultView as IBindingListView;
+      if (entityCollection == null) return null;
+      entityCollection.DefaultView.DataChangeAction = PostCollectionChangeAction.NoAction;
+      return entityCollection.DefaultView as IBindingListView;
     }
 
     /// <summary>
@@ -342,7 +344,7 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<IEntityFieldCore> GetFields(this IEntityCore entityCore)
     {
-      return entityCore.Fields.Cast<IEntityFieldCore>();
+      return entityCore.Fields;
     }
 
     public static IEnumerable<IEntityFieldCore> GetChangedFields(this IEntityCore entity)
@@ -383,30 +385,68 @@ namespace AW.Helper.LLBL
 
     public static void RevertChangesToDBValue(IEnumerable modifiedEntities)
     {
-      if (modifiedEntities is IEntityView)
+      var postCollectionChangeActionNoAction = false;
+      var view = modifiedEntities as IEntityView;
+      if (view != null)
+      {
         modifiedEntities = ((IEntityView) modifiedEntities).RelatedCollection;
-      if (modifiedEntities is IEntityView2)
-        modifiedEntities = ((IEntityView2) modifiedEntities).RelatedCollection;
-      if (modifiedEntities is IEntityCollection)
-      {
-        var entityCollection = (IEntityCollection) modifiedEntities;
-        if (entityCollection.RemovedEntitiesTracker != null)
-          entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
-        RevertChangesToDBValue(entityCollection);
-        if (entityCollection.RemovedEntitiesTracker != null)
-          entityCollection.RemovedEntitiesTracker.Clear();
+        postCollectionChangeActionNoAction = view.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
-      else if (modifiedEntities is IEntityCollection2)
+      var view2 = modifiedEntities as IEntityView2;
+      if (view2 != null)
       {
-        var entityCollection = (IEntityCollection2) modifiedEntities;
+        modifiedEntities = ((IEntityView2) modifiedEntities).RelatedCollection;
+        postCollectionChangeActionNoAction = view2.DataChangeAction == PostCollectionChangeAction.NoAction;
+      }
+      var entities = modifiedEntities as IEntityCollection;
+      if (entities != null)
+      {
+        var entityCollection = entities;
         if (entityCollection.RemovedEntitiesTracker != null)
-          entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
+        {
+          if (postCollectionChangeActionNoAction)
+            view.DataChangeAction = PostCollectionChangeAction.ReapplyFilterAndSorter;
+          try
+          {
+            entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
+          }
+          finally
+          {
+            if (postCollectionChangeActionNoAction)
+              view.DataChangeAction = PostCollectionChangeAction.NoAction;
+          }
+        }
         RevertChangesToDBValue(entityCollection);
         if (entityCollection.RemovedEntitiesTracker != null)
           entityCollection.RemovedEntitiesTracker.Clear();
       }
       else
-        RevertChangesToDBValue(modifiedEntities.Cast<IEntityCore>());
+      {
+        var collection = modifiedEntities as IEntityCollection2;
+        if (collection != null)
+        {
+          var entityCollection = collection;
+          if (entityCollection.RemovedEntitiesTracker != null)
+          {
+            if (postCollectionChangeActionNoAction)
+              view2.DataChangeAction = PostCollectionChangeAction.ReapplyFilterAndSorter;
+            try
+            {
+              entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
+            }
+            finally
+            {
+              if (postCollectionChangeActionNoAction)
+                view2.DataChangeAction = PostCollectionChangeAction.NoAction;
+            }
+          }
+          RevertChangesToDBValue(entityCollection);
+          if (entityCollection.RemovedEntitiesTracker != null)
+            entityCollection.RemovedEntitiesTracker.Clear();
+        }
+        else
+          RevertChangesToDBValue(modifiedEntities.Cast<IEntityCore>());
+      }
     }
 
     public static void Undo(object modifiedData)
