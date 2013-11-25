@@ -10,6 +10,8 @@ using AW.Data;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Helper;
+using AW.Helper.TypeConverters;
+using Humanizer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AW.Tests
@@ -116,7 +118,34 @@ namespace AW.Tests
 			var xmlSchema = TestData.GetTestXmlSchema();
 			CopyToDataTableAndAssert(xmlSchema.Items, xmlSchema.Items[0].GetType());
 		}
-	
+
+    [TestMethod]
+    public void EnumerationConverterTest()
+    {
+      EnumToStringTest<AddressType>();
+      EnumToStringTest<OrderStatus>();
+      EnumToStringTest<MaritalStatus>();
+      EnumToStringTest<NameStyle>();
+      EnumToStringTest<ProductMaintenanceDocumentStatus>();
+      EnumToStringTest<CreditRating>();
+    }
+    private static void EnumToStringTest<TEnum>()
+    {
+      var enumType = typeof(TEnum);
+      var enumerationConverter = new EnumerationConverter(enumType);
+      var underlyingType = Enum.GetUnderlyingType(enumType);
+      foreach (var anEnum in GeneralHelper.EnumAsEnumerable<TEnum>())
+      {
+        var enumAsString = anEnum.ToString();
+        Assert.AreEqual(anEnum, enumerationConverter.ConvertFromString(enumAsString), enumAsString);
+        var asUnderlyingType = Convert.ChangeType(anEnum, underlyingType);
+        var asUnderlyingTypesString = Convert.ToString(asUnderlyingType);
+        Assert.AreEqual(anEnum, enumerationConverter.ConvertFromString(asUnderlyingTypesString), asUnderlyingTypesString);
+        var description = GeneralHelper.GetDescription(anEnum);
+        var humanizedEnumString = String.IsNullOrEmpty(description) ? enumAsString.Humanize() : description;
+        Assert.AreEqual(anEnum, enumerationConverter.ConvertFromString(humanizedEnumString), humanizedEnumString);
+      }
+    }
 	}
 
 	public class StringPropertyDescriptor : PropertyDescriptor

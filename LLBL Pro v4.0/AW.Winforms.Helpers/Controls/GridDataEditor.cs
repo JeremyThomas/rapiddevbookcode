@@ -9,6 +9,7 @@ using System.Linq.Dynamic;
 using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
+using AW.Helper.TypeConverters;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
 using DynamicTable;
@@ -493,12 +494,13 @@ namespace AW.Winforms.Helpers.Controls
           //  DataPropertyName = e.Column.DataPropertyName
           //};
           //e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
-
+          EnumerationConverter.AddEnumerationConverter(coreType);
           var enumDataGridViewComboBoxColumn2 = new DataGridViewComboBoxColumn
           {
             HeaderText = e.Column.HeaderText,
             ValueType = e.Column.ValueType,
-            DataSource = GeneralHelper.EnumsGetAsNullableValues(coreType),
+            DataSource = Enum.GetValues(e.Column.ValueType),
+            //DataSource = GeneralHelper.EnumsGetAsNullableValues(coreType),
             DataPropertyName = e.Column.DataPropertyName,
             SortMode = e.Column.SortMode
           };

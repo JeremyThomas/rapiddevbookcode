@@ -23,18 +23,16 @@ namespace AW.Helper.TypeConverters
 
     public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
     {
-      if (value is string)
-        try
-        {
-          return base.ConvertFrom(context, culture, value);
-        }
-        catch (FormatException)
-        {
-          var strValue = (string) value;
-          GeneralHelper.StringToEnum(EnumType, strValue);
-          throw;
-        }
-      return base.ConvertFrom(context, culture, value);
+      var s = value as string;
+      if (s == null) return base.ConvertFrom(context, culture, value);
+      try
+      {
+        return base.ConvertFrom(context, culture, s);
+      }
+      catch (FormatException)
+      {
+        return GeneralHelper.StringToEnum(EnumType, s);
+      }
     }
   }
 }

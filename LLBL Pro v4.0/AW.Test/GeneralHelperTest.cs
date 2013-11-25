@@ -129,7 +129,7 @@ namespace AW.Tests
       EnumToStringTest<ProductMaintenanceDocumentStatus>();
       EnumToStringTest<CreditRating>();
     }
-    private static void EnumToStringTest<TEnum>()
+    private static void EnumToStringTest<TEnum>()where TEnum : struct
     {
       var enumType = typeof(TEnum);
       var enumerationConverter = new EnumerationConverter(enumType);
@@ -141,9 +141,10 @@ namespace AW.Tests
         var asUnderlyingType = Convert.ChangeType(anEnum, underlyingType);
         var asUnderlyingTypesString = Convert.ToString(asUnderlyingType);
         Assert.AreEqual(anEnum, enumerationConverter.ConvertFromString(asUnderlyingTypesString), asUnderlyingTypesString);
-        var description = GeneralHelper.GetDescription(anEnum);
-        var humanizedEnumString = String.IsNullOrEmpty(description) ? enumAsString.Humanize() : description;
+        var humanizedEnumString = ((Enum)(object)anEnum).Humanize();
         Assert.AreEqual(anEnum, enumerationConverter.ConvertFromString(humanizedEnumString), humanizedEnumString);
+        EnumerationConverter.AddEnumerationConverter(enumType);
+        Assert.IsInstanceOfType(TypeDescriptor.GetConverter(enumType), typeof(EnumerationConverter), enumType.ToString());
       }
     }
 	}
