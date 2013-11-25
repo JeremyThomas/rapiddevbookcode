@@ -42,7 +42,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\AW.LLBLGen.DataContextDriver\AW.LINQPad.LLBLGen.DataContextDriver.snk</AssemblyOriginatorKeyFile>
