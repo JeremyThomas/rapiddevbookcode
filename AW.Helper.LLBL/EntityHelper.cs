@@ -748,7 +748,9 @@ namespace AW.Helper.LLBL
     public static IBindingListView CreateEntityView2(IEnumerable enumerable, Type itemType)
     {
       var entityCollection = ToEntityCollection2(enumerable, itemType);
-      return entityCollection == null ? null : entityCollection.DefaultView as IBindingListView;
+      if (entityCollection == null) return null;
+      entityCollection.DefaultView.DataChangeAction = PostCollectionChangeAction.NoAction;
+      return entityCollection.DefaultView as IBindingListView;
     }
 
     public static IRelationPredicateBucket GetRelationInfo(IEntity2 entity, string fieldName, IEnumerable<string> primaryKeyColumnNames)
