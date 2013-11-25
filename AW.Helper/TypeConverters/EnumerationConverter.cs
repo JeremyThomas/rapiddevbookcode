@@ -5,6 +5,9 @@ using Humanizer;
 
 namespace AW.Helper.TypeConverters
 {
+  /// <summary>
+  /// An Enum Converter that converts to/from strings using Humanize
+  /// </summary>
   public class EnumerationConverter : EnumConverter
 
   {
@@ -12,12 +15,21 @@ namespace AW.Helper.TypeConverters
     {
     }
 
+    /// <summary>
+    /// Adds the enumeration converter if the enum doesn't already have one.
+    /// </summary>
+    /// <param name="enumType">Type of the enum.</param>
+    public static void AddEnumerationConverter(Type enumType)
+    {
+      GeneralHelper.CheckIsEnum(enumType);
+      if (!(TypeDescriptor.GetConverter(enumType) is EnumerationConverter))
+        TypeDescriptor.AddAttributes(enumType, new TypeConverterAttribute(typeof(EnumerationConverter)));
+    }
+
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
       if (destinationType == typeof (string) && value != null)
-      {
         return ((Enum) value).Humanize();
-      }
       return base.ConvertTo(context, culture, value, destinationType);
     }
 
@@ -31,7 +43,7 @@ namespace AW.Helper.TypeConverters
       }
       catch (FormatException)
       {
-        return GeneralHelper.StringToEnum(EnumType, s);
+        return GeneralHelper.StringToEnum(s, EnumType);
       }
     }
   }
