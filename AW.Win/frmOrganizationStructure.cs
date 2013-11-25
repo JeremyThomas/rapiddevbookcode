@@ -6,12 +6,11 @@ using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
 using AW.Data.Queries;
 using AW.Helper.LLBL;
-using AW.Win.Properties;
 using AW.Winforms.Helpers;
 
 namespace AW.Win
 {
-  public partial class FrmOrganizationStructure : Form
+  public partial class FrmOrganizationStructure : FrmPersistantLocation
   {
     public FrmOrganizationStructure()
     {
@@ -28,12 +27,10 @@ namespace AW.Win
     {
       EmployeeCollection = LookUpQueries.GetEmployees();
       EmployeeCollection.RemovedEntitiesTracker = new EmployeeCollection();
-      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrganizationStructureSizeLocation);
     }
 
     private void FrmOrganizationStructure_FormClosing(object sender, FormClosingEventArgs e)
     {
-      Settings.Default.OrganizationStructureSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
 
     private void employeeEntityDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -52,8 +49,8 @@ namespace AW.Win
       EmployeeCollection.SaveMulti(true);
       EmployeeCollection.RemovedEntitiesTracker.DeleteMulti();
       employeeEntityBindingNavigatorSaveItem.Enabled = false;
-    }    
-    
+    }
+
     private void toolStripButtonRevert_Click(object sender, EventArgs e)
     {
       EmployeeCollection.RevertChangesToDBValue();
@@ -77,9 +74,5 @@ namespace AW.Win
       dataTreeViewrOganizationStructure.CollapseAll();
       dataTreeViewrOganizationStructureEcho.CollapseAll();
     }
-
-
-
-
   }
 }

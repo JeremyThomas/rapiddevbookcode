@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using AW.Winforms.Helpers;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
-  public partial class FrmReconcile: Form
+  public partial class FrmReconcile : FrmPersistantLocation
   {
     private IEntity Entity { get; set; }
     private IEntity DBEntity { get; set; }
@@ -64,13 +65,13 @@ namespace AW.Win
       DBEntity.Refetch();
 
       changes = from entityField in entity.Fields.OfType<EntityField>()
-                join dbentityField in DBEntity.Fields.OfType<EntityField>() on entityField.Name equals dbentityField.Name
-                where !(entityField.DbValue == dbentityField.DbValue || entityField.DbValue.Equals(dbentityField.DbValue))
-                select new ConflictResolution(entityField, dbentityField);
+        join dbentityField in DBEntity.Fields.OfType<EntityField>() on entityField.Name equals dbentityField.Name
+        where !(entityField.DbValue == dbentityField.DbValue || entityField.DbValue.Equals(dbentityField.DbValue))
+        select new ConflictResolution(entityField, dbentityField);
 
       conflicts = (from conflictResolution in changes
-                   where conflictResolution.Conflict
-                   select conflictResolution).ToList();
+        where conflictResolution.Conflict
+        select conflictResolution).ToList();
 
       entityFieldBindingSource.DataSource = conflicts;
 
@@ -90,23 +91,23 @@ namespace AW.Win
         //  row.Cells["UseYourChanges"].Value = !Convert.ToBoolean(row.Cells["UseYourChanges"].Value);
       }
       entityFieldBindingSource.ResetBindings(false);
-
     }
 
     private void toolStripButtonResolve_Click(object sender, EventArgs e)
     {
       entityFieldBindingSource.EndEdit();
-      var NumUseYourChanges = conflicts.Where(c => c.UseYourChanges).Count();
+      var numUseYourChanges = conflicts.Where(c => c.UseYourChanges).Count();
 
-      if (NumUseYourChanges == 0)
+      if (numUseYourChanges == 0)
         Entity.Fields = DBEntity.Fields.Clone();
-      else if (NumUseYourChanges == changes.Count())
+      else if (numUseYourChanges == changes.Count())
         Entity.Save(null);
       else
       {
-        foreach (var change in changes)
-          if (!change.UseYourChanges)
-            Entity.Fields[Entity.Fields.IndexOf(change.LocalField)] = change.DBField.Clone() as EntityField;
+        foreach (var change in changes.Where(change => !change.UseYourChanges))
+        {
+          Entity.Fields[Entity.Fields.IndexOf(change.LocalField)] = change.DBField.Clone() as EntityField;
+        }
         Entity.Save(null);
       }
       DialogResult = DialogResult.OK;
@@ -115,10 +116,7 @@ namespace AW.Win
     private void toolStripButtonShowAllChanges_Click(object sender, EventArgs e)
     {
       entityFieldBindingSource.EndEdit();
-      if (entityFieldBindingSource.DataSource == conflicts)
-        entityFieldBindingSource.DataSource = changes;
-      else
-        entityFieldBindingSource.DataSource = conflicts;
+      entityFieldBindingSource.DataSource = entityFieldBindingSource.DataSource == conflicts ? changes : conflicts;
     }
   }
 }

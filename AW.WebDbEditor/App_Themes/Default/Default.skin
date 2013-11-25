@@ -1,0 +1,13 @@
+﻿<%-- Button skin so all the buttons look the same --%>
+<asp:button SkinId="ButtonSkin" runat="server" CssClass="FormButtons" />
+
+<%-- Skin for the (mm/dd/yyyy) text label next to a DateTextBox control. You can control with the next line to show them or not. --%>
+<asp:label SkinId="DateDescriptionLabelSkin" runat="server" Visible="false" />
+
+<%-- Skin for the list grid --%>
+<asp:GridView runat="server" SkinId="gridviewSkin"
+    CellPadding="4" ForeColor="#333333" GridLines="None" CssClass="Content" 
+     AllowPaging="True" AllowSorting="True" >
+	<HeaderStyle CssClass="tableheaders" />
+	<PagerStyle CssClass="headers" HorizontalAlign="Center" />
+</asp:GridView>

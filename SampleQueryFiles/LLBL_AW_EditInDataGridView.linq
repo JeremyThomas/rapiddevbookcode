@@ -9,18 +9,6 @@
 		<CustomCxString>data source=(local)\sqlexpress;initial catalog=AdventureWorks;integrated security=SSPI</CustomCxString>
 		<DisplayName>AW 3.0 - connection string</DisplayName>
 	</Connection>
-  <Reference>&lt;RuntimeDirectory&gt;System.Windows.Forms.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Helper.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Winforms.Helpers.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Data.dll</Reference>
-  <Reference>C:\Documents and Settings\All Users\Documents\dev\Visual Studio Projects\BookSource\Code Sample\AW.Win\bin\Debug\AW.Helper.LLBL.dll</Reference>
-  <Namespace>AW.Data</Namespace>
-  <Namespace>AW.Data.Linq</Namespace>
-  <Namespace>AW.Helper.LLBL</Namespace>
-  <Namespace>AW.Winforms.Helpers.DataEditor</Namespace>
-  <Namespace>SD.LLBLGen.Pro.ORMSupportClasses</Namespace>
 </Query>
 
 var contacts =  from contact in Contact

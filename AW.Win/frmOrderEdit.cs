@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
 using AW.Helper.LLBL;
-using AW.Win.Properties;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.LLBL.PropGridEx;
@@ -11,7 +10,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Win
 {
-  public partial class FrmOrderEdit : Form
+  public partial class FrmOrderEdit : FrmPersistantLocation
   {
     private readonly SalesOrderHeaderEntity _order;
 
@@ -34,7 +33,6 @@ namespace AW.Win
         PopulateOrderData();
         PopulateOrderDetailData();
       }
-      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.OrderEditSizeLocation);
     }
 
     private void PopulateListBoxes()
@@ -111,16 +109,16 @@ namespace AW.Win
     private void tspClose_Click(object sender, EventArgs e)
     {
       if (_order != null && !_order.IsNew)
-        RevertAnyChanges();  //_order.Refetch();
+        RevertAnyChanges(); //_order.Refetch();
       Close();
     }
 
     private void tspDelete_Click(object sender, EventArgs e)
     {
       if (MessageBox.Show(
-            "Are you sure you want to delete this order?",
-            "Confirm delete", MessageBoxButtons.OKCancel,
-            MessageBoxIcon.Warning) == DialogResult.OK)
+        "Are you sure you want to delete this order?",
+        "Confirm delete", MessageBoxButtons.OKCancel,
+        MessageBoxIcon.Warning) == DialogResult.OK)
       {
         _order.Delete();
         Close();
@@ -139,12 +137,11 @@ namespace AW.Win
     {
       // salesOrderHeaderEntityBindingSource.CancelEdit();
       if (_order != null) _order.ResetErrors();
-      Settings.Default.OrderEditSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
     }
 
     private void toolStripButtonViewEntity_Click(object sender, EventArgs e)
     {
-      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
+      FrmLLBLEntityViewer.Show(_order);
     }
 
     private void toolStripButtonRefetch_Click(object sender, EventArgs e)

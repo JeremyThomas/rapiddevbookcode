@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
-using AW.Helper;
 using AW.Winforms.Helpers.Controls;
 
 namespace AW.Winforms.Helpers.DataEditor
@@ -33,7 +34,7 @@ namespace AW.Winforms.Helpers.DataEditor
 		public static IEnumerable ShowInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
-				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditor {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, false).ShowDialog();
+				FrmDataEditor.CreateDataEditorForm(enumerable, dataEditorPersister, pageSize).ShowDialog();
 			return enumerable;
 		}
 
@@ -41,7 +42,7 @@ namespace AW.Winforms.Helpers.DataEditor
 
 		#region DataGridViewGeneric
 
-		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable) 
+		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable)
 		{
 			var contextField = enumerable.GetType().GetField("context", BindingFlags.Instance | BindingFlags.NonPublic);
 			if (contextField != null)
@@ -59,28 +60,17 @@ namespace AW.Winforms.Helpers.DataEditor
 		}
 
 		/// <summary>
-		/// Edits the enumerable in a DataGridView.
+		/// 	Edits the enumerable in a DataGridView.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="enumerable">The enumerable.</param>
-		/// <param name="dataEditorPersister">The grid data editor persister.</param>
-		/// <param name="pageSize">Size of the page.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="enumerable"> The enumerable. </param>
+		/// <param name="dataEditorPersister"> The grid data editor persister. </param>
+		/// <param name="pageSize"> Size of the page. </param>
+		/// <returns> </returns>
 		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
 		{
 			if (enumerable != null)
-			{
-				var stringEnumerable = enumerable as IEnumerable<string>;
-				const bool readOnly = false;
-				if (stringEnumerable != null)
-				{
-					stringEnumerable.CreateStringWrapperForBinding().ShowInGrid(dataEditorPersister, pageSize);
-					//enumerable = stringEnumerable.CreateStringWrapperForBinding();
-					//readOnly = true;
-					return enumerable;
-				}
-				FrmDataEditor.CreateDataEditorForm(enumerable, new GridDataEditorT<T> {Dock = DockStyle.Fill}, dataEditorPersister, pageSize, readOnly).ShowDialog();
-			}
+				FrmDataEditor.CreateDataEditorForm(enumerable, dataEditorPersister, pageSize, false).ShowDialog();
 			return enumerable;
 		}
 
@@ -104,13 +94,13 @@ namespace AW.Winforms.Helpers.DataEditor
 		}
 
 		/// <summary>
-		/// Edits the DataQuery in a DataGridView.
+		/// 	Edits the DataQuery in a DataGridView.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="dataQuery">The data query (System.Data.Linq.DataQuery`1).</param>
-		/// <param name="dataContext">The data context.</param>
-		/// <param name="pageSize">Size of the page.</param>
-		/// <returns></returns>
+		/// <typeparam name="T"> </typeparam>
+		/// <param name="dataQuery"> The data query (System.Data.Linq.DataQuery`1). </param>
+		/// <param name="dataContext"> The data context. </param>
+		/// <param name="pageSize"> Size of the page. </param>
+		/// <returns> </returns>
 		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> dataQuery, DataContext dataContext, ushort pageSize)
 		{
 			return ShowInGrid(dataQuery, new DataEditorLinqtoSQLPersister(dataContext), pageSize);
@@ -144,5 +134,20 @@ namespace AW.Winforms.Helpers.DataEditor
 			FrmHierarchyEditor.LaunchForm(enumerable, iDPropertyName, parentIDPropertyName, nameColumn, dataEditorPersister);
 			return enumerable;
 		}
+
+		public static IEnumerable<T> ShowHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+		                                                                           Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression)
+		{
+			return ShowHierarchyInTree(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, null);
+		}
+
+		public static IEnumerable<T> ShowHierarchyInTree<T, TId, TParentId, TName>(this IEnumerable<T> enumerable, Expression<Func<T, TId>> iDPropertyExpression,
+		                                                                           Expression<Func<T, TParentId>> parentIDPropertyExpression, Expression<Func<T, TName>> namePropertyExpression,
+		                                                                           IDataEditorPersister dataEditorPersister)
+		{
+			FrmHierarchyEditor.LaunchForm(enumerable, iDPropertyExpression, parentIDPropertyExpression, namePropertyExpression, dataEditorPersister);
+			return enumerable;
+		}
+
 	}
 }

@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,12 +14,11 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <SignAssembly>false</SignAssembly>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Ancillary\AdventureWorks.snk</AssemblyOriginatorKeyFile>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
+    <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <PublishUrl>http://localhost/ObjectListView/</PublishUrl>
@@ -37,6 +37,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,6 +48,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>docs\ObjectListView.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,6 +58,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>docs\ObjectListView.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release - Test|AnyCPU' ">
     <OutputPath>bin\Release - Test\</OutputPath>
@@ -65,17 +68,11 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <DocumentationFile>docs\ObjectListView.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="nunit.framework, Version=2.5.4.10098, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\nunit.framework.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -119,46 +116,6 @@
     <Compile Include="SortDescriptionCollection.cs" />
     <Compile Include="StringComparerPredicate.cs" />
     <Compile Include="StringComparerPredicateT.cs" />
-    <Compile Include="TestsGeneric\IBindingList.cs" />
-    <Compile Include="TestsGeneric\IBindingListView.cs" />
-    <Compile Include="TestsGeneric\ICancelAddNew.cs" />
-    <Compile Include="TestsGeneric\ICollection.cs" />
-    <Compile Include="TestsGeneric\ICollectionT.cs" />
-    <Compile Include="TestsGeneric\IEnumerable.cs" />
-    <Compile Include="TestsGeneric\IEnumerableT.cs" />
-    <Compile Include="TestsGeneric\IList.cs" />
-    <Compile Include="TestsGeneric\IListT.cs" />
-    <Compile Include="TestsGeneric\IRaiseItemChangedEvents.cs" />
-    <Compile Include="TestsGeneric\ITypedList.cs" />
-    <Compile Include="TestsGeneric\NotifyingList.cs" />
-    <Compile Include="TestsGeneric\ObjectListView.cs" />
-    <Compile Include="TestsGeneric\ViewFactory.cs" />
-    <Compile Include="Tests\AccountRep.cs" />
-    <Compile Include="Tests\Company.cs" />
-    <Compile Include="Tests\Customer.cs" />
-    <Compile Include="Tests\CustomerProgram.cs" />
-    <Compile Include="Tests\DateTimeDayComparer.cs" />
-    <Compile Include="Tests\ExplicitEditableObject.cs" />
-    <Compile Include="Tests\ExtendedProperty.cs" />
-    <Compile Include="Tests\FilterNode.cs" />
-    <Compile Include="Tests\IBindingList.cs" />
-    <Compile Include="Tests\IBindingListView.cs" />
-    <Compile Include="Tests\ICancelAddNew.cs" />
-    <Compile Include="Tests\ICollection.cs" />
-    <Compile Include="Tests\IEnumerable.cs" />
-    <Compile Include="Tests\IList.cs" />
-    <Compile Include="Tests\IRaiseItemChangedEvents.cs" />
-    <Compile Include="Tests\ITypedList.cs" />
-    <Compile Include="Tests\NotifyingList.cs" />
-    <Compile Include="Tests\NotifyingListItem.cs" />
-    <Compile Include="Tests\NotifyingListItemEvents.cs" />
-    <Compile Include="Tests\ObjectListView.cs" />
-    <Compile Include="Tests\Order.cs" />
-    <Compile Include="Tests\RelationalExpression.cs" />
-    <Compile Include="Tests\SimpleClass.cs" />
-    <Compile Include="Tests\SimpleEditableObject.cs" />
-    <Compile Include="Tests\StringLengthComparer.cs" />
-    <Compile Include="Tests\ViewFactory.cs" />
     <Compile Include="ObjectListViewVisualizer.cs" />
     <Compile Include="VisualizerForm.cs">
       <SubType>Form</SubType>
@@ -223,6 +180,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Docs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Ancillary\AdventureWorks.snk">
+      <Link>AdventureWorks.snk</Link>
+    </None>
+    <None Include="ExcludeAll.codeclonesettings" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

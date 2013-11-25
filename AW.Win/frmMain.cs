@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.EntityClasses;
@@ -15,12 +16,11 @@ using AW.Winforms.Helpers.QueryRunner;
 
 namespace AW.Win
 {
-  public partial class FrmMain : Form
+  public partial class FrmMain : FrmPersistantLocation
   {
     public FrmMain()
     {
       InitializeComponent();
-      AWHelper.SetWindowSizeAndLocation(this, Settings.Default.MainWindowSizeLocation);
     }
 
     private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -30,19 +30,20 @@ namespace AW.Win
 
     private void frmMain_Load(object sender, EventArgs e)
     {
-      MetaDataHelper.AddAssociatedMetadataProviders(MetaDataHelper.GetDescendance(typeof (CommonEntityBase)));
+      MetaDataHelper.FoldAllAssociatedMetadataProvidersIntoTheSubjectType(typeof (CommonEntityBase));
+      reOpenWindowsToolStripMenuItem.Checked = Settings.Default.ReopenWindows;
     }
 
     private void frmMain_Shown(object sender, EventArgs e)
     {
-      if (Settings.Default.ReopenWindows && Settings.Default.OpenWindows != null)
-        foreach (var formName in Settings.Default.OpenWindows)
-        {
-          var frm = LaunchChildForm(formName);
-          if (frm is FrmQueryRunner)
-            ((FrmQueryRunner) frm).OpenFiles(Settings.Default.QueryFilesToReopen);
-          Application.DoEvents();
-        }
+      if (!Settings.Default.ReopenWindows || Settings.Default.OpenWindows == null) return;
+      foreach (var runner in from string formName in Settings.Default.OpenWindows
+        select LaunchChildForm(formName) as FrmQueryRunner)
+      {
+        if (runner != null)
+          runner.OpenFiles(Settings.Default.QueryFilesToReopen);
+        Application.DoEvents();
+      }
     }
 
     private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -52,38 +53,57 @@ namespace AW.Win
 
     private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
     {
-      Settings.Default.MainWindowSizeLocation = AWHelper.GetWindowNormalSizeAndLocation(this);
-
       Settings.Default.ReopenWindows = reOpenWindowsToolStripMenuItem.Checked;
       if (Settings.Default.OpenWindows == null)
         Settings.Default.OpenWindows = new StringCollection();
       else
         Settings.Default.OpenWindows.Clear();
-      if (Settings.Default.ReopenWindows && MdiChildren.Length > 0)
-        foreach (var myForm in MdiChildren)
-          if (Convert.ToBoolean(myForm.Tag))
-          {
-            Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
-            if (myForm is FrmQueryRunner)
-              Settings.Default.QueryFilesToReopen = ((FrmQueryRunner) myForm).GetOpenFiles();
-          }
+      if (!Settings.Default.ReopenWindows || MdiChildren.Length <= 0) return;
+      foreach (var myForm in MdiChildren.Where(myForm => Convert.ToBoolean(myForm.Tag)))
+      {
+        Settings.Default.OpenWindows.Add(myForm.GetType().FullName);
+        var form = myForm as FrmQueryRunner;
+        if (form != null)
+          Settings.Default.QueryFilesToReopen = form.GetOpenFiles();
+      }
     }
 
     public Form LaunchChildForm(string formName)
     {
       var formType = Type.GetType(formName);
       if (formType == null)
-      {
-        if (formName == typeof (FrmQueryRunner).FullName)
-          return LaunchChildForm(typeof (FrmQueryRunner));
-        return null;
-      }
-      return LaunchChildForm(formType);
+        return formName == typeof (FrmQueryRunner).FullName ? LaunchChildForm(typeof (FrmQueryRunner)) : null;
+      return formType == typeof(FrmEasyQuery) ? LaunchEasyQuery() : LaunchChildForm(formType);
     }
 
     public Form LaunchChildForm(Type formType, params Object[] args)
     {
       return formType == null ? null : AWHelper.LaunchChildForm(this, formType, args);
+    }
+
+    public T LaunchChildFormGeneric<T>(params Object[] args) where T : Form
+    {
+      return (T) LaunchChildForm(typeof (T), args);
+    }
+
+    private FrmQueryRunner LaunchQueryRunner()
+    {
+      var qr = LaunchChildFormGeneric<FrmQueryRunner>();
+      if (qr != null)
+      {
+        qr.SaveFunction += EntityHelper.Save;
+        qr.DeleteFunction += EntityHelper.Delete;
+      }
+      return qr;
+    }
+
+    private FrmEasyQuery LaunchEasyQuery(string fileName = null)
+    {
+      var frmEasyQuery = LaunchChildFormGeneric<FrmEasyQuery>();
+      frmEasyQuery.MRUHandlerProject = mruHandlerProject;
+      Application.DoEvents();
+      frmEasyQuery.LoadFromFile(fileName);
+      return frmEasyQuery;
     }
 
     private void ordersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -126,9 +146,15 @@ namespace AW.Win
 
     private void DoFileOpen(string fileName)
     {
-      var frmQueryRunner = LaunchQueryRunner();
-      if (frmQueryRunner != null) frmQueryRunner.DoFileOpen(fileName);
-
+      if (".XML".Equals(Path.GetExtension(fileName), StringComparison.OrdinalIgnoreCase))
+      {
+        LaunchEasyQuery(fileName: fileName);
+      }
+      else
+      {
+        var frmQueryRunner = LaunchQueryRunner();
+        if (frmQueryRunner != null) frmQueryRunner.DoFileOpen(fileName);
+      }
       openFileDialogProject.InitialDirectory = Path.GetDirectoryName(fileName);
       mruHandlerProject.AddRecentlyUsedFile(fileName);
     }
@@ -175,30 +201,25 @@ namespace AW.Win
       LaunchQueryRunner();
     }
 
-    private FrmQueryRunner LaunchQueryRunner()
-    {
-      var qr = LaunchChildForm(typeof (FrmQueryRunner)) as FrmQueryRunner;
-      if (qr != null)
-      {
-        qr.SaveFunction += EntityHelper.Save;
-        qr.DeleteFunction += EntityHelper.Delete;
-      }
-      return qr;
-    }
 
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmLLBLEntityViewer.LaunchAsChildForm(MetaSingletons.MetaData, new LLBLWinformHelper.DataEditorLLBLSelfServicingPersister());
+      FrmLLBLEntityViewer.Show(MetaSingletons.MetaData);
     }
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (FrmEntitiesAndFields), typeof (CommonEntityBase), MetaSingletons.MetaData);
+      LaunchChildForm(typeof (FrmEntitiesAndFields), MetaSingletons.MetaData);
     }
 
     private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
     {
       LaunchChildForm(typeof (FrmOrganizationStructure));
+    }
+
+    private void easyQueryToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      LaunchEasyQuery();
     }
 
     private void frmMain_DragDrop(object sender, DragEventArgs e)
@@ -220,6 +241,11 @@ namespace AW.Win
     private void frmMain_DragOver(object sender, DragEventArgs e)
     {
       e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
+    }
+
+    private void organizationStructureEditorToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      MetaSingletons.MetaData.Employee.ShowSelfServicingHierarchyInTree("EmployeeID", "ManagerID", "EmployeeDisplayName");
     }
   }
 }

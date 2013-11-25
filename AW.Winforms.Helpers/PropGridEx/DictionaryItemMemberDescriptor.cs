@@ -3,43 +3,43 @@ using System.Collections;
 
 namespace AW.Winforms.Helpers.PropGridEx
 {
-  /// <summary>
-  /// PropertyDescriptor for all items in an IDictionary
-  /// </summary>
-  public class DictionaryItemMemberDescriptor : ListItemAbstractDescriptor
-  {
-    private readonly IDictionary m_Dict;
-    private readonly object m_Key;
+	/// <summary>
+	/// PropertyDescriptor for all items in an IDictionary
+	/// </summary>
+	public class DictionaryItemMemberDescriptor : ListItemAbstractDescriptor
+	{
+		private readonly IDictionary m_Dict;
+		private readonly object m_Key;
 
-    public DictionaryItemMemberDescriptor(IDictionary list, object key)
-      :
-        base(String.Format("[{0}]", key), null)
-    {
-      m_Dict = list;
-      m_Key = key;
-    }
+		public DictionaryItemMemberDescriptor(IDictionary list, object key)
+			:
+				base(String.Format("[{0}]", key), null)
+		{
+			m_Dict = list;
+			m_Key = key;
+		}
 
-    public override Type ComponentType
-    {
-      get { return typeof (IDictionary); }
-    }
+		public override Type ComponentType
+		{
+			get { return typeof (IDictionary); }
+		}
 
-    public override object GetValue(object component)
-    {
-      return m_Key != null ? m_Dict[m_Key] : null;
-    }
+		public override object GetValue(object component)
+		{
+			return m_Key != null ? m_Dict[m_Key] : null;
+		}
 
-    // string category = "IDictionary";
-    //        attributes.Add(new CategoryAttribute(category));
-    public override string Category
-    {
-      get { return "IList"; }
-    }
+		// string category = "IDictionary";
+		//        attributes.Add(new CategoryAttribute(category));
+		public override string Category
+		{
+			get { return "IList"; }
+		}
 
-    //        attributes.Add(new DescriptionAttribute(String.Format("Dictionary item with key '{0}'", this.m_Key)));
-    public override string Description
-    {
-      get { return String.Format("Dictionary item with key '{0}'", m_Key); }
-    }
-  }
+		//        attributes.Add(new DescriptionAttribute(String.Format("Dictionary item with key '{0}'", this.m_Key)));
+		public override string Description
+		{
+			get { return String.Format("Dictionary item with key '{0}'", m_Key); }
+		}
+	}
 }

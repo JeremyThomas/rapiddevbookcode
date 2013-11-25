@@ -60,7 +60,7 @@ namespace AW.Helper
 		{
 			SetType(source);
 			// Load the table from the scalar sequence if _type is a primitive type.
-			if (Type.IsPrimitive)
+			if (ValueTypeWrapper.TypeNeedsWrappingForBinding(Type))
 				return ShredPrimitive(source, table, options);
 
 			// Create a new table if the input table is null.
@@ -152,7 +152,8 @@ namespace AW.Helper
 				{
 					// Add the property as a column in the table if it doesn't exist
 					// already.
-					var dc = table.Columns.Contains(p.Name) ? table.Columns[p.Name]
+					var dc = table.Columns.Contains(p.Name)
+					         	? table.Columns[p.Name]
 					         	: table.Columns.Add(p.Name, MetaDataHelper.GetCoreType(p.PropertyType));
 
 					// Add the property to the ordinal map.

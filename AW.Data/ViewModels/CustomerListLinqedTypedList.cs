@@ -15,7 +15,7 @@ namespace AW.Data.ViewModels
     private readonly string _lastName;
     private readonly string _suffix;
     private readonly string _emailAddress;
-    private readonly int _emailPromotion;
+    private readonly EmailPromotion _emailPromotion;
     private readonly string _countryRegionName;
     private readonly string _stateProvinceName;
     private readonly int _customerID;
@@ -70,7 +70,7 @@ namespace AW.Data.ViewModels
       get { return _emailAddress; }
     }
 
-    public int EmailPromotion
+    public EmailPromotion EmailPromotion
     {
       get { return _emailPromotion; }
     }
@@ -92,7 +92,7 @@ namespace AW.Data.ViewModels
 
     public CustomerListLinqedTypedList(string addressLine1, string addressLine2, string city, string addressType, string title,
                                        string firstName, string middleName, string lastName, string suffix, string emailAddress,
-                                       int emailPromotion, string countryRegionName, string stateProvinceName, int customerID)
+                                       EmailPromotion emailPromotion, string countryRegionName, string stateProvinceName, int customerID)
     {
       _addressLine1 = addressLine1;
       _addressLine2 = addressLine2;
@@ -112,22 +112,22 @@ namespace AW.Data.ViewModels
 
     public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery()
     {
-      return GetCustomerListQuery(MetaSingletons.MetaData.Customer);
+      return GetCustomerListQuery(MetaSingletons.MetaData.Individual);
     }
 
-    public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery(IQueryable<CustomerEntity> customers)
+    public static IQueryable<CustomerListLinqedTypedList> GetCustomerListQuery(IQueryable<IndividualEntity> individuals)
     {
-      return (from customer in customers
-              from customerAddress in customer.CustomerAddresses
+      return (from individual in individuals
+              from customerAddress in individual.CustomerAddresses
               select
                 new CustomerListLinqedTypedList(customerAddress.Address.AddressLine1, customerAddress.Address.AddressLine2,
                                                 customerAddress.Address.City, customerAddress.AddressType.Name,
-                                                customer.Individual.Contact.Title, customer.Individual.Contact.FirstName,
-                                                customer.Individual.Contact.MiddleName, customer.Individual.Contact.LastName,
-                                                customer.Individual.Contact.Suffix, customer.Individual.Contact.EmailAddress,
-                                                customer.Individual.Contact.EmailPromotion,
+                                                individual.Contact.Title, individual.Contact.FirstName,
+                                                individual.Contact.MiddleName, individual.Contact.LastName,
+                                                individual.Contact.Suffix, individual.Contact.EmailAddress,
+                                                individual.Contact.EmailPromotion,
                                                 customerAddress.Address.StateProvince.CountryRegion.Name,
-                                                customerAddress.Address.StateProvince.Name, customer.CustomerID));
+                                                customerAddress.Address.StateProvince.Name, individual.CustomerID));
     }
   }
 }

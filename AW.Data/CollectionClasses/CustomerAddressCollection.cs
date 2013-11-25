@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -20,7 +20,6 @@ using AW.Data.EntityClasses;
 using AW.Data.FactoryClasses;
 using AW.Data.DaoClasses;
 using AW.Data.HelperClasses;
-
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.CollectionClasses
@@ -40,7 +39,7 @@ namespace AW.Data.CollectionClasses
 
 		/// <summary> CTor</summary>
 		/// <param name="initialContents">The initial contents of this collection.</param>
-		public CustomerAddressCollection(IList<CustomerAddressEntity> initialContents):base(new CustomerAddressEntityFactory())
+		public CustomerAddressCollection(IEnumerable<CustomerAddressEntity> initialContents):base(new CustomerAddressEntityFactory())
 		{
 			AddRange(initialContents);
 		}
@@ -67,7 +66,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiManyToOne(IEntity addressInstance, IEntity addressTypeInstance, IEntity customerInstance)
 		{
-			return GetMultiManyToOne(addressInstance, addressTypeInstance, customerInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, null, 0, 0);
+			return GetMultiManyToOne(addressInstance, addressTypeInstance, customerInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, null, 0, 0);
 		}
 
 		/// <summary> Retrieves in this CustomerAddressCollection object all CustomerAddressEntity objects which have data in common with the specified related Entities.
@@ -79,7 +78,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>true if succeeded, false otherwise</returns>
 		public bool GetMultiManyToOne(IEntity addressInstance, IEntity addressTypeInstance, IEntity customerInstance, IPredicateExpression filter)
 		{
-			return GetMultiManyToOne(addressInstance, addressTypeInstance, customerInstance, base.MaxNumberOfItemsToReturn, base.SortClauses, filter, 0, 0);
+			return GetMultiManyToOne(addressInstance, addressTypeInstance, customerInstance, this.MaxNumberOfItemsToReturn, this.SortClauses, filter, 0, 0);
 		}
 
 		/// <summary> Retrieves in this CustomerAddressCollection object all CustomerAddressEntity objects which have data in common with the specified related Entities.
@@ -117,12 +116,11 @@ namespace AW.Data.CollectionClasses
 			{
 				return GetMulti(filter, maxNumberOfItemsToReturn, sortClauses, null, pageNumber, pageSize);
 			}
-			if(!base.SuppressClearInGetMulti)
+			if(!this.SuppressClearInGetMulti)
 			{
 				this.Clear();
 			}
-			CustomerAddressDAO dao = DAOFactory.CreateCustomerAddressDAO();
-			return dao.GetMulti(base.Transaction, this, maxNumberOfItemsToReturn, sortClauses, base.EntityFactoryToUse, filter, addressInstance, addressTypeInstance, customerInstance, pageNumber, pageSize);
+			return DAOFactory.CreateCustomerAddressDAO().GetMulti(this.Transaction, this, maxNumberOfItemsToReturn, sortClauses, this.EntityFactoryToUse, filter, addressInstance, addressTypeInstance, customerInstance, pageNumber, pageSize);
 		}
 
 		/// <summary> Deletes from the persistent storage all CustomerAddress entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.</summary>
@@ -133,8 +131,7 @@ namespace AW.Data.CollectionClasses
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
 		public int DeleteMultiManyToOne(IEntity addressInstance, IEntity addressTypeInstance, IEntity customerInstance)
 		{
-			CustomerAddressDAO dao = DAOFactory.CreateCustomerAddressDAO();
-			return dao.DeleteMulti(base.Transaction, addressInstance, addressTypeInstance, customerInstance);
+			return DAOFactory.CreateCustomerAddressDAO().DeleteMulti(this.Transaction, addressInstance, addressTypeInstance, customerInstance);
 		}
 
 		/// <summary> Updates in the persistent storage all CustomerAddress entities which have data in common with the specified related Entities. If one is omitted, that entity is not used as a filter.
@@ -146,10 +143,8 @@ namespace AW.Data.CollectionClasses
 		/// <returns>Amount of entities affected, if the used persistent storage has rowcounting enabled.</returns>
 		public int UpdateMultiManyToOne(CustomerAddressEntity entityWithNewValues, IEntity addressInstance, IEntity addressTypeInstance, IEntity customerInstance)
 		{
-			CustomerAddressDAO dao = DAOFactory.CreateCustomerAddressDAO();
-			return dao.UpdateMulti(entityWithNewValues, base.Transaction, addressInstance, addressTypeInstance, customerInstance);
+			return DAOFactory.CreateCustomerAddressDAO().UpdateMulti(entityWithNewValues, this.Transaction, addressInstance, addressTypeInstance, customerInstance);
 		}
-
 
 
 		/// <summary> Retrieves Entity rows in a datatable which match the specified filter. It will always create a new connection to the database.</summary>
@@ -208,8 +203,7 @@ namespace AW.Data.CollectionClasses
 			return GetScalar(fieldIndex, expressionToExecute, aggregateToApply, null, null, null);
 		}
 
-		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are
-		/// applied on.</summary>
+		/// <summary> Gets a scalar value, calculated with the aggregate and expression specified. the field index specified is the field the expression and aggregate are applied on.</summary>
 		/// <param name="fieldIndex">Field index of field to which to apply the aggregate function and expression</param>
 		/// <param name="expressionToExecute">The expression to execute. Can be null</param>
 		/// <param name="aggregateToApply">Aggregate function to apply. </param>
@@ -252,8 +246,7 @@ namespace AW.Data.CollectionClasses
 			{
 				fields[0].AggregateFunctionToApply = aggregateToApply;
 			}
-			CustomerAddressDAO dao = DAOFactory.CreateCustomerAddressDAO();
-			return dao.GetScalar(fields, base.Transaction, filter, relations, groupByClause);
+			return DAOFactory.CreateCustomerAddressDAO().GetScalar(fields, this.Transaction, filter, relations, groupByClause);
 		}
 		
 		/// <summary>Creats a new DAO instance so code which is in the base class can still use the proper DAO object.</summary>
@@ -269,7 +262,6 @@ namespace AW.Data.CollectionClasses
 		{
 			return new Transaction(levelOfIsolation, name);
 		}
-
 
 		#region Custom EntityCollection code
 		

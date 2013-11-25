@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: Culture. </summary>
+	/// <summary>Implements the relations factory for the entity: Culture. </summary>
 	public partial class CultureRelations
 	{
 		/// <summary>CTor</summary>
@@ -31,8 +31,6 @@ namespace AW.Data.RelationClasses
 		{
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.ProductModelProductDescriptionCultureEntityUsingCultureID);
-
-
 			return toReturn;
 		}
 
@@ -45,7 +43,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductModelProductDescriptionCulture" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductModelProductDescriptionCultures" , true);
 				relation.AddEntityFieldPair(CultureFields.CultureID, ProductModelProductDescriptionCultureFields.CultureID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CultureEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductModelProductDescriptionCultureEntity", false);
@@ -54,16 +52,25 @@ namespace AW.Data.RelationClasses
 		}
 
 
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticCultureRelations
+	{
+		internal static readonly IEntityRelation ProductModelProductDescriptionCultureEntityUsingCultureIDStatic = new CultureRelations().ProductModelProductDescriptionCultureEntityUsingCultureID;
+
+		/// <summary>CTor</summary>
+		static StaticCultureRelations()
+		{
+		}
 	}
 }

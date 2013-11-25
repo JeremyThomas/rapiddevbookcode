@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: CreditCard. </summary>
+	/// <summary>Implements the relations factory for the entity: CreditCard. </summary>
 	public partial class CreditCardRelations
 	{
 		/// <summary>CTor</summary>
@@ -32,8 +32,6 @@ namespace AW.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.ContactCreditCardEntityUsingCreditCardID);
 			toReturn.Add(this.SalesOrderHeaderEntityUsingCreditCardID);
-
-
 			return toReturn;
 		}
 
@@ -46,7 +44,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ContactCreditCard" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ContactCreditCards" , true);
 				relation.AddEntityFieldPair(CreditCardFields.CreditCardID, ContactCreditCardFields.CreditCardID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CreditCardEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ContactCreditCardEntity", false);
@@ -70,16 +68,26 @@ namespace AW.Data.RelationClasses
 		}
 
 
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticCreditCardRelations
+	{
+		internal static readonly IEntityRelation ContactCreditCardEntityUsingCreditCardIDStatic = new CreditCardRelations().ContactCreditCardEntityUsingCreditCardID;
+		internal static readonly IEntityRelation SalesOrderHeaderEntityUsingCreditCardIDStatic = new CreditCardRelations().SalesOrderHeaderEntityUsingCreditCardID;
+
+		/// <summary>CTor</summary>
+		static StaticCreditCardRelations()
+		{
+		}
 	}
 }

@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: Location. </summary>
+	/// <summary>Implements the relations factory for the entity: Location. </summary>
 	public partial class LocationRelations
 	{
 		/// <summary>CTor</summary>
@@ -32,8 +32,6 @@ namespace AW.Data.RelationClasses
 			List<IEntityRelation> toReturn = new List<IEntityRelation>();
 			toReturn.Add(this.ProductInventoryEntityUsingLocationID);
 			toReturn.Add(this.WorkOrderRoutingEntityUsingLocationID);
-
-
 			return toReturn;
 		}
 
@@ -46,7 +44,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductInventory" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "ProductInventories" , true);
 				relation.AddEntityFieldPair(LocationFields.LocationID, ProductInventoryFields.LocationID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("LocationEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("ProductInventoryEntity", false);
@@ -61,7 +59,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "WorkOrderRouting" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "WorkOrderRoutings" , true);
 				relation.AddEntityFieldPair(LocationFields.LocationID, WorkOrderRoutingFields.LocationID);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("LocationEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("WorkOrderRoutingEntity", false);
@@ -70,16 +68,26 @@ namespace AW.Data.RelationClasses
 		}
 
 
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticLocationRelations
+	{
+		internal static readonly IEntityRelation ProductInventoryEntityUsingLocationIDStatic = new LocationRelations().ProductInventoryEntityUsingLocationID;
+		internal static readonly IEntityRelation WorkOrderRoutingEntityUsingLocationIDStatic = new LocationRelations().WorkOrderRoutingEntityUsingLocationID;
+
+		/// <summary>CTor</summary>
+		static StaticLocationRelations()
+		{
+		}
 	}
 }

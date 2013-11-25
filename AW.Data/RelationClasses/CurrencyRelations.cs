@@ -1,9 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////
 // This is generated code. 
 //////////////////////////////////////////////////////////////
-// Code is generated using LLBLGen Pro version: 2.6
+// Code is generated using LLBLGen Pro version: 4.0
 // Code is generated on: 
-// Code is generated using templates: SD.TemplateBindings.SharedTemplates.NET20
+// Code is generated using templates: SD.TemplateBindings.SharedTemplates
 // Templates vendor: Solutions Design.
 // Templates version: 
 //////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Data.RelationClasses
 {
-	/// <summary>Implements the static Relations variant for the entity: Currency. </summary>
+	/// <summary>Implements the relations factory for the entity: Currency. </summary>
 	public partial class CurrencyRelations
 	{
 		/// <summary>CTor</summary>
@@ -33,8 +33,6 @@ namespace AW.Data.RelationClasses
 			toReturn.Add(this.CountryRegionCurrencyEntityUsingCurrencyCode);
 			toReturn.Add(this.CurrencyRateEntityUsingFromCurrencyCode);
 			toReturn.Add(this.CurrencyRateEntityUsingToCurrencyCode);
-
-
 			return toReturn;
 		}
 
@@ -47,7 +45,7 @@ namespace AW.Data.RelationClasses
 		{
 			get
 			{
-				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CountryRegionCurrency" , true);
+				IEntityRelation relation = new EntityRelation(SD.LLBLGen.Pro.ORMSupportClasses.RelationType.OneToMany, "CountryRegionCurrencies" , true);
 				relation.AddEntityFieldPair(CurrencyFields.CurrencyCode, CountryRegionCurrencyFields.CurrencyCode);
 				relation.InheritanceInfoPkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CurrencyEntity", true);
 				relation.InheritanceInfoFkSideEntity = InheritanceInfoProviderSingleton.GetInstance().GetInheritanceInfo("CountryRegionCurrencyEntity", false);
@@ -86,16 +84,27 @@ namespace AW.Data.RelationClasses
 		}
 
 
-
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSubTypeRelation(string subTypeEntityName) { return null; }
 		/// <summary>stub, not used in this entity, only for TargetPerEntity entities.</summary>
 		public virtual IEntityRelation GetSuperTypeRelation() { return null;}
-
 		#endregion
 
 		#region Included Code
 
 		#endregion
+	}
+	
+	/// <summary>Static class which is used for providing relationship instances which are re-used internally for syncing</summary>
+	internal static class StaticCurrencyRelations
+	{
+		internal static readonly IEntityRelation CountryRegionCurrencyEntityUsingCurrencyCodeStatic = new CurrencyRelations().CountryRegionCurrencyEntityUsingCurrencyCode;
+		internal static readonly IEntityRelation CurrencyRateEntityUsingFromCurrencyCodeStatic = new CurrencyRelations().CurrencyRateEntityUsingFromCurrencyCode;
+		internal static readonly IEntityRelation CurrencyRateEntityUsingToCurrencyCodeStatic = new CurrencyRelations().CurrencyRateEntityUsingToCurrencyCode;
+
+		/// <summary>CTor</summary>
+		static StaticCurrencyRelations()
+		{
+		}
 	}
 }

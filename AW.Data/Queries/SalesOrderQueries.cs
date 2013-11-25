@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using AW.Data.CollectionClasses;
 using AW.Data.EntityClasses;
+using AW.Data.FactoryClasses;
 using AW.Data.Filters;
 using AW.Data.HelperClasses;
+using AW.Data.Linq;
+using AW.Data.ViewModels;
 using AW.Helper.LLBL;
-using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
+using SD.LLBLGen.Pro.QuerySpec;
+using SD.LLBLGen.Pro.QuerySpec.SelfServicing;
 
 namespace AW.Data.Queries
 {
@@ -15,77 +17,121 @@ namespace AW.Data.Queries
   {
     public static SalesOrderHeaderCollection GetSalesOrderHeaderCollection
       (
-      DateTime FromDate,
-      DateTime ToDate,
-      string FirstName,
-      string LastName,
-      int OrderID,
-      string OrderNumber,
-      string CityName,
-      string StateName,
-      string CountryName,
-      string Zip,
+      OrderSearchCriteria orderSearchCriteria,
       int maxNumberOfItemsToReturn,
       bool prefetch
       )
     {
-      var relations = new RelationCollection();
-      var Filter = SalesOrderHeaderFilters.FilterByDateOrderIDOrderNumberCustomerNameAddress(relations, FromDate, ToDate, OrderID, OrderNumber, FirstName, LastName, CityName, StateName, CountryName, Zip);
-      ISortExpression Sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
-      var Orders = new SalesOrderHeaderCollection();
       //note      Orders.SupportsSorting = true;
+      IPrefetchPath prefetchPath = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated} : null;
+      var relations = new RelationCollection();
+      if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
+      {
+        relations.Add(SalesOrderHeaderEntity.Relations.IndividualEntityUsingCustomerID);
+        relations.Add(IndividualEntity.Relations.ContactEntityUsingContactID);
+        relations.Add(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID);
+      }
+      var orders = new SalesOrderHeaderCollection();
+      var filter = orderSearchCriteria.GetPredicateExpression();
+      ISortExpression sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
+      orders.GetMulti(filter, maxNumberOfItemsToReturn, sort, relations, prefetchPath);
+      return orders;
+    }
 
-      IPrefetchPath Prefetch = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntityBase.PrefetchPathCustomerViewRelated} : null;
-      Orders.GetMulti(Filter, maxNumberOfItemsToReturn, Sort, relations, Prefetch);
-      return Orders;
+    public static SalesOrderHeaderCollection GetSalesOrderHeaderCollectionCustomerViewRelated
+      (
+      OrderSearchCriteria orderSearchCriteria,
+      int maxNumberOfItemsToReturn,
+      bool prefetch
+      )
+    {
+      //note      Orders.SupportsSorting = true;
+      IPrefetchPath prefetchPath = prefetch ? new PrefetchPath((int) EntityType.SalesOrderHeaderEntity) {SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated} : null;
+      var relations = new RelationCollection();
+      if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
+        relations.Add(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID);
+      var orders = new SalesOrderHeaderCollection();
+      var filter = orderSearchCriteria.GetPredicateExpressionCustomerView();
+      ISortExpression sort = new SortExpression {SalesOrderHeaderFields.OrderDate | SortOperator.Ascending};
+      orders.GetMulti(filter, maxNumberOfItemsToReturn, sort, relations, prefetchPath);
+      return orders;
+    }
+
+    public static SalesOrderHeaderCollection GetSalesOrderHeaderCollectionQuerySpec
+      (
+      OrderSearchCriteria orderSearchCriteria,
+      int maxNumberOfItemsToReturn,
+      bool prefetch
+      )
+    {
+      var filter = orderSearchCriteria.GetPredicateExpression();
+      var qf = new QueryFactory();
+      var q = qf.SalesOrderHeader.Where(filter);
+      q.OrderBy(SalesOrderHeaderFields.OrderDate | SortOperator.Ascending).Page(1, maxNumberOfItemsToReturn);
+      if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
+        q.From(QueryTarget.InnerJoin(SalesOrderHeaderEntity.Relations.IndividualEntityUsingCustomerID)
+          .InnerJoin(IndividualEntity.Relations.ContactEntityUsingContactID).InnerJoin(IndividualEntity.Relations.CustomerAddressEntityUsingCustomerID));
+      if (prefetch)
+        q.WithPath(SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated);
+      var orders = new SalesOrderHeaderCollection();
+      orders.GetMulti(q);
+      return orders;
+    }
+
+    public static SalesOrderHeaderCollection GetSalesOrderHeaderCollectionQuerySpecCustomerViewRelated
+      (
+      OrderSearchCriteria orderSearchCriteria,
+      int maxNumberOfItemsToReturn,
+      bool prefetch
+      )
+    {
+      var filter = orderSearchCriteria.GetPredicateExpressionCustomerView();
+      var qf = new QueryFactory();
+      var q = qf.SalesOrderHeader.Where(filter);
+      q.OrderBy(SalesOrderHeaderFields.OrderDate | SortOperator.Ascending).Page(1, maxNumberOfItemsToReturn);
+      if (orderSearchCriteria.HasCustomerViewRelatedCriteria())
+        q.From(QueryTarget.InnerJoin(SalesOrderHeaderEntity.Relations.CustomerViewRelatedEntityUsingCustomerID));
+      if (prefetch)
+        q.WithPath(SalesOrderHeaderEntity.PrefetchPathCustomerViewRelated);
+      var orders = new SalesOrderHeaderCollection();
+      orders.GetMulti(q);
+      return orders;
     }
 
     public static CollectionCore<SalesOrderHeaderEntity> GetSalesOrderHeaderCollectionWithLinq
       (
-      DateTime FromDate,
-      DateTime ToDate,
-      string FirstName,
-      string LastName,
-      int OrderID,
-      string OrderNumber,
-      string CityName,
-      string StateName,
-      string CountryName,
-      string Zip,
+      OrderSearchCriteria orderSearchCriteria,
       int maxNumberOfItemsToReturn,
       bool prefetch
       )
     {
-      var predicate = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressLambda(FromDate, ToDate, FirstName, LastName, CityName, StateName, CountryName, Zip, OrderID, OrderNumber);
+      var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(orderSearchCriteria);
 
-      if (prefetch)
-        predicate = predicate.WithPath(p => p.Prefetch(c => c.CustomerViewRelated));
+      salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
       if (maxNumberOfItemsToReturn > 0)
-        predicate = predicate.Take(maxNumberOfItemsToReturn);
-      //return ((ILLBLGenProQuery)predicate).Execute<SalesOrderHeaderCollection>();
-      return predicate.ToEntityCollection();
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Take(maxNumberOfItemsToReturn);
+      if (prefetch)
+        salesOrderHeaderQuery = salesOrderHeaderQuery.PrefetchCustomerViewRelated();
+      return salesOrderHeaderQuery.ToEntityCollection();
     }
 
-    public static IQueryable<SalesOrderHeaderEntity> DoSalesOrderHeaderLinqQuery
+    public static IQueryable<SalesOrderHeaderEntity> DoSalesOrderHeaderLinqQueryCustomerViewRelated
       (
-      DateTime fromDate,
-      DateTime toDate,
-      string firstName,
-      string lastName,
-      int orderID,
-      string orderNumber,
-      string cityName,
-      string stateName,
-      IEnumerable<string> countries,
-      string zip,
-      int maxNumberOfItemsToReturn
+      OrderSearchCriteria orderSearchCriteria,
+      int maxNumberOfItemsToReturn,
+      bool prefetch = false
       )
     {
-      var query = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddress(fromDate, toDate, orderID, orderNumber, firstName, lastName, cityName, stateName, zip, countries);
+      var salesOrderHeaderQuery = MetaSingletons.MetaData.SalesOrderHeader.FilterByDateOrderIDOrderNumberCustomerNameAddressCustomerViewRelated(orderSearchCriteria);
+
+      salesOrderHeaderQuery = salesOrderHeaderQuery.OrderBy(s => s.OrderDate);
 
       if (maxNumberOfItemsToReturn > 0)
-        query = query.Take(maxNumberOfItemsToReturn);
-      return query;
+        salesOrderHeaderQuery = salesOrderHeaderQuery.Take(maxNumberOfItemsToReturn);
+
+      if (prefetch)
+        salesOrderHeaderQuery = salesOrderHeaderQuery.PrefetchCustomerViewRelated();
+      return salesOrderHeaderQuery;
     }
   }
 }

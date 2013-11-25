@@ -1,0 +1,12 @@
+﻿<CodeCloneSettings>
+  <Exclusions>
+    <File>CollectionClasses\*.cs</File>
+    <File>DaoClasses\*.cs</File>
+    <File>EntityClasses\*.cs</File>
+    <File>FactoryClasses\*.cs</File>
+    <File>HelperClasses\*.cs</File>
+    <File>RelationClasses\*.cs</File>
+    <File>TypedListClasses\*.cs</File>
+    <File>TypedViewClasses\*.cs</File>
+  </Exclusions>
+</CodeCloneSettings>
