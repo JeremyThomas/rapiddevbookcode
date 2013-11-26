@@ -1790,7 +1790,7 @@ namespace AW.Data
 	
   // __LLBLGENPRO_USER_CODE_REGION_START CustomUserConstants
 
-  public enum ContactType
+  public enum ContactType : byte
   {
     AccountingManager = 1,
     AssistantSalesAgent = 2,
@@ -1814,8 +1814,8 @@ namespace AW.Data
     SalesRepresentative = 20,
   }
 
-  [TypeConverter(typeof(EnumerationConverter))]
-  public enum AddressType
+  [TypeConverter(typeof(HumanizedEnumConverter))]
+  public enum AddressType : byte
   {
     Billing = 1,
     Home = 2,
@@ -1827,7 +1827,7 @@ namespace AW.Data
     Archive = 6
   };
 
-  public enum OrderStatus
+  public enum OrderStatus : byte
   {
     [System.ComponentModel.Description("In process")]
 // ReSharper disable InconsistentNaming
@@ -1840,7 +1840,7 @@ namespace AW.Data
     Cancelled
   }
 
-  public enum OrderPlacesBy
+  public enum OrderPlacesBy : byte
   {
     SalesPerson,
     Customer
@@ -1854,7 +1854,11 @@ namespace AW.Data
     S
   }
 
-  public enum Gender
+  public class MaritalStatusDBConverter : BaseEnumConverter<MaritalStatus>
+  {
+  }
+
+  public enum Gender : byte
   {
     [System.ComponentModel.Description("Male")]
     M,
@@ -1862,57 +1866,61 @@ namespace AW.Data
     F
   }
 
-  public enum Current
+  public class GenderDBConverter : BaseEnumConverter<Gender>
+  {
+  }
+
+  public enum Current : byte
   {
     Inactive,
     Active
   }
 
-  public enum PayFrequency
+  public enum PayFrequency : byte
   {
     Monthly = 1,
     BiWeekly
   }
 
-  public enum NameStyle
+  public enum NameStyle : byte
   {
     FirstLast,
     LastFirst
   }
 
-  public enum EmailPromotion
+  public enum EmailPromotion : byte
   {
     None,
     AWOnly,
     AWAndPartners
   }
 
-  public enum StateProvinceCodeExistence
+  public enum StateProvinceCodeExistence : byte
   {
     Exists,
     Unavailable
   }
 
-  public enum ProductMaintenanceDocumentStatus
+  public enum ProductMaintenanceDocumentStatus : byte
   {
     PendingApproval = 1, 
     Approved, 
     Obsolete
   }
 
-  public enum ProductMake
+  public enum ProductMake : byte
   {
     Purchased,
     InHouse
   }
 
-  public enum ProductFinished
+  public enum ProductFinished : byte
   {
     Salable,
     NotSalable
   }
 
-  public enum PurchaseOrderStatus
+  public enum PurchaseOrderStatus : byte
   {
     Pending = 1,
     Approved,
@@ -1920,7 +1928,7 @@ namespace AW.Data
     Complete,
   }
 
-  public enum CreditRating
+  public enum CreditRating : byte
   {
     Superior = 1,
     Excellent,
@@ -1929,7 +1937,7 @@ namespace AW.Data
     BelowAverage,
   }
 
-  public enum TaxApplication
+  public enum TaxApplication : byte
   {
     Retail = 1,
     Wholesale,

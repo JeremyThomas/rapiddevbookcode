@@ -2462,9 +2462,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "Product"."Class"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual System.String Class
+		public virtual Nullable<AW.Data.ProductClass> Class
 		{
-			get { return (System.String)GetValue((int)ProductFieldIndex.Class, true); }
+			get { return (Nullable<AW.Data.ProductClass>)GetValue((int)ProductFieldIndex.Class, false); }
 			set	{ SetValue((int)ProductFieldIndex.Class, value, true); }
 		}
 
@@ -2572,9 +2572,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "Product"."ProductLine"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual System.String ProductLine
+		public virtual Nullable<AW.Data.ProductLine> ProductLine
 		{
-			get { return (System.String)GetValue((int)ProductFieldIndex.ProductLine, true); }
+			get { return (Nullable<AW.Data.ProductLine>)GetValue((int)ProductFieldIndex.ProductLine, false); }
 			set	{ SetValue((int)ProductFieldIndex.ProductLine, value, true); }
 		}
 
@@ -2704,9 +2704,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "Product"."Style"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 2<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): true, false, false</remarks>
-		public virtual System.String Style
+		public virtual Nullable<AW.Data.ProductStyle> Style
 		{
-			get { return (System.String)GetValue((int)ProductFieldIndex.Style, true); }
+			get { return (Nullable<AW.Data.ProductStyle>)GetValue((int)ProductFieldIndex.Style, false); }
 			set	{ SetValue((int)ProductFieldIndex.Style, value, true); }
 		}
 

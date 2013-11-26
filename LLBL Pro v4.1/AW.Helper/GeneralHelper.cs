@@ -9,10 +9,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml;
-using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml;
+using System.Xml.Serialization;
 using Humanizer;
 
 namespace AW.Helper
@@ -25,21 +25,12 @@ namespace AW.Helper
         Trace.Listeners.Add(new DefaultTraceListener());
     }
 
-    /// <summary>
-    /// 	Used for converting any spaces in the string version of an enum name to a substitute in the CLR enum name.
-    /// </summary>
-    /// <example>
-    /// 	In_Progress -to- "In Progress"
-    /// </example>
-    public static readonly char EnumSpaceSubstitute = '_';
-
-    public static readonly char EnumNumberPrefix = '_';
     public const string StringJoinSeperator = ", ";
 
     #region Debuging
 
     /// <summary>
-    /// 	Sends a msg to the Win32 debug output and prefixs it with the name off the method that called TraceOut
+    ///   Sends a msg to the Win32 debug output and prefixs it with the name off the method that called TraceOut
     /// </summary>
     /// <param name="msg"> The message. </param>
     public static void TraceOut(string msg)
@@ -54,7 +45,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Traces out the exception and the InnerMostException.
+    ///   Traces out the exception and the InnerMostException.
     /// </summary>
     /// <param name="exception">The exception.</param>
     /// <returns>InnerMostException</returns>
@@ -78,61 +69,27 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Converts the string to the enum.
+    ///   Converts the string to the enum.
     /// </summary>
     /// <typeparam name="T"> </typeparam>
     /// <param name="strOfEnum"> The string version of the enum. </param>
     /// <returns> </returns>
     public static T ToEnum<T>(this string strOfEnum)
     {
-      return String.IsNullOrEmpty(strOfEnum) ? default(T) : strOfEnum.ToEnum<T>(EnumSpaceSubstitute);
+      return String.IsNullOrEmpty(strOfEnum) ? default(T) : (T) StringToEnum(strOfEnum, (typeof (T)));
     }
 
-    /// <summary>
-    /// 	Converts the string to the enum.
-    /// </summary>
-    /// <typeparam name="T"> </typeparam>
-    /// <param name="strOfEnum"> The string version of the enum. </param>
-    /// <param name="spaceSubstitute"> The space substitute. </param>
-    /// <returns> </returns>
-    public static T ToEnum<T>(this string strOfEnum, char spaceSubstitute)
+    public static object StringToEnum(string strOfEnum, Type enumType)
     {
-      var fixedString = strOfEnum.Replace(' ', spaceSubstitute);
-      if (Char.IsDigit(fixedString, 0))
-      {
-        int enumindex;
-        if (Int32.TryParse(fixedString, out enumindex))
-          return (T) Enum.ToObject(typeof (T), enumindex);
-        fixedString = EnumNumberPrefix + fixedString;
-      }
-      return (T) Enum.Parse(typeof (T), fixedString, true);
-    }
-
-    public static object StringToEnum(Type enumType, string strOfEnum)
-    {
-      return StringToEnum(enumType, strOfEnum, EnumSpaceSubstitute);
-    }
-
-    private static object StringToEnum(Type enumType, string strOfEnum, char spaceSubstitute)
-    {
+      var coreType = MetaDataHelper.GetCoreType(enumType);
       if (Enum.IsDefined(enumType, strOfEnum))
-        return Enum.Parse(MetaDataHelper.GetCoreType(enumType), strOfEnum, true);
-      var fixedString = strOfEnum.Replace(' ', spaceSubstitute);
-      if (Char.IsDigit(fixedString, 0))
-      {
-        int enumindex;
-        if (Int32.TryParse(fixedString, out enumindex))
-          return Enum.ToObject(enumType, enumindex);
-        fixedString = EnumNumberPrefix + fixedString;
-      }
-      if (Enum.IsDefined(enumType, fixedString))
-        return Enum.Parse(MetaDataHelper.GetCoreType(enumType), fixedString, true);
+        return Enum.Parse(coreType, strOfEnum, true);
       var value = DehumanizeTo(strOfEnum, enumType);
-      return value ?? Enum.Parse(MetaDataHelper.GetCoreType(enumType), strOfEnum, true); //Throw exception if null
+      return value ?? (coreType == enumType ? Enum.Parse(coreType, strOfEnum, true) : null); //Throw exception if null and type is not nullable
     }
 
     /// <summary>
-    /// Dehumanizes a string into the Enum it was originally Humanized from!
+    ///   Dehumanizes a string into the Enum it was originally Humanized from!
     /// </summary>
     /// <param name="input">The string to be converted</param>
     /// <param name="enumType">Type of the enum.</param>
@@ -155,7 +112,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Enums as an enumerable.
+    ///   Enums as an enumerable.
     /// </summary>
     /// <typeparam name="TEnum"> The type of the enum. </typeparam>
     /// <see cref="http://weblogs.asp.net/alnurismail/archive/2008/10/06/c-iterating-through-an-enum.aspx" />
@@ -177,29 +134,15 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Converts the Enum to a string using the enum description if it has one else replacing 
-    /// any EnumSpaceSubstitute characters with a space character.
+    /// Turns an enum member into a human readable string; e.g. AnonymousUser -&gt; Anonymous user. It also honors DescriptionAttribute data annotation
     /// </summary>
-    /// <param name="e">The enum.</param>
+    /// <param name="e">The enum member to be humanized</param>
     /// <returns>
-    /// The string version of an enum with spaces in it as required.
+    ///   The string version of an enum with spaces in it as required.
     /// </returns>
     public static string EnumToString(this Enum e)
     {
-      if (e == null) return null;
-      var description = GetDescription(e);
-      return String.IsNullOrEmpty(description) ? e.EnumToString(EnumSpaceSubstitute) : description;
-    }
-
-    /// <summary>
-    /// Converts the Enum to a string replacing any spaceSubstitute characters with a space character.
-    /// </summary>
-    /// <param name="e">The enum.</param>
-    /// <param name="spaceSubstitute">The space substitute.</param>
-    /// <returns>The string version of an enum with spaces in it as required</returns>
-    public static string EnumToString(this Enum e, char spaceSubstitute)
-    {
-      return e.ToString().Replace(spaceSubstitute, ' ');
+      return e == null ? null : e.Humanize();
     }
 
     public static IList EnumsGetAsNullableValues(Type enumType)
@@ -212,13 +155,13 @@ namespace AW.Helper
       {
         list.Add(item);
       }
-      var nulledEnum = Enum.ToObject(enumType, list.Count+1);
+      var nulledEnum = Enum.ToObject(enumType, list.Count + 1);
       list.Add(nulledEnum);
       return list;
     }
 
     /// <summary>
-    /// Gets the description of an object if it has one else returns null.
+    ///   Gets the description of an object if it has one else returns null.
     /// </summary>
     /// <param name="value">The value.</param>
     /// <returns></returns>
@@ -243,7 +186,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Joins an array of non empty strings together as one string with a separator between each non empty original string.
+    ///   Joins an array of non empty strings together as one string with a separator between each non empty original string.
     /// </summary>
     /// <param name="separator"> The separator. </param>
     /// <param name="values"> The values. </param>
@@ -259,7 +202,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Skips then takes.
+    ///   Skips then takes.
     /// </summary>
     /// <typeparam name="T"> </typeparam>
     /// <param name="enumerable"> The enumerable. </param>
@@ -272,7 +215,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Skips then takes.
+    ///   Skips then takes.
     /// </summary>
     /// <typeparam name="T"> </typeparam>
     /// <param name="queryable"> The query able. </param>
@@ -321,7 +264,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Copies enumerable to a data table.
+    ///   Copies enumerable to a data table.
     /// </summary>
     /// <see cref="http://msdn.microsoft.com/en-us/library/bb669096.aspx" />
     /// <typeparam name="T"> </typeparam>
@@ -338,7 +281,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Convert a List{T} to a DataTable.
+    ///   Convert a List{T} to a DataTable.
     /// </summary>
     public static DataTable ToDataTable<T>(List<T> items)
     {
@@ -364,7 +307,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	returns null if empty.
+    ///   returns null if empty.
     /// </summary>
     /// <see cref="http://haacked.com/archive/2010/06/16/null-or-empty-coalescing.aspx" />
     /// <param name="items"> The items. </param>
@@ -375,7 +318,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Determines whether the specified IEnumerable is null or empty.
+    ///   Determines whether the specified IEnumerable is null or empty.
     /// </summary>
     /// <see cref="http://haacked.com/archive/2010/06/10/checking-for-empty-enumerations.aspx" />
     /// <typeparam name="T"> </typeparam>
@@ -392,7 +335,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Determines whether the specified enumerable has any items.
+    ///   Determines whether the specified enumerable has any items.
     /// </summary>
     /// <param name="enumerable"> The enumerable. </param>
     /// <returns> </returns>
@@ -407,7 +350,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Determines whether the specified enumerable has any items.
+    ///   Determines whether the specified enumerable has any items.
     /// </summary>
     /// <param name="enumerable"> The enumerable. </param>
     /// <param name="reset"> if set to <c>true</c> reset the enumerator if there are any items found. </param>
@@ -451,7 +394,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Adds an item to the specified array.
+    ///   Adds an item to the specified array.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="array">The array.</param>
@@ -517,12 +460,12 @@ namespace AW.Helper
       if (File.Exists(fileName))
       {
         var fileMap = new ExeConfigurationFileMap
-          {
-            LocalUserConfigFilename = fileName,
-            ExeConfigFilename = fileName,
-            MachineConfigFilename = fileName,
-            RoamingUserConfigFilename = fileName
-          };
+        {
+          LocalUserConfigFilename = fileName,
+          ExeConfigFilename = fileName,
+          MachineConfigFilename = fileName,
+          RoamingUserConfigFilename = fileName
+        };
         var configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
         return configuration;
       }
@@ -627,11 +570,11 @@ namespace AW.Helper
     public static void AddSettingsProperty(ApplicationSettingsBase applicationSettingsBase, string settingName, Type settingType)
     {
       var settingsProperty = new SettingsProperty(settingName)
-        {
-          PropertyType = settingType,
-          Provider = applicationSettingsBase.Providers.Cast<SettingsProvider>().FirstOrDefault(),
-          SerializeAs = SettingsSerializeAs.Xml
-        };
+      {
+        PropertyType = settingType,
+        Provider = applicationSettingsBase.Providers.Cast<SettingsProvider>().FirstOrDefault(),
+        SerializeAs = SettingsSerializeAs.Xml
+      };
       settingsProperty.Attributes.Add(typeof (UserScopedSettingAttribute), new UserScopedSettingAttribute());
       applicationSettingsBase.Properties.Add(settingsProperty);
     }
@@ -651,7 +594,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Clones the object graph.
+    ///   Clones the object graph.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="graph">The graph.</param>
@@ -664,12 +607,13 @@ namespace AW.Helper
       ms.Seek(0, SeekOrigin.Begin);
       var oOut = bf.Deserialize(ms);
       ms.Close();
-      return (T)oOut;
+      return (T) oOut;
     }
+
     /// <summary>
-    /// Gets the OS architecture.
-    /// if .net 4 could use Environment.Is64BitOperatingSystem
-    /// http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
+    ///   Gets the OS architecture.
+    ///   if .net 4 could use Environment.Is64BitOperatingSystem
+    ///   http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
     /// </summary>
     /// <returns> 32 or 64 </returns>
     internal static int GetOSArchitecture()
@@ -679,9 +623,9 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Gets a value indicating whether [is64 bit operating system].
-    /// 	if .net 4 could use Environment.Is64BitOperatingSystem
-    /// 	http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
+    ///   Gets a value indicating whether [is64 bit operating system].
+    ///   if .net 4 could use Environment.Is64BitOperatingSystem
+    ///   http://stackoverflow.com/questions/336633/how-to-detect-windows-64-bit-platform-with-net
     /// </summary>
     /// <value> <c>true</c> if [is64 bit operating system]; otherwise, <c>false</c> . </value>
     public static bool Is64BitOperatingSystem
@@ -701,15 +645,15 @@ namespace AW.Helper
     }
 
     /// <summary>
-    ///  Returns a value indicating whether the specified System.String object occurs
-    ///  within this string - case-insensitive.
-    ///  This is mapped to SQL so can be used in Linq-To-DB, see Northwind.DAL.Oracle.DataAccessAdapter
+    ///   Returns a value indicating whether the specified System.String object occurs
+    ///   within this string - case-insensitive.
+    ///   This is mapped to SQL so can be used in Linq-To-DB, see Northwind.DAL.Oracle.DataAccessAdapter
     /// </summary>
     /// <param name="source">The source.</param>
     /// <param name="value">The string to seek.</param>
     /// <returns>
-    ///  true if the value parameter occurs within this string, or if value is the
-    ///  empty string (""); otherwise, false.
+    ///   true if the value parameter occurs within this string, or if value is the
+    ///   empty string (""); otherwise, false.
     /// </returns>
     public static bool ContainsIgnoreCase(this string source, string value)
     {
@@ -717,8 +661,8 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Determines whether this string and a specified System.String object have the same value - case-insensitive.
-    /// This is mapped to SQL so can be used in Linq-To-DB, see Northwind.DAL.Oracle.DataAccessAdapter
+    ///   Determines whether this string and a specified System.String object have the same value - case-insensitive.
+    ///   This is mapped to SQL so can be used in Linq-To-DB, see Northwind.DAL.Oracle.DataAccessAdapter
     /// </summary>
     /// <param name="source">The source.</param>
     /// <param name="value">The value.</param>
