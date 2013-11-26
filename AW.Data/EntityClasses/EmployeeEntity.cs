@@ -1084,9 +1084,6 @@ namespace AW.Data.EntityClasses
 			fieldHashtable.Add("MS_Description", @"Unique nonclustered index.");
 			_fieldsCustomProperties.Add("ContactID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
-			fieldHashtable.Add("MS_Description", @"0 = Inactive, 1 = Active");
-			_fieldsCustomProperties.Add("CurrentFlag", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
 			fieldHashtable.Add("MS_Description", @"Clustered index created by a primary key constraint.");
 			_fieldsCustomProperties.Add("EmployeeID", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
@@ -1095,6 +1092,12 @@ namespace AW.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			fieldHashtable.Add("MS_Description", @"Employee hired on this date.");
 			_fieldsCustomProperties.Add("HireDate", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"0 = Inactive, 1 = Active");
+			_fieldsCustomProperties.Add("IsCurrent", fieldHashtable);
+			fieldHashtable = new Dictionary<string, string>();
+			fieldHashtable.Add("MS_Description", @"Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.");
+			_fieldsCustomProperties.Add("IsSalaried", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			fieldHashtable.Add("MS_Description", @"Network login.");
 			_fieldsCustomProperties.Add("LoginID", fieldHashtable);
@@ -1113,9 +1116,6 @@ namespace AW.Data.EntityClasses
 			fieldHashtable = new Dictionary<string, string>();
 			fieldHashtable.Add("MS_Description", @"ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample.");
 			_fieldsCustomProperties.Add("Rowguid", fieldHashtable);
-			fieldHashtable = new Dictionary<string, string>();
-			fieldHashtable.Add("MS_Description", @"Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.");
-			_fieldsCustomProperties.Add("SalariedFlag", fieldHashtable);
 			fieldHashtable = new Dictionary<string, string>();
 			fieldHashtable.Add("MS_Description", @"Number of available sick leave hours.");
 			_fieldsCustomProperties.Add("SickLeaveHours", fieldHashtable);
@@ -1347,17 +1347,6 @@ namespace AW.Data.EntityClasses
 			set	{ SetValue((int)EmployeeFieldIndex.ContactID, value, true); }
 		}
 
-		/// <summary> The CurrentFlag property of the Entity Employee<br/><br/>
-		/// MS_Description: 0 = Inactive, 1 = Active<br/>0 = Inactive, 1 = Active</summary>
-		/// <remarks>Mapped on  table field: "Employee"."CurrentFlag"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean CurrentFlag
-		{
-			get { return (System.Boolean)GetValue((int)EmployeeFieldIndex.CurrentFlag, true); }
-			set	{ SetValue((int)EmployeeFieldIndex.CurrentFlag, value, true); }
-		}
-
 		/// <summary> The EmployeeID property of the Entity Employee<br/><br/>
 		/// MS_Description: Clustered index created by a primary key constraint.<br/>Clustered index created by a primary key constraint.</summary>
 		/// <remarks>Mapped on  table field: "Employee"."EmployeeID"<br/>
@@ -1389,6 +1378,28 @@ namespace AW.Data.EntityClasses
 		{
 			get { return (System.DateTime)GetValue((int)EmployeeFieldIndex.HireDate, true); }
 			set	{ SetValue((int)EmployeeFieldIndex.HireDate, value, true); }
+		}
+
+		/// <summary> The IsCurrent property of the Entity Employee<br/><br/>
+		/// MS_Description: 0 = Inactive, 1 = Active<br/>0 = Inactive, 1 = Active</summary>
+		/// <remarks>Mapped on  table field: "Employee"."CurrentFlag"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean IsCurrent
+		{
+			get { return (System.Boolean)GetValue((int)EmployeeFieldIndex.IsCurrent, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.IsCurrent, value, true); }
+		}
+
+		/// <summary> The IsSalaried property of the Entity Employee<br/><br/>
+		/// MS_Description: Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.<br/>Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.</summary>
+		/// <remarks>Mapped on  table field: "Employee"."SalariedFlag"<br/>
+		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
+		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
+		public virtual System.Boolean IsSalaried
+		{
+			get { return (System.Boolean)GetValue((int)EmployeeFieldIndex.IsSalaried, true); }
+			set	{ SetValue((int)EmployeeFieldIndex.IsSalaried, value, true); }
 		}
 
 		/// <summary> The LoginID property of the Entity Employee<br/><br/>
@@ -1455,17 +1466,6 @@ namespace AW.Data.EntityClasses
 		{
 			get { return (System.Guid)GetValue((int)EmployeeFieldIndex.Rowguid, true); }
 			set	{ SetValue((int)EmployeeFieldIndex.Rowguid, value, true); }
-		}
-
-		/// <summary> The SalariedFlag property of the Entity Employee<br/><br/>
-		/// MS_Description: Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.<br/>Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.</summary>
-		/// <remarks>Mapped on  table field: "Employee"."SalariedFlag"<br/>
-		/// Table field type characteristics (type, precision, scale, length): Bit, 0, 0, 0<br/>
-		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.Boolean SalariedFlag
-		{
-			get { return (System.Boolean)GetValue((int)EmployeeFieldIndex.SalariedFlag, true); }
-			set	{ SetValue((int)EmployeeFieldIndex.SalariedFlag, value, true); }
 		}
 
 		/// <summary> The SickLeaveHours property of the Entity Employee<br/><br/>
@@ -1869,7 +1869,7 @@ namespace AW.Data.EntityClasses
                         new PredicateExpression();
                     SalariedPred.Add(
                         (EmployeeFields.HireDate >= HireDateAfter) &
-                        (EmployeeFields.SalariedFlag == true));
+                        (EmployeeFields.IsSalaried == true));
                     Salaried.GetMulti(SalariedPred);
                     foreach (EmployeeEntity Employee in Salaried)
                     {
@@ -1882,7 +1882,7 @@ namespace AW.Data.EntityClasses
                         new PredicateExpression();
                     NonSalariedPred.Add(
                         (EmployeeFields.HireDate >= HireDateAfter) &
-                        (EmployeeFields.SalariedFlag == false));
+                        (EmployeeFields.IsSalaried == false));
                     NonSalaried.GetMulti(NonSalariedPred);
                     foreach (EmployeeEntity Employee in NonSalaried)
                     {

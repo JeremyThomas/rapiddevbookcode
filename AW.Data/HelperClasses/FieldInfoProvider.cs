@@ -179,17 +179,17 @@ namespace AW.Data.HelperClasses
 			this.AddFieldIndexEnumForElementName(typeof(EmployeeFieldIndex), "EmployeeEntity");
 			this.AddElementFieldInfo("EmployeeEntity", "BirthDate", typeof(System.DateTime), false, false, false, false,  (int)EmployeeFieldIndex.BirthDate, 0, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "ContactID", typeof(System.Int32), false, true, false, false,  (int)EmployeeFieldIndex.ContactID, 0, 0, 10);
-			this.AddElementFieldInfo("EmployeeEntity", "CurrentFlag", typeof(System.Boolean), false, false, false, false,  (int)EmployeeFieldIndex.CurrentFlag, 0, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "EmployeeID", typeof(System.Int32), true, false, true, false,  (int)EmployeeFieldIndex.EmployeeID, 0, 0, 10);
 			this.AddElementFieldInfo("EmployeeEntity", "Gender", typeof(AW.Data.Gender), false, false, false, false,  (int)EmployeeFieldIndex.Gender, 1, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "HireDate", typeof(System.DateTime), false, false, false, false,  (int)EmployeeFieldIndex.HireDate, 0, 0, 0);
+			this.AddElementFieldInfo("EmployeeEntity", "IsCurrent", typeof(System.Boolean), false, false, false, false,  (int)EmployeeFieldIndex.IsCurrent, 0, 0, 0);
+			this.AddElementFieldInfo("EmployeeEntity", "IsSalaried", typeof(System.Boolean), false, false, false, false,  (int)EmployeeFieldIndex.IsSalaried, 0, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "LoginID", typeof(System.String), false, false, false, false,  (int)EmployeeFieldIndex.LoginID, 256, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "ManagerID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)EmployeeFieldIndex.ManagerID, 0, 0, 10);
 			this.AddElementFieldInfo("EmployeeEntity", "MaritalStatus", typeof(AW.Data.MaritalStatus), false, false, false, false,  (int)EmployeeFieldIndex.MaritalStatus, 1, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)EmployeeFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "NationalIdnumber", typeof(System.String), false, false, false, false,  (int)EmployeeFieldIndex.NationalIdnumber, 15, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "Rowguid", typeof(System.Guid), false, false, false, false,  (int)EmployeeFieldIndex.Rowguid, 0, 0, 0);
-			this.AddElementFieldInfo("EmployeeEntity", "SalariedFlag", typeof(System.Boolean), false, false, false, false,  (int)EmployeeFieldIndex.SalariedFlag, 0, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "SickLeaveHours", typeof(System.Int16), false, false, false, false,  (int)EmployeeFieldIndex.SickLeaveHours, 0, 0, 5);
 			this.AddElementFieldInfo("EmployeeEntity", "Title", typeof(System.String), false, false, false, false,  (int)EmployeeFieldIndex.Title, 50, 0, 0);
 			this.AddElementFieldInfo("EmployeeEntity", "VacationHours", typeof(System.Int16), false, false, false, false,  (int)EmployeeFieldIndex.VacationHours, 0, 0, 5);
@@ -348,7 +348,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("DocumentEntity", "FileName", typeof(System.String), false, false, false, false,  (int)DocumentFieldIndex.FileName, 400, 0, 0);
 			this.AddElementFieldInfo("DocumentEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)DocumentFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("DocumentEntity", "Revision", typeof(System.String), false, false, false, false,  (int)DocumentFieldIndex.Revision, 5, 0, 0);
-			this.AddElementFieldInfo("DocumentEntity", "Status", typeof(System.Byte), false, false, false, false,  (int)DocumentFieldIndex.Status, 0, 0, 3);
+			this.AddElementFieldInfo("DocumentEntity", "Status", typeof(AW.Data.ProductMaintenanceDocumentStatus), false, false, false, false,  (int)DocumentFieldIndex.Status, 0, 0, 3);
 			this.AddElementFieldInfo("DocumentEntity", "Title", typeof(System.String), false, false, false, false,  (int)DocumentFieldIndex.Title, 50, 0, 0);
 		}
 		/// <summary>Inits IllustrationEntity's FieldInfo objects</summary>
@@ -373,7 +373,7 @@ namespace AW.Data.HelperClasses
 		private void InitProductEntityInfos()
 		{
 			this.AddFieldIndexEnumForElementName(typeof(ProductFieldIndex), "ProductEntity");
-			this.AddElementFieldInfo("ProductEntity", "Class", typeof(System.String), false, false, false, true,  (int)ProductFieldIndex.Class, 2, 0, 0);
+			this.AddElementFieldInfo("ProductEntity", "Class", typeof(Nullable<AW.Data.ProductClass>), false, false, false, true,  (int)ProductFieldIndex.Class, 2, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "Color", typeof(System.String), false, false, false, true,  (int)ProductFieldIndex.Color, 15, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "DaysToManufacture", typeof(System.Int32), false, false, false, false,  (int)ProductFieldIndex.DaysToManufacture, 0, 0, 10);
 			this.AddElementFieldInfo("ProductEntity", "DiscontinuedDate", typeof(Nullable<System.DateTime>), false, false, false, true,  (int)ProductFieldIndex.DiscontinuedDate, 0, 0, 0);
@@ -383,7 +383,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("ProductEntity", "ModifiedDate", typeof(System.DateTime), false, false, false, false,  (int)ProductFieldIndex.ModifiedDate, 0, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "Name", typeof(System.String), false, false, false, false,  (int)ProductFieldIndex.Name, 50, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "ProductID", typeof(System.Int32), true, false, true, false,  (int)ProductFieldIndex.ProductID, 0, 0, 10);
-			this.AddElementFieldInfo("ProductEntity", "ProductLine", typeof(System.String), false, false, false, true,  (int)ProductFieldIndex.ProductLine, 2, 0, 0);
+			this.AddElementFieldInfo("ProductEntity", "ProductLine", typeof(Nullable<AW.Data.ProductLine>), false, false, false, true,  (int)ProductFieldIndex.ProductLine, 2, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "ProductModelID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ProductFieldIndex.ProductModelID, 0, 0, 10);
 			this.AddElementFieldInfo("ProductEntity", "ProductNumber", typeof(System.String), false, false, false, false,  (int)ProductFieldIndex.ProductNumber, 25, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "ProductSubcategoryID", typeof(Nullable<System.Int32>), false, true, false, true,  (int)ProductFieldIndex.ProductSubcategoryID, 0, 0, 10);
@@ -395,7 +395,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldInfo("ProductEntity", "Size", typeof(System.String), false, false, false, true,  (int)ProductFieldIndex.Size, 5, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "SizeUnitMeasureCode", typeof(System.String), false, true, false, true,  (int)ProductFieldIndex.SizeUnitMeasureCode, 3, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "StandardCost", typeof(System.Decimal), false, false, false, false,  (int)ProductFieldIndex.StandardCost, 0, 4, 19);
-			this.AddElementFieldInfo("ProductEntity", "Style", typeof(System.String), false, false, false, true,  (int)ProductFieldIndex.Style, 2, 0, 0);
+			this.AddElementFieldInfo("ProductEntity", "Style", typeof(Nullable<AW.Data.ProductStyle>), false, false, false, true,  (int)ProductFieldIndex.Style, 2, 0, 0);
 			this.AddElementFieldInfo("ProductEntity", "Weight", typeof(Nullable<System.Decimal>), false, false, false, true,  (int)ProductFieldIndex.Weight, 0, 2, 8);
 			this.AddElementFieldInfo("ProductEntity", "WeightUnitMeasureCode", typeof(System.String), false, true, false, true,  (int)ProductFieldIndex.WeightUnitMeasureCode, 3, 0, 0);
 		}

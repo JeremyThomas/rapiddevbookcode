@@ -494,12 +494,12 @@ namespace AW.Winforms.Helpers.Controls
           //  DataPropertyName = e.Column.DataPropertyName
           //};
           //e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
-          HumanizedEnumConverter.AddEnumerationConverter(coreType);
+          HumanizedEnumConverter.AddEnumerationConverter(e.Column.ValueType);
           var enumDataGridViewComboBoxColumn2 = new DataGridViewComboBoxColumn
           {
             HeaderText = e.Column.HeaderText,
             ValueType = e.Column.ValueType,
-            DataSource = Enum.GetValues(e.Column.ValueType),
+            DataSource = Enum.GetValues(coreType),
             //DataSource = GeneralHelper.EnumsGetAsNullableValues(coreType),
             DataPropertyName = e.Column.DataPropertyName,
             SortMode = e.Column.SortMode

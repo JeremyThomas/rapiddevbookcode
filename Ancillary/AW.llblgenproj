@@ -77,13 +77,18 @@
     <TypeShortcut Shortcut="Current" Type="AW.Data.Current, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="EmailPromotion" Type="AW.Data.EmailPromotion, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="Gender" Type="AW.Data.Gender, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="JobClassification" Type="AW.Data.JobClassification, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="MaritalStatus" Type="AW.Data.MaritalStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="NameStyle" Type="AW.Data.NameStyle, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="OrderPlacesBy" Type="AW.Data.OrderPlacesBy, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="OrderStatus" Type="AW.Data.OrderStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="PayFrequency" Type="AW.Data.PayFrequency, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductClass" Type="AW.Data.ProductClass, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="ProductFinished" Type="AW.Data.ProductFinished, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductLine" Type="AW.Data.ProductLine, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="ProductMaintenanceDocumentStatus" Type="AW.Data.ProductMaintenanceDocumentStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="ProductMake" Type="AW.Data.ProductMake, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
+    <TypeShortcut Shortcut="ProductStyle" Type="AW.Data.ProductStyle, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="PurchaseOrderStatus" Type="AW.Data.PurchaseOrderStatus, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="StateProvinceCodeExistence" Type="AW.Data.StateProvinceCodeExistence, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
     <TypeShortcut Shortcut="TaxApplication" Type="AW.Data.TaxApplication, AW.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30e1e0e3428e39e5" />
@@ -409,14 +414,6 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="CurrentFlag" Type="bool">
-            <Description><![CDATA[0 = Inactive, 1 = Active]]></Description>
-            <OutputSettingValues>
-              <CustomProperties>
-                <CustomProperty Name="MS_Description" Value="0 = Inactive, 1 = Active" />
-              </CustomProperties>
-            </OutputSettingValues>
-          </Field>
           <Field Name="EmployeeID" Type="int" IsReadOnly="true" IsPrimaryKey="true">
             <Description><![CDATA[Clustered index created by a primary key constraint.]]></Description>
             <OutputSettingValues>
@@ -438,6 +435,22 @@
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="Employee hired on this date." />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="IsCurrent" Type="bool">
+            <Description><![CDATA[0 = Inactive, 1 = Active]]></Description>
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="0 = Inactive, 1 = Active" />
+              </CustomProperties>
+            </OutputSettingValues>
+          </Field>
+          <Field Name="IsSalaried" Type="bool">
+            <Description><![CDATA[Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.]]></Description>
+            <OutputSettingValues>
+              <CustomProperties>
+                <CustomProperty Name="MS_Description" Value="Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining." />
               </CustomProperties>
             </OutputSettingValues>
           </Field>
@@ -486,14 +499,6 @@
             <OutputSettingValues>
               <CustomProperties>
                 <CustomProperty Name="MS_Description" Value="ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample." />
-              </CustomProperties>
-            </OutputSettingValues>
-          </Field>
-          <Field Name="SalariedFlag" Type="bool">
-            <Description><![CDATA[Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining.]]></Description>
-            <OutputSettingValues>
-              <CustomProperties>
-                <CustomProperty Name="MS_Description" Value="Job classification. 0 = Hourly, not exempt from collective bargaining. 1 = Salaried, exempt from collective bargaining." />
               </CustomProperties>
             </OutputSettingValues>
           </Field>
@@ -1330,7 +1335,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="Status" Type="byte" Precision="3">
+          <Field Name="Status" Type="ProductMaintenanceDocumentStatus" Precision="3">
             <Description><![CDATA[1 = Pending approval, 2 = Approved, 3 = Obsolete]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -1437,7 +1442,7 @@
       </EntityDefinition>
       <EntityDefinition Name="Product" GroupName="Production">
         <Fields>
-          <Field Name="Class" Type="string" IsOptional="true" MaxLength="2">
+          <Field Name="Class" Type="ProductClass" IsOptional="true" MaxLength="2">
             <Description><![CDATA[H = High, M = Medium, L = Low]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -1517,7 +1522,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="ProductLine" Type="string" IsOptional="true" MaxLength="2">
+          <Field Name="ProductLine" Type="ProductLine" IsOptional="true" MaxLength="2">
             <Description><![CDATA[R = Road, M = Mountain, T = Touring, S = Standard]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -1613,7 +1618,7 @@
               </CustomProperties>
             </OutputSettingValues>
           </Field>
-          <Field Name="Style" Type="string" IsOptional="true" MaxLength="2">
+          <Field Name="Style" Type="ProductStyle" IsOptional="true" MaxLength="2">
             <Description><![CDATA[W = Womens, M = Mens, U = Universal]]></Description>
             <OutputSettingValues>
               <CustomProperties>
@@ -9233,17 +9238,17 @@
           <FieldMappings>
             <FieldMapping FieldName="BirthDate" TargetFieldName="BirthDate" />
             <FieldMapping FieldName="ContactID" TargetFieldName="ContactID" />
-            <FieldMapping FieldName="CurrentFlag" TargetFieldName="CurrentFlag" />
             <FieldMapping FieldName="EmployeeID" TargetFieldName="EmployeeID" SequenceToUse="SCOPE_IDENTITY()" />
             <FieldMapping FieldName="Gender" TargetFieldName="Gender" TypeConverterToUse="AW.Data.GenderDBConverter" />
             <FieldMapping FieldName="HireDate" TargetFieldName="HireDate" />
+            <FieldMapping FieldName="IsCurrent" TargetFieldName="CurrentFlag" />
+            <FieldMapping FieldName="IsSalaried" TargetFieldName="SalariedFlag" />
             <FieldMapping FieldName="LoginID" TargetFieldName="LoginID" />
             <FieldMapping FieldName="ManagerID" TargetFieldName="ManagerID" />
             <FieldMapping FieldName="MaritalStatus" TargetFieldName="MaritalStatus" TypeConverterToUse="AW.Data.MaritalStatusDBConverter" />
             <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
             <FieldMapping FieldName="NationalIdnumber" TargetFieldName="NationalIDNumber" />
             <FieldMapping FieldName="Rowguid" TargetFieldName="rowguid" />
-            <FieldMapping FieldName="SalariedFlag" TargetFieldName="SalariedFlag" />
             <FieldMapping FieldName="SickLeaveHours" TargetFieldName="SickLeaveHours" />
             <FieldMapping FieldName="Title" TargetFieldName="Title" />
             <FieldMapping FieldName="VacationHours" TargetFieldName="VacationHours" />
@@ -9410,7 +9415,7 @@
         </EntityMapping>
         <EntityMapping EntityName="Production:Product" TargetName="AdventureWorks:Production:Product">
           <FieldMappings>
-            <FieldMapping FieldName="Class" TargetFieldName="Class" />
+            <FieldMapping FieldName="Class" TargetFieldName="Class" TypeConverterToUse="AW.Data.ProductClassDBConverter" />
             <FieldMapping FieldName="Color" TargetFieldName="Color" />
             <FieldMapping FieldName="DaysToManufacture" TargetFieldName="DaysToManufacture" />
             <FieldMapping FieldName="DiscontinuedDate" TargetFieldName="DiscontinuedDate" />
@@ -9420,7 +9425,7 @@
             <FieldMapping FieldName="ModifiedDate" TargetFieldName="ModifiedDate" />
             <FieldMapping FieldName="Name" TargetFieldName="Name" />
             <FieldMapping FieldName="ProductID" TargetFieldName="ProductID" SequenceToUse="SCOPE_IDENTITY()" />
-            <FieldMapping FieldName="ProductLine" TargetFieldName="ProductLine" />
+            <FieldMapping FieldName="ProductLine" TargetFieldName="ProductLine" TypeConverterToUse="AW.Data.ProductLineDBConverter" />
             <FieldMapping FieldName="ProductModelID" TargetFieldName="ProductModelID" />
             <FieldMapping FieldName="ProductNumber" TargetFieldName="ProductNumber" />
             <FieldMapping FieldName="ProductSubcategoryID" TargetFieldName="ProductSubcategoryID" />
@@ -9432,7 +9437,7 @@
             <FieldMapping FieldName="Size" TargetFieldName="Size" />
             <FieldMapping FieldName="SizeUnitMeasureCode" TargetFieldName="SizeUnitMeasureCode" />
             <FieldMapping FieldName="StandardCost" TargetFieldName="StandardCost" />
-            <FieldMapping FieldName="Style" TargetFieldName="Style" />
+            <FieldMapping FieldName="Style" TargetFieldName="Style" TypeConverterToUse="AW.Data.ProductStyleDBConverter" />
             <FieldMapping FieldName="Weight" TargetFieldName="Weight" />
             <FieldMapping FieldName="WeightUnitMeasureCode" TargetFieldName="WeightUnitMeasureCode" />
           </FieldMappings>
@@ -10009,7 +10014,13 @@
         </SPCallMapping>
       </SPCallMappings>
       <TvfCallMappings />
-      <TypeConversionDefinitions />
+      <TypeConversionDefinitions>
+        <TypeConversionDefinition TypeConverter="AW.Data.GenderDBConverter" DbDotNetType="System.String" />
+        <TypeConversionDefinition TypeConverter="AW.Data.MaritalStatusDBConverter" DbDotNetType="System.String" />
+        <TypeConversionDefinition TypeConverter="AW.Data.ProductClassDBConverter" DbDotNetType="System.String" />
+        <TypeConversionDefinition TypeConverter="AW.Data.ProductLineDBConverter" DbDotNetType="System.String" />
+        <TypeConversionDefinition TypeConverter="AW.Data.ProductStyleDBConverter" DbDotNetType="System.String" />
+      </TypeConversionDefinitions>
     </MappingStore>
   </MappingStores>
   <ModelViews>

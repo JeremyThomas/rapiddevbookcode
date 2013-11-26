@@ -22,9 +22,15 @@ namespace AW.Helper.TypeConverters
     /// <param name="enumType">Type of the enum.</param>
     public static void AddEnumerationConverter(Type enumType)
     {
-      GeneralHelper.CheckIsEnum(enumType);
+      var coreType = MetaDataHelper.GetCoreType(enumType);
+      GeneralHelper.CheckIsEnum(coreType);
       if (!(TypeDescriptor.GetConverter(enumType) is HumanizedEnumConverter))
         TypeDescriptor.AddAttributes(enumType, new TypeConverterAttribute(typeof (HumanizedEnumConverter)));
+      if (coreType != enumType)
+      {
+        if (!(TypeDescriptor.GetConverter(coreType) is HumanizedEnumConverter))
+          TypeDescriptor.AddAttributes(coreType, new TypeConverterAttribute(typeof(HumanizedEnumConverter))); 
+      }
     }
 
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)

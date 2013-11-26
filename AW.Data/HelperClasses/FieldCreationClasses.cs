@@ -172,11 +172,6 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.ContactID);}
 		}
-		/// <summary>Creates a new EmployeeEntity.CurrentFlag field instance</summary>
-		public static EntityField CurrentFlag
-		{
-			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.CurrentFlag);}
-		}
 		/// <summary>Creates a new EmployeeEntity.EmployeeID field instance</summary>
 		public static EntityField EmployeeID
 		{
@@ -191,6 +186,16 @@ namespace AW.Data.HelperClasses
 		public static EntityField HireDate
 		{
 			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.HireDate);}
+		}
+		/// <summary>Creates a new EmployeeEntity.IsCurrent field instance</summary>
+		public static EntityField IsCurrent
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.IsCurrent);}
+		}
+		/// <summary>Creates a new EmployeeEntity.IsSalaried field instance</summary>
+		public static EntityField IsSalaried
+		{
+			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.IsSalaried);}
 		}
 		/// <summary>Creates a new EmployeeEntity.LoginID field instance</summary>
 		public static EntityField LoginID
@@ -221,11 +226,6 @@ namespace AW.Data.HelperClasses
 		public static EntityField Rowguid
 		{
 			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.Rowguid);}
-		}
-		/// <summary>Creates a new EmployeeEntity.SalariedFlag field instance</summary>
-		public static EntityField SalariedFlag
-		{
-			get { return (EntityField)EntityFieldFactory.Create(EmployeeFieldIndex.SalariedFlag);}
 		}
 		/// <summary>Creates a new EmployeeEntity.SickLeaveHours field instance</summary>
 		public static EntityField SickLeaveHours
@@ -2617,11 +2617,6 @@ namespace AW.Data.HelperClasses
 		{
 			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.ContactID);}
 		}
-		/// <summary>Creates a new SalesPersonEntity.CurrentFlag field instance</summary>
-		public static EntityField CurrentFlag
-		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.CurrentFlag);}
-		}
 		/// <summary>Creates a new SalesPersonEntity.EmployeeID field instance</summary>
 		public static EntityField EmployeeID_Employee
 		{
@@ -2636,6 +2631,16 @@ namespace AW.Data.HelperClasses
 		public static EntityField HireDate
 		{
 			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.HireDate);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.IsCurrent field instance</summary>
+		public static EntityField IsCurrent
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.IsCurrent);}
+		}
+		/// <summary>Creates a new SalesPersonEntity.IsSalaried field instance</summary>
+		public static EntityField IsSalaried
+		{
+			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.IsSalaried);}
 		}
 		/// <summary>Creates a new SalesPersonEntity.LoginID field instance</summary>
 		public static EntityField LoginID
@@ -2666,11 +2671,6 @@ namespace AW.Data.HelperClasses
 		public static EntityField Rowguid
 		{
 			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.Rowguid);}
-		}
-		/// <summary>Creates a new SalesPersonEntity.SalariedFlag field instance</summary>
-		public static EntityField SalariedFlag
-		{
-			get { return (EntityField)EntityFieldFactory.Create(SalesPersonFieldIndex.SalariedFlag);}
 		}
 		/// <summary>Creates a new SalesPersonEntity.SickLeaveHours field instance</summary>
 		public static EntityField SickLeaveHours

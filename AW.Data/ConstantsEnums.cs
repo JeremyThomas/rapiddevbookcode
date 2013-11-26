@@ -94,14 +94,16 @@ namespace AW.Data
 		BirthDate,
 		///<summary>ContactID. </summary>
 		ContactID,
-		///<summary>CurrentFlag. </summary>
-		CurrentFlag,
 		///<summary>EmployeeID. </summary>
 		EmployeeID,
 		///<summary>Gender. </summary>
 		Gender,
 		///<summary>HireDate. </summary>
 		HireDate,
+		///<summary>IsCurrent. </summary>
+		IsCurrent,
+		///<summary>IsSalaried. </summary>
+		IsSalaried,
 		///<summary>LoginID. </summary>
 		LoginID,
 		///<summary>ManagerID. </summary>
@@ -114,8 +116,6 @@ namespace AW.Data
 		NationalIdnumber,
 		///<summary>Rowguid. </summary>
 		Rowguid,
-		///<summary>SalariedFlag. </summary>
-		SalariedFlag,
 		///<summary>SickLeaveHours. </summary>
 		SickLeaveHours,
 		///<summary>Title. </summary>
@@ -1308,14 +1308,16 @@ namespace AW.Data
 		BirthDate,
 		///<summary>ContactID. Inherited from Employee</summary>
 		ContactID,
-		///<summary>CurrentFlag. Inherited from Employee</summary>
-		CurrentFlag,
 		///<summary>EmployeeID. Inherited from Employee</summary>
 		EmployeeID_Employee,
 		///<summary>Gender. Inherited from Employee</summary>
 		Gender,
 		///<summary>HireDate. Inherited from Employee</summary>
 		HireDate,
+		///<summary>IsCurrent. Inherited from Employee</summary>
+		IsCurrent,
+		///<summary>IsSalaried. Inherited from Employee</summary>
+		IsSalaried,
 		///<summary>LoginID. Inherited from Employee</summary>
 		LoginID,
 		///<summary>ManagerID. Inherited from Employee</summary>
@@ -1328,8 +1330,6 @@ namespace AW.Data
 		NationalIdnumber,
 		///<summary>Rowguid. Inherited from Employee</summary>
 		Rowguid,
-		///<summary>SalariedFlag. Inherited from Employee</summary>
-		SalariedFlag,
 		///<summary>SickLeaveHours. Inherited from Employee</summary>
 		SickLeaveHours,
 		///<summary>Title. Inherited from Employee</summary>
@@ -1814,14 +1814,12 @@ namespace AW.Data
     SalesRepresentative = 20,
   }
 
-  [TypeConverter(typeof(HumanizedEnumConverter))]
+  [TypeConverter(typeof (HumanizedEnumConverter))]
   public enum AddressType : byte
   {
     Billing = 1,
     Home = 2,
-    [System.ComponentModel.Description("Main Office")]
-// ReSharper disable once InconsistentNaming
-    Main_Office = 3,
+    MainOffice = 3,
     Primary = 4,
     Shipping = 5,
     Archive = 6
@@ -1829,10 +1827,7 @@ namespace AW.Data
 
   public enum OrderStatus : byte
   {
-    [System.ComponentModel.Description("In process")]
-// ReSharper disable InconsistentNaming
-    In_process = 1,
-// ReSharper restore InconsistentNaming
+    InProcess = 1,
     Approved,
     Backordered,
     Rejected,
@@ -1848,10 +1843,8 @@ namespace AW.Data
 
   public enum MaritalStatus
   {
-    [System.ComponentModel.Description("Married")]
-    M,
-    [System.ComponentModel.Description("Single")]
-    S
+    [Description("Married")] M,
+    [Description("Single")] S
   }
 
   public class MaritalStatusDBConverter : BaseEnumConverter<MaritalStatus>
@@ -1860,16 +1853,26 @@ namespace AW.Data
 
   public enum Gender : byte
   {
-    [System.ComponentModel.Description("Male")]
-    M,
-    [System.ComponentModel.Description("Female")]
-    F
+    [Description("Male")] M,
+    [Description("Female")] F
   }
 
   public class GenderDBConverter : BaseEnumConverter<Gender>
   {
   }
 
+  /// <summary>
+  /// For IsSalaried but not used
+  /// </summary>
+  public enum JobClassification : byte
+  {
+    Hourly,
+    Salaried
+  }
+
+  /// <summary>
+  /// For IsCurrent but not used
+  /// </summary>
   public enum Current : byte
   {
     Inactive,
@@ -1888,6 +1891,11 @@ namespace AW.Data
     LastFirst
   }
 
+  /// <summary>
+  ///   0 = Contact does not wish to receive e-mail promotions,
+  ///   1 = Contact does wish to receive e-mail promotions from AdventureWorks,
+  ///   2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners.
+  /// </summary>
   public enum EmailPromotion : byte
   {
     None,
@@ -1895,29 +1903,85 @@ namespace AW.Data
     AWAndPartners
   }
 
+  /// <summary>
+  ///   0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode.
+  /// </summary>
   public enum StateProvinceCodeExistence : byte
   {
     Exists,
     Unavailable
   }
 
+  /// <summary>
+  ///   1 = Pending approval, 2 = Approved, 3 = Obsolete
+  /// </summary>
   public enum ProductMaintenanceDocumentStatus : byte
   {
-    PendingApproval = 1, 
-    Approved, 
+    PendingApproval = 1,
+    Approved,
     Obsolete
   }
 
+  /// <summary>
+  ///   0 = Product is purchased, 1 = Product is manufactured in-house.
+  /// </summary>
   public enum ProductMake : byte
   {
     Purchased,
     InHouse
   }
 
+  /// <summary>
+  ///   0 = Product is not a salable item. 1 = Product is salable.
+  /// </summary>
   public enum ProductFinished : byte
   {
     Salable,
     NotSalable
+  }
+
+  /// <summary>
+  ///   R = Road, M = Mountain, T = Touring, S = Standard
+  /// </summary>
+  public enum ProductLine : byte
+  {
+    [Description("Road")] R,
+    [Description("Mountain")] M,
+    [Description("Touring")]T,
+    [Description("Standard")]S
+  }
+
+  public class ProductLineDBConverter : BaseEnumConverter<ProductLine>
+  {
+  }
+
+  /// <summary>
+  ///   H = High, M = Medium, L = Low
+  /// </summary>
+  public enum ProductClass : byte
+  {
+    [Description("High")] H,
+    [Description("Medium")] M,
+    [Description("Low")]L
+  }
+
+  public class ProductClassDBConverter : BaseEnumConverter<ProductClass>
+  {
+  }
+
+  /// <summary>
+  ///   W = Womens, M = Mens, U = Universal
+  /// </summary>
+  public enum ProductStyle : byte
+  {
+    [Description("Womens")] W,
+    [Description("Mens")] M,
+    [Description("Universal")]
+    U
+  }
+
+  public class ProductStyleDBConverter : BaseEnumConverter<ProductStyle>
+  {
   }
 
   public enum PurchaseOrderStatus : byte
