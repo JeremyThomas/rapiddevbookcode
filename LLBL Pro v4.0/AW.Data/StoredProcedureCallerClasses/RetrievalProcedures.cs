@@ -87,7 +87,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		private static StoredProcedureCall CreateUspGetEmployeeManagersCall(IDataAccessCore dataAccessProvider, System.Int32 employeeId)
 		{
 			return new StoredProcedureCall(dataAccessProvider, @"[AdventureWorks].[dbo].[uspGetEmployeeManagers]", "UspGetEmployeeManagers")
-							.AddParameter("@EmployeeID", "Int", 0, ParameterDirection.Input, true, 0, 0, employeeId);
+							.AddParameter("@EmployeeID", "Int", 0, ParameterDirection.Input, true, 10, 0, employeeId);
 		}
 
 		/// <summary>Creates the call object for the call 'UspGetManagerEmployees' to stored procedure 'uspGetManagerEmployees'.</summary>
@@ -97,7 +97,7 @@ namespace AW.Data.StoredProcedureCallerClasses
 		private static StoredProcedureCall CreateUspGetManagerEmployeesCall(IDataAccessCore dataAccessProvider, System.Int32 managerId)
 		{
 			return new StoredProcedureCall(dataAccessProvider, @"[AdventureWorks].[dbo].[uspGetManagerEmployees]", "UspGetManagerEmployees")
-							.AddParameter("@ManagerID", "Int", 0, ParameterDirection.Input, true, 0, 0, managerId);
+							.AddParameter("@ManagerID", "Int", 0, ParameterDirection.Input, true, 10, 0, managerId);
 		}
 
 

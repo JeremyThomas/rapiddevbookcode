@@ -494,7 +494,7 @@ namespace AW.Winforms.Helpers.Controls
           //  DataPropertyName = e.Column.DataPropertyName
           //};
           //e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
-          EnumerationConverter.AddEnumerationConverter(coreType);
+          HumanizedEnumConverter.AddEnumerationConverter(coreType);
           var enumDataGridViewComboBoxColumn2 = new DataGridViewComboBoxColumn
           {
             HeaderText = e.Column.HeaderText,

@@ -6,24 +6,25 @@ using Humanizer;
 namespace AW.Helper.TypeConverters
 {
   /// <summary>
-  /// An Enum Converter that converts to/from strings using Humanize
+  ///   An Enum Converter that converts to/from strings using Humanizer
   /// </summary>
-  public class EnumerationConverter : EnumConverter
-
+  [Description("An Enum Converter that converts to/from strings using Humanizer")]
+  public class HumanizedEnumConverter : EnumConverter
   {
-    public EnumerationConverter(Type type) : base(type)
+
+    public HumanizedEnumConverter(Type type) : base(type)
     {
     }
 
     /// <summary>
-    /// Adds the enumeration converter if the enum doesn't already have one.
+    ///   Adds the enumeration converter if the enum doesn't already have one.
     /// </summary>
     /// <param name="enumType">Type of the enum.</param>
     public static void AddEnumerationConverter(Type enumType)
     {
       GeneralHelper.CheckIsEnum(enumType);
-      if (!(TypeDescriptor.GetConverter(enumType) is EnumerationConverter))
-        TypeDescriptor.AddAttributes(enumType, new TypeConverterAttribute(typeof(EnumerationConverter)));
+      if (!(TypeDescriptor.GetConverter(enumType) is HumanizedEnumConverter))
+        TypeDescriptor.AddAttributes(enumType, new TypeConverterAttribute(typeof (HumanizedEnumConverter)));
     }
 
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
