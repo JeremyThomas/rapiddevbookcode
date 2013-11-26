@@ -122,17 +122,23 @@ namespace AW.Tests
     [TestMethod]
     public void EnumerationConverterTest()
     {
+      var maritalStatusDBConverter = new MaritalStatusDBConverter();
+      var instance = maritalStatusDBConverter.CreateInstance(null, null);
+      Assert.IsNotNull(instance);
+      Assert.AreEqual("M", maritalStatusDBConverter.ConvertToString(MaritalStatus.M));
+
       EnumToStringTest<AddressType>();
       EnumToStringTest<OrderStatus>();
       EnumToStringTest<MaritalStatus>();
       EnumToStringTest<NameStyle>();
       EnumToStringTest<ProductMaintenanceDocumentStatus>();
       EnumToStringTest<CreditRating>();
+      EnumToStringTest<ContactType>();
     }
-    private static void EnumToStringTest<TEnum>()
+    private static void EnumToStringTest<TEnum>()where TEnum : struct
     {
       var enumType = typeof(TEnum);
-      var enumerationConverter = new EnumerationConverter(enumType);
+      var enumerationConverter = new HumanizedEnumConverter(enumType);
       var underlyingType = Enum.GetUnderlyingType(enumType);
       foreach (var anEnum in GeneralHelper.EnumAsEnumerable<TEnum>())
       {
@@ -141,9 +147,10 @@ namespace AW.Tests
         var asUnderlyingType = Convert.ChangeType(anEnum, underlyingType);
         var asUnderlyingTypesString = Convert.ToString(asUnderlyingType);
         Assert.AreEqual(anEnum, enumerationConverter.ConvertFromString(asUnderlyingTypesString), asUnderlyingTypesString);
-        var description = GeneralHelper.GetDescription(anEnum);
-        var humanizedEnumString = String.IsNullOrEmpty(description) ? enumAsString.Humanize() : description;
+        var humanizedEnumString = ((Enum)(object)anEnum).Humanize();
         Assert.AreEqual(anEnum, enumerationConverter.ConvertFromString(humanizedEnumString), humanizedEnumString);
+        HumanizedEnumConverter.AddEnumerationConverter(enumType);
+        Assert.IsInstanceOfType(TypeDescriptor.GetConverter(enumType), typeof(HumanizedEnumConverter), enumType.ToString());
       }
     }
 	}
