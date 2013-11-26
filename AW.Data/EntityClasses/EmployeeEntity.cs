@@ -1374,9 +1374,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "Employee"."Gender"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String Gender
+		public virtual AW.Data.Gender Gender
 		{
-			get { return (System.String)GetValue((int)EmployeeFieldIndex.Gender, true); }
+			get { return (AW.Data.Gender)GetValue((int)EmployeeFieldIndex.Gender, true); }
 			set	{ SetValue((int)EmployeeFieldIndex.Gender, value, true); }
 		}
 
@@ -1418,9 +1418,9 @@ namespace AW.Data.EntityClasses
 		/// <remarks>Mapped on  table field: "Employee"."MaritalStatus"<br/>
 		/// Table field type characteristics (type, precision, scale, length): NChar, 0, 0, 1<br/>
 		/// Table field behavior characteristics (is nullable, is PK, is identity): false, false, false</remarks>
-		public virtual System.String MaritalStatus
+		public virtual AW.Data.MaritalStatus MaritalStatus
 		{
-			get { return (System.String)GetValue((int)EmployeeFieldIndex.MaritalStatus, true); }
+			get { return (AW.Data.MaritalStatus)GetValue((int)EmployeeFieldIndex.MaritalStatus, true); }
 			set	{ SetValue((int)EmployeeFieldIndex.MaritalStatus, value, true); }
 		}
 

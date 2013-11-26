@@ -84,7 +84,8 @@
     <Compile Include="CommandToExecutableSQL.cs" />
     <Compile Include="DataHelper.cs" />
     <Compile Include="DataSetSurrogate.cs" />
-    <Compile Include="TypeConverters\EnumerationConverter.cs" />
+    <Compile Include="TypeConverters\BaseEnumConverter.cs" />
+    <Compile Include="TypeConverters\HumanizedEnumConverter.cs" />
     <Compile Include="GeneralHelper.cs" />
     <Compile Include="HiearchicalQueryableExtensions.cs" />
     <Compile Include="MemberName.cs" />
