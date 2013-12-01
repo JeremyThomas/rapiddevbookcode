@@ -179,17 +179,17 @@ namespace AW.Data.HelperClasses
 			this.AddElementMapping("EmployeeEntity", @"AdventureWorks", @"HumanResources", "Employee", 16);
 			this.AddElementFieldMapping("EmployeeEntity", "BirthDate", "BirthDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 0);
 			this.AddElementFieldMapping("EmployeeEntity", "ContactID", "ContactID", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 1);
-			this.AddElementFieldMapping("EmployeeEntity", "CurrentFlag", "CurrentFlag", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 2);
-			this.AddElementFieldMapping("EmployeeEntity", "EmployeeID", "EmployeeID", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 3);
-			this.AddElementFieldMapping("EmployeeEntity", "Gender", "Gender", false, "NChar", 1, 0, 0, false, "", new AW.Data.GenderDBConverter(), typeof(System.String), 4);
-			this.AddElementFieldMapping("EmployeeEntity", "HireDate", "HireDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 5);
-			this.AddElementFieldMapping("EmployeeEntity", "LoginID", "LoginID", false, "NVarChar", 256, 0, 0, false, "", null, typeof(System.String), 6);
-			this.AddElementFieldMapping("EmployeeEntity", "ManagerID", "ManagerID", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 7);
-			this.AddElementFieldMapping("EmployeeEntity", "MaritalStatus", "MaritalStatus", false, "NChar", 1, 0, 0, false, "", new AW.Data.MaritalStatusDBConverter(), typeof(System.String), 8);
-			this.AddElementFieldMapping("EmployeeEntity", "ModifiedDate", "ModifiedDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 9);
-			this.AddElementFieldMapping("EmployeeEntity", "NationalIdnumber", "NationalIDNumber", false, "NVarChar", 15, 0, 0, false, "", null, typeof(System.String), 10);
-			this.AddElementFieldMapping("EmployeeEntity", "Rowguid", "rowguid", false, "UniqueIdentifier", 0, 0, 0, false, "", null, typeof(System.Guid), 11);
-			this.AddElementFieldMapping("EmployeeEntity", "SalariedFlag", "SalariedFlag", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 12);
+			this.AddElementFieldMapping("EmployeeEntity", "EmployeeID", "EmployeeID", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 2);
+			this.AddElementFieldMapping("EmployeeEntity", "Gender", "Gender", false, "NChar", 1, 0, 0, false, "", new AW.Data.GenderDBConverter(), typeof(System.String), 3);
+			this.AddElementFieldMapping("EmployeeEntity", "HireDate", "HireDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 4);
+			this.AddElementFieldMapping("EmployeeEntity", "IsCurrent", "CurrentFlag", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 5);
+			this.AddElementFieldMapping("EmployeeEntity", "IsSalaried", "SalariedFlag", false, "Bit", 0, 0, 0, false, "", null, typeof(System.Boolean), 6);
+			this.AddElementFieldMapping("EmployeeEntity", "LoginID", "LoginID", false, "NVarChar", 256, 0, 0, false, "", null, typeof(System.String), 7);
+			this.AddElementFieldMapping("EmployeeEntity", "ManagerID", "ManagerID", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 8);
+			this.AddElementFieldMapping("EmployeeEntity", "MaritalStatus", "MaritalStatus", false, "NChar", 1, 0, 0, false, "", new AW.Data.MaritalStatusDBConverter(), typeof(System.String), 9);
+			this.AddElementFieldMapping("EmployeeEntity", "ModifiedDate", "ModifiedDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 10);
+			this.AddElementFieldMapping("EmployeeEntity", "NationalIdnumber", "NationalIDNumber", false, "NVarChar", 15, 0, 0, false, "", null, typeof(System.String), 11);
+			this.AddElementFieldMapping("EmployeeEntity", "Rowguid", "rowguid", false, "UniqueIdentifier", 0, 0, 0, false, "", null, typeof(System.Guid), 12);
 			this.AddElementFieldMapping("EmployeeEntity", "SickLeaveHours", "SickLeaveHours", false, "SmallInt", 0, 5, 0, false, "", null, typeof(System.Int16), 13);
 			this.AddElementFieldMapping("EmployeeEntity", "Title", "Title", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 14);
 			this.AddElementFieldMapping("EmployeeEntity", "VacationHours", "VacationHours", false, "SmallInt", 0, 5, 0, false, "", null, typeof(System.Int16), 15);
@@ -390,7 +390,7 @@ namespace AW.Data.HelperClasses
 		private void InitProductEntityMappings()
 		{
 			this.AddElementMapping("ProductEntity", @"AdventureWorks", @"Production", "Product", 25);
-			this.AddElementFieldMapping("ProductEntity", "Class", "Class", true, "NChar", 2, 0, 0, false, "", null, typeof(System.String), 0);
+			this.AddElementFieldMapping("ProductEntity", "Class", "Class", true, "NChar", 2, 0, 0, false, "", new AW.Data.ProductClassDBConverter(), typeof(System.String), 0);
 			this.AddElementFieldMapping("ProductEntity", "Color", "Color", true, "NVarChar", 15, 0, 0, false, "", null, typeof(System.String), 1);
 			this.AddElementFieldMapping("ProductEntity", "DaysToManufacture", "DaysToManufacture", false, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 2);
 			this.AddElementFieldMapping("ProductEntity", "DiscontinuedDate", "DiscontinuedDate", true, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 3);
@@ -400,7 +400,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldMapping("ProductEntity", "ModifiedDate", "ModifiedDate", false, "DateTime", 0, 0, 0, false, "", null, typeof(System.DateTime), 7);
 			this.AddElementFieldMapping("ProductEntity", "Name", "Name", false, "NVarChar", 50, 0, 0, false, "", null, typeof(System.String), 8);
 			this.AddElementFieldMapping("ProductEntity", "ProductID", "ProductID", false, "Int", 0, 10, 0, true, "SCOPE_IDENTITY()", null, typeof(System.Int32), 9);
-			this.AddElementFieldMapping("ProductEntity", "ProductLine", "ProductLine", true, "NChar", 2, 0, 0, false, "", null, typeof(System.String), 10);
+			this.AddElementFieldMapping("ProductEntity", "ProductLine", "ProductLine", true, "NChar", 2, 0, 0, false, "", new AW.Data.ProductLineDBConverter(), typeof(System.String), 10);
 			this.AddElementFieldMapping("ProductEntity", "ProductModelID", "ProductModelID", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 11);
 			this.AddElementFieldMapping("ProductEntity", "ProductNumber", "ProductNumber", false, "NVarChar", 25, 0, 0, false, "", null, typeof(System.String), 12);
 			this.AddElementFieldMapping("ProductEntity", "ProductSubcategoryID", "ProductSubcategoryID", true, "Int", 0, 10, 0, false, "", null, typeof(System.Int32), 13);
@@ -412,7 +412,7 @@ namespace AW.Data.HelperClasses
 			this.AddElementFieldMapping("ProductEntity", "Size", "Size", true, "NVarChar", 5, 0, 0, false, "", null, typeof(System.String), 19);
 			this.AddElementFieldMapping("ProductEntity", "SizeUnitMeasureCode", "SizeUnitMeasureCode", true, "NChar", 3, 0, 0, false, "", null, typeof(System.String), 20);
 			this.AddElementFieldMapping("ProductEntity", "StandardCost", "StandardCost", false, "Money", 0, 19, 4, false, "", null, typeof(System.Decimal), 21);
-			this.AddElementFieldMapping("ProductEntity", "Style", "Style", true, "NChar", 2, 0, 0, false, "", null, typeof(System.String), 22);
+			this.AddElementFieldMapping("ProductEntity", "Style", "Style", true, "NChar", 2, 0, 0, false, "", new AW.Data.ProductStyleDBConverter(), typeof(System.String), 22);
 			this.AddElementFieldMapping("ProductEntity", "Weight", "Weight", true, "Decimal", 0, 8, 2, false, "", null, typeof(System.Decimal), 23);
 			this.AddElementFieldMapping("ProductEntity", "WeightUnitMeasureCode", "WeightUnitMeasureCode", true, "NChar", 3, 0, 0, false, "", null, typeof(System.String), 24);
 		}

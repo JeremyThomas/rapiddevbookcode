@@ -82,9 +82,9 @@ namespace AW.Helper
     public static object StringToEnum(string strOfEnum, Type enumType)
     {
       var coreType = MetaDataHelper.GetCoreType(enumType);
-      if (Enum.IsDefined(enumType, strOfEnum))
+      if (Enum.IsDefined(coreType, strOfEnum))
         return Enum.Parse(coreType, strOfEnum, true);
-      var value = DehumanizeTo(strOfEnum, enumType);
+      var value = DehumanizeTo(strOfEnum, coreType);
       return value ?? (coreType == enumType ? Enum.Parse(coreType, strOfEnum, true) : null); //Throw exception if null and type is not nullable
     }
 

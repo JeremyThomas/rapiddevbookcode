@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace AW.Helper.TypeConverters
 {
@@ -20,6 +21,13 @@ namespace AW.Helper.TypeConverters
   {
     public BaseEnumConverter() : base(typeof (T))
     {
+    }
+
+    public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+    {
+      if (value == null)
+        return null;
+      return base.ConvertFrom(context, culture, value);
     }
 
     /// <summary>

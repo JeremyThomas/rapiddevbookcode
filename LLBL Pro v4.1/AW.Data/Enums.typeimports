@@ -3,8 +3,8 @@
   <typeImport typeName="AW.Data.AddressType" assemblyFile=".\AW.Data.dll"/>
   <typeImport typeName="AW.Data.OrderStatus" assemblyFile=".\AW.Data.dll"/>
   <typeImport typeName="AW.Data.OrderPlacesBy" assemblyFile=".\AW.Data.dll"/>
-  <typeImport typeName="AW.Data.MaritalStatus" assemblyFile=".\AW.Data.dll"/>
-  <typeImport typeName="AW.Data.Gender" assemblyFile=".\AW.Data.dll"/>
+  <typeImport typeName="AW.Data.NameStyle" assemblyFile=".\AW.Data.dll"/>
+  <typeImport typeName="AW.Data.JobClassification" assemblyFile=".\AW.Data.dll"/>
   <typeImport typeName="AW.Data.Current" assemblyFile=".\AW.Data.dll"/>
   <typeImport typeName="AW.Data.PayFrequency" assemblyFile=".\AW.Data.dll"/>
   <typeImport typeName="AW.Data.EmailPromotion" assemblyFile=".\AW.Data.dll"/>
