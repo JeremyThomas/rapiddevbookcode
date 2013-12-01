@@ -151,12 +151,10 @@ namespace AW.Helper
       var enumAsEnumerable = Enum.GetValues(enumType);
       var nullableType = MetaDataHelper.CreateNullableType(enumType);
       var list = MetaDataHelper.CreateList(nullableType);
-      foreach (var item in enumAsEnumerable)
-      {
-        list.Add(item);
-      }
-      var nulledEnum = Enum.ToObject(enumType, list.Count + 1);
+      var nulledEnum = Enum.ToObject(enumType, enumAsEnumerable.Length + 1);
       list.Add(nulledEnum);
+      foreach (var item in enumAsEnumerable)
+        list.Add(item);
       return list;
     }
 
