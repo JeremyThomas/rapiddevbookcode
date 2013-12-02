@@ -19,15 +19,25 @@ namespace AW.Helper.TypeConverters
   [Description("Converter with as core type System.Enum, for mapping a field with a .NET type System.Enum onto a numeric or string database field")]
   public class BaseEnumConverter<T> : EnumConverter where T : struct
   {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BaseEnumConverter{T}"/> class.
+    /// </summary>
     public BaseEnumConverter() : base(typeof (T))
     {
     }
 
+    /// <summary>
+    /// Converts the specified value object to an enumeration object.
+    /// </summary>
+    /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
+    /// <param name="culture">An optional <see cref="T:System.Globalization.CultureInfo" />. If not supplied, the current culture is assumed.</param>
+    /// <param name="value">The <see cref="T:System.Object" /> to convert.</param>
+    /// <returns>
+    /// An <see cref="T:System.Object" /> that represents the converted <paramref name="value" />.
+    /// </returns>
     public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
     {
-      if (value == null)
-        return null;
-      return base.ConvertFrom(context, culture, value);
+      return value == null ? null : base.ConvertFrom(context, culture, value);
     }
 
     /// <summary>

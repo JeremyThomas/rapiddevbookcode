@@ -11,9 +11,12 @@ namespace AW.Helper.TypeConverters
   [Description("An Enum Converter that converts to/from strings using Humanizer")]
   public class HumanizedEnumConverter : EnumConverter
   {
-
+    private readonly Type _coreEnumType;
+    private readonly bool _isNullable;
     public HumanizedEnumConverter(Type type) : base(type)
     {
+      _coreEnumType = MetaDataHelper.GetCoreType(type);
+      _isNullable = _coreEnumType != type;
     }
 
     /// <summary>
@@ -36,7 +39,7 @@ namespace AW.Helper.TypeConverters
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
       if (destinationType == typeof (string) && value != null)
-        return ((Enum) value).Humanize();
+          return Enum.IsDefined(_coreEnumType, value) ? ((Enum)value).Humanize() : string.Empty;
       return base.ConvertTo(context, culture, value, destinationType);
     }
 
