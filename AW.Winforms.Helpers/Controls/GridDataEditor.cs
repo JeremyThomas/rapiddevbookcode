@@ -499,8 +499,7 @@ namespace AW.Winforms.Helpers.Controls
           {
             HeaderText = e.Column.HeaderText,
             ValueType = e.Column.ValueType,
-            DataSource = Enum.GetValues(coreType),
-            //DataSource = GeneralHelper.EnumsGetAsNullableValues(coreType),
+            DataSource = coreType == e.Column.ValueType? Enum.GetValues(coreType): GeneralHelper.EnumsGetAsNullableValues(coreType),
             DataPropertyName = e.Column.DataPropertyName,
             SortMode = e.Column.SortMode
           };
