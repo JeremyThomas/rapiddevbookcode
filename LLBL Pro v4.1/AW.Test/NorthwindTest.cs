@@ -372,5 +372,17 @@ namespace AW.Tests
                       };
       customers.First();
     }
+
+    [TestMethod]
+    public void TestGroupByOrderDateYear()
+    {
+      var linqMetaData = GetNorthwindLinqMetaData();
+      var ordersGroupedByYear = from o in linqMetaData.Order
+                   group o by o.OrderDate.Value.Year into orderYear
+                   select orderYear;
+
+      Assert.AreEqual(3, ordersGroupedByYear.Select(o=>o.Key).Count());
+      Assert.AreEqual(1, ordersGroupedByYear.Count());
+    }
   }
 }
