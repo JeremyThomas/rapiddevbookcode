@@ -481,35 +481,21 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
     {
-      if (!Readonly)
+      if (Readonly) return;
+      var coreType = MetaDataHelper.GetCoreType(e.Column.ValueType);
+      if (e.Column.ValueType == null || !coreType.IsEnum || e.Column is DataGridViewComboBoxColumn) return;
+      HumanizedEnumConverter.AddEnumerationConverter(e.Column.ValueType);
+      var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
       {
-        var coreType = MetaDataHelper.GetCoreType(e.Column.ValueType);
-        if (e.Column.ValueType != null && coreType.IsEnum && !(e.Column is DataGridViewComboBoxColumn))
-        {
-          //var enumDataGridViewComboBoxColumn = new DataGridViewComboBoxColumn
-          //{
-          //  HeaderText = e.Column.HeaderText, ValueType = e.Column.ValueType, ValueMember = "Value",
-          //  DisplayMember = "Value",
-          //  DataSource = ValueTypeWrapper.CreateWrapperForBinding(Enum.GetValues(e.Column.ValueType)).ToList(),
-          //  DataPropertyName = e.Column.DataPropertyName
-          //};
-          //e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
-          HumanizedEnumConverter.AddEnumerationConverter(e.Column.ValueType);
-          var enumDataGridViewComboBoxColumn2 = new DataGridViewComboBoxColumn
-          {
-            HeaderText = e.Column.HeaderText,
-            ValueType = e.Column.ValueType,
-            DataSource = coreType == e.Column.ValueType? Enum.GetValues(coreType): GeneralHelper.EnumsGetAsNullableValues(coreType),
-            DataPropertyName = e.Column.DataPropertyName,
-            SortMode = e.Column.SortMode
-          };
+        HeaderText = e.Column.HeaderText,
+        ValueType = e.Column.ValueType,
+        DataSource = coreType == e.Column.ValueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType),
+        DataPropertyName = e.Column.DataPropertyName,
+        SortMode = e.Column.SortMode
+      };
 
-          e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn2);
-
-          e.Column.DataGridView.Columns.Remove(e.Column);
-
-        }
-      }
+      e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
+      e.Column.DataGridView.Columns.Remove(e.Column);
     }
 
     private void dataGridViewEnumerable_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

@@ -69,9 +69,9 @@ namespace AW.Helper
     }
 
     /// <summary>
-    ///   Converts the string to the enum.
+    ///   Converts the string to the enum - generic.
     /// </summary>
-    /// <typeparam name="T"> </typeparam>
+    /// <typeparam name="T">Enum or nullable enum </typeparam>
     /// <param name="strOfEnum"> The string version of the enum. </param>
     /// <returns> </returns>
     public static T ToEnum<T>(this string strOfEnum)
@@ -79,13 +79,21 @@ namespace AW.Helper
       return String.IsNullOrEmpty(strOfEnum) ? default(T) : (T) StringToEnum(strOfEnum, (typeof (T)));
     }
 
-    public static object StringToEnum(string strOfEnum, Type enumType)
+    /// <summary>
+    /// Converts the string to the enum, using Humanize if needed.
+    /// </summary>
+    /// <param name="strOfEnum">The string of enum.</param>
+    /// <param name="enumType">Type of the enum or nullable enum.</param>
+    /// <param name="throwException">if set to <c>true</c> throw exception if cannot be converted.</param>
+    /// <returns></returns>
+    public static object StringToEnum(string strOfEnum, Type enumType, bool throwException = true)
     {
       var coreType = MetaDataHelper.GetCoreType(enumType);
       if (Enum.IsDefined(coreType, strOfEnum))
         return Enum.Parse(coreType, strOfEnum, true);
       var value = DehumanizeTo(strOfEnum, coreType);
-      return value ?? (coreType == enumType ? Enum.Parse(coreType, strOfEnum, true) : null); //Throw exception if null and type is not nullable
+      return value ?? (coreType == enumType && throwException ? Enum.Parse(coreType, strOfEnum, true) : null); 
+      //Throw exception if null and type is not nullable and throwException flag is true
     }
 
     /// <summary>
@@ -145,6 +153,12 @@ namespace AW.Helper
       return e == null ? null : e.Humanize();
     }
 
+    /// <summary>
+    /// Retrieves an list of the values of the constants in a specified enumeration plus and additional constant not in the enum 
+    /// for use in nulling out an enum.
+    /// </summary>
+    /// <param name="enumType">Type of the enum.</param>
+    /// <returns></returns>
     public static IList EnumsGetAsNullableValues(Type enumType)
     {
       CheckIsEnum(enumType);
@@ -156,6 +170,93 @@ namespace AW.Helper
       foreach (var item in enumAsEnumerable)
         list.Add(item);
       return list;
+    }
+
+    /// <summary>
+    /// Retrieves an list of the values of the constants in a specified enumeration plus and additional constant not in the enum 
+    /// for use in nulling out an enum from a combobox.
+    /// </summary>
+    /// <param name="enumType">Type of the enum.</param>
+    /// <returns></returns>
+    public static IList EnumsGetValuesPlusUndefined(Type enumType)
+    {
+      CheckIsEnum(enumType);
+      var enumAsEnumerable = Enum.GetValues(enumType);
+      var list = MetaDataHelper.CreateList(enumType, enumAsEnumerable);
+      var nulledEnum = GetLargestUndefinedEnumValue(enumType);
+      list.Insert(0, nulledEnum);
+      return list;
+    }
+
+    /// <summary>
+    /// Gets the largest undefined enum value.
+    /// </summary>
+    /// <param name="enumType">Type of the enum.</param>
+    /// <returns></returns>
+    private static object GetLargestUndefinedEnumValue(Type enumType)
+    {
+      dynamic maxValue = GetMaxValue(Enum.GetUnderlyingType(enumType));
+      while (Enum.IsDefined(enumType, maxValue))
+      {
+        if (maxValue == 0)
+          return 0; //Should never happen
+        maxValue = maxValue--;
+      }
+      var undefinedEnum = Enum.ToObject(enumType, maxValue);
+      return undefinedEnum;
+    }
+
+    public static IConvertible GetMaxValue(Type primitiveType)
+    {
+      IConvertible maxValue;
+      var typeCode = Type.GetTypeCode(primitiveType);
+      switch (typeCode)
+      {
+        case TypeCode.Byte:
+          maxValue = byte.MaxValue;
+          break;
+        case TypeCode.Char:
+          maxValue = char.MaxValue;
+          break;
+        case TypeCode.DateTime:
+          maxValue = DateTime.MaxValue;
+          break;
+        case TypeCode.Decimal:
+          maxValue = decimal.MaxValue;
+          break;
+        case TypeCode.Double:
+          maxValue = decimal.MaxValue;
+          break;
+        case TypeCode.Int16:
+          maxValue = short.MaxValue;
+          break;
+        case TypeCode.Int32:
+          maxValue = int.MaxValue;
+          break;
+        case TypeCode.Int64:
+          maxValue = long.MaxValue;
+          break;
+        case TypeCode.SByte:
+          maxValue = sbyte.MaxValue;
+          break;
+        case TypeCode.Single:
+          maxValue = float.MaxValue;
+          break;
+        case TypeCode.UInt16:
+          maxValue = ushort.MaxValue;
+          break;
+        case TypeCode.UInt32:
+          maxValue = uint.MaxValue;
+          break;
+        case TypeCode.UInt64:
+          maxValue = ulong.MaxValue;
+          break;
+        default:
+          maxValue = 0;
+          break;
+      }
+
+      return maxValue;
     }
 
     /// <summary>
