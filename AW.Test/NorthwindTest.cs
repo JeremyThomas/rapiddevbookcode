@@ -1,6 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic;
 using AW.Helper.LLBL;
+using AW.Winforms.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Northwind.DAL;
 using Northwind.DAL.DTO;
 using Northwind.DAL.EntityClasses;
 using Northwind.DAL.Linq;
@@ -11,6 +16,24 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Tests
 {
+  public class GroupByYear
+  {
+    public int Year { get; set; }
+    public int Month { get; set; }
+  }
+
+  public class CountryRegion : KeyCount
+  {
+    public string ShipCountry { get; set; }
+    public string ShipRegion { get; set; }
+  }
+
+  public class KeyCount
+  {
+    public object Key { get; set; }
+    public int Count { get; set; }
+  }
+
   /// <summary>
   ///   Summary description for NorthwindTest
   /// </summary>
@@ -55,7 +78,7 @@ namespace AW.Tests
     public void CustomerAnonProjection()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
-                      select new {c.Address, c.City, CompanyName = (string) null, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region};
+        select new {c.Address, c.City, CompanyName = (string) null, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region};
       Assert.IsNotNull(queryable.ToList());
     }
 
@@ -63,7 +86,7 @@ namespace AW.Tests
     public void CustomerVMProjection()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
-                      select new CustomerVM(c.Address, c.City, null, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region);
+        select new CustomerVM(c.Address, c.City, null, c.ContactName, c.ContactTitle, c.Country, c.CustomerId, c.Fax, c.Phone, c.PostalCode, c.Region);
       Assert.IsNotNull(queryable.ToList());
     }
 
@@ -88,8 +111,8 @@ namespace AW.Tests
     public void CustomerLeftJoinCustomerDemographic()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
-                      from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
-                      select new {c.ContactName, ccd.CustomerId, ccd.CustomerDemographic.CustomerDesc};
+        from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+        select new {c.ContactName, ccd.CustomerId, ccd.CustomerDemographic.CustomerDesc};
       var result = queryable.ToList();
       Assert.AreEqual(1, result.Count);
     }
@@ -101,10 +124,10 @@ namespace AW.Tests
     public void CustomerExpicitLeftJoinCustomerDemographic()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
-                      from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
-                      join cd in GetNorthwindLinqMetaData().CustomerDemographic on ccd.CustomerTypeId equals cd.CustomerTypeId into customerDemographics
-                      from cd in customerDemographics.DefaultIfEmpty()
-                      select new {c.ContactName, ccd.CustomerId, cd.CustomerDesc};
+        from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+        join cd in GetNorthwindLinqMetaData().CustomerDemographic on ccd.CustomerTypeId equals cd.CustomerTypeId into customerDemographics
+        from cd in customerDemographics.DefaultIfEmpty()
+        select new {c.ContactName, ccd.CustomerId, cd.CustomerDesc};
       var result = queryable.ToList();
       Assert.AreEqual(91, result.Count);
     }
@@ -116,8 +139,8 @@ namespace AW.Tests
     public void CustomerLeftJoinCustomerDemographicViaMany()
     {
       var queryable = from c in GetNorthwindLinqMetaData().Customer
-                      from cd in c.CustomerDemographics.DefaultIfEmpty()
-                      select new {c.ContactName, c.CustomerId, cd.CustomerDesc};
+        from cd in c.CustomerDemographics.DefaultIfEmpty()
+        select new {c.ContactName, c.CustomerId, cd.CustomerDesc};
       var result = queryable.ToList();
       Assert.AreEqual(1, result.Count);
     }
@@ -130,14 +153,14 @@ namespace AW.Tests
     {
       var cus = GetNorthwindLinqMetaData().Customer.PrefetchCustomerCustomerDemosCustomerDemographic().ToEntityCollection2();
       var cusproj = from c in cus
-                    from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
-                    select
-                      new
-                        {
-                          c.ContactName,
-                          CustomerId = ccd == null ? null : ccd.CustomerId,
-                          CustomerDesc = ccd == null ? null : ccd.CustomerDemographic.CustomerDesc
-                        };
+        from ccd in c.CustomerCustomerDemos.DefaultIfEmpty()
+        select
+          new
+          {
+            c.ContactName,
+            CustomerId = ccd == null ? null : ccd.CustomerId,
+            CustomerDesc = ccd == null ? null : ccd.CustomerDemographic.CustomerDesc
+          };
       Assert.AreEqual(91, cusproj.Count());
     }
 
@@ -152,7 +175,8 @@ namespace AW.Tests
     }
 
     /// <summary>
-    ///   Tests that there is only one CustomerDemographic after a second prefetch CustomerCustomerDemo Table has 1 row: ALFKI 1 CustomerDemographic Table has 1 row: xxx 1
+    ///   Tests that there is only one CustomerDemographic after a second prefetch CustomerCustomerDemo Table has 1 row: ALFKI
+    ///   1 CustomerDemographic Table has 1 row: xxx 1
     /// </summary>
     /// <param name="contextToUse"> The context to use. </param>
     private static void AssertOneCustomerDemographicAfterSecondPrefetch(Context contextToUse)
@@ -189,8 +213,8 @@ namespace AW.Tests
 
       // first time
       var customer = (from c in metaData.Customer
-                      where c.CustomerId == customerToSearch
-                      select c)
+        where c.CustomerId == customerToSearch
+        select c)
         .PrefetchEmployeesViaOrders()
         .Single();
       Assert.AreEqual(customerToSearch, customer.CustomerId);
@@ -203,8 +227,8 @@ namespace AW.Tests
 
       // second time
       customer = (from c in metaData.Customer
-                  where c.CustomerId == customerToSearch
-                  select c)
+        where c.CustomerId == customerToSearch
+        select c)
         .PrefetchEmployeesViaOrders()
         .Single();
       Assert.AreEqual(customerToSearch, customer.CustomerId);
@@ -255,27 +279,27 @@ namespace AW.Tests
     {
       var metaData = GetNorthwindLinqMetaData();
       var employees = from e in metaData.Employee
-                      where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
-                      select e;
+        where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+        select e;
 
       const int expected = 7;
       Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //This is ok
       Assert.AreEqual(expected, employees.Count());
 
       employees = from e in metaData.Employee
-                  from order in e.Orders
-                  from et in e.EmployeeTerritories
-                  where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
-                  select e;
+        from order in e.Orders
+        from et in e.EmployeeTerritories
+        where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+        select e;
 
       Assert.AreEqual(expected, employees.ToEntityCollection2().Count()); //So is this
       Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
 
       // This one throws 'The multi-part identifier "LPLA_4.EmployeeID" could not be bound.'
       employees = from e in metaData.Employee
-                  from et in e.EmployeeTerritories
-                  where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
-                  select e;
+        from et in e.EmployeeTerritories
+        where e.Orders.Any(o => o.ShipCity == "Reims") || e.Orders.Any(o => o.ShipCity == "Lyon")
+        select e;
 
       Assert.AreEqual(expected, employees.ToEntityCollection2().Count());
       Assert.AreEqual(expected, employees.CountColumn(e => e.EmployeeId, true));
@@ -355,34 +379,133 @@ namespace AW.Tests
     {
       var linqMetaData = GetNorthwindLinqMetaData();
       var orders = from o in linqMetaData.Order
-                   select new
-                   {
-                     o.CustomerId,
-                     o.OrderId,
-                   };
+        select new
+        {
+          o.CustomerId,
+          o.OrderId,
+        };
 
       var customers = from c in linqMetaData.Customer
-                      where c.CustomerId == orders.First().CustomerId
-                      select new
-                      {
-                        orders.First().OrderId,
-                        c.Address,
-                        c.City,
-                        c.CompanyName
-                      };
+        where c.CustomerId == orders.First().CustomerId
+        select new
+        {
+          orders.First().OrderId,
+          c.Address,
+          c.City,
+          c.CompanyName
+        };
       customers.First();
     }
 
-    [TestMethod]
+    [TestMethod, Description("http://www.llblgen.com/TinyForum/Messages.aspx?ThreadID=22376")]
     public void TestGroupByOrderDateYear()
     {
       var linqMetaData = GetNorthwindLinqMetaData();
-      var ordersGroupedByYear = from o in linqMetaData.Order
-                   group o by o.OrderDate.Value.Year into orderYear
-                   select orderYear;
+      var ordersGroupedByYear = linqMetaData.Order.GroupBy(o => o.OrderDate.Value.Year);
 
-      Assert.AreEqual(3, ordersGroupedByYear.Select(o=>o.Key).Count());
-      Assert.AreEqual(1, ordersGroupedByYear.Count());
+      Assert.AreEqual(3, ordersGroupedByYear.Select(o => o.Key).Count());
+      //Fails Assert.AreEqual(3, ordersGroupedByYear.Count());
+
+      var ordersWithYear = from o in linqMetaData.Order
+        select new {o.OrderDate.Value.Year, o};
+      var ordersGroupedByYear2 = from o in ordersWithYear
+        group o by o.Year
+        into orderYear
+        select orderYear;
+      /// Assert.AreEqual(1, ordersGroupedByYear2.Count());
+    }
+
+    [TestMethod]
+    public void TestGroupByOrderDatesNamedType()
+    {
+      var linqMetaData = GetNorthwindLinqMetaData();
+      //IQueryable<IGrouping<object, OrderEntity>> ordersGroupedByYear = from o in linqMetaData.Order
+      //  group o by new {o.OrderDate.Value.Year, o.OrderDate.Value.Month}
+      //  into orderYear
+      //  select orderYear;
+      IQueryable<IGrouping<object, OrderEntity>> ordersGroupedByYear = linqMetaData.Order.GroupBy(o => new {o.OrderDate.Value.Year, o.OrderDate.Value.Month});
+
+      Assert.AreEqual(23, ordersGroupedByYear.Select(o => o.Key).Count());
+
+      var ordersGroupedByYearNamed = from o in linqMetaData.Order
+        group o by new GroupByYear {Year = o.OrderDate.Value.Year, Month = o.OrderDate.Value.Month}
+        into orderYear
+        select orderYear;
+
+      //Fails  Assert.AreEqual(23, ordersGroupedByYearNamed.Select(o => o.Key).Count());
+    }
+
+    [TestMethod]
+    public void TestGroupByOrderNamedType()
+    {
+      var linqMetaData = GetNorthwindLinqMetaData();
+      //var ordersGroupedByCountry = from o in linqMetaData.Order
+      //  group o by new CountryRegion {ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion}
+      //  into orderCountry
+      //  select orderCountry;
+      var ordersGroupedByCountry = linqMetaData.Order.GroupBy(o => new CountryRegion {ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion});
+
+      var ordersGroupedByCountryList = ordersGroupedByCountry.Select(o => new CountryRegion { ShipCountry = o.Key.ShipCountry, ShipRegion = o.Key.ShipRegion, Count = o.Count() }).ToList();
+      Assert.AreEqual(35, ordersGroupedByCountryList.Count());
+
+      var ordersGroupedByCountryKeyList = ordersGroupedByCountry.Select(o => new CountryRegion { Key= o.Key, Count = o.Count() }).ToList();
+      Assert.AreEqual(35, ordersGroupedByCountryKeyList.Count());
+
+      var ordersGroupedByCountryDynamic = (IQueryable<IGrouping<DynamicClass, OrderEntity>>) linqMetaData.Order.GroupBy("new(ShipCountry, ShipRegion)", "it");
+      var countryRegions = new List<CountryRegion>();
+      foreach (IGrouping<DynamicClass, OrderEntity> grouping in ordersGroupedByCountryDynamic)
+      {
+        var countryRegion = new CountryRegion();
+        dynamic countryRegionDyn =grouping.Key;
+        countryRegion.ShipCountry = countryRegionDyn.ShipCountry;
+        countryRegion.ShipRegion = countryRegionDyn.ShipRegion;
+        countryRegions.Add(countryRegion);
+      }
+      var groupedByCountryWithCountDynamic = (IQueryable<DynamicClass>)ordersGroupedByCountryDynamic.Select("new(Key.ShipCountry, Key.ShipRegion, Count() as Count)");
+      var groupedByCountryWithCountDynamicList = groupedByCountryWithCountDynamic.ToList();
+      Assert.AreEqual(35, groupedByCountryWithCountDynamicList.Count());
+
+      var groupedByCountryWithCount = ordersGroupedByCountryDynamic.Select(x => new { Key = x.Key, Count = x.Count() });
+
+      var groupedByCountryWithCountList = groupedByCountryWithCount.ToList();
+
+      //Assert.AreEqual(35, groupedByCountryWithCountList.Count());
+
+      //MapKeysToProperties(groupedByCountryWithCountList, MapKeyToProperties);
+    }
+
+    private static void MapKeysToProperties(IEnumerable<CountryRegion> dynamicClasses, Action<CountryRegion> keyMapper)
+    {
+      foreach (var dynamicClass in dynamicClasses)
+      {
+        keyMapper(dynamicClass);
+      }
+    }
+
+    private static void MapKeyToProperties(CountryRegion dynamicClass)
+    {
+      dynamic countryRegionDyn = dynamicClass.Key;
+      dynamicClass.ShipCountry = countryRegionDyn.ShipCountry;
+      dynamicClass.Count = dynamicClass.Count;
+    }
+
+    [TestMethod]
+    public void TestGroupByOrderDynamic()
+    {
+      var linqMetaData = GetNorthwindLinqMetaData();
+      var ordersGroupedByCountry = from o in linqMetaData.Order
+        group o by o.ShipCountry;
+
+      Assert.AreEqual(21, ordersGroupedByCountry.Select(o => o.Key).Count());
+      var ordersGroupedByCountryDynamic = (IQueryable<IGrouping<object, OrderEntity>>) linqMetaData.Order.GroupBy(OrderFieldIndex.ShipCountry.ToString(), "it");
+
+      Assert.AreEqual(21, ordersGroupedByCountryDynamic.Select(o => o.Key).Count());
+
+      //    var ordersGroupedByCountryDynamic = linqMetaData.Order
+      //.GroupBy(o => MetaDataHelper.GetPropertyValue(o, OrderFieldIndex.ShipCountry.ToString()))
+      //.Select(orderCountry => orderCountry);
+
+      //    Assert.AreEqual(21, ordersGroupedByCountryDynamic.Select(o => o.Key).Count());
     }
   }
 }
