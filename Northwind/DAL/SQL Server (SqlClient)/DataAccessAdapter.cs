@@ -198,7 +198,7 @@ namespace Northwind.DAL.SqlServer
       StaticCustomFunctionMappings.Add(new FunctionMapping(typeof(GeneralHelper), "EqualsIgnoreCase", 2, "{0} = {1}"));
     }
 
-    static readonly FunctionMappingStore StaticCustomFunctionMappings;
+	  public static readonly FunctionMappingStore StaticCustomFunctionMappings;
 
 	  // __LLBLGENPRO_USER_CODE_REGION_END
 		#endregion

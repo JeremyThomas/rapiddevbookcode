@@ -71,7 +71,7 @@ namespace AW.Tests
 
     public static LinqMetaData GetNorthwindLinqMetaData()
     {
-      return new LinqMetaData {AdapterToUse = new DataAccessAdapter()};
+      return new LinqMetaData(new DataAccessAdapter(), DataAccessAdapter.StaticCustomFunctionMappings);
     }
 
     [TestMethod, Description("tests whether you can have a typed null field in a anonymous projection")]
@@ -401,7 +401,7 @@ namespace AW.Tests
     public void TestGroupByOrderDateYear()
     {
       var linqMetaData = GetNorthwindLinqMetaData();
-      var ordersGroupedByYear = linqMetaData.Order.GroupBy(o => o.OrderDate.Value.Year);
+      IQueryable<IGrouping<int, OrderEntity>> ordersGroupedByYear = linqMetaData.Order.GroupBy(o => o.OrderDate.Value.Year);
 
       Assert.AreEqual(3, ordersGroupedByYear.Select(o => o.Key).Count());
       //Fails Assert.AreEqual(3, ordersGroupedByYear.Count());
@@ -427,12 +427,9 @@ namespace AW.Tests
 
       Assert.AreEqual(23, ordersGroupedByYear.Select(o => o.Key).Count());
 
-      var ordersGroupedByYearNamed = from o in linqMetaData.Order
-        group o by new GroupByYear {Year = o.OrderDate.Value.Year, Month = o.OrderDate.Value.Month}
-        into orderYear
-        select orderYear;
+      var ordersGroupedByYearNamed = linqMetaData.Order.GroupBy(o => new GroupByYear { Year = o.OrderDate.Value.Year, Month = o.OrderDate.Value.Month });
 
-      //Fails  Assert.AreEqual(23, ordersGroupedByYearNamed.Select(o => o.Key).Count());
+      Assert.AreEqual(23, ordersGroupedByYearNamed.Select(o => new { o.Key.Year, o.Key.Month, count = o.Count() }).Count());
     }
 
     [TestMethod]
@@ -444,9 +441,15 @@ namespace AW.Tests
       //  into orderCountry
       //  select orderCountry;
       var ordersGroupedByCountry = linqMetaData.Order.GroupBy(o => new CountryRegion {ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion});
+      var ordersGroupedByCountryAnon = linqMetaData.Order.GroupBy(o => new  { ShipCountry = o.ShipCountry, ShipRegion = o.ShipRegion });
 
       var ordersGroupedByCountryList = ordersGroupedByCountry.Select(o => new CountryRegion { ShipCountry = o.Key.ShipCountry, ShipRegion = o.Key.ShipRegion, Count = o.Count() }).ToList();
       Assert.AreEqual(35, ordersGroupedByCountryList.Count());
+
+      var ordersGroupedByCountryList2Anon = ordersGroupedByCountryAnon.Select(o => new CountryRegion { ShipCountry = string.IsNullOrEmpty(o.Key.ShipCountry) ? "empty" : o.Key.ShipCountry }).ToList();
+      Assert.AreEqual(35, ordersGroupedByCountryList2Anon.Count());
+      var ordersGroupedByCountryList2 = ordersGroupedByCountry.Select(o => new CountryRegion { ShipCountry = string.IsNullOrEmpty(o.Key.ShipCountry) ? "empty" : o.Key.ShipCountry }).ToList();
+      Assert.AreEqual(35, ordersGroupedByCountryList2.Count());
 
       var ordersGroupedByCountryKeyList = ordersGroupedByCountry.Select(o => new CountryRegion { Key= o.Key, Count = o.Count() }).ToList();
       Assert.AreEqual(35, ordersGroupedByCountryKeyList.Count());
