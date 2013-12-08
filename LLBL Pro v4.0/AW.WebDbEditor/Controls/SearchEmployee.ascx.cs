@@ -131,7 +131,7 @@ public partial class Controls_SearchEmployee : System.Web.UI.UserControl, ISearc
 		{
 			object fromValue = chkCurrentFlagMiFrom.Checked;
 			object toValue = null;
-			toAdd = GeneralUtils.CreatePredicate(EmployeeFields.CurrentFlag, Convert.ToInt32(opCurrentFlag.SelectedValue), chkNotCurrentFlag.Checked, 
+			toAdd = GeneralUtils.CreatePredicate(EmployeeFields.IsCurrent, Convert.ToInt32(opCurrentFlag.SelectedValue), chkNotCurrentFlag.Checked, 
 						fromValue, toValue);
 			if(toAdd != null)
 			{
@@ -251,7 +251,7 @@ public partial class Controls_SearchEmployee : System.Web.UI.UserControl, ISearc
 		{
 			object fromValue = chkSalariedFlagMiFrom.Checked;
 			object toValue = null;
-			toAdd = GeneralUtils.CreatePredicate(EmployeeFields.SalariedFlag, Convert.ToInt32(opSalariedFlag.SelectedValue), chkNotSalariedFlag.Checked, 
+			toAdd = GeneralUtils.CreatePredicate(EmployeeFields.IsSalaried, Convert.ToInt32(opSalariedFlag.SelectedValue), chkNotSalariedFlag.Checked, 
 						fromValue, toValue);
 			if(toAdd != null)
 			{
