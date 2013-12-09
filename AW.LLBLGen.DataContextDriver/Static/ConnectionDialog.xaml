@@ -258,6 +258,20 @@
                      Text="{Binding CxInfo.DriverData.Element[AdapterType].Value}"
                      ToolTip="{Binding ElementName=lblAdapterType,
                                        Path=Content}" />
+            <DockPanel>
+              <Label DockPanel.Dock="Right" Padding="1">
+              </Label>
+              <Label Name="lblFunctionMappingStoreMember"
+                     Padding="0,0,0,1"
+                     ToolTip="{Binding RelativeSource={RelativeSource Self},
+                                       Path=Content}">
+                Full name of FunctionMappingStoreMember:
+              </Label>
+            </DockPanel>
+            <TextBox Name="textBoxFunctionMappingStoreMember"
+                     Text="{Binding CxInfo.DriverData.Element[FunctionMappingStoreMember].Value}"
+                     ToolTip="{Binding ElementName=lblFunctionMappingStoreMember,
+                                       Path=Content}" />
           </StackPanel>
 
           <StackPanel Orientation="Horizontal">
