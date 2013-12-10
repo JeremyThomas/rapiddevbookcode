@@ -1012,30 +1012,30 @@ namespace AW.LLBLGen.DataContextDriver.Static
       var factoryAdapterAssembly = LoadAssembly(factoryAssemblyPath);
       if (factoryAdapterAssembly == null)
         throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
-      var factoryType = factoryAdapterAssembly.GetType(adapterTypeName);
-      if (factoryType == null)
+      var adapterType = factoryAdapterAssembly.GetType(adapterTypeName);
+      if (adapterType == null)
       {
         factoryAdapterAssembly.GetTypes();
         throw new ApplicationException(String.Format("Factory type: {0} could not be loaded from: {1}!", adapterTypeName,
           factoryAssemblyPath));
       }
-
-      var memberInfos = factoryType.GetMembers(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
       var functionMappingStoreType = typeof (FunctionMappingStore);
-      foreach (var memberInfo in memberInfos.Where(m => m.DeclaringType != null))
-      {
-        var propertyInfo = memberInfo as PropertyInfo;
-        if (propertyInfo != null && propertyInfo.PropertyType == functionMappingStoreType)
-          return propertyInfo;
-        var methodInfo = memberInfo as MethodInfo;
-        if (methodInfo != null && methodInfo.ReturnType == functionMappingStoreType)
-          return methodInfo;
-        var fieldInfo = memberInfo as FieldInfo;
-        if (fieldInfo != null && fieldInfo.FieldType == functionMappingStoreType)
-          return fieldInfo;
-      }
+      var memberInfos = adapterType.FindMembers(MemberTypes.Method | MemberTypes.Property | MemberTypes.Field, 
+        BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, ReturnTypeFilter, functionMappingStoreType);
+      return memberInfos.FirstOrDefault(m => m.DeclaringType == adapterType);
+    }
 
-      return null;
+    private static bool ReturnTypeFilter(MemberInfo memberInfo, object filterCriteria)
+    {
+      var functionMappingStoreType = (Type)filterCriteria;
+      var propertyInfo = memberInfo as PropertyInfo;
+      if (propertyInfo != null && propertyInfo.PropertyType == functionMappingStoreType)
+        return true;
+      var methodInfo = memberInfo as MethodInfo;
+      if (methodInfo != null && methodInfo.ReturnType == functionMappingStoreType)
+        return true;
+      var fieldInfo = memberInfo as FieldInfo;
+      return fieldInfo != null && fieldInfo.FieldType == functionMappingStoreType;
     }
 
     #endregion
