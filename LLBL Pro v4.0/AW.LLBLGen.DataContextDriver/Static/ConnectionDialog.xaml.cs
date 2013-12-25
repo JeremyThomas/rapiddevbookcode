@@ -21,6 +21,7 @@ using AW.Helper.Annotations;
 using AW.LLBLGen.DataContextDriver.Properties;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.ConnectionUI;
+using AW.Winforms.Helpers.WPF;
 using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
 using Microsoft.Data.ConnectionUI;
@@ -1294,6 +1295,21 @@ namespace AW.LLBLGen.DataContextDriver.Static
     }
 
     #endregion
+
+    private void GridSplitter_DragStarted(object sender, DragStartedEventArgs e)
+    {
+      var scrollView = AWVisualTreeHelper.FindVisualChild<ScrollViewer>(AdditionalAssembliesDataGridCnxt);
+      var verticalVisibility = scrollView.ComputedVerticalScrollBarVisibility;
+      if (verticalVisibility == Visibility.Visible)
+        RowDefAdditionalAssemblies.MaxHeight = double.PositiveInfinity;
+      else
+        RowDefAdditionalAssemblies.MaxHeight = AdditionalAssembliesDataGridCnxt.ActualHeight;
+    }
+
+    private void GridSplitter_DragCompleted(object sender, DragCompletedEventArgs e)
+    {
+      RowDefAdditionalAssemblies.MaxHeight = double.PositiveInfinity;
+    }
   }
 
   public enum LLBLConnectionType
