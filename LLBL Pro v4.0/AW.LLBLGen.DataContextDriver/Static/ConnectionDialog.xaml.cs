@@ -15,6 +15,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Xml.Linq;
 using AW.Helper;
 using AW.Helper.Annotations;
@@ -1308,7 +1309,32 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private void GridSplitter_DragCompleted(object sender, DragCompletedEventArgs e)
     {
-      RowDefAdditionalAssemblies.MaxHeight = double.PositiveInfinity;
+      if (RowDefAdditionalAssemblies.Height.Value <= AdditionalAssembliesDataGridCnxt.ActualHeight)
+        RowDefAdditionalAssemblies.MaxHeight = double.PositiveInfinity;
+      else
+      {
+        var dispatcherTimer = new DispatcherTimer();
+        dispatcherTimer.Tick += SetRowMaxHeightToGrid;
+        dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+        dispatcherTimer.Start();
+      }
+    }
+
+    private void SetRowMaxHeightToGrid(object sender, EventArgs eventArgs)
+    {
+      if (AdditionalAssembliesDataGridCnxt.ActualHeight == RowDefAdditionalAssemblies.Height.Value)
+      {
+        RowDefAdditionalAssemblies.MaxHeight = double.PositiveInfinity;
+        var dispatcherTimer = sender as DispatcherTimer;
+        if (dispatcherTimer != null) dispatcherTimer.IsEnabled = false;
+      }
+      else
+        RowDefAdditionalAssemblies.MaxHeight = AdditionalAssembliesDataGridCnxt.ActualHeight;
+      gridSplitterAdditionalAssemblies.RaiseEvent(new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
+      {
+        RoutedEvent = Mouse.MouseDownEvent,
+        Source = gridSplitterAdditionalAssemblies,
+      });
     }
   }
 

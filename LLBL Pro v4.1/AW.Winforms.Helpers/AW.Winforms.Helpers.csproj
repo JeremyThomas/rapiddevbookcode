@@ -246,6 +246,7 @@
     <Compile Include="WindowPlacement.cs" />
     <Compile Include="WindowSettings.cs" />
     <Compile Include="WPF\AnyConverter.cs" />
+    <Compile Include="WPF\AWVisualTreeHelper.cs" />
     <Compile Include="WPF\EnumerationExtension.cs" />
     <Compile Include="WPF\ConcreteLinkedConverters.cs" />
     <Compile Include="WPF\EnumToBooleanConverter.cs" />
