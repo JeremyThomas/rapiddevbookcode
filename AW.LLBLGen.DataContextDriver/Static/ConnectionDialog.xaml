@@ -569,14 +569,17 @@
       </TabItem>
       <TabItem x:Name="AdditionalAssembliesAndNamespaces" Header="Additional Assemblies and Namespaces" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type static:ConnectionDialog}}"
 				DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}">
-        <Grid>
+        <Grid >
           <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" Name="RowDefAdditionalAssemblies"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition MinHeight="100"/>
+            <RowDefinition />
             <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>
+          </Grid.RowDefinitions>          
           <DataGrid x:Name="AdditionalAssembliesDataGridCnxt"
       			MinWidth="200"
+                    MaxHeight="200"
+                    BorderBrush="Gray" BorderThickness="5" 
       			AutoGenerateColumns="False"
       			ItemsSource="{Binding AdditionalAssembliesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
       			ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTipCnxt}" Margin="0">
@@ -590,7 +593,8 @@
               </DataGridTextColumn>
             </DataGrid.Columns>
           </DataGrid>
-          <Grid Grid.Row="1" x:Name="NamespacesCanvas"  Height="Auto">
+ 
+          <Grid Grid.Row="2" x:Name="NamespacesCanvas"  Height="Auto">
             <DataGrid x:Name="AdditionalNamespacesDataGridCnxt"
           		MinWidth="200"
           		MaxHeight="{Binding ElementName=NamespacesCanvas, Path=ActualHeight}"
@@ -602,7 +606,7 @@
               </DataGrid.Columns>
             </DataGrid>
           </Grid>
-          <WrapPanel Orientation="Horizontal" Margin="0" Grid.Row="2">
+          <WrapPanel Orientation="Horizontal" Margin="0" Grid.Row="3">
 
             <Button x:Name="buttonClearAdditionalCnxt"
       				Margin="5,0,0,0"
@@ -626,6 +630,9 @@
       				Content="Add namespaces from selected assemblies"
       				ToolTip="Add namespaces from selected assemblies and the assemblies defined in the driver" />
           </WrapPanel>
+          <GridSplitter HorizontalAlignment="Stretch" Height="3" VerticalAlignment="Top" Grid.Row="1"
+                                      Background="Black" ResizeBehavior="PreviousAndNext"
+              ShowsPreview="True" DragStarted="GridSplitter_DragStarted" DragCompleted="GridSplitter_DragCompleted" />  
         </Grid>
       </TabItem>
       <TabItem x:Name="DriverTab"
