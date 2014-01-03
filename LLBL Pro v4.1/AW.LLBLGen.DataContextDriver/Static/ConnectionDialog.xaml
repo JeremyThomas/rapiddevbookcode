@@ -8,8 +8,8 @@
         xmlns:properties="clr-namespace:AW.LLBLGen.DataContextDriver.Properties"
         xmlns:static="clr-namespace:AW.LLBLGen.DataContextDriver.Static"
         Title="{x:Static dataContextDriver:Constants.Name}"
-        MinWidth="300"
-        MinHeight="300"
+        MinWidth="200"
+        MinHeight="200"
         Background="{x:Static SystemColors.ControlBrush}"
         Closing="Window_Closing"
 				Closed="ConnectionDialog_OnClosed"
@@ -230,7 +230,7 @@
               <Label DockPanel.Dock="Right" Padding="1"/>
               <Label x:Name="lblFunctionMappingStoreMember"
 								Padding="0,0,0,1"
-								ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" Content="Full name of FunctionMappingStoreMember:"/>
+								ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" Content="Name of FunctionMappingStoreMember:"/>
             </DockPanel>
             <TextBox x:Name="textBoxFunctionMappingStoreMember"
 							Text="{Binding CxInfo.DriverData.Element[FunctionMappingStoreMember].Value}"
@@ -578,8 +578,6 @@
           </Grid.RowDefinitions>          
           <DataGrid x:Name="AdditionalAssembliesDataGridCnxt"
       			MinWidth="200"
-                    MaxHeight="200"
-                    BorderBrush="Gray" BorderThickness="5" 
       			AutoGenerateColumns="False"
       			ItemsSource="{Binding AdditionalAssembliesCnxt, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
       			ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTipCnxt}" Margin="0">
@@ -630,7 +628,7 @@
       				Content="Add namespaces from selected assemblies"
       				ToolTip="Add namespaces from selected assemblies and the assemblies defined in the driver" />
           </WrapPanel>
-          <GridSplitter HorizontalAlignment="Stretch" Height="3" VerticalAlignment="Top" Grid.Row="1"
+          <GridSplitter Name="gridSplitterAdditionalAssemblies" HorizontalAlignment="Stretch" Height="2" VerticalAlignment="Top" Grid.Row="1"
                                       Background="Black" ResizeBehavior="PreviousAndNext"
               ShowsPreview="True" DragStarted="GridSplitter_DragStarted" DragCompleted="GridSplitter_DragCompleted" />  
         </Grid>
@@ -649,10 +647,10 @@
         <TabItem.DataContext>
           <StaticResource ResourceKey="settingsViewSource"/>
         </TabItem.DataContext>
-        <StackPanel>
+        <Grid Margin="0">
           <Grid x:Name="grid13"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -661,24 +659,24 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Provider:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Provider:" />
             <TextBox x:Name="defaultProviderTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Width="120"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultProvider, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Width="120"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultProvider, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid8"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,32,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="116" />
               <ColumnDefinition Width="28" />
@@ -689,21 +687,21 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.ColumnSpan="3"
-							Margin="3,3,0,3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Database Connection:" />
+      				Margin="3,3,0,3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Database Connection:" />
             <TextBox x:Name="defaultDatabaseConnectionTextBox"
-							Grid.Column="3"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultDatabaseConnection, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Column="3"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultDatabaseConnection, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid3"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,64,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -712,23 +710,23 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Application Config:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Application Config:" />
             <TextBox x:Name="defaultApplicationConfigTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultApplicationConfig, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultApplicationConfig, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid4"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,96,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -737,23 +735,23 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Connection Type:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Connection Type:" />
             <TextBox x:Name="defaultConnectionTypeTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultConnectionType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultConnectionType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid9"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,128,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -762,23 +760,23 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Display Name:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Display Name:" />
             <TextBox x:Name="defaultDisplayNameTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultDisplayName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultDisplayName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid10"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,160,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -787,23 +785,23 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Linq Meta Data:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Linq Meta Data:" />
             <TextBox x:Name="defaultLinqMetaDataTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultLinqMetaData, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultLinqMetaData, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid11"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,192,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -812,23 +810,23 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Linq Meta Data Assembly:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Linq Meta Data Assembly:" />
             <TextBox x:Name="defaultLinqMetaDataAssemblyTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultLinqMetaDataAssembly, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultLinqMetaDataAssembly, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid1"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,224,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -837,23 +835,23 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Adapter Assembly:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Adapter Assembly:" />
             <TextBox x:Name="defaultAdapterAssemblyTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultAdapterAssembly, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultAdapterAssembly, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid2"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,256,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -862,25 +860,25 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Adapter Type:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Adapter Type:" />
             <TextBox x:Name="defaultAdapterTypeTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultAdapterType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultAdapterType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
 
 
           <Grid x:Name="grid5"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,288,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -889,23 +887,23 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Data Access Adapter Factory Assembly:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Data Access Adapter Factory Assembly:" />
             <TextBox x:Name="defaultDataAccessAdapterFactoryAssemblyTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultDataAccessAdapterFactoryAssembly, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultDataAccessAdapterFactoryAssembly, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid6"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,320,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -914,23 +912,23 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Data Access Adapter Factory Method:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Data Access Adapter Factory Method:" />
             <TextBox x:Name="defaultDataAccessAdapterFactoryMethodTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultDataAccessAdapterFactoryMethod, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultDataAccessAdapterFactoryMethod, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
           <Grid x:Name="grid7"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top">
+      			HorizontalAlignment="Left"
+      			VerticalAlignment="Top" Margin="0,352,0,0">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="Auto" />
@@ -939,30 +937,29 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
-							Grid.Column="0"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Content="Default Data Access Adapter Factory Type:" />
+      				Grid.Column="0"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Content="Default Data Access Adapter Factory Type:" />
             <TextBox x:Name="defaultDataAccessAdapterFactoryTypeTextBox"
-							Grid.Row="0"
-							Grid.Column="1"
-							Height="23"
-							Margin="3"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Center"
-							Text="{Binding DefaultDataAccessAdapterFactoryType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
+      				Grid.Row="0"
+      				Grid.Column="1"
+      				Height="23"
+      				Margin="3"
+      				HorizontalAlignment="Left"
+      				VerticalAlignment="Center"
+      				Text="{Binding DefaultDataAccessAdapterFactoryType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
 
-
           <WrapPanel d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type static:ConnectionDialog}}"
-						DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}"
-						Orientation="Horizontal">
+      			DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}"
+      			Orientation="Horizontal" Margin="0,384,0,0">
             <DataGrid x:Name="AdditionalAssembliesDataGrid"
-							MinWidth="100"
-							AutoGenerateColumns="False"
-							ItemsSource="{Binding AdditionalAssemblies, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-							ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTip}">
+      				MinWidth="100"
+      				AutoGenerateColumns="False"
+      				ItemsSource="{Binding AdditionalAssemblies, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+      				ToolTip="{x:Static static:ConnectionDialog.AdditionalAssembliesToolTip}" >
               <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
                   <DataGridTextColumn.Header>
@@ -974,41 +971,41 @@
               </DataGrid.Columns>
             </DataGrid>
             <DataGrid x:Name="AdditionalNamespacesDataGrid"
-							MinWidth="100"
-							AutoGenerateColumns="False"
-							ItemsSource="{Binding AdditionalNamespaces, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-							ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTip}">
+      				MinWidth="100"
+      				AutoGenerateColumns="False"
+      				ItemsSource="{Binding AdditionalNamespaces, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+      				ToolTip="{x:Static static:ConnectionDialog.AdditionalNamespacesToolTip}">
               <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Value}" Header="Additional Namespaces" />
               </DataGrid.Columns>
             </DataGrid>
 
             <Button x:Name="buttonClearAdditional"
-							Margin="5,0,0,0"
-							VerticalAlignment="Center"
-							Click="buttonClearAdditionalClick"
-							Content="Clear additional"
-							ToolTip="Clear additional Assemblies and Namespaces" />
+      				Margin="5,0,0,0"
+      				VerticalAlignment="Center"
+      				Click="buttonClearAdditionalClick"
+      				Content="Clear additional"
+      				ToolTip="Clear additional Assemblies and Namespaces" />
             <Button Margin="5,0,0,0"
-							VerticalAlignment="Center"
-							Click="ChooseAssemblies"
-							Content="Add Assemblies..."
-							ToolTip="Browse for Additional Assemblies" />
+      				VerticalAlignment="Center"
+      				Click="ChooseAssemblies"
+      				Content="Add Assemblies..."
+      				ToolTip="Browse for Additional Assemblies" />
             <Button Margin="5,0,0,0"
-							VerticalAlignment="Center"
-							Click="AddORMProfiler"
-							Content="Add ORM Profiler"
-							ToolTip="Add ORM Profiler assemblies" />
+      				VerticalAlignment="Center"
+      				Click="AddORMProfiler"
+      				Content="Add ORM Profiler"
+      				ToolTip="Add ORM Profiler assemblies" />
             <Button x:Name="buttonClearDefaults"
-							Margin="5,0,0,0"
-							VerticalAlignment="Center"
-							Click="buttonClear_Click"
-							Content="Clear defaults"
-							ToolTip="Clear defaults" />
+      				Margin="5,0,0,0"
+      				VerticalAlignment="Center"
+      				Click="buttonClear_Click"
+      				Content="Clear defaults"
+      				ToolTip="Clear defaults" />
 
           </WrapPanel>
 
-        </StackPanel>
+        </Grid>
       </TabItem>
 
     </TabControl>
