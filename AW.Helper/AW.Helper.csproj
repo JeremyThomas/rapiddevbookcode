@@ -48,8 +48,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Humanizer">
-      <HintPath>..\packages\Humanizer.1.0\lib\NET40\Humanizer.dll</HintPath>
+    <Reference Include="Humanizer, Version=1.0.29.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Humanizer.1.0.29\lib\portable-win+net40+sl50+wp8\Humanizer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />

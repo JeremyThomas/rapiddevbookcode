@@ -98,6 +98,7 @@
       this.bindingNavigatorData.BindingSource = this.bindingSourceEnumerable;
       this.bindingNavigatorData.CountItem = this.bindingNavigatorCountItem1;
       this.bindingNavigatorData.DeleteItem = this.bindingNavigatorDeleteItem1;
+      this.bindingNavigatorData.Font = new System.Drawing.Font("Segoe UI", 9F);
       this.bindingNavigatorData.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem1,
             this.bindingNavigatorMovePreviousItem1,
@@ -322,7 +323,6 @@
       // 
       this.dataGridViewEnumerable.AllowUserToOrderColumns = true;
       this.dataGridViewEnumerable.AutoGenerateColumns = false;
-      this.dataGridViewEnumerable.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
       this.dataGridViewEnumerable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridViewEnumerable.DataSource = this.bindingSourceEnumerable;
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -342,6 +342,7 @@
       this.bindingNavigatorPaging.CountItem = this.bindingNavigatorCountItem;
       this.bindingNavigatorPaging.DeleteItem = null;
       this.bindingNavigatorPaging.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.bindingNavigatorPaging.Font = new System.Drawing.Font("Segoe UI", 9F);
       this.bindingNavigatorPaging.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bindingNavigatorMoveFirstItem,
             this.bindingNavigatorMovePreviousItem,
