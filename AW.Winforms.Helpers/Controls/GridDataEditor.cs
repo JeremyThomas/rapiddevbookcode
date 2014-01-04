@@ -493,7 +493,8 @@ namespace AW.Winforms.Helpers.Controls
           ValueType = e.Column.ValueType,
           DataSource = coreType == e.Column.ValueType ? Enum.GetValues(coreType) : GeneralHelper.EnumsGetValuesPlusUndefined(coreType),
           DataPropertyName = e.Column.DataPropertyName,
-          SortMode = e.Column.SortMode
+          SortMode = e.Column.SortMode,
+          DefaultCellStyle = e.Column.DefaultCellStyle
         };
 
         e.Column.DataGridView.Columns.Add(enumDataGridViewComboBoxColumn);
@@ -502,11 +503,12 @@ namespace AW.Winforms.Helpers.Controls
       else if (coreType == typeof (DateTime))
       {
         var dataGridViewDateTimeColumn = new DataGridViewDateTimeColumn
-                {
+        {
           HeaderText = e.Column.HeaderText,
           ValueType = e.Column.ValueType,
           DataPropertyName = e.Column.DataPropertyName,
-          SortMode = e.Column.SortMode
+          SortMode = e.Column.SortMode,
+          DefaultCellStyle = e.Column.DefaultCellStyle
         };
         e.Column.DataGridView.Columns.Add(dataGridViewDateTimeColumn);
         e.Column.DataGridView.Columns.Remove(e.Column);
@@ -549,7 +551,11 @@ namespace AW.Winforms.Helpers.Controls
         dataGridViewEnumerable.AutoGenerateColumns = true;
       }
       // Resize the master DataGridView columns to fit the newly loaded data.
-      dataGridViewEnumerable.AutoResizeColumns();
+      dataGridViewEnumerable.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
+      foreach (var column in dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Where(column => column.Width > 300))
+      {
+        column.Width = 300;
+      }
     }
   }
 }
