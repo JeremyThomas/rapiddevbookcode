@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace AW.Winforms.Helpers.Controls
@@ -7,7 +9,7 @@ namespace AW.Winforms.Helpers.Controls
   #region DataGridViewDateTimeColumn
 
   /// <summary>
-  /// DateTimePicker with ShowUpDown on
+  ///   DateTimePicker with ShowUpDown on
   /// </summary>
   /// <see cref="http://www.codeproject.com/Articles/14674/Generic-DataGridView-V2-0" />
   /// <see cref="http://msdn.microsoft.com/en-us/library/7tas5c80.aspx" />
@@ -35,23 +37,18 @@ namespace AW.Winforms.Helpers.Controls
 
   public class DateTimeCell : DataGridViewTextBoxCell
   {
-    public DateTimeCell()
-      : base()
-    {
-      // Use the short date format.
-      Style.Format = "g";
-    }
-
     public override void InitializeEditingControl(int rowIndex, object
       initialFormattedValue, DataGridViewCellStyle dataGridViewCellStyle)
     {
       // Set the value of the editing control to the current cell value.
-      base.InitializeEditingControl(rowIndex, initialFormattedValue,
-        dataGridViewCellStyle);
-      var ctl =
-        DataGridView.EditingControl as DateTimeEditingControl;
-
-      if (Value != DBNull.Value)
+      base.InitializeEditingControl(rowIndex, initialFormattedValue, dataGridViewCellStyle);
+      var ctl = DataGridView.EditingControl as DateTimeEditingControl;
+      if (ctl == null) return;
+      if (Value == null || Value == DBNull.Value)
+      {
+        if (DefaultNewRowValue != null) ctl.Value = (DateTime) DefaultNewRowValue;
+      }
+      else
       {
         ctl.Value = (DateTime) Value;
       }
@@ -88,44 +85,91 @@ namespace AW.Winforms.Helpers.Controls
   internal class DateTimeEditingControl : DateTimePicker, IDataGridViewEditingControl
   {
     private bool _valueChanged;
+    private readonly TypeConverter _typeConverter;
 
     public DateTimeEditingControl()
     {
-      Format = DateTimePickerFormat.Custom;
-      CustomFormat = "MM dd yyyy hh mm ss";
-      ShowUpDown = true;
+      CustomFormat = string.Format("{0} {1}", CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern, CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern);
+      _typeConverter = TypeDescriptor.GetConverter(typeof (DateTime));
     }
 
     // Implements the IDataGridViewEditingControl.EditingControlFormattedValue 
     // property.
     public object EditingControlFormattedValue
     {
-      get { return Value.ToShortDateString(); }
+      get { return _typeConverter.ConvertToString(Value); }
       set
       {
-        if (value is String)
-        {
-          Value = DateTime.Parse((String) value);
-        }
+        var convertedValue = _typeConverter.ConvertFrom(value);
+        if (convertedValue != null)
+          Value = (DateTime) convertedValue;
       }
     }
 
     // Implements the 
     // IDataGridViewEditingControl.GetEditingControlFormattedValue method.
-    public object GetEditingControlFormattedValue(
-      DataGridViewDataErrorContexts context)
+    public object GetEditingControlFormattedValue(DataGridViewDataErrorContexts context)
     {
       return EditingControlFormattedValue;
     }
 
     // Implements the 
     // IDataGridViewEditingControl.ApplyCellStyleToEditingControl method.
-    public void ApplyCellStyleToEditingControl(
-      DataGridViewCellStyle dataGridViewCellStyle)
+    public void ApplyCellStyleToEditingControl(DataGridViewCellStyle dataGridViewCellStyle)
     {
       Font = dataGridViewCellStyle.Font;
       CalendarForeColor = dataGridViewCellStyle.ForeColor;
       CalendarMonthBackground = dataGridViewCellStyle.BackColor;
+
+      if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
+      {
+        RightToLeftLayout = true;
+      }
+      else
+      {
+        RightToLeftLayout = false;
+      }
+
+      SetFormatFromDateTimeFormatString(dataGridViewCellStyle.Format);
+    }
+
+    private void SetFormatFromDateTimeFormatString(string dateTimeFormatString)
+    {            
+      if (string.IsNullOrEmpty(dateTimeFormatString))
+      {
+        Format = DateTimePickerFormat.Custom;
+        ShowUpDown = true;
+      }
+      else if (dateTimeFormatString.Length == 1)
+        switch (dateTimeFormatString[0])
+        {
+          case 'd': // Short Date
+            ShowUpDown = false;
+            Format = DateTimePickerFormat.Short;
+            break;
+          case 'D': // Long Date        
+          case 'm':
+          case 'M': // Month/Day Date 
+          case 'y':
+          case 'Y': // Year/Month Date 
+            ShowUpDown = false;
+            Format = DateTimePickerFormat.Long;
+            break;
+          case 't': // Short Time
+          case 'T': // Long Time
+            Format = DateTimePickerFormat.Time;
+            ShowUpDown = true;
+            break;
+          default:
+            Format = DateTimePickerFormat.Custom;
+            ShowUpDown = true;
+            break;
+        }
+      else
+      {
+        Format = DateTimePickerFormat.Custom;
+        ShowUpDown = true;
+      }
     }
 
     // Implements the IDataGridViewEditingControl.EditingControlRowIndex 

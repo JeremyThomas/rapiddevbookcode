@@ -19,6 +19,10 @@ namespace AW.Winforms.Helpers.Controls
 {
   public partial class GridDataEditor : UserControl
   {
+    /// <summary>
+    /// The maximum automatic generate column width - 300
+    /// </summary>
+    private const int MaxAutoGenerateColumnWidth = 300;
     private readonly ArrayList _deleteItems = new ArrayList();
     protected bool IsBinding = true;
     private bool _loaded;
@@ -552,10 +556,8 @@ namespace AW.Winforms.Helpers.Controls
       }
       // Resize the master DataGridView columns to fit the newly loaded data.
       dataGridViewEnumerable.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
-      foreach (var column in dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Where(column => column.Width > 300))
-      {
-        column.Width = 300;
-      }
+      foreach (var column in dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Where(column => column.Width > MaxAutoGenerateColumnWidth))
+        column.Width = MaxAutoGenerateColumnWidth;
     }
   }
 }
