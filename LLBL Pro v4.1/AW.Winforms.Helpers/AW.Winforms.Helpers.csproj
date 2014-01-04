@@ -133,6 +133,9 @@
       <DependentUpon>SqlCeConnectionUIControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DataEditorPersister.cs" />
+    <Compile Include="Controls\DataGridViewDateTimeColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\HierarchyEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
