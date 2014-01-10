@@ -28,6 +28,16 @@ namespace AW.Winforms.Helpers.LLBL.PropGridEx
 		{
 		}
 
+	  public FrmLLBLEntityViewer(object entity, IDataAccessAdapter dataAccessAdapter)
+	    : base(entity, dataAccessAdapter == null ? null : new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter))
+    {
+    }
+
+    public FrmLLBLEntityViewer(object entity, ILinqMetaData linqMetaData)
+      : this(entity, EntityHelper.GetDataAccessAdapter(linqMetaData))
+    {
+    }
+
 		#region Overrides of FrmEntityViewer
 
 		protected override void Initialize()
