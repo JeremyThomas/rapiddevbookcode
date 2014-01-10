@@ -23,20 +23,22 @@ namespace AW.Winforms.Helpers
 		}
 
 		//&& enumerable.ToString() != "System.Collections.Hashtable+KeyCollection"
-		public static IBindingListView ToBindingListView(this IEnumerable enumerable)
+		public static IBindingListView ToBindingListView(this IEnumerable enumerable, bool ensureFilteringEnabled = false)
 		{
 			var showenEnumerable = enumerable != null && !(enumerable is string);
 			if (showenEnumerable)
 			{
-				if (enumerable is IBindingListView)
-					return (IBindingListView) enumerable;
-				if (enumerable is IListSource)
+			  var iBindingListView = enumerable as IBindingListView;
+        if (iBindingListView != null && (!ensureFilteringEnabled || iBindingListView.SupportsFiltering))
+					return iBindingListView;
+			  var listSource = enumerable as IListSource;
+			  if (listSource != null)
 				{
-					var bindingListView = ListSourceToBindingListView((IListSource) enumerable);
-					if (bindingListView != null)
+					var bindingListView = ListSourceToBindingListView(listSource);
+          if (bindingListView != null && (!ensureFilteringEnabled || bindingListView.SupportsFiltering))
 						return bindingListView;
 				}
-				return CreateBindingListView(enumerable);
+        return CreateBindingListView(enumerable, ensureFilteringEnabled);
 			}
 			return null;
 		}
@@ -104,14 +106,14 @@ namespace AW.Winforms.Helpers
 			return null;
 		}
 
-		private static IBindingListView CreateBindingListView<T>(IEnumerable<T> enumerable)
+    private static IBindingListView CreateBindingListView<T>(IEnumerable<T> enumerable, bool ensureFilteringEnabled = false)
 		{
 			foreach (var iBindingListView in
-				from bindingListViewCreater in BindingListViewCreaters
-				where bindingListViewCreater.Key.IsAssignableFrom(typeof (T))
-				select bindingListViewCreater.Value(enumerable, typeof (T))
+				from bindingListViewCreator in BindingListViewCreaters
+				where bindingListViewCreator.Key.IsAssignableFrom(typeof (T))
+				select bindingListViewCreator.Value(enumerable, typeof (T))
 				into iBindingListView
-				where iBindingListView != null
+          where iBindingListView != null && (!ensureFilteringEnabled || iBindingListView.SupportsFiltering)
 				select iBindingListView)
 			{
 				return iBindingListView;
@@ -119,20 +121,20 @@ namespace AW.Winforms.Helpers
 			return ToObjectListView(enumerable);
 		}
 
-		private static IBindingListView CreateBindingListView(IEnumerable enumerable)
+    private static IBindingListView CreateBindingListView(IEnumerable enumerable, bool ensureFilteringEnabled = false)
 		{
 			var itemType = MetaDataHelper.GetEnumerableItemType(enumerable);
-			return CreateBindingListView(enumerable, itemType);
+      return CreateBindingListView(enumerable, itemType, ensureFilteringEnabled);
 		}
 
-		private static IBindingListView CreateBindingListView(IEnumerable enumerable, Type itemType)
+    private static IBindingListView CreateBindingListView(IEnumerable enumerable, Type itemType, bool ensureFilteringEnabled = false)
 		{
 			foreach (var iBindingListView in
-				from bindingListViewCreater in BindingListViewCreaters
-				where bindingListViewCreater.Key.IsAssignableFrom(itemType)
-				select bindingListViewCreater.Value(enumerable, itemType)
+				from bindingListViewCreator in BindingListViewCreaters
+				where bindingListViewCreator.Key.IsAssignableFrom(itemType)
+				select bindingListViewCreator.Value(enumerable, itemType)
 				into iBindingListView
-				where iBindingListView != null
+				where iBindingListView != null && (!ensureFilteringEnabled || iBindingListView.SupportsFiltering)
 				select iBindingListView)
 			{
 				return iBindingListView;
@@ -216,9 +218,9 @@ namespace AW.Winforms.Helpers
 			}
 		}
 
-		public static bool BindEnumerable(this BindingSource bindingSource, IEnumerable enumerable, bool setReadonly)
+		public static bool BindEnumerable(this BindingSource bindingSource, IEnumerable enumerable, bool setReadonly, bool ensureFilteringEnabled = false)
 		{
-			var showenEnumerable = BindEnumerable(bindingSource, enumerable);
+      var showenEnumerable = BindEnumerableInternal(bindingSource, enumerable, ensureFilteringEnabled);
 			if (showenEnumerable)
 				if (setReadonly && bindingSource.AllowEdit && bindingSource.DataSource is IBindingList)
 					SetReadonly(((IBindingList) bindingSource.DataSource));
@@ -250,13 +252,17 @@ namespace AW.Winforms.Helpers
 			return showenEnumerable;
 		}
 
-		private static bool BindEnumerable(BindingSource bindingSource, IEnumerable enumerable)
+		private static bool BindEnumerableInternal(BindingSource bindingSource, IEnumerable enumerable, bool ensureFilteringEnabled = false)
 		{
-			bool showenEnumerable;
+			bool shownEnumerable;
 			try
 			{
-				bindingSource.DataSource = enumerable.ToBindingListView();
-				showenEnumerable = bindingSource.DataSource != null;
+        if (bindingSource.SupportsSorting)
+			    bindingSource.RemoveSort();
+        if (bindingSource.SupportsFiltering)
+          bindingSource.RemoveFilter();
+        bindingSource.DataSource = enumerable.ToBindingListView(ensureFilteringEnabled);
+				shownEnumerable = bindingSource.DataSource != null;
 			}
 			catch (Exception)
 			{
@@ -268,9 +274,9 @@ namespace AW.Winforms.Helpers
 				{
 					bindingSource.DataSource = null;
 				}
-				showenEnumerable = bindingSource.DataSource != null;
+				shownEnumerable = bindingSource.DataSource != null;
 			}
-			return showenEnumerable;
+			return shownEnumerable;
 		}
 
 		public static bool SetReadonly(IBindingList bindingList)

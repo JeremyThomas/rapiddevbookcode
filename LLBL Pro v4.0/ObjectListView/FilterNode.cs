@@ -237,6 +237,8 @@ namespace JesseJohnston
         relationalOps.Add("<=", RelationalOperator.LessEqual);
         relationalOps.Add(">", RelationalOperator.Greater);
         relationalOps.Add(">=", RelationalOperator.GreaterEqual);
+        relationalOps.Add("IN", RelationalOperator.In);
+        relationalOps.Add("IS", RelationalOperator.Equal);
 
         foreach (var op in relationalOps.Keys)
         {
@@ -254,8 +256,8 @@ namespace JesseJohnston
 
         // Split into tokens delimited by spaces, relational operators, and parentheses.  Remove extra spaces.
         var parts = ExtractTokens(expression,
-                                  new[] {' ', '<', '>', '=', '!', '(', ')'},
-                                  new[] {'<', '>', '=', '!', '(', ')'},
+                                  new[] { ' ', '<', '>', '=', '!', '(', ')', '[', ']',',' },
+                                  new[] { '<', '>', '=', '!', '(', ')', 'I', 'N', 'S' },
                                   new[] {'\'', '"'});
 
         if (parts.Count == 0)
@@ -263,10 +265,23 @@ namespace JesseJohnston
 
         // Parse into tokens that are either operators, terms or a paren.
         Token prevToken = null;
+        Token prevRelationalToken = null;
         var parenCount = 0;
+        bool skipnext = false;
 
         foreach (var part in parts)
         {
+          if (skipnext)
+          {
+            skipnext = false;
+            continue;
+          }
+
+          if (part == "Convert" || part == "System.String")
+          {
+            skipnext = true;
+            continue;
+          }
           Token t = null;
 
           // Because a condition could also be the rvalue of a relation (e.g. State = OR), evaluate as a condition
@@ -291,6 +306,7 @@ namespace JesseJohnston
                 if (prevToken == null || prevToken.Type != TokenType.Term)
                   throw new ArgumentException("An operator must be preceded by an expression term.", "expression");
                 t = new Token(pair.Value);
+                prevRelationalToken = t;
                 break;
               }
             }
@@ -312,6 +328,7 @@ namespace JesseJohnston
               parenCount--;
             }
             else if (prevToken != null && prevToken.Type != TokenType.Condition && prevToken.Type != TokenType.Relation && prevToken.Type != TokenType.OpenParen)
+              if (prevRelationalToken == null || prevRelationalToken.Relation!=RelationalOperator.In)
               throw new ArgumentException("An expression term must be preceded by an operator or opening paren.", "expression");
 
             t = new Token(part);
@@ -355,6 +372,8 @@ namespace JesseJohnston
 
         // Remove leading and trailing whitespace.
         expression = expression.Trim();
+        if (expression[expression.Length - 1] == ')' && expression[0] == '(')
+          expression = expression.Remove(expression.Length - 1).Remove(0, 1);
 
         for (var i = 0; i < expression.Length; i++)
         {
@@ -535,23 +554,62 @@ namespace JesseJohnston
 
         if (evaluationIndex > -1)
         {
-          var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
-                                              tokens[evaluationIndex + 1].Term,
-                                              tokens[evaluationIndex].Relation);
-          tokens.RemoveAt(evaluationIndex - 1);
-          tokens.RemoveAt(evaluationIndex - 1);
-          tokens.RemoveAt(evaluationIndex - 1);
-
-          tokens.Insert(evaluationIndex - 1, new Token(expr));
-
-          // Remove parentheses surrounding a resolved expression.
-          if (evaluationIndex - 2 > -1 && tokens[evaluationIndex - 2].Type == TokenType.OpenParen &&
-              evaluationIndex < tokens.Count && tokens[evaluationIndex].Type == TokenType.CloseParen)
+          var relationalOperator = tokens[evaluationIndex].Relation;
+          if (relationalOperator == RelationalOperator.In)
           {
-            // New resolved expression is now at evaluationIndex - 1.
-            tokens.RemoveAt(evaluationIndex - 2);
-            // New resolved expression is now at evaluationIndex - 2.
+            int numValues =0;
+            var value = "";
+            for (var i = evaluationIndex+2; i < tokens.Count; i++)
+            {
+              if (tokens[i].Type == TokenType.CloseParen)
+                break;
+              numValues +=1;
+              value = value +","+ tokens[i].Term;
+            }
+
+            var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
+              value,
+              relationalOperator);
             tokens.RemoveAt(evaluationIndex - 1);
+            tokens.RemoveAt(evaluationIndex - 1);
+            tokens.RemoveAt(evaluationIndex - 1);
+            for (int i = 0; i < numValues; i++)
+            {
+                    tokens.RemoveAt(evaluationIndex - 1);
+            }
+
+            tokens.Insert(evaluationIndex - 1, new Token(expr));
+
+            // Remove parentheses surrounding a resolved expression.
+            if (evaluationIndex - 2 > -1 && tokens[evaluationIndex - 2].Type == TokenType.OpenParen &&
+                evaluationIndex < tokens.Count && tokens[evaluationIndex].Type == TokenType.CloseParen)
+            {
+              // New resolved expression is now at evaluationIndex - 1.
+              tokens.RemoveAt(evaluationIndex - 2);
+              // New resolved expression is now at evaluationIndex - 2.
+              tokens.RemoveAt(evaluationIndex - 1);
+            }
+          }
+          else
+          {
+            var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
+  tokens[evaluationIndex + 1].Term,
+  relationalOperator);
+            tokens.RemoveAt(evaluationIndex - 1);
+            tokens.RemoveAt(evaluationIndex - 1);
+            tokens.RemoveAt(evaluationIndex - 1);
+
+            tokens.Insert(evaluationIndex - 1, new Token(expr));
+
+            // Remove parentheses surrounding a resolved expression.
+            if (evaluationIndex - 2 > -1 && tokens[evaluationIndex - 2].Type == TokenType.OpenParen &&
+                evaluationIndex < tokens.Count && tokens[evaluationIndex].Type == TokenType.CloseParen)
+            {
+              // New resolved expression is now at evaluationIndex - 1.
+              tokens.RemoveAt(evaluationIndex - 2);
+              // New resolved expression is now at evaluationIndex - 2.
+              tokens.RemoveAt(evaluationIndex - 1);
+            }
           }
         }
         else

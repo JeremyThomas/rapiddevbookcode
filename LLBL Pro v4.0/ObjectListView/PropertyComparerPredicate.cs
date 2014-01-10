@@ -72,4 +72,66 @@ namespace JesseJohnston
       }
     }
   }
+
+  internal class InComparerPredicate<T>
+  {
+    private readonly PropertyDescriptor property;
+    private readonly List<T> compareTo = new List<T>();
+    private readonly Comparer<T> comparer;
+
+    public InComparerPredicate(PropertyDescriptor property, string value)
+    {
+      if (property == null)
+        throw new ArgumentNullException("property");
+
+      this.property = property;
+
+      if (value == null)
+        compareTo.Add(default(T));
+      else
+      {
+        comparer = Comparer<T>.Default;
+        foreach (var s in value.Split(','))
+        {
+          if (!string.IsNullOrEmpty(s))
+          {
+            var compareTov = (T) property.Converter.ConvertFrom(s);
+            compareTo.Add(compareTov);
+          }
+        }
+
+      }
+    }
+
+    public bool Matches(object item)
+    {
+      if (item == null)
+        throw new ArgumentNullException("item");
+      if (property.ComponentType != item.GetType())
+        throw new ArgumentException("item");
+
+      try
+      {
+        var testValue = (T)property.GetValue(item);
+        foreach (var compareTov in compareTo)
+        {
+          var result = comparer.Compare(compareTov, testValue);
+          if (result == 0)
+            return true;
+        }
+
+
+            return false;
+      }
+      catch (TargetException)
+      {
+        // An intermediate property is null, so the leaf property value in the path is inaccessible.
+        // Just exclude this list item from the matches.
+        if (property is PropertyPathDescriptor)
+          return false;
+        else
+          throw;
+      }
+    }
+  }
 }

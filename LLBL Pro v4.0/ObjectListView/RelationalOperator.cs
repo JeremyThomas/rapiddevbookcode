@@ -8,6 +8,7 @@ namespace JesseJohnston
     Greater,
     GreaterEqual,
     Less,
-    LessEqual
+    LessEqual,
+    In
   }
 }

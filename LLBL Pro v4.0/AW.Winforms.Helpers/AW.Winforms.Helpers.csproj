@@ -62,6 +62,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdvancedDataGridView">
+      <HintPath>..\Lib\AdvancedDataGridView.dll</HintPath>
+    </Reference>
     <Reference Include="AW.Helper.LLBL">
       <HintPath>..\AW.Helper.LLBL\bin\Debug\AW.Helper.LLBL.dll</HintPath>
     </Reference>
