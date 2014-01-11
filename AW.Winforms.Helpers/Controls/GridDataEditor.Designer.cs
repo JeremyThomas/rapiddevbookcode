@@ -54,9 +54,13 @@
       this.toolStripLabelDeleteCount = new System.Windows.Forms.ToolStripLabel();
       this.toolStripLabelSaveResult = new System.Windows.Forms.ToolStripLabel();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripButtonEnableFilter = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonClearFilters = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonClearSort = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
+      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
       this.toolStripButtonObjectBrowser = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonObjectListViewVisualizer = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonEnableFilter = new System.Windows.Forms.ToolStripButton();
       this.dataGridViewEnumerable = new ADGV.AdvancedDataGridView();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingSourcePaging = new System.Windows.Forms.BindingSource(this.components);
@@ -73,9 +77,7 @@
       this.tabControlGrids = new System.Windows.Forms.TabControl();
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
-      this.toolStripButtonClearFilters = new System.Windows.Forms.ToolStripButton();
-      this.toolStripButtonClearSort = new System.Windows.Forms.ToolStripButton();
-      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+      this.searchToolBar = new ACS.UserControls.SearchToolBar();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -129,6 +131,7 @@
             this.toolStripButtonEnableFilter,
             this.toolStripButtonClearFilters,
             this.toolStripButtonClearSort,
+            this.toolStripButtonSearch,
             this.toolStripSeparator4,
             this.toolStripButtonObjectBrowser,
             this.toolStripButtonObjectListViewVisualizer});
@@ -307,6 +310,54 @@
       this.toolStripSeparator3.Name = "toolStripSeparator3";
       this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
       // 
+      // toolStripButtonEnableFilter
+      // 
+      this.toolStripButtonEnableFilter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonEnableFilter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEnableFilter.Image")));
+      this.toolStripButtonEnableFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonEnableFilter.Name = "toolStripButtonEnableFilter";
+      this.toolStripButtonEnableFilter.Size = new System.Drawing.Size(92, 22);
+      this.toolStripButtonEnableFilter.Text = "Enable Filtering";
+      this.toolStripButtonEnableFilter.ToolTipText = "Enable Filtering";
+      this.toolStripButtonEnableFilter.Visible = false;
+      this.toolStripButtonEnableFilter.Click += new System.EventHandler(this.toolStripButtonEnableFilter_Click);
+      // 
+      // toolStripButtonClearFilters
+      // 
+      this.toolStripButtonClearFilters.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonClearFilters.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonClearFilters.Image")));
+      this.toolStripButtonClearFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonClearFilters.Name = "toolStripButtonClearFilters";
+      this.toolStripButtonClearFilters.Size = new System.Drawing.Size(72, 22);
+      this.toolStripButtonClearFilters.Text = "Clear Filters";
+      this.toolStripButtonClearFilters.Click += new System.EventHandler(this.toolStripButtonClearFilters_Click);
+      // 
+      // toolStripButtonClearSort
+      // 
+      this.toolStripButtonClearSort.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonClearSort.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonClearSort.Image")));
+      this.toolStripButtonClearSort.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonClearSort.Name = "toolStripButtonClearSort";
+      this.toolStripButtonClearSort.Size = new System.Drawing.Size(62, 22);
+      this.toolStripButtonClearSort.Text = "Clear Sort";
+      this.toolStripButtonClearSort.Click += new System.EventHandler(this.toolStripButtonClearSort_Click);
+      // 
+      // toolStripButtonSearch
+      // 
+      this.toolStripButtonSearch.CheckOnClick = true;
+      this.toolStripButtonSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonSearch.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSearch.Image")));
+      this.toolStripButtonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonSearch.Name = "toolStripButtonSearch";
+      this.toolStripButtonSearch.Size = new System.Drawing.Size(46, 22);
+      this.toolStripButtonSearch.Text = "Search";
+      this.toolStripButtonSearch.Click += new System.EventHandler(this.toolStripButtonSearch_Click);
+      // 
+      // toolStripSeparator4
+      // 
+      this.toolStripSeparator4.Name = "toolStripSeparator4";
+      this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+      // 
       // toolStripButtonObjectBrowser
       // 
       this.toolStripButtonObjectBrowser.Enabled = false;
@@ -326,17 +377,6 @@
       this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(157, 22);
       this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListView Visualizer";
       this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
-      // 
-      // toolStripButtonEnableFilter
-      // 
-      this.toolStripButtonEnableFilter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonEnableFilter.Image")));
-      this.toolStripButtonEnableFilter.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonEnableFilter.Name = "toolStripButtonEnableFilter";
-      this.toolStripButtonEnableFilter.Size = new System.Drawing.Size(108, 22);
-      this.toolStripButtonEnableFilter.Text = "Enable Filtering";
-      this.toolStripButtonEnableFilter.ToolTipText = "Enable Filtering";
-      this.toolStripButtonEnableFilter.Visible = false;
-      this.toolStripButtonEnableFilter.Click += new System.EventHandler(this.toolStripButtonEnableFilter_Click);
       // 
       // dataGridViewEnumerable
       // 
@@ -466,7 +506,7 @@
       this.dataGridEnumerable.HeaderForeColor = System.Drawing.SystemColors.ControlText;
       this.dataGridEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridEnumerable.Name = "dataGridEnumerable";
-      this.dataGridEnumerable.Size = new System.Drawing.Size(1141, 516);
+      this.dataGridEnumerable.Size = new System.Drawing.Size(1141, 489);
       this.dataGridEnumerable.TabIndex = 6;
       this.dataGridEnumerable.DataSourceChanged += new System.EventHandler(this.dataGridEnumerable_DataSourceChanged);
       this.dataGridEnumerable.Navigate += new System.Windows.Forms.NavigateEventHandler(this.dataGridEnumerable_Navigate);
@@ -476,10 +516,10 @@
       this.tabControlGrids.Controls.Add(this.tabPageDataGrid);
       this.tabControlGrids.Controls.Add(this.tabPageDataGridView);
       this.tabControlGrids.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControlGrids.Location = new System.Drawing.Point(0, 25);
+      this.tabControlGrids.Location = new System.Drawing.Point(0, 52);
       this.tabControlGrids.Name = "tabControlGrids";
       this.tabControlGrids.SelectedIndex = 0;
-      this.tabControlGrids.Size = new System.Drawing.Size(1155, 548);
+      this.tabControlGrids.Size = new System.Drawing.Size(1155, 521);
       this.tabControlGrids.TabIndex = 7;
       this.tabControlGrids.SelectedIndexChanged += new System.EventHandler(this.tabControlGrids_SelectedIndexChanged);
       // 
@@ -489,7 +529,7 @@
       this.tabPageDataGrid.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGrid.Name = "tabPageDataGrid";
       this.tabPageDataGrid.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGrid.Size = new System.Drawing.Size(1147, 522);
+      this.tabPageDataGrid.Size = new System.Drawing.Size(1147, 495);
       this.tabPageDataGrid.TabIndex = 0;
       this.tabPageDataGrid.Text = "DataGrid";
       this.tabPageDataGrid.UseVisualStyleBackColor = true;
@@ -505,28 +545,21 @@
       this.tabPageDataGridView.Text = "DataGridView";
       this.tabPageDataGridView.UseVisualStyleBackColor = true;
       // 
-      // toolStripButtonClearFilters
+      // searchToolBar
       // 
-      this.toolStripButtonClearFilters.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonClearFilters.Image")));
-      this.toolStripButtonClearFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonClearFilters.Name = "toolStripButtonClearFilters";
-      this.toolStripButtonClearFilters.Size = new System.Drawing.Size(88, 22);
-      this.toolStripButtonClearFilters.Text = "Clear Filters";
-      this.toolStripButtonClearFilters.Click += new System.EventHandler(this.toolStripButtonClearFilters_Click);
-      // 
-      // toolStripButtonClearSort
-      // 
-      this.toolStripButtonClearSort.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonClearSort.Image")));
-      this.toolStripButtonClearSort.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonClearSort.Name = "toolStripButtonClearSort";
-      this.toolStripButtonClearSort.Size = new System.Drawing.Size(78, 22);
-      this.toolStripButtonClearSort.Text = "Clear Sort";
-      this.toolStripButtonClearSort.Click += new System.EventHandler(this.toolStripButtonClearSort_Click);
-      // 
-      // toolStripSeparator4
-      // 
-      this.toolStripSeparator4.Name = "toolStripSeparator4";
-      this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+      this.searchToolBar.AllowMerge = false;
+      this.searchToolBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+      this.searchToolBar.Location = new System.Drawing.Point(0, 25);
+      this.searchToolBar.MaximumSize = new System.Drawing.Size(0, 27);
+      this.searchToolBar.MinimumSize = new System.Drawing.Size(0, 27);
+      this.searchToolBar.Name = "searchToolBar";
+      this.searchToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+      this.searchToolBar.Size = new System.Drawing.Size(1155, 27);
+      this.searchToolBar.TabIndex = 8;
+      this.searchToolBar.Text = "searchToolBar1";
+      this.searchToolBar.Visible = false;
+      this.searchToolBar.Search += new ACS.UserControls.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
+      this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
       // 
       // GridDataEditor
       // 
@@ -534,6 +567,7 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.tabControlGrids);
       this.Controls.Add(this.bindingNavigatorPaging);
+      this.Controls.Add(this.searchToolBar);
       this.Controls.Add(this.bindingNavigatorData);
       this.Name = "GridDataEditor";
       this.Size = new System.Drawing.Size(1155, 598);
@@ -604,5 +638,7 @@
     private System.Windows.Forms.ToolStripButton toolStripButtonClearFilters;
     private System.Windows.Forms.ToolStripButton toolStripButtonClearSort;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+    private ACS.UserControls.SearchToolBar searchToolBar;
+    private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
   }
 }

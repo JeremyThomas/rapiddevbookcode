@@ -6,8 +6,9 @@ using System.Data;
 namespace JesseJohnston
 {
   /// <summary>
-  /// A node in the filter expression tree.  A node may be a terminal expression (i.e. property name, value, and relational operator)
-  /// or a sub-tree containing a logical operator, left and right terms.
+  ///   A node in the filter expression tree.  A node may be a terminal expression (i.e. property name, value, and relational
+  ///   operator)
+  ///   or a sub-tree containing a logical operator, left and right terms.
   /// </summary>
   internal class FilterNode : IEnumerable<FilterNode>
   {
@@ -256,9 +257,9 @@ namespace JesseJohnston
 
         // Split into tokens delimited by spaces, relational operators, and parentheses.  Remove extra spaces.
         var parts = ExtractTokens(expression,
-                                  new[] { ' ', '<', '>', '=', '!', '(', ')', '[', ']',',' },
-                                  new[] { '<', '>', '=', '!', '(', ')', 'I', 'N', 'S' },
-                                  new[] {'\'', '"'});
+          new[] {' ', '<', '>', '=', '!', '(', ')', '[', ']', ','},
+          new[] {'<', '>', '=', '!', '(', ')', 'I', 'N', 'S'},
+          new[] {'\'', '"'});
 
         if (parts.Count == 0)
           throw new ArgumentException("expression");
@@ -267,7 +268,7 @@ namespace JesseJohnston
         Token prevToken = null;
         Token prevRelationalToken = null;
         var parenCount = 0;
-        bool skipnext = false;
+        var skipnext = false;
 
         foreach (var part in parts)
         {
@@ -328,8 +329,8 @@ namespace JesseJohnston
               parenCount--;
             }
             else if (prevToken != null && prevToken.Type != TokenType.Condition && prevToken.Type != TokenType.Relation && prevToken.Type != TokenType.OpenParen)
-              if (prevRelationalToken == null || prevRelationalToken.Relation!=RelationalOperator.In)
-              throw new ArgumentException("An expression term must be preceded by an operator or opening paren.", "expression");
+              if (prevRelationalToken == null || prevRelationalToken.Relation != RelationalOperator.In)
+                throw new ArgumentException("An expression term must be preceded by an operator or opening paren.", "expression");
 
             t = new Token(part);
           }
@@ -358,7 +359,7 @@ namespace JesseJohnston
           throw new ArgumentException("An expression must contain at least two terms and a relational operator.", "expression");
       }
 
-      private ICollection<string> ExtractTokens(string expression, char[] delimiters, char[] delimitersIncludedAsTokens, char[] quotes)
+      private ICollection<string> ExtractTokens(string expression, IEnumerable<char> delimiters, IEnumerable<char> delimitersIncludedAsTokens, IEnumerable<char> quotes)
       {
         var tokens = new List<string>();
         var delims = new List<char>(delimiters); // delimiters
@@ -372,7 +373,8 @@ namespace JesseJohnston
 
         // Remove leading and trailing whitespace.
         expression = expression.Trim();
-        if (expression[expression.Length - 1] == ')' && expression[0] == '(')
+        // Remove brackets around entire expression
+        while (expression[expression.Length - 1] == ')' && expression[0] == '(')
           expression = expression.Remove(expression.Length - 1).Remove(0, 1);
 
         for (var i = 0; i < expression.Length; i++)
@@ -497,10 +499,10 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FilterNode"/> class that is a terminal node.
+    ///   Initializes a new instance of the <see cref="FilterNode" /> class that is a terminal node.
     /// </summary>
     /// <remarks>
-    /// A terminal node is a relational expression, and contains no child nodes.
+    ///   A terminal node is a relational expression, and contains no child nodes.
     /// </remarks>
     /// <param name="term">The expression term.</param>
     public FilterNode(RelationalExpression term)
@@ -511,7 +513,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="FilterNode"/> class that is not a terminal node.
+    ///   Initializes a new instance of the <see cref="FilterNode" /> class that is not a terminal node.
     /// </summary>
     /// <param name="left">The left child node.</param>
     /// <param name="right">The right node.</param>
@@ -531,7 +533,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Parses the specified text into a binary expression tree.
+    ///   Parses the specified text into a binary expression tree.
     /// </summary>
     /// <param name="expression">The expression text to parse.</param>
     /// <returns></returns>
@@ -557,14 +559,14 @@ namespace JesseJohnston
           var relationalOperator = tokens[evaluationIndex].Relation;
           if (relationalOperator == RelationalOperator.In)
           {
-            int numValues =0;
+            var numValues = 0;
             var value = "";
-            for (var i = evaluationIndex+2; i < tokens.Count; i++)
+            for (var i = evaluationIndex + 2; i < tokens.Count; i++)
             {
               if (tokens[i].Type == TokenType.CloseParen)
                 break;
-              numValues +=1;
-              value = value +","+ tokens[i].Term;
+              numValues += 1;
+              value = value + "," + tokens[i].Term;
             }
 
             var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
@@ -573,9 +575,10 @@ namespace JesseJohnston
             tokens.RemoveAt(evaluationIndex - 1);
             tokens.RemoveAt(evaluationIndex - 1);
             tokens.RemoveAt(evaluationIndex - 1);
-            for (int i = 0; i < numValues; i++)
+            tokens.RemoveAt(evaluationIndex - 1);
+            for (var i = 0; i < numValues; i++)
             {
-                    tokens.RemoveAt(evaluationIndex - 1);
+              tokens.RemoveAt(evaluationIndex - 1);
             }
 
             tokens.Insert(evaluationIndex - 1, new Token(expr));
@@ -593,8 +596,8 @@ namespace JesseJohnston
           else
           {
             var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
-  tokens[evaluationIndex + 1].Term,
-  relationalOperator);
+              tokens[evaluationIndex + 1].Term,
+              relationalOperator);
             tokens.RemoveAt(evaluationIndex - 1);
             tokens.RemoveAt(evaluationIndex - 1);
             tokens.RemoveAt(evaluationIndex - 1);
@@ -698,7 +701,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Evaluates the current node and it's child nodes.
+    ///   Evaluates the current node and it's child nodes.
     /// </summary>
     /// <param name="evaluator">The delegate used to evaluate terminal nodes.</param>
     /// <returns>True if the current node and it's children evaluate to true; false otherwise.</returns>
@@ -742,7 +745,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Resets the evaluation status for each node in the expression tree, so that it can be re-evaluated.
+    ///   Resets the evaluation status for each node in the expression tree, so that it can be re-evaluated.
     /// </summary>
     public void Reset()
     {

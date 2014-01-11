@@ -583,12 +583,17 @@ namespace AW.Winforms.Helpers.Controls
       dataGridViewEnumerable.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells);
       foreach (var column in dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Where(column => column.Width > MaxAutoGenerateColumnWidth))
         column.Width = MaxAutoGenerateColumnWidth;
+      searchToolBar.SetColumns(dataGridViewEnumerable.Columns);
     }
 
     private void dataGridViewEnumerable_FilterStringChanged(object sender, EventArgs e)
     {
       if (bindingSourceEnumerable.SupportsFiltering)
-       bindingSourceEnumerable.Filter = dataGridViewEnumerable.FilterString;
+      {
+        bindingSourceEnumerable.Filter = dataGridViewEnumerable.FilterString;
+        toolStripButtonClearFilters.Visible = !string.IsNullOrWhiteSpace(dataGridViewEnumerable.FilterString);
+        toolStripButtonClearFilters.ToolTipText = dataGridViewEnumerable.FilterString;
+      }
     }
 
     private void dataGridViewEnumerable_SortStringChanged(object sender, EventArgs e)
@@ -605,7 +610,6 @@ namespace AW.Winforms.Helpers.Controls
 
          //BindEnumerable(new Csla.ObjectListView(bindingSourceEnumerable.List));
         toolStripButtonEnableFilter.Visible = false;
-        toolStripButtonClearFilters.Visible = true;
       }
     }
 
@@ -623,6 +627,51 @@ namespace AW.Winforms.Helpers.Controls
       dataGridViewEnumerable.ClearSort(true);
       if (bindingSourceEnumerable.SupportsSorting)
         bindingSourceEnumerable.RemoveSort();
+    }
+
+    private void toolStripButtonSearch_Click(object sender, EventArgs e)
+    {
+      if (toolStripButtonSearch.Checked)
+        searchToolBar.Show();
+      else
+        searchToolBar.Hide();
+    }
+
+    private void searchToolBar_Search(object sender, ACS.UserControls.SearchToolBarSearchEventArgs e)
+    {
+      var startColumn = 0;
+      var startRow = 0;
+      if (!e.FromBegin)
+      {
+        var endcol = dataGridViewEnumerable.CurrentCell.ColumnIndex + 1 >= dataGridViewEnumerable.ColumnCount;
+        var endrow = dataGridViewEnumerable.CurrentCell.RowIndex + 1 >= dataGridViewEnumerable.RowCount;
+
+        if (endcol && endrow)
+        {
+          startColumn = dataGridViewEnumerable.CurrentCell.ColumnIndex;
+          startRow = dataGridViewEnumerable.CurrentCell.RowIndex;
+        }
+        else
+        {
+          startColumn = endcol ? 0 : dataGridViewEnumerable.CurrentCell.ColumnIndex + 1;
+          startRow = dataGridViewEnumerable.CurrentCell.RowIndex + (endcol ? 1 : 0);
+        }
+      }
+      var c = dataGridViewEnumerable.FindCell(
+        e.ValueToSearch,
+        e.ColumnToSearch != null ? e.ColumnToSearch.Name : null,
+        startRow,
+        startColumn,
+        e.WholeWord,
+        e.CaseSensitive);
+
+      if (c != null)
+        dataGridViewEnumerable.CurrentCell = c;
+    }
+
+    private void searchToolBar_VisibleChanged(object sender, EventArgs e)
+    {
+      toolStripButtonSearch.Checked = searchToolBar.Visible;
     }
   }
 }
