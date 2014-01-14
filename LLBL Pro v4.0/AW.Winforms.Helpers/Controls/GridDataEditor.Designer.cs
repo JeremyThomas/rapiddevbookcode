@@ -330,6 +330,7 @@
       this.toolStripButtonClearFilters.Name = "toolStripButtonClearFilters";
       this.toolStripButtonClearFilters.Size = new System.Drawing.Size(72, 22);
       this.toolStripButtonClearFilters.Text = "Clear Filters";
+      this.toolStripButtonClearFilters.Visible = false;
       this.toolStripButtonClearFilters.Click += new System.EventHandler(this.toolStripButtonClearFilters_Click);
       // 
       // toolStripButtonClearSort
@@ -389,7 +390,7 @@
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
-      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1141, 516);
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1141, 489);
       this.dataGridViewEnumerable.TabIndex = 4;
       this.dataGridViewEnumerable.TimeFilter = false;
       this.dataGridViewEnumerable.SortStringChanged += new System.EventHandler(this.dataGridViewEnumerable_SortStringChanged);
@@ -506,7 +507,7 @@
       this.dataGridEnumerable.HeaderForeColor = System.Drawing.SystemColors.ControlText;
       this.dataGridEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridEnumerable.Name = "dataGridEnumerable";
-      this.dataGridEnumerable.Size = new System.Drawing.Size(1141, 489);
+      this.dataGridEnumerable.Size = new System.Drawing.Size(1141, 516);
       this.dataGridEnumerable.TabIndex = 6;
       this.dataGridEnumerable.DataSourceChanged += new System.EventHandler(this.dataGridEnumerable_DataSourceChanged);
       this.dataGridEnumerable.Navigate += new System.Windows.Forms.NavigateEventHandler(this.dataGridEnumerable_Navigate);
@@ -516,10 +517,10 @@
       this.tabControlGrids.Controls.Add(this.tabPageDataGrid);
       this.tabControlGrids.Controls.Add(this.tabPageDataGridView);
       this.tabControlGrids.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControlGrids.Location = new System.Drawing.Point(0, 52);
+      this.tabControlGrids.Location = new System.Drawing.Point(0, 25);
       this.tabControlGrids.Name = "tabControlGrids";
       this.tabControlGrids.SelectedIndex = 0;
-      this.tabControlGrids.Size = new System.Drawing.Size(1155, 521);
+      this.tabControlGrids.Size = new System.Drawing.Size(1155, 548);
       this.tabControlGrids.TabIndex = 7;
       this.tabControlGrids.SelectedIndexChanged += new System.EventHandler(this.tabControlGrids_SelectedIndexChanged);
       // 
@@ -529,7 +530,7 @@
       this.tabPageDataGrid.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGrid.Name = "tabPageDataGrid";
       this.tabPageDataGrid.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGrid.Size = new System.Drawing.Size(1147, 495);
+      this.tabPageDataGrid.Size = new System.Drawing.Size(1147, 522);
       this.tabPageDataGrid.TabIndex = 0;
       this.tabPageDataGrid.Text = "DataGrid";
       this.tabPageDataGrid.UseVisualStyleBackColor = true;
@@ -540,7 +541,7 @@
       this.tabPageDataGridView.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGridView.Name = "tabPageDataGridView";
       this.tabPageDataGridView.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGridView.Size = new System.Drawing.Size(1147, 522);
+      this.tabPageDataGridView.Size = new System.Drawing.Size(1147, 495);
       this.tabPageDataGridView.TabIndex = 1;
       this.tabPageDataGridView.Text = "DataGridView";
       this.tabPageDataGridView.UseVisualStyleBackColor = true;
@@ -554,7 +555,7 @@
       this.searchToolBar.MinimumSize = new System.Drawing.Size(0, 27);
       this.searchToolBar.Name = "searchToolBar";
       this.searchToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this.searchToolBar.Size = new System.Drawing.Size(1155, 27);
+      this.searchToolBar.Size = new System.Drawing.Size(0, 27);
       this.searchToolBar.TabIndex = 8;
       this.searchToolBar.Text = "searchToolBar1";
       this.searchToolBar.Visible = false;

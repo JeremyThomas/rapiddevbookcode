@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("AW.DebugVisualizers")]
-[assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2012")]
-[assembly: AssemblyProduct("Enumerable Debugger Visualizer for VS2012")]
-[assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2013")]
+[assembly: AssemblyDescription("Enumerable Debugger Visualizer for VS2013")]
+[assembly: AssemblyProduct("Enumerable Debugger Visualizer for VS2013")]
+[assembly: AssemblyCopyright("Copyright © Jeremy Thomas 2014")]
 [assembly: AssemblyCompany("Jeremy Thomas")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
