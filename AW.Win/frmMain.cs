@@ -72,8 +72,24 @@ namespace AW.Win
     {
       var formType = Type.GetType(formName);
       if (formType == null)
-        return formName == typeof (FrmQueryRunner).FullName ? LaunchChildForm(typeof (FrmQueryRunner)) : null;
+      {
+        return LaunchChildForm(formName, typeof(FrmQueryRunner), typeof(FrmLLBLEntityViewer), typeof(FrmEntitiesAndFields));
+      }
       return formType == typeof(FrmEasyQuery) ? LaunchEasyQuery() : LaunchChildForm(formType);
+    }
+
+    private Form LaunchChildForm(string formName, params Type[] formTypes)
+    {
+      foreach (var formType in formTypes.Where(formType => formName == formType.FullName))
+      {
+        if (formType == typeof (FrmLLBLEntityViewer))
+          viewMetadataToolStripMenuItem_Click(null, null);
+        else
+          if (formType == typeof(FrmEntitiesAndFields))
+            viewEntitiesAndFieldsToolStripMenuItem_Click(null, null);
+        return LaunchChildForm(formType);
+      }
+      return  null;
     }
 
     public Form LaunchChildForm(Type formType, params Object[] args)
@@ -200,16 +216,17 @@ namespace AW.Win
     {
       LaunchQueryRunner();
     }
-
-
+    
     private void viewMetadataToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      FrmLLBLEntityViewer.Show(MetaSingletons.MetaData);
+      var childForm = LaunchChildForm(typeof(FrmLLBLEntityViewer), MetaSingletons.MetaData);
+      childForm.Tag = true;
     }
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      LaunchChildForm(typeof (FrmEntitiesAndFields), MetaSingletons.MetaData);
+      var childForm = LaunchChildForm(typeof(FrmEntitiesAndFields), MetaSingletons.MetaData);
+      childForm.Tag = true;
     }
 
     private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
