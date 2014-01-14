@@ -187,7 +187,6 @@ namespace AW.Winforms.Helpers.Controls
         toolStripButtonObjectListViewVisualizer.Enabled = IsObjectListView();
         toolStripButtonObjectListViewVisualizer.Visible = toolStripButtonObjectListViewVisualizer.Enabled;
         toolStripButtonEnableFilter.Visible = !bindingSourceEnumerable.SupportsFiltering;
-        toolStripButtonClearFilters.Visible = bindingSourceEnumerable.SupportsFiltering;
         BindGrids();
         SetButtonsOnEditEnded();
       }
@@ -606,7 +605,7 @@ namespace AW.Winforms.Helpers.Controls
       if (!bindingSourceEnumerable.SupportsFiltering)
       {
         EnsureFilteringEnabled = true;
-        BindEnumerable(_superset);
+        BindEnumerable((IEnumerable) _superset ?? bindingSourceEnumerable.List);
 
          //BindEnumerable(new Csla.ObjectListView(bindingSourceEnumerable.List));
         toolStripButtonEnableFilter.Visible = false;
