@@ -70,6 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LLBL", "LLBL", "{F90642C7-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{F15CB949-7617-4315-BC90-9A4A94633C86}"
 	ProjectSection(SolutionItems) = preProject
+		Documentation\AdvancedDataGridView MPL License.txt = Documentation\AdvancedDataGridView MPL License.txt
 		Documentation\DynamicQueryable-CSharpSamples MPL License.txt = Documentation\DynamicQueryable-CSharpSamples MPL License.txt
 		Documentation\Hawkeye MPL License.txt = Documentation\Hawkeye MPL License.txt
 		Documentation\llblgenlinqpad - New BSD License.txt = Documentation\llblgenlinqpad - New BSD License.txt
