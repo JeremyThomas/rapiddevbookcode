@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmQueryRunner));
       this.tabControl = new System.Windows.Forms.TabControl();
       this.contextMenuStripTab = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.toolStripMenuItemSave = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,8 +61,8 @@
       this.tabControl.SelectedIndex = 0;
       this.tabControl.Size = new System.Drawing.Size(918, 624);
       this.tabControl.TabIndex = 0;
-      this.tabControl.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
       this.tabControl.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
+      this.tabControl.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
       // 
       // contextMenuStripTab
       // 
@@ -140,20 +141,20 @@
       this.queryRunner1.Name = "queryRunner1";
       this.queryRunner1.Size = new System.Drawing.Size(904, 592);
       this.queryRunner1.TabIndex = 0;
-      this.queryRunner1.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
       this.queryRunner1.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
+      this.queryRunner1.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);
       // 
       // contextMenuStripBlank
       // 
       this.contextMenuStripBlank.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.blankToolStripMenuItem});
       this.contextMenuStripBlank.Name = "contextMenuStripBlank";
-      this.contextMenuStripBlank.Size = new System.Drawing.Size(111, 26);
+      this.contextMenuStripBlank.Size = new System.Drawing.Size(104, 26);
       // 
       // blankToolStripMenuItem
       // 
       this.blankToolStripMenuItem.Name = "blankToolStripMenuItem";
-      this.blankToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+      this.blankToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
       this.blankToolStripMenuItem.Text = "blank";
       // 
       // openFileDialog
@@ -171,6 +172,7 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(918, 624);
       this.Controls.Add(this.tabControl);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FrmQueryRunner";
       this.Tag = "true";
       this.Text = "Query Runner";
