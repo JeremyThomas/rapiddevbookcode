@@ -25,15 +25,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
   {
     #region Constants
 
-    public static readonly string[] AdditionalAssemblies = new[]
+    public static readonly string[] AdditionalAssemblies =
     {
       "SD.LLBLGen.Pro.ORMSupportClasses.dll",
       "AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
       "AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
-      "AW.LinqPadExtensions.dll"
+      "AW.LinqPadExtensions.dll", "Humanizer.dll"
     };
 
-    public static readonly string[] AdditionalNamespaces = new[]
+    public static readonly string[] AdditionalNamespaces =
     {
       "SD.LLBLGen.Pro.ORMSupportClasses",
       "AW.Helper",
@@ -42,7 +42,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       "AW.Winforms.Helpers.LLBL",
       "AW.LinqPadExtensions",
       "AW.LLBLGen.DataContextDriver",
-      "AW.LLBLGen.DataContextDriver.Static"
+      "AW.LLBLGen.DataContextDriver.Static",
+      "Humanizer"
     };
 
     #endregion

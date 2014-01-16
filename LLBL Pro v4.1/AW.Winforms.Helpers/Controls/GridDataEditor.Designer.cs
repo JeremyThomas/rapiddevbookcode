@@ -78,6 +78,7 @@
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
       this.searchToolBar = new ACS.UserControls.SearchToolBar();
+      this.toolStripButtonUnPage = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -134,7 +135,8 @@
             this.toolStripButtonSearch,
             this.toolStripSeparator4,
             this.toolStripButtonObjectBrowser,
-            this.toolStripButtonObjectListViewVisualizer});
+            this.toolStripButtonObjectListViewVisualizer,
+            this.toolStripButtonUnPage});
       this.bindingNavigatorData.Location = new System.Drawing.Point(0, 0);
       this.bindingNavigatorData.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
       this.bindingNavigatorData.MoveLastItem = this.bindingNavigatorMoveLastItem1;
@@ -282,7 +284,7 @@
       // 
       this.toolStripComboBoxClipboardCopyMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.toolStripComboBoxClipboardCopyMode.Name = "toolStripComboBoxClipboardCopyMode";
-      this.toolStripComboBoxClipboardCopyMode.Size = new System.Drawing.Size(160, 25);
+      this.toolStripComboBoxClipboardCopyMode.Size = new System.Drawing.Size(180, 25);
       this.toolStripComboBoxClipboardCopyMode.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxClipboardCopyMode_SelectedIndexChanged);
       // 
       // copyToolStripButton
@@ -361,21 +363,23 @@
       // 
       // toolStripButtonObjectBrowser
       // 
+      this.toolStripButtonObjectBrowser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
       this.toolStripButtonObjectBrowser.Enabled = false;
       this.toolStripButtonObjectBrowser.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectBrowser.Image")));
       this.toolStripButtonObjectBrowser.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectBrowser.Name = "toolStripButtonObjectBrowser";
-      this.toolStripButtonObjectBrowser.Size = new System.Drawing.Size(148, 22);
+      this.toolStripButtonObjectBrowser.Size = new System.Drawing.Size(132, 22);
       this.toolStripButtonObjectBrowser.Text = "View in Object Browser";
       this.toolStripButtonObjectBrowser.Click += new System.EventHandler(this.toolStripButtonObjectBrowser_Click);
       // 
       // toolStripButtonObjectListViewVisualizer
       // 
+      this.toolStripButtonObjectListViewVisualizer.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
       this.toolStripButtonObjectListViewVisualizer.Enabled = false;
       this.toolStripButtonObjectListViewVisualizer.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonObjectListViewVisualizer.Image")));
       this.toolStripButtonObjectListViewVisualizer.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.toolStripButtonObjectListViewVisualizer.Name = "toolStripButtonObjectListViewVisualizer";
-      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(157, 22);
+      this.toolStripButtonObjectListViewVisualizer.Size = new System.Drawing.Size(141, 22);
       this.toolStripButtonObjectListViewVisualizer.Text = "ObjectListView Visualizer";
       this.toolStripButtonObjectListViewVisualizer.Click += new System.EventHandler(this.toolStripButtonObjectListViewVisualizer_Click);
       // 
@@ -390,7 +394,7 @@
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
-      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1141, 489);
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1141, 516);
       this.dataGridViewEnumerable.TabIndex = 4;
       this.dataGridViewEnumerable.TimeFilter = false;
       this.dataGridViewEnumerable.SortStringChanged += new System.EventHandler(this.dataGridViewEnumerable_SortStringChanged);
@@ -541,7 +545,7 @@
       this.tabPageDataGridView.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGridView.Name = "tabPageDataGridView";
       this.tabPageDataGridView.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGridView.Size = new System.Drawing.Size(1147, 495);
+      this.tabPageDataGridView.Size = new System.Drawing.Size(1147, 522);
       this.tabPageDataGridView.TabIndex = 1;
       this.tabPageDataGridView.Text = "DataGridView";
       this.tabPageDataGridView.UseVisualStyleBackColor = true;
@@ -561,6 +565,17 @@
       this.searchToolBar.Visible = false;
       this.searchToolBar.Search += new ACS.UserControls.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
+      // 
+      // toolStripButtonUnPage
+      // 
+      this.toolStripButtonUnPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonUnPage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonUnPage.Image")));
+      this.toolStripButtonUnPage.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonUnPage.Name = "toolStripButtonUnPage";
+      this.toolStripButtonUnPage.Size = new System.Drawing.Size(100, 19);
+      this.toolStripButtonUnPage.Text = "Remove Pageing";
+      this.toolStripButtonUnPage.Visible = false;
+      this.toolStripButtonUnPage.Click += new System.EventHandler(this.toolStripButtonUnPage_Click);
       // 
       // GridDataEditor
       // 
@@ -641,5 +656,6 @@
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     private ACS.UserControls.SearchToolBar searchToolBar;
     private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
+    private System.Windows.Forms.ToolStripButton toolStripButtonUnPage;
   }
 }

@@ -114,7 +114,18 @@ namespace AW.Winforms.Helpers.Controls
       get { return bindingSourceEnumerable; }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the grid was set read-only.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if [read-only]; otherwise, <c>false</c>.
+    /// </value>
     public bool Readonly { get; set; }
+
+    /// <summary>
+    /// Was the last bound Enumerable not writable when grid is not read-only
+    /// </summary>
+    private bool _shouldBeReadonly;
 
     #endregion
 
@@ -209,14 +220,14 @@ namespace AW.Winforms.Helpers.Controls
       if (Readonly)
         return Readonly;
       var queryable = enumerable as IQueryable;
-      var shouldBeReadonly = queryable != null;
-      if (shouldBeReadonly)
+      _shouldBeReadonly = queryable != null;
+      if (_shouldBeReadonly)
       {
         if (typeToEdit == null)
           typeToEdit = queryable.ElementType;
-        shouldBeReadonly = !CanSave(typeToEdit);
+        _shouldBeReadonly = !CanSave(typeToEdit);
       }
-      return shouldBeReadonly;
+      return _shouldBeReadonly;
     }
 
     protected virtual bool GetFirstPage()
@@ -238,7 +249,7 @@ namespace AW.Winforms.Helpers.Controls
 
     protected bool Paging()
     {
-      return bindingSourcePaging.Count > 0;
+      return bindingSourcePaging.Count > 1;
     }
 
     protected virtual IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
@@ -328,9 +339,9 @@ namespace AW.Winforms.Helpers.Controls
       SetItemType(enumerable);
       bindingSourcePaging.DataSource = null;
       bindingSourcePaging.DataSource = CreatePageDataSource(pageSize, enumerable);
-      if (bindingSourcePaging.Count == 0)
-        return GetFirstPage(enumerable);
-      return bindingSourceEnumerable.List != null;
+      if (Paging())
+        return bindingSourceEnumerable.List != null;        
+      return GetFirstPage(enumerable);
     }
 
     private IEnumerable SkipTake()
@@ -505,7 +516,7 @@ namespace AW.Winforms.Helpers.Controls
       }
       else
         e.Column.SortMode = DataGridViewColumnSortMode.Automatic;
-      if (Readonly) return;
+      if (Readonly || _shouldBeReadonly) return;
       var coreType = MetaDataHelper.GetCoreType(e.Column.ValueType);
       if (e.Column.ValueType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn) return;
       var dataGridView = e.Column.DataGridView;
@@ -583,6 +594,7 @@ namespace AW.Winforms.Helpers.Controls
       foreach (var column in dataGridViewEnumerable.Columns.Cast<DataGridViewColumn>().Where(column => column.Width > MaxAutoGenerateColumnWidth))
         column.Width = MaxAutoGenerateColumnWidth;
       searchToolBar.SetColumns(dataGridViewEnumerable.Columns);
+      toolStripButtonUnPage.Visible = Paging();
     }
 
     private void dataGridViewEnumerable_FilterStringChanged(object sender, EventArgs e)
@@ -600,16 +612,26 @@ namespace AW.Winforms.Helpers.Controls
       bindingSourceEnumerable.Sort = dataGridViewEnumerable.SortString;
     }
 
+    private void toolStripButtonUnPage_Click(object sender, EventArgs e)
+    {
+      PageSize = 0;
+      BindEnumerable(SourceEnumerable);
+    }
     private void toolStripButtonEnableFilter_Click(object sender, EventArgs e)
     {
       if (!bindingSourceEnumerable.SupportsFiltering)
       {
         EnsureFilteringEnabled = true;
-        BindEnumerable((IEnumerable) _superset ?? bindingSourceEnumerable.List);
+        BindEnumerable(SourceEnumerable);
 
          //BindEnumerable(new Csla.ObjectListView(bindingSourceEnumerable.List));
         toolStripButtonEnableFilter.Visible = false;
       }
+    }
+
+    private IEnumerable SourceEnumerable
+    {
+      get { return (IEnumerable) _superset ?? bindingSourceEnumerable.List; }
     }
 
     public bool EnsureFilteringEnabled { get; set; }
@@ -672,5 +694,6 @@ namespace AW.Winforms.Helpers.Controls
     {
       toolStripButtonSearch.Checked = searchToolBar.Visible;
     }
+
   }
 }
