@@ -12,12 +12,10 @@ using AW.LLBLGen.DataContextDriver;
 [assembly: AssemblyProduct(Constants.AssemblyProduct)]
 [assembly: AssemblyCompany(Constants.AssemblyCompany)]
 [assembly: AssemblyCopyright(Constants.AssemblyCopyright)]
-[assembly: InternalsVisibleTo("AW.LLBLGen.DataContextDriver.Tests, PublicKey="
-                              + "0024000004800000940000000602000000240000525341310004000001000100b7ca1ffad3dde8"
-                              + "8292c0d17093ac90812579d80cacffbd97c9c7c61db7f65bea9ade61e8f3ddfb19704bdc653c8f"
-                              + "40917a46a0d5439f966f05e0917e90b79ed42743afc1bded5b691fd75c2f4e4b8a70914c7ac27f"
-                              + "2c0f9575393453f4ed2173d7cbb3259cc8216ceb4b6020b25e033c7207b53024187d05fcb11497"
-                              + "281fd0c3")]
+[assembly: InternalsVisibleTo("AW.LLBLGen.DataContextDriver.Tests, PublicKey=" 
+                              + "00240000048000009400000006020000002400005253413100040000010001" 
+                              + "00617C527F26977F11BF44A006FA17B0E76B3B733474167628978F3EFCBBA78591E491CA015B8D9F06C7A820218C0353BE65E59C4D26455723EC3CAA09273A7F88323" 
+                              + "A8F789B83B0FC9EEC3DC648B2ECBF42F56A1627E1327A129A4620044FA2F5B9CCC13E56CFB1D125D14799642F358CB45D56C305C033F77E5ACD93479576C7")]
 
 
 // Setting ComVisible to false makes the types in this assembly not visible 
