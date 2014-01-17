@@ -14,6 +14,6 @@ rem       @"LINQPad\Drivers\DataContext\3.5\")
 rem
 rem  The final part of the directory is the name of the assembly plus its public key token in brackets.
 echo 4.0 fc72f5371c581d00
-xcopy /i/y *.dll "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\4.0\AW.LLBLGen.DataContextDriver (fc72f5371c581d00)"
-xcopy /i/y *.pdb "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\4.0\AW.LLBLGen.DataContextDriver (fc72f5371c581d00)"
+xcopy /i/y *.dll "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\4.0\AW.LLBLGen.DataContextDriver.40 (fc72f5371c581d00)"
+xcopy /i/y *.pdb "C:\Documents and Settings\All Users\Application Data\LINQPad\Drivers\DataContext\4.0\AW.LLBLGen.DataContextDriver.40 (fc72f5371c581d00)"
 pause
