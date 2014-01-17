@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AW.DebugVisualizers</RootNamespace>
-    <AssemblyName>AW.DebugVisualizers</AssemblyName>
+    <AssemblyName>AW.DebugVisualizers.2013</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
