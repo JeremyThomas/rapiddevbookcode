@@ -45,7 +45,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     /// <summary>
     ///   AdapterType
     /// </summary>
-    public const string ElementNameAdaptertype = "AdapterType";
+    public const string ElementNameAdapterType = "AdapterType";
 
     public const string ElementNameAdapterAssembly = "AdapterAssembly";
 
@@ -63,6 +63,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public const string ElementNameFactoryAssembly = "FactoryAssembly";
     public const string ElementNameUseFields = "UseFields";
     public const string ElementNameDisplayInGrid = "DisplayInGrid";
+    public const string ElementNameMembersToExclude = "MembersToExclude";
     public const string TitleChooseLLBLEntityAssembly = "Choose LLBL entity assembly";
     public const string TitleChooseCustomType = "Choose LinqMetaData or ElementCreatorCore Type";
     public const string TitleChooseDataAccessAdapterAssembly = "Choose Data Access Adapter assembly";
@@ -88,7 +89,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static readonly string AdditionalNamespacesToolTip = string.Format(AdditionalNamespacesToolTipF, "driver");
     public static readonly string AdditionalNamespacesToolTipCnxt = string.Format(AdditionalNamespacesToolTipF, "connection");
 
-    private static readonly LLBLConnectionType[] AdapterConnectionTypes = new[]
+    private static readonly LLBLConnectionType[] AdapterConnectionTypes =
     {
       LLBLConnectionType.Adapter,
       LLBLConnectionType.AdapterFactory
@@ -242,7 +243,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static void CreateDriverDataElements(IConnectionInfo cxInfo)
     {
-      CreateElementIfNeeded(cxInfo, ElementNameAdaptertype, Settings.Default.DefaultAdapterType);
+      CreateElementIfNeeded(cxInfo, ElementNameAdapterType, Settings.Default.DefaultAdapterType);
       CreateElementIfNeeded(cxInfo, ElementNameAdapterAssembly, Settings.Default.DefaultAdapterAssembly);
       CreateElementIfNeeded(cxInfo, ElementNameFactoryMethod, Settings.Default.DefaultDataAccessAdapterFactoryMethod);
       CreateElementIfNeeded(cxInfo, ElementNameFactoryType, Settings.Default.DefaultDataAccessAdapterFactoryType);
@@ -250,13 +251,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameConnectionType, Settings.Default.DefaultConnectionType.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameUseFields, true.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameDisplayInGrid, DisplayInGrid.ExcludeEntityBaseProperties.ToString());
-      CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies, null);
-      CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces, null);
+      CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies);
+      CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces);
+      CreateElementIfNeeded(cxInfo, ElementNameMembersToExclude);
     }
 
     public static void UpGradeDriverDataElements(IConnectionInfo cxInfo)
     {
-      var adaptertypeName = GetDriverDataValue(cxInfo, ElementNameAdaptertype);
+      var adaptertypeName = GetDriverDataValue(cxInfo, ElementNameAdapterType);
       if (String.IsNullOrEmpty(adaptertypeName))
         CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.SelfServicing).ToString());
       else if (adaptertypeName == cxInfo.DatabaseInfo.DbVersion)
@@ -267,22 +269,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
         CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.AdapterFactory).ToString());
         cxInfo.DatabaseInfo.Provider = null;
         cxInfo.DatabaseInfo.DbVersion = null;
-        cxInfo.DriverData.Element(ElementNameAdaptertype).Value = String.Empty;
+        cxInfo.DriverData.Element(ElementNameAdapterType).Value = String.Empty;
       }
       else
       {
-        CreateElementIfNeeded(cxInfo, ElementNameAdaptertype, null);
+        CreateElementIfNeeded(cxInfo, ElementNameAdapterType, null);
         CreateElementIfNeeded(cxInfo, ElementNameAdapterAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
         CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.Adapter).ToString());
       }
       CreateElementIfNeeded(cxInfo, ElementNameUseFields, true.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameDisplayInGrid, DisplayInGrid.ExcludeEntityBaseProperties.ToString());
       cxInfo.CustomTypeInfo.CustomMetadataPath = null;
-      CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies, null);
-      CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces, null);
+      CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies);
+      CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces);
+      CreateElementIfNeeded(cxInfo, ElementNameMembersToExclude);
     }
 
-    private static void CreateElementIfNeeded(IConnectionInfo cxInfo, string elementName, string defaultValue)
+    private static void CreateElementIfNeeded(IConnectionInfo cxInfo, string elementName, string defaultValue = null)
     {
       if (cxInfo.DriverData.Element(elementName) == null)
       {
@@ -338,6 +341,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
       return howToDisplayInGrid;
     }
 
+    internal static string[] GetMembersToExclude(IConnectionInfo cxInfo)
+    {
+      var driverDataValue = GetDriverDataValue(cxInfo, ElementNameMembersToExclude);
+      return driverDataValue == null ? new string[0] : driverDataValue.Split(Environment.NewLine.ToCharArray());
+    }
+
     protected override void OnSourceInitialized(EventArgs e)
     {
       base.OnSourceInitialized(e);
@@ -382,7 +391,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
       Settings.Default.DefaultDisplayName = CxInfo.DisplayName;
 
-      Settings.Default.DefaultAdapterType = GetDriverDataValue(ElementNameAdaptertype);
+      Settings.Default.DefaultAdapterType = GetDriverDataValue(ElementNameAdapterType);
       Settings.Default.DefaultAdapterAssembly = GetDriverDataValue(ElementNameAdapterAssembly);
       int connectionTypeIndex;
       if (Int32.TryParse(GetDriverDataValue(ElementNameConnectionType), out connectionTypeIndex))
@@ -992,7 +1001,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       try
       {
-        var adapterTypeName = GetDriverDataValue(connectionInfo, ElementNameAdaptertype);
+        var adapterTypeName = GetDriverDataValue(connectionInfo, ElementNameAdapterType);
         if (!String.IsNullOrEmpty(adapterTypeName))
         {
           var validMethods = GetFunctionMappingStoreMember(connectionInfo, adapterTypeName);

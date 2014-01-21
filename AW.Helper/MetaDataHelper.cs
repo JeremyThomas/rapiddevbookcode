@@ -401,31 +401,26 @@ namespace AW.Helper
 		/// <returns> The System.Type of the items contained in the list. </returns>
 		public static Type GetEnumerableItemType(IEnumerable enumerable)
 		{
-			var queryable = enumerable as IQueryable;
-			if (queryable != null)
-				return queryable.ElementType;
-			Type itemType;
-			try
-			{
-				itemType = ListBindingHelper.GetListItemType(enumerable);
-			}
-			catch (NotImplementedException)
-			{
-				itemType = null;
-			}
-			if (itemType == null || itemType == typeof (object))
-			{
-				var enumerableType = enumerable.GetType();
-				var elementType = GetElementType(enumerableType);
-				if (elementType != enumerableType)
-					return elementType;
-				//queryable = enumerable.AsQueryable();
-				//return queryable.ElementType;
-			}
-			return itemType;
+		  var queryable = enumerable as IQueryable;
+		  if (queryable != null)
+		    return queryable.ElementType;
+		  Type itemType;
+		  var enumerableType = enumerable.GetType();
+		  var elementType = GetElementType(enumerableType);
+		  if (elementType != enumerableType)
+		    return elementType;
+		  try
+		  {
+		    itemType = ListBindingHelper.GetListItemType(enumerable);
+		  }
+		  catch (NotImplementedException)
+		  {
+		    itemType = null;
+		  }
+		  return itemType;
 		}
 
-		/// <summary>
+	  /// <summary>
 		/// 	Gets the type of the object type if it isn't enumerable or if it is get the enumerable Item Type.
 		/// </summary>
 		/// <param name="o"> The object. </param>

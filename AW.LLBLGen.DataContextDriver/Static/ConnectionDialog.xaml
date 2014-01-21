@@ -19,7 +19,7 @@
         Loaded="Window_Loaded"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Height="567" >
+        mc:Ignorable="d" Height="532" >
   <Window.Resources>
     <static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterToVisibility" LLBLConnectionType="Adapter" />
     <static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterFactoryToVisibility" LLBLConnectionType="AdapterFactory" />
@@ -39,9 +39,9 @@
       <RowDefinition  />
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    <TabControl x:Name="TabControl" Margin="0">
+    <TabControl x:Name="TabControl" Margin="0" >
       <TabItem Header="Connection" ToolTip="Connection settings required by LLBL">
-        <StackPanel MinHeight="0" Margin="7">
+        <StackPanel MinHeight="0" Margin="0,11,14,3">
 
           <DockPanel>
             <Label DockPanel.Dock="Right"
@@ -215,7 +215,7 @@
               <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Click="ChooseAdapterOrFactoryClass"
 									ToolTip="{Binding TargetName, RelativeSource={RelativeSource Self}}"
-									TargetName="{x:Static static:ConnectionDialog.ElementNameAdaptertype}">
+									TargetName="{x:Static static:ConnectionDialog.ElementNameAdapterType}">
                   <Run Text="Choose..."/>
                 </Hyperlink>
               </Label>
@@ -230,45 +230,15 @@
               <Label DockPanel.Dock="Right" Padding="1"/>
               <Label x:Name="lblFunctionMappingStoreMember"
 								Padding="0,0,0,1"
-								ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" Content="Name of FunctionMappingStoreMember:"/>
+								ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" 
+                     Content="Name of FunctionMappingStoreMember:"/>
             </DockPanel>
             <TextBox x:Name="textBoxFunctionMappingStoreMember"
 							Text="{Binding CxInfo.DriverData.Element[FunctionMappingStoreMember].Value}"
 							ToolTip="{Binding Content, ElementName=lblFunctionMappingStoreMember}" />
           </StackPanel>
 
-          <StackPanel Orientation="Horizontal">
-            <StackPanel.Resources>
-              <Style TargetType="{x:Type ComboBox}">
-                <Setter Property="Margin" Value="5,0,5,0" />
-              </Style>
-            </StackPanel.Resources>
-            <CheckBox Margin="1,0,0,5"
-							IsChecked="{Binding CxInfo.Persist}"
-							ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" Content="Remember this connection"/>
-            <CheckBox Margin="5,0,0,5"
-							IsChecked="{Binding CxInfo.DriverData.Element[UseFields].Value}"
-							ToolTip="If you choose to use entity information to create the schema tree more information will be shown in the tree nodes tooltips however only properties created by the designer are shown" Content="Use entity info rather then just reflection"/>
-            <ComboBox x:Name="ComboBoxDisplayInGrid"
-							Width="194"
-							DisplayMemberPath="Description"
-							ItemsSource="{Binding Source={local:Enumeration {x:Type dataContextDriver:DisplayInGrid}}}"
-							SelectedValue="{Binding CxInfo.DriverData.Element[DisplayInGrid].Value, Mode=TwoWay}"
-							SelectedValuePath="Value"
-							ToolTip="Options to use when a query is run with 'Results to Data Grids'" />
-            <Button x:Name="btnSaveDefault"
-							MinWidth="60"
-							Margin="5,0,0,0"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center"
-							VerticalContentAlignment="Center"
-							Click="btnSaveDefault_Click"
-							Content="Save as default"
-							IsDefault="True"
-							Padding="8,2"
-							TabIndex="1"
-							ToolTip="Save this connection as the default for new connections, this enables cloning of a connection" />
-          </StackPanel>
+
         </StackPanel>
       </TabItem>
       <TabItem DataContext="{Binding CxInfo}"
@@ -515,9 +485,9 @@
 						Grid.ColumnSpan="3"
 						Height="23"
 						MinWidth="200"
-						Margin="3"
+						Margin="3,5,0,0"
 						HorizontalAlignment="Left"
-						VerticalAlignment="Center"
+						VerticalAlignment="Top"
 						Text="{Binding DatabaseInfo.Server, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           <Label Grid.Row="15"
 						Grid.Column="0"
@@ -567,6 +537,41 @@
 						Text="{Binding DatabaseInfo.UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
         </Grid>
       </TabItem>
+      <TabItem Header="UI"
+               ToolTip="Options for the Schema Tree View and Grid output">
+        <Grid>
+ <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+          </Grid.RowDefinitions>
+          <StackPanel Orientation="Horizontal">
+            <Label x:Name="lblSchemaTreeView"
+                   ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" FontWeight="Bold" >Schema Tree View:</Label>
+          <CheckBox 
+              IsChecked="{Binding CxInfo.DriverData.Element[UseFields].Value}"
+        		ToolTip="If you choose to use entity information to create the schema tree more information will be shown in the tree nodes tooltips however only properties created by the designer are shown" Content="Use entity info rather then just reflection" Grid.ColumnSpan="2" VerticalAlignment="Center"/>
+          </StackPanel>
+          <StackPanel Grid.Row="1"  Orientation="Horizontal" >
+            <Label x:Name="lblComboBoxDisplayInGrid"
+                   ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" >Options to use when a query is run with 'Results to Data Grids':</Label>
+            <ComboBox x:Name="ComboBoxDisplayInGrid"
+                      DisplayMemberPath="Description"
+                      ItemsSource="{Binding Source={local:Enumeration {x:Type dataContextDriver:DisplayInGrid}}}"
+                      SelectedValue="{Binding CxInfo.DriverData.Element[DisplayInGrid].Value, Mode=TwoWay}"
+                      SelectedValuePath="Value"
+                      ToolTip="{Binding Content, ElementName=lblComboBoxDisplayInGrid}" 
+                      Width="450"
+                      />
+          </StackPanel>
+          <Label x:Name="lblMembersToExclude"  Grid.Row="2"
+                   ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" FontWeight="Bold" >Properties to Exclude from display in the grid (one per line)</Label>
+          <TextBox x:Name="TextBoxMembersToExclude"  Text="{Binding CxInfo.DriverData.Element[MembersToExclude].Value}"  Grid.Row="3" 
+                   HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoWordSelection="True" AcceptsReturn="True"  
+                   ToolTip="{Binding Content, ElementName=lblMembersToExclude}" />
+        </Grid>
+      </TabItem>
       <TabItem x:Name="AdditionalAssembliesAndNamespaces" Header="Additional Assemblies and Namespaces" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type static:ConnectionDialog}}"
 				DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}">
         <Grid >
@@ -575,7 +580,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition Height="Auto"/>
-          </Grid.RowDefinitions>          
+          </Grid.RowDefinitions>
           <DataGrid x:Name="AdditionalAssembliesDataGridCnxt"
       			MinWidth="200"
       			AutoGenerateColumns="False"
@@ -591,7 +596,7 @@
               </DataGridTextColumn>
             </DataGrid.Columns>
           </DataGrid>
- 
+
           <Grid Grid.Row="2" x:Name="NamespacesCanvas"  Height="Auto">
             <DataGrid x:Name="AdditionalNamespacesDataGridCnxt"
           		MinWidth="200"
@@ -630,7 +635,7 @@
           </WrapPanel>
           <GridSplitter Name="gridSplitterAdditionalAssemblies" HorizontalAlignment="Stretch" Height="2" VerticalAlignment="Top" Grid.Row="1"
                                       Background="Black" ResizeBehavior="PreviousAndNext"
-              ShowsPreview="True" DragStarted="GridSplitter_DragStarted" DragCompleted="GridSplitter_DragCompleted" />  
+              ShowsPreview="True" DragStarted="GridSplitter_DragStarted" DragCompleted="GridSplitter_DragCompleted" />
         </Grid>
       </TabItem>
       <TabItem x:Name="DriverTab"
@@ -1010,6 +1015,27 @@
 
     </TabControl>
     <DockPanel Margin="0,5,0,0" LastChildFill="False" Grid.Row="1" MinHeight="30" RenderTransformOrigin="0.519,-10.367" MaxHeight="30">
+      <StackPanel Orientation="Horizontal">
+        <StackPanel.Resources>
+          <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Margin" Value="5,0,5,0" />
+          </Style>
+        </StackPanel.Resources>
+        <CheckBox Margin="1,0,0,5"
+							IsChecked="{Binding CxInfo.Persist}"
+							ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" Content="Remember this connection" VerticalAlignment="Center"/>
+        <Button x:Name="btnSaveDefault"
+							MinWidth="60"
+							Margin="5,0,0,0"
+							HorizontalAlignment="Center"
+							VerticalAlignment="Center"
+							VerticalContentAlignment="Center"
+							Click="btnSaveDefault_Click"
+							Content="Save as default"
+							Padding="8,2"
+							TabIndex="1"
+							ToolTip="Save this connection as the default for new connections, this enables cloning of a connection" />
+      </StackPanel>
       <Button x:Name="btnCancel"
 				MinWidth="60"
 				Margin="5,0,5,5"
@@ -1025,9 +1051,8 @@
 				Click="btnOK_Click"
 				Content="OK"
 				DockPanel.Dock="Right"
-				IsDefault="True"
 				Padding="8,2"
-				TabIndex="1" />
+				TabIndex="1" IsDefault="True" />
     </DockPanel>
   </Grid>
 </Window>

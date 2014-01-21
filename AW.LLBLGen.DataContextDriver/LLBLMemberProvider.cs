@@ -18,7 +18,7 @@ namespace AW.LLBLGen.DataContextDriver
 
 		public static ICustomMemberProvider CreateCustomDisplayMemberProviderIfNeeded(object objectToWrite)
 		{
-			var objectToWriteType = objectToWrite.GetType(); //MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToWrite);
+			var objectToWriteType = MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToWrite);
 			var isCustomMemberProvider = objectToWriteType.GetInterface("ICustomMemberProvider", true) != null;
 			return !isCustomMemberProvider && IsEntity(objectToWriteType) ? new LLBLMemberProvider(objectToWrite, objectToWriteType) : null;
 		}
