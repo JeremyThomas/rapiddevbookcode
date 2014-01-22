@@ -236,7 +236,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
       mockedIConnectionInfo.Setup(ci => ci.DriverData).Returns(xElementDriverData);
       mockedIConnectionInfo.Setup(ci => ci.CustomTypeInfo).Returns(mockedICustomTypeInfo.Object);
       mockedIConnectionInfo.Setup(ci => ci.DatabaseInfo).Returns(mockedIDatabaseInfo.Object);
-      ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdaptertype, "Northwind.DAL.SqlServer.DataAccessAdapter");
+      ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdapterType, "Northwind.DAL.SqlServer.DataAccessAdapter");
       ConnectionDialog.SetDriverDataValue(mockedIConnectionInfo.Object, ConnectionDialog.ElementNameAdapterAssembly, "Northwind.DAL.SqlServer.dll");
       return mockedIConnectionInfo;
     }
