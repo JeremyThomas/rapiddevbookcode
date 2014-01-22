@@ -20,6 +20,8 @@ namespace AW.Winforms.Helpers.Controls
 {
   public partial class GridDataEditor : UserControl
   {
+    private readonly string[] _membersToExclude;
+
     /// <summary>
     /// The maximum automatic generate column width - 300
     /// </summary>
@@ -42,8 +44,10 @@ namespace AW.Winforms.Helpers.Controls
     /// <summary>
     ///   Initializes a new instance of the <see cref="T:System.Windows.Forms.UserControl" /> class.
     /// </summary>
-    public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly) : this()
+    public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly, params string[] membersToExclude)
+      : this()
     {
+      _membersToExclude = membersToExclude;
       if (ValueTypeWrapper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
       {
         enumerable = ValueTypeWrapper.CreateWrapperForBinding(enumerable);
@@ -508,6 +512,10 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
     {
+      var dataGridView = e.Column.DataGridView;
+      if (_membersToExclude != null && _membersToExclude.Contains(e.Column.DataPropertyName))
+        dataGridView.Columns.Remove(e.Column);
+
       dataGridViewEnumerable.AutoGenerateContextFilters = bindingSourceEnumerable.SupportsFiltering;
       if (dataGridViewEnumerable.AutoGenerateContextFilters)
       {
@@ -519,7 +527,7 @@ namespace AW.Winforms.Helpers.Controls
       if (Readonly || _shouldBeReadonly) return;
       var coreType = MetaDataHelper.GetCoreType(e.Column.ValueType);
       if (e.Column.ValueType == null || e.Column is DataGridViewComboBoxColumn || e.Column is DataGridViewDateTimeColumn) return;
-      var dataGridView = e.Column.DataGridView;
+
       if (coreType.IsEnum)
       {
         HumanizedEnumConverter.AddEnumerationConverter(e.Column.ValueType);

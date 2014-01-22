@@ -138,33 +138,40 @@ namespace AW.LLBLGen.DataContextDriver.Static
         {
           case DisplayInGrid.ExcludeEntityBaseProperties:
             var elementType = LinqUtils.DetermineSetElementType(objectToDisplay.GetType());
-            if (typeof (IEntityCore).IsAssignableFrom(elementType))
-            {
-              var membersToExclude = typeof (EntityBase).GetProperties().Select(p => p.Name)
-                .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
-              if (typeof (IEntity).IsAssignableFrom(elementType))
-              {
-                // remove alwaysFetch/AlreadyFetched flag properties
-                membersToExclude = membersToExclude
-                  .Union(elementType.GetProperties()
-                    .Where(p => p.PropertyType == typeof (bool) &&
-                                (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch")))
-                    .Select(p => p.Name));
-              }
-              options.MembersToExclude = membersToExclude.Distinct().ToArray();
-            }
+            options.MembersToExclude = GetEntityBaseProperties(elementType).Union(_membersToExclude).ToArray();
             break;
           case DisplayInGrid.UseEditableGrid:
           case DisplayInGrid.UseEditableGridPaged:
             var toDisplay = objectToDisplay as IEnumerable;
             if (toDisplay != null)
             {
-              CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LinqPadExtensions.CustomVisualizers.DefaultPageSize);
+              options.MembersToExclude = GetEntityBaseProperties(MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToDisplay)).Union(_membersToExclude).ToArray();
+              CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort)0 : LinqPadExtensions.CustomVisualizers.DefaultPageSize, options.MembersToExclude);
               return;
             }
             break;
         }
       base.DisplayObjectInGrid(objectToDisplay, options);
+    }
+
+    private static IEnumerable<string> GetEntityBaseProperties(Type elementType)
+    {
+      if (typeof (IEntityCore).IsAssignableFrom(elementType))
+      {
+        var membersToExclude = typeof (EntityBase).GetProperties().Select(p => p.Name)
+          .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
+        if (typeof (IEntity).IsAssignableFrom(elementType))
+        {
+          // remove alwaysFetch/AlreadyFetched flag properties
+          membersToExclude = membersToExclude
+            .Union(elementType.GetProperties()
+              .Where(p => p.PropertyType == typeof (bool) &&
+                          (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch") || p.Name.EndsWith("NewIfNotFound")))
+              .Select(p => p.Name));
+        }
+        return membersToExclude.Distinct();
+      }
+      return Enumerable.Empty<string>();
     }
 
     private DisplayInGrid _howToDisplayInGrid;
@@ -175,6 +182,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         LLBLWinformHelper.ForceInitialization();
         _howToDisplayInGrid = ConnectionDialog.GetHowToDisplayInGrid(cxInfo).GetValueOrDefault(_howToDisplayInGrid);
+       _membersToExclude = ConnectionDialog.GetMembersToExclude(cxInfo);
         var baseType = context.GetType().BaseType;
         if (baseType != null)
         {
@@ -272,6 +280,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static readonly MethodInfo HandlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
     private TextWriter _sqlTranslationWriter;
+    private IEnumerable<string> _membersToExclude;
 
     private void SQLTraceEventHandler(object sender, EventArgs e)
     {

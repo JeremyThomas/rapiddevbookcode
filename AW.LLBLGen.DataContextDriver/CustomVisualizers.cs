@@ -14,14 +14,15 @@ namespace AW.LLBLGen.DataContextDriver
 {
 	public static class CustomVisualizers
 	{
-    /// <summary>
-    /// Displays the enumerable in a paged DataGridView Custom Visualizer.
-    /// If the enumerable contains LLBL entities it attempts to create a LLBL Persister
-    /// </summary>
-    /// <param name="enumerable">The enumerable.</param>
-    /// <param name="pageSize">Size of the page.</param>
-    /// <returns></returns>
-    public static IEnumerable DisplayInGrid(IEnumerable enumerable, ushort pageSize)
+	  /// <summary>
+	  /// Displays the enumerable in a paged DataGridView Custom Visualizer.
+	  /// If the enumerable contains LLBL entities it attempts to create a LLBL Persister
+	  /// </summary>
+	  /// <param name="enumerable">The enumerable.</param>
+	  /// <param name="pageSize">Size of the page.</param>
+	  /// <param name="membersToExclude"></param>
+	  /// <returns></returns>
+	  public static IEnumerable DisplayInGrid(IEnumerable enumerable, ushort pageSize, params string[] membersToExclude)
     {
       IDataEditorPersister dataEditorPersister = null;
       if (enumerable != null)
@@ -35,7 +36,7 @@ namespace AW.LLBLGen.DataContextDriver
             if (dataAccessAdapter != null) dataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(dataAccessAdapter);
           }
       }
-      return enumerable.DisplayInGrid(dataEditorPersister, pageSize);
+      return enumerable.DisplayInGrid(dataEditorPersister, pageSize, membersToExclude);
     }
 
 		#region Self Servicing

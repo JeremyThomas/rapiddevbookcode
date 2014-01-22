@@ -65,17 +65,18 @@ namespace AW.LinqPadExtensions
 			return DisplayInGrid(enumerable, dataEditorPersister, DefaultPageSize);
 		}
 
-		/// <summary>
-		/// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
-		/// </summary>
-		/// <param name="enumerable"> The enumerable. </param>
-		/// <param name="dataEditorPersister"> The data editor persister. </param>
-		/// <param name="pageSize"> Size of the page. </param>
-		/// <returns> </returns>
-		public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize)
+	  /// <summary>
+	  /// 	Displays the enumerable in a paged DataGridView Custom Visualizer.
+	  /// </summary>
+	  /// <param name="enumerable"> The enumerable. </param>
+	  /// <param name="dataEditorPersister"> The data editor persister. </param>
+	  /// <param name="pageSize"> Size of the page. </param>
+	  /// <param name="membersToExclude"></param>
+	  /// <returns> </returns>
+	  public static IEnumerable DisplayInGrid(this IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, params string[] membersToExclude)
 		{
 			if (enumerable != null)
-				PanelManager.DisplayControl(new GridDataEditor(enumerable, dataEditorPersister, pageSize, false));
+        PanelManager.DisplayControl(new GridDataEditor(enumerable, dataEditorPersister, pageSize, false, membersToExclude));
 			return Enumerable.Empty<object>(); //So can be used in a linqpad expression
 		}
 

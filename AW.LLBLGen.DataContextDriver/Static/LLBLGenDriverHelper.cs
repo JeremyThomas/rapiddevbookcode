@@ -65,7 +65,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 		public static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo)
 		{
 			ConnectionDialog.UpGradeDriverDataElements(cxInfo);
-			var adapterTypeName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameAdaptertype);
+			var adapterTypeName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameAdapterType);
 			var factoryTypeName = ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameFactoryType);
 			if (String.IsNullOrEmpty(adapterTypeName) && String.IsNullOrEmpty(factoryTypeName))
 				throw new ApplicationException("CommonDaoBase or adapter not found!");
