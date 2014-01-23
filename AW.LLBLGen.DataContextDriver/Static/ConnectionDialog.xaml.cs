@@ -1205,12 +1205,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       var dcs = new DataConnectionConfiguration(null);
       dcs.LoadConfiguration(dcd);
 
-      var dataProvider = dcd.UnspecifiedDataSource.Providers.FirstOrDefault(p => p.Name == Provider);
-      if (dataProvider != null)
-      {
-        dcd.SelectedDataSource = dcd.UnspecifiedDataSource;
-        dcd.SelectedDataProvider = dataProvider;
-      }
+      DataConnectionConfiguration.SelectDataProvider(dcd, Provider);
 
       if (dcd.SelectedDataProvider != null)
         dcd.ConnectionString = CxInfo.DatabaseInfo.CustomCxString;
