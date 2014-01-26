@@ -131,7 +131,6 @@
     <Compile Include="Static\ConnectionDialog.xaml.cs">
       <DependentUpon>ConnectionDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Static\EnumerationExtension.cs" />
     <Compile Include="Static\LLBLConnectionTypeToVisibilityConverter.cs" />
     <Compile Include="Static\LLBLGenStaticDriver.cs" />
     <Compile Include="LLBLMemberProvider.cs" />
