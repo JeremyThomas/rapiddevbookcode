@@ -5,7 +5,7 @@ using System.Reflection;
 // associated with an assembly.
 
 [assembly: AssemblyConfiguration(AssemblyInfoConstants.AssemblyConfiguration)]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("All Rights Reserved")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyInformationalVersion(AssemblyInfoConstants.AssemblyInformationalVersion)]
 
@@ -35,6 +35,9 @@ internal static class AssemblyInfoConstants
   public const string AssemblyConfiguration = "Release";
 #endif
   public const string ConfigurationSuffix = "\r\nBuild: " + AssemblyConfiguration;
+
+  public const string AssemblyProduct = "Adventure Works Cycles Demo";
+  public const string AssemblyCompany = "Adventure Works Cycles";
 }
 
 //[assembly: AllowPartiallyTrustedCallers]

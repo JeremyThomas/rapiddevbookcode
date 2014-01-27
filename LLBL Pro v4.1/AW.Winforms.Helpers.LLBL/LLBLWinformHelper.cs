@@ -347,9 +347,5 @@ namespace AW.Winforms.Helpers.LLBL
 			return propertyType.ToString();
 		}
 
-		public static void BrowseData(this ILinqMetaData linqMetaData)
-		{
-			FrmEntitiesAndFields.ShowEntitiesAndFields(linqMetaData, null);
-		}
 	}
 }

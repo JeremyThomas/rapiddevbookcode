@@ -68,7 +68,7 @@ namespace AW.Winforms.Helpers.PropGridEx
 		/// <summary>
 		/// Add the instance fields of an object
 		/// </summary>
-		private static void AddTypeFields(IReflect type, ICollection<PropertyDescriptor> fields, ICollection<string> addedMemberNames)
+		private static void AddTypeFields(Type type, ICollection<PropertyDescriptor> fields, ICollection<string> addedMemberNames)
 		{
 			// stop at List / ArrayList / Dictionary / SortedList / Hashtable 
 			if ((type == typeof (ArrayList)) ||
