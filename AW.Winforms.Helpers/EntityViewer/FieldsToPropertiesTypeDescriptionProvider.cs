@@ -441,7 +441,7 @@ public class FieldsToPropertiesTypeDescriptionProvider : TypeDescriptionProvider
 		/// <summary>
 		/// Add the  fields of an object
 		/// </summary>
-		private static void AddTypeFields(IReflect type, Attribute[] attributes, PropertyDescriptorCollection fields, ICollection<string> addedMemberNames)
+		private static void AddTypeFields(Type type, Attribute[] attributes, PropertyDescriptorCollection fields, ICollection<string> addedMemberNames)
 		{
 			if ((type == typeof (ArrayList)) ||
 			    (type == typeof (Hashtable)) ||

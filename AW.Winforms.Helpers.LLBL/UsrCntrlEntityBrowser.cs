@@ -16,7 +16,6 @@ namespace AW.Winforms.Helpers.LLBL
 {
   public partial class UsrCntrlEntityBrowser : UsrCntrlThreePanelBase
 	{
-		private static UsrCntrlEntityBrowser _formSingleton;
 		private readonly Type _baseType;
 		private readonly ILinqMetaData _linqMetaData;
 
