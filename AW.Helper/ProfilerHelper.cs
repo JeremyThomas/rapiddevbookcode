@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Data.Common;
 using System.Globalization;
 using System.Reflection;
@@ -7,64 +6,80 @@ using System.Reflection;
 namespace AW.Helper
 {
   /// <summary>
-  /// 	http://www.OrmProfiler.com
+  ///   http://www.OrmProfiler.com
   /// </summary>
   public static class ProfilerHelper
   {
     /// <summary>
-    /// SD.Tools.OrmProfiler.Interceptor
+    ///   SD.Tools.OrmProfiler.Interceptor
     /// </summary>
     public const string OrmProfilerAssemblyString = "SD.Tools.OrmProfiler.Interceptor";
+
     /// <summary>
-    /// SD.Tools.OrmProfiler.Interceptor.NET45
+    ///   SD.Tools.OrmProfiler.Interceptor.NET45
     /// </summary>
     public const string OrmProfilerAssemblyString45 = OrmProfilerAssemblyString + ".NET45";
+
     public const string OrmProfilerAssemblyFileName = OrmProfilerAssemblyString + ".dll";
     public const string OrmProfilerAssemblyFileName45 = OrmProfilerAssemblyString45 + ".dll";
+
     /// <summary>
-    /// SD.Tools.OrmProfiler.Interceptor.InterceptorCore
+    ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore
     /// </summary>
     public const string OrmProfilerInterceptorTypeName = OrmProfilerAssemblyString + ".InterceptorCore";
 
     /// <summary>
-    /// SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.dll
+    ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.dll
     /// </summary>
     public const string OrmProfilerInterceptorAssemblyQualifiedTypeName = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyString;
+
     /// <summary>
-    /// SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.NET45.dll
+    ///   SD.Tools.OrmProfiler.Interceptor.InterceptorCore, SD.Tools.OrmProfiler.Interceptor.NET45.dll
     /// </summary>
     public const string OrmProfilerInterceptorAssemblyQualifiedTypeName45 = OrmProfilerInterceptorTypeName + ", " + OrmProfilerAssemblyString45;
+
     /// <summary>
-    /// Initialize
+    ///   Initialize
     /// </summary>
     public const string InitializeMethodName = "Initialize";
+
     /// <summary>
-    /// ORMProfilerEnabled
+    ///   ORMProfilerEnabled
     /// </summary>
     public const string OrmProfilerAppSettingsName = "ORMProfilerEnabled";
+
     /// <summary>
-    /// Solutions Design\ORM Profiler v1.1
+    ///   Solutions Design\ORM Profiler v1.1
     /// </summary>
     public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.1";
+
     /// <summary>
-    /// Solutions Design\ORM Profiler v1.5
+    ///   Solutions Design\ORM Profiler v1.5
     /// </summary>
     public const string SolutionsDesignOrmProfilerPath15 = @"Solutions Design\ORM Profiler v1.5";
 
     /// <summary>
-    /// 	Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
+    ///   Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
     /// </summary>
-    /// <remarks>SD.Tools.OrmProfiler.Interceptor.dll, SD.Tools.OrmProfiler.Shared.dll SD.Tools.BCLExtensions.dll, SD.Tools.Algorithmia.dll need to be able to be loaded</remarks>
+    /// <remarks>
+    ///   SD.Tools.OrmProfiler.Interceptor.dll, SD.Tools.OrmProfiler.Shared.dll SD.Tools.BCLExtensions.dll,
+    ///   SD.Tools.Algorithmia.dll need to be able to be loaded
+    /// </remarks>
     /// <returns> true if Initialize took place </returns>
     public static bool InitializeOrmProfiler()
     {
       try
       {
-        return InterceptorCoreInitialize(GetInterceptorType());
+        var interceptorType = GetInterceptorType();
+        var interceptorCoreInitialize = InterceptorCoreInitialize(interceptorType);
+        OrmProfilerStatus = string.Format("OrmProfiler {0}, {1}", interceptorCoreInitialize ? "enabled" : "disabled", 
+          interceptorType.Assembly.FullName.Substring(0, interceptorType.Assembly.FullName.LastIndexOf(',')));
+        return interceptorCoreInitialize;
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e.Message);	
+        OrmProfilerStatus = "Error Initializing OrmProfiler " + e.Message;
+        GeneralHelper.TraceOut(e.Message);
         return false;
       }
     }
@@ -78,26 +93,32 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// 	Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
+    ///   Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
     /// </summary>
     /// <param name="interceptorType"> The interceptorType type. </param>
     public static bool InterceptorCoreInitialize(Type interceptorType)
     {
       if (interceptorType == null)
+      {
+        OrmProfilerStatus = "OrmProfiler Assemblies not Found";
         return false;
+      }
+
       var result = interceptorType.InvokeMember(InitializeMethodName,
-                               BindingFlags.Public |
-                               BindingFlags.InvokeMethod |
-                               BindingFlags.Static,
-                               null, null, new object[] {ApplicationName}, CultureInfo.CurrentUICulture);
+        BindingFlags.Public |
+        BindingFlags.InvokeMethod |
+        BindingFlags.Static,
+        null, null, new object[] {ApplicationName}, CultureInfo.CurrentUICulture);
       MetaDataHelper.AddSelfAssemblyResolverIfNeeded(interceptorType);
       if (result is bool)
         return (bool) result;
       return true;
     }
 
+    public static string OrmProfilerStatus { get; private set; }
+
     /// <summary>
-    /// 	Gets the name of the application(as used by the Profiler).
+    ///   Gets the name of the application(as used by the Profiler).
     /// </summary>
     /// <value> The name of the application. </value>
     public static string ApplicationName

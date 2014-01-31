@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AW.LLBLGen.DataContextDriver</RootNamespace>
-    <AssemblyName>AW.LLBLGen.DataContextDriver.40</AssemblyName>
+    <AssemblyName>AW.LLBLGen.DataContextDriver.41</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>

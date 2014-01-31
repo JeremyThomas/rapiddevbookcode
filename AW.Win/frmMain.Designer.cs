@@ -63,14 +63,18 @@ namespace AW.Win
       this.arrangeIconsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
       this.reOpenWindowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+      this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.openFileDialogProject = new System.Windows.Forms.OpenFileDialog();
       this.mruHandlerProject = new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUHandler(this.components);
+      this.dataBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.menuStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.mruHandlerProject)).BeginInit();
       this.SuspendLayout();
       // 
       // menuStrip1
       // 
+      this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.searchToolStripMenuItem,
@@ -80,6 +84,7 @@ namespace AW.Win
       this.menuStrip1.Location = new System.Drawing.Point(0, 0);
       this.menuStrip1.MdiWindowListItem = this.windowsMenu;
       this.menuStrip1.Name = "menuStrip1";
+      this.menuStrip1.ShowItemToolTips = true;
       this.menuStrip1.Size = new System.Drawing.Size(617, 24);
       this.menuStrip1.TabIndex = 1;
       this.menuStrip1.Text = "menuStrip1";
@@ -197,7 +202,8 @@ namespace AW.Win
             this.adHocLINQQueryRunnerToolStripMenuItem,
             this.viewMetadataToolStripMenuItem,
             this.viewEntitiesAndFieldsToolStripMenuItem,
-            this.easyQueryToolStripMenuItem});
+            this.easyQueryToolStripMenuItem,
+            this.dataBrowserToolStripMenuItem});
       this.utilitiesToolStripMenuItem.Name = "utilitiesToolStripMenuItem";
       this.utilitiesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
       this.utilitiesToolStripMenuItem.Text = "&Utilities";
@@ -253,7 +259,9 @@ namespace AW.Win
             this.closeAllToolStripMenuItem,
             this.arrangeIconsToolStripMenuItem,
             this.toolStripSeparator3,
-            this.reOpenWindowsToolStripMenuItem});
+            this.reOpenWindowsToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.aboutToolStripMenuItem});
       this.windowsMenu.Name = "windowsMenu";
       this.windowsMenu.Size = new System.Drawing.Size(68, 20);
       this.windowsMenu.Text = "&Windows";
@@ -306,14 +314,20 @@ namespace AW.Win
       settings1.CustomersSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.DateFrom = new System.DateTime(2008, 8, 24, 21, 34, 1, 0);
       settings1.DateTo = new System.DateTime(2008, 8, 24, 21, 34, 1, 0);
+      settings1.EasyQueryDBMode = 1;
       settings1.EntityFieldColumns = null;
       settings1.EntityViewerSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.FilterOnFromDate = true;
       settings1.FilterOnToDate = false;
+      settings1.FilterUsingCustomerViewRelated = true;
       settings1.FirstName = "";
       settings1.FrmEntityViewerSplitterDistance = 289;
+      settings1.FrmOrderSearchPredicate = "";
+      settings1.IQueryable = false;
+      settings1.IsOnline = System.Windows.Forms.CheckState.Indeterminate;
       settings1.LastName = "";
       settings1.LinqTraceLevel = System.Diagnostics.TraceLevel.Off;
+      settings1.LLBLQueryType = AW.Helper.LLBL.LLBLQueryType.Native;
       settings1.MainWindowSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.MainWindowState = System.Windows.Forms.FormWindowState.Normal;
       settings1.NumRows = new decimal(new int[] {
@@ -328,6 +342,7 @@ namespace AW.Win
       settings1.OrderSearchSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.OrganizationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.OrganizationStructureSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+      settings1.OrmProfiler = true;
       settings1.PersistenceExecutionTraceLevel = System.Diagnostics.TraceLevel.Off;
       settings1.Prefetch = true;
       settings1.QueryExecutionTraceLevel = System.Diagnostics.TraceLevel.Off;
@@ -335,12 +350,15 @@ namespace AW.Win
       settings1.ReopenWindows = false;
       settings1.SettingQueryRunnerSizeAndLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.SettingsKey = "";
+      settings1.ShowCustomerViewRelatedFields = true;
       settings1.SQLTrace = false;
       settings1.State = "";
       settings1.TraceLevel = System.Diagnostics.TraceLevel.Off;
       settings1.TraceSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.TraceWindowSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
+      settings1.UseEasyQuery = true;
       settings1.UseLinq = false;
+      settings1.UsePredicate = true;
       settings1.VacationSizeLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
       settings1.Zip = "";
       this.reOpenWindowsToolStripMenuItem.Checked = settings1.ReopenWindows;
@@ -348,6 +366,18 @@ namespace AW.Win
       this.reOpenWindowsToolStripMenuItem.Name = "reOpenWindowsToolStripMenuItem";
       this.reOpenWindowsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
       this.reOpenWindowsToolStripMenuItem.Text = "Reopen Windows";
+      // 
+      // toolStripSeparator4
+      // 
+      this.toolStripSeparator4.Name = "toolStripSeparator4";
+      this.toolStripSeparator4.Size = new System.Drawing.Size(163, 6);
+      // 
+      // aboutToolStripMenuItem
+      // 
+      this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+      this.aboutToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+      this.aboutToolStripMenuItem.Text = "About";
+      this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
       // 
       // openFileDialogProject
       // 
@@ -361,6 +391,13 @@ namespace AW.Win
       this.mruHandlerProject.MruItem = this.mostRecentlyUsedToolStripMenuItem;
       this.mruHandlerProject.StorageName = "mru";
       this.mruHandlerProject.MRUItemClicked += new AW.Winforms.Helpers.MostRecentlyUsedHandler.MRUItemClickedHandler(this.mruHandlerProject_MRUItemClicked);
+      // 
+      // dataBrowserToolStripMenuItem
+      // 
+      this.dataBrowserToolStripMenuItem.Name = "dataBrowserToolStripMenuItem";
+      this.dataBrowserToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+      this.dataBrowserToolStripMenuItem.Text = "Data Browser";
+      this.dataBrowserToolStripMenuItem.Click += new System.EventHandler(this.dataBrowserToolStripMenuItem_Click);
       // 
       // FrmMain
       // 
@@ -425,5 +462,8 @@ namespace AW.Win
         private System.Windows.Forms.ToolStripMenuItem organizationStructureToolStripMenuItem;
 				private System.Windows.Forms.ToolStripMenuItem organizationStructureEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem easyQueryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dataBrowserToolStripMenuItem;
     }
 }
