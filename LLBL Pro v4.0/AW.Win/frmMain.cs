@@ -73,10 +73,8 @@ namespace AW.Win
     {
       var formType = Type.GetType(formName);
       if (formType == null)
-      {
-        return LaunchChildForm(formName, typeof(FrmQueryRunner), typeof(FrmLLBLEntityViewer), typeof(FrmEntitiesAndFields));
-      }
-      return formType == typeof(FrmEasyQuery) ? LaunchEasyQuery() : LaunchChildForm(formType);
+        return LaunchChildForm(formName, typeof(FrmQueryRunner), typeof(FrmLLBLEntityViewer), typeof(FrmEntitiesAndFields), typeof(FrmPersistantLocation));
+      return  LaunchChildForm(formType);
     }
 
     private Form LaunchChildForm(string formName, params Type[] formTypes)
@@ -95,7 +93,9 @@ namespace AW.Win
 
     public Form LaunchChildForm(Type formType, params Object[] args)
     {
-      return formType == null ? null : AWHelper.LaunchChildForm(this, formType, args);
+      return formType == null ? null : formType == typeof(FrmEasyQuery) ? LaunchEasyQuery()
+        : formType == typeof(FrmPersistantLocation) ? ShowDataBrowser() 
+        : AWHelper.LaunchChildForm(this, formType, args);
     }
 
     public T LaunchChildFormGeneric<T>(params Object[] args) where T : Form
@@ -232,9 +232,16 @@ namespace AW.Win
 
     private void dataBrowserToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var form = new FrmPersistantLocation {WindowSettingsName = "DataBrowser", Text = "Data Browser", Tag = true};
-      form.Controls.Add(new UsrCntrlEntityBrowser(MetaSingletons.MetaData) { Dock = DockStyle.Fill });
-      AWHelper.ShowForm(form, this);
+      ShowDataBrowser();
+    }
+
+    private FrmPersistantLocation ShowDataBrowser()
+    {
+      var form = new FrmPersistantLocation {WindowSettingsName = "DataBrowser", Text = "Data Browser", Icon = Icon, Tag = true};
+
+      form.Controls.Add(new UsrCntrlEntityBrowser(MetaSingletons.MetaData) {Dock = DockStyle.Fill});
+       AWHelper.ShowForm(form, this);
+      return form;
     }
 
     private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
@@ -246,7 +253,7 @@ namespace AW.Win
     {
       LaunchEasyQuery();
     }
-
+    
     private void frmMain_DragDrop(object sender, DragEventArgs e)
     {
       var files = (string[]) e.Data.GetData(DataFormats.FileDrop);

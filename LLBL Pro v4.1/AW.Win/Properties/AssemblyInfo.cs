@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("AW.Win")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("LLBLGen Pro Adventure Works Rapid C# Windows Development Sample.")]
+[assembly: AssemblyDescription("The worked example in Joseph Chancellor’s book Rapid C# Windows Development which uses LLBLGen Pro to connect to the Adventure Works sample database.")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

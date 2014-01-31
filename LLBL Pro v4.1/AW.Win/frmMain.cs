@@ -9,6 +9,7 @@ using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
 using AW.Winforms.Helpers;
+using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.LLBL.PropGridEx;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
@@ -229,6 +230,13 @@ namespace AW.Win
       childForm.Tag = true;
     }
 
+    private void dataBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      var form = new FrmPersistantLocation {WindowSettingsName = "DataBrowser", Text = "Data Browser", Tag = true};
+      form.Controls.Add(new UsrCntrlEntityBrowser(MetaSingletons.MetaData) { Dock = DockStyle.Fill });
+      AWHelper.ShowForm(form, this);
+    }
+
     private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
     {
       LaunchChildForm(typeof (FrmOrganizationStructure));
@@ -264,5 +272,16 @@ namespace AW.Win
     {
       MetaSingletons.MetaData.Employee.ShowSelfServicingHierarchyInTree("EmployeeID", "ManagerID", "EmployeeDisplayName");
     }
+
+    private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+    //  LaunchChildForm(typeof(AboutBox));
+      var moreInfo= Environment.NewLine + Environment.NewLine;
+      moreInfo += "https://rapiddevbookcode.codeplex.com/documentation" + Environment.NewLine;
+      moreInfo += Environment.NewLine + Environment.NewLine + ProfilerHelper.OrmProfilerStatus;
+      var ab = new AboutBox(moreInfo);
+      ab.ShowDialog(this);
+    }
+
   }
 }
