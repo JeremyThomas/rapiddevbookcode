@@ -73,12 +73,19 @@
       this.bindingNavigatorMoveNextItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorMoveLastItem = new System.Windows.Forms.ToolStripButton();
       this.bindingNavigatorSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+      this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabelCurrentPagesSize = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripTextBoxNewPageSize = new System.Windows.Forms.ToolStripTextBox();
+      this.toolStripButtonSetPageSize = new System.Windows.Forms.ToolStripButton();
+      this.toolStripButtonUnPage = new System.Windows.Forms.ToolStripButton();
       this.dataGridEnumerable = new System.Windows.Forms.DataGrid();
       this.tabControlGrids = new System.Windows.Forms.TabControl();
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
+      this.toolStripButtonShowDatagrid = new System.Windows.Forms.ToolStripButton();
       this.searchToolBar = new ACS.UserControls.SearchToolBar();
-      this.toolStripButtonUnPage = new System.Windows.Forms.ToolStripButton();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -122,6 +129,11 @@
             this.toolStripSeparator2,
             this.saveToolStripButton,
             this.toolStripSeparator1,
+            this.toolStripButtonClearSort,
+            this.toolStripButtonEnableFilter,
+            this.toolStripButtonClearFilters,
+            this.toolStripButtonSearch,
+            this.toolStripSeparator4,
             this.printToolStripButton,
             this.toolStripSeparator,
             this.toolStripComboBoxClipboardCopyMode,
@@ -129,14 +141,9 @@
             this.toolStripLabelDeleteCount,
             this.toolStripLabelSaveResult,
             this.toolStripSeparator3,
-            this.toolStripButtonEnableFilter,
-            this.toolStripButtonClearFilters,
-            this.toolStripButtonClearSort,
-            this.toolStripButtonSearch,
-            this.toolStripSeparator4,
+            this.toolStripButtonShowDatagrid,
             this.toolStripButtonObjectBrowser,
-            this.toolStripButtonObjectListViewVisualizer,
-            this.toolStripButtonUnPage});
+            this.toolStripButtonObjectListViewVisualizer});
       this.bindingNavigatorData.Location = new System.Drawing.Point(0, 0);
       this.bindingNavigatorData.MoveFirstItem = this.bindingNavigatorMoveFirstItem1;
       this.bindingNavigatorData.MoveLastItem = this.bindingNavigatorMoveLastItem1;
@@ -144,7 +151,7 @@
       this.bindingNavigatorData.MovePreviousItem = this.bindingNavigatorMovePreviousItem1;
       this.bindingNavigatorData.Name = "bindingNavigatorData";
       this.bindingNavigatorData.PositionItem = this.bindingNavigatorPositionItem1;
-      this.bindingNavigatorData.Size = new System.Drawing.Size(1155, 25);
+      this.bindingNavigatorData.Size = new System.Drawing.Size(1335, 25);
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
@@ -273,6 +280,7 @@
       this.printToolStripButton.Name = "printToolStripButton";
       this.printToolStripButton.Size = new System.Drawing.Size(23, 22);
       this.printToolStripButton.Text = "&Print";
+      this.printToolStripButton.ToolTipText = "Print Via ReportViewer";
       this.printToolStripButton.Click += new System.EventHandler(this.printToolStripButton_Click);
       // 
       // toolStripSeparator
@@ -285,6 +293,7 @@
       this.toolStripComboBoxClipboardCopyMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.toolStripComboBoxClipboardCopyMode.Name = "toolStripComboBoxClipboardCopyMode";
       this.toolStripComboBoxClipboardCopyMode.Size = new System.Drawing.Size(180, 25);
+      this.toolStripComboBoxClipboardCopyMode.ToolTipText = "ClipboardCopyMode";
       this.toolStripComboBoxClipboardCopyMode.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxClipboardCopyMode_SelectedIndexChanged);
       // 
       // copyToolStripButton
@@ -394,7 +403,7 @@
       this.dataGridViewEnumerable.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridViewEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridViewEnumerable.Name = "dataGridViewEnumerable";
-      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1141, 516);
+      this.dataGridViewEnumerable.Size = new System.Drawing.Size(1321, 516);
       this.dataGridViewEnumerable.TabIndex = 4;
       this.dataGridViewEnumerable.TimeFilter = false;
       this.dataGridViewEnumerable.SortStringChanged += new System.EventHandler(this.dataGridViewEnumerable_SortStringChanged);
@@ -421,7 +430,14 @@
             this.bindingNavigatorSeparator1,
             this.bindingNavigatorMoveNextItem,
             this.bindingNavigatorMoveLastItem,
-            this.bindingNavigatorSeparator2});
+            this.bindingNavigatorSeparator2,
+            this.toolStripLabel1,
+            this.toolStripLabel2,
+            this.toolStripLabelCurrentPagesSize,
+            this.toolStripLabel3,
+            this.toolStripTextBoxNewPageSize,
+            this.toolStripButtonSetPageSize,
+            this.toolStripButtonUnPage});
       this.bindingNavigatorPaging.Location = new System.Drawing.Point(0, 573);
       this.bindingNavigatorPaging.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
       this.bindingNavigatorPaging.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -429,7 +445,7 @@
       this.bindingNavigatorPaging.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
       this.bindingNavigatorPaging.Name = "bindingNavigatorPaging";
       this.bindingNavigatorPaging.PositionItem = this.bindingNavigatorPositionItem;
-      this.bindingNavigatorPaging.Size = new System.Drawing.Size(1155, 25);
+      this.bindingNavigatorPaging.Size = new System.Drawing.Size(1335, 25);
       this.bindingNavigatorPaging.TabIndex = 5;
       this.bindingNavigatorPaging.Text = "bindingNavigator2";
       // 
@@ -504,6 +520,56 @@
       this.bindingNavigatorSeparator2.Name = "bindingNavigatorSeparator2";
       this.bindingNavigatorSeparator2.Size = new System.Drawing.Size(6, 25);
       // 
+      // toolStripLabel1
+      // 
+      this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+      this.toolStripLabel1.Name = "toolStripLabel1";
+      this.toolStripLabel1.Size = new System.Drawing.Size(65, 22);
+      this.toolStripLabel1.Text = "PagesSize:";
+      // 
+      // toolStripLabel2
+      // 
+      this.toolStripLabel2.Name = "toolStripLabel2";
+      this.toolStripLabel2.Size = new System.Drawing.Size(50, 22);
+      this.toolStripLabel2.Text = "Current:";
+      // 
+      // toolStripLabelCurrentPagesSize
+      // 
+      this.toolStripLabelCurrentPagesSize.Name = "toolStripLabelCurrentPagesSize";
+      this.toolStripLabelCurrentPagesSize.Size = new System.Drawing.Size(13, 22);
+      this.toolStripLabelCurrentPagesSize.Text = "0";
+      // 
+      // toolStripLabel3
+      // 
+      this.toolStripLabel3.Name = "toolStripLabel3";
+      this.toolStripLabel3.Size = new System.Drawing.Size(34, 22);
+      this.toolStripLabel3.Text = "New:";
+      // 
+      // toolStripTextBoxNewPageSize
+      // 
+      this.toolStripTextBoxNewPageSize.Name = "toolStripTextBoxNewPageSize";
+      this.toolStripTextBoxNewPageSize.Size = new System.Drawing.Size(40, 25);
+      // 
+      // toolStripButtonSetPageSize
+      // 
+      this.toolStripButtonSetPageSize.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonSetPageSize.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSetPageSize.Image")));
+      this.toolStripButtonSetPageSize.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonSetPageSize.Name = "toolStripButtonSetPageSize";
+      this.toolStripButtonSetPageSize.Size = new System.Drawing.Size(27, 22);
+      this.toolStripButtonSetPageSize.Text = "Set";
+      this.toolStripButtonSetPageSize.Click += new System.EventHandler(this.toolStripButtonSetPageSize_Click);
+      // 
+      // toolStripButtonUnPage
+      // 
+      this.toolStripButtonUnPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+      this.toolStripButtonUnPage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonUnPage.Image")));
+      this.toolStripButtonUnPage.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonUnPage.Name = "toolStripButtonUnPage";
+      this.toolStripButtonUnPage.Size = new System.Drawing.Size(100, 22);
+      this.toolStripButtonUnPage.Text = "Remove Pageing";
+      this.toolStripButtonUnPage.Click += new System.EventHandler(this.toolStripButtonUnPage_Click);
+      // 
       // dataGridEnumerable
       // 
       this.dataGridEnumerable.DataMember = "";
@@ -511,7 +577,7 @@
       this.dataGridEnumerable.HeaderForeColor = System.Drawing.SystemColors.ControlText;
       this.dataGridEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridEnumerable.Name = "dataGridEnumerable";
-      this.dataGridEnumerable.Size = new System.Drawing.Size(1141, 516);
+      this.dataGridEnumerable.Size = new System.Drawing.Size(1321, 516);
       this.dataGridEnumerable.TabIndex = 6;
       this.dataGridEnumerable.DataSourceChanged += new System.EventHandler(this.dataGridEnumerable_DataSourceChanged);
       this.dataGridEnumerable.Navigate += new System.Windows.Forms.NavigateEventHandler(this.dataGridEnumerable_Navigate);
@@ -524,7 +590,7 @@
       this.tabControlGrids.Location = new System.Drawing.Point(0, 25);
       this.tabControlGrids.Name = "tabControlGrids";
       this.tabControlGrids.SelectedIndex = 0;
-      this.tabControlGrids.Size = new System.Drawing.Size(1155, 548);
+      this.tabControlGrids.Size = new System.Drawing.Size(1335, 548);
       this.tabControlGrids.TabIndex = 7;
       this.tabControlGrids.SelectedIndexChanged += new System.EventHandler(this.tabControlGrids_SelectedIndexChanged);
       // 
@@ -534,7 +600,7 @@
       this.tabPageDataGrid.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGrid.Name = "tabPageDataGrid";
       this.tabPageDataGrid.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGrid.Size = new System.Drawing.Size(1147, 522);
+      this.tabPageDataGrid.Size = new System.Drawing.Size(1327, 522);
       this.tabPageDataGrid.TabIndex = 0;
       this.tabPageDataGrid.Text = "DataGrid";
       this.tabPageDataGrid.UseVisualStyleBackColor = true;
@@ -545,10 +611,20 @@
       this.tabPageDataGridView.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGridView.Name = "tabPageDataGridView";
       this.tabPageDataGridView.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGridView.Size = new System.Drawing.Size(1147, 522);
+      this.tabPageDataGridView.Size = new System.Drawing.Size(1327, 522);
       this.tabPageDataGridView.TabIndex = 1;
       this.tabPageDataGridView.Text = "DataGridView";
       this.tabPageDataGridView.UseVisualStyleBackColor = true;
+      // 
+      // toolStripButtonShowDatagrid
+      // 
+      this.toolStripButtonShowDatagrid.CheckOnClick = true;
+      this.toolStripButtonShowDatagrid.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowDatagrid.Image")));
+      this.toolStripButtonShowDatagrid.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.toolStripButtonShowDatagrid.Name = "toolStripButtonShowDatagrid";
+      this.toolStripButtonShowDatagrid.Size = new System.Drawing.Size(203, 22);
+      this.toolStripButtonShowDatagrid.Text = "Enable Related Object Navigation";
+      this.toolStripButtonShowDatagrid.Click += new System.EventHandler(this.toolStripButtonShowDatagrid_Click);
       // 
       // searchToolBar
       // 
@@ -566,17 +642,6 @@
       this.searchToolBar.Search += new ACS.UserControls.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
       // 
-      // toolStripButtonUnPage
-      // 
-      this.toolStripButtonUnPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-      this.toolStripButtonUnPage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonUnPage.Image")));
-      this.toolStripButtonUnPage.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.toolStripButtonUnPage.Name = "toolStripButtonUnPage";
-      this.toolStripButtonUnPage.Size = new System.Drawing.Size(100, 19);
-      this.toolStripButtonUnPage.Text = "Remove Pageing";
-      this.toolStripButtonUnPage.Visible = false;
-      this.toolStripButtonUnPage.Click += new System.EventHandler(this.toolStripButtonUnPage_Click);
-      // 
       // GridDataEditor
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -586,7 +651,7 @@
       this.Controls.Add(this.searchToolBar);
       this.Controls.Add(this.bindingNavigatorData);
       this.Name = "GridDataEditor";
-      this.Size = new System.Drawing.Size(1155, 598);
+      this.Size = new System.Drawing.Size(1335, 598);
       this.Load += new System.EventHandler(this.GridDataEditor_Load);
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).EndInit();
@@ -657,5 +722,12 @@
     private ACS.UserControls.SearchToolBar searchToolBar;
     private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
     private System.Windows.Forms.ToolStripButton toolStripButtonUnPage;
+    private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+    private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+    private System.Windows.Forms.ToolStripLabel toolStripLabelCurrentPagesSize;
+    private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+    private System.Windows.Forms.ToolStripTextBox toolStripTextBoxNewPageSize;
+    private System.Windows.Forms.ToolStripButton toolStripButtonSetPageSize;
+    private System.Windows.Forms.ToolStripButton toolStripButtonShowDatagrid;
   }
 }
