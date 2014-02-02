@@ -188,7 +188,16 @@ namespace AW.Helper.LLBL
 
     public static IEnumerable<Type> GetEntitiesTypes(ILinqMetaData linqMetaData)
     {
-      return GetEntitiesTypes(linqMetaData.GetType().Assembly);
+      var entitiesTypes = GetEntitiesTypes(linqMetaData.GetType().Assembly);
+      if (entitiesTypes.Any())
+        return entitiesTypes;
+      var topLevelProps =
+        from prop in linqMetaData.GetType().GetProperties()
+        where prop.PropertyType.IsAssignableTo(typeof(IDataSource)) && prop.PropertyType.IsGenericType
+        let typeArgument = prop.PropertyType.GetGenericArguments()[0]
+        where typeArgument != null
+        select typeArgument;
+      return topLevelProps;
     }
 
     public static IQueryProvider GetProvider(ILinqMetaData linqMetaData)
@@ -774,24 +783,24 @@ namespace AW.Helper.LLBL
     #endregion
 
     /// <summary>
-    ///   Gets the properties of type entity since sometimes these properties are not browsable so they need to be handled as a
-    ///   special case.
+    /// Gets the properties of type entity since sometimes these properties are not browseable so they need to be handled as a special case.
     /// </summary>
     /// <param name="type">The type.</param>
+    /// <param name="includeGenericParameters">if set to <c>true</c> [include generic].</param>
     /// <returns></returns>
-    public static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type)
+    public static IEnumerable<PropertyDescriptor> GetPropertiesOfTypeEntity(Type type, bool includeGenericParameters = false)
     {
-      return MetaDataHelper.GetPropertyDescriptors(type).FilterByIsEntityCore(true);
+      return MetaDataHelper.GetPropertyDescriptors(type).FilterByIsEntityCore(true, includeGenericParameters);
     }
 
-    public static IEnumerable<PropertyDescriptor> FilterByIsEntityCore(this IEnumerable<PropertyDescriptor> propertyDescriptors, bool? isEntityCore)
+    public static IEnumerable<PropertyDescriptor> FilterByIsEntityCore(this IEnumerable<PropertyDescriptor> propertyDescriptors, bool? isEntityCore = true , bool includeGenericParameters =false)
     {
-      return isEntityCore.HasValue ? propertyDescriptors.Where(propertyDescriptor => IsEntityCore(propertyDescriptor) == isEntityCore.Value) : propertyDescriptors;
+      return isEntityCore.HasValue ? propertyDescriptors.Where(propertyDescriptor => IsEntityCore(propertyDescriptor, includeGenericParameters) == isEntityCore.Value) : propertyDescriptors;
     }
 
-    public static bool IsEntityCore(PropertyDescriptor propertyDescriptor)
+    public static bool IsEntityCore(PropertyDescriptor propertyDescriptor, bool includeGenericParameters = false)
     {
-      return IsEntityCore(propertyDescriptor.PropertyType);
+      return IsEntityCore(propertyDescriptor.PropertyType, includeGenericParameters);
     }
 
     public static bool IsMemberOfEntityCore(PropertyDescriptor propertyDescriptor)
@@ -799,9 +808,12 @@ namespace AW.Helper.LLBL
       return IsEntityCore(propertyDescriptor.ComponentType);
     }
 
-    private static bool IsEntityCore(Type type)
+    private static bool IsEntityCore(Type type, bool includeGenericParameters = false)
     {
-      return typeof (IEntityCore).IsAssignableFrom(type);
+      var isEntityCore = typeof (IEntityCore).IsAssignableFrom(type);
+      if (isEntityCore || !includeGenericParameters) return isEntityCore;
+      var typeParametersOfGenericType = MetaDataHelper.GetTypeParametersOfGenericType(type);
+      return typeParametersOfGenericType != null && typeParametersOfGenericType.Any(t => IsEntityCore(t));
     }
 
     public static IEntityFields GetFieldsFromType(Type type)

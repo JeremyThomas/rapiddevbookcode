@@ -288,21 +288,31 @@ namespace AW.Helper
 			return implementers;
 		}
 
-		public static Type GetTypeParameterOfGenericType(Type type)
-		{
-			if (type == typeof (object))
-				return null;
-			return type.IsGenericType ? type.GetGenericArguments().First() : GetTypeParameterOfGenericType(type.BaseType);
-		}
+	  public static Type GetTypeParameterOfGenericType(Type type)
+	  {
+	    while (true)
+	    {
+        if (type == null ||type == typeof(object))
+	        return null;
+	      if (type.IsGenericType)
+	        return type.GetGenericArguments().First();
+	      type = type.BaseType;
+	    }
+	  }
 
-		public static Type[] GetTypeParametersOfGenericType(Type type)
-		{
-			if (type == typeof(object) || type == null)
-				return null;
-			return type.IsGenericType ? type.GetGenericArguments() : GetTypeParametersOfGenericType(type.BaseType);
-		}
+	  public static Type[] GetTypeParametersOfGenericType(Type type)
+	  {
+	    while (true)
+	    {
+	      if (type == typeof (object) || type == null)
+	        return null;
+	      if (type.IsGenericType) 
+          return type.GetGenericArguments();
+	      type = type.BaseType;
+	    }
+	  }
 
-		public static bool IsSerializable(Type type)
+	  public static bool IsSerializable(Type type)
 		{
 			if (type.IsSerializable || type.IsInterface)
 			{

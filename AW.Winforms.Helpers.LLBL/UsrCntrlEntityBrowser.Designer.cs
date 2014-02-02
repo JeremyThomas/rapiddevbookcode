@@ -38,10 +38,11 @@ namespace AW.Winforms.Helpers.LLBL
       this.getCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabelSelected = new System.Windows.Forms.ToolStripStatusLabel();
-      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.contextMenuStrip1.SuspendLayout();
       this.statusStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -60,8 +61,10 @@ namespace AW.Winforms.Helpers.LLBL
       this.treeViewEntities.Location = new System.Drawing.Point(0, 0);
       this.treeViewEntities.Name = "treeViewEntities";
       this.treeViewEntities.SelectedImageIndex = 4;
+      this.treeViewEntities.ShowNodeToolTips = true;
       this.treeViewEntities.Size = new System.Drawing.Size(167, 563);
       this.treeViewEntities.TabIndex = 1;
+      this.toolTip1.SetToolTip(this.treeViewEntities, "Entities amd their proerties");
       this.treeViewEntities.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewEntities_ItemDrag);
       this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterSelect);
       this.treeViewEntities.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewEntities_NodeMouseClick);
@@ -86,7 +89,7 @@ namespace AW.Winforms.Helpers.LLBL
             this.toolStripMenuItemOpen,
             this.getCountToolStripMenuItem});
       this.contextMenuStrip1.Name = "contextMenuStrip1";
-      this.contextMenuStrip1.Size = new System.Drawing.Size(185, 92);
+      this.contextMenuStrip1.Size = new System.Drawing.Size(185, 70);
       // 
       // openPaged30ToolStripMenuItem
       // 
@@ -124,19 +127,6 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStripStatusLabelSelected.Name = "toolStripStatusLabelSelected";
       this.toolStripStatusLabelSelected.Size = new System.Drawing.Size(118, 17);
       this.toolStripStatusLabelSelected.Text = "toolStripStatusLabel1";
-      // 
-      // gridDataEditor
-      // 
-      this.gridDataEditor.DataMember = "";
-      this.gridDataEditor.DataSource = null;
-      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.gridDataEditor.EnsureFilteringEnabled = false;
-      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
-      this.gridDataEditor.Name = "gridDataEditor";
-      this.gridDataEditor.PageSize = ((ushort)(0));
-      this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(331, 563);
-      this.gridDataEditor.TabIndex = 0;
       // 
       // splitContainer1
       // 
@@ -190,6 +180,20 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
       // 
+      // gridDataEditor
+      // 
+      this.gridDataEditor.DataMember = "";
+      this.gridDataEditor.DataSource = null;
+      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridDataEditor.EnsureFilteringEnabled = false;
+      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.Name = "gridDataEditor";
+      this.gridDataEditor.PageSize = ((ushort)(0));
+      this.gridDataEditor.Readonly = false;
+      this.gridDataEditor.Size = new System.Drawing.Size(331, 563);
+      this.gridDataEditor.TabIndex = 0;
+      this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
+      // 
       // UsrCntrlEntityBrowser
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -226,5 +230,6 @@ namespace AW.Winforms.Helpers.LLBL
     private Controls.GridDataEditor gridDataEditor;
     private System.Windows.Forms.BindingNavigator bindingNavigatorPaging;
     private System.Windows.Forms.BindingNavigator bindingNavigatorData;
+    private System.Windows.Forms.ToolTip toolTip1;
   }
 }
