@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing.Design;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Reflection;
@@ -38,7 +39,8 @@ namespace AW.Winforms.Helpers.Controls
     {
       InitializeComponent();
       HumanizedEnumConverter.AddEnumerationConverter(typeof(DataGridViewClipboardCopyMode));
-      dataGridViewEnumerable.AutoGenerateColumns = true;
+      dataGridViewEnumerable.AutoGenerateColumns = true;      
+      toolStripButtonShowDatagrid_Click(null, null);
     }
 
     /// <summary>
@@ -73,7 +75,15 @@ namespace AW.Winforms.Helpers.Controls
 
     [Category("Data"),
      Description("Size of the page")]
-    public ushort PageSize { get; set; }
+    public ushort PageSize
+    {
+      get { return _pageSize; }
+      set
+      {
+        _pageSize = value;
+        toolStripLabelCurrentPagesSize.Text = _pageSize.ToString(CultureInfo.InvariantCulture);
+      }
+    }
 
     [AttributeProvider(typeof (IListSource)),
      Category("Data"),
@@ -401,6 +411,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private Type _itemType;
     protected bool SupportsNotifyPropertyChanged;
+    private ushort _pageSize;
 
     protected virtual Type ItemType
     {
@@ -622,9 +633,21 @@ namespace AW.Winforms.Helpers.Controls
 
     private void toolStripButtonUnPage_Click(object sender, EventArgs e)
     {
-      PageSize = 0;
+      ChangePageSize(0);
+    }
+
+    private void toolStripButtonSetPageSize_Click(object sender, EventArgs e)
+    {
+      ChangePageSize(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text));
+    }
+
+    private void ChangePageSize(ushort pageSize)
+    {
+      if (PageSize == pageSize) return;
+      PageSize = pageSize;
       BindEnumerable(SourceEnumerable);
     }
+
     private void toolStripButtonEnableFilter_Click(object sender, EventArgs e)
     {
       if (!bindingSourceEnumerable.SupportsFiltering)
@@ -701,6 +724,16 @@ namespace AW.Winforms.Helpers.Controls
     private void searchToolBar_VisibleChanged(object sender, EventArgs e)
     {
       toolStripButtonSearch.Checked = searchToolBar.Visible;
+    }
+
+    private void toolStripButtonShowDatagrid_Click(object sender, EventArgs e)
+    {
+      if (toolStripButtonShowDatagrid.Checked)
+        tabControlGrids.TabPages.Add(tabPageDataGrid);
+      else
+      {
+        tabControlGrids.TabPages.Remove(tabPageDataGrid);
+      }
     }
 
   }

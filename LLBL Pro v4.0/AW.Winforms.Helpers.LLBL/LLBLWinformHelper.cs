@@ -208,38 +208,21 @@ namespace AW.Winforms.Helpers.LLBL
 			{
 				var entityNode = schemaTreeNodeCollection.Add(entityType.Name, GetEntityTypeName(entityType));
 				entityNode.Tag = entityType;
-				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
-					Where(p => !typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
-					// All browseable properties that aren't a list
+        entityNode.ToolTipText = FormatTypeName(entityType, false);
+
+				foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false,true).
+          Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, 1)))
 				{
-					var fieldNode = entityNode.Nodes.Add(browsableProperty.Name);
-					if (typeof (IEntityCore).IsAssignableFrom(browsableProperty.PropertyType))
-					{
-						fieldNode.ImageIndex = 3;
-						fieldNode.Tag = browsableProperty;
-					}
-					else
-						fieldNode.ImageIndex = 1;
+				  entityNode.Nodes.Add(fieldNode);
 				}
 
-				foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType))
-					//All selfservicing entity types
-					//if (!entityNode.Nodes.ContainsKey(entityTypeProperty.Name))
-					if (!entityNode.Nodes.Cast<TreeNode>().Any(tn=>tn.Text==entityTypeProperty.Name))
+				foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true))
 				{
 					var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
-
-					fieldNode.ImageIndex = 3;
+          fieldNode.ToolTipText = FormatTypeName(entityTypeProperty.PropertyType, false);
+          fieldNode.ImageIndex = EntityHelper.IsEntityCore(entityTypeProperty) ? 3 : 2;
+        //  fieldNode.Text = CreateTreeNodeText(entityTypeProperty);
 					fieldNode.Tag = entityTypeProperty;
-				}
-
-				foreach (var browsableProperty in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().
-					Where(p => typeof (IList).IsAssignableFrom(p.PropertyType)).OrderBy(p => p.Name))
-					// All browseable list properties
-				{
-					var fieldNode = entityNode.Nodes.Add(browsableProperty.Name);
-					fieldNode.Tag = browsableProperty;
-					fieldNode.ImageIndex = 2;
 				}
 			}
 		}
@@ -339,13 +322,27 @@ namespace AW.Winforms.Helpers.LLBL
 			}
 
 			// Ordinary property:
-			return new TreeNode(childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")") { ImageIndex = 1, Name = childProp.Name };
+			return CreateSimpleTypeTreeNode(childProp, 1);
 		}
 
-		private static string FormatTypeName(Type propertyType, bool b)
+	  private static TreeNode CreateSimpleTypeTreeNode(PropertyDescriptor childProp, int imageIndex)
+	  {
+      return new TreeNode(CreateTreeNodeText(childProp)) { ImageIndex = imageIndex, Name = childProp.Name, Tag = childProp, ToolTipText = FormatTypeName(childProp.PropertyType, false), };
+	  }
+
+	  private static string CreateTreeNodeText(PropertyDescriptor childProp)
+	  {
+	    return childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")";
+	  }
+
+	  /// <summary>
+    /// Delegete to override to customize formatting the type name. e.g by LINQPad.Extensibility.DataContext.DataContextDriver.FormatTypeName
+    /// </summary>
+    public static event Func<Type,bool,string> GetFormatTypeName;
+
+    private static string FormatTypeName(Type propertyType, bool includeNamespace)
 		{
-			return propertyType.ToString();
+      return GetFormatTypeName == null ? propertyType.ToString() : GetFormatTypeName(propertyType, includeNamespace);
 		}
-
 	}
 }

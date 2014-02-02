@@ -47,6 +47,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.toolStripStatusLabelSelected = new System.Windows.Forms.ToolStripStatusLabel();
       this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.propertyGrid = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
       this.splitContainerVertical.Panel1.SuspendLayout();
       this.splitContainerVertical.Panel2.SuspendLayout();
@@ -79,7 +80,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
       this.splitContainerHorizontal.Size = new System.Drawing.Size(332, 563);
-      this.splitContainerHorizontal.SplitterDistance = 176;
+      this.splitContainerHorizontal.SplitterDistance = 155;
       // 
       // treeViewEntities
       // 
@@ -89,8 +90,10 @@ namespace AW.Winforms.Helpers.LLBL
       this.treeViewEntities.Location = new System.Drawing.Point(0, 0);
       this.treeViewEntities.Name = "treeViewEntities";
       this.treeViewEntities.SelectedImageIndex = 4;
+      this.treeViewEntities.ShowNodeToolTips = true;
       this.treeViewEntities.Size = new System.Drawing.Size(166, 563);
       this.treeViewEntities.TabIndex = 1;
+      this.toolTip1.SetToolTip(this.treeViewEntities, "Entities amd their proerties");
       this.treeViewEntities.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeViewEntities_ItemDrag);
       this.treeViewEntities.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEntities_AfterSelect);
       this.treeViewEntities.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewEntities_NodeMouseClick);
@@ -218,8 +221,9 @@ namespace AW.Winforms.Helpers.LLBL
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(0));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(332, 383);
+      this.gridDataEditor.Size = new System.Drawing.Size(332, 404);
       this.gridDataEditor.TabIndex = 0;
+      this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
       // 
       // propertyGrid
       // 
@@ -230,7 +234,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.propertyGrid.DrawFlat = true;
       this.propertyGrid.Location = new System.Drawing.Point(0, 0);
       this.propertyGrid.Name = "propertyGrid";
-      this.propertyGrid.Size = new System.Drawing.Size(332, 176);
+      this.propertyGrid.Size = new System.Drawing.Size(332, 155);
       this.propertyGrid.TabIndex = 0;
       // 
       // FrmEntitiesAndFields
@@ -280,5 +284,6 @@ namespace AW.Winforms.Helpers.LLBL
 		private System.Windows.Forms.ToolStripMenuItem viewPropertyDescriptorsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem viewAttributesToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem viewInObjectBrowserToolStripMenuItem;
+    private System.Windows.Forms.ToolTip toolTip1;
   }
 }

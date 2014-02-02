@@ -56,6 +56,7 @@
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabelInstance = new System.Windows.Forms.ToolStripStatusLabel();
       this.toolStripStatusLabelSelectePath = new System.Windows.Forms.ToolStripStatusLabel();
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerVertical)).BeginInit();
       this.splitContainerVertical.Panel1.SuspendLayout();
       this.splitContainerVertical.Panel2.SuspendLayout();
@@ -90,7 +91,7 @@
       // 
       this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
       this.splitContainerHorizontal.Size = new System.Drawing.Size(684, 540);
-      this.splitContainerHorizontal.SplitterDistance = 270;
+      this.splitContainerHorizontal.SplitterDistance = 244;
       // 
       // contextMenuStrip1
       // 
@@ -197,6 +198,7 @@
       this.ObjectBrowser.ObjectToBrowse = null;
       this.ObjectBrowser.Size = new System.Drawing.Size(343, 540);
       this.ObjectBrowser.TabIndex = 0;
+      this.toolTip1.SetToolTip(this.ObjectBrowser, "Properties of selected object");
       this.ObjectBrowser.NodeSelected += new System.EventHandler(this.ObjectBrowser_NodeSelected);
       // 
       // propertyGrid1
@@ -209,7 +211,7 @@
       this.propertyGrid1.DrawFlat = true;
       this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
       this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(684, 207);
+      this.propertyGrid1.Size = new System.Drawing.Size(684, 181);
       this.propertyGrid1.TabIndex = 0;
       this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       // 
@@ -282,7 +284,7 @@
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(20));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(684, 266);
+      this.gridDataEditor.Size = new System.Drawing.Size(684, 292);
       this.gridDataEditor.TabIndex = 3;
       // 
       // dataGridViewTextBoxColumn11
@@ -382,6 +384,7 @@
     protected AW.Winforms.Helpers.PropGridEx.PropertyGridEx propertyGrid1;
     protected sliver.Windows.Forms.StateBrowser ObjectBrowser;
     protected AW.Winforms.Helpers.Controls.GridDataEditor gridDataEditor;
+    private System.Windows.Forms.ToolTip toolTip1;
 
   }
 }
