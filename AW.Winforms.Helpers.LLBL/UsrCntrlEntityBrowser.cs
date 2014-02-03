@@ -35,8 +35,19 @@ namespace AW.Winforms.Helpers.LLBL
 		public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData) : this()
 		{
 			_linqMetaData = linqMetaData;
-			LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, GetEntitiesTypes());
-			if (treeViewEntities.Nodes.Count == 0)
+		  var entitiesTypes = GetEntitiesTypes();
+		  var firstEntityType = entitiesTypes.FirstOrDefault();
+		  if (firstEntityType != null)
+		  {
+		    IDataAccessAdapter adapter = null;
+		    if (firstEntityType.Implements(typeof (IEntity2)))
+		    {
+		      dynamic dlinqMetaData = linqMetaData;
+		      if (dlinqMetaData != null) adapter = dlinqMetaData.AdapterToUse;
+		    }
+		    LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, entitiesTypes, adapter);
+		  }
+		  if (treeViewEntities.Nodes.Count == 0)
 			  LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData.GetType());
 		}
 

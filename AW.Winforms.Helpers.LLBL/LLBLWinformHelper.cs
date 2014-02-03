@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
+using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
@@ -12,337 +13,505 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Winforms.Helpers.LLBL
 {
-	public static class LLBLWinformHelper
-	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="T:System.Object"/> class.
-		/// </summary>
-		static LLBLWinformHelper()
-		{
-			BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity), EntityHelper.CreateEntityView);
-			BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity2), EntityHelper.CreateEntityView2);
-		}
-
-		/// <summary>
-		/// Dummy method which forces the initialization of LLBLWinformHelper via it's static constructor.
-		/// </summary>
-		public static void ForceInitialization()
-		{
-		}
-
-		#region Validatation
-
-		public static bool ValidatePropertyAssignment<T>(
-			Control controltoValidate,
-			int fieldToValidate,
-			T value, string errorMessage,
-			ErrorProvider myError,
-			EntityBase entity)
-		{
-			var validated = true;
-			try
-			{
-				var validator = entity.Validator;
-				if (value.Equals(entity.GetCurrentFieldValue(fieldToValidate)) == false
-				    && validator.ValidateFieldValue(entity, fieldToValidate, value) == false
-					)
-				{
-					myError.SetError(controltoValidate, errorMessage);
-					validated = false;
-				}
-				else
-					myError.SetError(controltoValidate, "");
-			}
-			catch (Exception err)
-			{
-				myError.SetError(controltoValidate, err.Message);
-				validated = false;
-			}
-			return validated;
-		}
-
-		public static bool ValidateForm(Control mycontrol, ErrorProvider myError)
-		{
-			var isValid = true;
-			foreach (Control childControl in mycontrol.Controls)
-			{
-				if (myError.GetError(childControl) != "")
-				{
-					isValid = false;
-					break;
-				}
-				if (childControl.Controls.Count > 0)
-				{
-					isValid = ValidateForm(childControl, myError);
-					if (isValid == false)
-						break;
-				}
-			}
-			return isValid;
-		}
-
-		#endregion
-
-		#region Self Servicing
-
-		public class DataEditorLLBLSelfServicingPersister : IDataEditorPersister
-		{
-			public int Save(object dataToSave)
-			{
-				return EntityHelper.Save(dataToSave);
-			}
-
-			public int Delete(object dataToDelete)
-			{
-				return EntityHelper.Delete(dataToDelete);
-			}
-
-			public bool CanSave(Type typeToSave)
-			{
-				return typeof (EntityBase).IsAssignableFrom(typeToSave);
-			}
-
-			public bool Undo(object modifiedData)
-			{
-				EntityHelper.Undo(modifiedData);
-				return true;
-			}
-		}
-
-		public static IEnumerable<T> ShowSelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
-		{
-			return enumerable.ShowInGrid(new DataEditorLLBLSelfServicingPersister(), pageSize);
-		}
-
-		public static IEnumerable<T> ShowSelfServicingInGrid<T>(this IEnumerable<T> enumerable) where T : EntityBase
-		{
-			return enumerable.ShowSelfServicingInGrid(DataEditorExtensions.DefaultPageSize);
-		}
-
-		public static IEnumerable ShowSelfServicingInGrid(this IEnumerable enumerable, ushort pageSize)
-		{
-			return enumerable.ShowInGrid(new DataEditorLLBLSelfServicingPersister(), pageSize);
-		}
-
-		public static IEnumerable<T> ShowSelfServicingHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase
-		{
-			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLSelfServicingPersister());
-		}
-
-		#endregion
-
-		#region Adapter
-
-		public static IEnumerable ShowInGrid(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
-		{
-			return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
-		}
-
-		public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
-		{
-			return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
-		}
-
-		public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
-		{
-			return ShowInGrid(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
-		}
-
-		public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query) where T : EntityBase2
-		{
-			return ShowAdapterInGrid(query, DataEditorExtensions.DefaultPageSize);
-		}
-
-		public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
-		{
-			return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLAdapterPersister(dataAccessAdapter));
-		}
-
-		public static IEnumerable<T> ShowAdapterHierarchyInTree<T>(this IQueryable<T> query, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
-		{
-			return query.ShowHierarchyInTree(EntityHelper.GetDataAccessAdapter(query), iDPropertyName, parentIDPropertyName, nameColumn);
-		}
-
-		public class DataEditorLLBLAdapterPersister : IDataEditorPersister
-		{
-			private readonly IDataAccessAdapter _dataAccessAdapter;
-
-			public DataEditorLLBLAdapterPersister(IDataAccessAdapter dataAccessAdapter)
-			{
-				_dataAccessAdapter = dataAccessAdapter;
-			}
-
-			public int Save(object dataToSave)
-			{
-				return EntityHelper.Save(dataToSave, _dataAccessAdapter);
-			}
-
-			public int Delete(object dataToDelete)
-			{
-				return EntityHelper.Delete(dataToDelete, _dataAccessAdapter);
-			}
-
-			public bool CanSave(Type typeToSave)
-			{
-				return typeof (EntityBase2).IsAssignableFrom(typeToSave);
-			}
-
-			public bool Undo(object modifiedData)
-			{
-				EntityHelper.Undo(modifiedData);
-				return true;
-			}
-		}
-
-		#endregion
-
-		public static void PopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes)
-		{
-			entityTreeView.Nodes.Clear();
-			PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes);
-		}
-
-		public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes)
-		{
-			foreach (var entityType in entitiesTypes.OrderBy(t => t.Name).ToList())
-			{
-				var entityNode = schemaTreeNodeCollection.Add(entityType.Name, GetEntityTypeName(entityType));
-				entityNode.Tag = entityType;
-        entityNode.ToolTipText = FormatTypeName(entityType, false);
-
-				foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false,true).
-          Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, 1)))
-				{
-				  entityNode.Nodes.Add(fieldNode);
-				}
-
-				foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true))
-				{
-					var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
-          fieldNode.ToolTipText = FormatTypeName(entityTypeProperty.PropertyType, false);
-          fieldNode.ImageIndex = EntityHelper.IsEntityCore(entityTypeProperty) ? 3 : 2;
-        //  fieldNode.Text = CreateTreeNodeText(entityTypeProperty);
-					fieldNode.Tag = entityTypeProperty;
-				}
-			}
-		}
-
-		private static string GetEntityTypeName(Type entityType)
-		{
-			return entityType.Name.Replace("Entity", "");
-		}
-
-		public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, Type dataContextType)
-		{
-			// Return the objects with which to populate the Schema Explorer by reflecting over customType.
-
-			// We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
-			var topLevelProps =
-				(
-					from prop in dataContextType.GetProperties()
-					where prop.PropertyType != typeof (string)
-					// Display all properties of type IEnumerable<T> (except for string!)
-					let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
-					where ienumerableOfT != null
-					let typeArgument =ienumerableOfT.GetGenericArguments()[0]
-					orderby prop.Name
-					select new TreeNode(prop.Name)
-					       	{
-					       		ToolTipText = FormatTypeName(prop.PropertyType, false),
-					       		// Store the entity type to the Tag property. We'll use it later.
-										Tag = typeArgument,
-										Name = typeArgument.Name
-					       	}
-				).ToList();
-
-			// Create a lookup keying each element type to the properties of that type. This will allow
-			// us to build hyperlink targets allowing the user to click between associations:
-			var elementTypeLookup = topLevelProps.ToLookup(tp => (Type) tp.Tag);
-
-			// Populate the columns (properties) of each entity:
-			foreach (var table in topLevelProps)
-				table.Nodes.AddRange(GetPropertiesToShowInSchema((Type) table.Tag)
-				                     	.Select(childProp => GetChildItem(elementTypeLookup, childProp))
-				                     	.ToArray());
-
-			schemaTreeNodeCollection.AddRange(topLevelProps.ToArray());
-		}
-
-		/// <summary>
-		/// 	Gets the properties to show in schema. 
-		/// 	They should be all the browsable properties with the addition of selfservicing entity properties.
-		/// </summary>
-		/// <remarks>
-		/// 	See MetaDataHelper.GetPropertiesToDisplay
-		/// </remarks>
-		/// <param name = "type">The type.</param>
-		/// <returns></returns>
-		private static IEnumerable<PropertyDescriptor> GetPropertiesToShowInSchema(Type type)
-		{
-			return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
-		}
-
-		private static TreeNode GetChildItem(ILookup<Type, TreeNode> elementTypeLookup, PropertyDescriptor childProp)
-		{
-			// If the property's type is in our list of entities, then it's a Many:1 (or 1:1) reference.
-			// We'll assume it's a Many:1 (we can't reliably identify 1:1s purely from reflection).
-			if (elementTypeLookup.Contains(childProp.PropertyType))
-			{
-				var n = new TreeNode(childProp.Name)
-				        	{
-				        		//HyperlinkTarget = elementTypeLookup[childProp.PropertyType].First(),
-				        		// FormatTypeName is a helper method that returns a nicely formatted type name.
-				        		ToolTipText = FormatTypeName(childProp.PropertyType, true),
-										Name = childProp.Name
-				        	};
-				if (typeof (IEntityCore).IsAssignableFrom(childProp.PropertyType))
-				{
-					n.ImageIndex = 3;
-					n.Tag = childProp;
-				}
-				else
-					n.ImageIndex = 1;
-				return n;
-			}
-
-			// Is the property's type a collection of entities?
-			var ienumerableOfT = childProp.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1");
-			if (ienumerableOfT != null)
-			{
-				var elementType = ienumerableOfT.GetGenericArguments()[0];
-				if (elementTypeLookup.Contains(elementType))
-					return new TreeNode(childProp.Name)
-					       	{
-					       		//HyperlinkTarget = elementTypeLookup[elementType].First(),
-					       		ImageIndex = 2,
-					       		Tag = childProp,
-					       		ToolTipText = elementType.ToString(),
-										Name = childProp.Name
-					       	};
-			}
-
-			// Ordinary property:
-			return CreateSimpleTypeTreeNode(childProp, 1);
-		}
-
-	  private static TreeNode CreateSimpleTypeTreeNode(PropertyDescriptor childProp, int imageIndex)
-	  {
-      return new TreeNode(CreateTreeNodeText(childProp)) { ImageIndex = imageIndex, Name = childProp.Name, Tag = childProp, ToolTipText = FormatTypeName(childProp.PropertyType, false), };
-	  }
-
-	  private static string CreateTreeNodeText(PropertyDescriptor childProp)
-	  {
-	    return childProp.Name + " (" + FormatTypeName(childProp.PropertyType, false) + ")";
-	  }
-
-	  /// <summary>
-    /// Delegete to override to customize formatting the type name. e.g by LINQPad.Extensibility.DataContext.DataContextDriver.FormatTypeName
+  public static class LLBLWinformHelper
+  {
+    /// <summary>
+    ///   Initializes a new instance of the <see cref="T:System.Object" /> class.
     /// </summary>
-    public static event Func<Type,bool,string> GetFormatTypeName;
+    static LLBLWinformHelper()
+    {
+      BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity), EntityHelper.CreateEntityView);
+      BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity2), EntityHelper.CreateEntityView2);
+    }
 
-    private static string FormatTypeName(Type propertyType, bool includeNamespace)
-		{
-      return GetFormatTypeName == null ? propertyType.ToString() : GetFormatTypeName(propertyType, includeNamespace);
-		}
-	}
+    /// <summary>
+    ///   Dummy method which forces the initialization of LLBLWinformHelper via it's static constructor.
+    /// </summary>
+    public static void ForceInitialization()
+    {
+    }
+
+    #region Validatation
+
+    public static bool ValidatePropertyAssignment<T>(
+      Control controltoValidate,
+      int fieldToValidate,
+      T value, string errorMessage,
+      ErrorProvider myError,
+      EntityBase entity)
+    {
+      var validated = true;
+      try
+      {
+        var validator = entity.Validator;
+        if (value.Equals(entity.GetCurrentFieldValue(fieldToValidate)) == false
+            && validator.ValidateFieldValue(entity, fieldToValidate, value) == false
+          )
+        {
+          myError.SetError(controltoValidate, errorMessage);
+          validated = false;
+        }
+        else
+          myError.SetError(controltoValidate, "");
+      }
+      catch (Exception err)
+      {
+        myError.SetError(controltoValidate, err.Message);
+        validated = false;
+      }
+      return validated;
+    }
+
+    public static bool ValidateForm(Control mycontrol, ErrorProvider myError)
+    {
+      var isValid = true;
+      foreach (Control childControl in mycontrol.Controls)
+      {
+        if (myError.GetError(childControl) != "")
+        {
+          isValid = false;
+          break;
+        }
+        if (childControl.Controls.Count > 0)
+        {
+          isValid = ValidateForm(childControl, myError);
+          if (isValid == false)
+            break;
+        }
+      }
+      return isValid;
+    }
+
+    #endregion
+
+    #region Self Servicing
+
+    public class DataEditorLLBLSelfServicingPersister : IDataEditorPersister
+    {
+      public int Save(object dataToSave)
+      {
+        return EntityHelper.Save(dataToSave);
+      }
+
+      public int Delete(object dataToDelete)
+      {
+        return EntityHelper.Delete(dataToDelete);
+      }
+
+      public bool CanSave(Type typeToSave)
+      {
+        return typeof (EntityBase).IsAssignableFrom(typeToSave);
+      }
+
+      public bool Undo(object modifiedData)
+      {
+        EntityHelper.Undo(modifiedData);
+        return true;
+      }
+    }
+
+    public static IEnumerable<T> ShowSelfServicingInGrid<T>(this IEnumerable<T> enumerable, ushort pageSize) where T : EntityBase
+    {
+      return enumerable.ShowInGrid(new DataEditorLLBLSelfServicingPersister(), pageSize);
+    }
+
+    public static IEnumerable<T> ShowSelfServicingInGrid<T>(this IEnumerable<T> enumerable) where T : EntityBase
+    {
+      return enumerable.ShowSelfServicingInGrid(DataEditorExtensions.DefaultPageSize);
+    }
+
+    public static IEnumerable ShowSelfServicingInGrid(this IEnumerable enumerable, ushort pageSize)
+    {
+      return enumerable.ShowInGrid(new DataEditorLLBLSelfServicingPersister(), pageSize);
+    }
+
+    public static IEnumerable<T> ShowSelfServicingHierarchyInTree<T>(this IEnumerable<T> enumerable, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase
+    {
+      return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLSelfServicingPersister());
+    }
+
+    #endregion
+
+    #region Adapter
+
+    public static IEnumerable ShowInGrid(this IEnumerable enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize)
+    {
+      return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
+    }
+
+    public static IEnumerable<T> ShowInGrid<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, ushort pageSize) where T : EntityBase2
+    {
+      return enumerable.ShowInGrid(new DataEditorLLBLAdapterPersister(dataAccessAdapter), pageSize);
+    }
+
+    public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query, ushort pageSize) where T : EntityBase2
+    {
+      return ShowInGrid(query, EntityHelper.GetDataAccessAdapter(query), pageSize);
+    }
+
+    public static IEnumerable<T> ShowAdapterInGrid<T>(this IQueryable<T> query) where T : EntityBase2
+    {
+      return ShowAdapterInGrid(query, DataEditorExtensions.DefaultPageSize);
+    }
+
+    public static IEnumerable<T> ShowHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
+    {
+      return enumerable.ShowHierarchyInTree(iDPropertyName, parentIDPropertyName, nameColumn, new DataEditorLLBLAdapterPersister(dataAccessAdapter));
+    }
+
+    public static IEnumerable<T> ShowAdapterHierarchyInTree<T>(this IQueryable<T> query, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
+    {
+      return query.ShowHierarchyInTree(EntityHelper.GetDataAccessAdapter(query), iDPropertyName, parentIDPropertyName, nameColumn);
+    }
+
+    public class DataEditorLLBLAdapterPersister : IDataEditorPersister
+    {
+      private readonly IDataAccessAdapter _dataAccessAdapter;
+
+      public DataEditorLLBLAdapterPersister(IDataAccessAdapter dataAccessAdapter)
+      {
+        _dataAccessAdapter = dataAccessAdapter;
+      }
+
+      public int Save(object dataToSave)
+      {
+        return EntityHelper.Save(dataToSave, _dataAccessAdapter);
+      }
+
+      public int Delete(object dataToDelete)
+      {
+        return EntityHelper.Delete(dataToDelete, _dataAccessAdapter);
+      }
+
+      public bool CanSave(Type typeToSave)
+      {
+        return typeof (EntityBase2).IsAssignableFrom(typeToSave);
+      }
+
+      public bool Undo(object modifiedData)
+      {
+        EntityHelper.Undo(modifiedData);
+        return true;
+      }
+    }
+
+    #endregion
+
+    public static void PopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes)
+    {
+      entityTreeView.Nodes.Clear();
+      PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes);
+    }
+
+    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes, IDataAccessAdapter adapter = null)
+    {
+      IElementCreatorCore elementCreator = null;
+      foreach (var entityType in entitiesTypes.OrderBy(t => t.Name).ToList())
+      {
+        if (elementCreator == null)
+          elementCreator = EntityHelper.CreateElementCreator(entityType);
+        var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);
+        var entityNode = schemaTreeNodeCollection.Add(entityType.Name, GetEntityTypeName(entityType));
+        entityNode.Tag = entityType;
+        var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(entity.Fields.First(), adapter);
+        entityNode.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
+        //entityNode.ToolTipText = FormatTypeName(entityType, false);
+        var entityFields = entity.GetFields();
+
+        foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).
+          Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, 1)))
+        {
+          entityNode.Nodes.Add(fieldNode);
+          var field = entityFields.FirstOrDefault(f => f.Name.Equals(fieldNode.Name));
+          {
+            if (field != null)
+            {
+              fieldNode.Text = CreateFieldText(field);
+              fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
+              var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
+              fieldNode.ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, fieldNode.Tag as PropertyDescriptor, fkNavigator);
+            }
+          }
+        }
+
+        foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true))
+        {
+          var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
+          fieldNode.ToolTipText = FormatTypeName(entityTypeProperty.PropertyType);
+          if (EntityHelper.IsEntityCore(entityTypeProperty))
+          {
+            fieldNode.ImageIndex = 3;
+            var entityNavigator = LinqUtils.CreateEntityInstanceFromEntityType(entityTypeProperty.PropertyType, elementCreator);
+            if (entityNavigator.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
+            {
+              if (entityTypeProperty.PropertyType.BaseType != null)
+              {
+                fieldNode.Text = fieldNode.Name + String.Format(" (Sub-type of '{0}')", entityTypeProperty.PropertyType.BaseType.Name);
+              }
+            }
+            fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, FormatTypeName(entityTypeProperty.PropertyType));
+          }
+          else
+          {
+            fieldNode.ImageIndex = 2;
+            var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(entityTypeProperty.PropertyType);
+            string targetToolTipText = null;
+            if (typeParameterOfGenericType != null) targetToolTipText = FormatTypeName(typeParameterOfGenericType, true);
+            fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, targetToolTipText);
+          }
+          //  fieldNode.Text = CreateTreeNodeText(entityTypeProperty);
+          fieldNode.Tag = entityTypeProperty;
+        }
+      }
+    }
+
+    public static string CreateTableToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo)
+    {
+      var type = entity.GetType();
+      var baseType = "";
+      if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
+        if (type.BaseType != null && !type.BaseType.IsAbstract)
+          baseType = "Base Type: " + type.BaseType.Name;
+      var toolTipText = GeneralHelper.Join(Environment.NewLine, FormatTypeName(type, true), baseType,
+        MetaDataHelper.GetDisplayNameAttributes(type).Select(da => da.DisplayName).Union(MetaDataHelper.GetDescriptionAttributes(type).Select(da => da.Description)).JoinAsString(),
+        entity.CustomPropertiesOfType.Values.JoinAsString());
+      if (fieldPersistenceInfo != null)
+      {
+        var dbInfo = String.Format("Table: {0}.{1}.{2}", fieldPersistenceInfo.SourceCatalogName, fieldPersistenceInfo.SourceSchemaName, fieldPersistenceInfo.SourceObjectName);
+        toolTipText += Environment.NewLine + dbInfo;
+      }
+      return toolTipText.Trim();
+    }
+
+    public static string CreateDisplayNameDescriptionCustomPropertiesToolTipText(IEntityCore entity, MemberDescriptor propertyDescriptor)
+    {
+      if (propertyDescriptor != null)
+      {
+        var toolTipText = CreateDisplayNameDescriptionToolTipText(propertyDescriptor);
+        toolTipText += Environment.NewLine + EntityHelper.GetFieldsCustomProperties(entity, propertyDescriptor.Name).JoinAsString();
+        return toolTipText.Trim();
+      }
+      return "";
+    }
+
+    public static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor)
+    {
+      var displayName = String.Empty;
+      try
+      {
+        displayName = propertyDescriptor.DisplayName;
+      }
+      catch (Exception e)
+      {
+        GeneralHelper.TraceOut(e);
+      }
+      displayName = displayName == propertyDescriptor.Name ? "" : displayName;
+      var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, displayName, propertyDescriptor.Description);
+      return toolTipText;
+    }
+
+    public static string CreateNavigatorToolTipText(IEntityCore entity, PropertyDescriptor navigatorProperty, string targetToolTipText)
+    {
+      var toolTipText = CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, navigatorProperty);
+
+      if (typeof (IEnumerable).IsAssignableFrom(navigatorProperty.PropertyType))
+      {
+        var targetTipText = targetToolTipText;
+        if (navigatorProperty.PropertyType.IsGenericType)
+        {
+          var elementType = MetaDataHelper.GetElementType(navigatorProperty.PropertyType);
+          targetTipText = targetTipText.Replace(FormatTypeName(elementType, true), "").Trim();
+        }
+        return GeneralHelper.Join(Environment.NewLine, toolTipText, FormatTypeName(navigatorProperty.PropertyType, true), targetTipText);
+      }
+      var relationsForFieldOfType = entity.GetRelationsForFieldOfType(navigatorProperty.Name);
+      foreach (IEntityRelation relation in relationsForFieldOfType)
+      {
+        var allFkEntityFieldCoreObjects = relation.GetAllFKEntityFieldCoreObjects();
+        var plurilizer = allFkEntityFieldCoreObjects.Count == 1 ? "" : "s";
+        toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
+          String.Format("Foreign Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
+      }
+      return targetToolTipText.Contains(toolTipText) ? targetToolTipText : GeneralHelper.Join(Environment.NewLine, toolTipText, targetToolTipText);
+    }
+
+    private static bool IsNonNormalPrecision(TypeCode typeCode, byte precision)
+    {
+      return !(precision == 10 && typeCode == TypeCode.Int32)
+             && !(precision == 5 && typeCode == TypeCode.Int16)
+             && !(precision == 24 && typeCode == TypeCode.Single)
+             && !(precision == 3 && typeCode == TypeCode.Byte);
+    }
+
+    public static string CreateFieldText(IFieldInfo field)
+    {
+      var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey
+        ? "PK"
+        : "", field.IsForeignKey
+          ? "FK"
+          : "", field.IsReadOnly ? "RO" : "");
+      var typeName = FormatTypeName(field.DataType, false);
+      var coreDataType = MetaDataHelper.GetCoreType(field.DataType);
+      var typeCode = Type.GetTypeCode(coreDataType);
+      if (!coreDataType.IsEnum && typeCode != TypeCode.Boolean)
+        if (field.MaxLength > 0 && field.MaxLength < 1073741823)
+          typeName += "{" + field.MaxLength + "}";
+        else
+        {
+          var scalePrecision = String.Empty;
+          if (field.Scale > 0)
+            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Scale.ToString());
+          var precision = field.Precision;
+          if (precision > 0 && IsNonNormalPrecision(typeCode, precision))
+            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, precision.ToString());
+          if (!String.IsNullOrEmpty(scalePrecision))
+            typeName += "{" + scalePrecision + "}";
+        }
+      return GeneralHelper.Join(" - ", field.Name + " (" + typeName + ")", extra);
+    }
+
+    public static string CreateFieldToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo, PropertyDescriptor propertyDescriptor, string fkNavigator)
+    {
+      var toolTipText = GeneralHelper.Join(Environment.NewLine, CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, propertyDescriptor), fkNavigator);
+      if (propertyDescriptor == null)
+        GeneralHelper.TraceOut(entity.LLBLGenProEntityName + " propertyDescriptor == null");
+      else
+      {
+        var coreType = MetaDataHelper.GetCoreType(propertyDescriptor.PropertyType);
+        if (coreType.IsEnum)
+          toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
+            String.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
+      }
+      if (fieldPersistenceInfo != null)
+      {
+        var sourceColumnIsNullable = fieldPersistenceInfo.SourceColumnIsNullable ? "" : " not ";
+        var sizeAndPrecision = "";
+        if (fieldPersistenceInfo.SourceColumnMaxLength < UInt16.MaxValue && fieldPersistenceInfo.SourceColumnMaxLength > 0 || fieldPersistenceInfo.SourceColumnPrecision > 0)
+          sizeAndPrecision = String.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
+        var dbInfo = String.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
+          sizeAndPrecision, sourceColumnIsNullable);
+        toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeperator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
+      }
+      return toolTipText.Trim();
+    }
+
+    private static string GetEntityTypeName(Type entityType)
+    {
+      return entityType.Name.Replace("Entity", "");
+    }
+
+    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, Type dataContextType)
+    {
+      // Return the objects with which to populate the Schema Explorer by reflecting over customType.
+
+      // We'll start by retrieving all the properties of the custom type that implement IEnumerable<T>:
+      var topLevelProps =
+        (
+          from prop in dataContextType.GetProperties()
+          where prop.PropertyType != typeof (string)
+          // Display all properties of type IEnumerable<T> (except for string!)
+          let ienumerableOfT = prop.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1")
+          where ienumerableOfT != null
+          let typeArgument = ienumerableOfT.GetGenericArguments()[0]
+          orderby prop.Name
+          select new TreeNode(prop.Name)
+          {
+            ToolTipText = FormatTypeName(prop.PropertyType, false),
+            // Store the entity type to the Tag property. We'll use it later.
+            Tag = typeArgument,
+            Name = typeArgument.Name
+          }
+          ).ToList();
+
+      // Create a lookup keying each element type to the properties of that type. This will allow
+      // us to build hyperlink targets allowing the user to click between associations:
+      var elementTypeLookup = topLevelProps.ToLookup(tp => (Type) tp.Tag);
+
+      // Populate the columns (properties) of each entity:
+      foreach (var table in topLevelProps)
+        table.Nodes.AddRange(GetPropertiesToShowInSchema((Type) table.Tag)
+          .Select(childProp => GetChildItem(elementTypeLookup, childProp))
+          .ToArray());
+
+      schemaTreeNodeCollection.AddRange(topLevelProps.ToArray());
+    }
+
+    /// <summary>
+    ///   Gets the properties to show in schema.
+    ///   They should be all the browsable properties with the addition of selfservicing entity properties.
+    /// </summary>
+    /// <remarks>
+    ///   See MetaDataHelper.GetPropertiesToDisplay
+    /// </remarks>
+    /// <param name="type">The type.</param>
+    /// <returns></returns>
+    private static IEnumerable<PropertyDescriptor> GetPropertiesToShowInSchema(Type type)
+    {
+      return ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>().Union(EntityHelper.GetPropertiesOfTypeEntity(type));
+    }
+
+    private static TreeNode GetChildItem(ILookup<Type, TreeNode> elementTypeLookup, PropertyDescriptor childProp)
+    {
+      // If the property's type is in our list of entities, then it's a Many:1 (or 1:1) reference.
+      // We'll assume it's a Many:1 (we can't reliably identify 1:1s purely from reflection).
+      if (elementTypeLookup.Contains(childProp.PropertyType))
+      {
+        var n = new TreeNode(childProp.Name)
+        {
+          //HyperlinkTarget = elementTypeLookup[childProp.PropertyType].First(),
+          // FormatTypeName is a helper method that returns a nicely formatted type name.
+          ToolTipText = FormatTypeName(childProp.PropertyType, true),
+          Name = childProp.Name
+        };
+        if (typeof (IEntityCore).IsAssignableFrom(childProp.PropertyType))
+        {
+          n.ImageIndex = 3;
+          n.Tag = childProp;
+        }
+        else
+          n.ImageIndex = 1;
+        return n;
+      }
+
+      // Is the property's type a collection of entities?
+      var ienumerableOfT = childProp.PropertyType.GetInterface("System.Collections.Generic.IEnumerable`1");
+      if (ienumerableOfT != null)
+      {
+        var elementType = ienumerableOfT.GetGenericArguments()[0];
+        if (elementTypeLookup.Contains(elementType))
+          return new TreeNode(childProp.Name)
+          {
+            //HyperlinkTarget = elementTypeLookup[elementType].First(),
+            ImageIndex = 2,
+            Tag = childProp,
+            ToolTipText = elementType.ToString(),
+            Name = childProp.Name
+          };
+      }
+
+      // Ordinary property:
+      return CreateSimpleTypeTreeNode(childProp, 1);
+    }
+
+    private static TreeNode CreateSimpleTypeTreeNode(PropertyDescriptor childProp, int imageIndex)
+    {
+      return new TreeNode(CreateTreeNodeText(childProp)) {ImageIndex = imageIndex, Name = childProp.Name, Tag = childProp, ToolTipText = FormatTypeName(childProp.PropertyType, false),};
+    }
+
+    private static string CreateTreeNodeText(PropertyDescriptor childProp)
+    {
+      return childProp.Name + " (" + FormatTypeName(childProp.PropertyType) + ")";
+    }
+
+    /// <summary>
+    ///   Delegete to override to customize formatting the type name. e.g by
+    ///   LINQPad.Extensibility.DataContext.DataContextDriver.FormatTypeName
+    /// </summary>
+    public static event Func<Type, bool, string> GetFormatTypeName;
+
+    private static string FormatTypeName(Type propertyType, bool includeNamespace = false)
+    {
+      return GetFormatTypeName == null ? (includeNamespace ? propertyType.ToString() : propertyType.Name) : GetFormatTypeName(propertyType, includeNamespace);
+    }
+  }
 }
