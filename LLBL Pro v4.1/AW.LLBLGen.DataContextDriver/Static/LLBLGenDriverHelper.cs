@@ -20,6 +20,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
   {
     #region Initialization
 
+    static LLBLGenDriverHelper()
+    {
+      LLBLWinformHelper.GetFormatTypeName += LINQPad.Extensibility.DataContext.DataContextDriver.FormatTypeName;
+    }
+
     private static Assembly LoadAssembly(string assemblyPath)
     {
       return LINQPad.Extensibility.DataContext.DataContextDriver.LoadAssemblySafely(assemblyPath);
