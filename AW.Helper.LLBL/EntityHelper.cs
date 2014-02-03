@@ -873,7 +873,7 @@ namespace AW.Helper.LLBL
       return fullListQueryMethod.Invoke(dataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
     }
 
-    public static IFieldPersistenceInfo GetFieldPersistenceInfo(IEntityFieldCore field, IDataAccessAdapter adapter)
+    public static IFieldPersistenceInfo GetFieldPersistenceInfo(IEntityFieldCore field, IDataAccessAdapter adapter = null)
     {
       if (field is IEntityField)
         return (IEntityField) field;
