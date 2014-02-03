@@ -72,8 +72,12 @@ namespace AW.Helper
       {
         var interceptorType = GetInterceptorType();
         var interceptorCoreInitialize = InterceptorCoreInitialize(interceptorType);
-        OrmProfilerStatus = string.Format("OrmProfiler {0}, {1}", interceptorCoreInitialize ? "enabled" : "disabled", 
-          interceptorType.Assembly.FullName.Substring(0, interceptorType.Assembly.FullName.LastIndexOf(',')));
+        if (!string.IsNullOrWhiteSpace(OrmProfilerStatus)) 
+          return interceptorCoreInitialize;
+        string interceptorTypeName = null;
+        if (interceptorType != null) 
+          interceptorTypeName = interceptorType.Assembly.FullName.Substring(0, interceptorType.Assembly.FullName.LastIndexOf(','));
+        OrmProfilerStatus = string.Format("OrmProfiler {0}, {1}", interceptorCoreInitialize ? "enabled" : "disabled", interceptorTypeName);
         return interceptorCoreInitialize;
       }
       catch (Exception e)

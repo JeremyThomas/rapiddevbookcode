@@ -205,7 +205,7 @@ namespace AW.LLBLGen.DataContextDriver.Tests
         } while (explorerItem.Tag != null && (Type) explorerItem.Tag != entity.GetType());
         var entityName = entityFactory.ForEntityName + " - " + explorerItem.Text;
         var notCoreCount = navigatorProperties.Count(er => !EntityHelper.IsEntityCore(er));
-        var coreCount = navigatorProperties.Count(EntityHelper.IsEntityCore);
+        var coreCount = navigatorProperties.Count(propertyDescriptor => EntityHelper.IsEntityCore(propertyDescriptor));
         var propertyCount = explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.Property);
         var collectionLinkCount = explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.CollectionLink);
         var referenceLinkCount = explorerItem.Children.Count(ei => ei.Kind == ExplorerItemKind.ReferenceLink);
