@@ -111,7 +111,7 @@ namespace AW.DebugVisualizers
     {
       return (from childToken in _firstJToken.OfType<JProperty>()
         select
-          new JPropertyDescriptor(childToken.Name, typeof (object)));
+          new JPropertyDescriptor(childToken.Name));
     }
 
     public object DeserializeJS(Stream serializationStream)

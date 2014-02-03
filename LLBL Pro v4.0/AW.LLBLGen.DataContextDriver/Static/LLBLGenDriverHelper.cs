@@ -177,7 +177,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       switch (explorerIcon)
       {
         case ExplorerIcon.Schema:
-          break;
+          return ExplorerItemKind.Schema;
         case ExplorerIcon.Table:
           return ExplorerItemKind.QueryableObject;
         case ExplorerIcon.View:
@@ -230,10 +230,29 @@ namespace AW.LLBLGen.DataContextDriver.Static
       // us to build hyperlink targets allowing the user to click between associations:
       var elementTypeLookup = topLevelProps.ToLookup(tp => tp.Tag.GetType());
 
+      var schemas = new Dictionary<string, ExplorerItem>();
+
       //Copy ToolTipText from base type fields
       foreach (var table in topLevelProps)
       {
         var entity = (IEntityCore) table.Tag;
+        if (!string.IsNullOrWhiteSpace(table.SqlName))
+        {
+          var strings = table.SqlName.Split('.');
+          if (strings.Count() > 1)
+          {
+           var schema = strings[0];
+            if (schemas.ContainsKey(schema))
+              schemas[schema].Children.Add(table);
+            else
+            {
+              var explorerItem = new ExplorerItem(schema, ExplorerItemKind.Schema, ExplorerIcon.Schema);
+              schemas.Add(schema, explorerItem);
+              explorerItem.Children = new List<ExplorerItem> {table};
+            }
+          }
+        }
+
         if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
         {
           var explorerItems = elementTypeLookup[entity.GetType().BaseType];
@@ -270,6 +289,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
         table.Tag = null;
       }
 
+      if (schemas.Count > 1)
+        return schemas.Values.ToList();
       return topLevelProps;
     }
 
@@ -333,6 +354,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
 
       explorerItem.ToolTipText = LLBLWinformHelper.CreateTableToolTipText(entity, fieldPersistenceInfo);
+      if (fieldPersistenceInfo != null)
+        explorerItem.SqlName = GeneralHelper.Join(".", fieldPersistenceInfo.SourceSchemaName, fieldPersistenceInfo.SourceObjectName);
       return fieldExplorerItems;
     }
 

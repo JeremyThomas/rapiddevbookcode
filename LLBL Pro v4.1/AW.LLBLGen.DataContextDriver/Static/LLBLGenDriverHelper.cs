@@ -323,16 +323,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
         var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
-        fieldExplorerItems.Add(new ExplorerItem(CreateFieldText(field), ExplorerItemKind.Property, field.IsPrimaryKey ? ExplorerIcon.Key : ExplorerIcon.Column)
+        fieldExplorerItems.Add(new ExplorerItem(LLBLWinformHelper.CreateFieldText(field), ExplorerItemKind.Property, field.IsPrimaryKey ? ExplorerIcon.Key : ExplorerIcon.Column)
         {
           DragText = field.Name,
           SqlName = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnName,
           SqlTypeDeclaration = fieldPersistenceInfo == null ? null : fieldPersistenceInfo.SourceColumnDbType,
-          ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.GetFieldPropertyDescriptor(field.Name), fkNavigator)
+          ToolTipText = LLBLWinformHelper.CreateFieldToolTipText(entity, fieldPersistenceInfo, propertyDescriptors.GetFieldPropertyDescriptor(field.Name), fkNavigator)
         });
       }
 
-      explorerItem.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
+      explorerItem.ToolTipText = LLBLWinformHelper.CreateTableToolTipText(entity, fieldPersistenceInfo);
       return fieldExplorerItems;
     }
 
@@ -382,136 +382,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
     }
 
-    private static string CreateFieldText(IFieldInfo field)
-    {
-      var extra = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, field.IsPrimaryKey
-        ? "PK"
-        : "", field.IsForeignKey
-          ? "FK"
-          : "", field.IsReadOnly ? "RO" : "");
-      var typeName = LINQPad.Extensibility.DataContext.DataContextDriver.FormatTypeName(field.DataType, false);
-      var coreDataType = MetaDataHelper.GetCoreType(field.DataType);
-      var typeCode = Type.GetTypeCode(coreDataType);
-      if (!coreDataType.IsEnum && typeCode != TypeCode.Boolean)
-        if (field.MaxLength > 0 && field.MaxLength < 1073741823)
-          typeName += "{" + field.MaxLength + "}";
-        else
-        {
-          var scalePrecision = String.Empty;
-          if (field.Scale > 0)
-            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, field.Scale.ToString());
-          var precision = field.Precision;
-          if (precision > 0 && IsNonNormalPrecision(typeCode, precision))
-            scalePrecision = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, scalePrecision, precision.ToString());
-          if (!String.IsNullOrEmpty(scalePrecision))
-            typeName += "{" + scalePrecision + "}";
-        }
-      return GeneralHelper.Join(" - ", field.Name + " (" + typeName + ")", extra);
-    }
-
-    private static bool IsNonNormalPrecision(TypeCode typeCode, byte precision)
-    {
-      return !(precision == 10 && typeCode == TypeCode.Int32)
-             && !(precision == 5 && typeCode == TypeCode.Int16)
-             && !(precision == 24 && typeCode == TypeCode.Single)
-             && !(precision == 3 && typeCode == TypeCode.Byte);
-    }
-
-    private static string CreateTableToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo)
-    {
-      var type = entity.GetType();
-      var baseType = "";
-      if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
-        if (type.BaseType != null && !type.BaseType.IsAbstract)
-          baseType = "Base Type: " + type.BaseType.Name;
-      var toolTipText = GeneralHelper.Join(Environment.NewLine, LINQPad.Extensibility.DataContext.DataContextDriver.FormatTypeName(type, true), baseType,
-        MetaDataHelper.GetDisplayNameAttributes(type).Select(da => da.DisplayName).Union(MetaDataHelper.GetDescriptionAttributes(type).Select(da => da.Description)).JoinAsString(),
-        entity.CustomPropertiesOfType.Values.JoinAsString());
-      if (fieldPersistenceInfo != null)
-      {
-        var dbInfo = String.Format("Table: {0}.{1}.{2}", fieldPersistenceInfo.SourceCatalogName, fieldPersistenceInfo.SourceSchemaName, fieldPersistenceInfo.SourceObjectName);
-        toolTipText += Environment.NewLine + dbInfo;
-      }
-      return toolTipText.Trim();
-    }
-
     private static string CreateNavigatorToolTipText(IEntityCore entity, PropertyDescriptor navigatorProperty, ExplorerItem hyperlinkTarget)
     {
-      var toolTipText = CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, navigatorProperty);
-      if (typeof (IEnumerable).IsAssignableFrom(navigatorProperty.PropertyType))
-      {
-        var targetTipText = hyperlinkTarget.ToolTipText;
-        if (navigatorProperty.PropertyType.IsGenericType)
-        {
-          var elementType = MetaDataHelper.GetElementType(navigatorProperty.PropertyType);
-          targetTipText = targetTipText.Replace(LINQPad.Extensibility.DataContext.DataContextDriver.FormatTypeName(elementType, true), "").Trim();
-        }
-        return GeneralHelper.Join(Environment.NewLine, toolTipText, LINQPad.Extensibility.DataContext.DataContextDriver.FormatTypeName(navigatorProperty.PropertyType, true), targetTipText);
-      }
-      var relationsForFieldOfType = entity.GetRelationsForFieldOfType(navigatorProperty.Name);
-      foreach (IEntityRelation relation in relationsForFieldOfType)
-      {
-        var allFkEntityFieldCoreObjects = relation.GetAllFKEntityFieldCoreObjects();
-        var plurilizer = allFkEntityFieldCoreObjects.Count == 1 ? "" : "s";
-        toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-          String.Format("Foreign Key field{0}: {1}", plurilizer, allFkEntityFieldCoreObjects.Select(f => f.Name).JoinAsString()));
-      }
-      return hyperlinkTarget.ToolTipText.Contains(toolTipText) ? hyperlinkTarget.ToolTipText : GeneralHelper.Join(Environment.NewLine, toolTipText, hyperlinkTarget.ToolTipText);
-    }
-
-    private static string CreateFieldToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo, PropertyDescriptor propertyDescriptor, string fkNavigator)
-    {
-      var toolTipText = GeneralHelper.Join(Environment.NewLine, CreateDisplayNameDescriptionCustomPropertiesToolTipText(entity, propertyDescriptor), fkNavigator);
-      if (propertyDescriptor == null)
-        GeneralHelper.TraceOut(entity.LLBLGenProEntityName + " propertyDescriptor == null");
-      else
-      {
-        var coreType = MetaDataHelper.GetCoreType(propertyDescriptor.PropertyType);
-        if (coreType.IsEnum)
-          toolTipText = GeneralHelper.Join(Environment.NewLine, toolTipText,
-            String.Format("Enum values: {0}", Enum.GetNames(coreType).JoinAsString()));
-      }
-      if (fieldPersistenceInfo != null)
-      {
-        var sourceColumnIsNullable = fieldPersistenceInfo.SourceColumnIsNullable ? "" : " not ";
-        var sizeAndPrecision = "";
-        if (fieldPersistenceInfo.SourceColumnMaxLength < UInt16.MaxValue && fieldPersistenceInfo.SourceColumnMaxLength > 0 || fieldPersistenceInfo.SourceColumnPrecision > 0)
-          sizeAndPrecision = String.Format("({0})", fieldPersistenceInfo.SourceColumnMaxLength + fieldPersistenceInfo.SourceColumnPrecision);
-        var dbInfo = String.Format("Column: {0} ({1}{2}, {3} null)", fieldPersistenceInfo.SourceColumnName, fieldPersistenceInfo.SourceColumnDbType,
-          sizeAndPrecision, sourceColumnIsNullable);
-        toolTipText += Environment.NewLine + GeneralHelper.Join(GeneralHelper.StringJoinSeperator, dbInfo, fieldPersistenceInfo.IdentityValueSequenceName);
-      }
-      return toolTipText.Trim();
-    }
-
-    private static string CreateDisplayNameDescriptionCustomPropertiesToolTipText(IEntityCore entity, MemberDescriptor propertyDescriptor)
-    {
-      if (propertyDescriptor != null)
-      {
-        var toolTipText = CreateDisplayNameDescriptionToolTipText(propertyDescriptor);
-        toolTipText += Environment.NewLine + EntityHelper.GetFieldsCustomProperties(entity, propertyDescriptor.Name).JoinAsString();
-        return toolTipText.Trim();
-      }
-      return "";
+      return LLBLWinformHelper.CreateNavigatorToolTipText(entity, navigatorProperty,  hyperlinkTarget.ToolTipText);
     }
 
     #endregion
-
-    private static string CreateDisplayNameDescriptionToolTipText(MemberDescriptor propertyDescriptor)
-    {
-      var displayName = string.Empty;
-      try
-      {
-        displayName = propertyDescriptor.DisplayName;
-      }
-      catch (Exception e)
-      {
-        GeneralHelper.TraceOut(e);
-      }
-      displayName = displayName == propertyDescriptor.Name ? "" : displayName;
-      var toolTipText = GeneralHelper.Join(GeneralHelper.StringJoinSeperator, displayName, propertyDescriptor.Description);
-      return toolTipText;
-    }
 
     #region Reflection
 
@@ -603,7 +479,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           ExplorerItemKind.Property, ExplorerIcon.Column)
         {
           DragText = childProp.Name,
-          ToolTipText = CreateDisplayNameDescriptionToolTipText(childProp)
+          ToolTipText = LLBLWinformHelper.CreateDisplayNameDescriptionToolTipText(childProp)
         };
       return explorerItem;
     }
@@ -618,7 +494,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private static ExplorerItem CreateEntityExplorerItem2(PropertyDescriptor childProp, ILookup<Type, ExplorerItem> elementTypeLookup, Type elementType, ExplorerItemKind kind, ExplorerIcon icon)
     {
       var hyperlinkTarget = elementTypeLookup[elementType].First();
-      var toolTipText = CreateDisplayNameDescriptionToolTipText(childProp);
+      var toolTipText = LLBLWinformHelper.CreateDisplayNameDescriptionToolTipText(childProp);
       var targetTipText = hyperlinkTarget.ToolTipText;
       if (typeof (IEnumerable).IsAssignableFrom(childProp.PropertyType))
       {
