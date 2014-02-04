@@ -273,7 +273,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             }
           }
           if (!prefixMatch)
-            prefixesAsSchemas.Add(table.SqlName + table.SqlName, table);
+            prefixesAsSchemas.Add(table.SqlName + table.Text, table);
         }
         table.SqlTypeDeclaration = string.Empty;
 
