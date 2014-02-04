@@ -6,9 +6,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -62,6 +64,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public const string ElementNameFactoryType = "FactoryType";
     public const string ElementNameFactoryAssembly = "FactoryAssembly";
     public const string ElementNameUseFields = "UseFields";
+    public const string ElementNameMembersUseSchema = "UseSchema";
+    public const string ElementNameMembersTablePrefixesToGroupBy = "TablePrefixesToGroupBy";
     public const string ElementNameDisplayInGrid = "DisplayInGrid";
     public const string ElementNameMembersToExclude = "MembersToExclude";
     public const string TitleChooseLLBLEntityAssembly = "Choose LLBL entity assembly";
@@ -254,6 +258,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies);
       CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces);
       CreateElementIfNeeded(cxInfo, ElementNameMembersToExclude);
+      CreateElementIfNeeded(cxInfo, ElementNameMembersUseSchema);
+      CreateElementIfNeeded(cxInfo, ElementNameMembersTablePrefixesToGroupBy);
     }
 
     public static void UpGradeDriverDataElements(IConnectionInfo cxInfo)
@@ -283,6 +289,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies);
       CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces);
       CreateElementIfNeeded(cxInfo, ElementNameMembersToExclude);
+      CreateElementIfNeeded(cxInfo, ElementNameMembersUseSchema);
+      CreateElementIfNeeded(cxInfo, ElementNameMembersTablePrefixesToGroupBy);
     }
 
     private static void CreateElementIfNeeded(IConnectionInfo cxInfo, string elementName, string defaultValue = null)
@@ -318,7 +326,24 @@ namespace AW.LLBLGen.DataContextDriver.Static
     internal static IEnumerable<string> GetDriverDataStringValues(IConnectionInfo cxInfo, string elementName)
     {
       var xElement = cxInfo.DriverData.Element(elementName);
-      return xElement != null ? xElement.Elements().Select(xe => xe.Value) : Enumerable.Empty<string>();
+      if (xElement != null)
+      {
+        var xElements = xElement.Elements();
+        if (xElements.Any())
+        return xElements.Select(xe => xe.Value);
+        if (!string.IsNullOrWhiteSpace(xElement.Value))
+        {
+          //var stringBuilder = new StringBuilder(xElement.Value);
+          return xElement.Value.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        }
+      }
+      return Enumerable.Empty<string>();
+    }
+
+    internal static bool GetDriverDataBooleanValue(IConnectionInfo cxInfo, string elementName)
+    {
+      var usefieldsElement = GetDriverDataValue(cxInfo, elementName);
+      return usefieldsElement == true.ToString(CultureInfo.InvariantCulture);
     }
 
     public string GetDriverDataValue(string elementName)
@@ -335,16 +360,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static DisplayInGrid? GetHowToDisplayInGrid(IConnectionInfo cxInfo)
     {
       DisplayInGrid? howToDisplayInGrid = null;
-      var usefieldsElement = cxInfo.DriverData.Element(ElementNameDisplayInGrid);
-      if (usefieldsElement != null && !String.IsNullOrEmpty(usefieldsElement.Value))
-        howToDisplayInGrid = usefieldsElement.Value.ToEnum<DisplayInGrid>();
+      var useFieldsElement = cxInfo.DriverData.Element(ElementNameDisplayInGrid);
+      if (useFieldsElement != null && !String.IsNullOrEmpty(useFieldsElement.Value))
+        howToDisplayInGrid = useFieldsElement.Value.ToEnum<DisplayInGrid>();
       return howToDisplayInGrid;
     }
 
-    internal static string[] GetMembersToExclude(IConnectionInfo cxInfo)
+    internal static IEnumerable<string> GetMembersToExclude(IConnectionInfo cxInfo)
     {
-      var driverDataValue = GetDriverDataValue(cxInfo, ElementNameMembersToExclude);
-      return driverDataValue == null ? new string[0] : driverDataValue.Split(Environment.NewLine.ToCharArray());
+      return GetDriverDataStringValues(cxInfo, ElementNameMembersToExclude);
     }
 
     protected override void OnSourceInitialized(EventArgs e)
