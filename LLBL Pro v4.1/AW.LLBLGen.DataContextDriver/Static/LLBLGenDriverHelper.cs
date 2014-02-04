@@ -214,7 +214,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     #region Entities
 
-    internal static List<ExplorerItem> GetSchemaFromEntities(IConnectionInfo cxInfo, Type customType)
+    internal static List<ExplorerItem> GetSchemaFromEntities(IConnectionInfo cxInfo, Type customType, bool useSchema = true,
+      IEnumerable<string> tablePrefixesToGroupBy = null)
     {
       var elementCreator = EntityHelper.CreateElementCreator(customType);
       var adapter = GetDataAccessAdapter(cxInfo, elementCreator is IElementCreator2);
@@ -231,17 +232,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
       var elementTypeLookup = topLevelProps.ToLookup(tp => tp.Tag.GetType());
 
       var schemas = new Dictionary<string, ExplorerItem>();
+      var prefixesAsSchemas = new Dictionary<string, ExplorerItem>();
 
       //Copy ToolTipText from base type fields
       foreach (var table in topLevelProps)
       {
         var entity = (IEntityCore) table.Tag;
-        if (!string.IsNullOrWhiteSpace(table.SqlName))
+        if (useSchema)
         {
-          var strings = table.SqlName.Split('.');
-          if (strings.Count() > 1)
+          if (!string.IsNullOrWhiteSpace(table.SqlTypeDeclaration))
           {
-           var schema = strings[0];
+            var schema = table.SqlTypeDeclaration;
             if (schemas.ContainsKey(schema))
               schemas[schema].Children.Add(table);
             else
@@ -252,21 +253,48 @@ namespace AW.LLBLGen.DataContextDriver.Static
             }
           }
         }
+        else if (!tablePrefixesToGroupBy.IsNullOrEmpty() && !string.IsNullOrWhiteSpace(table.SqlName))
+        {
+          var prefixMatch = false;
+          foreach (var prefix in tablePrefixesToGroupBy)
+          {
+            if (table.SqlName.StartsWith(prefix,true,null))
+            {
+              if (prefixesAsSchemas.ContainsKey(prefix))
+                prefixesAsSchemas[prefix].Children.Add(table);
+              else
+              {
+                var explorerItem = new ExplorerItem(prefix, ExplorerItemKind.Schema, ExplorerIcon.Schema);
+                prefixesAsSchemas.Add(prefix, explorerItem);
+                explorerItem.Children = new List<ExplorerItem> {table};
+              }
+              prefixMatch = true;
+              break;
+            }
+          }
+          if (!prefixMatch)
+            prefixesAsSchemas.Add(table.SqlName + table.SqlName, table);
+        }
+        table.SqlTypeDeclaration = string.Empty;
 
         if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
         {
-          var explorerItems = elementTypeLookup[entity.GetType().BaseType];
-          var baseItem = explorerItems.SingleOrDefault();
-          if (baseItem != null)
+          var baseType = entity.GetType().BaseType;
+          if (baseType != null)
           {
-            table.Text += string.Format(" (Sub-type of '{0}')", baseItem.DragText);
-            foreach (var explorerItem in baseItem.Children)
+            var explorerItems = elementTypeLookup[baseType];
+            var baseItem = explorerItems.SingleOrDefault();
+            if (baseItem != null)
             {
-              var item = table.Children.Single(c => c.Text == explorerItem.Text);
-              if (explorerItem.ToolTipText.Contains(item.ToolTipText))
-                item.ToolTipText = explorerItem.ToolTipText;
-              if (item.Icon == ExplorerIcon.Column)
-                item.Icon = ExplorerIcon.Inherited;
+              table.Text += string.Format(" (Sub-type of '{0}')", baseItem.DragText);
+              foreach (var explorerItem in baseItem.Children)
+              {
+                var item = table.Children.Single(c => c.Text == explorerItem.Text);
+                if (explorerItem.ToolTipText.Contains(item.ToolTipText))
+                  item.ToolTipText = explorerItem.ToolTipText;
+                if (item.Icon == ExplorerIcon.Column)
+                  item.Icon = ExplorerIcon.Inherited;
+              }
             }
           }
         }
@@ -289,8 +317,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
         table.Tag = null;
       }
 
-      if (schemas.Count > 1)
+      if (useSchema && schemas.Count > 1)
         return schemas.Values.ToList();
+      if (prefixesAsSchemas.Any())
+        return prefixesAsSchemas.Values.ToList();
       return topLevelProps;
     }
 
@@ -355,7 +385,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
       explorerItem.ToolTipText = LLBLWinformHelper.CreateTableToolTipText(entity, fieldPersistenceInfo);
       if (fieldPersistenceInfo != null)
-        explorerItem.SqlName = GeneralHelper.Join(".", fieldPersistenceInfo.SourceSchemaName, fieldPersistenceInfo.SourceObjectName);
+      {
+        explorerItem.SqlTypeDeclaration = fieldPersistenceInfo.SourceSchemaName;
+        explorerItem.SqlName = fieldPersistenceInfo.SourceObjectName;
+      }
       return fieldExplorerItems;
     }
 
@@ -407,7 +440,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static string CreateNavigatorToolTipText(IEntityCore entity, PropertyDescriptor navigatorProperty, ExplorerItem hyperlinkTarget)
     {
-      return LLBLWinformHelper.CreateNavigatorToolTipText(entity, navigatorProperty,  hyperlinkTarget.ToolTipText);
+      return LLBLWinformHelper.CreateNavigatorToolTipText(entity, navigatorProperty, hyperlinkTarget.ToolTipText);
     }
 
     #endregion
@@ -545,7 +578,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     #endregion
 
     /// <summary>
-    /// Browses the data from a LINQPad like Treeview.
+    ///   Browses the data from a LINQPad like Treeview.
     /// </summary>
     /// <example>LinqPad: this.BrowseData()</example>
     /// <param name="linqMetaData">The linq meta data.</param>
