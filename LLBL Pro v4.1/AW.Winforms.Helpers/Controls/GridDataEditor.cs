@@ -206,6 +206,7 @@ namespace AW.Winforms.Helpers.Controls
       {
         _canSave = CanSaveEnumerable();
         saveToolStripButton.Enabled = _canSave && !SupportsNotifyPropertyChanged;
+        saveToolStripButton.Visible = _canSave;
         copyToolStripButton.Enabled = true;
         printToolStripButton.Enabled = true;
         toolStripButtonObjectBrowser.Enabled = true;
@@ -660,7 +661,7 @@ namespace AW.Winforms.Helpers.Controls
       }
     }
 
-    private IEnumerable SourceEnumerable
+    protected virtual IEnumerable SourceEnumerable
     {
       get { return (IEnumerable) _superset ?? bindingSourceEnumerable.List; }
     }
