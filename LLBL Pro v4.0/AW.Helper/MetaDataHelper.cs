@@ -71,6 +71,31 @@ namespace AW.Helper
 		}
 
 		/// <summary>
+    /// Sets the PCL resolver.
+    /// </summary>
+    /// <see cref="https://github.com/AutoMapper/AutoMapper/issues/383"/>
+    /// <see cref="https://connect.microsoft.com/VisualStudio/feedback/details/779370/vs2012-incorrectly-resolves-mscorlib-version-when-referencing-pcl-assembly"/>
+    /// <see cref="http://stackoverflow.com/questions/13871267/unable-to-resolve-assemblies-that-use-portable-class-libraries"/>
+    /// <see cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1"/>
+    /// <see cref="https://github.com/Fody/Costura/issues/30"/>
+    public static void SetPclResolver()
+    {
+        AppDomain.CurrentDomain.AssemblyResolve += PclAssemblyResolver;
+    }
+
+    private static Assembly PclAssemblyResolver(object sender, ResolveEventArgs args)
+    {
+      if (args.Name.ContainsIgnoreCase("System.Core"))
+      {
+        var assembly = LoadedAssemblyResolver(sender, args);
+        if (assembly == null)
+          assembly = Assembly.Load(args.Name);
+        return assembly;
+      }
+      return null;
+    }
+
+    /// <summary>
 		/// 	Assembly resolver that probes the assemblies loaded in the current Domain.
 		/// </summary>
 		/// <param name="sender"> The sender. </param>
@@ -411,26 +436,26 @@ namespace AW.Helper
 		/// <returns> The System.Type of the items contained in the list. </returns>
 		public static Type GetEnumerableItemType(IEnumerable enumerable)
 		{
-		  var queryable = enumerable as IQueryable;
-		  if (queryable != null)
-		    return queryable.ElementType;
-		  Type itemType;
+			var queryable = enumerable as IQueryable;
+			if (queryable != null)
+				return queryable.ElementType;
+			Type itemType;
 		  var enumerableType = enumerable.GetType();
 		  var elementType = GetElementType(enumerableType);
 		  if (elementType != enumerableType)
 		    return elementType;
-		  try
-		  {
-		    itemType = ListBindingHelper.GetListItemType(enumerable);
-		  }
-		  catch (NotImplementedException)
-		  {
-		    itemType = null;
-		  }
-		  return itemType;
+			try
+			{
+				itemType = ListBindingHelper.GetListItemType(enumerable);
+			}
+			catch (NotImplementedException)
+			{
+				itemType = null;
+			}
+			return itemType;
 		}
 
-	  /// <summary>
+		/// <summary>
 		/// 	Gets the type of the object type if it isn't enumerable or if it is get the enumerable Item Type.
 		/// </summary>
 		/// <param name="o"> The object. </param>
@@ -758,5 +783,11 @@ namespace AW.Helper
 			var memberExpression = expression.Body as MemberExpression;
 			return memberExpression == null ? null : memberExpression.Member;
 		}
+
+    public static object GetPropertyValue(object obj, string propertyName)
+    {
+      var propertyInfo = obj.GetType().GetProperty(propertyName);
+      return propertyInfo == null ? null : propertyInfo.GetValue(obj, null);
+    }
 	}
 }

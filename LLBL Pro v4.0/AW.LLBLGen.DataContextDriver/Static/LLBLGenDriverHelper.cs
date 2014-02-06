@@ -215,7 +215,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     #region Entities
 
     internal static List<ExplorerItem> GetSchemaFromEntities(IConnectionInfo cxInfo, Type customType, bool useSchema = true,
-      IEnumerable<string> tablePrefixesToGroupBy = null)
+      IEnumerable<string> tablePrefixesToGroupBy = null, string prefixDelimiter = null)
     {
       var elementCreator = EntityHelper.CreateElementCreator(customType);
       var adapter = GetDataAccessAdapter(cxInfo, elementCreator is IElementCreator2);
@@ -258,10 +258,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
           var prefixMatch = false;
           foreach (var prefix in tablePrefixesToGroupBy)
           {
-            if (table.SqlName.StartsWith(prefix,true,null))
+            if (table.SqlName.StartsWith(prefix, true, null))
             {
-              if (prefixesAsSchemas.ContainsKey(prefix))
-                prefixesAsSchemas[prefix].Children.Add(table);
+              ExplorerItem value;
+              if (prefixesAsSchemas.TryGetValue(prefix, out value))
+                value.Children.Add(table);
               else
               {
                 var explorerItem = new ExplorerItem(prefix, ExplorerItemKind.Schema, ExplorerIcon.Schema);
@@ -273,7 +274,25 @@ namespace AW.LLBLGen.DataContextDriver.Static
             }
           }
           if (!prefixMatch)
-            prefixesAsSchemas.Add(table.SqlName + table.SqlName, table);
+            prefixesAsSchemas.Add(table.SqlName + table.Text, table);
+        }
+        else if (!string.IsNullOrWhiteSpace(prefixDelimiter) && !string.IsNullOrWhiteSpace(table.SqlName))
+        {
+          var prefix = table.SqlName.Before(prefixDelimiter);
+          if (string.IsNullOrWhiteSpace(prefix))
+            prefixesAsSchemas.Add(table.SqlName + table.Text, table);
+          else
+          {
+            ExplorerItem value;
+            if (prefixesAsSchemas.TryGetValue(prefix, out value))
+              value.Children.Add(table);
+            else
+            {
+              var explorerItem = new ExplorerItem(prefix, ExplorerItemKind.Schema, ExplorerIcon.Schema);
+              prefixesAsSchemas.Add(prefix, explorerItem);
+              explorerItem.Children = new List<ExplorerItem> {table};
+            }
+          }
         }
         table.SqlTypeDeclaration = string.Empty;
 

@@ -559,6 +559,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
           </Grid.RowDefinitions>
           <StackPanel Orientation="Vertical">
@@ -575,13 +576,19 @@
             <CheckBox
               IsChecked="{Binding CxInfo.DriverData.Element[UseSchema].Value}"
               ToolTip="Use Table Schema to group the Entities"
-              Content="Use Table Schema to group the Entities"  VerticalAlignment="Center" 
+              Content="Use Table Schema to group the Entities"  VerticalAlignment="Center" Margin="5,0,0,0" 
               />
 
             </StackPanel>
+            <Label x:Name="lblPrefixDelimiterToGroupBy"
+                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" >
+              Table Prefix Delimiter to group Entities by (e.g. with a delimiter of __ table Sales__Order would grouped into a node called Sales)
+            </Label>
+            <TextBox x:Name="TextBoxTablePrefixDelimiterToGroupBy" Text="{Binding CxInfo.DriverData.Element[TablePrefixDelimiterToGroupBy].Value}"
+                   ToolTip="{Binding Content, ElementName=lblPrefixDelimiterToGroupBy}" />
             <Label x:Name="lblPrefixesToGroupBy"
                  ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" >
-              Tables Prefixes To group Entities by (one per line)
+              Table Prefixes to group Entities by (one per line) (e.g. A prefix of Customer would group tables Customer,CustomerDemographic and CustomerCustomerDemo together)
             </Label>
             <TextBox x:Name="TextBoxTablePrefixesToGroupBy" Text="{Binding CxInfo.DriverData.Element[TablePrefixesToGroupBy].Value}"
                  
@@ -589,7 +596,8 @@
                    AcceptsReturn="True"
                    ToolTip="{Binding Content, ElementName=lblPrefixesToGroupBy}" />
           </StackPanel>
-          <StackPanel Grid.Row="1" Orientation="Horizontal">
+          <Label Grid.Row="1" FontWeight="Bold">Data Grids:</Label>
+          <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Label x:Name="lblComboBoxDisplayInGrid"
                    ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}">
               Options to use when a query is run with 'Results to Data Grids':
@@ -602,12 +610,12 @@
                       ToolTip="{Binding Content, ElementName=lblComboBoxDisplayInGrid}"
                       Width="450" />
           </StackPanel>
-          <Label x:Name="lblMembersToExclude" Grid.Row="2"
-                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" FontWeight="Bold">
+          <Label x:Name="lblMembersToExclude" Grid.Row="3"
+                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" >
             Properties to Exclude from display in the grid (one per line)
           </Label>
           <TextBox x:Name="TextBoxMembersToExclude" Text="{Binding CxInfo.DriverData.Element[MembersToExclude].Value}"
-                   Grid.Row="3"
+                   Grid.Row="4"
                    HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoWordSelection="True"
                    AcceptsReturn="True"
                    ToolTip="{Binding Content, ElementName=lblMembersToExclude}" />
