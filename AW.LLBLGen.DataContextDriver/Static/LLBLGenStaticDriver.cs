@@ -224,7 +224,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
         var usefieldsElement = ConnectionDialog.GetDriverDataBooleanValue(cxInfo, ConnectionDialog.ElementNameUseFields);
         return usefieldsElement ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType, 
           ConnectionDialog.GetDriverDataBooleanValue(cxInfo, ConnectionDialog.ElementNameMembersUseSchema),
-          ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixesToGroupBy)) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
+          ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixesToGroupBy),
+           ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixDelimiterToGroupBy)) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
       }
       catch (Exception e)
       {

@@ -66,6 +66,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public const string ElementNameUseFields = "UseFields";
     public const string ElementNameMembersUseSchema = "UseSchema";
     public const string ElementNameMembersTablePrefixesToGroupBy = "TablePrefixesToGroupBy";
+    public const string ElementNameMembersTablePrefixDelimiterToGroupBy = "TablePrefixDelimiterToGroupBy";
     public const string ElementNameDisplayInGrid = "DisplayInGrid";
     public const string ElementNameMembersToExclude = "MembersToExclude";
     public const string TitleChooseLLBLEntityAssembly = "Choose LLBL entity assembly";
@@ -260,6 +261,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameMembersToExclude);
       CreateElementIfNeeded(cxInfo, ElementNameMembersUseSchema);
       CreateElementIfNeeded(cxInfo, ElementNameMembersTablePrefixesToGroupBy);
+      CreateElementIfNeeded(cxInfo, ElementNameMembersTablePrefixDelimiterToGroupBy);
     }
 
     public static void UpGradeDriverDataElements(IConnectionInfo cxInfo)
@@ -275,7 +277,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
         CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.AdapterFactory).ToString());
         cxInfo.DatabaseInfo.Provider = null;
         cxInfo.DatabaseInfo.DbVersion = null;
-        cxInfo.DriverData.Element(ElementNameAdapterType).Value = String.Empty;
+        var xElement = cxInfo.DriverData.Element(ElementNameAdapterType);
+        if (xElement != null) xElement.Value = String.Empty;
       }
       else
       {
@@ -291,6 +294,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameMembersToExclude);
       CreateElementIfNeeded(cxInfo, ElementNameMembersUseSchema);
       CreateElementIfNeeded(cxInfo, ElementNameMembersTablePrefixesToGroupBy);
+      CreateElementIfNeeded(cxInfo, ElementNameMembersTablePrefixDelimiterToGroupBy);
     }
 
     private static void CreateElementIfNeeded(IConnectionInfo cxInfo, string elementName, string defaultValue = null)

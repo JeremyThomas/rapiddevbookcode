@@ -771,5 +771,14 @@ namespace AW.Helper
     {
       return source.Equals(value, StringComparison.OrdinalIgnoreCase);
     }
+
+    /// <summary>
+    ///   Get string value before [first] delimiter.
+    /// </summary>
+    public static string Before(this string value, string delimiter)
+    {
+      var posA = value.IndexOf(delimiter, System.StringComparison.Ordinal);
+      return posA == -1 ? "" : value.Substring(0, posA);
+    }
   }
 }
