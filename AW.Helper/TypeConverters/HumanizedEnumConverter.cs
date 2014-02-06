@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using Humanizer;
 
 namespace AW.Helper.TypeConverters
@@ -13,6 +14,14 @@ namespace AW.Helper.TypeConverters
   {
     private readonly Type _coreEnumType;
     private readonly bool _isNullable;
+
+    /// <summary>
+    /// Initializes the <see cref="HumanizedEnumConverter"/> class.
+    /// </summary>
+    static HumanizedEnumConverter()
+    {
+      MetaDataHelper.SetPclResolver();
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="HumanizedEnumConverter"/> class.
@@ -53,8 +62,21 @@ namespace AW.Helper.TypeConverters
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
       if (destinationType == typeof (string) && value != null)
-        return Enum.IsDefined(_coreEnumType, value) ? ((Enum) value).Humanize() : string.Empty;
+        return Enum.IsDefined(_coreEnumType, value) ? Humanize((Enum) value) : string.Empty;
       return base.ConvertTo(context, culture, value, destinationType);
+    }
+
+    private static string Humanize(Enum value)
+    {
+      try
+      {
+        return value.EnumToString();
+      }
+      catch (FileNotFoundException e)
+      {
+        GeneralHelper.TraceOut(e);
+        return value.ToString();
+      }  
     }
 
     /// <summary>
