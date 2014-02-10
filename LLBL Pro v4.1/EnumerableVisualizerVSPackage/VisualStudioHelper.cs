@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
 using Microsoft.Win32;
 
 namespace JeremyThomas.EnumerableVisualizerVSPackage
@@ -42,11 +45,14 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
       using (var localMachineKey = Registry.LocalMachine.OpenSubKey(registryKeyString))
         if (localMachineKey != null)
         {
-          var installDirIde = Convert.ToString(localMachineKey.GetValue("InstallDir"));
-          if (installDirIde != null) return installDirIde.Remove(installDirIde.Length - 4, 4); //Remove /IDE
+          var installDirIde = Convert.ToString(localMachineKey.GetValue("InstallDir"));        
+          var ideLength = @"/IDE".Length;
+          if (installDirIde.Length > ideLength)
+            return installDirIde.Remove(installDirIde.Length - ideLength, ideLength); //Remove /IDE
         }
-      var vscomntoolsDir = Environment.GetEnvironmentVariable("VS" + (int)version + "COMNTOOLS");
-      return vscomntoolsDir == null ? null : vscomntoolsDir.Remove(vscomntoolsDir.Length - 6, 6); //Remove /Tools
+      var vscomntoolsDir = Environment.GetEnvironmentVariable("VS" + (int) version + "COMNTOOLS");
+      var toolsLength = @"/Tools".Length;
+      return vscomntoolsDir == null ? null : vscomntoolsDir.Remove(vscomntoolsDir.Length - toolsLength, toolsLength); //Remove /Tools
     }
 
     internal static string GetVisualStudioDebuggerVisualizersDir(VisualStudioVersion version)
@@ -65,6 +71,55 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
       if (version == VisualStudioVersion.Other) throw new Exception("Not supported version");
 
       return ((int) version/10).ToString("00.0", CultureInfo.InvariantCulture);
+    }
+
+    public static string InstallDebuggerVisualizer(string debuggerVisualizerFileName, string debuggerVisualizerSourceDir, VisualStudioVersion visualStudioVersion)
+    {
+      string result = null;
+      var debuggerVisualizersDir = GetVisualStudioDebuggerVisualizersDir(visualStudioVersion);
+      if (Directory.Exists(debuggerVisualizersDir) && Directory.Exists(debuggerVisualizerSourceDir))
+      {
+        var target = Path.Combine(debuggerVisualizersDir, debuggerVisualizerFileName);
+        var source = Path.Combine(debuggerVisualizerSourceDir, debuggerVisualizerFileName);
+
+        var sourceVisualizerFileInfo = new FileInfo(source);
+        var targetVisualizerFileInfo = new FileInfo(target);
+
+        if (sourceVisualizerFileInfo.Exists)
+          if (targetVisualizerFileInfo.Exists)
+          {
+            if (sourceVisualizerFileInfo.LastWriteTime != targetVisualizerFileInfo.LastWriteTime)
+              File.Copy(source, target, true);
+          }
+          else
+            File.Copy(source, target, false);
+        else
+        {
+          result = sourceVisualizerFileInfo.FullName + " does not exist";
+        }
+      }
+      else
+      {
+        result = string.Format("{0} or {1} does not exist", debuggerVisualizersDir, debuggerVisualizerSourceDir);
+      }
+      if (result != null)
+        Trace.WriteLine(result);
+      return result;
+    }
+
+    public static string GetDebuggerVisualizerSourceDir(Assembly assembly)
+    {
+      var debuggerVisualizerSourceDir = "";
+      try
+      {
+        var location = assembly.Location;
+        debuggerVisualizerSourceDir = Path.GetDirectoryName(location);
+      }
+      catch (NotSupportedException ex)
+      {
+        Debug.WriteLine(ex.Message);
+      }
+      return debuggerVisualizerSourceDir;
     }
   }
 }

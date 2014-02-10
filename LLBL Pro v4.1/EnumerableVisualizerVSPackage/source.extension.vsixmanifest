@@ -3,11 +3,14 @@
   <Metadata>
     <Identity Id="07ea796c-6649-482d-82f8-b5be69a5f574" Version="3.0" Language="en-US" Publisher="Jeremy Thomas" />
     <DisplayName>Enumerable Debugger Visualizer</DisplayName>
-    <Description>Enumerable Debugger Visualizer that displays any registered IEnumerable object in a datagridview.</Description>
+    <Description xml:space="preserve">Enumerable Debugger Visualizer that displays any registered IEnumerable object in a DataGridView.
+Note this extension is just an installer for the Debugger Visualizer which will remain after this extension has been uninstalled.
+Keep this extension only if you wish to receive updates</Description>
     <MoreInfo>https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer</MoreInfo>
-    <License>Microsoft Public License (Ms-PL)</License>
-    <ReleaseNotes>Vsix Installer</ReleaseNotes>
+    <License>Microsoft Public License (Ms-PL).txt</License>
+    <ReleaseNotes>https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer</ReleaseNotes>
     <Icon>Adventure Works Cycle company logo.gif</Icon>
+    <Tags>Debugger Visualizer</Tags>
   </Metadata>
   <Installation InstalledByMsi="false">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0]" />
