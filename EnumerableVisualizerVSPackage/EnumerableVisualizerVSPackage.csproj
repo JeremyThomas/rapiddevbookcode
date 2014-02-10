@@ -104,7 +104,6 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="EnumerableVisualizerVsPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PkgCmdID.cs" />
     <Compile Include="VisualStudioHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +128,7 @@
   <ItemGroup>
     <VSCTCompile Include="EnumerableVisualizerVSPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
+      <SubType>Designer</SubType>
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>

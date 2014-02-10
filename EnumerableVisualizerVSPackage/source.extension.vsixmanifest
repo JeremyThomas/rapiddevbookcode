@@ -3,9 +3,11 @@
   <Metadata>
     <Identity Id="07ea796c-6649-482d-82f8-b5be69a5f574" Version="3.0" Language="en-US" Publisher="Jeremy Thomas" />
     <DisplayName>Enumerable Debugger Visualizer</DisplayName>
-    <Description xml:space="preserve">Enumerable Debugger Visualizer that displays any registered IEnumerable object in a DataGridView.
-Note this extension is just an installer for the Debugger Visualizer which will remain after this extension has been uninstalled.
-Keep this extension only if you wish to receive updates</Description>
+    <Description xml:space="preserve">Enumerable Debugger Visualizer that displays any registered IEnumerable object in a DataGridView control.
+Note, this extension is just an installer for the Debugger Visualizer which will remain after this extension has been Uninstalled.
+During any solution load the Debugger Visualizer Assembly, AW.EnumerableVisualizer.2013.dll, will be copied to VisualStudioInstallPath\Common7\Packages\Debugger\Visualizers if it isn't there already.
+After checking that the Debugger Visualizer is installed keep this extension only if you wish to notified of updates.
+To remove the Debugger Visualizer simply remove AW.EnumerableVisualizer.2013.dll from VisualStudioInstallPath\Common7\Packages\Debugger\Visualizers</Description>
     <MoreInfo>https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer</MoreInfo>
     <License>Microsoft Public License (Ms-PL).txt</License>
     <ReleaseNotes>https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer</ReleaseNotes>
