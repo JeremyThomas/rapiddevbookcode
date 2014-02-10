@@ -28,6 +28,8 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
   // This attribute is needed to let the shell know that this package exposes some menus.
   [ProvideMenuResource("Menus.ctmenu", 1)]
   [Guid(GuidList.guidEnumerableVisualizerVSPackagePkgString)]
+  //Setting initialization to the opening of a solution file
+  [ProvideAutoLoad("D2567162-F94F-4091-8798-A096E61B8B50")]
   public sealed class EnumerableVisualizerVsPackage : Package
   {
     /// <summary>
@@ -40,8 +42,10 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
     public EnumerableVisualizerVsPackage()
     {
       Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", ToString()));
+      Debug.WriteLine(VisualStudioHelper.InstallDebuggerVisualizer("AW.EnumerableVisualizer.2013.dll", 
+        VisualStudioHelper.GetDebuggerVisualizerSourceDir(GetType().Assembly), 
+        VisualStudioVersion.VS2013));
     }
-
 
     /////////////////////////////////////////////////////////////////////////////
     // Overridden Package Implementation
@@ -78,45 +82,7 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
     private void MenuItemCallback(object sender, EventArgs e)
     {
       var pszText = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", ToString());
-      var vsixDir = "";
-      try
-      {
-        var location = GetType().Assembly.Location;
-        vsixDir = Path.GetDirectoryName(location);
-      }
-      catch (NotSupportedException ex)
-      {
-        Trace.WriteLine(vsixDir + "not found");
-        pszText = ex.Message;
-      }
-
-      var debuggerVisualizersDir = VisualStudioHelper.GetVisualStudioDebuggerVisualizersDir(VisualStudioVersion.VS2013);
-      if (vsixDir != null && (Directory.Exists(debuggerVisualizersDir) && Directory.Exists(vsixDir)))
-      {
-        var target = Path.Combine(debuggerVisualizersDir, "AW.EnumerableVisualizer.2013.dll");
-        var source = Path.Combine(vsixDir, "AW.EnumerableVisualizer.2013.dll");
-
-        var visualizerFileInfo = new FileInfo(source);
-        var targetFileInfo = new FileInfo(target);
-
-        if (visualizerFileInfo.Exists)
-          if (targetFileInfo.Exists)
-          {
-            if (visualizerFileInfo.LastWriteTime != targetFileInfo.LastWriteTime)
-              File.Copy(source, target, true);
-          }
-          else
-            File.Copy(source, target, false);
-        else
-        {
-          pszText = visualizerFileInfo.FullName + " does not exist";
-          Trace.WriteLine(pszText);
-        }
-      }
-      else
-      {
-        pszText = debuggerVisualizersDir + " does not exist";
-      }
+      pszText = VisualStudioHelper.InstallDebuggerVisualizer("AW.EnumerableVisualizer.2013.dll", VisualStudioHelper.GetDebuggerVisualizerSourceDir(GetType().Assembly), VisualStudioVersion.VS2013);
 
       // Show a Message Box to prove we were here
       var uiShell = (IVsUIShell) GetService(typeof (SVsUIShell));
@@ -136,5 +102,7 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
         0, // false
         out result));
     }
+
+    
   }
 }
