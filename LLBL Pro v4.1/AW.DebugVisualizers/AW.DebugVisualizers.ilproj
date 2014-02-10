@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Settings>
   <!--Switches-->
-  <CopyAttributes Enabled="true" />
+  <CopyAttributes Enabled="false" />
   <UnionDuplicates Enabled="false" />
   <Debug Enabled="1" />
   <Internalize Enabled="false" />
@@ -9,24 +9,27 @@
   <!--Signing-->
   <Sign Enabled="false" Delay="false"></Sign>
   <!--Logging-->
-  <Log Enabled="true">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\AW.EnumerableVisualizer.2013.log</Log>
+  <Log Enabled="true">C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.EnumerableVisualizer.2013.log</Log>
   <!--Assemblies-->
   <Assemblies>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\AdvancedDataGridView.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\AW.DebugVisualizers.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\AW.Helper.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\AW.Winforms.Helpers.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\CSScriptLibrary.v3.5.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\Dynamic.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\Humanizer.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\Microsoft.Data.ConnectionUI.Dialog.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\Microsoft.Data.ConnectionUI.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\Newtonsoft.Json.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\ObjectListView.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\sliver.Windows.Forms.StateBrowser.dll</Assembly>
-    <Primary>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\AW.DebugVisualizers.dll</Primary>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AdvancedDataGridView.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.Helper.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.Winforms.Helpers.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\CSScriptLibrary.v3.5.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\Dynamic.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\Humanizer.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\Microsoft.Data.ConnectionUI.Dialog.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\Microsoft.Data.ConnectionUI.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\Newtonsoft.Json.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\ObjectListView.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\sliver.Windows.Forms.StateBrowser.dll</Assembly>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.DebugVisualizers.2013.dll</Assembly>
+    <Primary>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.DebugVisualizers.2013.dll</Primary>
   </Assemblies>
   <!--Output-->
-  <OutputAssembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.0\AW.DebugVisualizers\bin\Release\AW.EnumerableVisualizer.2013.dll</OutputAssembly>
-  <Framework>.NET Framework v4.0 Client</Framework>
+  <OutputAssembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.EnumerableVisualizer.2013.dll</OutputAssembly>
+  <!--.NET Framework-->
+  <Framework>.NET Framework 4.5 Full</Framework>
+  <!--Merge Engine-->
+  <Engine Name="ILMerge" />
 </Settings>

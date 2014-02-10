@@ -31,4 +31,6 @@ xcopy /y  bin\debug\Dynamic.* %VisualizersDir%
 xcopy /y  bin\debug\ObjectListView.* %VisualizersDir%
 xcopy /y  bin\debug\sliver.Windows.Forms.StateBrowser.* %VisualizersDir%
 xcopy /y  bin\debug\Newtonsoft.Json.dll %VisualizersDir%
+xcopy /y  bin\debug\AdvancedDataGridView.dll %VisualizersDir%
+xcopy /y  bin\debug\Humanizer.dll %VisualizersDir%
 pause

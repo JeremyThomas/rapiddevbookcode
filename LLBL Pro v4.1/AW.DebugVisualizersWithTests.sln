@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{109114F1-DE48-4B10-AF10-A18D9AF68E8B}"
 	ProjectSection(SolutionItems) = preProject
 		Ancillary\AdventureWorks.snk = Ancillary\AdventureWorks.snk
@@ -83,9 +85,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitForms", "nunitforms\so
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitForms.Test", "nunitforms\source\NUnitForms.Test\NUnitForms.Test.csproj", "{E779CBD7-1CCE-4796-AE12-00AB56A8A815}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnumerableVisualizerVSPackage", "EnumerableVisualizerVSPackage\EnumerableVisualizerVSPackage.csproj", "{5DDABF66-0501-474A-A84B-70FF6E672D51}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 16
+		SccNumberOfProjects = 17
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs01
 		SccLocalPath0 = .
@@ -147,9 +151,9 @@ Global
 		SccProjectTopLevelParentUniqueName15 = AW.DebugVisualizersWithTests.sln
 		SccProjectName15 = nunitforms/source/NUnitForms.Test
 		SccLocalPath15 = nunitforms\\source\\NUnitForms.Test
-	EndGlobalSection
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = AW.DebugVisualizersWithTests.vsmdi
+		SccProjectUniqueName16 = EnumerableVisualizerVSPackage\\EnumerableVisualizerVSPackage.csproj
+		SccProjectName16 = EnumerableVisualizerVSPackage
+		SccLocalPath16 = EnumerableVisualizerVSPackage
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -216,6 +220,10 @@ Global
 		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E779CBD7-1CCE-4796-AE12-00AB56A8A815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DDABF66-0501-474A-A84B-70FF6E672D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DDABF66-0501-474A-A84B-70FF6E672D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DDABF66-0501-474A-A84B-70FF6E672D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DDABF66-0501-474A-A84B-70FF6E672D51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -223,8 +231,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
-		{47F52527-A001-405B-9CEC-FCBF7FA10855} = {881A675A-EB80-4108-821E-0665114D2C72}
 		{80418BDD-8FF2-4F01-8782-AD22A496AF79} = {881A675A-EB80-4108-821E-0665114D2C72}
+		{47F52527-A001-405B-9CEC-FCBF7FA10855} = {881A675A-EB80-4108-821E-0665114D2C72}
 		{3A769AFA-83F9-4CB0-8F69-60B8487055E0} = {881A675A-EB80-4108-821E-0665114D2C72}
 		{24FA312C-06E0-462D-97FA-709AC20D09EF} = {881A675A-EB80-4108-821E-0665114D2C72}
 		{0AAD790B-15C7-4119-9987-3137A0BB20B9} = {881A675A-EB80-4108-821E-0665114D2C72}
@@ -236,6 +244,9 @@ Global
 		{D978DA92-C5B6-4670-98E4-17390BBCCF08} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
 		{E579ACDA-8C4F-4E35-A18B-C001D9EECD2B} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
 		{E779CBD7-1CCE-4796-AE12-00AB56A8A815} = {42C8D572-EEFF-496A-9D7E-D357651D2611}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = AW.DebugVisualizersWithTests.vsmdi
 	EndGlobalSection
 	GlobalSection(SpecExplorer.ActivityCompletionStatus) = preSolution
 		SpecExplorer.ActivityCompletionStatus = 
