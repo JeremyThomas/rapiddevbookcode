@@ -1,12 +1,6 @@
-﻿using System;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 
 namespace JeremyThomas.EnumerableVisualizerVSPackage
 {
@@ -25,8 +19,6 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
   // This attribute is used to register the information needed to show this package
   // in the Help/About dialog of Visual Studio.
   [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
-  // This attribute is needed to let the shell know that this package exposes some menus.
-  [ProvideMenuResource("Menus.ctmenu", 1)]
   [Guid(GuidList.guidEnumerableVisualizerVSPackagePkgString)]
   //Setting initialization to the opening of a solution file
   [ProvideAutoLoad("D2567162-F94F-4091-8798-A096E61B8B50")]
@@ -41,9 +33,8 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
     /// </summary>
     public EnumerableVisualizerVsPackage()
     {
-      Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", ToString()));
-      Debug.WriteLine(VisualStudioHelper.InstallDebuggerVisualizer("AW.EnumerableVisualizer.2013.dll", 
-        VisualStudioHelper.GetDebuggerVisualizerSourceDir(GetType().Assembly), 
+      Debug.WriteLine(VisualStudioHelper.InstallDebuggerVisualizer("AW.EnumerableVisualizer.2013.dll",
+        VisualStudioHelper.GetDebuggerVisualizerSourceDir(GetType().Assembly),
         VisualStudioVersion.VS2013));
     }
 
@@ -52,57 +43,6 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
 
     #region Package Members
 
-    /// <summary>
-    ///   Initialization of the package; this method is called right after the package is sited, so this is the place
-    ///   where you can put all the initialization code that rely on services provided by VisualStudio.
-    /// </summary>
-    protected override void Initialize()
-    {
-      Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", ToString()));
-      base.Initialize();
-
-      // Add our command handlers for menu (commands must exist in the .vsct file)
-      var mcs = GetService(typeof (IMenuCommandService)) as OleMenuCommandService;
-      if (null != mcs)
-      {
-        // Create the command for the menu item.
-        var menuCommandID = new CommandID(GuidList.guidEnumerableVisualizerVSPackageCmdSet, (int) PkgCmdIDList.cmdidInstallDebuggerVisualizer);
-        var menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
-        mcs.AddCommand(menuItem);
-      }
-    }
-
     #endregion
-
-    /// <summary>
-    ///   This function is the callback used to execute a command when the a menu item is clicked.
-    ///   See the Initialize method to see how the menu item is associated to this function using
-    ///   the OleMenuCommandService service and the MenuCommand class.
-    /// </summary>
-    private void MenuItemCallback(object sender, EventArgs e)
-    {
-      var pszText = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", ToString());
-      pszText = VisualStudioHelper.InstallDebuggerVisualizer("AW.EnumerableVisualizer.2013.dll", VisualStudioHelper.GetDebuggerVisualizerSourceDir(GetType().Assembly), VisualStudioVersion.VS2013);
-
-      // Show a Message Box to prove we were here
-      var uiShell = (IVsUIShell) GetService(typeof (SVsUIShell));
-      var clsid = Guid.Empty;
-      int result;
-
-      ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
-        0,
-        ref clsid,
-        "EnumerableVisualizerVSPackage",
-        pszText,
-        string.Empty,
-        0,
-        OLEMSGBUTTON.OLEMSGBUTTON_OK,
-        OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
-        OLEMSGICON.OLEMSGICON_INFO,
-        0, // false
-        out result));
-    }
-
-    
   }
 }
