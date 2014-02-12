@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
+using AW.Helper;
 using Microsoft.VisualStudio.Shell;
 
 namespace JeremyThomas.EnumerableVisualizerVSPackage

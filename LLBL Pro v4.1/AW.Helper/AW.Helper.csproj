@@ -100,6 +100,7 @@
     <Compile Include="TypeConverters\NumericConverters.cs" />
     <Compile Include="TypeConverters\TypeConverterHelper.cs" />
     <Compile Include="ValueTypeWrapper.cs" />
+    <Compile Include="VisualStudioHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Ancillary\AdventureWorks.snk">
