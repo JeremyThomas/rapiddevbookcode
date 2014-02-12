@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Win32;
 
-namespace JeremyThomas.EnumerableVisualizerVSPackage
+namespace AW.Helper
 {
   /// <summary>
   ///   Represents the several visual studio versions.
@@ -29,7 +29,7 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
   ///   http://pascoal.net/2011/04/getting-visual-studio-installation-directory/
   ///   Supported versions 2005, 2008 and 2010, .Net 2003 and .Net 2002
   /// </summary>
-  internal static class VisualStudioHelper
+  public static class VisualStudioHelper
   {
     /// <summary>
     ///   Gets the installation (Common7) directory of a given Visual Studio Version
@@ -55,7 +55,7 @@ namespace JeremyThomas.EnumerableVisualizerVSPackage
       return vscomntoolsDir == null ? null : vscomntoolsDir.Remove(vscomntoolsDir.Length - toolsLength, toolsLength); //Remove /Tools
     }
 
-    internal static string GetVisualStudioDebuggerVisualizersDir(VisualStudioVersion version)
+    public static string GetVisualStudioDebuggerVisualizersDir(VisualStudioVersion version)
     {
       return GetVisualStudioInstallationCommonDir(version) + @"Packages\Debugger\Visualizers";
     }
