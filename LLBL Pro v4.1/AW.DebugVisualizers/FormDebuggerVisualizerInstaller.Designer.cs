@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDebuggerVisualizerInstaller));
       this.buttonInstallAllUsers = new System.Windows.Forms.Button();
       this.buttonInstallCurrentUser = new System.Windows.Forms.Button();
@@ -38,8 +39,9 @@
       this.label4 = new System.Windows.Forms.Label();
       this.labelStatusAll = new System.Windows.Forms.Label();
       this.linkLabelUser = new System.Windows.Forms.LinkLabel();
-      this.label6 = new System.Windows.Forms.Label();
+      this.labelStatusUser = new System.Windows.Forms.Label();
       this.linkLabelWebSite = new System.Windows.Forms.LinkLabel();
+      this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.tableLayoutPanel1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -53,6 +55,7 @@
       this.buttonInstallAllUsers.Size = new System.Drawing.Size(102, 23);
       this.buttonInstallAllUsers.TabIndex = 0;
       this.buttonInstallAllUsers.Text = "Install for all Users";
+      this.toolTip1.SetToolTip(this.buttonInstallAllUsers, "May need to run as admin to do this");
       this.buttonInstallAllUsers.UseVisualStyleBackColor = true;
       this.buttonInstallAllUsers.Click += new System.EventHandler(this.buttonInstallAllUsers_Click);
       // 
@@ -67,6 +70,7 @@
       this.buttonInstallCurrentUser.TabIndex = 1;
       this.buttonInstallCurrentUser.Text = "Install Current User Only";
       this.buttonInstallCurrentUser.UseVisualStyleBackColor = true;
+      this.buttonInstallCurrentUser.Click += new System.EventHandler(this.buttonInstallCurrentUser_Click);
       // 
       // linkLabelAll
       // 
@@ -89,10 +93,11 @@
       this.label1.Size = new System.Drawing.Size(67, 13);
       this.label1.TabIndex = 3;
       this.label1.Text = "Install Action";
-      this.label1.Click += new System.EventHandler(this.label1_Click);
       // 
       // tableLayoutPanel1
       // 
+      this.tableLayoutPanel1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.tableLayoutPanel1.AutoSize = true;
       this.tableLayoutPanel1.ColumnCount = 3;
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
       this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -104,16 +109,15 @@
       this.tableLayoutPanel1.Controls.Add(this.linkLabelAll, 2, 1);
       this.tableLayoutPanel1.Controls.Add(this.labelStatusAll, 1, 1);
       this.tableLayoutPanel1.Controls.Add(this.linkLabelUser, 2, 2);
-      this.tableLayoutPanel1.Controls.Add(this.label6, 1, 2);
+      this.tableLayoutPanel1.Controls.Add(this.labelStatusUser, 1, 2);
       this.tableLayoutPanel1.Controls.Add(this.buttonInstallAllUsers, 0, 1);
-      this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 54);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
       this.tableLayoutPanel1.RowCount = 3;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(628, 82);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(628, 83);
       this.tableLayoutPanel1.TabIndex = 5;
       // 
       // label3
@@ -156,16 +160,17 @@
       this.linkLabelUser.TabIndex = 4;
       this.linkLabelUser.TabStop = true;
       this.linkLabelUser.Text = "linkLabel2";
+      this.linkLabelUser.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAll_LinkClicked);
       // 
-      // label6
+      // labelStatusUser
       // 
-      this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
-      this.label6.AutoSize = true;
-      this.label6.Location = new System.Drawing.Point(139, 62);
-      this.label6.Name = "label6";
-      this.label6.Size = new System.Drawing.Size(66, 13);
-      this.label6.TabIndex = 7;
-      this.label6.Text = "Not Installed";
+      this.labelStatusUser.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.labelStatusUser.AutoSize = true;
+      this.labelStatusUser.Location = new System.Drawing.Point(139, 62);
+      this.labelStatusUser.Name = "labelStatusUser";
+      this.labelStatusUser.Size = new System.Drawing.Size(66, 13);
+      this.labelStatusUser.TabIndex = 7;
+      this.labelStatusUser.Text = "Not Installed";
       // 
       // linkLabelWebSite
       // 
@@ -173,19 +178,20 @@
       this.linkLabelWebSite.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
       this.linkLabelWebSite.Location = new System.Drawing.Point(3, 9);
       this.linkLabelWebSite.Name = "linkLabelWebSite";
-      this.linkLabelWebSite.Size = new System.Drawing.Size(564, 39);
+      this.linkLabelWebSite.Size = new System.Drawing.Size(558, 39);
       this.linkLabelWebSite.TabIndex = 6;
       this.linkLabelWebSite.Text = resources.GetString("linkLabelWebSite.Text");
-      this.linkLabelWebSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
+      this.linkLabelWebSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAll_LinkClicked);
       // 
       // FormDebuggerVisualizerInstaller
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoSize = true;
       this.ClientSize = new System.Drawing.Size(628, 136);
       this.Controls.Add(this.linkLabelWebSite);
       this.Controls.Add(this.tableLayoutPanel1);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
       this.Name = "FormDebuggerVisualizerInstaller";
       this.ShowIcon = false;
       this.Text = "Enumerable Debugger Visualizer Installer";
@@ -207,8 +213,9 @@
     private System.Windows.Forms.LinkLabel linkLabelUser;
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.Label labelStatusAll;
-    private System.Windows.Forms.Label label6;
+    private System.Windows.Forms.Label labelStatusUser;
     private System.Windows.Forms.LinkLabel linkLabelWebSite;
+    private System.Windows.Forms.ToolTip toolTip1;
   }
 }
 

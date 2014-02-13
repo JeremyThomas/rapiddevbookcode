@@ -38,9 +38,7 @@ namespace AW.Helper
     /// <returns>Null if not installed the installation directory otherwise</returns>
     internal static string GetVisualStudioInstallationCommonDir(VisualStudioVersion version)
     {
-      var registryKeyString = String.Format(@"SOFTWARE{0}Microsoft\VisualStudio\{1}",
-        Environment.Is64BitProcess ? @"\Wow6432Node\" : "\\",
-        GetVersionNumber(version));
+      var registryKeyString = GetRegistryKeyString(version, Environment.Is64BitProcess);
 
       using (var localMachineKey = Registry.LocalMachine.OpenSubKey(registryKeyString))
         if (localMachineKey != null)
@@ -55,9 +53,46 @@ namespace AW.Helper
       return vscomntoolsDir == null ? null : vscomntoolsDir.Remove(vscomntoolsDir.Length - toolsLength, toolsLength); //Remove /Tools
     }
 
+    private static string GetRegistryKeyString(VisualStudioVersion version, bool is64BitProcess)
+    {
+      var registryKeyString = String.Format(@"SOFTWARE{0}Microsoft\VisualStudio\{1}",
+        is64BitProcess ? @"\Wow6432Node\" : "\\",
+        GetVersionNumber(version));
+      return registryKeyString;
+    }
+
     public static string GetVisualStudioDebuggerVisualizersDir(VisualStudioVersion version)
     {
       return GetVisualStudioInstallationCommonDir(version) + @"Packages\Debugger\Visualizers";
+    }
+
+    internal static string GetVisualStudioUserDir(VisualStudioVersion version)
+    {
+      //HKEY_CURRENT_USER\Software\Microsoft\VisualStudio\11.0
+      var registryKeyString = GetRegistryKeyString(version, false);
+
+      string visualStudioUserDir;
+      using (var currentUserKey = Registry.CurrentUser.OpenSubKey(registryKeyString))
+        if (currentUserKey != null)
+        {
+          var visualStudioLocation = Convert.ToString(currentUserKey.GetValue("VisualStudioLocation"));
+          visualStudioUserDir = Environment.ExpandEnvironmentVariables(visualStudioLocation);
+          if (Directory.Exists(visualStudioUserDir))
+          return visualStudioUserDir;
+        }
+      visualStudioUserDir = string.Format("{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), version.EnumToString().Replace("VS", "Visual Studio"));
+      return Directory.Exists(visualStudioUserDir) ? visualStudioUserDir : null;
+    }
+
+    public static string GetVisualStudioDebuggerVisualizersUserDir(VisualStudioVersion version)
+    {
+      var visualStudioUserDir = GetVisualStudioUserDir(version);
+      if (string.IsNullOrWhiteSpace(visualStudioUserDir))
+        return "Visualizers Dir not found";
+      var visualStudioDebuggerVisualizersUserDir = visualStudioUserDir + @"\Visualizers";
+      if (string.IsNullOrWhiteSpace(visualStudioDebuggerVisualizersUserDir))
+        return "Visualizers Dir not found";
+      return visualStudioDebuggerVisualizersUserDir;
     }
 
     /// <summary>
@@ -68,8 +103,8 @@ namespace AW.Helper
     /// <returns>A string with the VS internal number version</returns>
     private static string GetVersionNumber(VisualStudioVersion version)
     {
-      if (version == VisualStudioVersion.Other) throw new Exception("Not supported version");
-
+      if (version == VisualStudioVersion.Other) 
+        throw new Exception("Not supported version");
       return ((int) version/10).ToString("00.0", CultureInfo.InvariantCulture);
     }
 
@@ -92,7 +127,7 @@ namespace AW.Helper
               File.Copy(source, target, true);
           }
           else
-            File.Copy(source, target, false);
+            File.Copy(source, target);
         else
         {
           result = sourceVisualizerFileInfo.FullName + " does not exist";
