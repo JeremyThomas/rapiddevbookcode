@@ -1,6 +1,6 @@
 ﻿namespace AW.DebugVisualizers
 {
-  partial class FormDebuggerVisualizerInstaller
+  sealed partial class FormDebuggerVisualizerInstaller
   {
     /// <summary>
     /// Required designer variable.
@@ -40,6 +40,7 @@
       this.labelStatusAll = new System.Windows.Forms.Label();
       this.linkLabelUser = new System.Windows.Forms.LinkLabel();
       this.labelStatusUser = new System.Windows.Forms.Label();
+      this.labelVersion = new System.Windows.Forms.Label();
       this.linkLabelWebSite = new System.Windows.Forms.LinkLabel();
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
       this.tableLayoutPanel1.SuspendLayout();
@@ -111,13 +112,15 @@
       this.tableLayoutPanel1.Controls.Add(this.linkLabelUser, 2, 2);
       this.tableLayoutPanel1.Controls.Add(this.labelStatusUser, 1, 2);
       this.tableLayoutPanel1.Controls.Add(this.buttonInstallAllUsers, 0, 1);
-      this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 54);
+      this.tableLayoutPanel1.Controls.Add(this.labelVersion, 0, 3);
+      this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 56);
       this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-      this.tableLayoutPanel1.RowCount = 3;
+      this.tableLayoutPanel1.RowCount = 4;
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(628, 83);
+      this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(628, 103);
       this.tableLayoutPanel1.TabIndex = 5;
       // 
       // label3
@@ -172,6 +175,18 @@
       this.labelStatusUser.TabIndex = 7;
       this.labelStatusUser.Text = "Not Installed";
       // 
+      // labelVersion
+      // 
+      this.labelVersion.Anchor = System.Windows.Forms.AnchorStyles.Left;
+      this.labelVersion.AutoSize = true;
+      this.tableLayoutPanel1.SetColumnSpan(this.labelVersion, 3);
+      this.labelVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelVersion.Location = new System.Drawing.Point(3, 86);
+      this.labelVersion.Name = "labelVersion";
+      this.labelVersion.Size = new System.Drawing.Size(51, 13);
+      this.labelVersion.TabIndex = 8;
+      this.labelVersion.Text = "Version 3";
+      // 
       // linkLabelWebSite
       // 
       this.linkLabelWebSite.AutoSize = true;
@@ -188,7 +203,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoSize = true;
-      this.ClientSize = new System.Drawing.Size(628, 136);
+      this.ClientSize = new System.Drawing.Size(628, 159);
       this.Controls.Add(this.linkLabelWebSite);
       this.Controls.Add(this.tableLayoutPanel1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
@@ -216,6 +231,7 @@
     private System.Windows.Forms.Label labelStatusUser;
     private System.Windows.Forms.LinkLabel linkLabelWebSite;
     private System.Windows.Forms.ToolTip toolTip1;
+    private System.Windows.Forms.Label labelVersion;
   }
 }
 

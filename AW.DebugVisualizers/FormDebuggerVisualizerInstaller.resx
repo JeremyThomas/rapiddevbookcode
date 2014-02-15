@@ -122,7 +122,7 @@
   </metadata>
   <data name="linkLabelWebSite.Text" xml:space="preserve">
     <value>This is an Enumerable Debugger Visualizer that displays any registered IEnumerable object in a DataGridView control.
-To Install click on of the buttons below which will copy this assembly to the directory chosen.
+To install click on either of the buttons below which will copy this assembly to the directory chosen.
 For more info see: https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer</value>
   </data>
 </root>
