@@ -23,11 +23,11 @@
     <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\Newtonsoft.Json.dll</Assembly>
     <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\ObjectListView.dll</Assembly>
     <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\sliver.Windows.Forms.StateBrowser.dll</Assembly>
-    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.DebugVisualizers.2013.dll</Assembly>
-    <Primary>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.DebugVisualizers.2013.dll</Primary>
+    <Assembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.DebugVisualizers.2013.exe</Assembly>
+    <Primary>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.DebugVisualizers.2013.exe</Primary>
   </Assemblies>
   <!--Output-->
-  <OutputAssembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.EnumerableVisualizer.2013.dll</OutputAssembly>
+  <OutputAssembly>C:\Users\Jeremy Thomas\Documents\Visual Studio 2010\Projects\CodePlex\RapidDevBookCode\LLBL Pro v4.1\AW.DebugVisualizers\bin\Debug\AW.EnumerableVisualizer.2013.exe</OutputAssembly>
   <!--.NET Framework-->
   <Framework>.NET Framework 4.5 Full</Framework>
   <!--Merge Engine-->

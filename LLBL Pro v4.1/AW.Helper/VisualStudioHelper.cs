@@ -43,7 +43,7 @@ namespace AW.Helper
       using (var localMachineKey = Registry.LocalMachine.OpenSubKey(registryKeyString))
         if (localMachineKey != null)
         {
-          var installDirIde = Convert.ToString(localMachineKey.GetValue("InstallDir"));        
+          var installDirIde = Convert.ToString(localMachineKey.GetValue("InstallDir"));
           var ideLength = @"/IDE".Length;
           if (installDirIde.Length > ideLength)
             return installDirIde.Remove(installDirIde.Length - ideLength, ideLength); //Remove /IDE
@@ -78,7 +78,7 @@ namespace AW.Helper
           var visualStudioLocation = Convert.ToString(currentUserKey.GetValue("VisualStudioLocation"));
           visualStudioUserDir = Environment.ExpandEnvironmentVariables(visualStudioLocation);
           if (Directory.Exists(visualStudioUserDir))
-          return visualStudioUserDir;
+            return visualStudioUserDir;
         }
       visualStudioUserDir = string.Format("{0}\\{1}", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), version.EnumToString().Replace("VS", "Visual Studio"));
       return Directory.Exists(visualStudioUserDir) ? visualStudioUserDir : null;
@@ -103,9 +103,21 @@ namespace AW.Helper
     /// <returns>A string with the VS internal number version</returns>
     private static string GetVersionNumber(VisualStudioVersion version)
     {
-      if (version == VisualStudioVersion.Other) 
+      if (version == VisualStudioVersion.Other)
         throw new Exception("Not supported version");
       return ((int) version/10).ToString("00.0", CultureInfo.InvariantCulture);
+    }
+
+    public static VisualStudioVersion GetVisualStudioVersion(int versionNumber)
+    {
+      var enumType = typeof (VisualStudioVersion);
+      if (Enum.IsDefined(enumType, versionNumber))
+        return (VisualStudioVersion) versionNumber;
+      versionNumber = versionNumber*10;
+      if (Enum.IsDefined(enumType, versionNumber))
+        return (VisualStudioVersion) versionNumber;
+      //GeneralHelper.EnumAsEnumerable<VisualStudioVersion>().FirstOrDefault()
+      return VisualStudioVersion.Other;
     }
 
     public static string InstallDebuggerVisualizer(string debuggerVisualizerFileName, string debuggerVisualizerSourceDir, VisualStudioVersion visualStudioVersion)

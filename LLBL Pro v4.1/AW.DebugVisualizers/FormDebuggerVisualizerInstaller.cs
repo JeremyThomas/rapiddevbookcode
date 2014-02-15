@@ -1,54 +1,90 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using AW.Helper;
+using Microsoft.VisualStudio.DebuggerVisualizers;
 
 namespace AW.DebugVisualizers
 {
-  public partial class FormDebuggerVisualizerInstaller : Form
+  public sealed partial class FormDebuggerVisualizerInstaller : Form
   {
-    private readonly string _destFileNameAll;
-    private readonly string _destFileNameUser;
+    private readonly string _destinationFileNameAll;
+    private readonly string _destinationFileNameUser;
+    private static readonly FileInfo SourceVisualizerFileInfo = new FileInfo(Application.ExecutablePath);
+    private static readonly FileVersionInfo SourceVisualizerFileVersionInfo = FileVersionInfo.GetVersionInfo(Application.ExecutablePath);
+    private static readonly string SourceFileName = Path.GetFileName(Application.ExecutablePath);
+    private FileInfo _destinationVisualizerFileInfoAll;
+    private FileInfo _destinationVisualizerFileInfoUser;
 
     public FormDebuggerVisualizerInstaller()
     {
       InitializeComponent();
-      linkLabelAll.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersDir(VisualStudioVersion.VS2013);
+      var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(typeof (IDialogVisualizerService));
+      var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
+      var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart);
+      var version = new AssemblyFileInfo(microsoftVisualStudioDebuggerVisualizersAssembly);
+
+      labelVersion.Text = "Version " + SourceVisualizerFileVersionInfo.ProductVersion + " for "
+                          + fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName + ". Last modified: " + SourceVisualizerFileInfo.LastWriteTime;
+
+      linkLabelAll.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersDir(visualStudioVersion);
       linkLabelAll.Links.Add(0, linkLabelAll.Text.Length, linkLabelAll.Text);
-      linkLabelUser.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersUserDir(VisualStudioVersion.VS2013);
+      linkLabelUser.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersUserDir(visualStudioVersion);
       linkLabelUser.Links.Add(0, linkLabelUser.Text.Length, linkLabelUser.Text);
-      _destFileNameAll = DestFileNameAll();
-      _destFileNameUser = DestFileNameUser();
+      _destinationFileNameAll = Path.Combine(linkLabelAll.Text, SourceFileName);
+      _destinationFileNameUser = Path.Combine(linkLabelUser.Text, SourceFileName);
       GetAllStatus();
       GetUserStatus();
-      linkLabelWebSite.Links.Add(234, linkLabelWebSite.Text.Length,"https://rapiddevbookcode.codeplex.com/wikipage?title=EnumerableDebugVisualizer");
+      var indexOfHyperLink = linkLabelWebSite.Text.IndexOf("https", StringComparison.Ordinal);
+      linkLabelWebSite.Links.Add(indexOfHyperLink, linkLabelWebSite.Text.Length,
+        linkLabelWebSite.Text.Substring(indexOfHyperLink));
     }
 
     private void GetAllStatus()
     {
-      var targetVisualizerFileInfoAll = new FileInfo(_destFileNameAll);
-      if (targetVisualizerFileInfoAll.Exists)
-        labelStatusAll.Text = "Installed";
+      _destinationVisualizerFileInfoAll = GetStatus(_destinationFileNameAll, labelStatusAll);
     }
 
     private void GetUserStatus()
     {
-      var targetVisualizerFileInfoUser = new FileInfo(_destFileNameUser);
-      if (targetVisualizerFileInfoUser.Exists)
-        labelStatusUser.Text = "Installed";
+      _destinationVisualizerFileInfoUser = GetStatus(_destinationFileNameUser, labelStatusUser);
+    }
+
+    private static FileInfo GetStatus(string destinationFileName, Control statusLabel)
+    {
+      var visualizerFileInfoUser = new FileInfo(destinationFileName);
+      if (visualizerFileInfoUser.Exists)
+      {
+        var fileVersionInfo = FileVersionInfo.GetVersionInfo(destinationFileName);
+        statusLabel.Text = "Installed. Version:" + fileVersionInfo.ProductVersion + " Last modified: " + visualizerFileInfoUser.LastWriteTime;
+      }
+      return visualizerFileInfoUser;
+    }
+
+    private static FileInfo CopyVisualizer(FileInfo sourceVisualizerFileInfo, FileInfo destinationVisualizerFileInfo, Control statusLabel)
+    {
+      if (destinationVisualizerFileInfo.Exists && sourceVisualizerFileInfo.LastWriteTime > destinationVisualizerFileInfo.LastWriteTime)
+        File.Copy(Application.ExecutablePath, destinationVisualizerFileInfo.FullName, true);
+      else
+        File.Copy(Application.ExecutablePath, destinationVisualizerFileInfo.FullName);
+      return GetStatus(destinationVisualizerFileInfo.FullName, statusLabel);
     }
 
     private void buttonInstallAllUsers_Click(object sender, EventArgs e)
     {
       try
       {
-        File.Copy(Application.ExecutablePath, _destFileNameAll);
-        GetAllStatus();
+        _destinationVisualizerFileInfoAll = CopyVisualizer(SourceVisualizerFileInfo, _destinationVisualizerFileInfoAll, labelStatusAll);
       }
       catch (UnauthorizedAccessException ex)
       {
         labelStatusAll.Text = ex.Message;
+      }
+      catch (IOException ex)
+      {
+        labelStatusUser.Text = ex.Message;
       }
     }
 
@@ -56,31 +92,12 @@ namespace AW.DebugVisualizers
     {
       try
       {
-        File.Copy(Application.ExecutablePath, _destFileNameUser);
-        GetUserStatus();
+        _destinationVisualizerFileInfoUser = CopyVisualizer(SourceVisualizerFileInfo, _destinationVisualizerFileInfoUser, labelStatusUser);
       }
       catch (IOException ex)
       {
-        var sourceVisualizerFileInfo = new FileInfo(Application.ExecutablePath);
-        var targetVisualizerFileInfo = new FileInfo(_destFileNameUser);
-        if (sourceVisualizerFileInfo.LastWriteTime > targetVisualizerFileInfo.LastWriteTime)
-        {
-          File.Copy(Application.ExecutablePath, _destFileNameUser, true);
-          GetUserStatus();
-        }
-        else
-          labelStatusUser.Text = ex.Message;
+        labelStatusUser.Text = ex.Message;
       }
-    }
-
-    private string DestFileNameAll()
-    {
-      return Path.Combine(linkLabelAll.Text, Path.GetFileName(Application.ExecutablePath));
-    }
-
-    private string DestFileNameUser()
-    {
-      return Path.Combine(linkLabelUser.Text, Path.GetFileName(Application.ExecutablePath));
     }
 
     private void linkLabelAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
