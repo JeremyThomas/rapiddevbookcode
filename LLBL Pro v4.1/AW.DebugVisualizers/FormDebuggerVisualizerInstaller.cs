@@ -24,9 +24,8 @@ namespace AW.DebugVisualizers
       var microsoftVisualStudioDebuggerVisualizersAssembly = Assembly.GetAssembly(typeof (IDialogVisualizerService));
       var fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly = FileVersionInfo.GetVersionInfo(microsoftVisualStudioDebuggerVisualizersAssembly.Location);
       var visualStudioVersion = VisualStudioHelper.GetVisualStudioVersion(fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductMajorPart);
-      var version = new AssemblyFileInfo(microsoftVisualStudioDebuggerVisualizersAssembly);
-
-      labelVersion.Text = "Version " + SourceVisualizerFileVersionInfo.ProductVersion + " for "
+   
+      labelVersion.Text = "This is version " + SourceVisualizerFileVersionInfo.ProductVersion + " for "
                           + fileVersionInfoMicrosoftVisualStudioDebuggerVisualizersAssembly.ProductName + ". Last modified: " + SourceVisualizerFileInfo.LastWriteTime;
 
       linkLabelAll.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersDir(visualStudioVersion);
