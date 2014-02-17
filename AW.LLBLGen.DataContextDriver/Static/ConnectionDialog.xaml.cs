@@ -89,7 +89,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static readonly string AdditionalNamespacesToolTipF = "The {0} adds these namespaces to the ones LINQPad provides"
                                                                  + Environment.NewLine +
                                                                  LLBLGenStaticDriver.AdditionalNamespaces.JoinAsString()
-                                                                 + "If you want any additional namespaces add them in here.";
+                                                                 + Environment.NewLine +
+                                                                 "If you want any additional namespaces add them in here.";
 
     public static readonly string AdditionalNamespacesToolTip = string.Format(AdditionalNamespacesToolTipF, "driver");
     public static readonly string AdditionalNamespacesToolTipCnxt = string.Format(AdditionalNamespacesToolTipF, "connection");

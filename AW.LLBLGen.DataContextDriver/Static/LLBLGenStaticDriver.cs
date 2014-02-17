@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -43,6 +44,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       "AW.LinqPadExtensions",
       "AW.LLBLGen.DataContextDriver",
       "AW.LLBLGen.DataContextDriver.Static",
+      "LLBLGen.Linq.Prefetch",
       "Humanizer"
     };
 
@@ -143,6 +145,11 @@ namespace AW.LLBLGen.DataContextDriver.Static
           case DisplayInGrid.UseEditableGrid:
           case DisplayInGrid.UseEditableGridPaged:
             var toDisplay = objectToDisplay as IEnumerable;
+            if (toDisplay == null)
+            {
+              var dataTable = objectToDisplay as DataTable;
+              if (dataTable != null) toDisplay = dataTable.DefaultView;
+            }
             if (toDisplay != null)
             {
               options.MembersToExclude = GetEntityBaseProperties(MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToDisplay)).Union(_membersToExclude).ToArray();
@@ -208,10 +215,33 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public override void TearDownContext(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager, object[] constructorArguments)
     {
       base.TearDownContext(cxInfo, context, executionManager, constructorArguments);
+      DisposeAdapter(context);
+    }
+    
+    private static void DisposeAdapter(object context)
+    {
       var dataAccessAdapterBase = LLBLGenDriverHelper.GetAdapter(context);
       if (dataAccessAdapterBase == null) return;
       dataAccessAdapterBase.Dispose();
       LLBLGenDriverHelper.MostRecentAdapter = null;
+    }
+
+    public override void ClearConnectionPools(IConnectionInfo cxInfo)
+    {
+      if (LLBLGenDriverHelper.MostRecentAdapter != null)
+      {
+        LLBLGenDriverHelper.MostRecentAdapter.Dispose();
+        LLBLGenDriverHelper.MostRecentAdapter = null;
+      }
+      base.ClearConnectionPools(cxInfo);
+    }
+
+    public override IDbConnection GetIDbConnection(IConnectionInfo cxInfo)
+    {
+      LLBLWinformHelper.ForceInitialization();
+      _howToDisplayInGrid = ConnectionDialog.GetHowToDisplayInGrid(cxInfo).GetValueOrDefault(_howToDisplayInGrid);
+      _membersToExclude = ConnectionDialog.GetMembersToExclude(cxInfo);
+      return base.GetIDbConnection(cxInfo);
     }
 
     // Return the objects with which to populate the Schema Explorer by reflecting over customType.
@@ -283,7 +313,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static readonly MethodInfo HandlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
     private TextWriter _sqlTranslationWriter;
-    private IEnumerable<string> _membersToExclude;
+    private IEnumerable<string> _membersToExclude = Enumerable.Empty<string>();
 
     private void SQLTraceEventHandler(object sender, EventArgs e)
     {
