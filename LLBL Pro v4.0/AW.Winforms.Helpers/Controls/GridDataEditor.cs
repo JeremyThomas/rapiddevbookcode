@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
 using System.Drawing.Design;
 using System.Globalization;
 using System.Linq;
@@ -730,10 +731,18 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonShowDatagrid_Click(object sender, EventArgs e)
     {
       if (toolStripButtonShowDatagrid.Checked)
+      {
+        tabControlGrids.ItemSize = new Size();
+        tabControlGrids.SizeMode = TabSizeMode.Normal;
+        tabControlGrids.Appearance = TabAppearance.Normal;
         tabControlGrids.TabPages.Add(tabPageDataGrid);
+      }
       else
       {
         tabControlGrids.TabPages.Remove(tabPageDataGrid);
+        tabControlGrids.ItemSize = new Size(0, 1);
+        tabControlGrids.SizeMode = TabSizeMode.Fixed;
+        tabControlGrids.Appearance = TabAppearance.FlatButtons;
       }
     }
 
