@@ -23,6 +23,7 @@ namespace AW.Helper
     {
       if (!Trace.Listeners.Cast<TraceListener>().Any(tl => tl.Name.Equals("Default")))
         Trace.Listeners.Add(new DefaultTraceListener());
+      MetaDataHelper.SetPclResolver();
     }
 
     public const string StringJoinSeperator = ", ";
@@ -80,7 +81,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Converts the string to the enum, using Humanize if needed.
+    ///   Converts the string to the enum, using Humanize if needed.
     /// </summary>
     /// <param name="strOfEnum">The string of enum.</param>
     /// <param name="enumType">Type of the enum or nullable enum.</param>
@@ -91,32 +92,9 @@ namespace AW.Helper
       var coreType = MetaDataHelper.GetCoreType(enumType);
       if (Enum.IsDefined(coreType, strOfEnum))
         return Enum.Parse(coreType, strOfEnum, true);
-      var value = DehumanizeTo(strOfEnum, coreType);
-      return value ?? (coreType == enumType && throwException ? Enum.Parse(coreType, strOfEnum, true) : null); 
+      var value = strOfEnum.DehumanizeTo(coreType, OnNoMatch.ReturnsNull);
+      return value ?? (coreType == enumType && throwException ? Enum.Parse(coreType, strOfEnum, true) : null);
       //Throw exception if null and type is not nullable and throwException flag is true
-    }
-
-    /// <summary>
-    ///   Dehumanizes a string into the Enum it was originally Humanized from!
-    /// </summary>
-    /// <param name="input">The string to be converted</param>
-    /// <param name="enumType">Type of the enum.</param>
-    /// <returns></returns>
-    private static Enum DehumanizeTo(string input, Type enumType)
-    {
-      var values = Enum.GetValues(enumType);
-
-      foreach (var value in values)
-      {
-        var enumValue = value as Enum;
-        if (enumValue == null)
-          return null;
-
-        if (string.Equals(enumValue.Humanize(), input, StringComparison.OrdinalIgnoreCase))
-          return enumValue;
-      }
-
-      return null;
     }
 
     /// <summary>
@@ -142,7 +120,8 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Turns an enum member into a human readable string; e.g. AnonymousUser -&gt; Anonymous user. It also honors DescriptionAttribute data annotation
+    ///   Turns an enum member into a human readable string; e.g. AnonymousUser -&gt; Anonymous user. It also honors
+    ///   DescriptionAttribute data annotation
     /// </summary>
     /// <param name="e">The enum member to be humanized</param>
     /// <returns>
@@ -150,12 +129,31 @@ namespace AW.Helper
     /// </returns>
     public static string EnumToString(this Enum e)
     {
-      return e == null ? null : e.Humanize();
+      try
+      {
+        return e == null ? null : e.Humanize();
+      }
+      catch (FileNotFoundException)
+      {
+        var type = typeof (EnumHumanizeExtensions);
+        var assembly = Assembly.Load(type.Assembly.FullName);
+        var h = assembly.GetType(type.FullName);
+        var methodInfo = h.GetMethod("Humanize", BindingFlags.Static | BindingFlags.Public,
+          null,
+          new Type[] {typeof (Enum)},
+          null);
+        if (methodInfo != null)
+        {
+          var staticContext = methodInfo.Invoke(null, new object[] {e});
+        }
+        return null;
+      }
     }
 
     /// <summary>
-    /// Retrieves an list of the values of the constants in a specified enumeration plus and additional constant not in the enum 
-    /// for use in nulling out an enum.
+    ///   Retrieves an list of the values of the constants in a specified enumeration plus and additional constant not in the
+    ///   enum
+    ///   for use in nulling out an enum.
     /// </summary>
     /// <param name="enumType">Type of the enum.</param>
     /// <returns></returns>
@@ -173,8 +171,9 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Retrieves an list of the values of the constants in a specified enumeration plus and additional constant not in the enum 
-    /// for use in nulling out an enum from a combobox.
+    ///   Retrieves an list of the values of the constants in a specified enumeration plus and additional constant not in the
+    ///   enum
+    ///   for use in nulling out an enum from a combobox.
     /// </summary>
     /// <param name="enumType">Type of the enum.</param>
     /// <returns></returns>
@@ -189,7 +188,7 @@ namespace AW.Helper
     }
 
     /// <summary>
-    /// Gets the largest undefined enum value.
+    ///   Gets the largest undefined enum value.
     /// </summary>
     /// <param name="enumType">Type of the enum.</param>
     /// <returns></returns>
@@ -777,7 +776,7 @@ namespace AW.Helper
     /// </summary>
     public static string Before(this string value, string delimiter)
     {
-      var posA = value.IndexOf(delimiter, System.StringComparison.Ordinal);
+      var posA = value.IndexOf(delimiter, StringComparison.Ordinal);
       return posA == -1 ? "" : value.Substring(0, posA);
     }
   }
