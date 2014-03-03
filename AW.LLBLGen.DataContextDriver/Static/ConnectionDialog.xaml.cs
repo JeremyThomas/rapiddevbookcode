@@ -1173,6 +1173,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
     }
 
+    private void AddHumanizerCnxt(object sender, RoutedEventArgs e)
+    {
+      ValueTypeWrapper<string>.Add(AdditionalAssembliesCnxt, "Humanizer.dll");
+      ValueTypeWrapper<string>.Add(AdditionalNamespacesCnxt, "Humanizer");
+    }
+
     private void AddORMProfiler(object sender, RoutedEventArgs e)
     {
       AddORMProfiler(AdditionalAssemblies);
@@ -1369,6 +1375,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
         Source = gridSplitterAdditionalAssemblies,
       });
     }
+
+
   }
 
   public enum LLBLConnectionType

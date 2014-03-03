@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
-using Humanizer;
 
 namespace AW.Helper.TypeConverters
 {
@@ -16,17 +14,12 @@ namespace AW.Helper.TypeConverters
     private readonly bool _isNullable;
 
     /// <summary>
-    /// Initializes the <see cref="HumanizedEnumConverter"/> class.
+    ///   Initializes a new instance of the <see cref="HumanizedEnumConverter" /> class.
     /// </summary>
-    static HumanizedEnumConverter()
-    {
-      MetaDataHelper.SetPclResolver();
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="HumanizedEnumConverter"/> class.
-    /// </summary>
-    /// <param name="type">A <see cref="T:System.Type" /> that represents the type of enumeration to associate with this enumeration converter.</param>
+    /// <param name="type">
+    ///   A <see cref="T:System.Type" /> that represents the type of enumeration to associate with this
+    ///   enumeration converter.
+    /// </param>
     public HumanizedEnumConverter(Type type) : base(type)
     {
       _coreEnumType = MetaDataHelper.GetCoreType(type);
@@ -49,44 +42,37 @@ namespace AW.Helper.TypeConverters
     }
 
     /// <summary>
-    /// Converts the given value object to the specified destination type.
-    /// When the converting to string and the enum is not defined then return empty string rather than the number
+    ///   Converts the given value object to the specified destination type.
+    ///   When the converting to string and the enum is not defined then return empty string rather than the number
     /// </summary>
     /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
-    /// <param name="culture">An optional <see cref="T:System.Globalization.CultureInfo" />. If not supplied, the current culture is assumed.</param>
+    /// <param name="culture">
+    ///   An optional <see cref="T:System.Globalization.CultureInfo" />. If not supplied, the current
+    ///   culture is assumed.
+    /// </param>
     /// <param name="value">The <see cref="T:System.Object" /> to convert.</param>
     /// <param name="destinationType">The <see cref="T:System.Type" /> to convert the value to.</param>
     /// <returns>
-    /// An <see cref="T:System.Object" /> that represents the converted <paramref name="value" />.
+    ///   An <see cref="T:System.Object" /> that represents the converted <paramref name="value" />.
     /// </returns>
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
       if (destinationType == typeof (string) && value != null)
-        return Enum.IsDefined(_coreEnumType, value) ? Humanize((Enum) value) : string.Empty;
+        return Enum.IsDefined(_coreEnumType, value) ? ((Enum) value).EnumToString() : string.Empty;
       return base.ConvertTo(context, culture, value, destinationType);
     }
 
-    private static string Humanize(Enum value)
-    {
-      try
-      {
-        return value.EnumToString();
-      }
-      catch (FileNotFoundException e)
-      {
-        GeneralHelper.TraceOut(e);
-        return value.ToString();
-      }  
-    }
-
     /// <summary>
-    /// Converts the specified value object to an enumeration object.
+    ///   Converts the specified value object to an enumeration object.
     /// </summary>
     /// <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context.</param>
-    /// <param name="culture">An optional <see cref="T:System.Globalization.CultureInfo" />. If not supplied, the current culture is assumed.</param>
+    /// <param name="culture">
+    ///   An optional <see cref="T:System.Globalization.CultureInfo" />. If not supplied, the current
+    ///   culture is assumed.
+    /// </param>
     /// <param name="value">The <see cref="T:System.Object" /> to convert.</param>
     /// <returns>
-    /// An <see cref="T:System.Object" /> that represents the converted <paramref name="value" />.
+    ///   An <see cref="T:System.Object" /> that represents the converted <paramref name="value" />.
     /// </returns>
     public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
     {
