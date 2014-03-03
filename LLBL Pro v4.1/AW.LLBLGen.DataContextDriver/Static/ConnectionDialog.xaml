@@ -679,6 +679,11 @@
                     ToolTip="Add ORM Profiler assemblies" />
             <Button Margin="5,0,0,0"
                     VerticalAlignment="Center"
+                    Click="AddHumanizerCnxt"
+                    Content="Add Humanizer"
+                    ToolTip="Add Humanizer assemblies and Namespace" />
+            <Button Margin="5,0,0,0"
+                    VerticalAlignment="Center"
                     Click="AddNamespacesFromAssemblies"
                     Content="Add namespaces from selected assemblies"
                     ToolTip="Add namespaces from selected assemblies and the assemblies defined in the driver" />
