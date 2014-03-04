@@ -31,7 +31,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       "SD.LLBLGen.Pro.ORMSupportClasses.dll",
       "AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
       "AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
-      "AW.LinqPadExtensions.dll", "Humanizer.dll"
+      "AW.LinqPadExtensions.dll"
     };
 
     public static readonly string[] AdditionalNamespaces =
@@ -44,8 +44,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       "AW.LinqPadExtensions",
       "AW.LLBLGen.DataContextDriver",
       "AW.LLBLGen.DataContextDriver.Static",
-      "LLBLGen.Linq.Prefetch",
-      "Humanizer"
+      "LLBLGen.Linq.Prefetch"
     };
 
     #endregion

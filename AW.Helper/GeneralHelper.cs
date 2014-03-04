@@ -23,7 +23,6 @@ namespace AW.Helper
     {
       if (!Trace.Listeners.Cast<TraceListener>().Any(tl => tl.Name.Equals("Default")))
         Trace.Listeners.Add(new DefaultTraceListener());
-      MetaDataHelper.SetPclResolver();
     }
 
     public const string StringJoinSeperator = ", ";
@@ -92,7 +91,15 @@ namespace AW.Helper
       var coreType = MetaDataHelper.GetCoreType(enumType);
       if (Enum.IsDefined(coreType, strOfEnum))
         return Enum.Parse(coreType, strOfEnum, true);
-      var value = strOfEnum.DehumanizeTo(coreType, OnNoMatch.ReturnsNull);
+      Enum value = null;
+      try
+      {
+        value = strOfEnum.DehumanizeTo(coreType, OnNoMatch.ReturnsNull);
+      }
+      catch (FileNotFoundException e)
+      {
+        TraceOut(e);
+      }
       return value ?? (coreType == enumType && throwException ? Enum.Parse(coreType, strOfEnum, true) : null);
       //Throw exception if null and type is not nullable and throwException flag is true
     }
@@ -120,33 +127,35 @@ namespace AW.Helper
     }
 
     /// <summary>
-    ///   Turns an enum member into a human readable string; e.g. AnonymousUser -&gt; Anonymous user. It also honors
-    ///   DescriptionAttribute data annotation
+    ///   Turns an enum member into a human readable string using humanizer; e.g. AnonymousUser -&gt; Anonymous user.
+    ///   It also honors DescriptionAttribute data annotation
     /// </summary>
-    /// <param name="e">The enum member to be humanized</param>
+    /// <param name="value">The enum member to be humanized</param>
     /// <returns>
     ///   The string version of an enum with spaces in it as required.
     /// </returns>
-    public static string EnumToString(this Enum e)
+    /// <remarks>
+    ///   Because humanizer is a PCL assembly it can have trouble loading at times, in which case there is a full back
+    ///   code to do a simpler version.
+    ///   One example is using LINQPad with shadow assemblies on, the workaround is to have humanizer in the LINQPad Plugins directory
+    /// </remarks>
+    /// <see cref="https://github.com/AutoMapper/AutoMapper/issues/383" />
+    /// <see cref="https://connect.microsoft.com/VisualStudio/feedback/details/779370/vs2012-incorrectly-resolves-mscorlib-version-when-referencing-pcl-assembly" />
+    /// <see cref="http://stackoverflow.com/questions/13871267/unable-to-resolve-assemblies-that-use-portable-class-libraries" />
+    /// <see cref="http://stackoverflow.com/questions/18277499/could-not-load-file-or-assembly-system-core-version-2-0-5-0-exception-wh?lq=1" />
+    /// <see cref="https://github.com/Fody/Costura/issues/30" />
+    public static string EnumToString(this Enum value)
     {
+      if (value == null) return null;
       try
       {
-        return e == null ? null : e.Humanize();
+        return value.Humanize();
       }
-      catch (FileNotFoundException)
+      catch (FileNotFoundException e)
       {
-        var type = typeof (EnumHumanizeExtensions);
-        var assembly = Assembly.Load(type.Assembly.FullName);
-        var h = assembly.GetType(type.FullName);
-        var methodInfo = h.GetMethod("Humanize", BindingFlags.Static | BindingFlags.Public,
-          null,
-          new Type[] {typeof (Enum)},
-          null);
-        if (methodInfo != null)
-        {
-          var staticContext = methodInfo.Invoke(null, new object[] {e});
-        }
-        return null;
+        TraceOut(e);
+        var description = GetDescription(value);
+        return String.IsNullOrEmpty(description) ? value.ToString() : description;
       }
     }
 
