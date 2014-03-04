@@ -32,7 +32,7 @@ namespace AW.Helper
     {
     }
 
-    private AssemblyFileInfo(Assembly assembly) : this(assembly.GetName().Name, assembly.GetTitle(), assembly.GetDescription(), assembly.GetVersion(), assembly.GetInformationalVersionAttribute())
+    public AssemblyFileInfo(Assembly assembly) : this(assembly.GetName().Name, assembly.GetTitle(), assembly.GetDescription(), assembly.GetVersion(), assembly.GetInformationalVersionAttribute())
     {
     }
 

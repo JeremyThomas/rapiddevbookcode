@@ -679,6 +679,11 @@
                     ToolTip="Add ORM Profiler assemblies" />
             <Button Margin="5,0,0,0"
                     VerticalAlignment="Center"
+                    Click="AddHumanizerCnxt"
+                    Content="Add Humanizer"
+                    ToolTip="Add Humanizer assemblies and Namespace" />
+            <Button Margin="5,0,0,0"
+                    VerticalAlignment="Center"
                     Click="AddNamespacesFromAssemblies"
                     Content="Add namespaces from selected assemblies"
                     ToolTip="Add namespaces from selected assemblies and the assemblies defined in the driver" />
@@ -1060,7 +1065,10 @@
                     Click="buttonClear_Click"
                     Content="Clear defaults"
                     ToolTip="Clear defaults" />
-
+            <Button Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    Content="Copy to plugins"
+                    ToolTip="Copy support assemblies to LINQPad plugins folder" Click="ButtonCopyToPlugins_Click" />
           </WrapPanel>
 
         </Grid>
