@@ -10,7 +10,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -335,7 +334,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         var xElements = xElement.Elements();
         if (xElements.Any())
-        return xElements.Select(xe => xe.Value);
+          return xElements.Select(xe => xe.Value);
         if (!string.IsNullOrWhiteSpace(xElement.Value))
         {
           //var stringBuilder = new StringBuilder(xElement.Value);
@@ -1060,14 +1059,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
           factoryAssemblyPath));
       }
       var functionMappingStoreType = typeof (FunctionMappingStore);
-      var memberInfos = adapterType.FindMembers(MemberTypes.Method | MemberTypes.Property | MemberTypes.Field, 
+      var memberInfos = adapterType.FindMembers(MemberTypes.Method | MemberTypes.Property | MemberTypes.Field,
         BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static, ReturnTypeFilter, functionMappingStoreType);
       return memberInfos.FirstOrDefault(m => m.DeclaringType == adapterType);
     }
 
     private static bool ReturnTypeFilter(MemberInfo memberInfo, object filterCriteria)
     {
-      var functionMappingStoreType = (Type)filterCriteria;
+      var functionMappingStoreType = (Type) filterCriteria;
       var propertyInfo = memberInfo as PropertyInfo;
       if (propertyInfo != null && propertyInfo.PropertyType == functionMappingStoreType)
         return true;
@@ -1319,6 +1318,31 @@ namespace AW.LLBLGen.DataContextDriver.Static
         }
     }
 
+    private void ButtonCopyToPlugins_Click(object sender, RoutedEventArgs e)
+    {
+      var thisDir = Path.GetDirectoryName(GetType().Assembly.Location);
+      var userOptionsType = typeof (IConnectionInfo).Assembly.GetType("LINQPad.UserOptions");
+      var propertyInfo = userOptionsType.GetProperty("Instance");
+      var value = propertyInfo.GetValue(null, null);
+      var methodInfo = userOptionsType.GetMethod("GetPluginsFolder");
+      var pluginsFolder = methodInfo.Invoke(value, new object[] {true}) as string;
+      // string pluginsFolder = value.GetPluginsFolder(true); // LINQPad.UserOptions.Instance.GetPluginsFolder(true);
+      if (thisDir != null && pluginsFolder != null)
+      {
+        var filesToExclude = new[] { "Microsoft.Data.ConnectionUI", "CSScriptLibrary", "LLBLGen" };
+        var files = Directory.GetFiles(thisDir, "*.dll");
+        foreach (var file in files)
+        {            
+          var fileName = Path.GetFileName(file);
+          if (fileName != null)
+          {
+            if (!filesToExclude.Any(fileName.Contains))
+              File.Copy(file, Path.Combine(pluginsFolder, fileName), true);
+          }
+        }
+      }
+    }
+
     #endregion
 
     #region Implementation of INotifyPropertyChanged
@@ -1375,8 +1399,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
         Source = gridSplitterAdditionalAssemblies,
       });
     }
-
-
   }
 
   public enum LLBLConnectionType
