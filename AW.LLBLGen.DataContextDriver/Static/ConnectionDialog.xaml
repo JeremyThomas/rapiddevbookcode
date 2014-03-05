@@ -1065,7 +1065,10 @@
                     Click="buttonClear_Click"
                     Content="Clear defaults"
                     ToolTip="Clear defaults" />
-
+            <Button Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    Content="Copy to plugins"
+                    ToolTip="Copy support assemblies to LINQPad plugins folder" Click="ButtonCopyToPlugins_Click" />
           </WrapPanel>
 
         </Grid>
