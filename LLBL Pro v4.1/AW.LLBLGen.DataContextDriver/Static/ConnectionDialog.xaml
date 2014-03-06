@@ -1098,6 +1098,15 @@
                 Padding="8,2"
                 TabIndex="1"
                 ToolTip="Save this connection as the default for new connections, this enables cloning of a connection" />
+        <Button x:Name="btnImportExisting"
+                Margin="5,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Content="Import Existing Connection"
+                Padding="8,2"
+                TabIndex="1"
+                ToolTip="Base this connection on an existing connection" Click="btnImportExisting_Click" />
       </StackPanel>
       <Button x:Name="btnCancel"
               MinWidth="60"
