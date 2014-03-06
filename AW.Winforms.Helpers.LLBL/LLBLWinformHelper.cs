@@ -203,17 +203,49 @@ namespace AW.Winforms.Helpers.LLBL
       PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes);
     }
 
-    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes, IDataAccessAdapter adapter = null)
+    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes, bool useSchema = true, string prefixDelimiter = null, IDataAccessAdapter adapter = null)
     {
-      IElementCreatorCore elementCreator = null;
+      IElementCreatorCore elementCreator = null;     
+      var schemas = new Dictionary<string, TreeNode>();
+      var prefixesToGroupBy = new Dictionary<string, TreeNode>();
+      var usePrefixes = !string.IsNullOrWhiteSpace(prefixDelimiter);
       foreach (var entityType in entitiesTypes.OrderBy(t => t.Name).ToList())
       {
         if (elementCreator == null)
           elementCreator = EntityHelper.CreateElementCreator(entityType);
-        var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);
-        var entityNode = schemaTreeNodeCollection.Add(entityType.Name, GetEntityTypeName(entityType));
+        var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);        
+        var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(entity.Fields.First(), adapter);        
+        var treeNodeCollectionToAddTo = schemaTreeNodeCollection;
+        if (useSchema && !string.IsNullOrWhiteSpace(fieldPersistenceInfo.SourceSchemaName))
+        {
+          var schema = fieldPersistenceInfo.SourceSchemaName;
+          TreeNode schemaTreeNode;
+          if (!schemas.TryGetValue(schema, out schemaTreeNode))
+            {
+              schemaTreeNode = new TreeNode(schema,6,4);
+              schemas.Add(schema, schemaTreeNode);
+            }
+          treeNodeCollectionToAddTo = schemaTreeNode.Nodes;
+        }
+        if (usePrefixes)
+        {
+          var prefix = fieldPersistenceInfo.SourceObjectName.Before(prefixDelimiter);
+          if (!string.IsNullOrWhiteSpace(prefix))
+          {
+            TreeNode prefixTreeNode;
+            if (!prefixesToGroupBy.TryGetValue(prefix, out prefixTreeNode))
+            {
+              prefixTreeNode = new TreeNode(prefix, 5, 4);
+              prefixesToGroupBy.Add(prefix, prefixTreeNode);
+              treeNodeCollectionToAddTo.Add(prefixTreeNode);
+            }
+            treeNodeCollectionToAddTo = prefixTreeNode.Nodes;
+          }
+        }
+
+        var entityNode = treeNodeCollectionToAddTo.Add(entityType.Name, GetEntityTypeName(entityType));
         entityNode.Tag = entityType;
-        var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(entity.Fields.First(), adapter);
+
         entityNode.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
         //entityNode.ToolTipText = FormatTypeName(entityType, false);
         var entityFields = entity.GetFields();
@@ -261,6 +293,13 @@ namespace AW.Winforms.Helpers.LLBL
           //  fieldNode.Text = CreateTreeNodeText(entityTypeProperty);
           fieldNode.Tag = entityTypeProperty;
         }
+      }
+      if (schemas.Count==1)
+        schemaTreeNodeCollection.AddRange(schemas.First().Value.Nodes.OfType<TreeNode>().ToArray());
+      else
+      foreach (var treeNode in schemas)
+      {
+        schemaTreeNodeCollection.Add(treeNode.Value);
       }
     }
 
