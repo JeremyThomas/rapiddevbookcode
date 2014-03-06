@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -234,8 +235,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           if (HowToDisplayInGrid == null)
             HowToDisplayInGrid = DisplayInGrid.AllProperties;
         }
-        AdditionalNamespacesCnxt = new ObservableCollection<ValueTypeWrapper<string>>(GetDriverDataStringValues(cxInfo, ElementNameAdditionalNamespaces).CreateStringWrapperForBinding());
-        AdditionalAssembliesCnxt = new ObservableCollection<ValueTypeWrapper<string>>(GetDriverDataStringValues(cxInfo, ElementNameAdditionalAssemblies).CreateStringWrapperForBinding());
+        SetAdditionalAssemblieAndNamespaces(cxInfo);
       }
       catch (Exception e)
       {
@@ -244,6 +244,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       DataContext = this;
       InitializeComponent();
+    }
+
+    private void SetAdditionalAssemblieAndNamespaces(IConnectionInfo cxInfo)
+    {
+      AdditionalNamespacesCnxt = new ObservableCollection<ValueTypeWrapper<string>>(GetDriverDataStringValues(cxInfo, ElementNameAdditionalNamespaces).CreateStringWrapperForBinding());
+      AdditionalAssembliesCnxt = new ObservableCollection<ValueTypeWrapper<string>>(GetDriverDataStringValues(cxInfo, ElementNameAdditionalAssemblies).CreateStringWrapperForBinding());
     }
 
     private static void CreateDriverDataElements(IConnectionInfo cxInfo)
@@ -397,6 +403,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
         var settingsViewSource = ((CollectionViewSource) (FindResource("settingsViewSource")));
         settingsViewSource.Source = new List<Settings> {Settings.Default};
+        if (!_isNewConnection) btnImportExisting.Visibility = Visibility.Hidden;
       }
       catch (Exception ex)
       {
@@ -1329,16 +1336,49 @@ namespace AW.LLBLGen.DataContextDriver.Static
       // string pluginsFolder = value.GetPluginsFolder(true); // LINQPad.UserOptions.Instance.GetPluginsFolder(true);
       if (thisDir != null && pluginsFolder != null)
       {
-        var filesToExclude = new[] { "Microsoft.Data.ConnectionUI", "CSScriptLibrary", "LLBLGen" };
+        var filesToExclude = new[] {"Microsoft.Data.ConnectionUI", "CSScriptLibrary", "LLBLGen"};
         var files = Directory.GetFiles(thisDir, "*.dll");
         foreach (var file in files)
-        {            
+        {
           var fileName = Path.GetFileName(file);
           if (fileName != null)
           {
             if (!filesToExclude.Any(fileName.Contains))
               File.Copy(file, Path.Combine(pluginsFolder, fileName), true);
           }
+        }
+      }
+    }
+
+    private void btnImportExisting_Click(object sender, RoutedEventArgs e)
+    {
+      var userOptionsType = typeof (IConnectionInfo).Assembly.GetType("LINQPad.Repository");
+      var methodInfo = userOptionsType.GetMethod("FromDisk");
+      var repositories = methodInfo.Invoke(null, new object[] {}) as IList;
+      if (repositories != null)
+      {
+        var connections = repositories.OfType<IConnectionInfo>();
+        var llblConnections = from c in connections
+          let driverDataString = c.DriverData.ToString()
+          where driverDataString.Contains("Adapter") || driverDataString.Contains("SelfService")
+          orderby c.DisplayName
+          select c;
+        var result = Dialogs.PickFromList("Existing LLBL connection", llblConnections.ToArray()) as IConnectionInfo;
+        if (result != null && _isNewConnection)
+        {
+          CxInfo.DisplayName = result.DisplayName + " Imported";
+          CxInfo.DriverData = result.DriverData;
+          CxInfo.AppConfigPath = result.AppConfigPath;
+          CxInfo.CustomTypeInfo.CustomAssemblyPath = result.CustomTypeInfo.CustomAssemblyPath;
+          CxInfo.CustomTypeInfo.CustomTypeName = result.CustomTypeInfo.CustomTypeName;
+          CxInfo.CustomTypeInfo.CustomMetadataPath = result.CustomTypeInfo.CustomMetadataPath;
+          CxInfo.DatabaseInfo.CustomCxString = result.DatabaseInfo.CustomCxString;
+          Provider = result.DatabaseInfo.Provider;
+          CxInfo.DatabaseInfo.Server = result.DatabaseInfo.Server;
+          CxInfo.DatabaseInfo.Database = result.DatabaseInfo.Database;
+         // SetAdditionalAssemblieAndNamespaces(CxInfo);
+          ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, GetDriverDataStringValues(result, ElementNameAdditionalNamespaces));
+          ValueTypeWrapper<string>.AddRange(AdditionalAssemblies, GetDriverDataStringValues(result, ElementNameAdditionalAssemblies));
         }
       }
     }

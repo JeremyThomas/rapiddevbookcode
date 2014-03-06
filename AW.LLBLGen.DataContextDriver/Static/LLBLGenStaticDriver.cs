@@ -249,12 +249,14 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       try
       {
+        if (customType == null)
+          throw new ArgumentNullException("customType");
         MetaDataHelper.AddDirectoryAssemblyResolverIfNeeded(customType.Assembly);
         var usefieldsElement = ConnectionDialog.GetDriverDataBooleanValue(cxInfo, ConnectionDialog.ElementNameUseFields);
-        return usefieldsElement ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType, 
+        return usefieldsElement ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType,
           ConnectionDialog.GetDriverDataBooleanValue(cxInfo, ConnectionDialog.ElementNameMembersUseSchema),
           ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixesToGroupBy),
-           ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixDelimiterToGroupBy)) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
+          ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixDelimiterToGroupBy)) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
       }
       catch (Exception e)
       {
