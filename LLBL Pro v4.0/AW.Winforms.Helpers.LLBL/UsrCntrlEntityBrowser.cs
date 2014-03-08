@@ -18,7 +18,6 @@ namespace AW.Winforms.Helpers.LLBL
   {
     private readonly Type _baseType;
     private readonly ILinqMetaData _linqMetaData;
-    private object _selectedObject;
     private bool _userHasInteracted;
 
     public UsrCntrlEntityBrowser()
@@ -82,12 +81,10 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void bindingSourceEnumerable_CurrentChanged(object sender, EventArgs e)
     {
-      _selectedObject = gridDataEditor.bindingSourceEnumerable.Current;
     }
 
     private void treeViewEntities_AfterSelect(object sender, TreeViewEventArgs e)
     {
-      _selectedObject = treeViewEntities.SelectedNode.Tag;
       if (!_userHasInteracted)
         return;
       var prop = treeViewEntities.SelectedNode.Tag as PropertyDescriptor;
@@ -124,14 +121,14 @@ namespace AW.Winforms.Helpers.LLBL
 
     private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
     {
-      Open(0);
+      Open();
     }
 
-    private void Open(ushort pageSize)
+    private void Open()
     {
       var entityQueryable = GetEntityQueryable();
       if (entityQueryable != null)
-        ViewEntities(entityQueryable, pageSize);
+        ViewEntities(entityQueryable);
     }
 
     private IQueryable GetEntityQueryable()
@@ -146,7 +143,7 @@ namespace AW.Winforms.Helpers.LLBL
       return entityQueryable;
     }
 
-    private void ViewEntities(IQueryable entityQueryable, ushort pageSize)
+    private void ViewEntities(IQueryable entityQueryable)
     {
       if (gridDataEditor.DataEditorPersister == null)
         if (typeof (IEntity).IsAssignableFrom(entityQueryable.ElementType))
@@ -157,12 +154,12 @@ namespace AW.Winforms.Helpers.LLBL
           if (provider != null)
             gridDataEditor.DataEditorPersister = new LLBLWinformHelper.DataEditorLLBLAdapterPersister(provider.AdapterToUse);
         }
-      gridDataEditor.BindEnumerable(entityQueryable, pageSize);
+      gridDataEditor.BindEnumerable(entityQueryable);
     }
 
     private void openPagedToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      Open(DataEditorExtensions.DefaultPageSize);
+      Open();
     }
 
     private void getCountToolStripMenuItem_Click(object sender, EventArgs e)
@@ -182,78 +179,8 @@ namespace AW.Winforms.Helpers.LLBL
     {
       if (e.Button == MouseButtons.Right && e.Node.Tag != null)
       {
-        treeViewEntities.SelectedNode = e.Node;
+       // treeViewEntities.SelectedNode = e.Node;
         contextMenuStrip1.Show(treeViewEntities, e.Location);
-      }
-    }
-
-    private void viewInPropertyGridToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      _selectedObject = treeViewEntities.SelectedNode.Tag;
-    }
-
-    private void viewToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      var entityQueryable = GetEntityQueryable();
-      if (entityQueryable != null)
-      {
-        _selectedObject = entityQueryable;
-
-      }
-    }
-
-    private void viewFieldsToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
-      var fields = EntityHelper.CreateEntity(typeOfEntity).Fields;
-      _selectedObject = fields;
-      gridDataEditor.BindEnumerable(fields);
-
-    }
-
-    private void viewPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
-      if (typeOfEntity != null)
-      {
-        var properties = typeOfEntity.GetProperties();
-        _selectedObject = properties;
-        gridDataEditor.BindEnumerable(properties);
-      }
-
-    }
-
-    private void viewPropertyDescriptorsToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
-      if (typeOfEntity != null)
-      {
-        var properties = MetaDataHelper.GetPropertyDescriptors(typeOfEntity);
-        _selectedObject = properties;
-        gridDataEditor.BindEnumerable(properties);
-      }
-
-    }
-
-    private void viewAttributesToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      var typeOfEntity = treeViewEntities.SelectedNode.Tag as Type;
-      if (typeOfEntity != null)
-      {
-        var properties = MetaDataHelper.GetPropertyDescriptors(typeOfEntity);
-        var attributes = properties.SelectMany(prop => prop.Attributes.Cast<Attribute>());
-        _selectedObject = attributes;
-        gridDataEditor.BindEnumerable(attributes);
-      }
-
-    }
-
-    private void viewInObjectBrowserToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      var entityQueryable = GetEntityQueryable();
-      if (entityQueryable != null)
-      {
-        FrmEntityViewer.LaunchAsChildForm(entityQueryable, gridDataEditor.DataEditorPersister);
       }
     }
 

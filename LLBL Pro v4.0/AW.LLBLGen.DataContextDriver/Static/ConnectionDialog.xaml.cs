@@ -17,6 +17,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using AW.Helper;
@@ -24,6 +25,7 @@ using AW.Helper.Annotations;
 using AW.LLBLGen.DataContextDriver.Properties;
 using AW.Winforms.Helpers;
 using AW.Winforms.Helpers.ConnectionUI;
+using AW.Winforms.Helpers.Forms;
 using AW.Winforms.Helpers.WPF;
 using LINQPad.Extensibility.DataContext;
 using LINQPad.Extensibility.DataContext.UI;
@@ -403,12 +405,23 @@ namespace AW.LLBLGen.DataContextDriver.Static
         this.SetPlacement(Settings.Default.ConnectionDialogPlacement);
         var settingsViewSource = ((CollectionViewSource) (FindResource("settingsViewSource")));
         settingsViewSource.Source = new List<Settings> {Settings.Default};
-        if (!_isNewConnection) btnImportExisting.Visibility = Visibility.Hidden;
+        if (!_isNewConnection) btnImportExisting.Visibility = Visibility.Hidden;     //
+        SetUriToPath(DriverDirectory, Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+        SetUriToPath(LINQPadErrorLog, Environment.ExpandEnvironmentVariables(@"%localappdata%\linqpad\logs"));
       }
       catch (Exception ex)
       {
         GeneralHelper.TraceOut(ex.Message);
         Application.OnThreadException(ex);
+      }
+    }
+
+    private void SetUriToPath(Hyperlink hyperlink, string location)
+    {
+      if (location != null)
+      {
+        var uriBuilder = new UriBuilder(location);
+        hyperlink.NavigateUri = uriBuilder.Uri;
       }
     }
 
@@ -1438,6 +1451,19 @@ namespace AW.LLBLGen.DataContextDriver.Static
         RoutedEvent = Mouse.MouseDownEvent,
         Source = gridSplitterAdditionalAssemblies,
       });
+    }
+
+    private void Url_Click(object sender, RoutedEventArgs e)
+    {
+      Process.Start(((Hyperlink)sender).NavigateUri.ToString()); 
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+      var ab = new AboutBox("") {AppEntryAssembly = Assembly.GetExecutingAssembly()};
+      //  var wih = new WindowInteropHelper(this);
+   //   wih. = ab.Handle;
+      ab.ShowDialog();
     }
   }
 
