@@ -597,14 +597,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
     #endregion
 
     /// <summary>
-    ///   Browses the data from a LINQPad like Treeview.
+    /// Browses the data from a LINQPad like Treeview.
     /// </summary>
-    /// <example>LinqPad: this.BrowseData()</example>
     /// <param name="linqMetaData">The linq meta data.</param>
-    public static void BrowseData(this ILinqMetaData linqMetaData)
+    /// <param name="useSchema">if set to <c>true</c> group by schema.</param>
+    /// <param name="prefixDelimiter">The prefix delimiter to group by table prefixes. e.g "_"</param>
+    /// <example>LinqPad: this.BrowseData()</example>
+    public static void BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null)
     {
       if (linqMetaData != null)
-        PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData));
+        PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter));
     }
   }
 }

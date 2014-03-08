@@ -39,10 +39,10 @@ namespace AW.Winforms.Helpers.LLBL
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabelSelected = new System.Windows.Forms.ToolStripStatusLabel();
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.contextMenuStrip1.SuspendLayout();
       this.statusStrip1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -81,6 +81,8 @@ namespace AW.Winforms.Helpers.LLBL
       this.imageList1.Images.SetKeyName(2, "GoRtl.bmp");
       this.imageList1.Images.SetKeyName(3, "GoLtr.bmp");
       this.imageList1.Images.SetKeyName(4, "PushpinHS.png");
+      this.imageList1.Images.SetKeyName(5, "EntityDataModel_entity_container_16x16.png");
+      this.imageList1.Images.SetKeyName(6, "XSDSchema_SequenceIcon.png");
       // 
       // contextMenuStrip1
       // 
@@ -145,6 +147,20 @@ namespace AW.Winforms.Helpers.LLBL
       this.splitContainer1.SplitterDistance = 167;
       this.splitContainer1.TabIndex = 3;
       // 
+      // gridDataEditor
+      // 
+      this.gridDataEditor.DataMember = "";
+      this.gridDataEditor.DataSource = null;
+      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridDataEditor.EnsureFilteringEnabled = false;
+      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.Name = "gridDataEditor";
+      this.gridDataEditor.PageSize = ((ushort)(0));
+      this.gridDataEditor.Readonly = false;
+      this.gridDataEditor.Size = new System.Drawing.Size(331, 563);
+      this.gridDataEditor.TabIndex = 0;
+      this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
+      // 
       // bindingNavigatorPaging
       // 
       this.bindingNavigatorPaging.AddNewItem = null;
@@ -179,20 +195,6 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.Size = new System.Drawing.Size(331, 25);
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
-      // 
-      // gridDataEditor
-      // 
-      this.gridDataEditor.DataMember = "";
-      this.gridDataEditor.DataSource = null;
-      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.gridDataEditor.EnsureFilteringEnabled = false;
-      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
-      this.gridDataEditor.Name = "gridDataEditor";
-      this.gridDataEditor.PageSize = ((ushort)(0));
-      this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(331, 563);
-      this.gridDataEditor.TabIndex = 0;
-      this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
       // 
       // UsrCntrlEntityBrowser
       // 
