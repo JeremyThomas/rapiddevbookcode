@@ -19,7 +19,7 @@
         Loaded="Window_Loaded"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Height="532">
+        mc:Ignorable="d" Height="547">
   <Window.Resources>
     <static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterToVisibility" LLBLConnectionType="Adapter" />
     <static:LLBLConnectionTypeToVisibilityConverter x:Key="AdapterFactoryToVisibility"
@@ -1069,10 +1069,25 @@
                     VerticalAlignment="Center"
                     Content="Copy to plugins"
                     ToolTip="Copy support assemblies to LINQPad plugins folder" Click="ButtonCopyToPlugins_Click" />
+            <TextBlock Margin="5,0,0,0" >
+    <Hyperlink ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" NavigateUri="https://rapiddevbookcode.codeplex.com/wikipage?title=LLBL4linqpad" Click="Url_Click">Driver Home page</Hyperlink>
+             
+            </TextBlock>
+            <TextBlock Margin="5,0,0,0">
+       <Hyperlink x:Name="DriverDirectory" NavigateUri="" ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" Click="Url_Click">Driver Directory</Hyperlink>
+            </TextBlock>
+            <TextBlock Margin="5,0,0,0">
+                <Hyperlink  x:Name="LINQPadErrorLog" NavigateUri="" ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" Click="Url_Click">LINQPad Error Log</Hyperlink>
+            </TextBlock>
+            <Button Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    Content="About"
+                    ToolTip="Details about this driver's assemblies" Click="Button_Click"  />
           </WrapPanel>
 
         </Grid>
       </TabItem>
+      
 
     </TabControl>
     <DockPanel Margin="0,5,0,0" LastChildFill="False" Grid.Row="1" MinHeight="30" RenderTransformOrigin="0.519,-10.367"
@@ -1085,7 +1100,8 @@
         </StackPanel.Resources>
         <CheckBox Margin="1,0,0,5"
                   IsChecked="{Binding CxInfo.Persist}"
-                  ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" Content="Remember this connection"
+                  ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" 
+                  Content="Remember this connection"
                   VerticalAlignment="Center" />
         <Button x:Name="btnSaveDefault"
                 MinWidth="60"
