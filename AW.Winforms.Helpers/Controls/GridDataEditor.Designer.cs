@@ -86,6 +86,8 @@
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
       this.searchToolBar = new ACS.UserControls.SearchToolBar();
+      this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabelSuperSetCount = new System.Windows.Forms.ToolStripLabel();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -447,7 +449,9 @@
             this.toolStripLabel3,
             this.toolStripTextBoxNewPageSize,
             this.toolStripButtonSetPageSize,
-            this.toolStripButtonUnPage});
+            this.toolStripButtonUnPage,
+            this.toolStripLabel4,
+            this.toolStripLabelSuperSetCount});
       this.bindingNavigatorPaging.Location = new System.Drawing.Point(0, 573);
       this.bindingNavigatorPaging.MoveFirstItem = this.bindingNavigatorMoveFirstItem;
       this.bindingNavigatorPaging.MoveLastItem = this.bindingNavigatorMoveLastItem;
@@ -642,6 +646,18 @@
       this.searchToolBar.Search += new ACS.UserControls.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
       // 
+      // toolStripLabel4
+      // 
+      this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+      this.toolStripLabel4.Name = "toolStripLabel4";
+      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
+      this.toolStripLabel4.Text = "Total Count";
+      // 
+      // toolStripLabelSuperSetCount
+      // 
+      this.toolStripLabelSuperSetCount.Name = "toolStripLabelSuperSetCount";
+      this.toolStripLabelSuperSetCount.Size = new System.Drawing.Size(0, 22);
+      // 
       // GridDataEditor
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -729,5 +745,7 @@
     private System.Windows.Forms.ToolStripTextBox toolStripTextBoxNewPageSize;
     private System.Windows.Forms.ToolStripButton toolStripButtonSetPageSize;
     private System.Windows.Forms.ToolStripButton toolStripButtonShowDatagrid;
+    private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+    private System.Windows.Forms.ToolStripLabel toolStripLabelSuperSetCount;
   }
 }
