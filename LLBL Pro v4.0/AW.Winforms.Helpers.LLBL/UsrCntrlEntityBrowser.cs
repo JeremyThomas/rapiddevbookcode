@@ -59,7 +59,6 @@ namespace AW.Winforms.Helpers.LLBL
     /// </summary>
     protected override void OnCreateControl()
     {
-      gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;
       if (treeViewEntities.Nodes.Count == 0)
         LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
       base.OnCreateControl();
@@ -72,15 +71,6 @@ namespace AW.Winforms.Helpers.LLBL
       if (_baseType != null)
         return MetaDataHelper.GetDescendants(_baseType);
       return _linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(_linqMetaData);
-    }
-
-    private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)
-    {
-      DoDragDrop(((TreeNode) e.Item).Text, DragDropEffects.All);
-    }
-
-    private void bindingSourceEnumerable_CurrentChanged(object sender, EventArgs e)
-    {
     }
 
     private void treeViewEntities_AfterSelect(object sender, TreeViewEventArgs e)
@@ -116,13 +106,8 @@ namespace AW.Winforms.Helpers.LLBL
       {
         openPagedToolStripMenuItem_Click(sender, e);
       }
-      toolStripStatusLabelSelected.Text = treeViewEntities.SelectedNode.Text;
     }
 
-    private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
-    {
-      Open();
-    }
 
     private void Open()
     {
@@ -160,28 +145,6 @@ namespace AW.Winforms.Helpers.LLBL
     private void openPagedToolStripMenuItem_Click(object sender, EventArgs e)
     {
       Open();
-    }
-
-    private void getCountToolStripMenuItem_Click(object sender, EventArgs e)
-    {
-      var entityQueryable = GetEntityQueryable();
-      if (entityQueryable != null)
-        toolStripStatusLabelSelected.Text = entityQueryable.Count().ToString();
-    }
-
-    private void treeViewEntities_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-    {
-      if (!e.Node.IsExpanded)
-        openPagedToolStripMenuItem_Click(sender, e);
-    }
-
-    private void treeViewEntities_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-    {
-      if (e.Button == MouseButtons.Right && e.Node.Tag != null)
-      {
-       // treeViewEntities.SelectedNode = e.Node;
-        contextMenuStrip1.Show(treeViewEntities, e.Location);
-      }
     }
 
     private void treeViewEntities_Click(object sender, EventArgs e)

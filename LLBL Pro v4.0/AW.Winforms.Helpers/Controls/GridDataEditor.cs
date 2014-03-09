@@ -309,7 +309,10 @@ namespace AW.Winforms.Helpers.Controls
     protected virtual int SuperSetCount()
     {
       if (!_superSetCount.HasValue)
+      {
         _superSetCount = _superset.Count();
+        toolStripLabelSuperSetCount.Text = _superSetCount.ToString();
+      }
       return _superSetCount.Value;
     }
 
