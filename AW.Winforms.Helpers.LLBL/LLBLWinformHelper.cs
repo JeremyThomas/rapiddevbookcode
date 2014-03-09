@@ -243,11 +243,15 @@ namespace AW.Winforms.Helpers.LLBL
           }
         }
 
-        var entityNode = treeNodeCollectionToAddTo.Add(entityType.Name, GetEntityTypeName(entityType));
+        var entityNodeText = GetEntityTypeName(entityType);
+        if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
+          if (entityType.BaseType != null && !entityType.BaseType.IsAbstract)
+            entityNodeText += String.Format(" (Sub-type of '{0}')", GetEntityTypeName(entityType.BaseType));
+        var entityNode = treeNodeCollectionToAddTo.Add(entityType.Name, entityNodeText);
         entityNode.Tag = entityType;
 
         entityNode.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
-        //entityNode.ToolTipText = FormatTypeName(entityType, false);
+
         var entityFields = entity.GetFields();
 
         foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).
@@ -273,13 +277,6 @@ namespace AW.Winforms.Helpers.LLBL
           if (EntityHelper.IsEntityCore(entityTypeProperty))
           {
             fieldNode.ImageIndex = 3;
-            if (entityTypeProperty.PropertyType.IsClass && !entityTypeProperty.PropertyType.IsAbstract)
-            {
-              var entityNavigator = LinqUtils.CreateEntityInstanceFromEntityType(entityTypeProperty.PropertyType, elementCreator);
-              if (entityNavigator.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
-                if (entityTypeProperty.PropertyType.BaseType != null)
-                  fieldNode.Text = fieldNode.Name + String.Format(" (Sub-type of '{0}')", entityTypeProperty.PropertyType.BaseType.Name);
-            }
             fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, FormatTypeName(entityTypeProperty.PropertyType));
           }
           else
