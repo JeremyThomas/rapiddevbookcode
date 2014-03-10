@@ -10,7 +10,7 @@ namespace AW.LLBLGen.DataContextDriver
     /// 4.1
     /// </summary>
     public const string LLBLVersion = "4.1";
-    public const string CopyrightYear = "2013";
+    public const string CopyrightYear = "2014";
     public const string LLBLGenNameVersion = "LLBLGen Pro v" + LLBLVersion;
     public const string DriverName = "AW " + LLBLGenNameVersion;
     public const string Name = DriverName + " (v" + Version + ")";
