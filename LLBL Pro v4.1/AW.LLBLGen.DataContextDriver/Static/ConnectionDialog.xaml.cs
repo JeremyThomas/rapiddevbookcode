@@ -17,7 +17,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using AW.Helper;
@@ -235,7 +234,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         {
           UpGradeDriverDataElements(cxInfo);
           if (HowToDisplayInGrid == null)
-            HowToDisplayInGrid = DisplayInGrid.AllProperties;
+            HowToDisplayInGrid = DisplayInGrid.UseEditableGrid;
         }
         SetAdditionalAssemblieAndNamespaces(cxInfo);
       }
@@ -263,7 +262,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       CreateElementIfNeeded(cxInfo, ElementNameFactoryAssembly, Settings.Default.DefaultDataAccessAdapterFactoryAssembly);
       CreateElementIfNeeded(cxInfo, ElementNameConnectionType, Settings.Default.DefaultConnectionType.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameUseFields, true.ToString());
-      CreateElementIfNeeded(cxInfo, ElementNameDisplayInGrid, DisplayInGrid.ExcludeEntityBaseProperties.ToString());
+      CreateElementIfNeeded(cxInfo, ElementNameDisplayInGrid, DisplayInGrid.UseEditableGrid.ToString());
       CreateElementIfNeeded(cxInfo, ElementNameAdditionalAssemblies);
       CreateElementIfNeeded(cxInfo, ElementNameAdditionalNamespaces);
       CreateElementIfNeeded(cxInfo, ElementNameMembersToExclude);
@@ -290,7 +289,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       else
       {
-        CreateElementIfNeeded(cxInfo, ElementNameAdapterType, null);
+        CreateElementIfNeeded(cxInfo, ElementNameAdapterType);
         CreateElementIfNeeded(cxInfo, ElementNameAdapterAssembly, cxInfo.CustomTypeInfo.CustomMetadataPath);
         CreateElementIfNeeded(cxInfo, ElementNameConnectionType, ((int) LLBLConnectionType.Adapter).ToString());
       }
@@ -408,6 +407,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         if (!_isNewConnection) btnImportExisting.Visibility = Visibility.Hidden;     //
         SetUriToPath(DriverDirectory, Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
         SetUriToPath(LINQPadErrorLog, Environment.ExpandEnvironmentVariables(@"%localappdata%\linqpad\logs"));
+        SetUriToPath(LINQPadConnections, Environment.ExpandEnvironmentVariables(@"%appdata%\linqpad\ConnectionsV2.xml"));
       }
       catch (Exception ex)
       {
@@ -1461,8 +1461,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private void Button_Click(object sender, RoutedEventArgs e)
     {
       var ab = new AboutBox("") {AppEntryAssembly = Assembly.GetExecutingAssembly()};
-      //  var wih = new WindowInteropHelper(this);
-   //   wih. = ab.Handle;
       ab.ShowDialog();
     }
   }

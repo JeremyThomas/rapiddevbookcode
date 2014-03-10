@@ -209,6 +209,7 @@ namespace AW.Winforms.Helpers.LLBL
       var schemas = new Dictionary<string, TreeNode>();
       var prefixesToGroupBy = new Dictionary<string, TreeNode>();
       var usePrefixes = !string.IsNullOrWhiteSpace(prefixDelimiter);
+      var entityNodes = new Dictionary<Type,Tuple<TreeNode, IEntityCore>>();
       foreach (var entityType in entitiesTypes.OrderBy(t => t.Name).ToList())
       {
         if (elementCreator == null)
@@ -251,46 +252,15 @@ namespace AW.Winforms.Helpers.LLBL
         entityNode.Tag = entityType;
 
         entityNode.ToolTipText = CreateTableToolTipText(entity, fieldPersistenceInfo);
+        entityNodes.Add(entityType, new Tuple<TreeNode, IEntityCore>(entityNode,entity));
 
-        var entityFields = entity.GetFields();
-
-        foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).
-          Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, 1)))
-        {
-          entityNode.Nodes.Add(fieldNode);
-          var field = entityFields.FirstOrDefault(f => f.Name.Equals(fieldNode.Name));
-          {
-            if (field != null)
-            {
-              fieldNode.Text = CreateFieldText(field);
-              fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
-              var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
-              fieldNode.ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, fieldNode.Tag as PropertyDescriptor, fkNavigator);
-            }
-          }
-        }
-
-        foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true))
-        {
-          var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
-          fieldNode.ToolTipText = FormatTypeName(entityTypeProperty.PropertyType);
-          if (EntityHelper.IsEntityCore(entityTypeProperty))
-          {
-            fieldNode.ImageIndex = 3;
-            fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, FormatTypeName(entityTypeProperty.PropertyType));
-          }
-          else
-          {
-            fieldNode.ImageIndex = 2;
-            var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(entityTypeProperty.PropertyType);
-            string targetToolTipText = null;
-            if (typeParameterOfGenericType != null) targetToolTipText = FormatTypeName(typeParameterOfGenericType, true);
-            fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, targetToolTipText);
-          }
-          //  fieldNode.Text = CreateTreeNodeText(entityTypeProperty);
-          fieldNode.Tag = entityTypeProperty;
-        }
       }
+
+      foreach (var entityNode in entityNodes)
+      {
+        PopulateEntityFields(entityNode.Value.Item1, entityNode.Value.Item2,entityNodes, adapter);
+      }
+
       if (schemas.Count==1)
         schemaTreeNodeCollection.AddRange(schemas.First().Value.Nodes.OfType<TreeNode>().ToArray());
       else
@@ -298,6 +268,57 @@ namespace AW.Winforms.Helpers.LLBL
       {
         schemaTreeNodeCollection.Add(treeNode.Value);
       }
+    }
+
+    private static void PopulateEntityFields(TreeNode entityNode, IEntityCore entity, Dictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, IDataAccessAdapter adapter)
+    {
+      IFieldPersistenceInfo fieldPersistenceInfo;
+      var entityType = entity.GetType();
+      var entityFields = entity.GetFields();
+
+      foreach (var fieldNode in ListBindingHelper.GetListItemProperties(entityType).Cast<PropertyDescriptor>().FilterByIsEntityCore(false, true).
+        Select(browseableProperty => CreateSimpleTypeTreeNode(browseableProperty, 1)))
+      {
+        entityNode.Nodes.Add(fieldNode);
+        var field = entityFields.FirstOrDefault(f => f.Name.Equals(fieldNode.Name));
+        {
+          if (field != null)
+          {
+            fieldNode.Text = CreateFieldText(field);
+            fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
+            var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
+            fieldNode.ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, fieldNode.Tag as PropertyDescriptor, fkNavigator);
+          }
+        }
+      }
+
+      foreach (var entityTypeProperty in EntityHelper.GetPropertiesOfTypeEntity(entityType, true))
+      {
+        var fieldNode = entityNode.Nodes.Add(entityTypeProperty.Name);
+        fieldNode.ToolTipText = FormatTypeName(entityTypeProperty.PropertyType);
+        if (EntityHelper.IsEntityCore(entityTypeProperty))
+        {
+          fieldNode.ImageIndex = 3;
+          fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, GetTargetToolTipText(entityNodes, entityTypeProperty.PropertyType));
+        }
+        else
+        {
+          fieldNode.ImageIndex = 2;
+          var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(entityTypeProperty.PropertyType);
+          string targetToolTipText = null;
+          if (typeParameterOfGenericType != null) targetToolTipText = GetTargetToolTipText(entityNodes, typeParameterOfGenericType);
+          fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, targetToolTipText);
+        }
+        //  fieldNode.Text = CreateTreeNodeText(entityTypeProperty);
+        fieldNode.Tag = entityTypeProperty;
+      }
+    }
+
+    private static string GetTargetToolTipText(IDictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, Type propertyType)
+    {
+      Tuple<TreeNode, IEntityCore> tuple;
+      var targetToolTipText = entityNodes.TryGetValue(propertyType, out tuple) ? tuple.Item1.ToolTipText : FormatTypeName(propertyType);
+      return targetToolTipText;
     }
 
     public static string CreateTableToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo)

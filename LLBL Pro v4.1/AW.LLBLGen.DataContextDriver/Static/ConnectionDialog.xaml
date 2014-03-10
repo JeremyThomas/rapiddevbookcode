@@ -564,16 +564,16 @@
           </Grid.RowDefinitions>
           <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-            <Label x:Name="lblSchemaTreeView"
+              <Label x:Name="lblSchemaTreeView"
                    ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" FontWeight="Bold">
-              Schema Tree View:
-            </Label>
-            <CheckBox
+                Schema Tree View:
+              </Label>
+              <CheckBox
               IsChecked="{Binding CxInfo.DriverData.Element[UseFields].Value}"
               ToolTip="If you choose to use entity information to create the schema tree more information will be shown in the tree nodes tooltips however only properties created by the designer are shown"
               Content="Use entity info rather then just reflection"  VerticalAlignment="Center" 
               />
-            <CheckBox
+              <CheckBox
               IsChecked="{Binding CxInfo.DriverData.Element[UseSchema].Value}"
               ToolTip="Use Table Schema to group the Entities"
               Content="Use Table Schema to group the Entities"  VerticalAlignment="Center" Margin="5,0,0,0" 
@@ -1071,13 +1071,16 @@
                     ToolTip="Copy support assemblies to LINQPad plugins folder" Click="ButtonCopyToPlugins_Click" />
             <TextBlock Margin="5,0,0,0" >
     <Hyperlink ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" NavigateUri="https://rapiddevbookcode.codeplex.com/wikipage?title=LLBL4linqpad" Click="Url_Click">Driver Home page</Hyperlink>
-             
+
             </TextBlock>
             <TextBlock Margin="5,0,0,0">
        <Hyperlink x:Name="DriverDirectory" NavigateUri="" ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" Click="Url_Click">Driver Directory</Hyperlink>
             </TextBlock>
             <TextBlock Margin="5,0,0,0">
                 <Hyperlink  x:Name="LINQPadErrorLog" NavigateUri="" ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" Click="Url_Click">LINQPad Error Log</Hyperlink>
+            </TextBlock>
+            <TextBlock Margin="5,0,0,0">
+                <Hyperlink  x:Name="LINQPadConnections" NavigateUri="" ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" Click="Url_Click">LINQPad Connections File</Hyperlink>
             </TextBlock>
             <Button Margin="5,0,0,0"
                     VerticalAlignment="Center"
@@ -1087,7 +1090,7 @@
 
         </Grid>
       </TabItem>
-      
+
 
     </TabControl>
     <DockPanel Margin="0,5,0,0" LastChildFill="False" Grid.Row="1" MinHeight="30" RenderTransformOrigin="0.519,-10.367"
