@@ -299,19 +299,26 @@ namespace AW.Winforms.Helpers.LLBL
         if (EntityHelper.IsEntityCore(entityTypeProperty))
         {
           fieldNode.ImageIndex = 3;
-          fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, entityNodes[entityTypeProperty.PropertyType].Item1.ToolTipText);
+          fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, GetTargetToolTipText(entityNodes, entityTypeProperty.PropertyType));
         }
         else
         {
           fieldNode.ImageIndex = 2;
           var typeParameterOfGenericType = MetaDataHelper.GetTypeParameterOfGenericType(entityTypeProperty.PropertyType);
           string targetToolTipText = null;
-          if (typeParameterOfGenericType != null) targetToolTipText = entityNodes[typeParameterOfGenericType].Item1.ToolTipText;
+          if (typeParameterOfGenericType != null) targetToolTipText = GetTargetToolTipText(entityNodes, typeParameterOfGenericType);
           fieldNode.ToolTipText = CreateNavigatorToolTipText(entity, entityTypeProperty, targetToolTipText);
         }
         //  fieldNode.Text = CreateTreeNodeText(entityTypeProperty);
         fieldNode.Tag = entityTypeProperty;
       }
+    }
+
+    private static string GetTargetToolTipText(IDictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, Type propertyType)
+    {
+      Tuple<TreeNode, IEntityCore> tuple;
+      var targetToolTipText = entityNodes.TryGetValue(propertyType, out tuple) ? tuple.Item1.ToolTipText : FormatTypeName(propertyType);
+      return targetToolTipText;
     }
 
     public static string CreateTableToolTipText(IEntityCore entity, IFieldPersistenceInfo fieldPersistenceInfo)

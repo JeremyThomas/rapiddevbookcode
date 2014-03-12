@@ -17,6 +17,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using System.Xml.Linq;
 using AW.Helper;
@@ -888,15 +889,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
               CxInfo.DriverData.SetElementValue(ElementNameFactoryMethod, factoryMethodName);
             }
           }
-          domainIsolator.Domain.SetData("CxInfo", CxInfo);
-          domainIsolator.Domain.DoCallBack(GetFunctionMappingStoreMember);
-          var functionMappingStoreMember = domainIsolator.Domain.GetData(FunctionMappingStoreMember);
-          CxInfo.DriverData.SetElementValue(FunctionMappingStoreMember, functionMappingStoreMember);
+          FindFunctionMappingStoreMember(domainIsolator);
         }
         catch (Exception ex)
         {
         }
       }
+    }
+
+    private void FindFunctionMappingStoreMember(DomainIsolator domainIsolator)
+    {
+      domainIsolator.Domain.SetData("CxInfo", CxInfo);
+      domainIsolator.Domain.DoCallBack(GetFunctionMappingStoreMember);
+      var functionMappingStoreMember = domainIsolator.Domain.GetData(FunctionMappingStoreMember);
+      CxInfo.DriverData.SetElementValue(FunctionMappingStoreMember, functionMappingStoreMember);
     }
 
     private static void GetAdapterOrFactoryClasses()
@@ -1017,6 +1023,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
     }
 
+    private void ChooseLlblFunctionMappingStoreMember(object sender, RoutedEventArgs e)
+    {
+      using (var domainIsolator = CreateDomainIsolator())
+      {
+          FindFunctionMappingStoreMember(domainIsolator);
+      }
+    }
     private static IEnumerable<MethodInfo> GetMethodsFromFactoryAssembly(IConnectionInfo connectionInfo, string factoryTypeName)
     {
       var factoryAssemblyPath = GetDriverDataValue(connectionInfo, ElementNameFactoryAssembly);
@@ -1389,9 +1402,18 @@ namespace AW.LLBLGen.DataContextDriver.Static
           Provider = result.DatabaseInfo.Provider;
           CxInfo.DatabaseInfo.Server = result.DatabaseInfo.Server;
           CxInfo.DatabaseInfo.Database = result.DatabaseInfo.Database;
+          OnPropertyChanged("LLBLConnectionType");
+          OnPropertyChanged("ConnectionTypeVisibility");
          // SetAdditionalAssemblieAndNamespaces(CxInfo);
           ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, GetDriverDataStringValues(result, ElementNameAdditionalNamespaces));
-          ValueTypeWrapper<string>.AddRange(AdditionalAssemblies, GetDriverDataStringValues(result, ElementNameAdditionalAssemblies));
+          ValueTypeWrapper<string>.AddRange(AdditionalAssembliesCnxt, GetDriverDataStringValues(result, ElementNameAdditionalAssemblies));
+
+          foreach (var visualChild in AWVisualTreeHelper.GetVisualChildren<TextBox>(this))
+          {
+            var bindingExpression = visualChild.GetBindingExpression(TextBox.TextProperty);
+            if (bindingExpression != null) 
+              bindingExpression.UpdateTarget();
+          }
         }
       }
     }
@@ -1463,6 +1485,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       var ab = new AboutBox("") {AppEntryAssembly = Assembly.GetExecutingAssembly()};
       ab.ShowDialog();
     }
+
   }
 
   public enum LLBLConnectionType

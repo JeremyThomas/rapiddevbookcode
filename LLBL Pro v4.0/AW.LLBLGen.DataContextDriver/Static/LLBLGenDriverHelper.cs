@@ -597,16 +597,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
     #endregion
 
     /// <summary>
-    /// Browses the data from a LINQPad like Treeview.
+    /// Browses the data as LLBL Entities from a LINQPad like Treeview.
     /// </summary>
     /// <param name="linqMetaData">The linq meta data.</param>
     /// <param name="useSchema">if set to <c>true</c> group by schema.</param>
     /// <param name="prefixDelimiter">The prefix delimiter to group by table prefixes. e.g "_"</param>
+    /// <param name="ensureFilteringEnabled">if set to <c>true</c> ensure filtering enabled, i.e. use ObjectListView rather than native LLBL EntityView.</param>
+    /// <returns>True if succeeded rather than void so can be passed to LINQPads Dump method.</returns>
     /// <example>LinqPad: this.BrowseData()</example>
-    public static void BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null)
+    public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null, bool ensureFilteringEnabled = true)
     {
-      if (linqMetaData != null)
-        PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter));
+      if (linqMetaData == null)
+        return false;
+      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled));
+      return true;
     }
   }
 }

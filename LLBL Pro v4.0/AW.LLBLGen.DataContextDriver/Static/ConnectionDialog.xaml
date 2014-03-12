@@ -241,7 +241,13 @@
                      Text="{Binding CxInfo.DriverData.Element[AdapterType].Value}"
                      ToolTip="{Binding Content, ElementName=lblAdapterType}" />
             <DockPanel>
-              <Label DockPanel.Dock="Right" Padding="1" />
+              <Label DockPanel.Dock="Right" Padding="1">
+                <Hyperlink Click="ChooseLlblFunctionMappingStoreMember"
+                           ToolTip="{Binding TargetName, RelativeSource={RelativeSource Self}}"
+                           >
+                  <Run Text="Choose..." />
+                </Hyperlink>
+              </Label>
               <Label x:Name="lblFunctionMappingStoreMember"
                      Padding="0,0,0,1"
                      ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"
