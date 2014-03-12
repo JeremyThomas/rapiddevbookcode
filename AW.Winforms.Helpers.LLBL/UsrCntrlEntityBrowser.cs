@@ -31,12 +31,13 @@ namespace AW.Winforms.Helpers.LLBL
       LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
     }
 
-    public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_")
+    public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true)
       : this()
     {
       _linqMetaData = linqMetaData;
-      var entitiesTypes = GetEntitiesTypes();
+      var entitiesTypes = GetEntitiesTypes().ToList();
       var firstEntityType = entitiesTypes.FirstOrDefault();
+      gridDataEditor.EnsureFilteringEnabled = ensureFilteringEnabled;
       if (firstEntityType != null)
       {
         IDataAccessAdapter adapter = null;
