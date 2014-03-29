@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -19,35 +18,66 @@ using SD.LLBLGen.Pro.ORMSupportClasses;
 namespace AW.LLBLGen.DataContextDriver.Static
 {
   /// <summary>
-  ///   This static driver let users query any data source that looks like a Data Context - in other words, that exposes properties of type IEnumerable of T.
+  ///   This static driver let users query any data source that looks like a Data Context - in other words, that exposes
+  ///   properties of type IEnumerable of T.
   /// </summary>
   public class LLBLGenStaticDriver : StaticDataContextDriver
   {
     #region Constants
 
     public static readonly string[] AdditionalAssemblies = new[]
-      {
-        "SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
-        "SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
-        "AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
-        "AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
-        "AW.LinqPadExtensions.dll"
-      };
+    {
+      "SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
+      "SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
+      "AW.Helper.dll", "AW.Helper.LLBL.dll", "System.Windows.Forms.dll",
+      "AW.Winforms.Helpers.dll", "AW.Winforms.Helpers.LLBL.dll",
+      "AW.LinqPadExtensions.dll"
+    };
 
     public static readonly string[] AdditionalNamespaces = new[]
-      {
-        "SD.LLBLGen.Pro.ORMSupportClasses",
-        "SD.LLBLGen.Pro.LinqSupportClasses",
-        "AW.Helper",
-        "AW.Helper.LLBL",
-        "AW.Winforms.Helpers.DataEditor",
-        "AW.Winforms.Helpers.LLBL",
-        "AW.LinqPadExtensions",
-        "AW.LLBLGen.DataContextDriver",
-        "AW.LLBLGen.DataContextDriver.Static"
-      };
+    {
+      "SD.LLBLGen.Pro.ORMSupportClasses",
+      "SD.LLBLGen.Pro.LinqSupportClasses",
+      "AW.Helper",
+      "AW.Helper.LLBL",
+      "AW.Winforms.Helpers.DataEditor",
+      "AW.Winforms.Helpers.LLBL",
+      "AW.LinqPadExtensions",
+      "AW.LLBLGen.DataContextDriver",
+      "AW.LLBLGen.DataContextDriver.Static"
+    };
 
     #endregion
+
+    static LLBLGenStaticDriver()
+    {
+      if (IsSupportAssemblyVersionMismatch())
+      {
+        var driverAssembly = typeof (LLBLGenStaticDriver).Assembly;
+        var awHelperLLBLAssembly = typeof (EntityHelper).Assembly;
+        var localHelperLLBLAssemblyPath = Path.Combine(Path.GetDirectoryName(driverAssembly.Location), Path.GetFileName(awHelperLLBLAssembly.Location));
+        if (File.Exists(localHelperLLBLAssemblyPath))
+          Assembly.LoadFrom(localHelperLLBLAssemblyPath);
+        //    AW.Helper.LLBL.EntityHelper.
+        //AW.Helper.LLBL.EntityHelper.GetDataAccessAdapter(Enumerable.Empty<string>());
+      }
+    }
+
+    private static bool IsSupportAssemblyVersionMismatch()
+    {
+      if (_awHelperLLBLAssemblyName == null)
+      {
+        var entityHelperType = typeof (EntityHelper);
+        _awHelperLLBLAssemblyName = entityHelperType.Assembly.GetName();
+      }
+      if (_awWinformsHelpersLlblAssemblyName == null)
+      {
+        var lLblWinformHelperType = typeof (LLBLWinformHelper);
+        _awWinformsHelpersLlblAssemblyName = lLblWinformHelperType.Assembly.GetName();
+      }
+      var assemblyVersionMismatch = _awHelperLLBLAssemblyName.Version != _awWinformsHelpersLlblAssemblyName.Version;
+      return assemblyVersionMismatch;
+    }
 
     #region Overrides of DataContextDriver
 
@@ -111,7 +141,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     public override IEnumerable<string> GetNamespacesToRemove(IConnectionInfo cxInfo)
     {
-      return new[] { "System.Data.Linq", "System.Data.SqlClient", "System.Data.Linq.SqlClient" };
+      return new[] {"System.Data.Linq", "System.Data.SqlClient", "System.Data.Linq.SqlClient"};
     }
 
     /// <summary>
@@ -142,15 +172,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
             if (typeof (IEntityCore).IsAssignableFrom(elementType))
             {
               var membersToExclude = typeof (EntityBase).GetProperties().Select(p => p.Name)
-                                                        .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
+                .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
               if (typeof (IEntity).IsAssignableFrom(elementType))
               {
                 // remove alwaysFetch/AlreadyFetched flag properties
                 membersToExclude = membersToExclude
                   .Union(elementType.GetProperties()
-                                    .Where(p => p.PropertyType == typeof (bool) &&
-                                                (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch")))
-                                    .Select(p => p.Name));
+                    .Where(p => p.PropertyType == typeof (bool) &&
+                                (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch")))
+                    .Select(p => p.Name));
               }
               options.MembersToExclude = membersToExclude.Distinct().ToArray();
             }
@@ -160,7 +190,21 @@ namespace AW.LLBLGen.DataContextDriver.Static
             var toDisplay = objectToDisplay as IEnumerable;
             if (toDisplay != null)
             {
-              CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LinqPadExtensions.CustomVisualizers.DefaultPageSize);
+              var pageSize = _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LinqPadExtensions.CustomVisualizers.DefaultPageSize;
+              try
+              {
+                CustomVisualizers.DisplayInGrid(toDisplay, pageSize);
+              }
+              catch (MissingMethodException e)
+              {
+                if (IsSupportAssemblyVersionMismatch())
+                {
+                  throw new Exception("Cannot load CustomVisualizers.DisplayInGrid due to Assembly Version Mismatch" 
+                    + _awHelperLLBLAssemblyName + " vs "+ _awWinformsHelpersLlblAssemblyName, e);
+                }
+                throw;
+              }
+
               return;
             }
             break;
@@ -244,7 +288,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private void SetSQLTranslationWriter(Type typeBeingTraced, object objectBeingTraced, QueryExecutionManager executionManager)
     {
       if (executionManager != null)
-      {      
+      {
         var eventInfo = typeBeingTraced.GetEvent(SQLTraceEventArgs.SqlTraceEventName);
         if (eventInfo == null)
           ORMQueryExecutionListener.AddORMQueryExecutionListener(executionManager);
@@ -273,6 +317,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static readonly MethodInfo HandlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
     private TextWriter _sqlTranslationWriter;
+    private static AssemblyName _awHelperLLBLAssemblyName;
+    private static AssemblyName _awWinformsHelpersLlblAssemblyName;
 
     private void SQLTraceEventHandler(object sender, EventArgs e)
     {
