@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.LLBLGen.DataContextDriver.Properties;
+using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.LLBL;
 using LINQPad;
 using LINQPad.Extensibility.DataContext;
@@ -25,7 +26,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
   {
     #region Constants
 
-    public static readonly string[] AdditionalAssemblies = new[]
+    public static readonly string[] AdditionalAssemblies =
     {
       "SD.LLBLGen.Pro.ORMSupportClasses.NET20.dll",
       "SD.LLBLGen.Pro.LinqSupportClasses.NET35.dll",
@@ -34,7 +35,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       "AW.LinqPadExtensions.dll"
     };
 
-    public static readonly string[] AdditionalNamespaces = new[]
+    public static readonly string[] AdditionalNamespaces =
     {
       "SD.LLBLGen.Pro.ORMSupportClasses",
       "SD.LLBLGen.Pro.LinqSupportClasses",
@@ -55,28 +56,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         var driverAssembly = typeof (LLBLGenStaticDriver).Assembly;
         var awHelperLLBLAssembly = typeof (EntityHelper).Assembly;
+// ReSharper disable once AssignNullToNotNullAttribute
         var localHelperLLBLAssemblyPath = Path.Combine(Path.GetDirectoryName(driverAssembly.Location), Path.GetFileName(awHelperLLBLAssembly.Location));
         if (File.Exists(localHelperLLBLAssemblyPath))
           Assembly.LoadFrom(localHelperLLBLAssemblyPath);
-        //    AW.Helper.LLBL.EntityHelper.
-        //AW.Helper.LLBL.EntityHelper.GetDataAccessAdapter(Enumerable.Empty<string>());
       }
     }
 
-    private static bool IsSupportAssemblyVersionMismatch()
+    private static bool IsSupportAssemblyVersionMismatch(string exceptionMessage = null, Exception innerException = null)
     {
-      if (_awHelperLLBLAssemblyName == null)
-      {
-        var entityHelperType = typeof (EntityHelper);
-        _awHelperLLBLAssemblyName = entityHelperType.Assembly.GetName();
-      }
-      if (_awWinformsHelpersLlblAssemblyName == null)
-      {
-        var lLblWinformHelperType = typeof (LLBLWinformHelper);
-        _awWinformsHelpersLlblAssemblyName = lLblWinformHelperType.Assembly.GetName();
-      }
-      var assemblyVersionMismatch = _awHelperLLBLAssemblyName.Version != _awWinformsHelpersLlblAssemblyName.Version;
-      return assemblyVersionMismatch;
+      var typesInAssemblies = new[] { typeof(EntityHelper), typeof(LLBLWinformHelper), typeof(ILinqMetaData), typeof(DataEditorExtensions) };
+      var an = from t in typesInAssemblies
+        select t.Assembly.GetName();
+      var compareVersion = an.First().Version;
+      var assemblyVersionMismatch = an.Any(assemblyName => assemblyName.Version != compareVersion);
+
+      if (String.IsNullOrEmpty(exceptionMessage))
+        return assemblyVersionMismatch;
+      if (assemblyVersionMismatch)
+        throw new Exception(exceptionMessage + Environment.NewLine + an.JoinAsString(), innerException);
+      return false;
     }
 
     #region Overrides of DataContextDriver
@@ -197,14 +196,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
               }
               catch (MissingMethodException e)
               {
-                if (IsSupportAssemblyVersionMismatch())
-                {
-                  throw new Exception("Cannot load CustomVisualizers.DisplayInGrid due to Assembly Version Mismatch" 
-                    + _awHelperLLBLAssemblyName + " vs "+ _awWinformsHelpersLlblAssemblyName, e);
-                }
-                throw;
+                if (!IsSupportAssemblyVersionMismatch("Cannot load CustomVisualizers.DisplayInGrid due to an assembly version mismatch."
+                  + Environment.NewLine
+                  + "Turning off shadowing of reference assemblies and/or removing offending assemblies from LINQPad Plugins (if present) should fix it." 
+                  + Environment.NewLine, e))
+                  throw;
               }
-
               return;
             }
             break;
@@ -317,8 +314,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static readonly MethodInfo HandlerSQLTraceEvent = MetaDataHelper.GetMethodInfo<LLBLGenStaticDriver>(x => x.SQLTraceEventHandler(null, null));
     private TextWriter _sqlTranslationWriter;
-    private static AssemblyName _awHelperLLBLAssemblyName;
-    private static AssemblyName _awWinformsHelpersLlblAssemblyName;
 
     private void SQLTraceEventHandler(object sender, EventArgs e)
     {
