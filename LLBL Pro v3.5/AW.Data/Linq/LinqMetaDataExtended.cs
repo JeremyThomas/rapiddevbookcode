@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using AW.Data.EntityClasses;
 
 namespace AW.Data.Linq
@@ -7,7 +8,14 @@ namespace AW.Data.Linq
   {
     static LinqMetaData()
     {
-      CommonEntityBase.Initialize();
+      try
+      {
+        CommonEntityBase.Initialize();
+      }
+      catch (TypeInitializationException)
+      {
+        CommonEntityBase.Initialize(); //Can sometimes work on the second go
+      }
     }
 
     public static void Initialize()
