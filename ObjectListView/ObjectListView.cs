@@ -2141,9 +2141,11 @@ namespace JesseJohnston
         while (eventQueue.Count > 0)
         {
           var e = eventQueue.Dequeue();
-          if (e is ListChangedEventArgs)
+          var le = e as ListChangedEventArgs;
+          if (le != null)
           {
-            var le = (ListChangedEventArgs) e;
+            //if (le.NewIndex < 0 && le.OldIndex < 0)
+            //  return;
             OnBeforeListChanged(le);
             OnListChanged(le);
             OnAfterListChanged(le);
