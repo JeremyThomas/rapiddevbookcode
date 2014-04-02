@@ -434,7 +434,7 @@ namespace JesseJohnston.Tests
     }
 
     [Test]
-    public void ParseSingleRelationInEqual()
+    public void ParseSingleRelationIn()
     {
       var node = FilterNode.Parse("name IN (value)");
       Assert.IsNotNull(node);
@@ -446,6 +446,36 @@ namespace JesseJohnston.Tests
       Assert.AreEqual(RelationalOperator.In, node.Term.Operator);
       Assert.AreEqual("name", node.Term.PropertyName);
       Assert.AreEqual("value", node.Term.Value);
+    }
+
+    [Test]
+    public void ParseSingleRelationInEmpty()
+    {
+      var node = FilterNode.Parse("name IN (' ')");
+      Assert.IsNotNull(node);
+      Assert.IsNull(node.Evaluated);
+      Assert.IsNull(node.Left);
+      Assert.IsNull(node.Right);
+      Assert.AreEqual(LogicalOperator.None, node.Operator);
+      Assert.IsNotNull(node.Term);
+      Assert.AreEqual(RelationalOperator.In, node.Term.Operator);
+      Assert.AreEqual("name", node.Term.PropertyName);
+      Assert.AreEqual(" ", node.Term.Value);
+    }
+
+    [Test]
+    public void ParseSingleRelationIs()
+    {
+      var node = FilterNode.Parse("name IS NULL");
+      Assert.IsNotNull(node);
+      Assert.IsNull(node.Evaluated);
+      Assert.IsNull(node.Left);
+      Assert.IsNull(node.Right);
+      Assert.AreEqual(LogicalOperator.None, node.Operator);
+      Assert.IsNotNull(node.Term);
+      Assert.AreEqual(RelationalOperator.Is, node.Term.Operator);
+      Assert.AreEqual("name", node.Term.PropertyName);
+      Assert.AreEqual("NULL", node.Term.Value);
     }
 
     [Test]

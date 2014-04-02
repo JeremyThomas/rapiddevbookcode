@@ -91,7 +91,7 @@ namespace JesseJohnston
       else
       {
         comparer = Comparer<T>.Default;
-        foreach (var s in value.Split(','))
+        foreach (var s in ObjectListViewHelper.SplitCSVLine(value))
         {
           if (!string.IsNullOrEmpty(s))
           {
