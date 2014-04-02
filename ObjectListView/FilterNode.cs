@@ -359,7 +359,7 @@ namespace JesseJohnston
           throw new ArgumentException("An expression must contain at least two terms and a relational operator.", "expression");
       }
 
-      private ICollection<string> ExtractTokens(string expression, IEnumerable<char> delimiters, IEnumerable<char> delimitersIncludedAsTokens, IEnumerable<char> quotes)
+      private static ICollection<string> ExtractTokens(string expression, IEnumerable<char> delimiters, IEnumerable<char> delimitersIncludedAsTokens, IEnumerable<char> quotes)
       {
         var tokens = new List<string>();
         var delims = new List<char>(delimiters); // delimiters
@@ -370,6 +370,7 @@ namespace JesseJohnston
         var tokenEnd = 0;
         var inQuote = false;
         var prevQuote = ' ';
+        var escapingQuote = false;
 
         // Remove leading and trailing whitespace.
         expression = expression.Trim();
@@ -393,14 +394,38 @@ namespace JesseJohnston
             {
               if (c == prevQuote)
               {
-                inQuote = false;
+                if (escapingQuote)
+                  escapingQuote = false;
+                else
+                {
+                  if (i < expression.Length - 1)
+                  {
+                    var nextc = expression[i + 1];
+                    if (nextc == c)
+                      escapingQuote = true;
+                    else
+                      inQuote = false;
+                  }
+                  else
+                    inQuote = false;
+                  if (!inQuote)
+                  {
+                    tokenEnd = i;
 
-                tokenEnd = i;
+                    if (tokenEnd > tokenStart) // Non-empty?{
+                    {
+                      var substring = expression.Substring(tokenStart, tokenEnd - tokenStart);
+                      foreach (var quote in quotes)
+                      {
+                        var quoteAsString = quote.ToString();
+                        substring = substring.Replace(quoteAsString + quoteAsString, quoteAsString);
+                      }
+                      tokens.Add(substring);
+                    }
 
-                if (tokenEnd > tokenStart) // Non-empty?
-                  tokens.Add(expression.Substring(tokenStart, tokenEnd - tokenStart));
-
-                tokenStart = i + 1; // Start parsing the next token
+                    tokenStart = i + 1; // Start parsing the next token
+                  }
+                }
               }
             }
             else
@@ -566,7 +591,7 @@ namespace JesseJohnston
               if (tokens[i].Type == TokenType.CloseParen)
                 break;
               numValues += 1;
-              value = value + "," + tokens[i].Term;
+              value = value + "," + ObjectListViewHelper.QuoteStringIfNeed(tokens[i].Term);
             }
 
             var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
