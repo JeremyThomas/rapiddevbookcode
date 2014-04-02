@@ -1755,8 +1755,14 @@ namespace JesseJohnston
     /// <param name="args">The <see cref="System.ComponentModel.ListChangedEventArgs"/> instance containing the event data.</param>
     protected virtual void OnListChanged(ListChangedEventArgs args)
     {
-      if (listChangedEvent != null)
+      if (listChangedEvent == null) return;
+      try
+      {
         listChangedEvent(this, args);
+      }
+      catch (ArgumentOutOfRangeException)
+      {
+      }
     }
 
     /// <summary>
