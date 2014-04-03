@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace JesseJohnston
@@ -36,20 +37,25 @@ namespace JesseJohnston
       return visualizerForm;
     }
 
+    public static string QuoteStringForCSVIfNeed(string data)
+    {
+      return QuoteStringIfNeed(data, new[] {",", Environment.NewLine});
+    }
+
     /// <summary>
     /// QuoteStringIfNeed
     /// </summary>
     /// <param name="data"></param>
-    /// <param name="stringToQuote"></param>
+    /// <param name="stringsToQuote"></param>
     /// <param name="quoteString"></param>
     /// <returns></returns>
-    public static string QuoteStringIfNeed(string data, string stringToQuote=",", string quoteString=@"""")
+    public static string QuoteStringIfNeed(string data, string[] stringsToQuote, string quoteString=@"""")
     {
       var oneQuote = String.Format("{0}", quoteString);
       var twoQuotes = String.Format("{0}{0}", quoteString);
       var quotedFormat = String.Format("{0}{{0}}{0}", quoteString);
 
-      if (data.Contains(stringToQuote))
+      if (stringsToQuote.Any(data.Contains))
         return String.Format(quotedFormat, data.Replace(oneQuote, twoQuotes));
       return data;
     }
@@ -57,7 +63,8 @@ namespace JesseJohnston
     public static string[] SplitCSVLine(string value)
     {
       var stringReader = new StringReader(value);
-      var textFieldParser = new Microsoft.VisualBasic.FileIO.TextFieldParser(stringReader) {Delimiters = new[] {","}, HasFieldsEnclosedInQuotes = true};
+      var textFieldParser = new Microsoft.VisualBasic.FileIO.TextFieldParser(stringReader) 
+      {Delimiters = new[] {","}, HasFieldsEnclosedInQuotes = true, TrimWhiteSpace = false};
       return textFieldParser.ReadFields();
     }
   }

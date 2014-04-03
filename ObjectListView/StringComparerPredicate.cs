@@ -53,6 +53,8 @@ namespace JesseJohnston
         if (compareTo == null)
           if (testValue == null)
             result = 0;
+          else if (op == RelationalOperator.Is && string.IsNullOrEmpty(testValue.Trim()))
+            result = 0;
           else
             result = -1;
         else if (testValue == null)
@@ -77,7 +79,6 @@ namespace JesseJohnston
             return result >= 0;
           case RelationalOperator.NotEqual:
             return result != 0;
-          case RelationalOperator.Equal:
           default:
             return result == 0;
         }
