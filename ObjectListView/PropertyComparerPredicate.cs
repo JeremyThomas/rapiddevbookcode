@@ -91,15 +91,21 @@ namespace JesseJohnston
       else
       {
         comparer = Comparer<T>.Default;
-        foreach (var s in ObjectListViewHelper.SplitCSVLine(value))
+        var values = ObjectListViewHelper.SplitCsvLine(value);
+        if (values == null)
         {
-          if (!string.IsNullOrEmpty(s))
-          {
-            var compareTov = (T) property.Converter.ConvertFrom(s);
-            compareTo.Add(compareTov);
-          }
+          var compareTov = (T)property.Converter.ConvertFrom(null);
+          compareTo.Add(compareTov);
         }
-
+        else
+          foreach (var s in values)
+          {
+            if (!string.IsNullOrEmpty(s))
+            {
+              var compareTov = (T) property.Converter.ConvertFrom(s);
+              compareTo.Add(compareTov);
+            }
+          }
       }
     }
 

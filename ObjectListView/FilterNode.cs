@@ -324,8 +324,15 @@ namespace JesseJohnston
             }
             else if (part == ")")
             {
-              if (prevToken == null || (prevToken.Type != TokenType.Term && prevToken.Type != TokenType.CloseParen))
-                throw new ArgumentException("A closing paren must be preceded by an expression term or a closing paren.", "expression");
+              if (prevToken == null)
+                throw new ArgumentException("A closing paren must be preceded by an expression term or a closing or opening paren.", "expression");
+              if (prevToken.Type == TokenType.OpenParen)
+              {
+                tokens.Add(new Token(string.Empty)); //for () insert string.Empty
+              }
+              else
+              if (prevToken.Type != TokenType.Term && prevToken.Type != TokenType.CloseParen)
+                throw new ArgumentException("A closing paren must be preceded by an expression term or a closing or opening paren.", "expression");
               if (parenCount == 0)
                 throw new ArgumentException("Unbalanced parentheses.", "expression");
               parenCount--;
@@ -600,7 +607,7 @@ namespace JesseJohnston
               if (tokens[i].Type == TokenType.CloseParen)
                 break;
               numValues += 1;
-              value = value + "," + ObjectListViewHelper.QuoteStringForCSVIfNeed(tokens[i].Term);
+              value = value + "," + ObjectListViewHelper.QuoteStringForCsvIfNeed(ObjectListViewHelper.UnQuoteStringFromADVGIfNeed( tokens[i].Term));
             }
 
             var expr = new RelationalExpression(tokens[index].Term,
