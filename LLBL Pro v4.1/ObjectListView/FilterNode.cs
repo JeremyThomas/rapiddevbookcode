@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 
 namespace JesseJohnston
 {
@@ -116,6 +117,7 @@ namespace JesseJohnston
       ResolvedNode
     }
 
+    [DebuggerDisplay("Term")]
     private class Token
     {
       private readonly string term;
@@ -239,7 +241,7 @@ namespace JesseJohnston
         relationalOps.Add(">", RelationalOperator.Greater);
         relationalOps.Add(">=", RelationalOperator.GreaterEqual);
         relationalOps.Add("IN", RelationalOperator.In);
-        relationalOps.Add("IS", RelationalOperator.Equal);
+        relationalOps.Add("IS", RelationalOperator.Is);
 
         foreach (var op in relationalOps.Keys)
         {
@@ -375,8 +377,8 @@ namespace JesseJohnston
         // Remove leading and trailing whitespace.
         expression = expression.Trim();
         // Remove brackets around entire expression
-        while (expression[expression.Length - 1] == ')' && expression[0] == '(')
-          expression = expression.Remove(expression.Length - 1).Remove(0, 1);
+        //while (expression[expression.Length - 1] == ')' && expression[0] == '(')
+        //  expression = expression.Remove(expression.Length - 1).Remove(0, 1);
 
         for (var i = 0; i < expression.Length; i++)
         {
@@ -387,7 +389,13 @@ namespace JesseJohnston
             if (inQuote && c == prevQuote)
               tokens.Add(expression.Substring(tokenStart, i - tokenStart));
             else if (!delims.Contains(c) || delimTokens.Contains(c))
-              tokens.Add(expression.Substring(tokenStart));
+              if (tokenStart == i || !delims.Contains(c))
+                tokens.Add(expression.Substring(tokenStart));
+              else
+              {
+                tokens.Add(expression.Substring(tokenStart, i - tokenStart));
+                tokens.Add(c.ToString());
+              }
           }
           else if (quoteChars.Contains(c)) // Quote found
             if (inQuote)
@@ -582,6 +590,7 @@ namespace JesseJohnston
         if (evaluationIndex > -1)
         {
           var relationalOperator = tokens[evaluationIndex].Relation;
+          var index = evaluationIndex - 1;
           if (relationalOperator == RelationalOperator.In)
           {
             var numValues = 0;
@@ -591,22 +600,23 @@ namespace JesseJohnston
               if (tokens[i].Type == TokenType.CloseParen)
                 break;
               numValues += 1;
-              value = value + "," + ObjectListViewHelper.QuoteStringIfNeed(tokens[i].Term);
+              value = value + "," + ObjectListViewHelper.QuoteStringForCSVIfNeed(tokens[i].Term);
             }
 
-            var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
-              value,
+            var expr = new RelationalExpression(tokens[index].Term,
+              value.Trim(','),
               relationalOperator);
-            tokens.RemoveAt(evaluationIndex - 1);
-            tokens.RemoveAt(evaluationIndex - 1);
-            tokens.RemoveAt(evaluationIndex - 1);
-            tokens.RemoveAt(evaluationIndex - 1);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
             for (var i = 0; i < numValues; i++)
             {
-              tokens.RemoveAt(evaluationIndex - 1);
+              if (index >= 0)
+                tokens.RemoveAt(index);
             }
 
-            tokens.Insert(evaluationIndex - 1, new Token(expr));
+            tokens.Insert(index, new Token(expr));
 
             // Remove parentheses surrounding a resolved expression.
             if (evaluationIndex - 2 > -1 && tokens[evaluationIndex - 2].Type == TokenType.OpenParen &&
@@ -615,19 +625,19 @@ namespace JesseJohnston
               // New resolved expression is now at evaluationIndex - 1.
               tokens.RemoveAt(evaluationIndex - 2);
               // New resolved expression is now at evaluationIndex - 2.
-              tokens.RemoveAt(evaluationIndex - 1);
+              tokens.RemoveAt(index);
             }
           }
           else
           {
-            var expr = new RelationalExpression(tokens[evaluationIndex - 1].Term,
+            var expr = new RelationalExpression(tokens[index].Term,
               tokens[evaluationIndex + 1].Term,
               relationalOperator);
-            tokens.RemoveAt(evaluationIndex - 1);
-            tokens.RemoveAt(evaluationIndex - 1);
-            tokens.RemoveAt(evaluationIndex - 1);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
+            tokens.RemoveAt(index);
 
-            tokens.Insert(evaluationIndex - 1, new Token(expr));
+            tokens.Insert(index, new Token(expr));
 
             // Remove parentheses surrounding a resolved expression.
             if (evaluationIndex - 2 > -1 && tokens[evaluationIndex - 2].Type == TokenType.OpenParen &&
@@ -636,7 +646,7 @@ namespace JesseJohnston
               // New resolved expression is now at evaluationIndex - 1.
               tokens.RemoveAt(evaluationIndex - 2);
               // New resolved expression is now at evaluationIndex - 2.
-              tokens.RemoveAt(evaluationIndex - 1);
+              tokens.RemoveAt(index);
             }
           }
         }
