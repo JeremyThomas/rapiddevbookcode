@@ -451,7 +451,7 @@ namespace JesseJohnston.Tests
     [Test]
     public void ParseSingleRelationInEmpty()
     {
-      var node = FilterNode.Parse("name IN (' ')");
+      var node = FilterNode.Parse("name IN ('')");
       Assert.IsNotNull(node);
       Assert.IsNull(node.Evaluated);
       Assert.IsNull(node.Left);
@@ -460,7 +460,7 @@ namespace JesseJohnston.Tests
       Assert.IsNotNull(node.Term);
       Assert.AreEqual(RelationalOperator.In, node.Term.Operator);
       Assert.AreEqual("name", node.Term.PropertyName);
-      Assert.AreEqual(" ", node.Term.Value);
+      Assert.AreEqual("", node.Term.Value);
     }
 
     [Test]
