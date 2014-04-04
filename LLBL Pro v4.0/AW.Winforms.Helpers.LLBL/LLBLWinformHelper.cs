@@ -217,30 +217,34 @@ namespace AW.Winforms.Helpers.LLBL
         var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);        
         var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(entity.Fields.First(), adapter);        
         var treeNodeCollectionToAddTo = schemaTreeNodeCollection;
-        if (useSchema && !string.IsNullOrWhiteSpace(fieldPersistenceInfo.SourceSchemaName))
+        if (fieldPersistenceInfo != null)
         {
-          var schema = fieldPersistenceInfo.SourceSchemaName;
-          TreeNode schemaTreeNode;
-          if (!schemas.TryGetValue(schema, out schemaTreeNode))
+          if (useSchema && !string.IsNullOrWhiteSpace(fieldPersistenceInfo.SourceSchemaName))
+          {
+            var schema = fieldPersistenceInfo.SourceSchemaName;
+            TreeNode schemaTreeNode;
+            if (!schemas.TryGetValue(schema, out schemaTreeNode))
             {
-              schemaTreeNode = new TreeNode(schema,6,4);
+              schemaTreeNode = new TreeNode(schema, 6, 4);
               schemas.Add(schema, schemaTreeNode);
             }
-          treeNodeCollectionToAddTo = schemaTreeNode.Nodes;
-        }
-        if (usePrefixes)
-        {
-          var prefix = fieldPersistenceInfo.SourceObjectName.Before(prefixDelimiter);
-          if (!string.IsNullOrWhiteSpace(prefix))
+            treeNodeCollectionToAddTo = schemaTreeNode.Nodes;
+          }
+
+          if (usePrefixes)
           {
-            TreeNode prefixTreeNode;
-            if (!prefixesToGroupBy.TryGetValue(prefix, out prefixTreeNode))
+            var prefix = fieldPersistenceInfo.SourceObjectName.Before(prefixDelimiter);
+            if (!string.IsNullOrWhiteSpace(prefix))
             {
-              prefixTreeNode = new TreeNode(prefix, 5, 4);
-              prefixesToGroupBy.Add(prefix, prefixTreeNode);
-              treeNodeCollectionToAddTo.Add(prefixTreeNode);
+              TreeNode prefixTreeNode;
+              if (!prefixesToGroupBy.TryGetValue(prefix, out prefixTreeNode))
+              {
+                prefixTreeNode = new TreeNode(prefix, 5, 4);
+                prefixesToGroupBy.Add(prefix, prefixTreeNode);
+                treeNodeCollectionToAddTo.Add(prefixTreeNode);
+              }
+              treeNodeCollectionToAddTo = prefixTreeNode.Nodes;
             }
-            treeNodeCollectionToAddTo = prefixTreeNode.Nodes;
           }
         }
 

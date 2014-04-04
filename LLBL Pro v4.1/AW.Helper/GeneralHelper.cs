@@ -286,10 +286,10 @@ namespace AW.Helper
       return JoinAsString(input, StringJoinSeperator);
     }
 
-    public static string JoinAsString<T>(this IEnumerable<T> input, string seperator)
+    public static string JoinAsString<T>(this IEnumerable<T> input, string separator)
     {
       var ar = input.Select(i => Convert.ToString(i)).ToArray();
-      return Join(seperator, ar);
+      return Join(separator, ar);
     }
 
     /// <summary>
