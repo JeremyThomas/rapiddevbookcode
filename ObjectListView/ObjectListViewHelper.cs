@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.VisualBasic.FileIO;
 
 namespace JesseJohnston
 {
@@ -40,23 +41,19 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Removed Quotes put in by ADGV.
-    /// <see cref="ADGVFilterMenu.FormatString"/>
+    ///   Removed Quotes put in by ADGV.
+    ///   <see cref="ADGVFilterMenu.FormatString" />
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns></returns>
-    public static string UnQuoteStringFromADVGIfNeed(string data)
+    public static string UnQuoteStringFromAdvgIfNeed(string data)
     {
-      String[] replace = { "%", "[", "]", "*", "\"", "`", "\\" };
-      foreach (var q in replace)
-      {
-        data = data.Replace(string.Format("[{0}]",q),q);
-      }
-      return data;
+      String[] replace = {"%", "[", "]", "*", "\"", "`", "\\"};
+      return replace.Aggregate(data, (current, q) => current.Replace(string.Format("[{0}]", q), q));
     }
 
     /// <summary>
-    /// Quotes the string for making a Comma Separated Variable if need.
+    ///   Quotes the string for making a Comma Separated Variable if need.
     /// </summary>
     /// <param name="data">The data.</param>
     /// <returns></returns>
@@ -66,25 +63,24 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Quotes a string for adding to a delimited line of fields
+    ///   Quotes a string for adding to a delimited line of fields
     /// </summary>
+    /// <see cref="http://www.blackbeltcoder.com/Articles/files/reading-and-writing-csv-files-in-c"/>
     /// <param name="data">The data.</param>
     /// <param name="stringsToQuote">The strings to quote.</param>
     /// <param name="quoteString">The quote string.</param>
     /// <returns></returns>
-    public static string QuoteStringIfNeed(string data, string[] stringsToQuote, string quoteString=@"""")
+    public static string QuoteStringIfNeed(string data, string[] stringsToQuote, string quoteString = @"""")
     {
+      if (!stringsToQuote.Any(data.Contains)) return data;
       var oneQuote = String.Format("{0}", quoteString);
       var twoQuotes = String.Format("{0}{0}", quoteString);
       var quotedFormat = String.Format("{0}{{0}}{0}", quoteString);
-
-      if (stringsToQuote.Any(data.Contains))
-        return String.Format(quotedFormat, data.Replace(oneQuote, twoQuotes));
-      return data;
+      return String.Format(quotedFormat, data.Replace(oneQuote, twoQuotes));
     }
 
     /// <summary>
-    /// Joins the values as Comma Separated Variable line.
+    ///   Joins the values as Comma Separated Variable line.
     /// </summary>
     /// <param name="values">The values.</param>
     /// <returns></returns>
@@ -94,19 +90,20 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Concatenates a specified delimiter <see cref="T:System.String"/> between each element of a specified <see cref="T:System.String"/> array, yielding a single concatenated string.
-    /// The values are quoted if they contain the delimiter or the NewLine string
+    ///   Concatenates a specified delimiter <see cref="T:System.String" /> between each element of a specified
+    ///   <see cref="T:System.String" /> array, yielding a single concatenated string.
+    ///   The values are quoted if they contain the delimiter or the NewLine string
     /// </summary>
     /// <param name="delimiter">The delimiter.</param>
     /// <param name="values">The values.</param>
     /// <returns></returns>
     public static string JoinAsDelimited(String delimiter, params String[] values)
     {
-      return String.Join(delimiter, values.Select(s => QuoteStringIfNeed(s, new[] { delimiter, Environment.NewLine })).ToArray());
+      return String.Join(delimiter, values.Select(s => QuoteStringIfNeed(s, new[] {delimiter, Environment.NewLine})).ToArray());
     }
 
     /// <summary>
-    /// Splits the Comma Separated Variable line into its fields.
+    ///   Splits the Comma Separated Variable line into its fields.
     /// </summary>
     /// <param name="csvLine">The csv line.</param>
     /// <returns>The fields</returns>
@@ -116,7 +113,7 @@ namespace JesseJohnston
     }
 
     /// <summary>
-    /// Splits the delimited line.
+    ///   Splits the delimited line.
     /// </summary>
     /// <param name="csvLine">The CSV line.</param>
     /// <param name="delimiters">The delimiters.</param>
@@ -124,8 +121,8 @@ namespace JesseJohnston
     public static string[] SplitDelimitedLine(string csvLine, params string[] delimiters)
     {
       var stringReader = new StringReader(csvLine);
-      var textFieldParser = new Microsoft.VisualBasic.FileIO.TextFieldParser(stringReader) 
-      { Delimiters = delimiters, HasFieldsEnclosedInQuotes = true, TrimWhiteSpace = false };
+      var textFieldParser = new TextFieldParser(stringReader)
+      {Delimiters = delimiters, HasFieldsEnclosedInQuotes = true, TrimWhiteSpace = false};
       return textFieldParser.ReadFields();
     }
   }
