@@ -174,7 +174,7 @@ namespace AW.Winforms.Helpers.Controls
       dataGridViewEnumerable.EndEdit();
       var numSaved = DataEditorPersister.Save(bindingSourceEnumerable.List);
       toolStripLabelSaveResult.Text = @"numSaved: " + numSaved;
-      if (_deleteItems != null && _deleteItems.Count > 0)
+      if (HasDeletes)
       {
         var numDeleted = DataEditorPersister.Delete(_deleteItems);
         toolStripLabelSaveResult.Text += @" numDeleted: " + numDeleted;
@@ -188,6 +188,11 @@ namespace AW.Winforms.Helpers.Controls
       else
         saveToolStripButton.Enabled = numSaved == 0 || !SupportsNotifyPropertyChanged;
       SetButtonsOnEditEnded();
+    }
+
+    private bool HasDeletes
+    {
+      get { return _deleteItems != null && _deleteItems.Count > 0; }
     }
 
     private void SetButtonsOnEditEnded()
@@ -259,6 +264,7 @@ namespace AW.Winforms.Helpers.Controls
       UnBindGrids();
 
       var isEnumerable = bindingSourceEnumerable.BindEnumerable(firstPageEnumerable, EnumerableShouldBeReadonly(enumerable, null), EnsureFilteringEnabled);
+      SetRemovingItem();
       IsBinding = false;
       return isEnumerable;
     }
@@ -379,8 +385,13 @@ namespace AW.Winforms.Helpers.Controls
     {
       if (SupportsNotifyPropertyChanged)
         saveToolStripButton.Enabled = false;
-      if (bindingSourceEnumerable.DataSource is ObjectListView)
+      if (DataSourceIsObjectListView)
         ((ObjectListView) bindingSourceEnumerable.DataSource).RemovingItem += GridDataEditor_RemovingItem;
+    }
+
+    private bool DataSourceIsObjectListView
+    {
+      get { return bindingSourceEnumerable.DataSource is ObjectListView; }
     }
 
     protected void GridDataEditor_RemovingItem(object sender, RemovingItemEventArgs e)
@@ -469,6 +480,11 @@ namespace AW.Winforms.Helpers.Controls
         switch (e.ListChangedType)
         {
           case ListChangedType.ItemDeleted:
+            saveToolStripButton.Enabled = _canSave && (!DataSourceIsObjectListView || HasDeletes);
+            toolStripButtonCancelEdit.Enabled = true;
+            bindingNavigatorPaging.Enabled = false;
+            break;
+    
           case ListChangedType.ItemChanged:
           case ListChangedType.ItemAdded:
             saveToolStripButton.Enabled = _canSave;

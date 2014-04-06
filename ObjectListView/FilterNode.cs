@@ -117,7 +117,7 @@ namespace JesseJohnston
       ResolvedNode
     }
 
-    [DebuggerDisplay("Term")]
+    [DebuggerDisplay("{term}")]
     private class Token
     {
       private readonly string term;
@@ -607,7 +607,7 @@ namespace JesseJohnston
               if (tokens[i].Type == TokenType.CloseParen)
                 break;
               numValues += 1;
-              value = value + "," + ObjectListViewHelper.QuoteStringForCsvIfNeed(ObjectListViewHelper.UnQuoteStringFromADVGIfNeed( tokens[i].Term));
+              value = value + "," + ObjectListViewHelper.QuoteStringForCsvIfNeed(ObjectListViewHelper.UnQuoteStringFromAdvgIfNeed( tokens[i].Term));
             }
 
             var expr = new RelationalExpression(tokens[index].Term,
