@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEntityBrowser));
       this.usrCntrlEntityBrowser1 = new AW.Winforms.Helpers.LLBL.UsrCntrlEntityBrowser();
       this.SuspendLayout();
       // 
@@ -45,8 +46,9 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(643, 579);
       this.Controls.Add(this.usrCntrlEntityBrowser1);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "FrmEntityBrowser";
-      this.Text = "Form1";
+      this.Text = "Northwind Data Browser";
       this.ResumeLayout(false);
 
     }
