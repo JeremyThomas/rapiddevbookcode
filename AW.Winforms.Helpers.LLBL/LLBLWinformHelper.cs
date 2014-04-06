@@ -22,6 +22,8 @@ namespace AW.Winforms.Helpers.LLBL
     {
       BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity), EntityHelper.CreateEntityView);
       BindingListHelper.RegisterbindingListViewCreater(typeof (IEntity2), EntityHelper.CreateEntityView2);
+      BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView), EntityHelper.GetRelatedCollection);
+      BindingListHelper.RegisterBindingListSourceProvider(typeof(IEntityView2), EntityHelper.GetRelatedCollection);
     }
 
     /// <summary>
