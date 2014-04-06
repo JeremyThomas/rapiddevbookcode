@@ -17,7 +17,7 @@ namespace AW.Winforms.Helpers.LLBL
   public partial class UsrCntrlEntityBrowser : UserControl
   {
     private readonly Type _baseType;
-    private readonly ILinqMetaData _linqMetaData;
+    private ILinqMetaData _linqMetaData;
     private bool _userHasInteracted;
 
     public UsrCntrlEntityBrowser()
@@ -33,6 +33,11 @@ namespace AW.Winforms.Helpers.LLBL
 
     public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true)
       : this()
+    {
+      Initialize(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled);
+    }
+
+    public void Initialize(ILinqMetaData linqMetaData, bool useSchema= true, string prefixDelimiter= "_", bool ensureFilteringEnabled= true)
     {
       _linqMetaData = linqMetaData;
       var entitiesTypes = GetEntitiesTypes().ToList();
@@ -51,7 +56,6 @@ namespace AW.Winforms.Helpers.LLBL
       if (treeViewEntities.Nodes.Count == 0)
         LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData.GetType());
     }
-
 
     #region Overrides of Form
 

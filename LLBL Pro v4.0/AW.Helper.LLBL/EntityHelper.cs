@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
+using Microsoft.CSharp.RuntimeBinder;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 using Expression = System.Linq.Expressions.Expression;
@@ -193,7 +194,7 @@ namespace AW.Helper.LLBL
         return entitiesTypes;
       var topLevelProps =
         from prop in linqMetaData.GetType().GetProperties()
-        where prop.PropertyType.IsAssignableTo(typeof(IDataSource)) && prop.PropertyType.IsGenericType
+        where prop.PropertyType.IsAssignableTo(typeof (IDataSource)) && prop.PropertyType.IsGenericType
         let typeArgument = prop.PropertyType.GetGenericArguments()[0]
         where typeArgument != null
         select typeArgument;
@@ -315,6 +316,20 @@ namespace AW.Helper.LLBL
       return entityCollection.DefaultView as IBindingListView;
     }
 
+    public static IEntityCollectionCore GetRelatedCollection(IBindingList entityView)
+    {
+      var view = entityView as IEntityView;
+      if (view == null)
+      {
+        var view2 = entityView as IEntityView2;
+        if (view2 != null)
+          return view2.RelatedCollection;
+      }
+      else
+        return view.RelatedCollection;
+      return null;
+    }
+
     /// <summary>
     ///   Gets the entity field from the name of the field.
     /// </summary>
@@ -386,6 +401,19 @@ namespace AW.Helper.LLBL
         entityCollection.Remove(newEntity);
     }
 
+    public static void RevertChangesToDBValue(IEntityCollectionCore entityCollection)
+    {
+      var collection = entityCollection as IEntityCollection;
+      if (collection == null)
+      {
+        var entityCollection2 = entityCollection as IEntityCollection2;
+        if (entityCollection2 != null)
+          entityCollection2.RevertChangesToDBValue();
+      }
+      else
+        collection.RevertChangesToDBValue();
+    }
+
     public static void RevertChangesToDBValue<T>(IEnumerable<T> entities) where T : class, IEntityCore
     {
       foreach (var dirtyEntity in entities.Where(e => e.IsDirty))
@@ -395,34 +423,65 @@ namespace AW.Helper.LLBL
     public static void RevertChangesToDBValue(IEnumerable modifiedEntities)
     {
       var postCollectionChangeActionNoAction = false;
+      IEntityView2 view2 = null;
       var view = modifiedEntities as IEntityView;
+      if (view == null)
+        view2 = modifiedEntities as IEntityView2;
+      if (view == null && view2 == null)
+      {
+        dynamic bindingListView = modifiedEntities as IBindingListView;
+        if (bindingListView != null)
+          try
+          {
+            modifiedEntities = bindingListView.List;
+            view = modifiedEntities as IEntityView;
+            view2 = modifiedEntities as IEntityView2;
+          }
+          catch (RuntimeBinderException)
+          {
+            //  MyProperty doesn't exist
+          }
+      }
       if (view != null)
       {
         modifiedEntities = ((IEntityView) modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
-      var view2 = modifiedEntities as IEntityView2;
       if (view2 != null)
       {
         modifiedEntities = ((IEntityView2) modifiedEntities).RelatedCollection;
         postCollectionChangeActionNoAction = view2.DataChangeAction == PostCollectionChangeAction.NoAction;
       }
-      var entities = modifiedEntities as IEntityCollection;
+      var entities = modifiedEntities as IEntityCollectionCore;
       if (entities != null)
       {
         var entityCollection = entities;
         if (entityCollection.RemovedEntitiesTracker != null)
         {
           if (postCollectionChangeActionNoAction)
-            view.DataChangeAction = PostCollectionChangeAction.ReapplyFilterAndSorter;
+          {
+            if (view != null) view.DataChangeAction = PostCollectionChangeAction.ReapplyFilterAndSorter;
+            if (view2 != null) view2.DataChangeAction = PostCollectionChangeAction.ReapplyFilterAndSorter;
+          }
           try
           {
-            entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
+            var collection = modifiedEntities as IEntityCollection;
+            if (collection == null)
+            {
+              var entityCollection2 = modifiedEntities as IEntityCollection2;
+              if (entityCollection2 != null)
+                entityCollection2.AddRange((IEntityCollection2) entityCollection.RemovedEntitiesTracker);
+            }
+            else
+              collection.AddRange((IEntityCollection) entityCollection.RemovedEntitiesTracker);
           }
           finally
           {
             if (postCollectionChangeActionNoAction)
-              view.DataChangeAction = PostCollectionChangeAction.NoAction;
+            {
+              if (view != null) view.DataChangeAction = PostCollectionChangeAction.NoAction;
+              if (view2 != null) view2.DataChangeAction = PostCollectionChangeAction.NoAction;
+            }
           }
         }
         RevertChangesToDBValue(entityCollection);
@@ -431,30 +490,7 @@ namespace AW.Helper.LLBL
       }
       else
       {
-        var collection = modifiedEntities as IEntityCollection2;
-        if (collection != null)
-        {
-          var entityCollection = collection;
-          if (entityCollection.RemovedEntitiesTracker != null)
-          {
-            if (postCollectionChangeActionNoAction)
-              view2.DataChangeAction = PostCollectionChangeAction.ReapplyFilterAndSorter;
-            try
-            {
-              entityCollection.AddRange(entityCollection.RemovedEntitiesTracker);
-            }
-            finally
-            {
-              if (postCollectionChangeActionNoAction)
-                view2.DataChangeAction = PostCollectionChangeAction.NoAction;
-            }
-          }
-          RevertChangesToDBValue(entityCollection);
-          if (entityCollection.RemovedEntitiesTracker != null)
-            entityCollection.RemovedEntitiesTracker.Clear();
-        }
-        else
-          RevertChangesToDBValue(modifiedEntities.Cast<IEntityCore>());
+        RevertChangesToDBValue(modifiedEntities.Cast<IEntityCore>());
       }
     }
 
@@ -783,7 +819,8 @@ namespace AW.Helper.LLBL
     #endregion
 
     /// <summary>
-    /// Gets the properties of type entity since sometimes these properties are not browseable so they need to be handled as a special case.
+    ///   Gets the properties of type entity since sometimes these properties are not browseable so they need to be handled as
+    ///   a special case.
     /// </summary>
     /// <param name="type">The type.</param>
     /// <param name="includeGenericParameters">if set to <c>true</c> [include generic].</param>
@@ -793,7 +830,7 @@ namespace AW.Helper.LLBL
       return MetaDataHelper.GetPropertyDescriptors(type).FilterByIsEntityCore(true, includeGenericParameters);
     }
 
-    public static IEnumerable<PropertyDescriptor> FilterByIsEntityCore(this IEnumerable<PropertyDescriptor> propertyDescriptors, bool? isEntityCore = true , bool includeGenericParameters =false)
+    public static IEnumerable<PropertyDescriptor> FilterByIsEntityCore(this IEnumerable<PropertyDescriptor> propertyDescriptors, bool? isEntityCore = true, bool includeGenericParameters = false)
     {
       return isEntityCore.HasValue ? propertyDescriptors.Where(propertyDescriptor => IsEntityCore(propertyDescriptor, includeGenericParameters) == isEntityCore.Value) : propertyDescriptors;
     }
