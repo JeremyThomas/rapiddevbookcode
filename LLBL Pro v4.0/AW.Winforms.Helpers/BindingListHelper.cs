@@ -140,9 +140,9 @@ namespace AW.Winforms.Helpers
 
     private static IBindingListView CreateBindingListView(IEnumerable enumerable, Type itemType, bool ensureFilteringEnabled = false)
     {
-      var potentialBindingListViews = from bindingListViewCreator in BindingListViewCreaters
-        where bindingListViewCreator.Key.IsAssignableFrom(itemType)
-        select bindingListViewCreator.Value(enumerable, itemType);
+      var potentialBindingListViews = BindingListViewCreaters
+        .Where(bindingListViewCreator => bindingListViewCreator.Key.IsAssignableFrom(itemType))
+        .Select(bindingListViewCreator => bindingListViewCreator.Value(enumerable, itemType)).ToList();
 
       var validBindingListViews = from bindingListViewCreator in potentialBindingListViews
         where bindingListViewCreator != null && (!ensureFilteringEnabled || bindingListViewCreator.SupportsFiltering)

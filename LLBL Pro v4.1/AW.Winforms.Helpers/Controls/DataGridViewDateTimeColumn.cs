@@ -25,11 +25,8 @@ namespace AW.Winforms.Helpers.Controls
       get { return base.CellTemplate; }
       set
       {
-        if (value != null &&
-            !value.GetType().IsAssignableFrom(typeof (DateTimeCell)))
-        {
+        if (value != null && !value.GetType().IsAssignableFrom(typeof (DateTimeCell)))
           throw new InvalidCastException("Must be a DateTimeCell");
-        }
         base.CellTemplate = value;
       }
     }
@@ -45,20 +42,27 @@ namespace AW.Winforms.Helpers.Controls
       var ctl = DataGridView.EditingControl as DateTimeEditingControl;
       if (ctl == null) return;
       if (Value == null || Value == DBNull.Value)
-      {
-        if (DefaultNewRowValue != null) ctl.Value = (DateTime) DefaultNewRowValue;
-      }
+        SetValueToDefault(ctl);
       else
       {
-        ctl.Value = (DateTime) Value;
+        var dateTimeValue = (DateTime) Value;
+        if (dateTimeValue == DateTime.MinValue)
+          SetValueToDefault(ctl);
+        else
+          ctl.Value = dateTimeValue;
       }
+    }
+
+    private void SetValueToDefault(DateTimePicker ctl)
+    {
+      if (DefaultNewRowValue != null) ctl.Value = (DateTime) DefaultNewRowValue;
     }
 
     public override Type EditType
     {
       get
       {
-        // Return the type of the editing contol that DateTimeCell uses.
+        // Return the type of the editing control that DateTimeCell uses.
         return typeof (DateTimeEditingControl);
       }
     }
@@ -121,20 +125,13 @@ namespace AW.Winforms.Helpers.Controls
       CalendarForeColor = dataGridViewCellStyle.ForeColor;
       CalendarMonthBackground = dataGridViewCellStyle.BackColor;
 
-      if (CultureInfo.CurrentCulture.TextInfo.IsRightToLeft)
-      {
-        RightToLeftLayout = true;
-      }
-      else
-      {
-        RightToLeftLayout = false;
-      }
+      RightToLeftLayout = CultureInfo.CurrentCulture.TextInfo.IsRightToLeft;
 
       SetFormatFromDateTimeFormatString(dataGridViewCellStyle.Format);
     }
 
     private void SetFormatFromDateTimeFormatString(string dateTimeFormatString)
-    {            
+    {
       if (string.IsNullOrEmpty(dateTimeFormatString))
       {
         Format = DateTimePickerFormat.Custom;

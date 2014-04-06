@@ -38,7 +38,7 @@ namespace AW.Win
     private void frmMain_Shown(object sender, EventArgs e)
     {
       if (!Settings.Default.ReopenWindows || Settings.Default.OpenWindows == null) return;
-      foreach (var runner in from string formName in Settings.Default.OpenWindows
+      foreach (var runner in from string formName in Settings.Default.OpenWindows.ToBindingListView()
         select LaunchChildForm(formName) as FrmQueryRunner)
       {
         if (runner != null)
