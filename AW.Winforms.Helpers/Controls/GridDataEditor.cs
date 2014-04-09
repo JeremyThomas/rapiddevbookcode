@@ -229,6 +229,7 @@ namespace AW.Winforms.Helpers.Controls
         bindingNavigatorPaging.Enabled = true;
       }
       toolStripLabelSaveResult.Text = "";
+      toolStripLabelDeleteCount.Text = "";
     }
 
     protected virtual bool IsObjectListView()
