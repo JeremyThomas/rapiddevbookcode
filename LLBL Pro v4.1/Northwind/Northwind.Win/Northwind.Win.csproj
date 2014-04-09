@@ -83,9 +83,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\AW.Helper\AW.Helper.csproj">
+      <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
+      <Name>AW.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\AW.Winforms.Helpers.LLBL\AW.Winforms.Helpers.LLBL.csproj">
       <Project>{a67a2102-ba0e-48b3-9ef8-831f72b47160}</Project>
       <Name>AW.Winforms.Helpers.LLBL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\AW.Winforms.Helpers\AW.Winforms.Helpers.csproj">
+      <Project>{D8041984-1823-4672-9B6E-3E99AB6A3A7A}</Project>
+      <Name>AW.Winforms.Helpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAL\Northwind.DAL.csproj">
       <Project>{24fa312c-06e0-462d-97fa-709ac20d09ef}</Project>
