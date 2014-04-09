@@ -181,7 +181,7 @@ namespace AW.Tests
 
     private static void TestPopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes)
     {
-      LLBLWinformHelper.PopulateTreeViewWithSchema(entityTreeView, entitiesTypes);
+      LLBLWinformHelper.PopulateTreeViewWithSchema(entityTreeView, entitiesTypes, false);
       Assert.AreEqual(entitiesTypes.Count(), entityTreeView.Nodes.Count, "entityTreeView.Nodes.Count");
       if (entityTreeView.Nodes.Count == EntityHelperTest.NumberOfEntities)
         Assert.AreEqual(NumSchemaObjects, entityTreeView.Nodes.Cast<TreeNode>().Descendants(tn => tn.Nodes.Cast<TreeNode>()).Count(), "NumSchemaObjects");
