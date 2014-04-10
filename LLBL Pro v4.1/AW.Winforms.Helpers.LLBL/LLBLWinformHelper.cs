@@ -199,10 +199,10 @@ namespace AW.Winforms.Helpers.LLBL
 
     #endregion
 
-    public static void PopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes)
+    public static void PopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes, bool useSchema = true)
     {
       entityTreeView.Nodes.Clear();
-      PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes);
+      PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes, useSchema);
     }
 
     public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes, bool useSchema = true, string prefixDelimiter = null, IDataAccessAdapter adapter = null)

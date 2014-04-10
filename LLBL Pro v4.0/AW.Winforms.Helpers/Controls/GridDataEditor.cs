@@ -277,23 +277,28 @@ namespace AW.Winforms.Helpers.Controls
 
     protected virtual IEnumerable<int> CreatePageDataSource(ushort pageSize, IEnumerable enumerable)
     {
+      _superSetCount = null;
       if (pageSize == 0 || enumerable == null)
+      {
+        _superset = null;
         return Enumerable.Empty<int>();
+      }
       try
       {
         if (enumerable is ArrayList || enumerable is Array || enumerable is DataView || !(IsGenericType(enumerable)))
         {
           PageSize = 0;
+          _superset = null;
           return Enumerable.Empty<int>();
         }
         _superset = enumerable.AsQueryable();
-        _superSetCount = null;
         if (ValueTypeWrapper.TypeNeedsWrappingForBinding(_superset.ElementType))
           _superset = ValueTypeWrapper.CreateWrapperForBinding(enumerable).AsQueryable();
       }
       catch (ArgumentException)
       {
         PageSize = 0;
+        _superset = null;
         return Enumerable.Empty<int>();
       }
       PageSize = pageSize;
@@ -656,18 +661,20 @@ namespace AW.Winforms.Helpers.Controls
     private void toolStripButtonUnPage_Click(object sender, EventArgs e)
     {
       ChangePageSize(0);
+
     }
 
     private void toolStripButtonSetPageSize_Click(object sender, EventArgs e)
     {
-      ChangePageSize(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text));
-    }
+      ChangePageSize(Convert.ToUInt16(toolStripTextBoxNewPageSize.Text));}
 
     private void ChangePageSize(ushort pageSize)
     {
       if (PageSize == pageSize) return;
       PageSize = pageSize;
       BindEnumerable(SourceEnumerable);
+      if (pageSize == 0)
+        toolStripLabelSuperSetCount.Text = "";
     }
 
     private void toolStripButtonEnableFilter_Click(object sender, EventArgs e)
@@ -684,7 +691,7 @@ namespace AW.Winforms.Helpers.Controls
 
     protected virtual IEnumerable SourceEnumerable
     {
-      get { return (IEnumerable) _superset ?? bindingSourceEnumerable.List; }
+      get { return _superset ?? bindingSourceEnumerable.GetDataSource(); }
     }
 
     public bool EnsureFilteringEnabled { get; set; }
