@@ -33,7 +33,13 @@ namespace AW.DebugVisualizers
       linkLabelUser.Text = VisualStudioHelper.GetVisualStudioDebuggerVisualizersUserDir(visualStudioVersion);
       linkLabelUser.Links.Add(0, linkLabelUser.Text.Length, linkLabelUser.Text);
       _destinationFileNameAll = Path.Combine(linkLabelAll.Text, SourceFileName);
-      _destinationFileNameUser = Path.Combine(linkLabelUser.Text, SourceFileName);
+      try
+      {
+        _destinationFileNameUser = Path.Combine(linkLabelUser.Text, SourceFileName);
+      }
+      catch (ArgumentException)
+      {
+      }
       GetAllStatus();
       GetUserStatus();
       var indexOfHyperLink = linkLabelWebSite.Text.IndexOf("https", StringComparison.Ordinal);
@@ -53,6 +59,8 @@ namespace AW.DebugVisualizers
 
     private static FileInfo GetStatus(string destinationFileName, Control statusLabel)
     {
+      if (destinationFileName == null)
+        return null;
       var visualizerFileInfoUser = new FileInfo(destinationFileName);
       if (visualizerFileInfoUser.Exists)
       {
