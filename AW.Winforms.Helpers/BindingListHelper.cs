@@ -379,15 +379,16 @@ namespace AW.Winforms.Helpers
       return result && !bindingList.AllowEdit;
     }
 
-    public static object GetDataSource(this BindingSource bindingSource)
+    public static IEnumerable GetDataSource(this BindingSource bindingSource)
     {
-      if (bindingSource.DataSource is BindingSource)
-        return GetDataSource((BindingSource) bindingSource.DataSource);
-      var objectListView = bindingSource.DataSource as ObjectListView;
-      return objectListView == null ? bindingSource.DataSource : GetDataSource(objectListView);
+      var dataSource = bindingSource.List as BindingSource;
+      if (dataSource != null)
+        return GetDataSource(dataSource);
+      var bindingList = bindingSource.List as IBindingList;
+      return bindingList == null ? bindingSource.List : GetDataSource(bindingList);
     }
 
-    public static object GetDataSource(this ObjectListView objectListView)
+    public static IEnumerable GetDataSource(this ObjectListView objectListView)
     {
       var bindingSource = objectListView.List as BindingSource;
       if (bindingSource != null)
@@ -396,7 +397,7 @@ namespace AW.Winforms.Helpers
       return objectListViewSource == null ? objectListView.List : GetDataSource(objectListViewSource);
     }
 
-    public static object GetDataSource(IBindingList bindingList)
+    public static IEnumerable GetDataSource(IBindingList bindingList)
     {
       if (bindingList == null)
         return null;

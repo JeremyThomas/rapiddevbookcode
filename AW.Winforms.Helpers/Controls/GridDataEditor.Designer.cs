@@ -81,13 +81,13 @@
       this.toolStripTextBoxNewPageSize = new System.Windows.Forms.ToolStripTextBox();
       this.toolStripButtonSetPageSize = new System.Windows.Forms.ToolStripButton();
       this.toolStripButtonUnPage = new System.Windows.Forms.ToolStripButton();
+      this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+      this.toolStripLabelSuperSetCount = new System.Windows.Forms.ToolStripLabel();
       this.dataGridEnumerable = new System.Windows.Forms.DataGrid();
       this.tabControlGrids = new System.Windows.Forms.TabControl();
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
       this.searchToolBar = new ACS.UserControls.SearchToolBar();
-      this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-      this.toolStripLabelSuperSetCount = new System.Windows.Forms.ToolStripLabel();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -584,6 +584,18 @@
       this.toolStripButtonUnPage.Text = "Remove Pageing";
       this.toolStripButtonUnPage.Click += new System.EventHandler(this.toolStripButtonUnPage_Click);
       // 
+      // toolStripLabel4
+      // 
+      this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+      this.toolStripLabel4.Name = "toolStripLabel4";
+      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
+      this.toolStripLabel4.Text = "Total Count";
+      // 
+      // toolStripLabelSuperSetCount
+      // 
+      this.toolStripLabelSuperSetCount.Name = "toolStripLabelSuperSetCount";
+      this.toolStripLabelSuperSetCount.Size = new System.Drawing.Size(0, 22);
+      // 
       // dataGridEnumerable
       // 
       this.dataGridEnumerable.DataMember = "";
@@ -645,18 +657,6 @@
       this.searchToolBar.Visible = false;
       this.searchToolBar.Search += new ACS.UserControls.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
-      // 
-      // toolStripLabel4
-      // 
-      this.toolStripLabel4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-      this.toolStripLabel4.Name = "toolStripLabel4";
-      this.toolStripLabel4.Size = new System.Drawing.Size(70, 22);
-      this.toolStripLabel4.Text = "Total Count";
-      // 
-      // toolStripLabelSuperSetCount
-      // 
-      this.toolStripLabelSuperSetCount.Name = "toolStripLabelSuperSetCount";
-      this.toolStripLabelSuperSetCount.Size = new System.Drawing.Size(0, 22);
       // 
       // GridDataEditor
       // 
