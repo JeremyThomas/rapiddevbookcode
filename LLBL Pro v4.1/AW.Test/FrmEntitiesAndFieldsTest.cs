@@ -83,7 +83,7 @@ namespace AW.Tests
     private void TestShowEntitiesAndFields(Type baseType, ILinqMetaData linqMetaData)
     {
       ModalFormHandler = Handler;
-      var form = baseType == null ? (linqMetaData == null ? new FrmEntitiesAndFields() : new FrmEntitiesAndFields(linqMetaData)) : new FrmEntitiesAndFields(baseType);
+      var form = baseType == null ? (linqMetaData == null ? new FrmEntitiesAndFields() : new FrmEntitiesAndFields(linqMetaData, false)) : new FrmEntitiesAndFields(baseType, false);
       AWHelper.ShowForm(form);
       Assert.AreEqual(EntityHelperTest.NumberOfEntities, _rootNodesCount, "EntityHelperTest.NumberOfEntities");
       Assert.AreEqual(LLBLWinformHelperTest.NumSchemaObjects, _nodesCount, "LLBLWinformHelperTest.NumSchemaObjects");
