@@ -7,7 +7,6 @@ using System.Linq;
 using System.Windows.Forms;
 using AW.Helper;
 using JesseJohnston;
-using Microsoft.Data.ConnectionUI;
 
 namespace AW.Winforms.Helpers
 {
@@ -59,11 +58,13 @@ namespace AW.Winforms.Helpers
       var showenEnumerable = enumerable != null && !(enumerable is string);
       if (showenEnumerable)
       {
-        if (enumerable is IBindingListView)
-          return (IBindingListView) enumerable;
-        if (enumerable is IListSource)
+        var view = enumerable as IBindingListView;
+        if (view != null)
+          return view;
+        var listSource = enumerable as IListSource;
+        if (listSource != null)
         {
-          var bindingListView = ListSourceToBindingListView((IListSource) enumerable);
+          var bindingListView = ListSourceToBindingListView(listSource);
           if (bindingListView != null)
             return bindingListView;
         }
@@ -98,8 +99,9 @@ namespace AW.Winforms.Helpers
     {
       if (collection != null)
       {
-        if (collection is IList)
-          return ToObjectListView((IList) collection);
+        var list = collection as IList;
+        if (list != null)
+          return ToObjectListView(list);
         var objectListView = CreateObjectListView(collection);
         if (objectListView.ItemType != null)
           return objectListView;
@@ -151,7 +153,7 @@ namespace AW.Winforms.Helpers
       foreach (var iBindingListView in validBindingListViews)
         return iBindingListView; //Return first
 
-      return CreateObjectListView(GetDataSource(potentialBindingListViews.FirstOrDefault()) as IEnumerable ?? enumerable, itemType);
+      return CreateObjectListView(GetDataSource(potentialBindingListViews.FirstOrDefault()) ?? enumerable, itemType);
     }
 
     private static ObjectListView CreateObjectListView(ICollection collection)
@@ -199,7 +201,7 @@ namespace AW.Winforms.Helpers
         if (dataSource == bindingList)
           objectListView = new ObjectListView(bindingList);
         else
-          return CreateObjectListViewDirect(dataSource as IEnumerable, itemType);
+          return CreateObjectListViewDirect(dataSource, itemType);
       }
       if (objectListView.ItemType == null)
         objectListView.ItemType = itemType;
@@ -410,7 +412,7 @@ namespace AW.Winforms.Helpers
         var bindingListSourceProvider = BindingListViewSources.FirstOrDefault(b => b.Key.IsInstanceOfType(bindingList)).Value;
         if (bindingListSourceProvider != null)
           return bindingListSourceProvider(bindingList);
-        return null;
+        return bindingList;
       }
       return GetDataSource(objectListViewSource);
     }
