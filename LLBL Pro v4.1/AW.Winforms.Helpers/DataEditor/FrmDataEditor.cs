@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using AW.Winforms.Helpers.Controls;
+using JesseJohnston;
 
 namespace AW.Winforms.Helpers.DataEditor
 {
@@ -16,14 +17,18 @@ namespace AW.Winforms.Helpers.DataEditor
 		public static string GetEnumerableDescription(IEnumerable enumerable)
 		{
 			string text;
-			if (enumerable is DataView)
-			{
-				var dataView = ((DataView) enumerable);
-				text = dataView.Table.TableName + " via a DataView";
-			}
-			else
-				text = enumerable.ToString();
-			return text;
+      var dataView = enumerable as DataView;
+		  if (dataView != null)
+		    text = dataView.Table.TableName + " via a DataView";
+		  else
+		  {
+        var objectListView = enumerable as ObjectListView;
+        if (objectListView != null)
+          text = objectListView.List + " via a ObjectListView";
+        else
+		      text = enumerable.ToString();
+		  }
+		  return text;
 		}
 
 		public static Form CreateDataViewForm(IEnumerable enumerable)
