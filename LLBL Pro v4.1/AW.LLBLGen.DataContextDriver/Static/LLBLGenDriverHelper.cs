@@ -243,13 +243,19 @@ namespace AW.LLBLGen.DataContextDriver.Static
           if (!string.IsNullOrWhiteSpace(table.SqlTypeDeclaration))
           {
             var schema = table.SqlTypeDeclaration;
-            if (schemas.ContainsKey(schema))
-              schemas[schema].Children.Add(table);
+            ExplorerItem value;
+            if (schemas.TryGetValue(schema, out value))
+            {
+              if (!AddWithPrefixDelimiter(prefixDelimiter, table, value))
+                value.Children.Add(table);
+            }
             else
             {
               var explorerItem = new ExplorerItem(schema, ExplorerItemKind.Schema, ExplorerIcon.Schema);
               schemas.Add(schema, explorerItem);
-              explorerItem.Children = new List<ExplorerItem> {table};
+              explorerItem.Children = new List<ExplorerItem>();
+              if (!AddWithPrefixDelimiter(prefixDelimiter, table, explorerItem))
+                explorerItem.Children.Add(table);
             }
           }
         }
@@ -276,24 +282,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           if (!prefixMatch)
             prefixesAsSchemas.Add(table.SqlName + table.Text, table);
         }
-        else if (!string.IsNullOrWhiteSpace(prefixDelimiter) && !string.IsNullOrWhiteSpace(table.SqlName))
-        {
-          var prefix = table.SqlName.Before(prefixDelimiter);
-          if (string.IsNullOrWhiteSpace(prefix))
-            prefixesAsSchemas.Add(table.SqlName + table.Text, table);
-          else
-          {
-            ExplorerItem value;
-            if (prefixesAsSchemas.TryGetValue(prefix, out value))
-              value.Children.Add(table);
-            else
-            {
-              var explorerItem = new ExplorerItem(prefix, ExplorerItemKind.Schema, ExplorerIcon.Schema);
-              prefixesAsSchemas.Add(prefix, explorerItem);
-              explorerItem.Children = new List<ExplorerItem> {table};
-            }
-          }
-        }
+        else AddWithPrefixDelimiter(prefixDelimiter, table, prefixesAsSchemas);
         table.SqlTypeDeclaration = string.Empty;
 
         if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
@@ -341,6 +330,54 @@ namespace AW.LLBLGen.DataContextDriver.Static
       if (prefixesAsSchemas.Any())
         return prefixesAsSchemas.Values.ToList();
       return topLevelProps;
+    }
+
+    private static bool AddWithPrefixDelimiter(string prefixDelimiter, ExplorerItem table, Dictionary<string, ExplorerItem> prefixesAsSchemas)
+    {
+      if (!string.IsNullOrWhiteSpace(prefixDelimiter) && !string.IsNullOrWhiteSpace(table.SqlName))
+      {
+        var prefix = table.SqlName.Before(prefixDelimiter);
+        if (string.IsNullOrWhiteSpace(prefix))
+          prefixesAsSchemas.Add(table.SqlName + table.Text, table);
+        else
+        {
+          ExplorerItem value;
+          if (prefixesAsSchemas.TryGetValue(prefix, out value))
+            value.Children.Add(table);
+          else
+          {
+            var explorerItem = new ExplorerItem(prefix, ExplorerItemKind.Schema, ExplorerIcon.Schema);
+            prefixesAsSchemas.Add(prefix, explorerItem);
+            explorerItem.Children = new List<ExplorerItem> {table};
+          }
+        }
+        return true;
+      }
+      return false;
+    }
+
+    private static bool AddWithPrefixDelimiter(string prefixDelimiter, ExplorerItem table, ExplorerItem schema)
+    {
+      if (!string.IsNullOrWhiteSpace(prefixDelimiter) && !string.IsNullOrWhiteSpace(table.SqlName))
+      {
+        var prefix = table.SqlName.Before(prefixDelimiter);
+        if (string.IsNullOrWhiteSpace(prefix))
+          schema.Children.Add(table);
+        else
+        {
+          var explorerPrefixItem = schema.Children.FirstOrDefault(p => p.Text == prefix);
+          if (explorerPrefixItem != null)
+            explorerPrefixItem.Children.Add(table);
+          else
+          {
+            var explorerItem = new ExplorerItem(prefix, ExplorerItemKind.Schema, ExplorerIcon.Schema);
+            schema.Children.Add(explorerItem);
+            explorerItem.Children = new List<ExplorerItem> { table };
+          }
+        }
+        return true;
+      }
+      return false;
     }
 
     private static DataAccessAdapterBase GetDataAccessAdapter(IConnectionInfo cxInfo, bool isAdapter)
