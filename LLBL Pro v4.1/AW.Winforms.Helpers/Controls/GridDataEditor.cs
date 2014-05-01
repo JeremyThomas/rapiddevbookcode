@@ -135,7 +135,11 @@ namespace AW.Winforms.Helpers.Controls
     /// <value>
     ///   <c>true</c> if [read-only]; otherwise, <c>false</c>.
     /// </value>
-    public bool Readonly { get; set; }
+    public bool Readonly
+    {
+      get { return dataGridViewEnumerable.ReadOnly; }
+      set { dataGridViewEnumerable.ReadOnly = value; }
+    }
 
     /// <summary>
     /// Was the last bound Enumerable not writable when grid is not read-only
