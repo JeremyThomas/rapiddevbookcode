@@ -220,10 +220,10 @@ namespace AW.Winforms.Helpers.LLBL
         var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(entity.Fields.First(), adapter);        
         var treeNodeCollectionToAddTo = schemaTreeNodeCollection;
         if (fieldPersistenceInfo != null)
-        {
-          if (useSchema && !string.IsNullOrWhiteSpace(fieldPersistenceInfo.SourceSchemaName))
+        {            
+          var schema = fieldPersistenceInfo.SourceSchemaName;
+          if (useSchema && !string.IsNullOrWhiteSpace(schema))
           {
-            var schema = fieldPersistenceInfo.SourceSchemaName;
             TreeNode schemaTreeNode;
             if (!schemas.TryGetValue(schema, out schemaTreeNode))
             {
@@ -239,10 +239,11 @@ namespace AW.Winforms.Helpers.LLBL
             if (!string.IsNullOrWhiteSpace(prefix))
             {
               TreeNode prefixTreeNode;
-              if (!prefixesToGroupBy.TryGetValue(prefix, out prefixTreeNode))
+              var prefixKey = useSchema ? schema + prefix : prefix;
+              if (!prefixesToGroupBy.TryGetValue(prefixKey, out prefixTreeNode))
               {
                 prefixTreeNode = new TreeNode(prefix, 5, 4);
-                prefixesToGroupBy.Add(prefix, prefixTreeNode);
+                prefixesToGroupBy.Add(prefixKey, prefixTreeNode);
                 treeNodeCollectionToAddTo.Add(prefixTreeNode);
               }
               treeNodeCollectionToAddTo = prefixTreeNode.Nodes;
