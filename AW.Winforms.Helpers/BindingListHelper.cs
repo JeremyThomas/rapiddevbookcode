@@ -256,10 +256,20 @@ namespace AW.Winforms.Helpers
 
     public static bool BindEnumerable(this BindingSource bindingSource, IEnumerable enumerable, bool setReadonly, bool ensureFilteringEnabled = false)
     {
+    //  var raiseListChangedEvents=bindingSource.RaiseListChangedEvents;
+      try
+      {
+  
+    //    bindingSource.RaiseListChangedEvents = false;
       var showenEnumerable = BindEnumerableInternal(bindingSource, enumerable, ensureFilteringEnabled);
       if (showenEnumerable)
-        if (setReadonly && bindingSource.AllowEdit && bindingSource.DataSource is IBindingList)
-          SetReadonly(((IBindingList) bindingSource.DataSource));
+      {
+        var list = bindingSource.DataSource as IBindingList;
+        if (setReadonly && (bindingSource.AllowEdit || bindingSource.AllowRemove) && list != null)
+        {
+          SetReadonly(list);
+          bindingSource.ResetBindings(true);
+        }
         else
           try
           {
@@ -269,8 +279,16 @@ namespace AW.Winforms.Helpers
           {
             GeneralHelper.TraceOut(e);
           }
+      }
 
       return showenEnumerable;
+      }
+      finally
+      {
+    //    bindingSource.RaiseListChangedEvents = raiseListChangedEvents;          
+  //      bindingSource.ResetBindings(true);
+      }
+
     }
 
     private static bool BindEnumerable<T>(BindingSource bindingSource, IEnumerable<T> enumerable)
@@ -325,12 +343,13 @@ namespace AW.Winforms.Helpers
 
     public static bool SetReadonly(IBindingList bindingList)
     {
-      var result = bindingList is ObjectListView;
+      var objectListView = bindingList as ObjectListView;
+      var result = objectListView != null;
       if (result)
       {
-        ((ObjectListView) bindingList).AllowEdit = false;
-        ((ObjectListView) bindingList).AllowRemove = false;
-        ((ObjectListView) bindingList).AllowNew = false;
+        objectListView.AllowEdit = false;
+        objectListView.AllowRemove = false;
+        objectListView.AllowNew = false;
       }
       else
       {

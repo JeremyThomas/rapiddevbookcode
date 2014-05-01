@@ -164,6 +164,8 @@ namespace AW.DebugVisualizers.Tests
       var northwindLinqMetaData = GetNorthwindLinqMetaData();
       var customerList = northwindLinqMetaData.Customer.ToList();
       const int expectedColumnCount = 12;
+      //Show(customerList);
+      //Show(customerList.ToEntityCollection2());
       TestShowTransported(customerList, expectedColumnCount);
       TestShowTransported(northwindLinqMetaData.Customer, expectedColumnCount);
       TestShowTransported(northwindLinqMetaData.Customer.ToEntityCollection2(), expectedColumnCount);
@@ -369,6 +371,10 @@ namespace AW.DebugVisualizers.Tests
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
+      Assert.IsTrue(dataGridView.ReadOnly);
+      Assert.IsInstanceOfType(dataGridView.DataSource, typeof (IBindingList));
+      var bindingList = (IBindingList) dataGridView.DataSource;
+      Assert.IsFalse(bindingList.AllowRemove);
       Application.DoEvents();
     }
 
