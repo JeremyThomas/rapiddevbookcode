@@ -1225,8 +1225,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       var ormProfilerPathAssemblies = new[] {ProfilerHelper.OrmProfilerAssemblyFileName, ProfilerHelper.OrmProfilerAssemblyFileName45, "SD.Tools.OrmProfiler.Shared.dll", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
       var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-      if (AddORMProfiler(additionalAssemblies, folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath15, ormProfilerPathAssemblies))
-        return;
       if (AddORMProfiler(additionalAssemblies, folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath, ormProfilerPathAssemblies))
         return;
       ValueTypeWrapper<string>.Add(additionalAssemblies, ormProfilerPathAssemblies);
