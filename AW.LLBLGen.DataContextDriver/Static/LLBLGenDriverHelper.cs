@@ -143,7 +143,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         var factoryAdapterAssembly = LoadAssembly(factoryAssemblyPath);
         if (factoryAdapterAssembly == null)
           throw new ApplicationException("Adapter assembly: " + factoryAssemblyPath + " could not be loaded!");
-        if (string.IsNullOrEmpty(factoryTypeName))
+        if (String.IsNullOrEmpty(factoryTypeName))
           throw new ApplicationException(String.Format("Adapter type was not specified!"));
         var factoryType = factoryAdapterAssembly.GetType(factoryTypeName);
         if (factoryType == null)
@@ -240,7 +240,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         var entity = (IEntityCore) table.Tag;
         if (useSchema)
         {
-          if (!string.IsNullOrWhiteSpace(table.SqlTypeDeclaration))
+          if (!String.IsNullOrWhiteSpace(table.SqlTypeDeclaration))
           {
             var schema = table.SqlTypeDeclaration;
             ExplorerItem value;
@@ -259,7 +259,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             }
           }
         }
-        else if (!tablePrefixesToGroupBy.IsNullOrEmpty() && !string.IsNullOrWhiteSpace(table.SqlName))
+        else if (!tablePrefixesToGroupBy.IsNullOrEmpty() && !String.IsNullOrWhiteSpace(table.SqlName))
         {
           var prefixMatch = false;
           foreach (var prefix in tablePrefixesToGroupBy)
@@ -283,7 +283,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             prefixesAsSchemas.Add(table.SqlName + table.Text, table);
         }
         else AddWithPrefixDelimiter(prefixDelimiter, table, prefixesAsSchemas);
-        table.SqlTypeDeclaration = string.Empty;
+        table.SqlTypeDeclaration = String.Empty;
 
         if (entity.LLBLGenProIsInHierarchyOfType != InheritanceHierarchyType.None)
         {
@@ -294,7 +294,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             var baseItem = explorerItems.SingleOrDefault();
             if (baseItem != null)
             {
-              table.Text += string.Format(" (Sub-type of '{0}')", baseItem.DragText);
+              table.Text += String.Format(" (Sub-type of '{0}')", baseItem.DragText);
               foreach (var explorerItem in baseItem.Children)
               {
                 var item = table.Children.Single(c => c.Text == explorerItem.Text);
@@ -334,10 +334,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static bool AddWithPrefixDelimiter(string prefixDelimiter, ExplorerItem table, Dictionary<string, ExplorerItem> prefixesAsSchemas)
     {
-      if (!string.IsNullOrWhiteSpace(prefixDelimiter) && !string.IsNullOrWhiteSpace(table.SqlName))
+      if (!String.IsNullOrWhiteSpace(prefixDelimiter) && !String.IsNullOrWhiteSpace(table.SqlName))
       {
         var prefix = table.SqlName.Before(prefixDelimiter);
-        if (string.IsNullOrWhiteSpace(prefix))
+        if (String.IsNullOrWhiteSpace(prefix))
           prefixesAsSchemas.Add(table.SqlName + table.Text, table);
         else
         {
@@ -358,10 +358,10 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     private static bool AddWithPrefixDelimiter(string prefixDelimiter, ExplorerItem table, ExplorerItem schema)
     {
-      if (!string.IsNullOrWhiteSpace(prefixDelimiter) && !string.IsNullOrWhiteSpace(table.SqlName))
+      if (!String.IsNullOrWhiteSpace(prefixDelimiter) && !String.IsNullOrWhiteSpace(table.SqlName))
       {
         var prefix = table.SqlName.Before(prefixDelimiter);
-        if (string.IsNullOrWhiteSpace(prefix))
+        if (String.IsNullOrWhiteSpace(prefix))
           schema.Children.Add(table);
         else
         {
@@ -633,6 +633,26 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     #endregion
 
+    public static IEnumerable<string> GetEntityBaseProperties(Type elementType)
+    {
+      if (typeof(IEntityCore).IsAssignableFrom(elementType))
+      {
+        var membersToExclude = typeof(EntityBase).GetProperties().Select(p => p.Name)
+          .Union(typeof(EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
+        if (typeof(IEntity).IsAssignableFrom(elementType))
+        {
+          // remove alwaysFetch/AlreadyFetched flag properties
+          membersToExclude = membersToExclude
+            .Union(elementType.GetProperties()
+              .Where(p => p.PropertyType == typeof(bool) &&
+                          (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch") || p.Name.EndsWith("NewIfNotFound")))
+              .Select(p => p.Name));
+        }
+        return membersToExclude.Distinct();
+      }
+      return Enumerable.Empty<string>();
+    }
+
     /// <summary>
     /// Browses the data as LLBL Entities from a LINQPad like Treeview.
     /// </summary>
@@ -646,7 +666,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     {
       if (linqMetaData == null)
         return false;
-      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled));
+      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, GetEntityBaseProperties(typeof(EntityBase)).ToArray()), "Data Browser");
       return true;
     }
   }

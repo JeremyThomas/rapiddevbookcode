@@ -24,6 +24,7 @@ namespace AW.Winforms.Helpers
 
     private static readonly Dictionary<Type, Func<IBindingList, IEnumerable>> BindingListViewSources
       = new Dictionary<Type, Func<IBindingList, IEnumerable>>();
+
     public static void RegisterBindingListSourceProvider(Type itemType, Func<IBindingList, IEnumerable> bindingListViewCreater)
     {
       if (BindingListViewCreaters.ContainsKey(itemType))
@@ -256,39 +257,36 @@ namespace AW.Winforms.Helpers
 
     public static bool BindEnumerable(this BindingSource bindingSource, IEnumerable enumerable, bool setReadonly, bool ensureFilteringEnabled = false)
     {
-    //  var raiseListChangedEvents=bindingSource.RaiseListChangedEvents;
+      //  var raiseListChangedEvents=bindingSource.RaiseListChangedEvents;
       try
       {
-  
-    //    bindingSource.RaiseListChangedEvents = false;
-      var showenEnumerable = BindEnumerableInternal(bindingSource, enumerable, ensureFilteringEnabled);
-      if (showenEnumerable)
-      {
-        var list = bindingSource.DataSource as IBindingList;
-        if (setReadonly && (bindingSource.AllowEdit || bindingSource.AllowRemove) && list != null)
+        //    bindingSource.RaiseListChangedEvents = false;
+        var showenEnumerable = BindEnumerableInternal(bindingSource, enumerable, ensureFilteringEnabled);
+        if (showenEnumerable)
         {
-          SetReadonly(list);
-          bindingSource.ResetBindings(true);
+          var list = bindingSource.DataSource as IBindingList;
+          if (setReadonly && (bindingSource.AllowEdit || bindingSource.AllowRemove) && list != null && SetReadonly(list))
+          {
+            bindingSource.ResetBindings(true); //To update UI for bindingSource.AllowRemove
+          }
+          else
+            try
+            {
+              bindingSource.AllowNew = !setReadonly;
+            }
+            catch (InvalidOperationException e)
+            {
+              GeneralHelper.TraceOut(e);
+            }
         }
-        else
-          try
-          {
-            bindingSource.AllowNew = !setReadonly;
-          }
-          catch (InvalidOperationException e)
-          {
-            GeneralHelper.TraceOut(e);
-          }
-      }
 
-      return showenEnumerable;
+        return showenEnumerable;
       }
       finally
       {
-    //    bindingSource.RaiseListChangedEvents = raiseListChangedEvents;          
-  //      bindingSource.ResetBindings(true);
+        //    bindingSource.RaiseListChangedEvents = raiseListChangedEvents;          
+        //      bindingSource.ResetBindings(true);
       }
-
     }
 
     private static bool BindEnumerable<T>(BindingSource bindingSource, IEnumerable<T> enumerable)
@@ -316,28 +314,29 @@ namespace AW.Winforms.Helpers
 
     private static bool BindEnumerableInternal(BindingSource bindingSource, IEnumerable enumerable, bool ensureFilteringEnabled = false)
     {
-      bool shownEnumerable;
       try
       {
         if (bindingSource.SupportsSorting)
           bindingSource.RemoveSort();
         if (bindingSource.SupportsFiltering)
           bindingSource.RemoveFilter();
+      }
+      catch (Exception e)
+      {
+        GeneralHelper.TraceOut(e);
+      }
+      bool shownEnumerable;
+      try
+      {
         bindingSource.DataSource = enumerable.ToBindingListView(ensureFilteringEnabled);
         shownEnumerable = bindingSource.DataSource != null;
       }
-      catch (Exception)
+      catch (ArgumentException) //From ObjectListView constructor
       {
-        try
-        {
-          bindingSource.DataSource = enumerable;
-        }
-        catch (Exception)
-        {
-          bindingSource.DataSource = null;
-        }
+        bindingSource.DataSource = enumerable; //To use default
         shownEnumerable = bindingSource.DataSource != null;
       }
+
       return shownEnumerable;
     }
 
@@ -353,11 +352,13 @@ namespace AW.Winforms.Helpers
       }
       else
       {
-        result = bindingList is DataView;
+        var dataView = bindingList as DataView;
+        result = dataView != null;
         if (result)
         {
-          ((DataView) bindingList).AllowEdit = false;
-          ((DataView) bindingList).AllowNew = false;
+          dataView.AllowEdit = false;
+          dataView.AllowNew = false;
+          dataView.AllowDelete = false;
         }
         else
         {
@@ -372,7 +373,7 @@ namespace AW.Winforms.Helpers
     private static void SetPropertyFalse(IEnumerable bindingList, string name)
     {
       var propertyInfo = bindingList.GetType().GetProperty(name);
-      if (propertyInfo.CanWrite)
+      if (propertyInfo != null && propertyInfo.CanWrite)
         propertyInfo.SetValue(bindingList, false, null);
     }
 

@@ -371,10 +371,15 @@ namespace AW.DebugVisualizers.Tests
       EnumerableVisualizer.Show(DialogVisualizerServiceFake, visualizerObjectProviderFake);
       var dataGridView = GridDataEditorTestBase.GetDataGridViewFromGridDataEditor(_dialogVisualizerServiceFake.VisualizerForm);
       Assert.AreEqual(expectedColumnCount, dataGridView.ColumnCount, enumerableOrDataTableToVisualize.ToString());
-      Assert.IsTrue(dataGridView.ReadOnly);
-      Assert.IsInstanceOfType(dataGridView.DataSource, typeof (IBindingList));
-      var bindingList = (IBindingList) dataGridView.DataSource;
-      Assert.IsFalse(bindingList.AllowRemove);
+      Assert.IsTrue(dataGridView.ReadOnly, "dataGridView.ReadOnly");
+      Assert.IsInstanceOfType(dataGridView.DataSource, typeof(BindingSource)); //make it BindingSource
+      var bindingSource = (BindingSource)(dataGridView.DataSource);
+      if (bindingSource.DataSource is IBindingList)
+      {
+        Assert.IsFalse(bindingSource.AllowRemove, "bindingSource.AllowRemove");
+        Assert.IsFalse(bindingSource.AllowEdit, "bindingSource.AllowEdit");
+        Assert.IsFalse(bindingSource.AllowNew, "bindingSource.AllowNew");
+      }
       Application.DoEvents();
     }
 
