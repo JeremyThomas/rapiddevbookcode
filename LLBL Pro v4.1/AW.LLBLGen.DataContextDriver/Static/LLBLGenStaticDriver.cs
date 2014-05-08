@@ -172,6 +172,15 @@ namespace AW.LLBLGen.DataContextDriver.Static
         if (baseType != null)
         {
           var assembly = baseType.Assembly;
+          try
+          {
+            ProfilerHelper.InitializeOrmProfiler();
+          }
+          catch (Exception e)
+          {
+            GeneralHelper.TraceOut(e);
+          }
+          
           //baseType.GetProperty("AdapterToUse")
           var type = assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
           if (type == null)

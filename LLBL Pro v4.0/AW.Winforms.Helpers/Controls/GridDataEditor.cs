@@ -22,7 +22,7 @@ namespace AW.Winforms.Helpers.Controls
 {
   public partial class GridDataEditor : UserControl
   {
-    private readonly string[] _membersToExclude;
+    public string[] MembersToExclude { get; set; }
 
     /// <summary>
     /// The maximum automatic generate column width - 300
@@ -50,7 +50,7 @@ namespace AW.Winforms.Helpers.Controls
     public GridDataEditor(IEnumerable enumerable, IDataEditorPersister dataEditorPersister, ushort pageSize, bool readOnly, params string[] membersToExclude)
       : this()
     {
-      _membersToExclude = membersToExclude;
+      MembersToExclude = membersToExclude;
       if (ValueTypeWrapper.TypeNeedsWrappingForBinding(MetaDataHelper.GetEnumerableItemType(enumerable)))
       {
         enumerable = ValueTypeWrapper.CreateWrapperForBinding(enumerable);
@@ -207,7 +207,7 @@ namespace AW.Winforms.Helpers.Controls
 
     private void dataGridViewEnumerable_DataError(object sender, DataGridViewDataErrorEventArgs e)
     {
-      GeneralHelper.TraceOut(e.Exception.ToString());
+      GeneralHelper.TraceOut(e.Exception);
     }
 
     private void bindingSourceEnumerable_DataSourceChanged(object sender, EventArgs e)
@@ -555,7 +555,7 @@ namespace AW.Winforms.Helpers.Controls
     private void dataGridViewEnumerable_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
     {
       var dataGridView = e.Column.DataGridView;
-      if (_membersToExclude != null && _membersToExclude.Contains(e.Column.DataPropertyName))
+      if (MembersToExclude != null && MembersToExclude.Contains(e.Column.DataPropertyName))
         dataGridView.Columns.Remove(e.Column);
 
       dataGridViewEnumerable.AutoGenerateContextFilters = bindingSourceEnumerable.SupportsFiltering;

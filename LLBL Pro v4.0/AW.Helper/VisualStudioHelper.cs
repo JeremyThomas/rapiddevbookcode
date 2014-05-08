@@ -90,8 +90,8 @@ namespace AW.Helper
       if (string.IsNullOrWhiteSpace(visualStudioUserDir))
         return "Visualizers Dir not found";
       var visualStudioDebuggerVisualizersUserDir = visualStudioUserDir + @"\Visualizers";
-      if (string.IsNullOrWhiteSpace(visualStudioDebuggerVisualizersUserDir))
-        return "Visualizers Dir not found";
+      if (!Directory.Exists(visualStudioDebuggerVisualizersUserDir))
+        return string.Format("Visualizers Dir, <{0}>, not found", visualStudioDebuggerVisualizersUserDir);
       return visualStudioDebuggerVisualizersUserDir;
     }
 
