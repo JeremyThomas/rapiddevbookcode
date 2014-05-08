@@ -31,18 +31,19 @@ namespace AW.Winforms.Helpers.LLBL
       LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
     }
 
-    public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true)
+    public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
       : this()
     {
-      Initialize(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled);
+      Initialize(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude);
     }
 
-    public void Initialize(ILinqMetaData linqMetaData, bool useSchema= true, string prefixDelimiter= "_", bool ensureFilteringEnabled= true)
+    public void Initialize(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
     {
       _linqMetaData = linqMetaData;
       var entitiesTypes = GetEntitiesTypes().ToList();
       var firstEntityType = entitiesTypes.FirstOrDefault();
       gridDataEditor.EnsureFilteringEnabled = ensureFilteringEnabled;
+      gridDataEditor.MembersToExclude = membersToExclude;
       if (firstEntityType != null)
       {
         IDataAccessAdapter adapter = null;

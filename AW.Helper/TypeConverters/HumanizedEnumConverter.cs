@@ -58,7 +58,7 @@ namespace AW.Helper.TypeConverters
     public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
     {
       if (destinationType == typeof (string) && value != null)
-        return Enum.IsDefined(_coreEnumType, value) ? ((Enum) value).EnumToString() : string.Empty;
+        return Enum.IsDefined(_coreEnumType, value) ? ((Enum)Enum.ToObject(_coreEnumType, value)).EnumToString() : string.Empty;
       return base.ConvertTo(context, culture, value, destinationType);
     }
 

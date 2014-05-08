@@ -49,14 +49,9 @@ namespace AW.Helper
     public const string OrmProfilerAppSettingsName = "ORMProfilerEnabled";
 
     /// <summary>
-    ///   Solutions Design\ORM Profiler v1.1
-    /// </summary>
-    public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.1";
-
-    /// <summary>
     ///   Solutions Design\ORM Profiler v1.5
     /// </summary>
-    public const string SolutionsDesignOrmProfilerPath15 = @"Solutions Design\ORM Profiler v1.5";
+    public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.5";
 
     /// <summary>
     ///   Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
