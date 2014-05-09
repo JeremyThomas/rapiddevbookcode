@@ -109,6 +109,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private static readonly Type IdataAccessAdapterType = typeof (IDataAccessAdapter);
     private static readonly Type IlinqMetaDataType = typeof (ILinqMetaData);
     private static readonly Type IelementCreatorCoreType = typeof (IElementCreatorCore);
+    private static readonly string ORMProfilerPath;
 
     #endregion
 
@@ -203,6 +204,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     static ConnectionDialog()
     {
       CommandManager.RegisterClassCommandBinding(typeof (DataGrid), new CommandBinding(ApplicationCommands.Paste, OnExecutedPaste));
+      ORMProfilerPath = ProfilerHelper.GetOrmProfilerPath();
     }
 
     public ConnectionDialog()
@@ -237,7 +239,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           if (HowToDisplayInGrid == null)
             HowToDisplayInGrid = DisplayInGrid.UseEditableGrid;
         }
-        SetAdditionalAssemblieAndNamespaces(cxInfo);
+        SetAdditionalAssembliesAndNamespaces(cxInfo);
       }
       catch (Exception e)
       {
@@ -248,7 +250,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       InitializeComponent();
     }
 
-    private void SetAdditionalAssemblieAndNamespaces(IConnectionInfo cxInfo)
+    private void SetAdditionalAssembliesAndNamespaces(IConnectionInfo cxInfo)
     {
       AdditionalNamespacesCnxt = new ObservableCollection<ValueTypeWrapper<string>>(GetDriverDataStringValues(cxInfo, ElementNameAdditionalNamespaces).CreateStringWrapperForBinding());
       AdditionalAssembliesCnxt = new ObservableCollection<ValueTypeWrapper<string>>(GetDriverDataStringValues(cxInfo, ElementNameAdditionalAssemblies).CreateStringWrapperForBinding());
@@ -409,6 +411,9 @@ namespace AW.LLBLGen.DataContextDriver.Static
         SetUriToPath(DriverDirectory, Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
         SetUriToPath(LINQPadErrorLog, Environment.ExpandEnvironmentVariables(@"%localappdata%\linqpad\logs"));
         SetUriToPath(LINQPadConnections, Environment.ExpandEnvironmentVariables(@"%appdata%\linqpad\ConnectionsV2.xml"));
+
+        AddORMProfilerCnxtButton.IsEnabled = !string.IsNullOrWhiteSpace(ORMProfilerPath);
+        AddORMProfilerButton.IsEnabled = AddORMProfilerCnxtButton.IsEnabled;
       }
       catch (Exception ex)
       {
@@ -1224,27 +1229,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
     private static void AddORMProfiler(ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies)
     {
       var ormProfilerPathAssemblies = new[] {ProfilerHelper.OrmProfilerAssemblyFileName, ProfilerHelper.OrmProfilerAssemblyFileName45, "SD.Tools.OrmProfiler.Shared.dll", "SD.Tools.BCLExtensions.dll ", "SD.Tools.Algorithmia.dll"};
-      var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-      if (AddORMProfiler(additionalAssemblies, folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath15, ormProfilerPathAssemblies))
-        return;
-      if (AddORMProfiler(additionalAssemblies, folderPath, ProfilerHelper.SolutionsDesignOrmProfilerPath, ormProfilerPathAssemblies))
+   if (AddORMProfiler(additionalAssemblies, ormProfilerPathAssemblies))
         return;
       ValueTypeWrapper<string>.Add(additionalAssemblies, ormProfilerPathAssemblies);
     }
 
-    private static bool AddORMProfiler(ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies, string folderPath, string solutionsDesignOrmProfilerPath, string[] ormProfilerPathAssemblies)
+    private static bool AddORMProfiler(ObservableCollection<ValueTypeWrapper<string>> additionalAssemblies, string[] ormProfilerPathAssemblies)
     {
-      var ormProfilerPath = Path.Combine(folderPath, solutionsDesignOrmProfilerPath);
-      if (Directory.Exists(ormProfilerPath))
+      if (!string.IsNullOrWhiteSpace(ORMProfilerPath))
       {
-        if (AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies, additionalAssemblies))
-          return true;
-      }
-      var programFilesPathx86 = Environment.GetEnvironmentVariable("ProgramFiles(x86)");
-      if (programFilesPathx86 != null && !programFilesPathx86.Equals(folderPath))
-      {
-        ormProfilerPath = Path.Combine(programFilesPathx86, solutionsDesignOrmProfilerPath);
-        if (Directory.Exists(ormProfilerPath) && AddormProfilerPathAssemblies(ormProfilerPath, ormProfilerPathAssemblies, additionalAssemblies))
+        if (AddormProfilerPathAssemblies(ORMProfilerPath, ormProfilerPathAssemblies, additionalAssemblies))
           return true;
       }
       return false;
@@ -1404,7 +1398,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           CxInfo.DatabaseInfo.Database = result.DatabaseInfo.Database;
           OnPropertyChanged("LLBLConnectionType");
           OnPropertyChanged("ConnectionTypeVisibility");
-         // SetAdditionalAssemblieAndNamespaces(CxInfo);
+         // SetAdditionalAssembliesAndNamespaces(CxInfo);
           ValueTypeWrapper<string>.AddRange(AdditionalNamespacesCnxt, GetDriverDataStringValues(result, ElementNameAdditionalNamespaces));
           ValueTypeWrapper<string>.AddRange(AdditionalAssembliesCnxt, GetDriverDataStringValues(result, ElementNameAdditionalAssemblies));
 

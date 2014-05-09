@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Data;
 using System.Data.Common;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Reflection;
+using Microsoft.Win32;
 
 namespace AW.Helper
 {
@@ -53,6 +57,11 @@ namespace AW.Helper
     /// </summary>
     public const string SolutionsDesignOrmProfilerPath = @"Solutions Design\ORM Profiler v1.5";
 
+    static ProfilerHelper()
+    {
+      OrmProfilerStatus = "ORMProfiler has not been Initialized";
+    }
+
     /// <summary>
     ///   Initializes the ORM Profiler. Reflected version of InterceptorCore.Initialize(ApplicationName);
     /// </summary>
@@ -66,11 +75,12 @@ namespace AW.Helper
       try
       {
         var interceptorType = GetInterceptorType();
+        OrmProfilerStatus = null;
         var interceptorCoreInitialize = InterceptorCoreInitialize(interceptorType);
-        if (!string.IsNullOrWhiteSpace(OrmProfilerStatus)) 
+        if (!string.IsNullOrWhiteSpace(OrmProfilerStatus))
           return interceptorCoreInitialize;
         string interceptorTypeName = null;
-        if (interceptorType != null) 
+        if (interceptorType != null)
           interceptorTypeName = interceptorType.Assembly.FullName.Substring(0, interceptorType.Assembly.FullName.LastIndexOf(','));
         OrmProfilerStatus = string.Format("OrmProfiler {0}, {1}", interceptorCoreInitialize ? "enabled" : "disabled", interceptorTypeName);
         return interceptorCoreInitialize;
@@ -78,17 +88,51 @@ namespace AW.Helper
       catch (Exception e)
       {
         OrmProfilerStatus = "Error Initializing OrmProfiler " + e.Message;
-        GeneralHelper.TraceOut(e.Message);
+        GeneralHelper.TraceOut(e);
         return false;
       }
+    }
+
+    public static bool DbProviderFactoryIsWrappedByOrmProfiler(DataRow providerRow)
+    {
+      return providerRow != null && providerRow[3].ToString().Contains(OrmProfilerAssemblyString);
+    }
+
+    public static bool DbProviderFactoryIsWrappedByOrmProfiler(string providerInvariantName)
+    {
+      var dbProviderFactoryIsWrappedByOrmProfiler = DbProviderFactories.GetFactoryClasses()
+        .Rows.OfType<DataRow>().FirstOrDefault(f => f.ItemArray[0].Equals(providerInvariantName));
+      return DbProviderFactoryIsWrappedByOrmProfiler(dbProviderFactoryIsWrappedByOrmProfiler);
+    }
+
+    /// <summary>
+    ///   Tests wether the databases provider factory is wrapped by orm profiler.
+    /// </summary>
+    /// <param name="systemDataType">Type in the System.Data namespace associated with DbProviderFactory.</param>
+    /// <returns></returns>
+    public static bool DbProviderFactoryIsWrappedByOrmProfiler(Type systemDataType)
+    {
+      return systemDataType.Namespace.Equals(OrmProfilerAssemblyString);
     }
 
     private static Type GetInterceptorType()
     {
       Type interceptorType = null;
-      if (Environment.Version.Major == 4 && Environment.Version.Revision >= 18051) //.NET45 installed
+      var dotNet45Installed = Environment.Version.Major == 4 && Environment.Version.Revision >= 18051;
+      if (dotNet45Installed) //.NET45 installed
         interceptorType = Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName45);
-      return interceptorType ?? (Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName));
+      interceptorType = interceptorType ?? (Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName));
+      if (interceptorType == null)
+      {
+        var ormProfilerPath = GetOrmProfilerPath();
+        if (ormProfilerPath != null)
+        {
+          var interceptorLocation = Path.Combine(ormProfilerPath, dotNet45Installed ? OrmProfilerAssemblyFileName45 : OrmProfilerAssemblyFileName);
+          var interceptorAssembly = Assembly.LoadFrom(interceptorLocation);
+          interceptorType = interceptorAssembly.GetType(OrmProfilerInterceptorTypeName);
+        }
+      }
+      return interceptorType;
     }
 
     /// <summary>
@@ -130,6 +174,27 @@ namespace AW.Helper
       var fieldInfo = dbCommand.GetType().GetField("_wrappedCommand", BindingFlags.NonPublic | BindingFlags.Instance);
       if (fieldInfo != null) return fieldInfo.GetValue(dbCommand) as DbCommand;
       return dbCommand;
+    }
+
+    /// <summary>
+    /// Gets the orm profiler path.
+    /// </summary>
+    /// <remarks>From https://llblgenlinqpad.codeplex.com</remarks>
+    /// <returns></returns>
+    public static string GetOrmProfilerPath()
+    {
+      var opsnapshotRegistration = Registry.GetValue("HKEY_CLASSES_ROOT\\.opsnapshot", string.Empty, null);
+      if (opsnapshotRegistration == null)
+        return null;
+      var realRegistryKey = opsnapshotRegistration as string;
+      if (realRegistryKey == null)
+        return null;
+      var iconPath = Registry.GetValue(string.Format("HKEY_CLASSES_ROOT\\{0}\\DefaultIcon", realRegistryKey), string.Empty, null) as string;
+      if (iconPath == null)
+        return null;
+      iconPath = iconPath.Substring(0, iconPath.Length - 2);
+      var ormProfilerPath = Path.GetDirectoryName(iconPath);
+      return Directory.Exists(ormProfilerPath) ? ormProfilerPath : null;
     }
   }
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
+using AW.Data.DaoClasses;
 using AW.Data.EntityClasses;
 using AW.Helper;
 using AW.Helper.LLBL;
@@ -286,7 +287,11 @@ namespace AW.Win
       var moreInfo= Environment.NewLine + Environment.NewLine;
       moreInfo += "https://rapiddevbookcode.codeplex.com/documentation" + Environment.NewLine;
       moreInfo += Environment.NewLine + Environment.NewLine + ProfilerHelper.OrmProfilerStatus;
-      var ab = new AboutBox(moreInfo);
+      var commonDaoBase = new CommonDaoBase();
+      var dbConnection = commonDaoBase.CreateConnection();
+      moreInfo += string.Format("{0}OrmProfiler has {1}wrapped the DbProviderFactory", Environment.NewLine, (ProfilerHelper.DbProviderFactoryIsWrappedByOrmProfiler(dbConnection.GetType()) 
+          ? "" : "NOT "));
+      var ab = new AboutBox(moreInfo);;
       ab.ShowDialog(this);
     }
 
