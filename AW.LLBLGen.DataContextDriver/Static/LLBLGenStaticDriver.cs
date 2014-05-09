@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -139,7 +138,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         {
           case DisplayInGrid.ExcludeEntityBaseProperties:
             var elementType = LinqUtils.DetermineSetElementType(objectToDisplay.GetType());
-            options.MembersToExclude = GetEntityBaseProperties(elementType).Union(_membersToExclude).ToArray();
+            options.MembersToExclude = LLBLGenDriverHelper.GetEntityBaseProperties(elementType).Union(_membersToExclude).ToArray();
             break;
           case DisplayInGrid.UseEditableGrid:
           case DisplayInGrid.UseEditableGridPaged:
@@ -151,33 +150,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
             }
             if (toDisplay != null)
             {
-              options.MembersToExclude = GetEntityBaseProperties(MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToDisplay)).Union(_membersToExclude).ToArray();
-              CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort)0 : LinqPadExtensions.CustomVisualizers.DefaultPageSize, options.MembersToExclude);
+              options.MembersToExclude = LLBLGenDriverHelper.GetEntityBaseProperties(MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToDisplay)).Union(_membersToExclude).ToArray();
+              CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LinqPadExtensions.CustomVisualizers.DefaultPageSize, options);
               return;
             }
             break;
         }
       base.DisplayObjectInGrid(objectToDisplay, options);
-    }
-
-    private static IEnumerable<string> GetEntityBaseProperties(Type elementType)
-    {
-      if (typeof (IEntityCore).IsAssignableFrom(elementType))
-      {
-        var membersToExclude = typeof (EntityBase).GetProperties().Select(p => p.Name)
-          .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
-        if (typeof (IEntity).IsAssignableFrom(elementType))
-        {
-          // remove alwaysFetch/AlreadyFetched flag properties
-          membersToExclude = membersToExclude
-            .Union(elementType.GetProperties()
-              .Where(p => p.PropertyType == typeof (bool) &&
-                          (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch") || p.Name.EndsWith("NewIfNotFound")))
-              .Select(p => p.Name));
-        }
-        return membersToExclude.Distinct();
-      }
-      return Enumerable.Empty<string>();
     }
 
     private DisplayInGrid _howToDisplayInGrid;
@@ -188,11 +167,20 @@ namespace AW.LLBLGen.DataContextDriver.Static
       {
         LLBLWinformHelper.ForceInitialization();
         _howToDisplayInGrid = ConnectionDialog.GetHowToDisplayInGrid(cxInfo).GetValueOrDefault(_howToDisplayInGrid);
-       _membersToExclude = ConnectionDialog.GetMembersToExclude(cxInfo);
+        _membersToExclude = ConnectionDialog.GetMembersToExclude(cxInfo);
         var baseType = context.GetType().BaseType;
         if (baseType != null)
         {
           var assembly = baseType.Assembly;
+          try
+          {
+            ProfilerHelper.InitializeOrmProfiler();
+          }
+          catch (Exception e)
+          {
+            GeneralHelper.TraceOut(e);
+          }
+          
           //baseType.GetProperty("AdapterToUse")
           var type = assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
           if (type == null)
@@ -216,7 +204,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       base.TearDownContext(cxInfo, context, executionManager, constructorArguments);
       DisposeAdapter(context);
     }
-    
+
     private static void DisposeAdapter(object context)
     {
       var dataAccessAdapterBase = LLBLGenDriverHelper.GetAdapter(context);
@@ -253,10 +241,12 @@ namespace AW.LLBLGen.DataContextDriver.Static
           throw new ArgumentNullException("customType");
         MetaDataHelper.AddDirectoryAssemblyResolverIfNeeded(customType.Assembly);
         var usefieldsElement = ConnectionDialog.GetDriverDataBooleanValue(cxInfo, ConnectionDialog.ElementNameUseFields);
-        return usefieldsElement ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType,
-          ConnectionDialog.GetDriverDataBooleanValue(cxInfo, ConnectionDialog.ElementNameMembersUseSchema),
-          ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixesToGroupBy),
-          ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixDelimiterToGroupBy)) : LLBLGenDriverHelper.GetSchemaByReflection(customType);
+        return usefieldsElement
+          ? LLBLGenDriverHelper.GetSchemaFromEntities(cxInfo, customType,
+            ConnectionDialog.GetDriverDataBooleanValue(cxInfo, ConnectionDialog.ElementNameMembersUseSchema),
+            ConnectionDialog.GetDriverDataStringValues(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixesToGroupBy),
+            ConnectionDialog.GetDriverDataValue(cxInfo, ConnectionDialog.ElementNameMembersTablePrefixDelimiterToGroupBy))
+          : LLBLGenDriverHelper.GetSchemaByReflection(customType);
       }
       catch (Exception e)
       {
@@ -334,6 +324,13 @@ namespace AW.LLBLGen.DataContextDriver.Static
       SetSQLTranslationWriter(commonDaoBaseType, executionManager);
     }
 
+    /// <summary>
+    ///   Initializes the adapter.
+    /// </summary>
+    /// <remarks></remarks>
+    /// <param name="cxInfo">The cx information.</param>
+    /// <param name="context">The context.</param>
+    /// <param name="executionManager">The execution manager.</param>
     private void InitializeAdapter(IConnectionInfo cxInfo, object context, QueryExecutionManager executionManager)
     {
       var linqMetaData = context as ILinqMetaData;
@@ -359,14 +356,17 @@ namespace AW.LLBLGen.DataContextDriver.Static
             {
               var adapterType = adapter.GetType();
               var propinfo = adapterType.GetProperty(functionMappingStoreMember, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+              // Leave (FunctionMappingStore) cast in place, despite what resharper suggests
+              // ReSharper disable RedundantCast
               if (propinfo != null)
-                linqMetaDataDynamic.CustomFunctionMappings = (FunctionMappingStore)propinfo.GetValue(adapter, null);
+                linqMetaDataDynamic.CustomFunctionMappings = (FunctionMappingStore) propinfo.GetValue(adapter, null);
               var methodInfo = adapterType.GetMethod(functionMappingStoreMember);
               if (methodInfo != null)
-                linqMetaDataDynamic.CustomFunctionMappings = (FunctionMappingStore)methodInfo.Invoke(adapter, BindingFlags.InvokeMethod, null, null, null);
+                linqMetaDataDynamic.CustomFunctionMappings = (FunctionMappingStore) methodInfo.Invoke(adapter, BindingFlags.InvokeMethod, null, null, null);
               var fieldInfo = adapterType.GetField(functionMappingStoreMember, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
               if (fieldInfo != null)
-                linqMetaDataDynamic.CustomFunctionMappings = (FunctionMappingStore)fieldInfo.GetValue(adapter);
+                linqMetaDataDynamic.CustomFunctionMappings = (FunctionMappingStore) fieldInfo.GetValue(adapter);
+              // ReSharper restore RedundantCast
             }
           }
           SetSQLTranslationWriter(adapter, executionManager);
