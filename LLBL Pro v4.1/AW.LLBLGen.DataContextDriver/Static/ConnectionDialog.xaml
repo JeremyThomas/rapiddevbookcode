@@ -243,8 +243,7 @@
             <DockPanel>
               <Label DockPanel.Dock="Right" Padding="1">
                 <Hyperlink Click="ChooseLlblFunctionMappingStoreMember"
-                           ToolTip="{Binding TargetName, RelativeSource={RelativeSource Self}}"
-                           >
+                           ToolTip="{Binding TargetName, RelativeSource={RelativeSource Self}}">
                   <Run Text="Choose..." />
                 </Hyperlink>
               </Label>
@@ -257,8 +256,6 @@
                      Text="{Binding CxInfo.DriverData.Element[FunctionMappingStoreMember].Value}"
                      ToolTip="{Binding Content, ElementName=lblFunctionMappingStoreMember}" />
           </StackPanel>
-
-
         </StackPanel>
       </TabItem>
       <TabItem DataContext="{Binding CxInfo}"
@@ -577,27 +574,24 @@
               <CheckBox
               IsChecked="{Binding CxInfo.DriverData.Element[UseFields].Value}"
               ToolTip="If you choose to use entity information to create the schema tree more information will be shown in the tree nodes tooltips however only properties created by the designer are shown"
-              Content="Use entity info rather then just reflection"  VerticalAlignment="Center" 
-              />
+              Content="Use entity info rather then just reflection"  VerticalAlignment="Center" />
               <CheckBox
               IsChecked="{Binding CxInfo.DriverData.Element[UseSchema].Value}"
               ToolTip="Use Table Schema to group the Entities"
-              Content="Use Table Schema to group the Entities"  VerticalAlignment="Center" Margin="5,0,0,0" 
-              />
-
+              Content="Use Table Schema to group the Entities"  VerticalAlignment="Center" Margin="5,0,0,0" />
             </StackPanel>
             <Label x:Name="lblPrefixDelimiterToGroupBy"
-                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" >
+                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}">
               Table Prefix Delimiter to group Entities by (e.g. with a delimiter of __ table Sales__Order would grouped into a node called Sales)
             </Label>
             <TextBox x:Name="TextBoxTablePrefixDelimiterToGroupBy" Text="{Binding CxInfo.DriverData.Element[TablePrefixDelimiterToGroupBy].Value}"
                    ToolTip="{Binding Content, ElementName=lblPrefixDelimiterToGroupBy}" />
             <Label x:Name="lblPrefixesToGroupBy"
-                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" >
+                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}">
               Table Prefixes to group Entities by (one per line) (e.g. A prefix of Customer would group tables Customer,CustomerDemographic and CustomerCustomerDemo together)
             </Label>
             <TextBox x:Name="TextBoxTablePrefixesToGroupBy" Text="{Binding CxInfo.DriverData.Element[TablePrefixesToGroupBy].Value}"
-                 
+
                    HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoWordSelection="True"
                    AcceptsReturn="True"
                    ToolTip="{Binding Content, ElementName=lblPrefixesToGroupBy}" />
@@ -617,7 +611,7 @@
                       Width="450" />
           </StackPanel>
           <Label x:Name="lblMembersToExclude" Grid.Row="3"
-                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" >
+                 ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}">
             Properties to Exclude from display in the grid (one per line)
           </Label>
           <TextBox x:Name="TextBoxMembersToExclude" Text="{Binding CxInfo.DriverData.Element[MembersToExclude].Value}"
@@ -716,6 +710,10 @@
           <StaticResource ResourceKey="settingsViewSource" />
         </TabItem.DataContext>
         <Grid Margin="0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
           <Grid x:Name="grid13"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top">
@@ -943,7 +941,6 @@
                      Text="{Binding DefaultAdapterType, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" />
           </Grid>
 
-
           <Grid x:Name="grid5"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top" Margin="0,288,0,0">
@@ -1021,9 +1018,10 @@
           </Grid>
 
           <WrapPanel
+            Grid.Row="1"
             d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type static:ConnectionDialog}}"
             DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Window}}}"
-            Orientation="Horizontal" Margin="0,384,0,0">
+            Orientation="Horizontal" Margin="0,0,0,0">
             <DataGrid x:Name="AdditionalAssembliesDataGrid"
                       MinWidth="100"
                       AutoGenerateColumns="False"
@@ -1075,9 +1073,8 @@
                     VerticalAlignment="Center"
                     Content="Copy to plugins"
                     ToolTip="Copy support assemblies to LINQPad plugins folder" Click="ButtonCopyToPlugins_Click" />
-            <TextBlock Margin="5,0,0,0" >
+            <TextBlock Margin="5,0,0,0">
     <Hyperlink ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" NavigateUri="https://rapiddevbookcode.codeplex.com/wikipage?title=LLBL4linqpad" Click="Url_Click">Driver Home page</Hyperlink>
-
             </TextBlock>
             <TextBlock Margin="5,0,0,0">
        <Hyperlink x:Name="DriverDirectory" NavigateUri="" ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}" Click="Url_Click">Driver Directory</Hyperlink>
@@ -1091,13 +1088,10 @@
             <Button Margin="5,0,0,0"
                     VerticalAlignment="Center"
                     Content="About"
-                    ToolTip="Details about this driver's assemblies" Click="Button_Click"  />
+                    ToolTip="Details about this driver's assemblies" Click="Button_Click" />
           </WrapPanel>
-
         </Grid>
       </TabItem>
-
-
     </TabControl>
     <DockPanel Margin="0,5,0,0" LastChildFill="False" Grid.Row="1" MinHeight="30" RenderTransformOrigin="0.519,-10.367"
                MaxHeight="30">
@@ -1109,7 +1103,7 @@
         </StackPanel.Resources>
         <CheckBox Margin="1,0,0,5"
                   IsChecked="{Binding CxInfo.Persist}"
-                  ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}" 
+                  ToolTip="{Binding Content, RelativeSource={RelativeSource Self}}"
                   Content="Remember this connection"
                   VerticalAlignment="Center" />
         <Button x:Name="btnSaveDefault"

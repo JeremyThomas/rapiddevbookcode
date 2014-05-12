@@ -118,9 +118,21 @@ namespace AW.Helper
     private static Type GetInterceptorType()
     {
       Type interceptorType = null;
-      if (Environment.Version.Major == 4 && Environment.Version.Revision >= 18051) //.NET45 installed
+      var dotNet45Installed = Environment.Version.Major == 4 && Environment.Version.Revision >= 18051;
+      if (dotNet45Installed) //.NET45 installed
         interceptorType = Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName45);
-      return interceptorType ?? (Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName));
+      interceptorType = interceptorType ?? (Type.GetType(OrmProfilerInterceptorAssemblyQualifiedTypeName));
+      if (interceptorType == null)
+      {
+        var ormProfilerPath = GetOrmProfilerPath();
+        if (ormProfilerPath != null)
+        {
+          var interceptorLocation = Path.Combine(ormProfilerPath, dotNet45Installed ? OrmProfilerAssemblyFileName45 : OrmProfilerAssemblyFileName);
+          var interceptorAssembly = Assembly.LoadFrom(interceptorLocation);
+          interceptorType = interceptorAssembly.GetType(OrmProfilerInterceptorTypeName);
+        }
+      }
+      return interceptorType;
     }
 
     /// <summary>
