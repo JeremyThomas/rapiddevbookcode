@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using AW.Winforms.Helpers.Controls;
+using AW.Winforms.Helpers.EntityViewer;
 using LINQPad;
 using LINQPad.Extensibility.DataContext;
 
@@ -85,30 +86,6 @@ namespace AW.LinqPadExtensions
         outputPanel.ToolTip = panelTitle;
       }
       return Enumerable.Empty<object>(); //So can be used in a linqpad expression
-    }
-
-    private static string GetPanelTitle(IEnumerable enumerable, GridOptions options = null)
-    {
-      return options == null || options.PanelTitle == null ? GetFriendyObjectTypeName(enumerable) : options.PanelTitle;
-    }
-
-    private static string TrimTitle(string panelTitle, int trimLength = 25)
-    {
-      if (panelTitle.Length > trimLength)
-        panelTitle = panelTitle.Substring(0, trimLength - 5) + "...";
-      return panelTitle;
-    }
-
-    private static string GetFriendyObjectTypeName(IEnumerable enumerable)
-    {
-      var explorerGridType = typeof (PanelManager).Assembly.GetType("LINQPad.UI.ExplorerGrid");
-      if (explorerGridType != null)
-      {
-        var objectToStringMethodInfo = explorerGridType.GetMethod("ObjectToString", BindingFlags.Public | BindingFlags.Static);
-        if (objectToStringMethodInfo != null)
-          return Convert.ToString(objectToStringMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, new object[] {enumerable}, null));
-      }
-      return enumerable.GetType().ToString();
     }
 
     #endregion
@@ -234,6 +211,47 @@ namespace AW.LinqPadExtensions
     }
 
     #endregion
+
+    private static string GetPanelTitle(object o, GridOptions options = null)
+    {
+      return options == null || options.PanelTitle == null ? GetFriendlyObjectTypeName(o) : options.PanelTitle;
+    }
+
+    private static string TrimTitle(string panelTitle, int trimLength = 25)
+    {
+      if (panelTitle.Length > trimLength)
+        panelTitle = panelTitle.Substring(0, trimLength - 5) + "...";
+      return panelTitle;
+    }
+
+    private static string GetFriendlyObjectTypeName(object o)
+    {
+      var explorerGridType = typeof(PanelManager).Assembly.GetType("LINQPad.UI.ExplorerGrid");
+      if (explorerGridType != null)
+      {
+        var objectToStringMethodInfo = explorerGridType.GetMethod("ObjectToString", BindingFlags.Public | BindingFlags.Static);
+        if (objectToStringMethodInfo != null)
+          return Convert.ToString(objectToStringMethodInfo.Invoke(null, BindingFlags.InvokeMethod, null, new[] { o }, null));
+      }
+      return o.GetType().ToString();
+    }
+
+    /// <summary>
+    /// Browse the properties of an object and any objects it references in the LINQPad output panel.
+    /// </summary>
+    /// <see cref="https://rapiddevbookcode.codeplex.com/wikipage?title=ObjectInspector"/>
+    /// <param name="objectToBrowse">The object to browse.</param>
+    /// <returns>The object to browse.</returns>
+    public static object Inspect(this object objectToBrowse)
+    {
+      if (objectToBrowse != null)
+      {
+        var panelTitle = GetPanelTitle(objectToBrowse);
+        var outputPanel = PanelManager.DisplayControl(new FrmEntityViewer(objectToBrowse) { TopLevel = false, FormBorderStyle = System.Windows.Forms.FormBorderStyle.None }, TrimTitle(panelTitle));
+        outputPanel.ToolTip = panelTitle;
+      }
+      return objectToBrowse;
+    }
 
     // ReSharper restore PossibleMultipleEnumeration
   }
