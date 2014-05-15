@@ -428,15 +428,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)).OrderBy(f => f.Name))
       {
         var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
-        try
-        {
-          fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
-        }
-        catch (Exception e)
-        {
-          e.TraceOut();
-          fieldPersistenceInfo = null;
-        }
+        fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(field, adapter);
         fieldExplorerItems.Add(new ExplorerItem(LLBLWinformHelper.CreateFieldText(field), ExplorerItemKind.Property, field.IsPrimaryKey ? ExplorerIcon.Key : ExplorerIcon.Column)
         {
           DragText = field.Name,
