@@ -910,11 +910,39 @@ namespace AW.Helper.LLBL
       return fullListQueryMethod.Invoke(dataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
     }
 
+    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafetly(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
+    {
+      IFieldPersistenceInfo fieldPersistenceInfo = null;
+      try
+      {
+        fieldPersistenceInfo = GetFieldPersistenceInfo(dataAccessAdapter, field);
+      }
+      catch (Exception e)
+      {
+        e.TraceOut();
+      }
+      return fieldPersistenceInfo;
+    }
+
     public static IFieldPersistenceInfo GetFieldPersistenceInfo(IEntityFieldCore field, IDataAccessAdapter adapter = null)
     {
-      if (field is IEntityField)
-        return (IEntityField) field;
+      var entityField = field as IEntityField;
+      if (entityField != null)
+        return entityField;
       return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2) field);
+    }
+
+    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafetly(IEntityFieldCore field, IDataAccessAdapter adapter = null)
+    {
+      var entityField = field as IEntityField;
+      if (entityField != null)
+        return entityField;
+      return adapter == null ? null : GetFieldPersistenceInfoSafetly(adapter, (IEntityField2) field);
+    }
+
+    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafetly(IEntityCore entity, IDataAccessAdapter adapter = null)
+    {
+      return GetFieldPersistenceInfoSafetly(entity.Fields.First(), adapter);
     }
 
     public static IEnumerable<string> GetFieldsCustomProperties(IEntityCore entity, string fieldName)

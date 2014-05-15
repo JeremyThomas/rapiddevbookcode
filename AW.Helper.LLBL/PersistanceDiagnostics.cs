@@ -430,7 +430,7 @@ namespace AW.Helper.LLBL
     /// <value>The name of the SQL server column.</value>
     public string ColumnName
     {
-      get { return SQLServerFieldPersistenceInfo.SourceColumnName; }
+      get { return SQLServerFieldPersistenceInfo == null ? null : SQLServerFieldPersistenceInfo.SourceColumnName; }
     }
 
     /// <summary>
@@ -458,7 +458,7 @@ namespace AW.Helper.LLBL
     /// <value>The name of the SQL server table.</value>
     internal string TableName
     {
-      get { return SQLServerFieldPersistenceInfo.SourceObjectName; }
+      get { return SQLServerFieldPersistenceInfo == null ? null : SQLServerFieldPersistenceInfo.SourceObjectName; }
     }
 
     /// <summary>
@@ -627,7 +627,7 @@ namespace AW.Helper.LLBL
       var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(entity, field.Name);
       DisplayNames = displayNameAttributes.Select(dna => dna.DisplayName).JoinAsString();
       DisplayNameAttributeTypes = displayNameAttributes.JoinAsString();
-      SQLServerFieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(SQLServerDataAccessAdapter, field);
+      SQLServerFieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(SQLServerDataAccessAdapter, field);
     }
 
     /// <summary>
@@ -656,7 +656,7 @@ namespace AW.Helper.LLBL
     /// <value>The name of the SQL server column.</value>
     public string ColumnName
     {
-      get { return SQLServerFieldPersistenceInfo.SourceColumnName; }
+      get { return SQLServerFieldPersistenceInfo == null ? null : SQLServerFieldPersistenceInfo.SourceColumnName;; }
     }
 
     /// <summary>
@@ -684,7 +684,10 @@ namespace AW.Helper.LLBL
     /// <value>The name of the SQL server table.</value>
     internal string TableName
     {
-      get { return SQLServerFieldPersistenceInfo.SourceObjectName; }
+      get
+      {
+        return SQLServerFieldPersistenceInfo == null ? null : SQLServerFieldPersistenceInfo.SourceObjectName;
+      }
     }
 
     /// <summary>
