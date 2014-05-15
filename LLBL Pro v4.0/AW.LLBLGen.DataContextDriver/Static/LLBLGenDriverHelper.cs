@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Winforms.Helpers.LLBL;
-using LINQPad;
 using LINQPad.Extensibility.DataContext;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
@@ -653,21 +652,5 @@ namespace AW.LLBLGen.DataContextDriver.Static
       return Enumerable.Empty<string>();
     }
 
-    /// <summary>
-    /// Browses the data as LLBL Entities from a LINQPad like Treeview.
-    /// </summary>
-    /// <param name="linqMetaData">The linq meta data.</param>
-    /// <param name="useSchema">if set to <c>true</c> group by schema.</param>
-    /// <param name="prefixDelimiter">The prefix delimiter to group by table prefixes. e.g "_"</param>
-    /// <param name="ensureFilteringEnabled">if set to <c>true</c> ensure filtering enabled, i.e. use ObjectListView rather than native LLBL EntityView.</param>
-    /// <returns>True if succeeded rather than void so can be passed to LINQPads Dump method.</returns>
-    /// <example>LinqPad: this.BrowseData()</example>
-    public static bool BrowseData(this ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null, bool ensureFilteringEnabled = true)
-    {
-      if (linqMetaData == null)
-        return false;
-      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, GetEntityBaseProperties(typeof(EntityBase)).ToArray()), "Data Browser");
-      return true;
-    }
   }
 }
