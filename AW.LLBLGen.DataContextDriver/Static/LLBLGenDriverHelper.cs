@@ -371,7 +371,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           {
             var explorerItem = new ExplorerItem(prefix, ExplorerItemKind.Schema, ExplorerIcon.Schema);
             schema.Children.Add(explorerItem);
-            explorerItem.Children = new List<ExplorerItem> { table };
+            explorerItem.Children = new List<ExplorerItem> {table};
           }
         }
         return true;
@@ -427,8 +427,8 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
       foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)).OrderBy(f => f.Name))
       {
-        fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
         var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
+        fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(field, adapter);
         fieldExplorerItems.Add(new ExplorerItem(LLBLWinformHelper.CreateFieldText(field), ExplorerItemKind.Property, field.IsPrimaryKey ? ExplorerIcon.Key : ExplorerIcon.Column)
         {
           DragText = field.Name,
@@ -634,16 +634,16 @@ namespace AW.LLBLGen.DataContextDriver.Static
 
     public static IEnumerable<string> GetEntityBaseProperties(Type elementType)
     {
-      if (typeof(IEntityCore).IsAssignableFrom(elementType))
+      if (typeof (IEntityCore).IsAssignableFrom(elementType))
       {
-        var membersToExclude = typeof(EntityBase).GetProperties().Select(p => p.Name)
-          .Union(typeof(EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
-        if (typeof(IEntity).IsAssignableFrom(elementType))
+        var membersToExclude = typeof (EntityBase).GetProperties().Select(p => p.Name)
+          .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
+        if (typeof (IEntity).IsAssignableFrom(elementType))
         {
           // remove alwaysFetch/AlreadyFetched flag properties
           membersToExclude = membersToExclude
             .Union(elementType.GetProperties()
-              .Where(p => p.PropertyType == typeof(bool) &&
+              .Where(p => p.PropertyType == typeof (bool) &&
                           (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch") || p.Name.EndsWith("NewIfNotFound")))
               .Select(p => p.Name));
         }
@@ -651,6 +651,5 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       return Enumerable.Empty<string>();
     }
-
   }
 }

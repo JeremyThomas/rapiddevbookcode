@@ -216,8 +216,8 @@ namespace AW.Winforms.Helpers.LLBL
       {
         if (elementCreator == null)
           elementCreator = EntityHelper.CreateElementCreator(entityType);
-        var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);        
-        var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(entity.Fields.First(), adapter);        
+        var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);
+        var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(entity, adapter);
         var treeNodeCollectionToAddTo = schemaTreeNodeCollection;
         if (fieldPersistenceInfo != null)
         {            
@@ -277,6 +277,7 @@ namespace AW.Winforms.Helpers.LLBL
       }
     }
 
+
     private static void PopulateEntityFields(TreeNode entityNode, IEntityCore entity, Dictionary<Type, Tuple<TreeNode, IEntityCore>> entityNodes, IDataAccessAdapter adapter)
     {
       IFieldPersistenceInfo fieldPersistenceInfo;
@@ -292,7 +293,7 @@ namespace AW.Winforms.Helpers.LLBL
           if (field != null)
           {
             fieldNode.Text = CreateFieldText(field);
-            fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfo(field, adapter);
+            fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(field, adapter);
             var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
             fieldNode.ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, fieldNode.Tag as PropertyDescriptor, fkNavigator);
           }
