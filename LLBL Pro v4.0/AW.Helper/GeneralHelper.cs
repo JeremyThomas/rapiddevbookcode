@@ -49,13 +49,11 @@ namespace AW.Helper
     /// </summary>
     /// <param name="exception">The exception.</param>
     /// <returns>InnerMostException</returns>
-    public static Exception TraceOut(Exception exception)
+    public static Exception TraceOut(this Exception exception)
     {
-      Trace.WriteLine(exception.Message);
-      var innerMostException = GetInnerMostException(exception);
-      if (innerMostException != exception)
-        TraceOut(innerMostException);
-      return innerMostException;
+      foreach (var exceptionInStack in GetExceptionAndInners(exception))
+        Trace.WriteLine(exceptionInStack.Message);
+      return exception.GetBaseException();
     }
 
     #endregion
@@ -695,9 +693,19 @@ namespace AW.Helper
       throw exception;
     }
 
-    public static Exception GetInnerMostException(Exception exception)
+    /// <summary>
+    /// Gets the exception followed by all the inner exceptions.
+    /// </summary>
+    /// <param name="exception">The exception.</param>
+    /// <returns></returns>
+    public static IEnumerable<Exception> GetExceptionAndInners(Exception exception)
     {
-      return exception.InnerException == null ? exception : GetInnerMostException(exception.InnerException);
+      //Need to create overload where child is not Enumerable LinqToObjectsExtensionMethods.DescendantsAndSelf(exception, e => e.InnerException);
+      while (exception != null)
+      {
+        yield return exception;
+        exception = exception.InnerException;
+      }
     }
 
     /// <summary>
