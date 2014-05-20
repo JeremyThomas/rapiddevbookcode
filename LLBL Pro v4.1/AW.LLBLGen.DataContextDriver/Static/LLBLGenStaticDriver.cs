@@ -40,7 +40,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
       "AW.Helper.LLBL",
       "AW.Winforms.Helpers.DataEditor",
       "AW.Winforms.Helpers.LLBL",
-      "AW.LinqPadExtensions",
       "AW.LLBLGen.DataContextDriver",
       "AW.LLBLGen.DataContextDriver.Static",
       "LLBLGen.Linq.Prefetch"
@@ -151,7 +150,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             if (toDisplay != null)
             {
               options.MembersToExclude = LLBLGenDriverHelper.GetEntityBaseProperties(MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToDisplay)).Union(_membersToExclude).ToArray();
-              CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LinqPadExtensions.CustomVisualizers.DefaultPageSize, options);
+              CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LINQPad.CustomVisualizers.DefaultPageSize, options);
               return;
             }
             break;

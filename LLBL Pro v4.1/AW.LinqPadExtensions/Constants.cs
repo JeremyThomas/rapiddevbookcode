@@ -1,4 +1,4 @@
-﻿namespace AW.LinqPadExtensions
+﻿namespace LINQPad
 {
   internal static class Constants
   {

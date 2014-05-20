@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AW.Helper.LLBL;
-using AW.LinqPadExtensions;
 using AW.LLBLGen.DataContextDriver.Static;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.LLBL;
@@ -68,7 +67,7 @@ namespace AW.LLBLGen.DataContextDriver
 
     public static IEnumerable<T> DisplaySelfServicingInGrid<T>(this IEnumerable<T> enumerable) where T : EntityBase
     {
-      return enumerable.DisplaySelfServicingInGrid(LinqPadExtensions.CustomVisualizers.DefaultPageSize);
+      return enumerable.DisplaySelfServicingInGrid(LINQPad.CustomVisualizers.DefaultPageSize);
     }
 
     public static IEnumerable DisplaySelfServicingInGrid(this IEnumerable enumerable, ushort pageSize)
@@ -108,7 +107,7 @@ namespace AW.LLBLGen.DataContextDriver
 
     public static IEnumerable<T> DisplayAdapterInGrid<T>(this IQueryable<T> query) where T : EntityBase2
     {
-      return DisplayAdapterInGrid(query, LinqPadExtensions.CustomVisualizers.DefaultPageSize);
+      return DisplayAdapterInGrid(query, LINQPad.CustomVisualizers.DefaultPageSize);
     }
 
     public static IEnumerable<T> DisplayHierarchyInTree<T>(this IEnumerable<T> enumerable, IDataAccessAdapter dataAccessAdapter, string iDPropertyName, string parentIDPropertyName, string nameColumn) where T : EntityBase2
