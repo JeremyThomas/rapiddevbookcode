@@ -7,10 +7,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.EntityViewer;
-using LINQPad;
 using LINQPad.Extensibility.DataContext;
 
-namespace AW.LinqPadExtensions
+namespace LINQPad
 {
   public static class CustomVisualizers
   {

@@ -8,7 +8,7 @@
     <ProjectGuid>{BBD8CAD5-6A28-494F-A6B0-A5280EC6F92E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AW.LinqPadExtensions</RootNamespace>
+    <RootNamespace>LINQPad</RootNamespace>
     <AssemblyName>AW.LinqPadExtensions</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -81,8 +81,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LINQPad">
-      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\LINQPad.exe</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\LINQPad\4\LINQPad.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
