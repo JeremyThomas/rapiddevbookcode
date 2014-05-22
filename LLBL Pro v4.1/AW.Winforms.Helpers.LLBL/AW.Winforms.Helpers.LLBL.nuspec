@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://rapiddevbookcode.codeplex.com/license</licenseUrl>
+    <projectUrl>https://rapiddevbookcode.codeplex.com/wikipage?title=EntityDataBrowser</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>First Release as a Nuget Package.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>LLBL</tags>
+  </metadata>
+</package>

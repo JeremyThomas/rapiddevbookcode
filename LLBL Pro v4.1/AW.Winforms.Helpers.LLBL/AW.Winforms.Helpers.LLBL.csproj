@@ -140,6 +140,8 @@
       <Link>AdventureWorks.snk</Link>
     </None>
     <None Include="app.config" />
+    <None Include="AW.Winforms.Helpers.LLBL.nuspec" />
+    <None Include="NugetPack.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

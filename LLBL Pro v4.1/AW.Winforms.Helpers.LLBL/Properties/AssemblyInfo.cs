@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("AW.Winforms.Helpers.LLBL")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Winforms Helpers for LLBL Pro")]
+[assembly: AssemblyDescription("Controls and helpers specific to LLBL Pro and Winforms")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

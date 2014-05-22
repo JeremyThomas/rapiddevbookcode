@@ -80,7 +80,7 @@ namespace AW.Winforms.Helpers.LLBL
       // 
       this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
       this.splitContainerHorizontal.Size = new System.Drawing.Size(332, 563);
-      this.splitContainerHorizontal.SplitterDistance = 155;
+      this.splitContainerHorizontal.SplitterDistance = 146;
       // 
       // treeViewEntities
       // 
@@ -108,6 +108,8 @@ namespace AW.Winforms.Helpers.LLBL
       this.imageList1.Images.SetKeyName(2, "GoRtl.bmp");
       this.imageList1.Images.SetKeyName(3, "GoLtr.bmp");
       this.imageList1.Images.SetKeyName(4, "PushpinHS.png");
+      this.imageList1.Images.SetKeyName(5, "EntityDataModel_entity_container_16x16.png");
+      this.imageList1.Images.SetKeyName(6, "XSDSchema_SequenceIcon.png");
       // 
       // contextMenuStrip1
       // 
@@ -218,10 +220,11 @@ namespace AW.Winforms.Helpers.LLBL
       this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gridDataEditor.EnsureFilteringEnabled = false;
       this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.MembersToExclude = null;
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(0));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(332, 404);
+      this.gridDataEditor.Size = new System.Drawing.Size(332, 413);
       this.gridDataEditor.TabIndex = 0;
       this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
       // 
@@ -234,7 +237,7 @@ namespace AW.Winforms.Helpers.LLBL
       this.propertyGrid.DrawFlat = true;
       this.propertyGrid.Location = new System.Drawing.Point(0, 0);
       this.propertyGrid.Name = "propertyGrid";
-      this.propertyGrid.Size = new System.Drawing.Size(332, 155);
+      this.propertyGrid.Size = new System.Drawing.Size(332, 146);
       this.propertyGrid.TabIndex = 0;
       // 
       // FrmEntitiesAndFields

@@ -392,10 +392,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AW.Data\AW.Data.csproj">
-      <Project>{47F52527-A001-405B-9CEC-FCBF7FA10855}</Project>
-      <Name>AW.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AW.Helper\AW.Helper.csproj">
       <Project>{FFC5B55E-9157-4CE6-81BD-E593E4C08422}</Project>
       <Name>AW.Helper</Name>
