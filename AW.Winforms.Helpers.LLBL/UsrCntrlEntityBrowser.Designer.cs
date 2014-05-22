@@ -33,10 +33,10 @@ namespace AW.Winforms.Helpers.LLBL
       this.treeViewEntities = new System.Windows.Forms.TreeView();
       this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       this.bindingNavigatorPaging = new System.Windows.Forms.BindingNavigator(this.components);
       this.bindingNavigatorData = new System.Windows.Forms.BindingNavigator(this.components);
       this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-      this.gridDataEditor = new AW.Winforms.Helpers.Controls.GridDataEditor();
       ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
       this.splitContainer1.Panel1.SuspendLayout();
       this.splitContainer1.Panel2.SuspendLayout();
@@ -90,6 +90,21 @@ namespace AW.Winforms.Helpers.LLBL
       this.splitContainer1.SplitterDistance = 167;
       this.splitContainer1.TabIndex = 3;
       // 
+      // gridDataEditor
+      // 
+      this.gridDataEditor.DataMember = "";
+      this.gridDataEditor.DataSource = null;
+      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridDataEditor.EnsureFilteringEnabled = false;
+      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.MembersToExclude = null;
+      this.gridDataEditor.Name = "gridDataEditor";
+      this.gridDataEditor.PageSize = ((ushort)(0));
+      this.gridDataEditor.Readonly = false;
+      this.gridDataEditor.Size = new System.Drawing.Size(331, 585);
+      this.gridDataEditor.TabIndex = 0;
+      this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
+      // 
       // bindingNavigatorPaging
       // 
       this.bindingNavigatorPaging.AddNewItem = null;
@@ -124,20 +139,6 @@ namespace AW.Winforms.Helpers.LLBL
       this.bindingNavigatorData.Size = new System.Drawing.Size(331, 25);
       this.bindingNavigatorData.TabIndex = 2;
       this.bindingNavigatorData.Text = "bindingNavigator1";
-      // 
-      // gridDataEditor
-      // 
-      this.gridDataEditor.DataMember = "";
-      this.gridDataEditor.DataSource = null;
-      this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.gridDataEditor.EnsureFilteringEnabled = false;
-      this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
-      this.gridDataEditor.Name = "gridDataEditor";
-      this.gridDataEditor.PageSize = ((ushort)(0));
-      this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(331, 585);
-      this.gridDataEditor.TabIndex = 0;
-      this.toolTip1.SetToolTip(this.gridDataEditor, "Data in the Tables");
       // 
       // UsrCntrlEntityBrowser
       // 

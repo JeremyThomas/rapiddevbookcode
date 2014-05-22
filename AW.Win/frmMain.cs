@@ -227,7 +227,7 @@ namespace AW.Win
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var childForm = LaunchChildForm(typeof(FrmEntitiesAndFields), MetaSingletons.MetaData);
+      var childForm = LaunchChildForm(typeof(FrmEntitiesAndFields), MetaSingletons.MetaData, true);
       childForm.Tag = true;
     }
 

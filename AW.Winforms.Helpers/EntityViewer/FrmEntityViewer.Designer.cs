@@ -45,7 +45,7 @@
       this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.ObjectBrowser = new sliver.Windows.Forms.StateBrowser();
       this.propertyGrid1 = new AW.Winforms.Helpers.PropGridEx.PropertyGridEx();
-      this.panel1 = new System.Windows.Forms.Panel();
+      this.panelOptions = new System.Windows.Forms.Panel();
       this.textBoxObjectBeingBrowsed = new System.Windows.Forms.TextBox();
       this.checkBoxShowNonPublicMembers = new System.Windows.Forms.CheckBox();
       this.checkBoxShowStaticMembers = new System.Windows.Forms.CheckBox();
@@ -66,7 +66,7 @@
       this.splitContainerHorizontal.Panel2.SuspendLayout();
       this.splitContainerHorizontal.SuspendLayout();
       this.contextMenuStrip1.SuspendLayout();
-      this.panel1.SuspendLayout();
+      this.panelOptions.SuspendLayout();
       this.statusStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -85,13 +85,13 @@
       // splitContainerHorizontal.Panel1
       // 
       this.splitContainerHorizontal.Panel1.Controls.Add(this.propertyGrid1);
-      this.splitContainerHorizontal.Panel1.Controls.Add(this.panel1);
+      this.splitContainerHorizontal.Panel1.Controls.Add(this.panelOptions);
       // 
       // splitContainerHorizontal.Panel2
       // 
       this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
       this.splitContainerHorizontal.Size = new System.Drawing.Size(684, 540);
-      this.splitContainerHorizontal.SplitterDistance = 244;
+      this.splitContainerHorizontal.SplitterDistance = 198;
       // 
       // contextMenuStrip1
       // 
@@ -209,28 +209,29 @@
       this.propertyGrid1.ContextMenuStrip = this.contextMenuStrip1;
       this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.propertyGrid1.DrawFlat = true;
-      this.propertyGrid1.Location = new System.Drawing.Point(0, 63);
+      this.propertyGrid1.Location = new System.Drawing.Point(0, 45);
       this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(684, 181);
+      this.propertyGrid1.Size = new System.Drawing.Size(684, 153);
       this.propertyGrid1.TabIndex = 0;
       this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       // 
-      // panel1
+      // panelOptions
       // 
-      this.panel1.Controls.Add(this.textBoxObjectBeingBrowsed);
-      this.panel1.Controls.Add(this.checkBoxShowNonPublicMembers);
-      this.panel1.Controls.Add(this.checkBoxShowStaticMembers);
-      this.panel1.Controls.Add(this.checkBoxShowDataTypes);
-      this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-      this.panel1.Location = new System.Drawing.Point(0, 0);
-      this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(684, 63);
-      this.panel1.TabIndex = 1;
+      this.panelOptions.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+      this.panelOptions.Controls.Add(this.textBoxObjectBeingBrowsed);
+      this.panelOptions.Controls.Add(this.checkBoxShowNonPublicMembers);
+      this.panelOptions.Controls.Add(this.checkBoxShowStaticMembers);
+      this.panelOptions.Controls.Add(this.checkBoxShowDataTypes);
+      this.panelOptions.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panelOptions.Location = new System.Drawing.Point(0, 0);
+      this.panelOptions.Name = "panelOptions";
+      this.panelOptions.Size = new System.Drawing.Size(684, 45);
+      this.panelOptions.TabIndex = 1;
       // 
       // textBoxObjectBeingBrowsed
       // 
       this.textBoxObjectBeingBrowsed.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.textBoxObjectBeingBrowsed.Location = new System.Drawing.Point(0, 43);
+      this.textBoxObjectBeingBrowsed.Location = new System.Drawing.Point(0, 25);
       this.textBoxObjectBeingBrowsed.Name = "textBoxObjectBeingBrowsed";
       this.textBoxObjectBeingBrowsed.Size = new System.Drawing.Size(684, 20);
       this.textBoxObjectBeingBrowsed.TabIndex = 3;
@@ -281,10 +282,11 @@
       this.gridDataEditor.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gridDataEditor.EnsureFilteringEnabled = false;
       this.gridDataEditor.Location = new System.Drawing.Point(0, 0);
+      this.gridDataEditor.MembersToExclude = null;
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(20));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(684, 292);
+      this.gridDataEditor.Size = new System.Drawing.Size(684, 338);
       this.gridDataEditor.TabIndex = 3;
       // 
       // dataGridViewTextBoxColumn11
@@ -322,8 +324,8 @@
       // toolStripStatusLabelSelectePath
       // 
       this.toolStripStatusLabelSelectePath.Name = "toolStripStatusLabelSelectePath";
-      this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(118, 17);
-      this.toolStripStatusLabelSelectePath.Text = "toolStripStatusLabel1";
+      this.toolStripStatusLabelSelectePath.Size = new System.Drawing.Size(68, 17);
+      this.toolStripStatusLabelSelectePath.Text = "SelectePath";
       // 
       // FrmEntityViewer
       // 
@@ -347,8 +349,8 @@
       ((System.ComponentModel.ISupportInitialize)(this.splitContainerHorizontal)).EndInit();
       this.splitContainerHorizontal.ResumeLayout(false);
       this.contextMenuStrip1.ResumeLayout(false);
-      this.panel1.ResumeLayout(false);
-      this.panel1.PerformLayout();
+      this.panelOptions.ResumeLayout(false);
+      this.panelOptions.PerformLayout();
       this.statusStrip1.ResumeLayout(false);
       this.statusStrip1.PerformLayout();
       this.ResumeLayout(false);
@@ -376,7 +378,7 @@
     private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelInstance;
     private System.Windows.Forms.ToolStripMenuItem copyObjectRefToolStripMenuItem;
     private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelSelectePath;
-    private System.Windows.Forms.Panel panel1;
+    private System.Windows.Forms.Panel panelOptions;
     private System.Windows.Forms.CheckBox checkBoxShowDataTypes;
     private System.Windows.Forms.CheckBox checkBoxShowNonPublicMembers;
     private System.Windows.Forms.CheckBox checkBoxShowStaticMembers;
