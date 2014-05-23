@@ -91,7 +91,7 @@
       // 
       this.splitContainerHorizontal.Panel2.Controls.Add(this.gridDataEditor);
       this.splitContainerHorizontal.Size = new System.Drawing.Size(684, 540);
-      this.splitContainerHorizontal.SplitterDistance = 198;
+      this.splitContainerHorizontal.SplitterDistance = 179;
       // 
       // contextMenuStrip1
       // 
@@ -211,7 +211,7 @@
       this.propertyGrid1.DrawFlat = true;
       this.propertyGrid1.Location = new System.Drawing.Point(0, 45);
       this.propertyGrid1.Name = "propertyGrid1";
-      this.propertyGrid1.Size = new System.Drawing.Size(684, 153);
+      this.propertyGrid1.Size = new System.Drawing.Size(684, 134);
       this.propertyGrid1.TabIndex = 0;
       this.propertyGrid1.SelectedGridItemChanged += new System.Windows.Forms.SelectedGridItemChangedEventHandler(this.propertyGrid1_SelectedGridItemChanged);
       // 
@@ -233,6 +233,7 @@
       this.textBoxObjectBeingBrowsed.Dock = System.Windows.Forms.DockStyle.Bottom;
       this.textBoxObjectBeingBrowsed.Location = new System.Drawing.Point(0, 25);
       this.textBoxObjectBeingBrowsed.Name = "textBoxObjectBeingBrowsed";
+      this.textBoxObjectBeingBrowsed.ReadOnly = true;
       this.textBoxObjectBeingBrowsed.Size = new System.Drawing.Size(684, 20);
       this.textBoxObjectBeingBrowsed.TabIndex = 3;
       // 
@@ -286,7 +287,7 @@
       this.gridDataEditor.Name = "gridDataEditor";
       this.gridDataEditor.PageSize = ((ushort)(20));
       this.gridDataEditor.Readonly = false;
-      this.gridDataEditor.Size = new System.Drawing.Size(684, 338);
+      this.gridDataEditor.Size = new System.Drawing.Size(684, 357);
       this.gridDataEditor.TabIndex = 3;
       // 
       // dataGridViewTextBoxColumn11

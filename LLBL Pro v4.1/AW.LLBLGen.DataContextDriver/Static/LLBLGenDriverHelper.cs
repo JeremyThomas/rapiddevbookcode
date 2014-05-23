@@ -39,7 +39,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           return GetAdapter(elementCreator);
       }
       else
-        return GetAdapter(linqMetaData);
+        return EntityHelper.GetDataAccessAdapter(linqMetaData) as DataAccessAdapterBase;
       return null;
     }
 
@@ -53,19 +53,6 @@ namespace AW.LLBLGen.DataContextDriver.Static
     public static DataAccessAdapterBase GetAdapter(IElementCreatorCore elementCreator)
     {
       return MostRecentAdapter;
-    }
-
-    /// <summary>
-    ///   Gets the adapter from the ILinqMetaData.
-    /// </summary>
-    /// <param name="linqMetaData">The linq meta data.</param>
-    /// <returns></returns>
-    public static DataAccessAdapterBase GetAdapter(ILinqMetaData linqMetaData)
-    {
-      var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
-      if (adapterToUseProperty != null)
-        return adapterToUseProperty.GetValue(linqMetaData, null) as DataAccessAdapterBase;
-      return null;
     }
 
     public static DataAccessAdapterBase GetAdapter(IConnectionInfo cxInfo)
@@ -428,7 +415,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       foreach (var field in entity.GetFields().Where(f => f.Name.Equals(f.Alias)).OrderBy(f => f.Name))
       {
         var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
-        fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(field, adapter);
+        fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(field, adapter);
         fieldExplorerItems.Add(new ExplorerItem(LLBLWinformHelper.CreateFieldText(field), ExplorerItemKind.Property, field.IsPrimaryKey ? ExplorerIcon.Key : ExplorerIcon.Column)
         {
           DragText = field.Name,

@@ -15,6 +15,8 @@ namespace AW.Helper.LLBL
 {
   public static class EntityHelper
   {
+    #region Linq
+
     /// <summary>
     ///   returns the DataSource to use in a Linq query for the entity type specified
     /// </summary>
@@ -80,6 +82,60 @@ namespace AW.Helper.LLBL
       return null;
     }
 
+    public static IQueryProvider GetProvider(ILinqMetaData linqMetaData)
+    {
+      return linqMetaData.GetQueryableForEntity(0).Provider;
+    }
+
+    public static IQueryable CreateLLBLGenProQueryFromEnumerableExpression(IQueryProvider provider, Expression expression)
+    {
+      var elementType = expression.Type;
+      if (expression.Type.IsGenericType)
+      {
+        elementType = expression.Type.GetGenericArguments()[0];
+      }
+      var queryableType = typeof(IQueryable<>).MakeGenericType(new[] { elementType });
+      if (queryableType.IsAssignableFrom(expression.Type))
+      {
+        provider.CreateQuery(expression);
+      }
+      var enumerableType = typeof(IEnumerable<>).MakeGenericType(new[] { elementType });
+      if (!enumerableType.IsAssignableFrom(expression.Type))
+      {
+        throw new ArgumentException("expression isn't enumerable");
+      }
+      return (IQueryable)Activator.CreateInstance(typeof(LLBLGenProQuery<>).MakeGenericType(new[] { elementType }), new object[] { provider, expression });
+    }
+
+    public static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(MethodCallExpression methodCallExpression)
+    {
+      return GetMethodCallExpressionParts(new Tuple<Expression, Expression, Expression>(null, null, null), methodCallExpression);
+    }
+
+    private static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(Tuple<Expression, Expression, Expression> result
+      , Expression expression)
+    {
+      var methodCallExpression = expression as MethodCallExpression;
+      if (methodCallExpression != null)
+      {
+        if (methodCallExpression.Method.Name == "Where")
+          result = new Tuple<Expression, Expression, Expression>(result.Item1, methodCallExpression.Arguments.Last(), result.Item3);
+        if (methodCallExpression.Method.Name == "OrderBy")
+          result = new Tuple<Expression, Expression, Expression>(result.Item1, result.Item2, methodCallExpression.Arguments.Last());
+        result = methodCallExpression.Arguments.Aggregate(result, GetMethodCallExpressionParts);
+      }
+      else
+      {
+        if (expression.NodeType == ExpressionType.Constant)
+          result = new Tuple<Expression, Expression, Expression>(expression, result.Item2, result.Item3);
+      }
+      return result;
+    }
+
+    #endregion
+
+    #region CreateEntity
+
     /// <summary>
     ///   Creates the entity from the .NET type specified.
     /// </summary>
@@ -128,6 +184,10 @@ namespace AW.Helper.LLBL
       return CreateEntity(typeof (T)) as T;
     }
 
+    #endregion
+
+    #region GetFactoryCore
+
     public static IEntityFactoryCore GetFactoryCore<T>(IElementCreatorCore elementCreatorCore) where T : class, IEntityCore
     {
       return (elementCreatorCore.GetFactory(typeof (T)));
@@ -160,6 +220,10 @@ namespace AW.Helper.LLBL
       }
       return GetFactoryCore<T>();
     }
+
+    #endregion
+
+    #region GetEntitiesType
 
     /// <summary>
     ///   Gets the EntityType value as integer for the entity type passed in
@@ -201,58 +265,14 @@ namespace AW.Helper.LLBL
       return topLevelProps;
     }
 
-    public static IQueryProvider GetProvider(ILinqMetaData linqMetaData)
+    public static IEnumerable<Type> GetEntitiesTypes(Type ancestorType, ILinqMetaData linqMetaData = null)
     {
-      return linqMetaData.GetQueryableForEntity(0).Provider;
+      if (ancestorType != null)
+        return MetaDataHelper.GetDescendants(ancestorType);
+      return linqMetaData == null ? GetEntitiesTypes() : GetEntitiesTypes(linqMetaData);
     }
 
-    public static IQueryable CreateLLBLGenProQueryFromEnumerableExpression(IQueryProvider provider, Expression expression)
-    {
-      var elementType = expression.Type;
-      if (expression.Type.IsGenericType)
-      {
-        elementType = expression.Type.GetGenericArguments()[0];
-      }
-      var queryableType = typeof (IQueryable<>).MakeGenericType(new[] {elementType});
-      if (queryableType.IsAssignableFrom(expression.Type))
-      {
-        provider.CreateQuery(expression);
-      }
-      var enumerableType = typeof (IEnumerable<>).MakeGenericType(new[] {elementType});
-      if (!enumerableType.IsAssignableFrom(expression.Type))
-      {
-        throw new ArgumentException("expression isn't enumerable");
-      }
-      return (IQueryable) Activator.CreateInstance(typeof (LLBLGenProQuery<>).MakeGenericType(new[] {elementType}), new object[] {provider, expression});
-    }
-
-    public static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(MethodCallExpression methodCallExpression)
-    {
-      return GetMethodCallExpressionParts(new Tuple<Expression, Expression, Expression>(null, null, null), methodCallExpression);
-    }
-
-    private static Tuple<Expression, Expression, Expression> GetMethodCallExpressionParts(Tuple<Expression, Expression, Expression> result
-      , Expression expression)
-    {
-      var methodCallExpression = expression as MethodCallExpression;
-      if (methodCallExpression != null)
-      {
-        if (methodCallExpression.Method.Name == "Where")
-          result = new Tuple<Expression, Expression, Expression>(result.Item1, methodCallExpression.Arguments.Last(), result.Item3);
-        if (methodCallExpression.Method.Name == "OrderBy")
-          result = new Tuple<Expression, Expression, Expression>(result.Item1, result.Item2, methodCallExpression.Arguments.Last());
-        foreach (var expArg in methodCallExpression.Arguments)
-        {
-          result = GetMethodCallExpressionParts(result, expArg);
-        }
-      }
-      else
-      {
-        if (expression.NodeType == ExpressionType.Constant)
-          result = new Tuple<Expression, Expression, Expression>(expression, result.Item2, result.Item3);
-      }
-      return result;
-    }
+    #endregion
 
     #region Self Servicing
 
@@ -673,16 +693,7 @@ namespace AW.Helper.LLBL
       return 0;
     }
 
-    /// <summary>
-    ///   Gets the data access adapter from a ILinqMetaData.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="linqMetaData">The linq meta data.</param>
-    /// <returns></returns>
-    public static IDataAccessAdapter GetDataAccessAdapter<T>(ILinqMetaData linqMetaData) where T : EntityBase2
-    {
-      return GetDataAccessAdapter(GetQueryableForEntity<T>(linqMetaData) as DataSource2<T>);
-    }
+    #region GetDataAccessAdapter
 
     /// <summary>
     ///   Gets the data access adapter from a DataSource2.
@@ -722,11 +733,43 @@ namespace AW.Helper.LLBL
       return llblGenProProvider2 == null ? null : llblGenProProvider2.AdapterToUse;
     }
 
+    /// <summary>
+    /// Gets the IDataAccessAdapter from a ILinqMetaData Via the provider.
+    /// </summary>
+    /// <param name="linqMetaData">The ILinqMetaData.</param>
+    /// <returns></returns>
     public static IDataAccessAdapter GetDataAccessAdapter(ILinqMetaData linqMetaData)
     {
       return GetDataAccessAdapter(GetProvider(linqMetaData));
     }
 
+    /// <summary>
+    ///   Gets the adapter from the ILinqMetaData.
+    /// </summary>
+    /// <param name="linqMetaData">The linq meta data.</param>
+    /// <returns></returns>
+    public static DataAccessAdapterBase GetDataAccessAdapterViaReflection(ILinqMetaData linqMetaData)
+    {
+      var adapterToUseProperty = linqMetaData.GetType().GetProperty("AdapterToUse");
+      if (adapterToUseProperty != null)
+        return adapterToUseProperty.GetValue(linqMetaData, null) as DataAccessAdapterBase;
+      return null;
+    }
+
+    public static IDataAccessAdapter GetDataAccessAdapter(ILinqMetaData linqMetaData, bool isAdapter)
+    {
+      IDataAccessAdapter adapter = null;
+      if (isAdapter)
+      {
+        dynamic dlinqMetaData = linqMetaData;
+        if (dlinqMetaData != null) adapter = dlinqMetaData.AdapterToUse;
+      }
+      return adapter;
+    }
+
+    #endregion
+
+    #region ToEntityCollection2
     /// <summary>
     ///   Converts an entity enumeration to an entity collection. If the enumeration is a ILLBLGenProQuery then executes
     ///   the query this object represents and returns its results in its native container - an entity collection.
@@ -789,6 +832,8 @@ namespace AW.Helper.LLBL
         entities.RemovedEntitiesTracker = entities.EntityFactoryToUse.CreateEntityCollection();
       return entities;
     }
+
+    #endregion
 
     public static IBindingListView CreateEntityView2(IEnumerable enumerable, Type itemType)
     {
@@ -904,13 +949,14 @@ namespace AW.Helper.LLBL
       return llblGenProEntityName.Replace("Entity", "");
     }
 
+    #region GetFieldPersistenceInfo
     public static IFieldPersistenceInfo GetFieldPersistenceInfo(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
     {
       var fullListQueryMethod = dataAccessAdapter.GetType().GetMethod("GetFieldPersistenceInfo", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (IEntityField2)}, null);
       return fullListQueryMethod.Invoke(dataAccessAdapter, new[] {field}) as IFieldPersistenceInfo;
     }
 
-    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafetly(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
+    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafely(IDataAccessAdapter dataAccessAdapter, IEntityField2 field)
     {
       IFieldPersistenceInfo fieldPersistenceInfo = null;
       try
@@ -932,18 +978,20 @@ namespace AW.Helper.LLBL
       return adapter == null ? null : GetFieldPersistenceInfo(adapter, (IEntityField2) field);
     }
 
-    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafetly(IEntityFieldCore field, IDataAccessAdapter adapter = null)
+    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafely(IEntityFieldCore field, IDataAccessAdapter adapter = null)
     {
       var entityField = field as IEntityField;
       if (entityField != null)
         return entityField;
-      return adapter == null ? null : GetFieldPersistenceInfoSafetly(adapter, (IEntityField2) field);
+      return adapter == null ? null : GetFieldPersistenceInfoSafely(adapter, (IEntityField2) field);
     }
 
-    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafetly(IEntityCore entity, IDataAccessAdapter adapter = null)
+    public static IFieldPersistenceInfo GetFieldPersistenceInfoSafely(IEntityCore entity, IDataAccessAdapter adapter = null)
     {
-      return GetFieldPersistenceInfoSafetly(entity.Fields.First(), adapter);
+      return GetFieldPersistenceInfoSafely(entity.Fields.First(), adapter);
     }
+
+    #endregion
 
     public static IEnumerable<string> GetFieldsCustomProperties(IEntityCore entity, string fieldName)
     {

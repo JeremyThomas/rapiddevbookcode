@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Windows.Forms;
-using AW.Helper;
 using AW.Helper.LLBL;
-using AW.Winforms.Helpers.Controls;
-using AW.Winforms.Helpers.DataEditor;
-using AW.Winforms.Helpers.EntityViewer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
 using SD.LLBLGen.Pro.ORMSupportClasses;
 
@@ -16,19 +10,35 @@ namespace AW.Winforms.Helpers.LLBL
 {
   public partial class UsrCntrlEntityBrowser : UserControl
   {
-    private readonly Type _baseType;
+    public Type BaseType { get; set; }
     private ILinqMetaData _linqMetaData;
     private bool _userHasInteracted;
+
+    public static FrmPersistantLocation ShowDataBrowser(ILinqMetaData linqMetaData, Form parentForm = null, 
+      bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
+    {
+      var form = new FrmPersistantLocation
+      {
+        WindowSettingsName = "DataBrowser",
+        Text = "Data Browser",
+        Icon = parentForm == null ? null : parentForm.Icon,
+      };
+
+      form.Controls.Add(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, membersToExclude) { Dock = DockStyle.Fill });
+      AWHelper.ShowForm(form, parentForm);
+      return form;
+    }
 
     public UsrCntrlEntityBrowser()
     {
       InitializeComponent();
     }
 
-    public UsrCntrlEntityBrowser(Type baseType) : this()
+    public UsrCntrlEntityBrowser(Type baseType, bool useSchema = true, string prefixDelimiter = "_")
+      : this()
     {
-      _baseType = baseType;
-      LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
+      BaseType = baseType;
+      LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, EntityHelper.GetEntitiesTypes(baseType, _linqMetaData), useSchema, prefixDelimiter);
     }
 
     public UsrCntrlEntityBrowser(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
@@ -40,25 +50,12 @@ namespace AW.Winforms.Helpers.LLBL
     public void Initialize(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = "_", bool ensureFilteringEnabled = true, params string[] membersToExclude)
     {
       _linqMetaData = linqMetaData;
-      var entitiesTypes = GetEntitiesTypes().ToList();
-      var firstEntityType = entitiesTypes.FirstOrDefault();
       gridDataEditor.EnsureFilteringEnabled = ensureFilteringEnabled;
       gridDataEditor.MembersToExclude = membersToExclude;
-      if (firstEntityType != null)
-      {
-        IDataAccessAdapter adapter = null;
-        if (firstEntityType.Implements(typeof (IEntity2)))
-        {
-          dynamic dlinqMetaData = linqMetaData;
-          if (dlinqMetaData != null) adapter = dlinqMetaData.AdapterToUse;
-        }
-        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, entitiesTypes, useSchema, prefixDelimiter, adapter);
-      }
-      if (treeViewEntities.Nodes.Count == 0)
-        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData.GetType());
+      LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, linqMetaData, null, useSchema, prefixDelimiter);
     }
 
-    #region Overrides of Form
+    #region Overrides of UserControl
 
     /// <summary>
     /// Raises the CreateControl event.
@@ -66,18 +63,11 @@ namespace AW.Winforms.Helpers.LLBL
     protected override void OnCreateControl()
     {
       if (treeViewEntities.Nodes.Count == 0)
-        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
+        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, EntityHelper.GetEntitiesTypes(BaseType, _linqMetaData));
       base.OnCreateControl();
     }
 
     #endregion
-
-    public IEnumerable<Type> GetEntitiesTypes()
-    {
-      if (_baseType != null)
-        return MetaDataHelper.GetDescendants(_baseType);
-      return _linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(_linqMetaData);
-    }
 
     private void treeViewEntities_AfterSelect(object sender, TreeViewEventArgs e)
     {

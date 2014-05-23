@@ -67,7 +67,7 @@ namespace AW.Winforms.Helpers.EntityViewer
         _doingObjectBrowserNodeSelection = false;
       }
       toolStripStatusLabelSelectePath.Text = "";
-      toolStripStatusLabelInstance.Text = IsMdiChild || Modal ? string.Format("(({0})((FrmEntityViewer)Application.OpenForms[{1}]).ObjectBeingBrowsed)", ObjectBeingBrowsed.GetType(), AWHelper.GetIndexOfForm(this)) : "";
+      toolStripStatusLabelInstance.Text = IsMdiChild || TopLevel ? string.Format("(({0})((FrmEntityViewer)Application.OpenForms[{1}]).ObjectBeingBrowsed)", ObjectBeingBrowsed.GetType(), AWHelper.GetIndexOfForm(this)) : "";
       textBoxObjectBeingBrowsed.Text = toolStripStatusLabelInstance.Text;
       if (string.IsNullOrWhiteSpace(textBoxObjectBeingBrowsed.Text))
       {
