@@ -158,7 +158,7 @@ namespace AW.Winforms.Helpers
       var mdiParent = parent as Form;
       if (mdiParent != null && mdiParent.IsMdiContainer)
         childForm.MdiParent = mdiParent;
-      else
+      else if (!childForm.TopLevel)
         childForm.Parent = parent;
       childForm.WindowState = FormWindowState.Normal;
       childForm.Show();

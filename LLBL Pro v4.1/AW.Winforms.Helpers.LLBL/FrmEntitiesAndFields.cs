@@ -41,17 +41,17 @@ namespace AW.Winforms.Helpers.LLBL
         LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData.GetType());
     }
 
-    public static void ShowEntitiesAndFields(Type baseType, Form parent)
+    public static void ShowEntitiesAndFields(Type baseType, Form parent = null, bool useSchema = true)
     {
       if (_formSingleton == null || _formSingleton.contextMenuStrip1.InvokeRequired)
-        _formSingleton = new FrmEntitiesAndFields(baseType);
+        _formSingleton = new FrmEntitiesAndFields(baseType, useSchema);
       AWHelper.ShowForm(_formSingleton, parent);
     }
 
-    public static void ShowEntitiesAndFields(ILinqMetaData linqMetaData, Form parent)
+    public static void ShowEntitiesAndFields(ILinqMetaData linqMetaData, Form parent = null, bool useSchema = true)
     {
       if (_formSingleton == null || _formSingleton.contextMenuStrip1.InvokeRequired)
-        _formSingleton = new FrmEntitiesAndFields(linqMetaData);
+        _formSingleton = new FrmEntitiesAndFields(linqMetaData, useSchema);
       AWHelper.ShowForm(_formSingleton, parent);
     }
 

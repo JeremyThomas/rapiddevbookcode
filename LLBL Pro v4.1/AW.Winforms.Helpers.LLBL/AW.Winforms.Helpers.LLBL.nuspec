@@ -14,4 +14,10 @@
     <copyright>Copyright 2014</copyright>
     <tags>LLBL</tags>
   </metadata>
+  <files>
+    <file src="..\Lib\sliver.Windows.Forms.StateBrowser.dll" target="lib\net40\" />
+    <file src="..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 12.0\ReportViewer\Microsoft.ReportViewer.WinForms.dll" target="lib\net40\" />
+    <file src="..\Lib\AdvancedDataGridView.dll" target="lib\net40\" />
+  </files>
+
 </package>
