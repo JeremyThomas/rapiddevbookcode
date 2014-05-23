@@ -1,1 +1,1 @@
-nuget pack AW.Winforms.Helpers.LLBL.csproj -IncludeReferencedProjects
+nuget pack AW.Winforms.Helpers.LLBL.csproj -IncludeReferencedProjects -Symbols
