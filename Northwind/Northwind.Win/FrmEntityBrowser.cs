@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using AW.Helper;
+﻿using AW.Helper;
 using AW.Winforms.Helpers;
 using Northwind.DAL.Linq;
 using Northwind.DAL.SqlServer;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace Northwind.Win
 {

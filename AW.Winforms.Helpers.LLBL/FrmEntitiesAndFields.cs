@@ -6,7 +6,6 @@ using System.Linq.Dynamic;
 using System.Windows.Forms;
 using AW.Helper;
 using AW.Helper.LLBL;
-using AW.Winforms.Helpers.Controls;
 using AW.Winforms.Helpers.DataEditor;
 using AW.Winforms.Helpers.EntityViewer;
 using SD.LLBLGen.Pro.LinqSupportClasses;
@@ -25,33 +24,31 @@ namespace AW.Winforms.Helpers.LLBL
       InitializeComponent();
     }
 
-    public FrmEntitiesAndFields(Type baseType, bool useSchema = true)
+    public FrmEntitiesAndFields(Type baseType, bool useSchema = true, string prefixDelimiter = null)
       : this()
     {
       _baseType = baseType;
-      LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes(), useSchema);
+      LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, EntityHelper.GetEntitiesTypes(_baseType, _linqMetaData), useSchema, prefixDelimiter);
     }
 
-    public FrmEntitiesAndFields(ILinqMetaData linqMetaData, bool useSchema = true)
+    public FrmEntitiesAndFields(ILinqMetaData linqMetaData, bool useSchema = true, string prefixDelimiter = null)
       : this()
     {
       _linqMetaData = linqMetaData;
-      LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, GetEntitiesTypes(), useSchema);
-      if (treeViewEntities.Nodes.Count == 0)
-        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, _linqMetaData.GetType());
+      LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities.Nodes, linqMetaData, null, useSchema, prefixDelimiter);
     }
 
-    public static void ShowEntitiesAndFields(Type baseType, Form parent = null, bool useSchema = true)
+    public static void ShowEntitiesAndFields(Type baseType, Form parent = null, bool useSchema = true, string prefixDelimiter = null)
     {
       if (_formSingleton == null || _formSingleton.contextMenuStrip1.InvokeRequired)
-        _formSingleton = new FrmEntitiesAndFields(baseType, useSchema);
+        _formSingleton = new FrmEntitiesAndFields(baseType, useSchema, prefixDelimiter);
       AWHelper.ShowForm(_formSingleton, parent);
     }
 
-    public static void ShowEntitiesAndFields(ILinqMetaData linqMetaData, Form parent = null, bool useSchema = true)
+    public static void ShowEntitiesAndFields(ILinqMetaData linqMetaData, Form parent = null, bool useSchema = true, string prefixDelimiter = null)
     {
       if (_formSingleton == null || _formSingleton.contextMenuStrip1.InvokeRequired)
-        _formSingleton = new FrmEntitiesAndFields(linqMetaData, useSchema);
+        _formSingleton = new FrmEntitiesAndFields(linqMetaData, useSchema, prefixDelimiter);
       AWHelper.ShowForm(_formSingleton, parent);
     }
 
@@ -88,18 +85,11 @@ namespace AW.Winforms.Helpers.LLBL
     {
       gridDataEditor.bindingSourceEnumerable.CurrentChanged += bindingSourceEnumerable_CurrentChanged;
       if (treeViewEntities.Nodes.Count == 0)
-        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, GetEntitiesTypes());
+        LLBLWinformHelper.PopulateTreeViewWithSchema(treeViewEntities, EntityHelper.GetEntitiesTypes(_baseType, _linqMetaData));
       base.OnCreateControl();
     }
 
     #endregion
-
-    public IEnumerable<Type> GetEntitiesTypes()
-    {
-      if (_baseType != null)
-        return MetaDataHelper.GetDescendants(_baseType);
-      return _linqMetaData == null ? EntityHelper.GetEntitiesTypes() : EntityHelper.GetEntitiesTypes(_linqMetaData);
-    }
 
     private void treeViewEntities_ItemDrag(object sender, ItemDragEventArgs e)
     {

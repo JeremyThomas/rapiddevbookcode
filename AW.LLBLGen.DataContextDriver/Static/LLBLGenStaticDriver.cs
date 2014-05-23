@@ -177,7 +177,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           }
           catch (Exception e)
           {
-            GeneralHelper.TraceOut(e);
+            e.TraceOut();
           }
           
           //baseType.GetProperty("AdapterToUse")
@@ -194,7 +194,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception e)
       {
-        GeneralHelper.TraceOut(e);
+        e.TraceOut();
       }
     }
 
@@ -249,7 +249,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
       }
       catch (Exception e)
       {
-        var innerMostException = GeneralHelper.TraceOut(e);
+        var innerMostException = e.TraceOut();
         Application.OnThreadException(innerMostException);
         if (e == innerMostException)
           throw;

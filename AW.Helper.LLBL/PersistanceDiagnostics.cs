@@ -627,7 +627,7 @@ namespace AW.Helper.LLBL
       var displayNameAttributes = MetaDataHelper.GetDisplayNameAttributes(entity, field.Name);
       DisplayNames = displayNameAttributes.Select(dna => dna.DisplayName).JoinAsString();
       DisplayNameAttributeTypes = displayNameAttributes.JoinAsString();
-      SQLServerFieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(SQLServerDataAccessAdapter, field);
+      SQLServerFieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(SQLServerDataAccessAdapter, field);
     }
 
     /// <summary>

@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Specialized;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using AW.Data;
 using AW.Data.DaoClasses;
 using AW.Data.EntityClasses;
+using AW.Data.Linq;
 using AW.Helper;
 using AW.Helper.LLBL;
 using AW.Win.Properties;
@@ -15,6 +17,7 @@ using AW.Winforms.Helpers.LLBL;
 using AW.Winforms.Helpers.LLBL.PropGridEx;
 using AW.Winforms.Helpers.MostRecentlyUsedHandler;
 using AW.Winforms.Helpers.QueryRunner;
+using SD.LLBLGen.Pro.LinqSupportClasses;
 
 namespace AW.Win
 {
@@ -227,7 +230,7 @@ namespace AW.Win
 
     private void viewEntitiesAndFieldsToolStripMenuItem_Click(object sender, EventArgs e)
     {
-      var childForm = LaunchChildForm(typeof(FrmEntitiesAndFields), MetaSingletons.MetaData, true);
+      var childForm = LaunchChildForm(typeof(FrmEntitiesAndFields), MetaSingletons.MetaData, true, null);
       childForm.Tag = true;
     }
 
@@ -238,11 +241,9 @@ namespace AW.Win
 
     private FrmPersistantLocation ShowDataBrowser()
     {
-      var form = new FrmPersistantLocation {WindowSettingsName = "DataBrowser", Text = "Data Browser", Icon = Icon, Tag = true};
-
-      form.Controls.Add(new UsrCntrlEntityBrowser(MetaSingletons.MetaData) {Dock = DockStyle.Fill});
-       AWHelper.ShowForm(form, this);
-      return form;
+      var childForm = UsrCntrlEntityBrowser.ShowDataBrowser(MetaSingletons.MetaData, this); 
+      childForm.Tag = true;
+      return childForm;
     }
 
     private void organizationStructureToolStripMenuItem_Click(object sender, EventArgs e)
@@ -294,6 +295,5 @@ namespace AW.Win
       var ab = new AboutBox(moreInfo);;
       ab.ShowDialog(this);
     }
-
   }
 }

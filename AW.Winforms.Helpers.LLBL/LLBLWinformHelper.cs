@@ -199,10 +199,18 @@ namespace AW.Winforms.Helpers.LLBL
 
     #endregion
 
-    public static void PopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes, bool useSchema = true)
+    public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, ILinqMetaData linqMetaData = null, Type baseType = null, bool useSchema = true, string prefixDelimiter = null)
+    {
+      var entitiesTypes = EntityHelper.GetEntitiesTypes(baseType, linqMetaData).ToList();
+      PopulateTreeViewWithSchema(schemaTreeNodeCollection, entitiesTypes, useSchema, prefixDelimiter, EntityHelper.GetDataAccessAdapter(linqMetaData));
+      if (schemaTreeNodeCollection.Count == 0 && linqMetaData != null) 
+        PopulateTreeViewWithSchema(schemaTreeNodeCollection, linqMetaData.GetType());
+    }
+
+    public static void PopulateTreeViewWithSchema(TreeView entityTreeView, IEnumerable<Type> entitiesTypes, bool useSchema = true, string prefixDelimiter = null, IDataAccessAdapter adapter = null)
     {
       entityTreeView.Nodes.Clear();
-      PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes, useSchema);
+      PopulateTreeViewWithSchema(entityTreeView.Nodes, entitiesTypes, useSchema, prefixDelimiter, adapter);
     }
 
     public static void PopulateTreeViewWithSchema(TreeNodeCollection schemaTreeNodeCollection, IEnumerable<Type> entitiesTypes, bool useSchema = true, string prefixDelimiter = null, IDataAccessAdapter adapter = null)
@@ -210,19 +218,19 @@ namespace AW.Winforms.Helpers.LLBL
       IElementCreatorCore elementCreator = null;     
       var schemas = new Dictionary<string, TreeNode>();
       var prefixesToGroupBy = new Dictionary<string, TreeNode>();
-      var usePrefixes = !string.IsNullOrWhiteSpace(prefixDelimiter);
-      var entityNodes = new Dictionary<Type,Tuple<TreeNode, IEntityCore>>();
+      var usePrefixes = !String.IsNullOrWhiteSpace(prefixDelimiter);
+      var entityNodes = new Dictionary<Type, Tuple<TreeNode, IEntityCore>>();
       foreach (var entityType in entitiesTypes.OrderBy(t => t.Name).ToList())
       {
         if (elementCreator == null)
           elementCreator = EntityHelper.CreateElementCreator(entityType);
         var entity = LinqUtils.CreateEntityInstanceFromEntityType(entityType, elementCreator);
-        var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(entity, adapter);
+        var fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(entity, adapter);
         var treeNodeCollectionToAddTo = schemaTreeNodeCollection;
         if (fieldPersistenceInfo != null)
         {            
           var schema = fieldPersistenceInfo.SourceSchemaName;
-          if (useSchema && !string.IsNullOrWhiteSpace(schema))
+          if (useSchema && !String.IsNullOrWhiteSpace(schema))
           {
             TreeNode schemaTreeNode;
             if (!schemas.TryGetValue(schema, out schemaTreeNode))
@@ -236,7 +244,7 @@ namespace AW.Winforms.Helpers.LLBL
           if (usePrefixes)
           {
             var prefix = fieldPersistenceInfo.SourceObjectName.Before(prefixDelimiter);
-            if (!string.IsNullOrWhiteSpace(prefix))
+            if (!String.IsNullOrWhiteSpace(prefix))
             {
               TreeNode prefixTreeNode;
               var prefixKey = useSchema ? schema + prefix : prefix;
@@ -293,7 +301,7 @@ namespace AW.Winforms.Helpers.LLBL
           if (field != null)
           {
             fieldNode.Text = CreateFieldText(field);
-            fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafetly(field, adapter);
+            fieldPersistenceInfo = EntityHelper.GetFieldPersistenceInfoSafely(field, adapter);
             var fkNavigator = field.IsForeignKey ? "Navigator: " + EntityHelper.GetNavigatorNames(entity, field.Name).JoinAsString() : "";
             fieldNode.ToolTipText = CreateFieldToolTipText(entity, fieldPersistenceInfo, fieldNode.Tag as PropertyDescriptor, fkNavigator);
           }
