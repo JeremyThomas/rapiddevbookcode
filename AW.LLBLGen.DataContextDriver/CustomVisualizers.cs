@@ -54,7 +54,7 @@ namespace AW.LLBLGen.DataContextDriver
     {
       if (linqMetaData == null)
         return false;
-      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, LLBLGenDriverHelper.GetEntityBaseProperties(typeof(EntityBase)).ToArray()), "Data Browser");
+      PanelManager.DisplayControl(new UsrCntrlEntityBrowser(linqMetaData, useSchema, prefixDelimiter, ensureFilteringEnabled, MembersToExcludeCache.GetMembersToExclude(typeof(EntityBase))), "Data Browser");
       return true;
     }
 
