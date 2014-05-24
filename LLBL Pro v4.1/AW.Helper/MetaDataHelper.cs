@@ -452,7 +452,7 @@ namespace AW.Helper
     /// <returns> The properties to display in LINQPad's Dump </returns>
     public static IEnumerable<PropertyDescriptor> GetPropertiesToDisplay(Type type)
     {
-      return from propertyDescriptor in ListBindingHelper.GetListItemProperties(type).Cast<PropertyDescriptor>()
+      return from propertyDescriptor in ListBindingHelper.GetListItemProperties(type).AsEnumerable()
              where (!typeof (IList).IsAssignableFrom(propertyDescriptor.PropertyType) || TypeDescriptor.GetConverter(typeof (Image)).CanConvertFrom(propertyDescriptor.PropertyType))
              select propertyDescriptor;
     }

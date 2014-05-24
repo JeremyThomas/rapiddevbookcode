@@ -618,25 +618,5 @@ namespace AW.LLBLGen.DataContextDriver.Static
     #endregion
 
     #endregion
-
-    public static IEnumerable<string> GetEntityBaseProperties(Type elementType)
-    {
-      if (typeof (IEntityCore).IsAssignableFrom(elementType))
-      {
-        var membersToExclude = typeof (EntityBase).GetProperties().Select(p => p.Name)
-          .Union(typeof (EntityBase2).GetProperties().Select(p => p.Name)).Distinct();
-        if (typeof (IEntity).IsAssignableFrom(elementType))
-        {
-          // remove alwaysFetch/AlreadyFetched flag properties
-          membersToExclude = membersToExclude
-            .Union(elementType.GetProperties()
-              .Where(p => p.PropertyType == typeof (bool) &&
-                          (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch") || p.Name.EndsWith("NewIfNotFound")))
-              .Select(p => p.Name));
-        }
-        return membersToExclude.Distinct();
-      }
-      return Enumerable.Empty<string>();
-    }
   }
 }

@@ -119,7 +119,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
     /// <returns> </returns>
     public override ICustomMemberProvider GetCustomDisplayMemberProvider(object objectToWrite)
     {
-      return LLBLMemberProvider.CreateCustomDisplayMemberProviderIfNeeded(objectToWrite);
+      return LLBLMemberProvider.CreateCustomDisplayMemberProviderIfNeeded(objectToWrite, _membersToExclude);
     }
 
     /// <summary>
@@ -137,7 +137,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
         {
           case DisplayInGrid.ExcludeEntityBaseProperties:
             var elementType = LinqUtils.DetermineSetElementType(objectToDisplay.GetType());
-            options.MembersToExclude = LLBLGenDriverHelper.GetEntityBaseProperties(elementType).Union(_membersToExclude).ToArray();
+            options.MembersToExclude = MembersToExcludeCache.GetMembersToExclude(elementType, _membersToExclude);
             break;
           case DisplayInGrid.UseEditableGrid:
           case DisplayInGrid.UseEditableGridPaged:
@@ -149,7 +149,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
             }
             if (toDisplay != null)
             {
-              options.MembersToExclude = LLBLGenDriverHelper.GetEntityBaseProperties(MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToDisplay)).Union(_membersToExclude).ToArray();
+              options.MembersToExclude = MembersToExcludeCache.GetMembersToExclude(MetaDataHelper.GetObjectTypeorEnumerableItemType(objectToDisplay), _membersToExclude);
               CustomVisualizers.DisplayInGrid(toDisplay, _howToDisplayInGrid == DisplayInGrid.UseEditableGrid ? (ushort) 0 : LINQPad.CustomVisualizers.DefaultPageSize, options);
               return;
             }
@@ -179,7 +179,7 @@ namespace AW.LLBLGen.DataContextDriver.Static
           {
             e.TraceOut();
           }
-          
+
           //baseType.GetProperty("AdapterToUse")
           var type = assembly.GetTypes().SingleOrDefault(t => t.Name.Contains("CommonDaoBase") && t.IsClass);
           if (type == null)
