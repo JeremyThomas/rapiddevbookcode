@@ -43,7 +43,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using SD.LLBLGen.Pro.ORMSupportClasses;
 
 namespace AW.Helper.LLBL
 {
@@ -56,18 +55,20 @@ namespace AW.Helper.LLBL
 
     private static readonly object Semaphore = new object();
     private static readonly Dictionary<Type, List<PropertyDescriptor>> Cache = new Dictionary<Type, List<PropertyDescriptor>>();
+    private static readonly Dictionary<Type, List<PropertyDescriptor>> AlreadyFetchedCache = new Dictionary<Type, List<PropertyDescriptor>>();
+    private static readonly Dictionary<PropertyDescriptor, PropertyDescriptor> AlreadyFetchedMatchCache = new Dictionary<PropertyDescriptor, PropertyDescriptor>();
 
     #endregion
 
     /// <summary>
-    /// Gets the property descriptors for the type specified. If they're not available in the cache, they're added.
+    ///   Gets the property descriptors for the type specified. If they're not available in the cache, they're added.
     /// </summary>
     /// <param name="entityType">Type of the entity.</param>
     /// <param name="otherMembersToExclude">The other members to exclude.</param>
     /// <returns></returns>
     /// <remarks>
-    /// Only returns descriptors for properties which don't implement IEntityCollection,
-    /// don't implement IEntity and which are browsable and which aren't in the list of Members To Exclude.
+    ///   Only returns descriptors for properties which don't implement IEntityCollection,
+    ///   don't implement IEntity and which are browsable and which aren't in the list of Members To Exclude.
     /// </remarks>
     public static List<PropertyDescriptor> GetDescriptors(Type entityType, IEnumerable<string> otherMembersToExclude = null)
     {
@@ -76,16 +77,37 @@ namespace AW.Helper.LLBL
         List<PropertyDescriptor> descriptors;
         if (!Cache.TryGetValue(entityType, out descriptors))
         {
-          var rawDescriptors = TypeDescriptor.GetProperties(entityType);
+          var rawDescriptors = TypeDescriptor.GetProperties(entityType).AsEnumerable();
           var membersToExclude = MembersToExcludeCache.GetMembersToExclude(entityType, otherMembersToExclude);
-          descriptors = rawDescriptors.AsEnumerable().Where(descriptor => descriptor.IsBrowsable
-                                                                          && !membersToExclude.Contains(descriptor.Name)
-                                                                          && !typeof (IEntityCollection).IsAssignableFrom(descriptor.PropertyType)
-                                                                          && !typeof (IEntity).IsAssignableFrom(descriptor.PropertyType)).ToList();
+          descriptors = rawDescriptors.Where(descriptor => descriptor.IsBrowsable
+                                                                          && !membersToExclude.Contains(descriptor.Name)).ToList();
           Cache[entityType] = descriptors;
+          AlreadyFetchedCache[entityType] = rawDescriptors.Where(p => p.PropertyType == typeof(bool) &&
+                                                                   p.Name.StartsWith(MembersToExcludeCache.AlreadyFetchedPrefix)).ToList();
         }
         return descriptors;
       }
+    }
+
+    public static PropertyDescriptor GetAlreadyFetchedDescriptor(PropertyDescriptor selfServicingPropertyDescriptor)
+    {
+      lock (Semaphore)
+      {
+        PropertyDescriptor alreadyFetchedDescriptor;
+        if (!AlreadyFetchedMatchCache.TryGetValue(selfServicingPropertyDescriptor, out alreadyFetchedDescriptor))
+        {
+          var alreadyFetched = GetAlreadyFetchedDescriptors(selfServicingPropertyDescriptor);
+          alreadyFetchedDescriptor = alreadyFetched.FirstOrDefault(p => p.Name == MembersToExcludeCache.AlreadyFetchedPrefix + selfServicingPropertyDescriptor.Name);
+          AlreadyFetchedMatchCache[selfServicingPropertyDescriptor] = alreadyFetchedDescriptor;
+        }
+        return alreadyFetchedDescriptor;
+      }
+    }
+
+    private static List<PropertyDescriptor> GetAlreadyFetchedDescriptors(PropertyDescriptor selfServicingPropertyDescriptor)
+    {
+      GetDescriptors(selfServicingPropertyDescriptor.ComponentType);
+      return AlreadyFetchedCache[selfServicingPropertyDescriptor.ComponentType];
     }
   }
 }

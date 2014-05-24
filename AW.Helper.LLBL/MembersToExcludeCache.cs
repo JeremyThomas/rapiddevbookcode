@@ -52,6 +52,11 @@ namespace AW.Helper.LLBL
   /// </summary>
   public static class MembersToExcludeCache
   {
+    /// <summary>
+    /// The AlreadyFetched prefix
+    /// </summary>
+    public const string AlreadyFetchedPrefix = "AlreadyFetched";
+
     #region Class Member Declarations
 
     private static readonly object Semaphore = new object();
@@ -78,7 +83,7 @@ namespace AW.Helper.LLBL
            entityBasePropertyNames = entityBasePropertyNames
             .Union(elementType.GetProperties()
               .Where(p => p.PropertyType == typeof(bool) &&
-                          (p.Name.StartsWith("AlreadyFetched") || p.Name.StartsWith("AlwaysFetch") || p.Name.EndsWith("NewIfNotFound")))
+                          (p.Name.StartsWith(AlreadyFetchedPrefix) || p.Name.StartsWith("AlwaysFetch") || p.Name.EndsWith("NewIfNotFound")))
               .Select(p => p.Name));
         }
         return entityBasePropertyNames;

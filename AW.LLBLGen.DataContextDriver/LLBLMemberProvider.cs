@@ -50,7 +50,27 @@ namespace AW.LLBLGen.DataContextDriver
 
     IEnumerable<object> ICustomMemberProvider.GetValues()
     {
-      return _propsToWrite.Select(p => p.GetValue(_objectToWrite));
+      return _propsToWrite.Select(GetValueIfAlreadyFetched);
+    }
+
+    private object GetValueIfAlreadyFetched(PropertyDescriptor p)
+    {
+      if (IsSelfServicingProperty(p))
+      {
+        var alreadyFetchedDescriptor = PropertyDescriptorCache.GetAlreadyFetchedDescriptor(p);
+        if (alreadyFetchedDescriptor != null)
+        {
+          var alreadyFetched = (Boolean?) alreadyFetchedDescriptor.GetValue(_objectToWrite);
+          if (!alreadyFetched.GetValueOrDefault())
+            return null;
+        }
+      }
+      return p.GetValue(_objectToWrite);
+    }
+
+    private static bool IsSelfServicingProperty(PropertyDescriptor propertyDescriptor)
+    {
+      return typeof (IEntityCollection).IsAssignableFrom(propertyDescriptor.PropertyType) || typeof (IEntity).IsAssignableFrom(propertyDescriptor.PropertyType);
     }
   }
 }
