@@ -79,7 +79,7 @@ namespace AW.Helper.LLBL
         {
           var rawDescriptors = TypeDescriptor.GetProperties(entityType).AsEnumerable();
           var membersToExclude = MembersToExcludeCache.GetMembersToExclude(entityType, otherMembersToExclude);
-          descriptors = rawDescriptors.Where(descriptor => descriptor.IsBrowsable
+          descriptors = rawDescriptors.Where(descriptor => (descriptor.IsBrowsable || EntityHelper.IsEntityCore(descriptor))
                                                                           && !membersToExclude.Contains(descriptor.Name)).ToList();
           Cache[entityType] = descriptors;
           AlreadyFetchedCache[entityType] = rawDescriptors.Where(p => p.PropertyType == typeof(bool) &&

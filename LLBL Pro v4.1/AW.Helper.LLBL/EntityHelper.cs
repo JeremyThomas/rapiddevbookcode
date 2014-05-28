@@ -890,7 +890,7 @@ namespace AW.Helper.LLBL
       return IsEntityCore(propertyDescriptor.ComponentType);
     }
 
-    private static bool IsEntityCore(Type type, bool includeGenericParameters = false)
+    public static bool IsEntityCore(Type type, bool includeGenericParameters = false)
     {
       var isEntityCore = typeof (IEntityCore).IsAssignableFrom(type);
       if (isEntityCore || !includeGenericParameters) return isEntityCore;

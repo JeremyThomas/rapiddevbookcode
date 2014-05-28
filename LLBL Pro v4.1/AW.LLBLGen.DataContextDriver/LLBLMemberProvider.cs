@@ -10,10 +10,6 @@ namespace AW.LLBLGen.DataContextDriver
 {
   public class LLBLMemberProvider : ICustomMemberProvider
   {
-    public static bool IsEntity(Type t)
-    {
-      return typeof (IEntityCore).IsAssignableFrom(t);
-    }
 
     /// <summary>
     ///   Creates the LLBL display member provider if objectToWrite does not implement ICustomMemberProvider and is a LLBL
@@ -26,7 +22,7 @@ namespace AW.LLBLGen.DataContextDriver
     {
       var objectToWriteType = objectToWrite.GetType();
       var isCustomMemberProvider = objectToWriteType.GetInterface("ICustomMemberProvider", true) != null;
-      return !isCustomMemberProvider && IsEntity(objectToWriteType) ? new LLBLMemberProvider(objectToWrite, objectToWriteType, membersToExclude) : null;
+      return !isCustomMemberProvider && EntityHelper.IsEntityCore(objectToWriteType) ? new LLBLMemberProvider(objectToWrite, objectToWriteType, membersToExclude) : null;
     }
 
     private readonly object _objectToWrite;
