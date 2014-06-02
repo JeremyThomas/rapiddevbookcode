@@ -140,6 +140,7 @@
       this.queryRunner1.Location = new System.Drawing.Point(3, 3);
       this.queryRunner1.Name = "queryRunner1";
       this.queryRunner1.Size = new System.Drawing.Size(904, 592);
+      this.queryRunner1.SplitterDistance = 350;
       this.queryRunner1.TabIndex = 0;
       this.queryRunner1.DragDrop += new System.Windows.Forms.DragEventHandler(this.tabControl_DragDrop);
       this.queryRunner1.DragOver += new System.Windows.Forms.DragEventHandler(this.tabControl_DragOver);

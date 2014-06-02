@@ -69,13 +69,14 @@
     <Reference Include="AW.Helper.LLBL">
       <HintPath>..\AW.Helper.LLBL\bin\Debug\AW.Helper.LLBL.dll</HintPath>
     </Reference>
-    <Reference Include="CSScriptLibrary.v3.5">
-      <HintPath>..\Lib\CSScriptLibrary.v3.5.dll</HintPath>
+    <Reference Include="CSScriptLibrary">
+      <HintPath>..\packages\CS-Script.3.7.2.0\lib\net40\CSScriptLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Dynamic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=68293a411f0cabcc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DynamicQuery.1.0\lib\35\Dynamic.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.ConnectionUI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=f4ca07f51760da93, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\DataConnectionDialog.1.2\Lib\Microsoft.Data.ConnectionUI.dll</HintPath>
@@ -88,6 +89,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 12.0\ReportViewer\Microsoft.ReportViewer.WinForms.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.CSharp">
+      <HintPath>..\packages\CS-Script.3.7.2.0\lib\net40\Mono.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

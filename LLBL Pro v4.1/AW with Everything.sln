@@ -22,7 +22,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BDC4C511-A2CA-4CCC-9960-748D511B5BAC}"
 	ProjectSection(SolutionItems) = preProject
-		Lib\CSScriptLibrary.v3.5.dll = Lib\CSScriptLibrary.v3.5.dll
 		Lib\sliver.Windows.Forms.StateBrowser.dll = Lib\sliver.Windows.Forms.StateBrowser.dll
 	EndProjectSection
 EndProject
@@ -89,11 +88,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hawkeye", "Hawkeye", "{A951
 		Lib\ACorns.Hawkeye.Injector.dll = Lib\ACorns.Hawkeye.Injector.dll
 		Lib\ACorns.Hawkeye.Injector.pdb = Lib\ACorns.Hawkeye.Injector.pdb
 		Lib\ACorns.PropertyGridExtender.dll = Lib\ACorns.PropertyGridExtender.dll
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9E62DAD6-C73A-49CA-9906-14E28325549C}"
-	ProjectSection(SolutionItems) = preProject
-		Lib\Test\NMock2.dll = Lib\Test\NMock2.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{E041D28F-1794-4FD2-8CB5-034464537EAF}"
@@ -661,7 +655,6 @@ Global
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|x86.ActiveCfg = Debug|Any CPU
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release|x86.ActiveCfg = Debug|Any CPU
 		{3FC1967C-B85A-4455-8850-F1659B8EC163}.Debug no unit tests|Any CPU.ActiveCfg = Debug|Any CPU
 		{3FC1967C-B85A-4455-8850-F1659B8EC163}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
@@ -682,7 +675,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F90642C7-E5E0-4B67-A97C-464F8697A452} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{A951B179-B81E-42E2-81CD-242D8E1D278D} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
-		{9E62DAD6-C73A-49CA-9906-14E28325549C} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{23799F0F-BB39-4943-92D9-5356321F4A53} = {BDC4C511-A2CA-4CCC-9960-748D511B5BAC}
 		{FFC5B55E-9157-4CE6-81BD-E593E4C08422} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
 		{D8041984-1823-4672-9B6E-3E99AB6A3A7A} = {0A1DF75C-9F0C-4B2E-BD03-316671ED8146}
