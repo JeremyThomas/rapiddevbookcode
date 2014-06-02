@@ -722,7 +722,7 @@ namespace AW.Winforms.Helpers.Controls
         searchToolBar.Hide();
     }
 
-    private void searchToolBar_Search(object sender, ACS.UserControls.SearchToolBarSearchEventArgs e)
+    private void searchToolBar_Search(object sender, ADGV.SearchToolBarSearchEventArgs e)
     {
       var startColumn = 0;
       var startRow = 0;

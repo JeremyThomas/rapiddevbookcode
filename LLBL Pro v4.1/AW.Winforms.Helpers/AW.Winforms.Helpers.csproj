@@ -62,8 +62,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AdvancedDataGridView">
-      <HintPath>..\Lib\AdvancedDataGridView.dll</HintPath>
+    <Reference Include="AdvancedDataGridView, Version=0.1.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ADGV.0.1.0.10\lib\net40\AdvancedDataGridView.dll</HintPath>
     </Reference>
     <Reference Include="AW.Helper.LLBL">
       <HintPath>..\AW.Helper.LLBL\bin\Debug\AW.Helper.LLBL.dll</HintPath>
@@ -156,12 +157,6 @@
     </Compile>
     <Compile Include="Controls\GridDataEditor.Designer.cs">
       <DependentUpon>GridDataEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\SearchToolBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\SearchToolBar.designer.cs">
-      <DependentUpon>SearchToolBar.cs</DependentUpon>
     </Compile>
     <Compile Include="DataEditor\DataEditorExtensions.cs" />
     <Compile Include="DataEditor\FrmDataEditor.cs">
@@ -290,12 +285,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GridDataEditor.resx">
       <DependentUpon>GridDataEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\SearchToolBar.resx">
-      <DependentUpon>SearchToolBar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\SearchToolBar.ru.resx">
-      <DependentUpon>SearchToolBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataEditor\FrmDataEditor.resx">
       <DependentUpon>FrmDataEditor.cs</DependentUpon>

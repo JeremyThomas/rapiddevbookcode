@@ -1,4 +1,6 @@
-﻿namespace AW.Winforms.Helpers.Controls
+﻿using ADGV;
+
+namespace AW.Winforms.Helpers.Controls
 {
   partial class GridDataEditor
   {
@@ -87,7 +89,7 @@
       this.tabControlGrids = new System.Windows.Forms.TabControl();
       this.tabPageDataGrid = new System.Windows.Forms.TabPage();
       this.tabPageDataGridView = new System.Windows.Forms.TabPage();
-      this.searchToolBar = new ACS.UserControls.SearchToolBar();
+      this.searchToolBar = new ADGV.SearchToolBar();
       ((System.ComponentModel.ISupportInitialize)(this.bindingSourceEnumerable)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.bindingNavigatorData)).BeginInit();
       this.bindingNavigatorData.SuspendLayout();
@@ -603,7 +605,7 @@
       this.dataGridEnumerable.HeaderForeColor = System.Drawing.SystemColors.ControlText;
       this.dataGridEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridEnumerable.Name = "dataGridEnumerable";
-      this.dataGridEnumerable.Size = new System.Drawing.Size(1321, 516);
+      this.dataGridEnumerable.Size = new System.Drawing.Size(1321, 489);
       this.dataGridEnumerable.TabIndex = 6;
       this.dataGridEnumerable.DataSourceChanged += new System.EventHandler(this.dataGridEnumerable_DataSourceChanged);
       this.dataGridEnumerable.Navigate += new System.Windows.Forms.NavigateEventHandler(this.dataGridEnumerable_Navigate);
@@ -613,10 +615,10 @@
       this.tabControlGrids.Controls.Add(this.tabPageDataGrid);
       this.tabControlGrids.Controls.Add(this.tabPageDataGridView);
       this.tabControlGrids.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControlGrids.Location = new System.Drawing.Point(0, 25);
+      this.tabControlGrids.Location = new System.Drawing.Point(0, 52);
       this.tabControlGrids.Name = "tabControlGrids";
       this.tabControlGrids.SelectedIndex = 0;
-      this.tabControlGrids.Size = new System.Drawing.Size(1335, 548);
+      this.tabControlGrids.Size = new System.Drawing.Size(1335, 521);
       this.tabControlGrids.TabIndex = 7;
       this.tabControlGrids.SelectedIndexChanged += new System.EventHandler(this.tabControlGrids_SelectedIndexChanged);
       // 
@@ -626,7 +628,7 @@
       this.tabPageDataGrid.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGrid.Name = "tabPageDataGrid";
       this.tabPageDataGrid.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGrid.Size = new System.Drawing.Size(1327, 522);
+      this.tabPageDataGrid.Size = new System.Drawing.Size(1327, 495);
       this.tabPageDataGrid.TabIndex = 0;
       this.tabPageDataGrid.Text = "DataGrid";
       this.tabPageDataGrid.UseVisualStyleBackColor = true;
@@ -651,11 +653,11 @@
       this.searchToolBar.MinimumSize = new System.Drawing.Size(0, 27);
       this.searchToolBar.Name = "searchToolBar";
       this.searchToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this.searchToolBar.Size = new System.Drawing.Size(0, 27);
+      this.searchToolBar.Size = new System.Drawing.Size(1335, 27);
       this.searchToolBar.TabIndex = 8;
       this.searchToolBar.Text = "searchToolBar1";
       this.searchToolBar.Visible = false;
-      this.searchToolBar.Search += new ACS.UserControls.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
+      this.searchToolBar.Search += new ADGV.SearchToolBarSearchEventHandler(this.searchToolBar_Search);
       this.searchToolBar.VisibleChanged += new System.EventHandler(this.searchToolBar_VisibleChanged);
       // 
       // GridDataEditor
@@ -689,7 +691,7 @@
 
     #endregion
 
-		private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem1;
+    private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem1;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem1;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMovePreviousItem1;
     private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator3;
@@ -697,12 +699,12 @@
     private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator4;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem1;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem1;
-		private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator5;
+    private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator5;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
     private System.Windows.Forms.ToolStripComboBox toolStripComboBoxClipboardCopyMode;
-		private System.Windows.Forms.ToolStripButton copyToolStripButton;
+    private System.Windows.Forms.ToolStripButton copyToolStripButton;
     private System.Windows.Forms.ToolStripLabel toolStripLabelDeleteCount;
-		private System.Windows.Forms.ToolStripLabel toolStripLabelSaveResult;
+    private System.Windows.Forms.ToolStripLabel toolStripLabelSaveResult;
     protected System.Windows.Forms.BindingSource bindingSourcePaging;
     private System.Windows.Forms.ToolStripLabel bindingNavigatorCountItem;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveFirstItem;
@@ -712,21 +714,21 @@
     private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator1;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveNextItem;
     private System.Windows.Forms.ToolStripButton bindingNavigatorMoveLastItem;
-		private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
-		public System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem1;
-		public System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem1;
-		public System.Windows.Forms.ToolStripButton printToolStripButton;
-		public System.Windows.Forms.BindingNavigator bindingNavigatorData;
+    private System.Windows.Forms.ToolStripSeparator bindingNavigatorSeparator2;
+    public System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem1;
+    public System.Windows.Forms.ToolStripButton bindingNavigatorDeleteItem1;
+    public System.Windows.Forms.ToolStripButton printToolStripButton;
+    public System.Windows.Forms.BindingNavigator bindingNavigatorData;
     public ADGV.AdvancedDataGridView dataGridViewEnumerable;
-		public System.Windows.Forms.ToolStripButton toolStripButtonCancelEdit;
-		public System.Windows.Forms.BindingNavigator bindingNavigatorPaging;
-		public System.Windows.Forms.ToolStripButton toolStripButtonObjectListViewVisualizer;
-		public System.Windows.Forms.ToolStripButton saveToolStripButton;
-		public System.Windows.Forms.BindingSource bindingSourceEnumerable;
-		private System.Windows.Forms.ToolStripButton toolStripButtonObjectBrowser;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+    public System.Windows.Forms.ToolStripButton toolStripButtonCancelEdit;
+    public System.Windows.Forms.BindingNavigator bindingNavigatorPaging;
+    public System.Windows.Forms.ToolStripButton toolStripButtonObjectListViewVisualizer;
+    public System.Windows.Forms.ToolStripButton saveToolStripButton;
+    public System.Windows.Forms.BindingSource bindingSourceEnumerable;
+    private System.Windows.Forms.ToolStripButton toolStripButtonObjectBrowser;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     private System.Windows.Forms.DataGrid dataGridEnumerable;
     private System.Windows.Forms.TabControl tabControlGrids;
     private System.Windows.Forms.TabPage tabPageDataGrid;
@@ -735,7 +737,7 @@
     private System.Windows.Forms.ToolStripButton toolStripButtonClearFilters;
     private System.Windows.Forms.ToolStripButton toolStripButtonClearSort;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-    private ACS.UserControls.SearchToolBar searchToolBar;
+    private SearchToolBar searchToolBar;
     private System.Windows.Forms.ToolStripButton toolStripButtonSearch;
     private System.Windows.Forms.ToolStripButton toolStripButtonUnPage;
     private System.Windows.Forms.ToolStripLabel toolStripLabel1;
