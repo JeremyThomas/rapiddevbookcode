@@ -99,6 +99,7 @@
     <Compile Include="TypeConverters\BaseNumericConverter.cs" />
     <Compile Include="TypeConverters\NumericConverters.cs" />
     <Compile Include="TypeConverters\TypeConverterHelper.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="ValueTypeWrapper.cs" />
     <Compile Include="VisualStudioHelper.cs" />
   </ItemGroup>

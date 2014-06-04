@@ -583,7 +583,7 @@ namespace AW.Winforms.Helpers.LLBL
 
     private static string FormatTypeName(Type propertyType, bool includeNamespace = false)
     {
-      return GetFormatTypeName == null ? (includeNamespace ? propertyType.ToString() : propertyType.Name) : GetFormatTypeName(propertyType, includeNamespace);
+      return GetFormatTypeName == null ? (includeNamespace ? propertyType.ToString() : TypeExtensions.FriendlyName(propertyType)) : GetFormatTypeName(propertyType, includeNamespace);
     }
   }
 }

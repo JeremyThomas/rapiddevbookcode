@@ -605,7 +605,7 @@ namespace AW.Winforms.Helpers.Controls
       this.dataGridEnumerable.HeaderForeColor = System.Drawing.SystemColors.ControlText;
       this.dataGridEnumerable.Location = new System.Drawing.Point(3, 3);
       this.dataGridEnumerable.Name = "dataGridEnumerable";
-      this.dataGridEnumerable.Size = new System.Drawing.Size(1321, 516);
+      this.dataGridEnumerable.Size = new System.Drawing.Size(1321, 489);
       this.dataGridEnumerable.TabIndex = 6;
       this.dataGridEnumerable.DataSourceChanged += new System.EventHandler(this.dataGridEnumerable_DataSourceChanged);
       this.dataGridEnumerable.Navigate += new System.Windows.Forms.NavigateEventHandler(this.dataGridEnumerable_Navigate);
@@ -615,10 +615,10 @@ namespace AW.Winforms.Helpers.Controls
       this.tabControlGrids.Controls.Add(this.tabPageDataGrid);
       this.tabControlGrids.Controls.Add(this.tabPageDataGridView);
       this.tabControlGrids.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.tabControlGrids.Location = new System.Drawing.Point(0, 25);
+      this.tabControlGrids.Location = new System.Drawing.Point(0, 52);
       this.tabControlGrids.Name = "tabControlGrids";
       this.tabControlGrids.SelectedIndex = 0;
-      this.tabControlGrids.Size = new System.Drawing.Size(1335, 548);
+      this.tabControlGrids.Size = new System.Drawing.Size(1335, 521);
       this.tabControlGrids.TabIndex = 7;
       this.tabControlGrids.SelectedIndexChanged += new System.EventHandler(this.tabControlGrids_SelectedIndexChanged);
       // 
@@ -628,7 +628,7 @@ namespace AW.Winforms.Helpers.Controls
       this.tabPageDataGrid.Location = new System.Drawing.Point(4, 22);
       this.tabPageDataGrid.Name = "tabPageDataGrid";
       this.tabPageDataGrid.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageDataGrid.Size = new System.Drawing.Size(1327, 522);
+      this.tabPageDataGrid.Size = new System.Drawing.Size(1327, 495);
       this.tabPageDataGrid.TabIndex = 0;
       this.tabPageDataGrid.Text = "DataGrid";
       this.tabPageDataGrid.UseVisualStyleBackColor = true;
@@ -653,7 +653,7 @@ namespace AW.Winforms.Helpers.Controls
       this.searchToolBar.MinimumSize = new System.Drawing.Size(0, 27);
       this.searchToolBar.Name = "searchToolBar";
       this.searchToolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-      this.searchToolBar.Size = new System.Drawing.Size(0, 27);
+      this.searchToolBar.Size = new System.Drawing.Size(1335, 27);
       this.searchToolBar.TabIndex = 8;
       this.searchToolBar.Text = "searchToolBar1";
       this.searchToolBar.Visible = false;
