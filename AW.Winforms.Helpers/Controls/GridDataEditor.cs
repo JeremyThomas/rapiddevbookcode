@@ -42,6 +42,21 @@ namespace AW.Winforms.Helpers.Controls
       HumanizedEnumConverter.AddEnumerationConverter(typeof(DataGridViewClipboardCopyMode));
       dataGridViewEnumerable.AutoGenerateColumns = true;      
       toolStripButtonShowDatagrid_Click(null, null);
+      var toolStripItemFromBeginButton = searchToolBar.Items["fromBeginButton"] as ToolStripButton;
+      if (toolStripItemFromBeginButton != null)
+      {
+        toolStripItemFromBeginButton.Checked = false;
+        searchToolBar.Items.Remove(toolStripItemFromBeginButton);
+      }
+      MoveLastItem(3);
+      MoveLastItem(2);
+    }
+
+    private void MoveLastItem(int offset)
+    {
+      var toolStripItem = searchToolBar.Items[searchToolBar.Items.Count - 1];
+      searchToolBar.Items.Remove(toolStripItem);
+      searchToolBar.Items.Insert(searchToolBar.Items.Count - offset, toolStripItem);
     }
 
     /// <summary>

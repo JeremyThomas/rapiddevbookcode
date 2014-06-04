@@ -649,7 +649,6 @@ Global
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|Any CPU.Build.0 = Debug|Any CPU
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug no unit tests|x86.ActiveCfg = Debug|Any CPU
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|Any CPU.ActiveCfg = Debug|Any CPU
 		{77DFF2FC-CDD8-4DD9-AFF7-4A4AE47982F1}.Release - Test|Any CPU.Build.0 = Debug|Any CPU
