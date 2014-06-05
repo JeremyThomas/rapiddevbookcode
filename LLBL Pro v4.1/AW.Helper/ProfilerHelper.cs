@@ -88,7 +88,7 @@ namespace AW.Helper
       catch (Exception e)
       {
         OrmProfilerStatus = "Error Initializing OrmProfiler " + e.Message;
-        GeneralHelper.TraceOut(e);
+        e.TraceOut();
         return false;
       }
     }

@@ -538,7 +538,7 @@ namespace AW.Helper
           }
           catch (Exception e)
           {
-            GeneralHelper.TraceOut(e);
+            e.TraceOut();
           }
         }
       return result;
