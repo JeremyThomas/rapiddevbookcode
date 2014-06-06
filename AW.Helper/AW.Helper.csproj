@@ -61,6 +61,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.SqlLocalDb">
+      <HintPath>..\packages\System.Data.SqlLocalDb.1.9.0.0\lib\net20\System.Data.SqlLocalDb.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data.DataSetExtensions">
