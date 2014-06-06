@@ -235,7 +235,7 @@ namespace Northwind.DAL.SqlServer
     {
       var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(ConnectionString);
          var dataSource = sqlConnectionStringBuilder.DataSource;
-      foreach (var sqlInstanceName in DataHelper.GetSqlInstanceNames().Where(sqlInstanceName => dataSource != sqlInstanceName))
+         foreach (var sqlInstanceName in DataHelper.GetSqlLocalDBAndLocalInstanceNames().Where(sqlInstanceName => dataSource != sqlInstanceName))
       {
         sqlConnectionStringBuilder.DataSource = sqlInstanceName;
         ConnectionString = sqlConnectionStringBuilder.ConnectionString;

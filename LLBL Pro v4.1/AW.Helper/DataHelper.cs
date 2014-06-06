@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Data.SqlLocalDb;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Win32;
@@ -290,17 +291,22 @@ namespace AW.Helper
       return e.Number == 4060 && e.State == 1;
     }
 
+    public static IEnumerable<string> GetSqlLocalDBAndLocalInstanceNames()
+    {
+      return GetSqlLocalDBInstanceNames().Union(GetSqlInstanceNames());
+    }
+
     public static IEnumerable<string> GetSqlInstanceNames()
     {
       var baseKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
       try
       {
-        var key = baseKey.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL") ?? baseKey.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Microsoft SQL Server\Instance Names\SQL");
+        var key = baseKey.OpenSubKey(@"SOFTWARE\"+ MicrosoftMicrosoftSQLServerInstanceNamesSQL) ?? baseKey.OpenSubKey(@"SOFTWARE\Wow6432Node\" + MicrosoftMicrosoftSQLServerInstanceNamesSQL);
         if (key == null) yield break;
         try
         {
           foreach (var instanceName in key.GetValueNames().Where(instanceName => !String.IsNullOrWhiteSpace(instanceName)))
-            yield return "MSSQLSERVER" == instanceName ? @"(local)" : @"(local)\" + instanceName;
+            yield return "MSSQLSERVER" == instanceName ? LocalInstancePrefix : LocalInstancePrefix +@"\" + instanceName;
         }
         finally
         {
@@ -311,6 +317,32 @@ namespace AW.Helper
       {
         baseKey.Close();
       }
+    }
+
+    public static IEnumerable<string> GetSqlLocalDBInstanceNames()
+    {
+      var sqlLocalDbProvider = new SqlLocalDbProvider();
+      return sqlLocalDbProvider.GetInstances().Where(sldb => !sldb.ConfigurationCorrupt).OrderByDescending(sldb => sldb.IsRunning).Select(GetInstanceName);
+    }
+
+    /// <summary>
+    ///   (LocalDb)\\
+    /// </summary>
+    public const string LocalDBInstancePrefix = "(LocalDb)\\";
+
+    /// <summary>
+    /// The local instance prefix (local)
+    /// </summary>
+    private const string LocalInstancePrefix = "(local)";
+
+    /// <summary>
+    /// Microsoft\Microsoft SQL Server\Instance Names\SQL
+    /// </summary>
+    private const string MicrosoftMicrosoftSQLServerInstanceNamesSQL = @"Microsoft\Microsoft SQL Server\Instance Names\SQL";
+
+    private static string GetInstanceName(ISqlLocalDbInstanceInfo localDbInstanceDataSource)
+    {
+      return LocalDBInstancePrefix + localDbInstanceDataSource.Name;
     }
 
     #region DbCommand
